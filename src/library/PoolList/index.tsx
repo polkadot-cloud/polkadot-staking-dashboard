@@ -32,6 +32,7 @@ export const PoolListInner = ({
   allowSearch,
   pools,
   title,
+  defaultFilters,
 }: PoolListProps) => {
   const { mode } = useTheme();
   const { isReady, network } = useApi();
@@ -40,7 +41,7 @@ export const PoolListInner = ({
   const { listFormat, setListFormat } = usePoolList();
   const { isSyncing } = useUi();
 
-  const { getExcludes } = useFilters();
+  const { getExcludes, setMultiExcludes } = useFilters();
   const { applyFilter } = usePoolFilters();
   const excludes = getExcludes('pools');
 
@@ -111,6 +112,13 @@ export const PoolListInner = ({
       handleValidatorsFilterUpdate();
     }
   }, [isSyncing, excludes?.length]);
+
+  // set default filters
+  useEffect(() => {
+    if (defaultFilters?.length) {
+      setMultiExcludes('pools', defaultFilters);
+    }
+  }, []);
 
   // handle filter / order update
   const handleValidatorsFilterUpdate = (

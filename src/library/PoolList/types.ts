@@ -10,4 +10,5 @@ export interface PoolListProps {
   refetchOnListUpdate?: string;
   pools?: any;
   title?: string;
+  defaultFilters?: Array<string>;
 }

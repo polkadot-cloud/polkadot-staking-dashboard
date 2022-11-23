@@ -43,7 +43,7 @@ export const ValidatorListInner = (props: any) => {
 
   const { selected, listFormat, setListFormat } = provider;
 
-  const { getExcludes, getOrder } = useFilters();
+  const { getExcludes, setMultiExcludes, getOrder } = useFilters();
   const { applyFilter, applyOrder, applySearch } = useValidatorFilters();
   const excludes = getExcludes('validators');
   const order = getOrder('validators');
@@ -66,6 +66,7 @@ export const ValidatorListInner = (props: any) => {
   const allowSearch = props.allowSearch ?? false;
   const allowListFormat = props.allowListFormat ?? true;
   const alwaysRefetchValidators = props.alwaysRefetchValidators ?? false;
+  const defaultFilters = props.defaultFilters ?? [];
 
   const actionsAll = [...actions].filter((action) => !action.onSelected);
   const actionsSelected = [...actions].filter(
@@ -121,6 +122,13 @@ export const ValidatorListInner = (props: any) => {
       setFetched(false);
     }
   }, [props.validators, nominator]);
+
+  // set default filters
+  useEffect(() => {
+    if (allowFilters && defaultFilters.length) {
+      setMultiExcludes('validators', defaultFilters);
+    }
+  }, []);
 
   // configure validator list when network is ready to fetch
   useEffect(() => {

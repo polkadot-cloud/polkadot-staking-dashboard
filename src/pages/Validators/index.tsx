@@ -21,6 +21,12 @@ export const Validators = (props: PageProps) => {
   const { isReady } = useApi();
   const { validators } = useValidators();
   const { t } = useTranslation('base');
+  const defaultFilters = [
+    'inactive',
+    'over_subscribed',
+    'all_commission',
+    'blocked_nominations',
+  ];
 
   return (
     <>
@@ -51,6 +57,7 @@ export const Validators = (props: PageProps) => {
                   batchKey="validators_browse"
                   title="Network Validators"
                   selectable={false}
+                  defaultFilters={defaultFilters}
                   allowMoreCols
                   allowFilters
                   allowSearch

@@ -61,7 +61,7 @@ export const usePoolFilters = () => {
   const filtersToLabels: { [key: string]: string } = {
     inactive: 'Inactive Pools',
     locked: 'Locked Pools',
-    dstroying: 'Destroying Pools',
+    destroying: 'Destroying Pools',
   };
 
   const filterToFunction: { [key: string]: AnyFunction } = {
