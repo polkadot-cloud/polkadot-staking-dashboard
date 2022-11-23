@@ -13,6 +13,7 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Bond = (props: SetupStepProps) => {
   const { section } = props;
@@ -20,6 +21,7 @@ export const Bond = (props: SetupStepProps) => {
   const { txFees } = useTxFees();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const setup = getSetupProgress(SetupType.Stake, activeAccount);
+  const { t } = useTranslation('pages');
 
   // either free to bond or existing setup value
   const initialBondValue = setup.bond === 0 ? 0 : setup.bond;
@@ -60,7 +62,7 @@ export const Bond = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={setup.bond !== 0}
-        title="Bond"
+        title={t('nominate.bond') || ''}
         helpKey="Bonding"
         setupType={SetupType.Stake}
       />
