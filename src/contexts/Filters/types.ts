@@ -7,7 +7,7 @@ export interface FiltersContextInterface {
   getExcludes: (g: string) => Array<string> | null;
   toggleExclude: (g: string, f: string) => void;
   setMultiExcludes: (g: string, fs: Array<string>) => void;
-  getOrder: (g: string) => string | null;
+  getOrder: (g: string) => string;
   setOrder: (g: string, o: string) => void;
   getSearchTerm: (g: string) => string | null;
   setSearchTerm: (g: string, t: string) => void;

@@ -11,7 +11,7 @@ export const defaultFiltersInterface = {
   // eslint-disable-next-line
   setMultiExcludes: (g: string, fs: Array<string>) => { },
   // eslint-disable-next-line
-  getOrder: (g: string) => null,
+  getOrder: (g: string) => 'default',
   // eslint-disable-next-line
   setOrder: (g: string, o: string) => { },
   // eslint-disable-next-line
