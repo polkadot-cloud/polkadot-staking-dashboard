@@ -143,6 +143,14 @@ export const useValidatorFilters = () => {
     );
   };
 
+  const filtersToLabels: { [key: string]: string } = {
+    inactive: 'Inactive Validators',
+    over_subscribed: 'Over Subscribed',
+    all_commission: '100% Commission',
+    blocked_nominations: 'Blocked Nominations',
+    missing_identity: 'Missing Identity',
+  };
+
   const filterToFunction: { [key: string]: AnyFunction } = {
     missing_identity: filterMissingIdentity,
     over_subscribed: filterOverSubscribed,
@@ -180,7 +188,7 @@ export const useValidatorFilters = () => {
 
   /*
    * orderLowestCommission
-   * Orders a list by commission.
+   * Orders a list by commission, lowest first.
    * Returns the updated ordered list.
    */
   const orderLowestCommission = (list: any) => {
@@ -189,11 +197,39 @@ export const useValidatorFilters = () => {
     );
   };
 
+  /*
+   * orderHighestCommission
+   * Orders a list by commission, highest first.
+   * Returns the updated ordered list.
+   */
+  const orderHighestCommission = (list: any) => {
+    return [...list].sort(
+      (a: any, b: any) => b.prefs.commission - a.prefs.commission
+    );
+  };
+
+  const ordersToLabels: { [key: string]: string } = {
+    default: 'Unordered',
+    low_commission: 'Low Commission',
+    high_commission: 'High Commission',
+  };
+
+  const orderToFunction: { [key: string]: AnyFunction } = {
+    low_commission: orderLowestCommission,
+    high_commission: orderHighestCommission,
+  };
+
   const applyOrder = (o: string, list: AnyJson) => {
-    return o === 'commission' ? orderLowestCommission(list) : list;
+    const fn = orderToFunction[o];
+    if (fn) {
+      return fn(list);
+    }
+    return list;
   };
 
   return {
+    filtersToLabels,
+    ordersToLabels,
     filter,
     applyOrder,
   };

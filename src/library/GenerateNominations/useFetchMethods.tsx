@@ -77,7 +77,7 @@ export const useFetchMehods = () => {
     ]);
 
     // order validators to find profitable candidates
-    _nominations = applyValidatorOrder(_nominations, 'commission');
+    _nominations = applyValidatorOrder(_nominations, 'low_commission');
 
     // choose shuffled subset of validators
     if (_nominations.length) {

@@ -6,19 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFilters } from 'contexts/Filters';
 import { Title } from 'library/Overlay/Title';
 import { FilterListButton, FilterListWrapper } from 'library/Overlay/Wrappers';
+import { useValidatorFilters } from './useValidatorFilters';
 
 export const FilterValidators = () => {
   const { getExcludes, toggleExclude } = useFilters();
+  const { filtersToLabels } = useValidatorFilters();
 
   const excludes = getExcludes('validators');
-
-  const filtersToLabels = {
-    inactive: 'Inactive Validators',
-    over_subscribed: 'Over Subscribed',
-    all_commission: '100% Commission',
-    blocked_nominations: 'Blocked Nominations',
-    missing_identity: 'Missing Identity',
-  };
 
   return (
     <FilterListWrapper>

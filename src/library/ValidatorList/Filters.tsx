@@ -18,6 +18,7 @@ import { Item } from 'library/Filter/Item';
 import { useEffect } from 'react';
 import { FilterValidators } from './FilterValidators';
 import { OrderValidators } from './OrderValidators';
+import { useValidatorFilters } from './useValidatorFilters';
 
 export const Filters = () => {
   const { validatorOrder, orderValidators } = useValidatorFilter();
@@ -29,6 +30,7 @@ export const Filters = () => {
     setMultiExcludes,
     toggleExclude,
   } = useFilters();
+  const { filtersToLabels, ordersToLabels } = useValidatorFilters();
 
   const excludes = getExcludes('validators');
   const order = getOrder('validators');
@@ -41,19 +43,6 @@ export const Filters = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [excludes]);
-
-  const excludeToLabel: { [key: string]: string } = {
-    inactive: 'Inactive Validators',
-    over_subscribed: 'Over Subscribed',
-    all_commission: '100% Commission',
-    blocked_nominations: 'Blocked Nominations',
-    missing_identity: 'Missing Identity',
-  };
-
-  const orderToLabel: { [key: string]: string } = {
-    default: 'Unordered',
-    commission: 'Low Commission',
-  };
 
   return (
     <>
@@ -103,7 +92,7 @@ export const Filters = () => {
             label={
               order === 'default'
                 ? 'Unordered'
-                : `Order: ${orderToLabel[order]}`
+                : `Order: ${ordersToLabels[order]}`
             }
             disabled
           />
@@ -111,7 +100,7 @@ export const Filters = () => {
           {excludes?.map((e: string, i: number) => (
             <Item
               key={`validator_filter_${i}`}
-              label={excludeToLabel[e]}
+              label={filtersToLabels[e]}
               icon={faBan}
               transform="grow-2"
               onClick={() => {

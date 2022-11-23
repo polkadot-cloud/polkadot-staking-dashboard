@@ -44,7 +44,7 @@ export const ValidatorFilterProvider = ({
         'missing_identity',
         'inactive',
       ]);
-      setValidatorOrder('commission');
+      setValidatorOrder('low_commission');
     } else {
       setValidatorFilters([]);
       setValidatorOrder('default');
@@ -252,7 +252,7 @@ export const ValidatorFilterProvider = ({
    * Returns the updated ordered list.
    */
   const applyValidatorOrder = (list: any, order: string) => {
-    return order === 'commission' ? orderLowestCommission(list) : list;
+    return order === 'low_commission' ? orderLowestCommission(list) : list;
   };
 
   /*
