@@ -3,10 +3,6 @@
 import { AnyFunction, AnyJson } from 'types';
 
 export const usePoolFilters = () => {
-  const filtersToLabels: { [key: string]: string } = {
-    inactive: 'Inactive Pools',
-  };
-
   /*
    * filterInactive
    * Iterates through the supplied list and refers to the meta
@@ -18,8 +14,38 @@ export const usePoolFilters = () => {
     return list;
   };
 
+  /*
+   * filterLocked
+   * Iterates through the supplied list and refers to the meta
+   * batch of the list to filter those list items that are
+   * locked.
+   * Returns the updated filtered list.
+   */
+  const filterLocked = (list: any) => {
+    return list;
+  };
+
+  /*
+   * filterDestroying
+   * Iterates through the supplied list and refers to the meta
+   * batch of the list to filter those list items that are
+   * being destroyed.
+   * Returns the updated filtered list.
+   */
+  const filterDestroying = (list: any) => {
+    return list;
+  };
+
+  const filtersToLabels: { [key: string]: string } = {
+    inactive: 'Inactive Pools',
+    locked: 'Locked Pools',
+    dstroying: 'Destroying Pools',
+  };
+
   const filterToFunction: { [key: string]: AnyFunction } = {
     inactive: filterInactive,
+    locked: filterLocked,
+    destroying: filterDestroying,
   };
 
   const getFiltersToApply = (excludes: Array<string>) => {
