@@ -14,7 +14,7 @@ export const OrderValidators = () => {
 
   const ordersToLabels = {
     default: 'Default',
-    low_commission: 'Low Commission',
+    commission: 'Low Commission',
   };
 
   return (

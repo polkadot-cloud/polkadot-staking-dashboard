@@ -8,7 +8,7 @@ export interface ItemProps {
   icon?: IconProp;
   label?: string;
   transform?: string;
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
 }
 

@@ -19,7 +19,9 @@ export const Item = ({
     transition={{
       duration: 0.3,
     }}
-    onClick={() => onClick()}
+    onClick={() => {
+      if (onClick !== undefined) onClick();
+    }}
     disabled={disabled}
   >
     <ItemWrapper>

@@ -22,10 +22,16 @@ import { OrderValidators } from './OrderValidators';
 export const Filters = () => {
   const { validatorOrder, orderValidators } = useValidatorFilter();
   const { openOverlayWith } = useOverlay();
-  const { clearExcludes, getExcludes, setMultiExcludes, toggleExclude } =
-    useFilters();
+  const {
+    clearExcludes,
+    getExcludes,
+    getOrder,
+    setMultiExcludes,
+    toggleExclude,
+  } = useFilters();
 
   const excludes = getExcludes('validators');
+  const order = getOrder('validators');
 
   const handleFilter = (fn: any, filter: string) => {
     fn(filter);
@@ -42,6 +48,11 @@ export const Filters = () => {
     all_commission: '100% Commission',
     blocked_nominations: 'Blocked Nominations',
     missing_identity: 'Missing Identity',
+  };
+
+  const orderToLabel: { [key: string]: string } = {
+    default: 'Unordered',
+    commission: 'Low Commission',
   };
 
   return (
@@ -89,10 +100,14 @@ export const Filters = () => {
       <Container>
         <div className="items">
           <Item
-            label="Order: Low Commission"
-            onClick={() => handleFilter(orderValidators, 'commission')}
+            label={
+              order === 'default'
+                ? 'Unordered'
+                : `Order: ${orderToLabel[order]}`
+            }
             disabled
           />
+          {!excludes?.length && <Item label="No filters" disabled />}
           {excludes?.map((e: string, i: number) => (
             <Item
               key={`validator_filter_${i}`}

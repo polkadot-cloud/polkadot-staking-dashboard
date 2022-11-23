@@ -178,7 +178,23 @@ export const useValidatorFilters = () => {
     return list;
   };
 
+  /*
+   * orderLowestCommission
+   * Orders a list by commission.
+   * Returns the updated ordered list.
+   */
+  const orderLowestCommission = (list: any) => {
+    return [...list].sort(
+      (a: any, b: any) => a.prefs.commission - b.prefs.commission
+    );
+  };
+
+  const applyOrder = (o: string, list: AnyJson) => {
+    return o === 'commission' ? orderLowestCommission(list) : list;
+  };
+
   return {
     filter,
+    applyOrder,
   };
 };

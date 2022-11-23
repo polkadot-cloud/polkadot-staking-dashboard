@@ -49,11 +49,12 @@ export const ValidatorListInner = (props: any) => {
   const { isSyncing } = useUi();
 
   // TODO: deprecate
-  const { validatorOrder, applyValidatorOrder, validatorSearchFilter } =
-    useValidatorFilter();
+  const { validatorSearchFilter } = useValidatorFilter();
 
-  const { getExcludes } = useFilters();
-  const { filter } = useValidatorFilters();
+  const { getExcludes, getOrder } = useFilters();
+  const { filter, applyOrder } = useValidatorFilters();
+  const excludes = getExcludes('validators');
+  const order = getOrder('validators');
 
   const {
     batchKey,
@@ -157,7 +158,7 @@ export const ValidatorListInner = (props: any) => {
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate();
     }
-  }, [validatorOrder, isSyncing, getExcludes('validators')?.length]);
+  }, [order, isSyncing, excludes?.length]);
 
   // handle modal resize on list format change
   useEffect(() => {
@@ -177,19 +178,11 @@ export const ValidatorListInner = (props: any) => {
     filteredValidators: any = Object.assign(validatorsDefault)
   ) => {
     if (allowFilters) {
-      // TODO: apply ordering from Filters context
-      if (validatorOrder !== 'default') {
-        filteredValidators = applyValidatorOrder(
-          filteredValidators,
-          validatorOrder
-        );
+      if (order !== 'default') {
+        filteredValidators = applyOrder(order, filteredValidators);
       }
       // apply excludes
-      filteredValidators = filter(
-        getExcludes('validators'),
-        filteredValidators,
-        batchKey
-      );
+      filteredValidators = filter(excludes, filteredValidators, batchKey);
       setValidators(filteredValidators);
       setPage(1);
       setRenderIteration(1);
