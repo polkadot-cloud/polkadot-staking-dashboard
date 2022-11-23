@@ -3,7 +3,7 @@
 
 import { useValidators } from 'contexts/Validators';
 import { Validator } from 'contexts/Validators/types';
-import { useValidatorFilters } from 'library/ValidatorList/useValidatorFilters';
+import { useValidatorFilters } from 'library/Hooks/useValidatorFilters';
 import { shuffle } from 'Utils';
 
 export const useFetchMehods = () => {

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFilters } from 'contexts/Filters';
 import { Title } from 'library/Overlay/Title';
 import { FilterListButton, FilterListWrapper } from 'library/Overlay/Wrappers';
-import { useValidatorFilters } from './useValidatorFilters';
+import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 
 export const OrderValidators = () => {
   const { getOrder, setOrder } = useFilters();

@@ -22,9 +22,9 @@ import { Selectable } from 'library/List/Selectable';
 import { Validator } from 'library/ValidatorList/Validator';
 import React, { useEffect, useRef, useState } from 'react';
 import { networkColors } from 'theme/default';
+import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
 import { Filters } from './Filters';
-import { useValidatorFilters } from './useValidatorFilters';
 
 export const ValidatorListInner = (props: any) => {
   const { mode } = useTheme();

@@ -15,9 +15,9 @@ import { useOverlay } from 'contexts/Overlay';
 import { Container } from 'library/Filter/Container';
 import { Item } from 'library/Filter/Item';
 import { useEffect } from 'react';
+import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { FilterValidators } from './FilterValidators';
 import { OrderValidators } from './OrderValidators';
-import { useValidatorFilters } from './useValidatorFilters';
 
 export const Filters = () => {
   const { openOverlayWith } = useOverlay();
