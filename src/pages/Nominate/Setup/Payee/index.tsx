@@ -30,7 +30,7 @@ export const Payee = (props: SetupStepProps) => {
       index: 0,
     },
     {
-      title: t('.nominate.to_stash'),
+      title: t('nominate.to_stash'),
       subtitle: t('nominate.sent_to_stash'),
       index: 1,
     },
