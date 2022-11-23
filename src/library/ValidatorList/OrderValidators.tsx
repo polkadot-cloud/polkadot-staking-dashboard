@@ -3,34 +3,40 @@
 
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useFilters } from 'contexts/Filters';
 import { Title } from 'library/Overlay/Title';
-import { FilterListWrapper } from 'library/Overlay/Wrappers';
+import { FilterListButton, FilterListWrapper } from 'library/Overlay/Wrappers';
 
 export const OrderValidators = () => {
+  const { getOrder, setOrder } = useFilters();
+
+  const order = getOrder('validators');
+
+  const ordersToLabels = {
+    default: 'Default',
+    low_commission: 'Low Commission',
+  };
+
   return (
     <FilterListWrapper>
       <Title title="Order Validators" />
       <div className="body">
-        <button
-          type="button"
-          className="item"
-          onClick={() => {
-            /* TODO: add filter */
-          }}
-        >
-          <FontAwesomeIcon transform="grow-2" icon={faCheckCircle} />
-          <h4>Default</h4>
-        </button>
-        <button
-          type="button"
-          className="item"
-          onClick={() => {
-            /* TODO: add filter */
-          }}
-        >
-          <FontAwesomeIcon transform="grow-2" icon={faCircle} />
-          <h4>Low Commission</h4>
-        </button>
+        {Object.entries(ordersToLabels).map(([o, l]: any, i: number) => (
+          <FilterListButton
+            active={order === o ?? false}
+            key={`validator_filter_${i}`}
+            type="button"
+            onClick={() => {
+              setOrder('validators', o);
+            }}
+          >
+            <FontAwesomeIcon
+              transform="grow-5"
+              icon={order === o ? faCheckCircle : faCircle}
+            />
+            <h4>{l}</h4>
+          </FilterListButton>
+        ))}
       </div>
     </FilterListWrapper>
   );

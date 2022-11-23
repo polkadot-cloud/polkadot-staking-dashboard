@@ -91,6 +91,7 @@ export const Filters = () => {
           <Item
             label="Order: Low Commission"
             onClick={() => handleFilter(orderValidators, 'commission')}
+            disabled
           />
           {excludes?.map((e: string, i: number) => (
             <Item

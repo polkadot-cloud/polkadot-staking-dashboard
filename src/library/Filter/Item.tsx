@@ -6,7 +6,13 @@ import { motion } from 'framer-motion';
 import { ItemProps } from './types';
 import { ItemWrapper } from './Wrappers';
 
-export const Item = ({ icon, label, transform, onClick }: ItemProps) => (
+export const Item = ({
+  disabled = false,
+  icon,
+  label,
+  transform,
+  onClick,
+}: ItemProps) => (
   <motion.button
     whileHover={{ scale: 1.02 }}
     whileTap={{ scale: 0.99 }}
@@ -14,6 +20,7 @@ export const Item = ({ icon, label, transform, onClick }: ItemProps) => (
       duration: 0.3,
     }}
     onClick={() => onClick()}
+    disabled={disabled}
   >
     <ItemWrapper>
       {icon ? (

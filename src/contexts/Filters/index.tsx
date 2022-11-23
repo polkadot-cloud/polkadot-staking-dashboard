@@ -92,13 +92,15 @@ export const FiltersProvider = ({
 
   // Get the current order of a list or null.
   const getOrder = (g: string) => {
-    return orders.find((o: FilterOrder) => o.key === g)?.order || null;
+    return orders.find((o: FilterOrder) => o.key === g)?.order || 'default';
   };
 
   // Sets an order key for a group.
   const setOrder = (g: string, o: string) => {
     let newOrders = [];
-    if (orders.length) {
+    if (o === 'default') {
+      newOrders = [...orders].filter((order: FilterOrder) => order.key !== g);
+    } else if (orders.length) {
       newOrders = [...orders].map((order: FilterOrder) =>
         order.key !== g ? order : { ...order, order: o }
       );
