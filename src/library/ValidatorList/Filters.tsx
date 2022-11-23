@@ -56,7 +56,7 @@ export const Filters = () => {
           onClick={() => {
             resetExcludes('validators');
           }}
-          disabled={!excludes?.length && order === 'default'}
+          disabled={!excludes?.length}
         />
       </div>
       <Container>
