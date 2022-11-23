@@ -77,7 +77,7 @@ export const Summary = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title={t('nominate.summary')}
+        title={t('nominate.summary') || ''}
         setupType={SetupType.Stake}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
