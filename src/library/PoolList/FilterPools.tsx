@@ -10,7 +10,7 @@ import { FilterListButton, FilterListWrapper } from 'library/Overlay/Wrappers';
 
 export const FilterPools = () => {
   const { getExcludes, toggleExclude } = useFilters();
-  const { filtersToLabels } = usePoolFilters({ batchKey: 'bonded_pools' });
+  const { filtersToLabels } = usePoolFilters();
 
   const excludes = getExcludes('pools');
 

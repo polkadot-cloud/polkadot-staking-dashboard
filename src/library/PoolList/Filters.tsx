@@ -16,7 +16,7 @@ import { FilterPools } from './FilterPools';
 
 export const Filters = () => {
   const { resetExcludes, getExcludes, toggleExclude } = useFilters();
-  const { filtersToLabels } = usePoolFilters({ batchKey: 'bonded_pools' });
+  const { filtersToLabels } = usePoolFilters();
   const { openOverlayWith } = useOverlay();
 
   const excludes = getExcludes('pools');
@@ -40,7 +40,7 @@ export const Filters = () => {
         <ButtonSecondary
           text="Reset"
           onClick={() => {
-            resetExcludes('validators');
+            resetExcludes('pools');
           }}
           disabled={!excludes?.length}
         />
@@ -50,12 +50,12 @@ export const Filters = () => {
           {!excludes?.length && <Item label="No filters" disabled />}
           {excludes?.map((e: string, i: number) => (
             <Item
-              key={`validator_filter_${i}`}
+              key={`pool_filter_${i}`}
               label={filtersToLabels[e]}
               icon={faBan}
               transform="grow-2"
               onClick={() => {
-                toggleExclude('validators', e);
+                toggleExclude('pools', e);
               }}
             />
           ))}

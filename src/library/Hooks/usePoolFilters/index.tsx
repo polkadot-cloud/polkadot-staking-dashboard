@@ -5,11 +5,10 @@ import { BondedPool } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { AnyFunction, AnyJson } from 'types';
 
-export const usePoolFilters = ({ batchKey }: { batchKey: string }) => {
+export const usePoolFilters = () => {
   const { meta } = useBondedPools();
   const { getNominationsStatusFromTargets } = useStaking();
-  // get pool targets from nominations meta batch
-  const nominations = meta[batchKey]?.nominations ?? [];
+  const { getPoolNominationStatusCode } = useBondedPools();
 
   /*
    * filterInactive
@@ -18,19 +17,20 @@ export const usePoolFilters = ({ batchKey }: { batchKey: string }) => {
    * not actively nominating.
    * Returns the updated filtered list.
    */
-  const filterInactive = (list: any) => {
-    let i = 0;
+  const filterInactive = (list: any, batchKey: string) => {
+    // get pool targets from nominations meta batch
+    const nominations = meta[batchKey]?.nominations ?? [];
+
+    let i = -1;
     const filteredList = list.filter((p: BondedPool) => {
-      const targets = nominations[i]?.targets ?? [];
-      // targets have not yet synced
-      if (!targets.length) {
-        return list;
-      }
-      const status = getNominationsStatusFromTargets(
-        p.addresses.stash,
-        targets
-      );
       i++;
+      const targets = nominations[i]?.targets ?? [];
+      if (!targets.length) {
+        return false;
+      }
+      const status = getPoolNominationStatusCode(
+        getNominationsStatusFromTargets(p.addresses.stash, targets)
+      );
       return status === 'active';
     });
     return filteredList;
@@ -80,7 +80,11 @@ export const usePoolFilters = ({ batchKey }: { batchKey: string }) => {
     return fns;
   };
 
-  const applyFilter = (excludes: Array<string> | null, list: AnyJson) => {
+  const applyFilter = (
+    excludes: Array<string> | null,
+    list: AnyJson,
+    batchKey: string
+  ) => {
     if (!excludes) {
       return list;
     }

@@ -5,12 +5,14 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
+import { useFilters } from 'contexts/Filters';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
+import { usePoolFilters } from 'library/Hooks/usePoolFilters';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
@@ -37,6 +39,10 @@ export const PoolListInner = ({
   const { fetchPoolsMetaBatch, poolSearchFilter } = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
   const { isSyncing } = useUi();
+
+  const { getExcludes } = useFilters();
+  const { applyFilter } = usePoolFilters();
+  const excludes = getExcludes('pools');
 
   // current page
   const [page, setPage] = useState<number>(1);
@@ -98,6 +104,24 @@ export const PoolListInner = ({
       }, 500);
     }
   }, [renderIterationRef.current]);
+
+  // list ui changes / validator changes trigger re-render of list
+  useEffect(() => {
+    if (fetched) {
+      handleValidatorsFilterUpdate();
+    }
+  }, [isSyncing, excludes?.length]);
+
+  // handle filter / order update
+  const handleValidatorsFilterUpdate = (
+    filteredValidators: any = Object.assign(poolsDefault)
+  ) => {
+    // apply excludes
+    filteredValidators = applyFilter(excludes, filteredValidators, batchKey);
+    _setPools(filteredValidators);
+    setPage(1);
+    setRenderIteration(1);
+  };
 
   // get pools to render
   let listPools = [];
