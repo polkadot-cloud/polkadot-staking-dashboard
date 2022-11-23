@@ -19,6 +19,7 @@ import { Pool } from 'library/Pool';
 import React, { useEffect, useRef, useState } from 'react';
 import { networkColors } from 'theme/default';
 import { PoolListProvider, usePoolList } from './context';
+import { Filters } from './Filters';
 import { PoolListProps } from './types';
 
 export const PoolListInner = ({
@@ -161,6 +162,7 @@ export const PoolListInner = ({
             placeholder="Search Pool ID, Name or Address"
           />
         )}
+        <Filters />
         {pagination && listPools.length > 0 && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}

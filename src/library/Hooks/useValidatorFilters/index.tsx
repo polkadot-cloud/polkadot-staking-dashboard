@@ -164,7 +164,6 @@ export const useValidatorFilters = () => {
 
   const getFiltersToApply = (excludes: Array<string>) => {
     const fns = [];
-
     for (const exclude of excludes) {
       if (filterToFunction[exclude]) {
         fns.push(filterToFunction[exclude]);
