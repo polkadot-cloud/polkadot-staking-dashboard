@@ -173,7 +173,7 @@ export const useValidatorFilters = () => {
     return fns;
   };
 
-  const filter = (
+  const applyFilter = (
     excludes: Array<string> | null,
     list: AnyJson,
     batchKey: string
@@ -283,7 +283,7 @@ export const useValidatorFilters = () => {
   return {
     filtersToLabels,
     ordersToLabels,
-    filter,
+    applyFilter,
     applyOrder,
     applySearch,
   };

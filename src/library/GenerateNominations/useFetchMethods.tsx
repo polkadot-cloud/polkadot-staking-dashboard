@@ -3,12 +3,12 @@
 
 import { useValidators } from 'contexts/Validators';
 import { Validator } from 'contexts/Validators/types';
-import { useValidatorFilter } from 'library/Filter/context';
+import { useValidatorFilters } from 'library/ValidatorList/useValidatorFilters';
 import { shuffle } from 'Utils';
 
 export const useFetchMehods = () => {
   const { validators, sessionParachain } = useValidators();
-  const { applyValidatorOrder, applyValidatorFilters } = useValidatorFilter();
+  const { applyFilter, applyOrder } = useValidatorFilters();
   let { favoritesList } = useValidators();
   if (favoritesList === null) {
     favoritesList = [];
@@ -69,15 +69,14 @@ export const useFetchMehods = () => {
     let _nominations = Object.assign(validators);
 
     // filter validators to find active candidates
-    _nominations = applyValidatorFilters(_nominations, rawBatchKey, [
-      'all_commission',
-      'blocked_nominations',
-      'inactive',
-      'missing_identity',
-    ]);
+    _nominations = applyFilter(
+      ['all_commission', 'blocked_nominations', 'inactive', 'missing_identity'],
+      _nominations,
+      rawBatchKey
+    );
 
     // order validators to find profitable candidates
-    _nominations = applyValidatorOrder(_nominations, 'low_commission');
+    _nominations = applyOrder('low_commission', _nominations);
 
     // choose shuffled subset of validators
     if (_nominations.length) {
@@ -93,22 +92,22 @@ export const useFetchMehods = () => {
     let _nominationsWaiting = Object.assign(validators);
 
     // filter validators to find waiting candidates
-    _nominationsWaiting = applyValidatorFilters(
-      _nominationsWaiting,
-      rawBatchKey,
+    _nominationsWaiting = applyFilter(
       [
         'all_commission',
         'blocked_nominations',
         'missing_identity',
         'in_session',
-      ]
+      ],
+      _nominationsWaiting,
+      rawBatchKey
     );
 
     // filter validators to find active candidates
-    _nominationsActive = applyValidatorFilters(
+    _nominationsActive = applyFilter(
+      ['all_commission', 'blocked_nominations', 'missing_identity', 'inactive'],
       _nominationsActive,
-      rawBatchKey,
-      ['all_commission', 'blocked_nominations', 'missing_identity', 'inactive']
+      rawBatchKey
     );
 
     // choose shuffled subset of waiting
@@ -126,36 +125,35 @@ export const useFetchMehods = () => {
   const available = (nominations: any) => {
     const _nominations = Object.assign(validators);
 
-    const _parachainValidators = applyValidatorFilters(
-      _nominations,
-      rawBatchKey,
+    const _parachainValidators = applyFilter(
       [
         'all_commission',
         'blocked_nominations',
         'inactive',
         'missing_identity',
         'not_parachain_validator',
-      ]
+      ],
+      _nominations,
+      rawBatchKey
     ).filter(
       (n: any) => !nominations.find((o: any) => o.address === n.address)
     );
 
-    const _activeValidators = applyValidatorFilters(_nominations, rawBatchKey, [
-      'all_commission',
-      'blocked_nominations',
-      'inactive',
-      'missing_identity',
-    ])
+    const _activeValidators = applyFilter(
+      ['all_commission', 'blocked_nominations', 'inactive', 'missing_identity'],
+      _nominations,
+      rawBatchKey
+    )
       .filter(
         (n: any) => !nominations.find((o: any) => o.address === n.address)
       )
       .filter((n: any) => !sessionParachain?.includes(n.address) || false);
 
-    const _randomValidator = applyValidatorFilters(_nominations, rawBatchKey, [
-      'all_commission',
-      'blocked_nominations',
-      'missing_identity',
-    ]).filter(
+    const _randomValidator = applyFilter(
+      ['all_commission', 'blocked_nominations', 'missing_identity'],
+      _nominations,
+      rawBatchKey
+    ).filter(
       (n: any) => !nominations.find((o: any) => o.address === n.address)
     );
 

@@ -14,7 +14,6 @@ import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { motion } from 'framer-motion';
-import { ValidatorFilterProvider } from 'library/Filter/context';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
@@ -45,7 +44,7 @@ export const ValidatorListInner = (props: any) => {
   const { selected, listFormat, setListFormat } = provider;
 
   const { getExcludes, getOrder } = useFilters();
-  const { filter, applyOrder, applySearch } = useValidatorFilters();
+  const { applyFilter, applyOrder, applySearch } = useValidatorFilters();
   const excludes = getExcludes('validators');
   const order = getOrder('validators');
 
@@ -175,7 +174,7 @@ export const ValidatorListInner = (props: any) => {
         filteredValidators = applyOrder(order, filteredValidators);
       }
       // apply excludes
-      filteredValidators = filter(excludes, filteredValidators, batchKey);
+      filteredValidators = applyFilter(excludes, filteredValidators, batchKey);
       setValidators(filteredValidators);
       setPage(1);
       setRenderIteration(1);
@@ -334,9 +333,7 @@ export const ValidatorList = (props: any) => {
       selectActive={selectActive}
       selectToggleable={selectToggleable}
     >
-      <ValidatorFilterProvider>
-        <ValidatorListShouldUpdate {...props} />
-      </ValidatorFilterProvider>
+      <ValidatorListShouldUpdate {...props} />
     </ListProvider>
   );
 };
