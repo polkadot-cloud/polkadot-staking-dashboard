@@ -14,6 +14,7 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
+import { useTranslation } from 'react-i18next';
 import {
   PageRowWrapper,
   RowPrimaryWrapper,
@@ -34,12 +35,13 @@ export const Active = () => {
   const { targets, setTargets, inSetup } = useStaking();
   const { getAccountNominations } = useBalances();
   const nominations = getAccountNominations(activeAccount);
+  const { t } = useTranslation('pages');
 
   const ROW_HEIGHT = 275;
 
   return (
     <>
-      <PageTitle title="Nominate" />
+      <PageTitle title={t('nominate.nominate')} />
       <StatBoxList>
         <MinimumActiveBondStatBox />
         <ActiveNominationsStatBox />
@@ -74,12 +76,12 @@ export const Active = () => {
             <>
               <CardHeaderWrapper withAction>
                 <h3>
-                  Start Nominating
+                  {t('nominate.start_nominating')}
                   <OpenHelpIcon helpKey="Nominations" />
                 </h3>
                 <div>
                   <ButtonPrimary
-                    text="Nominate"
+                    text={t('nominate.nominate')}
                     iconLeft={faChevronCircleRight}
                     iconTransform="grow-1"
                     disabled={targets.length === 0 || inSetup() || isSyncing}
