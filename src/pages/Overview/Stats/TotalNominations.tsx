@@ -4,11 +4,13 @@
 import BN from 'bn.js';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
+import { useTranslation } from 'react-i18next';
 import { toFixedIfNecessary } from 'Utils';
 
 export const TotalNominatorsStatBox = () => {
   const { staking } = useStaking();
   const { totalNominators, maxNominatorsCount } = staking;
+  const { t } = useTranslation('pages');
 
   // total active nominators as percent
   let totalNominatorsAsPercent = 0;
@@ -19,7 +21,7 @@ export const TotalNominatorsStatBox = () => {
   }
 
   const params = {
-    label: 'Total Nominators',
+    label: t('overview.total_nominators'),
     stat: {
       value: totalNominators.toNumber(),
       total: maxNominatorsCount.toNumber(),

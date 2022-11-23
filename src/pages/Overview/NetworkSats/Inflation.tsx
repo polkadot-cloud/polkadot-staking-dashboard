@@ -6,6 +6,7 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import useInflation from 'library/Hooks/useInflation';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { useTranslation } from 'react-i18next';
 import { toFixedIfNecessary } from 'Utils';
 import { InflationWrapper } from './Wrappers';
 
@@ -13,6 +14,7 @@ export const Inflation = () => {
   const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
   const { inflation, stakedReturn } = useInflation();
+  const { t } = useTranslation('pages');
 
   const { lastTotalStake } = staking;
   const { totalIssuance } = metrics;
@@ -38,7 +40,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                Historical Rewards Rate{' '}
+                {t('overview.historical_rewards_rate')}{' '}
                 <OpenHelpIcon helpKey="Historical Rewards Rate" />
               </h4>
             </div>
@@ -52,7 +54,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                Inflation <OpenHelpIcon helpKey="Inflation" />
+                {t('overview.inflation')} <OpenHelpIcon helpKey="Inflation" />
               </h4>
             </div>
           </div>
@@ -60,7 +62,8 @@ export const Inflation = () => {
             <div className="inner">
               <h2>{supplyAsPercent}%</h2>
               <h4>
-                Supply Staked <OpenHelpIcon helpKey="Supply Staked" />
+                {t('overview.supply_staked')}{' '}
+                <OpenHelpIcon helpKey="Supply Staked" />
               </h4>
             </div>
           </div>
