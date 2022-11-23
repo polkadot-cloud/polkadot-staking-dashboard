@@ -9,6 +9,7 @@ import { useStaking } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
 import { PageRowWrapper } from 'Wrappers';
 
@@ -20,6 +21,7 @@ export const ControllerNotImported = () => {
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { getBondedAccount } = useBalances();
   const controller = getBondedAccount(activeAccount);
+  const { t } = useTranslation('pages');
 
   return (
     <>
@@ -33,12 +35,7 @@ export const ControllerNotImported = () => {
               }}
             >
               <CardHeaderWrapper>
-                <h4>
-                  You have not imported your controller account. If you have
-                  lost access to your controller account, set a new one now.
-                  Otherwise, import the controller into one of your active
-                  extensions.
-                </h4>
+                <h4>{t('nominate.controller_not_imported')}</h4>
               </CardHeaderWrapper>
               <ButtonPrimary
                 text="Set New Controller"
