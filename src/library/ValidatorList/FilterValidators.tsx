@@ -5,7 +5,7 @@ import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFilters } from 'contexts/Filters';
 import { Title } from 'library/Overlay/Title';
-import { FilterListItem, FilterListWrapper } from 'library/Overlay/Wrappers';
+import { FilterListButton, FilterListWrapper } from 'library/Overlay/Wrappers';
 
 export const FilterValidators = () => {
   const { getExcludes, toggleExclude } = useFilters();
@@ -25,7 +25,7 @@ export const FilterValidators = () => {
       <Title title="Filter Validators" />
       <div className="body">
         {Object.entries(filtersToLabels).map(([f, l]: any, i: number) => (
-          <FilterListItem
+          <FilterListButton
             active={excludes?.includes(f) ?? false}
             key={`validator_filter_${i}`}
             type="button"
@@ -38,7 +38,7 @@ export const FilterValidators = () => {
               icon={excludes?.includes(f) ? faCheckCircle : faCircle}
             />
             <h4>{l}</h4>
-          </FilterListItem>
+          </FilterListButton>
         ))}
       </div>
     </FilterListWrapper>

@@ -131,7 +131,7 @@ export const FilterListWrapper = styled.div`
   }
 `;
 
-export const FilterListItem = styled.button<{ active: boolean }>`
+export const FilterListButton = styled.button<{ active: boolean }>`
   border: 1px solid
     ${(props) => (props.active ? networkColor : buttonPrimaryBackground)};
   background: ${buttonPrimaryBackground};
