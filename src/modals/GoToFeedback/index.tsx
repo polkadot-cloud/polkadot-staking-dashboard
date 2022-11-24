@@ -16,7 +16,6 @@ export const GoToFeedback = () => {
           style={{
             padding: '0 1.75rem',
             width: '100%',
-            boxSizing: 'border-box',
           }}
         >
           <NotesWrapper style={{ paddingTop: 0 }}>

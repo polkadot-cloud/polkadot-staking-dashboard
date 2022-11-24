@@ -76,7 +76,6 @@ export const ClaimReward = () => {
         <div
           style={{
             width: '100%',
-            boxSizing: 'border-box',
           }}
         >
           {!accountHasSigner(activeAccount) && (

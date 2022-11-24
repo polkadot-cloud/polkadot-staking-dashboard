@@ -14,7 +14,7 @@
             "minimum_nominator_bond": "The minimum nominator bond is now",
             "minimum_bonding_amount": "The minimum bonding amount to start nominating on {{networkName}} is now",
             "currently_staked": "{{supplyAsPercent}}% of total {{networkUnit}} supply is currently staked.",
-            "staking_on_the_network": "A total of {{_lastTotalStakeBase}}{{networkUnit}} is actively staking on the network.",
+            "staking_on_the_network": "A total of {{lastTotalStakeBase}} {{networkUnit}} is actively staking on the network.",
             "network_stats": "Network Stats",
             "historical_rewards_rate": "Historical Rewards Rate",
             "inflation": "Inflation",
