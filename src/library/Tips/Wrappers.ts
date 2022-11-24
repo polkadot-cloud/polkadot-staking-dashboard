@@ -6,9 +6,9 @@ import styled from 'styled-components';
 import { helpButton, textPrimary, textSecondary } from 'theme';
 
 export const TipWrapper = styled(motion.div)`
+  background: ${helpButton};
   width: 100%;
   display: flex;
-  background: ${helpButton};
   border-radius: 1.5rem;
   margin-bottom: 1.25rem;
   padding: 2rem 2rem 1rem 2rem;
