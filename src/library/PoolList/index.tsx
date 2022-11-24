@@ -117,8 +117,19 @@ export const PoolListInner = ({
 
   // set default filters
   useEffect(() => {
-    if (defaultFilters?.length) {
-      setMultiFilters(FilterType.Exclude, 'pools', defaultFilters);
+    if (defaultFilters?.includes?.length) {
+      setMultiFilters(
+        FilterType.Include,
+        'validators',
+        defaultFilters?.includes
+      );
+    }
+    if (defaultFilters?.excludes?.length) {
+      setMultiFilters(
+        FilterType.Exclude,
+        'validators',
+        defaultFilters?.excludes
+      );
     }
   }, []);
 

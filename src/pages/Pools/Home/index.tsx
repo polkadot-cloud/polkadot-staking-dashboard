@@ -155,7 +155,10 @@ export const HomeInner = () => {
                 batchKey="bonded_pools"
                 pools={bondedPools}
                 title="Active Pools"
-                defaultFilters={['locked', 'destroying']}
+                defaultFilters={{
+                  includes: ['active'],
+                  excludes: ['locked', 'destroying'],
+                }}
                 allowMoreCols
                 allowSearch
                 pagination

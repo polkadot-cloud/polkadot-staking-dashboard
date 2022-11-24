@@ -47,6 +47,7 @@ export const Filters = () => {
         <ButtonSecondary
           text="Reset"
           onClick={() => {
+            resetFilters(FilterType.Include, 'pools');
             resetFilters(FilterType.Exclude, 'pools');
           }}
           disabled={!hasFilters}

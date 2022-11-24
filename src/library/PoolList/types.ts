@@ -10,5 +10,8 @@ export interface PoolListProps {
   refetchOnListUpdate?: string;
   pools?: any;
   title?: string;
-  defaultFilters?: Array<string>;
+  defaultFilters?: {
+    includes: Array<string> | null;
+    excludes: Array<string> | null;
+  };
 }

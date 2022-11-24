@@ -68,7 +68,7 @@ export const ValidatorListInner = (props: any) => {
   const allowSearch = props.allowSearch ?? false;
   const allowListFormat = props.allowListFormat ?? true;
   const alwaysRefetchValidators = props.alwaysRefetchValidators ?? false;
-  const defaultFilters = props.defaultFilters ?? [];
+  const defaultFilters = props.defaultFilters ?? undefined;
 
   const actionsAll = [...actions].filter((action) => !action.onSelected);
   const actionsSelected = [...actions].filter(
@@ -127,8 +127,21 @@ export const ValidatorListInner = (props: any) => {
 
   // set default filters
   useEffect(() => {
-    if (allowFilters && defaultFilters.length) {
-      setMultiFilters(FilterType.Exclude, 'validators', defaultFilters);
+    if (allowFilters) {
+      if (defaultFilters?.includes?.length) {
+        setMultiFilters(
+          FilterType.Include,
+          'validators',
+          defaultFilters?.includes
+        );
+      }
+      if (defaultFilters?.excludes?.length) {
+        setMultiFilters(
+          FilterType.Exclude,
+          'validators',
+          defaultFilters?.excludes
+        );
+      }
     }
   }, []);
 

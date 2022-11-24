@@ -21,11 +21,10 @@ export const Validators = (props: PageProps) => {
   const { isReady } = useApi();
   const { validators } = useValidators();
   const { t } = useTranslation('base');
-  const defaultFilters = [
-    'over_subscribed',
-    'all_commission',
-    'blocked_nominations',
-  ];
+  const defaultFilters = {
+    includes: ['active'],
+    excludes: ['over_subscribed', 'all_commission', 'blocked_nominations'],
+  };
 
   return (
     <>
