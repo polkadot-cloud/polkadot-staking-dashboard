@@ -4,14 +4,14 @@
 import { TipsContextInterface } from './types';
 
 export const defaultTipsContext: TipsContextInterface = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   openTipWith: (d, c) => {},
   closeTip: () => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   setStatus: (s) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   setTip: (d) => {},
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line
   toggleDismiss: (o) => {},
   dismissOpen: false,
   status: 0,

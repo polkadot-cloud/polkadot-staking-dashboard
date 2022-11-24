@@ -79,9 +79,7 @@ export const UpdateController = () => {
         helpKey="Controller Account Eligibility"
       />
       <Wrapper>
-        <div
-          style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
-        >
+        <div style={{ padding: '0 1rem', width: '100%' }}>
           <div style={{ marginBottom: '1.5rem' }}>
             {!accountHasSigner(activeAccount) && (
               <Warning text="Your stash account is read only and cannot sign transactions." />

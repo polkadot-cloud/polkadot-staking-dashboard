@@ -4,104 +4,12 @@
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
-import React, { useState } from 'react';
-import * as defaults from './defaults';
-import { ValidatorFilterContextInterface } from './types';
+import { AnyFunction, AnyJson } from 'types';
 
-// Note: This context should wrap both the filter component and UI in question for displaying the filtered list.
-export const ValidatorFilterContext =
-  React.createContext<ValidatorFilterContextInterface>(defaults.defaultContext);
-
-export const useValidatorFilter = () =>
-  React.useContext(ValidatorFilterContext);
-
-export const ValidatorFilterProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const useValidatorFilters = () => {
   const { consts } = useApi();
   const { meta, session, sessionParachain } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
-
-  // store validator filters that are currently active
-  const [validatorFilters, setValidatorFilters]: any = useState([]);
-
-  // store the validator ordering method that is currently active
-  const [validatorOrder, setValidatorOrder]: any = useState('default');
-
-  /*
-   * toggleAllValidaorFilters
-   * Either turns all filters on or all filters off.
-   * This does not use the 'in_session' filter.
-   */
-  const toggleAllValidatorFilters = (toggle: number) => {
-    if (toggle) {
-      setValidatorFilters([
-        'all_commission',
-        'blocked_nominations',
-        'over_subscribed',
-        'missing_identity',
-        'inactive',
-      ]);
-    } else {
-      setValidatorFilters([]);
-    }
-  };
-
-  /*
-   * toggleFilterValidators
-   * Toggles a validator filter. If the filer is currently active,
-   * it is removed. State updates accordingly.
-   */
-  const toggleFilterValidators = (f: string) => {
-    const filter = [...validatorFilters];
-    const action = filter.includes(f) ? 'remove' : 'push';
-
-    if (action === 'remove') {
-      const index = filter.indexOf(f);
-      filter.splice(index, 1);
-    } else {
-      filter.push(f);
-    }
-    setValidatorFilters(filter);
-  };
-
-  /*
-   * applyValidatorFilters
-   * Takes a list, batchKey and which filter should be applied
-   * to the data. The filter function in question is called,
-   * that is dependent on the filter key.
-   * The updated filtered list is returned.
-   *
-   */
-  const applyValidatorFilters = (
-    list: any,
-    batchKey: string,
-    filter: any = validatorFilters
-  ) => {
-    if (filter.includes('all_commission')) list = filterAllCommission(list);
-    if (filter.includes('blocked_nominations'))
-      list = filterBlockedNominations(list);
-    if (filter.includes('over_subscribed'))
-      list = filterOverSubscribed(list, batchKey);
-    if (filter.includes('missing_identity'))
-      list = filterMissingIdentity(list, batchKey);
-    if (filter.includes('inactive')) list = filterInactive(list);
-    if (filter.includes('not_parachain_validator'))
-      list = filterNonParachainValidator(list);
-    if (filter.includes('in_session')) list = filterInSession(list);
-    return list;
-  };
-
-  /*
-   * resetValidatorFilters
-   * Resets filters and ordering to the default state.
-   */
-  const resetValidatorFilters = () => {
-    setValidatorFilters([]);
-    setValidatorOrder('default');
-  };
 
   /*
    * filterMissingIdentity
@@ -198,11 +106,11 @@ export const ValidatorFilterProvider = ({
   };
 
   /*
-   * filterInactive
+   * filterActive
    * Filters the supplied list and removes items that are inactive.
    * Returns the updated filtered list.
    */
-  const filterInactive = (list: any) => {
+  const filterActive = (list: any) => {
     // if list has not yet been populated, return original list
     if (session.list.length === 0) return list;
     return list.filter((validator: any) =>
@@ -236,26 +144,62 @@ export const ValidatorFilterProvider = ({
     );
   };
 
-  /*
-   * orderValidators
-   * Sets the ordering key for orderValidators
-   */
-  const orderValidators = (by: string) => {
-    setValidatorOrder(validatorOrder === by ? 'default' : by);
+  const includesToLabels: { [key: string]: string } = {
+    active: 'Active Validators',
   };
 
-  /*
-   * orderValidators
-   * Applies an ordering function to the validator list.
-   * Returns the updated ordered list.
-   */
-  const applyValidatorOrder = (list: any, order: string) => {
-    return order === 'commission' ? orderLowestCommission(list) : list;
+  const excludesToLabels: { [key: string]: string } = {
+    over_subscribed: 'Over Subscribed',
+    all_commission: '100% Commission',
+    blocked_nominations: 'Blocked Nominations',
+    missing_identity: 'Missing Identity',
+  };
+
+  const filterToFunction: { [key: string]: AnyFunction } = {
+    active: filterActive,
+    missing_identity: filterMissingIdentity,
+    over_subscribed: filterOverSubscribed,
+    all_commission: filterAllCommission,
+    blocked_nominations: filterBlockedNominations,
+    not_parachain_validator: filterNonParachainValidator,
+    in_session: filterInSession,
+  };
+
+  const getFiltersToApply = (excludes: Array<string>) => {
+    const fns = [];
+    for (const exclude of excludes) {
+      if (filterToFunction[exclude]) {
+        fns.push(filterToFunction[exclude]);
+      }
+    }
+    return fns;
+  };
+
+  const applyFilter = (
+    includes: Array<string> | null,
+    excludes: Array<string> | null,
+    list: AnyJson,
+    batchKey: string
+  ) => {
+    if (!excludes && !includes) {
+      return list;
+    }
+    if (includes) {
+      for (const fn of getFiltersToApply(includes)) {
+        list = fn(list, batchKey);
+      }
+    }
+    if (excludes) {
+      for (const fn of getFiltersToApply(excludes)) {
+        list = fn(list, batchKey);
+      }
+    }
+    return list;
   };
 
   /*
    * orderLowestCommission
-   * Orders a list by commission.
+   * Orders a list by commission, lowest first.
    * Returns the updated ordered list.
    */
   const orderLowestCommission = (list: any) => {
@@ -265,17 +209,43 @@ export const ValidatorFilterProvider = ({
   };
 
   /*
-   * validatorSearchFilter
+   * orderHighestCommission
+   * Orders a list by commission, highest first.
+   * Returns the updated ordered list.
+   */
+  const orderHighestCommission = (list: any) => {
+    return [...list].sort(
+      (a: any, b: any) => b.prefs.commission - a.prefs.commission
+    );
+  };
+
+  const ordersToLabels: { [key: string]: string } = {
+    default: 'Unordered',
+    low_commission: 'Low Commission',
+    high_commission: 'High Commission',
+  };
+
+  const orderToFunction: { [key: string]: AnyFunction } = {
+    low_commission: orderLowestCommission,
+    high_commission: orderHighestCommission,
+  };
+
+  const applyOrder = (o: string, list: AnyJson) => {
+    const fn = orderToFunction[o];
+    if (fn) {
+      return fn(list);
+    }
+    return list;
+  };
+
+  /*
+   * applySearch
    * Iterates through the supplied list and refers to the meta
    * batch of the list to filter those list items that match
    * the search term.
    * Returns the updated filtered list.
    */
-  const validatorSearchFilter = (
-    list: any,
-    batchKey: string,
-    searchTerm: string
-  ) => {
+  const applySearch = (list: any, batchKey: string, searchTerm: string) => {
     if (meta[batchKey] === undefined) return list;
     const filteredList: any = [];
     for (const validator of list) {
@@ -320,21 +290,12 @@ export const ValidatorFilterProvider = ({
     return filteredList;
   };
 
-  return (
-    <ValidatorFilterContext.Provider
-      value={{
-        orderValidators,
-        applyValidatorOrder,
-        applyValidatorFilters,
-        resetValidatorFilters,
-        toggleFilterValidators,
-        toggleAllValidatorFilters,
-        validatorSearchFilter,
-        validatorFilters,
-        validatorOrder,
-      }}
-    >
-      {children}
-    </ValidatorFilterContext.Provider>
-  );
+  return {
+    includesToLabels,
+    excludesToLabels,
+    ordersToLabels,
+    applyFilter,
+    applyOrder,
+    applySearch,
+  };
 };

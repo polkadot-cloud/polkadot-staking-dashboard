@@ -93,9 +93,7 @@ export const Nominate = () => {
     <>
       <Title title="Nominate" icon={faPlayCircle} />
       <PaddingWrapper verticalOnly>
-        <div
-          style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
-        >
+        <div style={{ padding: '0 1rem', width: '100%' }}>
           {warnings.map((text: any, index: number) => (
             <Warning key={index} text={text} />
           ))}

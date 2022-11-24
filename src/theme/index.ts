@@ -7,6 +7,7 @@ import {
   defaultThemes,
   networkColors,
   networkColorsSecondary,
+  networkColorsStroke,
   networkColorsTransparent,
 } from './default';
 
@@ -173,6 +174,13 @@ export const modalBackground: theme.ThemeSet = theme(
   defaultThemes.modal.background
 );
 
+// overlay
+
+export const overlayBackground: theme.ThemeSet = theme(
+  v,
+  defaultThemes.overlay.background
+);
+
 // help
 
 export const helpButton: theme.ThemeSet = theme(
@@ -244,6 +252,8 @@ export const networkColorSecondary: theme.ThemeSet = theme(
   n,
   networkColorsSecondary
 );
+
+export const networkColorStroke: theme.ThemeSet = theme(n, networkColorsStroke);
 
 export const networkColorTransparent: theme.ThemeSet = theme(
   n,
