@@ -32,7 +32,7 @@ export const FilterPools = () => {
           >
             <FontAwesomeIcon
               transform="grow-5"
-              icon={excludes?.includes(f) ? faCheckCircle : faCircle}
+              icon={includes?.includes(f) ? faCheckCircle : faCircle}
             />
             <h4>{l}</h4>
           </FilterListButton>
