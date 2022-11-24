@@ -58,7 +58,9 @@ export const usePoolFilters = () => {
     return list.filter((p: BondedPool) => p.state !== 'Destroying');
   };
 
-  const filtersToLabels: { [key: string]: string } = {
+  const includesToLabels: { [key: string]: string } = {};
+
+  const excludesToLabels: { [key: string]: string } = {
     inactive: 'Inactive Pools',
     locked: 'Locked Pools',
     destroying: 'Destroying Pools',
@@ -96,7 +98,8 @@ export const usePoolFilters = () => {
 
   return {
     filterToFunction,
-    filtersToLabels,
+    includesToLabels,
+    excludesToLabels,
     applyFilter,
   };
 };

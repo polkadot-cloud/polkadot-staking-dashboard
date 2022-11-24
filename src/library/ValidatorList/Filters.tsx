@@ -24,7 +24,8 @@ import { OrderValidators } from './OrderValidators';
 export const Filters = () => {
   const { openOverlayWith } = useOverlay();
   const { resetFilters, getFilters, getOrder, toggleFilter } = useFilters();
-  const { filtersToLabels, ordersToLabels } = useValidatorFilters();
+  const { includesToLabels, excludesToLabels, ordersToLabels } =
+    useValidatorFilters();
 
   const includes = getFilters(FilterType.Include, 'validators');
   const excludes = getFilters(FilterType.Exclude, 'validators');
@@ -77,7 +78,7 @@ export const Filters = () => {
           {includes?.map((e: string, i: number) => (
             <Item
               key={`validator_include_${i}`}
-              label={filtersToLabels[e]}
+              label={includesToLabels[e]}
               icon={faCheck}
               transform="grow-2"
               onClick={() => {
@@ -88,7 +89,7 @@ export const Filters = () => {
           {excludes?.map((e: string, i: number) => (
             <Item
               key={`validator_exclude_${i}`}
-              label={filtersToLabels[e]}
+              label={excludesToLabels[e]}
               icon={faBan}
               transform="grow-2"
               onClick={() => {

@@ -144,7 +144,9 @@ export const useValidatorFilters = () => {
     );
   };
 
-  const filtersToLabels: { [key: string]: string } = {
+  const includesToLabels: { [key: string]: string } = {};
+
+  const excludesToLabels: { [key: string]: string } = {
     inactive: 'Inactive Validators',
     over_subscribed: 'Over Subscribed',
     all_commission: '100% Commission',
@@ -280,7 +282,8 @@ export const useValidatorFilters = () => {
   };
 
   return {
-    filtersToLabels,
+    includesToLabels,
+    excludesToLabels,
     ordersToLabels,
     applyFilter,
     applyOrder,

@@ -21,7 +21,7 @@ import { FilterPools } from './FilterPools';
 
 export const Filters = () => {
   const { resetFilters, getFilters, toggleFilter } = useFilters();
-  const { filtersToLabels } = usePoolFilters();
+  const { includesToLabels, excludesToLabels } = usePoolFilters();
   const { openOverlayWith } = useOverlay();
 
   const includes = getFilters(FilterType.Include, 'pools');
@@ -57,8 +57,8 @@ export const Filters = () => {
           {!hasFilters && <Item label="No filters" disabled />}
           {includes?.map((e: string, i: number) => (
             <Item
-              key={`validator_include_${i}`}
-              label={filtersToLabels[e]}
+              key={`pool_include_${i}`}
+              label={includesToLabels[e]}
               icon={faCheck}
               transform="grow-2"
               onClick={() => {
@@ -69,7 +69,7 @@ export const Filters = () => {
           {excludes?.map((e: string, i: number) => (
             <Item
               key={`pool_filter_${i}`}
-              label={filtersToLabels[e]}
+              label={excludesToLabels[e]}
               icon={faBan}
               transform="grow-2"
               onClick={() => {
