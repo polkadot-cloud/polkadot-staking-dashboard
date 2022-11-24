@@ -23,7 +23,7 @@ export const Validators = (props: PageProps) => {
   const { t } = useTranslation('base');
   const defaultFilters = {
     includes: ['active'],
-    excludes: ['over_subscribed', 'all_commission', 'blocked_nominations'],
+    excludes: ['all_commission', 'blocked_nominations', 'missing_identity'],
   };
 
   return (

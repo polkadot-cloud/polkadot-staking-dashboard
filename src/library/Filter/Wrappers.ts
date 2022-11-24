@@ -66,7 +66,7 @@ export const ItemWrapper = styled.div`
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
-    margin-right: 0.75rem;
+    margin-right: 0.55rem;
   }
   p {
     color: ${textSecondary};

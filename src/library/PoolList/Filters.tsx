@@ -72,7 +72,7 @@ export const Filters = () => {
               key={`pool_filter_${i}`}
               label={excludesToLabels[e]}
               icon={faBan}
-              transform="grow-2"
+              transform="grow-0"
               onClick={() => {
                 toggleFilter(FilterType.Exclude, 'pools', e);
               }}
