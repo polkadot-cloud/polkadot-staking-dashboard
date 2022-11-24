@@ -7,6 +7,7 @@ import {
   ButtonSecondary,
 } from '@rossbulat/polkadot-dashboard-ui';
 import { useFilters } from 'contexts/Filters';
+import { FilterType } from 'contexts/Filters/types';
 import { useOverlay } from 'contexts/Overlay';
 import { Container } from 'library/Filter/Container';
 import { Item } from 'library/Filter/Item';
@@ -15,11 +16,11 @@ import { usePoolFilters } from '../Hooks/usePoolFilters';
 import { FilterPools } from './FilterPools';
 
 export const Filters = () => {
-  const { resetExcludes, getExcludes, toggleExclude } = useFilters();
+  const { resetFilters, getFilters, toggleFilter } = useFilters();
   const { filtersToLabels } = usePoolFilters();
   const { openOverlayWith } = useOverlay();
 
-  const excludes = getExcludes('pools');
+  const excludes = getFilters(FilterType.Exclude, 'pools');
 
   // scroll to top of the window on every filter.
   useEffect(() => {
@@ -40,7 +41,7 @@ export const Filters = () => {
         <ButtonSecondary
           text="Reset"
           onClick={() => {
-            resetExcludes('pools');
+            resetFilters(FilterType.Exclude, 'pools');
           }}
           disabled={!excludes?.length}
         />
@@ -55,7 +56,7 @@ export const Filters = () => {
               icon={faBan}
               transform="grow-2"
               onClick={() => {
-                toggleExclude('pools', e);
+                toggleFilter(FilterType.Exclude, 'pools', e);
               }}
             />
           ))}

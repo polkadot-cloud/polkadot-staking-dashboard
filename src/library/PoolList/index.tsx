@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
+import { FilterType } from 'contexts/Filters/types';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { StakingContext } from 'contexts/Staking';
@@ -41,9 +42,9 @@ export const PoolListInner = ({
   const { listFormat, setListFormat } = usePoolList();
   const { isSyncing } = useUi();
 
-  const { getExcludes, setMultiExcludes } = useFilters();
+  const { getFilters, setMultiFilters } = useFilters();
   const { applyFilter } = usePoolFilters();
-  const excludes = getExcludes('pools');
+  const excludes = getFilters(FilterType.Exclude, 'pools');
 
   // current page
   const [page, setPage] = useState<number>(1);
@@ -116,7 +117,7 @@ export const PoolListInner = ({
   // set default filters
   useEffect(() => {
     if (defaultFilters?.length) {
-      setMultiExcludes('pools', defaultFilters);
+      setMultiFilters(FilterType.Exclude, 'pools', defaultFilters);
     }
   }, []);
 

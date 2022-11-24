@@ -11,6 +11,7 @@ import {
   ButtonSecondary,
 } from '@rossbulat/polkadot-dashboard-ui';
 import { useFilters } from 'contexts/Filters';
+import { FilterType } from 'contexts/Filters/types';
 import { useOverlay } from 'contexts/Overlay';
 import { Container } from 'library/Filter/Container';
 import { Item } from 'library/Filter/Item';
@@ -21,10 +22,10 @@ import { OrderValidators } from './OrderValidators';
 
 export const Filters = () => {
   const { openOverlayWith } = useOverlay();
-  const { resetExcludes, getExcludes, getOrder, toggleExclude } = useFilters();
+  const { resetFilters, getFilters, getOrder, toggleFilter } = useFilters();
   const { filtersToLabels, ordersToLabels } = useValidatorFilters();
 
-  const excludes = getExcludes('validators');
+  const excludes = getFilters(FilterType.Exclude, 'validators');
   const order = getOrder('validators');
 
   // scroll to top of the window on every filter.
@@ -54,7 +55,7 @@ export const Filters = () => {
         <ButtonSecondary
           text="Reset"
           onClick={() => {
-            resetExcludes('validators');
+            resetFilters(FilterType.Exclude, 'validators');
           }}
           disabled={!excludes?.length}
         />
@@ -77,7 +78,7 @@ export const Filters = () => {
               icon={faBan}
               transform="grow-2"
               onClick={() => {
-                toggleExclude('validators', e);
+                toggleFilter(FilterType.Exclude, 'validators', e);
               }}
             />
           ))}

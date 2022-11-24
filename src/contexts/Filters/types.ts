@@ -3,23 +3,33 @@
 
 import { AnyFunction, AnyJson } from 'types';
 
+export enum FilterType {
+  Exclude,
+  Include,
+}
+
 export interface FiltersContextInterface {
-  getExcludes: (g: string) => Array<string> | null;
-  toggleExclude: (g: string, f: string) => void;
-  setMultiExcludes: (g: string, fs: Array<string>) => void;
+  getFilters: (t: FilterType, g: string) => Array<string> | null;
+  toggleFilter: (t: FilterType, g: string, f: string) => void;
+  setMultiFilters: (t: FilterType, g: string, fs: Array<string>) => void;
   getOrder: (g: string) => string;
   setOrder: (g: string, o: string) => void;
   getSearchTerm: (g: string) => string | null;
   setSearchTerm: (g: string, t: string) => void;
-  resetExcludes: (g: string) => void;
+  resetFilters: (t: FilterType, g: string) => void;
   resetOrder: (g: string) => void;
   clearSearchTerm: (g: string) => void;
-  applyExcludes: (g: string, list: AnyJson, fn: AnyFunction) => void;
+  applyFilters: (
+    t: FilterType,
+    g: string,
+    list: AnyJson,
+    fn: AnyFunction
+  ) => void;
   applyOrder: (g: string, list: AnyJson, fn: AnyFunction) => void;
 }
 
-export type FilterExcludes = Array<FilterExclude>;
-export type FilterExclude = { key: string; filters: Array<string> };
+export type FilterItems = Array<FilterItem>;
+export type FilterItem = { key: string; filters: Array<string> };
 
 export type FilterOrders = Array<FilterOrder>;
 export type FilterOrder = { key: string; order: string };

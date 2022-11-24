@@ -7,6 +7,7 @@ import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useFilters } from 'contexts/Filters';
+import { FilterType } from 'contexts/Filters/types';
 import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { StakingContext } from 'contexts/Staking';
@@ -43,9 +44,9 @@ export const ValidatorListInner = (props: any) => {
 
   const { selected, listFormat, setListFormat } = provider;
 
-  const { getExcludes, setMultiExcludes, getOrder } = useFilters();
+  const { getFilters, setMultiFilters, getOrder } = useFilters();
   const { applyFilter, applyOrder, applySearch } = useValidatorFilters();
-  const excludes = getExcludes('validators');
+  const excludes = getFilters(FilterType.Exclude, 'validators');
   const order = getOrder('validators');
 
   const {
@@ -126,7 +127,7 @@ export const ValidatorListInner = (props: any) => {
   // set default filters
   useEffect(() => {
     if (allowFilters && defaultFilters.length) {
-      setMultiExcludes('validators', defaultFilters);
+      setMultiFilters(FilterType.Exclude, 'validators', defaultFilters);
     }
   }, []);
 

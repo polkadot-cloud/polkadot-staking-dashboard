@@ -4,15 +4,16 @@
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFilters } from 'contexts/Filters';
+import { FilterType } from 'contexts/Filters/types';
 import { usePoolFilters } from 'library/Hooks/usePoolFilters';
 import { Title } from 'library/Overlay/Title';
 import { FilterListButton, FilterListWrapper } from 'library/Overlay/Wrappers';
 
 export const FilterPools = () => {
-  const { getExcludes, toggleExclude } = useFilters();
+  const { getFilters, toggleFilter } = useFilters();
   const { filtersToLabels } = usePoolFilters();
 
-  const excludes = getExcludes('pools');
+  const excludes = getFilters(FilterType.Exclude, 'pools');
 
   return (
     <FilterListWrapper>
@@ -24,7 +25,7 @@ export const FilterPools = () => {
             key={`validator_filter_${i}`}
             type="button"
             onClick={() => {
-              toggleExclude('pools', f);
+              toggleFilter(FilterType.Exclude, 'pools', f);
             }}
           >
             <FontAwesomeIcon
