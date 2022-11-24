@@ -20,14 +20,14 @@ export const usePoolFilters = () => {
   const filterActive = (list: any, batchKey: string) => {
     // get pool targets from nominations meta batch
     const nominations = meta[batchKey]?.nominations ?? [];
+    if (!nominations) {
+      return list;
+    }
 
     let i = -1;
     const filteredList = list.filter((p: BondedPool) => {
       i++;
       const targets = nominations[i]?.targets ?? [];
-      if (!targets.length) {
-        return true;
-      }
       const status = getPoolNominationStatusCode(
         getNominationsStatusFromTargets(p.addresses.stash, targets)
       );

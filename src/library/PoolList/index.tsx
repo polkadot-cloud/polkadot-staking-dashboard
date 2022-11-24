@@ -111,7 +111,7 @@ export const PoolListInner = ({
   // list ui changes / validator changes trigger re-render of list
   useEffect(() => {
     // only filter when pool nominations have been synced.
-    if (meta[batchKey]?.nominations) {
+    if (!isSyncing && meta[batchKey]?.nominations) {
       handlePoolsFilterUpdate();
     }
   }, [isSyncing, includes?.length, excludes?.length, meta]);
