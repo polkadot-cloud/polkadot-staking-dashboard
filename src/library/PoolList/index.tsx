@@ -42,10 +42,12 @@ export const PoolListInner = ({
   const { listFormat, setListFormat } = usePoolList();
   const { isSyncing } = useUi();
 
-  const { getFilters, setMultiFilters } = useFilters();
+  const { getFilters, setMultiFilters, getSearchTerm, setSearchTerm } =
+    useFilters();
   const { applyFilter } = usePoolFilters();
   const includes = getFilters(FilterType.Include, 'pools');
   const excludes = getFilters(FilterType.Exclude, 'pools');
+  const searchTerm = getSearchTerm('pools');
 
   // current page
   const [page, setPage] = useState<number>(1);
@@ -130,8 +132,10 @@ export const PoolListInner = ({
   const handlePoolsFilterUpdate = (
     filteredPools: any = Object.assign(poolsDefault)
   ) => {
-    // apply filters
     filteredPools = applyFilter(includes, excludes, filteredPools, batchKey);
+    if (searchTerm) {
+      filteredPools = poolSearchFilter(filteredPools, batchKey, searchTerm);
+    }
     _setPools(filteredPools);
     setPage(1);
     setRenderIteration(1);
@@ -149,7 +153,6 @@ export const PoolListInner = ({
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
-
     let filteredPools = Object.assign(poolsDefault);
     filteredPools = applyFilter(includes, excludes, filteredPools, batchKey);
     filteredPools = poolSearchFilter(filteredPools, batchKey, newValue);
@@ -163,6 +166,7 @@ export const PoolListInner = ({
     setPage(1);
     setRenderIteration(1);
     _setPools(filteredPools);
+    setSearchTerm('pools', newValue);
   };
 
   return (
