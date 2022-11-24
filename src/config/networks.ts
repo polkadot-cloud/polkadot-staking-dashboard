@@ -1,17 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { WellKnownChain } from '@polkadot/rpc-provider/substrate-connect';
 import { DefaultParams } from 'consts';
-import { ReactComponent as KusamaIconSVG } from 'img/kusama_icon.svg';
-import { ReactComponent as KusamaInlineSVG } from 'img/kusama_inline.svg';
-import { ReactComponent as KusamaLogoSVG } from 'img/kusama_logo.svg';
 import { ReactComponent as PolkadotIconSVG } from 'img/polkadot_icon.svg';
 import { ReactComponent as PolkadotInlineSVG } from 'img/polkadot_inline.svg';
 import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
-import { ReactComponent as WestendIconSVG } from 'img/westend_icon.svg';
-import { ReactComponent as WestendInlineSVG } from 'img/westend_inline.svg';
-import { ReactComponent as WestendLogoSVG } from 'img/westend_logo.svg';
 import { Networks } from 'types';
 
 /*
@@ -22,7 +15,7 @@ export const NETWORKS: Networks = {
     name: 'Polkadot',
     endpoints: {
       rpc: 'wss://apps-rpc.polkadot.io',
-      lightClient: WellKnownChain.polkadot,
+      lightClient: null,
     },
     colors: {
       primary: {
@@ -62,94 +55,48 @@ export const NETWORKS: Networks = {
       stakeTarget: 0.75,
     },
   },
-  kusama: {
-    name: 'Kusama',
+  alephzerotestnet: {
+    name: 'alephzerotestnet',
     endpoints: {
-      rpc: 'wss://kusama-rpc.polkadot.io',
-      lightClient: WellKnownChain.ksmcc3,
+      rpc: 'wss://ws.test.azero.dev',
+      lightClient: null,
     },
     colors: {
       primary: {
-        light: '#201f37',
-        dark: '#6c6b80',
+        light: 'rgb(0, 204, 171)',
+        dark: 'rgb(0, 204, 171)',
       },
       secondary: {
-        light: '#999',
-        dark: '#AAA',
+        light: 'black',
+        dark: 'black',
       },
       transparent: {
-        light: 'rgb(51,51,51,0.05)',
-        dark: 'rgb(102,102,102, 0.05)',
+        light: 'rgb(0, 204, 171, 0.05)',
+        dark: 'rgb(0, 204, 171, 0.05)',
       },
     },
-    subscanEndpoint: 'https://kusama.api.subscan.io',
-    unit: 'KSM',
-    units: 12,
-    ss58: 2,
-    brand: {
-      icon: KusamaIconSVG,
-      logo: {
-        svg: KusamaLogoSVG,
-        width: '8.5rem',
-      },
-      inline: {
-        svg: KusamaInlineSVG,
-        size: '1.55rem',
-      },
-    },
-    api: {
-      unit: 'KSM',
-      priceTicker: 'KSMUSDT',
-    },
-    params: {
-      ...DefaultParams,
-      auctionAdjust: 0.3 / 60,
-      auctionMax: 60,
-      stakeTarget: 0.75,
-    },
-  },
-  westend: {
-    name: 'Westend',
-    endpoints: {
-      rpc: 'wss://westend-rpc.polkadot.io',
-      lightClient: WellKnownChain.westend2,
-    },
-    colors: {
-      primary: {
-        light: '#da4e71',
-        dark: '#da4e71',
-      },
-      secondary: {
-        light: '#e37c44',
-        dark: '#e37c44',
-      },
-      transparent: {
-        light: 'rgb(218, 78, 113, 0.05)',
-        dark: 'rgb(218, 78, 113, 0.05)',
-      },
-    },
-    subscanEndpoint: 'https://westend.api.subscan.io',
-    unit: 'WND',
+    subscanEndpoint: 'https://alephzero.api.subscan.io',
+    unit: 'TZERO',
     units: 12,
     ss58: 42,
     brand: {
-      icon: WestendIconSVG,
+      icon: PolkadotIconSVG,
       logo: {
-        svg: WestendLogoSVG,
+        svg: PolkadotLogoSVG,
         width: '8.5rem',
       },
       inline: {
-        svg: WestendInlineSVG,
-        size: '1.15rem',
+        svg: PolkadotInlineSVG,
+        size: '1.2rem',
       },
     },
     api: {
-      unit: 'DOT',
-      priceTicker: 'DOTUSDT',
+      unit: 'TAZERO',
+      priceTicker: 'DOTUSDT', // this is for compatibility with binance endpoint, it's pinged for current token value, but we don't display that value
     },
     params: {
       ...DefaultParams,
-      stakeTarget: 0.75,
+      stakeTarget: 0.5,
     },
   },
 };

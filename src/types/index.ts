@@ -12,6 +12,7 @@ export enum NetworkName {
   Polkadot = 'polkadot',
   Kusama = 'kusama',
   Westend = 'westend',
+  AlephZeroTestnet = 'alephzerotestnet',
 }
 
 export enum Toggle {
@@ -27,7 +28,7 @@ export interface Network {
   name: string;
   endpoints: {
     rpc: string;
-    lightClient: WellKnownChain;
+    lightClient: WellKnownChain | null;
   };
   colors: {
     primary: {

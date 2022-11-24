@@ -96,8 +96,8 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       _api.consts.staking.maxNominations,
       _api.consts.staking.sessionsPerEra,
       _api.consts.staking.maxNominatorRewardedPerValidator,
-      _api.consts.electionProviderMultiPhase.maxElectingVoters,
-      _api.consts.babe.expectedBlockTime,
+      null, // _api.consts.electionProviderMultiPhase.maxElectingVoters, // we don't support that query
+      null, // _api.consts.babe.expectedBlockTime, // we don't use babe
       _api.consts.balances.existentialDeposit,
       _api.consts.staking.historyDepth,
       _api.consts.nominationPools.palletId,
@@ -165,7 +165,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     const { endpoints } = nodeEndpoint;
 
     let _provider: WsProvider | ScProvider;
-    if (_isLightClient) {
+    if (_isLightClient && endpoints.lightClient) {
       _provider = new ScProvider(endpoints.lightClient);
       await _provider.connect();
     } else {

@@ -7,10 +7,10 @@ import { stringToU8a } from '@polkadot/util';
  * Global Constants
  */
 export const UriPrefix = '/';
-export const TitleDefault = 'Polkadot Staking Dashboard';
-export const DappName = 'Polkadot Staking Dashboard';
-export const PolkadotUrl = 'https://polkadot.network/staking/';
-export const DefaultNetwork = 'polkadot';
+export const TitleDefault = 'Aleph Zero Staking Dashboard';
+export const DappName = 'Aleph Zero Staking Dashboard';
+export const PolkadotUrl = 'https://alephzero.org/staking/';
+export const DefaultNetwork = 'alephzerotestnet';
 
 /*
  * Data Structure Helpers
@@ -59,7 +59,7 @@ export const FallbackBondingDuration = 28;
 export const FallbackSessionsPerEra = 6;
 export const FallbackNominatorRewardedPerValidator = 256;
 export const FallbackMaxElectingVoters = 22500;
-export const FallbackExpectedBlockTime = 6000;
+export const FallbackExpectedBlockTime = 1000;
 
 /*
  * Misc values

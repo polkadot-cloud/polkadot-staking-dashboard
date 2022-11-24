@@ -37,5 +37,5 @@ export const defaultApiContext: APIContextInterface = {
   isLightClient: false,
   isReady: false,
   status: ConnectionStatus.Disconnected,
-  network: NETWORKS.polkadot,
+  network: NETWORKS.alephzerotestnet,
 };
