@@ -44,11 +44,18 @@ export const ValidatorListInner = (props: any) => {
 
   const { selected, listFormat, setListFormat } = provider;
 
-  const { getFilters, setMultiFilters, getOrder } = useFilters();
+  const {
+    getFilters,
+    setMultiFilters,
+    getOrder,
+    getSearchTerm,
+    setSearchTerm,
+  } = useFilters();
   const { applyFilter, applyOrder, applySearch } = useValidatorFilters();
   const includes = getFilters(FilterType.Include, 'validators');
   const excludes = getFilters(FilterType.Exclude, 'validators');
   const order = getOrder('validators');
+  const searchTerm = getSearchTerm('validators');
 
   const {
     batchKey,
@@ -202,6 +209,13 @@ export const ValidatorListInner = (props: any) => {
         filteredValidators,
         batchKey
       );
+      if (searchTerm) {
+        filteredValidators = applySearch(
+          filteredValidators,
+          batchKey,
+          searchTerm
+        );
+      }
       setValidators(filteredValidators);
       setPage(1);
       setRenderIteration(1);
@@ -246,6 +260,7 @@ export const ValidatorListInner = (props: any) => {
     setPage(1);
     setIsSearching(e.currentTarget.value !== '');
     setRenderIteration(1);
+    setSearchTerm('validators', newValue);
   };
 
   return (
