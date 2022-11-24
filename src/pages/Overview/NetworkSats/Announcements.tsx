@@ -98,10 +98,10 @@ export const Announcements = () => {
     });
   }
 
-  // 90% plus nominators reached - warning
+  // 90% plus nominators reached
   if (nominatorReachedPercentage.toNumber() >= 90) {
     announcements.push({
-      class: 'warning',
+      class: 'neutral',
       title: `${toFixedIfNecessary(
         nominatorReachedPercentage.toNumber(),
         2
