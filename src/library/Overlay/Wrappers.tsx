@@ -7,6 +7,7 @@ import {
   cardShadow,
   modalBackground,
   networkColor,
+  networkColorStroke,
   overlayBackground,
   shadowColor,
   textPrimary,
@@ -134,7 +135,7 @@ export const FilterListWrapper = styled.div`
 
 export const FilterListButton = styled.button<{ active: boolean }>`
   border: 1px solid
-    ${(props) => (props.active ? networkColor : buttonPrimaryBackground)};
+    ${(props) => (props.active ? networkColorStroke : buttonPrimaryBackground)};
   background: ${buttonPrimaryBackground};
   width: 100%;
   display: flex;
@@ -146,14 +147,14 @@ export const FilterListButton = styled.button<{ active: boolean }>`
   transition: border 0.1s;
 
   h4 {
-    color: ${(props) => (props.active ? networkColor : textSecondary)};
+    color: ${(props) => (props.active ? networkColorStroke : textSecondary)};
     font-variation-settings: 'wght' 560;
     transition: color 0.1s;
     margin: 0;
   }
 
   svg {
-    color: ${(props) => (props.active ? networkColor : textSecondary)};
+    color: ${(props) => (props.active ? networkColorStroke : textSecondary)};
     opacity: ${(props) => (props.active ? 1 : 0.7)};
     transition: color 0.1s;
     margin-left: 0.2rem;

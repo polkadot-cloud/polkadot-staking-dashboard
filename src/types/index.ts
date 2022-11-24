@@ -38,6 +38,10 @@ export interface Network {
       light: string;
       dark: string;
     };
+    stroke: {
+      light: string;
+      dark: string;
+    };
     transparent: {
       light: string;
       dark: string;

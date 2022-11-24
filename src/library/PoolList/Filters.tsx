@@ -45,7 +45,7 @@ export const Filters = () => {
           }}
         />
         <ButtonSecondary
-          text="Reset"
+          text="Clear"
           onClick={() => {
             resetFilters(FilterType.Include, 'pools');
             resetFilters(FilterType.Exclude, 'pools');

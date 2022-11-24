@@ -57,7 +57,7 @@ export const Filters = () => {
           }}
         />
         <ButtonSecondary
-          text="Reset"
+          text="Clear"
           onClick={() => {
             resetFilters(FilterType.Include, 'validators');
             resetFilters(FilterType.Exclude, 'validators');
