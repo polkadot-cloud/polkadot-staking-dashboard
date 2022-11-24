@@ -5,6 +5,7 @@ import { TooltipProvider } from 'contexts/Tooltip';
 import { TransferOptionsProvider } from 'contexts/TransferOptions';
 import { TxFeesProvider } from 'contexts/TxFees';
 import { withProviders } from 'library/Hooks';
+import { LocaleProvider } from 'library/Locale';
 import Router from 'Router';
 import { ThemeProvider } from 'styled-components';
 import { EntryWrapper as Wrapper } from 'Wrappers';
@@ -59,6 +60,7 @@ export const ThemedRouter = () => {
 };
 
 export const Providers = withProviders(
+  LocaleProvider,
   FiltersProvider,
   APIProvider,
   ConnectProvider,

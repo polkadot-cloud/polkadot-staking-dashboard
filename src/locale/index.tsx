@@ -55,18 +55,19 @@ if (dynamicLoad) {
 }
 
 // map i18n to moment locale keys, with any custom amendments.
-const i18ToMomentLocaleMap: { [key: string]: string } = {
+const i18ToLocaleMap: { [key: string]: string } = {
   ...Object.fromEntries(availableLanguages.map((a: string) => [a, a])),
+  en: 'en-gb',
   cn: 'zh-cn',
 };
 
 // convert i18 locale key to moment key if needed.
-export const i18ToMomentLocale = (l: string) => {
-  return i18ToMomentLocaleMap[l] || DefaultLocale;
+export const i18ToLocale = (l: string) => {
+  return i18ToLocaleMap[l] || DefaultLocale;
 };
 
 // set moment locale
-moment.locale(i18ToMomentLocale(defaultLng));
+moment.locale(i18ToLocale(defaultLng));
 
 // export i18next for context.
 export { i18next };

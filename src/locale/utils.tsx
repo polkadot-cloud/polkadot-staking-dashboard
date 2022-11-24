@@ -2,10 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { DefaultLocale } from 'consts';
-import moment from 'moment';
 import 'moment/min/locales';
 import { AnyJson } from 'types';
-import { i18ToMomentLocale, lngNamespaces } from './index';
+import { lngNamespaces } from './index';
 
 // Gets the active language
 //
@@ -104,7 +103,5 @@ export const doDynamicImport = async (lng: string, i18next: AnyJson) => {
   Object.entries(r).forEach(([ns, inner]: [string, AnyJson]) => {
     i18next.addResourceBundle(l, ns, inner);
   });
-
-  moment.locale(i18ToMomentLocale(l));
   i18next.changeLanguage(l);
 };

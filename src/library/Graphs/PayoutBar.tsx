@@ -18,7 +18,7 @@ import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
-import moment from 'moment';
+import { useLocale } from 'library/Locale';
 import { Bar } from 'react-chartjs-2';
 import {
   defaultThemes,
@@ -49,6 +49,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
+  const { locale } = useLocale();
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts.filter(
@@ -77,9 +78,13 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
     : networkColorsSecondary[`${name}-${mode}`];
 
   const data = {
-    labels: payoutsByDay.map((item: AnySubscan) =>
-      moment.unix(item.block_timestamp).format('Do MMM')
-    ),
+    labels: payoutsByDay.map((item: AnySubscan) => {
+      const dateObj = new Date(item.block_timestamp * 1000).toLocaleDateString(
+        locale,
+        { day: 'numeric', month: 'short' }
+      );
+      return `${dateObj}`;
+    }),
     datasets: [
       {
         label: 'Payout',
