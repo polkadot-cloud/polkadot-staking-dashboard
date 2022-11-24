@@ -7,13 +7,14 @@ import {
   cardShadow,
   modalBackground,
   networkColor,
+  overlayBackground,
   shadowColor,
   textPrimary,
   textSecondary,
 } from 'theme';
 
 export const OverlayWrapper = styled.div`
-  background: rgba(200, 200, 200, 0.45);
+  background: ${overlayBackground};
   position: fixed;
   width: 100%;
   height: 100%;

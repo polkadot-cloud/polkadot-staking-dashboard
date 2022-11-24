@@ -79,8 +79,11 @@ export const defaultThemes: { [key: string]: any } = {
     secondary: v('#ccc', '#444'),
   },
   modal: {
-    overlay: v('rgba(242,240,240, 0.6)', 'rgba(16,16,16, 0.6)'),
+    overlay: v('rgba(242,240,240,0.6)', 'rgba(16,16,16,0.6)'),
     background: v('#fff', '#0b0b0b'),
+  },
+  overlay: {
+    background: v('rgba(200,200,200,0.45)', 'rgba(30,30,30,0.6)'),
   },
   help: {
     button: {

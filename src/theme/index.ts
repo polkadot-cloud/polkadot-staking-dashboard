@@ -173,6 +173,13 @@ export const modalBackground: theme.ThemeSet = theme(
   defaultThemes.modal.background
 );
 
+// overlay
+
+export const overlayBackground: theme.ThemeSet = theme(
+  v,
+  defaultThemes.overlay.background
+);
+
 // help
 
 export const helpButton: theme.ThemeSet = theme(
