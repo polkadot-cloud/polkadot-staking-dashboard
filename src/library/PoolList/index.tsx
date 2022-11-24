@@ -38,7 +38,7 @@ export const PoolListInner = ({
   const { mode } = useTheme();
   const { isReady, network } = useApi();
   const { metrics } = useNetworkMetrics();
-  const { fetchPoolsMetaBatch, poolSearchFilter } = useBondedPools();
+  const { fetchPoolsMetaBatch, poolSearchFilter, meta } = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
   const { isSyncing } = useUi();
 
@@ -110,41 +110,29 @@ export const PoolListInner = ({
 
   // list ui changes / validator changes trigger re-render of list
   useEffect(() => {
-    if (fetched) {
-      handleValidatorsFilterUpdate();
+    // only filter when pool nominations have been synced.
+    if (meta[batchKey]?.nominations) {
+      handlePoolsFilterUpdate();
     }
-  }, [isSyncing, includes?.length, excludes?.length]);
+  }, [isSyncing, includes?.length, excludes?.length, meta]);
 
   // set default filters
   useEffect(() => {
     if (defaultFilters?.includes?.length) {
-      setMultiFilters(
-        FilterType.Include,
-        'validators',
-        defaultFilters?.includes
-      );
+      setMultiFilters(FilterType.Include, 'pools', defaultFilters?.includes);
     }
     if (defaultFilters?.excludes?.length) {
-      setMultiFilters(
-        FilterType.Exclude,
-        'validators',
-        defaultFilters?.excludes
-      );
+      setMultiFilters(FilterType.Exclude, 'pools', defaultFilters?.excludes);
     }
   }, []);
 
   // handle filter / order update
-  const handleValidatorsFilterUpdate = (
-    filteredValidators: any = Object.assign(poolsDefault)
+  const handlePoolsFilterUpdate = (
+    filteredPools: any = Object.assign(poolsDefault)
   ) => {
     // apply filters
-    filteredValidators = applyFilter(
-      includes,
-      excludes,
-      filteredValidators,
-      batchKey
-    );
-    _setPools(filteredValidators);
+    filteredPools = applyFilter(includes, excludes, filteredPools, batchKey);
+    _setPools(filteredPools);
     setPage(1);
     setRenderIteration(1);
   };

@@ -26,7 +26,7 @@ export const usePoolFilters = () => {
       i++;
       const targets = nominations[i]?.targets ?? [];
       if (!targets.length) {
-        return false;
+        return true;
       }
       const status = getPoolNominationStatusCode(
         getNominationsStatusFromTargets(p.addresses.stash, targets)
