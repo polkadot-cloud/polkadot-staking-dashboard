@@ -1,7 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faBan, faFilterCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBan,
+  faCheck,
+  faFilterCircleXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import {
   ButtonInvertRounded,
   ButtonSecondary,
@@ -20,12 +24,14 @@ export const Filters = () => {
   const { filtersToLabels } = usePoolFilters();
   const { openOverlayWith } = useOverlay();
 
+  const includes = getFilters(FilterType.Include, 'pools');
   const excludes = getFilters(FilterType.Exclude, 'pools');
+  const hasFilters = includes?.length || excludes?.length;
 
   // scroll to top of the window on every filter.
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [excludes]);
+  }, [includes, excludes]);
 
   return (
     <>
@@ -43,12 +49,23 @@ export const Filters = () => {
           onClick={() => {
             resetFilters(FilterType.Exclude, 'pools');
           }}
-          disabled={!excludes?.length}
+          disabled={!hasFilters}
         />
       </div>
       <Container>
         <div className="items">
-          {!excludes?.length && <Item label="No filters" disabled />}
+          {!hasFilters && <Item label="No filters" disabled />}
+          {includes?.map((e: string, i: number) => (
+            <Item
+              key={`validator_include_${i}`}
+              label={filtersToLabels[e]}
+              icon={faCheck}
+              transform="grow-2"
+              onClick={() => {
+                toggleFilter(FilterType.Include, 'validators', e);
+              }}
+            />
+          ))}
           {excludes?.map((e: string, i: number) => (
             <Item
               key={`pool_filter_${i}`}
@@ -65,5 +82,3 @@ export const Filters = () => {
     </>
   );
 };
-
-export default Filters;

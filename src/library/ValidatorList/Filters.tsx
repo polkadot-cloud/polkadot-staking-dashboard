@@ -4,6 +4,7 @@
 import {
   faArrowDownWideShort,
   faBan,
+  faCheck,
   faFilterCircleXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -25,13 +26,15 @@ export const Filters = () => {
   const { resetFilters, getFilters, getOrder, toggleFilter } = useFilters();
   const { filtersToLabels, ordersToLabels } = useValidatorFilters();
 
+  const includes = getFilters(FilterType.Include, 'validators');
   const excludes = getFilters(FilterType.Exclude, 'validators');
+  const hasFilters = includes?.length || excludes?.length;
   const order = getOrder('validators');
 
   // scroll to top of the window on every filter.
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [excludes]);
+  }, [includes, excludes]);
 
   return (
     <>
@@ -57,7 +60,7 @@ export const Filters = () => {
           onClick={() => {
             resetFilters(FilterType.Exclude, 'validators');
           }}
-          disabled={!excludes?.length}
+          disabled={!hasFilters}
         />
       </div>
       <Container>
@@ -70,10 +73,21 @@ export const Filters = () => {
             }
             disabled
           />
-          {!excludes?.length && <Item label="No filters" disabled />}
+          {!hasFilters && <Item label="No filters" disabled />}
+          {includes?.map((e: string, i: number) => (
+            <Item
+              key={`validator_include_${i}`}
+              label={filtersToLabels[e]}
+              icon={faCheck}
+              transform="grow-2"
+              onClick={() => {
+                toggleFilter(FilterType.Include, 'validators', e);
+              }}
+            />
+          ))}
           {excludes?.map((e: string, i: number) => (
             <Item
-              key={`validator_filter_${i}`}
+              key={`validator_exclude_${i}`}
               label={filtersToLabels[e]}
               icon={faBan}
               transform="grow-2"
@@ -87,5 +101,3 @@ export const Filters = () => {
     </>
   );
 };
-
-export default Filters;
