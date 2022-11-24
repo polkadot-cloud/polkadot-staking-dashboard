@@ -11,13 +11,13 @@ export const usePoolFilters = () => {
   const { getPoolNominationStatusCode } = useBondedPools();
 
   /*
-   * filterInactive
+   * filterActive
    * Iterates through the supplied list and refers to the meta
    * batch of the list to filter those list items that are
-   * not actively nominating.
+   * actively nominating.
    * Returns the updated filtered list.
    */
-  const filterInactive = (list: any, batchKey: string) => {
+  const filterActive = (list: any, batchKey: string) => {
     // get pool targets from nominations meta batch
     const nominations = meta[batchKey]?.nominations ?? [];
 
@@ -58,16 +58,17 @@ export const usePoolFilters = () => {
     return list.filter((p: BondedPool) => p.state !== 'Destroying');
   };
 
-  const includesToLabels: { [key: string]: string } = {};
+  const includesToLabels: { [key: string]: string } = {
+    active: 'Active Pools',
+  };
 
   const excludesToLabels: { [key: string]: string } = {
-    inactive: 'Inactive Pools',
     locked: 'Locked Pools',
     destroying: 'Destroying Pools',
   };
 
   const filterToFunction: { [key: string]: AnyFunction } = {
-    inactive: filterInactive,
+    active: filterActive,
     locked: filterLocked,
     destroying: filterDestroying,
   };
@@ -83,15 +84,23 @@ export const usePoolFilters = () => {
   };
 
   const applyFilter = (
+    includes: Array<string> | null,
     excludes: Array<string> | null,
     list: AnyJson,
     batchKey: string
   ) => {
-    if (!excludes) {
+    if (!excludes && !includes) {
       return list;
     }
-    for (const fn of getFiltersToApply(excludes)) {
-      list = fn(list, batchKey);
+    if (includes) {
+      for (const fn of getFiltersToApply(includes)) {
+        list = fn(list, batchKey);
+      }
+    }
+    if (excludes) {
+      for (const fn of getFiltersToApply(excludes)) {
+        list = fn(list, batchKey);
+      }
     }
     return list;
   };

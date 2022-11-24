@@ -106,11 +106,11 @@ export const useValidatorFilters = () => {
   };
 
   /*
-   * filterInactive
+   * filterActive
    * Filters the supplied list and removes items that are inactive.
    * Returns the updated filtered list.
    */
-  const filterInactive = (list: any) => {
+  const filterActive = (list: any) => {
     // if list has not yet been populated, return original list
     if (session.list.length === 0) return list;
     return list.filter((validator: any) =>
@@ -144,10 +144,11 @@ export const useValidatorFilters = () => {
     );
   };
 
-  const includesToLabels: { [key: string]: string } = {};
+  const includesToLabels: { [key: string]: string } = {
+    active: 'Active Validators',
+  };
 
   const excludesToLabels: { [key: string]: string } = {
-    inactive: 'Inactive Validators',
     over_subscribed: 'Over Subscribed',
     all_commission: '100% Commission',
     blocked_nominations: 'Blocked Nominations',
@@ -155,11 +156,11 @@ export const useValidatorFilters = () => {
   };
 
   const filterToFunction: { [key: string]: AnyFunction } = {
+    active: filterActive,
     missing_identity: filterMissingIdentity,
     over_subscribed: filterOverSubscribed,
     all_commission: filterAllCommission,
     blocked_nominations: filterBlockedNominations,
-    inactive: filterInactive,
     not_parachain_validator: filterNonParachainValidator,
     in_session: filterInSession,
   };
@@ -175,15 +176,23 @@ export const useValidatorFilters = () => {
   };
 
   const applyFilter = (
+    includes: Array<string> | null,
     excludes: Array<string> | null,
     list: AnyJson,
     batchKey: string
   ) => {
-    if (!excludes) {
+    if (!excludes && !includes) {
       return list;
     }
-    for (const fn of getFiltersToApply(excludes)) {
-      list = fn(list, batchKey);
+    if (includes) {
+      for (const fn of getFiltersToApply(includes)) {
+        list = fn(list, batchKey);
+      }
+    }
+    if (excludes) {
+      for (const fn of getFiltersToApply(excludes)) {
+        list = fn(list, batchKey);
+      }
     }
     return list;
   };

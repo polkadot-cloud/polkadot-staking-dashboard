@@ -44,6 +44,7 @@ export const PoolListInner = ({
 
   const { getFilters, setMultiFilters } = useFilters();
   const { applyFilter } = usePoolFilters();
+  const includes = getFilters(FilterType.Include, 'pools');
   const excludes = getFilters(FilterType.Exclude, 'pools');
 
   // current page
@@ -112,7 +113,7 @@ export const PoolListInner = ({
     if (fetched) {
       handleValidatorsFilterUpdate();
     }
-  }, [isSyncing, excludes?.length]);
+  }, [isSyncing, includes?.length, excludes?.length]);
 
   // set default filters
   useEffect(() => {
@@ -125,8 +126,13 @@ export const PoolListInner = ({
   const handleValidatorsFilterUpdate = (
     filteredValidators: any = Object.assign(poolsDefault)
   ) => {
-    // apply excludes
-    filteredValidators = applyFilter(excludes, filteredValidators, batchKey);
+    // apply filters
+    filteredValidators = applyFilter(
+      includes,
+      excludes,
+      filteredValidators,
+      batchKey
+    );
     _setPools(filteredValidators);
     setPage(1);
     setRenderIteration(1);

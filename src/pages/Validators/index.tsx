@@ -22,7 +22,6 @@ export const Validators = (props: PageProps) => {
   const { validators } = useValidators();
   const { t } = useTranslation('base');
   const defaultFilters = [
-    'inactive',
     'over_subscribed',
     'all_commission',
     'blocked_nominations',

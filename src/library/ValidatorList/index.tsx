@@ -46,6 +46,7 @@ export const ValidatorListInner = (props: any) => {
 
   const { getFilters, setMultiFilters, getOrder } = useFilters();
   const { applyFilter, applyOrder, applySearch } = useValidatorFilters();
+  const includes = getFilters(FilterType.Include, 'validators');
   const excludes = getFilters(FilterType.Exclude, 'validators');
   const order = getOrder('validators');
 
@@ -159,7 +160,7 @@ export const ValidatorListInner = (props: any) => {
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate();
     }
-  }, [order, isSyncing, excludes?.length]);
+  }, [order, isSyncing, includes?.length, excludes?.length]);
 
   // handle modal resize on list format change
   useEffect(() => {
@@ -182,8 +183,13 @@ export const ValidatorListInner = (props: any) => {
       if (order !== 'default') {
         filteredValidators = applyOrder(order, filteredValidators);
       }
-      // apply excludes
-      filteredValidators = applyFilter(excludes, filteredValidators, batchKey);
+      // apply filters
+      filteredValidators = applyFilter(
+        includes,
+        excludes,
+        filteredValidators,
+        batchKey
+      );
       setValidators(filteredValidators);
       setPage(1);
       setRenderIteration(1);

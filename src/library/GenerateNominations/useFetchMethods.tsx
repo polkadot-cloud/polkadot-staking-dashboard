@@ -70,7 +70,8 @@ export const useFetchMehods = () => {
 
     // filter validators to find active candidates
     _nominations = applyFilter(
-      ['all_commission', 'blocked_nominations', 'inactive', 'missing_identity'],
+      ['active'],
+      ['all_commission', 'blocked_nominations', 'missing_identity'],
       _nominations,
       rawBatchKey
     );
@@ -93,6 +94,7 @@ export const useFetchMehods = () => {
 
     // filter validators to find waiting candidates
     _nominationsWaiting = applyFilter(
+      null,
       [
         'all_commission',
         'blocked_nominations',
@@ -105,7 +107,8 @@ export const useFetchMehods = () => {
 
     // filter validators to find active candidates
     _nominationsActive = applyFilter(
-      ['all_commission', 'blocked_nominations', 'missing_identity', 'inactive'],
+      ['active'],
+      ['all_commission', 'blocked_nominations', 'missing_identity'],
       _nominationsActive,
       rawBatchKey
     );
@@ -126,10 +129,10 @@ export const useFetchMehods = () => {
     const _nominations = Object.assign(validators);
 
     const _parachainValidators = applyFilter(
+      ['active'],
       [
         'all_commission',
         'blocked_nominations',
-        'inactive',
         'missing_identity',
         'not_parachain_validator',
       ],
@@ -140,7 +143,8 @@ export const useFetchMehods = () => {
     );
 
     const _activeValidators = applyFilter(
-      ['all_commission', 'blocked_nominations', 'inactive', 'missing_identity'],
+      ['active'],
+      ['all_commission', 'blocked_nominations', 'missing_identity'],
       _nominations,
       rawBatchKey
     )
@@ -150,6 +154,7 @@ export const useFetchMehods = () => {
       .filter((n: any) => !sessionParachain?.includes(n.address) || false);
 
     const _randomValidator = applyFilter(
+      null,
       ['all_commission', 'blocked_nominations', 'missing_identity'],
       _nominations,
       rawBatchKey
