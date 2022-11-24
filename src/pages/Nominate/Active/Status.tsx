@@ -19,6 +19,7 @@ import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import Stat from 'library/Stat';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, registerSaEvent, rmCommas } from 'Utils';
 import { Separator } from 'Wrappers';
 import { Controller } from './Controller';
@@ -35,6 +36,7 @@ export const Status = ({ height }: { height: number }) => {
   const { payee } = staking;
   const { meta, validators } = useValidators();
   const nominations = getAccountNominations(activeAccount);
+  const { t } = useTranslation('pages');
 
   // get nomination status
   const nominationStatuses = getNominationsStatus();
@@ -81,7 +83,7 @@ export const Status = ({ height }: { height: number }) => {
 
   const payeeStatus = PayeeStatus.find((item) => item.key === payee);
 
-  let startTitle = 'Start Nominating';
+  let startTitle = t('nominate.start_nominating');
   if (inSetup()) {
     const progress = getStakeSetupProgressPercent(activeAccount);
     if (progress > 0) {
@@ -91,18 +93,20 @@ export const Status = ({ height }: { height: number }) => {
   return (
     <CardWrapper height={height}>
       <Stat
-        label="Status"
+        label={t('nominate.status')}
         helpKey="Nomination Status"
         stat={
           inSetup() || isSyncing
-            ? 'Not Nominating'
+            ? t('nominate.not_nominating')
             : !nominations.length
-            ? 'Inactive: No Nominations Set'
+            ? t('nominate.no_nominations_set')
             : activeNominees.length
-            ? `Nominating and ${
-                earningRewards ? 'Earning Rewards' : 'Not Earning Rewards'
+            ? `${t('nominate.nominating_and')} ${
+                earningRewards
+                  ? t('nominate.earning_rewards')
+                  : t('nominate.not_earning_rewards')
               }`
-            : 'Waiting for Active Nominations'
+            : t('nominate.waiting_for_active_nominations')
         }
         buttons={
           !inSetup()
@@ -129,7 +133,7 @@ export const Status = ({ height }: { height: number }) => {
       />
       <Separator />
       <Stat
-        label="Reward Destination"
+        label={t('nominate.reward_destination')}
         helpKey="Reward Destination"
         icon={
           (payee === null
@@ -140,12 +144,16 @@ export const Status = ({ height }: { height: number }) => {
             ? faCircle
             : faWallet) as IconProp
         }
-        stat={inSetup() ? 'Not Assigned' : payeeStatus?.name ?? 'Not Assigned'}
+        stat={
+          inSetup()
+            ? t('nominate.not_assigned')
+            : payeeStatus?.name ?? t('nominate.not_assigned')
+        }
         buttons={
           !inSetup()
             ? [
                 {
-                  title: 'Update',
+                  title: t('nominate.update'),
                   icon: faWallet,
                   small: true,
                   disabled:
@@ -157,7 +165,7 @@ export const Status = ({ height }: { height: number }) => {
         }
       />
       <Separator />
-      <Controller label="Controller Account" />
+      <Controller label={t('nominate.controller_account')} />
     </CardWrapper>
   );
 };

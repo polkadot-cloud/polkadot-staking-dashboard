@@ -1,29 +1,32 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import useInflation from 'library/Hooks/useInflation';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { toFixedIfNecessary } from 'Utils';
+import { useTranslation } from 'react-i18next';
+import { planckBnToUnit, toFixedIfNecessary } from 'Utils';
 import { InflationWrapper } from './Wrappers';
 
 export const Inflation = () => {
+  const { units } = useApi().network;
   const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
   const { inflation, stakedReturn } = useInflation();
+  const { t } = useTranslation('pages');
 
   const { lastTotalStake } = staking;
   const { totalIssuance } = metrics;
 
   // total supply as percent
-  let supplyAsPercent = 0;
-  if (totalIssuance.gt(new BN(0))) {
-    supplyAsPercent = lastTotalStake
-      .div(totalIssuance.div(new BN(100)))
-      .toNumber();
-  }
+  const totalIssuanceBase = planckBnToUnit(totalIssuance, units);
+  const lastTotalStakeBase = planckBnToUnit(lastTotalStake, units);
+  const supplyAsPercent =
+    lastTotalStakeBase === 0
+      ? 0
+      : lastTotalStakeBase / (totalIssuanceBase * 0.01);
 
   return (
     <InflationWrapper>
@@ -38,7 +41,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                Historical Rewards Rate{' '}
+                {t('overview.historical_rewards_rate')}{' '}
                 <OpenHelpIcon helpKey="Historical Rewards Rate" />
               </h4>
             </div>
@@ -52,15 +55,16 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                Inflation <OpenHelpIcon helpKey="Inflation" />
+                {t('overview.inflation')} <OpenHelpIcon helpKey="Inflation" />
               </h4>
             </div>
           </div>
           <div>
             <div className="inner">
-              <h2>{supplyAsPercent}%</h2>
+              <h2>{toFixedIfNecessary(supplyAsPercent, 2)}%</h2>
               <h4>
-                Supply Staked <OpenHelpIcon helpKey="Supply Staked" />
+                {t('overview.supply_staked')}{' '}
+                <OpenHelpIcon helpKey="Supply Staked" />
               </h4>
             </div>
           </div>

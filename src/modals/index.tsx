@@ -12,6 +12,7 @@ import { ChangeNominations } from './ChangeNominations';
 import { ChangePoolRoles } from './ChangePoolRoles';
 import { ClaimReward } from './ClaimReward';
 import { ConnectAccounts } from './ConnectAccounts';
+import { DismissTips } from './DismissTips';
 import { GoToFeedback } from './GoToFeedback';
 import { JoinPool } from './JoinPool';
 import { LeavePool } from './LeavePool';
@@ -112,6 +113,7 @@ export const Modal = () => {
               {modal === 'ChangePoolRoles' && <ChangePoolRoles />}
               {modal === 'ClaimReward' && <ClaimReward />}
               {modal === 'ConnectAccounts' && <ConnectAccounts />}
+              {modal === 'DismissTips' && <DismissTips />}
               {modal === 'JoinPool' && <JoinPool />}
               {modal === 'Settings' && <Settings />}
               {modal === 'UpdateController' && <UpdateController />}

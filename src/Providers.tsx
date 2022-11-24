@@ -13,11 +13,13 @@ import { APIProvider, useApi } from './contexts/Api';
 import { BalancesProvider } from './contexts/Balances';
 import { ConnectProvider } from './contexts/Connect';
 import { ExtrinsicsProvider } from './contexts/Extrinsics';
+import { FiltersProvider } from './contexts/Filters';
 import { HelpProvider } from './contexts/Help';
 import { MenuProvider } from './contexts/Menu';
 import { ModalProvider } from './contexts/Modal';
 import { NetworkMetricsProvider } from './contexts/Network';
 import { NotificationsProvider } from './contexts/Notifications';
+import { OverlayProvider } from './contexts/Overlay';
 import { ActivePoolsProvider } from './contexts/Pools/ActivePools';
 import { BondedPoolsProvider } from './contexts/Pools/BondedPools';
 import { PoolMembersProvider } from './contexts/Pools/PoolMembers';
@@ -27,7 +29,6 @@ import { SessionEraProvider } from './contexts/SessionEra';
 import { StakingProvider } from './contexts/Staking';
 import { SubscanProvider } from './contexts/Subscan';
 import { useTheme } from './contexts/Themes';
-import { TipsProvider } from './contexts/Tips';
 import { UIProvider } from './contexts/UI';
 import { ValidatorsProvider } from './contexts/Validators';
 
@@ -58,6 +59,7 @@ export const ThemedRouter = () => {
 };
 
 export const Providers = withProviders(
+  FiltersProvider,
   APIProvider,
   ConnectProvider,
   HelpProvider,
@@ -81,7 +83,7 @@ export const Providers = withProviders(
   ExtrinsicsProvider,
   ModalProvider,
   SessionEraProvider,
-  TipsProvider
+  OverlayProvider
 )(ThemedRouter);
 
 export default Providers;
