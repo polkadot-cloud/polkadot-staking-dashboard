@@ -196,7 +196,6 @@ export const ValidatorListInner = (props: any) => {
       if (order !== 'default') {
         filteredValidators = applyOrder(order, filteredValidators);
       }
-      // apply filters
       filteredValidators = applyFilter(
         includes,
         excludes,
@@ -227,9 +226,14 @@ export const ValidatorListInner = (props: any) => {
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
-    // update validator list
-    let filteredValidators = Object.assign(validatorsDefault);
 
+    let filteredValidators = Object.assign(validatorsDefault);
+    filteredValidators = applyFilter(
+      includes,
+      excludes,
+      filteredValidators,
+      batchKey
+    );
     filteredValidators = applySearch(filteredValidators, batchKey, newValue);
 
     // ensure no duplicates

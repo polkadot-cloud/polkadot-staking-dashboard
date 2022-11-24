@@ -151,6 +151,7 @@ export const PoolListInner = ({
     const newValue = e.currentTarget.value;
 
     let filteredPools = Object.assign(poolsDefault);
+    filteredPools = applyFilter(includes, excludes, filteredPools, batchKey);
     filteredPools = poolSearchFilter(filteredPools, batchKey, newValue);
 
     // ensure no duplicates
