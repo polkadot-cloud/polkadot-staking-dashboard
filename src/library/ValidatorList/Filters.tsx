@@ -2,116 +2,104 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
-  faBalanceScaleLeft,
-  faClock,
-  faExclamationTriangle,
-  faPercentage,
-  faUserSlash,
-  faUserTag,
+  faArrowDownWideShort,
+  faBan,
+  faCheck,
+  faFilterCircleXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import { Category } from 'library/Filter/Category';
+import {
+  ButtonInvertRounded,
+  ButtonSecondary,
+} from '@rossbulat/polkadot-dashboard-ui';
+import { useFilters } from 'contexts/Filters';
+import { FilterType } from 'contexts/Filters/types';
+import { useOverlay } from 'contexts/Overlay';
 import { Container } from 'library/Filter/Container';
-import { useValidatorFilter } from 'library/Filter/context';
 import { Item } from 'library/Filter/Item';
 import { useEffect } from 'react';
+import { useValidatorFilters } from '../Hooks/useValidatorFilters';
+import { FilterValidators } from './FilterValidators';
+import { OrderValidators } from './OrderValidators';
 
 export const Filters = () => {
-  const {
-    validatorOrder,
-    validatorFilters,
-    orderValidators,
-    toggleFilterValidators,
-    toggleAllValidatorFilters,
-  } = useValidatorFilter();
+  const { openOverlayWith } = useOverlay();
+  const { resetFilters, getFilters, getOrder, toggleFilter } = useFilters();
+  const { includesToLabels, excludesToLabels, ordersToLabels } =
+    useValidatorFilters();
 
-  const handleFilter = (fn: any, filter: string) => {
-    fn(filter);
-  };
+  const includes = getFilters(FilterType.Include, 'validators');
+  const excludes = getFilters(FilterType.Exclude, 'validators');
+  const hasFilters = includes?.length || excludes?.length;
+  const order = getOrder('validators');
 
   // scroll to top of the window on every filter.
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [validatorFilters]);
+  }, [includes, excludes]);
 
   return (
-    <Container>
-      <Category title="Order">
-        <Item
-          label="Low Commission"
-          icon={faPercentage}
-          transform="grow-4"
-          active={validatorOrder === 'commission'}
-          onClick={() => handleFilter(orderValidators, 'commission')}
-          width={175}
-        />
-      </Category>
-      <Category
-        title="Exclude:"
-        buttons={[
-          {
-            title: 'All',
-            onClick: () => toggleAllValidatorFilters(1),
-          },
-          {
-            title: 'Clear',
-            onClick: () => toggleAllValidatorFilters(0),
-            disabled: !validatorFilters.length,
-          },
-        ]}
-      >
-        <Item
-          label="inactive validators"
-          icon={faClock}
-          transform="grow-4"
-          active={validatorFilters?.includes('inactive') ?? false}
+    <>
+      <div style={{ marginBottom: '1.1rem' }}>
+        <ButtonInvertRounded
+          text="Order"
+          marginRight
+          iconLeft={faArrowDownWideShort}
           onClick={() => {
-            handleFilter(toggleFilterValidators, 'inactive');
+            openOverlayWith(<OrderValidators />);
           }}
-          width={170}
         />
-        <Item
-          label="over subscribed"
-          icon={faExclamationTriangle}
-          transform="grow-4"
-          active={validatorFilters?.includes('over_subscribed') ?? false}
+        <ButtonInvertRounded
+          text="Filter"
+          marginRight
+          iconLeft={faFilterCircleXmark}
           onClick={() => {
-            handleFilter(toggleFilterValidators, 'over_subscribed');
+            openOverlayWith(<FilterValidators />);
           }}
-          width={155}
         />
-        <Item
-          label="100% commission"
-          icon={faBalanceScaleLeft}
-          transform="grow-2"
-          active={validatorFilters?.includes('all_commission') ?? false}
+        <ButtonSecondary
+          text="Clear"
           onClick={() => {
-            handleFilter(toggleFilterValidators, 'all_commission');
+            resetFilters(FilterType.Include, 'validators');
+            resetFilters(FilterType.Exclude, 'validators');
           }}
-          width={170}
+          disabled={!hasFilters}
         />
-        <Item
-          label="blocked nominations"
-          icon={faUserSlash}
-          transform="grow-1"
-          active={validatorFilters?.includes('blocked_nominations') ?? false}
-          onClick={() => {
-            handleFilter(toggleFilterValidators, 'blocked_nominations');
-          }}
-          width={190}
-        />
-        <Item
-          label="missing identity"
-          icon={faUserTag}
-          transform="grow-2"
-          active={validatorFilters?.includes('missing_identity') ?? false}
-          onClick={() => {
-            handleFilter(toggleFilterValidators, 'missing_identity');
-          }}
-          width={160}
-        />
-      </Category>
-    </Container>
+      </div>
+      <Container>
+        <div className="items">
+          <Item
+            label={
+              order === 'default'
+                ? 'Unordered'
+                : `Order: ${ordersToLabels[order]}`
+            }
+            disabled
+          />
+          {!hasFilters && <Item label="No filters" disabled />}
+          {includes?.map((e: string, i: number) => (
+            <Item
+              key={`validator_include_${i}`}
+              label={includesToLabels[e]}
+              icon={faCheck}
+              transform="grow-2"
+              onClick={() => {
+                toggleFilter(FilterType.Include, 'validators', e);
+              }}
+            />
+          ))}
+          {excludes?.map((e: string, i: number) => (
+            <Item
+              key={`validator_exclude_${i}`}
+              label={excludesToLabels[e]}
+              icon={faBan}
+              transform="grow-0"
+              onClick={() => {
+                toggleFilter(FilterType.Exclude, 'validators', e);
+              }}
+            />
+          ))}
+        </div>
+      </Container>
+    </>
   );
 };
-
-export default Filters;

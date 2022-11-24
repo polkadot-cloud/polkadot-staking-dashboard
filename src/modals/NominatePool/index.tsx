@@ -79,9 +79,7 @@ export const NominatePool = () => {
     <>
       <Title title="Nominate" icon={faPlayCircle} />
       <PaddingWrapper verticalOnly>
-        <div
-          style={{ padding: '0 1rem', width: '100%', boxSizing: 'border-box' }}
-        >
+        <div style={{ padding: '0 1rem', width: '100%' }}>
           {warnings.map((text: string, index: number) => (
             <Warning key={`warning_${index}`} text={text} />
           ))}

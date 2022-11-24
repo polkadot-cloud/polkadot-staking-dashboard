@@ -5,12 +5,15 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
+import { useFilters } from 'contexts/Filters';
+import { FilterType } from 'contexts/Filters/types';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
+import { usePoolFilters } from 'library/Hooks/usePoolFilters';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
@@ -19,6 +22,7 @@ import { Pool } from 'library/Pool';
 import React, { useEffect, useRef, useState } from 'react';
 import { networkColors } from 'theme/default';
 import { PoolListProvider, usePoolList } from './context';
+import { Filters } from './Filters';
 import { PoolListProps } from './types';
 
 export const PoolListInner = ({
@@ -29,13 +33,19 @@ export const PoolListInner = ({
   allowSearch,
   pools,
   title,
+  defaultFilters,
 }: PoolListProps) => {
   const { mode } = useTheme();
   const { isReady, network } = useApi();
   const { metrics } = useNetworkMetrics();
-  const { fetchPoolsMetaBatch, poolSearchFilter } = useBondedPools();
+  const { fetchPoolsMetaBatch, poolSearchFilter, meta } = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
   const { isSyncing } = useUi();
+
+  const { getFilters, setMultiFilters } = useFilters();
+  const { applyFilter } = usePoolFilters();
+  const includes = getFilters(FilterType.Include, 'pools');
+  const excludes = getFilters(FilterType.Exclude, 'pools');
 
   // current page
   const [page, setPage] = useState<number>(1);
@@ -97,6 +107,35 @@ export const PoolListInner = ({
       }, 500);
     }
   }, [renderIterationRef.current]);
+
+  // list ui changes / validator changes trigger re-render of list
+  useEffect(() => {
+    // only filter when pool nominations have been synced.
+    if (!isSyncing && meta[batchKey]?.nominations) {
+      handlePoolsFilterUpdate();
+    }
+  }, [isSyncing, includes?.length, excludes?.length, meta]);
+
+  // set default filters
+  useEffect(() => {
+    if (defaultFilters?.includes?.length) {
+      setMultiFilters(FilterType.Include, 'pools', defaultFilters?.includes);
+    }
+    if (defaultFilters?.excludes?.length) {
+      setMultiFilters(FilterType.Exclude, 'pools', defaultFilters?.excludes);
+    }
+  }, []);
+
+  // handle filter / order update
+  const handlePoolsFilterUpdate = (
+    filteredPools: any = Object.assign(poolsDefault)
+  ) => {
+    // apply filters
+    filteredPools = applyFilter(includes, excludes, filteredPools, batchKey);
+    _setPools(filteredPools);
+    setPage(1);
+    setRenderIteration(1);
+  };
 
   // get pools to render
   let listPools = [];
@@ -161,6 +200,7 @@ export const PoolListInner = ({
             placeholder="Search Pool ID, Name or Address"
           />
         )}
+        <Filters />
         {pagination && listPools.length > 0 && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}

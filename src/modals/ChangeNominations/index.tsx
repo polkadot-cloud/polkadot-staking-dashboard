@@ -123,7 +123,6 @@ export const ChangeNominations = () => {
           style={{
             padding: '0 1.25rem',
             width: '100%',
-            boxSizing: 'border-box',
           }}
         >
           {!nominations.length && (

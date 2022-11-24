@@ -90,7 +90,6 @@ export const UpdatePayee = () => {
             padding: '0 1.25rem',
             marginTop: '1rem',
             width: '100%',
-            boxSizing: 'border-box',
           }}
         >
           {getControllerNotImported(controller) && (

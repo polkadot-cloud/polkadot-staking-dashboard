@@ -7,36 +7,29 @@ import { ItemProps } from './types';
 import { ItemWrapper } from './Wrappers';
 
 export const Item = ({
+  disabled = false,
   icon,
-  active,
-  width = 180,
   label,
   transform,
   onClick,
-  disabled = false,
 }: ItemProps) => (
   <motion.button
-    disabled={disabled}
     whileHover={{ scale: 1.02 }}
     whileTap={{ scale: 0.99 }}
     transition={{
       duration: 0.3,
     }}
     onClick={() => {
-      onClick();
+      if (onClick !== undefined) onClick();
     }}
-    style={{
-      opacity: disabled ? 0.5 : 1,
-    }}
+    disabled={disabled}
   >
-    <ItemWrapper active={active} style={{ width }}>
-      <div className="icon">
-        <FontAwesomeIcon
-          icon={icon}
-          transform={transform}
-          opacity={active ? 1 : 0.7}
-        />
-      </div>
+    <ItemWrapper>
+      {icon ? (
+        <div className="icon">
+          <FontAwesomeIcon icon={icon} transform={transform} />
+        </div>
+      ) : null}
       <p>{label}</p>
     </ItemWrapper>
   </motion.button>
