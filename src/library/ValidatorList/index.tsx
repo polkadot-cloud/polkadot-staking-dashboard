@@ -44,11 +44,18 @@ export const ValidatorListInner = (props: any) => {
 
   const { selected, listFormat, setListFormat } = provider;
 
-  const { getFilters, setMultiFilters, getOrder } = useFilters();
+  const {
+    getFilters,
+    setMultiFilters,
+    getOrder,
+    getSearchTerm,
+    setSearchTerm,
+  } = useFilters();
   const { applyFilter, applyOrder, applySearch } = useValidatorFilters();
   const includes = getFilters(FilterType.Include, 'validators');
   const excludes = getFilters(FilterType.Exclude, 'validators');
   const order = getOrder('validators');
+  const searchTerm = getSearchTerm('validators');
 
   const {
     batchKey,
@@ -196,13 +203,19 @@ export const ValidatorListInner = (props: any) => {
       if (order !== 'default') {
         filteredValidators = applyOrder(order, filteredValidators);
       }
-      // apply filters
       filteredValidators = applyFilter(
         includes,
         excludes,
         filteredValidators,
         batchKey
       );
+      if (searchTerm) {
+        filteredValidators = applySearch(
+          filteredValidators,
+          batchKey,
+          searchTerm
+        );
+      }
       setValidators(filteredValidators);
       setPage(1);
       setRenderIteration(1);
@@ -227,9 +240,14 @@ export const ValidatorListInner = (props: any) => {
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
-    // update validator list
-    let filteredValidators = Object.assign(validatorsDefault);
 
+    let filteredValidators = Object.assign(validatorsDefault);
+    filteredValidators = applyFilter(
+      includes,
+      excludes,
+      filteredValidators,
+      batchKey
+    );
     filteredValidators = applySearch(filteredValidators, batchKey, newValue);
 
     // ensure no duplicates
@@ -242,6 +260,7 @@ export const ValidatorListInner = (props: any) => {
     setPage(1);
     setIsSearching(e.currentTarget.value !== '');
     setRenderIteration(1);
+    setSearchTerm('validators', newValue);
   };
 
   return (
