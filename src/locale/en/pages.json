@@ -1,9 +1,9 @@
 {
     "pages": {
         "overview": {
-            "nominator_limit": "Nominator Limit Has Been Reached.",
+            "nominator_limit": "Nominator limit has been reached.",
             "maximum_allowed": "The maximum allowed nominators have been reached on the network. Please wait for available slots if you wish to nominate.",
-            "limit_reached": "% of Nominator Limit Reached.",
+            "limit_reached": "% of nominator limit reached.",
             "maximum_amount": "The maximum amount of nominators has almost been reached. The nominator cap is currently",
             "pools_are_active": "nomination pools are active.",
             "available_to_join": "The number of nomination pools available to join on {{networkName}}.",
