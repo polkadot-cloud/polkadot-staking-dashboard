@@ -13,6 +13,7 @@ import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Graphs/Wrappers';
+import { useTranslation } from 'react-i18next';
 import { ButtonRowWrapper, PageRowWrapper } from 'Wrappers';
 
 export const ClosurePrompts = () => {
@@ -25,6 +26,7 @@ export const ClosurePrompts = () => {
   const { isBonding, selectedActivePool, isDepositor, poolNominations } =
     useActivePools();
   const { getTransferOptions } = useTransferOptions();
+  const { t } = useTranslation('pages');
 
   const { state, memberCounter } = selectedActivePool?.bondedPool || {};
   const { active, totalUnlockChuncks } = getTransferOptions(activeAccount).pool;
@@ -55,21 +57,21 @@ export const ClosurePrompts = () => {
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
             <div className="content">
-              <h3>Destroy Pool</h3>
+              <h3>{t('pools.destroy_pool')}</h3>
               <h4>
-                All members have now left the pool.{' '}
+                {t('pools.left_the_pool')}
                 {targets.length > 0
-                  ? 'To continue with pool closure, stop nominating.'
+                  ? t('pools.stop_nominating')
                   : depositorCanWithdraw
-                  ? 'You can now withdraw and close the pool.'
+                  ? t('pools.close_pool')
                   : depositorCanUnbond
-                  ? 'You can now unbond your funds.'
-                  : 'Withdraw your unlock chunk to proceed with pool closure.'}
+                  ? t('pools.unbond_your_funds')
+                  : t('pools.withdraw_unlock')}
               </h4>
               <ButtonRowWrapper verticalSpacing>
                 <ButtonPrimary
                   marginRight
-                  text="Unbond"
+                  text={t('pools.unbond')}
                   disabled={
                     poolsSyncing ||
                     (!depositorCanWithdraw && !depositorCanUnbond)

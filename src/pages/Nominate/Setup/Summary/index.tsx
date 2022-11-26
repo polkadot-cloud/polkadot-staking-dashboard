@@ -101,7 +101,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('nominate.reward_destination:')}
+              &nbsp; {t('nominate.reward_destination')}:
             </div>
             <div>{payee}</div>
           </section>
@@ -111,7 +111,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('nominate.nominate:')}
+              &nbsp; {t('nominate.nominate')}:
             </div>
             <div>{nominations.length}</div>
           </section>
@@ -121,7 +121,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('nominate.bond_amount:')}
+              &nbsp; {t('nominate.bond_amount')}
             </div>
             <div>
               {humanNumber(bond)} {network.unit}

@@ -12,6 +12,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { Identicon } from 'library/Identicon';
 import OpenHelpIcon from 'library/OpenHelpIcon';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
+import { useTranslation } from 'react-i18next';
 import { determinePoolDisplay } from 'Utils';
 import { Wrapper } from './Wrapper';
 
@@ -24,8 +25,9 @@ export const Membership = ({ label }: { label: string }) => {
     useActivePools();
   const { getTransferOptions } = useTransferOptions();
   const { active } = getTransferOptions(activeAccount).pool;
+  const { t } = useTranslation('pages');
 
-  let display = 'Not in Pool';
+  let display = t('pools.not_in_pool');
   if (selectedActivePool) {
     const pool = bondedPools.find((p: any) => {
       return p.addresses.stash === selectedActivePool.addresses.stash;
@@ -48,7 +50,7 @@ export const Membership = ({ label }: { label: string }) => {
     paddingRight += 9;
     buttons.push(
       <ButtonPrimary
-        text="Manage"
+        text={t('pools.manage')}
         iconLeft={faCog}
         disabled={!isReady || isReadOnlyAccount(activeAccount)}
         onClick={() => openModalWith('ManagePool', {}, 'small')}
@@ -60,7 +62,7 @@ export const Membership = ({ label }: { label: string }) => {
     paddingRight += 8.5;
     buttons.push(
       <ButtonPrimary
-        text="Leave"
+        text={t('pools.leave')}
         iconLeft={faSignOutAlt}
         disabled={!isReady || isReadOnlyAccount(activeAccount)}
         onClick={() =>

@@ -3,12 +3,14 @@
 
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { Number } from 'library/StatBoxList/Number';
+import { useTranslation } from 'react-i18next';
 
 const ActivePoolsStatBox = () => {
   const { stats } = usePoolsConfig();
+  const { t } = useTranslation('pages');
 
   const params = {
-    label: 'Active Pools',
+    label: t('pools.active_pools'),
     value: stats.counterForBondedPools.toNumber(),
     unit: '',
     helpKey: 'Active Pools',

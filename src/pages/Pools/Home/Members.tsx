@@ -9,6 +9,7 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { PoolState } from 'contexts/Pools/types';
 import { useTheme } from 'contexts/Themes';
 import { CardWrapper } from 'library/Graphs/Wrappers';
+import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 import { MembersList } from './MembersList';
 
@@ -17,11 +18,12 @@ export const Members = () => {
   const { mode } = useTheme();
   const { getMembersOfPool } = usePoolMembers();
   const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
+  const { t } = useTranslation('pages');
 
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
-  const poolMembersTitle = `${poolMembers.length} Pool Member${
-    poolMembers.length === 1 ? `` : `s`
-  }`;
+  const poolMembersTitle = `${t('pools.pool_member', {
+    count: poolMembers.length,
+  })}`;
 
   const networkColorsSecondary: any = network.colors.secondary;
   const annuncementBorderColor = networkColorsSecondary[mode];
@@ -39,12 +41,11 @@ export const Members = () => {
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
             <div className="content">
-              <h3>Pool Currently Locked</h3>
+              <h3>{t('pools.pool_currently_locked')}</h3>
               <h4>
-                You have permission to unbond and withdraw funds of any pool
-                member. Use a member&apos;s menu ({' '}
-                <FontAwesomeIcon icon={faBars} transform="shrink-2" /> ) to
-                select management options.
+                {t('pools.permission_to_unbond')}({' '}
+                <FontAwesomeIcon icon={faBars} transform="shrink-2" /> ){' '}
+                {t('pools.management_options')}
               </h4>
             </div>
           </CardWrapper>
@@ -58,12 +59,11 @@ export const Members = () => {
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
             <div className="content">
-              <h3>Pool in Destroying State</h3>
+              <h3>{t('pools.pool_in_destroying_state')}</h3>
               <h4>
-                You have permission to unbond and withdraw funds of any pool
-                member. Use a member&apos;s menu ({' '}
-                <FontAwesomeIcon icon={faBars} transform="shrink-2" /> ) to
-                select management options.
+                {t('pools.permission_to_unbond')} ({' '}
+                <FontAwesomeIcon icon={faBars} transform="shrink-2" /> ){' '}
+                {t('pools.management_options')}
               </h4>
             </div>
           </CardWrapper>

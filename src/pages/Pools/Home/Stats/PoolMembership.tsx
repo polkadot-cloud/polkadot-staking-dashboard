@@ -4,19 +4,21 @@
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Text } from 'library/StatBoxList/Text';
+import { useTranslation } from 'react-i18next';
 
 const PoolMembership = () => {
   const { membership } = usePoolMemberships();
   const { isOwner } = useActivePools();
+  const { t } = useTranslation('pages');
 
   const params = {
-    label: 'Pool Membership',
+    label: t('pools.pool_membership'),
     value:
       membership === null
-        ? 'Not in Pool'
+        ? t('pools.not_in_pool')
         : isOwner()
-        ? `Owner of Pool ${membership.poolId}`
-        : `In Pool ${membership.poolId}`,
+        ? `${t('pools.owner_of_pool')} ${membership.poolId}`
+        : `${t('pools.in_pool')} ${membership.poolId}`,
     unit: '',
     helpKey: 'Pool Membership',
   };
