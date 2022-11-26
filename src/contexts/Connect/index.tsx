@@ -165,11 +165,11 @@ export const ConnectProvider = ({
 
     if (localExternalAccounts.length) {
       // get and format active account if present
-      const _activeAccount = getActiveAccountLocal(network);
+      const activeAccountLocal = getActiveAccountLocal(network);
 
       const activeAccountIsExternal =
         localExternalAccounts.find(
-          (a: ImportedAccount) => a.address === _activeAccount
+          (a: ImportedAccount) => a.address === activeAccountLocal
         ) ?? null;
 
       // remove already-imported accounts (extensions may have already imported)
@@ -202,7 +202,7 @@ export const ConnectProvider = ({
   const connectActiveExtensions = async () => {
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
-    const _activeAccount = getActiveAccountLocal(network);
+    const activeAccountLocal = getActiveAccountLocal(network);
 
     // iterate extensions and add accounts to state
     let extensionsCount = 0;
@@ -244,7 +244,7 @@ export const ConnectProvider = ({
                   // connect to active account if found in extension
                   const activeAccountInWallet =
                     injected.find(
-                      (a: ExtensionAccount) => a.address === _activeAccount
+                      (a: ExtensionAccount) => a.address === activeAccountLocal
                     ) ?? null;
                   if (activeAccountInWallet !== null) {
                     activeWalletAccount = activeAccountInWallet;
@@ -297,7 +297,7 @@ export const ConnectProvider = ({
     keyring.setSS58Format(network.ss58);
     const { id, enable } = _extension;
 
-    const _activeAccount = getActiveAccountLocal(network);
+    const activeAccountLocal = getActiveAccountLocal(network);
     try {
       // summons extension popup
       const extension: ExtensionInteface = await enable(DappName);
@@ -323,7 +323,7 @@ export const ConnectProvider = ({
               // connect to active account if found in extension
               const activeAccountInWallet =
                 injected.find(
-                  (a: ExtensionAccount) => a.address === _activeAccount
+                  (a: ExtensionAccount) => a.address === activeAccountLocal
                 ) ?? null;
               if (activeAccountInWallet !== null) {
                 connectToAccount(activeAccountInWallet);
