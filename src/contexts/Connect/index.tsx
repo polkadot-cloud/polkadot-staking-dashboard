@@ -14,15 +14,10 @@ import { useExtensions } from 'contexts/Extensions';
 import { Extension, ExtensionInteface } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
-import {
-  clipAddress,
-  isValidAddress,
-  localStorageOrDefault,
-  setStateWithRef,
-} from 'Utils';
+import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { defaultConnectContext } from './defaults';
+import { useImportExtension } from './Hooks/useImportExtension';
 import {
-  addToLocalExtensions,
   extensionIsLocal,
   getActiveAccountLocal,
   getLocalExternalAccounts,
@@ -47,10 +42,11 @@ export const ConnectProvider = ({
     setExtensionsFetched,
     extensions,
   } = useExtensions();
-
   // store accounts list
   const [accounts, setAccounts] = useState<Array<ImportedAccount>>([]);
   const accountsRef = useRef(accounts);
+
+  const { handleImportExtension } = useImportExtension(accountsRef.current);
 
   // store the currently active account
   const [activeAccount, _setActiveAccount] = useState<string | null>(null);
@@ -254,36 +250,9 @@ export const ConnectProvider = ({
                 if (!injected) {
                   return;
                 }
-                // update extensions status
-                setExtensionStatus(id, 'connected');
-                // update local active extensions
-                addToLocalExtensions(id);
+                injected = handleImportExtension(id, extension, injected);
 
-                // only continue if there are accounts
                 if (injected.length) {
-                  // remove injected already imported from another extension
-                  injected = injected.filter(
-                    (i: ExtensionAccount) =>
-                      !accountsRef.current
-                        .map((j: ImportedAccount) => j.address)
-                        .includes(i.address)
-                  );
-
-                  // filter injected with correctly formatted addresses
-                  injected = injected.filter((i: ExtensionAccount) => {
-                    return isValidAddress(i.address);
-                  });
-
-                  // format account properties
-                  injected = injected.map((a: ExtensionAccount) => {
-                    return {
-                      address: a.address,
-                      source: id,
-                      name: a.name,
-                      signer: extension.signer,
-                    };
-                  });
-
                   // remove any injected accounts from local external if any exist
                   const localExternalAccounts = getLocalExternalAccounts(
                     network,
@@ -379,36 +348,9 @@ export const ConnectProvider = ({
             if (!injected) {
               return;
             }
-            // update extensions status
-            setExtensionStatus(id, 'connected');
-            // update local active extensions
-            addToLocalExtensions(id);
+            injected = handleImportExtension(id, extension, injected);
 
-            // only continue if there are accounts
             if (injected.length) {
-              // remove injected already imported from another extension
-              injected = injected.filter(
-                (i: ExtensionAccount) =>
-                  !accountsRef.current
-                    .map((j: ImportedAccount) => j.address)
-                    .includes(i.address)
-              );
-
-              // filter injected with correctly formatted addresses
-              injected = injected.filter((i: ExtensionAccount) => {
-                return isValidAddress(i.address);
-              });
-
-              // format account properties
-              injected = injected.map((a: ExtensionAccount) => {
-                return {
-                  address: a.address,
-                  source: id,
-                  name: a.name,
-                  signer: extension.signer,
-                };
-              });
-
               // remove injected if they exist in local external accounts
               const localExternalAccounts = getLocalExternalAccounts(
                 network,
