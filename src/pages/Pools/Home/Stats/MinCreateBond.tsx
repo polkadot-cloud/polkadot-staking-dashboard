@@ -14,7 +14,7 @@ const MinCreateBondStatBox = () => {
   const { t } = useTranslation('pages');
 
   const params = {
-    label: t('pools.minimum-create_bond'),
+    label: t('pools.minimum_create_bond'),
     value: planckBnToUnit(stats.minCreateBond, units),
     unit: network.unit,
     helpKey: 'Minimum Create Bond',

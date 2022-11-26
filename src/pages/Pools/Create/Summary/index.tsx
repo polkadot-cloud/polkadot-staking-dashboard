@@ -110,7 +110,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('pools.pool_name:')}
+              &nbsp; {t('pools.pool_name')}:
             </div>
             <div>{metadata ?? `Not Set`}</div>
           </section>
@@ -120,7 +120,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('pools.bond_amount:')}
+              &nbsp; {t('pools.bond_amount')}:
             </div>
             <div>
               {humanNumber(bond)} {network.unit}
@@ -132,7 +132,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('pools.nominations:')}
+              &nbsp; {t('pools.nominations')}:
             </div>
             <div>{nominations.length}</div>
           </section>
@@ -142,7 +142,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('pools.roles:')}
+              &nbsp; {t('pools.roles')}:
             </div>
             <div>{t('pools.assigned')}</div>
           </section>
