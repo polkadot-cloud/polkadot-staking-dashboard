@@ -38,6 +38,10 @@ export interface Network {
       light: string;
       dark: string;
     };
+    stroke: {
+      light: string;
+      dark: string;
+    };
     transparent: {
       light: string;
       dark: string;
@@ -104,6 +108,8 @@ export type MaybeString = string | null;
 export type AnyApi = any;
 // eslint-disable-next-line
 export type AnyJson = any;
+// eslint-disable-next-line
+export type AnyFunction = any;
 // eslint-disable-next-line
 export type AnyMetaBatch = any;
 // eslint-disable-next-line

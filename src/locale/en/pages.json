@@ -1,9 +1,9 @@
 {
     "pages": {
         "overview": {
-            "nominator_limit": "Nominator Limit Has Been Reached.",
+            "nominator_limit": "Nominator limit has been reached.",
             "maximum_allowed": "The maximum allowed nominators have been reached on the network. Please wait for available slots if you wish to nominate.",
-            "limit_reached": "% of Nominator Limit Reached.",
+            "limit_reached": "% of nominator limit reached.",
             "maximum_amount": "The maximum amount of nominators has almost been reached. The nominator cap is currently",
             "pools_are_active": "nomination pools are active.",
             "available_to_join": "The number of nomination pools available to join on {{networkName}}.",
@@ -14,7 +14,7 @@
             "minimum_nominator_bond": "The minimum nominator bond is now",
             "minimum_bonding_amount": "The minimum bonding amount to start nominating on {{networkName}} is now",
             "currently_staked": "{{supplyAsPercent}}% of total {{networkUnit}} supply is currently staked.",
-            "staking_on_the_network": "A total of {{_lastTotalStakeBase}}{{networkUnit}} is actively staking on the network.",
+            "staking_on_the_network": "A total of {{lastTotalStakeBase}} {{networkUnit}} is actively staking on the network.",
             "network_stats": "Network Stats",
             "historical_rewards_rate": "Historical Rewards Rate",
             "inflation": "Inflation",

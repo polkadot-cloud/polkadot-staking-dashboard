@@ -33,6 +33,10 @@ export const NETWORKS: Networks = {
         light: '#e474bc',
         dark: '#e474bc',
       },
+      stroke: {
+        light: 'rgb(211, 48, 121)',
+        dark: 'rgb(211, 48, 121)',
+      },
       transparent: {
         light: 'rgb(211, 48, 121, 0.05)',
         dark: 'rgb(211, 48, 121, 0.05)',
@@ -76,6 +80,10 @@ export const NETWORKS: Networks = {
       secondary: {
         light: '#999',
         dark: '#AAA',
+      },
+      stroke: {
+        light: '#4c4b63',
+        dark: '#d1d1db',
       },
       transparent: {
         light: 'rgb(51,51,51,0.05)',
@@ -122,6 +130,10 @@ export const NETWORKS: Networks = {
       secondary: {
         light: '#e37c44',
         dark: '#e37c44',
+      },
+      stroke: {
+        light: '#da4e71',
+        dark: '#da4e71',
       },
       transparent: {
         light: 'rgb(218, 78, 113, 0.05)',

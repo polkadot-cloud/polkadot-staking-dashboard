@@ -195,7 +195,7 @@ export const BondedPoolsProvider = ({
       return unsub;
     };
 
-    const subscribeToNominators = async (_addresses: AnyApi) => {
+    const subscribeToNominations = async (_addresses: AnyApi) => {
       const unsub = await api.query.staking.nominators.multi(
         _addresses,
         (_nominations: AnyApi) => {
@@ -203,10 +203,8 @@ export const BondedPoolsProvider = ({
           for (let i = 0; i < _nominations.length; i++) {
             nominations.push(_nominations[i].toHuman());
           }
-
           const _batchesUpdated = Object.assign(poolMetaBatchesRef.current);
           _batchesUpdated[key].nominations = nominations;
-
           setStateWithRef(
             { ..._batchesUpdated },
             setPoolMetaBatch,
@@ -220,7 +218,7 @@ export const BondedPoolsProvider = ({
     // initiate subscriptions
     await Promise.all([
       subscribeToMetadata(ids),
-      subscribeToNominators(addresses),
+      subscribeToNominations(addresses),
     ]).then((unsubs: Array<Fn>) => {
       addMetaBatchUnsubs(key, unsubs);
     });

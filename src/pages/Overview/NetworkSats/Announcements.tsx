@@ -49,13 +49,13 @@ export const Announcements = () => {
   );
 
   // total supply as percent
-  let supplyAsPercent = 0;
-  if (totalIssuance.gt(new BN(0))) {
-    supplyAsPercent = lastTotalStake
-      .div(totalIssuance.div(new BN(100)))
-      .toNumber();
-  }
-  const lastTotalStakeBase = lastTotalStake.div(new BN(10 ** units));
+  // total supply as percent
+  const totalIssuanceBase = planckBnToUnit(totalIssuance, units);
+  const lastTotalStakeBase = planckBnToUnit(lastTotalStake, units);
+  const supplyAsPercent =
+    lastTotalStakeBase === 0
+      ? 0
+      : lastTotalStakeBase / (totalIssuanceBase * 0.01);
 
   const container = {
     hidden: { opacity: 0 },
@@ -98,10 +98,10 @@ export const Announcements = () => {
     });
   }
 
-  // 90% plus nominators reached - warning
+  // 90% plus nominators reached
   if (nominatorReachedPercentage.toNumber() >= 90) {
     announcements.push({
-      class: 'warning',
+      class: 'neutral',
       title: `${toFixedIfNecessary(
         nominatorReachedPercentage.toNumber(),
         2
@@ -123,7 +123,7 @@ export const Announcements = () => {
       subtitle: `${t('overview.available_to_join', { networkName })}`,
     });
 
-    // total locked in pols
+    // total locked in pools
     announcements.push({
       class: 'pools',
       title: `${totalPoolPointsBase} ${network.unit} ${t('overview.in_pools')}`,
@@ -153,16 +153,17 @@ export const Announcements = () => {
     })}${planckBnToUnit(minNominatorBond, units)} ${network.unit}.`,
   });
 
-  const _lastTotalStakeBase = humanNumber(lastTotalStakeBase.toNumber());
   // supply staked
   announcements.push({
     class: 'neutral',
     title: `${t('overview.currently_staked', {
-      supplyAsPercent,
+      supplyAsPercent: toFixedIfNecessary(supplyAsPercent, 2),
       networkUnit,
     })}`,
     subtitle: `${t('overview.staking_on_the_network', {
-      _lastTotalStakeBase,
+      lastTotalStakeBase: humanNumber(
+        toFixedIfNecessary(lastTotalStakeBase, 0)
+      ),
       networkUnit,
     })}`,
   });

@@ -14,7 +14,7 @@
             "minimum_nominator_bond": "提名人抵押额最低为",
             "minimum_bonding_amount": "在{{networkName}}提名最低绑定额为",
             "currently_staked": "{{networkUnit}}中的{{supplyAsPercent}}% 目前己被抵押.",
-            "staking_on_the_network": "共 {{_lastTotalStakeBase}} {{networkUnit}}在网络中被活跃抵押中",
+            "staking_on_the_network": "共 {{lastTotalStakeBase}} {{networkUnit}}在网络中被活跃抵押中",
             "network_stats": "网络信息",
             "historical_rewards_rate": "历史奖励率",
             "inflation": "通货膨胀",

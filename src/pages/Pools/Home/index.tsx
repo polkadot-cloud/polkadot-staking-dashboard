@@ -88,10 +88,10 @@ export const HomeInner = () => {
         button={
           totalAccountPools
             ? {
-                title: t('pools.all_roles'),
-                onClick: () =>
-                  openModalWith('AccountPoolRoles', { who: activeAccount }),
-              }
+              title: t('pools.all_roles'),
+              onClick: () =>
+                openModalWith('AccountPoolRoles', { who: activeAccount }),
+            }
             : undefined
         }
       />
@@ -157,6 +157,10 @@ export const HomeInner = () => {
                 batchKey="bonded_pools"
                 pools={bondedPools}
                 title={t('pools.active_pools')}
+                defaultFilters={{
+                  includes: ['active'],
+                  excludes: ['locked', 'destroying'],
+                }}
                 allowMoreCols
                 allowSearch
                 pagination

@@ -15,7 +15,6 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
-import { ValidatorFilterProvider } from 'library/Filter/context';
 import { LargeItem } from 'library/Filter/LargeItem';
 import { SelectableWrapper } from 'library/List';
 import { ValidatorList } from 'library/ValidatorList';
@@ -28,9 +27,7 @@ import {
 import { useFetchMehods } from './useFetchMethods';
 import { GenerateOptionsWrapper } from './Wrappers';
 
-export const GenerateNominationsInner = (
-  props: GenerateNominationsInnerProps
-) => {
+export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
   // functional props
   const setters = props.setters ?? [];
   const defaultNominations = props.nominations;
@@ -369,14 +366,6 @@ export const GenerateNominationsInner = (
         )}
       </Wrapper>
     </>
-  );
-};
-
-export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
-  return (
-    <ValidatorFilterProvider>
-      <GenerateNominationsInner {...props} />
-    </ValidatorFilterProvider>
   );
 };
 
