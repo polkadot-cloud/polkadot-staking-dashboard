@@ -4,9 +4,29 @@
 import Keyring from '@polkadot/keyring';
 import { Network } from 'types';
 import { localStorageOrDefault } from 'Utils';
-import { ExternalAccount } from './types';
+import { ExternalAccount, ImportedAccount } from './types';
 
-// removes extension from localExtensions
+// extension utils
+
+// adds an extension to local `active_extensions`
+export const addToLocalExtensions = (id: string) => {
+  const localExtensions = localStorageOrDefault<string[]>(
+    `active_extensions`,
+    [],
+    true
+  );
+  if (Array.isArray(localExtensions)) {
+    if (!localExtensions.includes(id)) {
+      localExtensions.push(id);
+      localStorage.setItem(
+        'active_extensions',
+        JSON.stringify(localExtensions)
+      );
+    }
+  }
+};
+
+// removes extension from local `active_extensions`
 export const removeFromLocalExtensions = (id: string) => {
   let localExtensions = localStorageOrDefault<string[]>(
     `active_extensions`,
@@ -19,12 +39,28 @@ export const removeFromLocalExtensions = (id: string) => {
   }
 };
 
-// gets local activeAccount
+// check if an extension exists in local `active_extensions`.
+export const extensionIsLocal = (id: string) => {
+  // connect if extension has been connected to previously
+  const localExtensions = localStorageOrDefault<string[]>(
+    `active_extensions`,
+    [],
+    true
+  );
+  let foundExtensionLocally = false;
+  if (Array.isArray(localExtensions)) {
+    foundExtensionLocally =
+      localExtensions.find((l: string) => l === id) !== undefined;
+  }
+  return foundExtensionLocally;
+};
+
+// account utils
+
+// gets local `active_account` for a network
 export const getActiveAccountLocal = (network: Network) => {
   const keyring = new Keyring();
   keyring.setSS58Format(network.ss58);
-
-  // get and format active account if present
   let _activeAccount = localStorageOrDefault(
     `${network.name.toLowerCase()}_active_account`,
     null
@@ -35,7 +71,8 @@ export const getActiveAccountLocal = (network: Network) => {
   return _activeAccount;
 };
 
-// Formats local external accounts using active network ss58 format.
+// gets local external accounts, formatting their addresses
+// using active network ss58 format.
 export const getLocalExternalAccounts = (
   network: Network,
   activeNetworkOnly = false
@@ -55,37 +92,21 @@ export const getLocalExternalAccounts = (
   return localExternalAccounts;
 };
 
-// check if an extension is in localExtensions (has been used previously)
-export const extensionIsLocal = (id: string) => {
-  // connect if extension has been connected to previously
-  const localExtensions = localStorageOrDefault<string[]>(
-    `active_extensions`,
-    [],
-    true
+// removes local `external_accounts` from local storage.
+export const removeLocalExternalAccounts = (
+  network: Network,
+  accounts: Array<ExternalAccount>
+) => {
+  let localExternalAccounts = getLocalExternalAccounts(network, true);
+  localExternalAccounts = localExternalAccounts.filter(
+    (l: ExternalAccount) =>
+      accounts.find(
+        (a: ImportedAccount) =>
+          a.address === l.address && l.network === network.name
+      ) === undefined
   );
-  let foundExtensionLocally = false;
-  if (Array.isArray(localExtensions)) {
-    foundExtensionLocally =
-      localExtensions.find((l: string) => l === id) !== undefined;
-  }
-
-  return foundExtensionLocally;
-};
-
-// adds an extension to local `active_extensions`
-export const addToLocalExtensions = (id: string) => {
-  const localExtensions = localStorageOrDefault<string[]>(
-    `active_extensions`,
-    [],
-    true
+  localStorage.setItem(
+    'external_accounts',
+    JSON.stringify(localExternalAccounts)
   );
-  if (Array.isArray(localExtensions)) {
-    if (!localExtensions.includes(id)) {
-      localExtensions.push(id);
-      localStorage.setItem(
-        'active_extensions',
-        JSON.stringify(localExtensions)
-      );
-    }
-  }
 };
