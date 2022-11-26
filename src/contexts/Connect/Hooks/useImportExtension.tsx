@@ -7,9 +7,9 @@ import { useExtensions } from 'contexts/Extensions';
 import { ExtensionInteface } from 'contexts/Extensions/types';
 import { isValidAddress } from 'Utils';
 import { ExtensionAccount, ImportedAccount } from '../types';
-import { addToLocalExtensions } from '../Utils';
+import { addToLocalExtensions, getInExternalAccounts } from '../Utils';
 
-export const useImportExtension = (accounts: Array<ImportedAccount>) => {
+export const useImportExtension = () => {
   const { network } = useApi();
   const { setExtensionStatus } = useExtensions();
 
@@ -19,8 +19,12 @@ export const useImportExtension = (accounts: Array<ImportedAccount>) => {
   // connected extensions. Calls separate method to handle account importing.
   const handleImportExtension = (
     id: string,
+    accounts: Array<ExtensionAccount>,
     extension: ExtensionInteface,
-    injected: Array<ExtensionAccount>
+    injected: Array<ExtensionAccount>,
+    callbacks: {
+      forgetAccounts: any;
+    }
   ) => {
     // update extensions status to connected.
     setExtensionStatus(id, 'connected');
@@ -29,7 +33,13 @@ export const useImportExtension = (accounts: Array<ImportedAccount>) => {
 
     // exit if no accounts to be imported.
     if (injected.length) {
-      return handleInjectedAccounts(id, extension, injected);
+      return handleInjectedAccounts(
+        id,
+        accounts,
+        extension,
+        injected,
+        callbacks
+      );
     }
     return [];
   };
@@ -39,8 +49,12 @@ export const useImportExtension = (accounts: Array<ImportedAccount>) => {
   // Gets accounts to be imported and commits them to state.
   const handleInjectedAccounts = (
     id: string,
+    accounts: Array<ExtensionAccount>,
     extension: ExtensionInteface,
-    injected: Array<ExtensionAccount>
+    injected: Array<ExtensionAccount>,
+    callbacks: {
+      forgetAccounts: any;
+    }
   ) => {
     // set network ss58 format
     const keyring = new Keyring();
@@ -58,11 +72,15 @@ export const useImportExtension = (accounts: Array<ImportedAccount>) => {
       return account;
     });
 
+    // remove injected if they exist in local external accounts
+    callbacks.forgetAccounts(getInExternalAccounts(injected, network));
+
     // remove accounts that have already been injected via another extension.
     injected = injected.filter(
       (i: ExtensionAccount) =>
         !accounts.map((j: ImportedAccount) => j.address).includes(i.address)
     );
+
     // format account properties.
     injected = injected.map((a: ExtensionAccount) => {
       return {

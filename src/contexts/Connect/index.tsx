@@ -43,11 +43,11 @@ export const ConnectProvider = ({
     setExtensionsFetched,
     extensions,
   } = useExtensions();
+  const { handleImportExtension } = useImportExtension();
+
   // store accounts list
   const [accounts, setAccounts] = useState<Array<ImportedAccount>>([]);
   const accountsRef = useRef(accounts);
-
-  const { handleImportExtension } = useImportExtension(accountsRef.current);
 
   // store the currently active account
   const [activeAccount, _setActiveAccount] = useState<string | null>(null);
@@ -230,32 +230,18 @@ export const ConnectProvider = ({
                 if (!injected) {
                   return;
                 }
-                injected = handleImportExtension(id, extension, injected);
+                injected = handleImportExtension(
+                  id,
+                  accountsRef.current,
+                  extension,
+                  injected,
+                  {
+                    forgetAccounts,
+                  }
+                );
 
                 if (injected.length) {
-                  // remove any injected accounts from local external if any exist
-                  const localExternalAccounts = getLocalExternalAccounts(
-                    network,
-                    true
-                  );
-                  const localAccountsToForget =
-                    localExternalAccounts.filter(
-                      (l: ExternalAccount) =>
-                        (injected || []).find(
-                          (a: ExtensionAccount) => a.address === l.address
-                        ) !== undefined && l.addedBy === 'system'
-                    ) || [];
-
-                  forgetAccounts(localAccountsToForget);
-
-                  // reformat address to ensure correct format
-                  injected.forEach(async (account: ExtensionAccount) => {
-                    const { address } = keyring.addFromAddress(account.address);
-                    account.address = address;
-                    return account;
-                  });
                   // connect to active account if found in extension
-                  // TODO: abstract this logic via a flag.
                   const activeAccountInWallet =
                     injected.find(
                       (a: ExtensionAccount) => a.address === _activeAccount
@@ -328,32 +314,17 @@ export const ConnectProvider = ({
             if (!injected) {
               return;
             }
-            injected = handleImportExtension(id, extension, injected);
+            injected = handleImportExtension(
+              id,
+              accountsRef.current,
+              extension,
+              injected,
+              {
+                forgetAccounts,
+              }
+            );
 
             if (injected.length) {
-              // remove injected if they exist in local external accounts
-              const localExternalAccounts = getLocalExternalAccounts(
-                network,
-                true
-              );
-
-              const localAccountsToForget =
-                localExternalAccounts.filter(
-                  (l: ExternalAccount) =>
-                    (injected || []).find(
-                      (a: ExtensionAccount) => a.address === l.address
-                    ) !== undefined && l.addedBy === 'system'
-                ) || [];
-
-              forgetAccounts(localAccountsToForget);
-
-              // reformat address to ensure correct format
-              injected.forEach(async (account: ExtensionAccount) => {
-                const { address } = keyring.addFromAddress(account.address);
-                account.address = address;
-                return account;
-              });
-
               // connect to active account if found in extension
               const activeAccountInWallet =
                 injected.find(
