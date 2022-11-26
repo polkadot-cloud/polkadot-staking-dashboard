@@ -1,6 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import Keyring from '@polkadot/keyring';
+import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
 import { ExtensionInteface } from 'contexts/Extensions/types';
 import { isValidAddress } from 'Utils';
@@ -8,6 +10,7 @@ import { ExtensionAccount, ImportedAccount } from '../types';
 import { addToLocalExtensions } from '../Utils';
 
 export const useImportExtension = (accounts: Array<ImportedAccount>) => {
+  const { network } = useApi();
   const { setExtensionStatus } = useExtensions();
 
   // handles connecting to a new extension.
@@ -39,17 +42,27 @@ export const useImportExtension = (accounts: Array<ImportedAccount>) => {
     extension: ExtensionInteface,
     injected: Array<ExtensionAccount>
   ) => {
-    // forget external accounts that are being injected now.
+    // set network ss58 format
+    const keyring = new Keyring();
+    keyring.setSS58Format(network.ss58);
+
+    // remove accounts that do not contain correctly formatted addresses.
+    injected = injected.filter((i: ExtensionAccount) => {
+      return isValidAddress(i.address);
+    });
+
+    // reformat addresses to ensure correct ss58 format
+    injected.forEach(async (account: ExtensionAccount) => {
+      const { address } = keyring.addFromAddress(account.address);
+      account.address = address;
+      return account;
+    });
 
     // remove accounts that have already been injected via another extension.
     injected = injected.filter(
       (i: ExtensionAccount) =>
         !accounts.map((j: ImportedAccount) => j.address).includes(i.address)
     );
-    // remove accounts that do not contain correctly formatted addresses.
-    injected = injected.filter((i: ExtensionAccount) => {
-      return isValidAddress(i.address);
-    });
     // format account properties.
     injected = injected.map((a: ExtensionAccount) => {
       return {
