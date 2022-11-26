@@ -254,7 +254,7 @@ export const ConnectProvider = ({
                   return;
                 }
                 // update extensions status
-                updateExtensionStatus(id, 'connected');
+                setExtensionStatus(id, 'connected');
                 // update local active extensions
                 addToLocalExtensions(id);
 
@@ -379,7 +379,7 @@ export const ConnectProvider = ({
               return;
             }
             // update extensions status
-            updateExtensionStatus(id, 'connected');
+            setExtensionStatus(id, 'connected');
             // update local active extensions
             addToLocalExtensions(id);
 
@@ -472,18 +472,18 @@ export const ConnectProvider = ({
     // authentication error (extension not enabled)
     if (err.substring(0, 9) === 'AuthError') {
       removeFromLocalExtensions(id);
-      updateExtensionStatus(id, 'not_authenticated');
+      setExtensionStatus(id, 'not_authenticated');
     }
 
     // extension not found (does not exist)
     if (err.substring(0, 17) === 'NotInstalledError') {
       removeFromLocalExtensions(id);
-      updateExtensionStatus(id, 'not_found');
+      setExtensionStatus(id, 'not_found');
     }
 
     // general error (maybe enabled but no accounts trust app)
     if (err.substring(0, 5) === 'Error') {
-      updateExtensionStatus(id, 'no_accounts');
+      setExtensionStatus(id, 'no_accounts');
     }
   };
 
@@ -508,10 +508,6 @@ export const ConnectProvider = ({
     localStorage.removeItem(`${network.name.toLowerCase()}_active_account`);
     setActiveAccount(null);
     setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
-  };
-
-  const updateExtensionStatus = (id: string, status: string) => {
-    setExtensionStatus(id, status);
   };
 
   const addToLocalExtensions = (id: string) => {
