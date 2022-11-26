@@ -22,6 +22,7 @@ import {
   getActiveAccountLocal,
   getLocalExternalAccounts,
   removeFromLocalExtensions,
+  removeLocalExternalAccounts,
 } from './Utils';
 
 export const ConnectContext = React.createContext<ConnectContextInterface>(
@@ -81,9 +82,10 @@ export const ConnectProvider = ({
       [],
       true
     );
-    // if extensions have been fetched
+    // if extensions have been fetched,
+    // get accounts if extensions exist and
+    // local extensions exist (previously connected).
     if (extensions) {
-      // get account if extensions exist and local extensions exist (previously connected).
       if (extensions.length && localExtensions.length) {
         connectActiveExtensions();
       } else {
@@ -95,23 +97,17 @@ export const ConnectProvider = ({
     };
   }, [extensions?.length, network]);
 
-  /* once extension accounts are synced, fetch
-   * any external accounts present in localStorage.
-   */
+  // once extension accounts are synced, fetch
+  // any external accounts present in localStorage.
   useEffect(() => {
-    // get local external accounts once extension fetching completes
-    if (extensionsFetched) {
-      importExternalAccounts();
-    }
+    if (extensionsFetched) importExternalAccounts();
   }, [extensionsFetched]);
 
   /*
    * Unsubscrbe all account subscriptions
    */
   const unsubscribeAll = () => {
-    unsubscribeRef.current.forEach(({ unsub }: AnyApi) => {
-      unsub();
-    });
+    unsubscribeRef.current.forEach(({ unsub }: AnyApi) => unsub());
   };
 
   /*
@@ -122,12 +118,10 @@ export const ConnectProvider = ({
     const keys = _accounts.map((a: ExternalAccount) => a.address);
 
     // unsubscribe from provided keys
-    const unsubs = unsubscribeRef.current.filter((f: AnyApi) =>
-      keys.includes(f.key)
-    );
-    Object.values(unsubs).forEach(({ unsub }: AnyApi) => {
-      unsub();
-    });
+    Object.values(
+      unsubscribeRef.current.filter((f: AnyApi) => keys.includes(f.key))
+    ).forEach(({ unsub }: AnyApi) => unsub());
+
     // filter keys from current unsubs
     const unsubsNew = unsubscribeRef.current.filter(
       (f: AnyApi) => !keys.includes(f.key)
@@ -142,22 +136,8 @@ export const ConnectProvider = ({
       setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
     }
 
-    // update localStorage
-    let localExternalAccounts = getLocalExternalAccounts(network, true);
-
-    // remove forgotten accounts from localStorage
-    localExternalAccounts = localExternalAccounts.filter(
-      (l: ExternalAccount) =>
-        _accounts.find(
-          (a: ImportedAccount) =>
-            a.address === l.address && l.network === network.name
-        ) === undefined
-    );
-
-    localStorage.setItem(
-      'external_accounts',
-      JSON.stringify(localExternalAccounts)
-    );
+    // remove forgotten external accounts from localStorage
+    removeLocalExternalAccounts(network, _accounts);
 
     // update accounts
     const accountsNew = accountsRef.current.filter(
@@ -166,8 +146,8 @@ export const ConnectProvider = ({
         undefined
     );
 
+    // update accounts and corresponding unsubs
     setStateWithRef(accountsNew, setAccounts, accountsRef);
-    // update unsubs state with filtered unsubs
     setStateWithRef(unsubsNew, setUnsubscribe, unsubscribeRef);
   };
 
