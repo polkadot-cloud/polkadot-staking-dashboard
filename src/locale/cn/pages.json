@@ -195,6 +195,14 @@
             "not_staking": "无抵押",
             "from_pool": "从提名池",
             "deducted_from_bond": "从质押里扣除"
+        },
+        "validators": {
+            "average_commission": "平均佣金",
+            "active_validators": "活跃验证人",
+            "total_validators": "所有验证人",
+            "network_validators": "验证人列表",
+            "connecting": "连接中...",
+            "fetching_validators": "正在获取验证人信息..."
         }
     }
 }

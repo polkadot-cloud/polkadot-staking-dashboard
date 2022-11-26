@@ -4,11 +4,13 @@
 import BN from 'bn.js';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
+import { useTranslation } from 'react-i18next';
 import { toFixedIfNecessary } from 'Utils';
 
 const TotalValidatorsStatBox = () => {
   const { staking } = useStaking();
   const { totalValidators, maxValidatorsCount } = staking;
+  const { t } = useTranslation('pages');
 
   // total validators as percent
   let totalValidatorsAsPercent = 0;
@@ -19,7 +21,7 @@ const TotalValidatorsStatBox = () => {
   }
 
   const params = {
-    label: 'Total Validators',
+    label: t('validators.total_validators'),
     stat: {
       value: totalValidators.toNumber(),
       total: maxValidatorsCount.toNumber(),

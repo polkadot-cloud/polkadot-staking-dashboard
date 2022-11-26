@@ -197,6 +197,14 @@
             "not_staking": "Not Staking",
             "from_pool": "From Pool",
             "deducted_from_bond": "Deducted from bond"
+        },
+        "validators": {
+            "average_commission": "Average Commission",
+            "active_validators": "Active Validators",
+            "total_validators": "Total Validators",
+            "network_validators": "Network Validators",
+            "connecting": "Connecting...",
+            "fetching_validators": "Fetching validators..."
         }
     }
 }
