@@ -63,7 +63,7 @@ export const Filters = () => {
               icon={faCheck}
               transform="grow-2"
               onClick={() => {
-                toggleFilter(FilterType.Include, 'validators', e);
+                toggleFilter(FilterType.Include, 'pools', e);
               }}
             />
           ))}

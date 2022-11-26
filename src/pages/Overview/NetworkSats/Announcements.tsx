@@ -98,10 +98,10 @@ export const Announcements = () => {
     });
   }
 
-  // 90% plus nominators reached - warning
+  // 90% plus nominators reached
   if (nominatorReachedPercentage.toNumber() >= 90) {
     announcements.push({
-      class: 'warning',
+      class: 'neutral',
       title: `${toFixedIfNecessary(
         nominatorReachedPercentage.toNumber(),
         2
@@ -123,7 +123,7 @@ export const Announcements = () => {
       subtitle: `${t('overview.available_to_join', { networkName })}`,
     });
 
-    // total locked in pols
+    // total locked in pools
     announcements.push({
       class: 'pools',
       title: `${totalPoolPointsBase} ${network.unit} ${t('overview.in_pools')}`,
