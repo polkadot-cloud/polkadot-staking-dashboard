@@ -4,7 +4,7 @@
 import Keyring from '@polkadot/keyring';
 import { Network } from 'types';
 import { localStorageOrDefault } from 'Utils';
-import { ExternalAccount, ImportedAccount } from './types';
+import { ExtensionAccount, ExternalAccount, ImportedAccount } from './types';
 
 // extension utils
 
@@ -57,7 +57,7 @@ export const extensionIsLocal = (id: string) => {
 
 // account utils
 
-// gets local `active_account` for a network
+// gets local `activeAccount` for a network
 export const getActiveAccountLocal = (network: Network) => {
   const keyring = new Keyring();
   keyring.setSS58Format(network.ss58);
@@ -82,14 +82,28 @@ export const getLocalExternalAccounts = (
     [],
     true
   ) as Array<ExternalAccount>;
-
-  // only fetch external accounts for active network
   if (activeNetworkOnly) {
     localExternalAccounts = localExternalAccounts.filter(
       (l: ExternalAccount) => l.network === network.name
     );
   }
   return localExternalAccounts;
+};
+
+// gets accounts that exist in local `external_accounts`
+export const getInExternalAccounts = (
+  accounts: Array<ExtensionAccount>,
+  network: Network
+) => {
+  const localExternalAccounts = getLocalExternalAccounts(network, true);
+  return (
+    localExternalAccounts.filter(
+      (l: ExternalAccount) =>
+        (accounts || []).find(
+          (a: ExtensionAccount) => a.address === l.address
+        ) !== undefined && l.addedBy === 'system'
+    ) || []
+  );
 };
 
 // removes local `external_accounts` from local storage.
