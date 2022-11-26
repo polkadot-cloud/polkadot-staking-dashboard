@@ -257,14 +257,9 @@ export const ConnectProvider = ({
                   ) {
                     connectToAccount(activeWalletAccount);
                   }
-                  // remove accounts if they already exist
-                  let _accounts = [...accountsRef.current].filter(
-                    (a: ImportedAccount) => {
-                      return a?.source !== id;
-                    }
-                  );
+
                   // concat accounts and store
-                  _accounts = _accounts.concat(injected);
+                  const _accounts = [...accountsRef.current].concat(injected);
                   setStateWithRef(_accounts, setAccounts, accountsRef);
                 }
               }
@@ -334,14 +329,8 @@ export const ConnectProvider = ({
                 connectToAccount(activeAccountInWallet);
               }
 
-              // remove accounts if they already exist
-              let _accounts = [...accountsRef.current].filter(
-                (a: ImportedAccount) => {
-                  return a?.source !== id;
-                }
-              );
               // concat accounts and store
-              _accounts = _accounts.concat(injected);
+              const _accounts = [...accountsRef.current].concat(injected);
               setStateWithRef(_accounts, setAccounts, accountsRef);
             }
           }
