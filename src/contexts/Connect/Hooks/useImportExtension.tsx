@@ -13,7 +13,7 @@ export const useImportExtension = () => {
   const { network } = useApi();
   const { setExtensionStatus } = useExtensions();
 
-  // handles connecting to a new extension.
+  // Handles connecting to a new extension.
   //
   // Adds extension metadata to state and updates local storage with
   // connected extensions. Calls separate method to handle account importing.
@@ -44,7 +44,7 @@ export const useImportExtension = () => {
     return [];
   };
 
-  // handles importing of extension accounts.
+  // Handles importing of extension accounts.
   //
   // Gets accounts to be imported and commits them to state.
   const handleInjectedAccounts = (
@@ -90,6 +90,7 @@ export const useImportExtension = () => {
         signer: extension.signer,
       };
     });
+
     return injected;
   };
 

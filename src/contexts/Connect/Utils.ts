@@ -106,7 +106,7 @@ export const getInExternalAccounts = (
   );
 };
 
-// removes local `external_accounts` from local storage.
+// removes supplied accounts from local `external_accounts`.
 export const removeLocalExternalAccounts = (
   network: Network,
   accounts: Array<ExternalAccount>
