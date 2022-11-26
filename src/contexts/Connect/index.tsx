@@ -22,6 +22,7 @@ import {
 } from 'Utils';
 import { defaultConnectContext } from './defaults';
 import {
+  addToLocalExtensions,
   extensionIsLocal,
   getActiveAccountLocal,
   getLocalExternalAccounts,
@@ -508,24 +509,6 @@ export const ConnectProvider = ({
     localStorage.removeItem(`${network.name.toLowerCase()}_active_account`);
     setActiveAccount(null);
     setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
-  };
-
-  const addToLocalExtensions = (id: string) => {
-    const localExtensions = localStorageOrDefault<string[]>(
-      `active_extensions`,
-      [],
-      true
-    );
-
-    if (Array.isArray(localExtensions)) {
-      if (!localExtensions.includes(id)) {
-        localExtensions.push(id);
-        localStorage.setItem(
-          'active_extensions',
-          JSON.stringify(localExtensions)
-        );
-      }
-    }
   };
 
   const getAccount = (addr: MaybeAccount) => {

@@ -19,7 +19,7 @@ export const removeFromLocalExtensions = (id: string) => {
   }
 };
 
-// Gets local activeAccount
+// gets local activeAccount
 export const getActiveAccountLocal = (network: Network) => {
   const keyring = new Keyring();
   keyring.setSS58Format(network.ss58);
@@ -70,4 +70,22 @@ export const extensionIsLocal = (id: string) => {
   }
 
   return foundExtensionLocally;
+};
+
+// adds an extension to local `active_extensions`
+export const addToLocalExtensions = (id: string) => {
+  const localExtensions = localStorageOrDefault<string[]>(
+    `active_extensions`,
+    [],
+    true
+  );
+  if (Array.isArray(localExtensions)) {
+    if (!localExtensions.includes(id)) {
+      localExtensions.push(id);
+      localStorage.setItem(
+        'active_extensions',
+        JSON.stringify(localExtensions)
+      );
+    }
+  }
 };
