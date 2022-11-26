@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { DefaultLocale } from 'consts';
-import 'moment/min/locales';
 import { AnyJson } from 'types';
 import { lngNamespaces } from './index';
 
