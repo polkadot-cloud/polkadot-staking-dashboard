@@ -6,12 +6,12 @@ import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useSubscan } from 'contexts/Subscan';
 import { useUi } from 'contexts/UI';
+import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
-import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { humanNumber, planckBnToUnit } from 'Utils';
 import {
@@ -47,6 +47,10 @@ export const Overview = () => {
   const PAYOUTS_HEIGHT = 410;
   const BALANCE_HEIGHT = PAYOUTS_HEIGHT;
 
+  const formatFrom = fromUnixTime(
+    lastReward?.block_timestamp ?? getUnixTime(new Date())
+  );
+  const formatTo = new Date();
   return (
     <>
       <PageTitle title={t('overview.overview')} />
@@ -98,7 +102,7 @@ export const Overview = () => {
                 <span className="fiat">
                   {lastReward === null
                     ? ''
-                    : moment.unix(lastReward.block_timestamp).fromNow()}
+                    : formatDistance(formatFrom, formatTo, { addSuffix: true })}
                 </span>
               </h2>
             </div>

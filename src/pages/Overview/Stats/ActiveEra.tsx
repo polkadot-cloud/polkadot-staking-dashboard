@@ -3,9 +3,9 @@
 
 import { useNetworkMetrics } from 'contexts/Network';
 import { useSessionEra } from 'contexts/SessionEra';
+import { format, fromUnixTime } from 'date-fns';
 import { useEraTimeLeft } from 'library/Hooks/useEraTimeLeft';
 import { Pie } from 'library/StatBoxList/Pie';
-import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 
 const ActiveEraStatBox = () => {
@@ -14,9 +14,8 @@ const ActiveEraStatBox = () => {
   const eraTimeLeft = useEraTimeLeft();
   const { t } = useTranslation('pages');
 
-  // format era time left
-  const _timeleft = moment.duration(eraTimeLeft * 1000, 'milliseconds');
-  const timeleft = `${_timeleft.hours()}:${_timeleft.minutes()}:${_timeleft.seconds()}`;
+  const _timeleft = fromUnixTime(eraTimeLeft);
+  const timeleft = format(_timeleft, 'KK:mm:ss');
 
   const params = {
     label: t('overview.active_era'),

@@ -6,6 +6,7 @@ import { MaxPayoutDays } from 'consts';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useUi } from 'contexts/UI';
+import { format, fromUnixTime } from 'date-fns';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { formatSize, useSize } from 'library/Graphs/Utils';
@@ -19,7 +20,6 @@ import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
-import moment from 'moment';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnySubscan } from 'types';
@@ -65,16 +65,17 @@ export const Payouts = (props: PageProps) => {
     // calculate the earliest and latest payout dates if they exist.
     if (payoutsList?.length) {
       setFromDate(
-        moment
-          .unix(
+        format(
+          fromUnixTime(
             payoutsList[Math.min(MaxPayoutDays - 2, payoutsList.length - 1)]
               .block_timestamp
-          )
-          .format('Do MMMM')
+          ),
+          'do MMM'
+        )
       );
 
       // latest payout date
-      setToDate(moment.unix(payoutsList[0].block_timestamp).format('Do MMMM'));
+      setToDate(format(fromUnixTime(payoutsList[0].block_timestamp), 'do MMM'));
     }
   }, [payoutsList?.length]);
 

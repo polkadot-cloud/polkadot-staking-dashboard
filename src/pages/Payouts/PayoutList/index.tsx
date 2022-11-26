@@ -12,13 +12,13 @@ import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useValidators } from 'contexts/Validators';
 import { Validator } from 'contexts/Validators/types';
+import { formatDistance, fromUnixTime } from 'date-fns';
 import { motion } from 'framer-motion';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { Identity } from 'library/ListItem/Labels/Identity';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
-import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import { networkColors } from 'theme/default';
 import { AnySubscan } from 'types';
@@ -234,7 +234,13 @@ export const PayoutListInner = (props: PayoutListProps) => {
                           {label === 'Slashed' && <h4>Deducted from bond</h4>}
                         </div>
                         <div>
-                          <h5>{moment.unix(p.block_timestamp).fromNow()}</h5>
+                          <h5>
+                            {formatDistance(
+                              fromUnixTime(p.block_timestamp),
+                              new Date(),
+                              { addSuffix: true }
+                            )}
+                          </h5>
                         </div>
                       </div>
                     </div>
