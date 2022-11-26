@@ -20,6 +20,7 @@ import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
+import { locales } from 'locale';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnySubscan } from 'types';
@@ -33,7 +34,7 @@ export const Payouts = (props: PageProps) => {
   const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
-  const { t } = useTranslation('base');
+  const { i18n, t } = useTranslation('base');
 
   const [payoutsList, setPayoutLists] = useState<AnySubscan>();
   const [fromDate, setFromDate] = useState<string | undefined>();
@@ -70,12 +71,19 @@ export const Payouts = (props: PageProps) => {
             payoutsList[Math.min(MaxPayoutDays - 2, payoutsList.length - 1)]
               .block_timestamp
           ),
-          'do MMM'
+          'do MMM',
+          {
+            locale: locales[i18n.resolvedLanguage],
+          }
         )
       );
 
       // latest payout date
-      setToDate(format(fromUnixTime(payoutsList[0].block_timestamp), 'do MMM'));
+      setToDate(
+        format(fromUnixTime(payoutsList[0].block_timestamp), 'do MMM', {
+          locale: locales[i18n.resolvedLanguage],
+        })
+      );
     }
   }, [payoutsList?.length]);
 

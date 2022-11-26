@@ -19,7 +19,9 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { Identity } from 'library/ListItem/Labels/Identity';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
+import { locales } from 'locale';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { networkColors } from 'theme/default';
 import { AnySubscan } from 'types';
 import { clipAddress, planckToUnit } from 'Utils';
@@ -37,6 +39,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
   const { listFormat, setListFormat } = usePayoutList();
   const { validators, meta } = useValidators();
   const { bondedPools } = useBondedPools();
+  const { i18n } = useTranslation();
 
   const disableThrottle = props.disableThrottle ?? false;
 
@@ -238,7 +241,10 @@ export const PayoutListInner = (props: PayoutListProps) => {
                             {formatDistance(
                               fromUnixTime(p.block_timestamp),
                               new Date(),
-                              { addSuffix: true }
+                              {
+                                addSuffix: true,
+                                locale: locales[i18n.resolvedLanguage],
+                              }
                             )}
                           </h5>
                         </div>

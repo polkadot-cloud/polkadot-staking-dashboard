@@ -12,6 +12,7 @@ import { GraphWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
+import { locales } from 'locale';
 import { useTranslation } from 'react-i18next';
 import { humanNumber, planckBnToUnit } from 'Utils';
 import {
@@ -42,15 +43,25 @@ export const Overview = () => {
     payouts,
     poolClaims
   );
-  const { t } = useTranslation('pages');
+  const { i18n, t } = useTranslation('pages');
 
   const PAYOUTS_HEIGHT = 410;
   const BALANCE_HEIGHT = PAYOUTS_HEIGHT;
 
-  const formatFrom = fromUnixTime(
-    lastReward?.block_timestamp ?? getUnixTime(new Date())
-  );
-  const formatTo = new Date();
+  let formatFrom = new Date();
+  let formatTo = new Date();
+  let formatOpts = {};
+  if (lastReward !== null) {
+    formatFrom = fromUnixTime(
+      lastReward?.block_timestamp ?? getUnixTime(new Date())
+    );
+    formatTo = new Date();
+    formatOpts = {
+      addSuffix: true,
+      locale: locales[i18n.resolvedLanguage],
+    };
+  }
+
   return (
     <>
       <PageTitle title={t('overview.overview')} />
@@ -102,7 +113,7 @@ export const Overview = () => {
                 <span className="fiat">
                   {lastReward === null
                     ? ''
-                    : formatDistance(formatFrom, formatTo, { addSuffix: true })}
+                    : formatDistance(formatFrom, formatTo, formatOpts)}
                 </span>
               </h2>
             </div>
