@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import Keyring from '@polkadot/keyring';
-import { ExtensionConfig, EXTENSIONS } from 'config/extensions';
 import { DappName } from 'consts';
+import { useApi } from 'contexts/Api';
 import {
   ConnectContextInterface,
-  Extension,
   ExtensionAccount,
-  ExtensionInteface,
   ExternalAccount,
   ImportedAccount,
 } from 'contexts/Connect/types';
+import { useExtensions } from 'contexts/Extensions';
+import { Extension, ExtensionInteface } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
 import {
@@ -20,7 +20,6 @@ import {
   localStorageOrDefault,
   setStateWithRef,
 } from 'Utils';
-import { useApi } from '../Api';
 import { defaultConnectContext } from './defaults';
 import {
   extensionIsLocal,
@@ -41,6 +40,12 @@ export const ConnectProvider = ({
   children: React.ReactNode;
 }) => {
   const { network } = useApi();
+  const {
+    setExtensionStatus,
+    extensionsFetched,
+    setExtensionsFetched,
+    extensions,
+  } = useExtensions();
 
   // store accounts list
   const [accounts, setAccounts] = useState<Array<ImportedAccount>>([]);
@@ -55,48 +60,9 @@ export const ConnectProvider = ({
     useState<ImportedAccount | null>(null);
   const activeAccountMetaRef = useRef(activeAccountMeta);
 
-  // store whether extensions have been fetched
-  const [extensionsFetched, setExtensionsFetched] = useState(false);
-
-  // store the installed extensions in state
-  const [extensions, setExtensions] = useState<Array<Extension> | null>(null);
-
-  // store extensions metadata in state
-  const [extensionsStatus, setExtensionsStatus] = useState<{
-    [key: string]: string;
-  }>({});
-  const extensionsStatusRef = useRef(extensionsStatus);
-
   // store unsubscribe handler for connected extensions
   const [unsubscribe, setUnsubscribe] = useState<AnyApi>([]);
   const unsubscribeRef = useRef(unsubscribe);
-
-  const getInstalledExtensions = () => {
-    const { injectedWeb3 }: AnyApi = window;
-
-    const _exts: Extension[] = [];
-    EXTENSIONS.forEach((e: ExtensionConfig) => {
-      if (injectedWeb3[e.id] !== undefined) {
-        _exts.push({
-          ...e,
-          ...injectedWeb3[e.id],
-        });
-      }
-    });
-
-    return _exts;
-  };
-
-  // initialise extensions
-  useEffect(() => {
-    if (!extensions) {
-      // timeout for initialising injectedWeb3
-      setTimeout(() => setExtensions(getInstalledExtensions()), 200);
-    }
-    return () => {
-      unsubscribeAll();
-    };
-  });
 
   /* re-sync extensions accounts on network switch
    * do this if activeAccount is present.
@@ -110,6 +76,7 @@ export const ConnectProvider = ({
     setStateWithRef(null, _setActiveAccount, activeAccountRef);
     setStateWithRef([], setAccounts, accountsRef);
     setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
+    setExtensionsFetched(false);
 
     // get active extensions
     const localExtensions = localStorageOrDefault(
@@ -117,9 +84,6 @@ export const ConnectProvider = ({
       [],
       true
     );
-
-    setExtensionsFetched(false);
-
     // if extensions have been fetched
     if (extensions) {
       // get account if extensions exist and local extensions exist (previously connected).
@@ -129,6 +93,9 @@ export const ConnectProvider = ({
         setExtensionsFetched(true);
       }
     }
+    return () => {
+      unsubscribeAll();
+    };
   }, [extensions?.length, network]);
 
   /* once extension accounts are synced, fetch
@@ -338,6 +305,7 @@ export const ConnectProvider = ({
                     return account;
                   });
                   // connect to active account if found in extension
+                  // TODO: abstract this logic via a flag.
                   const activeAccountInWallet =
                     injected.find(
                       (a: ExtensionAccount) => a.address === _activeAccount
@@ -543,13 +511,7 @@ export const ConnectProvider = ({
   };
 
   const updateExtensionStatus = (id: string, status: string) => {
-    setStateWithRef(
-      Object.assign(extensionsStatusRef.current, {
-        [id]: status,
-      }),
-      setExtensionsStatus,
-      extensionsStatusRef
-    );
+    setExtensionStatus(id, status);
   };
 
   const addToLocalExtensions = (id: string) => {
@@ -664,8 +626,6 @@ export const ConnectProvider = ({
         accountHasSigner,
         isReadOnlyAccount,
         forgetAccounts,
-        extensions: extensions ?? [],
-        extensionsStatus: extensionsStatusRef.current,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
         activeAccountMeta: activeAccountMetaRef.current,
