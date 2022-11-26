@@ -88,10 +88,10 @@ export const HomeInner = () => {
         button={
           totalAccountPools
             ? {
-              title: t('pools.all_roles'),
-              onClick: () =>
-                openModalWith('AccountPoolRoles', { who: activeAccount }),
-            }
+                title: t('pools.all_roles'),
+                onClick: () =>
+                  openModalWith('AccountPoolRoles', { who: activeAccount }),
+              }
             : undefined
         }
       />

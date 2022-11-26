@@ -12,13 +12,14 @@ import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useValidators } from 'contexts/Validators';
 import { Validator } from 'contexts/Validators/types';
+import { formatDistance, fromUnixTime } from 'date-fns';
 import { motion } from 'framer-motion';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { Identity } from 'library/ListItem/Labels/Identity';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
-import moment from 'moment';
+import { locales } from 'locale';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { networkColors } from 'theme/default';
@@ -38,7 +39,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
   const { listFormat, setListFormat } = usePayoutList();
   const { validators, meta } = useValidators();
   const { bondedPools } = useBondedPools();
-  const { t } = useTranslation('pages');
+  const { i18n, t } = useTranslation('pages');
 
   const disableThrottle = props.disableThrottle ?? false;
 
@@ -240,7 +241,16 @@ export const PayoutListInner = (props: PayoutListProps) => {
                           )}
                         </div>
                         <div>
-                          <h5>{moment.unix(p.block_timestamp).fromNow()}</h5>
+                          <h5>
+                            {formatDistance(
+                              fromUnixTime(p.block_timestamp),
+                              new Date(),
+                              {
+                                addSuffix: true,
+                                locale: locales[i18n.resolvedLanguage],
+                              }
+                            )}
+                          </h5>
                         </div>
                       </div>
                     </div>

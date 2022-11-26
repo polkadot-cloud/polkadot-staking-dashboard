@@ -2,14 +2,21 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { AppVersion, DefaultLocale } from 'consts';
+import { enGB, zhCN } from 'date-fns/locale';
 import i18next from 'i18next';
-import moment from 'moment';
 import { initReactI18next } from 'react-i18next';
+import { AnyJson } from 'types';
 import baseEn from './en/base.json';
 import helpEn from './en/help.json';
 import pagesEn from './en/pages.json';
 import tipsEn from './en/tips.json';
 import { doDynamicImport, getActiveLanguage, getResources } from './utils';
+
+// available locales as key value pairs
+export const locales: { [key: string]: AnyJson } = {
+  en: enGB,
+  cn: zhCN,
+};
 
 // available languages as an array of strings.
 export const availableLanguages = ['en', 'cn'];
@@ -54,19 +61,17 @@ if (dynamicLoad) {
   doDynamicImport(lng, i18next);
 }
 
-// map i18n to moment locale keys, with any custom amendments.
-const i18ToMomentLocaleMap: { [key: string]: string } = {
+// map i18n to BCP 47 keys, with any custom amendments.
+const i18ToLocaleMap: { [key: string]: string } = {
   ...Object.fromEntries(availableLanguages.map((a: string) => [a, a])),
+  en: 'en-gb',
   cn: 'zh-cn',
 };
 
-// convert i18 locale key to moment key if needed.
-export const i18ToMomentLocale = (l: string) => {
-  return i18ToMomentLocaleMap[l] || DefaultLocale;
+// convert i18n locale key to BCP 47 key if needed.
+export const i18ToLocale = (l: string) => {
+  return i18ToLocaleMap[l] || DefaultLocale;
 };
-
-// set moment locale
-moment.locale(i18ToMomentLocale(defaultLng));
 
 // export i18next for context.
 export { i18next };

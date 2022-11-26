@@ -57,7 +57,7 @@ export const PoolName = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={setup.metadata !== ''}
-        title={t('pools.pool_name')}
+        title={t('pools.pool_name') || ''}
         // helpKey="Bonding"
         setupType={SetupType.Pool}
       />
