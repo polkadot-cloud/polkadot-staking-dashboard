@@ -26,15 +26,12 @@ export const List = () => {
         (v) => v.validators[network.name.toLowerCase()] !== undefined
       )
     );
-  }, [network, validatorCommunity]);
+  }, [network]);
 
   useEffect(() => {
     window.scrollTo(0, scrollPos);
   }, [scrollPos]);
 
-  // TODO: add ordering (random, alphabetically ascending or descending) (larger ValidatorList style buttons).
-  // TODO: ability to pin validator identities to the top of the list (persist to localStorage).
-  // TODO: refer to saved scroll pos (context) and go to it immediately when activeItem goes back to null.
   const container = {
     hidden: { opacity: 0 },
     show: {
