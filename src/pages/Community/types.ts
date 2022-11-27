@@ -1,7 +1,4 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
-
-import { FunctionComponent, SVGProps } from 'react';
 
 export interface ItemProps {
   item: Item;
@@ -14,6 +11,6 @@ export interface Item {
   email: string;
   twitter: string;
   website: string;
-  Thumbnail: FunctionComponent<SVGProps<SVGSVGElement>>;
+  thumbnail: string;
   validators: { [key: string]: string };
 }
