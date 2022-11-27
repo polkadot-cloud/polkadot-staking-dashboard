@@ -10,6 +10,7 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
+import { useTranslation } from 'react-i18next';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
@@ -22,6 +23,7 @@ export const useStatusButtons = () => {
   const { bondedPools } = useBondedPools();
   const { isOwner } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
+  const { t } = useTranslation('pages');
 
   const { active } = getTransferOptions(activeAccount).pool;
   const poolSetupPercent = getPoolSetupProgressPercent(activeAccount);
@@ -29,7 +31,9 @@ export const useStatusButtons = () => {
   let _label;
   let _buttons;
   const createBtn = {
-    title: `Create${poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``}`,
+    title: `${t('pools.create')}${
+      poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``
+    }`,
     icon: faPlusCircle,
     large: true,
     transform: 'grow-1',
@@ -43,7 +47,7 @@ export const useStatusButtons = () => {
   };
 
   const joinPoolBtn = {
-    title: `Join`,
+    title: `${t('pools.join')}`,
     icon: faUserPlus,
     large: true,
     transform: 'grow-1',
@@ -56,14 +60,14 @@ export const useStatusButtons = () => {
   };
 
   if (!membership) {
-    _label = 'Pool Membership';
+    _label = t('pools.pool_membership');
     _buttons = [createBtn, joinPoolBtn];
   } else if (isOwner()) {
-    _label = `Owner of Pool ${membership.poolId}`;
+    _label = `${t('pools.owner_of_pool')} ${membership.poolId}`;
   } else if (active?.gtn(0)) {
-    _label = `Member of Pool ${membership.poolId}`;
+    _label = `${t('pools.member_of_pool')} ${membership.poolId}`;
   } else {
-    _label = `Leaving Pool ${membership.poolId}`;
+    _label = `${t('pools.leaving_pool')} ${membership.poolId}`;
   }
   return { label: _label, buttons: _buttons };
 };

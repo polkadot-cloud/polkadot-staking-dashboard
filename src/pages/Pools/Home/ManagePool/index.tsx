@@ -12,6 +12,7 @@ import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import Nominations from 'pages/Nominate/Active/Nominations';
+import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 
 export const ManagePool = () => {
@@ -26,6 +27,7 @@ export const ManagePool = () => {
     poolNominations,
     selectedActivePool,
   } = useActivePools();
+  const { t } = useTranslation('pages');
 
   const isNominating = !!poolNominations?.targets?.length;
   const nominator = selectedActivePool?.addresses?.stash ?? null;
@@ -42,14 +44,14 @@ export const ManagePool = () => {
           <>
             <CardHeaderWrapper withAction>
               <h3>
-                Generate Nominations
+                {t('pools.generate_nominations')}
                 <OpenHelpIcon helpKey="Nominations" />
               </h3>
               <div>
                 <ButtonPrimary
                   iconLeft={faChevronCircleRight}
                   iconTransform="grow-1"
-                  text="Nominate"
+                  text={t('pools.nominate')}
                   disabled={!canNominate}
                   onClick={() => openModalWith('NominatePool', {}, 'small')}
                 />

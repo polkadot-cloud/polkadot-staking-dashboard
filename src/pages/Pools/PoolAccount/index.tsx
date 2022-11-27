@@ -10,6 +10,7 @@ import { NotificationText } from 'contexts/Notifications/types';
 import { motion } from 'framer-motion';
 import { Identicon } from 'library/Identicon';
 import { getIdentityDisplay } from 'library/ValidatorList/Validator/Utils';
+import { useTranslation } from 'react-i18next';
 import { clipAddress, convertRemToPixels } from 'Utils';
 import { PoolAccountProps } from '../types';
 import { Wrapper } from './Wrapper';
@@ -19,6 +20,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
 
   const { addNotification } = useNotifications();
   const { meta } = useAccount();
+  const { t } = useTranslation('pages');
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
@@ -49,7 +51,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
         transition={{ duration: 0.3 }}
       >
         {address === null ? (
-          <h4>Not Set</h4>
+          <h4>{t('pools.not_set')}</h4>
         ) : synced && display !== null ? (
           <>
             <div className="icon">

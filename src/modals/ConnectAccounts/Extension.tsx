@@ -4,14 +4,15 @@
 import { faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
-import { Extension as ExtensionInterface } from 'contexts/Connect/types';
+import { useExtensions } from 'contexts/Extensions';
+import { Extension as ExtensionInterface } from 'contexts/Extensions/types';
 import { useState } from 'react';
 import { ExtensionProps } from './types';
 import { ExtensionWrapper } from './Wrappers';
 
 export const Extension = (props: ExtensionProps) => {
-  const { extensions } = useConnect();
-  const { extensionsStatus } = useConnect();
+  const { extensions } = useExtensions();
+  const { extensionsStatus } = useExtensions();
   const { meta } = props;
   const { id } = meta;
 

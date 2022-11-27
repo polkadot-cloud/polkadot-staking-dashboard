@@ -11,6 +11,7 @@ import { PageTitle } from 'library/PageTitle';
 import { PoolList } from 'library/PoolList';
 import { StatBoxList } from 'library/StatBoxList';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   PageRowWrapper,
   RowPrimaryWrapper,
@@ -36,6 +37,7 @@ export const HomeInner = () => {
   const { getPoolRoles, selectedActivePool } = useActivePools();
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { openModalWith } = useModal();
+  const { t } = useTranslation('pages');
 
   const accountPools = getAccountPools(activeAccount);
   const totalAccountPools = Object.entries(accountPools).length;
@@ -51,7 +53,7 @@ export const HomeInner = () => {
 
   let tabs = [
     {
-      title: 'Overview',
+      title: t('pools.overview'),
       active: activeTab === 0,
       onClick: () => setActiveTab(0),
     },
@@ -59,7 +61,7 @@ export const HomeInner = () => {
 
   if (selectedActivePool) {
     tabs = tabs.concat({
-      title: 'Members',
+      title: t('pools.members'),
       active: activeTab === 1,
       onClick: () => setActiveTab(1),
     });
@@ -67,12 +69,12 @@ export const HomeInner = () => {
 
   tabs = tabs.concat(
     {
-      title: 'All Pools',
+      title: t('pools.all_pools'),
       active: activeTab === 2,
       onClick: () => setActiveTab(2),
     },
     {
-      title: 'Favorites',
+      title: t('pools.favorites'),
       active: activeTab === 3,
       onClick: () => setActiveTab(3),
     }
@@ -81,12 +83,12 @@ export const HomeInner = () => {
   return (
     <>
       <PageTitle
-        title="Pools"
+        title={t('pools.pools')}
         tabs={tabs}
         button={
           totalAccountPools
             ? {
-                title: 'All Roles',
+                title: t('pools.all_roles'),
                 onClick: () =>
                   openModalWith('AccountPoolRoles', { who: activeAccount }),
               }
@@ -154,7 +156,7 @@ export const HomeInner = () => {
               <PoolList
                 batchKey="bonded_pools"
                 pools={bondedPools}
-                title="Active Pools"
+                title={t('pools.active_pools')}
                 defaultFilters={{
                   includes: ['active'],
                   excludes: ['locked', 'destroying'],
