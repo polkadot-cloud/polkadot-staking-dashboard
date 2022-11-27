@@ -236,9 +236,7 @@ export const ConnectProvider = ({
                   accountsRef.current,
                   extension,
                   injected,
-                  {
-                    forgetAccounts,
-                  }
+                  forgetAccounts
                 );
 
                 // store active wallet account if found in this extension
@@ -280,7 +278,8 @@ export const ConnectProvider = ({
         }
       }
 
-      // after last extension, import external accounts
+      // set extension fetched to allow external accounts
+      // to be imported.
       if (i === total) {
         setExtensionsFetched(true);
       }
@@ -312,9 +311,7 @@ export const ConnectProvider = ({
               accountsRef.current,
               extension,
               injected,
-              {
-                forgetAccounts,
-              }
+              forgetAccounts
             );
 
             // set active account for network if not yet set
@@ -326,13 +323,11 @@ export const ConnectProvider = ({
             }
 
             // concat accounts and store
-            if (injected.length) {
-              setStateWithRef(
-                [...accountsRef.current].concat(injected),
-                setAccounts,
-                accountsRef
-              );
-            }
+            setStateWithRef(
+              [...accountsRef.current].concat(injected),
+              setAccounts,
+              accountsRef
+            );
           }
         )) as () => void;
 

@@ -27,9 +27,7 @@ export const useImportExtension = () => {
     accounts: Array<ExtensionAccount>,
     extension: ExtensionInteface,
     injected: Array<ExtensionAccount>,
-    callbacks: {
-      forgetAccounts: AnyFunction;
-    }
+    callback: AnyFunction
   ) => {
     // update extensions status to connected.
     setExtensionStatus(id, 'connected');
@@ -43,7 +41,7 @@ export const useImportExtension = () => {
         accounts,
         extension,
         injected,
-        callbacks
+        callback
       );
     }
     return [];
@@ -57,9 +55,7 @@ export const useImportExtension = () => {
     accounts: Array<ExtensionAccount>,
     extension: ExtensionInteface,
     injected: Array<ExtensionAccount>,
-    callbacks: {
-      forgetAccounts: AnyFunction;
-    }
+    callback: AnyFunction
   ) => {
     // set network ss58 format
     const keyring = new Keyring();
@@ -78,7 +74,7 @@ export const useImportExtension = () => {
     });
 
     // remove injected if they exist in local external accounts
-    callbacks.forgetAccounts(getInExternalAccounts(injected, network));
+    callback(getInExternalAccounts(injected, network));
 
     // remove accounts that have already been injected via another extension.
     injected = injected.filter(
