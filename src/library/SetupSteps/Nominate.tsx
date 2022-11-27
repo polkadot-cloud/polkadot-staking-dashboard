@@ -35,7 +35,7 @@ export const Nominate = (props: NominationsProps) => {
       <Header
         thisSection={section}
         complete={setup.nominations.length > 0}
-        title={t('nominate')}
+        title={t('nominate') || ''}
         helpKey="Nominating"
         setupType={setupType}
       />

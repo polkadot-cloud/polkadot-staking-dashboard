@@ -50,6 +50,7 @@ export const Controller = ({ label }: { label: string }) => {
                 !isReady || !hasController() || isReadOnlyAccount(activeAccount)
               }
               onClick={() => openModalWith('UpdateController', {}, 'large')}
+              style={{ minWidth: '7.5rem' }}
             />
           </div>
         </h2>

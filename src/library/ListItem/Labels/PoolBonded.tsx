@@ -82,7 +82,7 @@ export const PoolBonded = ({
     <>
       <ValidatorStatusWrapper status={nominationStatus}>
         <h5>
-          {nominationStatus === null
+          {nominationStatus === null || !eraStakers.stakers.length
             ? `${t('syncing')}`
             : targets.length
             ? capitalizeFirstLetter(nominationStatus ?? '')

@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useFilters } from 'contexts/Filters';
+import { FilterType } from 'contexts/Filters/types';
 import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { StakingContext } from 'contexts/Staking';
@@ -13,10 +15,6 @@ import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { motion } from 'framer-motion';
-import {
-  useValidatorFilter,
-  ValidatorFilterProvider,
-} from 'library/Filter/context';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
@@ -26,6 +24,7 @@ import { Validator } from 'library/ValidatorList/Validator';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { networkColors } from 'theme/default';
+import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
 import { Filters } from './Filters';
 
@@ -37,6 +36,7 @@ export const ValidatorListInner = (props: any) => {
   const { fetchValidatorMetaBatch } = useValidators();
   const provider = useList();
   const modal = useModal();
+  const { isSyncing } = useUi();
   const { t } = useTranslation('library');
 
   // determine the nominator of the validator list.
@@ -46,14 +46,18 @@ export const ValidatorListInner = (props: any) => {
 
   const { selected, listFormat, setListFormat } = provider;
 
-  const { isSyncing } = useUi();
   const {
-    validatorFilters,
-    validatorOrder,
-    applyValidatorFilters,
-    applyValidatorOrder,
-    validatorSearchFilter,
-  } = useValidatorFilter();
+    getFilters,
+    setMultiFilters,
+    getOrder,
+    getSearchTerm,
+    setSearchTerm,
+  } = useFilters();
+  const { applyFilter, applyOrder, applySearch } = useValidatorFilters();
+  const includes = getFilters(FilterType.Include, 'validators');
+  const excludes = getFilters(FilterType.Exclude, 'validators');
+  const order = getOrder('validators');
+  const searchTerm = getSearchTerm('validators');
 
   const {
     batchKey,
@@ -73,6 +77,7 @@ export const ValidatorListInner = (props: any) => {
   const allowSearch = props.allowSearch ?? false;
   const allowListFormat = props.allowListFormat ?? true;
   const alwaysRefetchValidators = props.alwaysRefetchValidators ?? false;
+  const defaultFilters = props.defaultFilters ?? undefined;
 
   const actionsAll = [...actions].filter((action) => !action.onSelected);
   const actionsSelected = [...actions].filter(
@@ -129,6 +134,26 @@ export const ValidatorListInner = (props: any) => {
     }
   }, [props.validators, nominator]);
 
+  // set default filters
+  useEffect(() => {
+    if (allowFilters) {
+      if (defaultFilters?.includes?.length) {
+        setMultiFilters(
+          FilterType.Include,
+          'validators',
+          defaultFilters?.includes
+        );
+      }
+      if (defaultFilters?.excludes?.length) {
+        setMultiFilters(
+          FilterType.Exclude,
+          'validators',
+          defaultFilters?.excludes
+        );
+      }
+    }
+  }, []);
+
   // configure validator list when network is ready to fetch
   useEffect(() => {
     if (isReady && metrics.activeEra.index !== 0 && !fetched) {
@@ -157,7 +182,7 @@ export const ValidatorListInner = (props: any) => {
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate();
     }
-  }, [validatorFilters, validatorOrder, isSyncing]);
+  }, [order, isSyncing, includes?.length, excludes?.length]);
 
   // handle modal resize on list format change
   useEffect(() => {
@@ -177,13 +202,22 @@ export const ValidatorListInner = (props: any) => {
     filteredValidators: any = Object.assign(validatorsDefault)
   ) => {
     if (allowFilters) {
-      if (validatorOrder !== 'default') {
-        filteredValidators = applyValidatorOrder(
+      if (order !== 'default') {
+        filteredValidators = applyOrder(order, filteredValidators);
+      }
+      filteredValidators = applyFilter(
+        includes,
+        excludes,
+        filteredValidators,
+        batchKey
+      );
+      if (searchTerm) {
+        filteredValidators = applySearch(
           filteredValidators,
-          validatorOrder
+          batchKey,
+          searchTerm
         );
       }
-      filteredValidators = applyValidatorFilters(filteredValidators, batchKey);
       setValidators(filteredValidators);
       setPage(1);
       setRenderIteration(1);
@@ -208,13 +242,15 @@ export const ValidatorListInner = (props: any) => {
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
-    // update validator list
+
     let filteredValidators = Object.assign(validatorsDefault);
-    filteredValidators = validatorSearchFilter(
+    filteredValidators = applyFilter(
+      includes,
+      excludes,
       filteredValidators,
-      batchKey,
-      newValue
+      batchKey
     );
+    filteredValidators = applySearch(filteredValidators, batchKey, newValue);
 
     // ensure no duplicates
     filteredValidators = filteredValidators.filter(
@@ -226,6 +262,7 @@ export const ValidatorListInner = (props: any) => {
     setPage(1);
     setIsSearching(e.currentTarget.value !== '');
     setRenderIteration(1);
+    setSearchTerm('validators', newValue);
   };
 
   return (
@@ -343,9 +380,7 @@ export const ValidatorList = (props: any) => {
       selectActive={selectActive}
       selectToggleable={selectToggleable}
     >
-      <ValidatorFilterProvider>
-        <ValidatorListShouldUpdate {...props} />
-      </ValidatorFilterProvider>
+      <ValidatorListShouldUpdate {...props} />
     </ListProvider>
   );
 };

@@ -136,9 +136,9 @@ export const Status = ({ height }: { height: number }) => {
   // determine pool status - left side
   const poolStatusLeft =
     poolState === PoolState.Block
-      ? t('pools.locked/')
+      ? `${t('pools.locked')} / `
       : poolState === PoolState.Destroy
-      ? t('pools.destroying/')
+      ? `${t('pools.destroying')} / `
       : '';
 
   // determine pool status - right side
