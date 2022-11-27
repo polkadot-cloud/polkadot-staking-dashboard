@@ -50,6 +50,9 @@ export const ValidatorListInner = (props: any) => {
     getOrder,
     getSearchTerm,
     setSearchTerm,
+    resetFilters,
+    resetOrder,
+    clearSearchTerm,
   } = useFilters();
   const { applyFilter, applyOrder, applySearch } = useValidatorFilters();
   const includes = getFilters(FilterType.Include, 'validators');
@@ -149,6 +152,13 @@ export const ValidatorListInner = (props: any) => {
           defaultFilters?.excludes
         );
       }
+
+      return () => {
+        resetFilters(FilterType.Exclude, 'validators');
+        resetFilters(FilterType.Include, 'validators');
+        resetOrder('validators');
+        clearSearchTerm('validators');
+      };
     }
   }, []);
 
