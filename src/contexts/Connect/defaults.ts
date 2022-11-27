@@ -21,7 +21,7 @@ export const defaultConnectContext: ConnectContextInterface = {
   // eslint-disable-next-line
   isReadOnlyAccount: (a) => false,
   // eslint-disable-next-line
-  forgetAccounts: (a) => { },
+  forgetAccounts: (a) => {},
   accounts: [],
   activeAccount: null,
   activeAccountMeta: null,

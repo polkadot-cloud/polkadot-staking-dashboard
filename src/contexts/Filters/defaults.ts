@@ -8,23 +8,23 @@ export const defaultFiltersInterface = {
   // eslint-disable-next-line
   getFilters: (t: FilterType, g: string) => [],
   // eslint-disable-next-line
-  toggleFilter: (t: FilterType, g: string, f: string) => { },
+  toggleFilter: (t: FilterType, g: string, f: string) => {},
   // eslint-disable-next-line
-  setMultiFilters: (t: FilterType, g: string, fs: Array<string>) => { },
+  setMultiFilters: (t: FilterType, g: string, fs: Array<string>) => {},
   // eslint-disable-next-line
   getOrder: (g: string) => 'default',
   // eslint-disable-next-line
-  setOrder: (g: string, o: string) => { },
+  setOrder: (g: string, o: string) => {},
   // eslint-disable-next-line
   getSearchTerm: (g: string) => null,
   // eslint-disable-next-line
-  setSearchTerm: (g: string, t: string) => { },
+  setSearchTerm: (g: string, t: string) => {},
   // eslint-disable-next-line
-  resetFilters: (t: FilterType, g: string) => { },
+  resetFilters: (t: FilterType, g: string) => {},
   // eslint-disable-next-line
-  resetOrder: (g: string) => { },
+  resetOrder: (g: string) => {},
   // eslint-disable-next-line
-  clearSearchTerm: (g: string) => { },
+  clearSearchTerm: (g: string) => {},
   // eslint-disable-next-line
   applyFilters: (t: FilterType, g: string, l: AnyJson, f: AnyFunction) => { },
   // eslint-disable-next-line

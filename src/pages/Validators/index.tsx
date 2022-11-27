@@ -20,7 +20,7 @@ export const Validators = (props: PageProps) => {
 
   const { isReady } = useApi();
   const { validators } = useValidators();
-  const { t } = useTranslation('base');
+  const { t } = useTranslation();
   const defaultFilters = {
     includes: ['active'],
     excludes: ['all_commission', 'blocked_nominations', 'missing_identity'],
@@ -28,7 +28,7 @@ export const Validators = (props: PageProps) => {
 
   return (
     <>
-      <PageTitle title={t(key)} />
+      <PageTitle title={t(key, { ns: 'base' })} />
       <StatBoxList>
         <TotalValidatorsStatBox />
         <ActiveValidatorsStatBox />
@@ -38,13 +38,15 @@ export const Validators = (props: PageProps) => {
         <CardWrapper>
           {!isReady ? (
             <div className="item">
-              <h3>Connecting...</h3>
+              <h3>{t('validators.connecting', { ns: 'pages' })}</h3>
             </div>
           ) : (
             <>
               {validators.length === 0 && (
                 <div className="item">
-                  <h3>Fetching validators...</h3>
+                  <h3>
+                    {t('validators.fetching_validators', { ns: 'pages' })}
+                  </h3>
                 </div>
               )}
 
@@ -53,7 +55,7 @@ export const Validators = (props: PageProps) => {
                   bondType="stake"
                   validators={validators}
                   batchKey="validators_browse"
-                  title="Network Validators"
+                  title={t('validators.network_validators', { ns: 'pages' })}
                   selectable={false}
                   defaultFilters={defaultFilters}
                   allowMoreCols
