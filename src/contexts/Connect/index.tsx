@@ -43,7 +43,11 @@ export const ConnectProvider = ({
     setExtensionsFetched,
     extensions,
   } = useExtensions();
-  const { handleImportExtension } = useImportExtension();
+  const {
+    handleImportExtension,
+    getActiveExtensionAccount,
+    connectActiveExtensionAccount,
+  } = useImportExtension();
 
   // store accounts list
   const [accounts, setAccounts] = useState<Array<ImportedAccount>>([]);
@@ -202,19 +206,18 @@ export const ConnectProvider = ({
   const connectActiveExtensions = async () => {
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
-    const activeAccountLocal = getActiveAccountLocal(network);
 
     // iterate extensions and add accounts to state
-    let extensionsCount = 0;
-    const totalExtensions = extensions?.length ?? 0;
+    const total = extensions?.length ?? 0;
     let activeWalletAccount: ImportedAccount | null = null;
 
     if (!extensions) {
       return;
     }
 
+    let i = 0;
     extensions.forEach(async (_extension: Extension) => {
-      extensionsCount++;
+      i++;
       const { id, enable } = _extension;
 
       // if extension is found locally, subscribe to accounts
@@ -224,7 +227,6 @@ export const ConnectProvider = ({
           const extension: ExtensionInteface = await enable(DappName);
 
           if (extension !== undefined) {
-            // subscribe to accounts
             const _unsubscribe = (await extension.accounts.subscribe(
               (injected: ExtensionAccount[]) => {
                 if (!injected) {
@@ -240,25 +242,19 @@ export const ConnectProvider = ({
                   }
                 );
 
+                // store active wallet account if found in this extension
+                activeWalletAccount = getActiveExtensionAccount(injected);
+
+                // set active account for network on final extension
+                if (i === total && activeAccountRef.current === null) {
+                  connectActiveExtensionAccount(
+                    activeWalletAccount,
+                    connectToAccount
+                  );
+                }
+
+                // concat accounts and store
                 if (injected.length) {
-                  // connect to active account if found in extension
-                  const activeAccountInWallet =
-                    injected.find(
-                      (a: ExtensionAccount) => a.address === activeAccountLocal
-                    ) ?? null;
-                  if (activeAccountInWallet !== null) {
-                    activeWalletAccount = activeAccountInWallet;
-                  }
-
-                  // set active account for network
-                  if (
-                    extensionsCount === totalExtensions &&
-                    activeAccountRef.current === null
-                  ) {
-                    connectToAccount(activeWalletAccount);
-                  }
-
-                  // concat accounts and store
                   const _accounts = [...accountsRef.current].concat(injected);
                   setStateWithRef(_accounts, setAccounts, accountsRef);
                 }
@@ -281,7 +277,7 @@ export const ConnectProvider = ({
       }
 
       // after last extension, import external accounts
-      if (extensionsCount === totalExtensions) {
+      if (i === total) {
         setExtensionsFetched(true);
       }
     });
@@ -297,7 +293,6 @@ export const ConnectProvider = ({
     keyring.setSS58Format(network.ss58);
     const { id, enable } = _extension;
 
-    const activeAccountLocal = getActiveAccountLocal(network);
     try {
       // summons extension popup
       const extension: ExtensionInteface = await enable(DappName);
@@ -319,17 +314,16 @@ export const ConnectProvider = ({
               }
             );
 
-            if (injected.length) {
-              // connect to active account if found in extension
-              const activeAccountInWallet =
-                injected.find(
-                  (a: ExtensionAccount) => a.address === activeAccountLocal
-                ) ?? null;
-              if (activeAccountInWallet !== null) {
-                connectToAccount(activeAccountInWallet);
-              }
+            // set active account for network if not yet set
+            if (activeAccountRef.current === null) {
+              connectActiveExtensionAccount(
+                getActiveExtensionAccount(injected),
+                connectToAccount
+              );
+            }
 
-              // concat accounts and store
+            // concat accounts and store
+            if (injected.length) {
               const _accounts = [...accountsRef.current].concat(injected);
               setStateWithRef(_accounts, setAccounts, accountsRef);
             }

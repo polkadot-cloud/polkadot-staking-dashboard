@@ -5,9 +5,14 @@ import Keyring from '@polkadot/keyring';
 import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
 import { ExtensionInteface } from 'contexts/Extensions/types';
+import { AnyFunction } from 'types';
 import { isValidAddress } from 'Utils';
 import { ExtensionAccount, ImportedAccount } from '../types';
-import { addToLocalExtensions, getInExternalAccounts } from '../Utils';
+import {
+  addToLocalExtensions,
+  getActiveAccountLocal,
+  getInExternalAccounts,
+} from '../Utils';
 
 export const useImportExtension = () => {
   const { network } = useApi();
@@ -23,7 +28,7 @@ export const useImportExtension = () => {
     extension: ExtensionInteface,
     injected: Array<ExtensionAccount>,
     callbacks: {
-      forgetAccounts: any;
+      forgetAccounts: AnyFunction;
     }
   ) => {
     // update extensions status to connected.
@@ -53,7 +58,7 @@ export const useImportExtension = () => {
     extension: ExtensionInteface,
     injected: Array<ExtensionAccount>,
     callbacks: {
-      forgetAccounts: any;
+      forgetAccounts: AnyFunction;
     }
   ) => {
     // set network ss58 format
@@ -94,7 +99,28 @@ export const useImportExtension = () => {
     return injected;
   };
 
+  // checks if the local active account is in the extension.
+  const getActiveExtensionAccount = (injected: Array<ImportedAccount>) => {
+    return (
+      injected.find(
+        (a: ExtensionAccount) => a.address === getActiveAccountLocal(network)
+      ) ?? null
+    );
+  };
+
+  // Connects to active account if in extension.
+  const connectActiveExtensionAccount = (
+    activeWalletAccount: ImportedAccount | null,
+    callback: AnyFunction
+  ) => {
+    if (activeWalletAccount !== null) {
+      callback(activeWalletAccount);
+    }
+  };
+
   return {
     handleImportExtension,
+    getActiveExtensionAccount,
+    connectActiveExtensionAccount,
   };
 };
