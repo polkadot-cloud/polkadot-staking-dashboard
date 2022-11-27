@@ -117,22 +117,22 @@ export const ConnectProvider = ({
   /*
    * Unsubscrbe from some account subscriptions and update the resulting state.
    */
-  const forgetAccounts = (_accounts: Array<ExternalAccount>) => {
-    if (!_accounts.length) return;
-    const keys = _accounts.map((a: ExternalAccount) => a.address);
+  const forgetAccounts = (forget: Array<ExternalAccount>) => {
+    if (!forget.length) return;
+    const addresses = forget.map((a: ExternalAccount) => a.address);
 
-    // unsubscribe from provided keys
+    // unsubscribe from provided addresses
     Object.values(
-      unsubscribeRef.current.filter((f: AnyApi) => keys.includes(f.key))
+      unsubscribeRef.current.filter((f: AnyApi) => addresses.includes(f.key))
     ).forEach(({ unsub }: AnyApi) => unsub());
 
-    // filter keys from current unsubs
+    // filter addresses from current unsubs
     const unsubsNew = unsubscribeRef.current.filter(
-      (f: AnyApi) => !keys.includes(f.key)
+      (f: AnyApi) => !addresses.includes(f.key)
     );
 
     // if active account is being forgotten, disconnect
-    const activeAccountUnsub = _accounts.find(
+    const activeAccountUnsub = forget.find(
       (a: ExternalAccount) => a.address === activeAccount
     );
     if (activeAccountUnsub !== undefined) {
@@ -141,12 +141,12 @@ export const ConnectProvider = ({
     }
 
     // remove forgotten external accounts from localStorage
-    removeLocalExternalAccounts(network, _accounts);
+    removeLocalExternalAccounts(network, forget);
 
     // update accounts
     const accountsNew = accountsRef.current.filter(
       (a: ImportedAccount) =>
-        _accounts.find((e: ExternalAccount) => e.address === a.address) ===
+        forget.find((e: ExternalAccount) => e.address === a.address) ===
         undefined
     );
 
@@ -188,10 +188,12 @@ export const ConnectProvider = ({
       if (activeAccountIsExternal) {
         connectToAccount(activeAccountIsExternal);
       }
-      const _accounts = [...accountsRef.current].concat(localExternalAccounts);
-
       // add external accounts to imported
-      setStateWithRef(_accounts, setAccounts, accountsRef);
+      setStateWithRef(
+        [...accountsRef.current].concat(localExternalAccounts),
+        setAccounts,
+        accountsRef
+      );
     }
   };
 
@@ -395,14 +397,14 @@ export const ConnectProvider = ({
   };
 
   // adds an external account (non-wallet) to accounts
-  const addExternalAccount = (_address: string, addedBy: string) => {
+  const addExternalAccount = (address: string, addedBy: string) => {
     // ensure account is formatted correctly
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
-    const { address } = keyring.addFromAddress(_address);
+    const formatted = keyring.addFromAddress(address).address;
 
     const externalAccount = {
-      address,
+      address: formatted,
       network: network.name,
       name: clipAddress(address),
       source: 'external',
@@ -418,8 +420,8 @@ export const ConnectProvider = ({
 
     // add external account to localStorage if not there already
     if (!exists) {
-      const _localExternal = localExternalAccounts.concat(externalAccount);
-      localStorage.setItem('external_accounts', JSON.stringify(_localExternal));
+      const localExternal = localExternalAccounts.concat(externalAccount);
+      localStorage.setItem('external_accounts', JSON.stringify(localExternal));
     }
 
     // add external account to imported accounts
@@ -450,13 +452,13 @@ export const ConnectProvider = ({
   };
 
   // check an account balance exists on-chain
-  const formatAccountSs58 = (_address: string) => {
+  const formatAccountSs58 = (address: string) => {
     try {
       const keyring = new Keyring();
       keyring.setSS58Format(network.ss58);
-      const { address } = keyring.addFromAddress(_address);
-      if (address !== _address) {
-        return address;
+      const formatted = keyring.addFromAddress(address).address;
+      if (formatted !== address) {
+        return formatted;
       }
       return null;
     } catch (e) {

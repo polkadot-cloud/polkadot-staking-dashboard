@@ -7,7 +7,7 @@ import { useExtensions } from 'contexts/Extensions';
 import { ExtensionInteface } from 'contexts/Extensions/types';
 import { AnyFunction } from 'types';
 import { isValidAddress } from 'Utils';
-import { ExtensionAccount, ImportedAccount } from '../types';
+import { ExtensionAccount, ExternalAccount, ImportedAccount } from '../types';
 import {
   addToLocalExtensions,
   getActiveAccountLocal,
@@ -27,7 +27,7 @@ export const useImportExtension = () => {
     accounts: Array<ExtensionAccount>,
     extension: ExtensionInteface,
     injected: Array<ExtensionAccount>,
-    callback: AnyFunction
+    forget: (a: Array<ExternalAccount>) => void
   ) => {
     // update extensions status to connected.
     setExtensionStatus(id, 'connected');
@@ -35,13 +35,7 @@ export const useImportExtension = () => {
     addToLocalExtensions(id);
 
     if (injected.length) {
-      return handleInjectedAccounts(
-        id,
-        accounts,
-        extension,
-        injected,
-        callback
-      );
+      return handleInjectedAccounts(id, accounts, extension, injected, forget);
     }
     return [];
   };
@@ -54,7 +48,7 @@ export const useImportExtension = () => {
     accounts: Array<ExtensionAccount>,
     extension: ExtensionInteface,
     injected: Array<ExtensionAccount>,
-    callback: AnyFunction
+    forget: (a: Array<ExternalAccount>) => void
   ) => {
     // set network ss58 format
     const keyring = new Keyring();
@@ -73,7 +67,7 @@ export const useImportExtension = () => {
     });
 
     // remove injected if they exist in local external accounts
-    callback(getInExternalAccounts(injected, network));
+    forget(getInExternalAccounts(injected, network));
 
     // remove accounts that have already been injected via another extension.
     injected = injected.filter(
