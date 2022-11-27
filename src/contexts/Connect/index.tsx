@@ -216,9 +216,9 @@ export const ConnectProvider = ({
     }
 
     let i = 0;
-    extensions.forEach(async (_extension: Extension) => {
+    extensions.forEach(async (e: Extension) => {
       i++;
-      const { id, enable } = _extension;
+      const { id, enable } = e;
 
       // if extension is found locally, subscribe to accounts
       if (extensionIsLocal(id)) {
@@ -227,11 +227,10 @@ export const ConnectProvider = ({
           const extension: ExtensionInteface = await enable(DappName);
 
           if (extension !== undefined) {
-            const _unsubscribe = (await extension.accounts.subscribe(
+            const unsub = (await extension.accounts.subscribe(
               (injected: ExtensionAccount[]) => {
-                if (!injected) {
-                  return;
-                }
+                if (!injected) return;
+
                 injected = handleImportExtension(
                   id,
                   accountsRef.current,
@@ -243,7 +242,9 @@ export const ConnectProvider = ({
                 );
 
                 // store active wallet account if found in this extension
-                activeWalletAccount = getActiveExtensionAccount(injected);
+                if (!activeWalletAccount) {
+                  activeWalletAccount = getActiveExtensionAccount(injected);
+                }
 
                 // set active account for network on final extension
                 if (i === total && activeAccountRef.current === null) {
@@ -255,8 +256,11 @@ export const ConnectProvider = ({
 
                 // concat accounts and store
                 if (injected.length) {
-                  const _accounts = [...accountsRef.current].concat(injected);
-                  setStateWithRef(_accounts, setAccounts, accountsRef);
+                  setStateWithRef(
+                    [...accountsRef.current].concat(injected),
+                    setAccounts,
+                    accountsRef
+                  );
                 }
               }
             )) as () => void;
@@ -265,7 +269,7 @@ export const ConnectProvider = ({
             setStateWithRef(
               [...unsubscribeRef.current].concat({
                 key: id,
-                unsub: _unsubscribe,
+                unsub,
               }),
               setUnsubscribe,
               unsubscribeRef
@@ -288,10 +292,10 @@ export const ConnectProvider = ({
    * This is invoked by the user by clicking on an extension.
    * If activeAccount is not found here, it is simply ignored.
    */
-  const connectExtensionAccounts = async (_extension: Extension) => {
+  const connectExtensionAccounts = async (e: Extension) => {
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
-    const { id, enable } = _extension;
+    const { id, enable } = e;
 
     try {
       // summons extension popup
@@ -299,11 +303,10 @@ export const ConnectProvider = ({
 
       if (extension !== undefined) {
         // subscribe to accounts
-        const _unsubscribe = (await extension.accounts.subscribe(
+        const unsub = (await extension.accounts.subscribe(
           (injected: ExtensionAccount[]) => {
-            if (!injected) {
-              return;
-            }
+            if (!injected) return;
+
             injected = handleImportExtension(
               id,
               accountsRef.current,
@@ -324,8 +327,11 @@ export const ConnectProvider = ({
 
             // concat accounts and store
             if (injected.length) {
-              const _accounts = [...accountsRef.current].concat(injected);
-              setStateWithRef(_accounts, setAccounts, accountsRef);
+              setStateWithRef(
+                [...accountsRef.current].concat(injected),
+                setAccounts,
+                accountsRef
+              );
             }
           }
         )) as () => void;
@@ -334,7 +340,7 @@ export const ConnectProvider = ({
         setStateWithRef(
           [...unsubscribeRef.current].concat({
             key: id,
-            unsub: _unsubscribe,
+            unsub,
           }),
           setUnsubscribe,
           unsubscribeRef
