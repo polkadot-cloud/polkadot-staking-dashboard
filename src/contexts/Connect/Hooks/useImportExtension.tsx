@@ -18,7 +18,7 @@ export const useImportExtension = () => {
   const { network } = useApi();
   const { setExtensionStatus } = useExtensions();
 
-  // Handles connecting to a new extension.
+  // Handles importing of an extension.
   //
   // Adds extension metadata to state and updates local storage with
   // connected extensions. Calls separate method to handle account importing.
@@ -95,6 +95,8 @@ export const useImportExtension = () => {
     return injected;
   };
 
+  // Get active extension account.
+  //
   // checks if the local active account is in the extension.
   const getActiveExtensionAccount = (injected: Array<ImportedAccount>) => {
     return (
@@ -104,6 +106,8 @@ export const useImportExtension = () => {
     );
   };
 
+  // Connect active extension account.
+  //
   // Connects to active account if in extension.
   const connectActiveExtensionAccount = (
     activeWalletAccount: ImportedAccount | null,

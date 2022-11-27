@@ -229,36 +229,33 @@ export const ConnectProvider = ({
           if (extension !== undefined) {
             const unsub = (await extension.accounts.subscribe(
               (injected: ExtensionAccount[]) => {
-                if (!injected) return;
-
-                injected = handleImportExtension(
-                  id,
-                  accountsRef.current,
-                  extension,
-                  injected,
-                  forgetAccounts
-                );
-
-                // store active wallet account if found in this extension
-                if (!activeWalletAccount) {
-                  activeWalletAccount = getActiveExtensionAccount(injected);
-                }
-
-                // set active account for network on final extension
-                if (i === total && activeAccountRef.current === null) {
-                  connectActiveExtensionAccount(
-                    activeWalletAccount,
-                    connectToAccount
+                if (injected) {
+                  injected = handleImportExtension(
+                    id,
+                    accountsRef.current,
+                    extension,
+                    injected,
+                    forgetAccounts
                   );
-                }
-
-                // concat accounts and store
-                if (injected.length) {
-                  setStateWithRef(
-                    [...accountsRef.current].concat(injected),
-                    setAccounts,
-                    accountsRef
-                  );
+                  // store active wallet account if found in this extension
+                  if (!activeWalletAccount) {
+                    activeWalletAccount = getActiveExtensionAccount(injected);
+                  }
+                  // set active account for network on final extension
+                  if (i === total && activeAccountRef.current === null) {
+                    connectActiveExtensionAccount(
+                      activeWalletAccount,
+                      connectToAccount
+                    );
+                  }
+                  // concat accounts and store
+                  if (injected.length) {
+                    setStateWithRef(
+                      [...accountsRef.current].concat(injected),
+                      setAccounts,
+                      accountsRef
+                    );
+                  }
                 }
               }
             )) as () => void;
@@ -304,30 +301,28 @@ export const ConnectProvider = ({
         // subscribe to accounts
         const unsub = (await extension.accounts.subscribe(
           (injected: ExtensionAccount[]) => {
-            if (!injected) return;
-
-            injected = handleImportExtension(
-              id,
-              accountsRef.current,
-              extension,
-              injected,
-              forgetAccounts
-            );
-
-            // set active account for network if not yet set
-            if (activeAccountRef.current === null) {
-              connectActiveExtensionAccount(
-                getActiveExtensionAccount(injected),
-                connectToAccount
+            if (injected) {
+              injected = handleImportExtension(
+                id,
+                accountsRef.current,
+                extension,
+                injected,
+                forgetAccounts
+              );
+              // set active account for network if not yet set
+              if (activeAccountRef.current === null) {
+                connectActiveExtensionAccount(
+                  getActiveExtensionAccount(injected),
+                  connectToAccount
+                );
+              }
+              // concat accounts and store
+              setStateWithRef(
+                [...accountsRef.current].concat(injected),
+                setAccounts,
+                accountsRef
               );
             }
-
-            // concat accounts and store
-            setStateWithRef(
-              [...accountsRef.current].concat(injected),
-              setAccounts,
-              accountsRef
-            );
           }
         )) as () => void;
 
