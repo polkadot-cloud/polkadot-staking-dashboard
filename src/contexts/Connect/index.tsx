@@ -293,6 +293,14 @@ export const ConnectProvider = ({
 
                 // only continue if there are accounts
                 if (injected.length) {
+                  // remove injected already imported from another extension
+                  injected = injected.filter(
+                    (i: ExtensionAccount) =>
+                      !accountsRef.current
+                        .map((j: ImportedAccount) => j.address)
+                        .includes(i.address)
+                  );
+
                   // filter injected with correctly formatted addresses
                   injected = injected.filter((i: ExtensionAccount) => {
                     return isValidAddress(i.address);
@@ -409,6 +417,14 @@ export const ConnectProvider = ({
 
             // only continue if there are accounts
             if (injected.length) {
+              // remove injected already imported from another extension
+              injected = injected.filter(
+                (i: ExtensionAccount) =>
+                  !accountsRef.current
+                    .map((j: ImportedAccount) => j.address)
+                    .includes(i.address)
+              );
+
               // filter injected with correctly formatted addresses
               injected = injected.filter((i: ExtensionAccount) => {
                 return isValidAddress(i.address);

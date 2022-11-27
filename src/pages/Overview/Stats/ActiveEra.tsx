@@ -16,7 +16,7 @@ const ActiveEraStatBox = () => {
   const { i18n, t } = useTranslation('pages');
 
   const _timeleft = fromUnixTime(eraTimeLeft);
-  const timeleft = format(_timeleft, 'KK:mm:ss', {
+  const timeleft = format(_timeleft, 'kk:mm:ss', {
     locale: locales[i18n.resolvedLanguage],
   });
 
