@@ -34,7 +34,6 @@ export const useImportExtension = () => {
     // update local active extensions
     addToLocalExtensions(id);
 
-    // exit if no accounts to be imported.
     if (injected.length) {
       return handleInjectedAccounts(
         id,
@@ -91,30 +90,26 @@ export const useImportExtension = () => {
         signer: extension.signer,
       };
     });
-
     return injected;
   };
 
   // Get active extension account.
   //
   // checks if the local active account is in the extension.
-  const getActiveExtensionAccount = (injected: Array<ImportedAccount>) => {
-    return (
-      injected.find(
-        (a: ExtensionAccount) => a.address === getActiveAccountLocal(network)
-      ) ?? null
-    );
-  };
+  const getActiveExtensionAccount = (injected: Array<ImportedAccount>) =>
+    injected.find(
+      (a: ExtensionAccount) => a.address === getActiveAccountLocal(network)
+    ) ?? null;
 
   // Connect active extension account.
   //
-  // Connects to active account if in extension.
+  // Connects to active account if it is provided.
   const connectActiveExtensionAccount = (
-    activeWalletAccount: ImportedAccount | null,
+    account: ImportedAccount | null,
     callback: AnyFunction
   ) => {
-    if (activeWalletAccount !== null) {
-      callback(activeWalletAccount);
+    if (account !== null) {
+      callback(account);
     }
   };
 
