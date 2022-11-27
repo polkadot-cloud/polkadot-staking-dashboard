@@ -115,10 +115,23 @@
         "inactive_validators": "非活跃验证人",
         "clear": "清除",
         "all": "全部",
-        "exclude:": "不含:",
+        "exclude": "不含:",
         "low_commission": "低佣金",
         "no_validators_match": "没有符合此条件的验证人.",
         "no_validators": "没有验证人.",
-        "displaying_validators": "正在显示 {{count}} 个验证人"
+        "displaying_validators": "正在显示 {{count}} 个验证人",
+        "order": "顺序",
+        "filter": "筛选",
+        "no_filters": "无筛选",
+        "active_validators": "活跃验证人",
+        "unordered": "无顺序",
+        "high_commission": "高佣金",
+        "search_address": "搜索地址或身份",
+        "include": "包含:",
+        "filter_pools": "筛选提名池",
+        "active_pools": "活跃提名池",
+        "locked_pools": "已锁定提名池",
+        "destroying_pools": "正在销毁提名池",
+        "unbonding": "正在解除质押"
     }
 }

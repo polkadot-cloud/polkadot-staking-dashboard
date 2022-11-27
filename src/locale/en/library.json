@@ -115,11 +115,24 @@
         "inactive_validators": "inactive validators",
         "clear": "Clear",
         "all": "All",
-        "exclude:": "Exclude:",
+        "exclude": "Exclude:",
         "low_commission": "Low Commission",
         "no_validators_match": "No validators match this criteria.",
         "no_validators": "No validators.",
         "displaying_validators_one": "Displaying {{count}} Validator",
-        "displaying_validators_other": "Displaying {{count}} Validators"
+        "displaying_validators_other": "Displaying {{count}} Validators",
+        "order": "Order",
+        "filter": "Filter",
+        "no_filters": "No filters",
+        "active_validators": "Active Validators",
+        "unordered": "Unordered",
+        "high_commission": "High Commission",
+        "search_address": "Search Address or Identity",
+        "include": "Include:",
+        "filter_pools": "Filter Pools",
+        "active_pools": "Active Pools",
+        "locked_pools": "Locked Pools",
+        "destroying_pools": "Destroying Pools",
+        "unbonding": "Unbonding"
     }
 }

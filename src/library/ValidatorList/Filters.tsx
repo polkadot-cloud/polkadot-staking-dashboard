@@ -43,7 +43,7 @@ export const Filters = () => {
     <>
       <div style={{ marginBottom: '1.1rem' }}>
         <ButtonInvertRounded
-          text="Order"
+          text={t('order')}
           marginRight
           iconLeft={faArrowDownWideShort}
           onClick={() => {
@@ -51,7 +51,7 @@ export const Filters = () => {
           }}
         />
         <ButtonInvertRounded
-          text="Filter"
+          text={t('filter')}
           marginRight
           iconLeft={faFilterCircleXmark}
           onClick={() => {
@@ -59,7 +59,7 @@ export const Filters = () => {
           }}
         />
         <ButtonSecondary
-          text="Clear"
+          text={t('clear')}
           onClick={() => {
             resetFilters(FilterType.Include, 'validators');
             resetFilters(FilterType.Exclude, 'validators');
@@ -72,12 +72,12 @@ export const Filters = () => {
           <Item
             label={
               order === 'default'
-                ? 'Unordered'
-                : `Order: ${ordersToLabels[order]}`
+                ? t('unordered') || ''
+                : `${t('order') || ''}: ${ordersToLabels[order]}`
             }
             disabled
           />
-          {!hasFilters && <Item label="No filters" disabled />}
+          {!hasFilters && <Item label={t('no_filters') || ''} disabled />}
           {includes?.map((e: string, i: number) => (
             <Item
               key={`validator_include_${i}`}

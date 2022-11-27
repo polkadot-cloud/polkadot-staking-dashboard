@@ -307,7 +307,7 @@ export const ValidatorListInner = (props: any) => {
         {allowSearch && (
           <SearchInput
             handleChange={handleSearchChange}
-            placeholder="Search Address or Identity"
+            placeholder={t('search_address')}
           />
         )}
 
