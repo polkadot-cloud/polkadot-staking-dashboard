@@ -3,7 +3,7 @@
 
 export const item = {
   name: '',
-  Thumbnail: null,
+  thumbnail: null,
   validators: [],
 };
 
