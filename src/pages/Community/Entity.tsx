@@ -8,6 +8,7 @@ import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import ValidatorList from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { useCommunitySections } from './context';
 import { Item } from './Item';
@@ -18,6 +19,7 @@ export const Entity = () => {
   const { validators: allValidators, removeValidatorMetaBatch } =
     useValidators();
   const { setActiveSection, activeItem } = useCommunitySections();
+  const { t } = useTranslation('pages');
 
   const { name, validators: entityAllValidators } = activeItem;
   const validators = entityAllValidators[network.name.toLowerCase()] ?? [];
@@ -57,7 +59,7 @@ export const Entity = () => {
       <TopBarWrapper>
         <ButtonSecondary
           lg
-          text="Go Back"
+          text={t('pools.go_back')}
           iconLeft={faChevronLeft}
           iconTransform="shrink-3"
           onClick={() => setActiveSection(0)}
@@ -69,7 +71,7 @@ export const Entity = () => {
       <CardWrapper>
         {!isReady ? (
           <div className="item">
-            <h3>Connecting...</h3>
+            <h3>{t('pools.connecting')}</h3>
           </div>
         ) : (
           <>
@@ -77,8 +79,8 @@ export const Entity = () => {
               <div className="item">
                 <h3>
                   {validators.length
-                    ? 'Fetching validators...'
-                    : 'This entity contains no validators.'}
+                    ? t('pools.fetching_validators')
+                    : t('pools.no_validators')}
                 </h3>
               </div>
             )}
@@ -87,7 +89,7 @@ export const Entity = () => {
                 bondType="stake"
                 validators={activeValidators}
                 batchKey={batchKey}
-                title={`${name}'s Validators`}
+                title={`${name} ${t('pools.validators')}`}
                 selectable={false}
                 allowMoreCols
                 pagination

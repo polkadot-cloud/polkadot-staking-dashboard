@@ -39,7 +39,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
   const { listFormat, setListFormat } = usePayoutList();
   const { validators, meta } = useValidators();
   const { bondedPools } = useBondedPools();
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation('pages');
 
   const disableThrottle = props.disableThrottle ?? false;
 
@@ -146,9 +146,9 @@ export const PayoutListInner = (props: PayoutListProps) => {
           {listPayouts.map((p: AnySubscan, index: number) => {
             const label =
               p.event_id === 'PaidOut'
-                ? 'Pool Claim'
+                ? t('payouts.pool_claim')
                 : p.event_id === 'Rewarded'
-                ? 'Payout'
+                ? t('payouts.payout')
                 : p.event_id;
 
             const labelClass =
@@ -207,7 +207,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
                     <div className="row">
                       <div>
                         <div>
-                          {label === 'Payout' && (
+                          {label === t('payouts.payout') && (
                             <>
                               {batchIndex > 0 ? (
                                 <Identity
@@ -221,7 +221,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
                               )}
                             </>
                           )}
-                          {label === 'Pool Claim' && (
+                          {label === t('payouts.pool_claim') && (
                             <>
                               {pool ? (
                                 <PoolIdentity
@@ -230,11 +230,15 @@ export const PayoutListInner = (props: PayoutListProps) => {
                                   pool={pool}
                                 />
                               ) : (
-                                <h4>From Pool {p.pool_id}</h4>
+                                <h4>
+                                  {t('payouts.from_pool')} {p.pool_id}
+                                </h4>
                               )}
                             </>
                           )}
-                          {label === 'Slashed' && <h4>Deducted from bond</h4>}
+                          {label === t('payouts.slashed') && (
+                            <h4>{t('payouts.deducted_from_bond')}</h4>
+                          )}
                         </div>
                         <div>
                           <h5>

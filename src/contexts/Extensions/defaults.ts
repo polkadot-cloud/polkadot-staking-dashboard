@@ -8,9 +8,9 @@ export const defaultExtensionsContext: ExtensionsContextInterface = {
   extensionsStatus: {},
   extensionsFetched: false,
   // eslint-disable-next-line
-  setExtensionStatus: (id, s) => { },
+  setExtensionStatus: (id, s) => {},
   // eslint-disable-next-line
-  setExtensionsFetched: (s) => { },
+  setExtensionsFetched: (s) => {},
   // eslint-disable-next-line
-  setExtensions: (s) => { },
+  setExtensions: (s) => {},
 };
