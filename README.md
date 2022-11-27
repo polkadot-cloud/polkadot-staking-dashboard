@@ -21,7 +21,7 @@ The following table outlines the structure of a `VALIDATOR_COMMUNITY` entry:
 | Element | Key | Required | Notes | Example
 | ------- | --- | -------- | ----- | ------- |
 | Operator Name  | `name` | Yes | The chosen name of the operator. | `Validator Central` |
-| Thumbnail   | `thumbnail` | Yes | The name of your SVG component representing your thumbnail.  | *See Below* | 
+| Thumbnail Name | `thumbnail` | Yes | The name of your SVG component representing your thumbnail.  | *See Below* | 
 | Bio  | `bio` | No | A short description of your entity. Maximum 300 characters. | `Summing up my validator identity in a sentence or so.` |
 | Email Address  | `email` | No | A public email address representing the operator. | `validatorcentral@parity.io` |
 | Twitter Handle | `twitter` | No | The Twitter handle representing the operator.  | `@ParityTech` |
