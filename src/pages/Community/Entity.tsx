@@ -59,7 +59,7 @@ export const Entity = () => {
       <TopBarWrapper>
         <ButtonSecondary
           lg
-          text={t('pools.go_back')}
+          text={t('community.go_back')}
           iconLeft={faChevronLeft}
           iconTransform="shrink-3"
           onClick={() => setActiveSection(0)}
@@ -71,7 +71,7 @@ export const Entity = () => {
       <CardWrapper>
         {!isReady ? (
           <div className="item">
-            <h3>{t('pools.connecting')}</h3>
+            <h3>{t('community.connecting')}</h3>
           </div>
         ) : (
           <>
@@ -79,8 +79,8 @@ export const Entity = () => {
               <div className="item">
                 <h3>
                   {validators.length
-                    ? t('pools.fetching_validators')
-                    : t('pools.no_validators')}
+                    ? t('community.fetching_validators')
+                    : t('community.no_validators')}
                 </h3>
               </div>
             )}
@@ -89,7 +89,7 @@ export const Entity = () => {
                 bondType="stake"
                 validators={activeValidators}
                 batchKey={batchKey}
-                title={`${name} ${t('pools.validators')}`}
+                title={`${name} ${t('community.validators')}`}
                 selectable={false}
                 allowMoreCols
                 pagination
