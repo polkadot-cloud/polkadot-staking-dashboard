@@ -29,7 +29,7 @@ export const GoToFeedback = () => {
           </NotesWrapper>
           <h2 style={{ marginTop: 0 }}>
             <a
-              href="https://polkadot-staking-dashboard.canny.io/feature-requests"
+              href="https://polkadot-staking-dashboard.canny.io/feedback"
               target="_blank"
               rel="noreferrer"
             >

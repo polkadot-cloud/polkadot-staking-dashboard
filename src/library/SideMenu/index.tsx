@@ -88,14 +88,13 @@ export const SideMenu = () => {
           onClick={() => {
             openHelpWith(null, {});
           }}
-          name={t('help')}
+          name={t('resources')}
           minimised={sideMenuMinimised}
           icon={{
             Svg: InfoSVG,
             size: sideMenuMinimised ? '1.6rem' : '1.4rem',
           }}
         />
-        <Heading title={t('feedback')} minimised={sideMenuMinimised} />
         <Secondary
           onClick={() => openModalWith('GoToFeedback')}
           name={t('feedback')}
