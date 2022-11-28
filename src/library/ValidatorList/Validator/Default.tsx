@@ -74,7 +74,7 @@ export const Default = (props: DefaultProps) => {
     {
       icon: <FontAwesomeIcon icon={faChartLine as IconProp} />,
       wrap: null,
-      title: `View Metrics${t('view_metrics')}`,
+      title: `${t('view_metrics')}`,
       cb: () => {
         openModalWith(
           'ValidatorMetrics',
@@ -89,7 +89,7 @@ export const Default = (props: DefaultProps) => {
     {
       icon: <FontAwesomeIcon icon={faCopy as IconProp} />,
       wrap: null,
-      title: `Copy Address ${t('copy_address')}`,
+      title: `${t('copy_address')}`,
       cb: () => {
         navigator.clipboard.writeText(address);
         if (notificationCopyAddress) {
