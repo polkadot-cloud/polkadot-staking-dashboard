@@ -37,8 +37,9 @@ export const useStatusButtons = () => {
       !isReady ||
       isReadOnlyAccount(activeAccount) ||
       !activeAccount ||
-      (stats.maxPools && stats.maxPools.toNumber() === 0) ||
-      bondedPools.length === stats.maxPools.toNumber(),
+      (!stats.maxPools === null &&
+        (stats.maxPools.toNumber() === 0 ||
+          bondedPools.length === stats.maxPools.toNumber())),
     onClick: () => setOnPoolSetup(1),
   };
 
