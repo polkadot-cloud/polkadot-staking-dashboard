@@ -35,7 +35,6 @@ export const ManageBond = () => {
   const { freeBalance } = allTransferOptions;
   const { totalUnlocking, totalUnlocked, totalUnlockChuncks } =
     allTransferOptions.nominate;
-  const { active: activePool } = allTransferOptions.pool;
   const { t } = useTranslation('pages');
 
   return (
@@ -93,7 +92,7 @@ export const ManageBond = () => {
         active={planckBnToUnit(active, units)}
         unlocking={planckBnToUnit(totalUnlocking, units)}
         unlocked={planckBnToUnit(totalUnlocked, units)}
-        free={planckBnToUnit(freeBalance.sub(activePool), units)}
+        free={planckBnToUnit(freeBalance, units)}
         inactive={inSetup()}
       />
     </>
