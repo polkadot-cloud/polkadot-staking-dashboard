@@ -11,6 +11,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
+import { lazy, Suspense, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useCommunitySections } from './context';
 import { ItemProps } from './types';
 import { ItemWrapper } from './Wrappers';
@@ -18,6 +20,7 @@ import { ItemWrapper } from './Wrappers';
 export const Item = (props: ItemProps) => {
   const { openModalWith } = useModal();
   const { network } = useApi();
+  const { t } = useTranslation('pages');
 
   const { item, actionable } = props;
   const {
@@ -26,7 +29,7 @@ export const Item = (props: ItemProps) => {
     email,
     twitter,
     website,
-    Thumbnail,
+    thumbnail,
     validators: entityAllValidators,
   } = item;
   const validatorCount =
@@ -54,13 +57,21 @@ export const Item = (props: ItemProps) => {
     },
   };
 
+  const Thumbnail = useMemo(() => {
+    return lazy(() => import(`config/validators/thumbnails/${thumbnail}`));
+  }, []);
+
   return (
     <ItemWrapper
       whileHover={{ scale: actionable ? 1.005 : 1 }}
       variants={listItem}
     >
       <div className="inner">
-        <section>{Thumbnail !== null && <Thumbnail />}</section>
+        <section>
+          <Suspense fallback={<div />}>
+            <Thumbnail />
+          </Suspense>
+        </section>
         <section>
           <h3>
             {name}
@@ -69,7 +80,7 @@ export const Item = (props: ItemProps) => {
               onClick={() => openModalWith('Bio', { name, bio }, 'large')}
               className="active"
             >
-              <span>Bio</span>
+              <span>{t('community.bio')}</span>
             </button>
           </h3>
 
@@ -92,8 +103,9 @@ export const Item = (props: ItemProps) => {
                 transform="shrink-1"
               />
               <h4>
-                {validatorCount} Validator
-                {validatorCount !== 1 && 's'}
+                {t('community.validator', {
+                  count: validatorCount,
+                })}
               </h4>
             </button>
             {email !== undefined && (
@@ -109,7 +121,7 @@ export const Item = (props: ItemProps) => {
                   transform="shrink-1"
                   className="icon-left"
                 />
-                <h4>email</h4>
+                <h4>{t('community.email')}</h4>
                 <FontAwesomeIcon
                   icon={faExternalLink}
                   className="icon-right"
@@ -145,7 +157,7 @@ export const Item = (props: ItemProps) => {
                   window.open(website, '_blank');
                 }}
               >
-                <h4>website</h4>
+                <h4>{t('community.website')}</h4>
                 <FontAwesomeIcon
                   icon={faExternalLink}
                   className="icon-right"

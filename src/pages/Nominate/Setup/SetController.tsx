@@ -14,11 +14,13 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit } from 'Utils';
 import { Spacer } from '../Wrappers';
 
 export const SetController = (props: SetupStepProps) => {
   const { section } = props;
+  const { t } = useTranslation('pages');
 
   const { consts, network } = useApi();
   const { activeAccount, accounts, getAccount } = useConnect();
@@ -67,7 +69,7 @@ export const SetController = (props: SetupStepProps) => {
     <>
       <Header
         thisSection={section}
-        title="Set Controller Account"
+        title={t('nominate.set_controller_account') || ''}
         helpKey="Stash and Controller Accounts"
         complete={setup.controller !== null}
         setupType={SetupType.Stake}
@@ -75,19 +77,23 @@ export const SetController = (props: SetupStepProps) => {
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {items.length === 0 && (
           <Warning
-            text={`None of your imported accounts have the minimum deposit of ${existentialDepositBase} ${network.unit}. Top up an account to make it eligible to become a controller.`}
+            text={`${t('nominate.none_of_your')} ${existentialDepositBase} ${
+              network.unit
+            }. ${t('nominate.top_up_account')}`}
           />
         )}
         {itemsWithEnoughBalance === 0 && (
           <Warning
-            text={`You have no other accounts imported. To select a controller, import another account with a balance of at least ${existentialDepositBase} ${network.unit}.`}
+            text={`${t(
+              'nominate.select_a_controller'
+            )} ${existentialDepositBase} ${network.unit}.`}
           />
         )}
         <Spacer />
         <AccountSelect
           items={items}
           onChange={handleOnChange}
-          placeholder="Search Account"
+          placeholder={t('nominate.search_account')}
           value={selected}
         />
         <Footer

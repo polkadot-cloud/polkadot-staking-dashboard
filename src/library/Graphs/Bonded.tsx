@@ -59,6 +59,7 @@ export const Bonded = ({
       tooltip: {
         displayColors: false,
         backgroundColor: defaultThemes.graphs.tooltip[mode],
+        titleColor: defaultThemes.text.invert[mode],
         bodyColor: defaultThemes.text.invert[mode],
         bodyFont: {
           weight: '600',
@@ -68,7 +69,7 @@ export const Bonded = ({
             if (inactive) {
               return 'Inactive';
             }
-            return `${context.label}: ${
+            return `${
               context.parsed === -1 ? 0 : humanNumber(context.parsed)
             } ${network.unit}`;
           },

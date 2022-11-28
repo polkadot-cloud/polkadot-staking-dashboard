@@ -12,8 +12,8 @@ import { Help } from 'library/Help';
 import { Menu } from 'library/Menu';
 import { NetworkBar } from 'library/NetworkBar';
 import Notifications from 'library/Notifications';
+import { Overlay } from 'library/Overlay';
 import SideMenu from 'library/SideMenu';
-import { Tips } from 'library/Tips';
 import { Tooltip } from 'library/Tooltip';
 import { Modal } from 'modals';
 import { useEffect, useRef } from 'react';
@@ -38,7 +38,7 @@ export const RouterInner = () => {
   const { network } = useApi();
   const { pathname } = useLocation();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation('base');
 
   // scroll to top of the window on every page change or network change
   useEffect(() => {
@@ -57,20 +57,20 @@ export const RouterInner = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
-      {/* Modal: closed by default */}
-      <Modal />
       <BodyInterfaceWrapper>
+        {/* Modal: closed by default */}
+        <Modal />
         {/* Help: closed by default */}
         <Help />
-
-        {/* Tips: closed by default */}
-        <Tips />
 
         {/* Menu: closed by default */}
         <Menu />
 
         {/* Tooltip: invisible by default */}
         <Tooltip />
+
+        {/* Overlay: closed by default */}
+        <Overlay />
 
         {/* Left side menu */}
         <SideInterfaceWrapper open={sideMenuOpen} minimised={sideMenuMinimised}>

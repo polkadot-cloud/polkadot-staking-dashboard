@@ -25,6 +25,7 @@ import {
   Wrapper,
 } from 'library/ListItem/Wrappers';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Member = (props: any) => {
   const { meta } = usePoolMembers();
@@ -36,6 +37,7 @@ export const Member = (props: any) => {
   const { activeEra } = metrics;
   const { state, roles } = selectedActivePool?.bondedPool || {};
   const { stateToggler, root, depositor } = roles || {};
+  const { t } = useTranslation('pages');
 
   const { who, batchKey, batchIndex } = props;
 
@@ -58,7 +60,7 @@ export const Member = (props: any) => {
       menuItems.push({
         icon: <FontAwesomeIcon icon={faUnlockAlt as IconProp} />,
         wrap: null,
-        title: `Unbond Funds`,
+        title: `${t('pools.unbond_funds')}`,
         cb: () => {
           openModalWith(
             'UnbondPoolMember',
@@ -84,7 +86,7 @@ export const Member = (props: any) => {
         menuItems.push({
           icon: <FontAwesomeIcon icon={faShare as IconProp} />,
           wrap: null,
-          title: `Withdraw Funds`,
+          title: `${t('pools.withdraw_funds')}`,
           cb: () => {
             openModalWith('WithdrawPoolMember', { who, member }, 'small');
           },

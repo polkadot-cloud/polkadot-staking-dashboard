@@ -6,6 +6,7 @@ import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { PoolState } from 'contexts/Pools/types';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, rmCommas, toFixedIfNecessary } from 'Utils';
 import { HeaderWrapper } from './Wrappers';
 
@@ -13,6 +14,7 @@ export const Header = () => {
   const { network } = useApi();
   const { selectedActivePool } = useActivePools();
   const { getMembersOfPool } = usePoolMembers();
+  const { t } = useTranslation('pages');
 
   const { state, points } = selectedActivePool?.bondedPool || {};
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
@@ -28,13 +30,13 @@ export const Header = () => {
   let stateDisplay;
   switch (state) {
     case PoolState.Block:
-      stateDisplay = 'Locked';
+      stateDisplay = t('pools.locked');
       break;
     case PoolState.Destroy:
-      stateDisplay = 'Destroying';
+      stateDisplay = t('pools.destroying');
       break;
     default:
-      stateDisplay = 'Open';
+      stateDisplay = t('pools.open');
       break;
   }
 
@@ -45,13 +47,13 @@ export const Header = () => {
           <div>
             <div className="inner">
               <h2>{stateDisplay}</h2>
-              <h4>Pool State</h4>
+              <h4>{t('pools.pool_state')}</h4>
             </div>
           </div>
           <div>
             <div className="inner">
               <h2>{poolMembers.length}</h2>
-              <h4>Pool Members</h4>
+              <h4>{t('pools.pool_members')}</h4>
             </div>
           </div>
           <div>
@@ -59,7 +61,7 @@ export const Header = () => {
               <h2>
                 {bonded} {network.unit}
               </h2>
-              <h4>Total Bonded</h4>
+              <h4>{t('pools.total_bonded')}</h4>
             </div>
           </div>
         </div>

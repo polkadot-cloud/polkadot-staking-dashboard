@@ -85,7 +85,6 @@ export const PayoutLine = ({
       x: {
         grid: {
           display: false,
-          drawBorder: false,
         },
         ticks: {
           display: false,
@@ -98,10 +97,11 @@ export const PayoutLine = ({
           display: false,
           beginAtZero: false,
         },
+        border: {
+          display: false,
+        },
         grid: {
-          drawBorder: false,
           color: defaultThemes.graphs.grid[mode],
-          borderColor: defaultThemes.transparent[mode],
         },
       },
     },
@@ -112,6 +112,7 @@ export const PayoutLine = ({
       tooltip: {
         displayColors: false,
         backgroundColor: defaultThemes.graphs.tooltip[mode],
+        titleColor: defaultThemes.text.invert[mode],
         bodyColor: defaultThemes.text.invert[mode],
         bodyFont: {
           weight: '600',

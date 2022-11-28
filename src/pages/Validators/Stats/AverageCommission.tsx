@@ -3,12 +3,14 @@
 
 import { useValidators } from 'contexts/Validators';
 import { Text } from 'library/StatBoxList/Text';
+import { useTranslation } from 'react-i18next';
 
 export const AverageCommission = () => {
   const { avgCommission } = useValidators();
+  const { t } = useTranslation('pages');
 
   const params = {
-    label: 'Average Commission',
+    label: t('validators.average_commission'),
     value: `${String(avgCommission)}%`,
     helpKey: 'Average Commission',
   };

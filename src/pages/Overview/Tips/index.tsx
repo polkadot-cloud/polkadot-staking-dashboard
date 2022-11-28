@@ -11,10 +11,10 @@ import { TIPS_CONFIG } from 'config/tips';
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
-import { useTips } from 'contexts/Tips';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
@@ -22,6 +22,7 @@ import useFillVariables from 'library/Hooks/useFillVariables';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnyJson } from 'types';
 import { setStateWithRef } from 'Utils';
 import { Items } from './Items';
@@ -32,14 +33,15 @@ export const Tips = () => {
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { networkSyncing } = useUi();
-  const { toggleDismiss } = useTips();
+  const { openModalWith } = useModal();
   const { fillVariables } = useFillVariables();
   const { membership } = usePoolMemberships();
   const { isNominating, staking } = useStaking();
   const { isOwner } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
-  const { minNominatorBond } = staking;
+  const { minNominatorBond, totalNominators, maxNominatorsCount } = staking;
   const transferOptions = getTransferOptions(activeAccount);
+  const { t, i18n } = useTranslation();
 
   // multiple tips per row is currently turned off.
   const multiTipsPerRow = false;
@@ -118,7 +120,10 @@ export const Tips = () => {
   if (!activeAccount) {
     segments.push(1);
   } else if (!isNominating() && !membership) {
-    if (transferOptions.freeBalance.gt(minNominatorBond)) {
+    if (
+      transferOptions.freeBalance.gt(minNominatorBond) &&
+      totalNominators.lt(maxNominatorsCount)
+    ) {
       segments.push(2);
     } else {
       segments.push(3);
@@ -139,12 +144,21 @@ export const Tips = () => {
   }
 
   // filter tips relevant to connected account.
-  let items = TIPS_CONFIG.filter((t: AnyJson) =>
-    segments.includes(t.meta.segment)
-  );
-  items = items.map((i: AnyJson) =>
-    fillVariables(i, ['title', 'subtitle', 'description'])
-  );
+  let items = TIPS_CONFIG.filter((i: AnyJson) => segments.includes(i.s));
+
+  items = items.map((i: any) => {
+    const { id } = i;
+
+    return fillVariables(
+      {
+        ...i,
+        title: t(`${id}.0`, { ns: 'tips' }),
+        subtitle: t(`${id}.1`, { ns: 'tips' }),
+        description: i18n.getResource(i18n.resolvedLanguage, 'tips', `${id}.2`),
+      },
+      ['title', 'subtitle', 'description']
+    );
+  });
 
   // determine items to be displayed
   const endItem = networkSyncing
@@ -162,7 +176,7 @@ export const Tips = () => {
     <CardWrapper>
       <CardHeaderWrapper withAction>
         <h4>
-          Tips
+          {t('module.tips', { ns: 'tips' })}
           <OpenHelpIcon helpKey="Dashboard Tips" />
         </h4>
         <div>
@@ -190,7 +204,7 @@ export const Tips = () => {
               </span>
               {totalPages > 1 && (
                 <>
-                  of <span>{items.length}</span>
+                  {t('module.of', { ns: 'tips' })} <span>{items.length}</span>
                 </>
               )}
             </h4>
@@ -212,7 +226,7 @@ export const Tips = () => {
             <button
               type="button"
               onClick={() => {
-                toggleDismiss(true);
+                openModalWith('DismissTips', {});
               }}
             >
               <FontAwesomeIcon icon={faCog} />

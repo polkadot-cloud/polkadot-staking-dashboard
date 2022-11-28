@@ -25,11 +25,11 @@ export const PAGE_CATEGORIES: PageCategories = [
   },
   {
     id: 2,
-    key: 'Stake',
+    key: 'stake',
   },
   {
     id: 3,
-    key: 'Validators',
+    key: 'validators',
   },
 ];
 

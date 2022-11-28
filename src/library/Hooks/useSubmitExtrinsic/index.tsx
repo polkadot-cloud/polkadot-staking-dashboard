@@ -5,7 +5,8 @@ import BN from 'bn.js';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { Extension } from 'contexts/Connect/types';
+import { useExtensions } from 'contexts/Extensions';
+import { Extension } from 'contexts/Extensions/types';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useNotifications } from 'contexts/Notifications';
 import { useTxFees } from 'contexts/TxFees';
@@ -24,7 +25,8 @@ export const useSubmitExtrinsic = ({
   const { setTxFees, setSender, txFees } = useTxFees();
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
-  const { getAccount, extensions } = useConnect();
+  const { extensions } = useExtensions();
+  const { getAccount } = useConnect();
 
   // if null account is provided, fallback to empty string
   const submitAddress: string = from ?? '';

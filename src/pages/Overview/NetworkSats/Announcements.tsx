@@ -13,6 +13,7 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
+import { useTranslation } from 'react-i18next';
 import {
   humanNumber,
   planckBnToUnit,
@@ -37,6 +38,7 @@ export const Announcements = () => {
   } = staking;
   const { bondedPools } = useBondedPools();
   const { totalIssuance } = metrics;
+  const { t } = useTranslation('pages');
 
   let totalPoolPoints = new BN(0);
   bondedPools.forEach((b: BondedPool) => {
@@ -47,13 +49,13 @@ export const Announcements = () => {
   );
 
   // total supply as percent
-  let supplyAsPercent = 0;
-  if (totalIssuance.gt(new BN(0))) {
-    supplyAsPercent = lastTotalStake
-      .div(totalIssuance.div(new BN(100)))
-      .toNumber();
-  }
-  const lastTotalStakeBase = lastTotalStake.div(new BN(10 ** units));
+  // total supply as percent
+  const totalIssuanceBase = planckBnToUnit(totalIssuance, units);
+  const lastTotalStakeBase = planckBnToUnit(lastTotalStake, units);
+  const supplyAsPercent =
+    lastTotalStakeBase === 0
+      ? 0
+      : lastTotalStakeBase / (totalIssuanceBase * 0.01);
 
   const container = {
     hidden: { opacity: 0 },
@@ -91,50 +93,51 @@ export const Announcements = () => {
   if (nominatorCapReached && !isSyncing) {
     announcements.push({
       class: 'danger',
-      title: 'Nominator Limit Has Been Reached.',
-      subtitle:
-        'The maximum allowed nominators have been reached on the network. Please wait for available slots if you wish to nominate.',
+      title: t('overview.nominator_limit'),
+      subtitle: t('overview.maximum_allowed'),
     });
   }
 
-  // 90% plus nominators reached - warning
+  // 90% plus nominators reached
   if (nominatorReachedPercentage.toNumber() >= 90) {
     announcements.push({
-      class: 'warning',
+      class: 'neutral',
       title: `${toFixedIfNecessary(
         nominatorReachedPercentage.toNumber(),
         2
-      )}% of Nominator Limit Reached.`,
-      subtitle: `The maximum amount of nominators has almost been reached. The nominator cap is currently ${humanNumber(
+      )}${t('overview.limit_reached')}`,
+      subtitle: `${t('overview.maximum_amount')} ${humanNumber(
         maxNominatorsCount.toNumber()
       )}.`,
     });
   }
 
+  const networkName = network.name;
+  const networkUnit = network.unit;
   // bonded pools available
   if (bondedPools.length) {
     // total pools active
     announcements.push({
       class: 'pools',
-      title: `${bondedPools.length} nomination pools are active.`,
-      subtitle: `The number of nomination pools available to join on ${network.name}.`,
+      title: `${bondedPools.length} ${t('overview.pools_are_active')}`,
+      subtitle: `${t('overview.available_to_join', { networkName })}`,
     });
 
-    // total locked in pols
+    // total locked in pools
     announcements.push({
       class: 'pools',
-      title: `${totalPoolPointsBase} ${network.unit} is currently bonded in pools.`,
-      subtitle: `The total ${network.unit} currently bonded in nomination pools.`,
+      title: `${totalPoolPointsBase} ${network.unit} ${t('overview.in_pools')}`,
+      subtitle: `${t('overview.bonded_in_pools', { networkUnit })}`,
     });
 
     if (poolMembers.length > 0 && !poolsSyncing) {
       // total locked in pols
       announcements.push({
         class: 'pools',
-        title: `${humanNumber(
-          poolMembers.length
-        )} pool members are actively bonding in pools.`,
-        subtitle: `The total number of accounts that have joined a pool.`,
+        title: `${humanNumber(poolMembers.length)} ${t(
+          'overview.pool_members_bonding'
+        )}`,
+        subtitle: `${t('overview.total_num_accounts')}`,
       });
     }
   }
@@ -142,19 +145,27 @@ export const Announcements = () => {
   // minimum nominator bond
   announcements.push({
     class: 'neutral',
-    title: `The minimum nominator bond is now ${minNominatorBondBase} ${network.unit}.`,
-    subtitle: `The minimum bonding amount to start nominating on ${
-      network.name
-    } is now ${planckBnToUnit(minNominatorBond, units)} ${network.unit}.`,
+    title: `${t('overview.minimum_nominator_bond')} ${minNominatorBondBase} ${
+      network.unit
+    }.`,
+    subtitle: `${t('overview.minimum_bonding_amount', {
+      networkName,
+    })}${planckBnToUnit(minNominatorBond, units)} ${network.unit}.`,
   });
 
   // supply staked
   announcements.push({
     class: 'neutral',
-    title: `${supplyAsPercent}% of total ${network.unit} supply is currently staked.`,
-    subtitle: `A total of ${humanNumber(lastTotalStakeBase.toNumber())} ${
-      network.unit
-    } is actively staking on the network.`,
+    title: `${t('overview.currently_staked', {
+      supplyAsPercent: toFixedIfNecessary(supplyAsPercent, 2),
+      networkUnit,
+    })}`,
+    subtitle: `${t('overview.staking_on_the_network', {
+      lastTotalStakeBase: humanNumber(
+        toFixedIfNecessary(lastTotalStakeBase, 0)
+      ),
+      networkUnit,
+    })}`,
   });
 
   return (

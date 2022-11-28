@@ -15,17 +15,19 @@ export const Favorites = (props: PageProps) => {
   const { page } = props;
   const { key } = page;
   const { favoritesList } = useValidators();
-  const { t } = useTranslation('pages');
+  const { t } = useTranslation();
 
   const batchKey = 'favorite_validators';
 
   return (
     <>
-      <PageTitle title={t(key)} />
+      <PageTitle title={t(key, { ns: 'base' })} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           {favoritesList === null ? (
-            <h3>Fetching favorite validators...</h3>
+            <h3>
+              {t('favorites.fetching_favorite_validators', { ns: 'pages' })}
+            </h3>
           ) : (
             <>
               {isReady && (
@@ -35,14 +37,16 @@ export const Favorites = (props: PageProps) => {
                       bondType="stake"
                       validators={favoritesList}
                       batchKey={batchKey}
-                      title="Favorite Validators"
+                      title={t('favorites.favorite_validators', {
+                        ns: 'pages',
+                      })}
                       selectable={false}
                       refetchOnListUpdate
                       allowMoreCols
                       toggleFavorites
                     />
                   ) : (
-                    <h3>No Favorites.</h3>
+                    <h3>{t('favorites.no_favorites', { ns: 'pages' })}</h3>
                   )}
                 </>
               )}

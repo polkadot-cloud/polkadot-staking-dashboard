@@ -6,6 +6,7 @@ import { stringToU8a } from '@polkadot/util';
 /*
  * Global Constants
  */
+export const AppVersion = '1.0.1';
 export const UriPrefix = '/';
 export const TitleDefault = 'Aleph Zero Staking Dashboard';
 export const DappName = 'Aleph Zero Staking Dashboard';

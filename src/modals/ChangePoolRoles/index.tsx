@@ -69,7 +69,6 @@ export const ChangePoolRoles = () => {
           style={{
             padding: '0 1.25rem',
             width: '100%',
-            boxSizing: 'border-box',
           }}
         >
           <RoleChange

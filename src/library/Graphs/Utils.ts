@@ -3,8 +3,19 @@
 
 import BN from 'bn.js';
 import { useUi } from 'contexts/UI';
+import {
+  differenceInDays,
+  endOfDay,
+  endOfTomorrow,
+  fromUnixTime,
+  getDayOfYear,
+  getUnixTime,
+  getYear,
+  parse,
+  startOfDay,
+  subDays,
+} from 'date-fns';
 import throttle from 'lodash.throttle';
-import moment from 'moment';
 import React from 'react';
 import { AnySubscan } from 'types';
 import { planckBnToUnit } from 'Utils';
@@ -98,7 +109,7 @@ export const calculatePayoutsByDay = (
   if (average > 1) maxDays += average;
 
   const payoutsByDay: any = [];
-  let curDay = 367;
+  let curDay = 366;
   let curYear = 3000;
   let curPayout = {
     amount: new BN(0),
@@ -106,21 +117,23 @@ export const calculatePayoutsByDay = (
   };
 
   // determine inactive days since last payout
-  const lastTs = moment.unix(payouts[0].block_timestamp);
+  const lastTs = fromUnixTime(payouts[0].block_timestamp);
 
   // test from start of day as to not duplicate today's payout entry
-  let daysSinceLast = moment().startOf('day').diff(lastTs, 'days');
+  let daysSinceLast = differenceInDays(startOfDay(new Date()), lastTs);
 
   // add inactive days
   if (daysSinceLast > 0) {
     daysSinceLast = daysSinceLast > maxDays ? maxDays : daysSinceLast;
-    let timestamp = moment().add(1, 'days').endOf('day');
+
+    let timestamp = endOfTomorrow();
+
     for (let i = 1; i <= daysSinceLast; i++) {
-      timestamp = timestamp.subtract(1, 'days');
+      timestamp = subDays(timestamp, 1);
       payoutsByDay.push({
         amount: 0,
         event_id: 'Reward',
-        block_timestamp: timestamp.unix(),
+        block_timestamp: getUnixTime(timestamp),
       });
     }
   }
@@ -138,16 +151,23 @@ export const calculatePayoutsByDay = (
       p++;
 
       // extract day and year from payout timestamp
-      const date = moment.unix(payout.block_timestamp);
-      const _day = date.dayOfYear();
-      const _year = date.year();
+      const date = fromUnixTime(payout.block_timestamp);
+      const _day = getDayOfYear(date);
+      const _year = getYear(date);
 
       // starting a new day
       if (_day < curDay || _year < curYear) {
         // check current day with previous, determine missing days
-        const prevTs = moment(`${curDay}/${curYear}`, 'DDD/YYYY').unix();
-        const thisTs = moment(`${_day}/${_year}`, 'DDD/YYYY').unix();
-        const gapDays = moment.unix(prevTs).diff(moment.unix(thisTs), 'days');
+        const prevTs = getUnixTime(
+          parse(`${pad(curDay, 3)}/${curYear}`, 'DDD/yyyy', new Date())
+        );
+        const thisTs = getUnixTime(
+          parse(`${pad(_day, 3)}/${_year}`, 'DDD/yyyy', new Date())
+        );
+        const gapDays = differenceInDays(
+          fromUnixTime(prevTs),
+          fromUnixTime(thisTs)
+        );
 
         // increment by `gap `days
         if (i !== 0) {
@@ -158,9 +178,11 @@ export const calculatePayoutsByDay = (
         }
 
         // get timestamp of end of day
-        const dayTs = moment(`${curDay}/${curYear}`, 'DDD/YYYY')
-          .endOf('day')
-          .unix();
+        const dayTs = getUnixTime(
+          endOfDay(
+            parse(`${pad(curDay, 3)}/${curYear}`, 'DDD/yyyy', new Date())
+          )
+        );
 
         // commit previous day payout
         if (i > 1) {
@@ -174,14 +196,14 @@ export const calculatePayoutsByDay = (
         // commit gap day payouts
         if (i !== 0) {
           // fill missing days
-          let gapDayTs = moment.unix(prevTs);
+          let gapDayTs = fromUnixTime(prevTs);
           if (gapDays > 1) {
             for (let j = 1; j < gapDays; j++) {
-              gapDayTs = gapDayTs.subtract(1, 'days');
+              gapDayTs = subDays(gapDayTs, 1);
               payoutsByDay.push({
                 amount: 0,
                 event_id: 'Reward',
-                block_timestamp: gapDayTs.unix(),
+                block_timestamp: getUnixTime(gapDayTs),
               });
             }
           }
@@ -247,20 +269,20 @@ export const prefillToMaxDays = (payoutsByDay: any, maxDays: number) => {
     // get earliest timestamp
     let timestamp;
     if (!payoutsByDay.length) {
-      timestamp = moment().endOf('day');
+      timestamp = endOfDay(new Date());
     } else {
-      timestamp = moment.unix(
+      timestamp = fromUnixTime(
         payoutsByDay[payoutsByDay.length - 1].block_timestamp
       );
     }
 
     // fill in remaining days
     for (let i = 0; i < remainingDays; i++) {
-      timestamp = timestamp.subtract(1, 'days');
+      timestamp = subDays(timestamp, 1);
       payoutsByDay.push({
         amount: 0,
         event_id: 'Reward',
-        block_timestamp: timestamp.unix(),
+        block_timestamp: getUnixTime(timestamp),
       });
     }
   }
@@ -407,13 +429,20 @@ export const combineRewardsByDay = (
 
 // calculate whether 2 unix timestamps are on the same day
 export const unixSameDay = (p: number, q: number) => {
-  const dateQ = moment.unix(q);
-  const _dayQ = dateQ.dayOfYear();
-  const _yearQ = dateQ.year();
+  const dateQ = getUnixTime(q);
+  const _dayQ = getDayOfYear(dateQ);
+  const _yearQ = getYear(dateQ);
 
-  const dateP = moment.unix(p);
-  const _dayP = dateP.dayOfYear();
-  const _yearP = dateP.year();
+  const dateP = getUnixTime(p);
+  const _dayP = getDayOfYear(dateP);
+  const _yearP = getYear(dateP);
 
   return _dayQ === _dayP && _yearQ === _yearP;
+};
+
+// ensures leading zeroes of numbers
+export const pad = (num: number, size: number) => {
+  let numStr = num.toString();
+  while (numStr.length < size) numStr = `0${numStr}`;
+  return numStr;
 };

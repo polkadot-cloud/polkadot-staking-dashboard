@@ -3,11 +3,13 @@
 
 import { useConnect } from 'contexts/Connect';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { isValidAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 
 export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
   const { formatAccountSs58 } = useConnect();
+  const { t } = useTranslation('pages');
 
   const processRoleEdit = (newAddress: string) => {
     let edit = {
@@ -40,10 +42,10 @@ export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
   let label;
   let labelClass;
   if (!roleEdit?.valid) {
-    label = 'Address Invalid';
+    label = t('pools.address_invalid');
     labelClass = 'danger';
   } else if (roleEdit?.reformatted) {
-    label = 'Address was reformatted';
+    label = t('pools.reformatted');
     labelClass = 'neutral';
   }
 

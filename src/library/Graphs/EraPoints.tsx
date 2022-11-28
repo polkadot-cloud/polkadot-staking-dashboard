@@ -36,10 +36,11 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
     maintainAspectRatio: false,
     scales: {
       x: {
+        border: {
+          display: false,
+        },
         grid: {
-          drawBorder: false,
           color: defaultThemes.transparent[mode],
-          borderColor: defaultThemes.transparent[mode],
         },
         ticks: {
           display: true,
@@ -55,14 +56,15 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
         },
       },
       y: {
+        border: {
+          display: false,
+        },
+        grid: {
+          color: defaultThemes.graphs.grid[mode],
+        },
         ticks: {
           display: true,
           beginAtZero: false,
-        },
-        grid: {
-          drawBorder: false,
-          color: defaultThemes.graphs.grid[mode],
-          borderColor: defaultThemes.transparent[mode],
         },
       },
     },
@@ -77,6 +79,7 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
       tooltip: {
         displayColors: false,
         backgroundColor: defaultThemes.graphs.tooltip[mode],
+        titleColor: defaultThemes.text.invert[mode],
         bodyColor: defaultThemes.text.invert[mode],
         bodyFont: {
           weight: '600',
