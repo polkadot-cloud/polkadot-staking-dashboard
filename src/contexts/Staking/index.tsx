@@ -11,6 +11,7 @@ import {
   StakingTargets,
 } from 'contexts/Staking/types';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnyApi, MaybeAccount } from 'types';
 import {
   localStorageOrDefault,
@@ -54,6 +55,7 @@ export const StakingProvider = ({
   } = useBalances();
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
+  const { t } = useTranslation('base');
 
   // store staking metrics in state
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
@@ -301,17 +303,17 @@ export const StakingProvider = ({
       );
 
       if (s === undefined) {
-        statuses[nomination] = 'waiting';
+        statuses[nomination] = t('contexts.waiting');
         continue;
       }
       const exists = (s.others ?? []).find(
         (_o: any) => _o.who === activeAccount
       );
       if (exists === undefined) {
-        statuses[nomination] = 'inactive';
+        statuses[nomination] = t('contexts.inactive');
         continue;
       }
-      statuses[nomination] = 'active';
+      statuses[nomination] = t('contexts.active');
     }
 
     return statuses;

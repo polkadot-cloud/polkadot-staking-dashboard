@@ -1,6 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-
+/* eslint-disable */
 import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -56,8 +56,7 @@ export const NominationStatus = (props: NominationStatusProps) => {
       <h5>
         {capitalizeFirstLetter(nominationStatus ?? '')}
         {stakedAmount > 0 &&
-          ` / ${
-            erasStakersSyncing ? '...' : `${humanNumber(stakedAmount)} ${unit}`
+          ` / ${erasStakersSyncing ? '...' : `${humanNumber(stakedAmount)} ${unit}`
           }`}
       </h5>
     </ValidatorStatusWrapper>

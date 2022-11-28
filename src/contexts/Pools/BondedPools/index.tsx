@@ -10,6 +10,7 @@ import {
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef, shuffle } from 'Utils';
 import { useApi } from '../../Api';
@@ -31,6 +32,7 @@ export const BondedPoolsProvider = ({
   const { getNominationsStatusFromTargets } = useStaking();
   const { createAccounts, stats } = usePoolsConfig();
   const { lastPoolId } = stats;
+  const { t } = useTranslation('base');
 
   // stores the meta data batches for pool lists
   const [poolMetaBatches, setPoolMetaBatch]: AnyMetaBatch = useState({});
@@ -241,7 +243,7 @@ export const BondedPoolsProvider = ({
     const nominations = poolMetaBatches.bonded_pools?.nominations ?? [];
     const targets = nominations[batchIndex]?.targets ?? [];
 
-    const target = targets.find((t: string) => t === nomination);
+    const target = targets.find((tg: string) => tg === nomination);
 
     const nominationStatus = getNominationsStatusFromTargets(nominator, [
       target,
@@ -254,16 +256,16 @@ export const BondedPoolsProvider = ({
    * Determine bonded pool's current nomination statuse
    */
   const getPoolNominationStatusCode = (statuses: NominationStatuses | null) => {
-    let status = 'waiting';
+    let status = t('contexts.waiting');
 
     if (statuses) {
       for (const _status of Object.values(statuses)) {
         if (_status === 'active') {
-          status = 'active';
+          status = t('contexts.active');
           break;
         }
         if (_status === 'inactive') {
-          status = 'inactive';
+          status = t('contexts.inactive');
         }
       }
     }
