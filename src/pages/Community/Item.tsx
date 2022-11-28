@@ -11,6 +11,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
+import { lazy, Suspense, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCommunitySections } from './context';
 import { ItemProps } from './types';
@@ -28,7 +29,7 @@ export const Item = (props: ItemProps) => {
     email,
     twitter,
     website,
-    Thumbnail,
+    thumbnail,
     validators: entityAllValidators,
   } = item;
   const validatorCount =
@@ -56,13 +57,21 @@ export const Item = (props: ItemProps) => {
     },
   };
 
+  const Thumbnail = useMemo(() => {
+    return lazy(() => import(`config/validators/thumbnails/${thumbnail}`));
+  }, []);
+
   return (
     <ItemWrapper
       whileHover={{ scale: actionable ? 1.005 : 1 }}
       variants={listItem}
     >
       <div className="inner">
-        <section>{Thumbnail !== null && <Thumbnail />}</section>
+        <section>
+          <Suspense fallback={<div />}>
+            <Thumbnail />
+          </Suspense>
+        </section>
         <section>
           <h3>
             {name}
