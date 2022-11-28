@@ -16,6 +16,7 @@ export const HELP_CONFIG: HelpItems = [
       'Inflation',
       'Historical Rewards Rate',
       'Ideal Staked',
+      'Supply Staked',
     ],
     external: [
       [
