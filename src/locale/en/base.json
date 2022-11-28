@@ -13,6 +13,11 @@
     "help": "Help",
     "inactive": "Inactive",
     "active": "Active",
-    "support": "Support"
+    "support": "Support",
+    "consts": {
+      "staked": "Back to Staking",
+      "stash": "To Stash Account",
+      "controller": "To Controller Account"
+    }
   }
 }

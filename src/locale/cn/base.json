@@ -13,6 +13,11 @@
     "help": "帮助",
     "support": "支持",
     "inactive": "未激活",
-    "active": "激活"
+    "active": "激活",
+    "consts": {
+      "staked": "回到抵押中",
+      "stash": "到Stash账户",
+      "controller": "到Controller账户"
+    }
   }
 }
