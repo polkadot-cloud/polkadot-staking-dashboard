@@ -1,0 +1,34 @@
+FROM ubuntu:22.04 as builder
+
+# Install any needed packages
+RUN apt-get update && \
+  apt-get install --no-install-recommends -y curl git gnupg ca-certificates
+
+# install nodejs
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get install --no-install-recommends -y nodejs build-essential && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
+
+WORKDIR /apps
+COPY . .
+
+RUN npm ci --legacy-peer-deps
+RUN NODE_ENV=production REACT_APP_DISABLE_FIAT=1 npm run build
+
+# ===========================================================
+FROM nginx:stable-alpine
+
+# The following is mainly for doc purpose to show which ENV is supported
+ENV WS_URL=
+
+WORKDIR /usr/share/nginx/html
+
+RUN apk add --no-cache bash;
+
+COPY docker/nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /apps/packages/apps/build /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
