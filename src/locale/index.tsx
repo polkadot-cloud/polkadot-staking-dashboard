@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { AppVersion, DefaultLocale } from 'consts';
-import { enGB, zhCN, fr } from 'date-fns/locale';
+import { enGB, fr, zhCN } from 'date-fns/locale';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import { AnyJson } from 'types';
