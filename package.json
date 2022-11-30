@@ -9,7 +9,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@polkadot/api": "^9.9.1",
+    "@polkadot/api": "^9.9.4",
     "@polkadot/keyring": "^10.1.12",
     "@polkadot/react-identicon": "^2.9.13",
     "@polkadot/rpc-provider": "^9.9.1",
