@@ -13,7 +13,7 @@ RUN apt-get install --no-install-recommends -y nodejs build-essential && \
 WORKDIR /apps
 COPY . .
 
-RUN npm ci --legacy-peer-deps
+RUN npm install --legacy-peer-deps
 RUN NODE_ENV=production REACT_APP_DISABLE_FIAT=1 npm run build
 
 # ===========================================================
@@ -27,7 +27,7 @@ WORKDIR /usr/share/nginx/html
 RUN apk add --no-cache bash;
 
 COPY docker/nginx.conf /etc/nginx/nginx.conf
-COPY --from=builder /apps/packages/apps/build /usr/share/nginx/html
+COPY --from=builder /apps/build /usr/share/nginx/html
 
 EXPOSE 80
 
