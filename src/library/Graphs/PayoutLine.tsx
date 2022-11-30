@@ -112,6 +112,7 @@ export const PayoutLine = ({
       tooltip: {
         displayColors: false,
         backgroundColor: defaultThemes.graphs.tooltip[mode],
+        titleColor: defaultThemes.text.invert[mode],
         bodyColor: defaultThemes.text.invert[mode],
         bodyFont: {
           weight: '600',

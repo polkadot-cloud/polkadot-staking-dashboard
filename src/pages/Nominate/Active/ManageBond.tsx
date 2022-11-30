@@ -14,6 +14,7 @@ import { useUi } from 'contexts/UI';
 import BondedGraph from 'library/Graphs/Bonded';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { useTranslation } from 'react-i18next';
 import { humanNumber, planckBnToUnit } from 'Utils';
 import { ButtonRowWrapper } from 'Wrappers';
 
@@ -34,13 +35,13 @@ export const ManageBond = () => {
   const { freeBalance } = allTransferOptions;
   const { totalUnlocking, totalUnlocked, totalUnlockChuncks } =
     allTransferOptions.nominate;
-  const { active: activePool } = allTransferOptions.pool;
+  const { t } = useTranslation('pages');
 
   return (
     <>
       <CardHeaderWrapper>
         <h4>
-          Bonded Funds
+          {t('nominate.bonded_funds')}
           <OpenHelpIcon helpKey="Bonding" />
         </h4>
         <h2>
@@ -91,7 +92,7 @@ export const ManageBond = () => {
         active={planckBnToUnit(active, units)}
         unlocking={planckBnToUnit(totalUnlocking, units)}
         unlocked={planckBnToUnit(totalUnlocked, units)}
-        free={planckBnToUnit(freeBalance.sub(activePool), units)}
+        free={planckBnToUnit(freeBalance, units)}
         inactive={inSetup()}
       />
     </>

@@ -18,8 +18,10 @@ import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
-import moment from 'moment';
+import { format, fromUnixTime } from 'date-fns';
+import { locales } from 'locale';
 import { Bar } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
 import {
   defaultThemes,
   networkColors,
@@ -49,6 +51,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
+  const { i18n } = useTranslation();
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts.filter(
@@ -77,9 +80,12 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
     : networkColorsSecondary[`${name}-${mode}`];
 
   const data = {
-    labels: payoutsByDay.map((item: AnySubscan) =>
-      moment.unix(item.block_timestamp).format('Do MMM')
-    ),
+    labels: payoutsByDay.map((item: AnySubscan) => {
+      const dateObj = format(fromUnixTime(item.block_timestamp), 'do MMM', {
+        locale: locales[i18n.resolvedLanguage],
+      });
+      return `${dateObj}`;
+    }),
     datasets: [
       {
         label: 'Payout',
@@ -143,6 +149,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
       tooltip: {
         displayColors: false,
         backgroundColor: defaultThemes.graphs.tooltip[mode],
+        titleColor: defaultThemes.text.invert[mode],
         bodyColor: defaultThemes.text.invert[mode],
         bodyFont: {
           weight: '600',

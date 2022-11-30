@@ -1,16 +1,17 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import useInflation from 'library/Hooks/useInflation';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
-import { toFixedIfNecessary } from 'Utils';
+import { planckBnToUnit, toFixedIfNecessary } from 'Utils';
 import { InflationWrapper } from './Wrappers';
 
 export const Inflation = () => {
+  const { units } = useApi().network;
   const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
   const { inflation, stakedReturn } = useInflation();
@@ -20,12 +21,12 @@ export const Inflation = () => {
   const { totalIssuance } = metrics;
 
   // total supply as percent
-  let supplyAsPercent = 0;
-  if (totalIssuance.gt(new BN(0))) {
-    supplyAsPercent = lastTotalStake
-      .div(totalIssuance.div(new BN(100)))
-      .toNumber();
-  }
+  const totalIssuanceBase = planckBnToUnit(totalIssuance, units);
+  const lastTotalStakeBase = planckBnToUnit(lastTotalStake, units);
+  const supplyAsPercent =
+    lastTotalStakeBase === 0
+      ? 0
+      : lastTotalStakeBase / (totalIssuanceBase * 0.01);
 
   return (
     <InflationWrapper>
@@ -60,7 +61,7 @@ export const Inflation = () => {
           </div>
           <div>
             <div className="inner">
-              <h2>{supplyAsPercent}%</h2>
+              <h2>{toFixedIfNecessary(supplyAsPercent, 2)}%</h2>
               <h4>
                 {t('overview.supply_staked')}{' '}
                 <OpenHelpIcon helpKey="Supply Staked" />

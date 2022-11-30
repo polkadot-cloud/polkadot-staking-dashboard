@@ -11,6 +11,7 @@ import { useStaking } from 'contexts/Staking';
 import { Identicon } from 'library/Identicon';
 import OpenHelpIcon from 'library/OpenHelpIcon';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
+import { useTranslation } from 'react-i18next';
 import { clipAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 
@@ -21,8 +22,9 @@ export const Controller = ({ label }: { label: string }) => {
   const { hasController } = useStaking();
   const { getBondedAccount } = useBalances();
   const controller = getBondedAccount(activeAccount);
+  const { t } = useTranslation('pages');
 
-  let display = 'None';
+  let display = t('nominate.none');
   if (hasController() && controller) {
     display = clipAddress(controller);
   }
@@ -42,12 +44,13 @@ export const Controller = ({ label }: { label: string }) => {
           {displayName || display}&nbsp;
           <div className="btn">
             <ButtonPrimary
-              text="Change"
+              text={t('nominate.change')}
               iconLeft={faExchangeAlt}
               disabled={
                 !isReady || !hasController() || isReadOnlyAccount(activeAccount)
               }
               onClick={() => openModalWith('UpdateController', {}, 'large')}
+              style={{ minWidth: '7.5rem' }}
             />
           </div>
         </h2>

@@ -6,6 +6,7 @@ import { MaxPayoutDays } from 'consts';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useUi } from 'contexts/UI';
+import { format, fromUnixTime } from 'date-fns';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { formatSize, useSize } from 'library/Graphs/Utils';
@@ -19,7 +20,7 @@ import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
-import moment from 'moment';
+import { locales } from 'locale';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnySubscan } from 'types';
@@ -33,7 +34,7 @@ export const Payouts = (props: PageProps) => {
   const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
-  const { t } = useTranslation('base');
+  const { i18n, t } = useTranslation();
 
   const [payoutsList, setPayoutLists] = useState<AnySubscan>();
   const [fromDate, setFromDate] = useState<string | undefined>();
@@ -65,22 +66,30 @@ export const Payouts = (props: PageProps) => {
     // calculate the earliest and latest payout dates if they exist.
     if (payoutsList?.length) {
       setFromDate(
-        moment
-          .unix(
+        format(
+          fromUnixTime(
             payoutsList[Math.min(MaxPayoutDays - 2, payoutsList.length - 1)]
               .block_timestamp
-          )
-          .format('Do MMMM')
+          ),
+          'do MMM',
+          {
+            locale: locales[i18n.resolvedLanguage],
+          }
+        )
       );
 
       // latest payout date
-      setToDate(moment.unix(payoutsList[0].block_timestamp).format('Do MMMM'));
+      setToDate(
+        format(fromUnixTime(payoutsList[0].block_timestamp), 'do MMM', {
+          locale: locales[i18n.resolvedLanguage],
+        })
+      );
     }
   }, [payoutsList?.length]);
 
   return (
     <>
-      <PageTitle title={t(key)} />
+      <PageTitle title={t(key, { ns: 'base' })} />
       <StatBoxList>
         <LastEraPayoutStatBox />
       </StatBoxList>
@@ -89,7 +98,7 @@ export const Payouts = (props: PageProps) => {
           <SubscanButton />
           <CardHeaderWrapper padded>
             <h4>
-              Payout History
+              {t('payouts.payout_history', { ns: 'pages' })}
               <OpenHelpIcon helpKey="Payout History" />
             </h4>
             <h2>
@@ -99,7 +108,7 @@ export const Payouts = (props: PageProps) => {
                   {toDate !== fromDate && <>&nbsp;-&nbsp;{toDate}</>}
                 </>
               ) : (
-                'None'
+                t('payouts.none', { ns: 'pages' })
               )}
             </h2>
           </CardHeaderWrapper>
@@ -108,13 +117,13 @@ export const Payouts = (props: PageProps) => {
               <StatusLabel
                 status="active_service"
                 statusFor="subscan"
-                title="Subscan Disabled"
+                title={t('payouts.subscan_disabled', { ns: 'pages' })}
                 topOffset="30%"
               />
             ) : (
               <StatusLabel
                 status="sync_or_setup"
-                title="Not Staking"
+                title={t('payouts.not_staking', { ns: 'pages' })}
                 topOffset="30%"
               />
             )}
@@ -141,7 +150,7 @@ export const Payouts = (props: PageProps) => {
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <CardWrapper>
             <PayoutList
-              title="Recent Payouts"
+              title={t('payouts.recent_payouts', { ns: 'pages' })}
               payouts={payoutsList}
               pagination
             />

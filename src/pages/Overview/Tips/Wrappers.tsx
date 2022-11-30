@@ -122,7 +122,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           height: 1.85rem;
           max-width: 100%;
           margin: 0;
-          padding: 0.15rem 6rem 0rem 0;
+          padding: 0.15rem 6.3rem 0rem 0;
           text-align: left;
           font-size: 1.05rem;
           text-overflow: ellipsis;
@@ -136,10 +136,10 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           display: flex;
           flex-flow: row nowrap;
           align-items: center;
-          background: ${networkColor};
-          color: white;
+          border: 1px solid ${networkColor};
+          color: ${networkColor};
           border-radius: 1.5rem;
-          padding: 0.1rem 0.85rem;
+          padding: 0rem 0.8rem;
           font-size: 1rem;
 
           > svg {

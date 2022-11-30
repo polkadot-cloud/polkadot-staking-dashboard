@@ -4,12 +4,14 @@
 import BN from 'bn.js';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
+import { useTranslation } from 'react-i18next';
 import { toFixedIfNecessary } from 'Utils';
 
 const ActiveValidatorsStatBox = () => {
   const { staking, eraStakers } = useStaking();
   const { validatorCount } = staking;
   const { activeValidators } = eraStakers;
+  const { t } = useTranslation('pages');
 
   // active validators as percent
   let activeValidatorsAsPercent = 0;
@@ -19,7 +21,7 @@ const ActiveValidatorsStatBox = () => {
   }
 
   const params = {
-    label: 'Active Validators',
+    label: t('validators.active_validators'),
     stat: {
       value: activeValidators,
       total: validatorCount.toNumber(),

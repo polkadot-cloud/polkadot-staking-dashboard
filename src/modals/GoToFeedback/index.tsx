@@ -16,7 +16,6 @@ export const GoToFeedback = () => {
           style={{
             padding: '0 1.75rem',
             width: '100%',
-            boxSizing: 'border-box',
           }}
         >
           <NotesWrapper style={{ paddingTop: 0 }}>
@@ -30,7 +29,7 @@ export const GoToFeedback = () => {
           </NotesWrapper>
           <h2 style={{ marginTop: 0 }}>
             <a
-              href="https://polkadot-staking-dashboard.canny.io/feature-requests"
+              href="https://polkadot-staking-dashboard.canny.io/feedback"
               target="_blank"
               rel="noreferrer"
             >

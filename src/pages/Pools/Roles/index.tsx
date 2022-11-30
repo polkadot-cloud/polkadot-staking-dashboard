@@ -16,6 +16,7 @@ import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import { PoolAccount } from '../PoolAccount';
 import RoleEditInput from './RoleEditInput';
@@ -23,6 +24,7 @@ import { RoleEditEntry, RolesProps } from './types';
 
 export const Roles = (props: RolesProps) => {
   const { batchKey, defaultRoles } = props;
+  const { t } = useTranslation('pages');
 
   const listenIsValid = props.listenIsValid ?? (() => {});
   const setters = props.setters ?? [];
@@ -137,7 +139,7 @@ export const Roles = (props: RolesProps) => {
     <>
       <CardHeaderWrapper withAction>
         <h3>
-          Roles <OpenHelpIcon helpKey="Pool Roles" />
+          {t('pools.roles')} <OpenHelpIcon helpKey="Pool Roles" />
         </h3>
         {!(isOwner() === true || setters.length) ? (
           <></>
@@ -148,7 +150,7 @@ export const Roles = (props: RolesProps) => {
                 <ButtonPrimary
                   iconLeft={faTimesCircle}
                   iconTransform="grow-1"
-                  text="Cancel"
+                  text={t('pools.cancel')}
                   disabled={poolsSyncing || isReadOnlyAccount(activeAccount)}
                   onClick={() => cancelHandler()}
                 />
@@ -159,7 +161,7 @@ export const Roles = (props: RolesProps) => {
               <ButtonPrimary
                 iconLeft={isEditing ? faCheckCircle : faEdit}
                 iconTransform="grow-1"
-                text={isEditing ? 'Save' : 'Edit'}
+                text={isEditing ? t('pools.save') : t('pools.edit')}
                 disabled={
                   poolsSyncing ||
                   isReadOnlyAccount(activeAccount) ||
@@ -174,7 +176,7 @@ export const Roles = (props: RolesProps) => {
       <RolesWrapper>
         <section>
           <div className="inner">
-            <h4>Depositor</h4>
+            <h4>{t('pools.depositor')}</h4>
             <PoolAccount
               address={roles.depositor ?? null}
               batchIndex={accounts.indexOf(roles.depositor ?? '-1')}
@@ -184,7 +186,7 @@ export const Roles = (props: RolesProps) => {
         </section>
         <section>
           <div className="inner">
-            <h4>Root</h4>
+            <h4>{t('pools.root')}</h4>
             {isEditing ? (
               <RoleEditInput
                 roleKey="root"
@@ -202,7 +204,7 @@ export const Roles = (props: RolesProps) => {
         </section>
         <section>
           <div className="inner">
-            <h4>Nominator</h4>
+            <h4>{t('pools.nominator')}</h4>
             {isEditing ? (
               <RoleEditInput
                 roleKey="nominator"
@@ -220,7 +222,7 @@ export const Roles = (props: RolesProps) => {
         </section>
         <section>
           <div className="inner">
-            <h4>State Toggler</h4>
+            <h4>{t('pools.state_toggler')}</h4>
             {isEditing ? (
               <RoleEditInput
                 roleKey="stateToggler"

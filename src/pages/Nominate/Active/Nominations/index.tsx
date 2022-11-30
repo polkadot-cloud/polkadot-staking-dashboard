@@ -14,6 +14,7 @@ import { useValidators } from 'contexts/Validators';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { ValidatorList } from 'library/ValidatorList';
+import { useTranslation } from 'react-i18next';
 import { MaybeAccount } from 'types';
 import { Wrapper } from './Wrapper';
 
@@ -30,6 +31,7 @@ export const Nominations = ({
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { getAccountNominations } = useBalances();
   const { nominated: stakeNominated, poolNominated } = useValidators();
+  const { t } = useTranslation('pages');
   let { favoritesList } = useValidators();
   if (favoritesList === null) {
     favoritesList = [];
@@ -97,7 +99,7 @@ export const Nominations = ({
     <Wrapper>
       <CardHeaderWrapper withAction>
         <h3>
-          {isPool ? 'Pool Nominations' : 'Nominations'}
+          {isPool ? t('nominate.pool_nominations') : t('nominate.nominations')}
           <OpenHelpIcon helpKey="Nominations" />
         </h3>
         <div>
@@ -109,7 +111,7 @@ export const Nominations = ({
             <ButtonPrimary
               iconLeft={faStopCircle}
               iconTransform="grow-1"
-              text="Stop"
+              text={t('nominate.stop')}
               disabled={stopBtnDisabled}
               onClick={() =>
                 openModalWith(
@@ -129,13 +131,13 @@ export const Nominations = ({
         <div className="head">
           <h4>
             {!isSyncing && nominated === null
-              ? 'Not Nominating.'
-              : 'Syncing...'}
+              ? t('nominate.not_nominating')
+              : t('nominate.syncing')}
           </h4>
         </div>
       ) : !nominator ? (
         <div className="head">
-          <h4>Not Nominating.</h4>
+          <h4>{t('nominate.not_nominating')}</h4>
         </div>
       ) : (
         <>
@@ -146,7 +148,7 @@ export const Nominations = ({
                 validators={nominated}
                 nominator={nominator}
                 batchKey={batchKey}
-                title="Your Nominations"
+                title={t('nominate.your_nominations')}
                 format="nomination"
                 selectable={
                   !isReadOnlyAccount(activeAccount) &&
@@ -157,13 +159,13 @@ export const Nominations = ({
                     ? []
                     : [
                         {
-                          title: 'Stop Nominating Selected',
+                          title: t('nominate.stop_nominating_selected'),
                           onClick: cbStopNominatingSelected,
                           onSelected: true,
                         },
                         {
                           disabled: !favoritesList.length,
-                          title: 'Add From Favorites',
+                          title: t('nominate.add_from_favorites'),
                           onClick: cbAddNominations,
                           onSelected: false,
                         },
@@ -177,11 +179,9 @@ export const Nominations = ({
           ) : (
             <div className="head">
               {poolDestroying ? (
-                <h4>
-                  Pool is being destroyed and nominating is no longer possible.
-                </h4>
+                <h4>{t('nominate.pool_destroy')}</h4>
               ) : (
-                <h4>Not Nominating.</h4>
+                <h4>{t('nominate.not_nominating')}</h4>
               )}
             </div>
           )}
