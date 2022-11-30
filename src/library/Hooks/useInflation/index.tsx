@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { BN_BILLION, BN_MILLION, BN_THOUSAND } from '@polkadot/util';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -21,10 +22,12 @@ export const useInflation = () => {
     maxInflation,
     minInflation,
     stakeTarget,
+    yearlyInflationInTokens,
   } = params;
 
-  const BN_MILLION = new BN('1000000');
-
+  /* For Aleph Zero inflation is calculated based on yearlyInflationInTokens and totalIssuanceInTokens
+   * We multiply stakedReturn by 0.9, as in case of Aleph Zero chain 10% of return goes to treasury
+   */
   const calculateInflation = (totalStaked: BN, numAuctions: BN) => {
     const stakedFraction =
       totalStaked.isZero() || totalIssuance.isZero()
@@ -35,20 +38,24 @@ export const useInflation = () => {
       stakeTarget -
       Math.min(auctionMax, numAuctions.toNumber()) * auctionAdjust;
     const idealInterest = maxInflation / idealStake;
-    const inflation =
-      100 *
-      (minInflation +
-        (stakedFraction <= idealStake
-          ? stakedFraction * (idealInterest - minInflation / idealStake)
-          : (idealInterest * idealStake - minInflation) *
-            2 ** ((idealStake - stakedFraction) / falloff)));
+
+    const totalIssuanceInTokens = totalIssuance
+      .div(BN_BILLION)
+      .div(BN_THOUSAND);
+
+    const inflation = totalIssuanceInTokens.isZero()
+      ? 0
+      : 100 * (yearlyInflationInTokens / totalIssuanceInTokens.toNumber());
+
+    let stakedReturn = stakedFraction ? inflation / stakedFraction : 0;
+    stakedReturn *= 0.9;
 
     return {
       idealInterest,
       idealStake,
       inflation,
       stakedFraction,
-      stakedReturn: stakedFraction ? inflation / stakedFraction : 0,
+      stakedReturn,
     };
   };
 

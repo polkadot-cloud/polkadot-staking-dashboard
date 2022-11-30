@@ -26,7 +26,7 @@ export const defaultFiltersInterface = {
   // eslint-disable-next-line
   clearSearchTerm: (g: string) => {},
   // eslint-disable-next-line
-  applyFilters: (t: FilterType, g: string, l: AnyJson, f: AnyFunction) => { },
+  applyFilters: (t: FilterType, g: string, l: AnyJson, f: AnyFunction) => {},
   // eslint-disable-next-line
-  applyOrder: (g: string, l: AnyJson, f: AnyFunction) => { }
+  applyOrder: (g: string, l: AnyJson, f: AnyFunction) => {},
 };

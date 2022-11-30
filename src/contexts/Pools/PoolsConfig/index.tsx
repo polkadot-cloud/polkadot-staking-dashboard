@@ -73,6 +73,7 @@ export const PoolsConfigProvider = ({
         api.query.nominationPools.maxPools,
         api.query.nominationPools.minCreateBond,
         api.query.nominationPools.minJoinBond,
+        api.query.staking.minNominatorBond,
       ],
       ([
         _counterForPoolMembers,
@@ -84,6 +85,7 @@ export const PoolsConfigProvider = ({
         _maxPools,
         _minCreateBond,
         _minJoinBond,
+        _minNominatorBond,
       ]) => {
         // format optional configs to BN or null
         _maxPoolMembers = _maxPoolMembers.toHuman();
@@ -99,6 +101,7 @@ export const PoolsConfigProvider = ({
           _maxPools = new BN(rmCommas(_maxPools));
         }
 
+        console.log(_minJoinBond);
         setStateWithRef(
           {
             ...poolsConfigRef.current,
@@ -111,7 +114,10 @@ export const PoolsConfigProvider = ({
               maxPoolMembersPerPool: _maxPoolMembersPerPool,
               maxPools: _maxPools,
               minCreateBond: _minCreateBond.toBn(),
-              minJoinBond: _minJoinBond.toBn(),
+              minJoinBond: BN.max(
+                _minJoinBond.toBn(),
+                _minNominatorBond.toBn()
+              ),
             },
           },
           setPoolsConfig,

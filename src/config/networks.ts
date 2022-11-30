@@ -1,86 +1,88 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { BN, BN_MILLION } from '@polkadot/util';
 import { DefaultParams } from 'consts';
-import { ReactComponent as PolkadotIconSVG } from 'img/polkadot_icon.svg';
-import { ReactComponent as PolkadotInlineSVG } from 'img/polkadot_inline.svg';
-import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
+import { ReactComponent as AzeroIconSVG } from 'img/a0_icon.svg';
+import { ReactComponent as AzeroInlineSVG } from 'img/a0_inline.svg';
+import { ReactComponent as AzeroLogoSVG } from 'img/a0_logo.svg';
 import { Networks } from 'types';
 
 /*
  * Network Configuration
  */
 export const NETWORKS: Networks = {
-  polkadot: {
-    name: 'Polkadot',
+  alephzero: {
+    name: 'Aleph Zero',
     endpoints: {
-      rpc: 'wss://apps-rpc.polkadot.io',
+      rpc: 'wss://ws.azero.dev',
       lightClient: null,
     },
     colors: {
       primary: {
-        light: 'rgb(211, 48, 121)',
-        dark: 'rgb(211, 48, 121)',
+        light: '#00ccab',
+        dark: '#00ccab',
       },
       secondary: {
-        light: '#e474bc',
-        dark: '#e474bc',
-      },
-      stroke: {
-        light: 'rgb(211, 48, 121)',
-        dark: 'rgb(211, 48, 121)',
-      },
-      transparent: {
-        light: 'rgb(211, 48, 121, 0.05)',
-        dark: 'rgb(211, 48, 121, 0.05)',
-      },
-    },
-    subscanEndpoint: 'https://polkadot.api.subscan.io',
-    unit: 'DOT',
-    units: 10,
-    ss58: 0,
-    brand: {
-      icon: PolkadotIconSVG,
-      logo: {
-        svg: PolkadotLogoSVG,
-        width: '8.5rem',
-      },
-      inline: {
-        svg: PolkadotInlineSVG,
-        size: '1.2rem',
-      },
-    },
-    api: {
-      unit: 'DOT',
-      priceTicker: 'DOTUSDT',
-    },
-    params: {
-      ...DefaultParams,
-      stakeTarget: 0.75,
-    },
-  },
-  alephzerotestnet: {
-    name: 'alephzerotestnet',
-    endpoints: {
-      rpc: 'wss://ws.test.azero.dev',
-      lightClient: null,
-    },
-    colors: {
-      primary: {
-        light: 'rgb(0, 204, 171)',
-        dark: 'rgb(0, 204, 171)',
-      },
-      secondary: {
-        light: 'black',
-        dark: 'black',
+        light: '#00eac7',
+        dark: '#00eac7',
       },
       stroke: {
         light: '#4c4b63',
         dark: '#d1d1db',
       },
       transparent: {
-        light: 'rgb(0, 204, 171, 0.05)',
-        dark: 'rgb(0, 204, 171, 0.05)',
+        light: 'rgba(0, 204, 171, .5)',
+        dark: 'rgba(0, 204, 171, .5)',
+      },
+    },
+    subscanEndpoint: 'https://alephzero.api.subscan.io',
+    unit: 'AZERO',
+    units: 12,
+    ss58: 42,
+    brand: {
+      icon: AzeroIconSVG,
+      logo: {
+        svg: AzeroLogoSVG,
+        width: '8.5rem',
+      },
+      inline: {
+        svg: AzeroInlineSVG,
+        size: '1.2rem',
+      },
+    },
+    api: {
+      unit: 'AZERO',
+      priceTicker: 'DOTUSDT', // this is for compatibility with binance endpoint, it's pinged for current token value, but we don't display that value
+    },
+    params: {
+      ...DefaultParams,
+      stakeTarget: 0.5,
+      yearlyInflationInTokens: BN_MILLION.mul(new BN(30)).toNumber(),
+    },
+  },
+  alephzerotestnet: {
+    name: 'Aleph Zero Testnet',
+    endpoints: {
+      rpc: 'wss://ws.test.azero.dev',
+      lightClient: null,
+    },
+    colors: {
+      primary: {
+        light: '#00ccab',
+        dark: '#00ccab',
+      },
+      secondary: {
+        light: '#00eac7',
+        dark: '#00eac7',
+      },
+      stroke: {
+        light: '#4c4b63',
+        dark: '#d1d1db',
+      },
+      transparent: {
+        light: 'rgba(0, 204, 171, .5)',
+        dark: 'rgba(0, 204, 171, .5)',
       },
     },
     subscanEndpoint: 'https://alephzero.api.subscan.io',
@@ -88,23 +90,24 @@ export const NETWORKS: Networks = {
     units: 12,
     ss58: 42,
     brand: {
-      icon: PolkadotIconSVG,
+      icon: AzeroIconSVG,
       logo: {
-        svg: PolkadotLogoSVG,
+        svg: AzeroLogoSVG,
         width: '8.5rem',
       },
       inline: {
-        svg: PolkadotInlineSVG,
+        svg: AzeroInlineSVG,
         size: '1.2rem',
       },
     },
     api: {
-      unit: 'TAZERO',
+      unit: 'TZERO',
       priceTicker: 'DOTUSDT', // this is for compatibility with binance endpoint, it's pinged for current token value, but we don't display that value
     },
     params: {
       ...DefaultParams,
       stakeTarget: 0.5,
+      yearlyInflationInTokens: BN_MILLION.mul(new BN(30)).toNumber(),
     },
   },
 };

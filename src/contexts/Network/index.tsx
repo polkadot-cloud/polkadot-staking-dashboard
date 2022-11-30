@@ -50,10 +50,7 @@ export const NetworkMetricsProvider = ({
 
     if (isReady) {
       const _unsub = await api.queryMulti(
-        [
-          api.query.staking.activeEra,
-          api.query.balances.totalIssuance,
-        ],
+        [api.query.staking.activeEra, api.query.balances.totalIssuance],
         ([activeEra, _totalIssuance]: AnyApi) => {
           // determine activeEra: toString used as alternative to `toHuman`, that puts commas in numbers
           let _activeEra = activeEra
