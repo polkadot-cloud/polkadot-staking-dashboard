@@ -101,7 +101,6 @@ export const PoolsConfigProvider = ({
           _maxPools = new BN(rmCommas(_maxPools));
         }
 
-        console.log(_minJoinBond);
         setStateWithRef(
           {
             ...poolsConfigRef.current,
