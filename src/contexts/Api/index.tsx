@@ -43,6 +43,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   const _name: NetworkName =
     (localStorage.getItem('network') as NetworkName) ?? NetworkName.Polkadot;
 
+  // store the currently active network
   const [network, setNetwork] = useState<NetworkState>({
     name: _name,
     meta: NETWORKS[localStorage.getItem('network') as NetworkName],
@@ -85,9 +86,12 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // connection callback
   const connectedCallback = async (_provider: WsProvider | ScProvider) => {
-    const _api = new ApiPromise({ provider: _provider });
-    await _api.isReady;
+    const _api = await ApiPromise.create({ provider: _provider });
 
+    // update connection status
+    setConnectionStatus(ConnectionStatus.Connected);
+
+    // put active network in localStorage
     localStorage.setItem('network', String(network.name));
 
     // constants
@@ -171,11 +175,12 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     } else {
       _provider = new WsProvider(endpoints.rpc);
     }
+
+    setProvider(_provider);
     setNetwork({
       name: _network,
       meta: NETWORKS[_network],
     });
-    setProvider(_provider);
   };
 
   // handle network switching

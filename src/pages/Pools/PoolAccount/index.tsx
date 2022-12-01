@@ -11,7 +11,7 @@ import { motion } from 'framer-motion';
 import { Identicon } from 'library/Identicon';
 import { getIdentityDisplay } from 'library/ValidatorList/Validator/Utils';
 import { useTranslation } from 'react-i18next';
-import { clipAddress, convertRemToPixels } from 'Utils';
+import { clipAddress, remToUnit } from 'Utils';
 import { PoolAccountProps } from '../types';
 import { Wrapper } from './Wrapper';
 
@@ -55,14 +55,14 @@ export const PoolAccount = (props: PoolAccountProps) => {
         ) : synced && display !== null ? (
           <>
             <div className="icon">
-              <Identicon value={address} size={convertRemToPixels('1.6rem')} />
+              <Identicon value={address} size={remToUnit('1.6rem')} />
             </div>
             <h4>{display}</h4>
           </>
         ) : (
           <>
             <div className="icon">
-              <Identicon value={address} size={convertRemToPixels('1.6rem')} />
+              <Identicon value={address} size={remToUnit('1.6rem')} />
             </div>
             <h4>{clipAddress(address)}</h4>
           </>

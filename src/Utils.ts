@@ -17,7 +17,7 @@ export const clipAddress = (val: string) => {
   )}`;
 };
 
-export const convertRemToPixels = (rem: string) => {
+export const remToUnit = (rem: string) => {
   const remAsNumber = Number(rem.slice(0, rem.length - 3));
   return (
     remAsNumber *
