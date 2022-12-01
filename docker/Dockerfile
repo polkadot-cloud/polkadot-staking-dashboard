@@ -19,16 +19,7 @@ RUN NODE_ENV=production REACT_APP_DISABLE_FIAT=1 npm run build
 # ===========================================================
 FROM nginx:stable-alpine
 
-# The following is mainly for doc purpose to show which ENV is supported
-ENV WS_URL=
-
 WORKDIR /usr/share/nginx/html
-
-RUN apk add --no-cache bash;
 
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /apps/build /usr/share/nginx/html
-
-EXPOSE 80
-
-CMD ["/bin/bash", "-c", "nginx -g \"daemon off;\""]
