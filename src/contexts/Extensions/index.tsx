@@ -38,15 +38,21 @@ export const ExtensionsProvider = ({
 
   // listen for window.injectedWeb3.
   let injectedWeb3Interval: ReturnType<typeof setInterval>;
+  let injectCounter = 0;
 
   // sets an interval to listen to `window` until the
   // `injectedWeb3` property is present.
   useEffect(() => {
     injectedWeb3Interval = setInterval(() => {
-      // if injected is present
-      const injectedWeb3 = (window as AnyApi)?.injectedWeb3 || null;
-      if (injectedWeb3) {
-        setInjectedPresent(true);
+      if (++injectCounter === 10) {
+        clearInterval(injectedWeb3Interval);
+      } else {
+        // if injected is present
+        const injectedWeb3 = (window as AnyApi)?.injectedWeb3 || null;
+        if (injectedWeb3 !== null) {
+          clearInterval(injectedWeb3Interval);
+          setInjectedPresent(true);
+        }
       }
     }, 500);
     return () => {
@@ -57,7 +63,6 @@ export const ExtensionsProvider = ({
   // initialise extensions.
   useEffect(() => {
     if (!extensions && injectedPresent) {
-      // clear `injectedWeb3` interval
       clearInterval(injectedWeb3Interval);
       // get installed extensions from `injectedWeb3`
       setExtensions(getInstalledExtensions());
