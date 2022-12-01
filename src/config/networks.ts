@@ -111,3 +111,104 @@ export const NETWORKS: Networks = {
     },
   },
 };
+
+if (process.env.NODE_ENV === 'development') {
+  NETWORKS.azerolocal = {
+    name: 'Aleph Zero Local',
+    endpoints: {
+      rpc: 'ws://localhost:9944',
+      lightClient: null,
+    },
+    colors: {
+      primary: {
+        light: '#00ccab',
+        dark: '#00ccab',
+      },
+      secondary: {
+        light: '#00eac7',
+        dark: '#00eac7',
+      },
+      stroke: {
+        light: '#4c4b63',
+        dark: '#d1d1db',
+      },
+      transparent: {
+        light: 'rgba(0, 204, 171, .5)',
+        dark: 'rgba(0, 204, 171, .5)',
+      },
+    },
+    subscanEndpoint: 'https://alephzero.api.subscan.io',
+    unit: 'LZERO',
+    units: 12,
+    ss58: 42,
+    brand: {
+      icon: AzeroIconSVG,
+      logo: {
+        svg: AzeroLogoSVG,
+        width: '8.5rem',
+      },
+      inline: {
+        svg: AzeroInlineSVG,
+        size: '1.2rem',
+      },
+    },
+    api: {
+      unit: 'LZERO',
+      priceTicker: 'DOTUSDT', // this is for compatibility with binance endpoint, it's pinged for current token value, but we don't display that value
+    },
+    params: {
+      ...DefaultParams,
+      stakeTarget: 0.5,
+      yearlyInflationInTokens: BN_MILLION.mul(new BN(30)).toNumber(),
+    },
+  };
+  NETWORKS.azerodevnet = {
+    name: 'Aleph Zero Devnet',
+    endpoints: {
+      rpc: 'wss://ws.dev.azero.dev',
+      lightClient: null,
+    },
+    colors: {
+      primary: {
+        light: '#00ccab',
+        dark: '#00ccab',
+      },
+      secondary: {
+        light: '#00eac7',
+        dark: '#00eac7',
+      },
+      stroke: {
+        light: '#4c4b63',
+        dark: '#d1d1db',
+      },
+      transparent: {
+        light: 'rgba(0, 204, 171, .5)',
+        dark: 'rgba(0, 204, 171, .5)',
+      },
+    },
+    subscanEndpoint: 'https://alephzero.api.subscan.io',
+    unit: 'DZERO',
+    units: 12,
+    ss58: 42,
+    brand: {
+      icon: AzeroIconSVG,
+      logo: {
+        svg: AzeroLogoSVG,
+        width: '8.5rem',
+      },
+      inline: {
+        svg: AzeroInlineSVG,
+        size: '1.2rem',
+      },
+    },
+    api: {
+      unit: 'DZERO',
+      priceTicker: 'DOTUSDT', // this is for compatibility with binance endpoint, it's pinged for current token value, but we don't display that value
+    },
+    params: {
+      ...DefaultParams,
+      stakeTarget: 0.5,
+      yearlyInflationInTokens: BN_MILLION.mul(new BN(30)).toNumber(),
+    },
+  };
+}
