@@ -4,12 +4,7 @@
 import { SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  borderPrimary,
-  networkColor,
-  networkColorSecondary,
-  textSecondary,
-} from 'theme';
+import { borderPrimary, networkColor, textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -50,7 +45,7 @@ export const Item = styled(motion.div)`
       color: #b5a200;
     }
     &.pools {
-      color: ${networkColorSecondary};
+      color: ${networkColor};
     }
   }
 

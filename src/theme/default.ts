@@ -19,17 +19,17 @@ export const defaultThemes: { [key: string]: any } = {
     invert: v('#fafafa', '#0e0e0e'),
     warning: v('#be7900', '#be7900'),
     danger: v('#ae2324', '#d14445'),
-    success: v('green', 'green'),
+    success: v('#66d16f', '#66d16f'),
   },
   background: {
-    primary: v('rgba(245,244,244,1)', 'rgba(39,39,39,1)'),
+    primary: v('rgba(245,244,244,1)', '#111b24'),
     gradient: v(
       'linear-gradient(180deg, rgba(245,244,244,1) 0%, rgba(245,244,244,1) 100px, rgba(230,230,230, 1) 80%, rgba(253,239,234,1) 100%)',
-      'linear-gradient(180deg, rgba(39,39,39,1) 0%, rgba(39,39,39,1) 100px, rgba(21,21,21,1) 100%)'
+      '#111b24'
     ),
-    secondary: v('rgba(255,255,255,0.58)', 'rgba(0,0,0,0.25)'),
+    secondary: v('rgba(255,255,255,0.58)', '#14202a'),
     network: v('rgba(244,225,225,0.75)', 'rgba(39,39,39,0.75)'),
-    dropdown: v('rgba(237,237,237,0.6)', 'rgba(33,33,33,0.6)'),
+    dropdown: v('rgba(237,237,237,0.6)', '#16232e'),
     modalitem: v('rgba(244,244,244,0.6)', 'rgba(22,22,22,0.4)'),
     validator: v(
       'linear-gradient(90deg, rgba(240,240,239,0.95) 0%, rgba(240,240,239,0.7) 100%)',
@@ -57,15 +57,15 @@ export const defaultThemes: { [key: string]: any } = {
     ),
   },
   graphs: {
-    colors: [v('#ccc', '#555'), v('#eee', '#222')],
-    inactive: v('#cfcfcf', '#1a1a1a'),
-    inactive2: v('#dadada', '#383838'),
-    tooltip: v('#333', '#ddd'),
+    colors: [v('#bccbd6', '#2f4252'), v('#edf0f3', '#182733')],
+    inactive: v('#cfdae3', '#16232e'),
+    inactive2: v('#bde4eb', '#1b2b38'),
+    tooltip: v('#e3e9ef', '#182733'),
     grid: v('#e8e8e8', '#222'),
   },
   buttons: {
     primary: { background: v('rgba(248, 248, 248, 0.9)', '#0f0f0f') },
-    secondary: { background: v('#eeecec', '#333') },
+    secondary: { background: v('#eeecec', '#1b2b38') },
     toggle: { background: v('rgba(244,243,242,1)', '#1a1a1a') },
     help: { background: v('#ececec', '#242424') },
     hover: { background: v('#e8e6e6', '#080808') },
@@ -75,7 +75,7 @@ export const defaultThemes: { [key: string]: any } = {
     },
   },
   border: {
-    primary: v('#e6e6e6', '#282828'),
+    primary: v('#e6e6e6', '#1b2b38'),
     secondary: v('#ccc', '#444'),
   },
   modal: {
@@ -95,8 +95,8 @@ export const defaultThemes: { [key: string]: any } = {
     background: v('#dadada', '#101010'),
   },
   shadow: {
-    primary: v('#dedede', '#1f1f1f'),
-    secondary: v('#eaeaea', '#222'),
+    primary: v('transparent', 'transparent'),
+    secondary: v('transparent', 'transparent'),
   },
   status: {
     danger: {
@@ -108,7 +108,7 @@ export const defaultThemes: { [key: string]: any } = {
       transparent: v('rgba(255,165,0,0.5)', 'rgba(255,165,0,0.5)'),
     },
     success: {
-      solid: v('green', 'green'),
+      solid: v('#66d16f', '#66d16f'),
       transparent: v('rgba(0,128,0,0.25)', 'rgba(0,128,0,0.25)'),
     },
   },

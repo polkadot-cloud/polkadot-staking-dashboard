@@ -199,8 +199,9 @@ export const ValidatorStatusWrapper = styled.div<{ status: string }>`
   padding: 0 0.5rem;
 
   h5 {
-    color: ${(props) => (props.status === 'active' ? 'green' : textSecondary)};
-    opacity: ${(props) => (props.status === 'active' ? 0.8 : 0.5)};
+    color: ${(props) =>
+      props.status === 'active' ? '#66d16f' : textSecondary};
+    opacity: ${(props) => (props.status === 'active' ? 1 : 0.8)};
     margin: 0;
     display: flex;
     flex-flow: row nowrap;
