@@ -21,6 +21,9 @@ export const ExtensionsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  // store whether injectedWeb3 is present
+  const [injectedPresent, setInjectedPresent] = useState<boolean>(false);
+
   // store the installed extensions in state
   const [extensions, setExtensions] = useState<Array<Extension> | null>(null);
 
@@ -33,11 +36,31 @@ export const ExtensionsProvider = ({
   }>({});
   const extensionsStatusRef = useRef(extensionsStatus);
 
+  // listen for window.injectedWeb3.
+  let injectedWeb3Interval: ReturnType<typeof setInterval>;
+
+  // sets an interval to listen to `window` until the
+  // `injectedWeb3` property is present.
+  useEffect(() => {
+    injectedWeb3Interval = setInterval(() => {
+      // if injected is present
+      const injectedWeb3 = (window as AnyApi)?.injectedWeb3 || null;
+      if (injectedWeb3) {
+        setInjectedPresent(true);
+      }
+    }, 500);
+    return () => {
+      clearInterval(injectedWeb3Interval);
+    };
+  });
+
   // initialise extensions.
   useEffect(() => {
-    if (!extensions) {
-      // timeout for initialising injectedWeb3
-      setTimeout(() => setExtensions(getInstalledExtensions()), 200);
+    if (!extensions && injectedPresent) {
+      // clear `injectedWeb3` interval
+      clearInterval(injectedWeb3Interval);
+      // get installed extensions from `injectedWeb3`
+      setExtensions(getInstalledExtensions());
     }
   });
 
