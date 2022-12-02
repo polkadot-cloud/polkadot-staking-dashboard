@@ -18,9 +18,7 @@ export const useInflation = () => {
   const {
     auctionAdjust,
     auctionMax,
-    falloff,
     maxInflation,
-    minInflation,
     stakeTarget,
     yearlyInflationInTokens,
   } = params;
