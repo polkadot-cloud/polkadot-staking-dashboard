@@ -3,6 +3,7 @@
 
 import BN from 'bn.js';
 import { useBalances } from 'contexts/Balances';
+import { Lock } from 'contexts/Balances/types';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React from 'react';
@@ -24,9 +25,9 @@ export const TransferOptionsProvider = ({
   children: React.ReactNode;
 }) => {
   const { metrics } = useNetworkMetrics();
-  const { getAccount, getAccountBalance, getLedgerForStash } = useBalances();
+  const { getAccount, getAccountBalance, getLedgerForStash, getAccountLocks } =
+    useBalances();
   const { membership } = usePoolMemberships();
-
   const { activeEra } = metrics;
 
   // get the bond and unbond amounts available to the user
@@ -37,8 +38,16 @@ export const TransferOptionsProvider = ({
     }
     const balance = getAccountBalance(address);
     const ledger = getLedgerForStash(address);
+    const locks = getAccountLocks(address);
+
     const { freeAfterReserve } = balance;
-    const { active, unlocking } = ledger;
+    const { active, total, unlocking } = ledger;
+
+    // calculate total balance locked after staking
+    let totalLockedBalance = new BN(0);
+    locks.forEach((l: Lock) => {
+      totalLockedBalance = totalLockedBalance.add(l.amount);
+    });
 
     const points = membership?.points;
     const activePool = points ? new BN(points) : new BN(0);
@@ -55,15 +64,10 @@ export const TransferOptionsProvider = ({
       }
     }
 
-    // free to bond balance
-    const freeBalance = BN.max(
-      freeAfterReserve.sub(active).sub(totalUnlocking).sub(totalUnlocked),
-      new BN(0)
-    );
+    // free balance after reserve. Does not consider locks other than staking.
+    const freeBalance = BN.max(freeAfterReserve.sub(total), new BN(0));
 
     const nominateOptions = () => {
-      const freeToUnbond = active;
-
       // total possible balance that can be bonded
       const totalPossibleBond = BN.max(
         freeAfterReserve.sub(totalUnlocking).sub(totalUnlocked),
@@ -72,7 +76,7 @@ export const TransferOptionsProvider = ({
 
       return {
         active,
-        freeToUnbond,
+        freeToUnbond: active,
         totalUnlocking,
         totalUnlocked,
         totalPossibleBond,
@@ -82,15 +86,10 @@ export const TransferOptionsProvider = ({
 
     const poolOptions = () => {
       const unlockingPool = membership?.unlocking || [];
-      const freeToUnbondPool = activePool;
 
       // total possible balance that can be bonded
       const totalPossibleBondPool = BN.max(
-        freeAfterReserve
-          .sub(active)
-          .sub(totalUnlocking)
-          .sub(totalUnlocked)
-          .add(activePool),
+        freeAfterReserve.sub(totalLockedBalance),
         new BN(0)
       );
 
@@ -106,7 +105,7 @@ export const TransferOptionsProvider = ({
       }
       return {
         active: activePool,
-        freeToUnbond: freeToUnbondPool,
+        freeToUnbond: activePool,
         totalUnlocking: totalUnlockingPool,
         totalUnlocked: totalUnlockedPool,
         totalPossibleBond: totalPossibleBondPool,
