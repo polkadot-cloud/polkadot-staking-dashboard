@@ -25,13 +25,13 @@ export const Bonded = ({
   // graph data
   let graphActive = active;
   let graphUnlocking = unlocking + unlocked;
-  let graphFree = free;
+  let graphAvailable = free;
 
   let zeroBalance = false;
   if (inactive) {
     graphActive = -1;
     graphUnlocking = -1;
-    graphFree = -1;
+    graphAvailable = -1;
     zeroBalance = true;
   }
 
@@ -91,11 +91,11 @@ export const Bonded = ({
       ];
 
   const data = {
-    labels: ['Active', 'Unlocking', 'Free'],
+    labels: ['Active', 'Unlocking', 'Available'],
     datasets: [
       {
         label: network.unit,
-        data: [graphActive, graphUnlocking, graphFree],
+        data: [graphActive, graphUnlocking, graphAvailable],
         backgroundColor: _colors,
         borderWidth: 0,
       },

@@ -44,7 +44,7 @@ export const BalanceGraph = () => {
   const { freeBalance } = allTransferOptions;
 
   const {
-    freeToUnbond: staked,
+    active: nominating,
     totalUnlocking,
     totalUnlocked,
   } = allTransferOptions.nominate;
@@ -67,22 +67,22 @@ export const BalanceGraph = () => {
   const freeFiat = toFixedIfNecessary(Number(freeBase * prices.lastPrice), 2);
 
   // graph data
-  let graphStaked = planckBnToUnit(staked, units);
-  let graphFreeToStake = planckBnToUnit(freeBalance, units);
+  let graphNominating = planckBnToUnit(nominating, units);
+  let graphOther = planckBnToUnit(freeBalance, units);
 
   let graphInPool = planckBnToUnit(poolBondOpions.active, units);
   let graphUnlocking = planckBnToUnit(unlocking, units);
 
   let zeroBalance = false;
   if (
-    graphStaked === 0 &&
-    graphFreeToStake === 0 &&
+    graphNominating === 0 &&
+    graphOther === 0 &&
     graphUnlocking === 0 &&
     graphInPool === 0
   ) {
-    graphStaked = -1;
+    graphNominating = -1;
     graphUnlocking = -1;
-    graphFreeToStake = -1;
+    graphOther = -1;
     graphInPool = -1;
     zeroBalance = true;
   }
@@ -130,25 +130,29 @@ export const BalanceGraph = () => {
 
   // determine stats
   const _labels = [
-    t('overview.available'),
-    t('overview.unlocking'),
-    t('overview.nominating'),
     t('overview.in_pool'),
+    t('overview.nominating'),
+    t('overview.unlocking'),
+    t('overview.available'),
   ];
-  const _data = [graphFreeToStake, graphUnlocking, graphStaked, graphInPool];
-  const _colors = zeroBalance
-    ? [
-        defaultThemes.graphs.colors[1][mode],
-        defaultThemes.graphs.inactive2[mode],
-        defaultThemes.graphs.inactive2[mode],
-        defaultThemes.graphs.inactive[mode],
-      ]
-    : [
-        defaultThemes.graphs.colors[1][mode],
-        defaultThemes.graphs.colors[0][mode],
-        networkColors[`${network.name}-${mode}`],
-        networkColorsSecondary[`${network.name}-${mode}`],
-      ];
+  const _data = [graphInPool, graphNominating, graphUnlocking, graphOther];
+  let _colors;
+
+  if (zeroBalance) {
+    _colors = [
+      defaultThemes.graphs.inactive2[mode],
+      defaultThemes.graphs.inactive[mode],
+      defaultThemes.graphs.inactive2[mode],
+      defaultThemes.graphs.colors[1][mode],
+    ];
+  } else {
+    _colors = [
+      networkColorsSecondary[`${network.name}-${mode}`],
+      networkColors[`${network.name}-${mode}`],
+      defaultThemes.graphs.colors[0][mode],
+      defaultThemes.graphs.colors[1][mode],
+    ];
+  }
 
   // default to a greyscale 50/50 donut on zero balance
   let dataSet;
