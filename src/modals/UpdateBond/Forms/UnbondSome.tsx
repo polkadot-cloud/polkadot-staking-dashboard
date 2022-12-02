@@ -50,12 +50,12 @@ export const UnbondSome = (props: FormsProps) => {
   const isPooling = bondType === 'pool';
 
   const allTransferOptions = getTransferOptions(activeAccount);
-  const { freeToUnbond: freeToUnbondBn } = isPooling
+  const { active: activeBn } = isPooling
     ? allTransferOptions.pool
     : allTransferOptions.nominate;
 
   // convert BN values to number
-  const freeToUnbond = planckBnToUnit(freeToUnbondBn, units);
+  const freeToUnbond = planckBnToUnit(activeBn, units);
   const minJoinBond = planckBnToUnit(minJoinBondBn, units);
   const minCreateBond = planckBnToUnit(minCreateBondBn, units);
   const minNominatorBond = planckBnToUnit(minNominatorBondBn, units);
@@ -67,7 +67,7 @@ export const UnbondSome = (props: FormsProps) => {
   const [bondValid, setBondValid] = useState<boolean>(false);
 
   // get the max amount available to unbond
-  const freeToUnbondToMin = isPooling
+  const unbondToMin = isPooling
     ? isDepositor()
       ? Math.max(freeToUnbond - minCreateBond, 0)
       : Math.max(freeToUnbond - minJoinBond, 0)
@@ -78,11 +78,11 @@ export const UnbondSome = (props: FormsProps) => {
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = freeToUnbondToMin;
+    const _bond = unbondToMin;
     setBond({ bond: _bond });
 
     setBondValid(isValid);
-  }, [freeToUnbondToMin, isValid]);
+  }, [unbondToMin, isValid]);
 
   // modal resize on form update
   useEffect(() => {
@@ -140,7 +140,7 @@ export const UnbondSome = (props: FormsProps) => {
           <UnbondFeedback
             bondType={bondType}
             listenIsValid={setBondValid}
-            defaultBond={freeToUnbondToMin}
+            defaultBond={unbondToMin}
             setters={[
               {
                 set: setBond,

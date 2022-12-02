@@ -37,16 +37,12 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { minJoinBond, minCreateBond } = stats;
   const { bondDuration } = consts;
 
-  const { freeToUnbond: freeToUnbondBn } =
-    getTransferOptions(activeAccount).pool;
+  const { active: activeBn } = getTransferOptions(activeAccount).pool;
 
   // unbond amount to minimum threshold
   const freeToUnbond = isDepositor()
-    ? planckBnToUnit(
-        BN.max(freeToUnbondBn.sub(minCreateBond), new BN(0)),
-        units
-      )
-    : planckBnToUnit(BN.max(freeToUnbondBn.sub(minJoinBond), new BN(0)), units);
+    ? planckBnToUnit(BN.max(activeBn.sub(minCreateBond), new BN(0)), units)
+    : planckBnToUnit(BN.max(activeBn.sub(minJoinBond), new BN(0)), units);
 
   // local bond value
   const [bond, setBond] = useState({
