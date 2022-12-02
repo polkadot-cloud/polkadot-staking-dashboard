@@ -16,7 +16,8 @@ const TotalValidatorsStatBox = () => {
   let totalValidatorsAsPercent = 0;
   if (maxValidatorsCount.gt(new BN(0))) {
     totalValidatorsAsPercent = totalValidators
-      .div(maxValidatorsCount.div(new BN(100)))
+      .div(maxValidatorsCount)
+      .mul(new BN(100))
       .toNumber();
   }
 

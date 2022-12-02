@@ -128,7 +128,7 @@ export const BondFeedback = ({
       _errors.push('Bond amount is too small.');
     }
 
-    if (bond.bond !== '' && bondAfterTxFees.toNumber() < 0) {
+    if (bond.bond !== '' && bondAfterTxFees.lt(new BN(0))) {
       _errors.push(`Not enough ${unit} to bond after transaction fees.`);
     }
 

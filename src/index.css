@@ -102,3 +102,39 @@ button {
   flex-flow: row wrap;
   align-items: flex-end;
 }
+
+.theme-aleph-zero,
+.theme-aleph-zero-testnet {
+  --color-primary-light: rgb(0, 204, 171);
+  --color-primary-dark: rgb(0, 204, 171);
+  --color-secondary-light: #00eac7;
+  --color-secondary-dark: #00eac7;
+  --color-transparent-light: rgb(0, 204, 171, 0.05);
+  --color-transparent-dark: rgb(0, 204, 171, 0.05);
+  --color-stroke-light: #ff4f4c;
+  --color-stroke-dark: #ff4f4c;
+}
+.theme-aleph-zero,
+.theme-aleph-zero-testnet.theme-light #logotype_brandmark {
+  fill: #111b24;
+}
+
+.theme-aleph-zero.theme-dark #logotype_brandmark,
+.theme-aleph-zero-testnet.theme-dark #logotype_brandmark {
+  fill: white;
+}
+
+.theme-aleph-zero .btn-primary,
+.theme-aleph-zero-testnet .btn-primary {
+  color: #111b24;
+}
+
+.theme-aleph-zero .connect > svg path,
+.theme-aleph-zero-testnet .connect > svg path {
+  fill: #111b24 !important;
+}
+
+.theme-aleph-zero .connect > span,
+.theme-aleph-zero-testnet .connect > span {
+  color: #111b24;
+}

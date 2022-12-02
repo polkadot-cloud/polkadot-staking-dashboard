@@ -6,5 +6,5 @@ import { ThemeContextInterface } from './types';
 export const defaultThemeContext: ThemeContextInterface = {
   // eslint-disable-next-line
   toggleTheme: (str) => {},
-  mode: 'light',
+  mode: 'dark',
 };

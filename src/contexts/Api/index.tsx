@@ -96,8 +96,6 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       _api.consts.staking.maxNominations,
       _api.consts.staking.sessionsPerEra,
       _api.consts.staking.maxNominatorRewardedPerValidator,
-      _api.consts.electionProviderMultiPhase.maxElectingVoters,
-      _api.consts.babe.expectedBlockTime,
       _api.consts.balances.existentialDeposit,
       _api.consts.staking.historyDepth,
       _api.consts.nominationPools.palletId,
@@ -123,27 +121,23 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       ? Number(_consts[3].toString())
       : FallbackNominatorRewardedPerValidator;
 
-    const maxElectingVoters = _consts[4]
-      ? Number(_consts[4].toString())
-      : FallbackMaxElectingVoters;
+    const maxElectingVoters = FallbackMaxElectingVoters;
 
-    const expectedBlockTime = _consts[5]
-      ? Number(_consts[5].toString())
-      : FallbackExpectedBlockTime;
+    const expectedBlockTime = FallbackExpectedBlockTime;
 
-    const existentialDeposit = _consts[6]
-      ? new BN(_consts[6].toString())
+    const existentialDeposit = _consts[4]
+      ? new BN(_consts[4].toString())
       : new BN(0);
 
     let historyDepth;
-    if (_consts[7] !== undefined) {
-      historyDepth = new BN(_consts[7].toString());
+    if (_consts[5] !== undefined) {
+      historyDepth = new BN(_consts[5].toString());
     } else {
       historyDepth = await _api.query.staking.historyDepth();
       historyDepth = new BN(historyDepth.toString());
     }
 
-    const poolsPalletId = _consts[8] ? _consts[8].toU8a() : new Uint8Array(0);
+    const poolsPalletId = _consts[6] ? _consts[6].toU8a() : new Uint8Array(0);
 
     setApi(_api);
     setConsts({
@@ -165,7 +159,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     const { endpoints } = nodeEndpoint;
 
     let _provider: WsProvider | ScProvider;
-    if (_isLightClient) {
+    if (_isLightClient && endpoints.lightClient) {
       _provider = new ScProvider(endpoints.lightClient);
       await _provider.connect();
     } else {

@@ -150,7 +150,7 @@ export const Announcements = () => {
     }.`,
     subtitle: `${t('overview.minimum_bonding_amount', {
       networkName,
-    })}${planckBnToUnit(minNominatorBond, units)} ${network.unit}.`,
+    })} ${planckBnToUnit(minNominatorBond, units)} ${network.unit}.`,
   });
 
   // supply staked

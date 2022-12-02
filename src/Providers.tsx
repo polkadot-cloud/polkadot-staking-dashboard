@@ -37,9 +37,10 @@ import { EntryWrapper as Wrapper } from 'Wrappers';
 export const WrappedRouter = () => {
   const { mode } = useTheme();
   const { network } = useApi();
+  const networkName = network.name.toLowerCase().replaceAll(' ', '-');
 
   return (
-    <Wrapper className={`theme-${network.name.toLowerCase()} theme-${mode}`}>
+    <Wrapper className={`theme-${networkName} theme-${mode}`}>
       <Router />
     </Wrapper>
   );

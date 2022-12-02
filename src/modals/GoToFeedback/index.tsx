@@ -20,20 +20,17 @@ export const GoToFeedback = () => {
         >
           <NotesWrapper style={{ paddingTop: 0 }}>
             <p>
-              We host a feedback page on{' '}
-              <a href="https://canny.io/" target="_blank" rel="noreferrer">
-                Canny.io
-              </a>
-              . Bug reports, feature requests and improvements are all welcome.
+              Best way to contact us is to join our Discord. Bug reports,
+              feature requests and improvements are all welcome.
             </p>
           </NotesWrapper>
           <h2 style={{ marginTop: 0 }}>
             <a
-              href="https://polkadot-staking-dashboard.canny.io/feedback"
+              href="https://discord.com/invite/alephzero"
               target="_blank"
               rel="noreferrer"
             >
-              Open Feedback on Canny.io &nbsp;
+              Open our Discord &nbsp;
               <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-3" />
             </a>
           </h2>
