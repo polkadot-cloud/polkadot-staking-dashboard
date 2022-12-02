@@ -1,6 +1,7 @@
 {
   "pages": {
     "overview": {
+      "overview": "概述",
       "nominator_limit": "已达到提名人数上限",
       "maximum_allowed": "已达到提名人数上限。请等待可用的名额",
       "limit_reached": "%提名人限额己被达到",
@@ -25,11 +26,10 @@
       "address_copied": "地址已复制到剪贴板",
       "no_account_connected": "未连接帐户",
       "in_pool": "提名池中",
-      "available": "可用",
+      "other": "其他",
       "unlocking": "正在解锁",
       "nominating": "提名中",
       "balance": "余额",
-      "overview": "概述",
       "recent_payouts": "最近收益",
       "subscan_disabled": "Subscan己断开",
       "not_staking": "无抵押",

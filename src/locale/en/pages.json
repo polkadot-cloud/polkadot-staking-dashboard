@@ -1,6 +1,7 @@
 {
   "pages": {
     "overview": {
+      "overview": "Overview",
       "nominator_limit": "Nominator limit has been reached.",
       "maximum_allowed": "The maximum allowed nominators have been reached on the network. Please wait for available slots if you wish to nominate.",
       "limit_reached": "% of nominator limit reached.",
@@ -24,12 +25,12 @@
       "active_nominators": "Active Nominators",
       "address_copied": "Address Copied to Clipboard",
       "no_account_connected": "No Account Connected",
-      "in_pool": "In Pool",
+      "in_pool": "In a Pool",
       "available": "Available",
       "unlocking": "Unlocking",
       "nominating": "Nominating",
       "balance": "Balance",
-      "overview": "Overview",
+      "other": "Other",
       "recent_payouts": "Recent Payouts",
       "subscan_disabled": "Subscan Disabled",
       "not_staking": "Not Staking",
