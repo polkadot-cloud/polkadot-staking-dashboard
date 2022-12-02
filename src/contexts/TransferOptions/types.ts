@@ -12,7 +12,6 @@ export interface TransferOptions {
   freeBalance: BN;
   nominate: {
     active: BN;
-    freeToUnbond: BN;
     totalUnlocking: BN;
     totalUnlocked: BN;
     totalPossibleBond: BN;
@@ -20,7 +19,6 @@ export interface TransferOptions {
   };
   pool: {
     active: BN;
-    freeToUnbond: BN;
     totalUnlocking: BN;
     totalUnlocked: BN;
     totalPossibleBond: BN;
