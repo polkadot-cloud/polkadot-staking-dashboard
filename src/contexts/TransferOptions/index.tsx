@@ -76,7 +76,6 @@ export const TransferOptionsProvider = ({
 
       return {
         active,
-        freeToUnbond: active,
         totalUnlocking,
         totalUnlocked,
         totalPossibleBond,
@@ -105,7 +104,6 @@ export const TransferOptionsProvider = ({
       }
       return {
         active: activePool,
-        freeToUnbond: activePool,
         totalUnlocking: totalUnlockingPool,
         totalUnlocked: totalUnlockedPool,
         totalPossibleBond: totalPossibleBondPool,

@@ -13,7 +13,6 @@ export const transferOptions: TransferOptions = {
   freeBalance: new BN(0),
   nominate: {
     active: new BN(0),
-    freeToUnbond: new BN(0),
     totalUnlocking: new BN(0),
     totalUnlocked: new BN(0),
     totalPossibleBond: new BN(0),
@@ -21,7 +20,6 @@ export const transferOptions: TransferOptions = {
   },
   pool: {
     active: new BN(0),
-    freeToUnbond: new BN(0),
     totalUnlocking: new BN(0),
     totalUnlocked: new BN(0),
     totalPossibleBond: new BN(0),

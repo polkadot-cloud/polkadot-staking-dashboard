@@ -44,7 +44,7 @@ export const BalanceGraph = () => {
   const { freeBalance } = allTransferOptions;
 
   const {
-    freeToUnbond: staked,
+    active: staked,
     totalUnlocking,
     totalUnlocked,
   } = allTransferOptions.nominate;
