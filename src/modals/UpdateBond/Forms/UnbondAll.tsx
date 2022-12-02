@@ -46,12 +46,12 @@ export const UnbondAll = (props: FormsProps) => {
   const isPooling = bondType === 'pool';
 
   const allTransferOptions = getTransferOptions(activeAccount);
-  const { freeToUnbond: freeToUnbondBn } = isPooling
+  const { active: activeBn } = isPooling
     ? allTransferOptions.pool
     : allTransferOptions.nominate;
 
   // convert BN values to number
-  const freeToUnbond = planckBnToUnit(freeToUnbondBn, units);
+  const freeToUnbond = planckBnToUnit(activeBn, units);
 
   // local bond value
   const [bond, setBond] = useState({
