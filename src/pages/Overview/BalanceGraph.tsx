@@ -133,7 +133,7 @@ export const BalanceGraph = () => {
     t('overview.in_pool'),
     t('overview.nominating'),
     t('overview.unlocking'),
-    t('overview.other'),
+    t('overview.available'),
   ];
   const _data = [graphInPool, graphNominating, graphUnlocking, graphOther];
   let _colors;
