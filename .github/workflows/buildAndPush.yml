@@ -1,0 +1,42 @@
+name: Build and push staking dashboard to ECR
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-push-docker:
+    name: Build and push staking-dashboard to ECR
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout Source code
+        uses: actions/checkout@v2
+
+      - name: Build docker image
+        run: |
+          docker build --tag staking-dashboard -f ./docker/Dockerfile .
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_MAINNET_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_MAINNET_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to ECR
+        uses: docker/login-action@v1
+        with:
+          registry: public.ecr.aws
+          username: ${{ secrets.AWS_MAINNET_ACCESS_KEY_ID }}
+          password: ${{ secrets.AWS_MAINNET_SECRET_ACCESS_KEY }}
+
+      - name: Push image to ECR
+        env:
+          LOCAL_IMAGE: staking-dashboard
+          IMAGE_TAG: $(git rev-parse --short HEAD)
+          ECR_PUSH_IMAGE: public.ecr.aws/p6e8q1z1/staking-dashboard
+        run: |
+          docker tag ${{ env.LOCAL_IMAGE }} ${{ env.ECR_PUSH_IMAGE }}:${{ env.IMAGE_TAG }}
+          docker tag ${{ env.LOCAL_IMAGE }} ${{ env.ECR_PUSH_IMAGE }}:latest
+          docker push ${{ env.ECR_PUSH_IMAGE }}:${{ env.IMAGE_TAG }}
+          docker push ${{ env.ECR_PUSH_IMAGE }}:latest
