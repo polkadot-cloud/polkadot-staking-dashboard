@@ -142,7 +142,7 @@ export const Default = (props: DefaultProps) => {
           {inModal && (
             <>
               <Labels>
-                <CopyAddress address={validator} />
+                <CopyAddress address={address} />
               </Labels>
             </>
           )}
