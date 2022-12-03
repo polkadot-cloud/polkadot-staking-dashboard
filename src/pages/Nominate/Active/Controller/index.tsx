@@ -50,18 +50,20 @@ export const Controller = ({ label }: { label: string }) => {
     <StatWrapper>
       <h4>
         {label} <OpenHelpIcon helpKey="Stash and Controller Accounts" />
-        <button
-          type="button"
-          className="btn"
-          onClick={() => {
-            if (notificationCopyAddress) {
-              addNotification(notificationCopyAddress);
-            }
-            navigator.clipboard.writeText(controller || '');
-          }}
-        >
-          <FontAwesomeIcon icon={faCopy as IconProp} transform="shrink-4" />
-        </button>
+        {controller !== null ? (
+          <button
+            type="button"
+            className="btn"
+            onClick={() => {
+              if (notificationCopyAddress) {
+                addNotification(notificationCopyAddress);
+              }
+              navigator.clipboard.writeText(controller || '');
+            }}
+          >
+            <FontAwesomeIcon icon={faCopy as IconProp} transform="shrink-4" />
+          </button>
+        ) : null}
       </h4>
       <Wrapper paddingLeft={hasController()} paddingRight>
         <h2 className="hide-with-padding">
