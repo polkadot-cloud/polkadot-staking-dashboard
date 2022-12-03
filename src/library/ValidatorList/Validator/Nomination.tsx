@@ -50,7 +50,7 @@ export const Nomination = (props: NominationProps) => {
           />
           <div>
             <Labels>
-              <CopyAddress address={validator} />
+              <CopyAddress address={address} />
               {toggleFavorites && <FavoriteValidator address={address} />}
             </Labels>
           </div>
