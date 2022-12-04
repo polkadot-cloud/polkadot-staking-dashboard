@@ -243,7 +243,7 @@ export const BondedPoolsProvider = ({
     const nominations = poolMetaBatches.bonded_pools?.nominations ?? [];
     const targets = nominations[batchIndex]?.targets ?? [];
 
-    const target = targets.find((tg: string) => tg === nomination);
+    const target = targets.find((x: string) => x === nomination);
 
     const nominationStatus = getNominationsStatusFromTargets(nominator, [
       target,
