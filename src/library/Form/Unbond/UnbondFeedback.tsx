@@ -37,7 +37,7 @@ export const UnbondFeedback = ({
   const { isDepositor } = useActivePools();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
-  const { units } = network;
+  const { units, unit } = network;
   const controller = getBondedAccount(activeAccount);
   const { minNominatorBond } = staking;
   const allTransferOptions = getTransferOptions(activeAccount);
@@ -107,7 +107,6 @@ export const UnbondFeedback = ({
 
   // get the actively bonded amount.
   const freeToUnbondBase = planckBnToUnit(freeToUnbondBn, units);
-  const unit = network.unit;
 
   // handle error updates
   const handleErrors = () => {

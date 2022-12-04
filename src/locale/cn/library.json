@@ -11,12 +11,12 @@
         "currently_selected": "当前选定:",
         "clear_selection": "清除选择",
         "not_enough": "不足",
-        "no_free": "您没有可用的 {{_unit}} 可质押.",
+        "no_free": "您没有可用的 {{unit}} 可质押.",
         "more_than_balance": "质押金额超过余额.",
         "too_small": "质押金额太少.",
         "at_least": "质押金最低为",
         "not_meet": "未达到最低质押金",
-        "not_enough_after": "交易费用后 {{_unit}} 不足以质押.",
+        "not_enough_after": "交易费用后 {{unit}} 不足以质押.",
         "bond": "质押",
         "available": "可用",
         "max": "最高",
@@ -134,6 +134,7 @@
         "locked_pools": "已锁定提名池",
         "destroying_pools": "正在销毁提名池",
         "unbonding": "正在解除质押",
-        "done": "完成"
+        "done": "完成",
+        "_available": "可用的"
     }
 }

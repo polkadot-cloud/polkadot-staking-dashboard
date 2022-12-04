@@ -36,7 +36,7 @@ export const BondFeedback = ({
   const { isDepositor } = useActivePools();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
-  const { units } = network;
+  const { units, unit } = network;
   const { minNominatorBond } = staking;
   const { t } = useTranslation('library');
 
@@ -115,12 +115,11 @@ export const BondFeedback = ({
     const _errors = warnings;
     const _bond = bond.bond;
     const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
-    const _unit = network.unit;
 
     // bond errors
     if (freeBalance === 0) {
       _bondDisabled = true;
-      _errors.push(`${t('no_free', { _unit })}`);
+      _errors.push(`${t('no_free', { unit })}`);
     }
 
     if (Number(bond.bond) > freeBalance) {
@@ -132,16 +131,16 @@ export const BondFeedback = ({
     }
 
     if (bond.bond !== '' && bondAfterTxFees.toNumber() < 0) {
-      _errors.push(`${t('not_enough_after', { _unit })}`);
+      _errors.push(`${t('not_enough_after', { unit })}`);
     }
 
     if (inSetup) {
       if (freeBalance < minBondBase) {
         _bondDisabled = true;
-        _errors.push(`${t('not_meet')} ${minBondBase} ${network.unit}.`);
+        _errors.push(`${t('not_meet')} ${minBondBase} ${unit}.`);
       }
       if (bond.bond !== '' && Number(bond.bond) < minBondBase) {
-        _errors.push(`${t('at_least')} ${minBondBase} ${network.unit}.`);
+        _errors.push(`${t('at_least')} ${minBondBase} ${unit}.`);
       }
     }
 

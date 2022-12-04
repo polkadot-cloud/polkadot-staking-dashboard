@@ -11,12 +11,12 @@
         "currently_selected": "Currently Selected:",
         "clear_selection": "clear selection",
         "not_enough": "Not Enough",
-        "no_free": "You have no free {{_unit}} to bond.",
+        "no_free": "You have no free {{unit}} to bond.",
         "more_than_balance": "Bond amount is more than your free balance.",
         "too_small": "Bond amount is too small.",
         "at_least": "Bond amount must be at least",
         "not_meet": "You do not meet the minimum bond of",
-        "not_enough_after": "Not enough {{_unit}} to bond after transaction fees.",
+        "not_enough_after": "Not enough {{unit}} to bond after transaction fees.",
         "bond": "Bond",
         "available": "available",
         "max": "Max",
@@ -135,6 +135,7 @@
         "locked_pools": "Locked Pools",
         "destroying_pools": "Destroying Pools",
         "unbonding": "Unbonding",
-        "done": "Done"
+        "done": "Done",
+        "_available": "Available"
     }
 }

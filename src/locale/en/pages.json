@@ -87,7 +87,8 @@
       "top_up_account": "Top up an account to make it eligible to become a controller.",
       "select_a_controller": "You have no other accounts imported. To select a controller, import another account with a balance of at least",
       "set_controller_account": "Set Controller Account",
-      "set_new_controller": "Set New Controller"
+      "set_new_controller": "Set New Controller",
+      "address_copied": "Address Copied to Clipboard"
     },
     "pools": {
       "bond": "Bond",

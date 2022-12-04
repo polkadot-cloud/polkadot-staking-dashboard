@@ -93,7 +93,7 @@ export const Bonded = ({
       ];
 
   const data = {
-    labels: [t('active'), t('unlocking'), 'Available'],
+    labels: [t('active'), t('unlocking'), t('_available')],
     datasets: [
       {
         label: network.unit,
