@@ -10,8 +10,7 @@ import { CopyAddressProps } from '../types';
 
 export const CopyAddress = (props: CopyAddressProps) => {
   const { addNotification } = useNotifications();
-  const { validator } = props;
-  const { address } = validator;
+  const { address } = props;
 
   // copy address notification
   const notificationCopyAddress: NotificationText | null =
