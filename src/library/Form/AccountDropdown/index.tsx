@@ -10,7 +10,7 @@ import Identicon from 'library/Identicon';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { defaultThemes, networkColors } from 'theme/default';
-import { convertRemToPixels } from 'Utils';
+import { remToUnit } from 'Utils';
 import { AccountDropdownProps, InputItem } from '../types';
 import { StyledController, StyledDownshift, StyledDropdown } from './Wrappers';
 
@@ -63,7 +63,7 @@ export const AccountDropdown = ({
               {current !== null && (
                 <Identicon
                   value={current?.address ?? ''}
-                  size={convertRemToPixels('2rem')}
+                  size={remToUnit('2rem')}
                 />
               )}
               <input className="input" disabled value={current?.name ?? ''} />
@@ -75,7 +75,7 @@ export const AccountDropdown = ({
               {value !== null && (
                 <Identicon
                   value={value?.address ?? ''}
-                  size={convertRemToPixels('2rem')}
+                  size={remToUnit('2rem')}
                 />
               )}
               <input className="input" disabled value={value?.name ?? '...'} />

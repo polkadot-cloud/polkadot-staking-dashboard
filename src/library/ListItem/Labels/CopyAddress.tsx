@@ -11,8 +11,7 @@ import { CopyAddressProps } from '../types';
 
 export const CopyAddress = (props: CopyAddressProps) => {
   const { addNotification } = useNotifications();
-  const { validator } = props;
-  const { address } = validator;
+  const { address } = props;
   const { t } = useTranslation('library');
 
   // copy address notification

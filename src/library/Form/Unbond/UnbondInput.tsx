@@ -13,7 +13,7 @@ import { InputWrapper } from '../Wrappers';
 export const UnbondInput = ({
   defaultValue,
   disabled,
-  freeToUnbondToMin,
+  unbondToMin,
   setters,
   value,
   active,
@@ -87,8 +87,8 @@ export const UnbondInput = ({
             text={t('max')}
             disabled={disabled}
             onClick={() => {
-              setLocalBond(freeToUnbondToMin);
-              updateParentState(freeToUnbondToMin);
+              setLocalBond(unbondToMin);
+              updateParentState(unbondToMin);
             }}
           />
         </section>

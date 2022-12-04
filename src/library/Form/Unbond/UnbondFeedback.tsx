@@ -47,7 +47,7 @@ export const UnbondFeedback = ({
   const transferOptions =
     bondType === 'pool' ? allTransferOptions.pool : allTransferOptions.nominate;
 
-  const { freeToUnbond: freeToUnbondBn, active } = transferOptions;
+  const { active: freeToUnbondBn } = transferOptions;
 
   // store errors
   const [errors, setErrors] = useState<Array<string>>([]);
@@ -89,7 +89,7 @@ export const UnbondFeedback = ({
       : planckBnToUnit(minNominatorBond, units);
 
   // unbond amount to minimum threshold
-  const freeToUnbondToMin =
+  const unbondToMin =
     bondType === 'pool'
       ? inSetup || isDepositor()
         ? planckBnToUnit(
@@ -106,7 +106,7 @@ export const UnbondFeedback = ({
         );
 
   // get the actively bonded amount.
-  const activeBase = planckBnToUnit(active, units);
+  const freeToUnbondBase = planckBnToUnit(freeToUnbondBn, units);
   const unit = network.unit;
 
   // handle error updates
@@ -116,7 +116,7 @@ export const UnbondFeedback = ({
     const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
 
     // unbond errors
-    if (Number(bond.bond) > activeBase) _errors.push(t('unbond_amount'));
+    if (Number(bond.bond) > freeToUnbondBase) _errors.push(t('unbond_amount'));
 
     // unbond errors for staking only
     if (bondType === 'stake')
@@ -126,7 +126,7 @@ export const UnbondFeedback = ({
     if (bond.bond !== '' && Number(bond.bond) < _planck)
       _errors.push(t('value_is_too_small'));
 
-    if (Number(bond.bond) > freeToUnbondToMin)
+    if (Number(bond.bond) > unbondToMin)
       _errors.push(
         `${t('minimum_bond', { minBondBase, unit })} ${
           bondType === 'stake'
@@ -148,10 +148,10 @@ export const UnbondFeedback = ({
       ))}
       <Spacer />
       <UnbondInput
-        active={active}
+        active={freeToUnbondBn}
         defaultValue={defaultValue}
         disabled={false}
-        freeToUnbondToMin={freeToUnbondToMin}
+        unbondToMin={unbondToMin}
         setters={setters}
         value={bond.bond}
       />
