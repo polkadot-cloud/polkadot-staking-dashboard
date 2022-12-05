@@ -48,7 +48,7 @@ export const StyledButton = styled.button`
   padding: 1rem 1.2rem;
   cursor: pointer;
   margin-bottom: 1rem;
-  border-radius: 1rem;
+  border-radius: 0.2rem;
   display: inline-flex;
   flex-flow: row wrap;
   justify-content: flex-start;
@@ -94,7 +94,7 @@ export const StyledButton = styled.button`
         border: 1px solid ${borderPrimary};
         background: ${backgroundSecondary};
         padding: 0.25rem 0.75rem;
-        border-radius: 1rem;
+        border-radius: 0.2rem;
       }
     }
   }

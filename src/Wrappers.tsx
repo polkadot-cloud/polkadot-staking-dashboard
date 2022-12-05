@@ -249,7 +249,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   }
 
   h1 {
-    font-family: 'Unbounded', 'sans-serif', sans-serif;
+    font-family: 'Gilroy', 'sans-serif', sans-serif;
     font-size: ${(props) => (props.sticky ? '1.4rem ' : '1.75rem')};
     @media (max-width: ${SideMenuStickyThreshold}px) {
       font-size: 1.5rem;
@@ -380,7 +380,7 @@ export const RowSecondaryWrapper = styled.div<InterfaceLayoutProps>`
   order: ${(props) => props.vOrder};
   flex-basis: 100%;
   width: 100%;
-  border-radius: 1rem;
+  border-radius: 0.2rem;
 
   @media (min-width: ${(props) => props.thresholdStickyMenu + 1}px) {
     ${(props) => props.hOrder === 1 && ' padding-left: 0.75rem;'}

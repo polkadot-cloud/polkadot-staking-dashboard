@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   transition: opacity 0.1s;
-  border-radius: 1rem;
+  border-radius: 0.2rem;
 
   > button:last-child {
     border: none;

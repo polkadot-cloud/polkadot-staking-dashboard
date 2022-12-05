@@ -22,23 +22,17 @@ export const defaultThemes: { [key: string]: any } = {
     success: v('#66d16f', '#66d16f'),
   },
   background: {
-    primary: v('rgba(245,244,244,1)', '#111b24'),
-    gradient: v(
-      'linear-gradient(180deg, rgba(245,244,244,1) 0%, rgba(245,244,244,1) 100px, rgba(230,230,230, 1) 80%, rgba(253,239,234,1) 100%)',
-      '#111b24'
-    ),
+    primary: v('#f3f5f7', '#111b24'),
+    gradient: v('#f3f5f7', '#111b24'),
     secondary: v('rgba(255,255,255,0.58)', '#14202a'),
-    network: v('rgba(244,225,225,0.75)', 'rgba(39,39,39,0.75)'),
-    dropdown: v('rgba(237,237,237,0.6)', '#16232e'),
+    network: v('#edf0f3', '#0f171f'),
+    dropdown: v('#f3f5f7', '#16232e'),
     modalitem: v('rgba(244,244,244,0.6)', 'rgba(22,22,22,0.4)'),
     validator: v(
       'linear-gradient(90deg, rgba(240,240,239,0.95) 0%, rgba(240,240,239,0.7) 100%)',
       'linear-gradient(90deg, rgba(30,30,30,0.8) 0%, rgba(30,30,30,0.5) 100%)'
     ),
-    label: v(
-      'linear-gradient(90deg, rgba(243,240,239,1) 0%, rgba(243,240,239,0.95) 100%)',
-      'linear-gradient(90deg, rgba(40,40,40,0.85) 0%, rgba(40,40,40,0.95) 100%)'
-    ),
+    label: v('#e3e9ef', '#182733'),
     tag: v('rgba(220,220,220,0.75)', 'rgba(36,36,36,0.75)'),
     identicon: v('#eee', '#333'),
     overlay: v(
@@ -48,11 +42,11 @@ export const defaultThemes: { [key: string]: any } = {
   },
   highlight: {
     primary: v(
-      'linear-gradient(90deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.03) 100%)',
+      '#e3e9ef',
       'linear-gradient(90deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.04) 100%)'
     ),
     secondary: v(
-      'linear-gradient(90deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.01) 100%)',
+      '#dbe4eb',
       'linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)'
     ),
   },
@@ -61,13 +55,13 @@ export const defaultThemes: { [key: string]: any } = {
     inactive: v('#cfdae3', '#16232e'),
     inactive2: v('#bde4eb', '#1b2b38'),
     tooltip: v('#e3e9ef', '#182733'),
-    grid: v('#e8e8e8', '#222'),
+    grid: v('#e3e9ef', '#182733'),
   },
   buttons: {
-    primary: { background: v('rgba(248, 248, 248, 0.9)', '#0f0f0f') },
-    secondary: { background: v('#eeecec', '#1b2b38') },
-    toggle: { background: v('rgba(244,243,242,1)', '#1a1a1a') },
-    help: { background: v('#ececec', '#242424') },
+    primary: { background: v('rgba(248, 248, 248, 0.9)', '#182733') },
+    secondary: { background: v('#e3e9ef', '#1b2b38') },
+    toggle: { background: v('rgba(244,243,242,1)', '#1b2b38') },
+    help: { background: v('#ececec', '#182733') },
     hover: { background: v('#e8e6e6', '#080808') },
     disabled: {
       background: v('#F3F6F4', '#000000'),
@@ -79,8 +73,8 @@ export const defaultThemes: { [key: string]: any } = {
     secondary: v('#ccc', '#444'),
   },
   modal: {
-    overlay: v('rgba(242,240,240,0.6)', 'rgba(16,16,16,0.6)'),
-    background: v('#fff', '#0b0b0b'),
+    overlay: v('rgba(242,240,240,0.6)', 'rgba(15,23,31,0.9)'),
+    background: v('#fff', '#14202a'),
   },
   overlay: {
     background: v('rgba(200,200,200,0.45)', 'rgba(30,30,30,0.6)'),

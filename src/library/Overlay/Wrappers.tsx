@@ -108,7 +108,7 @@ export const TitleWrapper = styled.div`
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
-        font-family: 'Unbounded', 'sans-serif', sans-serif;
+        font-family: 'Gilroy', 'sans-serif', sans-serif;
         font-size: 1.3rem;
         margin: 0;
 
@@ -141,7 +141,7 @@ export const FilterListButton = styled.button<{ active: boolean }>`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  border-radius: 1rem;
+  border-radius: 0.2rem;
   padding: 0rem 1rem;
   margin: 1rem 0;
   transition: border 0.1s;

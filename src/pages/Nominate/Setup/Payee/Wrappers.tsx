@@ -35,7 +35,7 @@ export const Item = styled.button<{ selected?: boolean }>`
     border: 1.5px solid
       ${(props) => (props.selected ? networkColor : borderPrimary)};
     width: 100%;
-    border-radius: 1rem;
+    border-radius: 0.2rem;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;

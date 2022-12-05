@@ -20,7 +20,7 @@ export const Wrapper = styled.div<WrapperProps>`
     background: ${backgroundLabel};
     opacity: 0.75;
     padding: 1rem 1.25rem;
-    border-radius: 1rem;
+    border-radius: 0.2rem;
     display: flex;
     flex-flow: row wrap;
     align-items: center;

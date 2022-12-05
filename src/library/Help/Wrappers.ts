@@ -83,7 +83,7 @@ export const ContentWrapper = styled.div`
   }
 
   h1 {
-    font-family: 'Unbounded', 'sans-serif', sans-serif;
+    font-family: 'Gilroy', 'sans-serif', sans-serif;
     margin-bottom: 1.75rem;
   }
 

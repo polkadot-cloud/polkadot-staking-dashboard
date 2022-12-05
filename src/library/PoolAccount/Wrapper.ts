@@ -7,7 +7,7 @@ import { borderSecondary, textSecondary } from 'theme';
 import { WrapperProps } from './types';
 
 export const Wrapper = styled(motion.button)<WrapperProps>`
-  border-radius: 1rem;
+  border-radius: 0.2rem;
   box-shadow: none;
   display: flex;
   flex-flow: row wrap;

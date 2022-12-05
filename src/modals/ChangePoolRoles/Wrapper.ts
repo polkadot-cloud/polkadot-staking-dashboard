@@ -46,7 +46,7 @@ export const RoleChangeWrapper = styled.div`
 
     &.selected {
       border: 1px solid ${borderPrimary};
-      border-radius: 1rem;
+      border-radius: 0.2rem;
       margin: 0;
       padding: 0.1rem 0.75rem;
     }

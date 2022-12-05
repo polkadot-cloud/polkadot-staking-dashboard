@@ -210,7 +210,7 @@ export const ReserveWrapper = styled.div`
           white-space: nowrap;
           overflow: hidden;
           position: relative;
-          border-radius: 1rem;
+          border-radius: 0.2rem;
           opacity: 0.75;
           padding-top: 0.7rem;
           padding-bottom: 0.7rem;

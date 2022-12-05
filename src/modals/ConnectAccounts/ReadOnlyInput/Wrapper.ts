@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 
   .input {
     border: 1px solid ${borderPrimary};
-    border-radius: 1rem;
+    border-radius: 0.2rem;
     display: flex;
     flex-flow: row wrap;
     align-items: center;

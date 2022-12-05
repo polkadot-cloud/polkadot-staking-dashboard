@@ -22,7 +22,7 @@ export const StyledDownshift = styled.div<any>`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    border-radius: 1rem;
+    border-radius: 0.2rem;
     padding: 0.1rem 0.75rem;
     margin: 0.25rem 0;
   }
@@ -53,7 +53,7 @@ export const StyledSelect = styled.div`
   position: relative;
   margin: 0.75rem 0 0;
   width: 100%;
-  border-radius: 1rem;
+  border-radius: 0.2rem;
   z-index: 1;
   height: 170px;
   padding: 0.25rem;
@@ -61,7 +61,7 @@ export const StyledSelect = styled.div`
   display: flex;
   flex-flow: row wrap;
   flex: 1;
-  border-radius: 1rem;
+  border-radius: 0.2rem;
 
   .wrapper {
     position: relative;
@@ -78,7 +78,7 @@ export const StyledSelect = styled.div`
       height: 100%;
       padding: 0.65rem 1rem;
       cursor: pointer;
-      border-radius: 1rem;
+      border-radius: 0.2rem;
       display: flex;
       flex-flow: column wrap;
       justify-content: center;

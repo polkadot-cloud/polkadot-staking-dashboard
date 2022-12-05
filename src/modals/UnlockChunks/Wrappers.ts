@@ -28,7 +28,7 @@ export const CardsWrapper = styled(motion.div)`
 `;
 
 export const ContentWrapper = styled.div`
-  border-radius: 1rem;
+  border-radius: 0.2rem;
   display: flex;
   flex-flow: column nowrap;
   flex-basis: 50%;
@@ -51,7 +51,7 @@ export const ChunkWrapper = styled.div<any>`
     flex-flow: row wrap;
     width: 100%;
     padding: 0.25rem 1.1rem;
-    border-radius: 1rem;
+    border-radius: 0.2rem;
     background: ${buttonPrimaryBackground};
 
     > section {

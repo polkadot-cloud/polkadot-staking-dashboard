@@ -72,7 +72,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   box-shadow: ${cardShadow} ${shadowColor};
   padding: ${(props) =>
     props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1.2rem'};
-  border-radius: 1.1rem;
+  border-radius: 0.2rem;
   background: ${(props) => (props.transparent ? 'none' : backgroundSecondary)};
   display: flex;
   flex-flow: column nowrap;
@@ -141,7 +141,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
 export const GraphWrapper = styled.div<GraphWrapperProps>`
   border: ${cardBorder} ${borderPrimary};
   box-shadow: ${cardShadow} ${shadowColor};
-  border-radius: 1rem;
+  border-radius: 0.2rem;
   background: ${backgroundSecondary};
   display: flex;
   flex-flow: column nowrap;
@@ -233,7 +233,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   .small_button {
     background: #f1f1f1;
     padding: 0.25rem 0.75rem;
-    border-radius: 1rem;
+    border-radius: 0.2rem;
   }
   .graph {
     position: relative;
