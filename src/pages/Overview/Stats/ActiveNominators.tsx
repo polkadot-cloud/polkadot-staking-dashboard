@@ -2,37 +2,35 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
 import { useTranslation } from 'react-i18next';
 import { toFixedIfNecessary } from 'Utils';
 
 export const ActiveNominatorsStatBox = () => {
-  const { consts } = useApi();
-  const { maxElectingVoters } = consts;
-  const { eraStakers } = useStaking();
+  const { eraStakers, staking } = useStaking();
   const { totalActiveNominators } = eraStakers;
+  const { maxNominatorsCount } = staking;
   const { t } = useTranslation('pages');
+  const maxNominatorsCountAsNumber = maxNominatorsCount.toNumber();
 
   // active nominators as percent
   let totalNominatorsAsPercent = 0;
-  if (maxElectingVoters > 0) {
+  if (maxNominatorsCount.gt(new BN('0'))) {
     totalNominatorsAsPercent =
-      totalActiveNominators /
-      new BN(maxElectingVoters).div(new BN(100)).toNumber();
+      totalActiveNominators / maxNominatorsCount.div(new BN(100)).toNumber();
   }
 
   const params = {
     label: t('overview.active_nominators'),
     stat: {
       value: totalActiveNominators,
-      total: maxElectingVoters,
+      total: maxNominatorsCountAsNumber,
       unit: '',
     },
     graph: {
       value1: totalActiveNominators,
-      value2: maxElectingVoters - totalActiveNominators,
+      value2: maxNominatorsCountAsNumber - totalActiveNominators,
     },
     tooltip: `${toFixedIfNecessary(totalNominatorsAsPercent, 2)}%`,
     helpKey: 'Active Nominators',

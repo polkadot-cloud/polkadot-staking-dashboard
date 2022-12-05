@@ -112,11 +112,11 @@ export const PoolsConfigProvider = ({
               maxPoolMembers: _maxPoolMembers,
               maxPoolMembersPerPool: _maxPoolMembersPerPool,
               maxPools: _maxPools,
-              minCreateBond: _minCreateBond.toBn(),
-              minJoinBond: BN.max(
-                _minJoinBond.toBn(),
+              minCreateBond: BN.max(
+                _minCreateBond.toBn(),
                 _minNominatorBond.toBn()
               ),
+              minJoinBond: _minJoinBond.toBn(),
             },
           },
           setPoolsConfig,
