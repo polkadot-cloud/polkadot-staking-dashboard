@@ -54,7 +54,7 @@ export const defaultThemes: { [key: string]: any } = {
     colors: [v('#bccbd6', '#2f4252'), v('#edf0f3', '#182733')],
     inactive: v('#cfdae3', '#16232e'),
     inactive2: v('#bde4eb', '#1b2b38'),
-    tooltip: v('#e3e9ef', '#182733'),
+    tooltip: v('#182733', '#edf0f3'),
     grid: v('#e3e9ef', '#182733'),
   },
   buttons: {
