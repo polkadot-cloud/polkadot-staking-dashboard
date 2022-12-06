@@ -143,7 +143,7 @@ export const Status = ({ height }: { height: number }) => {
         stat={
           inSetup()
             ? t('nominate.not_assigned', { ns: 'pages' })
-            : t(`${name}`, { ns: 'base' }) ??
+            : t(`consts.${name}`, { ns: 'base' }) ??
               t('nominate.not_assigned', { ns: 'pages' })
         }
         buttons={

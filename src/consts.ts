@@ -20,18 +20,32 @@ export const EmptyH256 = new Uint8Array(32);
 export const ModPrefix = stringToU8a('modl');
 export const U32Opts = { bitLength: 32, isLe: true };
 
+// export const PayeeStatus = [
+//   {
+//     key: 'Staked',
+//     name: 'consts.staked',
+//   },
+//   {
+//     key: 'Stash',
+//     name: 'consts.stash',
+//   },
+//   {
+//     key: 'Controller',
+//     name: 'consts.controller',
+//   },
+// ];
 export const PayeeStatus = [
   {
     key: 'Staked',
-    name: 'consts.staked',
+    name: 'staked',
   },
   {
     key: 'Stash',
-    name: 'consts.stash',
+    name: 'stash',
   },
   {
     key: 'Controller',
-    name: 'consts.controller',
+    name: 'controller',
   },
 ];
 

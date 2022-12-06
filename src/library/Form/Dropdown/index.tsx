@@ -49,7 +49,11 @@ export const Dropdown = ({
         <div style={{ position: 'relative' }}>
           <div className="current">
             <div className="input-wrap selected">
-              <input className="input" disabled value={t(`${cname}`) ?? ''} />
+              <input
+                className="input"
+                disabled
+                value={t(`consts.${cname}`) ?? ''}
+              />
             </div>
             <span>
               <FontAwesomeIcon icon={faAnglesRight} />
@@ -59,7 +63,7 @@ export const Dropdown = ({
                 className="input"
                 disabled
                 {...c.getInputProps({ placeholder })}
-                value={t(`${vname}`) ?? '...'}
+                value={t(`consts.${vname}`) ?? '...'}
               />
             </div>
           </div>
@@ -100,13 +104,13 @@ const DropdownItem = ({ c, item, index }: any) => {
   return (
     <div
       className="item"
-      {...c.getItemProps({ key: t(`${iname}`), index, item })}
+      {...c.getItemProps({ key: t(`consts.${iname}`), index, item })}
       style={{
         color,
         border,
       }}
     >
-      <p>{t(`${iname}`)}</p>
+      <p>{t(`consts.${iname}`)}</p>
     </div>
   );
 };
