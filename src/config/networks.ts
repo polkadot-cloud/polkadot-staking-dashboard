@@ -116,7 +116,7 @@ if (process.env.NODE_ENV === 'development') {
   NETWORKS.azerolocal = {
     name: 'Aleph Zero Local',
     endpoints: {
-      rpc: 'wss://localhost:9944',
+      rpc: 'ws://localhost:9944',
       lightClient: null,
     },
     colors: {
