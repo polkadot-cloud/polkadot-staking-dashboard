@@ -20,7 +20,7 @@ import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import Stat from 'library/Stat';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, rmCommas } from 'Utils';
+import { planckBnToUnit, rmCommas, stringToKey } from 'Utils';
 import { Separator } from 'Wrappers';
 import { Controller } from './Controller';
 
@@ -81,8 +81,8 @@ export const Status = ({ height }: { height: number }) => {
     }
   }
 
-  const payeeStatus = PayeeStatus.find((item) => item.key === payee);
-  const name = payeeStatus?.name;
+  const payeeStatus = PayeeStatus.find((item) => item === payee);
+  const name = stringToKey(payeeStatus || '');
 
   let startTitle = t('nominate.start_nominating', { ns: 'pages' });
   if (inSetup()) {

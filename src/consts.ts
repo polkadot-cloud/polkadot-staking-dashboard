@@ -34,20 +34,7 @@ export const U32Opts = { bitLength: 32, isLe: true };
 //     name: 'consts.controller',
 //   },
 // ];
-export const PayeeStatus = [
-  {
-    key: 'Staked',
-    name: 'staked',
-  },
-  {
-    key: 'Stash',
-    name: 'stash',
-  },
-  {
-    key: 'Controller',
-    name: 'controller',
-  },
-];
+export const PayeeStatus = ['Staked', 'Stash', 'Controller'];
 
 export const InterfaceMaximumWidth = 1550;
 export const SideMenuMaximisedWidth = 185;

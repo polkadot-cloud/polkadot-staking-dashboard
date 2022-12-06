@@ -9,8 +9,9 @@ import { useCombobox } from 'downshift';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { defaultThemes, networkColors } from 'theme/default';
+import { stringToKey } from 'Utils';
 import { StyledDownshift, StyledDropdown } from '../AccountDropdown/Wrappers';
-import { DropdownInput, DropdownProps } from '../types';
+import { DropdownProps } from '../types';
 
 export const Dropdown = ({
   items,
@@ -20,9 +21,9 @@ export const Dropdown = ({
   value,
   current,
 }: DropdownProps) => {
-  const [inputItems, setInputItems] = useState<Array<DropdownInput>>(items);
+  const [inputItems, setInputItems] = useState<Array<string>>(items);
 
-  const itemToString = (item: DropdownInput | null) => item?.name ?? '';
+  const itemToString = (item: string | null) => item ?? '';
 
   const c = useCombobox({
     items: inputItems,
@@ -35,8 +36,8 @@ export const Dropdown = ({
   });
 
   const { t } = useTranslation('base');
-  const cname = current?.name;
-  const vname = value?.name;
+  const cname = stringToKey(current);
+  const vname = stringToKey(value);
 
   return (
     <StyledDownshift>
@@ -70,7 +71,7 @@ export const Dropdown = ({
 
           <StyledDropdown {...c.getMenuProps()}>
             <div className="items">
-              {inputItems.map((item: DropdownInput, index: number) => (
+              {inputItems.map((item: string, index: number) => (
                 <DropdownItem
                   key={`controller_acc_${index}`}
                   c={c}
@@ -90,16 +91,16 @@ const DropdownItem = ({ c, item, index }: any) => {
   const { name } = useApi().network;
   const { mode } = useTheme();
   const color =
-    c.selectedItem?.key === item.key
+    c.selectedItem === item
       ? networkColors[`${name}-${mode}`]
       : defaultThemes.text.primary[mode];
   const border =
-    c.selectedItem?.key === item.key
+    c.selectedItem === item
       ? `2px solid ${networkColors[`${name}-${mode}`]}`
       : `2px solid ${defaultThemes.transparent[mode]}`;
 
   const { t } = useTranslation('base');
-  const iname = item.name;
+  const iname = stringToKey(item);
 
   return (
     <div

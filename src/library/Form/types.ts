@@ -89,12 +89,12 @@ export interface NominateStatusBarProps {
 }
 
 export interface DropdownProps {
-  items: Array<DropdownInput>;
+  items: Array<string>;
   onChange: (o: any) => void;
   label?: string;
   placeholder: string;
-  value: DropdownInput;
-  current: DropdownInput;
+  value: string;
+  current: string;
   height: string;
 }
 
