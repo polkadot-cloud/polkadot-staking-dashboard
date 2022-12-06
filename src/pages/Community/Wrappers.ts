@@ -87,7 +87,7 @@ export const ItemWrapper = styled(motion.div)`
         display: flex;
         flex-flow: row wrap;
         align-items: center;
-        border-radius: 1rem;
+        border-radius: 0.2rem;
         padding: 0.3rem 1rem;
 
         svg {

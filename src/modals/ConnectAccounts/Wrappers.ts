@@ -24,7 +24,7 @@ export const CardsWrapper = styled(motion.div)`
 `;
 
 export const ContentWrapper = styled.div`
-  border-radius: 1rem;
+  border-radius: 0.2rem;
   display: flex;
   flex-flow: column nowrap;
   width: 50%;
@@ -44,7 +44,7 @@ export const Wrapper = styled.div`
   h1 {
     color: ${textPrimary};
     font-size: 1.4rem;
-    font-family: 'Unbounded', 'sans-serif', sans-serif;
+    font-family: 'Gilroy', 'sans-serif', sans-serif;
     padding: 0.5rem 0.5rem 0 0.5rem;
   }
 
@@ -84,7 +84,7 @@ export const PaddingWrapper = styled.div`
 `;
 
 export const AccountGroupWrapper = styled(motion.button)`
-  border-radius: 1rem;
+  border-radius: 0.2rem;
   width: 100%;
   display: flex;
   flex-flow: row wrap;

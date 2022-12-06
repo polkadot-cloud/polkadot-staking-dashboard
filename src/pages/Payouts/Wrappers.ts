@@ -21,7 +21,7 @@ export const ItemWrapper = styled(motion.div)`
     flex: 1;
     background: ${backgroundDropdown};
     box-shadow: 0px 1.75px 0px 1.25px ${shadowColorSecondary};
-    border-radius: 1rem;
+    border-radius: 0.2rem;
     display: flex;
     flex-flow: column wrap;
     justify-content: flex-start;

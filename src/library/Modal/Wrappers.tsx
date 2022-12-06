@@ -34,7 +34,7 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
-        font-family: 'Unbounded', 'sans-serif', sans-serif;
+        font-family: 'Gilroy', 'sans-serif', sans-serif;
         font-size: 1.3rem;
         margin: 0;
 

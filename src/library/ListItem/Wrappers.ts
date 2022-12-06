@@ -33,7 +33,7 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
       box-shadow: none;
       border: none;`}
     flex: 1;
-    border-radius: 1rem;
+    border-radius: 0.2rem;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
@@ -249,7 +249,6 @@ export const Separator = styled.div`
   width: 100%;
   height: 1px;
   border-bottom: 1px solid ${borderPrimary};
-  opacity: 0.7;
 `;
 
 export const MenuPosition = styled.div`

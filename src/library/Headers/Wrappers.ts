@@ -99,7 +99,7 @@ export const Item = styled(motion.button)`
 export const ItemInactive = styled(motion.div)`
   flex-grow: 1;
   padding: 0 1rem;
-  border-radius: 1rem;
+  border-radius: 0.2rem;
   background: ${buttonSecondaryBackground};
   display: flex;
   flex-flow: column nowrap;

@@ -1,16 +1,18 @@
 /* Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
  * SPDX-License-Identifier: Apache-2.0 */
 
+@import url('https://fonts.googleapis.com/css2?family=Karla&display=swap');
+
 @font-face {
-  font-family: 'Inter';
+  font-family: 'Gilroy';
   font-style: normal;
-  src: url('../public/fonts/Inter.ttf');
+  src: url('../public/fonts/gilroy-regular.otf');
 }
 
 @font-face {
-  font-family: 'Unbounded';
-  font-style: normal;
-  src: url('../public/fonts/Unbounded.ttf');
+  font-family: 'Gilroy';
+  font-style: 600;
+  src: url('../public/fonts/Gilroy-Medium.otf');
 }
 
 /* global font size */
@@ -32,7 +34,7 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Inter', 'sans-serif', sans-serif;
+  font-family: 'Karla', 'sans-serif', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -103,16 +105,23 @@ button {
   align-items: flex-end;
 }
 
+/* Aleph custom styles */
+.btn-layout, button {
+  font-family: 'Gilroy', sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.04rem;
+}
+
 .theme-aleph-zero,
 .theme-aleph-zero-testnet {
-  --color-primary-light: rgb(0, 204, 171);
-  --color-primary-dark: rgb(0, 204, 171);
+  --color-primary-light: #00eac7;
+  --color-primary-dark: #00eac7;
   --color-secondary-light: #00eac7;
   --color-secondary-dark: #00eac7;
   --color-transparent-light: rgb(0, 204, 171, 0.05);
   --color-transparent-dark: rgb(0, 204, 171, 0.05);
-  --color-stroke-light: #ff4f4c;
-  --color-stroke-dark: #ff4f4c;
+  --color-stroke-light: #00eac7;
+  --color-stroke-dark: #00eac7;
 }
 .theme-aleph-zero,
 .theme-aleph-zero-testnet.theme-light #logotype_brandmark {

@@ -53,7 +53,6 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
     justify-content: flex-end;
     margin-right: 0.4rem;
     font-size: 0.88rem;
-    opacity: 0.7;
 
     > span {
       &.success {

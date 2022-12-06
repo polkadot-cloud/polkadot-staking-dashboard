@@ -20,16 +20,16 @@ export const NETWORKS: Networks = {
     },
     colors: {
       primary: {
-        light: '#00ccab',
-        dark: '#00ccab',
+        light: '#00eac7',
+        dark: '#00eac7',
       },
       secondary: {
         light: '#00eac7',
         dark: '#00eac7',
       },
       stroke: {
-        light: '#4c4b63',
-        dark: '#d1d1db',
+        light: '#00eac7',
+        dark: '#00eac7',
       },
       transparent: {
         light: 'rgba(0, 204, 171, .5)',
@@ -69,16 +69,16 @@ export const NETWORKS: Networks = {
     },
     colors: {
       primary: {
-        light: '#00ccab',
-        dark: '#00ccab',
+        light: '#00eac7',
+        dark: '#00eac7',
       },
       secondary: {
         light: '#00eac7',
         dark: '#00eac7',
       },
       stroke: {
-        light: '#4c4b63',
-        dark: '#d1d1db',
+        light: '#00eac7',
+        dark: '#00eac7',
       },
       transparent: {
         light: 'rgba(0, 204, 171, .5)',
@@ -121,16 +121,16 @@ if (process.env.NODE_ENV === 'development') {
     },
     colors: {
       primary: {
-        light: '#00ccab',
-        dark: '#00ccab',
+        light: '#00eac7',
+        dark: '#00eac7',
       },
       secondary: {
         light: '#00eac7',
         dark: '#00eac7',
       },
       stroke: {
-        light: '#4c4b63',
-        dark: '#d1d1db',
+        light: '#00eac7',
+        dark: '#00eac7',
       },
       transparent: {
         light: 'rgba(0, 204, 171, .5)',
@@ -170,16 +170,16 @@ if (process.env.NODE_ENV === 'development') {
     },
     colors: {
       primary: {
-        light: '#00ccab',
-        dark: '#00ccab',
+        light: '#00eac7',
+        dark: '#00eac7',
       },
       secondary: {
         light: '#00eac7',
         dark: '#00eac7',
       },
       stroke: {
-        light: '#4c4b63',
-        dark: '#d1d1db',
+        light: '#00eac7',
+        dark: '#00eac7',
       },
       transparent: {
         light: 'rgba(0, 204, 171, .5)',

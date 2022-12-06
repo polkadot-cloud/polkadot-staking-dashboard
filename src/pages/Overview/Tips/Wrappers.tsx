@@ -26,7 +26,7 @@ export const ItemWrapper = styled(motion.div)`
 `;
 
 export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
-  border-radius: 1.25rem;
+  border-radius: 0.2rem;
   transition: border 0.05s;
   display: flex;
   flex-flow: row wrap;

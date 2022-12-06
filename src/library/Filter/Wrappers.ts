@@ -86,7 +86,7 @@ export const LargeItemWrapper = styled.div`
   > .inner {
     border: 1.5px solid ${borderPrimary};
     background: ${buttonPrimaryBackground};
-    border-radius: 1rem;
+    border-radius: 0.2rem;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;

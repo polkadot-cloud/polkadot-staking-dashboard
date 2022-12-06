@@ -10,7 +10,7 @@ export const Wrapper = styled(motion.button)<any>`
   cursor: ${(props) => props.cursor};
   background: ${(props) => props.fill};
   font-size: ${(props) => props.fontSize};
-  border-radius: 1.25rem;
+  border-radius: 0.2rem;
   box-shadow: none;
   display: flex;
   flex-flow: row wrap;
