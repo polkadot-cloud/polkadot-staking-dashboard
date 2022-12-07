@@ -227,7 +227,7 @@
         "Average Commission",
         [
           "The average validator commission rate on {NETWORK_NAME}.",
-          "This metric excludes validators who host a 100% commission, as these nodes usually block nominations are are run for the purposes of staking on central exchange platforms."
+          "This metric excludes validators who host a 100% commission, as these nodes usually block nominations and are run for the purposes of staking on central exchange platforms."
         ]
       ],
       "era": [
