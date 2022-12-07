@@ -23,19 +23,14 @@ import {
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
-  const { networkSyncing, poolsSyncing, isSyncing } = useUi();
+  const { networkSyncing, poolsSyncing } = useUi();
   const { network } = useApi();
   const { units } = network;
   const { staking } = useStaking();
   const { metrics } = useNetworkMetrics();
   const { poolMembers } = usePoolMembers();
 
-  const {
-    minNominatorBond,
-    totalNominators,
-    maxNominatorsCount,
-    lastTotalStake,
-  } = staking;
+  const { minNominatorBond, lastTotalStake } = staking;
   const { bondedPools } = useBondedPools();
   const { totalIssuance } = metrics;
   const { t } = useTranslation('pages');
@@ -76,41 +71,8 @@ export const Announcements = () => {
     },
   };
 
-  const nominatorCapReached = maxNominatorsCount.eq(totalNominators);
-
-  let nominatorReachedPercentage = new BN(0);
-  if (maxNominatorsCount.gt(new BN(0)) && totalNominators.gt(new BN(0))) {
-    nominatorReachedPercentage = totalNominators.div(
-      maxNominatorsCount.div(new BN(100))
-    );
-  }
-
   const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
-
   const announcements = [];
-
-  // maximum nominators have been reached
-  if (nominatorCapReached && !isSyncing) {
-    announcements.push({
-      class: 'danger',
-      title: t('overview.nominator_limit'),
-      subtitle: t('overview.maximum_allowed'),
-    });
-  }
-
-  // 90% plus nominators reached
-  if (nominatorReachedPercentage.toNumber() >= 90) {
-    announcements.push({
-      class: 'neutral',
-      title: `${toFixedIfNecessary(
-        nominatorReachedPercentage.toNumber(),
-        2
-      )}${t('overview.limit_reached')}`,
-      subtitle: `${t('overview.maximum_amount')} ${humanNumber(
-        maxNominatorsCount.toNumber()
-      )}.`,
-    });
-  }
 
   const networkName = network.name;
   const networkUnit = network.unit;
