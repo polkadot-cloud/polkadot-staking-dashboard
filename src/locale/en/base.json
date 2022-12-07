@@ -19,11 +19,6 @@
       "staked": "Back to Staking",
       "stash": "To Stash Account",
       "controller": "To Controller Account"
-    },
-    "contexts": {
-      "waiting": "waiting",
-      "inactive": "inactive",
-      "active": "active"
     }
   }
 }

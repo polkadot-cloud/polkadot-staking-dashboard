@@ -1,11 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable */
+
 import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
+import { useTranslation } from 'react-i18next';
 import {
   capitalizeFirstLetter,
   humanNumber,
@@ -23,6 +24,7 @@ export const NominationStatus = (props: NominationStatusProps) => {
 
   const { ownStake, stakers } = eraStakers;
   const { address, nominator, bondType } = props;
+  const { t } = useTranslation('library');
 
   let nominationStatus;
   if (bondType === 'pool') {
@@ -54,9 +56,10 @@ export const NominationStatus = (props: NominationStatusProps) => {
   return (
     <ValidatorStatusWrapper status={nominationStatus}>
       <h5>
-        {capitalizeFirstLetter(nominationStatus ?? '')}
+        {capitalizeFirstLetter(t(`${nominationStatus}`) ?? '')}
         {stakedAmount > 0 &&
-          ` / ${erasStakersSyncing ? '...' : `${humanNumber(stakedAmount)} ${unit}`
+          ` / ${
+            erasStakersSyncing ? '...' : `${humanNumber(stakedAmount)} ${unit}`
           }`}
       </h5>
     </ValidatorStatusWrapper>
