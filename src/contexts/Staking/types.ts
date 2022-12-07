@@ -10,7 +10,6 @@ export interface StakingMetrics {
   lastReward: BN;
   lastTotalStake: BN;
   validatorCount: BN;
-  maxNominatorsCount: BN;
   maxValidatorsCount: BN;
   minNominatorBond: BN;
   payee: string | null;
