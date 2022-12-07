@@ -16,7 +16,6 @@ export const stakingMetrics: StakingMetrics = {
   lastReward: new BN(0),
   lastTotalStake: new BN(0),
   validatorCount: new BN(0),
-  maxNominatorsCount: new BN(0),
   maxValidatorsCount: new BN(0),
   minNominatorBond: new BN(0),
   payee: null,

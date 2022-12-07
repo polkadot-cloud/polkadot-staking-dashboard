@@ -39,7 +39,7 @@ export const Tips = () => {
   const { isNominating, staking } = useStaking();
   const { isOwner } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
-  const { minNominatorBond, totalNominators, maxNominatorsCount } = staking;
+  const { minNominatorBond } = staking;
   const transferOptions = getTransferOptions(activeAccount);
   const { t, i18n } = useTranslation();
 
@@ -120,10 +120,7 @@ export const Tips = () => {
   if (!activeAccount) {
     segments.push(1);
   } else if (!isNominating() && !membership) {
-    if (
-      transferOptions.freeBalance.gt(minNominatorBond) &&
-      totalNominators.lt(maxNominatorsCount)
-    ) {
+    if (transferOptions.freeBalance.gt(minNominatorBond)) {
       segments.push(2);
     } else {
       segments.push(3);
