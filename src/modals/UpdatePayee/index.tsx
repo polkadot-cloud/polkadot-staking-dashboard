@@ -32,7 +32,7 @@ export const UpdatePayee = () => {
 
   const { payee } = staking;
 
-  const _selected: any = PayeeStatus.find((item) => item === payee);
+  const defaultSelected: any = PayeeStatus.find((item) => item === payee);
   const [selected, setSelected]: any = useState(null);
 
   // reset selected value on account change
@@ -76,7 +76,7 @@ export const UpdatePayee = () => {
 
   // remove active payee option from selectable items
   const payeeItems = PayeeStatus.filter((item) => {
-    return item !== _selected;
+    return item !== defaultSelected;
   });
 
   return (
@@ -108,8 +108,8 @@ export const UpdatePayee = () => {
             placeholder="Reward Destination"
             value={selected}
             current={{
-              key: _selected,
-              name: t(`payee.${_selected.toLowerCase()}`),
+              key: defaultSelected,
+              name: t(`payee.${defaultSelected.toLowerCase()}`),
             }}
             height="17rem"
           />
