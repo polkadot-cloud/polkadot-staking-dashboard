@@ -25,6 +25,7 @@ import { Separator } from 'Wrappers';
 import { Controller } from './Controller';
 
 export const Status = ({ height }: { height: number }) => {
+  const { t } = useTranslation();
   const { isReady, network } = useApi();
   const { setOnNominatorSetup, getStakeSetupProgressPercent }: any = useUi();
   const { openModalWith } = useModal();
@@ -36,8 +37,6 @@ export const Status = ({ height }: { height: number }) => {
   const { payee } = staking;
   const { meta, validators } = useValidators();
   const nominations = getAccountNominations(activeAccount);
-  const { t } = useTranslation('pages');
-
   // get nomination status
   const nominationStatuses = getNominationsStatus();
 
@@ -81,9 +80,38 @@ export const Status = ({ height }: { height: number }) => {
     }
   }
 
-  const payeeStatus = PayeeStatus.find((item) => item.key === payee);
+  const payeeStatus = PayeeStatus.find((item) => item === payee);
 
-  let startTitle = t('nominate.start_nominating');
+  const getNominationStatus = () => {
+    if (inSetup() || isSyncing) {
+      return t('nominate.not_nominating', { ns: 'pages' });
+    }
+    if (!nominations.length) {
+      return t('nominate.no_nominations_set', { ns: 'pages' });
+    }
+    if (activeNominees.length) {
+      let str = t('nominate.nominating_and', { ns: 'pages' });
+      if (earningRewards) {
+        str += ` ${t('nominate.earning_rewards', { ns: 'pages' })}`;
+      } else {
+        str += ` ${t('nominate.not_earning_rewards', { ns: 'pages' })}`;
+      }
+      return str;
+    }
+    return t('nominate.waiting_for_active_nominations', { ns: 'pages' });
+  };
+
+  const getPayeeStatus = () => {
+    if (inSetup()) {
+      return t('nominate.not_assigned', { ns: 'pages' });
+    }
+    if (payeeStatus) {
+      return t(`payee.${payeeStatus?.toLowerCase()}`, { ns: 'base' });
+    }
+    return t('nominate.not_assigned', { ns: 'pages' });
+  };
+
+  let startTitle = t('nominate.start_nominating', { ns: 'pages' });
   if (inSetup()) {
     const progress = getStakeSetupProgressPercent(activeAccount);
     if (progress > 0) {
@@ -93,21 +121,9 @@ export const Status = ({ height }: { height: number }) => {
   return (
     <CardWrapper height={height}>
       <Stat
-        label={t('nominate.status')}
+        label={t('nominate.status', { ns: 'pages' })}
         helpKey="Nomination Status"
-        stat={
-          inSetup() || isSyncing
-            ? t('nominate.not_nominating')
-            : !nominations.length
-            ? t('nominate.no_nominations_set')
-            : activeNominees.length
-            ? `${t('nominate.nominating_and')} ${
-                earningRewards
-                  ? t('nominate.earning_rewards')
-                  : t('nominate.not_earning_rewards')
-              }`
-            : t('nominate.waiting_for_active_nominations')
-        }
+        stat={getNominationStatus()}
         buttons={
           !inSetup()
             ? []
@@ -133,7 +149,7 @@ export const Status = ({ height }: { height: number }) => {
       />
       <Separator />
       <Stat
-        label={t('nominate.reward_destination')}
+        label={t('nominate.reward_destination', { ns: 'pages' })}
         helpKey="Reward Destination"
         icon={
           (payee === null
@@ -144,16 +160,12 @@ export const Status = ({ height }: { height: number }) => {
             ? faCircle
             : faWallet) as IconProp
         }
-        stat={
-          inSetup()
-            ? t('nominate.not_assigned')
-            : payeeStatus?.name ?? t('nominate.not_assigned')
-        }
+        stat={getPayeeStatus()}
         buttons={
           !inSetup()
             ? [
                 {
-                  title: t('nominate.update'),
+                  title: t('nominate.update', { ns: 'pages' }),
                   icon: faWallet,
                   small: true,
                   disabled:
@@ -165,7 +177,7 @@ export const Status = ({ height }: { height: number }) => {
         }
       />
       <Separator />
-      <Controller label={t('nominate.controller_account')} />
+      <Controller label={t('nominate.controller_account', { ns: 'pages' })} />
     </CardWrapper>
   );
 };
