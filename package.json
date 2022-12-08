@@ -11,7 +11,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@polkadot/api": "^9.9.4",
     "@polkadot/keyring": "^10.1.12",
-    "@polkadot/react-identicon": "^2.9.13",
+    "@polkadot/react-identicon": "^2.9.14",
     "@polkadot/rpc-provider": "^9.9.1",
     "@polkadot/types": "^9.10.1",
     "@polkadot/types-codec": "^9.9.1",
