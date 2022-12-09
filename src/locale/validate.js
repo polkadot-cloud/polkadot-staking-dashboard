@@ -1,5 +1,3 @@
-/* eslint-disable guard-for-in */
-/* eslint-disable no-console */
 const { join } = require('path');
 const fs = require('fs');
 
@@ -25,20 +23,19 @@ fs.readdir(fullPath, (error, files) => {
     const mainJson = JSON.parse(
       fs.readFileSync(join(fullPath, file)).toString()
     );
-    // Loop through dirs
     languages.forEach((lang) => {
       const fullPathLanguage = join(__dirname, `./${lang}`);
       const comparedJson = JSON.parse(
         fs.readFileSync(join(fullPathLanguage, file)).toString()
       );
 
-      const a = getDeepKeys(mainJson); // unique keys of object1
-      const b = getDeepKeys(comparedJson); // unique keys of objec
+      const a = getDeepKeys(mainJson);
+      const b = getDeepKeys(comparedJson);
 
       if (a.sort().length !== b.sort().length) {
         const missing = a.filter((item) => b.indexOf(item) < 0);
         throw new Error(
-          `Missing the following keys from "${file}" file:\n"${missing}."`
+          `Missing the following keys from "${file}" file:\n"${missing}".`
         );
       }
     });
