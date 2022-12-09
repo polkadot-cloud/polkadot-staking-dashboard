@@ -8,6 +8,7 @@ import { initReactI18next } from 'react-i18next';
 import { AnyJson } from 'types';
 import baseEn from './en/base.json';
 import helpEn from './en/help.json';
+import libEn from './en/library.json';
 import pagesEn from './en/pages.json';
 import tipsEn from './en/tips.json';
 import { doDynamicImport, getActiveLanguage, getResources } from './utils';
@@ -22,10 +23,16 @@ export const locales: { [key: string]: AnyJson } = {
 export const availableLanguages = ['en', 'cn'];
 
 // the supported namespaces.
-export const lngNamespaces = ['base', 'help', 'tips', 'pages'];
+export const lngNamespaces = ['base', 'help', 'tips', 'pages', 'library'];
 
 // default structure of language resources.
-const fallbackResources = { ...baseEn, ...helpEn, ...tipsEn, ...pagesEn };
+const fallbackResources = {
+  ...baseEn,
+  ...helpEn,
+  ...tipsEn,
+  ...pagesEn,
+  ...libEn,
+};
 
 // check app version, wipe `lng_resources` if version is different.
 const localAppVersion = localStorage.getItem('app_version');

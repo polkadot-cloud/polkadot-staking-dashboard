@@ -5,6 +5,7 @@ import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { EstimatedFeeContext, TxFeesContext, useTxFees } from 'contexts/TxFees';
 import React, { Context, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
 import { humanNumber, planckBnToUnit } from 'Utils';
 import { EstimatedTxFeeProps } from './types';
@@ -16,6 +17,7 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
   } = useApi();
   const { mode } = useTheme();
   const { txFees, resetTxFees, notEnoughFunds } = useTxFees();
+  const { t } = useTranslation('library');
 
   useEffect(() => {
     return () => {
@@ -29,18 +31,18 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
     <>
       {format === 'table' ? (
         <>
-          <div>Estimated Tx Fee:</div>
+          <div>{t('estimated_fee')}</div>
           <div>{txFees.isZero() ? '...' : `${txFeesBase} ${unit}`}</div>
         </>
       ) : (
         <Wrapper>
           <p>
-            Estimated Tx Fee:{' '}
+            {t('estimated_fee')}{' '}
             {txFees.isZero() ? '...' : `${txFeesBase} ${unit}`}
           </p>
           {notEnoughFunds === true && (
             <p style={{ color: defaultThemes.text.danger[mode] }}>
-              The sender does not have enough {unit} to submit this transaction.
+              {t('not_enough_funds', { unit })}
             </p>
           )}
         </Wrapper>
