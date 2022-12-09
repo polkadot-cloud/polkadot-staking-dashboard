@@ -1900,7 +1900,7 @@
     "@polkadot/types-codec" "9.9.4"
     "@polkadot/util" "^10.1.14"
 
-"@polkadot/types-codec@9.10.1", "@polkadot/types-codec@^9.9.1":
+"@polkadot/types-codec@9.10.1":
   version "9.10.1"
   resolved "https://registry.yarnpkg.com/@polkadot/types-codec/-/types-codec-9.10.1.tgz#d767b14696b8f97dbbbf1a2ee8520801e899273b"
   integrity sha512-X/IHwKhxxxDtRqsZ+YeetvFqxMRFKDlg9oPkeaDhjah88iLptg3bqS+LsIFSc14w9r4O0Ts8zB1XG6e/hT6LaQ==
@@ -1917,6 +1917,15 @@
     "@babel/runtime" "^7.20.1"
     "@polkadot/util" "^10.1.14"
     "@polkadot/x-bigint" "^10.1.14"
+
+"@polkadot/types-codec@^9.10.2":
+  version "9.10.2"
+  resolved "https://registry.yarnpkg.com/@polkadot/types-codec/-/types-codec-9.10.2.tgz#7f0e33c33292bdfcd959945b2427742b941df712"
+  integrity sha512-zQOPzxq2N6PUP6Gkxc3OVT7Ub8AD3qC0PBeCnc/fhKjgX3CoKQK4TC6tDL8pEaaIVFh4LOHlHvhWJhqaUNe95A==
+  dependencies:
+    "@babel/runtime" "^7.20.6"
+    "@polkadot/util" "^10.2.1"
+    "@polkadot/x-bigint" "^10.2.1"
 
 "@polkadot/types-create@9.10.1":
   version "9.10.1"
@@ -2092,21 +2101,13 @@
   dependencies:
     "@babel/runtime" "^7.20.6"
 
-"@polkadot/x-bigint@10.2.1", "@polkadot/x-bigint@^10.2.1":
+"@polkadot/x-bigint@10.2.1", "@polkadot/x-bigint@^10.1.14", "@polkadot/x-bigint@^10.2.1":
   version "10.2.1"
   resolved "https://registry.yarnpkg.com/@polkadot/x-bigint/-/x-bigint-10.2.1.tgz#aa2d4384bb4ae6b5a3f333aa25bf6fd64d9006c5"
   integrity sha512-asFroI2skC4gYv0oIqqb84DqCCxhNUTSCKobEg57WdXoT4TKrN9Uetg2AMSIHRiX/9lP3EPMhUjM1VVGobTQRQ==
   dependencies:
     "@babel/runtime" "^7.20.6"
     "@polkadot/x-global" "10.2.1"
-
-"@polkadot/x-bigint@^10.1.14":
-  version "10.1.14"
-  resolved "https://registry.yarnpkg.com/@polkadot/x-bigint/-/x-bigint-10.1.14.tgz#5ae56c10f3ac8c29fcd2cc3f5236ac4ff7e52af0"
-  integrity sha512-HgrofhI+WM699ozJ9zFZcPUApB2jqwCEOMUgM1jv2WNxF0ILKNDpH08dB8OBy2SKfnKoSgmXwWtxWl1u+mq10A==
-  dependencies:
-    "@babel/runtime" "^7.20.1"
-    "@polkadot/x-global" "10.1.14"
 
 "@polkadot/x-fetch@^10.1.14":
   version "10.1.14"
