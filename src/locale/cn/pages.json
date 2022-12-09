@@ -86,7 +86,9 @@
       "none_of_your": "您的所有帐户都不足最低存款额",
       "top_up_account": "为账户充值,使其有资格成为controller",
       "select_a_controller": "您没有导入其他帐户。如要要选择controller,请导入另一个帐户余额至少为",
-      "set_controller_account": "设置Controller帐户"
+      "set_controller_account": "设置Controller帐户",
+      "set_new_controller": "设置新Controller帐户",
+      "address_copied": "地址已复制到剪贴板"
     },
     "pools": {
       "bond": "质押",
@@ -170,7 +172,9 @@
       "root": "主理人",
       "depositor": "存款人",
       "nominator": "提名人",
-      "state_toggler": "状态切换人"
+      "state_toggler": "状态切换人",
+      "address_copied": "地址已复制到剪贴板",
+      "address": "地址"
     },
     "community": {
       "fetching_validators": "正在获取验证人信息...",

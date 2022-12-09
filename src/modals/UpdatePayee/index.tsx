@@ -1,6 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-
+/* eslint-disable */
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
@@ -71,7 +71,7 @@ export const UpdatePayee = () => {
     callbackSubmit: () => {
       setModalStatus(2);
     },
-    callbackInBlock: () => {},
+    callbackInBlock: () => { },
   });
 
   // remove active payee option from selectable items
