@@ -1,9 +1,12 @@
 const { join } = require('path');
 const fs = require('fs');
 
-const languages = ['cn'];
-
-const fullPath = join(__dirname, './en');
+const getDirectories = (source) =>
+  fs
+    .readdirSync(source, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory())
+    .filter((v) => v.name !== 'en')
+    .map((dirent) => dirent.name);
 
 const getDeepKeys = (obj) => {
   let keys = [];
@@ -16,6 +19,9 @@ const getDeepKeys = (obj) => {
   }
   return keys;
 };
+
+const fullPath = join(__dirname, './en');
+const languages = getDirectories('./src/locale');
 
 fs.readdir(fullPath, (error, files) => {
   if (error) console.log(error);
@@ -35,7 +41,7 @@ fs.readdir(fullPath, (error, files) => {
       if (a.sort().length !== b.sort().length) {
         const missing = a.filter((item) => b.indexOf(item) < 0);
         throw new Error(
-          `Missing the following keys from "${file}" file:\n"${missing}".`
+          `Missing the following keys from locale "${lang}", file: "${file}":\n"${missing}".`
         );
       }
     });
