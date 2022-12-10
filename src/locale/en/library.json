@@ -42,7 +42,6 @@
     "active_low_commission_subtitle": "Gets a set of active validators with low commission.",
     "optimal_selection": "Optimal Selection",
     "optimal_selection_subtitle": "Selects a mix of majority active and inactive validators.",
-
     "re_generate": "Re-Generate"
   }
 }
