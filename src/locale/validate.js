@@ -1,6 +1,9 @@
 const { join } = require('path');
 const fs = require('fs');
 
+const oneExp = new RegExp('^.+_one$');
+const otherExp = new RegExp('^.+_other$');
+
 const getDirectories = (source) =>
   fs
     .readdirSync(source, { withFileTypes: true })
@@ -11,7 +14,9 @@ const getDirectories = (source) =>
 const getDeepKeys = (obj) => {
   let keys = [];
   for (const key in obj) {
-    keys.push(key);
+    if (!(oneExp.test(key) || otherExp.test(key))) {
+      keys.push(key);
+    }
     if (typeof obj[key] === 'object') {
       const subkeys = getDeepKeys(obj[key]);
       keys = keys.concat(subkeys.map((subkey) => `${key}.${subkey}`));
