@@ -51,6 +51,20 @@ export const Inflation = () => {
               <h2>
                 {totalIssuance.toString() === '0'
                   ? '0'
+                  : toFixedIfNecessary(stakedReturn - inflation, 2)}
+                %
+              </h2>
+              <h4>
+                Adjusted Rewards Rate
+                <OpenHelpIcon helpKey="Adjusted Rewards Rate" />
+              </h4>
+            </div>
+          </div>
+          <div>
+            <div className="inner">
+              <h2>
+                {totalIssuance.toString() === '0'
+                  ? '0'
                   : toFixedIfNecessary(inflation, 2)}
                 %
               </h2>

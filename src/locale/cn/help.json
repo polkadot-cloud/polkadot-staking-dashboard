@@ -66,6 +66,13 @@
         "历史年收益",
         ["根据{NETWORK_NAME}奖励分配数据估算的年收益."]
       ],
+      "adjustedRewardsRate": [
+        "Adjusted Rewards Rate",
+        [
+          "An estimated realized annual yield based on the {NETWORK_NAME} reward distribution model.",
+          "This figure is effectively the Historical Rewards Rate minus the inflation rate."
+        ]
+      ],
       "idealStaked": ["最优比例", ["理想网络条件下的抵押占发行量的百分比."]],
       "nominationStatus": [
         "提名状态",
