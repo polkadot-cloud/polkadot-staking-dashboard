@@ -225,7 +225,7 @@ export const StakingProvider = ({
         ]) => {
           setStakingMetrics({
             ...stakingMetrics,
-            payee: Object.keys(_payee.toHuman())[0],
+            payee: _payee.toHuman(),
             lastTotalStake: _lastTotalStake.toBn(),
             validatorCount: _validatorCount.toBn(),
             totalNominators: _totalNominators.toBn(),
