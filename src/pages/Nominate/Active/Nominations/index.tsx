@@ -99,7 +99,7 @@ export const Nominations = ({
     <Wrapper>
       <CardHeaderWrapper withAction>
         <h3>
-          {isPool ? t('nominate.pool_nominations') : t('nominate.nominations')}
+          {isPool ? t('nominate.poolNominations') : t('nominate.nominations')}
           <OpenHelpIcon helpKey="Nominations" />
         </h3>
         <div>
@@ -131,13 +131,13 @@ export const Nominations = ({
         <div className="head">
           <h4>
             {!isSyncing && nominated === null
-              ? t('nominate.not_nominating')
+              ? t('nominate.notNominating')
               : `${t('nominate.syncing')}...`}
           </h4>
         </div>
       ) : !nominator ? (
         <div className="head">
-          <h4>{t('nominate.not_nominating')}</h4>
+          <h4>{t('nominate.notNominating')}</h4>
         </div>
       ) : (
         <>
@@ -148,7 +148,7 @@ export const Nominations = ({
                 validators={nominated}
                 nominator={nominator}
                 batchKey={batchKey}
-                title={t('nominate.your_nominations')}
+                title={t('nominate.yourNominations')}
                 format="nomination"
                 selectable={
                   !isReadOnlyAccount(activeAccount) &&
@@ -159,13 +159,13 @@ export const Nominations = ({
                     ? []
                     : [
                         {
-                          title: t('nominate.stop_nominating_selected'),
+                          title: t('nominate.stopNominatingSelected'),
                           onClick: cbStopNominatingSelected,
                           onSelected: true,
                         },
                         {
                           disabled: !favoritesList.length,
-                          title: t('nominate.add_from_favorites'),
+                          title: t('nominate.addFromFavorites'),
                           onClick: cbAddNominations,
                           onSelected: false,
                         },
@@ -179,9 +179,9 @@ export const Nominations = ({
           ) : (
             <div className="head">
               {poolDestroying ? (
-                <h4>{t('nominate.pool_destroy')}</h4>
+                <h4>{t('nominate.poolDestroy')}</h4>
               ) : (
-                <h4>{t('nominate.not_nominating')}</h4>
+                <h4>{t('nominate.notNominating')}</h4>
               )}
             </div>
           )}

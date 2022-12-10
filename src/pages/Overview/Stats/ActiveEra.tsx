@@ -21,7 +21,7 @@ const ActiveEraStatBox = () => {
   });
 
   const params = {
-    label: t('overview.active_era'),
+    label: t('overview.activeEra'),
     stat: {
       value: metrics.activeEra.index,
       unit: '',

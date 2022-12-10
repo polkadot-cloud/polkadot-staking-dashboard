@@ -76,7 +76,7 @@ export const Active = () => {
             <>
               <CardHeaderWrapper withAction>
                 <h3>
-                  {t('nominate.start_nominating')}
+                  {t('nominate.startNominating')}
                   <OpenHelpIcon helpKey="Nominations" />
                 </h3>
                 <div>

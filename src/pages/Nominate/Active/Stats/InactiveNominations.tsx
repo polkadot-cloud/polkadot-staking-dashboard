@@ -22,7 +22,7 @@ export const ActiveNominationsStatBox = () => {
   }
 
   const params = {
-    label: t('nominate.inactive_nominations'),
+    label: t('nominate.inactiveNominations'),
     stat: {
       value: inactive,
       total,

@@ -26,7 +26,7 @@ export const Favorites = (props: PageProps) => {
         <CardWrapper>
           {favoritesList === null ? (
             <h3>
-              {t('favorites.fetching_favorite_validators', { ns: 'pages' })}...
+              {t('favorites.fetchingFavoriteValidators', { ns: 'pages' })}...
             </h3>
           ) : (
             <>
@@ -37,7 +37,7 @@ export const Favorites = (props: PageProps) => {
                       bondType="stake"
                       validators={favoritesList}
                       batchKey={batchKey}
-                      title={t('favorites.favorite_validators', {
+                      title={t('favorites.favoriteValidators', {
                         ns: 'pages',
                       })}
                       selectable={false}
@@ -46,7 +46,7 @@ export const Favorites = (props: PageProps) => {
                       toggleFavorites
                     />
                   ) : (
-                    <h3>{t('favorites.no_favorites', { ns: 'pages' })}</h3>
+                    <h3>{t('favorites.noFavorites', { ns: 'pages' })}</h3>
                   )}
                 </>
               )}

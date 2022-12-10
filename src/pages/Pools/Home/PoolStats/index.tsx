@@ -13,7 +13,7 @@ export const PoolStats = () => {
   return (
     <CardWrapper>
       <CardHeaderWrapper>
-        <h3>{t('pools.pool_stats')}</h3>
+        <h3>{t('pools.poolStats')}</h3>
       </CardHeaderWrapper>
       <Wrapper>
         <Header />

@@ -16,7 +16,7 @@ export const ActiveNominationsStatBox = () => {
     0;
 
   const params = {
-    label: t('nominate.active_nominations'),
+    label: t('nominate.activeNominations'),
     stat: {
       value: active,
       total,

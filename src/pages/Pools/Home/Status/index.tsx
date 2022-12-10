@@ -143,16 +143,16 @@ export const Status = ({ height }: { height: number }) => {
 
   // determine pool status - right side
   const poolStatusRight = poolsSyncing
-    ? t('pools.inactive_pool_not_nominating')
+    ? t('pools.inactivePoolNotNominating')
     : !isNominating
-    ? t('pools.inactive_pool_not_nominating')
+    ? t('pools.inactivePoolNotNominating')
     : activeNominees.length
-    ? `${t('pools.nominating_and')} ${
+    ? `${t('pools.nominatingAnd')} ${
         earningRewards
-          ? t('pools.earning_rewards')
-          : t('pools.not_earning_rewards')
+          ? t('pools.earningRewards')
+          : t('pools.notEarningRewards')
       }`
-    : t('pools.waiting_for_active_nominations');
+    : t('pools.waitingForActiveNominations');
 
   const { label, buttons } = useStatusButtons();
 
@@ -162,15 +162,15 @@ export const Status = ({ height }: { height: number }) => {
         <Membership label={label} />
       ) : (
         <Stat
-          label={t('pools.pool_membership')}
+          label={t('pools.poolMembership')}
           helpKey="Pool Membership"
-          stat={t('pools.not_in_pool')}
+          stat={t('pools.notInPool')}
           buttons={poolsSyncing ? [] : buttons}
         />
       )}
       <Separator />
       <Stat
-        label={t('pools.unclaimed_rewards')}
+        label={t('pools.unclaimedRewards')}
         helpKey="Pool Rewards"
         stat={labelRewards}
         buttons={poolsSyncing ? [] : buttonsRewards}
@@ -180,7 +180,7 @@ export const Status = ({ height }: { height: number }) => {
           <Separator />
           <Stat
             icon={poolsSyncing ? undefined : poolStateIcon}
-            label={t('pools.pool_status')}
+            label={t('pools.poolStatus')}
             helpKey="Nomination Status"
             stat={`${poolStatusLeft}${poolStatusRight}`}
           />

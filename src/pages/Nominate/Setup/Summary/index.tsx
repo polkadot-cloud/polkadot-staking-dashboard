@@ -82,7 +82,7 @@ export const Summary = (props: SetupStepProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
-          <Warning text={t('nominate.read_only')} />
+          <Warning text={t('nominate.readOnly')} />
         )}
         <SummaryWrapper>
           <section>
@@ -101,7 +101,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('nominate.reward_destination')}:
+              &nbsp; {t('nominate.rewardDestination')}:
             </div>
             <div>{payee}</div>
           </section>
@@ -121,7 +121,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('nominate.bond_amount')}:
+              &nbsp; {t('nominate.bondAmount')}:
             </div>
             <div>
               {humanNumber(bond)} {network.unit}
@@ -146,7 +146,7 @@ export const Summary = (props: SetupStepProps) => {
             disabled={
               submitting || !accountHasSigner(activeAccount) || !txFeesValid
             }
-            text={t('nominate.start_nominating')}
+            text={t('nominate.startNominating')}
           />
         </div>
       </MotionContainer>
