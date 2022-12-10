@@ -125,16 +125,20 @@ export const UnbondFeedback = ({
     if (bond.bond !== '' && Number(bond.bond) < _planck)
       _errors.push(t('value_is_too_small'));
 
-    if (Number(bond.bond) > unbondToMin)
-      _errors.push(
-        `${t('minimum_bond', { minBondBase, unit })} ${
-          bondType === 'stake'
-            ? `${t('when_actively_nominating')}`
-            : isDepositor()
-            ? `${t('as_the_pool_depositor')}`
-            : `${t('as_a_pool_member')}`
-        }.`
-      );
+    if (Number(bond.bond) > unbondToMin) {
+      // start the error message stating a min bond is required.
+      let err = `${t('minimum_bond', { minBondBase, unit })} `;
+
+      // append the subject to the error message.
+      if (bondType === 'stake') {
+        err += t('when_actively_nominating');
+      } else if (isDepositor()) {
+        err += t('as_the_pool_depositor');
+      } else {
+        err += t('as_a_pool_member');
+      }
+      _errors.push(err);
+    }
 
     listenIsValid(!_errors.length && _bond !== '');
     setErrors(_errors);

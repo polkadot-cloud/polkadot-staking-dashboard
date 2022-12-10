@@ -34,15 +34,6 @@
     "parachain_validator": "平行链验证人",
     "remove_selected": "移除选定项",
     "add_from_favorites": "从收藏夹添加",
-    "add_validators_from_scratch": "从头开始添加验证人",
-    "manual_selection": "手动选择",
-    "favorites_validators": "获取一组您喜欢的验证人",
-    "from_favorites": "来自收藏夹",
-    "with_low_commission": "取一组低佣金的活动验证人",
-    "active_low_commission": "活跃低佣金",
-    "mix_of_majority": "混合选择大多数活动和非活动验证人",
-    "optimal_selection": "最佳选择",
-    "re_generate": "重新生成",
     "free": "己解锁",
     "unlocking": "正在解锁",
     "points": "点数",
@@ -69,6 +60,15 @@
     "prev": "上一页",
     "next": "下一页",
     "cancel": "取消",
-    "select": "选择"
+    "select": "选择",
+    "manual_selection": "手动选择",
+    "manual_selection_subtitle": "从头开始添加验证人.",
+    "from_favorites": "来自收藏夹",
+    "from_favorites_subtitle": "获取一组您喜欢的验证人",
+    "active_low_commission": "活跃低佣金",
+    "active_low_commission_subtitle": "取一组低佣金的活动验证人",
+    "optimal_selection": "最佳选择",
+    "optimal_selection_subtitle": "混合选择大多数活动和非活动验证人",
+    "re_generate": "重新生成"
   }
 }
