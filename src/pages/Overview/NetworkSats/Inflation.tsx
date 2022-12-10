@@ -55,7 +55,7 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                Adjusted Rewards Rate
+                {t('overview.adjustedRewardsRate')}{' '}
                 <OpenHelpIcon helpKey="Adjusted Rewards Rate" />
               </h4>
             </div>
