@@ -71,6 +71,13 @@
           "An estimated annual yield based on the {NETWORK_NAME} reward distribution model."
         ]
       ],
+      "adjustedRewardsRate": [
+        "Adjusted Rewards Rate",
+        [
+          "An estimated realized annual yield based on the {NETWORK_NAME} reward distribution model.",
+          "This figure is effectively the historical rewards rate minus the inflation rate."
+        ]
+      ],
       "idealStaked": [
         "Ideal Staked",
         ["The percentage of staked total supply in ideal network conditions."]

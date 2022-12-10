@@ -71,6 +71,7 @@
       "activeEra": "Active Era",
       "activeNominators": "Active Nominators",
       "addressCopied": "Address Copied to Clipboard",
+      "adjustedRewardsRate": "Adjusted Rewards Rate",
       "available": "Available",
       "availableToJoin": "The number of nomination pools available to join on {{networkName}}.",
       "balance": "Balance",
