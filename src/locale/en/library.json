@@ -1,0 +1,9 @@
+{
+    "library": {
+        "click_to_reload": "Click to reload",
+        "error_unknown": "Oops, Something Went Wrong",
+        "estimated_fee": "Estimated Tx Fee:",
+        "not_enough_funds": "The sender does have enough {{unit}} to submit this transaction.",
+        "not_staking": "Not Staking"
+    }
+}
