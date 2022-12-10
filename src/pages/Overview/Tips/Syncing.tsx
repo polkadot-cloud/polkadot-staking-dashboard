@@ -49,7 +49,7 @@ export const Syncing = () => {
               <h3>{t('module.syncing_with', { network: name })}</h3>
             </div>
             <div className="desc">
-              <h4>{t('module.one_moment')}</h4>
+              <h4>{t('module.one_moment')}...</h4>
             </div>
           </section>
         </ItemInnerWrapper>
