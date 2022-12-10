@@ -5,6 +5,7 @@ import { ButtonInvert } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { humanNumber, isNumeric } from 'Utils';
 import { BondInputProps } from '../types';
 import { InputWrapper } from '../Wrappers';
@@ -24,6 +25,7 @@ export const BondInput = ({
 
   const { network } = useApi();
   const { activeAccount } = useConnect();
+  const { t } = useTranslation('library');
 
   // the current local bond value
   const [localBond, setLocalBond] = useState(_value);
@@ -61,7 +63,9 @@ export const BondInput = ({
 
   return (
     <InputWrapper>
-      <h3>Bond {network.unit}:</h3>
+      <h3>
+        {t('bond')} {network.unit}:
+      </h3>
       <div className="inner">
         <section style={{ opacity: disabled ? 0.5 : 1 }}>
           <div className="input">
@@ -80,14 +84,16 @@ export const BondInput = ({
               <p>
                 {syncing
                   ? '...'
-                  : `${humanNumber(freeBalance)} ${network.unit} available`}
+                  : `${humanNumber(freeBalance)} ${network.unit} ${t(
+                      'available'
+                    )}`}
               </p>
             </div>
           </div>
         </section>
         <section>
           <ButtonInvert
-            text="Max"
+            text={t('max')}
             disabled={disabled || syncing || freeBalance === 0}
             onClick={() => {
               setLocalBond(freeBalance);
