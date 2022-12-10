@@ -112,7 +112,7 @@ export const Summary = (props: SetupStepProps) => {
               />{' '}
               &nbsp; {t('pools.pool_name')}:
             </div>
-            <div>{metadata ?? `Not Set`}</div>
+            <div>{metadata ?? `${t('pools.not_set')}`}</div>
           </section>
           <section>
             <div>
