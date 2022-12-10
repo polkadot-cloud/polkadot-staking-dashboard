@@ -34,14 +34,15 @@
     "parachain_validator": "Parachain Validator",
     "remove_selected": "Remove Selected",
     "add_from_favorites": "Add From Favorites",
-    "add_validators_from_scratch": "Add validators from scratch.",
     "manual_selection": "Manual Selection",
-    "favorites_validators": "Gets a set of your favorite validators.",
+    "manual_selection_subtitle": "Add validators from scratch.",
     "from_favorites": "From Favorites",
-    "with_low_commission": "Gets a set of active validators with low commission.",
+    "from_favorites_subtitle": "Gets a set of your favorite validators.",
     "active_low_commission": "Active Low Commission",
-    "mix_of_majority": "Selects a mix of majority active and inactive validators.",
+    "active_low_commission_subtitle": "Gets a set of active validators with low commission.",
     "optimal_selection": "Optimal Selection",
+    "optimal_selection_subtitle": "Selects a mix of majority active and inactive validators.",
+
     "re_generate": "Re-Generate"
   }
 }

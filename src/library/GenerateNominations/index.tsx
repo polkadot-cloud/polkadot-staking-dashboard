@@ -203,7 +203,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
   const methods = [
     {
       title: t('optimal_selection'),
-      subtitle: t('mix_of_majority'),
+      subtitle: t('optimal_selection_subtitle'),
       icon: faChartPie as IconProp,
       onClick: () => {
         setMethod('Optimal Selection');
@@ -214,7 +214,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     },
     {
       title: t('active_low_commission'),
-      subtitle: t('with_low_commission'),
+      subtitle: t('active_low_commission_subtitle'),
       icon: faCoins as IconProp,
       onClick: () => {
         setMethod('Active Low Commission');
@@ -225,7 +225,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     },
     {
       title: t('from_favorites'),
-      subtitle: t('favorites_validators'),
+      subtitle: t('from_favorites_subtitle'),
       icon: faHeart as IconProp,
       onClick: () => {
         setMethod('From Favorites');
@@ -236,7 +236,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     },
     {
       title: t('manual_selection'),
-      subtitle: t('add_validators_from_scratch'),
+      subtitle: t('manual_selection_subtitle'),
       icon: faUserEdit as IconProp,
       onClick: () => {
         setMethod('Manual');
