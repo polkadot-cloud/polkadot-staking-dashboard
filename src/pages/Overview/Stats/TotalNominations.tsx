@@ -12,7 +12,7 @@ export const TotalNominatorsStatBox = () => {
   const { t } = useTranslation('pages');
 
   const params = {
-    label: t('overview.total_nominators'),
+    label: t('overview.totalNominators'),
     value: humanNumber(totalNominators.toNumber()),
     helpKey: 'Total Nominators',
   };

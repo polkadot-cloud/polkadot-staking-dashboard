@@ -37,7 +37,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
   let notification: NotificationText | null = null;
   if (address !== null) {
     notification = {
-      title: t('pools.address_copied'),
+      title: t('pools.addressCopied'),
       subtitle: address,
     };
   }
@@ -51,7 +51,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
         transition={{ duration: 0.3 }}
       >
         {address === null ? (
-          <h4>{t('pools.not_set')}</h4>
+          <h4>{t('pools.notSet')}</h4>
         ) : synced && display !== null ? (
           <>
             <div className="icon">

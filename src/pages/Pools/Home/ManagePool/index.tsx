@@ -44,7 +44,7 @@ export const ManagePool = () => {
           <>
             <CardHeaderWrapper withAction>
               <h3>
-                {t('pools.generate_nominations')}
+                {t('pools.generateNominations')}
                 <OpenHelpIcon helpKey="Nominations" />
               </h3>
               <div>

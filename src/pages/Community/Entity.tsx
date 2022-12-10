@@ -59,7 +59,7 @@ export const Entity = () => {
       <TopBarWrapper>
         <ButtonSecondary
           lg
-          text={t('community.go_back')}
+          text={t('community.goBack')}
           iconLeft={faChevronLeft}
           iconTransform="shrink-3"
           onClick={() => setActiveSection(0)}
@@ -79,8 +79,8 @@ export const Entity = () => {
               <div className="item">
                 <h3>
                   {validators.length
-                    ? `${t('community.fetching_validators')}...`
-                    : t('community.no_validators')}
+                    ? `${t('community.fetchingValidators')}...`
+                    : t('community.noValidators')}
                 </h3>
               </div>
             )}

@@ -69,7 +69,7 @@ export const SetController = (props: SetupStepProps) => {
     <>
       <Header
         thisSection={section}
-        title={t('nominate.set_controller_account') || ''}
+        title={t('nominate.setControllerAccount') || ''}
         helpKey="Stash and Controller Accounts"
         complete={setup.controller !== null}
         setupType={SetupType.Stake}
@@ -77,15 +77,15 @@ export const SetController = (props: SetupStepProps) => {
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {items.length === 0 && (
           <Warning
-            text={`${t('nominate.none_of_your')} ${existentialDepositBase} ${
+            text={`${t('nominate.noneOfYour')} ${existentialDepositBase} ${
               network.unit
-            }. ${t('nominate.top_up_account')}`}
+            }. ${t('nominate.topUpAccount')}`}
           />
         )}
         {itemsWithEnoughBalance === 0 && (
           <Warning
             text={`${t(
-              'nominate.select_a_controller'
+              'nominate.selectAController'
             )} ${existentialDepositBase} ${network.unit}.`}
           />
         )}
@@ -93,7 +93,7 @@ export const SetController = (props: SetupStepProps) => {
         <AccountSelect
           items={items}
           onChange={handleOnChange}
-          placeholder={t('nominate.search_account')}
+          placeholder={t('nominate.searchAccount')}
           value={selected}
         />
         <Footer

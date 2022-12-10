@@ -6,52 +6,52 @@ import * as infoJson from 'img/json/info-outline.json';
 
 export const TIPS_CONFIG = [
   {
-    id: 'connect_extensions',
+    id: 'connectExtensions',
     s: 1,
     icon: infoJson,
   },
   {
-    id: 'recommended_nominator',
+    id: 'recommendedNominator',
     s: 2,
     icon: infoJson,
   },
   {
-    id: 'recommended_join_pool',
+    id: 'recommendedJoinPool',
     s: 3,
     icon: infoJson,
   },
   {
-    id: 'how_to_stake',
+    id: 'howToStake',
     s: 4,
     icon: helpCenterJson,
   },
   {
-    id: 'managing_nominations',
+    id: 'managingNominations',
     s: 5,
     icon: infoJson,
   },
   {
-    id: 'monitoring_pool',
+    id: 'monitoringPool',
     s: 6,
     icon: infoJson,
   },
   {
-    id: 'join_another_pool',
+    id: 'joinAnotherPool',
     s: 6,
     icon: infoJson,
   },
   {
-    id: 'keep_pool_nominating',
+    id: 'keepPoolNominating',
     s: 7,
     icon: infoJson,
   },
   {
-    id: 'reviewing_payouts',
+    id: 'reviewingPayouts',
     s: 8,
     icon: infoJson,
   },
   {
-    id: 'understanding_validator_performance',
+    id: 'understandingValidatorPerformance',
     s: 8,
     icon: infoJson,
   },

@@ -130,7 +130,7 @@ export const BalanceGraph = () => {
 
   // determine stats
   const _labels = [
-    t('overview.in_pool'),
+    t('overview.inPool'),
     t('overview.nominating'),
     t('overview.unlocking'),
     t('overview.available'),

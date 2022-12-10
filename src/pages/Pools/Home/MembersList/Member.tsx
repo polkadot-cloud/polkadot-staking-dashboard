@@ -60,7 +60,7 @@ export const Member = (props: any) => {
       menuItems.push({
         icon: <FontAwesomeIcon icon={faUnlockAlt as IconProp} />,
         wrap: null,
-        title: `${t('pools.unbond_funds')}`,
+        title: `${t('pools.unbondFunds')}`,
         cb: () => {
           openModalWith(
             'UnbondPoolMember',
@@ -86,7 +86,7 @@ export const Member = (props: any) => {
         menuItems.push({
           icon: <FontAwesomeIcon icon={faShare as IconProp} />,
           wrap: null,
-          title: `${t('pools.withdraw_funds')}`,
+          title: `${t('pools.withdrawFunds')}`,
           cb: () => {
             openModalWith('WithdrawPoolMember', { who, member }, 'small');
           },

@@ -23,7 +23,7 @@ export const Setup = () => {
 
   return (
     <>
-      <PageTitle title={t('nominate.start_nominating')} />
+      <PageTitle title={t('nominate.startNominating')} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
           <span>
