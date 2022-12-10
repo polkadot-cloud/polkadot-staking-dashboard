@@ -132,7 +132,7 @@ export const Nominations = ({
           <h4>
             {!isSyncing && nominated === null
               ? t('nominate.not_nominating')
-              : t('nominate.syncing')}
+              : `${t('nominate.syncing')}...`}
           </h4>
         </div>
       ) : !nominator ? (

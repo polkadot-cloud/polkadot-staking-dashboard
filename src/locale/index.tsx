@@ -23,15 +23,15 @@ export const locales: { [key: string]: AnyJson } = {
 export const availableLanguages = ['en', 'cn'];
 
 // the supported namespaces.
-export const lngNamespaces = ['base', 'help', 'tips', 'pages', 'library'];
+export const lngNamespaces = ['base', 'help', 'library', 'pages', 'tips'];
 
 // default structure of language resources.
 const fallbackResources = {
   ...baseEn,
   ...helpEn,
-  ...tipsEn,
-  ...pagesEn,
   ...libEn,
+  ...pagesEn,
+  ...tipsEn,
 };
 
 // check app version, wipe `lng_resources` if version is different.

@@ -71,7 +71,7 @@ export const Entity = () => {
       <CardWrapper>
         {!isReady ? (
           <div className="item">
-            <h3>{t('community.connecting')}</h3>
+            <h3>{t('community.connecting')}...</h3>
           </div>
         ) : (
           <>
@@ -79,7 +79,7 @@ export const Entity = () => {
               <div className="item">
                 <h3>
                   {validators.length
-                    ? t('community.fetching_validators')
+                    ? `${t('community.fetching_validators')}...`
                     : t('community.no_validators')}
                 </h3>
               </div>
