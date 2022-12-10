@@ -70,6 +70,7 @@
       "activeEra": "活跃 Era",
       "activeNominators": "活跃提名人",
       "addressCopied": "地址已复制到剪贴板",
+      "adjustedRewardsRate": "调整后收益率",
       "available": "可用",
       "availableToJoin": "在{{networkName}}网络中可参与的池数",
       "balance": "余额",
