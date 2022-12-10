@@ -2,7 +2,7 @@
   "tips": {
     "module": {
       "tips": "Tips",
-      "one_moment": "One moment please...",
+      "one_moment": "One moment please",
       "syncing_with": "Syncing with {{network}}",
       "more": "More",
       "close": "Close",

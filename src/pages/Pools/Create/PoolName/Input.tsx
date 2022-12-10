@@ -41,7 +41,7 @@ export const Input = (props: any) => {
         <input
           className="textbox"
           style={{ width: '100%' }}
-          placeholder="Pool Name"
+          placeholder={t('pools.pool_name') || ''}
           type="text"
           onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
           value={metadata ?? ''}
