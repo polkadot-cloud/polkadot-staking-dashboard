@@ -24,7 +24,7 @@ export const ActiveNominatorsStatBox = () => {
   }
 
   const params = {
-    label: t('overview.active_nominators'),
+    label: t('overview.activeNominators'),
     stat: {
       value: totalActiveNominators,
       total: maxElectingVoters,

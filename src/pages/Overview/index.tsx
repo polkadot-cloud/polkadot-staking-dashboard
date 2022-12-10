@@ -101,7 +101,7 @@ export const Overview = () => {
           <GraphWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
             <SubscanButton />
             <div className="head">
-              <h4>{t('overview.recent_payouts')}</h4>
+              <h4>{t('overview.recentPayouts')}</h4>
               <h2>
                 {lastReward === null
                   ? 0

@@ -8,6 +8,7 @@ import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit } from 'Utils';
 import { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
@@ -18,6 +19,7 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { unit, units } = useApi().network;
   const { minNominatorBond } = staking;
   const { minActiveBond } = eraStakers;
+  const { t } = useTranslation('library');
 
   const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
   const gtMinNominatorBond = value >= minNominatorBondBase;
@@ -29,13 +31,13 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
         <section className={gtMinNominatorBond && !isSyncing ? 'invert' : ''}>
           <h4>&nbsp;</h4>
           <div className="bar">
-            <h5>Inactive</h5>
+            <h5>{t('inactive')}</h5>
           </div>
         </section>
         <section className={gtMinNominatorBond && !isSyncing ? 'invert' : ''}>
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
-            &nbsp; Nominate &nbsp;
+            &nbsp; {t('nominate')} &nbsp;
             <OpenHelpIcon helpKey="Nominating" />
           </h4>
           <div className="bar">
@@ -47,7 +49,7 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
         <section className={gtMinActiveBond && !isSyncing ? 'invert' : ''}>
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
-            &nbsp;Active &nbsp;
+            &nbsp;{t('active')} &nbsp;
             <OpenHelpIcon helpKey="Active Bond Threshold" />
           </h4>
           <div className="bar">

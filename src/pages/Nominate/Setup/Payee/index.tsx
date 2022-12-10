@@ -25,18 +25,18 @@ export const Payee = (props: SetupStepProps) => {
   const options = ['Staked', 'Stash', 'Controller'];
   const buttons = [
     {
-      title: t('nominate.back_to_staking'),
-      subtitle: t('nominate.automatically_bonded'),
+      title: t('nominate.backToStaking'),
+      subtitle: t('nominate.automaticallyBonded'),
       index: 0,
     },
     {
-      title: t('nominate.to_stash'),
-      subtitle: t('nominate.sent_to_stash'),
+      title: t('nominate.toStash'),
+      subtitle: t('nominate.sentToStash'),
       index: 1,
     },
     {
-      title: t('nominate.to_controller'),
-      subtitle: t('nominate.sent_to_controller'),
+      title: t('nominate.toController'),
+      subtitle: t('nominate.sentToController'),
       index: 2,
     },
   ];
@@ -71,7 +71,7 @@ export const Payee = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={setup.payee !== null}
-        title={t('nominate.reward_destination') || ''}
+        title={t('nominate.rewardDestination') || ''}
         helpKey="Reward Destination"
         setupType={SetupType.Stake}
       />

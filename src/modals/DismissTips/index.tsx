@@ -15,7 +15,7 @@ export const DismissTips = () => {
 
   return (
     <>
-      <Title title={t('module.dismiss_tips')} />
+      <Title title={t('module.dismissTips')} />
       <PaddingWrapper horizontalOnly>
         <div
           style={{
@@ -24,13 +24,13 @@ export const DismissTips = () => {
           }}
         >
           <div>
-            <h4>{t('module.dismiss_result')}</h4>
-            <h4>{t('module.re-enable')}</h4>
+            <h4>{t('module.dismissResult')}</h4>
+            <h4>{t('module.reEnable')}</h4>
           </div>
           <div className="buttons">
             <ButtonSubmit
               marginRight
-              text={t('module.disable_dashboard_tips')}
+              text={t('module.disableDashboardTips')}
               onClick={() => {
                 toggleService('tips');
                 setStatus(2);

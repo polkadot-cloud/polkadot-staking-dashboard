@@ -27,7 +27,7 @@ export const Membership = ({ label }: { label: string }) => {
   const { active } = getTransferOptions(activeAccount).pool;
   const { t } = useTranslation('pages');
 
-  let display = t('pools.not_in_pool');
+  let display = t('pools.notInPool');
   if (selectedActivePool) {
     const pool = bondedPools.find((p: any) => {
       return p.addresses.stash === selectedActivePool.addresses.stash;

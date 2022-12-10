@@ -38,7 +38,7 @@ export const ManageBond = () => {
     <>
       <CardHeaderWrapper>
         <h4>
-          {t('pools.bonded_funds')}
+          {t('pools.bondedFunds')}
           <OpenHelpIcon helpKey="Bonded in Pool" />
         </h4>
         <h2>

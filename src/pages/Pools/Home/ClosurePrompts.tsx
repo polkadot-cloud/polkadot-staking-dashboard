@@ -57,16 +57,16 @@ export const ClosurePrompts = () => {
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
             <div className="content">
-              <h3>{t('pools.destroy_pool')}</h3>
+              <h3>{t('pools.destroyPool')}</h3>
               <h4>
-                {t('pools.left_the_pool')}
+                {t('pools.leftThePool')}
                 {targets.length > 0
-                  ? t('pools.stop_nominating')
+                  ? t('pools.stopNominating')
                   : depositorCanWithdraw
-                  ? t('pools.close_pool')
+                  ? t('pools.closePool')
                   : depositorCanUnbond
-                  ? t('pools.unbond_your_funds')
-                  : t('pools.withdraw_unlock')}
+                  ? t('pools.unbondYourFunds')
+                  : t('pools.withdrawUnlock')}
               </h4>
               <ButtonRowWrapper verticalSpacing>
                 <ButtonPrimary

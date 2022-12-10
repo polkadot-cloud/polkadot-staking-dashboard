@@ -45,7 +45,7 @@ export const Validators = (props: PageProps) => {
               {validators.length === 0 && (
                 <div className="item">
                   <h3>
-                    {t('validators.fetching_validators', { ns: 'pages' })}...
+                    {t('validators.fetchingValidators', { ns: 'pages' })}...
                   </h3>
                 </div>
               )}
@@ -55,7 +55,7 @@ export const Validators = (props: PageProps) => {
                   bondType="stake"
                   validators={validators}
                   batchKey="validators_browse"
-                  title={t('validators.network_validators', { ns: 'pages' })}
+                  title={t('validators.networkValidators', { ns: 'pages' })}
                   selectable={false}
                   defaultFilters={defaultFilters}
                   allowMoreCols

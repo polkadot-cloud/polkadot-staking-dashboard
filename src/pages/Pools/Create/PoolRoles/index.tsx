@@ -71,13 +71,13 @@ export const PoolRoles = (props: SetupStepProps) => {
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <h4 style={{ margin: '0.5rem 0' }}>
           <Trans
-            defaults={t('pools.pool_creator') || ''}
+            defaults={t('pools.poolCreator') || ''}
             components={{ b: <b /> }}
           />
         </h4>
         <h4 style={{ marginTop: 0 }}>
           <Trans
-            defaults={t('pools.assigned_to_any_account') || ''}
+            defaults={t('pools.assignedToAnyAccount') || ''}
             components={{ b: <b /> }}
           />
         </h4>

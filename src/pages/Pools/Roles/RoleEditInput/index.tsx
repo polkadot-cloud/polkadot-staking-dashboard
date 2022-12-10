@@ -42,7 +42,7 @@ export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
   let label;
   let labelClass;
   if (!roleEdit?.valid) {
-    label = t('pools.address_invalid');
+    label = t('pools.addressInvalid');
     labelClass = 'danger';
   } else if (roleEdit?.reformatted) {
     label = t('pools.reformatted');
