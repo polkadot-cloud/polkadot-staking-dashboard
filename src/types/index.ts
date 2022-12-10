@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import type { WellKnownChain } from '@polkadot/rpc-provider/substrate-connect';
 import { PageProps } from 'pages/types';
 import React, { FunctionComponent, SVGProps } from 'react';
 
@@ -27,7 +26,7 @@ export interface Network {
   name: string;
   endpoints: {
     rpc: string;
-    lightClient: WellKnownChain;
+    lightClient: AnyApi;
   };
   colors: {
     primary: {

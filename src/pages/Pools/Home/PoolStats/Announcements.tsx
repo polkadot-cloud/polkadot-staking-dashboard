@@ -22,7 +22,7 @@ export const Announcements = () => {
   const { poolsSyncing } = useUi();
   const { network, consts } = useApi();
   const { selectedActivePool } = useActivePools();
-  const { units } = network;
+  const { units, unit } = network;
   const { rewardAccountBalance } = selectedActivePool || {};
   const { totalRewardsClaimed } = selectedActivePool?.rewardPool || {};
   const { existentialDeposit } = consts;
@@ -67,20 +67,17 @@ export const Announcements = () => {
   };
 
   const announcements = [];
-  const unit = network.unit;
 
   announcements.push({
     class: 'neutral',
-    title: `${humanNumber(rewardsClaimed)} ${network.unit} ${t(
-      'pools.been_claimed'
-    )}`,
+    title: `${humanNumber(rewardsClaimed)} ${unit} ${t('pools.been_claimed')}`,
     subtitle: `${t('pools.been_claimed_by', { unit })}`,
   });
 
   if (rewardBalance > 0) {
     announcements.push({
       class: 'neutral',
-      title: `${humanNumber(rewardBalance)} ${network.unit} ${t(
+      title: `${humanNumber(rewardBalance)} ${unit} ${t(
         'pools.outstanding_reward'
       )}`,
       subtitle: `${t('pools.available_to_claim', { unit })}`,

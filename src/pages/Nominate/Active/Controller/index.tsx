@@ -41,7 +41,7 @@ export const Controller = ({ label }: { label: string }) => {
   let notificationCopyAddress: NotificationText | null = null;
   if (controller !== null) {
     notificationCopyAddress = {
-      title: 'Address Copied to Clipboard',
+      title: t('nominate.address_copied'),
       subtitle: controller,
     };
   }
