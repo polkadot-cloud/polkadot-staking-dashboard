@@ -1,11 +1,9 @@
 {
     "library": {
-        "errors": {
-            "unknown": "抱歉，页面出现点小问题哦"
-        },
-        "not_staking": "无抵押",
         "click_to_reload": "重新加载",
+        "error_unknown": "抱歉，页面出现点小问题哦",
         "estimated_fee": "预计交易费用:",
-        "not_enough_funds": "您的 {{unit}} 不足以提交这次交易"
+        "not_enough_funds": "您的 {{unit}} 不足以提交这次交易",
+        "not_staking": "无抵押"
     }
 }

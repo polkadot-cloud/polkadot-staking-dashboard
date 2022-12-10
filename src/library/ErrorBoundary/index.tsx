@@ -18,7 +18,7 @@ export const ErrorFallbackApp = ({
       <h3>
         <FontAwesomeIcon icon={faBug} transform="grow-25" />
       </h3>
-      <h1>{t('errors.unknown')}</h1>
+      <h1>{t('error_unknown')}</h1>
       <h2>
         <button type="button" onClick={resetErrorBoundary}>
           {t('click_to_reload')}
@@ -40,7 +40,7 @@ export const ErrorFallbackRoutes = ({
       <h3 className="with-margin">
         <FontAwesomeIcon icon={faBug} transform="grow-25" />
       </h3>
-      <h1>{t('errors.unknown')}</h1>
+      <h1>{t('error_unknown')}</h1>
       <h2>
         <button type="button" onClick={resetErrorBoundary}>
           {t('click_to_reload')}
@@ -59,7 +59,7 @@ export const ErrorFallbackModal = ({
 
   return (
     <Wrapper className="modal">
-      <h2>{t('errors.unknown')}</h2>
+      <h2>{t('error_unknown')}</h2>
       <h4>
         <button type="button" onClick={resetErrorBoundary}>
           {t('click_to_reload')}
