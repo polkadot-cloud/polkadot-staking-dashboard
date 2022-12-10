@@ -38,14 +38,14 @@ export const Validators = (props: PageProps) => {
         <CardWrapper>
           {!isReady ? (
             <div className="item">
-              <h3>{t('validators.connecting', { ns: 'pages' })}</h3>
+              <h3>{t('validators.connecting', { ns: 'pages' })}...</h3>
             </div>
           ) : (
             <>
               {validators.length === 0 && (
                 <div className="item">
                   <h3>
-                    {t('validators.fetching_validators', { ns: 'pages' })}
+                    {t('validators.fetching_validators', { ns: 'pages' })}...
                   </h3>
                 </div>
               )}

@@ -2,9 +2,9 @@
   "pages": {
     "community": {
       "bio": "Bio",
-      "connecting": "Connecting...",
+      "connecting": "Connecting",
       "email": "Email",
-      "fetching_validators": "Fetching validators...",
+      "fetching_validators": "Fetching validators",
       "go_back": "Go Back",
       "no_validators": "This entity contains no validators.",
       "validators": "'s Validators",
@@ -14,7 +14,7 @@
     },
     "favorites": {
       "favorite_validators": "Favorite Validators",
-      "fetching_favorite_validators": "Fetching favorite validators...",
+      "fetching_favorite_validators": "Fetching favorite validators",
       "no_favorites": "No Favorites."
     },
     "nominate": {
@@ -23,7 +23,7 @@
       "address_copied": "Address Copied to Clipboard",
       "automatically_bonded": "Payouts are automatically bonded to your existing bonded balance.",
       "back_to_staking": "Back to Staking",
-      "bond_amount": "Bond Amount:",      
+      "bond_amount": "Bond Amount",      
       "back": "Back",
       "bond": "Bond",
       "bonded_funds": "Bonded Funds",
@@ -58,7 +58,7 @@
       "stop": "Stop",
       "stop_nominating_selected": "Stop Nominating Selected",
       "summary": "Summary",
-      "syncing": "Syncing...",
+      "syncing": "Syncing",
       "to_controller": "To Controller",
       "to_stash": "To Stash",
       "top_up_account": "Top up an account to make it eligible to become a controller.",
@@ -123,8 +123,8 @@
       "all_pools": "All Pools",
       "all_roles": "All Roles",
       "assigned": "Assigned",
-      "available_to_claim": "The outstanding amount of {{unit}} available to claim by pool members.",
       "assigned_to_any_account": " Your <b>Root</b>, <b>Nominator</b> and <b>State Toggler</b> roles can be assigned to any account.",
+      "available_to_claim": "The outstanding amount of {{unit}} available to claim by pool members.",
       "back": "Back",
       "been_claimed": "in rewards have been claimed.",
       "been_claimed_by": "The total amount of {{unit}} that has been claimed by pool members.",
@@ -141,7 +141,7 @@
       "depositor": "Depositor",
       "earning_rewards": "Earning Rewards",
       "edit": "Edit",
-      "fetching_favorite_pools": "Fetching favorite pools...",
+      "fetching_favorite_pools": "Fetching favorite pools",
       "favorites_list": "Favorites List",
       "favorites": "Favorites",
       "generate_nominations": "Generate Nominations",
@@ -170,7 +170,7 @@
       "outstanding_reward": "outstanding reward balance.",
       "overview": "Overview",
       "owner_of_pool": "Owner of Pool",
-      "permission_to_unbond": "You have permission to unbond and withdraw funds of any pool member. Use a member's's menu ",
+      "permission_to_unbond": "You have permission to unbond and withdraw funds of any pool member. Use a member's's menu",
       "pool_creator": " As the pool creator, you will consume your pool's <b>Depositor</b> role.",
       "pool_name": "Pool Name",
       "pool_name_support": "Pool names support characters, symbols and emojis - be creative!",
@@ -205,8 +205,8 @@
     "validators": {
       "active_validators": "Active Validators",
       "average_commission": "Average Commission",
-      "connecting": "Connecting...",
-      "fetching_validators": "Fetching validators...",
+      "connecting": "Connecting",
+      "fetching_validators": "Fetching validators",
       "network_validators": "Network Validators",
       "total_validators": "Total Validators"
     }
