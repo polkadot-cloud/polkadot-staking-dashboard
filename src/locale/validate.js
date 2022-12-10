@@ -45,9 +45,11 @@ fs.readdir(fullPath, (error, files) => {
 
       if (a.sort().length !== b.sort().length) {
         const missing = a.filter((item) => b.indexOf(item) < 0);
-        throw new Error(
-          `Missing the following keys from locale "${lang}", file: "${file}":\n"${missing}".`
-        );
+        if (missing.join('').trim().length > 0) {
+          throw new Error(
+            `Missing the following keys from locale "${lang}", file: "${file}":\n"${missing}".`
+          );
+        }
       }
     });
   });
