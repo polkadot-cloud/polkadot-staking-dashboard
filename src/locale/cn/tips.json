@@ -2,13 +2,13 @@
   "tips": {
     "module": {
       "tips": "提示",
-      "one_moment": "请稍等...",
+      "one_moment": "请稍等",
       "syncing_with": "同步 {{network}}",
       "more": "更多",
       "close": "关闭",
       "dismiss_tips": "解除提示",
       "dismiss_result": "在该页面中去除提示窗口.",
-      "re-enable": "提示可以通过侧菜单左下角的齿轮图标访问从设置中重新启用.",
+      "re-enable": "提示可以通过侧菜单左下角的齿轮图标访问从设置中重新启用",
       "disable_dashboard_tips": "除去提示",
       "cancel": "取消",
       "of": "/"

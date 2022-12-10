@@ -26,7 +26,7 @@ export const Favorites = (props: PageProps) => {
         <CardWrapper>
           {favoritesList === null ? (
             <h3>
-              {t('favorites.fetching_favorite_validators', { ns: 'pages' })}
+              {t('favorites.fetching_favorite_validators', { ns: 'pages' })}...
             </h3>
           ) : (
             <>

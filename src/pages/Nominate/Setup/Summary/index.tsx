@@ -121,7 +121,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('nominate.bond_amount')}
+              &nbsp; {t('nominate.bond_amount')}:
             </div>
             <div>
               {humanNumber(bond)} {network.unit}
