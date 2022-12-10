@@ -70,17 +70,17 @@ export const Announcements = () => {
 
   announcements.push({
     class: 'neutral',
-    title: `${humanNumber(rewardsClaimed)} ${unit} ${t('pools.been_claimed')}`,
-    subtitle: `${t('pools.been_claimed_by', { unit })}`,
+    title: `${humanNumber(rewardsClaimed)} ${unit} ${t('pools.beenClaimed')}`,
+    subtitle: `${t('pools.beenClaimedBy', { unit })}`,
   });
 
   if (rewardBalance > 0) {
     announcements.push({
       class: 'neutral',
       title: `${humanNumber(rewardBalance)} ${unit} ${t(
-        'pools.outstanding_reward'
+        'pools.outstandingReward'
       )}`,
-      subtitle: `${t('pools.available_to_claim', { unit })}`,
+      subtitle: `${t('pools.availableToClaim', { unit })}`,
     });
   }
 

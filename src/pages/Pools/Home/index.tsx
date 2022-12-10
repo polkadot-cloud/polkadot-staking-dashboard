@@ -69,7 +69,7 @@ export const HomeInner = () => {
 
   tabs = tabs.concat(
     {
-      title: t('pools.all_pools'),
+      title: t('pools.allPools'),
       active: activeTab === 2,
       onClick: () => setActiveTab(2),
     },
@@ -88,7 +88,7 @@ export const HomeInner = () => {
         button={
           totalAccountPools
             ? {
-                title: t('pools.all_roles'),
+                title: t('pools.allRoles'),
                 onClick: () =>
                   openModalWith('AccountPoolRoles', { who: activeAccount }),
               }
@@ -156,7 +156,7 @@ export const HomeInner = () => {
               <PoolList
                 batchKey="bonded_pools"
                 pools={bondedPools}
-                title={t('pools.active_pools')}
+                title={t('pools.activePools')}
                 defaultFilters={{
                   includes: ['active'],
                   excludes: ['locked', 'destroying'],

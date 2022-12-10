@@ -11,6 +11,7 @@ import { useExtrinsics } from 'contexts/Extrinsics';
 import { useNotifications } from 'contexts/Notifications';
 import { useTxFees } from 'contexts/TxFees';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnyApi } from 'types';
 import { registerSaEvent } from 'Utils';
 import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
@@ -29,6 +30,7 @@ export const useSubmitExtrinsic = ({
   const { extensions } = useExtensions();
   const { getAccount } = useConnect();
   const networkLower = network.name.toLowerCase();
+  const { t } = useTranslation('library');
 
   // if null account is provided, fallback to empty string
   const submitAddress: string = from ?? '';
@@ -73,7 +75,7 @@ export const useSubmitExtrinsic = ({
 
     const extension = extensions.find((e: Extension) => e.id === source);
     if (extension === undefined) {
-      throw new Error('wallet not found');
+      throw new Error(t('wallet_not_found') || '');
     } else {
       // summons extension popup if not already connected.
       extension.enable(DappName);
@@ -91,8 +93,8 @@ export const useSubmitExtrinsic = ({
           if (status.isReady) {
             addPending(accountNonce);
             addNotification({
-              title: 'Pending',
-              subtitle: 'Transaction was initiated.',
+              title: t('pending'),
+              subtitle: t('transaction_was_initiated'),
             });
             callbackSubmit();
           }
@@ -110,8 +112,8 @@ export const useSubmitExtrinsic = ({
             setSubmitting(false);
             removePending(accountNonce);
             addNotification({
-              title: 'In Block',
-              subtitle: 'Transaction in block',
+              title: t('in_block'),
+              subtitle: t('transaction_in_block'),
             });
             callbackInBlock();
           }
@@ -121,14 +123,14 @@ export const useSubmitExtrinsic = ({
             events.forEach(({ event: { method } }: AnyApi) => {
               if (method === 'ExtrinsicSuccess') {
                 addNotification({
-                  title: 'Finalized',
-                  subtitle: 'Transaction successful',
+                  title: t('finalized'),
+                  subtitle: t('transaction_successful'),
                 });
                 unsub();
               } else if (method === 'ExtrinsicFailed') {
                 addNotification({
-                  title: 'Failed',
-                  subtitle: 'Error with transaction',
+                  title: t('failed'),
+                  subtitle: t('error_with_transaction'),
                 });
                 setSubmitting(false);
                 removePending(accountNonce);
@@ -142,8 +144,8 @@ export const useSubmitExtrinsic = ({
       setSubmitting(false);
       removePending(accountNonce);
       addNotification({
-        title: 'Cancelled',
-        subtitle: 'Transaction was cancelled',
+        title: t('cancelled'),
+        subtitle: t('transaction_was_cancelled'),
       });
     }
   };

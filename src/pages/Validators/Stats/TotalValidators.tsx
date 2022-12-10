@@ -21,7 +21,7 @@ const TotalValidatorsStatBox = () => {
   }
 
   const params = {
-    label: t('validators.total_validators'),
+    label: t('validators.totalValidators'),
     stat: {
       value: totalValidators.toNumber(),
       total: maxValidatorsCount.toNumber(),

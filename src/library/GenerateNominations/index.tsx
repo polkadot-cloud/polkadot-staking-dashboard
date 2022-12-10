@@ -20,6 +20,7 @@ import { SelectableWrapper } from 'library/List';
 import { ValidatorList } from 'library/ValidatorList';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   GenerateNominationsInnerProps,
   Nominations,
@@ -43,6 +44,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     available: availableToNominate,
   } = useFetchMehods();
   const { maxNominations } = consts;
+  const { t } = useTranslation('library');
 
   let { favoritesList } = useValidators();
   if (favoritesList === null) {
@@ -200,8 +202,8 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
   // accumulate generation methods
   const methods = [
     {
-      title: 'Optimal Selection',
-      subtitle: 'Selects a mix of majority active and inactive validators.',
+      title: t('optimal_selection'),
+      subtitle: t('optimal_selection_subtitle'),
       icon: faChartPie as IconProp,
       onClick: () => {
         setMethod('Optimal Selection');
@@ -211,8 +213,8 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
       },
     },
     {
-      title: 'Active Low Commission',
-      subtitle: 'Gets a set of active validators with low commission.',
+      title: t('active_low_commission'),
+      subtitle: t('active_low_commission_subtitle'),
       icon: faCoins as IconProp,
       onClick: () => {
         setMethod('Active Low Commission');
@@ -222,8 +224,8 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
       },
     },
     {
-      title: 'From Favorites',
-      subtitle: 'Gets a set of your favorite validators.',
+      title: t('from_favorites'),
+      subtitle: t('from_favorites_subtitle'),
       icon: faHeart as IconProp,
       onClick: () => {
         setMethod('From Favorites');
@@ -233,8 +235,8 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
       },
     },
     {
-      title: 'Manual Selection',
-      subtitle: 'Add validators from scratch.',
+      title: t('manual_selection'),
+      subtitle: t('manual_selection_subtitle'),
       icon: faUserEdit as IconProp,
       onClick: () => {
         setMethod('Manual');
@@ -247,19 +249,19 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
   // accumulate actions
   const actions = [
     {
-      title: 'Add From Favorites',
+      title: t('add_from_favorites'),
       onClick: cbAddNominations,
       onSelected: false,
       isDisabled: disabledAddFavorites,
     },
     {
-      title: `Remove Selected`,
+      title: `${t('remove_selected')}`,
       onClick: cbRemoveSelected,
       onSelected: true,
       isDisabled: () => false,
     },
     {
-      title: 'Parachain Validator',
+      title: t('parachain_validator'),
       onClick: () => addNominationByType('Parachain Validator'),
       onSelected: false,
       icon: faPlus,
@@ -268,7 +270,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
         !availableToNominate(nominations).parachainValidators.length,
     },
     {
-      title: 'Active Validator',
+      title: t('active_validator'),
       onClick: () => addNominationByType('Active Validator'),
       onSelected: false,
       icon: faPlus,
@@ -277,7 +279,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
         !availableToNominate(nominations).activeValidators.length,
     },
     {
-      title: 'Random Validator',
+      title: t('random_validator'),
       onClick: () => addNominationByType('Random Validator'),
       onSelected: false,
       icon: faPlus,
@@ -309,7 +311,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
                 setFetching(true);
               }}
             >
-              Re-Generate
+              {t('re_generate')}
             </button>
           )}
         </SelectableWrapper>

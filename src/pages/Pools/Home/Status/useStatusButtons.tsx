@@ -69,14 +69,14 @@ export const useStatusButtons = () => {
   };
 
   if (!membership) {
-    _label = t('pools.pool_membership');
+    _label = t('pools.poolMembership');
     _buttons = [createBtn, joinPoolBtn];
   } else if (isOwner()) {
-    _label = `${t('pools.owner_of_pool')} ${membership.poolId}`;
+    _label = `${t('pools.ownerOfPool')} ${membership.poolId}`;
   } else if (active?.gtn(0)) {
-    _label = `${t('pools.member_of_pool')} ${membership.poolId}`;
+    _label = `${t('pools.memberOfPool')} ${membership.poolId}`;
   } else {
-    _label = `${t('pools.leaving_pool')} ${membership.poolId}`;
+    _label = `${t('pools.leavingPool')} ${membership.poolId}`;
   }
   return { label: _label, buttons: _buttons };
 };

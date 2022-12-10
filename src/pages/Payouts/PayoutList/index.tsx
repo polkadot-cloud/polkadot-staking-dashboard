@@ -146,7 +146,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
           {listPayouts.map((p: AnySubscan, index: number) => {
             const label =
               p.event_id === 'PaidOut'
-                ? t('payouts.pool_claim')
+                ? t('payouts.poolClaim')
                 : p.event_id === 'Rewarded'
                 ? t('payouts.payout')
                 : p.event_id;
@@ -221,7 +221,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
                               )}
                             </>
                           )}
-                          {label === t('payouts.pool_claim') && (
+                          {label === t('payouts.poolClaim') && (
                             <>
                               {pool ? (
                                 <PoolIdentity
@@ -231,13 +231,13 @@ export const PayoutListInner = (props: PayoutListProps) => {
                                 />
                               ) : (
                                 <h4>
-                                  {t('payouts.from_pool')} {p.pool_id}
+                                  {t('payouts.fromPool')} {p.pool_id}
                                 </h4>
                               )}
                             </>
                           )}
                           {label === t('payouts.slashed') && (
-                            <h4>{t('payouts.deducted_from_bond')}</h4>
+                            <h4>{t('payouts.deductedFromBond')}</h4>
                           )}
                         </div>
                         <div>

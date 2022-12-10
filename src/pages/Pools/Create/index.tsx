@@ -23,7 +23,7 @@ export const Create = () => {
 
   return (
     <>
-      <PageTitle title={t('pools.create_a_pool')} />
+      <PageTitle title={t('pools.createAPool')} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
           <span>
