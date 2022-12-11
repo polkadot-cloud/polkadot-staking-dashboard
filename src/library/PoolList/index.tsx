@@ -20,6 +20,7 @@ import { Pagination } from 'library/List/Pagination';
 import { SearchInput } from 'library/List/SearchInput';
 import { Pool } from 'library/Pool';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { networkColors } from 'theme/default';
 import { PoolListProvider, usePoolList } from './context';
 import { Filters } from './Filters';
@@ -41,6 +42,7 @@ export const PoolListInner = ({
   const { fetchPoolsMetaBatch, poolSearchFilter, meta } = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
   const { isSyncing } = useUi();
+  const { t } = useTranslation('library');
 
   const { getFilters, setMultiFilters, getSearchTerm, setSearchTerm } =
     useFilters();
@@ -160,7 +162,7 @@ export const PoolListInner = ({
     // ensure no duplicates
     filteredPools = filteredPools.filter(
       (value: any, index: any, self: any) =>
-        index === self.findIndex((t: any) => t.id === value.id)
+        index === self.findIndex((i: any) => i.id === value.id)
     );
 
     setPage(1);
@@ -202,7 +204,7 @@ export const PoolListInner = ({
         {allowSearch && poolsDefault.length > 0 && (
           <SearchInput
             handleChange={handleSearchChange}
-            placeholder="Search Pool ID, Name or Address"
+            placeholder={t('search')}
           />
         )}
         <Filters />
@@ -242,9 +244,7 @@ export const PoolListInner = ({
             </>
           ) : (
             <h4 style={{ padding: '1rem 1rem 0 1rem' }}>
-              {isSyncing
-                ? 'Syncing Pool list...'
-                : 'No pools match this criteria.'}
+              {isSyncing ? t('syncing_pool_list') : t('no_match')}
             </h4>
           )}
         </MotionContainer>

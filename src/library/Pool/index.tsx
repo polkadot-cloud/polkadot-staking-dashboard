@@ -26,6 +26,7 @@ import {
 } from 'library/ListItem/Wrappers';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
 import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
@@ -34,6 +35,7 @@ import { PoolProps } from './types';
 export const Pool = (props: PoolProps) => {
   const { pool, batchKey, batchIndex } = props;
   const { memberCounter, addresses, id, state } = pool;
+  const { t } = useTranslation('library');
 
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -66,7 +68,7 @@ export const Pool = (props: PoolProps) => {
     addresses.stash == null
       ? null
       : {
-          title: 'Address Copied to Clipboard',
+          title: t('address_copied_to_clipboard'),
           subtitle: addresses.stash,
         };
 
@@ -77,7 +79,7 @@ export const Pool = (props: PoolProps) => {
   menuItems.push({
     icon: <FontAwesomeIcon icon={faProjectDiagram as IconProp} />,
     wrap: null,
-    title: `View Pool Nominations`,
+    title: `${t('view_pool_nominations')}`,
     cb: () => {
       openModalWith(
         'PoolNominations',
@@ -94,7 +96,7 @@ export const Pool = (props: PoolProps) => {
   menuItems.push({
     icon: <FontAwesomeIcon icon={faCopy as IconProp} />,
     wrap: null,
-    title: `Copy Pool Address`,
+    title: t('copy_pool_address'),
     cb: () => {
       navigator.clipboard.writeText(addresses.stash);
       if (notificationCopyAddress) {

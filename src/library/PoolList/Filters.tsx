@@ -16,6 +16,7 @@ import { useOverlay } from 'contexts/Overlay';
 import { Container } from 'library/Filter/Container';
 import { Item } from 'library/Filter/Item';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { usePoolFilters } from '../Hooks/usePoolFilters';
 import { FilterPools } from './FilterPools';
 
@@ -23,6 +24,7 @@ export const Filters = () => {
   const { resetFilters, getFilters, toggleFilter } = useFilters();
   const { includesToLabels, excludesToLabels } = usePoolFilters();
   const { openOverlayWith } = useOverlay();
+  const { t } = useTranslation('library');
 
   const includes = getFilters(FilterType.Include, 'pools');
   const excludes = getFilters(FilterType.Exclude, 'pools');
@@ -37,7 +39,7 @@ export const Filters = () => {
     <>
       <div style={{ marginBottom: '1.1rem' }}>
         <ButtonInvertRounded
-          text="Filter"
+          text={t('filter')}
           marginRight
           iconLeft={faFilterCircleXmark}
           onClick={() => {
@@ -45,7 +47,7 @@ export const Filters = () => {
           }}
         />
         <ButtonSecondary
-          text="Clear"
+          text={t('clear')}
           onClick={() => {
             resetFilters(FilterType.Include, 'pools');
             resetFilters(FilterType.Exclude, 'pools');
