@@ -18,6 +18,7 @@ import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import Wrapper from './Wrapper';
 
@@ -27,6 +28,7 @@ export const UpdateController = () => {
   const { activeAccount, getAccount, accountHasSigner } = useConnect();
   const { getBondedAccount } = useBalances();
   const { txFeesValid } = useTxFees();
+  const { t } = useTranslation('modals');
 
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
@@ -74,7 +76,7 @@ export const UpdateController = () => {
   return (
     <>
       <Title
-        title="Change Controller Account"
+        title={t('change_controller_account')}
         icon={faExchangeAlt}
         helpKey="Controller Account Eligibility"
       />
@@ -82,13 +84,13 @@ export const UpdateController = () => {
         <div style={{ padding: '0 1rem', width: '100%' }}>
           <div style={{ marginBottom: '1.5rem' }}>
             {!accountHasSigner(activeAccount) && (
-              <Warning text="Your stash account is read only and cannot sign transactions." />
+              <Warning text={t('read_only')} />
             )}
           </div>
           <AccountDropdown
             items={items}
             onChange={handleOnChange}
-            placeholder="Search Account"
+            placeholder={t('search_account')}
             current={account}
             value={selected}
             height="17rem"

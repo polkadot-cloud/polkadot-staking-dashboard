@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next';
 import { FooterWrapper, PaddingWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
-  const { t } = useTranslation('base');
+  const { t } = useTranslation();
   const { api } = useApi();
   const { activeAccount } = useConnect();
   const { getBondedAccount } = useBalances();
@@ -82,7 +82,7 @@ export const UpdatePayee = () => {
   return (
     <>
       <Title
-        title="Update Reward Destination"
+        title={t('update_reward_destination', { ns: 'modals' })}
         icon={faWallet}
         helpKey="Reward Destination"
       />
@@ -95,21 +95,23 @@ export const UpdatePayee = () => {
           }}
         >
           {getControllerNotImported(controller) && (
-            <Warning text="You must have your controller account imported to update your reward destination" />
+            <Warning
+              text={t('must_have_controller_update', { ns: 'modals' })}
+            />
           )}
           <Dropdown
             items={payeeItems.map((p) => {
               return {
                 key: p,
-                name: t(`payee.${p.toLowerCase()}`),
+                name: t(`payee.${p.toLowerCase()}`, { ns: 'base' }),
               };
             })}
             onChange={handleOnChange}
-            placeholder="Reward Destination"
+            placeholder={t('reward_destination', { ns: 'modals' })}
             value={selected}
             current={{
               key: defaultSelected,
-              name: t(`payee.${defaultSelected.toLowerCase()}`),
+              name: t(`payee.${defaultSelected.toLowerCase()}`, { ns: 'base' }),
             }}
             height="17rem"
           />

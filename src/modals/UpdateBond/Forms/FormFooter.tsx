@@ -4,6 +4,7 @@
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonInvert, ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { useTranslation } from 'react-i18next';
 import { FooterWrapper } from '../../Wrappers';
 
 export const FormFooter = ({
@@ -13,6 +14,7 @@ export const FormFooter = ({
   isValid,
 }: any) => {
   const hasSections = setSection !== undefined;
+  const { t } = useTranslation('modals');
 
   const handleSubmit = () => {
     if (hasSections) {
@@ -25,7 +27,7 @@ export const FormFooter = ({
       <div>
         {hasSections && (
           <ButtonInvert
-            text="Back"
+            text={t('back')}
             iconLeft={faChevronLeft}
             onClick={() => handleSubmit()}
           />
