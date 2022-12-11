@@ -177,7 +177,7 @@ export const ReserveWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 1.75rem;
+  margin-top: 1.5rem;
   padding: 0 0.75rem;
 
   > h4 {
@@ -209,18 +209,24 @@ export const ReserveWrapper = styled.div`
           white-space: nowrap;
           overflow: hidden;
           position: relative;
-          border-radius: 0.9rem;
+          border-radius: 0.5rem;
           padding-top: 0.7rem;
           padding-bottom: 0.7rem;
           padding-left: 2.5rem;
           padding-right: 1.5rem;
           width: 100%;
-          font-size: 1rem;
 
-          .icon {
-            position: absolute;
-            top: 0.98rem;
-            left: 0.95rem;
+          > h3 {
+            font-size: 1rem;
+            opacity: 0.7;
+            padding: 0;
+            margin: 0;
+
+            .icon {
+              position: absolute;
+              top: 0.98rem;
+              left: 0.95rem;
+            }
           }
         }
       }
@@ -248,7 +254,7 @@ export const BalanceChartWrapper = styled.div`
     flex-flow: row nowrap;
     width: 100%;
     height: 3.25rem;
-    border-radius: 0.9rem;
+    border-radius: 0.5rem;
     overflow: hidden;
 
     &.main {
@@ -263,6 +269,7 @@ export const BalanceChartWrapper = styled.div`
       padding: 0 1rem;
       > span {
         font-variation-settings: 'wght' 550;
+        opacity: 0.7;
       }
     }
   }

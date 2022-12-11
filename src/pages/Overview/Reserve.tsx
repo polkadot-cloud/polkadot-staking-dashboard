@@ -28,17 +28,19 @@ export const Reserve = (props: ReserveProps) => {
 
         <div className="inner">
           <section>
-            <h3 className="reserve">
-              <FontAwesomeIcon
-                icon={faLock}
-                transform="shrink-2"
-                className="icon"
-              />
-              {`${toFixedIfNecessary(
-                planckBnToUnit(existentialAmount, network.units),
-                5
-              )} ${network.unit}`}
-            </h3>
+            <div className="reserve">
+              <h3>
+                <FontAwesomeIcon
+                  icon={faLock}
+                  transform="shrink-2"
+                  className="icon"
+                />
+                {`${toFixedIfNecessary(
+                  planckBnToUnit(existentialAmount, network.units),
+                  5
+                )} ${network.unit}`}
+              </h3>
+            </div>
           </section>
         </div>
       </ReserveWrapper>
