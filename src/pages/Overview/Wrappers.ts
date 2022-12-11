@@ -1,12 +1,15 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { MediumFontSizeMaxWidth, SmallFontSizeMaxWidth } from 'consts';
+import { SmallFontSizeMaxWidth } from 'consts';
 import styled from 'styled-components';
 import {
   borderPrimary,
   borderSecondary,
   buttonSecondaryBackground,
+  cardBorder,
+  networkColor,
+  networkColorSecondary,
   textSecondary,
 } from 'theme';
 
@@ -174,13 +177,9 @@ export const ReserveWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 5.5rem;
-  @media (min-width: ${SmallFontSizeMaxWidth + 1}px) {
-    margin-top: 3rem;
-  }
-  @media (min-width: ${MediumFontSizeMaxWidth + 1}px) {
-    margin-top: 2.25rem;
-  }
+  margin-top: 1.75rem;
+  padding: 0 0.75rem;
+
   > h4 {
     margin-top: 0.75rem;
     margin-bottom: 0.25rem;
@@ -210,17 +209,17 @@ export const ReserveWrapper = styled.div`
           white-space: nowrap;
           overflow: hidden;
           position: relative;
-          border-radius: 1rem;
-          opacity: 0.75;
+          border-radius: 0.9rem;
           padding-top: 0.7rem;
           padding-bottom: 0.7rem;
-          padding-left: 2.75rem;
+          padding-left: 2.5rem;
           padding-right: 1.5rem;
           width: 100%;
+          font-size: 1rem;
 
           .icon {
             position: absolute;
-            top: 0.8rem;
+            top: 0.98rem;
             left: 0.95rem;
           }
         }
@@ -230,5 +229,101 @@ export const ReserveWrapper = styled.div`
         margin-left: 0.6rem;
       }
     }
+  }
+`;
+
+export const BalanceChartWrapper = styled.div`
+  width: 100%;
+  padding: 0 1.75rem;
+  margin: 1rem 0;
+
+  .chart {
+    background: ${buttonSecondaryBackground};
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    height: 3.25rem;
+    border-radius: 0.9rem;
+    overflow: hidden;
+
+    &.main {
+      border: ${cardBorder} ${borderPrimary};
+    }
+    > div {
+      height: 100%;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      font-size: 1rem;
+      padding: 0 1rem;
+      > span {
+        font-variation-settings: 'wght' 550;
+      }
+    }
+  }
+
+  .legend {
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.4rem;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    > section {
+      padding: 0 1rem;
+      display: flex;
+      flex-flow: column wrap;
+      align-items: flex-start;
+      > h4 {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        > span {
+          width: 1rem;
+          height: 1rem;
+          border-radius: 0.25rem;
+          margin-right: 0.6rem;
+        }
+      }
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+  }
+  .available {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    margin-top: 2.5rem;
+    > div {
+      display: flex;
+      flex-flow: row wrap;
+      &:first-child {
+        padding-right: 0.5rem;
+      }
+      &:last-child {
+        padding-left: 0.5rem;
+      }
+      > h4 {
+        margin: 0.5rem 0 0.8rem 0;
+        padding: 0 0.2rem;
+      }
+    }
+  }
+  .d1 {
+    color: white;
+    background: ${networkColor};
+  }
+  .d2 {
+    color: white;
+    background: ${networkColorSecondary};
+  }
+  .d3 {
+    color: white;
+    background: ${textSecondary};
+  }
+  .d4 {
+    color: ${textSecondary};
+    background: ${buttonSecondaryBackground};
   }
 `;

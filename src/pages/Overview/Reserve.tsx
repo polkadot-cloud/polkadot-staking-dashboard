@@ -31,7 +31,7 @@ export const Reserve = (props: ReserveProps) => {
             <h3 className="reserve">
               <FontAwesomeIcon
                 icon={faLock}
-                transform="shrink-4"
+                transform="shrink-2"
                 className="icon"
               />
               {`${toFixedIfNecessary(
