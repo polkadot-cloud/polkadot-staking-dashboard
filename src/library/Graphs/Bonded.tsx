@@ -53,7 +53,7 @@ export const Bonded = ({
           padding: 20,
           color: defaultThemes.text.primary[mode],
           font: {
-            size: 13,
+            size: 12.5,
             weight: '600',
           },
         },
@@ -93,7 +93,7 @@ export const Bonded = ({
       ];
 
   const data = {
-    labels: [t('active'), t('unlocking'), t('free')],
+    labels: [t('active'), t('unlocking'), t('available')],
     datasets: [
       {
         label: network.unit,

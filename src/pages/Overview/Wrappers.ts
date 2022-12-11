@@ -237,6 +237,11 @@ export const BalanceChartWrapper = styled.div`
   padding: 0 1.75rem;
   margin: 1rem 0;
 
+  .l {
+    font-variation-settings: 'wght' 600;
+    font-size: 1.1rem;
+  }
+
   .chart {
     background: ${buttonSecondaryBackground};
     display: flex;
@@ -281,8 +286,7 @@ export const BalanceChartWrapper = styled.div`
         > span {
           width: 1rem;
           height: 1rem;
-          border-radius: 0.25rem;
-          margin-right: 0.6rem;
+          margin-right: 0.5rem;
         }
       }
       &:first-child {

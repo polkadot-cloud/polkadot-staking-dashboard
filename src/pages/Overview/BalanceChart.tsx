@@ -62,17 +62,17 @@ export const BalanceChart = () => {
       <BalanceChartWrapper>
         <div className="legend">
           <section>
-            <h4>
+            <h4 className="l">
               <span className="d1" /> Nominating
             </h4>
           </section>
           <section>
-            <h4>
+            <h4 className="l">
               <span className="d2" /> In a Pool
             </h4>
           </section>
           <section>
-            <h4>
+            <h4 className="l">
               <span className="d4" /> Not Staking
             </h4>
           </section>
@@ -87,7 +87,7 @@ export const BalanceChart = () => {
         </div>
         <div className="available">
           <div style={{ width: '60%', flex: 1, flexBasis: '66%' }}>
-            <h4>
+            <h4 className="l">
               Free Balance <OpenHelpIcon helpKey="Your Balance" />
             </h4>
             <div className="chart">
@@ -97,7 +97,7 @@ export const BalanceChart = () => {
             </div>
           </div>
           <div style={{ width: '30%', flex: 1, flexBasis: '33%' }}>
-            <h4>
+            <h4 className="l">
               Locked <OpenHelpIcon helpKey="Your Balance" />
             </h4>
             <div className="chart">
