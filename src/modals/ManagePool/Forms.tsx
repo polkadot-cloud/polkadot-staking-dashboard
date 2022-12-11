@@ -18,12 +18,14 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import React, { forwardRef, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Separator } from 'Wrappers';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef((props: any, ref: any) => {
   const { setSection, task, section } = props;
+  const { t } = useTranslation('modals');
 
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
@@ -74,29 +76,19 @@ export const Forms = forwardRef((props: any, ref: any) => {
     switch (task) {
       case 'set_pool_metadata':
         title = undefined;
-        message = (
-          <p>
-            Your updated name will be stored on-chain as encoded bytes. The
-            update will take effect immediately.
-          </p>
-        );
+        message = <p>{t('stored_on_chain')}</p>;
         break;
       case 'destroy_pool':
-        title = <h2>Destroying a Pool is Irreversible</h2>;
-        message = (
-          <p>
-            Once you Destroy the pool, all members can be permissionlessly
-            unbonded, and the pool can never be reopened.
-          </p>
-        );
+        title = <h2>{t('destroy_irreversible')}</h2>;
+        message = <p>{t('destroy_pool')}</p>;
         break;
       case 'unlock_pool':
-        title = <h2>Submit Pool Unlock</h2>;
-        message = <p>Once you Unlock the pool new people can join the pool.</p>;
+        title = <h2>{t('submit_unlock')}</h2>;
+        message = <p>{t('unlock_pool')}</p>;
         break;
       case 'lock_pool':
-        title = <h2>Submit Pool Lock</h2>;
-        message = <p>Once you Lock the pool no one else can join the pool.</p>;
+        title = <h2>{t('submit_lock')}</h2>;
+        message = <p>{t('lock_pool')}</p>;
         break;
       default:
         title = null;
@@ -105,8 +97,8 @@ export const Forms = forwardRef((props: any, ref: any) => {
     return { title, message };
   })();
 
-  const poolStateFromTask = (t: string) => {
-    switch (t) {
+  const poolStateFromTask = (tk: string) => {
+    switch (tk) {
       case 'destroy_pool':
         return PoolState.Destroy;
       case 'lock_pool':
@@ -182,9 +174,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
   return (
     <ContentWrapper>
       <div className="items" ref={ref}>
-        {!accountHasSigner(activeAccount) && (
-          <Warning text="Your account is read only, and cannot sign transactions." />
-        )}
+        {!accountHasSigner(activeAccount) && <Warning text={t('read_only')} />}
         <div>
           <>
             {/* include task title if present */}
@@ -202,7 +192,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
                 <input
                   className="textbox"
                   style={{ width: '100%' }}
-                  placeholder="Pool Name"
+                  placeholder={t('pool_name') || ''}
                   type="text"
                   onChange={(e: React.FormEvent<HTMLInputElement>) =>
                     handleMetadataChange(e)
@@ -230,7 +220,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
                 transform="grow-2"
                 icon={faChevronLeft as IconProp}
               />
-              Back
+              {t('back')}
             </button>
           </div>
           <div>
