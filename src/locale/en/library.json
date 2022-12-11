@@ -106,7 +106,7 @@
     "choose_validators": "Choose up to {{maxNominations}} validators to nominate. Generate your nominations automatically or manually insert them.",
     "view_metrics": "View Metrics",
     "copy_address": "Copy Address",
-    "100%_commission": "100% commission",
+    "100_commission": "100% commission",
     "blocked_nominations": "blocked nominations",
     "missing_identity": "missing identity",
     "over_subscribed": "over subscribed",

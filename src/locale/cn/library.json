@@ -106,7 +106,7 @@
     "choose_validators": "最多能选择 {{maxNominations}} 个验证人。自动生成提名或手动加入提名",
     "view_metrics": "查看指标",
     "copy_address": "复制地址",
-    "100%_commission": "100% 佣金",
+    "100_commission": "100% 佣金",
     "blocked_nominations": "己冻结提名",
     "missing_identity": "无ID",
     "over_subscribed": " 己超额认选",
