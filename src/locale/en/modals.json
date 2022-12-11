@@ -148,6 +148,7 @@
     "unlocks_after_era": "Unlocks after era",
     "unlock_take": "Unlocks take {{bondDuration}} eras before they can be withdrawn.",
     "rebond_unlock": " You can rebond unlocks at any time in this period, or withdraw them to your free balance thereafter.",
-    "unlock_chunk": "Unlock chunks cannot currently be rebonded in a pool. If you wish to rebond, withdraw the unlock chunk first and the add to your bond."
+    "unlock_chunk": "Unlock chunks cannot currently be rebonded in a pool. If you wish to rebond, withdraw the unlock chunk first and the add to your bond.",
+    "ting": "ting"
   }
 }

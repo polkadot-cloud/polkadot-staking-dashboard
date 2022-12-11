@@ -142,7 +142,7 @@ export const Forms = forwardRef(
             </div>
             <div>
               <ButtonSubmit
-                text={`Submit${submitting ? 'ting' : ''}`}
+                text={`${t('submit')}${submitting ? t('ting') : ''}`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
                 onClick={() => submitTx()}

@@ -118,8 +118,7 @@ export const ValidatorMetrics = () => {
           flex
         >
           <h4>
-            {t('recent_era_points')}Recent Era Points{' '}
-            <OpenHelpIcon helpKey="Era Points" />
+            {t('recent_era_points')} <OpenHelpIcon helpKey="Era Points" />
           </h4>
           <div className="inner" ref={ref} style={{ minHeight }}>
             <StatusLabel
