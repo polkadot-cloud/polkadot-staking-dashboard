@@ -15,7 +15,7 @@
     "not_meet": "You do not meet the minimum bond of",
     "not_enough_after": "Not enough {{unit}} to bond after transaction fees.",
     "bond": "Bond",
-    "available": "available",
+    "available": "Available",
     "max": "Max",
     "create_pool": "Create Pool",
     "nominate_inactive": "Inactive",
