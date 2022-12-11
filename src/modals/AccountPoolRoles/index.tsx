@@ -11,6 +11,7 @@ import { BondedPool } from 'contexts/Pools/types';
 import Identicon from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
+import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 import { ContentWrapper, StyledButton } from './Wrappers';
 
@@ -19,6 +20,7 @@ export const AccountPoolRoles = () => {
   const { getAccountPools } = useBondedPools();
   const { membership } = usePoolMemberships();
   const { who } = config;
+  const { t } = useTranslation('modals');
 
   const accountPools = getAccountPools(who);
   const totalAccountPools = Object.entries(accountPools).length;
@@ -26,7 +28,7 @@ export const AccountPoolRoles = () => {
 
   return (
     <>
-      <Title title="All Pool Roles" icon={faBars} />
+      <Title title={t('all_pool_roles')} icon={faBars} />
       <PaddingWrapper>
         <ContentWrapper>
           {membership && (
@@ -38,8 +40,9 @@ export const AccountPoolRoles = () => {
             </>
           )}
           <h4>
-            Active Roles in <b>{totalAccountPools}</b> Pool
-            {totalAccountPools === 1 ? '' : 's'}
+            {t('active_roles', {
+              count: totalAccountPools,
+            })}
           </h4>
           <div className="items">
             {Object.entries(accountPools).map(([key, item]: any, i: number) => (
@@ -56,6 +59,7 @@ const Button = ({ item, poolId }: { item: Array<string>; poolId: string }) => {
   const { setStatus } = useModal();
   const { bondedPools } = useBondedPools();
   const { setSelectedPoolId } = useActivePools();
+  const { t } = useTranslation('modals');
 
   const pool = bondedPools.find((b: BondedPool) => String(b.id) === poolId);
   const stash = pool?.addresses?.stash || '';
@@ -75,11 +79,13 @@ const Button = ({ item, poolId }: { item: Array<string>; poolId: string }) => {
       </div>
 
       <div className="details">
-        <h3>Pool {poolId}</h3>
+        <h3>
+          {t('pool')} {poolId}
+        </h3>
         <h4>
-          {item.includes('root') && <span>Root</span>}
-          {item.includes('nominator') && <span>Nominator</span>}
-          {item.includes('stateToggler') && <span>State Toggler</span>}
+          {item.includes('root') && <span>{t('root')}</span>}
+          {item.includes('nominator') && <span>{t('nominator')}</span>}
+          {item.includes('stateToggler') && <span>{t('state_toggler')}</span>}
         </h4>
       </div>
       <div>

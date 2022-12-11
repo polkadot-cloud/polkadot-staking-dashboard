@@ -12,6 +12,7 @@ import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import { RoleChange } from './RoleChange';
 import Wrapper from './Wrapper';
@@ -24,6 +25,7 @@ export const ChangePoolRoles = () => {
   const { config } = useModal();
   const { txFeesValid } = useTxFees();
   const { id: poolId, roleEdits } = config;
+  const { t } = useTranslation('modals');
 
   // tx to submit
   const getTx = () => {
@@ -63,7 +65,7 @@ export const ChangePoolRoles = () => {
 
   return (
     <>
-      <Title title="Change Pool Roles" icon={faExchangeAlt} />
+      <Title title={t('change_pool_roles')} icon={faExchangeAlt} />
       <Wrapper>
         <div
           style={{
@@ -72,17 +74,17 @@ export const ChangePoolRoles = () => {
           }}
         >
           <RoleChange
-            roleName="Root"
+            roleName={t('root')}
             oldAddress={roleEdits?.root?.oldAddress}
             newAddress={roleEdits?.root?.newAddress}
           />
           <RoleChange
-            roleName="Nominator"
+            roleName={t('nominator')}
             oldAddress={roleEdits?.nominator?.oldAddress}
             newAddress={roleEdits?.nominator?.newAddress}
           />
           <RoleChange
-            roleName="State Toggler"
+            roleName={t('state_toggler')}
             oldAddress={roleEdits?.stateToggler?.oldAddress}
             newAddress={roleEdits?.stateToggler?.newAddress}
           />
