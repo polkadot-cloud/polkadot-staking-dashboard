@@ -152,7 +152,7 @@ export const useValidatorFilters = () => {
 
   const excludesToLabels: { [key: string]: string } = {
     over_subscribed: t('over_subscribed'),
-    all_commission: t('100%_commission'),
+    all_commission: t('100_commission'),
     blocked_nominations: t('blocked_nominations'),
     missing_identity: t('missing_identity'),
   };

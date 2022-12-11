@@ -244,7 +244,7 @@ export const PoolListInner = ({
             </>
           ) : (
             <h4 style={{ padding: '1rem 1rem 0 1rem' }}>
-              {isSyncing ? t('syncing_pool_list') : t('no_match')}
+              {isSyncing ? `${t('syncing_pool_list')}...` : t('no_match')}
             </h4>
           )}
         </MotionContainer>
