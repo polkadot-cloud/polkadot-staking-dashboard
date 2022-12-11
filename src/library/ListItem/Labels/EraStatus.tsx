@@ -25,11 +25,10 @@ export const EraStatus = (props: any) => {
     stakers.find((s: any) => s.address === address) || null;
 
   // flag whether validator is active
-
   const validatorStatus = isSyncing
     ? t('waiting')
     : validatorInEra
-    ? t('list_item.active')
+    ? t('list_item_active')
     : t('waiting');
 
   let totalStakePlanck = new BN(0);
@@ -51,7 +50,7 @@ export const EraStatus = (props: any) => {
         {isSyncing || erasStakersSyncing
           ? t('syncing')
           : validatorInEra
-          ? `${t('list_item.active')} / ${humanNumber(totalStake)} ${unit}`
+          ? `${t('list_item_active')} / ${humanNumber(totalStake)} ${unit}`
           : capitalizeFirstLetter(validatorStatus ?? '')}
       </h5>
     </ValidatorStatusWrapper>

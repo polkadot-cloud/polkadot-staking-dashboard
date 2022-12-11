@@ -74,9 +74,7 @@
     "validator_commission": "Validator Commission",
     "address_copied_to_clipboard": "Address Copied to Clipboard",
     "waiting": "waiting",
-    "list_item": {
-      "active": "active"
-    },
+    "list_item_active": "active",
     "syncing": "Syncing",
     "favorite": "Favorite",
     "add": "Add",
@@ -87,7 +85,7 @@
     "favorite_validator_removed": "Favorite Validator Removed",
     "join": "Join",
     "pool_members": "Pool Members",
-    "minimum_reward": "Over subscribed: Minimum reward bond is",
+    "over_subscribed_min_reward": "Over subscribed: Minimum reward bond is",
     "validating_parachain_blocks": "Validating Parachain Blocks",
     "not_nominating": "Not Nominating",
     "pool_id": "Pool ID",
