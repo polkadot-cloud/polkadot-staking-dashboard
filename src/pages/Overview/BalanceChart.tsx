@@ -68,12 +68,12 @@ export const BalanceChart = () => {
           </section>
           <section>
             <h4>
-              <span className="d2" /> In Pool
+              <span className="d2" /> In a Pool
             </h4>
           </section>
-          <section style={{ opacity: 0.25 }}>
+          <section>
             <h4>
-              <span className="d3" /> Unlocking
+              <span className="d4" /> Not Staking
             </h4>
           </section>
         </div>
