@@ -34,9 +34,9 @@ export const FavoriteValidator = (props: FavoriteProps) => {
 
   const posRef = useRef<HTMLDivElement>(null);
 
-  const tooltipText = `${
-    isFavorite ? `${t('remove')}` : `${t('library.add')}`
-  } ${t('favorite')}`;
+  const tooltipText = `${isFavorite ? `${t('remove')}` : `${t('add')}`} ${t(
+    'favorite'
+  )}`;
 
   const toggleTooltip = () => {
     if (!open) {
