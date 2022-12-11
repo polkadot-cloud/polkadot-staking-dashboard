@@ -85,10 +85,10 @@ export const PoolBonded = ({
           {nominationStatus === null || !eraStakers.stakers.length
             ? `${t('syncing')}...`
             : targets.length
-            ? capitalizeFirstLetter(nominationStatus ?? '')
+            ? capitalizeFirstLetter(t(`${nominationStatus}`) ?? '')
             : t('not_nominating')}
           {' / '}
-          Bonded: {humanNumber(toFixedIfNecessary(poolBonded, 3))} {unit}
+          {t('bonded')}: {humanNumber(toFixedIfNecessary(poolBonded, 3))} {unit}
         </h5>
       </ValidatorStatusWrapper>
     </>
