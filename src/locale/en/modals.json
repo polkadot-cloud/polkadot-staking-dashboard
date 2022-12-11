@@ -149,6 +149,8 @@
     "unlock_take": "Unlocks take {{bondDuration}} eras before they can be withdrawn.",
     "rebond_unlock": " You can rebond unlocks at any time in this period, or withdraw them to your free balance thereafter.",
     "unlock_chunk": "Unlock chunks cannot currently be rebonded in a pool. If you wish to rebond, withdraw the unlock chunk first and the add to your bond.",
-    "ting": "ting"
+    "ting": "ting",
+    "you_must_controller": "You must have your controller account imported to stop nominating.",
+    "you_must_account": "You must have your account imported to stop nominating."
   }
 }

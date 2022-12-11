@@ -130,9 +130,11 @@ export const ChangeNominations = () => {
           {!nominations.length && <Warning text={t('no_nominations_set')} />}
           {!accountHasSigner(signingAccount) && (
             <Warning
-              text={`You must have your${
-                bondType === 'stake' ? ' controller ' : ' '
-              }account imported to stop nominating.`}
+              text={`${
+                bondType === 'stake'
+                  ? t('you_must', { context: 'controller' })
+                  : t('you_must', { context: 'account' })
+              }`}
             />
           )}
           <h2>
