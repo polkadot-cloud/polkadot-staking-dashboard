@@ -100,7 +100,7 @@
     "copy_pool_address": "复制池地址",
     "search": "搜索池ID、名称或地址",
     "no_match": "没有符合此条件的池.",
-    "syncing_pool_list": "同步池列表...",
+    "syncing_pool_list": "同步池列表",
     "continue": "继续",
     "update": "更改",
     "choose_validators": "最多能选择 {{maxNominations}} 个验证人。自动生成提名或手动加入提名",

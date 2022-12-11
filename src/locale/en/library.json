@@ -100,7 +100,7 @@
     "copy_pool_address": "Copy Pool Address",
     "search": "Search Pool ID, Name or Address",
     "no_match": "No pools match this criteria.",
-    "syncing_pool_list": "Syncing Pool list...",
+    "syncing_pool_list": "Syncing Pool list",
     "continue": "Continue",
     "update": "Update",
     "choose_validators": "Choose up to {{maxNominations}} validators to nominate. Generate your nominations automatically or manually insert them.",
