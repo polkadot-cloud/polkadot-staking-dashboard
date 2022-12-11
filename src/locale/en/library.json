@@ -19,9 +19,7 @@
     "max": "Max",
     "create_pool": "Create Pool",
     "nominate_inactive": "Inactive",
-    "graphs": {
-      "inactive": "Inactive"
-    },
+    "graph_inactive": "Inactive",
     "nominate": "Nominate",
     "nominate_active": "Active",
     "unbond_amount": "Unbond amount is more than your bonded balance.",

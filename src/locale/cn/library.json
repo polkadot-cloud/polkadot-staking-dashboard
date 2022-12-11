@@ -19,9 +19,7 @@
     "max": "最高",
     "create_pool": "创建提名池",
     "nominate_inactive": "未激活",
-    "graphs": {
-      "inactive": "不活跃"
-    },
+    "graph_inactive": "不活跃",
     "nominate": "提名",
     "nominate_active": "激活",
     "unbond_amount": "解除金额超过质押余额",
