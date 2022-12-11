@@ -19,6 +19,9 @@
     "max": "最高",
     "create_pool": "创建提名池",
     "inactive": "未激活",
+    "graphs": {
+      "inactive": "不活跃"
+    },
     "nominate": "提名",
     "active": "激活",
     "unbond_amount": "解除金额超过质押余额",
@@ -131,6 +134,7 @@
     "active_pools": "活跃提名池",
     "locked_pools": "已锁定提名池",
     "destroying_pools": "正在销毁提名池",
-    "unbonding": "正在解除质押"
+    "unbonding": "正在解除质押",
+    "done": "完成"
   }
 }
