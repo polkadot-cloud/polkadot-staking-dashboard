@@ -77,9 +77,7 @@
     "validator_commission": "验证人佣金",
     "address_copied_to_clipboard": "复制到剪贴板的地址",
     "waiting": "等待中",
-    "list_item": {
-      "active": "活跃"
-    },
+    "list_item_active": "活跃",
     "syncing": "正在同步",
     "favorite": "收藏夹",
     "add": "添加",
@@ -90,7 +88,7 @@
     "favorite_validator_removed": "收藏夹已删除验证人",
     "join": "加入提名池",
     "pool_members": "提名池成员",
-    "minimum_reward": "超额认选：最低奖励质押为",
+    "over_subscribed_min_reward": "超额认选：最低奖励质押为",
     "validating_parachain_blocks": "验证平行链区块",
     "not_nominating": "非提名状态中",
     "pool_id": "提名池ID",
