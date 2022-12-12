@@ -97,8 +97,8 @@ export const Forms = forwardRef((props: any, ref: any) => {
     return { title, message };
   })();
 
-  const poolStateFromTask = (T: string) => {
-    switch (T) {
+  const poolStateFromTask = (s: string) => {
+    switch (s) {
       case 'destroy_pool':
         return PoolState.Destroy;
       case 'lock_pool':
