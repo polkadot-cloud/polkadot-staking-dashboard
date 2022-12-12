@@ -135,8 +135,8 @@ export const NominateFromFavorites = () => {
             <Warning
               text={`${
                 bondType === 'stake'
-                  ? t('you_must', { context: 'controller' })
-                  : t('you_must', { context: 'account' })
+                  ? t('youMust', { context: 'controller' })
+                  : t('youMust', { context: 'account' })
               }`}
             />
           )}
