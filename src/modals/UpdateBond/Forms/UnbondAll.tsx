@@ -127,7 +127,7 @@ export const UnbondAll = (props: FormsProps) => {
       <div className="items">
         <>
           {!accountHasSigner(signingAccount) && (
-            <Warning text={t('read_only')} />
+            <Warning text={t('readOnly)} />
           )}
           {isStaking && controllerNotImported ? (
             <Warning text={t('controllerImported')} />

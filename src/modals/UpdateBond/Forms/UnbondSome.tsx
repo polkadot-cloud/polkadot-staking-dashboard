@@ -127,7 +127,7 @@ export const UnbondSome = (props: FormsProps) => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push(t('read_only'));
+    warnings.push(t('readOnly));
   }
 
   return (

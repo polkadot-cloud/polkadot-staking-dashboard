@@ -100,7 +100,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
       <div className="items">
         <>
           {!accountHasSigner(activeAccount) && (
-            <Warning text={t('read_only')} />
+            <Warning text={t('readOnly)} />
           )}
           {unclaimedRewards > 0 && (
             <Warning

@@ -174,7 +174,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
   return (
     <ContentWrapper>
       <div className="items" ref={ref}>
-        {!accountHasSigner(activeAccount) && <Warning text={t('read_only')} />}
+        {!accountHasSigner(activeAccount) && <Warning text={t('readOnly)} />}
         <div>
           <>
             {/* include task title if present */}

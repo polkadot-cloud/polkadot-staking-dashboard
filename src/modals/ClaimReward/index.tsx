@@ -83,7 +83,7 @@ export const ClaimReward = () => {
           }}
         >
           {!accountHasSigner(activeAccount) ? (
-            <Warning text={t('read_only')} />
+            <Warning text={t('readOnly)} />
           ) : null}
           {!unclaimedRewards?.gtn(0) ? (
             <Warning text={t('noRewards')} />

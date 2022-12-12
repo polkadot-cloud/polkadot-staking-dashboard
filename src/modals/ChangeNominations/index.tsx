@@ -119,7 +119,7 @@ export const ChangeNominations = () => {
 
   return (
     <>
-      <Title title={t('stop_nominating')} icon={faStopCircle} />
+      <Title title={t('stopNominating')} icon={faStopCircle} />
       <PaddingWrapper verticalOnly>
         <div
           style={{

@@ -84,7 +84,7 @@ export const UpdateController = () => {
         <div style={{ padding: '0 1rem', width: '100%' }}>
           <div style={{ marginBottom: '1.5rem' }}>
             {!accountHasSigner(activeAccount) && (
-              <Warning text={t('read_only')} />
+              <Warning text={t('readOnly)} />
             )}
           </div>
           <AccountDropdown
