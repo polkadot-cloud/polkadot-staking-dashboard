@@ -15,7 +15,7 @@ export const ChooseLanguage = () => {
 
   return (
     <>
-      <Title title={t('choose_language')} Svg={LanguageSVG} />
+      <Title title={t('chooseLanguage')} Svg={LanguageSVG} />
       <PaddingWrapper>
         <ContentWrapper>
           <div className="item">
