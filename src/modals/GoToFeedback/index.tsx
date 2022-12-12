@@ -26,7 +26,7 @@ export const GoToFeedback = () => {
               <a href="https://canny.io/" target="_blank" rel="noreferrer">
                 Canny.io
               </a>
-              {t('welcome_to_report')}
+              . {t('welcome_to_report')}
             </p>
           </NotesWrapper>
           <h2 style={{ marginTop: 0 }}>
