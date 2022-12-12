@@ -68,7 +68,7 @@ export const Pool = (props: PoolProps) => {
     addresses.stash == null
       ? null
       : {
-          title: t('address_copied_to_clipboard'),
+          title: t('addressCopiedToClipboard'),
           subtitle: addresses.stash,
         };
 
@@ -79,7 +79,7 @@ export const Pool = (props: PoolProps) => {
   menuItems.push({
     icon: <FontAwesomeIcon icon={faProjectDiagram as IconProp} />,
     wrap: null,
-    title: `${t('view_pool_nominations')}`,
+    title: `${t('viewPoolNominations')}`,
     cb: () => {
       openModalWith(
         'PoolNominations',
@@ -96,7 +96,7 @@ export const Pool = (props: PoolProps) => {
   menuItems.push({
     icon: <FontAwesomeIcon icon={faCopy as IconProp} />,
     wrap: null,
-    title: t('copy_pool_address'),
+    title: t('copyPoolAddress'),
     cb: () => {
       navigator.clipboard.writeText(addresses.stash);
       if (notificationCopyAddress) {

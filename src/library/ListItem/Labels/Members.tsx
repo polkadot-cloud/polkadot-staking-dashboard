@@ -14,7 +14,7 @@ export const Members = (props: { members: string }) => {
 
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
   const posRef = useRef<HTMLDivElement>(null);
-  const tooltipText = t('pool_members');
+  const tooltipText = t('poolMembers');
 
   const toggleTooltip = () => {
     if (!open) {

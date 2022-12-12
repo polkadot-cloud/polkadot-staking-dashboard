@@ -47,7 +47,7 @@ export const Oversubscribed = (props: OversubscribedProps) => {
 
   const posRef = useRef(null);
 
-  const tooltipText = `${t('over_subscribed_min_reward')} ${lowestReward} ${
+  const tooltipText = `${t('overSubscribedMinReward')} ${lowestReward} ${
     network.unit
   }`;
 

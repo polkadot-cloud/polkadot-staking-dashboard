@@ -20,7 +20,7 @@ export const FilterPools = () => {
 
   return (
     <FilterListWrapper>
-      <Title title={t('filter_pools')} />
+      <Title title={t('filterPools')} />
       <div className="body">
         <h4>{t('include')}:</h4>
         {Object.entries(includesToLabels).map(([f, l]: any, i: number) => (

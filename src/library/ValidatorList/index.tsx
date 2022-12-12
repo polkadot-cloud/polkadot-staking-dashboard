@@ -281,7 +281,7 @@ export const ValidatorListInner = (props: any) => {
         <div>
           <h4>
             {title ||
-              `${t('displaying_validators', {
+              `${t('displayingValidators', {
                 count: validators.length,
               })}`}
           </h4>
@@ -317,7 +317,7 @@ export const ValidatorListInner = (props: any) => {
         {allowSearch && (
           <SearchInput
             handleChange={handleSearchChange}
-            placeholder={t('search_address')}
+            placeholder={t('searchAddress')}
           />
         )}
 
@@ -374,7 +374,7 @@ export const ValidatorListInner = (props: any) => {
             </>
           ) : (
             <h4 style={{ marginTop: '1rem' }}>
-              {isSearching ? t('no_validators_match') : t('no_validators')}
+              {isSearching ? t('noValidatorsMatch') : t('noValidators')}
             </h4>
           )}
         </MotionContainer>

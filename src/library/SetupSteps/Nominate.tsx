@@ -41,7 +41,7 @@ export const Nominate = (props: NominationsProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <div style={{ marginTop: '0.5rem' }}>
-          <h4>{t('choose_validators', { maxNominations })}</h4>
+          <h4>{t('chooseValidators', { maxNominations })}</h4>
           <GenerateNominations
             batchKey={batchKey}
             setters={[

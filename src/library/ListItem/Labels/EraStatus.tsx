@@ -28,7 +28,7 @@ export const EraStatus = (props: any) => {
   const validatorStatus = isSyncing
     ? t('waiting')
     : validatorInEra
-    ? t('list_item_active')
+    ? t('listItemActive')
     : t('waiting');
 
   let totalStakePlanck = new BN(0);
@@ -50,7 +50,7 @@ export const EraStatus = (props: any) => {
         {isSyncing || erasStakersSyncing
           ? t('syncing')
           : validatorInEra
-          ? `${t('list_item_active')} / ${humanNumber(totalStake)} ${unit}`
+          ? `${t('listItemActive')} / ${humanNumber(totalStake)} ${unit}`
           : capitalizeFirstLetter(validatorStatus ?? '')}
       </h5>
     </ValidatorStatusWrapper>

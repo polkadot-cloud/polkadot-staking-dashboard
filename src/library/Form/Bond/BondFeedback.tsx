@@ -119,28 +119,28 @@ export const BondFeedback = ({
     // bond errors
     if (freeBalance === 0) {
       _bondDisabled = true;
-      _errors.push(`${t('no_free', { unit })}`);
+      _errors.push(`${t('noFree', { unit })}`);
     }
 
     if (Number(bond.bond) > freeBalance) {
-      _errors.push(t('more_than_balance'));
+      _errors.push(t('moreThanBalance'));
     }
 
     if (bond.bond !== '' && Number(bond.bond) < _planck) {
-      _errors.push(t('too_small'));
+      _errors.push(t('tooSmall'));
     }
 
     if (bond.bond !== '' && bondAfterTxFees.toNumber() < 0) {
-      _errors.push(`${t('not_enough_after', { unit })}`);
+      _errors.push(`${t('notEnoughAfter', { unit })}`);
     }
 
     if (inSetup) {
       if (freeBalance < minBondBase) {
         _bondDisabled = true;
-        _errors.push(`${t('not_meet')} ${minBondBase} ${unit}.`);
+        _errors.push(`${t('notMeet')} ${minBondBase} ${unit}.`);
       }
       if (bond.bond !== '' && Number(bond.bond) < minBondBase) {
-        _errors.push(`${t('at_least')} ${minBondBase} ${unit}.`);
+        _errors.push(`${t('atLeast')} ${minBondBase} ${unit}.`);
       }
     }
 

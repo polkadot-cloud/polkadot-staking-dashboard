@@ -35,7 +35,7 @@ export const GoToFeedback = () => {
               target="_blank"
               rel="noreferrer"
             >
-              {t('open_feedback')} &nbsp
+              {t('open_feedback')} &nbsp;
               <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-3" />
             </a>
           </h2>

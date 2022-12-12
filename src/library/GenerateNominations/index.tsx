@@ -202,8 +202,8 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
   // accumulate generation methods
   const methods = [
     {
-      title: t('optimal_selection'),
-      subtitle: t('optimal_selection_subtitle'),
+      title: t('optimalSelection'),
+      subtitle: t('optimalSelectionSubtitle'),
       icon: faChartPie as IconProp,
       onClick: () => {
         setMethod('Optimal Selection');
@@ -213,8 +213,8 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
       },
     },
     {
-      title: t('active_low_commission'),
-      subtitle: t('active_low_commission_subtitle'),
+      title: t('activeLowCommission'),
+      subtitle: t('activeLowCommissionSubtitle'),
       icon: faCoins as IconProp,
       onClick: () => {
         setMethod('Active Low Commission');
@@ -224,8 +224,8 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
       },
     },
     {
-      title: t('from_favorites'),
-      subtitle: t('from_favorites_subtitle'),
+      title: t('fromFavorites'),
+      subtitle: t('fromFavoritesSubtitle'),
       icon: faHeart as IconProp,
       onClick: () => {
         setMethod('From Favorites');
@@ -236,7 +236,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     },
     {
       title: t('manual_selection'),
-      subtitle: t('manual_selection_subtitle'),
+      subtitle: t('manualSelectionSubtitle'),
       icon: faUserEdit as IconProp,
       onClick: () => {
         setMethod('Manual');
@@ -249,19 +249,19 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
   // accumulate actions
   const actions = [
     {
-      title: t('add_from_favorites'),
+      title: t('addFromFavorites'),
       onClick: cbAddNominations,
       onSelected: false,
       isDisabled: disabledAddFavorites,
     },
     {
-      title: `${t('remove_selected')}`,
+      title: `${t('removeSelected')}`,
       onClick: cbRemoveSelected,
       onSelected: true,
       isDisabled: () => false,
     },
     {
-      title: t('parachain_validator'),
+      title: t('parachainValidator'),
       onClick: () => addNominationByType('Parachain Validator'),
       onSelected: false,
       icon: faPlus,
@@ -270,7 +270,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
         !availableToNominate(nominations).parachainValidators.length,
     },
     {
-      title: t('active_validator'),
+      title: t('activeValidator'),
       onClick: () => addNominationByType('Active Validator'),
       onSelected: false,
       icon: faPlus,
@@ -279,7 +279,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
         !availableToNominate(nominations).activeValidators.length,
     },
     {
-      title: t('random_validator'),
+      title: t('randomValidator'),
       onClick: () => addNominationByType('Random Validator'),
       onSelected: false,
       icon: faPlus,
@@ -311,7 +311,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
                 setFetching(true);
               }}
             >
-              {t('re_generate')}
+              {t('reGenerate')}
             </button>
           )}
         </SelectableWrapper>

@@ -86,7 +86,7 @@ export const PoolBonded = ({
             ? `${t('syncing')}...`
             : targets.length
             ? capitalizeFirstLetter(t(`${nominationStatus}`) ?? '')
-            : t('not_nominating')}
+            : t('notNominating')}
           {' / '}
           {t('bonded')}: {humanNumber(toFixedIfNecessary(poolBonded, 3))} {unit}
         </h5>
