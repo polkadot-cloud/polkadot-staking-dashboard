@@ -86,7 +86,7 @@ export const BalanceChart = () => {
           </div>
         </div>
         <div className="available">
-          <div style={{ width: '60%', flex: 1, flexBasis: '66%' }}>
+          <div style={{ flex: 1, flexBasis: '66%' }}>
             <h4 className="l">
               Free Balance <OpenHelpIcon helpKey="Your Balance" />
             </h4>
@@ -96,13 +96,30 @@ export const BalanceChart = () => {
               </div>
             </div>
           </div>
-          <div style={{ width: '30%', flex: 1, flexBasis: '33%' }}>
+          <div style={{ flex: 1, flexBasis: '24%' }}>
             <h4 className="l">
               Locked <OpenHelpIcon helpKey="Your Balance" />
             </h4>
             <div className="chart">
               <div className="d4" style={{ width: '100%' }}>
                 <span>28.98 DOT</span>
+              </div>
+            </div>
+          </div>
+          <div
+            style={{
+              width: '10%',
+              flex: 1,
+              flexBasis: '10%',
+              minWidth: '100px',
+            }}
+          >
+            <h4 className="l">
+              Reserved <OpenHelpIcon helpKey="Your Balance" />
+            </h4>
+            <div className="chart">
+              <div className="d4" style={{ width: '100%' }}>
+                <span>1 DOT</span>
               </div>
             </div>
           </div>

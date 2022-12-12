@@ -191,17 +191,14 @@ export const ReserveWrapper = styled.div`
     display: flex;
     flex-flow: row wrap;
     margin: 0;
-
     > section {
       display: flex;
       flex-flow: row wrap;
       align-items: center;
       position: relative;
-
       &:first-child {
         overflow: hidden;
         padding-left: 0;
-
         .reserve {
           background: ${buttonSecondaryBackground};
           display: block;
@@ -215,13 +212,11 @@ export const ReserveWrapper = styled.div`
           padding-left: 2.5rem;
           padding-right: 1.5rem;
           width: 100%;
-
           > h3 {
             font-size: 1rem;
             opacity: 0.7;
             padding: 0;
             margin: 0;
-
             .icon {
               position: absolute;
               top: 0.98rem;
@@ -230,7 +225,6 @@ export const ReserveWrapper = styled.div`
           }
         }
       }
-
       .help-icon {
         margin-left: 0.6rem;
       }
@@ -242,12 +236,10 @@ export const BalanceChartWrapper = styled.div`
   width: 100%;
   padding: 0 1.75rem;
   margin: 1rem 0;
-
   .l {
     font-variation-settings: 'wght' 600;
     font-size: 1.1rem;
   }
-
   .chart {
     background: ${buttonSecondaryBackground};
     display: flex;
@@ -256,7 +248,6 @@ export const BalanceChartWrapper = styled.div`
     height: 3.25rem;
     border-radius: 0.5rem;
     overflow: hidden;
-
     &.main {
       border: ${cardBorder} ${borderPrimary};
     }
@@ -273,7 +264,6 @@ export const BalanceChartWrapper = styled.div`
       }
     }
   }
-
   .legend {
     width: 100%;
     margin-top: 0.5rem;
@@ -309,11 +299,12 @@ export const BalanceChartWrapper = styled.div`
     > div {
       display: flex;
       flex-flow: row wrap;
+      padding: 0 0.25rem;
       &:first-child {
-        padding-right: 0.5rem;
+        padding-left: 0rem;
       }
       &:last-child {
-        padding-left: 0.5rem;
+        padding-right: 0rem;
       }
       > h4 {
         margin: 0.5rem 0 0.8rem 0;
