@@ -38,7 +38,7 @@ export const Header = (props: HeaderProps) => {
                 />
               </span>
             )}
-            <h4 className="complete">Complete</h4>
+            <h4 className="complete">{t('library.complete')}</h4>
           </>
         )}
       </section>

@@ -21,7 +21,7 @@ export const Title = ({ helpKey, title, icon, fixed, Svg }: TitleProps) => {
   const { setStatus } = useModal();
 
   const graphic = Svg ? (
-    <Svg style={{ width: '1.5rem', height: '1.5rem' }} />
+    <Svg style={{ width: '1.6rem', height: '1.6rem' }} />
   ) : icon ? (
     <FontAwesomeIcon transform="grow-3" icon={icon} />
   ) : null;

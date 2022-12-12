@@ -37,7 +37,6 @@ export const UnbondSome = (props: FormsProps) => {
   const { txFees, txFeesValid } = useTxFees();
   const { getTransferOptions } = useTransferOptions();
   const { t } = useTranslation('modals');
-
   const controller = getBondedAccount(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
   const { minNominatorBond: minNominatorBondBn } = staking;

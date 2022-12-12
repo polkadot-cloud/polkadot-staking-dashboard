@@ -13,7 +13,6 @@ import { NominationsProps } from './types';
 
 export const Nominate = (props: NominationsProps) => {
   const { batchKey, setupType, section } = props;
-
   const { consts } = useApi();
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();

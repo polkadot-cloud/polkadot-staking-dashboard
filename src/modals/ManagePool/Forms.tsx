@@ -188,7 +188,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
             {/* include form element if task is to set metadata */}
             {task === 'set_pool_metadata' && (
               <>
-                <h2>Update Pool Name</h2>
+                <h2>{t('modals.update_pool_name')}</h2>
                 <input
                   className="textbox"
                   style={{ width: '100%' }}

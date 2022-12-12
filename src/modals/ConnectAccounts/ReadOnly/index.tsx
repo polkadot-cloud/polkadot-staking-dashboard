@@ -13,7 +13,6 @@ import { Wrapper } from './Wrapper';
 
 export const ReadOnly = (props: ReadOnlyProps) => {
   const { setReadOnlyOpen, readOnlyOpen } = props;
-
   const { accounts, forgetAccounts } = useConnect();
   const { t } = useTranslation('modals');
 

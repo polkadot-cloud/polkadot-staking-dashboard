@@ -29,7 +29,6 @@ export const UpdateController = () => {
   const { getBondedAccount } = useBalances();
   const { txFeesValid } = useTxFees();
   const { t } = useTranslation('modals');
-
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
 

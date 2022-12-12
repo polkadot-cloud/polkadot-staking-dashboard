@@ -58,7 +58,6 @@ export const Networks = () => {
             {Object.entries(NETWORKS).map(([key, item]: any, index: number) => {
               const Svg = item.brand.inline.svg;
               const rpcDisabled = networkKey === key;
-
               return (
                 <NetworkButton
                   connected={networkKey === key}

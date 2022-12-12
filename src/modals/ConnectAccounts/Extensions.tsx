@@ -19,7 +19,6 @@ import {
 
 export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
   const { setSection } = props;
-
   const { accounts } = useConnect();
   const { t } = useTranslation('modals');
 

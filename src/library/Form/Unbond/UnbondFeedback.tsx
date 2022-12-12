@@ -28,7 +28,6 @@ export const UnbondFeedback = ({
   txFees,
 }: UnbondFeedbackProps) => {
   const defaultValue = defaultBond || '';
-
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
@@ -147,7 +146,7 @@ export const UnbondFeedback = ({
   return (
     <>
       {errors.map((err: string, index: number) => (
-        <Warning key={`unbond_error_${index}`} text={err} />
+        <Warning key={`unbond_error_${index} `} text={err} />
       ))}
       <Spacer />
       <UnbondInput

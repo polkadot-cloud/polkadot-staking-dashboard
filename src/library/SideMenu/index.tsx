@@ -161,7 +161,6 @@ export const SideMenu = () => {
             <MoonOutlineSVG width="1.4em" height="1.4em" />
           </button>
         )}
-
         <button
           type="button"
           onClick={() => openModalWith('ChooseLanguage', {}, 'small')}

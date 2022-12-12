@@ -33,7 +33,6 @@ import {
 
 export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
   const { setSection } = props;
-
   const { isReady } = useApi();
   const { getAccount, activeAccount } = useConnect();
   const {

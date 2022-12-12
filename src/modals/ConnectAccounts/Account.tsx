@@ -9,6 +9,7 @@ import { useExtensions } from 'contexts/Extensions';
 import { Extension } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
 import Identicon from 'library/Identicon';
+import { useTranslation } from 'react-i18next';
 import { clipAddress } from 'Utils';
 import { AccountElementProps } from './types';
 import { AccountWrapper } from './Wrappers';
@@ -61,6 +62,7 @@ export const AccountInner = (props: AccountElementProps) => {
   const label = props.label ?? null;
   const source = meta?.source ?? null;
   const imported = meta !== null && source !== 'external';
+  const { t } = useTranslation('common');
 
   return (
     <>
@@ -75,7 +77,7 @@ export const AccountInner = (props: AccountElementProps) => {
           className="label warning"
           style={{ color: '#a17703', paddingLeft: '0.5rem' }}
         >
-          Read Only
+          {t('modals.read_only')}
         </div>
       )}
 

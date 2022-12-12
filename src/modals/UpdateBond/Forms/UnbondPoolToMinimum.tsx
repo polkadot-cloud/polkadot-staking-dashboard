@@ -22,7 +22,6 @@ import { FormFooter } from './FormFooter';
 export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { setSection } = props;
   const { t } = useTranslation('modals');
-
   const { api, network, consts } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();

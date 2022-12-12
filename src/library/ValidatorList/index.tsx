@@ -68,7 +68,6 @@ export const ValidatorListInner = (props: any) => {
     allowFilters,
     toggleFavorites,
     pagination,
-    title,
     format,
     selectable,
     bondType,

@@ -36,6 +36,7 @@ export const HomeInner = () => {
   const { bondedPools, getAccountPools } = useBondedPools();
   const { getPoolRoles, selectedActivePool } = useActivePools();
   const { activeTab, setActiveTab } = usePoolsTabs();
+
   const { openModalWith } = useModal();
   const { t } = useTranslation('pages');
 

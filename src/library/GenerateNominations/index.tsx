@@ -33,7 +33,6 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
   const setters = props.setters ?? [];
   const defaultNominations = props.nominations;
   const { batchKey } = props;
-
   const { openModalWith } = useModal();
   const { isReady, consts } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();

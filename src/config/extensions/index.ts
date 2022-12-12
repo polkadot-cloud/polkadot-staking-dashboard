@@ -12,9 +12,7 @@ import { ReactComponent as TalismanSVG } from './icons/talisman_icon.svg';
 export interface ExtensionConfig {
   id: string;
   title: string;
-  icon: FunctionComponent<
-    SVGProps<SVGSVGElement> & { title?: string | undefined }
-  >;
+  icon: FunctionComponent<SVGProps<SVGSVGElement> & { title?: string }>;
 }
 export const EXTENSIONS: ExtensionConfig[] = [
   {

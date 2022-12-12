@@ -22,7 +22,6 @@ export const Overview = forwardRef(
     const { units } = network;
     const { activeEra } = metrics;
     const { t } = useTranslation('modals');
-
     const isStaking = bondType === 'stake';
 
     let withdrawAvailable = new BN(0);

@@ -36,7 +36,7 @@ export const BondFeedback = ({
   const { isDepositor } = useActivePools();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
-  const { units, unit } = network;
+  const { units } = network;
   const { minNominatorBond } = staking;
   const { t } = useTranslation('library');
 
@@ -115,6 +115,7 @@ export const BondFeedback = ({
     const _errors = warnings;
     const _bond = bond.bond;
     const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
+    const unit = network.unit;
 
     // bond errors
     if (freeBalance === 0) {

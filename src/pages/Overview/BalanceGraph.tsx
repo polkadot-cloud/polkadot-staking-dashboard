@@ -5,6 +5,7 @@ import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
+import { useLocale } from 'contexts/Locale';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
@@ -39,6 +40,7 @@ export const BalanceGraph = () => {
   const { services } = useUi();
   const prices = usePrices();
   const { t } = useTranslation('pages');
+  const { locale } = useLocale();
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { freeBalance } = allTransferOptions;
@@ -88,6 +90,7 @@ export const BalanceGraph = () => {
   }
 
   const options = {
+    locale,
     responsive: true,
     maintainAspectRatio: false,
     spacing: zeroBalance ? 0 : 5,

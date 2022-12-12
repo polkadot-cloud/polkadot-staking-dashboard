@@ -135,6 +135,7 @@ const DropdownItem = ({ c, item, index }: any) => {
     : {};
   const opacity = item.active ? 1 : 0.5;
   const cursor = item.active ? 'pointer' : 'default';
+  const { t } = useTranslation('common');
 
   return (
     <div

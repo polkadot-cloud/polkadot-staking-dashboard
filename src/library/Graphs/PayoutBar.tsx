@@ -122,6 +122,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
             size: 10,
           },
           autoSkip: true,
+          // maxTicksLimit: 50, // TODO; make dynamic depending on width of chart.
         },
       },
       y: {

@@ -29,7 +29,6 @@ export const UpdatePayee = () => {
   const controller = getBondedAccount(activeAccount);
   const { staking, getControllerNotImported } = useStaking();
   const { txFeesValid } = useTxFees();
-
   const { payee } = staking;
 
   const defaultSelected: any = PayeeStatus.find((item) => item === payee);

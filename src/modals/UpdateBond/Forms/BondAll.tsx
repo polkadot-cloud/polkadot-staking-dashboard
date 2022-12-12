@@ -23,7 +23,6 @@ import { FormFooter } from './FormFooter';
 export const BondAll = (props: FormsProps) => {
   const { setSection, setLocalResize } = props;
   const { t } = useTranslation('modals');
-
   const { api, network } = useApi();
   const { units, unit } = network;
   const { setStatus: setModalStatus, config } = useModal();

@@ -22,6 +22,7 @@ export const BondInput = ({
   const sets = setters ?? [];
   const _value = value ?? 0;
   const disableTxFeeUpd = disableTxFeeUpdate ?? false;
+  const { t } = useTranslation('common');
 
   const { network } = useApi();
   const { activeAccount } = useConnect();

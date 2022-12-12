@@ -17,11 +17,9 @@ import { Wrapper } from './Wrapper';
 
 export const PoolAccount = (props: PoolAccountProps) => {
   const { address, last, batchKey, batchIndex } = props;
-
   const { addNotification } = useNotifications();
   const { meta } = useAccount();
   const { t } = useTranslation('pages');
-
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
 
