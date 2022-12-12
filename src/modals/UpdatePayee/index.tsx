@@ -123,8 +123,8 @@ export const UpdatePayee = () => {
               <ButtonSubmit
                 text={`${
                   submitting
-                    ? t('submit', { context: 'submitting', ns: 'modals' })
-                    : t('submit', { context: 'submit', ns: 'modals' })
+                    ? t('submitting', { ns: 'modals' })
+                    : t('submit', { ns: 'modals' })
                 }`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"

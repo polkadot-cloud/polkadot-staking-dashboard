@@ -103,11 +103,7 @@ export const ClaimReward = () => {
           <FooterWrapper>
             <div>
               <ButtonSubmit
-                text={`${
-                  submitting
-                    ? t('submit', { context: 'submitting' })
-                    : t('submit', { context: 'submit' })
-                }`}
+                text={`${submitting ? t('submitting') : t('submit')}`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
                 onClick={() => submitTx()}

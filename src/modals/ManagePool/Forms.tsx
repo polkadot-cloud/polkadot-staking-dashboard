@@ -97,8 +97,8 @@ export const Forms = forwardRef((props: any, ref: any) => {
     return { title, message };
   })();
 
-  const poolStateFromTask = (tk: string) => {
-    switch (tk) {
+  const poolStateFromTask = (T: string) => {
+    switch (T) {
       case 'destroy_pool':
         return PoolState.Destroy;
       case 'lock_pool':
@@ -225,11 +225,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
           </div>
           <div>
             <ButtonSubmit
-              text={`${
-                submitting
-                  ? t('submit', { context: 'submitting' })
-                  : t('submit', { context: 'submit' })
-              }`}
+              text={`${submitting ? t('submitting') : t('submit')}`}
               iconLeft={faArrowAltCircleUp}
               iconTransform="grow-2"
               onClick={() => submitTx()}

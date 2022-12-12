@@ -145,7 +145,7 @@ export const NominateFromFavorites = () => {
               bondType="stake"
               validators={availableFavorites}
               batchKey={batchKey}
-              title={t('f_not_nominated')}
+              title={t('favorite_not_nominated')}
               selectable
               selectActive
               selectToggleable={false}
@@ -181,11 +181,7 @@ export const NominateFromFavorites = () => {
           </h3>
           <div>
             <ButtonSubmit
-              text={`${
-                submitting
-                  ? t('submit', { context: 'submitting' })
-                  : t('submit', { context: 'submit' })
-              }`}
+              text={`${submitting ? t('submitting') : t('submit')}`}
               iconLeft={faArrowAltCircleUp}
               iconTransform="grow-2"
               onClick={() => submitTx()}
