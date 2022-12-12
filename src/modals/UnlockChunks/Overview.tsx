@@ -144,9 +144,9 @@ export const Overview = forwardRef(
         <NotesWrapper>
           <p>
             {t('unlock_take', { bondDuration })}
-            {isStaking && `${t('rebond_unlock')}`}
+            {isStaking ? `${t('rebond_unlock')}` : null}
           </p>
-          {!isStaking && <p>{t('unlock_chunk')}</p>}
+          {!isStaking ? <p>{t('unlock_chunk')}</p> : null}
         </NotesWrapper>
       </ContentWrapper>
     );
