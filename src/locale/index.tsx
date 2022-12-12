@@ -21,7 +21,7 @@ export const locales: { [key: string]: AnyJson } = {
 };
 
 // available languages as an array of strings.
-export const availableLanguages: any = ['en', 'cn'];
+export const availableLanguages: Array<string> = ['en', 'cn'];
 
 // the supported namespaces.
 export const lngNamespaces = [
