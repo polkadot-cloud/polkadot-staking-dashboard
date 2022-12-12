@@ -121,7 +121,11 @@ export const UpdatePayee = () => {
           <FooterWrapper>
             <div>
               <ButtonSubmit
-                text={`${t('submit')}${submitting ? t('ting') : ''}`}
+                text={`${
+                  submitting
+                    ? t('submit', { context: 'submitting', ns: 'modals' })
+                    : t('submit', { context: 'submit', ns: 'modals' })
+                }`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
                 onClick={() => submitTx()}

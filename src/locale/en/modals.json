@@ -129,7 +129,6 @@
     "bond_more": "Bond more",
     "bond_extra": "Bond Extra",
     "recent_era_points": "Recent Era Points",
-    "submit": "Submit",
     "unbound_to_minimum": "Unbond up to the {{minCreateBondBase}} {{unit}} minimum bond for pool depositors.",
     "unbound_to_maintain": "Unbond up to the {{minJoinBondBase}} {{unit}} minimum to maintain your pool membership",
     "change_controller_account": "Change Controller Account",
@@ -149,7 +148,8 @@
     "unlock_take": "Unlocks take {{bondDuration}} eras before they can be withdrawn.",
     "rebond_unlock": " You can rebond unlocks at any time in this period, or withdraw them to your free balance thereafter.",
     "unlock_chunk": "Unlock chunks cannot currently be rebonded in a pool. If you wish to rebond, withdraw the unlock chunk first and the add to your bond.",
-    "ting": "ting",
+    "submit_submit": "Submit",
+    "submit_submitting": "Submitting",
     "you_must_controller": "You must have your controller account imported to stop nominating.",
     "you_must_account": "You must have your account imported to stop nominating.",
     "in_pool": "In Pool"

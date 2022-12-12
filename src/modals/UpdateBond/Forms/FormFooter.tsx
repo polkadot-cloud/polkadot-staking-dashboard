@@ -35,7 +35,11 @@ export const FormFooter = ({
       </div>
       <div>
         <ButtonSubmit
-          text={`Submit${submitting ? `ting` : ''}`}
+          text={`${
+            submitting
+              ? t('submit', { context: 'submitting' })
+              : t('submit', { context: 'submit' })
+          }`}
           iconLeft={faArrowAltCircleUp}
           iconTransform="grow-2"
           onClick={() => submitTx()}

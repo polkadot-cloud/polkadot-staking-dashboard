@@ -123,7 +123,6 @@
     "bond_more": "质押更多",
     "bond_extra": "质押多余",
     "recent_era_points": "最近Era点数",
-    "submit": "提交",
     "unbound_to_minimum": "存款人解除质押到{{minCreateBondBase}} {{unit}}的最低保证金.",
     "unbound_to_maintain": "存款人解除质押到{{unbound_to_maintain}} {{unit}}最小值，以保持池成员身份",
     "change_controller_account": "更改Controller 帐户",
@@ -143,7 +142,8 @@
     "unlock_take": "解锁需等待{{bondDuration}} 个era才能被提款",
     "rebond_unlock": "在此之后可随时重新质押解锁,或将其提出",
     "unlock_chunk": "己解锁的金额当前无法在池中重新质押。如果您希望重新质押，请先取出解锁金额并添加到您的质押中",
-    "ting": "中",
+    "submit_submit": "提交",
+    "submit_submitting": "提交中",
     "you_must_controller": "您必须导入controller帐户才能停止提名",
     "you_must_account": "您必须导入帐户才能停止提名",
     "in_pool": "提名池内"

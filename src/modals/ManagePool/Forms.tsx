@@ -225,7 +225,11 @@ export const Forms = forwardRef((props: any, ref: any) => {
           </div>
           <div>
             <ButtonSubmit
-              text={`${t('submit')}${submitting ? t('ting') : ''}`}
+              text={`${
+                submitting
+                  ? t('submit', { context: 'submitting' })
+                  : t('submit', { context: 'submit' })
+              }`}
               iconLeft={faArrowAltCircleUp}
               iconTransform="grow-2"
               onClick={() => submitTx()}
