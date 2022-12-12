@@ -17,7 +17,7 @@ export const Blocked = (props: BlockedProps) => {
 
   const posRef = useRef(null);
 
-  const tooltipText = t('blocking_nominations');
+  const tooltipText = t('blockingNominations');
 
   const toggleTooltip = () => {
     if (!open) {

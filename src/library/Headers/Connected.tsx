@@ -59,7 +59,7 @@ export const Connected = () => {
                   getControllerNotImported(controller)
                     ? controller
                       ? clipAddress(controller)
-                      : t('not_imported') || ''
+                      : t('notImported') || ''
                     : undefined
                 }
                 format="name"

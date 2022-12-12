@@ -69,7 +69,7 @@ export const Bonded = ({
         callbacks: {
           label: (context: any) => {
             if (inactive) {
-              return 'Inactive';
+              return t('graphInactive');
             }
             return `${
               context.parsed === -1 ? 0 : humanNumber(context.parsed)

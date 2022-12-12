@@ -24,7 +24,7 @@ export const Status = () => {
       )}
       {status === ConnectionStatus.Connected && (
         <motion.p animate={{ opacity: [0, 1] }} transition={{ duration: 0.3 }}>
-          {t('connected_to_network')}
+          {t('connectedToNetwork')}
         </motion.p>
       )}
     </>

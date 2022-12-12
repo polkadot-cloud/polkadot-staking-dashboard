@@ -34,7 +34,7 @@ export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
         <section className={sectionClassName}>
           <h4>
             <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
-            &nbsp;{t('create_pool')}
+            &nbsp;{t('createPool')}
           </h4>
           <div className="bar">
             <h5>{isSyncing ? '...' : `${minCreateBondBase} ${unit}`}</h5>

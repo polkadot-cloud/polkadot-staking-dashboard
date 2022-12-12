@@ -8,19 +8,21 @@ import { FilterType } from 'contexts/Filters/types';
 import { usePoolFilters } from 'library/Hooks/usePoolFilters';
 import { Title } from 'library/Overlay/Title';
 import { FilterListButton, FilterListWrapper } from 'library/Overlay/Wrappers';
+import { useTranslation } from 'react-i18next';
 
 export const FilterPools = () => {
   const { getFilters, toggleFilter } = useFilters();
   const { includesToLabels, excludesToLabels } = usePoolFilters();
+  const { t } = useTranslation('library');
 
   const includes = getFilters(FilterType.Include, 'pools');
   const excludes = getFilters(FilterType.Exclude, 'pools');
 
   return (
     <FilterListWrapper>
-      <Title title="Filter Pools" />
+      <Title title={t('filterPools')} />
       <div className="body">
-        <h4>Include:</h4>
+        <h4>{t('include')}:</h4>
         {Object.entries(includesToLabels).map(([f, l]: any, i: number) => (
           <FilterListButton
             active={includes?.includes(f) ?? false}
@@ -38,7 +40,7 @@ export const FilterPools = () => {
           </FilterListButton>
         ))}
 
-        <h4>Exclude:</h4>
+        <h4>{t('exclude')}:</h4>
         {Object.entries(excludesToLabels).map(([f, l]: any, i: number) => (
           <FilterListButton
             active={excludes?.includes(f) ?? false}

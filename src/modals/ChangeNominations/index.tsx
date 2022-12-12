@@ -15,6 +15,7 @@ import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   FooterWrapper,
   NotesWrapper,
@@ -30,6 +31,7 @@ export const ChangeNominations = () => {
   const { poolNominations, isNominator, isOwner, selectedActivePool } =
     useActivePools();
   const { txFeesValid } = useTxFees();
+  const { t } = useTranslation('modals');
 
   const { nominations: newNominations, provider, bondType } = config;
 
@@ -117,7 +119,7 @@ export const ChangeNominations = () => {
 
   return (
     <>
-      <Title title="Stop Nominating" icon={faStopCircle} />
+      <Title title={t('stop_nominating')} icon={faStopCircle} />
       <PaddingWrapper verticalOnly>
         <div
           style={{
@@ -125,9 +127,9 @@ export const ChangeNominations = () => {
             width: '100%',
           }}
         >
-          {!nominations.length && (
-            <Warning text="You have no nominations set." />
-          )}
+          {!nominations.length ? (
+            <Warning text={t('no_nominations_set')} />
+          ) : null}
           {!accountHasSigner(signingAccount) && (
             <Warning
               text={`You must have your${
@@ -136,16 +138,14 @@ export const ChangeNominations = () => {
             />
           )}
           <h2>
-            Stop {!remaining ? 'All Nomination' : `${removing} Nomination`}
-            {removing === 1 ? '' : 's'}
+            {t('stop')}{' '}
+            {!remaining
+              ? t('all_nomination')
+              : `${t('nomination', { count: removing })}`}
           </h2>
           <Separator />
           <NotesWrapper>
-            <p>
-              Once submitted, your nominations will be removed from your
-              dashboard immediately, and will not be nominated from the start of
-              the next era.
-            </p>
+            <p>{t('change_nomination')}</p>
             <EstimatedTxFee />
           </NotesWrapper>
           <FooterWrapper>

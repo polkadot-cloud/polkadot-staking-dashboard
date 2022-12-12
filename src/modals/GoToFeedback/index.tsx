@@ -5,12 +5,14 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReactComponent as ForumSVG } from 'img/forum.svg';
 import { Title } from 'library/Modal/Title';
+import { useTranslation } from 'react-i18next';
 import { NotesWrapper, PaddingWrapper } from '../Wrappers';
 
 export const GoToFeedback = () => {
+  const { t } = useTranslation('modals');
   return (
     <>
-      <Title title="Feedback" Svg={ForumSVG} />
+      <Title title={t('feedback')} Svg={ForumSVG} />
       <PaddingWrapper verticalOnly>
         <div
           style={{
@@ -20,11 +22,11 @@ export const GoToFeedback = () => {
         >
           <NotesWrapper style={{ paddingTop: 0 }}>
             <p>
-              We host a feedback page on{' '}
+              {t('feedback_page')}{' '}
               <a href="https://canny.io/" target="_blank" rel="noreferrer">
                 Canny.io
               </a>
-              . Bug reports, feature requests and improvements are all welcome.
+              . {t('welcome_to_report')}
             </p>
           </NotesWrapper>
           <h2 style={{ marginTop: 0 }}>
@@ -33,7 +35,7 @@ export const GoToFeedback = () => {
               target="_blank"
               rel="noreferrer"
             >
-              Open Feedback on Canny.io &nbsp;
+              {t('open_feedback')} &nbsp;
               <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-3" />
             </a>
           </h2>

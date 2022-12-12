@@ -22,6 +22,7 @@ import { SearchInput } from 'library/List/SearchInput';
 import { Selectable } from 'library/List/Selectable';
 import { Validator } from 'library/ValidatorList/Validator';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { networkColors } from 'theme/default';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
@@ -36,6 +37,7 @@ export const ValidatorListInner = (props: any) => {
   const provider = useList();
   const modal = useModal();
   const { isSyncing } = useUi();
+  const { t } = useTranslation('library');
 
   // determine the nominator of the validator list.
   // By default this will be the activeAccount. But for pools,
@@ -263,7 +265,7 @@ export const ValidatorListInner = (props: any) => {
     // ensure no duplicates
     filteredValidators = filteredValidators.filter(
       (value: any, index: any, self: any) =>
-        index === self.findIndex((t: any) => t.address === value.address)
+        index === self.findIndex((i: any) => i.address === value.address)
     );
 
     handleValidatorsFilterUpdate(filteredValidators);
@@ -279,9 +281,9 @@ export const ValidatorListInner = (props: any) => {
         <div>
           <h4>
             {title ||
-              `Dispalying ${validators.length} Validator${
-                validators.length === 1 ? '' : 's'
-              }`}
+              `${t('displayingValidators', {
+                count: validators.length,
+              })}`}
           </h4>
         </div>
         <div>
@@ -315,7 +317,7 @@ export const ValidatorListInner = (props: any) => {
         {allowSearch && (
           <SearchInput
             handleChange={handleSearchChange}
-            placeholder="Search Address or Identity"
+            placeholder={t('searchAddress')}
           />
         )}
 
@@ -372,9 +374,7 @@ export const ValidatorListInner = (props: any) => {
             </>
           ) : (
             <h4 style={{ marginTop: '1rem' }}>
-              {isSearching
-                ? 'No validators match this criteria.'
-                : 'No validators.'}
+              {isSearching ? t('noValidatorsMatch') : t('noValidators')}
             </h4>
           )}
         </MotionContainer>

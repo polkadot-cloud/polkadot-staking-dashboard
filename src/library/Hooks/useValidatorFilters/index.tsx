@@ -4,12 +4,14 @@
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
+import { useTranslation } from 'react-i18next';
 import { AnyFunction, AnyJson } from 'types';
 
 export const useValidatorFilters = () => {
   const { consts } = useApi();
   const { meta, session, sessionParachain } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
+  const { t } = useTranslation('library');
 
   /*
    * filterMissingIdentity
@@ -145,14 +147,14 @@ export const useValidatorFilters = () => {
   };
 
   const includesToLabels: { [key: string]: string } = {
-    active: 'Active Validators',
+    active: t('activeValidators'),
   };
 
   const excludesToLabels: { [key: string]: string } = {
-    over_subscribed: 'Over Subscribed',
-    all_commission: '100% Commission',
-    blocked_nominations: 'Blocked Nominations',
-    missing_identity: 'Missing Identity',
+    over_subscribed: t('overSubscribed'),
+    all_commission: t('100Commission'),
+    blocked_nominations: t('blockedNominations'),
+    missing_identity: t('missingIdentity'),
   };
 
   const filterToFunction: { [key: string]: AnyFunction } = {
@@ -220,9 +222,9 @@ export const useValidatorFilters = () => {
   };
 
   const ordersToLabels: { [key: string]: string } = {
-    default: 'Unordered',
-    low_commission: 'Low Commission',
-    high_commission: 'High Commission',
+    default: t('unordered'),
+    low_commission: t('lowCommission'),
+    high_commission: t('highCommission'),
   };
 
   const orderToFunction: { [key: string]: AnyFunction } = {

@@ -61,8 +61,8 @@ export const PoolMemberBonded = (props: any) => {
       {poolMember && totalUnbonding > 0 && (
         <ValidatorStatusWrapper status="inactive">
           <h5>
-            Unbonding {humanNumber(toFixedIfNecessary(totalUnbonding, 3))}{' '}
-            {unit}
+            {t('unbonding')}{' '}
+            {humanNumber(toFixedIfNecessary(totalUnbonding, 3))} {unit}
           </h5>
         </ValidatorStatusWrapper>
       )}
