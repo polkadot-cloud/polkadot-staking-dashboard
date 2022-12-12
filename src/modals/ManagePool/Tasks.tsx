@@ -56,7 +56,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                 }}
               >
                 <div>
-                  <h3>{t('_unlock_pool')}</h3>
+                  <h3>{t('unlock_pool')}</h3>
                   <p>{t('allow_to_join')}</p>
                 </div>
                 <div>
@@ -74,7 +74,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                 }}
               >
                 <div>
-                  <h3>{t('_lock_pool')}</h3>
+                  <h3>{t('lock_pool')}</h3>
                   <p>{t('stop_joining_pool')}</p>
                 </div>
                 <div>
@@ -88,11 +88,11 @@ export const Tasks = forwardRef((props: any, ref: any) => {
               disabled={poolDestroying}
               onClick={() => {
                 setSection(1);
-                setTask('destroy_pool');
+                setTask('destroy_pool_result');
               }}
             >
               <div>
-                <h3>{t('_destroy_pool')}</h3>
+                <h3>{t('destroy_pool')}</h3>
                 <p>{t('change_to_destroy')}</p>
               </div>
               <div>

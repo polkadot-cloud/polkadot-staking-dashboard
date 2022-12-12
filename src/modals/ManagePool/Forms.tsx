@@ -84,11 +84,11 @@ export const Forms = forwardRef((props: any, ref: any) => {
         break;
       case 'unlock_pool':
         title = <h2>{t('submit_unlock')}</h2>;
-        message = <p>{t('unlock_pool')}</p>;
+        message = <p>{t('unlock_pool_result')}</p>;
         break;
       case 'lock_pool':
         title = <h2>{t('submit_lock')}</h2>;
-        message = <p>{t('lock_pool')}</p>;
+        message = <p>{t('lock_pool_result')}</p>;
         break;
       default:
         title = null;
