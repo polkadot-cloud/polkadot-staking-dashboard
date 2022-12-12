@@ -66,7 +66,6 @@
     "managePool": "Manage Pool",
     "mustHaveController": "You must have your controller account imported to start nominating",
     "mustHaveControllerUpdate": "You must have your controller account imported to update your reward destination",
-
     "networks": "Networks",
     "newTotalBond": "New total bond:",
     "noAccounts": "No Accounts",
@@ -133,8 +132,8 @@
     "unbondMemberFunds": "Unbond Member Funds",
     "unbondSomeOfYour": "Unbond some of your",
     "unbondToMinimum": "Unbond To Minimum",
-    "unboundToMaintain": "Unbond up to the {{minJoinBondBase}} {{unit}} minimum to maintain your pool membership",
-    "unboundToMinimum": "Unbond up to the {{minCreateBondBase}} {{unit}} minimum bond for pool depositors.",
+    "unbondToMaintain": "Unbond up to the {{minJoinBondBase}} {{unit}} minimum to maintain your pool membership",
+    "unbondToMinimumCreate": "Unbond up to the {{minCreateBondBase}} {{unit}} minimum bond for pool depositors.",
     "undergoingMaintenance": "Undergoing Maintenance",
     "unlockChunk": "Unlock chunks cannot currently be rebonded in a pool. If you wish to rebond, withdraw the unlock chunk first and the add to your bond.",
     "unlocked": "Unlocked",
@@ -145,13 +144,13 @@
     "unlockTake": "Unlocks take {{bondDuration}} eras before they can be withdrawn.",
     "valid": "Valid Address",
     "validatorMetrics": "Validator Metrics",
-
     "welcomeToReport": "Bug reports, feature requests and improvements are all welcome.",
     "willSurpass": "Adding this many favorites will surpass {{maxNominations}} nominations.",
     "withdraw": "Withdraw",
     "withdrawMemberFunds": "Withdraw Member Funds",
     "withdrawUnlocked": "Withdraw Unlocked",
     "youMust_account": "You must have your account imported to stop nominating.",
-    "youMust_controller": "You must have your controller account imported to stop nominating."
+    "youMust_controller": "You must have your controller account imported to stop nominating.",
+    "chooseLanguage": "Choose Language"
   }
 }
