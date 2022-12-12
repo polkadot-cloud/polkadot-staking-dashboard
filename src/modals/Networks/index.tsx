@@ -39,7 +39,7 @@ export const Networks = () => {
 
   const posRef = useRef(null);
 
-  const tooltipText = t('undergoing_maintenance');
+  const tooltipText = t('undergoingMaintenance');
 
   const toggleTooltip = () => {
     if (!open) {
@@ -53,7 +53,7 @@ export const Networks = () => {
       <Title title={t('networks')} icon={faGlobe} />
       <PaddingWrapper>
         <ContentWrapper>
-          <h4>{t('select_network')}</h4>
+          <h4>{t('selectNetwork')}</h4>
           <div className="items">
             {Object.entries(NETWORKS).map(([key, item]: any, index: number) => {
               const Svg = item.brand.inline.svg;
@@ -93,7 +93,7 @@ export const Networks = () => {
               );
             })}
           </div>
-          <h4>{t('connection_type')}</h4>
+          <h4>{t('connectionType')}</h4>
           <ConnectionsWrapper>
             <ConnectionButton
               connected={!isLightClient}
@@ -123,7 +123,7 @@ export const Networks = () => {
                 onMouseMove={() => toggleTooltip()}
               />
               <TooltipPosition ref={posRef} style={{ left: '10px' }} />
-              <h3>{t('light_client')}</h3>
+              <h3>{t('lightClient')}</h3>
               {isLightClient && <h4 className="selected">{t('selected')}</h4>}
             </ConnectionButton>
           </ConnectionsWrapper>
@@ -133,7 +133,7 @@ export const Networks = () => {
               <BraveIconSVG />
               <div className="brave-text">
                 <Trans
-                  defaults={t('brave_text') || ''}
+                  defaults={t('braveText') || ''}
                   components={{ b: <b />, i: <i /> }}
                 />{' '}
                 <a
@@ -142,7 +142,7 @@ export const Networks = () => {
                   rel="noreferrer"
                   className="learn-more"
                 >
-                  {t('learn_more_here')}
+                  {t('learnMoreHere')}
                 </a>
               </div>
             </BraveWarning>

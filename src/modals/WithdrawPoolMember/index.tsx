@@ -85,13 +85,13 @@ export const WithdrawPoolMember = () => {
 
   return (
     <>
-      <Title title={t('withdraw_member_funds')} icon={faMinus} />
+      <Title title={t('withdrawMemberFunds')} icon={faMinus} />
       <PaddingWrapper verticalOnly />
       <ContentWrapper>
         <div>
           <div>
             {!accountHasSigner(activeAccount) && (
-              <Warning text={t('read_only')} />
+              <Warning text={t('readOnly')} />
             )}
             <h2>
               {t('withdraw')} {totalWithdraw} {network.unit}

@@ -84,18 +84,18 @@ export const UnbondPoolMember = () => {
 
   return (
     <>
-      <Title title={t('unbond_member_funds')} icon={faMinus} />
+      <Title title={t('unbondMemberFunds')} icon={faMinus} />
       <PaddingWrapper verticalOnly />
       <ContentWrapper>
-        {!accountHasSigner(activeAccount) && <Warning text={t('read_only')} />}
+        {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
         <div className="items">
-          <h4>{t('amount_to_unbond')}</h4>
+          <h4>{t('amountToUnbond')}</h4>
           <h2>
             {freeToUnbond} {network.unit}
           </h2>
           <Separator />
           <NotesWrapper>
-            <p>{t('once_unbonding', { bondDuration })}</p>
+            <p>{t('onceUnbonding', { bondDuration })}</p>
             {bondValid && <EstimatedTxFee />}
           </NotesWrapper>
         </div>

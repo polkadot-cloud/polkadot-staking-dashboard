@@ -76,19 +76,19 @@ export const Forms = forwardRef((props: any, ref: any) => {
     switch (task) {
       case 'set_pool_metadata':
         title = undefined;
-        message = <p>{t('stored_on_chain')}</p>;
+        message = <p>{t('storedOnChain')}</p>;
         break;
       case 'destroy_pool':
-        title = <h2>{t('destroy_irreversible')}</h2>;
-        message = <p>{t('destroy_pool')}</p>;
+        title = <h2>{t('destroyIrreversible')}</h2>;
+        message = <p>{t('destroyPool')}</p>;
         break;
       case 'unlock_pool':
-        title = <h2>{t('submit_unlock')}</h2>;
-        message = <p>{t('unlock_pool_result')}</p>;
+        title = <h2>{t('submitUnlock')}</h2>;
+        message = <p>{t('unlockPoolResult')}</p>;
         break;
       case 'lock_pool':
-        title = <h2>{t('submit_lock')}</h2>;
-        message = <p>{t('lock_pool_result')}</p>;
+        title = <h2>{t('submitLock')}</h2>;
+        message = <p>{t('lockPoolResult')}</p>;
         break;
       default:
         title = null;
@@ -174,7 +174,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
   return (
     <ContentWrapper>
       <div className="items" ref={ref}>
-        {!accountHasSigner(activeAccount) && <Warning text={t('read_only')} />}
+        {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
         <div>
           <>
             {/* include task title if present */}
@@ -192,7 +192,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
                 <input
                   className="textbox"
                   style={{ width: '100%' }}
-                  placeholder={t('pool_name') || ''}
+                  placeholder={t('poolName') || ''}
                   type="text"
                   onChange={(e: React.FormEvent<HTMLInputElement>) =>
                     handleMetadataChange(e)

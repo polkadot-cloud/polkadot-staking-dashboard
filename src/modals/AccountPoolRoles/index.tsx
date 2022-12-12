@@ -28,7 +28,7 @@ export const AccountPoolRoles = () => {
 
   return (
     <>
-      <Title title={t('all_pool_roles')} icon={faBars} />
+      <Title title={t('allPoolRoles')} icon={faBars} />
       <PaddingWrapper>
         <ContentWrapper>
           {membership && (
@@ -40,7 +40,7 @@ export const AccountPoolRoles = () => {
             </>
           )}
           <h4>
-            {t('active_roles', {
+            {t('activeRoles', {
               count: totalAccountPools,
             })}
           </h4>
@@ -86,7 +86,7 @@ const Button = ({ item, poolId }: { item: Array<string>; poolId: string }) => {
           {item.includes('root') ? <span>{t('root')}</span> : null}
           {item.includes('nominator') ? <span>{t('nominator')}</span> : null}
           {item.includes('stateToggler') ? (
-            <span>{t('state_toggler')}</span>
+            <span>{t('stateToggler')}</span>
           ) : null}
         </h4>
       </div>

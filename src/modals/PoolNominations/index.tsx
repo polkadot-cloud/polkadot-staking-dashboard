@@ -16,7 +16,7 @@ export const PoolNominations = () => {
 
   return (
     <>
-      <Title title={t('pool_nominations')} />
+      <Title title={t('poolNominations')} />
       <PaddingWrapper>
         <ListWrapper>
           {targets.length > 0 ? (
@@ -26,13 +26,13 @@ export const PoolNominations = () => {
               validators={targets}
               nominator={nominator}
               batchKey={batchKey}
-              title={t('pool_nominations')}
+              title={t('poolNominations')}
               showMenu={false}
               inModal
               refetchOnListUpdate
             />
           ) : (
-            <h3>{t('pool_is_not_nominating')}</h3>
+            <h3>{t('poolIsNotNominating')}</h3>
           )}
         </ListWrapper>
       </PaddingWrapper>

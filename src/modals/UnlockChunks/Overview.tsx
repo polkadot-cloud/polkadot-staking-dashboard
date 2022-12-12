@@ -92,7 +92,7 @@ export const Overview = forwardRef(
         {withdrawAvailable.toNumber() > 0 && (
           <div style={{ margin: '1rem 0 0.5rem 0' }}>
             <ButtonSubmit
-              text={t('withdraw_unlocked')}
+              text={t('withdrawUnlocked')}
               onClick={() => {
                 setTask('withdraw');
                 setUnlock({
@@ -119,7 +119,7 @@ export const Overview = forwardRef(
                   <h4>
                     {left <= 0
                       ? t('unlocked')
-                      : `${t('unlocks_after_era')} ${era}`}
+                      : `${t('unlocksAfterEra')} ${era}`}
                   </h4>
                 </section>
                 {isStaking && (
@@ -143,10 +143,10 @@ export const Overview = forwardRef(
         })}
         <NotesWrapper>
           <p>
-            {t('unlock_take', { bondDuration })}
-            {isStaking ? `${t('rebond_unlock')}` : null}
+            {t('unlockTake', { bondDuration })}
+            {isStaking ? `${t('rebondUnlock')}` : null}
           </p>
-          {!isStaking ? <p>{t('unlock_chunk')}</p> : null}
+          {!isStaking ? <p>{t('unlockChunk')}</p> : null}
         </NotesWrapper>
       </ContentWrapper>
     );

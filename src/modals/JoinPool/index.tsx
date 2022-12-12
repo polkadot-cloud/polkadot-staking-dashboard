@@ -86,11 +86,11 @@ export const JoinPool = () => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push(t('read_only'));
+    warnings.push(t('readOnly'));
   }
   return (
     <>
-      <Title title={t('join_pool')} icon={faUserPlus} />
+      <Title title={t('joinPool')} icon={faUserPlus} />
       <PaddingWrapper>
         <ContentWrapper>
           <div>

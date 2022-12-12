@@ -76,7 +76,7 @@ export const UpdateController = () => {
   return (
     <>
       <Title
-        title={t('change_controller_account')}
+        title={t('changeControllerAccount')}
         icon={faExchangeAlt}
         helpKey="Controller Account Eligibility"
       />
@@ -84,13 +84,13 @@ export const UpdateController = () => {
         <div style={{ padding: '0 1rem', width: '100%' }}>
           <div style={{ marginBottom: '1.5rem' }}>
             {!accountHasSigner(activeAccount) && (
-              <Warning text={t('read_only')} />
+              <Warning text={t('readOnly')} />
             )}
           </div>
           <AccountDropdown
             items={items}
             onChange={handleOnChange}
-            placeholder={t('search_account')}
+            placeholder={t('searchAccount')}
             current={account}
             value={selected}
             height="17rem"

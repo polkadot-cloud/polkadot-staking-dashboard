@@ -204,7 +204,7 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
           <AccountWrapper>
             <div>
               <div>
-                <h3>{t('no_account_connected')}</h3>
+                <h3>{t('noAccountConnected')}</h3>
               </div>
               <div />
             </div>
@@ -257,7 +257,7 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
           <>
             <h3 className="heading">
               <FontAwesomeIcon icon={faUsers} transform="shrink-4" />{' '}
-              {t('in_pool')}
+              {t('inPool')}
             </h3>
             {activePooling.map((item: PoolMembership, i: number) => {
               const { address } = item;

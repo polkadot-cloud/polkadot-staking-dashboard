@@ -114,26 +114,24 @@ export const BondAll = (props: FormsProps) => {
     <>
       <div className="items">
         <>
-          {!accountHasSigner(activeAccount) && (
-            <Warning text={t('read_only')} />
-          )}
+          {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
           {freeBalance === 0 && (
-            <Warning text={`${t('no_free_to_bond', { unit })}`} />
+            <Warning text={`${t('noFreeToBond', { unit })}`} />
           )}
           {unclaimedRewards > 0 && bondType === 'pool' && (
             <Warning
-              text={`${t('bonding_withdraw')} ${unclaimedRewards} ${unit}.`}
+              text={`${t('bondingWithdraw')} ${unclaimedRewards} ${unit}.`}
             />
           )}
-          <h4>{t('amount_to_bond')}</h4>
+          <h4>{t('amountToBond')}</h4>
           <h2>
             {largestTxFee.eq(new BN(0))
               ? '...'
               : `${planckBnToUnit(bondAfterTxFees, units)} ${unit}`}
           </h2>
-          <p>{t('added_to_bond', { unit })}</p>
+          <p>{t('addedToBond', { unit })}</p>
           <Separator />
-          <h4>{t('new_total_bond')}</h4>
+          <h4>{t('newTotalBond')}</h4>
           <h2>
             {largestTxFee.eq(new BN(0))
               ? '...'

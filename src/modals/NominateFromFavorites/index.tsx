@@ -128,7 +128,7 @@ export const NominateFromFavorites = () => {
 
   return (
     <>
-      <Title title={t('nominate_favorites')} />
+      <Title title={t('nominateFavorites')} />
       <PaddingWrapper>
         <div style={{ marginBottom: '1rem' }}>
           {!accountHasSigner(signingAccount) && (
@@ -147,7 +147,7 @@ export const NominateFromFavorites = () => {
               bondType="stake"
               validators={availableFavorites}
               batchKey={batchKey}
-              title={t('favorite_not_nominated')}
+              title={t('favoriteNotNominated')}
               selectable
               selectActive
               selectToggleable={false}
@@ -158,7 +158,7 @@ export const NominateFromFavorites = () => {
               refetchOnListUpdate
             />
           ) : (
-            <h3>{t('no_favorites_available')}</h3>
+            <h3>{t('noFavoritesAvailable')}</h3>
           )}
         </ListWrapper>
         <NotesWrapper style={{ paddingBottom: 0 }}>
@@ -175,11 +175,11 @@ export const NominateFromFavorites = () => {
           >
             {selectedFavorites.length > 0
               ? overMaxNominations
-                ? `${t('will_surpass', { maxNominations })}`
-                : `${t('adding_favorite', {
+                ? `${t('willSurpass', { maxNominations })}`
+                : `${t('addingFavorite', {
                     count: selectedFavorites.length,
                   })}`
-              : `${t('no_favorites_selected')}`}
+              : `${t('noFavoritesSelected')}`}
           </h3>
           <div>
             <ButtonSubmit
