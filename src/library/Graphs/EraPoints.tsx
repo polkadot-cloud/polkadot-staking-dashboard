@@ -76,7 +76,7 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
       },
       title: {
         display: false,
-        text: t('era_points'),
+        text: t('eraPoints'),
       },
       tooltip: {
         displayColors: false,

@@ -96,7 +96,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         borderRadius: 3,
       },
       {
-        label: t('pool_claim'),
+        label: t('poolClaim'),
         data: poolClaimsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPoolClaims,
         backgroundColor: colorPoolClaims,

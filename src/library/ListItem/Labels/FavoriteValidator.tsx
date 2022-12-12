@@ -24,11 +24,11 @@ export const FavoriteValidator = (props: FavoriteProps) => {
 
   const notificationFavorite = !isFavorite
     ? {
-        title: t('favorite_validator_added'),
+        title: t('favoriteValidatorAdded'),
         subtitle: address,
       }
     : {
-        title: t('favorite_validator_removed'),
+        title: t('favoriteValidatorRemoved'),
         subtitle: address,
       };
 

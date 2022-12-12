@@ -149,7 +149,7 @@ export const PayoutLine = ({
   return (
     <>
       <h5 className="secondary">
-        {average > 1 ? `${average} ${t('day_average')}` : null}
+        {average > 1 ? `${average} ${t('dayAverage')}` : null}
       </h5>
       <div
         className="graph_line"

@@ -147,14 +147,14 @@ export const useValidatorFilters = () => {
   };
 
   const includesToLabels: { [key: string]: string } = {
-    active: t('active_validators'),
+    active: t('activeValidators'),
   };
 
   const excludesToLabels: { [key: string]: string } = {
-    over_subscribed: t('over_subscribed'),
-    all_commission: t('100_commission'),
-    blocked_nominations: t('blocked_nominations'),
-    missing_identity: t('missing_identity'),
+    over_subscribed: t('overSubscribed'),
+    all_commission: t('100Commission'),
+    blocked_nominations: t('blockedNominations'),
+    missing_identity: t('missingIdentity'),
   };
 
   const filterToFunction: { [key: string]: AnyFunction } = {
@@ -223,8 +223,8 @@ export const useValidatorFilters = () => {
 
   const ordersToLabels: { [key: string]: string } = {
     default: t('unordered'),
-    low_commission: t('low_commission'),
-    high_commission: t('high_commission'),
+    low_commission: t('lowCommission'),
+    high_commission: t('highCommission'),
   };
 
   const orderToFunction: { [key: string]: AnyFunction } = {

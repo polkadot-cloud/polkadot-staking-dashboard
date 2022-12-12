@@ -66,7 +66,7 @@ export const AccountSelect = ({
           {c.selectedItem && (
             <StyledController
               onClick={() => c.reset()}
-              aria-label={t('currently_selected')}
+              aria-label={t('currentlySelected')}
             >
               <FontAwesomeIcon transform="grow-4" icon={faTimes} />
             </StyledController>

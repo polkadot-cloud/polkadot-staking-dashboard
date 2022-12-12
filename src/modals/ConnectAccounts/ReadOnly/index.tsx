@@ -5,6 +5,7 @@ import { faCog, faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
+import { useTranslation } from 'react-i18next';
 import { ReadOnlyInput } from '../ReadOnlyInput';
 import { ReadOnlyProps } from '../types';
 import { ExtensionWrapper } from '../Wrappers';
@@ -14,6 +15,7 @@ export const ReadOnly = (props: ReadOnlyProps) => {
   const { setReadOnlyOpen, readOnlyOpen } = props;
 
   const { accounts, forgetAccounts } = useConnect();
+  const { t } = useTranslation('modals');
 
   // get all external accounts
   const externalAccountsOnly = accounts.filter((a: ImportedAccount) => {
@@ -44,19 +46,19 @@ export const ReadOnly = (props: ReadOnlyProps) => {
             style={{ margin: '0 0.75rem 0 1.25rem' }}
           />
           <h3>
-            <span className="name">Read Only Accounts</span>
+            <span className="name">{t('read_only_accounts')}</span>
           </h3>
 
           <div>
             <h3>
               <span
                 className={`message${
-                  externalAccountsByUser.length ? ` success` : ``
+                  externalAccountsByUser.length ? ` success` : null
                 }`}
               >
                 {externalAccountsByUser.length
-                  ? `${externalAccountsByUser.length} Connected`
-                  : ``}
+                  ? `${externalAccountsByUser.length} ${t('connected')}`
+                  : null}
               </span>
             </h3>
             {!readOnlyOpen && <FontAwesomeIcon icon={faCog} className="icon" />}
@@ -68,8 +70,7 @@ export const ReadOnly = (props: ReadOnlyProps) => {
           <ReadOnlyInput />
           {externalAccountsByUser.length > 0 && (
             <h5>
-              {externalAccountsByUser.length} Read Only Account
-              {externalAccountsByUser.length === 1 ? '' : 's'}
+              {t('read_only_account', { count: externalAccountsByUser.length })}
             </h5>
           )}
           <div className="accounts">
@@ -82,7 +83,7 @@ export const ReadOnly = (props: ReadOnlyProps) => {
                     forgetAccount(a);
                   }}
                 >
-                  Forget
+                  {t('forget')}
                 </button>
               </div>
             ))}
