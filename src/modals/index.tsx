@@ -16,6 +16,7 @@ import { DismissTips } from './DismissTips';
 import { GoToFeedback } from './GoToFeedback';
 import { JoinPool } from './JoinPool';
 import { LeavePool } from './LeavePool';
+import { Languages } from './Locale';
 import { ManagePool } from './ManagePool';
 import { Networks } from './Networks';
 import { Nominate } from './Nominate';
@@ -132,6 +133,7 @@ export const Modal = () => {
               {modal === 'UnbondPoolMember' && <UnbondPoolMember />}
               {modal === 'WithdrawPoolMember' && <WithdrawPoolMember />}
               {modal === 'GoToFeedback' && <GoToFeedback />}
+              {modal === 'Languages' && <Languages />}
             </ErrorBoundary>
           </ContentWrapper>
         </HeightWrapper>

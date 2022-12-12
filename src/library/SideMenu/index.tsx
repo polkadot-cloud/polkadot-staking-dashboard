@@ -1,6 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-
+/* eslint-disable */
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SideMenuStickyThreshold } from 'consts';
@@ -14,6 +14,7 @@ import { UIContextInterface } from 'contexts/UI/types';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
 import { ReactComponent as ForumSVG } from 'img/forum.svg';
 import { ReactComponent as InfoSVG } from 'img/info.svg';
+import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
@@ -68,16 +69,16 @@ export const SideMenu = () => {
     status === ConnectionStatus.Connecting
       ? defaultThemes.status.warning.solid[mode]
       : status === ConnectionStatus.Connected
-      ? defaultThemes.status.success.solid[mode]
-      : defaultThemes.status.danger.solid[mode];
+        ? defaultThemes.status.success.solid[mode]
+        : defaultThemes.status.danger.solid[mode];
 
   // handle transparent border color
   const borderColor =
     status === ConnectionStatus.Connecting
       ? defaultThemes.status.warning.transparent[mode]
       : status === ConnectionStatus.Connected
-      ? defaultThemes.status.success.transparent[mode]
-      : defaultThemes.status.danger.transparent[mode];
+        ? defaultThemes.status.success.transparent[mode]
+        : defaultThemes.status.danger.transparent[mode];
 
   return (
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
@@ -161,6 +162,12 @@ export const SideMenu = () => {
           </button>
         )}
       </section>
+      <button
+        type="button"
+        onClick={() => openModalWith('Languages', {}, 'small')}
+      >
+        <LanguageSVG width="1.0rem" height="1.0rem" />
+      </button>
     </Wrapper>
   );
 };
