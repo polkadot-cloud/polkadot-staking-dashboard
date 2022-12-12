@@ -151,6 +151,7 @@
     "unlock_chunk": "Unlock chunks cannot currently be rebonded in a pool. If you wish to rebond, withdraw the unlock chunk first and the add to your bond.",
     "ting": "ting",
     "you_must_controller": "You must have your controller account imported to stop nominating.",
-    "you_must_account": "You must have your account imported to stop nominating."
+    "you_must_account": "You must have your account imported to stop nominating.",
+    "in_pool": "In Pool"
   }
 }

@@ -145,6 +145,7 @@
     "unlock_chunk": "己解锁的金额当前无法在池中重新质押。如果您希望重新质押，请先取出解锁金额并添加到您的质押中",
     "ting": "中",
     "you_must_controller": "您必须导入controller帐户才能停止提名",
-    "you_must_account": "您必须导入帐户才能停止提名"
+    "you_must_account": "您必须导入帐户才能停止提名",
+    "in_pool": "提名池内"
   }
 }
