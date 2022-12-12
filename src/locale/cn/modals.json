@@ -74,7 +74,7 @@
     "learn_more_here": "了解更多",
     "light_client": "轻客户端",
     "connection_type": "连接类型",
-    "brave_text": "致Brave的用户! 由于最近的更新 (Brave 版本 1.36), 使用轻型客户端时可能会出现问题(例如不能连接).",
+    "brave_text": "<b> 致Brave的用户</b> ! 由于最近的更新 (<i>Brave 版本 1.36</i>), 使用轻型客户端时可能会出现问题(例如不能连接).",
     "must_have_controller": "必须导入controller帐户才能开始提名",
     "not_meet_minimum": "未达到{{minNominatorBondBase}} {{unit}}的提名人最低额.请在提名前质押一些资金",
     "nominate": "提名",

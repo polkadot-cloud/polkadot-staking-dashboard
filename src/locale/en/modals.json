@@ -78,7 +78,7 @@
     "learn_more_here": "Learn more here.",
     "light_client": "Light Client",
     "connection_type": "Connection Type",
-    "brave_text": "To Brave users! Due to a recent update (Brave version 1.36), there may appear issues while using light clients (e.g. not connected).",
+    "brave_text": "<b>To Brave users!</b> Due to a recent update (<i>Brave version 1.36</i>), there may appear issues while using light clients (e.g. not connected).",
     "must_have_controller": "You must have your controller account imported to start nominating",
     "not_meet_minimum": "You do not meet the minimum nominator bond of {{minNominatorBondBase}} {{unit}}. Please bond some funds before nominating.",
     "nominate": "Nominate",

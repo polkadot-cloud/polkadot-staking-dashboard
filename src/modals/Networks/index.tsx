@@ -10,7 +10,7 @@ import { useTooltip } from 'contexts/Tooltip';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { NetworkName } from 'types';
 import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
 import { PaddingWrapper } from '../Wrappers';
@@ -132,7 +132,10 @@ export const Networks = () => {
             <BraveWarning>
               <BraveIconSVG />
               <div className="brave-text">
-                {t('brave_text')}{' '}
+                <Trans
+                  defaults={t('brave_text') || ''}
+                  components={{ b: <b />, i: <i /> }}
+                />{' '}
                 <a
                   href="https://paritytech.github.io/substrate-connect/#troubleshooting"
                   target="_blank"
