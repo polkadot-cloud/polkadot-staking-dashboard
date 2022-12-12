@@ -7,10 +7,12 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
 import { Warning } from 'library/Form/Warning';
 import { forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ContentWrapper } from './Wrappers';
 
 export const Tasks = forwardRef((props: any, ref: any) => {
   const { setSection, setTask } = props;
+  const { t } = useTranslation('modals');
 
   const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
   const poolLocked = selectedActivePool?.bondedPool?.state === PoolState.Block;
@@ -19,9 +21,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
 
   return (
     <ContentWrapper>
-      {poolDestroying && (
-        <Warning text="This pool is being destroyed. There are no management options available." />
-      )}
+      {poolDestroying && <Warning text={t('being_destroyed')} />}
 
       <div className="items" ref={ref}>
         {isOwner() && (
@@ -35,8 +35,8 @@ export const Tasks = forwardRef((props: any, ref: any) => {
             }}
           >
             <div>
-              <h3>Rename Pool</h3>
-              <p>Update the public name of the pool.</p>
+              <h3>{t('rename_pool')}</h3>
+              <p>{t('update_name')}</p>
             </div>
             <div>
               <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
@@ -56,8 +56,8 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                 }}
               >
                 <div>
-                  <h3>Unlock Pool</h3>
-                  <p>Allow new members to join the pool.</p>
+                  <h3>{t('unlock_pool')}</h3>
+                  <p>{t('allow_to_join')}</p>
                 </div>
                 <div>
                   <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
@@ -74,8 +74,8 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                 }}
               >
                 <div>
-                  <h3>Lock Pool</h3>
-                  <p>Stop new members from joining the pool.</p>
+                  <h3>{t('lock_pool')}</h3>
+                  <p>{t('stop_joining_pool')}</p>
                 </div>
                 <div>
                   <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
@@ -88,12 +88,12 @@ export const Tasks = forwardRef((props: any, ref: any) => {
               disabled={poolDestroying}
               onClick={() => {
                 setSection(1);
-                setTask('destroy_pool');
+                setTask('destroy_pool_result');
               }}
             >
               <div>
-                <h3>Destroy Pool</h3>
-                <p>Change pool to destroying state.</p>
+                <h3>{t('destroy_pool')}</h3>
+                <p>{t('change_to_destroy')}</p>
               </div>
               <div>
                 <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />

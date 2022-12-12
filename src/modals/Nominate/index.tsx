@@ -15,6 +15,7 @@ import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit } from 'Utils';
 import {
   FooterWrapper,
@@ -30,12 +31,13 @@ export const Nominate = () => {
   const { getBondedAccount, getLedgerForStash } = useBalances();
   const { setStatus: setModalStatus } = useModal();
   const { txFeesValid } = useTxFees();
-  const { units } = network;
+  const { units, unit } = network;
   const { minNominatorBond } = staking;
   const controller = getBondedAccount(activeAccount);
   const { nominations } = targets;
   const ledger = getLedgerForStash(activeAccount);
   const { active } = ledger;
+  const { t } = useTranslation('modals');
 
   const activeBase = planckBnToUnit(active, units);
   const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
@@ -76,42 +78,33 @@ export const Nominate = () => {
   // warnings
   const warnings = [];
   if (getControllerNotImported(controller)) {
-    warnings.push(
-      'You must have your controller account imported to start nominating'
-    );
+    warnings.push(t('must_have_controller'));
   }
   if (!nominations.length) {
-    warnings.push('You have no nominations set.');
+    warnings.push(t('no_nominations_set'));
   }
   if (activeBase < minNominatorBondBase) {
-    warnings.push(
-      `You do not meet the minimum nominator bond of ${minNominatorBondBase} ${network.unit}. Please bond some funds before nominating.`
-    );
+    warnings.push(`${(t('not_meet_minimum'), { minNominatorBondBase, unit })}`);
   }
 
   return (
     <>
-      <Title title="Nominate" icon={faPlayCircle} />
+      <Title title={t('nominate')} icon={faPlayCircle} />
       <PaddingWrapper verticalOnly>
         <div style={{ padding: '0 1rem', width: '100%' }}>
           {warnings.map((text: any, index: number) => (
             <Warning key={index} text={text} />
           ))}
-          <h2>
-            You Have {nominations.length} Nomination
-            {nominations.length === 1 ? '' : 's'}
-          </h2>
+          <h2>{t('have_nomination', { count: nominations.length })}</h2>
           <Separator />
           <NotesWrapper>
-            <p>
-              Once submitted, you will start nominating your chosen validators.
-            </p>
+            <p>{t('once_submitted')}</p>
             <EstimatedTxFee />
           </NotesWrapper>
           <FooterWrapper>
             <div>
               <ButtonSubmit
-                text={`Submit${submitting ? 'ting' : ''}`}
+                text={`${submitting ? t('submitting') : t('submit')}`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
                 onClick={() => submitTx()}

@@ -256,7 +256,8 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
         {activePooling.length > 0 && (
           <>
             <h3 className="heading">
-              <FontAwesomeIcon icon={faUsers} transform="shrink-4" /> In Pool
+              <FontAwesomeIcon icon={faUsers} transform="shrink-4" />{' '}
+              {t('in_pool')}
             </h3>
             {activePooling.map((item: PoolMembership, i: number) => {
               const { address } = item;

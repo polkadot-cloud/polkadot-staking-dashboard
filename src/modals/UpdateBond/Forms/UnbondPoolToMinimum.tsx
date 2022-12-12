@@ -13,6 +13,7 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { NotesWrapper, Separator } from '../../Wrappers';
 import { FormsProps } from '../types';
@@ -20,6 +21,7 @@ import { FormFooter } from './FormFooter';
 
 export const UnbondPoolToMinimum = (props: FormsProps) => {
   const { setSection } = props;
+  const { t } = useTranslation('modals');
 
   const { api, network, consts } = useApi();
   const { units } = network;
@@ -98,23 +100,22 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
       <div className="items">
         <>
           {!accountHasSigner(activeAccount) && (
-            <Warning text="Your account is read only, and cannot sign transactions." />
+            <Warning text={t('read_only')} />
           )}
           {unclaimedRewards > 0 && (
             <Warning
-              text={`Unbonding will also withdraw your outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+              text={`${t('unbonding_withdraw')} ${unclaimedRewards} ${
+                network.unit
+              }.`}
             />
           )}
-          <h4>Amount to unbond:</h4>
+          <h4>{t('amount_to_unbond')}</h4>
           <h2>
             {freeToUnbond} {network.unit}
           </h2>
           <Separator />
           <NotesWrapper>
-            <p>
-              Once unbonding, you must wait {bondDuration} eras for your funds
-              to become available.
-            </p>
+            <p>{t('once_unbonding', { bondDuration })}</p>
             {bondValid && <EstimatedTxFee />}
           </NotesWrapper>
         </>

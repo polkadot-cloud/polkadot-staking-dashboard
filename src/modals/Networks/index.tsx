@@ -10,6 +10,7 @@ import { useTooltip } from 'contexts/Tooltip';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { NetworkName } from 'types';
 import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
 import { PaddingWrapper } from '../Wrappers';
@@ -27,6 +28,7 @@ export const Networks = () => {
   const { setStatus } = useModal();
   const networkKey: string = network.name.toLowerCase();
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
+  const { t } = useTranslation('modals');
 
   useEffect(() => {
     // @ts-ignore
@@ -37,7 +39,7 @@ export const Networks = () => {
 
   const posRef = useRef(null);
 
-  const tooltipText = 'Undergoing Maintenance';
+  const tooltipText = t('undergoing_maintenance');
 
   const toggleTooltip = () => {
     if (!open) {
@@ -48,10 +50,10 @@ export const Networks = () => {
 
   return (
     <>
-      <Title title="Networks" icon={faGlobe} />
+      <Title title={t('networks')} icon={faGlobe} />
       <PaddingWrapper>
         <ContentWrapper>
-          <h4>Select Network</h4>
+          <h4>{t('select_network')}</h4>
           <div className="items">
             {Object.entries(NETWORKS).map(([key, item]: any, index: number) => {
               const Svg = item.brand.inline.svg;
@@ -78,7 +80,9 @@ export const Networks = () => {
                     />
                   </div>
                   <h3>{item.name}</h3>
-                  {networkKey === key && <h4 className="selected">Selected</h4>}
+                  {networkKey === key && (
+                    <h4 className="selected">{t('selected')}</h4>
+                  )}
                   <div>
                     <FontAwesomeIcon
                       transform="shrink-2"
@@ -89,7 +93,7 @@ export const Networks = () => {
               );
             })}
           </div>
-          <h4>Connection Type</h4>
+          <h4>{t('connection_type')}</h4>
           <ConnectionsWrapper>
             <ConnectionButton
               connected={!isLightClient}
@@ -101,7 +105,7 @@ export const Networks = () => {
               }}
             >
               <h3>RPC</h3>
-              {!isLightClient && <h4 className="selected">Selected</h4>}
+              {!isLightClient && <h4 className="selected">{t('selected')}</h4>}
             </ConnectionButton>
             <ConnectionButton
               connected={isLightClient}
@@ -119,8 +123,8 @@ export const Networks = () => {
                 onMouseMove={() => toggleTooltip()}
               />
               <TooltipPosition ref={posRef} style={{ left: '10px' }} />
-              <h3>Light Client</h3>
-              {isLightClient && <h4 className="selected">Selected</h4>}
+              <h3>{t('light_client')}</h3>
+              {isLightClient && <h4 className="selected">{t('selected')}</h4>}
             </ConnectionButton>
           </ConnectionsWrapper>
 
@@ -128,16 +132,17 @@ export const Networks = () => {
             <BraveWarning>
               <BraveIconSVG />
               <div className="brave-text">
-                <b>To Brave users!</b> Due to a recent update (
-                <i>Brave version 1.36</i>), there may appear issues while using
-                light clients (e.g. not connected).{' '}
+                <Trans
+                  defaults={t('brave_text') || ''}
+                  components={{ b: <b />, i: <i /> }}
+                />{' '}
                 <a
                   href="https://paritytech.github.io/substrate-connect/#troubleshooting"
                   target="_blank"
                   rel="noreferrer"
                   className="learn-more"
                 >
-                  Learn more here.
+                  {t('learn_more_here')}
                 </a>
               </div>
             </BraveWarning>

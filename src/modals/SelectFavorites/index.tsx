@@ -8,6 +8,7 @@ import { Validator } from 'contexts/Validators/types';
 import { Title } from 'library/Modal/Title';
 import { ValidatorList } from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 import { FooterWrapper, ListWrapper } from './Wrappers';
 
@@ -17,6 +18,7 @@ export const SelectFavorites = () => {
   const { favoritesList } = useValidators();
   const { maxNominations } = consts;
   const { nominations, callback: generateNominationsCallback } = config;
+  const { t } = useTranslation('modals');
 
   // store filtered favorites
   const [availableFavorites, setAvailableFavorites] = useState<
@@ -62,7 +64,7 @@ export const SelectFavorites = () => {
 
   return (
     <>
-      <Title title="Add From Favorites" />
+      <Title title={t('add_from_favorites')} />
       <PaddingWrapper>
         <ListWrapper>
           {availableFavorites.length > 0 ? (
@@ -70,7 +72,7 @@ export const SelectFavorites = () => {
               bondType="stake"
               validators={availableFavorites}
               batchKey={batchKey}
-              title="Favorite Validators"
+              title={t('favorite_validators')}
               selectable
               selectActive
               selectToggleable={false}
@@ -81,7 +83,7 @@ export const SelectFavorites = () => {
               refetchOnListUpdate
             />
           ) : (
-            <h3>No Favorites Available.</h3>
+            <h3>{t('no_favorites_available')}</h3>
           )}
         </ListWrapper>
         <FooterWrapper>
@@ -92,11 +94,11 @@ export const SelectFavorites = () => {
           >
             {selectedFavorites.length > 0
               ? overMaxNominations
-                ? `Adding this many favorites will surpass ${maxNominations} nominations.`
-                : `Add ${selectedFavorites.length} Favorite${
-                    selectedFavorites.length !== 1 ? `s` : ``
-                  } to Nominations`
-              : `No Favorites Selected`}
+                ? `${t('will_surpass', { maxNominations })}`
+                : `${t('adding_favorite', {
+                    count: selectedFavorites.length,
+                  })}`
+              : `${t('no_favorites_selected')}`}
           </button>
         </FooterWrapper>
       </PaddingWrapper>

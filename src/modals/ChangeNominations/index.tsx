@@ -132,9 +132,11 @@ export const ChangeNominations = () => {
           ) : null}
           {!accountHasSigner(signingAccount) && (
             <Warning
-              text={`You must have your${
-                bondType === 'stake' ? ' controller ' : ' '
-              }account imported to stop nominating.`}
+              text={`${
+                bondType === 'stake'
+                  ? t('you_must', { context: 'controller' })
+                  : t('you_must', { context: 'account' })
+              }`}
             />
           )}
           <h2>
@@ -151,7 +153,7 @@ export const ChangeNominations = () => {
           <FooterWrapper>
             <div>
               <ButtonSubmit
-                text={`Submit${submitting ? 'ting' : ''}`}
+                text={`${submitting ? t('submitting') : t('submit')}`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
                 onClick={() => submitTx()}
