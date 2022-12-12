@@ -71,7 +71,7 @@ export const Account = ({
       )}
 
       {unassigned ? (
-        <span className="title unassigned">{t('not_staking')}</span>
+        <span className="title unassigned">{t('notStaking')}</span>
       ) : (
         <>
           {format !== 'text' && (
