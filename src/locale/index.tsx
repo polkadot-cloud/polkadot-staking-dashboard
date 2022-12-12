@@ -34,7 +34,7 @@ export const lngNamespaces = [
 ];
 
 // default structure of language resources.
-const fallbackResources = {
+export const fallbackResources = {
   ...baseEn,
   ...helpEn,
   ...libEn,
@@ -59,7 +59,7 @@ const lng: string = getActiveLanguage();
 
 // get default resources and whether a dynamic load is required for
 // the active language.
-const { resources, dynamicLoad } = getResources(lng, fallbackResources);
+const { resources, dynamicLoad } = getResources(lng);
 
 // default language to show before any dynamic load
 const defaultLng = dynamicLoad ? DefaultLocale : lng;
