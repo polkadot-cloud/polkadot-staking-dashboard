@@ -21,7 +21,10 @@ export const locales: { [key: string]: AnyJson } = {
 };
 
 // available languages as an array of strings.
-export const availableLanguages = ['en', 'cn'];
+export const availableLanguages: Array<Array<string>> = [
+  ['en', 'English'],
+  ['cn', '中文'],
+];
 
 // the supported namespaces.
 export const lngNamespaces = [
@@ -34,7 +37,7 @@ export const lngNamespaces = [
 ];
 
 // default structure of language resources.
-const fallbackResources = {
+export const fallbackResources = {
   ...baseEn,
   ...helpEn,
   ...libEn,
@@ -59,7 +62,7 @@ const lng: string = getActiveLanguage();
 
 // get default resources and whether a dynamic load is required for
 // the active language.
-const { resources, dynamicLoad } = getResources(lng, fallbackResources);
+const { resources, dynamicLoad } = getResources(lng);
 
 // default language to show before any dynamic load
 const defaultLng = dynamicLoad ? DefaultLocale : lng;
@@ -79,7 +82,9 @@ if (dynamicLoad) {
 
 // map i18n to BCP 47 keys, with any custom amendments.
 const i18ToLocaleMap: { [key: string]: string } = {
-  ...Object.fromEntries(availableLanguages.map((a: string) => [a, a])),
+  ...Object.fromEntries(
+    availableLanguages.map((a: Array<string>) => [a[0], a[0]])
+  ),
   en: 'en-gb',
   cn: 'zh-cn',
 };

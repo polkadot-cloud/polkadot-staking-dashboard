@@ -125,8 +125,8 @@
     "unbondingWithdraw": "解除质押还将提取您的未申领收益",
     "unbondMemberFunds": "解除质押会员金",
     "unbondSomeOfYour": "解除部分质押",
-    "unboundToMinimum": "存款人解除质押到{{minCreateBondBase}} {{unit}}的最低保证金.",
-    "unboundToMaintain": "存款人解除质押到{{unbound_to_maintain}} {{unit}}最小值，以保持池成员身份",
+    "unbondToMinimumCreate": "存款人解除质押到{{minCreateBondBase}} {{unit}}的最低保证金.",
+    "unbondToMaintain": "存款人解除质押到{{minJoinBondBase}} {{unit}}最小值，以保持池成员身份",
     "unbondToMinimum": "解除至最少质押",
     "undergoingMaintenance": "正在进行维护",
     "unlockChunk": "己解锁的金额当前无法在池中重新质押。如果您希望重新质押，请先取出解锁金额并添加到您的质押中",
@@ -144,6 +144,7 @@
     "withdrawMemberFunds": "取出会员资金",
     "withdrawUnlocked": "取出己解锁",
     "youMust_account": "您必须导入帐户才能停止提名",
-    "youMust_controller": "您必须导入controller帐户才能停止提名"
+    "youMust_controller": "您必须导入controller帐户才能停止提名",
+    "chooseLanguage": "选择语言"
   }
 }
