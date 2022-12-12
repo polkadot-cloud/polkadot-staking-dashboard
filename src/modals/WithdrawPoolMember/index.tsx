@@ -22,6 +22,7 @@ import {
   Separator,
 } from 'modals/Wrappers';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, rmCommas } from 'Utils';
 
 export const WithdrawPoolMember = () => {
@@ -31,6 +32,7 @@ export const WithdrawPoolMember = () => {
   const { metrics } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
   const { txFeesValid } = useTxFees();
+  const { t } = useTranslation('modals');
 
   const { activeEra } = metrics;
   const { member, who } = config;
@@ -83,16 +85,16 @@ export const WithdrawPoolMember = () => {
 
   return (
     <>
-      <Title title="Withdraw Member Funds" icon={faMinus} />
+      <Title title={t('withdrawMemberFunds')} icon={faMinus} />
       <PaddingWrapper verticalOnly />
       <ContentWrapper>
         <div>
           <div>
             {!accountHasSigner(activeAccount) && (
-              <Warning text="Your account is read only, and cannot sign transactions." />
+              <Warning text={t('readOnly')} />
             )}
             <h2>
-              Withdraw {totalWithdraw} {network.unit}
+              {t('withdraw')} {totalWithdraw} {network.unit}
             </h2>
 
             <Separator />
@@ -103,7 +105,7 @@ export const WithdrawPoolMember = () => {
           <FooterWrapper>
             <div>
               <ButtonSubmit
-                text={`Submit${submitting ? 'ting' : ''}`}
+                text={`${submitting ? t('submitting') : t('submit')}`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
                 onClick={() => submitTx()}

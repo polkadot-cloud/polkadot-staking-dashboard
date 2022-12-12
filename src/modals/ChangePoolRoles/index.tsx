@@ -65,7 +65,7 @@ export const ChangePoolRoles = () => {
 
   return (
     <>
-      <Title title={t('change_pool_roles')} icon={faExchangeAlt} />
+      <Title title={t('changePoolRoles')} icon={faExchangeAlt} />
       <Wrapper>
         <div
           style={{
@@ -84,7 +84,7 @@ export const ChangePoolRoles = () => {
             newAddress={roleEdits?.nominator?.newAddress}
           />
           <RoleChange
-            roleName={t('state_toggler')}
+            roleName={t('stateToggler')}
             oldAddress={roleEdits?.stateToggler?.oldAddress}
             newAddress={roleEdits?.stateToggler?.newAddress}
           />
@@ -94,7 +94,7 @@ export const ChangePoolRoles = () => {
           <FooterWrapper>
             <div>
               <ButtonSubmit
-                text={`Submit${submitting ? 'ting' : ''}`}
+                text={`${submitting ? t('submitting') : t('submit')}`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
                 onClick={() => submitTx()}

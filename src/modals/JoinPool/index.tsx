@@ -86,11 +86,11 @@ export const JoinPool = () => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push(t('read_only'));
+    warnings.push(t('readOnly'));
   }
   return (
     <>
-      <Title title={t('join_pool')} icon={faUserPlus} />
+      <Title title={t('joinPool')} icon={faUserPlus} />
       <PaddingWrapper>
         <ContentWrapper>
           <div>
@@ -115,7 +115,7 @@ export const JoinPool = () => {
           <FooterWrapper>
             <div>
               <ButtonSubmit
-                text={`Submit${submitting ? 'ting' : ''}`}
+                text={`${submitting ? t('submitting') : t('submit')}`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
                 onClick={() => submitTx()}

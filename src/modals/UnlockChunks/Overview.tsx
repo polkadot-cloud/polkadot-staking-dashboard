@@ -9,6 +9,7 @@ import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
 import { forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { humanNumber, planckBnToUnit, toFixedIfNecessary } from 'Utils';
 import { NotesWrapper, Separator } from '../Wrappers';
 import { ChunkWrapper, ContentWrapper } from './Wrappers';
@@ -20,6 +21,7 @@ export const Overview = forwardRef(
     const { bondDuration } = consts;
     const { units } = network;
     const { activeEra } = metrics;
+    const { t } = useTranslation('modals');
 
     const isStaking = bondType === 'stake';
 
@@ -42,7 +44,7 @@ export const Overview = forwardRef(
             <div className="inner">
               <h4>
                 <FontAwesomeIcon icon={faCheckCircle} className="icon" />{' '}
-                Unlocked
+                {t('unlocked')}
               </h4>
               <h2>
                 {humanNumber(
@@ -76,7 +78,7 @@ export const Overview = forwardRef(
           </StatWrapper>
           <StatWrapper>
             <div className="inner">
-              <h4>Total</h4>
+              <h4>{t('total')}</h4>
               <h2>
                 {humanNumber(
                   toFixedIfNecessary(planckBnToUnit(totalUnbonding, units), 3)
@@ -90,7 +92,7 @@ export const Overview = forwardRef(
         {withdrawAvailable.toNumber() > 0 && (
           <div style={{ margin: '1rem 0 0.5rem 0' }}>
             <ButtonSubmit
-              text="Withdraw Unlocked"
+              text={t('withdrawUnlocked')}
               onClick={() => {
                 setTask('withdraw');
                 setUnlock({
@@ -114,13 +116,17 @@ export const Overview = forwardRef(
                   <h2>
                     {planckBnToUnit(value, units)} {network.unit}
                   </h2>
-                  <h4>{left <= 0 ? 'Unlocked' : `Unlocks after era ${era}`}</h4>
+                  <h4>
+                    {left <= 0
+                      ? t('unlocked')
+                      : `${t('unlocksAfterEra')} ${era}`}
+                  </h4>
                 </section>
                 {isStaking && (
                   <section>
                     <div>
                       <ButtonSubmit
-                        text="Rebond"
+                        text={t('rebond')}
                         onClick={() => {
                           setTask('rebond');
                           setUnlock(chunk);
@@ -137,17 +143,10 @@ export const Overview = forwardRef(
         })}
         <NotesWrapper>
           <p>
-            Unlocks take {bondDuration} eras before they can be withdrawn.
-            {isStaking &&
-              `You can rebond unlocks at any time in this period, or withdraw them to your free balance thereafter.`}
+            {t('unlockTake', { bondDuration })}
+            {isStaking ? `${t('rebondUnlock')}` : null}
           </p>
-          {!isStaking && (
-            <p>
-              Unlock chunks cannot currently be rebonded in a pool. If you wish
-              to rebond, withdraw the unlock chunk first and the add to your
-              bond.
-            </p>
-          )}
+          {!isStaking ? <p>{t('unlockChunk')}</p> : null}
         </NotesWrapper>
       </ContentWrapper>
     );

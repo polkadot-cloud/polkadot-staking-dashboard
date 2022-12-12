@@ -70,12 +70,12 @@ export const ReadOnlyInput = () => {
   let labelClass;
   switch (valid) {
     case 'confirm_reformat':
-      label = t('confirm_reformat');
+      label = t('confirmReformat');
       labelClass = 'neutral';
 
       break;
     case 'already_imported':
-      label = t('already_imported');
+      label = t('alreadyImported');
       labelClass = 'danger';
       break;
     case 'not_valid':
@@ -87,7 +87,7 @@ export const ReadOnlyInput = () => {
       labelClass = 'success';
       break;
     default:
-      label = t('input_address');
+      label = t('inputAddress');
       labelClass = 'neutral';
   }
 

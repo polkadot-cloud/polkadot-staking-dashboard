@@ -5,6 +5,7 @@ import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Forms } from './Forms';
 import { Tasks } from './Tasks';
 import { CardsWrapper, FixedContentWrapper, Wrapper } from './Wrappers';
@@ -15,6 +16,7 @@ export const UpdateBond = () => {
 
   // modal task
   const [task, setTask] = useState(null);
+  const { t } = useTranslation('modals');
 
   // active modal section
   const [section, setSection] = useState(0);
@@ -45,7 +47,7 @@ export const UpdateBond = () => {
     <Wrapper>
       <FixedContentWrapper ref={headerRef}>
         <Title
-          title={`${fn === 'add' ? 'Add To' : 'Remove'} Bond`}
+          title={`${fn === 'add' ? t('addTo') : t('remove')} ${t('bond')}`}
           icon={fn === 'add' ? faPlus : faMinus}
           fixed
         />

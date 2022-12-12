@@ -83,27 +83,25 @@ export const ClaimReward = () => {
           }}
         >
           {!accountHasSigner(activeAccount) ? (
-            <Warning text={t('read_only')} />
+            <Warning text={t('readOnly')} />
           ) : null}
-          {!unclaimedRewards?.gtn(0) ? (
-            <Warning text={t('no_rewards')} />
-          ) : null}
+          {!unclaimedRewards?.gtn(0) ? <Warning text={t('noRewards')} /> : null}
           <h2>
             {planckBnToUnit(unclaimedRewards, units)} {unit}
           </h2>
           <Separator />
           <div className="notes">
             {claimType === 'bond' ? (
-              <p>{t('claim_reward1')}</p>
+              <p>{t('claimReward1')}</p>
             ) : (
-              <p>{t('claim_reward2')}</p>
+              <p>{t('claimReward2')}</p>
             )}
             <EstimatedTxFee />
           </div>
           <FooterWrapper>
             <div>
               <ButtonSubmit
-                text={`Submit${submitting ? 'ting' : ''}`}
+                text={`${submitting ? t('submitting') : t('submit')}`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
                 onClick={() => submitTx()}

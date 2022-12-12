@@ -11,7 +11,7 @@ export const LeavePool = () => {
   const { t } = useTranslation('modals');
   return (
     <>
-      <Title title={t('leave_pool')} icon={faSignOutAlt} />
+      <Title title={t('leavePool')} icon={faSignOutAlt} />
       <PaddingWrapper>
         <UnbondAll />
       </PaddingWrapper>
