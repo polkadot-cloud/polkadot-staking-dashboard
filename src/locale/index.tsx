@@ -9,6 +9,7 @@ import { AnyJson } from 'types';
 import baseEn from './en/base.json';
 import helpEn from './en/help.json';
 import libEn from './en/library.json';
+import modalsEn from './en/modals.json';
 import pagesEn from './en/pages.json';
 import tipsEn from './en/tips.json';
 import { doDynamicImport, getActiveLanguage, getResources } from './utils';
@@ -23,13 +24,21 @@ export const locales: { [key: string]: AnyJson } = {
 export const availableLanguages = ['en', 'cn'];
 
 // the supported namespaces.
-export const lngNamespaces = ['base', 'help', 'library', 'pages', 'tips'];
+export const lngNamespaces = [
+  'base',
+  'help',
+  'library',
+  'modals',
+  'pages',
+  'tips',
+];
 
 // default structure of language resources.
 const fallbackResources = {
   ...baseEn,
   ...helpEn,
   ...libEn,
+  ...modalsEn,
   ...pagesEn,
   ...tipsEn,
 };
