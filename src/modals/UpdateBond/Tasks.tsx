@@ -41,9 +41,9 @@ export const Tasks = forwardRef((props: any, ref: any) => {
               }}
             >
               <div>
-                <h3>{t('bond_extra')}</h3>
+                <h3>{t('bondExtra')}</h3>
                 <p>
-                  {t('bond_more')} {network.unit}.
+                  {t('bondMore')} {network.unit}.
                 </p>
               </div>
               <div>
@@ -59,9 +59,9 @@ export const Tasks = forwardRef((props: any, ref: any) => {
               }}
             >
               <div>
-                <h3>{t('bond_all')}</h3>
+                <h3>{t('bondAll')}</h3>
                 <p>
-                  {t('bond_all_available')} {network.unit}.
+                  {t('bondAllAvailable')} {network.unit}.
                 </p>
               </div>
               <div>
@@ -83,7 +83,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
               <div>
                 <h3>{t('unbond')}</h3>
                 <p>
-                  {t('unbond_some_of_your')} {network.unit}.
+                  {t('unbondSomeOfYour')} {network.unit}.
                 </p>
               </div>
               <div>
@@ -100,8 +100,8 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                 }}
               >
                 <div>
-                  <h3>{t('unbond_all')}</h3>
-                  <p>{t('exit_your_staking_position')}</p>
+                  <h3>{t('unbondAll')}</h3>
+                  <p>{t('exitYourStakingPosition')}</p>
                 </div>
                 <div>
                   <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
@@ -118,14 +118,14 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                 }}
               >
                 <div>
-                  <h3>{t('unbond_to_minimum')}</h3>
+                  <h3>{t('unbondToMinimum')}</h3>
                   <p>
                     {isDepositor()
-                      ? `${t('unbound_to_minimum', {
+                      ? `${t('unboundToMinimum', {
                           minCreateBondBase,
                           unit,
                         })}`
-                      : `${t('unbound_to_maintain', {
+                      : `${t('unboundToMaintain', {
                           minJoinBondBase,
                           unit,
                         })}`}

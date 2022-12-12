@@ -21,7 +21,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
 
   return (
     <ContentWrapper>
-      {poolDestroying && <Warning text={t('being_destroyed')} />}
+      {poolDestroying && <Warning text={t('beingDestroyed')} />}
 
       <div className="items" ref={ref}>
         {isOwner() && (
@@ -35,8 +35,8 @@ export const Tasks = forwardRef((props: any, ref: any) => {
             }}
           >
             <div>
-              <h3>{t('rename_pool')}</h3>
-              <p>{t('update_name')}</p>
+              <h3>{t('renamePool')}</h3>
+              <p>{t('updateName')}</p>
             </div>
             <div>
               <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
@@ -56,8 +56,8 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                 }}
               >
                 <div>
-                  <h3>{t('unlock_pool')}</h3>
-                  <p>{t('allow_to_join')}</p>
+                  <h3>{t('unlockPool')}</h3>
+                  <p>{t('allowToJoin')}</p>
                 </div>
                 <div>
                   <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
@@ -74,8 +74,8 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                 }}
               >
                 <div>
-                  <h3>{t('lock_pool')}</h3>
-                  <p>{t('stop_joining_pool')}</p>
+                  <h3>{t('lockPool')}</h3>
+                  <p>{t('stopJoiningPool')}</p>
                 </div>
                 <div>
                   <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
@@ -88,12 +88,12 @@ export const Tasks = forwardRef((props: any, ref: any) => {
               disabled={poolDestroying}
               onClick={() => {
                 setSection(1);
-                setTask('destroy_pool_result');
+                setTask('destroyPoolResult');
               }}
             >
               <div>
-                <h3>{t('destroy_pool')}</h3>
-                <p>{t('change_to_destroy')}</p>
+                <h3>{t('destroyPool')}</h3>
+                <p>{t('changeToDestroy')}</p>
               </div>
               <div>
                 <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />

@@ -109,7 +109,7 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push(t('read_only'));
+    warnings.push(t('readOnly'));
   }
 
   return (
@@ -117,7 +117,7 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
       <div className="items">
         {unclaimedRewards > 0 && bondType === 'pool' && (
           <Warning
-            text={`${t('bonding_withdraw')} ${unclaimedRewards} ${
+            text={`${t('bondingWithdraw')} ${unclaimedRewards} ${
               network.unit
             }.`}
           />

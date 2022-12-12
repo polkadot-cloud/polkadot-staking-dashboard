@@ -18,7 +18,7 @@ export const Settings = () => {
     <>
       <Title title={t('settings')} />
       <PaddingWrapper>
-        <h4>{t('toggle_services')}</h4>
+        <h4>{t('toggleServices')}</h4>
         <StatusButton
           checked={services.includes('subscan')}
           label="Subscan API"
@@ -29,18 +29,18 @@ export const Settings = () => {
         {!DISABLE_FIAT && (
           <StatusButton
             checked={services.includes('binance_spot')}
-            label={t('binance_api')}
+            label={t('binanceApi')}
             onClick={() => {
               toggleService('binance_spot');
             }}
           />
         )}
 
-        <h4>{t('toggle_features')}</h4>
+        <h4>{t('toggleFeatures')}</h4>
 
         <StatusButton
           checked={services.includes('tips')}
-          label={t('dashboard_tips')}
+          label={t('dashboardTips')}
           onClick={() => {
             toggleService('tips');
           }}

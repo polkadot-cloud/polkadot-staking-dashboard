@@ -68,13 +68,13 @@ export const NominatePool = () => {
   // warnings
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push(t('read_only'));
+    warnings.push(t('readOnly'));
   }
   if (!nominations.length) {
-    warnings.push(t('no_nominations_set'));
+    warnings.push(t('noNominationsSet'));
   }
   if (!isOwner() || !isNominator()) {
-    warnings.push(`${t('no_nominator_role')}`);
+    warnings.push(`${t('noNominatorRole')}`);
   }
 
   return (
@@ -85,10 +85,10 @@ export const NominatePool = () => {
           {warnings.map((text: string, index: number) => (
             <Warning key={`warning_${index}`} text={text} />
           ))}
-          <h2>{t('have_nomination', { count: nominations.length })}</h2>
+          <h2>{t('haveNomination', { count: nominations.length })}</h2>
           <Separator />
           <NotesWrapper>
-            <p>{t('once_submitted')}</p>
+            <p>{t('onceSubmitted')}</p>
             <EstimatedTxFee />
           </NotesWrapper>
           <FooterWrapper>
