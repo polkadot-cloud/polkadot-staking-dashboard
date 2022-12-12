@@ -133,9 +133,11 @@ export const NominateFromFavorites = () => {
         <div style={{ marginBottom: '1rem' }}>
           {!accountHasSigner(signingAccount) && (
             <Warning
-              text={`You must have your${
-                bondType === 'stake' ? ' controller' : ' '
-              }account imported to add nominations.`}
+              text={`${
+                bondType === 'stake'
+                  ? t('youMust', { context: 'controller' })
+                  : t('youMust', { context: 'account' })
+              }`}
             />
           )}
         </div>
