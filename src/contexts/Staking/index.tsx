@@ -11,7 +11,6 @@ import {
   StakingTargets,
 } from 'contexts/Staking/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { AnyApi, MaybeAccount } from 'types';
 import {
   localStorageOrDefault,
@@ -40,8 +39,6 @@ export const StakingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { t } = useTranslation('common');
-
   const {
     activeAccount,
     accounts: connectAccounts,

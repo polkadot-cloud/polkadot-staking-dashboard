@@ -7,7 +7,6 @@ import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { useCombobox } from 'downshift';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { defaultThemes, networkColors } from 'theme/default';
 import { StyledDownshift, StyledDropdown } from '../AccountDropdown/Wrappers';
 import { DropdownInput, DropdownProps } from '../types';
@@ -34,7 +33,6 @@ export const Dropdown = ({
     },
   });
 
-  const { t } = useTranslation('common');
   const cname = current?.name;
   const vname = value?.name;
 
@@ -94,7 +92,6 @@ const DropdownItem = ({ c, item, index }: any) => {
       ? `2px solid ${networkColors[`${name}-${mode}`]}`
       : `2px solid ${defaultThemes.transparent[mode]}`;
 
-  const { t } = useTranslation('common');
   const iname = item.name;
   return (
     <div
