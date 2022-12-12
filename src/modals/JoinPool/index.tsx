@@ -20,6 +20,7 @@ import useBondGreatestFee from 'library/Hooks/useBondGreatestFee';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { FooterWrapper, NotesWrapper, PaddingWrapper } from '../Wrappers';
 import { ContentWrapper } from './Wrapper';
@@ -36,6 +37,7 @@ export const JoinPool = () => {
   const { getTransferOptions } = useTransferOptions();
   const { freeBalance } = getTransferOptions(activeAccount);
   const largestTxFee = useBondGreatestFee({ bondType: 'pool' });
+  const { t } = useTranslation('modals');
 
   // local bond value
   const [bond, setBond] = useState({
@@ -84,11 +86,11 @@ export const JoinPool = () => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push('Your account is read only, and cannot sign transactions.');
+    warnings.push(t('read_only'));
   }
   return (
     <>
-      <Title title="Join Pool" icon={faUserPlus} />
+      <Title title={t('join_pool')} icon={faUserPlus} />
       <PaddingWrapper>
         <ContentWrapper>
           <div>

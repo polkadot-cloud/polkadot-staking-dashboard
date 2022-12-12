@@ -16,6 +16,7 @@ import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { PoolMembership } from 'contexts/Pools/types';
 import { forwardRef, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnyJson } from 'types';
 import { AccountButton, AccountElement } from './Account';
 import {
@@ -46,6 +47,7 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
   const { setStatus } = useModal();
   const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
+  const { t } = useTranslation('modals');
 
   const _controllers: Array<ControllerAccount> = [];
   const _stashes: Array<StashAcount> = [];
@@ -180,11 +182,11 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
       <PaddingWrapper ref={ref}>
         <div className="head">
           <div>
-            <h1>Accounts</h1>
+            <h1>{t('accounts')}</h1>
           </div>
           <div>
             <ButtonSecondary
-              text="Extensions"
+              text={t('extensions')}
               iconLeft={faCog}
               iconTransform="shrink-2"
               onClick={() => setSection(0)}
@@ -195,14 +197,14 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
           <AccountButton
             address={activeAccount}
             meta={getAccount(activeAccount)}
-            label={['danger', 'Disconnect']}
+            label={['danger', t('disconnect')]}
             disconnect
           />
         ) : (
           <AccountWrapper>
             <div>
               <div>
-                <h3>No Account Connected</h3>
+                <h3>{t('no_account_connected')}</h3>
               </div>
               <div />
             </div>
@@ -212,7 +214,7 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
           <>
             <h3 className="heading">
               <FontAwesomeIcon icon={faProjectDiagram} transform="shrink-4" />{' '}
-              Nominating
+              {t('nominating')}
             </h3>
             {activeStaking.map((item: ActivelyStakingAccount, i: number) => {
               const { stash, controller } = item;
@@ -273,7 +275,7 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
 
         {inactive.length > 0 && (
           <>
-            <h3 className="heading">Not Staking</h3>
+            <h3 className="heading">{t('notStaking')}</h3>
             {inactive.map((item: string, i: number) => {
               const account = getAccount(item);
               const address = account?.address ?? '';

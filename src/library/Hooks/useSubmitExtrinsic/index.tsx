@@ -73,7 +73,7 @@ export const useSubmitExtrinsic = ({
 
     const extension = extensions.find((e: Extension) => e.id === source);
     if (extension === undefined) {
-      throw new Error(t('wallet_not_found') || '');
+      throw new Error(t('walletNotFound') || '');
     } else {
       // summons extension popup if not already connected.
       extension.enable(DappName);
@@ -92,7 +92,7 @@ export const useSubmitExtrinsic = ({
             addPending(accountNonce);
             addNotification({
               title: t('pending'),
-              subtitle: t('transaction_was_initiated'),
+              subtitle: t('transactionInitiated'),
             });
             callbackSubmit();
           }
@@ -102,8 +102,8 @@ export const useSubmitExtrinsic = ({
             setSubmitting(false);
             removePending(accountNonce);
             addNotification({
-              title: t('in_block'),
-              subtitle: t('transaction_in_block'),
+              title: t('inBlock'),
+              subtitle: t('transactionInBlock'),
             });
             callbackInBlock();
           }
@@ -114,13 +114,13 @@ export const useSubmitExtrinsic = ({
               if (method === 'ExtrinsicSuccess') {
                 addNotification({
                   title: t('finalized'),
-                  subtitle: t('transaction_successful'),
+                  subtitle: t('transactionSuccessful'),
                 });
                 unsub();
               } else if (method === 'ExtrinsicFailed') {
                 addNotification({
                   title: t('failed'),
-                  subtitle: t('error_with_transaction'),
+                  subtitle: t('errorWithTransaction'),
                 });
                 setSubmitting(false);
                 removePending(accountNonce);
@@ -135,7 +135,7 @@ export const useSubmitExtrinsic = ({
       removePending(accountNonce);
       addNotification({
         title: t('cancelled'),
-        subtitle: t('transaction_was_cancelled'),
+        subtitle: t('transactionCancelled'),
       });
     }
   };

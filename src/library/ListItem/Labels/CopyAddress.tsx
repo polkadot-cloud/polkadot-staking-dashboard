@@ -19,7 +19,7 @@ export const CopyAddress = (props: CopyAddressProps) => {
     address == null
       ? null
       : {
-          title: t('address_copied_to_clipboard'),
+          title: t('addressCopiedToClipboard'),
           subtitle: address,
         };
 

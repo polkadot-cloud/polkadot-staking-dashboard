@@ -17,7 +17,7 @@ export const ParaValidator = ({ address }: ParaValidatorProps) => {
 
   const posRef = useRef(null);
 
-  const tooltipText = t('validating_parachain_blocks');
+  const tooltipText = t('validatingParachainBlocks');
 
   const toggleTooltip = () => {
     if (!open) {
