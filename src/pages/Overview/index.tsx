@@ -25,7 +25,6 @@ import { ActiveAccount } from './ActiveAccount';
 import { BalanceChart } from './BalanceChart';
 import { NetworkStats } from './NetworkSats';
 import Payouts from './Payouts';
-import Reserve from './Reserve';
 import ActiveEraStatBox from './Stats/ActiveEra';
 import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
 import TotalNominatorsStatBox from './Stats/TotalNominations';
@@ -90,7 +89,6 @@ export const Overview = () => {
           <GraphWrapper style={{ minHeight: BALANCE_HEIGHT }} flex>
             {/* <BalanceGraph /> */}
             <BalanceChart />
-            <Reserve />
           </GraphWrapper>
         </RowSecondaryWrapper>
         <RowPrimaryWrapper

@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { SmallFontSizeMaxWidth } from 'consts';
 import styled from 'styled-components';
 import {
   borderPrimary,
@@ -173,65 +172,6 @@ export const Separator = styled.div`
   height: 1px;
 `;
 
-export const ReserveWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-flow: column wrap;
-  margin-top: 1.5rem;
-  padding: 0 0.75rem;
-
-  > h4 {
-    margin-top: 0.75rem;
-    margin-bottom: 0.25rem;
-    @media (min-width: ${SmallFontSizeMaxWidth + 1}px) {
-      margin-top: 0.9rem;
-    }
-  }
-  > .inner {
-    display: flex;
-    flex-flow: row wrap;
-    margin: 0;
-    > section {
-      display: flex;
-      flex-flow: row wrap;
-      align-items: center;
-      position: relative;
-      &:first-child {
-        overflow: hidden;
-        padding-left: 0;
-        .reserve {
-          background: ${buttonSecondaryBackground};
-          display: block;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          position: relative;
-          border-radius: 0.5rem;
-          padding-top: 0.7rem;
-          padding-bottom: 0.7rem;
-          padding-left: 2.5rem;
-          padding-right: 1.5rem;
-          width: 100%;
-          > h3 {
-            font-size: 1rem;
-            opacity: 0.7;
-            padding: 0;
-            margin: 0;
-            .icon {
-              position: absolute;
-              top: 0.98rem;
-              left: 0.95rem;
-            }
-          }
-        }
-      }
-      .help-icon {
-        margin-left: 0.6rem;
-      }
-    }
-  }
-`;
-
 export const BalanceChartWrapper = styled.div`
   width: 100%;
   padding: 0 1.75rem;
@@ -299,7 +239,7 @@ export const BalanceChartWrapper = styled.div`
     > div {
       display: flex;
       flex-flow: row wrap;
-      padding: 0 0.25rem;
+      padding: 0 0.35rem;
       &:first-child {
         padding-left: 0rem;
       }
@@ -310,6 +250,20 @@ export const BalanceChartWrapper = styled.div`
         margin: 0.5rem 0 0.8rem 0;
         padding: 0 0.2rem;
       }
+    }
+  }
+  .more {
+    width: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    margin-top: 3rem;
+    h4 {
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+    }
+    section {
+      width: 100%;
+      margin-top: 0.25rem;
     }
   }
   .d1 {

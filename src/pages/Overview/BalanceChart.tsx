@@ -1,6 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -15,6 +17,7 @@ import {
   toFixedIfNecessary,
   usdFormatter,
 } from 'Utils';
+import { Separator } from 'Wrappers';
 import { BalanceChartWrapper } from './Wrappers';
 
 export const BalanceChart = () => {
@@ -25,7 +28,7 @@ export const BalanceChart = () => {
   const prices = usePrices();
   const { services } = useUi();
   const { activeAccount } = useConnect();
-  const { getAccountBalance } = useBalances();
+  const { getAccountBalance, existentialAmount } = useBalances();
   const { getTransferOptions } = useTransferOptions();
   const balance = getAccountBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
@@ -115,14 +118,40 @@ export const BalanceChart = () => {
             }}
           >
             <h4 className="l">
-              Reserved <OpenHelpIcon helpKey="Your Balance" />
+              Reserved <OpenHelpIcon helpKey="Reserve Balance" />
             </h4>
             <div className="chart">
               <div className="d4" style={{ width: '100%' }}>
-                <span>1 DOT</span>
+                <span>{`${toFixedIfNecessary(
+                  planckBnToUnit(existentialAmount, units),
+                  5
+                )} ${unit}`}</span>
               </div>
             </div>
           </div>
+        </div>
+        <div className="more">
+          <Separator />
+          <h4>
+            More Resources <OpenHelpIcon helpKey="Reserve Balance" />
+          </h4>
+
+          <section>
+            <div>
+              <ButtonInvertRounded
+                onClick={() =>
+                  window.open(
+                    `https://polkadot.subscan.io/account/${activeAccount}`,
+                    '_blank'
+                  )
+                }
+                lg
+                iconRight={faExternalLinkAlt}
+                iconTransform="shrink-2"
+                text="Subscan"
+              />
+            </div>
+          </section>
         </div>
       </BalanceChartWrapper>
     </>
