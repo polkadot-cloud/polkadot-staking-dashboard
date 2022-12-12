@@ -109,7 +109,7 @@ export const Forms = forwardRef(
         <div ref={ref} style={{ paddingBottom: '1rem' }}>
           <div>
             {!accountHasSigner(signingAccount) && (
-              <Warning text={t('readOnly)} />
+              <Warning text={t('readOnly')} />
             )}
 
             <div style={{ marginTop: '2rem' }}>

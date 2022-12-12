@@ -114,9 +114,7 @@ export const BondAll = (props: FormsProps) => {
     <>
       <div className="items">
         <>
-          {!accountHasSigner(activeAccount) && (
-            <Warning text={t('readOnly)} />
-          )}
+          {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
           {freeBalance === 0 && (
             <Warning text={`${t('noFreeToBond', { unit })}`} />
           )}

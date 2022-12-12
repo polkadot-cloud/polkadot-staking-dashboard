@@ -109,7 +109,7 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push(t('readOnly));
+    warnings.push(t('readOnly'));
   }
 
   return (

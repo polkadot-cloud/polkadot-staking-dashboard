@@ -68,7 +68,7 @@ export const NominatePool = () => {
   // warnings
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push(t('readOnly));
+    warnings.push(t('readOnly'));
   }
   if (!nominations.length) {
     warnings.push(t('noNominationsSet'));

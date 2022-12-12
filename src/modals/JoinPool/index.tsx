@@ -86,7 +86,7 @@ export const JoinPool = () => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push(t('readOnly));
+    warnings.push(t('readOnly'));
   }
   return (
     <>
