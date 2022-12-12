@@ -46,7 +46,7 @@ export const ReadOnly = (props: ReadOnlyProps) => {
             style={{ margin: '0 0.75rem 0 1.25rem' }}
           />
           <h3>
-            <span className="name">{t('read_only_accounts')}</span>
+            <span className="name">{t('readOnlyAccounts')}</span>
           </h3>
 
           <div>
@@ -70,7 +70,7 @@ export const ReadOnly = (props: ReadOnlyProps) => {
           <ReadOnlyInput />
           {externalAccountsByUser.length > 0 && (
             <h5>
-              {t('read_only_account', { count: externalAccountsByUser.length })}
+              {t('readOnlyAccount', { count: externalAccountsByUser.length })}
             </h5>
           )}
           <div className="accounts">

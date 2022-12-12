@@ -22,11 +22,11 @@ export const GoToFeedback = () => {
         >
           <NotesWrapper style={{ paddingTop: 0 }}>
             <p>
-              {t('feedback_page')}{' '}
+              {t('feedbackPage')}{' '}
               <a href="https://canny.io/" target="_blank" rel="noreferrer">
                 Canny.io
               </a>
-              . {t('welcome_to_report')}
+              . {t('welcomeToReport')}
             </p>
           </NotesWrapper>
           <h2 style={{ marginTop: 0 }}>
@@ -35,7 +35,7 @@ export const GoToFeedback = () => {
               target="_blank"
               rel="noreferrer"
             >
-              {t('open_feedback')} &nbsp;
+              {t('openFeedback')} &nbsp;
               <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-3" />
             </a>
           </h2>

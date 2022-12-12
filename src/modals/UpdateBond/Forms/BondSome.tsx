@@ -14,6 +14,7 @@ import { Warning } from 'library/Form/Warning';
 import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { NotesWrapper } from '../../Wrappers';
 import { FormsProps } from '../types';
@@ -33,6 +34,7 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
   const { freeBalance: freeBalanceBn } = getTransferOptions(activeAccount);
   const freeBalance = planckBnToUnit(freeBalanceBn, units);
   const largestTxFee = useBondGreatestFee({ bondType });
+  const { t } = useTranslation('modals');
 
   // calculate any unclaimed pool rewards.
   let { unclaimedRewards } = selectedActivePool || {};
@@ -107,7 +109,7 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push('Your account is read only, and cannot sign transactions.');
+    warnings.push(t('readOnly'));
   }
 
   return (
@@ -115,7 +117,9 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
       <div className="items">
         {unclaimedRewards > 0 && bondType === 'pool' && (
           <Warning
-            text={`Bonding will also withdraw your outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+            text={`${t('bondingWithdraw')} ${unclaimedRewards} ${
+              network.unit
+            }.`}
           />
         )}
         <BondFeedback
