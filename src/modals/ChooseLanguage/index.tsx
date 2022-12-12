@@ -5,6 +5,7 @@ import { useModal } from 'contexts/Modal';
 import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { Title } from 'library/Modal/Title';
 import { availableLanguages } from 'locale';
+import { changeLanguage } from 'locale/utils';
 import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 import { ContentWrapper, LocaleButton } from './Wrapper';
@@ -25,7 +26,7 @@ export const ChooseLanguage = () => {
                   connected={i18n.resolvedLanguage === l}
                   type="button"
                   onClick={() => {
-                    i18n.changeLanguage(l);
+                    changeLanguage(l, i18n);
                     setStatus(2);
                   }}
                 >
