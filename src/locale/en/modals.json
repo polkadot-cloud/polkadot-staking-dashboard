@@ -150,6 +150,9 @@
     "withdrawMemberFunds": "Withdraw Member Funds",
     "withdrawUnlocked": "Withdraw Unlocked",
     "youMust_account": "You must have your account imported to stop nominating.",
-    "youMust_controller": "You must have your controller account imported to stop nominating."
+    "youMust_controller": "You must have your controller account imported to stop nominating.",
+    "choose_language": "Choose Language",
+    "en": "en",
+    "cn": "cn"
   }
 }

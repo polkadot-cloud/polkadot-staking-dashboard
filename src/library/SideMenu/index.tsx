@@ -164,9 +164,9 @@ export const SideMenu = () => {
       </section>
       <button
         type="button"
-        onClick={() => openModalWith('Languages', {}, 'small')}
+        onClick={() => openModalWith('ChooseLanguage', {}, 'small')}
       >
-        <LanguageSVG width="1.0rem" height="1.0rem" />
+        <LanguageSVG width="1.6rem" height="1.6rem" />
       </button>
     </Wrapper>
   );
