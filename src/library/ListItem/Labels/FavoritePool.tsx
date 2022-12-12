@@ -24,11 +24,11 @@ export const FavoritePool = (props: FavoriteProps) => {
 
   const notificationFavorite = !isFavorite
     ? {
-        title: t('favorite_pool_added'),
+        title: t('favoritePoolAdded'),
         subtitle: address,
       }
     : {
-        title: t('favorite_pool_removed'),
+        title: t('favoritePoolRemoved'),
         subtitle: address,
       };
 

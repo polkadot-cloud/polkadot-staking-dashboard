@@ -53,7 +53,7 @@ export const getEligibleControllers = (): Array<InputItem> => {
           active:
             planckBnToUnit(balance.free, network.units) >
             planckBnToUnit(existentialAmount, network.units),
-          alert: `${t('not_enough')} ${network.unit}`,
+          alert: `${t('notEnough')} ${network.unit}`,
         };
       }
     );

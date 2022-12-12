@@ -115,27 +115,27 @@ export const UnbondFeedback = ({
     const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
 
     // unbond errors
-    if (Number(bond.bond) > freeToUnbondBase) _errors.push(t('unbond_amount'));
+    if (Number(bond.bond) > freeToUnbondBase) _errors.push(t('unbondAmount'));
 
     // unbond errors for staking only
     if (bondType === 'stake')
       if (getControllerNotImported(controller))
-        _errors.push(t('imported_to_unbond'));
+        _errors.push(t('importedToUnbond'));
 
     if (bond.bond !== '' && Number(bond.bond) < _planck)
-      _errors.push(t('value_is_too_small'));
+      _errors.push(t('valueTooSmall'));
 
     if (Number(bond.bond) > unbondToMin) {
       // start the error message stating a min bond is required.
-      let err = `${t('minimum_bond', { minBondBase, unit })} `;
+      let err = `${t('minimumBond', { minBondBase, unit })} `;
 
       // append the subject to the error message.
       if (bondType === 'stake') {
-        err += t('when_actively_nominating');
+        err += t('whenActivelyNominating');
       } else if (isDepositor()) {
-        err += t('as_the_pool_depositor');
+        err += t('asThePoolDepositor');
       } else {
-        err += t('as_a_pool_member');
+        err += t('asAPoolMember');
       }
       _errors.push(err);
     }

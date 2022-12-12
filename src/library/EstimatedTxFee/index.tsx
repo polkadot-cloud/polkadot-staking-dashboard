@@ -31,18 +31,18 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
     <>
       {format === 'table' ? (
         <>
-          <div>{t('estimated_fee')}:</div>
+          <div>{t('estimatedFee')}:</div>
           <div>{txFees.isZero() ? '...' : `${txFeesBase} ${unit}`}</div>
         </>
       ) : (
         <Wrapper>
           <p>
-            {t('estimated_fee')}:{' '}
+            {t('estimatedFee')}:{' '}
             {txFees.isZero() ? '...' : `${txFeesBase} ${unit}`}
           </p>
           {notEnoughFunds === true && (
             <p style={{ color: defaultThemes.text.danger[mode] }}>
-              {t('not_enough_funds', { unit })}
+              {t('notEnoughFunds', { unit })}
             </p>
           )}
         </Wrapper>

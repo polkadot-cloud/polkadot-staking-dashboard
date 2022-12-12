@@ -61,12 +61,12 @@ export const usePoolFilters = () => {
   };
 
   const includesToLabels: { [key: string]: string } = {
-    active: t('active_pools'),
+    active: t('activePools'),
   };
 
   const excludesToLabels: { [key: string]: string } = {
-    locked: t('locked_pools'),
-    destroying: t('destroying_pools'),
+    locked: t('lockedPools'),
+    destroying: t('destroyingPools'),
   };
 
   const filterToFunction: { [key: string]: AnyFunction } = {

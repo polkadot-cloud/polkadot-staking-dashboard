@@ -275,7 +275,7 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
 
         {inactive.length > 0 && (
           <>
-            <h3 className="heading">{t('not_staking')}</h3>
+            <h3 className="heading">{t('notStaking')}</h3>
             {inactive.map((item: string, i: number) => {
               const account = getAccount(item);
               const address = account?.address ?? '';

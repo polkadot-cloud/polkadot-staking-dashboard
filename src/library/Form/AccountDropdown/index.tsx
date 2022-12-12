@@ -55,7 +55,7 @@ export const AccountDropdown = ({
     <StyledDownshift>
       <div>
         <div className="label" {...c.getLabelProps()}>
-          {t('currently_selected')}:
+          {t('currentlySelected')}:
         </div>
         <div>
           <div className="current">
@@ -91,7 +91,7 @@ export const AccountDropdown = ({
               {c.selectedItem && (
                 <StyledController
                   onClick={() => c.reset()}
-                  aria-label={t('clear_selection')}
+                  aria-label={t('clearSelection')}
                 >
                   <FontAwesomeIcon transform="grow-2" icon={faTimes} />
                 </StyledController>
@@ -147,7 +147,7 @@ const DropdownItem = ({ c, item, index }: any) => {
       </div>
       {!item.active && (
         <span>
-          {t('not_enough')} {network.unit}
+          {t('notEnough')} {network.unit}
         </span>
       )}
       <p>{item.name}</p>

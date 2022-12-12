@@ -14,7 +14,7 @@ export const Commission = (props: { commission: number }) => {
 
   const posRef = useRef<HTMLDivElement>(null);
 
-  const tooltipText = t('validator_commission');
+  const tooltipText = t('validatorCommission');
 
   const toggleTooltip = () => {
     if (!open) {
