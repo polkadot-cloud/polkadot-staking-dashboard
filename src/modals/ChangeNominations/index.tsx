@@ -127,7 +127,9 @@ export const ChangeNominations = () => {
             width: '100%',
           }}
         >
-          {!nominations.length && <Warning text={t('no_nominations_set')} />}
+          {!nominations.length ? (
+            <Warning text={t('no_nominations_set')} />
+          ) : null}
           {!accountHasSigner(signingAccount) && (
             <Warning
               text={`You must have your${
