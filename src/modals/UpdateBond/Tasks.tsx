@@ -121,11 +121,11 @@ export const Tasks = forwardRef((props: any, ref: any) => {
                   <h3>{t('unbondToMinimum')}</h3>
                   <p>
                     {isDepositor()
-                      ? `${t('unboundToMinimum', {
+                      ? `${t('unbondToMinimumCreate', {
                           minCreateBondBase,
                           unit,
                         })}`
-                      : `${t('unboundToMaintain', {
+                      : `${t('unbondToMaintain', {
                           minJoinBondBase,
                           unit,
                         })}`}
