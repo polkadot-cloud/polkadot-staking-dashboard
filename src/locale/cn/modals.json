@@ -50,7 +50,7 @@
     "join_pool": "加入池",
     "leave_pool": "离开池",
     "lock_pool": "一旦锁定提名池，其他人就无法加入提名池",
-    "lsubmit_lock": "提交提名池锁定",
+    "submit_lock": "提交提名池锁定",
     "unlock_pool": "解锁提名池后，新用户可以加入提名池",
     "submit_unlock": "提交提名池解锁",
     "destroy_pool": "销毁提名池后，所有成员都可以无权限解除质押，提名池永远无法重新开启",
