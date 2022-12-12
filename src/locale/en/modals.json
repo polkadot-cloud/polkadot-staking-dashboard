@@ -1,7 +1,7 @@
 {
   "modals": {
     "open_feedback": "Open Feedback on Canny.io",
-    "welcome_to_report": ". Bug reports, feature requests and improvements are all welcome.",
+    "welcome_to_report": "Bug reports, feature requests and improvements are all welcome.",
     "feedback_page": "We host a feedback page on",
     "feedback": "Feedback",
     "all_pool_roles": "All Pool Roles",

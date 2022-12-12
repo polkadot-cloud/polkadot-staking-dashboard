@@ -82,10 +82,12 @@ export const ClaimReward = () => {
             width: '100%',
           }}
         >
-          {!accountHasSigner(activeAccount) && (
+          {!accountHasSigner(activeAccount) ? (
             <Warning text={t('read_only')} />
-          )}
-          {!unclaimedRewards?.gtn(0) && <Warning text={t('no_rewards')} />}
+          ) : null}
+          {!unclaimedRewards?.gtn(0) ? (
+            <Warning text={t('no_rewards')} />
+          ) : null}
           <h2>
             {planckBnToUnit(unclaimedRewards, units)} {unit}
           </h2>

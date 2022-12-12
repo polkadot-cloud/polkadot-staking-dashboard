@@ -53,12 +53,12 @@ export const ReadOnly = (props: ReadOnlyProps) => {
             <h3>
               <span
                 className={`message${
-                  externalAccountsByUser.length ? ` success` : ``
+                  externalAccountsByUser.length ? ` success` : null
                 }`}
               >
                 {externalAccountsByUser.length
                   ? `${externalAccountsByUser.length} ${t('connected')}`
-                  : ``}
+                  : null}
               </span>
             </h3>
             {!readOnlyOpen && <FontAwesomeIcon icon={faCog} className="icon" />}

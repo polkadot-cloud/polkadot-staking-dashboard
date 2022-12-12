@@ -1,7 +1,7 @@
 {
   "modals": {
     "open_feedback": "在 Canny.io反馈",
-    "welcome_to_report": ". 欢迎Bug报告、功能请求和改进.",
+    "welcome_to_report": "欢迎Bug报告、功能请求和改进.",
     "feedback_page": "我们的反馈页面在",
     "feedback": "反馈",
     "all_pool_roles": "所有池角色",
