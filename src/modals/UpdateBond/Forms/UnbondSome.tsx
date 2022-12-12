@@ -136,7 +136,7 @@ export const UnbondSome = (props: FormsProps) => {
         <>
           {unclaimedRewards > 0 && bondType === 'pool' && (
             <Warning
-              text={`${t('unbonding_withdraw')} ${unclaimedRewards} ${
+              text={`${t('unbondingWithdraw')} ${unclaimedRewards} ${
                 network.unit
               }.`}
             />
@@ -155,7 +155,7 @@ export const UnbondSome = (props: FormsProps) => {
             txFees={txFees}
           />
           <NotesWrapper>
-            <p>{t('once_unbonding', { bondDuration })}</p>
+            <p>{t('onceUnbonding', { bondDuration })}</p>
             <EstimatedTxFee />
           </NotesWrapper>
         </>

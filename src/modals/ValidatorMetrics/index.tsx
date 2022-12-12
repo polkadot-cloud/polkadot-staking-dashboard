@@ -66,19 +66,19 @@ export const ValidatorMetrics = () => {
 
   const stats = [
     {
-      label: t('self_stake'),
+      label: t('selfStake'),
       value: `${humanNumber(planckBnToUnit(ownStake, units))} ${unit}`,
       help: 'Self Stake',
     },
     {
-      label: t('nominator_stake'),
+      label: t('nominatorStake'),
       value: `${humanNumber(planckBnToUnit(otherStake, units))} ${unit}`,
       help: 'Nominator Stake',
     },
   ];
   return (
     <>
-      <Title title={t('validator_metrics')} />
+      <Title title={t('validatorMetrics')} />
       <div className="header">
         <Identicon value={address} size={33} />
         <h2>
@@ -118,13 +118,13 @@ export const ValidatorMetrics = () => {
           flex
         >
           <h4>
-            {t('recent_era_points')} <OpenHelpIcon helpKey="Era Points" />
+            {t('recentEraPoints')} <OpenHelpIcon helpKey="Era Points" />
           </h4>
           <div className="inner" ref={ref} style={{ minHeight }}>
             <StatusLabel
               status="active_service"
               statusFor="subscan"
-              title={t('subscan_disabled')}
+              title={t('subscanDisabled')}
             />
             <div
               className="graph"

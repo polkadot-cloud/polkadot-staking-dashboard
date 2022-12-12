@@ -78,13 +78,13 @@ export const Nominate = () => {
   // warnings
   const warnings = [];
   if (getControllerNotImported(controller)) {
-    warnings.push(t('must_have_controller'));
+    warnings.push(t('mustHaveController'));
   }
   if (!nominations.length) {
-    warnings.push(t('no_nominations_set'));
+    warnings.push(t('noNominationsSet'));
   }
   if (activeBase < minNominatorBondBase) {
-    warnings.push(`${(t('not_meet_minimum'), { minNominatorBondBase, unit })}`);
+    warnings.push(`${(t('notMeetMinimum'), { minNominatorBondBase, unit })}`);
   }
 
   return (
@@ -95,10 +95,10 @@ export const Nominate = () => {
           {warnings.map((text: any, index: number) => (
             <Warning key={index} text={text} />
           ))}
-          <h2>{t('have_nomination', { count: nominations.length })}</h2>
+          <h2>{t('haveNomination', { count: nominations.length })}</h2>
           <Separator />
           <NotesWrapper>
-            <p>{t('once_submitted')}</p>
+            <p>{t('onceSubmitted')}</p>
             <EstimatedTxFee />
           </NotesWrapper>
           <FooterWrapper>

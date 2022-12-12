@@ -86,7 +86,7 @@ export const ClaimReward = () => {
             <Warning text={t('read_only')} />
           ) : null}
           {!unclaimedRewards?.gtn(0) ? (
-            <Warning text={t('no_rewards')} />
+            <Warning text={t('noRewards')} />
           ) : null}
           <h2>
             {planckBnToUnit(unclaimedRewards, units)} {unit}
@@ -94,9 +94,9 @@ export const ClaimReward = () => {
           <Separator />
           <div className="notes">
             {claimType === 'bond' ? (
-              <p>{t('claim_reward1')}</p>
+              <p>{t('claimReward1')}</p>
             ) : (
-              <p>{t('claim_reward2')}</p>
+              <p>{t('claimReward2')}</p>
             )}
             <EstimatedTxFee />
           </div>

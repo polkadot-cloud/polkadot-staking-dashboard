@@ -85,7 +85,7 @@ export const WithdrawPoolMember = () => {
 
   return (
     <>
-      <Title title={t('withdraw_member_funds')} icon={faMinus} />
+      <Title title={t('withdrawMemberFunds')} icon={faMinus} />
       <PaddingWrapper verticalOnly />
       <ContentWrapper>
         <div>

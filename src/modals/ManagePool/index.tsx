@@ -38,7 +38,7 @@ export const ManagePool = () => {
   return (
     <Wrapper>
       <FixedContentWrapper ref={headerRef}>
-        <Title title={t('manage_pool')} icon={faCog} fixed />
+        <Title title={t('managePool')} icon={faCog} fixed />
       </FixedContentWrapper>
       <CardsWrapper
         animate={section === 0 ? 'home' : 'next'}

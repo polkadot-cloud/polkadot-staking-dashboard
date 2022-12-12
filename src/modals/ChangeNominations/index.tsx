@@ -128,26 +128,26 @@ export const ChangeNominations = () => {
           }}
         >
           {!nominations.length ? (
-            <Warning text={t('no_nominations_set')} />
+            <Warning text={t('noNominationsSet')} />
           ) : null}
           {!accountHasSigner(signingAccount) && (
             <Warning
               text={`${
                 bondType === 'stake'
-                  ? t('you_must', { context: 'controller' })
-                  : t('you_must', { context: 'account' })
+                  ? t('youMust', { context: 'controller' })
+                  : t('youMust', { context: 'account' })
               }`}
             />
           )}
           <h2>
             {t('stop')}{' '}
             {!remaining
-              ? t('all_nomination')
+              ? t('allNomination')
               : `${t('nomination', { count: removing })}`}
           </h2>
           <Separator />
           <NotesWrapper>
-            <p>{t('change_nomination')}</p>
+            <p>{t('changeNomination')}</p>
             <EstimatedTxFee />
           </NotesWrapper>
           <FooterWrapper>

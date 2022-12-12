@@ -117,7 +117,7 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
       <div className="items">
         {unclaimedRewards > 0 && bondType === 'pool' && (
           <Warning
-            text={`${t('bonding_withdraw')} ${unclaimedRewards} ${
+            text={`${t('bondingWithdraw')} ${unclaimedRewards} ${
               network.unit
             }.`}
           />

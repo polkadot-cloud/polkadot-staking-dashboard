@@ -76,7 +76,7 @@ export const UpdateController = () => {
   return (
     <>
       <Title
-        title={t('change_controller_account')}
+        title={t('changeControllerAccount')}
         icon={faExchangeAlt}
         helpKey="Controller Account Eligibility"
       />
@@ -90,7 +90,7 @@ export const UpdateController = () => {
           <AccountDropdown
             items={items}
             onChange={handleOnChange}
-            placeholder={t('search_account')}
+            placeholder={t('searchAccount')}
             current={account}
             value={selected}
             height="17rem"

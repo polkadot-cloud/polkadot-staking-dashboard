@@ -104,18 +104,18 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
           )}
           {unclaimedRewards > 0 && (
             <Warning
-              text={`${t('unbonding_withdraw')} ${unclaimedRewards} ${
+              text={`${t('unbondingWithdraw')} ${unclaimedRewards} ${
                 network.unit
               }.`}
             />
           )}
-          <h4>{t('amount_to_unbond')}</h4>
+          <h4>{t('amountToUnbond')}</h4>
           <h2>
             {freeToUnbond} {network.unit}
           </h2>
           <Separator />
           <NotesWrapper>
-            <p>{t('once_unbonding', { bondDuration })}</p>
+            <p>{t('onceUnbonding', { bondDuration })}</p>
             {bondValid && <EstimatedTxFee />}
           </NotesWrapper>
         </>

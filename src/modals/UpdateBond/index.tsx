@@ -47,7 +47,7 @@ export const UpdateBond = () => {
     <Wrapper>
       <FixedContentWrapper ref={headerRef}>
         <Title
-          title={`${fn === 'add' ? t('add_to') : t('remove')} ${t('bond')}`}
+          title={`${fn === 'add' ? t('addTo') : t('remove')} ${t('bond')}`}
           icon={fn === 'add' ? faPlus : faMinus}
           fixed
         />

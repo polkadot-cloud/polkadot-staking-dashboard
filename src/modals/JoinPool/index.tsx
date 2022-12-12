@@ -90,7 +90,7 @@ export const JoinPool = () => {
   }
   return (
     <>
-      <Title title={t('join_pool')} icon={faUserPlus} />
+      <Title title={t('joinPool')} icon={faUserPlus} />
       <PaddingWrapper>
         <ContentWrapper>
           <div>

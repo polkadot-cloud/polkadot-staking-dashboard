@@ -82,7 +82,7 @@ export const UpdatePayee = () => {
   return (
     <>
       <Title
-        title={t('update_reward_destination', { ns: 'modals' })}
+        title={t('updateRewardDestination', { ns: 'modals' })}
         icon={faWallet}
         helpKey="Reward Destination"
       />
@@ -95,9 +95,7 @@ export const UpdatePayee = () => {
           }}
         >
           {getControllerNotImported(controller) && (
-            <Warning
-              text={t('must_have_controller_update', { ns: 'modals' })}
-            />
+            <Warning text={t('mustHaveControllerUpdate', { ns: 'modals' })} />
           )}
           <Dropdown
             items={payeeItems.map((p) => {
@@ -107,7 +105,7 @@ export const UpdatePayee = () => {
               };
             })}
             onChange={handleOnChange}
-            placeholder={t('reward_destination', { ns: 'modals' })}
+            placeholder={t('rewardDestination', { ns: 'modals' })}
             value={selected}
             current={{
               key: defaultSelected,

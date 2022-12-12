@@ -64,7 +64,7 @@ export const SelectFavorites = () => {
 
   return (
     <>
-      <Title title={t('add_from_favorites')} />
+      <Title title={t('addFromFavorites')} />
       <PaddingWrapper>
         <ListWrapper>
           {availableFavorites.length > 0 ? (
@@ -72,7 +72,7 @@ export const SelectFavorites = () => {
               bondType="stake"
               validators={availableFavorites}
               batchKey={batchKey}
-              title={t('favorite_validators')}
+              title={t('favoriteValidators')}
               selectable
               selectActive
               selectToggleable={false}
@@ -83,7 +83,7 @@ export const SelectFavorites = () => {
               refetchOnListUpdate
             />
           ) : (
-            <h3>{t('no_favorites_available')}</h3>
+            <h3>{t('noFavoritesAvailable')}</h3>
           )}
         </ListWrapper>
         <FooterWrapper>
@@ -94,11 +94,11 @@ export const SelectFavorites = () => {
           >
             {selectedFavorites.length > 0
               ? overMaxNominations
-                ? `${t('will_surpass', { maxNominations })}`
-                : `${t('adding_favorite', {
+                ? `${t('willSurpass', { maxNominations })}`
+                : `${t('addingFavorite', {
                     count: selectedFavorites.length,
                   })}`
-              : `${t('no_favorites_selected')}`}
+              : `${t('noFavoritesSelected')}`}
           </button>
         </FooterWrapper>
       </PaddingWrapper>
