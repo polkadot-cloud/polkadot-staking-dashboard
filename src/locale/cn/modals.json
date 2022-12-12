@@ -145,8 +145,6 @@
     "withdrawUnlocked": "取出己解锁",
     "youMust_account": "您必须导入帐户才能停止提名",
     "youMust_controller": "您必须导入controller帐户才能停止提名",
-    "chooseLanguage": "选择语言",
-    "en": "英语",
-    "cn": "中文"
+    "chooseLanguage": "选择语言"
   }
 }

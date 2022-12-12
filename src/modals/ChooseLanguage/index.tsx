@@ -20,23 +20,28 @@ export const ChooseLanguage = () => {
       <PaddingWrapper>
         <ContentWrapper>
           <div className="item">
-            {availableLanguages.map((l: string, i: number) => (
-              <h3 key={`${l}_{i}`}>
-                <LocaleButton
-                  connected={i18n.resolvedLanguage === l}
-                  type="button"
-                  onClick={() => {
-                    changeLanguage(l, i18n);
-                    setStatus(2);
-                  }}
-                >
-                  {t(`${availableLanguages[i]}`).toUpperCase()}
-                  {i18n.resolvedLanguage === l && (
-                    <h4 className="selected">{t('selected')}</h4>
-                  )}
-                </LocaleButton>
-              </h3>
-            ))}
+            {availableLanguages.map((a: Array<string>, i: number) => {
+              const code = a[0];
+              const label = a[1];
+
+              return (
+                <h3 key={`${code}_${i}`}>
+                  <LocaleButton
+                    connected={i18n.resolvedLanguage === code}
+                    type="button"
+                    onClick={() => {
+                      changeLanguage(code, i18n);
+                      setStatus(2);
+                    }}
+                  >
+                    {label}
+                    {i18n.resolvedLanguage === code && (
+                      <h4 className="selected">{t('selected')}</h4>
+                    )}
+                  </LocaleButton>
+                </h3>
+              );
+            })}
           </div>
         </ContentWrapper>
       </PaddingWrapper>

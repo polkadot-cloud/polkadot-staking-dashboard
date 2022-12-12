@@ -21,7 +21,10 @@ export const locales: { [key: string]: AnyJson } = {
 };
 
 // available languages as an array of strings.
-export const availableLanguages: Array<string> = ['en', 'cn'];
+export const availableLanguages: Array<Array<string>> = [
+  ['en', 'English'],
+  ['cn', '中文'],
+];
 
 // the supported namespaces.
 export const lngNamespaces = [
@@ -79,7 +82,9 @@ if (dynamicLoad) {
 
 // map i18n to BCP 47 keys, with any custom amendments.
 const i18ToLocaleMap: { [key: string]: string } = {
-  ...Object.fromEntries(availableLanguages.map((a: string) => [a, a])),
+  ...Object.fromEntries(
+    availableLanguages.map((a: Array<string>) => [a[0], a[0]])
+  ),
   en: 'en-gb',
   cn: 'zh-cn',
 };
