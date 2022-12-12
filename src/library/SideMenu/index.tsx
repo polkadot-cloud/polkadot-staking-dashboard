@@ -69,16 +69,16 @@ export const SideMenu = () => {
     status === ConnectionStatus.Connecting
       ? defaultThemes.status.warning.solid[mode]
       : status === ConnectionStatus.Connected
-        ? defaultThemes.status.success.solid[mode]
-        : defaultThemes.status.danger.solid[mode];
+      ? defaultThemes.status.success.solid[mode]
+      : defaultThemes.status.danger.solid[mode];
 
   // handle transparent border color
   const borderColor =
     status === ConnectionStatus.Connecting
       ? defaultThemes.status.warning.transparent[mode]
       : status === ConnectionStatus.Connected
-        ? defaultThemes.status.success.transparent[mode]
-        : defaultThemes.status.danger.transparent[mode];
+      ? defaultThemes.status.success.transparent[mode]
+      : defaultThemes.status.danger.transparent[mode];
 
   return (
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
@@ -169,7 +169,6 @@ export const SideMenu = () => {
           <LanguageSVG width="1.6rem" height="1.6rem" />
         </button>
       </section>
-
     </Wrapper>
   );
 };
