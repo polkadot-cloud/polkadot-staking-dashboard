@@ -175,7 +175,13 @@ export const BalanceChart = () => {
             </div>
           </div>
           {fundsLocked > 0 ? (
-            <div style={{ flex: 1, flexBasis: `${graphLocked.toFixed(2)}%` }}>
+            <div
+              style={{
+                flexShrink: 1,
+                minWidth: '8rem',
+                flexBasis: `${graphLocked.toFixed(2)}%`,
+              }}
+            >
               <h4 className="l">
                 Locked <OpenHelpIcon helpKey="Your Balance" />
               </h4>
