@@ -79,7 +79,7 @@
       [
         "It is important to keep your pool actively nominating.",
         "If your pool is not earning rewards, members will be tempted to leave and join another pool.",
-        "Your root and nominator roles are important for managing your nominations. If nominations are not performing well, choose different ones to increase your pool's chances of earning rewards."
+        "Your root and nominator roles are important for managing your nomination."
       ]
     ],
     "reviewing_payouts": [
@@ -92,11 +92,10 @@
     ],
     "understanding_validator_performance": [
       "Measuring Validator Performance",
-      "Various factors affect how much validators are rewarded.",
+      "The performance of the validator depends on its uptime.",
       [
-        "Various factors affect how much validators are rewarded, such as the amount of era points it generates, how many nominators are backing it, and whether it is over subscribed.",
-        "All these metrics change over time, sometimes in an unpredictable manner.It is therefore important that nominators actively monitor validators and their performance.",
-        "Staking dashboard provides a range of metrics to help you understand how a validator is performing."
+        "The reward systems on Aleph Zero is simple -- each validator is earning rewards proportional to its stake.",
+        "If a validator's uptime is lower than 100%, its reward is slightly reduced though."
       ]
     ]
   }
