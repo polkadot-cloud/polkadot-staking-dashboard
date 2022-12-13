@@ -178,7 +178,7 @@ export const BalanceChart = () => {
             <div
               style={{
                 flexShrink: 1,
-                minWidth: '8rem',
+                minWidth: '8.5rem',
                 flexBasis: `${graphLocked.toFixed(2)}%`,
               }}
             >
@@ -195,7 +195,8 @@ export const BalanceChart = () => {
           <div
             style={{
               flex: 0,
-              width: '8rem',
+              maxWidth: '8.25rem',
+              flexBasis: '50%',
             }}
           >
             <h4 className="l">

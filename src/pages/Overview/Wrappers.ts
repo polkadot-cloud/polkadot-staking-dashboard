@@ -206,7 +206,7 @@ export const BalanceChartWrapper = styled.div`
         white-space: nowrap;
         overflow: hidden;
         font-variation-settings: 'wght' 550;
-        opacity: 0.7;
+        opacity: 0.75;
         padding: 0 0.75rem;
         width: 100%;
       }
