@@ -86,6 +86,7 @@
     "notAuthenticated": "Not Authenticated. Authenticate and Try Again",
     "notConnected": "Not Connected",
     "notMeetMinimum": "You do not meet the minimum nominator bond of {{minNominatorBondBase}} {{unit}}. Please bond some funds before nominating.",
+    "notStaking": "Not Staking",
     "onceSubmitted": "Once submitted, you will start nominating your chosen validators.",
     "onceUnbonding": "Once unbonding, your funds to become available after {{bondDuration}} eras.",
     "openFeedback": "Open Feedback on Canny.io",

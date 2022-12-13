@@ -73,12 +73,16 @@ export const getResources = (lng: string) => {
 // On click handler for changing language in-app.
 export const changeLanguage = async (lng: string, i18next: AnyApi) => {
   // check whether resources exist and need to by dynamically loaded.
-  const { dynamicLoad } = getResources(lng);
+  const { resources, dynamicLoad } = getResources(lng);
 
   // dynamically load default language resources if needed.
   if (dynamicLoad) {
     await doDynamicImport(lng, i18next);
   } else {
+    localStorage.setItem(
+      'lng_resources',
+      JSON.stringify({ l: lng, r: resources })
+    );
     i18next.changeLanguage(lng);
   }
 };
