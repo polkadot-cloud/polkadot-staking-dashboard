@@ -191,16 +191,24 @@ export const BalanceChartWrapper = styled.div`
       border: ${cardBorder} ${borderPrimary};
     }
     > div {
+      position: relative;
       height: 100%;
       display: flex;
       flex-flow: row wrap;
       align-items: center;
       font-size: 1rem;
       transition: width 1.5s cubic-bezier(0.1, 1, 0.2, 1);
+
       > span {
+        position: absolute;
+        left: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
         font-variation-settings: 'wght' 550;
         opacity: 0.7;
-        padding: 0 1rem;
+        padding: 0 0.75rem;
+        width: 100%;
       }
     }
   }

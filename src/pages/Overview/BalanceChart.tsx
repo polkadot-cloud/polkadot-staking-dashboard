@@ -150,7 +150,16 @@ export const BalanceChart = () => {
           />
         </div>
         <div className="available">
-          <div style={{ flex: 1, flexBasis: '66%' }}>
+          <div
+            style={{
+              flex: 1,
+              flexBasis: `${
+                graphFree > 0 && graphLocked > 0
+                  ? `${graphFree.toFixed(2)}%`
+                  : 'auto'
+              }`,
+            }}
+          >
             <h4 className="l">
               Free Balance <OpenHelpIcon helpKey="Your Balance" />
             </h4>
@@ -158,11 +167,7 @@ export const BalanceChart = () => {
               <div
                 className="d4"
                 style={{
-                  width: `${
-                    graphFree > 0 && graphLocked > 0
-                      ? `${graphFree.toFixed(2)}%`
-                      : 'auto'
-                  }`,
+                  width: '100%',
                 }}
               >
                 <span>{toFixedIfNecessary(fundsFree, 3)} DOT</span>
@@ -183,9 +188,8 @@ export const BalanceChart = () => {
           ) : null}
           <div
             style={{
-              flex: 1,
-              flexBasis: '1%',
-              minWidth: '90px',
+              flex: 0,
+              width: '8rem',
             }}
           >
             <h4 className="l">
