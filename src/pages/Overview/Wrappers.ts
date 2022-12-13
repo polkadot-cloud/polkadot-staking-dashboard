@@ -243,7 +243,7 @@ export const BalanceChartWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-flow: row nowrap;
-    margin-top: 2.5rem;
+    margin-top: 2.7rem;
     > div {
       display: flex;
       flex-flow: row wrap;
@@ -255,7 +255,7 @@ export const BalanceChartWrapper = styled.div`
         padding-right: 0rem;
       }
       > h4 {
-        margin: 0.5rem 0 0.8rem 0;
+        margin: 0.5rem 0 0.7rem 0;
         padding: 0 0.2rem;
       }
     }
