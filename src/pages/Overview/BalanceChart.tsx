@@ -3,8 +3,10 @@
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
+import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
+import { Lock } from 'contexts/Balances/types';
 import { useConnect } from 'contexts/Connect';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
@@ -28,7 +30,8 @@ export const BalanceChart = () => {
   const prices = usePrices();
   const { services } = useUi();
   const { activeAccount } = useConnect();
-  const { getAccountBalance, existentialAmount } = useBalances();
+  const { getAccountBalance, existentialAmount, getAccountLocks } =
+    useBalances();
   const { getTransferOptions } = useTransferOptions();
   const balance = getAccountBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
@@ -36,14 +39,65 @@ export const BalanceChart = () => {
   const unlockingPools = poolBondOpions.totalUnlocking.add(
     poolBondOpions.totalUnlocked
   );
+
   // user's total balance
-  const { free } = balance;
-  const freeBase = planckBnToUnit(
+  const { free, miscFrozen } = balance;
+  const totalBalance = planckBnToUnit(
     free.add(poolBondOpions.active).add(unlockingPools),
     units
   );
   // convert balance to fiat value
-  const freeFiat = toFixedIfNecessary(Number(freeBase * prices.lastPrice), 2);
+  const freeFiat = toFixedIfNecessary(
+    Number(totalBalance * prices.lastPrice),
+    2
+  );
+
+  // total funds nominating
+  const nominating = planckBnToUnit(
+    allTransferOptions.nominate.active
+      .add(allTransferOptions.nominate.totalUnlocking)
+      .add(allTransferOptions.nominate.totalUnlocked),
+    units
+  );
+  // total funds in pool
+  const inPool = planckBnToUnit(
+    allTransferOptions.pool.active
+      .add(allTransferOptions.pool.totalUnlocking)
+      .add(allTransferOptions.pool.totalUnlocked),
+    units
+  );
+  // total funds not staking
+  const notStaking = planckBnToUnit(
+    allTransferOptions.freeBalance.add(existentialAmount),
+    units
+  );
+
+  // graph percentages
+  const graphTotal = nominating + inPool + notStaking;
+  const graphNominating = nominating > 0 ? nominating / (graphTotal * 0.01) : 0;
+  const graphInPool = inPool > 0 ? inPool / (graphTotal * 0.01) : 0;
+  const graphNotStaking =
+    graphTotal > 0 ? 100 - graphNominating - graphInPool : 0;
+
+  // check account non-staking locks
+  const locks = getAccountLocks(activeAccount);
+
+  // NOT WORKING - there is overlap between different lock types.
+  // miscFrozen - staking lock
+  const locksStaking = locks.find((l: Lock) => l.id.trim() === 'staking');
+  const lockStakingAmount = locksStaking ? locksStaking.amount : new BN(0);
+
+  // available balance data
+  const fundsLocked = planckBnToUnit(miscFrozen.sub(lockStakingAmount), units);
+  const fundsReserved = planckBnToUnit(existentialAmount, units);
+  const fundsFree =
+    planckBnToUnit(allTransferOptions.freeBalance, units) - fundsLocked;
+
+  // available balance percentages
+  const graphAvailable = fundsFree + fundsReserved + fundsLocked;
+  const graphLocked =
+    fundsLocked > 0 ? fundsLocked / (graphAvailable * 0.01) : 0;
+  const graphFree = fundsFree > 0 ? fundsFree / (graphAvailable * 0.01) : 0;
 
   return (
     <>
@@ -53,7 +107,7 @@ export const BalanceChart = () => {
           <OpenHelpIcon helpKey="Your Balance" />
         </h4>
         <h2>
-          <span className="amount">{humanNumber(freeBase)}</span>&nbsp;
+          <span className="amount">{humanNumber(totalBalance)}</span>&nbsp;
           {unit}
           <span className="fiat">
             {services.includes('binance_spot') && (
@@ -64,16 +118,20 @@ export const BalanceChart = () => {
       </div>
       <BalanceChartWrapper>
         <div className="legend">
-          <section>
-            <h4 className="l">
-              <span className="d1" /> Nominating
-            </h4>
-          </section>
-          <section>
-            <h4 className="l">
-              <span className="d2" /> In a Pool
-            </h4>
-          </section>
+          {nominating > 0 ? (
+            <section>
+              <h4 className="l">
+                <span className="d1" /> Nominating
+              </h4>
+            </section>
+          ) : null}
+          {inPool > 0 ? (
+            <section>
+              <h4 className="l">
+                <span className="d2" /> In a Pool
+              </h4>
+            </section>
+          ) : null}
           <section>
             <h4 className="l">
               <span className="d4" /> Not Staking
@@ -81,12 +139,15 @@ export const BalanceChart = () => {
           </section>
         </div>
         <div className="chart main">
-          <div className="d1" style={{ width: '80%' }}>
-            &nbsp;
-          </div>
-          <div className="d2" style={{ width: '10%' }}>
-            &nbsp;
-          </div>
+          <div
+            className="d1"
+            style={{ width: `${graphNominating.toFixed(2)}%` }}
+          />
+          <div className="d2" style={{ width: `${graphInPool.toFixed(2)}%` }} />
+          <div
+            className="d4"
+            style={{ width: `${graphNotStaking.toFixed(2)}%` }}
+          />
         </div>
         <div className="available">
           <div style={{ flex: 1, flexBasis: '66%' }}>
@@ -94,27 +155,37 @@ export const BalanceChart = () => {
               Free Balance <OpenHelpIcon helpKey="Your Balance" />
             </h4>
             <div className="chart">
-              <div className="d4" style={{ width: '100%' }}>
-                <span>234.201 DOT</span>
+              <div
+                className="d4"
+                style={{
+                  width: `${
+                    graphFree > 0 && graphLocked > 0
+                      ? `${graphFree.toFixed(2)}%`
+                      : 'auto'
+                  }`,
+                }}
+              >
+                <span>{toFixedIfNecessary(fundsFree, 3)} DOT</span>
               </div>
             </div>
           </div>
-          <div style={{ flex: 1, flexBasis: '24%' }}>
-            <h4 className="l">
-              Locked <OpenHelpIcon helpKey="Your Balance" />
-            </h4>
-            <div className="chart">
-              <div className="d4" style={{ width: '100%' }}>
-                <span>28.98 DOT</span>
+          {fundsLocked > 0 ? (
+            <div style={{ flex: 1, flexBasis: `${graphLocked.toFixed(2)}%` }}>
+              <h4 className="l">
+                Locked <OpenHelpIcon helpKey="Your Balance" />
+              </h4>
+              <div className="chart">
+                <div className="d4" style={{ width: '100%' }}>
+                  <span>{toFixedIfNecessary(fundsLocked, 3)} DOT</span>
+                </div>
               </div>
             </div>
-          </div>
+          ) : null}
           <div
             style={{
-              width: '10%',
               flex: 1,
-              flexBasis: '10%',
-              minWidth: '100px',
+              flexBasis: '1%',
+              minWidth: '90px',
             }}
           >
             <h4 className="l">
@@ -122,10 +193,7 @@ export const BalanceChart = () => {
             </h4>
             <div className="chart">
               <div className="d4" style={{ width: '100%' }}>
-                <span>{`${toFixedIfNecessary(
-                  planckBnToUnit(existentialAmount, units),
-                  5
-                )} ${unit}`}</span>
+                <span>{`${toFixedIfNecessary(fundsReserved, 3)} ${unit}`}</span>
               </div>
             </div>
           </div>

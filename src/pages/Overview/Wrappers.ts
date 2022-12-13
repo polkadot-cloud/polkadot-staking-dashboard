@@ -115,7 +115,6 @@ export const SectionWrapper = styled.div<{ noPadding?: boolean }>`
       margin-left: 0.5rem;
       opacity: 0.7;
     }
-
     .icon {
       position: relative;
       top: 0.1rem;
@@ -197,10 +196,11 @@ export const BalanceChartWrapper = styled.div`
       flex-flow: row wrap;
       align-items: center;
       font-size: 1rem;
-      padding: 0 1rem;
+      transition: width 1.5s cubic-bezier(0.1, 1, 0.2, 1);
       > span {
         font-variation-settings: 'wght' 550;
         opacity: 0.7;
+        padding: 0 1rem;
       }
     }
   }
