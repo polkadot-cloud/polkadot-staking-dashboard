@@ -66,8 +66,16 @@ export const BalanceChart = () => {
       .add(allTransferOptions.pool.totalUnlocked),
     units
   );
+
   // total funds not staking
-  const notStaking = planckBnToUnit(allTransferOptions.freeBalance, units);
+
+  // check account non-staking locks
+  const locks = getAccountLocks(activeAccount);
+  const locksStaking = locks.find((l: Lock) => l.id.trim() === 'staking');
+  const lockStakingAmount = locksStaking ? locksStaking.amount : new BN(0);
+
+  const graphAvailable = planckBnToUnit(free.sub(lockStakingAmount), units);
+  const notStaking = graphAvailable - nominating - inPool;
 
   // graph percentages
   const graphTotal = nominating + inPool + notStaking;
@@ -76,11 +84,6 @@ export const BalanceChart = () => {
   const graphNotStaking =
     graphTotal > 0 ? 100 - graphNominating - graphInPool : 0;
 
-  // check account non-staking locks
-  const locks = getAccountLocks(activeAccount);
-  const locksStaking = locks.find((l: Lock) => l.id.trim() === 'staking');
-  const lockStakingAmount = locksStaking ? locksStaking.amount : new BN(0);
-
   // available balance data
   const fundsLocked = planckBnToUnit(miscFrozen.sub(lockStakingAmount), units);
   let fundsReserved = planckBnToUnit(existentialAmount, units);
@@ -88,7 +91,6 @@ export const BalanceChart = () => {
     planckBnToUnit(allTransferOptions.freeBalance, units) - fundsLocked;
 
   // available balance percentages
-  const graphAvailable = planckBnToUnit(free.sub(lockStakingAmount), units);
   const graphLocked =
     fundsLocked > 0 ? fundsLocked / (graphAvailable * 0.01) : 0;
   const graphFree = fundsFree > 0 ? fundsFree / (graphAvailable * 0.01) : 0;
