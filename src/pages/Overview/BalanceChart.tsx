@@ -26,7 +26,7 @@ import { BalanceChartWrapper } from './Wrappers';
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
   const {
-    network: { units, unit },
+    network: { units, unit, name },
   } = useApi();
   const prices = usePrices();
   const { services } = useUi();
@@ -100,7 +100,7 @@ export const BalanceChart = () => {
   }
 
   // width threshold (percentage) to display graph values
-  const WidthThreshold = 5;
+  const WidthThreshold = 10;
 
   return (
     <>
@@ -260,7 +260,7 @@ export const BalanceChart = () => {
               <ButtonInvertRounded
                 onClick={() =>
                   window.open(
-                    `https://polkadot.subscan.io/account/${activeAccount}`,
+                    `https://${name.toLowerCase()}.subscan.io/account/${activeAccount}`,
                     '_blank'
                   )
                 }
