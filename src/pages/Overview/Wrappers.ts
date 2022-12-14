@@ -256,6 +256,7 @@ export const BalanceChartWrapper = styled.div`
       }
       > h4,
       .heading {
+        color: ${textSecondary};
         width: 100%;
         margin: 0.5rem 0 0.75rem 0;
         padding: 0.2rem;
