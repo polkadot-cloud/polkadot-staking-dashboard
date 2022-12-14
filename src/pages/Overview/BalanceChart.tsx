@@ -223,7 +223,7 @@ export const BalanceChart = () => {
             >
               <div className="l heading">
                 <div>
-                  Locked{t('overview.')}
+                  {t('overview.locked')}
                   <OpenHelpIcon helpKey="Reserve Balance" />
                 </div>
               </div>

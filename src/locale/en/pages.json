@@ -82,6 +82,7 @@
       "inPool": "In a Pool",
       "inPools": "is currently bonded in pools.",
       "inflation": "Inflation",
+      "locked": "Locked",
       "minimumBondingAmount": "The minimum bonding amount to start nominating on {{networkName}} is now",
       "minimumNominatorBond": "The minimum nominator bond is now",
       "more_resources": "More Resources",

@@ -1,6 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-
+/* eslint-disable */
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faChartPie,
@@ -295,25 +295,25 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
         <SelectableWrapper>
           <button type="button" onClick={() => clearNominations()}>
             <FontAwesomeIcon icon={faTimes as IconProp} />
-            {method}
+            {method}ting
           </button>
 
           {['Active Low Commission', 'Optimal Selection'].includes(
             method || ''
           ) && (
-            <button
-              type="button"
-              onClick={() => {
-                // set a temporary height to prevent height snapping on re-renders.
-                setHeight(heightRef?.current?.clientHeight || null);
-                setTimeout(() => setHeight(null), 200);
-                removeValidatorMetaBatch(batchKey);
-                setFetching(true);
-              }}
-            >
-              {t('reGenerate')}
-            </button>
-          )}
+              <button
+                type="button"
+                onClick={() => {
+                  // set a temporary height to prevent height snapping on re-renders.
+                  setHeight(heightRef?.current?.clientHeight || null);
+                  setTimeout(() => setHeight(null), 200);
+                  removeValidatorMetaBatch(batchKey);
+                  setFetching(true);
+                }}
+              >
+                {t('reGenerate')}
+              </button>
+            )}
         </SelectableWrapper>
       )}
       <Wrapper

@@ -81,6 +81,7 @@
       "inPool": "提名池中",
       "inPools": "当前质押在提名池中",
       "inflation": "通货膨胀",
+      "locked": "己锁",
       "minimumBondingAmount": "在{{networkName}}提名最低绑定额为",
       "minimumNominatorBond": "提名人抵押额最低为",
       "more_resources": "更多资讯",
