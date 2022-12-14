@@ -2,14 +2,33 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
+import { AnyJson } from 'types';
 import { planckBnToUnit, rmCommas } from 'Utils';
 
 // eslint-disable-next-line no-restricted-globals
 export const ctx: Worker = self as any;
 
-ctx.addEventListener('message', (event: any) => {
+ctx.addEventListener('message', (event: AnyJson) => {
   const { data } = event;
+  const { task } = data;
 
+  let message = {};
+
+  switch (task) {
+    case 'initialise_exposures':
+      message = processExposures(data);
+      break;
+    default:
+  }
+
+  postMessage({ task, ...message });
+});
+
+// process exposure
+//
+// abstracts active nominators and minimum active
+// bond from erasStakers.
+const processExposures = (data: AnyJson) => {
   const { units, exposures, activeAccount } = data;
 
   const stakers: any = [];
@@ -76,14 +95,14 @@ ctx.addEventListener('message', (event: any) => {
   // convert minActiveBond to base value
   minActiveBond = planckBnToUnit(minActiveBond, units);
 
-  postMessage({
+  return {
     stakers,
     ownStake,
     totalActiveNominators: nominators.length,
     activeValidators,
     minActiveBond,
     _activeAccount: activeAccount,
-  });
-});
+  };
+};
 
 export default null as any;

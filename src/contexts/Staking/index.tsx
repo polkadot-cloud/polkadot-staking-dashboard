@@ -166,6 +166,10 @@ export const StakingProvider = ({
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
       const { data } = message;
+      const { task } = data;
+      if (task !== 'initialise_exposures') {
+        return;
+      }
       const {
         stakers,
         totalActiveNominators,
@@ -271,6 +275,7 @@ export const StakingProvider = ({
 
     // worker to calculate stats
     worker.postMessage({
+      task: 'initialise_exposures',
       activeAccount,
       units: network.units,
       exposures,
