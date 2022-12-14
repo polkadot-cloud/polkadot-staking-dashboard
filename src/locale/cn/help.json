@@ -51,6 +51,14 @@
           "该应用确保账户永远不会低于这个数额."
         ]
       ],
+      "lockedBalance": [
+        "Locked Balance",
+        [
+          "In {NETWORK_NAME} some actions require your balance to be locked, such as staking, or voting on governance. If some of your balance is locked, it can not be transferred.",
+          "The amount of locked balance displayed on staking dashboard represents all your locks except from your staked balance.",
+          "You are able to nominate with any remaining locked balance, but you are not able to join a pool as this requires a transfer to the pool account."
+        ]
+      ],
       "networkStats": [
         "网络数据",
         ["实时网络信息可为您的抵押提供参考.", "可从总览中得到最新的网络数据."]

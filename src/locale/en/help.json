@@ -51,6 +51,14 @@
           "Staking dashboard ensures that this amount of {NETWORK_UNIT} is never touched."
         ]
       ],
+      "lockedBalance": [
+        "Locked Balance",
+        [
+          "In {NETWORK_NAME} some actions require your balance to be locked, such as staking or voting on governance. If some of your balance is locked, it cannot be transferred.",
+          "The amount of locked balance displayed on staking dashboard represents all your locks apart from the staking lock - hence displaying all the locked balance at your disposal that you can use to nominate.",
+          "You are able to nominate with any remaining locked balance, but you are not able to join a pool with it, as doing so requires a transfer to the pool account."
+        ]
+      ],
       "networkStats": [
         "Network Stats",
         [
