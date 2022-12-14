@@ -254,9 +254,27 @@ export const BalanceChartWrapper = styled.div`
       &:last-child {
         padding-right: 0rem;
       }
-      > h4 {
-        margin: 0.5rem 0 0.7rem 0;
-        padding: 0 0.2rem;
+      > h4,
+      .heading {
+        width: 100%;
+        margin: 0.5rem 0 0.75rem 0;
+        padding: 0.2rem;
+        height: 1.75rem;
+        position: relative;
+        overflow: hidden;
+        > div {
+          position: absolute;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          max-width: 100%;
+          padding-right: 2rem;
+          .help-icon {
+            position: absolute;
+            right: 0;
+            top: 0;
+          }
+        }
       }
     }
   }

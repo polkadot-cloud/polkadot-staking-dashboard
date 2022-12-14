@@ -193,9 +193,11 @@ export const BalanceChart = () => {
               }`,
             }}
           >
-            <h4 className="l">
-              Free <OpenHelpIcon helpKey="Your Balance" />
-            </h4>
+            <div className="l heading">
+              <div>
+                Free <OpenHelpIcon helpKey="Your Balance" />
+              </div>
+            </div>
             <div className="chart">
               <div
                 className="d4"
@@ -215,9 +217,12 @@ export const BalanceChart = () => {
                 flexBasis: `${graphLocked.toFixed(2)}%`,
               }}
             >
-              <h4 className="l">
-                Locked <OpenHelpIcon helpKey="Reserve Balance" />
-              </h4>
+              <div className="l heading">
+                <div>
+                  Locked
+                  <OpenHelpIcon helpKey="Reserve Balance" />
+                </div>
+              </div>
               <div className="chart">
                 <div className="d4" style={{ width: '100%' }}>
                   <span>{toFixedIfNecessary(fundsLocked, 3)} DOT</span>
@@ -229,14 +234,17 @@ export const BalanceChart = () => {
             <div
               style={{
                 flex: 0,
-                minWidth: '8.r5rem',
+                minWidth: '8.5rem',
                 maxWidth: '8.5rem',
                 flexBasis: '50%',
               }}
             >
-              <h4 className="l">
-                Reserve <OpenHelpIcon helpKey="Reserve Balance" />
-              </h4>
+              <div className="l heading">
+                <div>
+                  Reserve
+                  <OpenHelpIcon helpKey="Reserve Balance" />
+                </div>
+              </div>
               <div className="chart">
                 <div className="d4" style={{ width: '100%' }}>
                   <span>
