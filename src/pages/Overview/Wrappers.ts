@@ -211,7 +211,7 @@ export const BalanceChartWrapper = styled.div`
         width: 100%;
 
         > svg {
-          margin-right: 0.5rem;
+          margin-right: 0.4rem;
         }
       }
     }

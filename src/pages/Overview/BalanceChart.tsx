@@ -84,15 +84,20 @@ export const BalanceChart = () => {
 
   // available balance data
   const fundsLocked = planckBnToUnit(miscFrozen.sub(lockStakingAmount), units);
-  const fundsReserved = planckBnToUnit(existentialAmount, units);
+  let fundsReserved = planckBnToUnit(existentialAmount, units);
   const fundsFree =
     planckBnToUnit(allTransferOptions.freeBalance, units) - fundsLocked;
 
   // available balance percentages
-  const graphAvailable = fundsFree + fundsReserved + fundsLocked;
+  const graphAvailable = planckBnToUnit(free.sub(lockStakingAmount), units);
   const graphLocked =
     fundsLocked > 0 ? fundsLocked / (graphAvailable * 0.01) : 0;
   const graphFree = fundsFree > 0 ? fundsFree / (graphAvailable * 0.01) : 0;
+
+  // get total available balance, including reserve and locks
+  if (graphAvailable < fundsReserved) {
+    fundsReserved = graphAvailable;
+  }
 
   // width threshold (percentage) to display graph values
   const WidthThreshold = 5;
@@ -221,26 +226,28 @@ export const BalanceChart = () => {
               </div>
             </div>
           ) : null}
-          <div
-            style={{
-              flex: 0,
-              minWidth: '8.5rem',
-              maxWidth: '8.5rem',
-              flexBasis: '50%',
-            }}
-          >
-            <h4 className="l">
-              Reserve <OpenHelpIcon helpKey="Reserve Balance" />
-            </h4>
-            <div className="chart">
-              <div className="d4" style={{ width: '100%' }}>
-                <span>
-                  <FontAwesomeIcon icon={faLock} transform="shrink-2" />
-                  {`${toFixedIfNecessary(fundsReserved, 3)} ${unit}`}
-                </span>
+          {fundsReserved > 0 && (
+            <div
+              style={{
+                flex: 0,
+                minWidth: '8.75rem',
+                maxWidth: '8.75rem',
+                flexBasis: '50%',
+              }}
+            >
+              <h4 className="l">
+                Reserve <OpenHelpIcon helpKey="Reserve Balance" />
+              </h4>
+              <div className="chart">
+                <div className="d4" style={{ width: '100%' }}>
+                  <span>
+                    <FontAwesomeIcon icon={faLock} transform="shrink-3" />
+                    {`${toFixedIfNecessary(fundsReserved, 3)} ${unit}`}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
         <div className="more">
           <Separator />
