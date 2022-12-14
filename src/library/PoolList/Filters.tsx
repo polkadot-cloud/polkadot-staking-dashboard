@@ -57,7 +57,7 @@ export const Filters = () => {
       </div>
       <Container>
         <div className="items">
-          {!hasFilters && <Item label="No filters" disabled />}
+          {!hasFilters && <Item label={t('noFilters') || ''} disabled />}
           {includes?.map((e: string, i: number) => (
             <Item
               key={`pool_include_${i}`}

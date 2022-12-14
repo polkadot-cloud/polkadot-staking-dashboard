@@ -125,20 +125,20 @@ export const BalanceChart = () => {
           {nominating > 0 ? (
             <section>
               <h4 className="l">
-                <span className="d1" /> Nominating
+                <span className="d1" /> {t('overview.nominating')}
               </h4>
             </section>
           ) : null}
           {inPool > 0 ? (
             <section>
               <h4 className="l">
-                <span className="d2" /> In a Pool
+                <span className="d2" /> {t('overview.inPool')}
               </h4>
             </section>
           ) : null}
           <section>
             <h4 className="l">
-              <span className="d4" /> Not Staking
+              <span className="d4" /> {t('overview.notStaking')}
             </h4>
           </section>
         </div>
@@ -197,7 +197,7 @@ export const BalanceChart = () => {
           >
             <div className="l heading">
               <div>
-                Free <OpenHelpIcon helpKey="Your Balance" />
+                {t('overview.free')} <OpenHelpIcon helpKey="Your Balance" />
               </div>
             </div>
             <div className="chart">
@@ -223,7 +223,7 @@ export const BalanceChart = () => {
             >
               <div className="l heading">
                 <div>
-                  Locked
+                  {t('overview.locked')}
                   <OpenHelpIcon helpKey="Reserve Balance" />
                 </div>
               </div>
@@ -247,7 +247,7 @@ export const BalanceChart = () => {
             >
               <div className="l heading">
                 <div>
-                  Reserve
+                  {t('overview.reserve')}
                   <OpenHelpIcon helpKey="Reserve Balance" />
                 </div>
               </div>
@@ -264,7 +264,8 @@ export const BalanceChart = () => {
         <div className="more">
           <Separator />
           <h4>
-            More Resources <OpenHelpIcon helpKey="Reserve Balance" />
+            {t('overview.moreResources')}
+            <OpenHelpIcon helpKey="Reserve Balance" />
           </h4>
 
           <section>

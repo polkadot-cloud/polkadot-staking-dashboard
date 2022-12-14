@@ -129,6 +129,7 @@
     "updateRewardDestination": "Update Reward Destination",
     "unbond": "Unbond",
     "unbondAll": "Unbond All",
+    "unbonding": "Unbonding",
     "unbondingWithdraw": "Unbonding will also withdraw your outstanding rewards of",
     "unbondMemberFunds": "Unbond Member Funds",
     "unbondSomeOfYour": "Unbond some of your",
