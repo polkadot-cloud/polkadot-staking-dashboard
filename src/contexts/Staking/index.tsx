@@ -254,7 +254,7 @@ export const StakingProvider = ({
     if (!isReady || metrics.activeEra.index === 0 || !api) {
       return;
     }
-    const _exposures = await api.query.staking.erasStakers.entries(
+    const exposuresRaw = await api.query.staking.erasStakers.entries(
       metrics.activeEra.index
     );
 
@@ -262,7 +262,7 @@ export const StakingProvider = ({
     setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
 
     // humanise exposures to send to worker
-    const exposures = _exposures.map(([_keys, _val]: AnyApi) => {
+    const exposures = exposuresRaw.map(([_keys, _val]: AnyApi) => {
       return {
         keys: _keys.toHuman(),
         val: _val.toHuman(),
