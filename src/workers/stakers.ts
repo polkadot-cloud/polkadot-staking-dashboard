@@ -8,19 +8,17 @@ import { planckBnToUnit, rmCommas } from 'Utils';
 // eslint-disable-next-line no-restricted-globals
 export const ctx: Worker = self as any;
 
+// handle incoming message and route to correct handler.
 ctx.addEventListener('message', (event: AnyJson) => {
   const { data } = event;
   const { task } = data;
-
   let message = {};
-
   switch (task) {
     case 'initialise_exposures':
       message = processExposures(data);
       break;
     default:
   }
-
   postMessage({ task, ...message });
 });
 
