@@ -263,11 +263,7 @@ export const BalanceChart = () => {
         </div>
         <div className="more">
           <Separator />
-          <h4>
-            {t('overview.moreResources')}
-            <OpenHelpIcon helpKey="Reserve Balance" />
-          </h4>
-
+          <h4>{t('overview.moreResources')}</h4>
           <section>
             <div>
               <ButtonInvertRounded
