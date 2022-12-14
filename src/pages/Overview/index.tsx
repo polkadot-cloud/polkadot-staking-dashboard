@@ -87,7 +87,6 @@ export const Overview = () => {
           thresholdFullWidth={SectionFullWidthThreshold}
         >
           <GraphWrapper style={{ minHeight: BALANCE_HEIGHT }} flex>
-            {/* <BalanceGraph /> */}
             <BalanceChart />
           </GraphWrapper>
         </RowSecondaryWrapper>
