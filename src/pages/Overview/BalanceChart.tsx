@@ -67,10 +67,7 @@ export const BalanceChart = () => {
     units
   );
   // total funds not staking
-  const notStaking = planckBnToUnit(
-    allTransferOptions.freeBalance.add(existentialAmount),
-    units
-  );
+  const notStaking = planckBnToUnit(allTransferOptions.freeBalance, units);
 
   // graph percentages
   const graphTotal = nominating + inPool + notStaking;
@@ -81,9 +78,6 @@ export const BalanceChart = () => {
 
   // check account non-staking locks
   const locks = getAccountLocks(activeAccount);
-
-  // NOT WORKING - there is overlap between different lock types.
-  // miscFrozen - staking lock
   const locksStaking = locks.find((l: Lock) => l.id.trim() === 'staking');
   const lockStakingAmount = locksStaking ? locksStaking.amount : new BN(0);
 
@@ -98,6 +92,9 @@ export const BalanceChart = () => {
   const graphLocked =
     fundsLocked > 0 ? fundsLocked / (graphAvailable * 0.01) : 0;
   const graphFree = fundsFree > 0 ? fundsFree / (graphAvailable * 0.01) : 0;
+
+  // width threshold (percentage) to display graph values
+  const WidthThreshold = 5;
 
   return (
     <>
@@ -141,13 +138,43 @@ export const BalanceChart = () => {
         <div className="chart main">
           <div
             className="d1"
-            style={{ width: `${graphNominating.toFixed(2)}%` }}
-          />
-          <div className="d2" style={{ width: `${graphInPool.toFixed(2)}%` }} />
+            style={{
+              width: `${graphNominating.toFixed(2)}%`,
+              flexGrow: !inPool && !notStaking && nominating ? 1 : 0,
+            }}
+          >
+            {graphNominating > WidthThreshold ? (
+              <span>{`${humanNumber(
+                toFixedIfNecessary(nominating, 3)
+              )} ${unit}`}</span>
+            ) : null}
+          </div>
+          <div
+            className="d2"
+            style={{
+              width: `${graphInPool.toFixed(2)}%`,
+              flexGrow: !nominating && !notStaking && inPool ? 1 : 0,
+            }}
+          >
+            {graphInPool > WidthThreshold ? (
+              <span>{`${humanNumber(
+                toFixedIfNecessary(inPool, 3)
+              )} ${unit}`}</span>
+            ) : null}
+          </div>
           <div
             className="d4"
-            style={{ width: `${graphNotStaking.toFixed(2)}%` }}
-          />
+            style={{
+              width: `${graphNotStaking.toFixed(2)}%`,
+              flexGrow: !nominating && !inPool ? 1 : 0,
+            }}
+          >
+            {graphNotStaking > WidthThreshold || graphNotStaking === 0 ? (
+              <span>{`${humanNumber(
+                toFixedIfNecessary(notStaking, 3)
+              )} ${unit}`}</span>
+            ) : null}
+          </div>
         </div>
         <div className="available">
           <div
