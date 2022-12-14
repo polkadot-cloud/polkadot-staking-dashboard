@@ -8,7 +8,6 @@ import { motion, useAnimationControls } from 'framer-motion';
 import { Tip } from 'library/Tips/Tip';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Lottie from 'react-lottie';
 import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers';
 
 export const ItemsInner = ({ items, page }: any) => {
@@ -59,7 +58,6 @@ const Item = ({
   title,
   subtitle,
   description,
-  icon,
   index,
   controls,
   initial,
@@ -81,15 +79,6 @@ const Item = ({
     }
   }, []);
 
-  const animateOptions = {
-    loop: false,
-    autoplay: false,
-    animationData: icon,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
-    },
-  };
-
   return (
     <ItemWrapper
       animate={controls}
@@ -110,21 +99,7 @@ const Item = ({
       }}
     >
       <ItemInnerWrapper>
-        <section>
-          <Lottie
-            options={animateOptions}
-            width="2.2rem"
-            height="2.2rem"
-            isStopped={isStopped}
-            isPaused={isStopped}
-            eventListeners={[
-              {
-                eventName: 'loopComplete',
-                callback: () => setIsStopped(true),
-              },
-            ]}
-          />
-        </section>
+        <section />
         <section>
           <div className="title">
             <h3>{title}</h3>

@@ -22,10 +22,9 @@ import {
   TopBarWrapper,
 } from 'Wrappers';
 import { ActiveAccount } from './ActiveAccount';
-import BalanceGraph from './BalanceGraph';
+import { BalanceChart } from './BalanceChart';
 import { NetworkStats } from './NetworkSats';
 import Payouts from './Payouts';
-import Reserve from './Reserve';
 import ActiveEraStatBox from './Stats/ActiveEra';
 import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
 import TotalNominatorsStatBox from './Stats/TotalNominations';
@@ -45,7 +44,7 @@ export const Overview = () => {
   );
   const { i18n, t } = useTranslation('pages');
 
-  const PAYOUTS_HEIGHT = 410;
+  const PAYOUTS_HEIGHT = 390;
   const BALANCE_HEIGHT = PAYOUTS_HEIGHT;
 
   let formatFrom = new Date();
@@ -88,8 +87,7 @@ export const Overview = () => {
           thresholdFullWidth={SectionFullWidthThreshold}
         >
           <GraphWrapper style={{ minHeight: BALANCE_HEIGHT }} flex>
-            <BalanceGraph />
-            <Reserve />
+            <BalanceChart />
           </GraphWrapper>
         </RowSecondaryWrapper>
         <RowPrimaryWrapper

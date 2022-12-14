@@ -1,12 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { MediumFontSizeMaxWidth, SmallFontSizeMaxWidth } from 'consts';
 import styled from 'styled-components';
 import {
   borderPrimary,
   borderSecondary,
   buttonSecondaryBackground,
+  cardBorder,
+  networkColor,
+  networkColorSecondary,
   textSecondary,
 } from 'theme';
 
@@ -113,7 +115,6 @@ export const SectionWrapper = styled.div<{ noPadding?: boolean }>`
       margin-left: 0.5rem;
       opacity: 0.7;
     }
-
     .icon {
       position: relative;
       top: 0.1rem;
@@ -170,65 +171,142 @@ export const Separator = styled.div`
   height: 1px;
 `;
 
-export const ReserveWrapper = styled.div`
+export const BalanceChartWrapper = styled.div`
   width: 100%;
-  display: flex;
-  flex-flow: column wrap;
-  margin-top: 5.5rem;
-  @media (min-width: ${SmallFontSizeMaxWidth + 1}px) {
-    margin-top: 3rem;
+  padding: 0 1.75rem;
+  margin: 1rem 0;
+  .l {
+    font-variation-settings: 'wght' 600;
+    font-size: 1.1rem;
   }
-  @media (min-width: ${MediumFontSizeMaxWidth + 1}px) {
-    margin-top: 2.25rem;
-  }
-  > h4 {
-    margin-top: 0.75rem;
-    margin-bottom: 0.25rem;
-    @media (min-width: ${SmallFontSizeMaxWidth + 1}px) {
-      margin-top: 0.9rem;
-    }
-  }
-  > .inner {
+  .chart {
+    background: ${buttonSecondaryBackground};
     display: flex;
-    flex-flow: row wrap;
-    margin: 0;
-
-    > section {
+    flex-flow: row nowrap;
+    width: 100%;
+    height: 3.25rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    &.main {
+      border: ${cardBorder} ${borderPrimary};
+    }
+    > div {
+      position: relative;
+      height: 100%;
       display: flex;
       flex-flow: row wrap;
       align-items: center;
-      position: relative;
+      font-size: 1rem;
+      transition: width 1.5s cubic-bezier(0.1, 1, 0.2, 1);
 
-      &:first-child {
+      > span {
+        position: absolute;
+        left: 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         overflow: hidden;
+        font-variation-settings: 'wght' 550;
+        opacity: 0.85;
+        padding: 0 0.75rem;
+        width: 100%;
+      }
+    }
+  }
+  .legend {
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.4rem;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    > section {
+      padding: 0 1rem;
+      display: flex;
+      flex-flow: column wrap;
+      align-items: flex-start;
+      > h4 {
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        > span {
+          width: 1rem;
+          height: 1rem;
+          margin-right: 0.5rem;
+        }
+      }
+      &:first-child {
         padding-left: 0;
-
-        .reserve {
-          background: ${buttonSecondaryBackground};
-          display: block;
+      }
+    }
+  }
+  .available {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    margin-top: 2.7rem;
+    > div {
+      display: flex;
+      flex-flow: row wrap;
+      padding: 0 0.35rem;
+      &:first-child {
+        padding-left: 0rem;
+      }
+      &:last-child {
+        padding-right: 0rem;
+      }
+      > h4,
+      .heading {
+        color: ${textSecondary};
+        width: 100%;
+        margin: 0.5rem 0 0.75rem 0;
+        padding: 0.2rem;
+        height: 1.75rem;
+        position: relative;
+        overflow: hidden;
+        > div {
+          position: absolute;
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
-          position: relative;
-          border-radius: 1rem;
-          opacity: 0.75;
-          padding-top: 0.7rem;
-          padding-bottom: 0.7rem;
-          padding-left: 2.75rem;
-          padding-right: 1.5rem;
-          width: 100%;
-
-          .icon {
+          max-width: 100%;
+          padding-right: 2rem;
+          .help-icon {
             position: absolute;
-            top: 0.8rem;
-            left: 0.95rem;
+            right: 0;
+            top: 0;
           }
         }
       }
-
-      .help-icon {
-        margin-left: 0.6rem;
-      }
     }
+  }
+  .more {
+    width: 100%;
+    display: flex;
+    flex-flow: column wrap;
+    margin-top: 2.75rem;
+    h4 {
+      margin-top: 0.25rem;
+      margin-bottom: 0.25rem;
+    }
+    section {
+      width: 100%;
+      margin-top: 0.1rem;
+    }
+  }
+  .d1 {
+    color: white;
+    background: ${networkColor};
+  }
+  .d2 {
+    color: white;
+    background: ${networkColorSecondary};
+  }
+  .d3 {
+    color: white;
+    background: ${textSecondary};
+  }
+  .d4 {
+    color: ${textSecondary};
+    background: ${buttonSecondaryBackground};
   }
 `;
