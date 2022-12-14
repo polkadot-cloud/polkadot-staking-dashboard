@@ -27,6 +27,7 @@ import {
 } from '../SetupSteps/types';
 import { useFetchMehods } from './useFetchMethods';
 import { GenerateOptionsWrapper } from './Wrappers';
+import { camelize } from 'Utils';
 
 export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
   // functional props
@@ -295,7 +296,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
         <SelectableWrapper>
           <button type="button" onClick={() => clearNominations()}>
             <FontAwesomeIcon icon={faTimes as IconProp} />
-            {method}ting
+            {t(`${camelize(method)}`)}
           </button>
 
           {['Active Low Commission', 'Optimal Selection'].includes(
