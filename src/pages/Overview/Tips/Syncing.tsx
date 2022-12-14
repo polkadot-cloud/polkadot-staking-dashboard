@@ -35,7 +35,7 @@ export const Syncing = () => {
     >
       <ItemWrapper>
         <ItemInnerWrapper inactive>
-          <section>
+          <section style={{ paddingRight: '1.25rem' }}>
             <Lottie
               options={animateOptions}
               width="2.2rem"
