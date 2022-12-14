@@ -27,12 +27,14 @@ export const FastUnstakeProvider = ({
   const { bondDuration } = consts;
 
   // store whether a fast unstake check is in progress.
+  // TODO: cancel checking on network change / account change.
   const [checking, setChecking] = useState<boolean>(false);
 
   // TODO: store metadata relating to the fast unstake check.
   // const [meta, setMeta] = useState<AnyJson>(null);
 
-  // TODO: handle finished fast unstake eligibility check
+  // TODO: handle finished fast unstake eligibility check.
+  // TODO: subscribe to fastUnstake.queue(activeAccount) if finally eligible and check has finished.
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
       const { data } = message;

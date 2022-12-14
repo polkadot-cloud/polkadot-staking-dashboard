@@ -4,6 +4,9 @@
 import BN from 'bn.js';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { useFastUnstake } from 'contexts/FastUnstake';
+import { useNetworkMetrics } from 'contexts/Network';
 import { useSubscan } from 'contexts/Subscan';
 import { useUi } from 'contexts/UI';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
@@ -13,6 +16,7 @@ import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { humanNumber, planckBnToUnit } from 'Utils';
 import {
@@ -43,6 +47,15 @@ export const Overview = () => {
     poolClaims
   );
   const { i18n, t } = useTranslation('pages');
+  const { activeAccount } = useConnect();
+  const { fastUnstakeEligible } = useFastUnstake();
+
+  // testing fast unstake
+  const { metrics } = useNetworkMetrics();
+  const { activeEra } = metrics;
+  useEffect(() => {
+    fastUnstakeEligible(activeAccount);
+  }, [activeEra]);
 
   const PAYOUTS_HEIGHT = 390;
   const BALANCE_HEIGHT = PAYOUTS_HEIGHT;
