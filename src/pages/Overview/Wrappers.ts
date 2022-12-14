@@ -209,6 +209,10 @@ export const BalanceChartWrapper = styled.div`
         opacity: 0.85;
         padding: 0 0.75rem;
         width: 100%;
+
+        > svg {
+          margin-right: 0.5rem;
+        }
       }
     }
   }
