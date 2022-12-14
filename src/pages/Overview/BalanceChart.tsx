@@ -1,8 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faExternalLinkAlt, faLock } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
@@ -230,8 +229,8 @@ export const BalanceChart = () => {
             <div
               style={{
                 flex: 0,
-                minWidth: '8.75rem',
-                maxWidth: '8.75rem',
+                minWidth: '8.r5rem',
+                maxWidth: '8.5rem',
                 flexBasis: '50%',
               }}
             >
@@ -241,8 +240,7 @@ export const BalanceChart = () => {
               <div className="chart">
                 <div className="d4" style={{ width: '100%' }}>
                   <span>
-                    <FontAwesomeIcon icon={faLock} transform="shrink-3" />
-                    {`${toFixedIfNecessary(fundsReserved, 3)} ${unit}`}
+                    {`${toFixedIfNecessary(fundsReserved, 4)} ${unit}`}
                   </span>
                 </div>
               </div>
