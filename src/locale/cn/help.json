@@ -52,11 +52,11 @@
         ]
       ],
       "lockedBalance": [
-        "Locked Balance",
+        "锁定余额",
         [
-          "In {NETWORK_NAME} some actions require your balance to be locked, such as staking, or voting on governance. If some of your balance is locked, it can not be transferred.",
-          "The amount of locked balance displayed on staking dashboard represents all your locks except from your staked balance.",
-          "You are able to nominate with any remaining locked balance, but you are not able to join a pool as this requires a transfer to the pool account."
+        "在{NETWORK_NAME}中，某些操作需要锁定余额，例如抵押或对治理进行投票。如果您的部分余额被锁定，则无法转移.",
+        "该应用显示的锁定余额代表除您的抵押余额外的所有锁定.",
+        "您可以用锁定余额做任何提名，但不能加入池，因为这需要转移余额到池帐户."
         ]
       ],
       "networkStats": [
