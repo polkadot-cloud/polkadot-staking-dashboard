@@ -197,7 +197,7 @@ export const BalanceChartWrapper = styled.div`
       flex-flow: row wrap;
       align-items: center;
       font-size: 1rem;
-      transition: width 1.5s cubic-bezier(0.1, 1, 0.2, 1);
+      transition: width 1.5s cubic-bezier(0, 1, 0, 1);
 
       > span {
         position: absolute;
