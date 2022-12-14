@@ -264,7 +264,7 @@ export const BalanceChart = () => {
         <div className="more">
           <Separator />
           <h4>
-            {t('overview.more_resources')}{' '}
+            {t('overview.moreResources')}
             <OpenHelpIcon helpKey="Reserve Balance" />
           </h4>
 

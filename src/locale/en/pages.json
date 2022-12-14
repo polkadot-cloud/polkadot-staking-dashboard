@@ -85,7 +85,7 @@
       "locked": "Locked",
       "minimumBondingAmount": "The minimum bonding amount to start nominating on {{networkName}} is now",
       "minimumNominatorBond": "The minimum nominator bond is now",
-      "more_resources": "More Resources",
+      "moreResources": "More Resources",
       "networkStats": "Network Stats",
       "noAccountConnected": "No Account Connected",
       "nominating": "Nominating",
