@@ -40,7 +40,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
       display: flex;
       flex-flow: row wrap;
       align-items: center;
-      padding-right: 1rem;
+      padding-right: 0.25rem;
 
       .lpf {
         fill: ${networkColor};
