@@ -12,6 +12,7 @@ export const HELP_CONFIG: HelpItems = [
       'Active Nominators',
       'Your Balance',
       'Reserve Balance',
+      'Locked Balance',
       'Network Stats',
       'Historical Rewards Rate',
       'Adjusted Rewards Rate',
