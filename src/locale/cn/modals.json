@@ -123,6 +123,7 @@
     "updateRewardDestination": "更新奖励地址",
     "unbond": "解除质押",
     "unbondAll": "解除所有质押",
+    "unbonding": "解除质押中",
     "unbondingWithdraw": "解除质押还将提取您的未申领收益",
     "unbondMemberFunds": "解除质押会员金",
     "unbondSomeOfYour": "解除部分质押",

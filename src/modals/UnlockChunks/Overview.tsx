@@ -60,7 +60,8 @@ export const Overview = forwardRef(
           <StatWrapper>
             <div className="inner">
               <h4>
-                <FontAwesomeIcon icon={faClock} className="icon" /> Unbonding
+                <FontAwesomeIcon icon={faClock} className="icon" />{' '}
+                {t('unbonding')}
               </h4>
               <h2>
                 {humanNumber(
