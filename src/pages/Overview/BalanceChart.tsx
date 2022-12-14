@@ -205,7 +205,9 @@ export const BalanceChart = () => {
                   width: '100%',
                 }}
               >
-                <span>{toFixedIfNecessary(fundsFree, 3)} DOT</span>
+                <span>
+                  {toFixedIfNecessary(fundsFree, 3)} {unit}
+                </span>
               </div>
             </div>
           </div>
@@ -225,7 +227,9 @@ export const BalanceChart = () => {
               </div>
               <div className="chart">
                 <div className="d4" style={{ width: '100%' }}>
-                  <span>{toFixedIfNecessary(fundsLocked, 3)} DOT</span>
+                  <span>
+                    {toFixedIfNecessary(fundsLocked, 3)} {unit}
+                  </span>
                 </div>
               </div>
             </div>
