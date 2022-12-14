@@ -75,10 +75,10 @@ export const BalanceChart = () => {
   const lockStakingAmount = locksStaking ? locksStaking.amount : new BN(0);
 
   const graphAvailable = planckBnToUnit(free.sub(lockStakingAmount), units);
-  const notStaking = graphAvailable - nominating - inPool;
+  const notStaking = graphAvailable;
 
   // graph percentages
-  const graphTotal = nominating + inPool + notStaking;
+  const graphTotal = nominating + inPool + graphAvailable;
   const graphNominating = nominating > 0 ? nominating / (graphTotal * 0.01) : 0;
   const graphInPool = inPool > 0 ? inPool / (graphTotal * 0.01) : 0;
   const graphNotStaking =
