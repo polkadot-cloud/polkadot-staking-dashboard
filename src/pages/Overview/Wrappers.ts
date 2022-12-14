@@ -264,7 +264,7 @@ export const BalanceChartWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-flow: column wrap;
-    margin-top: 3.1rem;
+    margin-top: 2.75rem;
     h4 {
       margin-top: 0.25rem;
       margin-bottom: 0.25rem;
