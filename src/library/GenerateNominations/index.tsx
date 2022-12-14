@@ -1,6 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable */
+
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faChartPie,
@@ -21,13 +21,13 @@ import { ValidatorList } from 'library/ValidatorList';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { camelize } from 'Utils';
 import {
   GenerateNominationsInnerProps,
   Nominations,
 } from '../SetupSteps/types';
 import { useFetchMehods } from './useFetchMethods';
 import { GenerateOptionsWrapper } from './Wrappers';
-import { camelize } from 'Utils';
 
 export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
   // functional props
@@ -302,19 +302,19 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
           {['Active Low Commission', 'Optimal Selection'].includes(
             method || ''
           ) && (
-              <button
-                type="button"
-                onClick={() => {
-                  // set a temporary height to prevent height snapping on re-renders.
-                  setHeight(heightRef?.current?.clientHeight || null);
-                  setTimeout(() => setHeight(null), 200);
-                  removeValidatorMetaBatch(batchKey);
-                  setFetching(true);
-                }}
-              >
-                {t('reGenerate')}
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={() => {
+                // set a temporary height to prevent height snapping on re-renders.
+                setHeight(heightRef?.current?.clientHeight || null);
+                setTimeout(() => setHeight(null), 200);
+                removeValidatorMetaBatch(batchKey);
+                setFetching(true);
+              }}
+            >
+              {t('reGenerate')}
+            </button>
+          )}
         </SelectableWrapper>
       )}
       <Wrapper
