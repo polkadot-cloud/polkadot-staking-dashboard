@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { SectionFullWidthThreshold } from 'consts';
 import styled from 'styled-components';
 import {
   borderPrimary,
@@ -284,6 +285,11 @@ export const BalanceChartWrapper = styled.div`
     display: flex;
     flex-flow: column wrap;
     margin-top: 2.75rem;
+    @media (max-width: ${SectionFullWidthThreshold}px) {
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
     h4 {
       margin-top: 0.25rem;
       margin-bottom: 0.25rem;
