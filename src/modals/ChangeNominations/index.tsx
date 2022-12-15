@@ -142,7 +142,7 @@ export const ChangeNominations = () => {
           <h2>
             {t('stop')}{' '}
             {!remaining
-              ? t('allNomination')
+              ? t('allNominations')
               : `${t('nomination', { count: removing })}`}
           </h2>
           <Separator />
