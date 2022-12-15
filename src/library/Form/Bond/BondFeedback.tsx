@@ -115,6 +115,7 @@ export const BondFeedback = ({
     const _errors = warnings;
     const _bond = bond.bond;
     const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
+    const _decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
 
     // bond errors
     if (freeBalance === 0) {
@@ -132,6 +133,10 @@ export const BondFeedback = ({
 
     if (bond.bond !== '' && bondAfterTxFees.toNumber() < 0) {
       _errors.push(`${t('notEnoughAfter', { unit })}`);
+    }
+
+    if (_decimals > units) {
+      _errors.push(`Bond amount can only have at most ${units} decimals.`);
     }
 
     if (inSetup) {

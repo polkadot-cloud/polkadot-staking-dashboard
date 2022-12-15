@@ -113,6 +113,7 @@ export const UnbondFeedback = ({
     const _errors = [...warnings];
     const _bond = bond.bond;
     const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
+    const _decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
 
     // unbond errors
     if (Number(bond.bond) > freeToUnbondBase) _errors.push(t('unbondAmount'));
@@ -124,6 +125,10 @@ export const UnbondFeedback = ({
 
     if (bond.bond !== '' && Number(bond.bond) < _planck)
       _errors.push(t('valueTooSmall'));
+
+    if (_decimals > units) {
+      _errors.push(`Bond amount can only have at most ${units} decimals.`);
+    }
 
     if (Number(bond.bond) > unbondToMin) {
       // start the error message stating a min bond is required.
