@@ -3,22 +3,17 @@
 
 import { useNetworkMetrics } from 'contexts/Network';
 import { useSessionEra } from 'contexts/SessionEra';
-import { format, fromUnixTime } from 'date-fns';
 import { useEraTimeLeft } from 'library/Hooks/useEraTimeLeft';
 import { Pie } from 'library/StatBoxList/Pie';
-import { locales } from 'locale';
 import { useTranslation } from 'react-i18next';
 
 const ActiveEraStatBox = () => {
   const { metrics } = useNetworkMetrics();
   const { sessionEra } = useSessionEra();
   const eraTimeLeft = useEraTimeLeft();
-  const { i18n, t } = useTranslation('pages');
+  const { t } = useTranslation('pages');
 
-  const _timeleft = fromUnixTime(eraTimeLeft);
-  const timeleft = format(_timeleft, 'kk:mm:ss', {
-    locale: locales[i18n.resolvedLanguage],
-  });
+  const timeleft = new Date(1000 * eraTimeLeft).toISOString().substring(11, 19);
 
   const params = {
     label: t('overview.activeEra'),
