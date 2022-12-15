@@ -29,11 +29,6 @@ export const toFixedIfNecessary = (value: number, dp: number) => {
   return +parseFloat(String(value)).toFixed(dp);
 };
 
-export const planckToUnit = (val: number, units: number): number => {
-  const value = val / 10 ** units;
-  return value;
-};
-
 /**
  * Converts an on chain balance value in BN planck to a decimal value in token unit (1 token token = 10^units planck)
  * @param val A BN that includes the balance in planck as it is stored on chain. It can be a very large number.
