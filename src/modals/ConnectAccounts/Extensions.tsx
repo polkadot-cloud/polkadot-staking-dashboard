@@ -39,7 +39,7 @@ export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
             <div>
               <h3>
                 <span className="name">
-                  {t('imported_account', { count: accounts.length })}
+                  {t('importedAccount', { count: accounts.length })}
                 </span>
               </h3>
             </div>

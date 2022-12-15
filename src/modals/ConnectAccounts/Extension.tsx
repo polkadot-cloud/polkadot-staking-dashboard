@@ -28,11 +28,10 @@ export const Extension = (props: ExtensionProps) => {
       message = `${t('connected')}`;
       break;
     case 'not_authenticated':
-      message = t('not_authenticated');
+      message = t('notAuthenticated');
       break;
     default:
-      message =
-        status === 'no_accounts' ? t('no_accounts') : t('not_connected');
+      message = status === 'no_accounts' ? t('noAccounts') : t('notConnected');
   }
 
   return (

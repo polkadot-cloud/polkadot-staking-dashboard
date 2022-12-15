@@ -14,6 +14,7 @@ import { Warning } from 'library/Form/Warning';
 import useBondGreatestFee from 'library/Hooks/useBondGreatestFee';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit } from 'Utils';
 import { Separator } from '../../Wrappers';
 import { FormsProps } from '../types';
@@ -21,9 +22,10 @@ import { FormFooter } from './FormFooter';
 
 export const BondAll = (props: FormsProps) => {
   const { setSection, setLocalResize } = props;
+  const { t } = useTranslation('modals');
 
   const { api, network } = useApi();
-  const { units } = network;
+  const { units, unit } = network;
   const { setStatus: setModalStatus, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getTransferOptions } = useTransferOptions();
@@ -112,29 +114,24 @@ export const BondAll = (props: FormsProps) => {
     <>
       <div className="items">
         <>
-          {!accountHasSigner(activeAccount) && (
-            <Warning text="Your account is read only, and cannot sign transactions." />
-          )}
+          {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
           {freeBalance === 0 && (
-            <Warning text={`You have no free ${network.unit} to bond.`} />
+            <Warning text={`${t('noFreeToBond', { unit })}`} />
           )}
           {unclaimedRewards > 0 && bondType === 'pool' && (
             <Warning
-              text={`Bonding will also withdraw your outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+              text={`${t('bondingWithdraw')} ${unclaimedRewards} ${unit}.`}
             />
           )}
-          <h4>Amount to bond:</h4>
+          <h4>{t('amountToBond')}</h4>
           <h2>
             {largestTxFee.eq(new BN(0))
               ? '...'
-              : `${planckBnToUnit(bondAfterTxFees, units)} ${network.unit}`}
+              : `${planckBnToUnit(bondAfterTxFees, units)} ${unit}`}
           </h2>
-          <p>
-            This amount of {network.unit} will be added to your current bonded
-            funds.
-          </p>
+          <p>{t('addedToBond', { unit })}</p>
           <Separator />
-          <h4>New total bond:</h4>
+          <h4>{t('newTotalBond')}</h4>
           <h2>
             {largestTxFee.eq(new BN(0))
               ? '...'

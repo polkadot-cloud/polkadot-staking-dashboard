@@ -119,7 +119,7 @@ export const ChangeNominations = () => {
 
   return (
     <>
-      <Title title={t('stop_nominating')} icon={faStopCircle} />
+      <Title title={t('stopNominating')} icon={faStopCircle} />
       <PaddingWrapper verticalOnly>
         <div
           style={{
@@ -128,30 +128,32 @@ export const ChangeNominations = () => {
           }}
         >
           {!nominations.length ? (
-            <Warning text={t('no_nominations_set')} />
+            <Warning text={t('noNominationsSet')} />
           ) : null}
           {!accountHasSigner(signingAccount) && (
             <Warning
-              text={`You must have your${
-                bondType === 'stake' ? ' controller ' : ' '
-              }account imported to stop nominating.`}
+              text={`${
+                bondType === 'stake'
+                  ? t('youMust', { context: 'controller' })
+                  : t('youMust', { context: 'account' })
+              }`}
             />
           )}
           <h2>
             {t('stop')}{' '}
             {!remaining
-              ? t('all_nomination')
+              ? t('allNominations')
               : `${t('nomination', { count: removing })}`}
           </h2>
           <Separator />
           <NotesWrapper>
-            <p>{t('change_nomination')}</p>
+            <p>{t('changeNomination')}</p>
             <EstimatedTxFee />
           </NotesWrapper>
           <FooterWrapper>
             <div>
               <ButtonSubmit
-                text={`Submit${submitting ? 'ting' : ''}`}
+                text={`${submitting ? t('submitting') : t('submit')}`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
                 onClick={() => submitTx()}

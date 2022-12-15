@@ -20,6 +20,7 @@ import {
   Separator,
 } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, rmCommas, unitToPlanckBn } from 'Utils';
 
 export const UnbondPoolMember = () => {
@@ -40,6 +41,7 @@ export const UnbondPoolMember = () => {
 
   // bond valid
   const [bondValid, setBondValid] = useState(false);
+  const { t } = useTranslation('modals');
 
   // unbond all validation
   const isValid = (() => {
@@ -82,30 +84,25 @@ export const UnbondPoolMember = () => {
 
   return (
     <>
-      <Title title="Unbond Member Funds" icon={faMinus} />
+      <Title title={t('unbondMemberFunds')} icon={faMinus} />
       <PaddingWrapper verticalOnly />
       <ContentWrapper>
-        {!accountHasSigner(activeAccount) && (
-          <Warning text="Your account is read only, and cannot sign transactions." />
-        )}
+        {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
         <div className="items">
-          <h4>Amount to unbond:</h4>
+          <h4>{t('amountToUnbond')}</h4>
           <h2>
             {freeToUnbond} {network.unit}
           </h2>
           <Separator />
           <NotesWrapper>
-            <p>
-              Once unbonding, your funds to become available after{' '}
-              {bondDuration} eras.
-            </p>
+            <p>{t('onceUnbonding', { bondDuration })}</p>
             {bondValid && <EstimatedTxFee />}
           </NotesWrapper>
         </div>
         <FooterWrapper>
           <div>
             <ButtonSubmit
-              text={`Submit${submitting ? 'ting' : ''}`}
+              text={`${submitting ? t('submitting') : t('submit')}`}
               iconLeft={faArrowAltCircleUp}
               iconTransform="grow-2"
               onClick={() => submitTx()}

@@ -21,6 +21,7 @@ import { ValidatorList } from 'library/ValidatorList';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { camelize } from 'Utils';
 import {
   GenerateNominationsInnerProps,
   Nominations,
@@ -295,7 +296,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
         <SelectableWrapper>
           <button type="button" onClick={() => clearNominations()}>
             <FontAwesomeIcon icon={faTimes as IconProp} />
-            {method}
+            {t(`${camelize(method)}`)}
           </button>
 
           {['Active Low Commission', 'Optimal Selection'].includes(
