@@ -152,6 +152,12 @@ export const SideMenu = () => {
           <CogOutlineSVG width="1.6em" height="1.6em" />
         </button>
 
+        <button
+          type="button"
+          onClick={() => openModalWith('ChooseLanguage', {}, 'small')}
+        >
+          <LanguageSVG width="1.65rem" height="1.65rem" />
+        </button>
         {mode === 'light' ? (
           <button type="button" onClick={() => toggleTheme()}>
             <SunnyOutlineSVG width="1.7em" height="1.7em" />
@@ -161,13 +167,6 @@ export const SideMenu = () => {
             <MoonOutlineSVG width="1.4em" height="1.4em" />
           </button>
         )}
-
-        <button
-          type="button"
-          onClick={() => openModalWith('ChooseLanguage', {}, 'small')}
-        >
-          <LanguageSVG width="1.6rem" height="1.6rem" />
-        </button>
       </section>
     </Wrapper>
   );
