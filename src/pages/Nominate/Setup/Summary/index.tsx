@@ -18,7 +18,7 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useTranslation } from 'react-i18next';
-import { humanNumber } from 'Utils';
+import { humanNumber, unitToPlanckBn } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -42,7 +42,9 @@ export const Summary = (props: SetupStepProps) => {
     const stashToSubmit = {
       Id: activeAccount,
     };
-    const bondToSubmit = bond * 10 ** units;
+
+    const bondToSubmit = unitToPlanckBn(bond, units).toString();
+
     const targetsToSubmit = nominations.map((item: any) => {
       return {
         Id: item.address,
