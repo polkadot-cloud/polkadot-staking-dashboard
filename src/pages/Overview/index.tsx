@@ -58,7 +58,6 @@ export const Overview = () => {
   }, [activeEra]);
 
   const PAYOUTS_HEIGHT = 390;
-  const BALANCE_HEIGHT = PAYOUTS_HEIGHT;
 
   let formatFrom = new Date();
   let formatTo = new Date();
@@ -99,7 +98,7 @@ export const Overview = () => {
           thresholdStickyMenu={SideMenuStickyThreshold}
           thresholdFullWidth={SectionFullWidthThreshold}
         >
-          <GraphWrapper style={{ minHeight: BALANCE_HEIGHT }} flex>
+          <GraphWrapper minHeight={PAYOUTS_HEIGHT} flex>
             <BalanceChart />
           </GraphWrapper>
         </RowSecondaryWrapper>
