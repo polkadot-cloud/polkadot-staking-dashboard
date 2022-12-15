@@ -144,6 +144,7 @@
     "unlocks": "Unlocks",
     "unlocksAfterEra": "Unlocks after era",
     "unlockTake": "Unlocks take {{bondDuration}} eras before they can be withdrawn.",
+    "updatePoolName": "Update Pool Name",
     "valid": "Valid Address",
     "validatorMetrics": "Validator Metrics",
     "welcomeToReport": "Bug reports, feature requests and improvements are all welcome.",

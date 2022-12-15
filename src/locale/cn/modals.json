@@ -138,6 +138,7 @@
     "unlocks": "解锁",
     "unlocksAfterEra": "解锁于era",
     "unlockTake": "解锁需等待{{bondDuration}} 个era才能被提款",
+    "updatePoolName": "更改提名池名称",
     "valid": "可用地址",
     "validatorMetrics": "验证人指标",
     "welcomeToReport": "欢迎Bug报告、功能请求和改进.",
