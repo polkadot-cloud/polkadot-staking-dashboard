@@ -88,7 +88,7 @@ export const Tasks = forwardRef((props: any, ref: any) => {
               disabled={poolDestroying}
               onClick={() => {
                 setSection(1);
-                setTask('destroyPoolResult');
+                setTask('destroy_pool');
               }}
             >
               <div>
