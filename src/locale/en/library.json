@@ -19,6 +19,7 @@
     "blockedNominations": "Blocked Nominations",
     "blockingNominations": "Blocking Nominations",
     "bond": "Bond",
+    "bondDecimalsError": "Bond amount can have at most {{units}} decimals.",
     "bonded": "Bonded",
     "cancel": "Cancel",
     "cancelled": "Cancelled",

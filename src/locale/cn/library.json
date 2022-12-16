@@ -19,6 +19,7 @@
     "blockedNominations": "己冻结提名",
     "blockingNominations": "冻结提名中",
     "bond": "质押",
+    "bondDecimalsError": "质押金额能最多有 {{units}} 位点数",
     "bonded": "己质押",
     "cancel": "取消",
     "cancelled": "已取消",
