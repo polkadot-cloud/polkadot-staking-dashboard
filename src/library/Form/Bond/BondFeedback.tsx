@@ -141,7 +141,7 @@ export const BondFeedback = ({
 
     // cbond amount must not surpass network supported units
     if (_decimals > units) {
-      _errors.push(`Bond amount can only have at most ${units} decimals.`);
+      _errors.push(`${t('bondDecimalsError', { units })}`);
     }
 
     if (inSetup) {
