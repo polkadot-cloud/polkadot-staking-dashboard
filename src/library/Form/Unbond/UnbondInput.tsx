@@ -81,7 +81,7 @@ export const UnbondInput = ({
               />
             </div>
             <div>
-              {humanNumber(activeBase)} {network.unit} bonded
+              {humanNumber(activeBase)} {network.unit} {t('bonded')}
             </div>
           </div>
         </section>
