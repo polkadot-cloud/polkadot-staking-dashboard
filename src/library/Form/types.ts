@@ -55,12 +55,12 @@ export interface BondFeedbackProps {
 }
 
 export interface BondInputProps {
+  freeBalance: number;
+  value: string;
+  defaultValue: string;
   syncing?: boolean;
   setters: any;
-  value: any;
-  defaultValue: number | string;
   disabled: boolean;
-  freeBalance: number;
   disableTxFeeUpdate?: boolean;
 }
 

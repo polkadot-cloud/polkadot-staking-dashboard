@@ -40,7 +40,7 @@ export const BondFeedback = ({
   const { minNominatorBond } = staking;
   const { t } = useTranslation('library');
 
-  const defBond = defaultBond || '';
+  const defaultBondStr = defaultBond ? String(defaultBond) : '';
 
   const allTransferOptions = getTransferOptions(activeAccount);
 
@@ -59,8 +59,8 @@ export const BondFeedback = ({
   const [errors, setErrors] = useState<Array<string>>([]);
 
   // local bond state
-  const [bond, setBond] = useState<{ bond: number | string }>({
-    bond: defBond,
+  const [bond, setBond] = useState<{ bond: string }>({
+    bond: defaultBondStr,
   });
 
   // whether bond is disabled
@@ -71,13 +71,13 @@ export const BondFeedback = ({
     freeBalance - Number(bond.bond) > planckBnToUnit(txFees, units);
 
   const bondAfterTxFees = enoughToCoverTxFees
-    ? unitToPlanckBn(Number(bond.bond), units)
-    : max(unitToPlanckBn(Number(bond.bond), units).sub(txFees), new BN(0));
+    ? unitToPlanckBn(bond.bond, units)
+    : max(unitToPlanckBn(bond.bond, units).sub(txFees), new BN(0));
 
   // update bond on account change
   useEffect(() => {
     setBond({
-      bond: defBond,
+      bond: defaultBondStr,
     });
   }, [activeAccount]);
 
@@ -90,7 +90,7 @@ export const BondFeedback = ({
   useEffect(() => {
     if (!disableTxFeeUpdate) {
       if (Number(bond.bond) > freeBalance) {
-        setBond({ bond: freeBalance });
+        setBond({ bond: String(freeBalance) });
       }
     }
   }, [txFees]);
@@ -111,47 +111,51 @@ export const BondFeedback = ({
 
   // handle error updates
   const handleErrors = () => {
-    let _bondDisabled = false;
+    let disabled = false;
     const _errors = warnings;
-    const _bond = bond.bond;
     const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
     const _decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
+    // const _maxSafe = new BN(Number.MAX_SAFE_INTEGER);
 
     // bond errors
     if (freeBalance === 0) {
-      _bondDisabled = true;
+      disabled = true;
       _errors.push(`${t('noFree', { unit })}`);
     }
 
+    // bond amount must not surpass freeBalalance
     if (Number(bond.bond) > freeBalance) {
       _errors.push(t('moreThanBalance'));
     }
 
+    // bond amount must not be smaller than 1 planck
     if (bond.bond !== '' && Number(bond.bond) < _planck) {
       _errors.push(t('tooSmall'));
     }
 
-    if (bond.bond !== '' && bondAfterTxFees.toNumber() < 0) {
+    // check bond after transaction fees is still valid
+    if (bond.bond !== '' && bondAfterTxFees.lt(new BN(0))) {
       _errors.push(`${t('notEnoughAfter', { unit })}`);
     }
 
+    // cbond amount must not surpass network supported units
     if (_decimals > units) {
       _errors.push(`Bond amount can only have at most ${units} decimals.`);
     }
 
     if (inSetup) {
       if (freeBalance < minBondBase) {
-        _bondDisabled = true;
+        disabled = true;
         _errors.push(`${t('notMeet')} ${minBondBase} ${unit}.`);
       }
+      // bond amount must be more than minimum required bond
       if (bond.bond !== '' && Number(bond.bond) < minBondBase) {
         _errors.push(`${t('atLeast')} ${minBondBase} ${unit}.`);
       }
     }
 
-    const bondValid = !_errors.length && _bond !== '';
-
-    setBondDisabled(_bondDisabled);
+    const bondValid = !_errors.length && bond.bond !== '';
+    setBondDisabled(disabled);
     listenIsValid(bondValid);
     setErrors(_errors);
   };
@@ -164,8 +168,8 @@ export const BondFeedback = ({
       <Spacer />
       <div style={{ maxWidth: maxWidth ? '500px' : '100%' }}>
         <BondInput
-          value={bond.bond}
-          defaultValue={defBond}
+          value={String(bond.bond)}
+          defaultValue={defaultBondStr}
           syncing={syncing}
           disabled={bondDisabled}
           setters={setters}

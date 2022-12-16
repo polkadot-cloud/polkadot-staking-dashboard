@@ -43,7 +43,7 @@ export const Summary = (props: SetupStepProps) => {
       Id: activeAccount,
     };
 
-    const bondToSubmit = unitToPlanckBn(bond, units).toString();
+    const bondToSubmit = unitToPlanckBn(String(bond), units).toString();
 
     const targetsToSubmit = nominations.map((item: any) => {
       return {
