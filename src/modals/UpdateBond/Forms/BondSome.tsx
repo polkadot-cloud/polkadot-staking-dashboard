@@ -54,10 +54,10 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
   // bond value after max tx fees have been deducated.
   let bondAfterTxFees: BN;
   if (enoughToCoverTxFees) {
-    bondAfterTxFees = unitToPlanckBn(Number(bond.bond), units);
+    bondAfterTxFees = unitToPlanckBn(String(bond.bond), units);
   } else {
     bondAfterTxFees = max(
-      unitToPlanckBn(Number(bond.bond), units).sub(largestTxFee),
+      unitToPlanckBn(String(bond.bond), units).sub(largestTxFee),
       new BN(0)
     );
   }

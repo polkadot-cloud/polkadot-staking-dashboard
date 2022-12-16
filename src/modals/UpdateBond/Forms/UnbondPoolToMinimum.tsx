@@ -79,7 +79,7 @@ export const UnbondPoolToMinimum = (props: FormsProps) => {
     }
 
     // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(bond.bond, units);
+    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
 
     tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
     return tx;
