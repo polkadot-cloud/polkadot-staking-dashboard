@@ -26,7 +26,7 @@
     "che-react-number-easing": "^0.1.4",
     "date-fns": "^2.29.3",
     "downshift": "^6.1.7",
-    "framer-motion": "7.6.19",
+    "framer-motion": "7.10.2",
     "i18next": "^22.4.5",
     "i18next-browser-languagedetector": "^7.0.1",
     "lodash.throttle": "^4.1.1",
