@@ -39,10 +39,9 @@ export const BondFeedback = ({
   const { units, unit } = network;
   const { minNominatorBond } = staking;
   const { t } = useTranslation('library');
+  const allTransferOptions = getTransferOptions(activeAccount);
 
   const defaultBondStr = defaultBond ? String(defaultBond) : '';
-
-  const allTransferOptions = getTransferOptions(activeAccount);
 
   // get bond options for either staking or pooling.
   const { freeBalance: freeBalanceBn } = allTransferOptions;
@@ -63,16 +62,18 @@ export const BondFeedback = ({
     bond: defaultBondStr,
   });
 
+  // current bond value BN
+  const bondBn = unitToPlanckBn(bond.bond, units);
+
   // whether bond is disabled
   const [bondDisabled, setBondDisabled] = useState(false);
 
   // bond minus tx fees if too much
-  const enoughToCoverTxFees: boolean =
-    freeBalance - Number(bond.bond) > planckBnToUnit(txFees, units);
+  const enoughToCoverTxFees: boolean = freeBondAmount.sub(bondBn).gt(txFees);
 
   const bondAfterTxFees = enoughToCoverTxFees
-    ? unitToPlanckBn(bond.bond, units)
-    : max(unitToPlanckBn(bond.bond, units).sub(txFees), new BN(0));
+    ? bondBn
+    : max(bondBn.sub(txFees), new BN(0));
 
   // update bond on account change
   useEffect(() => {
@@ -102,34 +103,34 @@ export const BondFeedback = ({
   });
 
   // bond amount to minimum threshold
-  const minBondBase =
+  const minBondBn =
     bondType === 'pool'
       ? inSetup || isDepositor()
-        ? planckBnToUnit(minCreateBond, units)
-        : planckBnToUnit(minJoinBond, units)
-      : planckBnToUnit(minNominatorBond, units);
+        ? minCreateBond
+        : minJoinBond
+      : minNominatorBond;
+  const minBondBase = planckBnToUnit(minBondBn, units);
 
   // handle error updates
   const handleErrors = () => {
     let disabled = false;
     const _errors = warnings;
-    const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
     const _decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
     // const _maxSafe = new BN(Number.MAX_SAFE_INTEGER);
 
     // bond errors
-    if (freeBalance === 0) {
+    if (freeBondAmount.eq(new BN(0))) {
       disabled = true;
       _errors.push(`${t('noFree', { unit })}`);
     }
 
     // bond amount must not surpass freeBalalance
-    if (Number(bond.bond) > freeBalance) {
+    if (bondBn.gt(freeBondAmount)) {
       _errors.push(t('moreThanBalance'));
     }
 
     // bond amount must not be smaller than 1 planck
-    if (bond.bond !== '' && Number(bond.bond) < _planck) {
+    if (bond.bond !== '' && bondBn.lt(new BN(1))) {
       _errors.push(t('tooSmall'));
     }
 
@@ -144,12 +145,12 @@ export const BondFeedback = ({
     }
 
     if (inSetup) {
-      if (freeBalance < minBondBase) {
+      if (freeBondAmount.lt(minBondBn)) {
         disabled = true;
         _errors.push(`${t('notMeet')} ${minBondBase} ${unit}.`);
       }
       // bond amount must be more than minimum required bond
-      if (bond.bond !== '' && Number(bond.bond) < minBondBase) {
+      if (bond.bond !== '' && bondBn.lt(minBondBn)) {
         _errors.push(`${t('atLeast')} ${minBondBase} ${unit}.`);
       }
     }
@@ -162,8 +163,8 @@ export const BondFeedback = ({
 
   return (
     <>
-      {errors.map((err: string, index: number) => (
-        <Warning key={`setup_error_${index}`} text={err} />
+      {errors.map((err: string, i: number) => (
+        <Warning key={`setup_error_${i}`} text={err} />
       ))}
       <Spacer />
       <div style={{ maxWidth: maxWidth ? '500px' : '100%' }}>

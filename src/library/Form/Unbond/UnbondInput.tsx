@@ -58,6 +58,9 @@ export const UnbondInput = ({
     }
   };
 
+  // unbond to min as unit
+  const unbondToMinBase = planckBnToUnit(unbondToMin, network.units);
+
   return (
     <InputWrapper>
       <h3>
@@ -87,8 +90,8 @@ export const UnbondInput = ({
             text={t('max')}
             disabled={disabled}
             onClick={() => {
-              setLocalBond(unbondToMin);
-              updateParentState(unbondToMin);
+              setLocalBond(unbondToMinBase);
+              updateParentState(unbondToMinBase);
             }}
           />
         </section>

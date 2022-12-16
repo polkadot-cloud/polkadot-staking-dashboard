@@ -77,7 +77,7 @@ export interface UnbondFeedbackProps {
 
 export interface UnbondInputProps {
   active: BN;
-  unbondToMin: number;
+  unbondToMin: BN;
   defaultValue: number | string;
   disabled: boolean;
   setters: any;
