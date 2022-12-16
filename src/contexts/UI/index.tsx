@@ -247,10 +247,11 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const getStakeSetupProgressPercent = (address: MaybeAccount) => {
     if (!address) return 0;
     const setupProgress = getSetupProgress(SetupType.Stake, address);
+    const bondBn = new BN(setupProgress.bond);
 
     const p = 25;
     let progress = 0;
-    if (setupProgress.bond > 0) progress += p;
+    if (bondBn.gt(new BN(0))) progress += p;
     if (setupProgress.controller !== null) progress += p;
     if (setupProgress.nominations.length) progress += p;
     if (setupProgress.payee !== null) progress += p - 1;
@@ -263,11 +264,12 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const getPoolSetupProgressPercent = (address: MaybeAccount) => {
     if (!address) return 0;
     const setupProgress = getSetupProgress(SetupType.Pool, address);
+    const bondBn = new BN(setupProgress.bond);
 
     const p = 25;
     let progress = 0;
     if (setupProgress.metadata !== '') progress += p;
-    if (setupProgress.bond > 0) progress += p;
+    if (bondBn.gt(new BN(0))) progress += p;
     if (setupProgress.nominations.length) progress += p;
     if (setupProgress.roles !== null) progress += p - 1;
     return progress;

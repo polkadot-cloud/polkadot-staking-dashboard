@@ -7,13 +7,13 @@ export const defaultStakeSetup = {
   controller: null,
   payee: null,
   nominations: [],
-  bond: 0,
+  bond: '0',
   section: 1,
 };
 
 export const defaultPoolSetup = {
   metadata: '',
-  bond: 0,
+  bond: '0',
   nominations: [],
   roles: null,
   section: 1,
