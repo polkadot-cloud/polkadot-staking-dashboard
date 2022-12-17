@@ -139,7 +139,7 @@ export const UnbondAll = (props: FormsProps) => {
           ) : (
             <></>
           )}
-          {unclaimedRewards > 0 && (
+          {isPooling && unclaimedRewards > 0 && (
             <Warning
               text={`${t('unbondingWithdraw')} ${unclaimedRewards} ${
                 network.unit

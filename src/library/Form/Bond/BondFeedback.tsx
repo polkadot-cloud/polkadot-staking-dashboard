@@ -90,7 +90,7 @@ export const BondFeedback = ({
   // update max bond after txFee sync
   useEffect(() => {
     if (!disableTxFeeUpdate) {
-      if (Number(bond.bond) > freeBalance) {
+      if (bondBn.gt(freeBondAmount)) {
         setBond({ bond: String(freeBalance) });
       }
     }
@@ -116,7 +116,6 @@ export const BondFeedback = ({
     let disabled = false;
     const _errors = warnings;
     const _decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
-    // const _maxSafe = new BN(Number.MAX_SAFE_INTEGER);
 
     // bond errors
     if (freeBondAmount.eq(new BN(0))) {
