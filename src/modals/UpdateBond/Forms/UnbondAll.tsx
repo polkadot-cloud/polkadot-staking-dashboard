@@ -99,7 +99,7 @@ export const UnbondAll = (props: FormsProps) => {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(bond.bond, units);
+    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
 
     // determine tx
     if (isPooling) {
@@ -139,7 +139,7 @@ export const UnbondAll = (props: FormsProps) => {
           ) : (
             <></>
           )}
-          {unclaimedRewards > 0 && (
+          {isPooling && unclaimedRewards > 0 && (
             <Warning
               text={`${t('unbondingWithdraw')} ${unclaimedRewards} ${
                 network.unit

@@ -67,7 +67,7 @@ export const UnbondPoolMember = () => {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(bond.bond, units);
+    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
     tx = api.tx.nominationPools.unbond(who, bondToSubmit);
     return tx;
   };

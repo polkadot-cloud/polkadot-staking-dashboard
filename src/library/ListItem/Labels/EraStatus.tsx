@@ -42,7 +42,9 @@ export const EraStatus = (props: any) => {
     }
   }
 
-  const totalStake = totalStakePlanck.div(new BN(10 ** units)).toNumber();
+  const totalStake = totalStakePlanck
+    .div(new BN(10).pow(new BN(units)))
+    .toNumber();
 
   return (
     <ValidatorStatusWrapper status={validatorStatus}>

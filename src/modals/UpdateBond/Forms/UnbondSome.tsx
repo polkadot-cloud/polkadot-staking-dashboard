@@ -102,7 +102,7 @@ export const UnbondSome = (props: FormsProps) => {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(bond.bond, units);
+    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
 
     // determine tx
     if (isPooling) {
