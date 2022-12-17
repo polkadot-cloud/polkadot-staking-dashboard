@@ -53,22 +53,22 @@ export const ManageBond = () => {
     !inSetup() &&
     !activeNominations.length;
 
-  let fastUnstakeText = '';
-  if (fastUnstakeActive) {
+  const getFastUnstakeText = () => {
     const { currentEra, checked } = meta;
     if (checking) {
-      fastUnstakeText = `Checking ${checked.length} of ${bondDuration} eras...`;
-    } else if (isExposed) {
-      const lastExposed = activeEra.index - (currentEra || 0);
-      fastUnstakeText = `Exposed ${lastExposed} Era${
-        lastExposed !== 1 ? `s` : ``
-      } Ago`;
-    } else if (queueStatus === null) {
-      fastUnstakeText = 'Fast Unstake';
-    } else {
-      fastUnstakeText = 'In Queue';
+      return `Checking ${checked.length} of ${bondDuration} eras...`;
     }
-  }
+    if (isExposed) {
+      const lastExposed = activeEra.index - (currentEra || 0);
+      return `Exposed ${lastExposed} Era${lastExposed !== 1 ? `s` : ``} Ago`;
+    }
+    if (queueStatus !== null) {
+      return 'In Queue';
+    }
+    return 'Fast Unstake';
+  };
+
+  const fastUnstakeText = fastUnstakeActive ? getFastUnstakeText() : '';
 
   return (
     <>
