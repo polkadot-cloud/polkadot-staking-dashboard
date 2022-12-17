@@ -21,7 +21,7 @@ import { humanNumber, planckBnToUnit } from 'Utils';
 import { ButtonRowWrapper } from 'Wrappers';
 
 export const ManageBond = () => {
-  const { network } = useApi();
+  const { network, consts } = useApi();
   const { units } = network;
   const { metrics } = useNetworkMetrics();
   const { openModalWith } = useModal();
@@ -31,6 +31,7 @@ export const ManageBond = () => {
   const { inSetup, getNominationsStatus } = useStaking();
   const { isSyncing } = useUi();
   const { checking, meta, isExposed, queueStatus } = useFastUnstake();
+  const { bondDuration } = consts;
   const { activeEra, fastUnstakeErasToCheckPerBlock } = metrics;
   const ledger = getLedgerForStash(activeAccount);
   const { active }: { active: BN } = ledger;
@@ -54,9 +55,9 @@ export const ManageBond = () => {
 
   let fastUnstakeText = '';
   if (fastUnstakeActive) {
-    const { currentEra } = meta;
+    const { currentEra, checked } = meta;
     if (checking) {
-      fastUnstakeText = 'Syncing...';
+      fastUnstakeText = `Checking ${checked.length} of ${bondDuration} eras...`;
     } else if (isExposed) {
       const lastExposed = activeEra.index - (currentEra || 0);
       fastUnstakeText = `Exposed ${lastExposed} Era${
@@ -119,14 +120,16 @@ export const ManageBond = () => {
             text={String(totalUnlockChuncks ?? 0)}
           />
           {fastUnstakeActive ? (
-            <ButtonPrimary
-              iconLeft={faBolt}
-              onClick={() => {
-                // TODO: open modal when synced;
-              }}
-              text={fastUnstakeText}
-              colorSecondary
-            />
+            <div>
+              <ButtonPrimary
+                iconLeft={faBolt}
+                onClick={() => {
+                  // TODO: open fast unstake modals.
+                }}
+                text={fastUnstakeText}
+                colorSecondary
+              />
+            </div>
           ) : null}
         </ButtonRowWrapper>
       </CardHeaderWrapper>
