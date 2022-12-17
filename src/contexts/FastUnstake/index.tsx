@@ -4,6 +4,7 @@
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/Network';
+import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
 // eslint-disable-next-line import/no-unresolved
@@ -26,6 +27,7 @@ export const FastUnstakeProvider = ({
   const { api, isReady, consts, network } = useApi();
   const { activeAccount } = useConnect();
   const { metrics } = useNetworkMetrics();
+  const { isNominating } = useStaking();
   const { activeEra } = metrics;
   const { bondDuration } = consts;
 
@@ -49,12 +51,13 @@ export const FastUnstakeProvider = ({
       setStateWithRef(defaultMeta, setMeta, metaRef);
       setChecking(false);
 
-      // TODO: only trigger when nominator and inactive.
-      if (activeAccount) {
+      if (activeAccount && isNominating()) {
+        // TODO: only trigger when nomination status is inactive.
+
         processEligibility(activeAccount);
       }
     }
-  }, [isReady, activeAccount, network.name, activeEra.index]);
+  }, [isReady, activeAccount, network.name, activeEra.index, isNominating()]);
 
   // handle worker message on completed exposure check.
   worker.onmessage = (message: MessageEvent) => {
