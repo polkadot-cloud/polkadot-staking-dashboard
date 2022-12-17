@@ -105,8 +105,8 @@ export const ManageFastUnstake = () => {
               <Separator />
               <NotesWrapper>
                 <p>
-                  You must <b>not</b> be actively nominating or validating for
-                  at least {bondDuration} eras on {network.name}.
+                  To register for fast unstake, you must <b>not</b> be actively
+                  nominating or validating for at least {bondDuration} eras.
                 </p>
                 <p>
                   If you are inactive for at least {erasRemaining} more era
