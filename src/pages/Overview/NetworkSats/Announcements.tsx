@@ -80,14 +80,14 @@ export const Announcements = () => {
   if (bondedPools.length) {
     // total pools active
     announcements.push({
-      class: 'pools',
+      class: 'neutral',
       title: `${bondedPools.length} ${t('overview.poolsAreActive')}`,
       subtitle: `${t('overview.availableToJoin', { networkName })}`,
     });
 
     // total locked in pools
     announcements.push({
-      class: 'pools',
+      class: 'neutral',
       title: `${totalPoolPointsBase} ${network.unit} ${t('overview.inPools')}`,
       subtitle: `${t('overview.bondedInPools', { networkUnit })}`,
     });
@@ -95,7 +95,7 @@ export const Announcements = () => {
     if (poolMembers.length > 0 && !poolsSyncing) {
       // total locked in pols
       announcements.push({
-        class: 'pools',
+        class: 'neutral',
         title: `${humanNumber(poolMembers.length)} ${t(
           'overview.poolMembersBonding'
         )}`,
