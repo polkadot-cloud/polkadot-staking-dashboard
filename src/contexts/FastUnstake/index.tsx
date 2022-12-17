@@ -5,8 +5,9 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/Network';
 import React, { useRef, useState } from 'react';
-import { MaybeAccount } from 'types';
+import { AnyApi, MaybeAccount } from 'types';
 // eslint-disable-next-line import/no-unresolved
+import { setStateWithRef } from 'Utils';
 import Worker from 'worker-loader!../../workers/stakers';
 import { defaultMeta } from './defaults';
 import { MetaInterface } from './types';
@@ -32,24 +33,35 @@ export const FastUnstakeProvider = ({
   // TODO: cancel checking on network change / account change.
   const [checking, setChecking] = useState<boolean>(false);
 
-  // TODO: update meta on start + on each era finish
+  // store state of elibigility checking.
   const [meta, setMeta] = useState<MetaInterface>(defaultMeta);
   const metaRef = useRef(meta);
 
-  // TODO: handle finished fast unstake eligibility check.
-  // TODO: subscribe to fastUnstake.queue(activeAccount) if finally eligible and check has finished.
+  // set currentEra being checked in metadata
+  //
+  // called when a new era is about to be processed.
+  const setMetaCurrentEra = (era: number) => {
+    const m = Object.assign(meta, {
+      currentEra: era,
+    });
+    setStateWithRef(m, setMeta, metaRef);
+  };
+
   worker.onmessage = (message: MessageEvent) => {
+    // TODO: if network or account switch has happened, return.
     if (message) {
       const { data } = message;
       const { task } = data;
       if (task !== 'fast_unstake_process_era') {
-        // TODO: implement callback
+        // TODO: update meta.checked on each era finish.
+        // TODO: subscribe to fastUnstake.queue(activeAccount) if finally eligible and check has finished.
+        // TODO: cancel fast unstake check if indeed exposed - not eligible.
       }
     }
   };
 
   // initiate fast unstake eligibility check.
-  const fastUnstakeEligible = async (a: MaybeAccount) => {
+  const processEligibility = async (a: MaybeAccount) => {
     // ensure current era has synced
     if (
       activeEra.index === 0 ||
@@ -60,37 +72,37 @@ export const FastUnstakeProvider = ({
       !activeAccount
     )
       return;
-
     setChecking(true);
+    setMetaCurrentEra(activeEra.index);
+    checkEra(activeEra.index);
+  };
 
-    // TODO: process one era at a time.
-    // const calls = Array.from(Array(bondDuration).keys());
-    // const exposuresRaw = await Promise.all(
-    //   calls.map((c: number) =>
-    //     api.query.staking.erasStakers.entries(metrics.activeEra.index - c)
-    //   )
-    // );
+  // checks an era for exposure.
+  //
+  // calls service worker to check exppsures for given era.
+  const checkEra = async (era: number) => {
+    if (!api) return;
 
-    // // humanise exposures to send to worker
-    // const exposures = exposuresRaw.map((e: AnyApi) =>
-    //   e.map(([_keys, _val]: AnyApi) => {
-    //     return {
-    //       keys: _keys.toHuman(),
-    //       val: _val.toHuman(),
-    //     };
-    //   })
-    // );
+    // fetch and humaise exposures.
+    const exposuresRaw = await api.query.staking.erasStakers.entries(era);
+    const exposures = exposuresRaw.map(([keys, val]: AnyApi) => {
+      return {
+        keys: keys.toHuman(),
+        val: val.toHuman(),
+      };
+    });
 
-    // send to worker to calculate eligibiltiy
+    // TODO: send to worker to calculate eligibiltiy
     // worker.postMessage({
     //   era,
     //   activeAccount,
+    //   network,
     //   exposures,
     // });
   };
 
   return (
-    <FastUnstakeContext.Provider value={{ fastUnstakeEligible }}>
+    <FastUnstakeContext.Provider value={{ processEligibility }}>
       {children}
     </FastUnstakeContext.Provider>
   );

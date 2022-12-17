@@ -48,13 +48,13 @@ export const Overview = () => {
   );
   const { i18n, t } = useTranslation('pages');
   const { activeAccount } = useConnect();
-  const { fastUnstakeEligible } = useFastUnstake();
+  const { processEligibility } = useFastUnstake();
 
   // testing fast unstake
   const { metrics } = useNetworkMetrics();
   const { activeEra } = metrics;
   useEffect(() => {
-    fastUnstakeEligible(activeAccount);
+    processEligibility(activeAccount);
   }, [activeEra]);
 
   const PAYOUTS_HEIGHT = 390;
