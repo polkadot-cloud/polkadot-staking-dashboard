@@ -24,7 +24,7 @@ export const Bond = (props: SetupStepProps) => {
   const { t } = useTranslation('pages');
 
   // either free to bond or existing setup value
-  const initialBondValue = setup.bond === 0 ? '' : setup.bond;
+  const initialBondValue = setup.bond === '0' ? '' : setup.bond;
 
   // store local bond amount for form control
   const [bond, setBond] = useState({
@@ -61,7 +61,7 @@ export const Bond = (props: SetupStepProps) => {
     <>
       <Header
         thisSection={section}
-        complete={setup.bond !== 0}
+        complete={setup.bond !== '0'}
         title={t('pools.bond') || ''}
         helpKey="Bonding"
         setupType={SetupType.Pool}
