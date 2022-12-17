@@ -1,19 +1,23 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { UIContextInterface } from './types';
+import {
+  PoolCreateProgress,
+  StakeSetupProgress,
+  UIContextInterface,
+} from './types';
 
-export const defaultStakeSetup = {
+export const defaultStakeSetup: StakeSetupProgress = {
   controller: null,
   payee: null,
   nominations: [],
-  bond: 0,
+  bond: '0',
   section: 1,
 };
 
-export const defaultPoolSetup = {
+export const defaultPoolSetup: PoolCreateProgress = {
   metadata: '',
-  bond: 0,
+  bond: '0',
   nominations: [],
   roles: null,
   section: 1,
