@@ -53,7 +53,7 @@ export const BondInput = ({
   };
 
   // apply bond to parent setters
-  const updateParentState = (val: number | string) => {
+  const updateParentState = (val: string) => {
     for (const s of sets) {
       s.set({
         ...s.current,

@@ -7,8 +7,8 @@ import { ImportedAccount } from 'contexts/Connect/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React, { useEffect, useRef, useState } from 'react';
-import { MaybeAccount, Sync } from 'types';
-import { localStorageOrDefault, setStateWithRef } from 'Utils';
+import { AnyJson, MaybeAccount, Sync } from 'types';
+import { localStorageOrDefault, setStateWithRef, unitToPlanckBn } from 'Utils';
 import { useApi } from '../Api';
 import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
@@ -232,7 +232,6 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
    */
   const getSetupProgress = (type: SetupType, address: MaybeAccount) => {
     const _setup = setupRef.current.find((s: any) => s.address === address);
-
     if (_setup === undefined) {
       return type === SetupType.Stake
         ? defaults.defaultStakeSetup
@@ -247,7 +246,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const getStakeSetupProgressPercent = (address: MaybeAccount) => {
     if (!address) return 0;
     const setupProgress = getSetupProgress(SetupType.Stake, address);
-    const bondBn = new BN(setupProgress.bond);
+    const bondBn = unitToPlanckBn(setupProgress.bond, network.units);
 
     const p = 25;
     let progress = 0;
@@ -264,7 +263,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const getPoolSetupProgressPercent = (address: MaybeAccount) => {
     if (!address) return 0;
     const setupProgress = getSetupProgress(SetupType.Pool, address);
-    const bondBn = new BN(setupProgress.bond);
+    const bondBn = unitToPlanckBn(setupProgress.bond, network.units);
 
     const p = 25;
     let progress = 0;
@@ -279,7 +278,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
    * Sets stake setup progress for an address.
    * Updates localStorage followed by app state.
    */
-  const setActiveAccountSetup = (type: SetupType, progress: any) => {
+  const setActiveAccountSetup = (type: SetupType, progress: AnyJson) => {
     if (!activeAccount) return;
 
     localStorage.setItem(
@@ -287,7 +286,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       JSON.stringify(progress)
     );
 
-    const setupUpdated = setupRef.current.map((obj: any) =>
+    const setupUpdated = setupRef.current.map((obj: AnyJson) =>
       obj.address === activeAccount
         ? {
             ...obj,
