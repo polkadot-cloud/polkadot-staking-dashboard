@@ -26,7 +26,7 @@ import {
 } from '../Wrappers';
 
 export const ManageFastUnstake = () => {
-  const { api, consts, network } = useApi();
+  const { api, consts } = useApi();
   const { activeAccount } = useConnect();
   const { getControllerNotImported } = useStaking();
   const { getBondedAccount } = useBalances();
