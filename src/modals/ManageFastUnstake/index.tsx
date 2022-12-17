@@ -90,8 +90,9 @@ export const ManageFastUnstake = () => {
                   Once registerd you will be waiting in the fast unstake queue.
                 </p>
                 <p>
-                  There are currently {counterForQueue} account
-                  {counterForQueue === 1 ? '' : 's'} in the queue.
+                  There are currently{' '}
+                  {counterForQueue === 0 ? 'no' : counterForQueue} account
+                  {counterForQueue !== 1 ? 's' : ''} in the queue.
                 </p>
                 <EstimatedTxFee />
               </NotesWrapper>
@@ -102,8 +103,8 @@ export const ManageFastUnstake = () => {
               <Separator />
               <NotesWrapper>
                 <p>
-                  There are currently {counterForQueue} account
-                  {counterForQueue === 1 ? '' : 's'} in the queue.
+                  {counterForQueue === 0 ? 'no' : counterForQueue} account
+                  {counterForQueue !== 1 ? 's' : ''} in the queue.
                 </p>
                 <p>
                   The fast unstake queue is unordered, so the exact timing of
