@@ -1,13 +1,20 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
+import {
+  faBolt,
+  faCheck,
+  faLockOpen,
+  faTimes,
+} from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
+import { useFastUnstake } from 'contexts/FastUnstake';
 import { useModal } from 'contexts/Modal';
+import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
@@ -19,16 +26,21 @@ import { humanNumber, planckBnToUnit } from 'Utils';
 import { ButtonRowWrapper } from 'Wrappers';
 
 export const ManageBond = () => {
-  const { network } = useApi();
+  const { network, consts } = useApi();
   const { units } = network;
+  const { metrics } = useNetworkMetrics();
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { getLedgerForStash } = useBalances();
   const { getTransferOptions } = useTransferOptions();
-  const { inSetup } = useStaking();
+  const { inSetup, getNominationsStatus } = useStaking();
   const { isSyncing } = useUi();
+  const { checking, meta, isExposed, queueStatus } = useFastUnstake();
+  const { bondDuration } = consts;
+  const { fastUnstakeErasToCheckPerBlock } = metrics;
   const ledger = getLedgerForStash(activeAccount);
   const { active }: { active: BN } = ledger;
+  const nominationStatuses = getNominationsStatus();
 
   const allTransferOptions = getTransferOptions(activeAccount);
 
@@ -36,6 +48,26 @@ export const ManageBond = () => {
   const { totalUnlocking, totalUnlocked, totalUnlockChuncks } =
     allTransferOptions.nominate;
   const { t } = useTranslation('pages');
+
+  const activeNominations = Object.entries(nominationStatuses)
+    .map(([k, v]: any) => (v === 'active' ? k : false))
+    .filter((v) => v !== false);
+
+  const fastUnstakeActive =
+    fastUnstakeErasToCheckPerBlock > 0 &&
+    !inSetup() &&
+    !activeNominations.length;
+
+  let fastUnstakeText = '';
+  if (fastUnstakeActive) {
+    const { currentEra, checked } = meta;
+    if (checking) {
+      fastUnstakeText = 'Syncing...';
+    } else {
+      fastUnstakeText = 'Fast Unstake';
+    }
+    // TODO: 'In Queue' if registered. (refer to queueStatus)
+  }
 
   return (
     <>
@@ -81,11 +113,22 @@ export const ManageBond = () => {
               inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
             }
             iconLeft={faLockOpen}
+            marginRight
             onClick={() =>
               openModalWith('UnlockChunks', { bondType: 'stake' }, 'small')
             }
             text={String(totalUnlockChuncks ?? 0)}
           />
+          {fastUnstakeActive ? (
+            <ButtonPrimary
+              iconLeft={checking ? faBolt : isExposed ? faCheck : faTimes}
+              onClick={() => {
+                // TODO: open modal when synced;
+              }}
+              text={fastUnstakeText}
+              colorSecondary
+            />
+          ) : null}
         </ButtonRowWrapper>
       </CardHeaderWrapper>
       <BondedGraph
