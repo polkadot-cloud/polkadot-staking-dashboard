@@ -38,7 +38,7 @@
     "react-helmet": "^6.1.0",
     "react-i18next": "^12.1.1",
     "react-lottie": "^1.2.3",
-    "react-router-dom": "^6.4.5",
+    "react-router-dom": "^6.5.0",
     "react-scripts": "5.0.1",
     "react-scroll": "^1.8.9",
     "styled-components": "^5.3.3",
