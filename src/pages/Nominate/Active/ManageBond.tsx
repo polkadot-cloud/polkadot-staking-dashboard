@@ -122,7 +122,7 @@ export const ManageBond = () => {
           {fastUnstakeActive ? (
             <div>
               <ButtonPrimary
-                disabled={isExposed === true || checking}
+                disabled={checking}
                 iconLeft={faBolt}
                 onClick={() => {
                   openModalWith('ManageFastUnstake', {}, 'small');

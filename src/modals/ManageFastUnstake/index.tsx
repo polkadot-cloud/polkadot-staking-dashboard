@@ -8,6 +8,7 @@ import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
+import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useTxFees } from 'contexts/TxFees';
@@ -25,14 +26,18 @@ import {
 } from '../Wrappers';
 
 export const ManageFastUnstake = () => {
-  const { api } = useApi();
+  const { api, consts, network } = useApi();
   const { activeAccount } = useConnect();
-  const { targets, getControllerNotImported } = useStaking();
+  const { getControllerNotImported } = useStaking();
   const { getBondedAccount } = useBalances();
   const { txFeesValid } = useTxFees();
   const { metrics } = useNetworkMetrics();
-  const { isExposed, counterForQueue, queueStatus } = useFastUnstake();
-  const { fastUnstakeErasToCheckPerBlock } = metrics;
+  const { isExposed, counterForQueue, queueStatus, meta } = useFastUnstake();
+  const { setResize } = useModal();
+  const { bondDuration } = consts;
+  const { activeEra, fastUnstakeErasToCheckPerBlock } = metrics;
+  const { currentEra } = meta;
+
   const controller = getBondedAccount(activeAccount);
   const { t } = useTranslation('modals');
   const registered = queueStatus !== null;
@@ -42,7 +47,11 @@ export const ManageFastUnstake = () => {
 
   useEffect(() => {
     setValid(fastUnstakeErasToCheckPerBlock > 0 && isExposed === false);
-  }, [targets]);
+  }, [isExposed, queueStatus]);
+
+  useEffect(() => {
+    setResize();
+  }, [isExposed, queueStatus]);
 
   // tx to submit
   const getTx = () => {
@@ -72,6 +81,15 @@ export const ManageFastUnstake = () => {
     warnings.push(t('mustHaveController'));
   }
 
+  // manage last exposed
+  let lastExposed = '';
+  let lastExposedEra = 0;
+  if (isExposed) {
+    lastExposedEra = activeEra.index - (currentEra || 0);
+    lastExposed = `${lastExposedEra} Era${lastExposedEra !== 1 ? `s` : ``} Ago`;
+  }
+  const erasRemaining = Math.max(1, bondDuration - lastExposedEra);
+
   return (
     <>
       <Title title="Fast Unstake" icon={faBolt} />
@@ -81,56 +99,79 @@ export const ManageFastUnstake = () => {
             <Warning key={index} text={text} />
           ))}
 
-          {!registered ? (
+          {isExposed ? (
             <>
-              <h2>Register For Fast Unstake</h2>
+              <h2>You Were Last Exposed {lastExposed}</h2>
               <Separator />
               <NotesWrapper>
                 <p>
-                  Once registerd you will be waiting in the fast unstake queue.
+                  You must <b>not</b> be actively nominating or validating for
+                  at least {bondDuration} eras on {network.name}.
                 </p>
                 <p>
-                  There are currently{' '}
-                  {counterForQueue === 0 ? 'no' : counterForQueue} account
-                  {counterForQueue !== 1 ? 's' : ''} in the queue.
+                  If you are inactive for at least {erasRemaining} more era
+                  {erasRemaining === 1 ? '' : 's'}, you will be able to register
+                  for fast unstake.
                 </p>
-                <EstimatedTxFee />
               </NotesWrapper>
             </>
           ) : (
             <>
-              <h2>Registered and Waiting to Unstake</h2>
-              <Separator />
-              <NotesWrapper>
-                <p>
-                  {counterForQueue === 0 ? 'no' : counterForQueue} account
-                  {counterForQueue !== 1 ? 's' : ''} in the queue.
-                </p>
-                <p>
-                  The fast unstake queue is unordered, so the exact timing of
-                  being selected is not known.
-                </p>
-                <EstimatedTxFee />
-              </NotesWrapper>
+              {!registered ? (
+                <>
+                  <h2>Register For Fast Unstake</h2>
+                  <Separator />
+                  <NotesWrapper>
+                    <p>
+                      Once registerd you will be waiting in the fast unstake
+                      queue.
+                    </p>
+                    <p>
+                      There are currently{' '}
+                      {counterForQueue === 0 ? 'no' : counterForQueue} account
+                      {counterForQueue !== 1 ? 's' : ''} in the queue.
+                    </p>
+                    <EstimatedTxFee />
+                  </NotesWrapper>
+                </>
+              ) : (
+                <>
+                  <h2>Registered and Waiting to Unstake</h2>
+                  <Separator />
+                  <NotesWrapper>
+                    <p>
+                      {counterForQueue === 0 ? 'no' : counterForQueue} account
+                      {counterForQueue !== 1 ? 's' : ''} in the queue.
+                    </p>
+                    <p>
+                      The fast unstake queue is unordered, so the exact timing
+                      of being selected is not known.
+                    </p>
+                    <EstimatedTxFee />
+                  </NotesWrapper>
+                </>
+              )}
             </>
           )}
-          <FooterWrapper>
-            <div>
-              <ButtonSubmit
-                text={`${
-                  submitting
-                    ? t('submitting')
-                    : registered
-                    ? 'Cancel Fast Unstake'
-                    : 'Register'
-                }`}
-                iconLeft={faArrowAltCircleUp}
-                iconTransform="grow-2"
-                onClick={() => submitTx()}
-                disabled={!valid || submitting || !txFeesValid}
-              />
-            </div>
-          </FooterWrapper>
+          {!isExposed && (
+            <FooterWrapper>
+              <div>
+                <ButtonSubmit
+                  text={`${
+                    submitting
+                      ? t('submitting')
+                      : registered
+                      ? 'Cancel Fast Unstake'
+                      : 'Register'
+                  }`}
+                  iconLeft={faArrowAltCircleUp}
+                  iconTransform="grow-2"
+                  onClick={() => submitTx()}
+                  disabled={!valid || submitting || !txFeesValid}
+                />
+              </div>
+            </FooterWrapper>
+          )}
         </div>
       </PaddingWrapper>
     </>
