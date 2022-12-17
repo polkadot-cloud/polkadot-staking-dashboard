@@ -12,17 +12,53 @@ export const ctx: Worker = self as any;
 ctx.addEventListener('message', (event: AnyJson) => {
   const { data } = event;
   const { task } = data;
-  let message = {};
+  let message: AnyJson = {};
   switch (task) {
     case 'initialise_exposures':
       message = processExposures(data);
+      break;
+    case 'process_fast_unstake_era':
+      message = processFastUnstakeEra(data);
       break;
     default:
   }
   postMessage({ task, ...message });
 });
 
-// process exposure
+// process fast unstake era exposures.
+//
+// checks if an account has been exposed in an
+// era.
+const processFastUnstakeEra = (data: AnyJson) => {
+  const { currentEra, exposures, task, where, who } = data;
+  let exposed = false;
+
+  // check exposed as validator or nominator.
+  exposures.every(({ keys, val }: any) => {
+    const validator = keys[1];
+    if (validator === who) {
+      exposed = true;
+      return false;
+    }
+    const others = val?.others ?? [];
+    const inOthers = others.find((o: AnyJson) => o.who === who);
+    if (inOthers) {
+      exposed = true;
+      return false;
+    }
+    return true;
+  });
+
+  return {
+    currentEra,
+    exposed,
+    task,
+    where,
+    who,
+  };
+};
+
+// process exposures.
 //
 // abstracts active nominators and minimum active
 // bond from erasStakers.
