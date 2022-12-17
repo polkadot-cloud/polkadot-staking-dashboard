@@ -106,7 +106,7 @@ export const ManageFastUnstake = () => {
               <NotesWrapper>
                 <p>
                   To register for fast unstake, you must <b>not</b> be actively
-                  staking for at least {bondDuration} eras.
+                  staking for more than {bondDuration} eras.
                 </p>
                 <p>
                   If you are inactive for at least {erasRemaining} more era
