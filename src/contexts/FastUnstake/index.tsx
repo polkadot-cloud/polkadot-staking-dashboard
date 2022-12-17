@@ -23,7 +23,7 @@ export const FastUnstakeProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, consts, network } = useApi();
+  const { api, isReady, consts, network } = useApi();
   const { activeAccount } = useConnect();
   const { metrics } = useNetworkMetrics();
   const { activeEra } = metrics;
@@ -32,35 +32,72 @@ export const FastUnstakeProvider = ({
   // store whether a fast unstake check is in progress.
   const [checking, setChecking] = useState<boolean>(false);
 
+  // store whether the account is exposed for fast unstake
+  const [isExposed, setIsExposed] = useState<boolean | null>(null);
+  const isExposedRef = useRef(isExposed);
+
   // store state of elibigility checking.
   const [meta, setMeta] = useState<MetaInterface>(defaultMeta);
   const metaRef = useRef(meta);
 
-  // cancel fast unstake check
-  // on network change or account change.
+  // initiate fast unstake check for accounts that are
+  // nominating but not active.
   useEffect(() => {
-    if (checking) {
-      setChecking(false);
+    if (isReady && activeAccount && activeEra.index !== 0) {
+      // cancel fast unstake check on network change or
+      // account change.
       setStateWithRef(defaultMeta, setMeta, metaRef);
+      setChecking(false);
+
+      // TODO: only trigger when nominator and inactive.
+      if (activeAccount) {
+        processEligibility(activeAccount);
+      }
     }
-  }, [activeAccount, network.name]);
+  }, [isReady, activeAccount, network.name, activeEra.index]);
 
   // handle worker message on completed exposure check.
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
+      // ensure correct task received
       const { data } = message;
-      const { task, currentEra, who, where } = data;
-      if (task !== 'fast_unstake_process_era') {
+      const { task } = data;
+      if (task !== 'process_fast_unstake_era') {
         return;
       }
-      // conditions have changed - cancel check.
+      // ensure still same conditions.
+      const { where, who } = data;
       if (where !== network.name || who !== activeAccount) {
+        console.log('conditions have changed, cancel fast unstake.');
         return;
       }
-      console.log('TODO: implement for ', currentEra);
-      // TODO: update meta.checked on each era finish.
-      // TODO: subscribe to fastUnstake.queue(activeAccount) if finally eligible and check has finished.
-      // TODO: cancel fast unstake check if indeed exposed - not eligible.
+      const { currentEra, exposed } = data;
+
+      // update check metadata, decrement current era.
+      const nextEra = currentEra - 1;
+      const { checked } = metaRef.current;
+      if (!metaRef.current.checked.includes(currentEra)) {
+        setStateWithRef(
+          Object.assign(metaRef.current, {
+            currentEra: nextEra,
+            checked: checked.concat(currentEra),
+          }),
+          setMeta,
+          metaRef
+        );
+      }
+      // if exposed, cancel checking and update exposed state.
+      if (exposed) {
+        setChecking(false);
+        setStateWithRef(true, setIsExposed, isExposedRef);
+      } else if (meta.checked.length === bondDuration) {
+        // successfully checked bondDuration eras.
+        console.log('check finished! not exposed!');
+        // TODO: subscribe to fastUnstake.queue(activeAccount) if finally eligible and check has finished.
+      } else {
+        // continue checking the next era.
+        checkEra(nextEra);
+      }
     }
   };
 
@@ -93,6 +130,8 @@ export const FastUnstakeProvider = ({
   const checkEra = async (era: number) => {
     if (!api) return;
 
+    console.log('checking era ', era);
+
     const exposuresRaw = await api.query.staking.erasStakers.entries(era);
     const exposures = exposuresRaw.map(([keys, val]: AnyApi) => {
       return {
@@ -100,14 +139,13 @@ export const FastUnstakeProvider = ({
         val: val.toHuman(),
       };
     });
-
-    // TODO: send to worker to calculate eligibiltiy
-    // worker.postMessage({
-    //   currentEra: era,
-    //   who: activeAccount,
-    //   where: network.name,
-    //   exposures,
-    // });
+    worker.postMessage({
+      task: 'process_fast_unstake_era',
+      currentEra: era,
+      who: activeAccount,
+      where: network.name,
+      exposures,
+    });
   };
 
   return (
