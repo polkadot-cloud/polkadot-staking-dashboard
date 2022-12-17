@@ -146,8 +146,8 @@ export const FastUnstakeProvider = ({
         setStateWithRef(true, setIsExposed, isExposedRef);
       } else if (meta.checked.length === bondDuration) {
         // successfully checked bondDuration eras.
+        setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(false, setIsExposed, isExposedRef);
-
         console.log('check finished! not exposed!');
         // subscribe to fast unstake queue for user and queue counter.
         subscribeFastUnstakeQueue();
