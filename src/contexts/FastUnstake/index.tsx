@@ -127,13 +127,12 @@ export const FastUnstakeProvider = ({
 
       // update check metadata, decrement current era.
       const nextEra = currentEra - 1;
-      const { checked } = metaRef.current;
       if (!metaRef.current.checked.includes(currentEra)) {
         setStateWithRef(
-          Object.assign(metaRef.current, {
+          {
             currentEra: nextEra,
-            checked: checked.concat(currentEra),
-          }),
+            checked: metaRef.current.checked.concat(currentEra),
+          },
           setMeta,
           metaRef
         );
@@ -158,14 +157,6 @@ export const FastUnstakeProvider = ({
     }
   };
 
-  // set currentEra being checked in metadata
-  const setMetaCurrentEra = (era: number) => {
-    const m = Object.assign(meta, {
-      currentEra: era,
-    });
-    setStateWithRef(m, setMeta, metaRef);
-  };
-
   // initiate fast unstake eligibility check.
   const processEligibility = async (a: MaybeAccount) => {
     // ensure current era has synced
@@ -178,8 +169,16 @@ export const FastUnstakeProvider = ({
       !activeAccount
     )
       return;
+
     setStateWithRef(true, setChecking, checkingRef);
-    setMetaCurrentEra(activeEra.index);
+    setStateWithRef(
+      {
+        currentEra: activeEra.index,
+        checked: [],
+      },
+      setMeta,
+      metaRef
+    );
     checkEra(activeEra.index);
   };
 

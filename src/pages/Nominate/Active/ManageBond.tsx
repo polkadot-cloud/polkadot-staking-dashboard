@@ -52,7 +52,6 @@ export const ManageBond = () => {
     fastUnstakeErasToCheckPerBlock > 0 &&
     !inSetup() &&
     !activeNominations.length;
-
   const getFastUnstakeText = () => {
     const { currentEra, checked } = meta;
     if (checking) {
