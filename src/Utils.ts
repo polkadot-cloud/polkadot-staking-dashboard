@@ -63,7 +63,7 @@ export const planckBnToUnit = (val: BN, units: number): number => {
  */
 export const unitToPlanckBn = (val: string, units: number): BN => {
   // split whole and decimal portion of the number
-  const split = val.split('.');
+  const split = String(val).split('.');
   const w = split[0];
   // handle decimals, remove any subsequent decimals.
   let d = split[1];
