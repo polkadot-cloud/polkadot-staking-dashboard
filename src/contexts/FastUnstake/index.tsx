@@ -73,7 +73,9 @@ export const FastUnstakeProvider = ({
     ) {
       // cancel fast unstake check on network change or
       // account change.
-      unsubRef.current?.unsubscribe();
+      if (typeof unsubRef.current === 'function') {
+        unsubRef.current();
+      }
       setStateWithRef(defaultMeta, setMeta, metaRef);
       setStateWithRef(null, setIsExposed, isExposedRef);
       setStateWithRef(null, setQueueStatus, queueStatusRef);
@@ -92,7 +94,9 @@ export const FastUnstakeProvider = ({
     }
 
     return () => {
-      unsubRef.current?.unsubscribe();
+      if (typeof unsubRef.current === 'function') {
+        unsubRef.current();
+      }
     };
   }, [
     isReady,
