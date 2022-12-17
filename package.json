@@ -21,7 +21,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "bn.js": "^5.2.1",
-    "chart.js": "^4.0.1",
+    "chart.js": "^4.1.0",
     "chartjs-plugin-datalabels": "^2.2.0",
     "che-react-number-easing": "^0.1.4",
     "date-fns": "^2.29.3",
