@@ -4,10 +4,12 @@
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/Network';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { MaybeAccount } from 'types';
 // eslint-disable-next-line import/no-unresolved
 import Worker from 'worker-loader!../../workers/stakers';
+import { defaultMeta } from './defaults';
+import { MetaInterface } from './types';
 
 export const FastUnstakeContext = React.createContext<any>(null);
 
@@ -30,8 +32,9 @@ export const FastUnstakeProvider = ({
   // TODO: cancel checking on network change / account change.
   const [checking, setChecking] = useState<boolean>(false);
 
-  // TODO: store metadata relating to the fast unstake check.
-  // const [meta, setMeta] = useState<AnyJson>(null);
+  // TODO: update meta on start + on each era finish
+  const [meta, setMeta] = useState<MetaInterface>(defaultMeta);
+  const metaRef = useRef(meta);
 
   // TODO: handle finished fast unstake eligibility check.
   // TODO: subscribe to fastUnstake.queue(activeAccount) if finally eligible and check has finished.
