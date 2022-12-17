@@ -31,7 +31,7 @@ export const ManageBond = () => {
   const { getTransferOptions } = useTransferOptions();
   const { inSetup, getNominationsStatus } = useStaking();
   const { isSyncing } = useUi();
-  const { checking, meta, isExposed, queueStatus, head } = useFastUnstake();
+  const { checking, meta, isExposed, head } = useFastUnstake();
   const { bondDuration } = consts;
   const { activeEra, fastUnstakeErasToCheckPerBlock } = metrics;
   const ledger = getLedgerForStash(activeAccount);
