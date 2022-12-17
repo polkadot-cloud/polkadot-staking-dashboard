@@ -1,12 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  faBolt,
-  faCheck,
-  faLockOpen,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons';
+import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
@@ -26,7 +21,7 @@ import { humanNumber, planckBnToUnit } from 'Utils';
 import { ButtonRowWrapper } from 'Wrappers';
 
 export const ManageBond = () => {
-  const { network, consts } = useApi();
+  const { network } = useApi();
   const { units } = network;
   const { metrics } = useNetworkMetrics();
   const { openModalWith } = useModal();
@@ -36,8 +31,7 @@ export const ManageBond = () => {
   const { inSetup, getNominationsStatus } = useStaking();
   const { isSyncing } = useUi();
   const { checking, meta, isExposed, queueStatus } = useFastUnstake();
-  const { bondDuration } = consts;
-  const { fastUnstakeErasToCheckPerBlock } = metrics;
+  const { activeEra, fastUnstakeErasToCheckPerBlock } = metrics;
   const ledger = getLedgerForStash(activeAccount);
   const { active }: { active: BN } = ledger;
   const nominationStatuses = getNominationsStatus();
@@ -60,13 +54,18 @@ export const ManageBond = () => {
 
   let fastUnstakeText = '';
   if (fastUnstakeActive) {
-    const { currentEra, checked } = meta;
+    const { currentEra } = meta;
     if (checking) {
       fastUnstakeText = 'Syncing...';
+    } else if (isExposed) {
+      const lastExposed = activeEra.index - (currentEra || 0);
+      fastUnstakeText = `Exposed ${lastExposed} Era${
+        lastExposed !== 1 ? `s` : ``
+      } Ago`;
     } else {
       fastUnstakeText = 'Fast Unstake';
+      // TODO: 'In Queue' if registered. (refer to queueStatus)
     }
-    // TODO: 'In Queue' if registered. (refer to queueStatus)
   }
 
   return (
@@ -121,7 +120,7 @@ export const ManageBond = () => {
           />
           {fastUnstakeActive ? (
             <ButtonPrimary
-              iconLeft={checking ? faBolt : isExposed ? faCheck : faTimes}
+              iconLeft={faBolt}
               onClick={() => {
                 // TODO: open modal when synced;
               }}
