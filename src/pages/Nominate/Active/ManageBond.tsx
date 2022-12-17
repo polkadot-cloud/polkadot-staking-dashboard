@@ -122,9 +122,10 @@ export const ManageBond = () => {
           {fastUnstakeActive ? (
             <div>
               <ButtonPrimary
+                disabled={isExposed === true || checking}
                 iconLeft={faBolt}
                 onClick={() => {
-                  // TODO: open fast unstake modals.
+                  openModalWith('ManageFastUnstake', {}, 'small');
                 }}
                 text={fastUnstakeText}
                 colorSecondary

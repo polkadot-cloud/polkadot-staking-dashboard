@@ -17,6 +17,7 @@ import { DismissTips } from './DismissTips';
 import { GoToFeedback } from './GoToFeedback';
 import { JoinPool } from './JoinPool';
 import { LeavePool } from './LeavePool';
+import { ManageFastUnstake } from './ManageFastUnstake';
 import { ManagePool } from './ManagePool';
 import { Networks } from './Networks';
 import { Nominate } from './Nominate';
@@ -112,28 +113,29 @@ export const Modal = () => {
               {modal === 'Bio' && <Bio />}
               {modal === 'ChangeNominations' && <ChangeNominations />}
               {modal === 'ChangePoolRoles' && <ChangePoolRoles />}
+              {modal === 'ChooseLanguage' && <ChooseLanguage />}
               {modal === 'ClaimReward' && <ClaimReward />}
               {modal === 'ConnectAccounts' && <ConnectAccounts />}
               {modal === 'DismissTips' && <DismissTips />}
+              {modal === 'GoToFeedback' && <GoToFeedback />}
               {modal === 'JoinPool' && <JoinPool />}
+              {modal === 'LeavePool' && <LeavePool />}
+              {modal === 'ManagePool' && <ManagePool />}
+              {modal === 'ManageFastUnstake' && <ManageFastUnstake />}
+              {modal === 'Networks' && <Networks />}
+              {modal === 'Nominate' && <Nominate />}
+              {modal === 'NominateFromFavorites' && <NominateFromFavorites />}
+              {modal === 'NominatePool' && <NominatePool />}
+              {modal === 'PoolNominations' && <PoolNominations />}
+              {modal === 'SelectFavorites' && <SelectFavorites />}
               {modal === 'Settings' && <Settings />}
+              {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
+              {modal === 'UnbondPoolMember' && <UnbondPoolMember />}
+              {modal === 'UnlockChunks' && <UnlockChunks />}
               {modal === 'UpdateController' && <UpdateController />}
               {modal === 'UpdateBond' && <UpdateBond />}
               {modal === 'UpdatePayee' && <UpdatePayee />}
-              {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
-              {modal === 'ManagePool' && <ManagePool />}
-              {modal === 'Nominate' && <Nominate />}
-              {modal === 'UnlockChunks' && <UnlockChunks />}
-              {modal === 'NominatePool' && <NominatePool />}
-              {modal === 'LeavePool' && <LeavePool />}
-              {modal === 'SelectFavorites' && <SelectFavorites />}
-              {modal === 'Networks' && <Networks />}
-              {modal === 'NominateFromFavorites' && <NominateFromFavorites />}
-              {modal === 'PoolNominations' && <PoolNominations />}
-              {modal === 'UnbondPoolMember' && <UnbondPoolMember />}
               {modal === 'WithdrawPoolMember' && <WithdrawPoolMember />}
-              {modal === 'GoToFeedback' && <GoToFeedback />}
-              {modal === 'ChooseLanguage' && <ChooseLanguage />}
             </ErrorBoundary>
           </ContentWrapper>
         </HeightWrapper>
