@@ -27,9 +27,10 @@ export const FastUnstakeProvider = ({
   const { api, isReady, consts, network } = useApi();
   const { activeAccount } = useConnect();
   const { metrics } = useNetworkMetrics();
-  const { isNominating } = useStaking();
-  const { activeEra } = metrics;
+  const { inSetup, getNominationsStatus } = useStaking();
+  const { activeEra, fastUnstakeErasToCheckPerBlock } = metrics;
   const { bondDuration } = consts;
+  const nominationStatuses = getNominationsStatus();
 
   // store whether a fast unstake check is in progress.
   const [checking, setChecking] = useState<boolean>(false);
@@ -45,19 +46,35 @@ export const FastUnstakeProvider = ({
   // initiate fast unstake check for accounts that are
   // nominating but not active.
   useEffect(() => {
-    if (isReady && activeAccount && activeEra.index !== 0) {
+    if (
+      isReady &&
+      activeAccount &&
+      activeEra.index !== 0 &&
+      fastUnstakeErasToCheckPerBlock > 0
+    ) {
       // cancel fast unstake check on network change or
       // account change.
       setStateWithRef(defaultMeta, setMeta, metaRef);
       setChecking(false);
 
-      if (activeAccount && isNominating()) {
-        // TODO: only trigger when nomination status is inactive.
+      // check for any active nominations
+      const activeNominations = Object.entries(nominationStatuses)
+        .map(([k, v]: any) => (v === 'active' ? k : false))
+        .filter((v) => v !== false);
 
+      // start process if account is inactively nominating
+      if (activeAccount && !inSetup() && !activeNominations.length) {
         processEligibility(activeAccount);
       }
     }
-  }, [isReady, activeAccount, network.name, activeEra.index, isNominating()]);
+  }, [
+    isReady,
+    activeAccount,
+    network.name,
+    activeEra.index,
+    inSetup(),
+    fastUnstakeErasToCheckPerBlock,
+  ]);
 
   // handle worker message on completed exposure check.
   worker.onmessage = (message: MessageEvent) => {
