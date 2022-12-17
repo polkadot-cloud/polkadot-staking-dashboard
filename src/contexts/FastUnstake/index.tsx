@@ -57,12 +57,6 @@ export const FastUnstakeProvider = ({
   const [unsub, setUnsub] = useState<AnyApi>(null);
   const unsubRef = useRef(unsub);
 
-  // TEST: subscribe to fastUnstake immediately.
-  // TODO: remove on impl finish.
-  useEffect(() => {
-    subscribeFastUnstakeQueue();
-  }, []);
-
   // initiate fast unstake check for accounts that are
   // nominating but not active.
   useEffect(() => {
@@ -120,7 +114,9 @@ export const FastUnstakeProvider = ({
       // ensure still same conditions.
       const { where, who } = data;
       if (where !== network.name || who !== activeAccount) {
+        // eslint-disable-next-line no-console
         console.log('conditions have changed, cancel fast unstake.');
+
         return;
       }
       const { currentEra, exposed } = data;
@@ -138,6 +134,7 @@ export const FastUnstakeProvider = ({
         );
       }
       if (exposed) {
+        // eslint-disable-next-line no-console
         console.log('exposed! Stop checking.');
 
         // if exposed, cancel checking and update exposed state.
@@ -147,6 +144,7 @@ export const FastUnstakeProvider = ({
         // successfully checked bondDuration eras.
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(false, setIsExposed, isExposedRef);
+        // eslint-disable-next-line no-console
         console.log('check finished! not exposed!');
         // subscribe to fast unstake queue for user and queue counter.
         subscribeFastUnstakeQueue();
@@ -207,7 +205,7 @@ export const FastUnstakeProvider = ({
   // calls service worker to check exppsures for given era.
   const checkEra = async (era: number) => {
     if (!api) return;
-
+    // eslint-disable-next-line no-console
     console.log('checking era ', era);
 
     const exposuresRaw = await api.query.staking.erasStakers.entries(era);
