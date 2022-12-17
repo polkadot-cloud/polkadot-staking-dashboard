@@ -4,7 +4,7 @@
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/Network';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
 // eslint-disable-next-line import/no-unresolved
 import { setStateWithRef } from 'Utils';
@@ -23,41 +23,53 @@ export const FastUnstakeProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, consts } = useApi();
+  const { api, consts, network } = useApi();
   const { activeAccount } = useConnect();
   const { metrics } = useNetworkMetrics();
   const { activeEra } = metrics;
   const { bondDuration } = consts;
 
   // store whether a fast unstake check is in progress.
-  // TODO: cancel checking on network change / account change.
   const [checking, setChecking] = useState<boolean>(false);
 
   // store state of elibigility checking.
   const [meta, setMeta] = useState<MetaInterface>(defaultMeta);
   const metaRef = useRef(meta);
 
+  // cancel fast unstake check
+  // on network change or account change.
+  useEffect(() => {
+    if (checking) {
+      setChecking(false);
+      setStateWithRef(defaultMeta, setMeta, metaRef);
+    }
+  }, [activeAccount, network.name]);
+
+  // handle worker message on completed exposure check.
+  worker.onmessage = (message: MessageEvent) => {
+    if (message) {
+      const { data } = message;
+      const { task, currentEra, who, where } = data;
+      if (task !== 'fast_unstake_process_era') {
+        return;
+      }
+      // conditions have changed - cancel check.
+      if (where !== network.name || who !== activeAccount) {
+        return;
+      }
+      console.log('TODO: implement for ', currentEra);
+      // TODO: update meta.checked on each era finish.
+      // TODO: subscribe to fastUnstake.queue(activeAccount) if finally eligible and check has finished.
+      // TODO: cancel fast unstake check if indeed exposed - not eligible.
+    }
+  };
+
   // set currentEra being checked in metadata
-  //
-  // called when a new era is about to be processed.
   const setMetaCurrentEra = (era: number) => {
     const m = Object.assign(meta, {
       currentEra: era,
     });
     setStateWithRef(m, setMeta, metaRef);
-  };
-
-  worker.onmessage = (message: MessageEvent) => {
-    // TODO: if network or account switch has happened, return.
-    if (message) {
-      const { data } = message;
-      const { task } = data;
-      if (task !== 'fast_unstake_process_era') {
-        // TODO: update meta.checked on each era finish.
-        // TODO: subscribe to fastUnstake.queue(activeAccount) if finally eligible and check has finished.
-        // TODO: cancel fast unstake check if indeed exposed - not eligible.
-      }
-    }
   };
 
   // initiate fast unstake eligibility check.
@@ -77,13 +89,10 @@ export const FastUnstakeProvider = ({
     checkEra(activeEra.index);
   };
 
-  // checks an era for exposure.
-  //
   // calls service worker to check exppsures for given era.
   const checkEra = async (era: number) => {
     if (!api) return;
 
-    // fetch and humaise exposures.
     const exposuresRaw = await api.query.staking.erasStakers.entries(era);
     const exposures = exposuresRaw.map(([keys, val]: AnyApi) => {
       return {
@@ -94,9 +103,9 @@ export const FastUnstakeProvider = ({
 
     // TODO: send to worker to calculate eligibiltiy
     // worker.postMessage({
-    //   era,
-    //   activeAccount,
-    //   network,
+    //   currentEra: era,
+    //   who: activeAccount,
+    //   where: network.name,
     //   exposures,
     // });
   };
