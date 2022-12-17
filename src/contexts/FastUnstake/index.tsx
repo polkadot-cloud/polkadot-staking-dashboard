@@ -34,6 +34,7 @@ export const FastUnstakeProvider = ({
 
   // store whether a fast unstake check is in progress.
   const [checking, setChecking] = useState<boolean>(false);
+  const checkingRef = useRef(checking);
 
   // store whether the account is exposed for fast unstake
   const [isExposed, setIsExposed] = useState<boolean | null>(null);
@@ -42,6 +43,24 @@ export const FastUnstakeProvider = ({
   // store state of elibigility checking.
   const [meta, setMeta] = useState<MetaInterface>(defaultMeta);
   const metaRef = useRef(meta);
+
+  // store fastUnstake queue status for user.
+  const [queueStatus, setQueueStatus] = useState<AnyApi>(null);
+  const queueStatusRef = useRef(queueStatus);
+
+  // store fastUnstake counter for queue.
+  const [counterForQueue, setCounterForQueue] = useState<number | null>(null);
+  const counterForQueueRef = useRef(counterForQueue);
+
+  // store fastUnstake subscription unsub.
+  const [unsub, setUnsub] = useState<AnyApi>(null);
+  const unsubRef = useRef(unsub);
+
+  // TEST: subscribe to fastUnstake immediately.
+  // TODO: remove on impl finish.
+  useEffect(() => {
+    subscribeFastUnstakeQueue();
+  }, []);
 
   // initiate fast unstake check for accounts that are
   // nominating but not active.
@@ -54,8 +73,12 @@ export const FastUnstakeProvider = ({
     ) {
       // cancel fast unstake check on network change or
       // account change.
+      unsubRef.current?.unsubscribe();
       setStateWithRef(defaultMeta, setMeta, metaRef);
-      setChecking(false);
+      setStateWithRef(null, setIsExposed, isExposedRef);
+      setStateWithRef(null, setQueueStatus, queueStatusRef);
+      setStateWithRef(null, setCounterForQueue, counterForQueueRef);
+      setStateWithRef(false, setChecking, checkingRef);
 
       // check for any active nominations
       const activeNominations = Object.entries(nominationStatuses)
@@ -67,6 +90,10 @@ export const FastUnstakeProvider = ({
         processEligibility(activeAccount);
       }
     }
+
+    return () => {
+      unsubRef.current?.unsubscribe();
+    };
   }, [
     isReady,
     activeAccount,
@@ -106,14 +133,19 @@ export const FastUnstakeProvider = ({
           metaRef
         );
       }
-      // if exposed, cancel checking and update exposed state.
       if (exposed) {
-        setChecking(false);
+        console.log('exposed! Stop checking.');
+
+        // if exposed, cancel checking and update exposed state.
+        setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(true, setIsExposed, isExposedRef);
       } else if (meta.checked.length === bondDuration) {
         // successfully checked bondDuration eras.
+        setStateWithRef(false, setIsExposed, isExposedRef);
+
         console.log('check finished! not exposed!');
-        // TODO: subscribe to fastUnstake.queue(activeAccount) if finally eligible and check has finished.
+        // subscribe to fast unstake queue for user and queue counter.
+        subscribeFastUnstakeQueue();
       } else {
         // continue checking the next era.
         checkEra(nextEra);
@@ -137,13 +169,35 @@ export const FastUnstakeProvider = ({
       !bondDuration ||
       !api ||
       !a ||
-      checking ||
+      checkingRef.current ||
       !activeAccount
     )
       return;
-    setChecking(true);
+    setStateWithRef(true, setChecking, checkingRef);
     setMetaCurrentEra(activeEra.index);
     checkEra(activeEra.index);
+  };
+
+  // subscribe to fastUnstake queue
+  const subscribeFastUnstakeQueue = async () => {
+    if (!api || !activeAccount) return;
+
+    const u = await api.queryMulti<AnyApi>(
+      [
+        [api.query.fastUnstake.queue, activeAccount],
+        api.query.fastUnstake.counterForQueue,
+      ],
+      ([_queue, _counterForQueue]) => {
+        setStateWithRef(_queue.toHuman(), setQueueStatus, queueStatusRef);
+        setStateWithRef(
+          _counterForQueue.toHuman(),
+          setCounterForQueue,
+          counterForQueueRef
+        );
+      }
+    );
+
+    setStateWithRef(u, setUnsub, unsubRef);
   };
 
   // calls service worker to check exppsures for given era.
@@ -169,7 +223,16 @@ export const FastUnstakeProvider = ({
   };
 
   return (
-    <FastUnstakeContext.Provider value={{ processEligibility }}>
+    <FastUnstakeContext.Provider
+      value={{
+        processEligibility,
+        checking: checkingRef.current,
+        meta: metaRef.current,
+        isExposed: isExposedRef.current,
+        queueStatus: queueStatusRef.current,
+        counterForQueue: counterForQueueRef.current,
+      }}
+    >
       {children}
     </FastUnstakeContext.Provider>
   );
