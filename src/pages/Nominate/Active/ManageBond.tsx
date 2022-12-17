@@ -63,9 +63,10 @@ export const ManageBond = () => {
       fastUnstakeText = `Exposed ${lastExposed} Era${
         lastExposed !== 1 ? `s` : ``
       } Ago`;
-    } else {
+    } else if (queueStatus === null) {
       fastUnstakeText = 'Fast Unstake';
-      // TODO: 'In Queue' if registered. (refer to queueStatus)
+    } else {
+      fastUnstakeText = 'In Queue';
     }
   }
 
