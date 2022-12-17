@@ -10,10 +10,11 @@ import { AnyApi, MaybeAccount } from 'types';
 // eslint-disable-next-line import/no-unresolved
 import { setStateWithRef } from 'Utils';
 import Worker from 'worker-loader!../../workers/stakers';
-import { defaultMeta } from './defaults';
-import { MetaInterface } from './types';
+import { defaultFastUnstakeContext, defaultMeta } from './defaults';
+import { FastUnstakeContextInterface, MetaInterface } from './types';
 
-export const FastUnstakeContext = React.createContext<any>(null);
+export const FastUnstakeContext =
+  React.createContext<FastUnstakeContextInterface>(defaultFastUnstakeContext);
 
 export const useFastUnstake = () => React.useContext(FastUnstakeContext);
 
@@ -229,7 +230,6 @@ export const FastUnstakeProvider = ({
   return (
     <FastUnstakeContext.Provider
       value={{
-        processEligibility,
         checking: checkingRef.current,
         meta: metaRef.current,
         isExposed: isExposedRef.current,
