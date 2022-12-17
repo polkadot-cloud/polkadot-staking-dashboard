@@ -13,5 +13,6 @@ export interface FastUnstakeContextInterface {
   meta: MetaInterface;
   isExposed: boolean | null;
   queueStatus: AnyApi;
+  head: AnyApi;
   counterForQueue: number | null;
 }

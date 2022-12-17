@@ -49,12 +49,16 @@ export const FastUnstakeProvider = ({
   const [queueStatus, setQueueStatus] = useState<AnyApi>(null);
   const queueStatusRef = useRef(queueStatus);
 
+  // store fastUnstake head.
+  const [head, setHead] = useState<AnyApi>(null);
+  const headRef = useRef(head);
+
   // store fastUnstake counter for queue.
   const [counterForQueue, setCounterForQueue] = useState<number | null>(null);
   const counterForQueueRef = useRef(counterForQueue);
 
   // store fastUnstake subscription unsub.
-  const [unsub, setUnsub] = useState<AnyApi>(null);
+  const [unsub, setUnsub] = useState<Array<AnyApi>>([]);
   const unsubRef = useRef(unsub);
 
   // initiate fast unstake check for accounts that are
@@ -68,14 +72,18 @@ export const FastUnstakeProvider = ({
     ) {
       // cancel fast unstake check on network change or
       // account change.
-      if (typeof unsubRef.current === 'function') {
-        unsubRef.current();
-      }
+      // if (unsubRef.current.length) {
+      // for (let u of unsubRef.current) {
+      //   u();
+      // }
+      // }
+
       setStateWithRef(defaultMeta, setMeta, metaRef);
       setStateWithRef(null, setIsExposed, isExposedRef);
       setStateWithRef(null, setQueueStatus, queueStatusRef);
       setStateWithRef(null, setCounterForQueue, counterForQueueRef);
       setStateWithRef(false, setChecking, checkingRef);
+      setStateWithRef([], setUnsub, unsubRef);
 
       // check for any active nominations
       const activeNominations = Object.entries(nominationStatuses)
@@ -89,9 +97,11 @@ export const FastUnstakeProvider = ({
     }
 
     return () => {
-      if (typeof unsubRef.current === 'function') {
-        unsubRef.current();
-      }
+      // if (unsubRef.current.length) {
+      // for (let u of unsubRef.current) {
+      //   u();
+      // }
+      // }
     };
   }, [
     isReady,
@@ -123,16 +133,18 @@ export const FastUnstakeProvider = ({
 
       // update check metadata, decrement current era.
       const nextEra = currentEra - 1;
+      const checked = metaRef.current.checked.concat(currentEra);
       if (!metaRef.current.checked.includes(currentEra)) {
         setStateWithRef(
           {
             currentEra: nextEra,
-            checked: metaRef.current.checked.concat(currentEra),
+            checked,
           },
           setMeta,
           metaRef
         );
       }
+
       if (exposed) {
         // eslint-disable-next-line no-console
         console.log('exposed! Stop checking.');
@@ -140,14 +152,16 @@ export const FastUnstakeProvider = ({
         // if exposed, cancel checking and update exposed state.
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(true, setIsExposed, isExposedRef);
-      } else if (meta.checked.length === bondDuration) {
+      } else if (checked.length === bondDuration) {
         // successfully checked bondDuration eras.
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(false, setIsExposed, isExposedRef);
+
         // eslint-disable-next-line no-console
         console.log('check finished! not exposed!');
+
         // subscribe to fast unstake queue for user and queue counter.
-        subscribeFastUnstakeQueue();
+        subscribeToFastUnstakeQueue();
       } else {
         // continue checking the next era.
         checkEra(nextEra);
@@ -181,25 +195,43 @@ export const FastUnstakeProvider = ({
   };
 
   // subscribe to fastUnstake queue
-  const subscribeFastUnstakeQueue = async () => {
+  const subscribeToFastUnstakeQueue = async () => {
     if (!api || !activeAccount) return;
+    const subscribeQueue = async (a: MaybeAccount) => {
+      const u = await api.query.fastUnstake.queue(a, (_queue: AnyApi) => {
+        const q = _queue.unwrapOrDefault(null).toHuman();
+        setStateWithRef(q, setQueueStatus, queueStatusRef);
+      });
+      return u;
+    };
+    const subscribeHead = async () => {
+      const u = await api.query.fastUnstake.head((_head: AnyApi) => {
+        const h = _head.unwrapOrDefault(null).toHuman();
+        setStateWithRef(h, setHead, headRef);
+      });
+      return u;
+    };
+    const subscribeCounterForQueue = async () => {
+      const u = await api.query.fastUnstake.counterForQueue(
+        (_counterForQueue: AnyApi) => {
+          const c = _counterForQueue.toHuman();
+          setStateWithRef(c, setCounterForQueue, counterForQueueRef);
+        }
+      );
+      return u;
+    };
 
-    const u = await api.queryMulti<AnyApi>(
-      [
-        [api.query.fastUnstake.queue, activeAccount],
-        api.query.fastUnstake.counterForQueue,
-      ],
-      ([_queue, _counterForQueue]) => {
-        setStateWithRef(_queue.toHuman(), setQueueStatus, queueStatusRef);
-        setStateWithRef(
-          _counterForQueue.toHuman(),
-          setCounterForQueue,
-          counterForQueueRef
-        );
-      }
-    );
+    // eslint-disable-next-line no-console
+    console.log('subscribing to queue + head');
 
-    setStateWithRef(u, setUnsub, unsubRef);
+    // initiate subscription, add to unsubs.
+    await Promise.all([
+      subscribeQueue(activeAccount),
+      subscribeHead(),
+      subscribeCounterForQueue(),
+    ]).then((u: any) => {
+      setStateWithRef(u, setUnsub, unsubRef);
+    });
   };
 
   // calls service worker to check exppsures for given era.
@@ -231,6 +263,7 @@ export const FastUnstakeProvider = ({
         meta: metaRef.current,
         isExposed: isExposedRef.current,
         queueStatus: queueStatusRef.current,
+        head: headRef.current,
         counterForQueue: counterForQueueRef.current,
       }}
     >

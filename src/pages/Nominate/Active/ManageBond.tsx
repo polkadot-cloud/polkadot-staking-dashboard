@@ -17,6 +17,7 @@ import BondedGraph from 'library/Graphs/Bonded';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
+import { AnyJson } from 'types';
 import { humanNumber, planckBnToUnit } from 'Utils';
 import { ButtonRowWrapper } from 'Wrappers';
 
@@ -30,7 +31,7 @@ export const ManageBond = () => {
   const { getTransferOptions } = useTransferOptions();
   const { inSetup, getNominationsStatus } = useStaking();
   const { isSyncing } = useUi();
-  const { checking, meta, isExposed, queueStatus } = useFastUnstake();
+  const { checking, meta, isExposed, queueStatus, head } = useFastUnstake();
   const { bondDuration } = consts;
   const { activeEra, fastUnstakeErasToCheckPerBlock } = metrics;
   const ledger = getLedgerForStash(activeAccount);
@@ -52,6 +53,11 @@ export const ManageBond = () => {
     fastUnstakeErasToCheckPerBlock > 0 &&
     !inSetup() &&
     !activeNominations.length;
+
+  // TODO: also check if user is in `queueStatus`.
+  const registered =
+    head?.stashes.find((s: AnyJson) => s[0] === activeAccount) ?? null;
+
   const getFastUnstakeText = () => {
     const { currentEra, checked } = meta;
     if (checking) {
@@ -61,14 +67,13 @@ export const ManageBond = () => {
       const lastExposed = activeEra.index - (currentEra || 0);
       return `Exposed ${lastExposed} Era${lastExposed !== 1 ? `s` : ``} Ago`;
     }
-    if (queueStatus !== null) {
+    if (registered) {
       return 'In Queue';
     }
     return 'Fast Unstake';
   };
 
   const fastUnstakeText = fastUnstakeActive ? getFastUnstakeText() : '';
-
   return (
     <>
       <CardHeaderWrapper>

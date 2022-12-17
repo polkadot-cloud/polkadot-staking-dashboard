@@ -11,6 +11,7 @@ import { useFastUnstake } from 'contexts/FastUnstake';
 import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
@@ -18,6 +19,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AnyJson } from 'types';
 import {
   FooterWrapper,
   NotesWrapper,
@@ -26,32 +28,43 @@ import {
 } from '../Wrappers';
 
 export const ManageFastUnstake = () => {
+  const { t } = useTranslation('modals');
   const { api, consts } = useApi();
   const { activeAccount } = useConnect();
   const { getControllerNotImported } = useStaking();
   const { getBondedAccount } = useBalances();
   const { txFeesValid } = useTxFees();
   const { metrics } = useNetworkMetrics();
-  const { isExposed, counterForQueue, queueStatus, meta } = useFastUnstake();
+  const { isExposed, counterForQueue, queueStatus, meta, head } =
+    useFastUnstake();
   const { setResize } = useModal();
+  const { getTransferOptions } = useTransferOptions();
   const { bondDuration } = consts;
   const { activeEra, fastUnstakeErasToCheckPerBlock } = metrics;
   const { currentEra } = meta;
-
   const controller = getBondedAccount(activeAccount);
-  const { t } = useTranslation('modals');
-  const registered = queueStatus !== null;
+  const allTransferOptions = getTransferOptions(activeAccount);
+  const { nominate } = allTransferOptions;
+  const { totalUnlockChuncks } = nominate;
+
+  // TODO: also check if user is in `queueStatus`.
+  const registered =
+    head?.stashes.find((s: AnyJson) => s[0] === activeAccount) ?? null;
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
 
   useEffect(() => {
-    setValid(fastUnstakeErasToCheckPerBlock > 0 && isExposed === false);
-  }, [isExposed, queueStatus]);
+    setValid(
+      fastUnstakeErasToCheckPerBlock > 0 &&
+        isExposed === false &&
+        totalUnlockChuncks === 0
+    );
+  }, [isExposed, fastUnstakeErasToCheckPerBlock, totalUnlockChuncks]);
 
   useEffect(() => {
     setResize();
-  }, [isExposed, queueStatus]);
+  }, [isExposed, queueStatus, registered]);
 
   // tx to submit
   const getTx = () => {
@@ -59,7 +72,7 @@ export const ManageFastUnstake = () => {
     if (!valid || !api) {
       return tx;
     }
-    if (registered) {
+    if (!registered) {
       tx = api.tx.fastUnstake.registerFastUnstake();
     } else {
       tx = api.tx.fastUnstake.deregister();
@@ -79,6 +92,13 @@ export const ManageFastUnstake = () => {
   const warnings = [];
   if (getControllerNotImported(controller)) {
     warnings.push(t('mustHaveController'));
+  }
+  if (totalUnlockChuncks > 0 && !registered) {
+    warnings.push(
+      `You have ${totalUnlockChuncks} unlock${
+        totalUnlockChuncks === 1 ? '' : 's'
+      } active. No unlocks can be active to register for fast unstake. Rebond or withdraw your unlocks to become fully bonded and try registering for fast unstake again.`
+    );
   }
 
   // manage last exposed
@@ -127,8 +147,7 @@ export const ManageFastUnstake = () => {
                       queue.
                     </p>
                     <p>
-                      There are currently{' '}
-                      {counterForQueue === 0 ? 'no' : counterForQueue} account
+                      There are currently {counterForQueue} account
                       {counterForQueue !== 1 ? 's' : ''} in the queue.
                     </p>
                     <EstimatedTxFee />
@@ -140,7 +159,7 @@ export const ManageFastUnstake = () => {
                   <Separator />
                   <NotesWrapper>
                     <p>
-                      {counterForQueue === 0 ? 'no' : counterForQueue} account
+                      {counterForQueue} account
                       {counterForQueue !== 1 ? 's' : ''} in the queue.
                     </p>
                     <p>

@@ -13,5 +13,6 @@ export const defaultFastUnstakeContext: FastUnstakeContextInterface = {
   meta: defaultMeta,
   isExposed: null,
   queueStatus: null,
+  head: null,
   counterForQueue: null,
 };
