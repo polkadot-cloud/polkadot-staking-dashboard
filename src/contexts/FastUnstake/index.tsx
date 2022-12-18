@@ -150,8 +150,11 @@ export const FastUnstakeProvider = ({
       // update check metadata, decrement current era.
       const nextEra = currentEra - 1;
 
-      // TODO: order `checked` with highest era first.
-      const checked = metaRef.current.checked.concat(currentEra);
+      // ensure checked eras are in order highest first.
+      const checked = metaRef.current.checked
+        .sort((a: number, b: number) => b - a)
+        .concat(currentEra);
+
       if (!metaRef.current.checked.includes(currentEra)) {
         // TODO: update localStorage with updated changes.
         // localStorage.setItem(...);
@@ -214,6 +217,28 @@ export const FastUnstakeProvider = ({
     checkEra(activeEra.index);
   };
 
+  // calls service worker to check exppsures for given era.
+  const checkEra = async (era: number) => {
+    if (!api) return;
+    // eslint-disable-next-line no-console
+    console.log('checking era ', era);
+
+    const exposuresRaw = await api.query.staking.erasStakers.entries(era);
+    const exposures = exposuresRaw.map(([keys, val]: AnyApi) => {
+      return {
+        keys: keys.toHuman(),
+        val: val.toHuman(),
+      };
+    });
+    worker.postMessage({
+      task: 'process_fast_unstake_era',
+      currentEra: era,
+      who: activeAccount,
+      where: network.name,
+      exposures,
+    });
+  };
+
   // subscribe to fastUnstake queue
   const subscribeToFastUnstakeQueue = async () => {
     if (!api || !activeAccount) return;
@@ -251,28 +276,6 @@ export const FastUnstakeProvider = ({
       subscribeCounterForQueue(),
     ]).then((u: any) => {
       setStateWithRef(u, setUnsub, unsubRef);
-    });
-  };
-
-  // calls service worker to check exppsures for given era.
-  const checkEra = async (era: number) => {
-    if (!api) return;
-    // eslint-disable-next-line no-console
-    console.log('checking era ', era);
-
-    const exposuresRaw = await api.query.staking.erasStakers.entries(era);
-    const exposures = exposuresRaw.map(([keys, val]: AnyApi) => {
-      return {
-        keys: keys.toHuman(),
-        val: val.toHuman(),
-      };
-    });
-    worker.postMessage({
-      task: 'process_fast_unstake_era',
-      currentEra: era,
-      who: activeAccount,
-      where: network.name,
-      exposures,
     });
   };
 
