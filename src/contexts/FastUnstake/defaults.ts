@@ -4,7 +4,6 @@
 import { FastUnstakeContextInterface, MetaInterface } from './types';
 
 export const defaultMeta: MetaInterface = {
-  currentEra: null,
   checked: [],
 };
 

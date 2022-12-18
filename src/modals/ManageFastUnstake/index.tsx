@@ -42,7 +42,7 @@ export const ManageFastUnstake = () => {
   const { getTransferOptions } = useTransferOptions();
   const { bondDuration } = consts;
   const { activeEra, fastUnstakeErasToCheckPerBlock } = metrics;
-  const { currentEra } = meta;
+  const { checked } = meta;
   const controller = getBondedAccount(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
   const { nominate } = allTransferOptions;
@@ -106,7 +106,7 @@ export const ManageFastUnstake = () => {
   let lastExposed = '';
   let lastExposedEra = 0;
   if (isExposed) {
-    lastExposedEra = activeEra.index - (currentEra || 0);
+    lastExposedEra = activeEra.index - (checked[0] || 0);
     lastExposed = `${lastExposedEra} Era${lastExposedEra !== 1 ? `s` : ``} Ago`;
   }
   const erasRemaining = Math.max(1, bondDuration - lastExposedEra);

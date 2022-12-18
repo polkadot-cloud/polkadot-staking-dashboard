@@ -59,12 +59,12 @@ export const ManageBond = () => {
     head?.stashes.find((s: AnyJson) => s[0] === activeAccount) ?? null;
 
   const getFastUnstakeText = () => {
-    const { currentEra, checked } = meta;
+    const { checked } = meta;
     if (checking) {
       return `Checking ${checked.length} of ${bondDuration} eras...`;
     }
     if (isExposed) {
-      const lastExposed = activeEra.index - (currentEra || 0);
+      const lastExposed = activeEra.index - (checked[0] || 0);
       return `Exposed ${lastExposed} Era${lastExposed !== 1 ? `s` : ``} Ago`;
     }
     if (registered) {

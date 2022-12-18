@@ -72,18 +72,31 @@ export const FastUnstakeProvider = ({
     ) {
       // cancel fast unstake check on network change or
       // account change.
-      // if (unsubRef.current.length) {
-      // for (let u of unsubRef.current) {
-      //   u();
-      // }
-      // }
+      if (unsubRef.current.length) {
+        for (const u of unsubRef.current) {
+          u();
+        }
+      }
 
-      setStateWithRef(defaultMeta, setMeta, metaRef);
-      setStateWithRef(null, setIsExposed, isExposedRef);
+      setStateWithRef(false, setChecking, checkingRef);
       setStateWithRef(null, setQueueStatus, queueStatusRef);
       setStateWithRef(null, setCounterForQueue, counterForQueueRef);
-      setStateWithRef(false, setChecking, checkingRef);
       setStateWithRef([], setUnsub, unsubRef);
+
+      // TODO: get any localStorage and check if it is still valid.
+      // TODO: remove expired eras (below activeEra - bondDuration).
+      // TODO: check if highest -> lowest are decremented, no missing eras.
+      // TODO: update localStorage with updated changes.
+      /*
+      {
+        isExposed: boolean;
+        checked: Array<number>;
+      }
+      */
+
+      // TODO: prefill if localStorage data is still up to date.
+      setStateWithRef(defaultMeta, setMeta, metaRef);
+      setStateWithRef(null, setIsExposed, isExposedRef);
 
       // check for any active nominations
       const activeNominations = Object.entries(nominationStatuses)
@@ -91,17 +104,21 @@ export const FastUnstakeProvider = ({
         .filter((v) => v !== false);
 
       // start process if account is inactively nominating
+      // TODO: check if any processing is needed with localStorage records.
       if (activeAccount && !inSetup() && !activeNominations.length) {
         processEligibility(activeAccount);
       }
+
+      // TODO: subscribe to fast unstake queue immediately if synced in localStorage and still up to date.
+      // subscribeToFastUnstakeQueue();.
     }
 
     return () => {
-      // if (unsubRef.current.length) {
-      // for (let u of unsubRef.current) {
-      //   u();
-      // }
-      // }
+      if (unsubRef.current.length) {
+        for (const u of unsubRef.current) {
+          u();
+        }
+      }
     };
   }, [
     isReady,
@@ -126,18 +143,22 @@ export const FastUnstakeProvider = ({
       if (where !== network.name || who !== activeAccount) {
         // eslint-disable-next-line no-console
         console.log('conditions have changed, cancel fast unstake.');
-
         return;
       }
       const { currentEra, exposed } = data;
 
       // update check metadata, decrement current era.
       const nextEra = currentEra - 1;
+
+      // TODO: order `checked` with highest era first.
       const checked = metaRef.current.checked.concat(currentEra);
       if (!metaRef.current.checked.includes(currentEra)) {
+        // TODO: update localStorage with updated changes.
+        // localStorage.setItem(...);
+
+        // update check metadata.
         setStateWithRef(
           {
-            currentEra: nextEra,
             checked,
           },
           setMeta,
@@ -185,7 +206,6 @@ export const FastUnstakeProvider = ({
     setStateWithRef(true, setChecking, checkingRef);
     setStateWithRef(
       {
-        currentEra: activeEra.index,
         checked: [],
       },
       setMeta,

@@ -4,7 +4,6 @@
 import { AnyApi } from 'types';
 
 export interface MetaInterface {
-  currentEra: number | null;
   checked: Array<number>;
 }
 
