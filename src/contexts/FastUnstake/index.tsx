@@ -62,7 +62,10 @@ export const FastUnstakeProvider = ({
   const unsubRef = useRef(unsub);
 
   // localStorage key to fetch local metadata.
-  const localKey = `${network.name}_${activeAccount}_fastUnstake`;
+  const localKey = `${network.name.toLowerCase()}_fast_unstake_${activeAccount}`;
+
+  // check until bond duration eras surpasssed.
+  const checkToEra = activeEra.index - bondDuration;
 
   // initiate fast unstake check for accounts that are
   // nominating but not active.
@@ -87,28 +90,52 @@ export const FastUnstakeProvider = ({
       setStateWithRef([], setUnsub, unsubRef);
 
       // get any existing localStorage records for account.
-      // eslint-disable-next-line
       const localMeta: LocalMeta | null = getLocalMeta();
-      // TODO: prefill
-      // TODO: localMeta ? { checked: localMeta.checked } : defaultMeta;
-      // TODO: localMeta ? { : localMeta.isExposed && localMeta.checked.length === bondDuration } : null;
 
-      setStateWithRef(defaultMeta, setMeta, metaRef);
-      setStateWithRef(null, setIsExposed, isExposedRef);
+      const initialMeta = localMeta
+        ? { checked: localMeta.checked }
+        : defaultMeta;
+
+      // even if localMeta.isExposed is false, we don't assume a final
+      // value until current era + bondDuration is checked.
+      let initialIsExposed = null;
+      if (localMeta) {
+        if (localMeta.checked.length === 1 + bondDuration) {
+          initialIsExposed = localMeta.isExposed;
+        } else if (localMeta.isExposed === true) {
+          initialIsExposed = true;
+        } else {
+          initialIsExposed = null;
+        }
+      }
+
+      if (localMeta) {
+        // eslint-disable-next-line no-console
+        console.log('initial local meta: ', localMeta);
+      }
+
+      setStateWithRef(initialMeta, setMeta, metaRef);
+      setStateWithRef(initialIsExposed, setIsExposed, isExposedRef);
 
       // check for any active nominations
       const activeNominations = Object.entries(nominationStatuses)
         .map(([k, v]: any) => (v === 'active' ? k : false))
         .filter((v) => v !== false);
 
-      // start process if account is inactively nominating
-      // TODO: check if any processing is needed with possible completed lcalStorage records.
-      if (activeAccount && !inSetup() && !activeNominations.length) {
+      // start process if account is inactively nominating & local fast unstake data is not complete.
+      if (
+        activeAccount &&
+        !inSetup() &&
+        !activeNominations.length &&
+        initialIsExposed === null
+      ) {
         processEligibility(activeAccount);
       }
 
-      // TODO: subscribe to fast unstake queue immediately if synced in localStorage and still up to date.
-      // subscribeToFastUnstakeQueue();.
+      // subscribe to fast unstake queue immediately if synced in localStorage and still up to date.
+      if (initialIsExposed === false) {
+        subscribeToFastUnstakeQueue();
+      }
     }
 
     return () => {
@@ -150,12 +177,18 @@ export const FastUnstakeProvider = ({
 
       // ensure checked eras are in order highest first.
       const checked = metaRef.current.checked
-        .sort((a: number, b: number) => b - a)
-        .concat(currentEra);
+        .concat(currentEra)
+        .sort((a: number, b: number) => b - a);
 
       if (!metaRef.current.checked.includes(currentEra)) {
-        // TODO: update localStorage with updated changes.
-        // localStorage.setItem(...);
+        // update localStorage with updated changes.
+        localStorage.setItem(
+          localKey,
+          JSON.stringify({
+            isExposed: exposed,
+            checked,
+          })
+        );
 
         // update check metadata.
         setStateWithRef(
@@ -174,8 +207,8 @@ export const FastUnstakeProvider = ({
         // if exposed, cancel checking and update exposed state.
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(true, setIsExposed, isExposedRef);
-      } else if (checked.length === bondDuration) {
-        // successfully checked bondDuration eras.
+      } else if (checked.length === 1 + bondDuration) {
+        // successfully checked current era - bondDuration eras.
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(false, setIsExposed, isExposedRef);
 
@@ -205,13 +238,6 @@ export const FastUnstakeProvider = ({
       return;
 
     setStateWithRef(true, setChecking, checkingRef);
-    setStateWithRef(
-      {
-        checked: [],
-      },
-      setMeta,
-      metaRef
-    );
     checkEra(activeEra.index);
   };
 
@@ -279,11 +305,14 @@ export const FastUnstakeProvider = ({
 
   // gets any existing fast unstake metadata for an account.
   const getLocalMeta = (): LocalMeta | null => {
-    const localMeta: AnyJson = localStorage.getItem(localKey);
+    let localMeta: AnyJson = localStorage.getItem(localKey);
 
     if (!localMeta) {
       return null;
     }
+
+    localMeta = JSON.parse(localMeta);
+
     const localMetaValidated = validateMeta(localMeta);
     if (!localMetaValidated) {
       // remove if not valid.
@@ -313,9 +342,8 @@ export const FastUnstakeProvider = ({
     }
 
     // remove any expired eras and sort highest first
-    const lowestEra = activeEra.index - bondDuration;
     localChecked = localChecked
-      .filter((e: number) => e >= lowestEra)
+      .filter((e: number) => e >= checkToEra)
       .sort((a: number, b: number) => b - a);
 
     // if no remaining eras, invalid
