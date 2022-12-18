@@ -149,7 +149,7 @@ export const UnbondFeedback = ({
       <UnbondInput
         active={active}
         defaultValue={defaultValue}
-        disabled={false}
+        disabled={active.isZero()}
         unbondToMin={unbondToMin}
         setters={setters}
         value={bond.bond}

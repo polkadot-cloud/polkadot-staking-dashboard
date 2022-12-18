@@ -27,10 +27,10 @@ import { NominatePool } from './NominatePool';
 import { PoolNominations } from './PoolNominations';
 import { SelectFavorites } from './SelectFavorites';
 import { Settings } from './Settings';
+import { Unbond } from './Unbond';
 import { UnbondPoolMember } from './UnbondPoolMember';
 import { UnlockChunks } from './UnlockChunks';
 import { Unstake } from './Unstake';
-import { UpdateBond } from './UpdateBond';
 import { UpdateController } from './UpdateController';
 import { UpdatePayee } from './UpdatePayee';
 import { ValidatorMetrics } from './ValidatorMetrics';
@@ -137,7 +137,7 @@ export const Modal = () => {
               {modal === 'UnlockChunks' && <UnlockChunks />}
               {modal === 'Unstake' && <Unstake />}
               {modal === 'UpdateController' && <UpdateController />}
-              {modal === 'UpdateBond' && <UpdateBond />}
+              {modal === 'Unbond' && <Unbond />}
               {modal === 'UpdatePayee' && <UpdatePayee />}
               {modal === 'WithdrawPoolMember' && <WithdrawPoolMember />}
             </ErrorBoundary>

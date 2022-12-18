@@ -101,7 +101,7 @@ export const ManageBond = () => {
             }
             marginRight
             onClick={() =>
-              openModalWith('UpdateBond', { bondType: 'stake' }, 'small')
+              openModalWith('Unbond', { bondType: 'stake' }, 'small')
             }
             text="-"
           />

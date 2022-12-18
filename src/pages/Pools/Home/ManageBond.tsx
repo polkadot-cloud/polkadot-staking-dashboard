@@ -65,7 +65,7 @@ export const ManageBond = () => {
             }
             marginRight
             onClick={() =>
-              openModalWith('UpdateBond', { bondType: 'pool' }, 'small')
+              openModalWith('Unbond', { bondType: 'pool' }, 'small')
             }
             text="-"
           />
