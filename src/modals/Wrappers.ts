@@ -4,13 +4,16 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import {
+  backgroundToggle,
   borderPrimary,
+  buttonPrimaryBackground,
   cardBorder,
   cardShadow,
   modalBackground,
   modalOverlayBackground,
   networkColor,
   shadowColor,
+  textPrimary,
   textSecondary,
 } from 'theme';
 
@@ -68,6 +71,12 @@ export const ContentWrapper = styled.div`
   overflow: hidden;
   position: relative;
 
+  h2 {
+    &.title {
+      margin: 0.75rem 0 0.25rem 0;
+    }
+  }
+
   a {
     color: ${networkColor};
   }
@@ -87,6 +96,48 @@ export const ContentWrapper = styled.div`
       color: ${textSecondary};
     }
   }
+  .action-button {
+    background: ${buttonPrimaryBackground};
+    padding: 1rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    border-radius: 0.75rem;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+    transition: all 0.15s;
+    width: 100%;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    h3,
+    p {
+      text-align: left;
+      margin: 0;
+    }
+    h3 {
+      margin-bottom: 0.5rem;
+    }
+    > *:last-child {
+      flex: 1;
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-end;
+    }
+    &:hover {
+      background: ${backgroundToggle};
+    }
+    .icon {
+      margin-right: 0.5rem;
+    }
+    p {
+      color: ${textPrimary};
+      font-size: 1rem;
+    }
+  }
 `;
 
 // generic wrapper for modal padding
@@ -101,10 +152,10 @@ export const PaddingWrapper = styled.div<{
   width: 100%;
   padding: ${(props) =>
     props.verticalOnly
-      ? '1rem 0'
+      ? '1.25rem 0'
       : props.horizontalOnly
       ? '0 1rem'
-      : '1rem 1.25rem'};
+      : '1.25rem 1.25rem'};
 `;
 
 // modal header, used for extrinsics forms
@@ -179,9 +230,11 @@ export const Separator = styled.div`
   margin: 0.75rem 0rem;
 `;
 
-export const NotesWrapper = styled.div`
+export const NotesWrapper = styled.div<{
+  noPadding?: boolean;
+}>`
   width: 100%;
-  padding: 1rem 0;
+  padding: ${(props) => (props.noPadding ? '0' : '1rem 0')};
   > p {
     color: ${textSecondary};
   }

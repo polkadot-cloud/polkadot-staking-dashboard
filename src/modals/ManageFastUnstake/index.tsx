@@ -121,7 +121,7 @@ export const ManageFastUnstake = () => {
 
           {isExposed ? (
             <>
-              <h2>You Were Last Exposed {lastExposed}</h2>
+              <h2 className="title">You Were Last Exposed {lastExposed}</h2>
               <Separator />
               <NotesWrapper>
                 <p>
@@ -155,7 +155,7 @@ export const ManageFastUnstake = () => {
                 </>
               ) : (
                 <>
-                  <h2>Registered and Waiting to Unstake</h2>
+                  <h2 className="title">Registered and Waiting to Unstake</h2>
                   <Separator />
                   <NotesWrapper>
                     <p>

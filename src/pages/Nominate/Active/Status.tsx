@@ -6,6 +6,7 @@ import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import {
   faChevronCircleRight,
   faRedoAlt,
+  faSignOutAlt,
   faWallet,
 } from '@fortawesome/free-solid-svg-icons';
 import { BN } from 'bn.js';
@@ -15,6 +16,7 @@ import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
@@ -33,12 +35,15 @@ export const Status = ({ height }: { height: number }) => {
   const { isSyncing } = useUi();
   const { getNominationsStatus, staking, inSetup, eraStakers } = useStaking();
   const { getAccountNominations } = useBalances();
+  const { getTransferOptions } = useTransferOptions();
   const { stakers } = eraStakers;
   const { payee } = staking;
   const { meta, validators } = useValidators();
   const nominations = getAccountNominations(activeAccount);
   // get nomination status
   const nominationStatuses = getNominationsStatus();
+  const transferOptions = getTransferOptions(activeAccount).nominate;
+  const { active } = transferOptions;
 
   // get active nominations
   const activeNominees = Object.entries(nominationStatuses)
@@ -118,6 +123,7 @@ export const Status = ({ height }: { height: number }) => {
       startTitle += `: ${progress}%`;
     }
   }
+
   return (
     <CardWrapper height={height}>
       <Stat
@@ -126,7 +132,19 @@ export const Status = ({ height }: { height: number }) => {
         stat={getNominationStatus()}
         buttons={
           !inSetup()
-            ? []
+            ? !active.isZero() || nominations.length > 0
+              ? [
+                  {
+                    title: 'Unstake',
+                    icon: faSignOutAlt,
+                    disabled:
+                      !isReady ||
+                      isReadOnlyAccount(activeAccount) ||
+                      !activeAccount,
+                    onClick: () => openModalWith('Unstake', {}, 'small'),
+                  },
+                ]
+              : []
             : [
                 {
                   title: startTitle,

@@ -29,6 +29,7 @@ import { SelectFavorites } from './SelectFavorites';
 import { Settings } from './Settings';
 import { UnbondPoolMember } from './UnbondPoolMember';
 import { UnlockChunks } from './UnlockChunks';
+import { Unstake } from './Unstake';
 import { UpdateBond } from './UpdateBond';
 import { UpdateController } from './UpdateController';
 import { UpdatePayee } from './UpdatePayee';
@@ -134,6 +135,7 @@ export const Modal = () => {
               {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
               {modal === 'UnbondPoolMember' && <UnbondPoolMember />}
               {modal === 'UnlockChunks' && <UnlockChunks />}
+              {modal === 'Unstake' && <Unstake />}
               {modal === 'UpdateController' && <UpdateController />}
               {modal === 'UpdateBond' && <UpdateBond />}
               {modal === 'UpdatePayee' && <UpdatePayee />}

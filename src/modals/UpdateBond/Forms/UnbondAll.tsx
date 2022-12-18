@@ -147,7 +147,7 @@ export const UnbondAll = (props: FormsProps) => {
             />
           )}
           <h4>{t('amountToUnbond')}</h4>
-          <h2>
+          <h2 className="title">
             {freeToUnbond} {network.unit}
           </h2>
           <Separator />

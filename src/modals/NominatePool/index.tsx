@@ -85,7 +85,9 @@ export const NominatePool = () => {
           {warnings.map((text: string, index: number) => (
             <Warning key={`warning_${index}`} text={text} />
           ))}
-          <h2>{t('haveNomination', { count: nominations.length })}</h2>
+          <h2 className="title">
+            {t('haveNomination', { count: nominations.length })}
+          </h2>
           <Separator />
           <NotesWrapper>
             <p>{t('onceSubmitted')}</p>

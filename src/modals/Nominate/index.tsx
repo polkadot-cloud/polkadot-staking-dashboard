@@ -95,7 +95,9 @@ export const Nominate = () => {
           {warnings.map((text: any, index: number) => (
             <Warning key={index} text={text} />
           ))}
-          <h2>{t('haveNomination', { count: nominations.length })}</h2>
+          <h2 className="title">
+            {t('haveNomination', { count: nominations.length })}
+          </h2>
           <Separator />
           <NotesWrapper>
             <p>{t('onceSubmitted')}</p>
