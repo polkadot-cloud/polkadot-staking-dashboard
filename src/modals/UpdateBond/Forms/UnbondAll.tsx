@@ -1,6 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
+import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -16,13 +18,9 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { NotesWrapper, Separator } from '../../Wrappers';
-import { FormsProps } from '../types';
-import { FormFooter } from './FormFooter';
+import { FooterWrapper, NotesWrapper, Separator } from '../../Wrappers';
 
-export const UnbondAll = (props: FormsProps) => {
-  const { setSection } = props;
-
+export const UnbondAll = () => {
   const { api, network, consts } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config } = useModal();
@@ -157,12 +155,20 @@ export const UnbondAll = (props: FormsProps) => {
           </NotesWrapper>
         </>
       </div>
-      <FormFooter
-        setSection={setSection}
-        submitTx={submitTx}
-        submitting={submitting}
-        isValid={bondValid && accountHasSigner(signingAccount) && txFeesValid}
-      />
+      <FooterWrapper>
+        <div>
+          <ButtonSubmit
+            text={`${submitting ? t('submitting') : t('submit')}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => submitTx()}
+            disabled={
+              submitting ||
+              !(bondValid && accountHasSigner(signingAccount) && txFeesValid)
+            }
+          />
+        </div>
+      </FooterWrapper>
     </>
   );
 };
