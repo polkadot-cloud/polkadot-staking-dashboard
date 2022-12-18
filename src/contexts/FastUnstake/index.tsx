@@ -315,8 +315,13 @@ export const FastUnstakeProvider = ({
     // remove any expired eras and sort highest first
     const lowestEra = activeEra.index - bondDuration;
     localChecked = localChecked
-      .filter((e: number) => e < lowestEra)
+      .filter((e: number) => e >= lowestEra)
       .sort((a: number, b: number) => b - a);
+
+    // if no remaining eras, invalid
+    if (!localChecked.length) {
+      return null;
+    }
 
     // check if highest -> lowest are decremented, no missing eras.
     let i = 0;
