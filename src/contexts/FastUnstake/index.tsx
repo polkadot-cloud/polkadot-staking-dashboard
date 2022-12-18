@@ -6,12 +6,12 @@ import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, MaybeAccount } from 'types';
+import { AnyApi, AnyJson, MaybeAccount } from 'types';
 // eslint-disable-next-line import/no-unresolved
 import { setStateWithRef } from 'Utils';
 import Worker from 'worker-loader!../../workers/stakers';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
-import { FastUnstakeContextInterface, MetaInterface } from './types';
+import { FastUnstakeContextInterface, LocalMeta, MetaInterface } from './types';
 
 export const FastUnstakeContext =
   React.createContext<FastUnstakeContextInterface>(defaultFastUnstakeContext);
@@ -61,6 +61,9 @@ export const FastUnstakeProvider = ({
   const [unsub, setUnsub] = useState<Array<AnyApi>>([]);
   const unsubRef = useRef(unsub);
 
+  // localStorage key to fetch local metadata.
+  const localKey = `${network.name}_${activeAccount}_fastUnstake`;
+
   // initiate fast unstake check for accounts that are
   // nominating but not active.
   useEffect(() => {
@@ -83,18 +86,13 @@ export const FastUnstakeProvider = ({
       setStateWithRef(null, setCounterForQueue, counterForQueueRef);
       setStateWithRef([], setUnsub, unsubRef);
 
-      // TODO: get any localStorage and check if it is still valid.
-      // TODO: remove expired eras (below activeEra - bondDuration).
-      // TODO: check if highest -> lowest are decremented, no missing eras.
-      // TODO: update localStorage with updated changes.
-      /*
-      {
-        isExposed: boolean;
-        checked: Array<number>;
-      }
-      */
+      // get any existing localStorage records for account.
+      // eslint-disable-next-line
+      const localMeta: LocalMeta | null = getLocalMeta();
+      // TODO: prefill
+      // TODO: localMeta ? { checked: localMeta.checked } : defaultMeta;
+      // TODO: localMeta ? { : localMeta.isExposed && localMeta.checked.length === bondDuration } : null;
 
-      // TODO: prefill if localStorage data is still up to date.
       setStateWithRef(defaultMeta, setMeta, metaRef);
       setStateWithRef(null, setIsExposed, isExposedRef);
 
@@ -104,7 +102,7 @@ export const FastUnstakeProvider = ({
         .filter((v) => v !== false);
 
       // start process if account is inactively nominating
-      // TODO: check if any processing is needed with localStorage records.
+      // TODO: check if any processing is needed with possible completed lcalStorage records.
       if (activeAccount && !inSetup() && !activeNominations.length) {
         processEligibility(activeAccount);
       }
@@ -277,6 +275,70 @@ export const FastUnstakeProvider = ({
     ]).then((u: any) => {
       setStateWithRef(u, setUnsub, unsubRef);
     });
+  };
+
+  // gets any existing fast unstake metadata for an account.
+  const getLocalMeta = (): LocalMeta | null => {
+    const localMeta: AnyJson = localStorage.getItem(localKey);
+
+    if (!localMeta) {
+      return null;
+    }
+    const localMetaValidated = validateMeta(localMeta);
+    if (!localMetaValidated) {
+      // remove if not valid.
+      localStorage.removeItem(localKey);
+      return null;
+    }
+    // set validated localStorage.
+    localStorage.setItem(localKey, JSON.stringify(localMetaValidated));
+    return localMetaValidated;
+  };
+
+  // validates stored fast unstake metadata for an account.
+  const validateMeta = (localMeta: AnyJson): LocalMeta | null => {
+    const localIsExposed = localMeta?.isExposed ?? null;
+    let localChecked = localMeta?.checked ?? null;
+
+    // check types saved
+    if (typeof localIsExposed !== 'boolean' || !Array.isArray(localChecked)) {
+      return null;
+    }
+    // check checked only contains numbers
+    const checkedNumeric = localChecked.every(
+      (e: AnyJson) => typeof e === 'number'
+    );
+    if (!checkedNumeric) {
+      return null;
+    }
+
+    // remove any expired eras and sort highest first
+    const lowestEra = activeEra.index - bondDuration;
+    localChecked = localChecked
+      .filter((e: number) => e < lowestEra)
+      .sort((a: number, b: number) => b - a);
+
+    // check if highest -> lowest are decremented, no missing eras.
+    let i = 0;
+    let prev = 0;
+    const noMissingEras = localChecked.every((e: number) => {
+      i++;
+      if (i === 1) {
+        prev = e;
+        return true;
+      }
+      const p = prev;
+      prev = e;
+      if (e === p - 1) return true;
+      return false;
+    });
+    if (!noMissingEras) {
+      return null;
+    }
+    return {
+      isExposed: localIsExposed,
+      checked: localChecked,
+    };
   };
 
   return (

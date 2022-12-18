@@ -3,6 +3,10 @@
 
 import { AnyApi } from 'types';
 
+export interface LocalMeta {
+  isExposed: boolean;
+  checked: Array<number>;
+}
 export interface MetaInterface {
   checked: Array<number>;
 }
