@@ -65,7 +65,6 @@ export const Networks = () => {
                   disabled={rpcDisabled}
                   key={`network_switch_${index}`}
                   type="button"
-                  className="action-button"
                   onClick={() => {
                     if (networkKey !== key) {
                       switchNetwork(key, isLightClient);
