@@ -15,7 +15,6 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
-import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
@@ -124,11 +123,37 @@ export const Unbond = () => {
     callbackInBlock: () => {},
   });
 
+  const nominatorActiveBelowMin =
+    bondType === 'stake' &&
+    !activeBn.isZero() &&
+    activeBn.lt(minNominatorBondBn);
+
+  const poolToMinBn = isDepositor() ? minCreateBondBn : minJoinBondBn;
+  const poolActiveBelowMin = bondType === 'pool' && activeBn.lt(poolToMinBn);
+
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
     warnings.push(t('readOnly'));
   }
 
+  if (unclaimedRewards > 0 && bondType === 'pool') {
+    warnings.push(
+      `${t('unbondingWithdraw')} ${unclaimedRewards} ${network.unit}.`
+    );
+  }
+  if (nominatorActiveBelowMin) {
+    warnings.push(
+      `Unable to unbond. Your bonded funds are below the minumum of ${minNominatorBond} ${network.unit}.`
+    );
+  }
+  if (poolActiveBelowMin) {
+    warnings.push(
+      `Unable to unbond. Your bonded funds are below the minumum of ${planckBnToUnit(
+        poolToMinBn,
+        units
+      )} ${network.unit}.`
+    );
+  }
   if (activeBn.isZero()) {
     warnings.push(`You have no ${network.unit} to unbond.`);
   }
@@ -137,13 +162,6 @@ export const Unbond = () => {
     <>
       <Title title={`${t('remove')} ${t('bond')}`} icon={faMinus} />
       <PaddingWrapper>
-        {unclaimedRewards > 0 && bondType === 'pool' && (
-          <Warning
-            text={`${t('unbondingWithdraw')} ${unclaimedRewards} ${
-              network.unit
-            }.`}
-          />
-        )}
         <UnbondFeedback
           bondType={bondType}
           listenIsValid={setBondValid}
