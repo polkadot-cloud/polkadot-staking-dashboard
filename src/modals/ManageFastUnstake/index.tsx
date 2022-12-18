@@ -25,6 +25,7 @@ import {
   NotesWrapper,
   PaddingWrapper,
   Separator,
+  WarningsWrapper,
 } from '../Wrappers';
 
 export const ManageFastUnstake = () => {
@@ -113,85 +114,87 @@ export const ManageFastUnstake = () => {
   return (
     <>
       <Title title="Fast Unstake" icon={faBolt} />
-      <PaddingWrapper verticalOnly>
-        <div style={{ padding: '0 1rem', width: '100%' }}>
-          {warnings.map((text: any, index: number) => (
-            <Warning key={index} text={text} />
-          ))}
+      <PaddingWrapper>
+        {warnings.length > 0 ? (
+          <WarningsWrapper>
+            {warnings.map((text: any, index: number) => (
+              <Warning key={index} text={text} />
+            ))}
+          </WarningsWrapper>
+        ) : null}
 
-          {isExposed ? (
-            <>
-              <h2 className="title">You Were Last Exposed {lastExposed}</h2>
-              <Separator />
-              <NotesWrapper>
-                <p>
-                  To register for fast unstake, you must <b>not</b> be actively
-                  staking for more than {bondDuration} eras.
-                </p>
-                <p>
-                  If you are inactive for at least {erasRemaining} more era
-                  {erasRemaining === 1 ? '' : 's'}, you will be able to register
-                  for fast unstake.
-                </p>
-              </NotesWrapper>
-            </>
-          ) : (
-            <>
-              {!registered ? (
-                <>
-                  <h2>Register For Fast Unstake</h2>
-                  <Separator />
-                  <NotesWrapper>
-                    <p>
-                      Once registerd you will be waiting in the fast unstake
-                      queue.
-                    </p>
-                    <p>
-                      There are currently {counterForQueue} account
-                      {counterForQueue !== 1 ? 's' : ''} in the queue.
-                    </p>
-                    <EstimatedTxFee />
-                  </NotesWrapper>
-                </>
-              ) : (
-                <>
-                  <h2 className="title">Registered and Waiting to Unstake</h2>
-                  <Separator />
-                  <NotesWrapper>
-                    <p>
-                      {counterForQueue} account
-                      {counterForQueue !== 1 ? 's' : ''} in the queue.
-                    </p>
-                    <p>
-                      The fast unstake queue is unordered, so the exact timing
-                      of being selected is not known.
-                    </p>
-                    <EstimatedTxFee />
-                  </NotesWrapper>
-                </>
-              )}
-            </>
-          )}
-          {!isExposed && (
-            <FooterWrapper>
-              <div>
-                <ButtonSubmit
-                  text={`${
-                    submitting
-                      ? t('submitting')
-                      : registered
-                      ? 'Cancel Fast Unstake'
-                      : 'Register'
-                  }`}
-                  iconLeft={faArrowAltCircleUp}
-                  iconTransform="grow-2"
-                  onClick={() => submitTx()}
-                  disabled={!valid || submitting || !txFeesValid}
-                />
-              </div>
-            </FooterWrapper>
-          )}
-        </div>
+        {isExposed ? (
+          <>
+            <h2 className="title">You Were Last Exposed {lastExposed}</h2>
+            <Separator />
+            <NotesWrapper>
+              <p>
+                To register for fast unstake, you must <b>not</b> be actively
+                staking for more than {bondDuration} eras.
+              </p>
+              <p>
+                If you are inactive for at least {erasRemaining} more era
+                {erasRemaining === 1 ? '' : 's'}, you will be able to register
+                for fast unstake.
+              </p>
+            </NotesWrapper>
+          </>
+        ) : (
+          <>
+            {!registered ? (
+              <>
+                <h2 className="title">Register For Fast Unstake</h2>
+                <Separator />
+                <NotesWrapper>
+                  <p>
+                    Once registerd you will be waiting in the fast unstake
+                    queue.
+                  </p>
+                  <p>
+                    There are currently {counterForQueue} account
+                    {counterForQueue !== 1 ? 's' : ''} in the queue.
+                  </p>
+                  <EstimatedTxFee />
+                </NotesWrapper>
+              </>
+            ) : (
+              <>
+                <h2 className="title">Registered and Waiting to Unstake</h2>
+                <Separator />
+                <NotesWrapper>
+                  <p>
+                    {counterForQueue} account
+                    {counterForQueue !== 1 ? 's' : ''} in the queue.
+                  </p>
+                  <p>
+                    The fast unstake queue is unordered, so the exact timing of
+                    being selected is not known.
+                  </p>
+                  <EstimatedTxFee />
+                </NotesWrapper>
+              </>
+            )}
+          </>
+        )}
+        {!isExposed && (
+          <FooterWrapper>
+            <div>
+              <ButtonSubmit
+                text={`${
+                  submitting
+                    ? t('submitting')
+                    : registered
+                    ? 'Cancel Fast Unstake'
+                    : 'Register'
+                }`}
+                iconLeft={faArrowAltCircleUp}
+                iconTransform="grow-2"
+                onClick={() => submitTx()}
+                disabled={!valid || submitting || !txFeesValid}
+              />
+            </div>
+          </FooterWrapper>
+        )}
       </PaddingWrapper>
     </>
   );

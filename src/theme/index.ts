@@ -85,6 +85,11 @@ export const backgroundOverlay: theme.ThemeSet = theme(
   defaultThemes.background.overlay
 );
 
+export const backgroundWarning: theme.ThemeSet = theme(
+  v,
+  defaultThemes.background.warning
+);
+
 // highlights
 
 export const highlightPrimary: theme.ThemeSet = theme(
@@ -160,6 +165,11 @@ export const borderPrimary: theme.ThemeSet = theme(
 export const borderSecondary: theme.ThemeSet = theme(
   v,
   defaultThemes.border.secondary
+);
+
+export const borderWarning: theme.ThemeSet = theme(
+  v,
+  defaultThemes.border.warning
 );
 
 // modal
