@@ -91,11 +91,7 @@ export const ManageBond = () => {
             }
             marginRight
             onClick={() =>
-              openModalWith(
-                'UpdateBond',
-                { fn: 'add', bondType: 'stake' },
-                'small'
-              )
+              openModalWith('Bond', { bondType: 'stake' }, 'small')
             }
             text="+"
           />
@@ -105,11 +101,7 @@ export const ManageBond = () => {
             }
             marginRight
             onClick={() =>
-              openModalWith(
-                'UpdateBond',
-                { fn: 'remove', bondType: 'stake' },
-                'small'
-              )
+              openModalWith('UpdateBond', { bondType: 'stake' }, 'small')
             }
             text="-"
           />

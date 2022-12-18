@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import BN, { max } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -13,14 +14,15 @@ import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Title } from 'library/Modal/Title';
+import { FormFooter } from 'modals/UpdateBond/Forms/FormFooter';
+import { NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { NotesWrapper } from '../../Wrappers';
-import { FormsProps } from '../types';
-import { FormFooter } from './FormFooter';
 
-export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
+export const Bond = () => {
+  const { t } = useTranslation('modals');
   const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, config, setResize } = useModal();
@@ -34,7 +36,6 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
   const { freeBalance: freeBalanceBn } = getTransferOptions(activeAccount);
   const freeBalance = planckBnToUnit(freeBalanceBn, units);
   const largestTxFee = useBondGreatestFee({ bondType });
-  const { t } = useTranslation('modals');
 
   // calculate any unclaimed pool rewards.
   let { unclaimedRewards } = selectedActivePool || {};
@@ -114,7 +115,8 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
 
   return (
     <>
-      <div className="items">
+      <Title title={`${t('addTo')} ${t('bond')}`} icon={faPlus} />
+      <PaddingWrapper>
         {unclaimedRewards > 0 && bondType === 'pool' && (
           <Warning
             text={`${t('bondingWithdraw')} ${unclaimedRewards} ${
@@ -127,7 +129,6 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
           bondType={bondType}
           listenIsValid={setBondValid}
           defaultBond={null}
-          setLocalResize={setLocalResize}
           setters={[
             {
               set: setBond,
@@ -140,13 +141,13 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
         <NotesWrapper>
           <EstimatedTxFee />
         </NotesWrapper>
-      </div>
-      <FormFooter
-        setSection={setSection}
-        submitTx={submitTx}
-        submitting={submitting}
-        isValid={bondValid && accountHasSigner(activeAccount) && txFeesValid}
-      />
+
+        <FormFooter
+          submitTx={submitTx}
+          submitting={submitting}
+          isValid={bondValid && accountHasSigner(activeAccount) && txFeesValid}
+        />
+      </PaddingWrapper>
     </>
   );
 };

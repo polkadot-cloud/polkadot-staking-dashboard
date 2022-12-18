@@ -4,7 +4,6 @@
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { forwardRef } from 'react';
@@ -18,8 +17,6 @@ export const Tasks = forwardRef((props: any, ref: any) => {
 
   const { network } = useApi();
   const { units, unit } = network;
-  const { config } = useModal();
-  const { fn } = config;
   const { isDepositor } = useActivePools();
   const { stats } = usePoolsConfig();
   const { minCreateBond, minJoinBond } = stats;
@@ -30,113 +27,69 @@ export const Tasks = forwardRef((props: any, ref: any) => {
   return (
     <ContentWrapper>
       <div className="items" ref={ref}>
-        {fn === 'add' && (
-          <>
-            <button
-              type="button"
-              className="action-button"
-              onClick={() => {
-                setSection(1);
-                setTask('bond_some');
-              }}
-            >
-              <div>
-                <h3>{t('bondExtra')}</h3>
-                <p>
-                  {t('bondMore')} {network.unit}.
-                </p>
-              </div>
-              <div>
-                <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
-              </div>
-            </button>
-            <button
-              type="button"
-              className="action-button"
-              onClick={() => {
-                setSection(1);
-                setTask('bond_all');
-              }}
-            >
-              <div>
-                <h3>{t('bondAll')}</h3>
-                <p>
-                  {t('bondAllAvailable')} {network.unit}.
-                </p>
-              </div>
-              <div>
-                <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
-              </div>
-            </button>
-          </>
+        <button
+          type="button"
+          className="action-button"
+          onClick={() => {
+            setSection(1);
+            setTask('unbond_some');
+          }}
+        >
+          <div>
+            <h3>{t('unbond')}</h3>
+            <p>
+              {t('unbondSomeOfYour')} {network.unit}.
+            </p>
+          </div>
+          <div>
+            <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
+          </div>
+        </button>
+        {bondType === 'stake' && (
+          <button
+            type="button"
+            className="action-button"
+            onClick={() => {
+              setSection(1);
+              setTask('unbond_all');
+            }}
+          >
+            <div>
+              <h3>{t('unbondAll')}</h3>
+              <p>{t('exitYourStakingPosition')}</p>
+            </div>
+            <div>
+              <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
+            </div>
+          </button>
         )}
-        {fn === 'remove' && (
-          <>
-            <button
-              type="button"
-              className="action-button"
-              onClick={() => {
-                setSection(1);
-                setTask('unbond_some');
-              }}
-            >
-              <div>
-                <h3>{t('unbond')}</h3>
-                <p>
-                  {t('unbondSomeOfYour')} {network.unit}.
-                </p>
-              </div>
-              <div>
-                <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
-              </div>
-            </button>
-            {bondType === 'stake' && (
-              <button
-                type="button"
-                className="action-button"
-                onClick={() => {
-                  setSection(1);
-                  setTask('unbond_all');
-                }}
-              >
-                <div>
-                  <h3>{t('unbondAll')}</h3>
-                  <p>{t('exitYourStakingPosition')}</p>
-                </div>
-                <div>
-                  <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
-                </div>
-              </button>
-            )}
-            {bondType === 'pool' && (
-              <button
-                type="button"
-                className="action-button"
-                onClick={() => {
-                  setSection(1);
-                  setTask('unbond_pool_to_minimum');
-                }}
-              >
-                <div>
-                  <h3>{t('unbondToMinimum')}</h3>
-                  <p>
-                    {isDepositor()
-                      ? `${t('unbondToMinimumCreate', {
-                          minCreateBondBase,
-                          unit,
-                        })}`
-                      : `${t('unbondToMaintain', {
-                          minJoinBondBase,
-                          unit,
-                        })}`}
-                  </p>
-                </div>
-                <div>
-                  <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
-                </div>
-              </button>
-            )}
-          </>
+        {bondType === 'pool' && (
+          <button
+            type="button"
+            className="action-button"
+            onClick={() => {
+              setSection(1);
+              setTask('unbond_pool_to_minimum');
+            }}
+          >
+            <div>
+              <h3>{t('unbondToMinimum')}</h3>
+              <p>
+                {isDepositor()
+                  ? `${t('unbondToMinimumCreate', {
+                      minCreateBondBase,
+                      unit,
+                    })}`
+                  : `${t('unbondToMaintain', {
+                      minJoinBondBase,
+                      unit,
+                    })}`}
+              </p>
+            </div>
+            <div>
+              <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
+            </div>
+          </button>
         )}
       </div>
     </ContentWrapper>

@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
+  width: 100%;
 
   > h4 {
     margin: 0;

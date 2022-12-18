@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faMinus } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
@@ -12,7 +12,7 @@ import { CardsWrapper, FixedContentWrapper, Wrapper } from './Wrappers';
 
 export const UpdateBond = () => {
   const { config, setModalHeight } = useModal();
-  const { fn, bondType } = config;
+  const { bondType } = config;
 
   // modal task
   const [task, setTask] = useState(null);
@@ -46,11 +46,7 @@ export const UpdateBond = () => {
   return (
     <Wrapper>
       <FixedContentWrapper ref={headerRef}>
-        <Title
-          title={`${fn === 'add' ? t('addTo') : t('remove')} ${t('bond')}`}
-          icon={fn === 'add' ? faPlus : faMinus}
-          fixed
-        />
+        <Title title={`${t('remove')} ${t('bond')}`} icon={faMinus} fixed />
       </FixedContentWrapper>
       <CardsWrapper
         animate={section === 0 ? 'home' : 'next'}

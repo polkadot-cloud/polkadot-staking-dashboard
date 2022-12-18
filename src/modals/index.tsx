@@ -8,6 +8,7 @@ import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { AccountPoolRoles } from './AccountPoolRoles';
 import { Bio } from './Bio';
+import { Bond } from './Bond';
 import { ChangeNominations } from './ChangeNominations';
 import { ChangePoolRoles } from './ChangePoolRoles';
 import { ChooseLanguage } from './ChooseLanguage';
@@ -111,6 +112,7 @@ export const Modal = () => {
             <ErrorBoundary FallbackComponent={ErrorFallbackModal}>
               {modal === 'AccountPoolRoles' && <AccountPoolRoles />}
               {modal === 'Bio' && <Bio />}
+              {modal === 'Bond' && <Bond />}
               {modal === 'ChangeNominations' && <ChangeNominations />}
               {modal === 'ChangePoolRoles' && <ChangePoolRoles />}
               {modal === 'ChooseLanguage' && <ChooseLanguage />}
