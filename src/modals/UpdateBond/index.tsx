@@ -6,7 +6,6 @@ import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Forms } from './Forms';
 import { Tasks } from './Tasks';
 import { CardsWrapper, FixedContentWrapper, Wrapper } from './Wrappers';
 
@@ -20,12 +19,6 @@ export const UpdateBond = () => {
 
   // active modal section
   const [section, setSection] = useState(0);
-
-  // increment to resize modal
-  const [localResize, _setLocalResize] = useState(0);
-  const setLocalResize = () => {
-    _setLocalResize(localResize + 1);
-  };
 
   // refs for wrappers
   const headerRef = useRef<HTMLDivElement>(null);
@@ -41,7 +34,7 @@ export const UpdateBond = () => {
       _height += formsRef.current?.clientHeight ?? 0;
     }
     setModalHeight(_height);
-  }, [section, task, localResize]);
+  }, [section, task]);
 
   return (
     <Wrapper>
@@ -69,14 +62,6 @@ export const UpdateBond = () => {
           setSection={setSection}
           setTask={setTask}
           ref={tasksRef}
-        />
-        <Forms
-          section={section}
-          setSection={setSection}
-          task={task}
-          ref={formsRef}
-          bondType={bondType}
-          setLocalResize={setLocalResize}
         />
       </CardsWrapper>
     </Wrapper>

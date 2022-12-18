@@ -1,7 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowAltCircleUp,
+  faSignOutAlt,
+} from '@fortawesome/free-solid-svg-icons';
+import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -13,8 +17,7 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
-import { FormFooter } from 'modals/UpdateBond/Forms/FormFooter';
-import { NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
+import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
@@ -120,11 +123,20 @@ export const Unstake = () => {
           <p>{t('onceUnbonding', { bondDuration })}</p>
           {bondValid && <EstimatedTxFee />}
         </NotesWrapper>
-        <FormFooter
-          submitTx={submitTx}
-          submitting={submitting}
-          isValid={bondValid && accountHasSigner(controller) && txFeesValid}
-        />
+        <FooterWrapper>
+          <div>
+            <ButtonSubmit
+              text={`${submitting ? t('submitting') : t('submit')}`}
+              iconLeft={faArrowAltCircleUp}
+              iconTransform="grow-2"
+              onClick={() => submitTx()}
+              disabled={
+                submitting ||
+                !(bondValid && accountHasSigner(controller) && txFeesValid)
+              }
+            />
+          </div>
+        </FooterWrapper>
       </PaddingWrapper>
     </>
   );
