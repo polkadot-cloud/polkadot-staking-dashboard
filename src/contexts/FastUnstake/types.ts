@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { AnyApi } from 'types';
+import { AnyApi, MaybeAccount } from 'types';
 
 export interface LocalMeta {
   isExposed: boolean;
@@ -13,6 +13,7 @@ export interface MetaInterface {
 }
 
 export interface FastUnstakeContextInterface {
+  getLocalkey: (a: MaybeAccount) => string;
   checking: boolean;
   meta: MetaInterface;
   isExposed: boolean | null;

@@ -8,6 +8,8 @@ export const defaultMeta: MetaInterface = {
 };
 
 export const defaultFastUnstakeContext: FastUnstakeContextInterface = {
+  // eslint-disable-next-line
+  getLocalkey: (a) => '',
   checking: false,
   meta: defaultMeta,
   isExposed: null,

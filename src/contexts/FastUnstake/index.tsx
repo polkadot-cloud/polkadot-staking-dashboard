@@ -62,7 +62,9 @@ export const FastUnstakeProvider = ({
   const unsubRef = useRef(unsub);
 
   // localStorage key to fetch local metadata.
-  const localKey = `${network.name.toLowerCase()}_fast_unstake_${activeAccount}`;
+  const getLocalkey = (a: MaybeAccount) => {
+    return `${network.name.toLowerCase()}_fast_unstake_${a}`;
+  };
 
   // check until bond duration eras surpasssed.
   const checkToEra = activeEra.index - bondDuration;
@@ -183,7 +185,7 @@ export const FastUnstakeProvider = ({
       if (!metaRef.current.checked.includes(currentEra)) {
         // update localStorage with updated changes.
         localStorage.setItem(
-          localKey,
+          getLocalkey(activeAccount),
           JSON.stringify({
             isExposed: exposed,
             checked,
@@ -305,7 +307,7 @@ export const FastUnstakeProvider = ({
 
   // gets any existing fast unstake metadata for an account.
   const getLocalMeta = (): LocalMeta | null => {
-    let localMeta: AnyJson = localStorage.getItem(localKey);
+    let localMeta: AnyJson = localStorage.getItem(getLocalkey(activeAccount));
 
     if (!localMeta) {
       return null;
@@ -316,11 +318,14 @@ export const FastUnstakeProvider = ({
     const localMetaValidated = validateMeta(localMeta);
     if (!localMetaValidated) {
       // remove if not valid.
-      localStorage.removeItem(localKey);
+      localStorage.removeItem(getLocalkey(activeAccount));
       return null;
     }
     // set validated localStorage.
-    localStorage.setItem(localKey, JSON.stringify(localMetaValidated));
+    localStorage.setItem(
+      getLocalkey(activeAccount),
+      JSON.stringify(localMetaValidated)
+    );
     return localMetaValidated;
   };
 
@@ -377,6 +382,7 @@ export const FastUnstakeProvider = ({
   return (
     <FastUnstakeContext.Provider
       value={{
+        getLocalkey,
         checking: checkingRef.current,
         meta: metaRef.current,
         isExposed: isExposedRef.current,
