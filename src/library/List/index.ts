@@ -98,7 +98,7 @@ export const SelectableWrapper = styled.div`
     border: 1px solid ${borderPrimary};
     font-size: 1rem;
     color: ${textSecondary};
-    border-radius: 1rem;
+    border-radius: 1.5rem;
     padding: 0.45rem 1rem;
     margin-right: 0.5rem;
     margin-bottom: 0.75rem;
