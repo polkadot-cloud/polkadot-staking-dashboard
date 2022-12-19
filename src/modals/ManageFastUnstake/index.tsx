@@ -142,7 +142,7 @@ export const ManageFastUnstake = () => {
           <>
             {!isFastUnstaking ? (
               <>
-                <h2 className="title">Register For Fast Unstake</h2>
+                <h2 className="title">Register Fast Unstake</h2>
                 <Separator />
                 <NotesWrapper>
                   <p>

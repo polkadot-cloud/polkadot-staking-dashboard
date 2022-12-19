@@ -35,13 +35,14 @@ export const Status = ({ height }: { height: number }) => {
   const { openModalWith } = useModal();
   const { isReady, network } = useApi();
   const { meta, validators } = useValidators();
-  const { getAccountNominations } = useBalances();
+  const { getAccountNominations, getBondedAccount } = useBalances();
   const { metrics } = useNetworkMetrics();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { setOnNominatorSetup, getStakeSetupProgressPercent }: any = useUi();
   const { getNominationsStatus, staking, inSetup, eraStakers } = useStaking();
   const { checking, isExposed } = useFastUnstake();
-  const { getFastUnstakeText, isUnstaking } = useUnstaking();
+  const { getFastUnstakeText, isUnstaking, isFastUnstaking } = useUnstaking();
+  const controller = getBondedAccount(activeAccount);
 
   const { fastUnstakeErasToCheckPerBlock } = metrics;
   const { stakers } = eraStakers;
@@ -129,10 +130,7 @@ export const Status = ({ height }: { height: number }) => {
     }
   }
 
-  const fastUnstakeActive =
-    fastUnstakeErasToCheckPerBlock > 0 && !inSetup() && !activeNominees.length;
-
-  const fastUnstakeText = fastUnstakeActive ? getFastUnstakeText() : '';
+  const fastUnstakeText = getFastUnstakeText();
   const slowUnstakeButton = {
     title: 'Unstake',
     icon: faSignOutAlt,
@@ -162,7 +160,7 @@ export const Status = ({ height }: { height: number }) => {
         stat={getNominationStatus()}
         buttons={
           !inSetup()
-            ? !isUnstaking
+            ? !isUnstaking && !isReadOnlyAccount(controller)
               ? [unstakeButton]
               : []
             : [
@@ -202,7 +200,10 @@ export const Status = ({ height }: { height: number }) => {
                   icon: faWallet,
                   small: true,
                   disabled:
-                    inSetup() || isSyncing || isReadOnlyAccount(activeAccount),
+                    inSetup() ||
+                    isSyncing ||
+                    isReadOnlyAccount(activeAccount) ||
+                    isFastUnstaking,
                   onClick: () => openModalWith('UpdatePayee', {}, 'small'),
                 },
               ]

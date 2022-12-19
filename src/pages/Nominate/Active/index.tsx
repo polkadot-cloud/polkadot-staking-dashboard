@@ -11,6 +11,7 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
+import useUnstaking from 'library/Hooks/useUnstaking';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
@@ -35,6 +36,7 @@ export const Active = () => {
   const { isSyncing } = useUi();
   const { targets, setTargets, inSetup } = useStaking();
   const { getAccountNominations } = useBalances();
+  const { isFastUnstaking } = useUnstaking();
   const nominations = getAccountNominations(activeAccount);
   const { t } = useTranslation('pages');
 
@@ -87,7 +89,10 @@ export const Active = () => {
                     iconLeft={faChevronCircleRight}
                     iconTransform="grow-1"
                     disabled={
-                      targets.nominations.length === 0 || inSetup() || isSyncing
+                      targets.nominations.length === 0 ||
+                      inSetup() ||
+                      isSyncing ||
+                      isFastUnstaking
                     }
                     onClick={() => openModalWith('Nominate', {}, 'small')}
                   />

@@ -49,7 +49,7 @@ export const UnstakePrompts = () => {
               </h3>
               <h4>
                 {isFastUnstaking
-                  ? 'You are in the fast unstake queue. You will not be able to carry out any staking functions while you are registered for fast unstake.'
+                  ? 'You are in the fast unstake queue. You will not be able to carry out any nominator tasks while you are registered for fast unstake.'
                   : !canWithdrawUnlocks
                   ? `Waiting for unlocks to become available to withdraw.`
                   : `Your bonded funds are now unlocked and ready to withdraw.`}{' '}

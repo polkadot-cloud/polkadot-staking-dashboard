@@ -13,6 +13,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import BondedGraph from 'library/Graphs/Bonded';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
+import useUnstaking from 'library/Hooks/useUnstaking';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
 import { humanNumber, planckBnToUnit } from 'Utils';
@@ -28,6 +29,7 @@ export const ManageBond = () => {
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const ledger = getLedgerForStash(activeAccount);
+  const { isFastUnstaking } = useUnstaking();
   const { active }: { active: BN } = ledger;
 
   const allTransferOptions = getTransferOptions(activeAccount);
@@ -50,7 +52,10 @@ export const ManageBond = () => {
         <ButtonRowWrapper>
           <ButtonPrimary
             disabled={
-              inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
+              inSetup() ||
+              isSyncing ||
+              isReadOnlyAccount(activeAccount) ||
+              isFastUnstaking
             }
             marginRight
             onClick={() =>
@@ -60,7 +65,10 @@ export const ManageBond = () => {
           />
           <ButtonPrimary
             disabled={
-              inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
+              inSetup() ||
+              isSyncing ||
+              isReadOnlyAccount(activeAccount) ||
+              isFastUnstaking
             }
             marginRight
             onClick={() =>
