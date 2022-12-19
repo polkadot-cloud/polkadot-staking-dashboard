@@ -134,7 +134,7 @@ export const Status = ({ height }: { height: number }) => {
   const slowUnstakeButton = {
     title: 'Unstake',
     icon: faSignOutAlt,
-    disabled: !isReady || isReadOnlyAccount(activeAccount) || !activeAccount,
+    disabled: !isReady || isReadOnlyAccount(controller) || !activeAccount,
     onClick: () => openModalWith('Unstake', {}, 'small'),
   };
 
