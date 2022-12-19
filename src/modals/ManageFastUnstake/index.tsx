@@ -16,10 +16,10 @@ import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import useUnstaking from 'library/Hooks/useUnstaking';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AnyJson } from 'types';
 import {
   FooterWrapper,
   NotesWrapper,
@@ -36,10 +36,11 @@ export const ManageFastUnstake = () => {
   const { getBondedAccount } = useBalances();
   const { txFeesValid } = useTxFees();
   const { metrics } = useNetworkMetrics();
-  const { isExposed, counterForQueue, queueStatus, meta, head } =
-    useFastUnstake();
+  const { isExposed, counterForQueue, queueStatus, meta } = useFastUnstake();
   const { setResize } = useModal();
   const { getTransferOptions } = useTransferOptions();
+  const { isFastUnstaking } = useUnstaking();
+
   const { bondDuration } = consts;
   const { activeEra, fastUnstakeErasToCheckPerBlock } = metrics;
   const { checked } = meta;
@@ -48,14 +49,11 @@ export const ManageFastUnstake = () => {
   const { nominate } = allTransferOptions;
   const { totalUnlockChuncks } = nominate;
 
-  // TODO: also check if user is in `queueStatus`.
-  const registered =
-    head?.stashes.find((s: AnyJson) => s[0] === activeAccount) ?? null;
-
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
 
   useEffect(() => {
+    // TODO: account for fast unstaking in progress (has unlock chunks).
     setValid(
       fastUnstakeErasToCheckPerBlock > 0 &&
         isExposed === false &&
@@ -65,7 +63,7 @@ export const ManageFastUnstake = () => {
 
   useEffect(() => {
     setResize();
-  }, [isExposed, queueStatus, registered]);
+  }, [isExposed, queueStatus, isFastUnstaking]);
 
   // tx to submit
   const getTx = () => {
@@ -73,7 +71,7 @@ export const ManageFastUnstake = () => {
     if (!valid || !api) {
       return tx;
     }
-    if (!registered) {
+    if (!isFastUnstaking) {
       tx = api.tx.fastUnstake.registerFastUnstake();
     } else {
       tx = api.tx.fastUnstake.deregister();
@@ -94,7 +92,7 @@ export const ManageFastUnstake = () => {
   if (getControllerNotImported(controller)) {
     warnings.push(t('mustHaveController'));
   }
-  if (totalUnlockChuncks > 0 && !registered) {
+  if (totalUnlockChuncks > 0 && !isFastUnstaking) {
     warnings.push(
       `You have ${totalUnlockChuncks} unlock${
         totalUnlockChuncks === 1 ? '' : 's'
@@ -141,7 +139,7 @@ export const ManageFastUnstake = () => {
           </>
         ) : (
           <>
-            {!registered ? (
+            {!isFastUnstaking ? (
               <>
                 <h2 className="title">Register For Fast Unstake</h2>
                 <Separator />
@@ -183,7 +181,7 @@ export const ManageFastUnstake = () => {
                 text={`${
                   submitting
                     ? t('submitting')
-                    : registered
+                    : isFastUnstaking
                     ? 'Cancel Fast Unstake'
                     : 'Register'
                 }`}

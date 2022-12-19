@@ -19,13 +19,12 @@ import { useFastUnstake } from 'contexts/FastUnstake';
 import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
-import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
+import useUnstaking from 'library/Hooks/useUnstaking';
 import Stat from 'library/Stat';
 import { useTranslation } from 'react-i18next';
-import { AnyJson } from 'types';
 import { planckBnToUnit, rmCommas } from 'Utils';
 import { Separator } from 'Wrappers';
 import { Controller } from './Controller';
@@ -34,25 +33,22 @@ export const Status = ({ height }: { height: number }) => {
   const { t } = useTranslation();
   const { isSyncing } = useUi();
   const { openModalWith } = useModal();
-  const { isReady, network, consts } = useApi();
+  const { isReady, network } = useApi();
   const { meta, validators } = useValidators();
   const { getAccountNominations } = useBalances();
   const { metrics } = useNetworkMetrics();
-  const { getTransferOptions } = useTransferOptions();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { setOnNominatorSetup, getStakeSetupProgressPercent }: any = useUi();
   const { getNominationsStatus, staking, inSetup, eraStakers } = useStaking();
-  const { checking, meta: fastUnstakeMeta, isExposed, head } = useFastUnstake();
+  const { checking, isExposed } = useFastUnstake();
+  const { getFastUnstakeText, isUnstaking } = useUnstaking();
 
-  const { activeEra, fastUnstakeErasToCheckPerBlock } = metrics;
-  const { bondDuration } = consts;
+  const { fastUnstakeErasToCheckPerBlock } = metrics;
   const { stakers } = eraStakers;
   const { payee } = staking;
   const nominations = getAccountNominations(activeAccount);
   // get nomination status
   const nominationStatuses = getNominationsStatus();
-  const transferOptions = getTransferOptions(activeAccount).nominate;
-  const { active } = transferOptions;
 
   // get active nominations
   const activeNominees = Object.entries(nominationStatuses)
@@ -133,27 +129,6 @@ export const Status = ({ height }: { height: number }) => {
     }
   }
 
-  // determine unstake button
-
-  // TODO: also check if user is in `queueStatus`.
-  const registered =
-    head?.stashes.find((s: AnyJson) => s[0] === activeAccount) ?? null;
-
-  const getFastUnstakeText = () => {
-    const { checked } = fastUnstakeMeta;
-    if (checking) {
-      return `Checking ${checked.length} of ${bondDuration} eras...`;
-    }
-    if (isExposed) {
-      const lastExposed = activeEra.index - (checked[0] || 0);
-      return `Exposed ${lastExposed} Era${lastExposed !== 1 ? `s` : ``} Ago`;
-    }
-    if (registered) {
-      return 'In Queue';
-    }
-    return 'Fast Unstake';
-  };
-
   const fastUnstakeActive =
     fastUnstakeErasToCheckPerBlock > 0 && !inSetup() && !activeNominees.length;
 
@@ -185,7 +160,7 @@ export const Status = ({ height }: { height: number }) => {
         stat={getNominationStatus()}
         buttons={
           !inSetup()
-            ? !active.isZero() || nominations.length > 0
+            ? !isUnstaking
               ? [unstakeButton]
               : []
             : [
