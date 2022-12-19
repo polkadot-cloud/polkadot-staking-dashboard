@@ -86,7 +86,11 @@ export const ClosurePrompts = () => {
                 />
                 <ButtonPrimary
                   iconLeft={faLockOpen}
-                  text={String(totalUnlockChuncks ?? 0)}
+                  text={
+                    depositorCanWithdraw
+                      ? 'Unlocked'
+                      : String(totalUnlockChuncks ?? 0)
+                  }
                   disabled={poolsSyncing || !isBonding()}
                   onClick={() =>
                     openModalWith(
