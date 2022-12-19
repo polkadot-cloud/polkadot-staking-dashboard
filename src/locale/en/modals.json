@@ -61,7 +61,7 @@
     "leavePool": "Leave Pool",
     "lightClient": "Light Client",
     "lockPool": "Lock Pool",
-    "lockPoolResult": "Once you Lock the pool no one else can join the pool.",
+    "lockPoolResult": "Once you lock the pool no one else can join the pool.",
     "managePool": "Manage Pool",
     "mustHaveController": "You must have your controller account imported to start nominating",
     "mustHaveControllerUpdate": "You must have your controller account imported to update your reward destination",
