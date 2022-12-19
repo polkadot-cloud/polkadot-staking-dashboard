@@ -53,11 +53,12 @@ export const ManageFastUnstake = () => {
   const [valid, setValid] = useState<boolean>(false);
 
   useEffect(() => {
-    // TODO: account for fast unstaking in progress (has unlock chunks).
     setValid(
       fastUnstakeErasToCheckPerBlock > 0 &&
-        isExposed === false &&
-        totalUnlockChuncks === 0
+        ((!isFastUnstaking &&
+          isExposed === false &&
+          totalUnlockChuncks === 0) ||
+          isFastUnstaking)
     );
   }, [isExposed, fastUnstakeErasToCheckPerBlock, totalUnlockChuncks]);
 
