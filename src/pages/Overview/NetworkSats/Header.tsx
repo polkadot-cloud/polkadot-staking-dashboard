@@ -29,7 +29,7 @@ export const Header = () => {
             <div className="inner">
               <h2>{humanNumber(totalValidators.toNumber())}</h2>
               <h4>
-                Online Validators
+                Total Validators
                 <OpenHelpIcon helpKey="Validator" />
               </h4>
             </div>
