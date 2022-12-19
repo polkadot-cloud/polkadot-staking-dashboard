@@ -150,7 +150,9 @@ export const Status = ({ height }: { height: number }) => {
   };
 
   const unstakeButton =
-    !checking && !isExposed ? fastUnstakeButton : slowUnstakeButton;
+    !checking && !isExposed && fastUnstakeErasToCheckPerBlock > 0
+      ? fastUnstakeButton
+      : slowUnstakeButton;
 
   return (
     <CardWrapper height={height}>
