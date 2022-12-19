@@ -27,7 +27,7 @@ export const SummaryWrapper = styled.div`
       width: 200px;
       display: flex;
       flex-flow: row wrap;
-      align-items: flex-end;
+      align-items: center;
 
       svg {
         color: ${networkColor};
