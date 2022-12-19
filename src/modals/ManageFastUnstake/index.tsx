@@ -37,7 +37,7 @@ export const ManageFastUnstake = () => {
   const { txFeesValid } = useTxFees();
   const { metrics } = useNetworkMetrics();
   const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
-  const { setResize } = useModal();
+  const { setResize, setStatus } = useModal();
   const { getTransferOptions } = useTransferOptions();
   const { isFastUnstaking } = useUnstaking();
 
@@ -85,7 +85,9 @@ export const ManageFastUnstake = () => {
     from: controller,
     shouldSubmit: valid,
     callbackSubmit: () => {},
-    callbackInBlock: () => {},
+    callbackInBlock: () => {
+      setStatus(2);
+    },
   });
 
   // warnings

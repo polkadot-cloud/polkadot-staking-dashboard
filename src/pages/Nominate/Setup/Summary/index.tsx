@@ -47,14 +47,20 @@ export const Summary = (props: SetupStepProps) => {
         Id: item.address,
       };
     });
+
+    const stashToSubmit = {
+      Id: activeAccount,
+    };
+
     const controllerToSubmit = {
       Id: controller,
     };
 
     // construct a batch of transactions
     const txs = [
-      api.tx.staking.bond(controllerToSubmit, bondToSubmit, payee),
+      api.tx.staking.bond(stashToSubmit, bondToSubmit, payee),
       api.tx.staking.nominate(targetsToSubmit),
+      api.tx.staking.setController(controllerToSubmit),
     ];
     return api.tx.utility.batch(txs);
   };
