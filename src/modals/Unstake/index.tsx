@@ -3,8 +3,10 @@
 
 import {
   faArrowAltCircleUp,
+  faMinus,
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -20,7 +22,7 @@ import { Title } from 'library/Modal/Title';
 import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { humanNumber, planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { Separator } from '../../Wrappers';
 
 export const Unstake = () => {
@@ -99,6 +101,8 @@ export const Unstake = () => {
     callbackInBlock: () => {},
   });
 
+  const multiTask = nominations.length && freeToUnbond > 0;
+
   return (
     <>
       <Title title="Unstake" icon={faSignOutAlt} />
@@ -109,13 +113,27 @@ export const Unstake = () => {
         ) : (
           <></>
         )}
-        <h2 className="title">
-          Unbond {freeToUnbond} {network.unit}
-        </h2>
+        {freeToUnbond > 0 ? (
+          <h2 className="title">
+            {multiTask ? (
+              <>
+                <FontAwesomeIcon icon={faMinus} transform="shrink-8" />{' '}
+              </>
+            ) : null}
+            Unbond {humanNumber(freeToUnbond)} {network.unit}
+          </h2>
+        ) : null}
         <Separator />
         {nominations.length > 0 && (
           <>
-            <h2 className="title">Stop Nominating 10 Validators</h2>
+            <h2 className="title">
+              {multiTask ? (
+                <>
+                  <FontAwesomeIcon icon={faMinus} transform="shrink-8" />{' '}
+                </>
+              ) : null}
+              Nominating 10 Validators
+            </h2>
             <Separator />
           </>
         )}
