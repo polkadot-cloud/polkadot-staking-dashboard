@@ -20,7 +20,7 @@ export const HistoricalRewardsRateStatBox = () => {
   const secondaryValue =
     totalIssuance.toString() === '0' || stakedReturn === 0
       ? undefined
-      : `/ ${toFixedIfNecessary(
+      : `${toFixedIfNecessary(
           Math.max(0, stakedReturn - inflation),
           2
         )}% after inflation`;
