@@ -39,9 +39,6 @@ export const Summary = (props: SetupStepProps) => {
     if (!activeAccount || !api) {
       return null;
     }
-    const stashToSubmit = {
-      Id: activeAccount,
-    };
 
     const bondToSubmit = unitToPlanckBn(String(bond), units).toString();
 
@@ -56,9 +53,8 @@ export const Summary = (props: SetupStepProps) => {
 
     // construct a batch of transactions
     const txs = [
-      api.tx.staking.bond(stashToSubmit, bondToSubmit, payee),
+      api.tx.staking.bond(controllerToSubmit, bondToSubmit, payee),
       api.tx.staking.nominate(targetsToSubmit),
-      api.tx.staking.setController(controllerToSubmit),
     ];
     return api.tx.utility.batch(txs);
   };
