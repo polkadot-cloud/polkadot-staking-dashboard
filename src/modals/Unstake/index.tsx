@@ -117,7 +117,7 @@ export const Unstake = () => {
           <h2 className="title">
             {multiTask ? (
               <>
-                <FontAwesomeIcon icon={faMinus} transform="shrink-8" />{' '}
+                <FontAwesomeIcon icon={faMinus} transform="shrink-10" />{' '}
               </>
             ) : null}
             Unbond {humanNumber(freeToUnbond)} {network.unit}
@@ -129,10 +129,11 @@ export const Unstake = () => {
             <h2 className="title">
               {multiTask ? (
                 <>
-                  <FontAwesomeIcon icon={faMinus} transform="shrink-8" />{' '}
+                  <FontAwesomeIcon icon={faMinus} transform="shrink-10" />{' '}
                 </>
               ) : null}
-              Nominating 10 Validators
+              Stop Nominating {nominations.length} Validator
+              {nominations.length === 1 ? '' : 's'}
             </h2>
             <Separator />
           </>
