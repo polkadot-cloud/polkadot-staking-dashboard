@@ -45,9 +45,9 @@ export const FastUnstakeProvider = ({
   const [meta, setMeta] = useState<MetaInterface>(defaultMeta);
   const metaRef = useRef(meta);
 
-  // store fastUnstake queue status for user.
-  const [queueStatus, setQueueStatus] = useState<AnyApi>(null);
-  const queueStatusRef = useRef(queueStatus);
+  // store fastUnstake queue deposit for user.
+  const [queueDeposit, setqueueDeposit] = useState<AnyApi>(null);
+  const queueDepositRef = useRef(queueDeposit);
 
   // store fastUnstake head.
   const [head, setHead] = useState<AnyApi>(null);
@@ -85,7 +85,7 @@ export const FastUnstakeProvider = ({
       }
 
       setStateWithRef(false, setChecking, checkingRef);
-      setStateWithRef(null, setQueueStatus, queueStatusRef);
+      setStateWithRef(null, setqueueDeposit, queueDepositRef);
       setStateWithRef(null, setCounterForQueue, counterForQueueRef);
       setStateWithRef([], setUnsub, unsubRef);
 
@@ -268,8 +268,8 @@ export const FastUnstakeProvider = ({
     if (!api || !activeAccount) return;
     const subscribeQueue = async (a: MaybeAccount) => {
       const u = await api.query.fastUnstake.queue(a, (_queue: AnyApi) => {
-        const q = _queue.unwrapOrDefault(null).toHuman();
-        setStateWithRef(q, setQueueStatus, queueStatusRef);
+        const q = _queue.unwrapOrDefault(null).toBn();
+        setStateWithRef(q, setqueueDeposit, queueDepositRef);
       });
       return u;
     };
@@ -380,7 +380,7 @@ export const FastUnstakeProvider = ({
         checking: checkingRef.current,
         meta: metaRef.current,
         isExposed: isExposedRef.current,
-        queueStatus: queueStatusRef.current,
+        queueDeposit: queueDepositRef.current,
         head: headRef.current,
         counterForQueue: counterForQueueRef.current,
       }}

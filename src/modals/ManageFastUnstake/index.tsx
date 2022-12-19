@@ -36,7 +36,7 @@ export const ManageFastUnstake = () => {
   const { getBondedAccount } = useBalances();
   const { txFeesValid } = useTxFees();
   const { metrics } = useNetworkMetrics();
-  const { isExposed, counterForQueue, queueStatus, meta } = useFastUnstake();
+  const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
   const { setResize } = useModal();
   const { getTransferOptions } = useTransferOptions();
   const { isFastUnstaking } = useUnstaking();
@@ -63,7 +63,7 @@ export const ManageFastUnstake = () => {
 
   useEffect(() => {
     setResize();
-  }, [isExposed, queueStatus, isFastUnstaking]);
+  }, [isExposed, queueDeposit, isFastUnstaking]);
 
   // tx to submit
   const getTx = () => {

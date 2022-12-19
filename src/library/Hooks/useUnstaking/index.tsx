@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
@@ -15,7 +16,7 @@ export const useUnstaking = () => {
   const { activeAccount } = useConnect();
   const { getNominationsStatus } = useStaking();
   const { metrics } = useNetworkMetrics();
-  const { checking, head, isExposed, queueStatus, meta } = useFastUnstake();
+  const { checking, head, isExposed, queueDeposit, meta } = useFastUnstake();
   const { bondDuration } = consts;
   const transferOptions = getTransferOptions(activeAccount).nominate;
   const nominationStatuses = getNominationsStatus();
@@ -28,9 +29,11 @@ export const useUnstaking = () => {
     .filter((v) => v !== false);
 
   // determine if user is fast unstaking.
-  // TODO: also check if user is in `queueStatus`.
-  const registered =
+  const inHead =
     head?.stashes.find((s: AnyJson) => s[0] === activeAccount) ?? undefined;
+  const inQueue = queueDeposit?.gt(new BN(0)) ?? false;
+
+  const registered = inHead || inQueue;
 
   // determine unstake button
   const getFastUnstakeText = () => {
