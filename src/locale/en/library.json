@@ -65,10 +65,10 @@
     "highCommission": "High Commission",
     "importedToUnbond": "You must have your controller account imported to unbond.",
     "inBlock": "In Block",
-    "inactive": "inactive",
+    "inactive": "Inactive",
     "include": "Include",
     "join": "Join",
-    "listItemActive": "active",
+    "listItemActive": "Active",
     "lockedPools": "Locked Pools",
     "lowCommission": "Low Commission",
     "manual": "Manual",
@@ -135,7 +135,7 @@
     "valueTooSmall": "Value is too small",
     "viewMetrics": "View Metrics",
     "viewPoolNominations": "View Pool Nominations",
-    "waiting": "waiting",
+    "waiting": "Waiting",
     "walletNotFound": "wallet not found",
     "whenActivelyNominating": "when actively nominating."
   }

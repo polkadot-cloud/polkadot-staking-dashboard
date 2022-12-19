@@ -172,6 +172,7 @@ export const StakingProvider = ({
       }
       const {
         stakers,
+        totalStaked,
         totalActiveNominators,
         activeValidators,
         minActiveBond,
@@ -188,6 +189,7 @@ export const StakingProvider = ({
           {
             ...eraStakersRef.current,
             stakers,
+            totalStaked: new BN(totalStaked),
             // nominators,
             totalActiveNominators,
             activeValidators,

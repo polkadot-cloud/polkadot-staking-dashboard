@@ -30,8 +30,8 @@ export const Validators = (props: PageProps) => {
     <>
       <PageTitle title={t(key, { ns: 'base' })} />
       <StatBoxList>
-        <TotalValidatorsStatBox />
         <ActiveValidatorsStatBox />
+        <TotalValidatorsStatBox />
         <AverageCommissionStatBox />
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>

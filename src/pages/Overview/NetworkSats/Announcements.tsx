@@ -5,7 +5,6 @@ import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
-import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { BondedPool } from 'contexts/Pools/types';
@@ -23,17 +22,14 @@ import {
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
-  const { networkSyncing, poolsSyncing } = useUi();
-  const { network } = useApi();
-  const { units } = network;
-  const { staking } = useStaking();
-  const { metrics } = useNetworkMetrics();
-  const { poolMembers } = usePoolMembers();
-
-  const { minNominatorBond, lastTotalStake } = staking;
-  const { bondedPools } = useBondedPools();
-  const { totalIssuance } = metrics;
   const { t } = useTranslation('pages');
+  const { networkSyncing, poolsSyncing, isSyncing } = useUi();
+  const { network } = useApi();
+  const { eraStakers } = useStaking();
+  const { units } = network;
+  const { poolMembers } = usePoolMembers();
+  const { bondedPools } = useBondedPools();
+  const { totalStaked } = eraStakers;
 
   let totalPoolPoints = new BN(0);
   bondedPools.forEach((b: BondedPool) => {
@@ -42,15 +38,6 @@ export const Announcements = () => {
   const totalPoolPointsBase = humanNumber(
     toFixedIfNecessary(planckBnToUnit(totalPoolPoints, units), 0)
   );
-
-  // total supply as percent
-  // total supply as percent
-  const totalIssuanceBase = planckBnToUnit(totalIssuance, units);
-  const lastTotalStakeBase = planckBnToUnit(lastTotalStake, units);
-  const supplyAsPercent =
-    lastTotalStakeBase === 0
-      ? 0
-      : lastTotalStakeBase / (totalIssuanceBase * 0.01);
 
   const container = {
     hidden: { opacity: 0 },
@@ -71,21 +58,23 @@ export const Announcements = () => {
     },
   };
 
-  const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
   const announcements = [];
 
-  const networkName = network.name;
   const networkUnit = network.unit;
-  // bonded pools available
-  if (bondedPools.length) {
-    // total pools active
+
+  // total staked on the network
+  if (!isSyncing) {
     announcements.push({
       class: 'neutral',
-      title: `${bondedPools.length} ${t('overview.poolsAreActive')}`,
-      subtitle: `${t('overview.availableToJoin', { networkName })}`,
+      title: `${humanNumber(
+        toFixedIfNecessary(planckBnToUnit(totalStaked, units), 0)
+      )} ${network.unit} is currently being staked on ${network.name}.`,
+      subtitle: `The total ${network.unit} currently being staked amongst all validators and nominators.`,
     });
+  }
 
-    // total locked in pools
+  // total locked in pools
+  if (bondedPools.length) {
     announcements.push({
       class: 'neutral',
       title: `${totalPoolPointsBase} ${network.unit} ${t('overview.inPools')}`,
@@ -103,32 +92,6 @@ export const Announcements = () => {
       });
     }
   }
-
-  // minimum nominator bond
-  announcements.push({
-    class: 'neutral',
-    title: `${t('overview.minimumNominatorBond')} ${minNominatorBondBase} ${
-      network.unit
-    }.`,
-    subtitle: `${t('overview.minimumBondingAmount', {
-      networkName,
-    })}${planckBnToUnit(minNominatorBond, units)} ${network.unit}.`,
-  });
-
-  // supply staked
-  announcements.push({
-    class: 'neutral',
-    title: `${t('overview.currentlyStaked', {
-      supplyAsPercent: toFixedIfNecessary(supplyAsPercent, 2),
-      networkUnit,
-    })}`,
-    subtitle: `${t('overview.stakingOnNetwork', {
-      lastTotalStakeBase: humanNumber(
-        toFixedIfNecessary(lastTotalStakeBase, 0)
-      ),
-      networkUnit,
-    })}`,
-  });
 
   return (
     <motion.div

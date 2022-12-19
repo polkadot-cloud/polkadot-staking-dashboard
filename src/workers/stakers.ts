@@ -69,9 +69,12 @@ const processExposures = (data: AnyJson) => {
   let activeValidators = 0;
   const ownStake: Array<any> = [];
   const nominators: any = [];
+  let totalStaked = new BN(0);
 
   exposures.forEach(({ keys, val }: any) => {
     const address = keys[1];
+    const total = val?.total ? new BN(rmCommas(val.total)) : new BN(0);
+    totalStaked = totalStaked.add(total);
     activeValidators++;
 
     stakers.push({
@@ -131,6 +134,7 @@ const processExposures = (data: AnyJson) => {
 
   return {
     stakers,
+    totalStaked: totalStaked.toString(),
     ownStake,
     totalActiveNominators: nominators.length,
     activeValidators,

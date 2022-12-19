@@ -101,6 +101,7 @@
       "supplyStaked": "Supply Staked",
       "totalNominators": "Total Nominators",
       "totalNumAccounts": "The total number of accounts that have joined a pool.",
+      "totalValidators": "Total Validators",
       "unlocking": "Unlocking"
     },
     "payouts": {

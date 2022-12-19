@@ -5,7 +5,7 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
 import { Announcements } from './Announcements';
-import { Inflation } from './Inflation';
+import { Header } from './Header';
 import { Wrapper } from './Wrappers';
 
 export const NetworkStats = () => {
@@ -20,7 +20,7 @@ export const NetworkStats = () => {
         </h3>
       </CardHeaderWrapper>
       <Wrapper>
-        <Inflation />
+        <Header />
         <Announcements />
       </Wrapper>
     </CardWrapper>
