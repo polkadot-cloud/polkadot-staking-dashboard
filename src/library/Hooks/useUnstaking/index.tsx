@@ -14,7 +14,7 @@ export const useUnstaking = () => {
   const { consts } = useApi();
   const { getTransferOptions } = useTransferOptions();
   const { activeAccount } = useConnect();
-  const { getNominationsStatus } = useStaking();
+  const { getNominationsStatus, inSetup } = useStaking();
   const { metrics } = useNetworkMetrics();
   const { checking, head, isExposed, queueDeposit, meta } = useFastUnstake();
   const { bondDuration } = consts;
@@ -53,7 +53,7 @@ export const useUnstaking = () => {
 
   return {
     getFastUnstakeText,
-    isUnstaking: !activeNominations.length && active.isZero(),
+    isUnstaking: !inSetup() && !activeNominations.length && active.isZero(),
     isFastUnstaking: !!registered,
   };
 };
