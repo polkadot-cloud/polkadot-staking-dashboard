@@ -84,7 +84,7 @@ export const UnbondPoolMember = () => {
   return (
     <>
       <Title title={t('unbondMemberFunds')} icon={faMinus} />
-      <PaddingWrapper verticalOnly>
+      <PaddingWrapper>
         {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
         <h4>{t('amountToUnbond')}</h4>
         <h2 className="title">
