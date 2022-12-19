@@ -76,7 +76,7 @@ export const Active = () => {
             <>
               <CardHeaderWrapper withAction>
                 <h3>
-                  {t('nominate.startNominating')}
+                  {t('nominate.nominate')}
                   <OpenHelpIcon helpKey="Nominations" />
                 </h3>
                 <div>
@@ -84,7 +84,9 @@ export const Active = () => {
                     text={t('nominate.nominate')}
                     iconLeft={faChevronCircleRight}
                     iconTransform="grow-1"
-                    disabled={targets.length === 0 || inSetup() || isSyncing}
+                    disabled={
+                      targets.nominations.length === 0 || inSetup() || isSyncing
+                    }
                     onClick={() => openModalWith('Nominate', {}, 'small')}
                   />
                 </div>

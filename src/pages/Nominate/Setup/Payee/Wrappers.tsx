@@ -4,8 +4,8 @@
 import { SectionFullWidthThreshold } from 'consts';
 import styled from 'styled-components';
 import {
+  backgroundDropdown,
   borderPrimary,
-  buttonPrimaryBackground,
   networkColor,
   textPrimary,
   textSecondary,
@@ -31,16 +31,16 @@ export const Item = styled.button<{ selected?: boolean }>`
   padding: 0.5rem;
 
   > div {
-    background: ${buttonPrimaryBackground};
+    background: ${backgroundDropdown};
     border: 1.5px solid
       ${(props) => (props.selected ? networkColor : borderPrimary)};
     width: 100%;
-    border-radius: 1rem;
+    border-radius: 1.25rem;
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
     align-items: center;
-    padding: 1.25rem;
+    padding: 1.25rem 1.25rem;
 
     > div {
       width: 100%;
@@ -57,7 +57,7 @@ export const Item = styled.button<{ selected?: boolean }>`
     }
     p {
       color: ${textSecondary};
-      margin: 0.5rem 0 0 0;
+      margin: 0.25rem 0 0 0;
       text-align: left;
     }
   }

@@ -3,8 +3,8 @@
 
 import styled from 'styled-components';
 import {
+  backgroundDropdown,
   borderPrimary,
-  buttonPrimaryBackground,
   networkColor,
   textSecondary,
 } from 'theme';
@@ -52,7 +52,7 @@ export const ItemWrapper = styled.div`
   display: flex;
   flex-flow: row nowrap;
   position: relative;
-  padding: 0.6rem 0.95rem;
+  padding: 0.75rem 1rem;
   margin-right: 1rem;
   align-items: center;
   width: max-content;
@@ -84,14 +84,14 @@ export const LargeItemWrapper = styled.div`
   justify-content: center;
   padding: 0.5rem;
   > .inner {
-    border: 1.5px solid ${borderPrimary};
-    background: ${buttonPrimaryBackground};
-    border-radius: 1rem;
+    border: 1px solid ${borderPrimary};
+    background: ${backgroundDropdown};
+    border-radius: 1.25rem;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     position: relative;
-    padding: 1rem;
+    padding: 1rem 1.25rem;
 
     &:last-child {
       margin-right: 0;
