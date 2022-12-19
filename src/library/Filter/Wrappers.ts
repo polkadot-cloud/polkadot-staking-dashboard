@@ -84,7 +84,7 @@ export const LargeItemWrapper = styled.div`
   justify-content: center;
   padding: 0.5rem;
   > .inner {
-    border: 1px solid ${borderPrimary};
+    border: 1.5px solid ${borderPrimary};
     background: ${backgroundDropdown};
     border-radius: 1.25rem;
     display: flex;
