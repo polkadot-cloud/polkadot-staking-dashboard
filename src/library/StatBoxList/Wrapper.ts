@@ -183,7 +183,7 @@ export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
     color: ${(props) =>
       props.primary === true ? networkColor : textSecondary};
     font-size: 0.95rem;
-    margin-left: 0.55rem;
+    margin-left: 0.4rem;
     margin-top: 0.1rem;
   }
 `;
