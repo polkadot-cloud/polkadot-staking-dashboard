@@ -148,7 +148,9 @@ export const Status = ({ height }: { height: number }) => {
   };
 
   const unstakeButton =
-    fastUnstakeErasToCheckPerBlock > 0 && (checking || !isExposed)
+    fastUnstakeErasToCheckPerBlock > 0 &&
+    !activeNominees.length &&
+    (checking || !isExposed)
       ? fastUnstakeButton
       : slowUnstakeButton;
 
