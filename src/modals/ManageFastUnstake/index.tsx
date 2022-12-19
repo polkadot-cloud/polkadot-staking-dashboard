@@ -150,8 +150,8 @@ export const ManageFastUnstake = () => {
                     queue.
                   </p>
                   <p>
-                    There are currently {counterForQueue} account
-                    {counterForQueue !== 1 ? 's' : ''} in the queue.
+                    Number of accounts currently in the fast unstake queue:{' '}
+                    <b>{counterForQueue}</b>
                   </p>
                   <EstimatedTxFee />
                 </NotesWrapper>
@@ -162,8 +162,8 @@ export const ManageFastUnstake = () => {
                 <Separator />
                 <NotesWrapper>
                   <p>
-                    {counterForQueue} account
-                    {counterForQueue !== 1 ? 's' : ''} in the queue.
+                    Number of accounts currently in the fast unstake queue:{' '}
+                    <b>{counterForQueue}</b>
                   </p>
                   <p>
                     The fast unstake queue is unordered, so the exact timing of

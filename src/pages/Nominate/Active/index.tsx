@@ -27,6 +27,7 @@ import ActiveNominatorsStatBox from './Stats/ActiveNominators';
 import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';
 import MinimumNominatorBondStatBox from './Stats/MinimumNominatorBond';
 import { Status } from './Status';
+import { UnstakePrompts } from './UnstakePrompts';
 
 export const Active = () => {
   const { openModalWith } = useModal();
@@ -48,6 +49,7 @@ export const Active = () => {
         <MinimumActiveBondStatBox />
       </StatBoxList>
       <ControllerNotImported />
+      <UnstakePrompts />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <RowPrimaryWrapper
           hOrder={1}
