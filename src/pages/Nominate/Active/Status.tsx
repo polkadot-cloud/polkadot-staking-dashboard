@@ -4,6 +4,7 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import {
+  faBolt,
   faChevronCircleRight,
   faRedoAlt,
   faSignOutAlt,
@@ -14,7 +15,9 @@ import { PayeeStatus } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
+import { useFastUnstake } from 'contexts/FastUnstake';
 import { useModal } from 'contexts/Modal';
+import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
@@ -22,23 +25,29 @@ import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import Stat from 'library/Stat';
 import { useTranslation } from 'react-i18next';
+import { AnyJson } from 'types';
 import { planckBnToUnit, rmCommas } from 'Utils';
 import { Separator } from 'Wrappers';
 import { Controller } from './Controller';
 
 export const Status = ({ height }: { height: number }) => {
   const { t } = useTranslation();
-  const { isReady, network } = useApi();
-  const { setOnNominatorSetup, getStakeSetupProgressPercent }: any = useUi();
-  const { openModalWith } = useModal();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { isSyncing } = useUi();
-  const { getNominationsStatus, staking, inSetup, eraStakers } = useStaking();
+  const { openModalWith } = useModal();
+  const { isReady, network, consts } = useApi();
+  const { meta, validators } = useValidators();
   const { getAccountNominations } = useBalances();
+  const { metrics } = useNetworkMetrics();
   const { getTransferOptions } = useTransferOptions();
+  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { setOnNominatorSetup, getStakeSetupProgressPercent }: any = useUi();
+  const { getNominationsStatus, staking, inSetup, eraStakers } = useStaking();
+  const { checking, meta: fastUnstakeMeta, isExposed, head } = useFastUnstake();
+
+  const { activeEra, fastUnstakeErasToCheckPerBlock } = metrics;
+  const { bondDuration } = consts;
   const { stakers } = eraStakers;
   const { payee } = staking;
-  const { meta, validators } = useValidators();
   const nominations = getAccountNominations(activeAccount);
   // get nomination status
   const nominationStatuses = getNominationsStatus();
@@ -124,6 +133,50 @@ export const Status = ({ height }: { height: number }) => {
     }
   }
 
+  // determine unstake button
+
+  // TODO: also check if user is in `queueStatus`.
+  const registered =
+    head?.stashes.find((s: AnyJson) => s[0] === activeAccount) ?? null;
+
+  const getFastUnstakeText = () => {
+    const { checked } = fastUnstakeMeta;
+    if (checking) {
+      return `Checking ${checked.length} of ${bondDuration} eras...`;
+    }
+    if (isExposed) {
+      const lastExposed = activeEra.index - (checked[0] || 0);
+      return `Exposed ${lastExposed} Era${lastExposed !== 1 ? `s` : ``} Ago`;
+    }
+    if (registered) {
+      return 'In Queue';
+    }
+    return 'Fast Unstake';
+  };
+
+  const fastUnstakeActive =
+    fastUnstakeErasToCheckPerBlock > 0 && !inSetup() && !activeNominees.length;
+
+  const fastUnstakeText = fastUnstakeActive ? getFastUnstakeText() : '';
+  const slowUnstakeButton = {
+    title: 'Unstake',
+    icon: faSignOutAlt,
+    disabled: !isReady || isReadOnlyAccount(activeAccount) || !activeAccount,
+    onClick: () => openModalWith('Unstake', {}, 'small'),
+  };
+
+  const fastUnstakeButton = {
+    disabled: checking,
+    title: fastUnstakeText,
+    icon: faBolt,
+    onClick: () => {
+      openModalWith('ManageFastUnstake', {}, 'small');
+    },
+  };
+
+  const unstakeButton =
+    !checking && !isExposed ? fastUnstakeButton : slowUnstakeButton;
+
   return (
     <CardWrapper height={height}>
       <Stat
@@ -133,17 +186,7 @@ export const Status = ({ height }: { height: number }) => {
         buttons={
           !inSetup()
             ? !active.isZero() || nominations.length > 0
-              ? [
-                  {
-                    title: 'Unstake',
-                    icon: faSignOutAlt,
-                    disabled:
-                      !isReady ||
-                      isReadOnlyAccount(activeAccount) ||
-                      !activeAccount,
-                    onClick: () => openModalWith('Unstake', {}, 'small'),
-                  },
-                ]
+              ? [unstakeButton]
               : []
             : [
                 {
