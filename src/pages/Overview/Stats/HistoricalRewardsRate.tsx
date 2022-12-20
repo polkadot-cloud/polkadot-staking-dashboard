@@ -20,10 +20,9 @@ export const HistoricalRewardsRateStatBox = () => {
   const secondaryValue =
     totalIssuance.toString() === '0' || stakedReturn === 0
       ? undefined
-      : `/ ${toFixedIfNecessary(
-          Math.max(0, stakedReturn - inflation),
-          2
-        )}% after inflation`;
+      : `/ ${toFixedIfNecessary(Math.max(0, stakedReturn - inflation), 2)}% ${t(
+          'overview.afterInflation'
+        )}`;
 
   const params = {
     label: t('overview.historicalRewardsRate'),

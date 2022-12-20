@@ -82,6 +82,7 @@
       "activePools": "Active Pools",
       "addressCopied": "Address Copied to Clipboard",
       "adjustedRewardsRate": "Adjusted Rewards Rate",
+      "afterInflation": "after inflation",
       "available": "Available",
       "balance": "Balance",
       "bondedInPools": "The total {{networkUnit}}  currently bonded in nomination pools.",
