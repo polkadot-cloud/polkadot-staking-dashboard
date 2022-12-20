@@ -33,6 +33,7 @@
       "earningRewards": "挣取奖励中",
       "inactiveNominations": "非活跃提名人",
       "minimumActiveBond": "最低活跃质押",
+      "minimumNominateBond":"最低提名质押",
       "noNominationsSet": "非活跃：未设置提名",
       "nominate": "提名",
       "nominatingAnd": "提名中和",
