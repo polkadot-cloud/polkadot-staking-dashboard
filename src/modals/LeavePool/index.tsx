@@ -17,7 +17,12 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
-import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
+import {
+  FooterWrapper,
+  NotesWrapper,
+  PaddingWrapper,
+  WarningsWrapper,
+} from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
@@ -97,11 +102,13 @@ export const LeavePool = () => {
       <PaddingWrapper>
         {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
         {unclaimedRewards > 0 && (
-          <Warning
-            text={`${t('unbondingWithdraw')} ${unclaimedRewards} ${
-              network.unit
-            }.`}
-          />
+          <WarningsWrapper>
+            <Warning
+              text={`${t('unbondingWithdraw')} ${unclaimedRewards} ${
+                network.unit
+              }.`}
+            />
+          </WarningsWrapper>
         )}
         <h2 className="title">
           {t('unbond')} {freeToUnbond} {network.unit}
