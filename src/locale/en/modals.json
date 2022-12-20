@@ -163,7 +163,23 @@
     "unstake": "Unstake",
     "unstakeUnbond": "Unbond {{bond}} {{unit}}",
     "unstakeStopNominating_one": "Stop Nominating {{count}} Validator",
-    "unstakeStopNominating_other": "Stop Nominating {{count}} Validators"
+    "unstakeStopNominating_other": "Stop Nominating {{count}} Validators",
 
+    "fastUnstake_title": "Fast Unstake",
+    "fastUnstake_register": "Register Fast Unstake",
+    "fastUnstakeWarningUnlocksActive_one": "You have {{count}} unlock active.",
+    "fastUnstakeWarningUnlocksActive_other": "You have {{count}} unlocks active.",
+    "fastUnstakeWarningUnlocksActiveMore": "No unlocks can be active to register for fast unstake. Rebond or withdraw your unlocks to become fully bonded and try registering for fast unstake again.",
+    "fastUnstakeExposedAgo_one": "You were last exposed {{count}} Era Ago",
+    "fastUnstakeExposedAgo_other": "You were last exposed {{count}} Eras Ago",
+    "fastUnstakeNote1": "To register for fast unstake, you must not be actively staking for more than {{bondDuration}} eras.",
+    "fastUnstakeNote2_one": "If you are inactive for at least {{count}} more era, you will be able to register for fast unstake.",
+    "fastUnstakeNote2_other": "If you are inactive for at least {{count}} more eras, you will be able to register for fast unstake.",
+    "fastUnstakeCurrentQueue": "Number of accounts currently in the fast unstake queue",
+    "fastUnstakeOnceRegistered": "Once registerd you will be waiting in the fast unstake queue.",
+    "fastUnstakeUnorderedNote": "The fast unstake queue is unordered, so the exact timing of being selected is not known.",
+    "fastUnstakeRegistered": "Registered and Waiting to Unstake",
+    "fastUnstakeSubmit_register": "Register",
+    "fastUnstakeSubmit_cancel": "Cancel Fast Unstake"
   }
 }

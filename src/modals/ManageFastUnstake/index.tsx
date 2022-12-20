@@ -97,24 +97,22 @@ export const ManageFastUnstake = () => {
   }
   if (totalUnlockChuncks > 0 && !isFastUnstaking) {
     warnings.push(
-      `You have ${totalUnlockChuncks} unlock${
-        totalUnlockChuncks === 1 ? '' : 's'
-      } active. No unlocks can be active to register for fast unstake. Rebond or withdraw your unlocks to become fully bonded and try registering for fast unstake again.`
+      `${t('fastUnstakeWarningUnlocksActive', {
+        count: totalUnlockChuncks,
+      })} ${t('fastUnstakeWarningUnlocksActiveMore')}`
     );
   }
 
   // manage last exposed
-  let lastExposed = '';
-  let lastExposedEra = 0;
+  let lastExposedAgo = 0;
   if (isExposed) {
-    lastExposedEra = activeEra.index - (checked[0] || 0);
-    lastExposed = `${lastExposedEra} Era${lastExposedEra !== 1 ? `s` : ``} Ago`;
+    lastExposedAgo = activeEra.index - (checked[0] || 0);
   }
-  const erasRemaining = Math.max(1, bondDuration - lastExposedEra);
+  const erasRemaining = Math.max(1, bondDuration - lastExposedAgo);
 
   return (
     <>
-      <Title title="Fast Unstake" icon={faBolt} />
+      <Title title={t('fastUnstake', { context: 'title' })} icon={faBolt} />
       <PaddingWrapper>
         {warnings.length > 0 ? (
           <WarningsWrapper>
@@ -126,51 +124,40 @@ export const ManageFastUnstake = () => {
 
         {isExposed ? (
           <>
-            <h2 className="title">You Were Last Exposed {lastExposed}</h2>
+            <h2 className="title">
+              {t('fastUnstakeExposedAgo', { count: lastExposedAgo })}
+            </h2>
             <Separator />
             <NotesWrapper>
-              <p>
-                To register for fast unstake, you must <b>not</b> be actively
-                staking for more than {bondDuration} eras.
-              </p>
-              <p>
-                If you are inactive for at least {erasRemaining} more era
-                {erasRemaining === 1 ? '' : 's'}, you will be able to register
-                for fast unstake.
-              </p>
+              <p>{t('fastUnstakeNote1', { bondDuration })}</p>
+              <p>{t('fastUnstakeNote2', { count: erasRemaining })}</p>
             </NotesWrapper>
           </>
         ) : (
           <>
             {!isFastUnstaking ? (
               <>
-                <h2 className="title">Register Fast Unstake</h2>
+                <h2 className="title">
+                  {t('fastUnstake', { context: 'register' })}
+                </h2>
                 <Separator />
                 <NotesWrapper>
+                  <p>{t('fastUnstakeOnceRegistered')}</p>
                   <p>
-                    Once registerd you will be waiting in the fast unstake
-                    queue.
-                  </p>
-                  <p>
-                    Number of accounts currently in the fast unstake queue:{' '}
-                    <b>{counterForQueue}</b>
+                    {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
                   </p>
                   <EstimatedTxFee />
                 </NotesWrapper>
               </>
             ) : (
               <>
-                <h2 className="title">Registered and Waiting to Unstake</h2>
+                <h2 className="title">{t('fastUnstakeRegistered')}</h2>
                 <Separator />
                 <NotesWrapper>
                   <p>
-                    Number of accounts currently in the fast unstake queue:{' '}
-                    <b>{counterForQueue}</b>
+                    {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
                   </p>
-                  <p>
-                    The fast unstake queue is unordered, so the exact timing of
-                    being selected is not known.
-                  </p>
+                  <p>{t('fastUnstakeUnorderedNote')}</p>
                   <EstimatedTxFee />
                 </NotesWrapper>
               </>
@@ -184,9 +171,9 @@ export const ManageFastUnstake = () => {
                 text={`${
                   submitting
                     ? t('submitting')
-                    : isFastUnstaking
-                    ? 'Cancel Fast Unstake'
-                    : 'Register'
+                    : t('fastUnstakeSubmit', {
+                        context: isFastUnstaking ? 'cancel' : 'register',
+                      })
                 }`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"

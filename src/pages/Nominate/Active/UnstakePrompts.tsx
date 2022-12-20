@@ -45,7 +45,7 @@ export const UnstakePrompts = () => {
           >
             <div className="content">
               <h3>
-                {t('unstakePromptInProgress', {
+                {t('nominate.unstakePromptInProgress', {
                   context: isFastUnstaking ? 'fast' : 'regular',
                 })}
               </h3>
