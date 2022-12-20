@@ -11,14 +11,12 @@ import { humanNumber, toFixedIfNecessary } from 'Utils';
 import { InflationWrapper } from './Wrappers';
 
 export const Header = () => {
+  const { t } = useTranslation('pages');
   const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
   const { bondedPools } = useBondedPools();
-  const { totalNominators, totalValidators } = staking;
-
   const { inflation } = useInflation();
-  const { t } = useTranslation('pages');
-
+  const { totalNominators, totalValidators } = staking;
   const { totalIssuance } = metrics;
 
   return (
@@ -29,7 +27,7 @@ export const Header = () => {
             <div className="inner">
               <h2>{humanNumber(totalValidators.toNumber())}</h2>
               <h4>
-                Total Validators
+                {t('overview.totalValidators')}
                 <OpenHelpIcon helpKey="Validator" />
               </h4>
             </div>
@@ -47,7 +45,7 @@ export const Header = () => {
             <div className="inner">
               <h2>{humanNumber(bondedPools.length)}</h2>
               <h4>
-                Active Pools
+                {t('overview.activePools')}
                 <OpenHelpIcon helpKey="Active Pools" />
               </h4>
             </div>
@@ -61,7 +59,7 @@ export const Header = () => {
                 %
               </h2>
               <h4>
-                {t('overview.inflation')} Rate
+                {t('overview.inflationRate')}
                 <OpenHelpIcon helpKey="Inflation" />
               </h4>
             </div>

@@ -86,7 +86,6 @@
       "historicalRewardsRate": "历史奖励率",
       "inPool": "提名池中",
       "inPools": "当前质押在提名池中",
-      "inflation": "通货膨胀",
       "locked": "己锁",
       "moreResources": "更多资讯",
       "networkStats": "网络信息",
@@ -107,7 +106,9 @@
 
       "networkCurrentlyStaked": "{{total}} {{unit}} is currently being staked on {{network}}.",
       "networkCurrentlyStakedSubtitle": "The total {{unit}} currently being staked amongst all validators and nominators.",
-      "unitSupplyStaked": "{{unit}} Supply Staked"
+      "unitSupplyStaked": "{{unit}} Supply Staked",
+      "activePools": "Active Pools",
+      "inflationRate": "Inflation Rate"
     },
     "payouts": {
       "deductedFromBond": "从质押里扣除",

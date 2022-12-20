@@ -87,7 +87,6 @@
       "historicalRewardsRate": "Historical Rewards Rate",
       "inPool": "In a Pool",
       "inPools": "is currently bonded in pools.",
-      "inflation": "Inflation",
       "locked": "Locked",
       "moreResources": "More Resources",
       "networkStats": "Network Stats",
@@ -108,7 +107,9 @@
 
       "networkCurrentlyStaked": "{{total}} {{unit}} is currently being staked on {{network}}.",
       "networkCurrentlyStakedSubtitle": "The total {{unit}} currently being staked amongst all validators and nominators.",
-      "unitSupplyStaked": "{{unit}} Supply Staked"
+      "unitSupplyStaked": "{{unit}} Supply Staked",
+      "activePools": "Active Pools",
+      "inflationRate": "Inflation Rate"
 
     },
     "payouts": {
