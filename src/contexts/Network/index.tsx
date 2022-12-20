@@ -55,12 +55,14 @@ export const NetworkMetricsProvider = ({
           api.query.balances.totalIssuance,
           api.query.auctions.auctionCounter,
           api.query.paraSessionInfo.earliestStoredSession,
+          api.query.fastUnstake.erasToCheckPerBlock,
         ],
         ([
           activeEra,
           _totalIssuance,
           _auctionCounter,
           _earliestStoredSession,
+          _erasToCheckPerBlock,
         ]: AnyApi) => {
           // determine activeEra: toString used as alternative to `toHuman`, that puts commas in numbers
           let _activeEra = activeEra
@@ -78,6 +80,7 @@ export const NetworkMetricsProvider = ({
             totalIssuance: _totalIssuance.toBn(),
             auctionCounter: new BN(_auctionCounter.toString()),
             earliestStoredSession: new BN(_earliestStoredSession.toString()),
+            fastUnstakeErasToCheckPerBlock: _erasToCheckPerBlock.toHuman(),
           };
           setMetrics(_metrics);
         }
@@ -94,6 +97,8 @@ export const NetworkMetricsProvider = ({
           totalIssuance: metrics.totalIssuance,
           auctionCounter: metrics.auctionCounter,
           earliestStoredSession: metrics.earliestStoredSession,
+          fastUnstakeErasToCheckPerBlock:
+            metrics.fastUnstakeErasToCheckPerBlock,
         },
       }}
     >

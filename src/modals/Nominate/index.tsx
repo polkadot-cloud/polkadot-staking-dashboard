@@ -22,6 +22,7 @@ import {
   NotesWrapper,
   PaddingWrapper,
   Separator,
+  WarningsWrapper,
 } from '../Wrappers';
 
 export const Nominate = () => {
@@ -81,40 +82,44 @@ export const Nominate = () => {
     warnings.push(t('mustHaveController'));
   }
   if (!nominations.length) {
-    warnings.push(t('noNominationsSet'));
+    warnings.push(`${t('noNominationsSet')}`);
   }
   if (activeBase < minNominatorBondBase) {
-    warnings.push(`${(t('notMeetMinimum'), { minNominatorBondBase, unit })}`);
+    warnings.push(`${t('notMeetMinimum', { minNominatorBondBase, unit })}`);
   }
 
   return (
     <>
       <Title title={t('nominate')} icon={faPlayCircle} />
-      <PaddingWrapper verticalOnly>
-        <div style={{ padding: '0 1rem', width: '100%' }}>
-          {warnings.map((text: any, index: number) => (
-            <Warning key={index} text={text} />
-          ))}
-          <h2>{t('haveNomination', { count: nominations.length })}</h2>
-          <Separator />
-          <NotesWrapper>
-            <p>{t('onceSubmitted')}</p>
-            <EstimatedTxFee />
-          </NotesWrapper>
-          <FooterWrapper>
-            <div>
-              <ButtonSubmit
-                text={`${submitting ? t('submitting') : t('submit')}`}
-                iconLeft={faArrowAltCircleUp}
-                iconTransform="grow-2"
-                onClick={() => submitTx()}
-                disabled={
-                  !valid || submitting || warnings.length > 0 || !txFeesValid
-                }
-              />
-            </div>
-          </FooterWrapper>
-        </div>
+      <PaddingWrapper>
+        {warnings.length > 0 && (
+          <WarningsWrapper>
+            {warnings.map((text: any, index: number) => (
+              <Warning key={index} text={text} />
+            ))}
+          </WarningsWrapper>
+        )}
+        <h2 className="title">
+          {t('haveNomination', { count: nominations.length })}
+        </h2>
+        <Separator />
+        <NotesWrapper>
+          <p>{t('onceSubmitted')}</p>
+          <EstimatedTxFee />
+        </NotesWrapper>
+        <FooterWrapper>
+          <div>
+            <ButtonSubmit
+              text={`${submitting ? t('submitting') : t('submit')}`}
+              iconLeft={faArrowAltCircleUp}
+              iconTransform="grow-2"
+              onClick={() => submitTx()}
+              disabled={
+                !valid || submitting || warnings.length > 0 || !txFeesValid
+              }
+            />
+          </div>
+        </FooterWrapper>
       </PaddingWrapper>
     </>
   );

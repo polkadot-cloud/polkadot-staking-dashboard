@@ -26,10 +26,10 @@ export const EraStatus = (props: any) => {
 
   // flag whether validator is active
   const validatorStatus = isSyncing
-    ? t('waiting')
+    ? 'waiting'
     : validatorInEra
-    ? t('listItemActive')
-    : t('waiting');
+    ? 'active'
+    : 'waiting';
 
   let totalStakePlanck = new BN(0);
   if (validatorInEra) {
@@ -42,7 +42,9 @@ export const EraStatus = (props: any) => {
     }
   }
 
-  const totalStake = totalStakePlanck.div(new BN(10 ** units)).toNumber();
+  const totalStake = totalStakePlanck
+    .div(new BN(10).pow(new BN(units)))
+    .toNumber();
 
   return (
     <ValidatorStatusWrapper status={validatorStatus}>

@@ -16,7 +16,7 @@ const MinJoinBondStatBox = () => {
   const params = {
     label: t('pools.minimumJoinBond'),
     value: planckBnToUnit(stats.minJoinBond, units),
-    unit: network.unit,
+    unit: ` ${network.unit}`,
     helpKey: 'Minimum Join Bond',
   };
   return <Number {...params} />;

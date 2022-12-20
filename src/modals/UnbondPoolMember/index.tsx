@@ -12,7 +12,6 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
-import { ContentWrapper } from 'modals/UpdateBond/Wrappers';
 import {
   FooterWrapper,
   NotesWrapper,
@@ -67,7 +66,7 @@ export const UnbondPoolMember = () => {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(bond.bond, units);
+    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
     tx = api.tx.nominationPools.unbond(who, bondToSubmit);
     return tx;
   };
@@ -85,20 +84,16 @@ export const UnbondPoolMember = () => {
   return (
     <>
       <Title title={t('unbondMemberFunds')} icon={faMinus} />
-      <PaddingWrapper verticalOnly />
-      <ContentWrapper>
+      <PaddingWrapper>
         {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
-        <div className="items">
-          <h4>{t('amountToUnbond')}</h4>
-          <h2>
-            {freeToUnbond} {network.unit}
-          </h2>
-          <Separator />
-          <NotesWrapper>
-            <p>{t('onceUnbonding', { bondDuration })}</p>
-            {bondValid && <EstimatedTxFee />}
-          </NotesWrapper>
-        </div>
+        <h2 className="title">
+          {t('unbond')} {freeToUnbond} {network.unit}
+        </h2>
+        <Separator />
+        <NotesWrapper>
+          <p>{t('onceUnbonding', { bondDuration })}</p>
+          {bondValid && <EstimatedTxFee />}
+        </NotesWrapper>
         <FooterWrapper>
           <div>
             <ButtonSubmit
@@ -115,7 +110,7 @@ export const UnbondPoolMember = () => {
             />
           </div>
         </FooterWrapper>
-      </ContentWrapper>
+      </PaddingWrapper>
     </>
   );
 };

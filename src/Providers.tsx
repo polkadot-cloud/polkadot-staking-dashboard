@@ -7,6 +7,7 @@ import { BalancesProvider } from 'contexts/Balances';
 import { ConnectProvider } from 'contexts/Connect';
 import { ExtensionsProvider } from 'contexts/Extensions';
 import { ExtrinsicsProvider } from 'contexts/Extrinsics';
+import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
 import { HelpProvider } from 'contexts/Help';
 import { MenuProvider } from 'contexts/Menu';
@@ -76,6 +77,7 @@ export const Providers = withProviders(
   ActivePoolsProvider,
   TransferOptionsProvider,
   ValidatorsProvider,
+  FastUnstakeProvider,
   UIProvider,
   SubscanProvider,
   MenuProvider,

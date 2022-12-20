@@ -60,7 +60,7 @@ export const JoinPool = () => {
     }
 
     // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(bond.bond, units);
+    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
     tx = api.tx.nominationPools.join(bondToSubmit, poolId);
 
     return tx;

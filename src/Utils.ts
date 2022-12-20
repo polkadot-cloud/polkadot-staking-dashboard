@@ -29,11 +29,6 @@ export const toFixedIfNecessary = (value: number, dp: number) => {
   return +parseFloat(String(value)).toFixed(dp);
 };
 
-export const planckToUnit = (val: number, units: number): number => {
-  const value = val / 10 ** units;
-  return value;
-};
-
 /**
  * Converts an on chain balance value in BN planck to a decimal value in token unit (1 token token = 10^units planck)
  * @param val A BN that includes the balance in planck as it is stored on chain. It can be a very large number.
@@ -62,30 +57,29 @@ export const planckBnToUnit = (val: BN, units: number): number => {
 
 /**
  * Converts a balance in token unit to an equivalent value in planck by applying the chain decimals point. (1 token = 10^units planck)
- * Since the result can be a very large number all calculations should happen in BN.
- * @param val the value in chain unit
+ * @param val the value in chain unit. (string to avoid surpassing MAX_SAFE_NUMBER)
  * @param units the chain decimal points (e.x. 10 for polkadot and 12 for Kusama)
  * @returns A big number that contains the equivalent value of the balance val in plancks
  */
-export const unitToPlanckBn = (val: number, units: number): BN => {
-  // convert to number in case the number arguments are passed as numeric strings
-  val = Number(val);
-  units = Number(units);
+export const unitToPlanckBn = (val: string, units: number): BN => {
+  // split whole and decimal portion of the number
+  const split = String(val).split('.');
+  const w = split[0];
+  // handle decimals, remove any subsequent decimals.
+  let d = split[1];
+  d = d?.replaceAll('.', '') ?? d;
 
-  // since the result can be a very large number we need to calculate the value in BN.
-  const Bn10 = new BN(10);
-  const BnUnits = new BN(units);
-
-  // BN does not support decimal numbers.
-  // 1. Convert the number to a fixed point decimal with the number of decimal points equal to the specified value for the chain (units)
-  // 2. Split the number to separate whole portion and decimal fraction and store them as different BN values.
-  const [w, d] = val.toFixed(units).split('.');
-  const wholeBn = new BN(Number(w));
-  const decimalBn = new BN(Number(d));
+  // ensure decimal places is equal to specified chain units length
+  d = d ? d.padEnd(units, '0') : ''.padEnd(units, '0');
+  // constrain to `units` decimal places
+  d = d.slice(0, units);
 
   // calculate the final result in planck by applying the decimal denominator(BnUnits)
-  const resultBn = wholeBn.mul(Bn10.pow(BnUnits)).add(decimalBn);
-  return resultBn;
+  const Bn10 = new BN(10);
+  const BnUnits = new BN(units);
+  const wholeBn = new BN(w);
+  const decimalBn = new BN(d);
+  return wholeBn.mul(Bn10.pow(BnUnits)).add(decimalBn);
 };
 
 export const humanNumberBn = (valBn: BN, units: number): string => {

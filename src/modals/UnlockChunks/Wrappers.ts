@@ -50,7 +50,7 @@ export const ChunkWrapper = styled.div<any>`
     display: flex;
     flex-flow: row wrap;
     width: 100%;
-    padding: 0.25rem 1.1rem;
+    padding: 0.5rem 1.25rem;
     border-radius: 1rem;
     background: ${buttonPrimaryBackground};
 
@@ -75,7 +75,7 @@ export const ChunkWrapper = styled.div<any>`
   }
   h4 {
     color: ${textSecondary};
-    margin: 0.35rem 0 0 0;
+    margin: 0.75rem 0 0 0;
   }
 `;
 

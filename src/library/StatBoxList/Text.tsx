@@ -4,9 +4,10 @@
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatBox } from './Item';
 import { TextProps } from './types';
+import { TextTitleWrapper } from './Wrapper';
 
 export const Text = (props: TextProps) => {
-  const { label, value, helpKey } = props;
+  const { label, value, secondaryValue, helpKey, primary } = props;
 
   const help = helpKey !== undefined;
 
@@ -14,7 +15,10 @@ export const Text = (props: TextProps) => {
     <StatBox>
       <div className="content chart">
         <div className="labels">
-          <h3 className="text">{value}</h3>
+          <TextTitleWrapper primary={primary === true}>
+            {value}
+            {secondaryValue ? <span>{secondaryValue}</span> : null}
+          </TextTitleWrapper>
           <h4>
             {label}
             {help && <OpenHelpIcon helpKey={helpKey} />}
