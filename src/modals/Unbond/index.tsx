@@ -143,24 +143,27 @@ export const Unbond = () => {
   }
   if (nominatorActiveBelowMin) {
     warnings.push(
-      `Unable to unbond. Your bonded funds are below the minumum of ${minNominatorBond} ${network.unit}.`
+      t('unbondErrorBelowMinimum', {
+        bond: minNominatorBond,
+        unit: network.unit,
+      })
     );
   }
   if (poolActiveBelowMin) {
     warnings.push(
-      `Unable to unbond. Your bonded funds are below the minumum of ${planckBnToUnit(
-        poolToMinBn,
-        units
-      )} ${network.unit}.`
+      t('unbondErrorBelowMinimum', {
+        bond: planckBnToUnit(poolToMinBn, units),
+        unit: network.unit,
+      })
     );
   }
   if (activeBn.isZero()) {
-    warnings.push(`You have no ${network.unit} to unbond.`);
+    warnings.push(t('unbondErrorNoFunds', { unit: network.unit }));
   }
 
   return (
     <>
-      <Title title={`${t('remove')} ${t('bond')}`} icon={faMinus} />
+      <Title title={`${t('removeBond')}`} icon={faMinus} />
       <PaddingWrapper>
         <UnbondFeedback
           bondType={bondType}
@@ -179,13 +182,19 @@ export const Unbond = () => {
             <>
               {isDepositor() ? (
                 <p>
-                  As the pool depositor you must maintain a bond of at least{' '}
-                  {minCreateBond} {network.unit}.
+                  {t('notePoolDepositorMinBond', {
+                    context: 'depositor',
+                    bond: minCreateBond,
+                    unit: network.unit,
+                  })}
                 </p>
               ) : (
                 <p>
-                  As a pool member you must maintain a bond of at least{' '}
-                  {minJoinBond} {network.unit}.
+                  {t('notePoolDepositorMinBond', {
+                    context: 'member',
+                    bond: minCreateBond,
+                    unit: network.unit,
+                  })}
                 </p>
               )}
             </>

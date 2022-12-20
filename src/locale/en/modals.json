@@ -154,6 +154,12 @@
     "youMust_controller": "You must have your controller account imported to stop nominating.",
     "chooseLanguage": "Choose Language",
 
-    "addToBond": "Add to Bond"
+    "addToBond": "Add to Bond",
+    "removeBond": "Remove Bond",
+    "unbondErrorBelowMinimum": "Unable to unbond. Your bonded funds are below the minumum of {{ bond }} {{ unit }}.",
+    "unbondErrorNoFunds": "You have no {{ unit}} to unbond.",
+    "notePoolDepositorMinBond_depositor": "As the pool depositor you must maintain a bond of at least {{ bond }} {{ unit }}.",
+    "notePoolDepositorMinBond_member": "As a pool member you must maintain a bond of at least {{ bond }} {{ unit }}."
+
   }
 }

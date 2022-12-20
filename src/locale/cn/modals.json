@@ -148,6 +148,12 @@
     "youMust_controller": "您必须导入controller帐户才能停止提名",
     "chooseLanguage": "选择语言",
 
-    "addToBond": "Add to Bond"
+    "addToBond": "Add to Bond",
+    "removeBond": "Remove Bond",
+    "unbondErrorBelowMinimum": "Unable to unbond. Your bonded funds are below the minumum of {{ bond }} {{ unit }}.",
+    "unbondErrorNoFunds": "You have no {{ unit}} to unbond.",
+    "notePoolDepositorMinBond_depositor": "As the pool depositor you must maintain a bond of at least {{ bond }} {{ unit }}.",
+    "notePoolDepositorMinBond_member": "As a pool member you must maintain a bond of at least {{ bond }} {{ unit }}."
+
   }
 }
