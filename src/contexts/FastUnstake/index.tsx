@@ -177,9 +177,6 @@ export const FastUnstakeProvider = ({
       }
       const { currentEra, exposed } = data;
 
-      // update check metadata, decrement current era.
-      const nextEra = currentEra - 1;
-
       // ensure checked eras are in order highest first.
       const checked = metaRef.current.checked
         .concat(currentEra)
@@ -188,7 +185,7 @@ export const FastUnstakeProvider = ({
       if (!metaRef.current.checked.includes(currentEra)) {
         // update localStorage with updated changes.
         localStorage.setItem(
-          getLocalkey(activeAccount),
+          getLocalkey(who),
           JSON.stringify({
             isExposed: exposed,
             checked,
@@ -221,7 +218,7 @@ export const FastUnstakeProvider = ({
         subscribeToFastUnstakeQueue();
       } else {
         // continue checking the next era.
-        checkEra(nextEra);
+        checkEra(currentEra - 1);
       }
     }
   };
