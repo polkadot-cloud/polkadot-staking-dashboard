@@ -66,7 +66,7 @@
       "unstakePromptInQueue": "您正在快速解除抵押队列中。当注册快速解除抵押时，您将无法执行任何提名人任务",
       "unstakePromptWaitingForUnlocks": "等待己解锁变为可提取",
       "unstakePromptReadyToWithdraw": "您的质押资金现已解锁并可提取",
-      "unstakePromptRevert": 如果您需要取消解除抵押, 请重新质押您的{{unit}}并再次开始提名",
+      "unstakePromptRevert": "如果您需要取消解除抵押, 请重新质押您的{{unit}}并再次开始提名",
       "unstakePromptInProgress_fast": "快速解除抵押正在进行中",
       "unstakePromptInProgress_regular": "解除抵押正在进行中",
       "update": "更改",
