@@ -131,7 +131,7 @@ export const Status = ({ height }: { height: number }) => {
   }
 
   const fastUnstakeText = getFastUnstakeText();
-  const slowUnstakeButton = {
+  const regularUnstakeButton = {
     title: 'Unstake',
     icon: faSignOutAlt,
     disabled: !isReady || isReadOnlyAccount(controller) || !activeAccount,
@@ -152,7 +152,7 @@ export const Status = ({ height }: { height: number }) => {
     !activeNominees.length &&
     (checking || !isExposed)
       ? fastUnstakeButton
-      : slowUnstakeButton;
+      : regularUnstakeButton;
 
   return (
     <CardWrapper height={height}>
