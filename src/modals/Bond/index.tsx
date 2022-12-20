@@ -115,7 +115,7 @@ export const Bond = () => {
 
   return (
     <>
-      <Title title={`${t('addTo')} ${t('bond')}`} icon={faPlus} />
+      <Title title={`${t('addToBond')}`} icon={faPlus} />
       <PaddingWrapper>
         {unclaimedRewards > 0 && bondType === 'pool' && (
           <Warning

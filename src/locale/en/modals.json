@@ -9,7 +9,6 @@
     "addingFavorite_one": "Adding {{count}} Nomination",
     "addingFavorite_other": "Adding {{count}} Nominations",
     "address": "Address",
-    "addTo": "Add To",
     "allNominations": "All Nominations",
     "allowToJoin": "Allow new members to join the pool.",
     "allPoolRoles": "All Pool Roles",
@@ -153,6 +152,8 @@
     "withdrawUnlocked": "Withdraw Unlocked",
     "youMust_account": "You must have your account imported to stop nominating.",
     "youMust_controller": "You must have your controller account imported to stop nominating.",
-    "chooseLanguage": "Choose Language"
+    "chooseLanguage": "Choose Language",
+
+    "addToBond": "Add to Bond"
   }
 }
