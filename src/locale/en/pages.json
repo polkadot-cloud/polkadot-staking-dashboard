@@ -65,6 +65,7 @@
       "topUpAccount": "Top up an account to make it eligible to become a controller.",
       "totalSupplyStaked": "Total Supply Staked",
       "unlocked": "Unlocked",
+      "unstake": "Unstake",
       "unstakePromptInQueue": "You are in the fast unstake queue. You will not be able to carry out any nominator tasks while you are registered for fast unstake.",
       "unstakePromptWaitingForUnlocks": "Waiting for unlocks to become available to withdraw.",
       "unstakePromptReadyToWithdraw": "Your bonded funds are now unlocked and ready to withdraw.",

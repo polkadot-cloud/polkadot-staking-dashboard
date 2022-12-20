@@ -64,6 +64,7 @@
       "topUpAccount": "为账户充值,使其有资格成为controller",
       "totalSupplyStaked": "所有抵押比例",
       "unlocked": "已解锁",
+      "unstake": "解除抵押",
       "unstakePromptInQueue": "您正在快速解除抵押队列中。当注册快速解除抵押时，您将无法执行任何提名人任务",
       "unstakePromptWaitingForUnlocks": "等待己解锁变为可提取",
       "unstakePromptReadyToWithdraw": "您的质押资金现已解锁并可提取",

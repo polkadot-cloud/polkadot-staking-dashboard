@@ -132,7 +132,7 @@ export const Status = ({ height }: { height: number }) => {
 
   const fastUnstakeText = getFastUnstakeText();
   const regularUnstakeButton = {
-    title: 'Unstake',
+    title: t('nominate.unstake', { ns: 'pages' }),
     icon: faSignOutAlt,
     disabled: !isReady || isReadOnlyAccount(controller) || !activeAccount,
     onClick: () => openModalWith('Unstake', {}, 'small'),
