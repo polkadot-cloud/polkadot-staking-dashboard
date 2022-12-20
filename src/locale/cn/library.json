@@ -138,10 +138,9 @@
     "walletNotFound": "未找到钱包",
     "whenActivelyNominating": "当活跃提名时",
 
-    "fastUnstake": "Fast Unstake",
-    "fastUnstakeCheckingEras": "Checking {{checked}} of {{total}} eras...",
-    "fastUnstakeExposed_one": "Exposed {{count}} Era Ago",
-    "fastUnstakeExposed_other": "Exposed {{count}} Eras Ago",
-    "inQueue": "In Queue"
+    "fastUnstake": "快速解除抵押",
+    "fastUnstakeCheckingEras": "正在查验 {{total}} eras中的 {{checked}} ...",
+    "fastUnstakeExposed": "在 {{count}} Era前己被显示",
+    "inQueue": "在队列中"
   }
 }
