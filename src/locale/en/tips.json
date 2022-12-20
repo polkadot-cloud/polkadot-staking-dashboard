@@ -2,18 +2,18 @@
   "tips": {
     "module": {
       "tips": "Tips",
-      "one_moment": "One moment please...",
-      "syncing_with": "Syncing with {{network}}",
+      "oneMoment": "One moment please",
+      "syncingWith": "Syncing with {{network}}",
       "more": "More",
       "close": "Close",
-      "dismiss_tips": "Dismiss Tips",
-      "dismiss_result": "Dismissing tips will remove them from your overview.",
-      "re-enable": "Tips can be turned re-enabled from dashboard settings, that can be accessed via the cog icon in the bottom left corner of the side menu.",
-      "disable_dashboard_tips": "Disable Dashboard Tips",
+      "dismissTips": "Dismiss Tips",
+      "dismissResult": "Dismissing tips will remove them from your overview.",
+      "reEnable": "Tips can be turned re-enabled from dashboard settings, that can be accessed via the cog icon in the bottom left corner of the side menu.",
+      "disableDashboardTips": "Disable Dashboard Tips",
       "cancel": "Cancel",
       "of": "of"
     },
-    "connect_extensions": [
+    "connectExtensions": [
       "Connect Extensions",
       "Connect your accounts to begin using Polkadot staking dashboard.",
       [
@@ -23,7 +23,7 @@
         "Staking dashboard supports a range of extensions and wallets."
       ]
     ],
-    "recommended_nominator": [
+    "recommendedNominator": [
       "Recommended: Become a Nominator",
       "You have enough {NETWORK_UNIT} to become a nominator.",
       [
@@ -31,7 +31,7 @@
         "Nominating directly does however require you to actively check your backed validators."
       ]
     ],
-    "recommended_join_pool": [
+    "recommendedJoinPool": [
       "Recommended: Join a Pool",
       "Your account is best suited to join a pool.",
       [
@@ -39,7 +39,7 @@
         "Joining a pool requires a minimum deposit of {MIN_POOL_JOIN_BOND} {NETWORK_UNIT}."
       ]
     ],
-    "how_to_stake": [
+    "howToStake": [
       "How Would You Like to Stake?",
       "Either become a nominator or become a member of a pool.",
       [
@@ -50,7 +50,7 @@
         "Creating a pool is also possible, requiring a minimum of {MIN_POOL_CREATE_BOND} {NETWORK_UNIT}."
       ]
     ],
-    "managing_nominations": [
+    "managingNominations": [
       "Managing Nominations",
       "Be sure to check the performance of your nominations on a regular basis.",
       [
@@ -58,7 +58,7 @@
         "To maximise variety and a decentralised mix of validators, choose validators from a range of entities."
       ]
     ],
-    "monitoring_pool": [
+    "monitoringPool": [
       "Managing Pool Membership",
       "It's  a good idea to check regularly whether your pool is actively earning rewards.",
       [
@@ -66,14 +66,14 @@
         "Monitor your pool's status to ensure that it is performing well regularly, and consider joining another pool if you are not receiving any rewards."
       ]
     ],
-    "join_another_pool": [
+    "joinAnotherPool": [
       "Joining Another Pool",
       "Switch to a different account to join another pool.",
       [
         "Only one pool can be joined per account on {NETWORK_NAME}. To join more pools, firstly switch to another account."
       ]
     ],
-    "keep_pool_nominating": [
+    "keepPoolNominating": [
       "Managing Your Pool",
       "It is important to keep your pool actively nominating.",
       [
@@ -82,7 +82,7 @@
         "Your root and nominator roles are important for managing your nominations. If nominations are not performing well, choose different ones to increase your pool's chances of earning rewards."
       ]
     ],
-    "reviewing_payouts": [
+    "reviewingPayouts": [
       "Reviewing Payouts",
       "Regularly reviewing your payouts is a good way to gauge how well your nominations are performing.",
       [
@@ -90,7 +90,7 @@
         "Go to the Payouts page to get a detailed breakdown of each payout you receive, and by which validator (or pool) the payout came from."
       ]
     ],
-    "understanding_validator_performance": [
+    "understandingValidatorPerformance": [
       "Measuring Validator Performance",
       "Various factors affect how much validators are rewarded.",
       [

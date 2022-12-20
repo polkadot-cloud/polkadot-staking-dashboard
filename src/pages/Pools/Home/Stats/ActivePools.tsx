@@ -10,7 +10,7 @@ const ActivePoolsStatBox = () => {
   const { t } = useTranslation('pages');
 
   const params = {
-    label: t('pools.active_pools'),
+    label: t('pools.activePools'),
     value: stats.counterForBondedPools.toNumber(),
     unit: '',
     helpKey: 'Active Pools',

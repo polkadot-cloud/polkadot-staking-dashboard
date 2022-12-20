@@ -5,6 +5,7 @@ import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { Doughnut } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes, networkColors } from 'theme/default';
 import { humanNumber } from 'Utils';
 import { BondedProps } from './types';
@@ -21,17 +22,18 @@ export const Bonded = ({
 }: BondedProps) => {
   const { mode } = useTheme();
   const { network } = useApi();
+  const { t } = useTranslation('library');
 
   // graph data
   let graphActive = active;
   let graphUnlocking = unlocking + unlocked;
-  let graphFree = free;
+  let graphAvailable = free;
 
   let zeroBalance = false;
   if (inactive) {
     graphActive = -1;
     graphUnlocking = -1;
-    graphFree = -1;
+    graphAvailable = -1;
     zeroBalance = true;
   }
 
@@ -51,7 +53,7 @@ export const Bonded = ({
           padding: 20,
           color: defaultThemes.text.primary[mode],
           font: {
-            size: 13,
+            size: 12.5,
             weight: '600',
           },
         },
@@ -67,7 +69,7 @@ export const Bonded = ({
         callbacks: {
           label: (context: any) => {
             if (inactive) {
-              return 'Inactive';
+              return t('graphInactive');
             }
             return `${
               context.parsed === -1 ? 0 : humanNumber(context.parsed)
@@ -91,11 +93,11 @@ export const Bonded = ({
       ];
 
   const data = {
-    labels: ['Active', 'Unlocking', 'Free'],
+    labels: [t('active'), t('unlocking'), t('available')],
     datasets: [
       {
         label: network.unit,
-        data: [graphActive, graphUnlocking, graphFree],
+        data: [graphActive, graphUnlocking, graphAvailable],
         backgroundColor: _colors,
         borderWidth: 0,
       },

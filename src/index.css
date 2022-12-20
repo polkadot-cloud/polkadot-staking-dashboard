@@ -24,12 +24,6 @@ html {
   }
 }
 
-@media (min-width: 1600px) {
-  html {
-    font-size: 11.7px;
-  }
-}
-
 body {
   margin: 0;
   font-family: 'Inter', 'sans-serif', sans-serif;

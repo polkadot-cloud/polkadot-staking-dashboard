@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { SideMenuStickyThreshold } from 'consts';
+import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import styled from 'styled-components';
 import {
   backgroundSecondary,
@@ -158,6 +158,13 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     box-shadow: none;
     background: none;
   `}
+  ${(props) =>
+    props.minHeight &&
+    `
+    @media(min-width: ${SectionFullWidthThreshold + 1}px) {
+      min-height: ${props.minHeight}px;
+    }
+  `}
 
   .inner {
     width: 100%;
@@ -241,7 +248,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     flex-flow: row wrap;
     justify-content: center;
     width: 100%;
-    padding: 1rem 1.5rem;
+    padding: 1rem 1.75rem;
   }
   .graph_line {
     margin-top: 0.6rem;

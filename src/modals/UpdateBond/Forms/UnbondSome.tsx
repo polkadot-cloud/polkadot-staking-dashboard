@@ -16,6 +16,7 @@ import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { NotesWrapper } from '../../Wrappers';
 import { FormsProps } from '../types';
@@ -35,6 +36,7 @@ export const UnbondSome = (props: FormsProps) => {
   const { isDepositor, selectedActivePool } = useActivePools();
   const { txFees, txFeesValid } = useTxFees();
   const { getTransferOptions } = useTransferOptions();
+  const { t } = useTranslation('modals');
 
   const controller = getBondedAccount(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
@@ -50,12 +52,12 @@ export const UnbondSome = (props: FormsProps) => {
   const isPooling = bondType === 'pool';
 
   const allTransferOptions = getTransferOptions(activeAccount);
-  const { freeToUnbond: freeToUnbondBn } = isPooling
+  const { active: activeBn } = isPooling
     ? allTransferOptions.pool
     : allTransferOptions.nominate;
 
   // convert BN values to number
-  const freeToUnbond = planckBnToUnit(freeToUnbondBn, units);
+  const freeToUnbond = planckBnToUnit(activeBn, units);
   const minJoinBond = planckBnToUnit(minJoinBondBn, units);
   const minCreateBond = planckBnToUnit(minCreateBondBn, units);
   const minNominatorBond = planckBnToUnit(minNominatorBondBn, units);
@@ -67,7 +69,7 @@ export const UnbondSome = (props: FormsProps) => {
   const [bondValid, setBondValid] = useState<boolean>(false);
 
   // get the max amount available to unbond
-  const freeToUnbondToMin = isPooling
+  const unbondToMin = isPooling
     ? isDepositor()
       ? Math.max(freeToUnbond - minCreateBond, 0)
       : Math.max(freeToUnbond - minJoinBond, 0)
@@ -78,11 +80,11 @@ export const UnbondSome = (props: FormsProps) => {
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = freeToUnbondToMin;
+    const _bond = unbondToMin;
     setBond({ bond: _bond });
 
     setBondValid(isValid);
-  }, [freeToUnbondToMin, isValid]);
+  }, [unbondToMin, isValid]);
 
   // modal resize on form update
   useEffect(() => {
@@ -125,7 +127,7 @@ export const UnbondSome = (props: FormsProps) => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push('Your account is read only, and cannot sign transactions.');
+    warnings.push(t('readOnly'));
   }
 
   return (
@@ -134,13 +136,15 @@ export const UnbondSome = (props: FormsProps) => {
         <>
           {unclaimedRewards > 0 && bondType === 'pool' && (
             <Warning
-              text={`Unbonding will also withdraw your outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+              text={`${t('unbondingWithdraw')} ${unclaimedRewards} ${
+                network.unit
+              }.`}
             />
           )}
           <UnbondFeedback
             bondType={bondType}
             listenIsValid={setBondValid}
-            defaultBond={freeToUnbondToMin}
+            defaultBond={unbondToMin}
             setters={[
               {
                 set: setBond,
@@ -151,10 +155,7 @@ export const UnbondSome = (props: FormsProps) => {
             txFees={txFees}
           />
           <NotesWrapper>
-            <p>
-              Once unbonding, you must wait {bondDuration} eras for your funds
-              to become available.
-            </p>
+            <p>{t('onceUnbonding', { bondDuration })}</p>
             <EstimatedTxFee />
           </NotesWrapper>
         </>

@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { WellKnownChain } from '@polkadot/rpc-provider/substrate-connect';
+import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import { DefaultParams } from 'consts';
 import { ReactComponent as KusamaIconSVG } from 'img/kusama_icon.svg';
 import { ReactComponent as KusamaInlineSVG } from 'img/kusama_inline.svg';
@@ -22,7 +22,7 @@ export const NETWORKS: Networks = {
     name: 'Polkadot',
     endpoints: {
       rpc: 'wss://apps-rpc.polkadot.io',
-      lightClient: WellKnownChain.polkadot,
+      lightClient: ScProvider.WellKnownChain.polkadot,
     },
     colors: {
       primary: {
@@ -50,11 +50,11 @@ export const NETWORKS: Networks = {
       icon: PolkadotIconSVG,
       logo: {
         svg: PolkadotLogoSVG,
-        width: '8.5rem',
+        width: '8.5em',
       },
       inline: {
         svg: PolkadotInlineSVG,
-        size: '1.2rem',
+        size: '1.2em',
       },
     },
     api: {
@@ -70,7 +70,7 @@ export const NETWORKS: Networks = {
     name: 'Kusama',
     endpoints: {
       rpc: 'wss://kusama-rpc.polkadot.io',
-      lightClient: WellKnownChain.ksmcc3,
+      lightClient: ScProvider.WellKnownChain.ksmcc3,
     },
     colors: {
       primary: {
@@ -98,11 +98,11 @@ export const NETWORKS: Networks = {
       icon: KusamaIconSVG,
       logo: {
         svg: KusamaLogoSVG,
-        width: '8.5rem',
+        width: '8.5em',
       },
       inline: {
         svg: KusamaInlineSVG,
-        size: '1.55rem',
+        size: '1.55em',
       },
     },
     api: {
@@ -120,7 +120,7 @@ export const NETWORKS: Networks = {
     name: 'Westend',
     endpoints: {
       rpc: 'wss://westend-rpc.polkadot.io',
-      lightClient: WellKnownChain.westend2,
+      lightClient: ScProvider.WellKnownChain.westend2,
     },
     colors: {
       primary: {
@@ -148,11 +148,11 @@ export const NETWORKS: Networks = {
       icon: WestendIconSVG,
       logo: {
         svg: WestendLogoSVG,
-        width: '8.5rem',
+        width: '8.5em',
       },
       inline: {
         svg: WestendInlineSVG,
-        size: '1.15rem',
+        size: '1.15em',
       },
     },
     api: {

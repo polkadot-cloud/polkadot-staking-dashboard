@@ -35,10 +35,10 @@ export const ControllerNotImported = () => {
               }}
             >
               <CardHeaderWrapper>
-                <h4>{t('nominate.controller_not_imported')}</h4>
+                <h4>{t('nominate.controllerNotImported')}</h4>
               </CardHeaderWrapper>
               <ButtonPrimary
-                text="Set New Controller"
+                text={t('nominate.setNewController')}
                 onClick={() => openModalWith('UpdateController', {}, 'large')}
               />
             </CardWrapper>

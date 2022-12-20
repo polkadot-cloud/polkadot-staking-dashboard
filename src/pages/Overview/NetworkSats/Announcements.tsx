@@ -23,19 +23,14 @@ import {
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
-  const { networkSyncing, poolsSyncing, isSyncing } = useUi();
+  const { networkSyncing, poolsSyncing } = useUi();
   const { network } = useApi();
   const { units } = network;
   const { staking } = useStaking();
   const { metrics } = useNetworkMetrics();
   const { poolMembers } = usePoolMembers();
 
-  const {
-    minNominatorBond,
-    totalNominators,
-    maxNominatorsCount,
-    lastTotalStake,
-  } = staking;
+  const { minNominatorBond, lastTotalStake } = staking;
   const { bondedPools } = useBondedPools();
   const { totalIssuance } = metrics;
   const { t } = useTranslation('pages');
@@ -76,41 +71,8 @@ export const Announcements = () => {
     },
   };
 
-  const nominatorCapReached = maxNominatorsCount.eq(totalNominators);
-
-  let nominatorReachedPercentage = new BN(0);
-  if (maxNominatorsCount.gt(new BN(0)) && totalNominators.gt(new BN(0))) {
-    nominatorReachedPercentage = totalNominators.div(
-      maxNominatorsCount.div(new BN(100))
-    );
-  }
-
   const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
-
   const announcements = [];
-
-  // maximum nominators have been reached
-  if (nominatorCapReached && !isSyncing) {
-    announcements.push({
-      class: 'danger',
-      title: t('overview.nominator_limit'),
-      subtitle: t('overview.maximum_allowed'),
-    });
-  }
-
-  // 90% plus nominators reached
-  if (nominatorReachedPercentage.toNumber() >= 90) {
-    announcements.push({
-      class: 'neutral',
-      title: `${toFixedIfNecessary(
-        nominatorReachedPercentage.toNumber(),
-        2
-      )}${t('overview.limit_reached')}`,
-      subtitle: `${t('overview.maximum_amount')} ${humanNumber(
-        maxNominatorsCount.toNumber()
-      )}.`,
-    });
-  }
 
   const networkName = network.name;
   const networkUnit = network.unit;
@@ -119,15 +81,15 @@ export const Announcements = () => {
     // total pools active
     announcements.push({
       class: 'pools',
-      title: `${bondedPools.length} ${t('overview.pools_are_active')}`,
-      subtitle: `${t('overview.available_to_join', { networkName })}`,
+      title: `${bondedPools.length} ${t('overview.poolsAreActive')}`,
+      subtitle: `${t('overview.availableToJoin', { networkName })}`,
     });
 
     // total locked in pools
     announcements.push({
       class: 'pools',
-      title: `${totalPoolPointsBase} ${network.unit} ${t('overview.in_pools')}`,
-      subtitle: `${t('overview.bonded_in_pools', { networkUnit })}`,
+      title: `${totalPoolPointsBase} ${network.unit} ${t('overview.inPools')}`,
+      subtitle: `${t('overview.bondedInPools', { networkUnit })}`,
     });
 
     if (poolMembers.length > 0 && !poolsSyncing) {
@@ -135,9 +97,9 @@ export const Announcements = () => {
       announcements.push({
         class: 'pools',
         title: `${humanNumber(poolMembers.length)} ${t(
-          'overview.pool_members_bonding'
+          'overview.poolMembersBonding'
         )}`,
-        subtitle: `${t('overview.total_num_accounts')}`,
+        subtitle: `${t('overview.totalNumAccounts')}`,
       });
     }
   }
@@ -145,10 +107,10 @@ export const Announcements = () => {
   // minimum nominator bond
   announcements.push({
     class: 'neutral',
-    title: `${t('overview.minimum_nominator_bond')} ${minNominatorBondBase} ${
+    title: `${t('overview.minimumNominatorBond')} ${minNominatorBondBase} ${
       network.unit
     }.`,
-    subtitle: `${t('overview.minimum_bonding_amount', {
+    subtitle: `${t('overview.minimumBondingAmount', {
       networkName,
     })}${planckBnToUnit(minNominatorBond, units)} ${network.unit}.`,
   });
@@ -156,11 +118,11 @@ export const Announcements = () => {
   // supply staked
   announcements.push({
     class: 'neutral',
-    title: `${t('overview.currently_staked', {
+    title: `${t('overview.currentlyStaked', {
       supplyAsPercent: toFixedIfNecessary(supplyAsPercent, 2),
       networkUnit,
     })}`,
-    subtitle: `${t('overview.staking_on_the_network', {
+    subtitle: `${t('overview.stakingOnNetwork', {
       lastTotalStakeBase: humanNumber(
         toFixedIfNecessary(lastTotalStakeBase, 0)
       ),

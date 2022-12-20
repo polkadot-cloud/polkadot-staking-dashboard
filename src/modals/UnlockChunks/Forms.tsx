@@ -20,6 +20,7 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { forwardRef, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, rmCommas } from 'Utils';
 import { FooterWrapper, NotesWrapper, Separator } from '../Wrappers';
 import { ContentWrapper } from './Wrappers';
@@ -36,6 +37,7 @@ export const Forms = forwardRef(
     const { setStatus: setModalStatus, config } = useModal();
     const { getBondedAccount } = useBalances();
     const { txFeesValid } = useTxFees();
+    const { t } = useTranslation('modals');
 
     const { bondType, poolClosure } = config || {};
     const { historyDepth } = consts;
@@ -107,18 +109,18 @@ export const Forms = forwardRef(
         <div ref={ref} style={{ paddingBottom: '1rem' }}>
           <div>
             {!accountHasSigner(signingAccount) && (
-              <Warning text="Your account is read only, and cannot sign transactions." />
+              <Warning text={t('readOnly')} />
             )}
 
             <div style={{ marginTop: '2rem' }}>
               {task === 'rebond' && (
                 <h2>
-                  Rebond {planckBnToUnit(value, units)} {network.unit}
+                  {t('rebond')} {planckBnToUnit(value, units)} {network.unit}
                 </h2>
               )}
               {task === 'withdraw' && (
                 <h2>
-                  Withdraw {planckBnToUnit(value, units)} {network.unit}
+                  {t('withdraw')} {planckBnToUnit(value, units)} {network.unit}
                 </h2>
               )}
             </div>
@@ -135,12 +137,12 @@ export const Forms = forwardRef(
                 onClick={() => setSection(0)}
               >
                 <FontAwesomeIcon transform="shrink-2" icon={faChevronLeft} />
-                Back
+                {t('back')}
               </button>
             </div>
             <div>
               <ButtonSubmit
-                text={`Submit${submitting ? 'ting' : ''}`}
+                text={`${submitting ? t('submitting') : t('submit')}`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
                 onClick={() => submitTx()}

@@ -63,7 +63,8 @@ export const Item = (props: ItemProps) => {
 
   return (
     <ItemWrapper
-      whileHover={{ scale: actionable ? 1.005 : 1 }}
+      whileHover={{ scale: 1.005 }}
+      transition={{ duration: 0.15 }}
       variants={listItem}
     >
       <div className="inner">

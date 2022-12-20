@@ -42,7 +42,7 @@ export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
   let label;
   let labelClass;
   if (!roleEdit?.valid) {
-    label = t('pools.address_invalid');
+    label = t('pools.addressInvalid');
     labelClass = 'danger';
   } else if (roleEdit?.reformatted) {
     label = t('pools.reformatted');
@@ -54,7 +54,7 @@ export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
       <div className="input">
         <section>
           <input
-            placeholder="Address"
+            placeholder={t('pools.address') || ''}
             type="text"
             onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
             value={roleEdit?.newAddress ?? ''}

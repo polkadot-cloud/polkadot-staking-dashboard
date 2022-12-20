@@ -12,25 +12,27 @@ export const HELP_CONFIG: HelpItems = [
       'Active Nominators',
       'Your Balance',
       'Reserve Balance',
+      'Locked Balance',
       'Network Stats',
-      'Inflation',
       'Historical Rewards Rate',
+      'Adjusted Rewards Rate',
+      'Inflation',
       'Ideal Staked',
       'Supply Staked',
     ],
     external: [
       [
-        'connect_your_accounts',
+        'connectAccounts',
         'https://support.polkadot.network/support/solutions/articles/65000182121-how-to-use-the-staking-dashboard-connecting-your-account',
         'polkadot.network',
       ],
       [
-        'how_to_use',
+        'howToUse',
         'https://support.polkadot.network/support/solutions/articles/65000182104-how-to-use-the-staking-dashboard-overview',
         'polkadot.network',
       ],
       [
-        'stake_dot',
+        'stakeDot',
         'https://support.polkadot.network/support/solutions/articles/65000182104-how-to-use-the-staking-dashboard-overview',
         'polkadot.network',
       ],
@@ -51,17 +53,17 @@ export const HELP_CONFIG: HelpItems = [
     ],
     external: [
       [
-        'change_destination',
+        'changeDestination',
         'https://support.polkadot.network/support/solutions/articles/65000182220-how-to-use-the-staking-dashboard-changing-reward-destination',
         'polkadot.network',
       ],
       [
-        'bond_more',
+        'bondMore',
         'https://support.polkadot.network/support/solutions/articles/65000182207-how-to-use-the-staking-dashboard-bond-more-tokens-to-your-existing-stake',
         'polkadot.network',
       ],
       [
-        'unbonding_tokens',
+        'unbondingTokens',
         'https://support.polkadot.network/support/solutions/articles/65000182201-how-to-use-the-staking-dashboard-unbonding-your-tokens',
         'polkadot.network',
       ],
@@ -71,12 +73,12 @@ export const HELP_CONFIG: HelpItems = [
         'polkadot.network',
       ],
       [
-        'change_account',
+        'changeAccount',
         'https://support.polkadot.network/support/solutions/articles/65000182218-how-to-use-the-staking-dashboard-changing-your-controller-account',
         'polkadot.network',
       ],
       [
-        'change_nominations',
+        'changeNominations',
         'https://support.polkadot.network/support/solutions/articles/65000182518-how-to-use-the-staking-dashboard-changing-your-nominations',
         'polkadot.network',
       ],
@@ -96,12 +98,12 @@ export const HELP_CONFIG: HelpItems = [
     ],
     external: [
       [
-        'create_pools',
+        'createPools',
         'https://support.polkadot.network/support/solutions/articles/65000182388-how-to-use-the-staking-dashboard-creating-nomination-pools',
         'polkadot.network',
       ],
       [
-        'claim_rewards',
+        'claimRewards',
         'https://support.polkadot.network/support/solutions/articles/65000182399-how-to-use-staking-dashboard-claiming-nomination-pool-rewards',
         'polkadot.network',
       ],
@@ -124,7 +126,7 @@ export const HELP_CONFIG: HelpItems = [
     ],
     external: [
       [
-        'choose_validators',
+        'chooseValidators',
         'https://support.polkadot.network/support/solutions/articles/65000150130-how-do-i-know-which-validators-to-choose-',
         'polkadot.network',
       ],

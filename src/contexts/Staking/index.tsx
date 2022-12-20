@@ -206,7 +206,6 @@ export const StakingProvider = ({
         [
           api.query.staking.counterForNominators,
           api.query.staking.counterForValidators,
-          api.query.staking.maxNominatorsCount,
           api.query.staking.maxValidatorsCount,
           api.query.staking.validatorCount,
           [api.query.staking.erasValidatorReward, previousEra],
@@ -217,7 +216,6 @@ export const StakingProvider = ({
         ([
           _totalNominators,
           _totalValidators,
-          _maxNominatorsCount,
           _maxValidatorsCount,
           _validatorCount,
           _lastReward,
@@ -235,7 +233,6 @@ export const StakingProvider = ({
             minNominatorBond: _minNominatorBond.toBn(),
             lastReward: _lastReward.unwrapOrDefault(new BN(0)),
             maxValidatorsCount: new BN(_maxValidatorsCount.toString()),
-            maxNominatorsCount: new BN(_maxNominatorsCount.toString()),
           });
         }
       );

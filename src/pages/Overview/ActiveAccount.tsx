@@ -9,7 +9,7 @@ import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
 import { Identicon } from 'library/Identicon';
 import { useTranslation } from 'react-i18next';
-import { clipAddress, convertRemToPixels } from 'Utils';
+import { clipAddress, remToUnit } from 'Utils';
 import { ActiveAccounWrapper } from './Wrappers';
 
 export const ActiveAccount = () => {
@@ -22,7 +22,7 @@ export const ActiveAccount = () => {
   let notification: NotificationText | null = null;
   if (accountData !== null) {
     notification = {
-      title: t('overview.address_copied'),
+      title: t('overview.addressCopied'),
       subtitle: accountData.address,
     };
   }
@@ -37,7 +37,7 @@ export const ActiveAccount = () => {
                 <div className="icon">
                   <Identicon
                     value={accountData.address}
-                    size={convertRemToPixels('1.7rem')}
+                    size={remToUnit('1.7rem')}
                   />
                 </div>
                 {clipAddress(accountData.address)}
@@ -67,7 +67,7 @@ export const ActiveAccount = () => {
               </>
             )}
 
-            {!accountData && t('overview.no_account_connected')}
+            {!accountData && t('overview.noAccountConnected')}
           </h3>
         </div>
       </div>

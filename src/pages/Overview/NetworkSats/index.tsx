@@ -15,7 +15,7 @@ export const NetworkStats = () => {
     <CardWrapper>
       <CardHeaderWrapper>
         <h3>
-          {t('overview.network_stats')}
+          {t('overview.networkStats')}
           <OpenHelpIcon helpKey="Network Stats" />
         </h3>
       </CardHeaderWrapper>

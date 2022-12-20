@@ -22,10 +22,9 @@ import {
   TopBarWrapper,
 } from 'Wrappers';
 import { ActiveAccount } from './ActiveAccount';
-import BalanceGraph from './BalanceGraph';
+import { BalanceChart } from './BalanceChart';
 import { NetworkStats } from './NetworkSats';
 import Payouts from './Payouts';
-import Reserve from './Reserve';
 import ActiveEraStatBox from './Stats/ActiveEra';
 import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
 import TotalNominatorsStatBox from './Stats/TotalNominations';
@@ -45,8 +44,7 @@ export const Overview = () => {
   );
   const { i18n, t } = useTranslation('pages');
 
-  const PAYOUTS_HEIGHT = 410;
-  const BALANCE_HEIGHT = PAYOUTS_HEIGHT;
+  const PAYOUTS_HEIGHT = 390;
 
   let formatFrom = new Date();
   let formatTo = new Date();
@@ -87,9 +85,8 @@ export const Overview = () => {
           thresholdStickyMenu={SideMenuStickyThreshold}
           thresholdFullWidth={SectionFullWidthThreshold}
         >
-          <GraphWrapper style={{ minHeight: BALANCE_HEIGHT }} flex>
-            <BalanceGraph />
-            <Reserve />
+          <GraphWrapper minHeight={PAYOUTS_HEIGHT} flex>
+            <BalanceChart />
           </GraphWrapper>
         </RowSecondaryWrapper>
         <RowPrimaryWrapper
@@ -101,7 +98,7 @@ export const Overview = () => {
           <GraphWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
             <SubscanButton />
             <div className="head">
-              <h4>{t('overview.recent_payouts')}</h4>
+              <h4>{t('overview.recentPayouts')}</h4>
               <h2>
                 {lastReward === null
                   ? 0

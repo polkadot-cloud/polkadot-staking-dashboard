@@ -17,7 +17,7 @@ export const clipAddress = (val: string) => {
   )}`;
 };
 
-export const convertRemToPixels = (rem: string) => {
+export const remToUnit = (rem: string) => {
   const remAsNumber = Number(rem.slice(0, rem.length - 3));
   return (
     remAsNumber *
@@ -226,8 +226,11 @@ export const extractUrlValue = (key: string, url: string) => {
   return match ? match[1] : null;
 };
 
-// converts a string of text to lowercase and replaces spaces with underscores
-export const stringToKey = (str: string) => {
-  if (!str) return '';
-  return str.toLowerCase().replace(/ /g, '_');
+// converts a string of text to camelCase
+export const camelize = (str: string) => {
+  return str
+    .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) =>
+      index === 0 ? word.toLowerCase() : word.toUpperCase()
+    )
+    .replace(/\s+/g, '');
 };

@@ -12,13 +12,13 @@ const PoolMembership = () => {
   const { t } = useTranslation('pages');
 
   const params = {
-    label: t('pools.pool_membership'),
+    label: t('pools.poolMembership'),
     value:
       membership === null
-        ? t('pools.not_in_pool')
+        ? t('pools.notInPool')
         : isOwner()
-        ? `${t('pools.owner_of_pool')} ${membership.poolId}`
-        : `${t('pools.in_pool')} ${membership.poolId}`,
+        ? `${t('pools.ownerOfPool')} ${membership.poolId}`
+        : `${t('pools.inPool')} ${membership.poolId}`,
     unit: '',
     helpKey: 'Pool Membership',
   };

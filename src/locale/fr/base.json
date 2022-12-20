@@ -13,6 +13,12 @@
     "help": "Aide",
     "inactive": "Inactif",
     "active": "Actif",
-    "support": "Support"
+    "support": "Support",
+    "resources": "Resources",
+    "payee": {
+      "staked": "Retour à l'investissement",
+      "stash": "Vers le compte de réserve",
+      "controller": "Vers le compte du contrôleur"
+    }
   }
 }

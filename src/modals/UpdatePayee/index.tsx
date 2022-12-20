@@ -17,9 +17,11 @@ import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FooterWrapper, PaddingWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
+  const { t } = useTranslation();
   const { api } = useApi();
   const { activeAccount } = useConnect();
   const { getBondedAccount } = useBalances();
@@ -30,7 +32,7 @@ export const UpdatePayee = () => {
 
   const { payee } = staking;
 
-  const _selected: any = PayeeStatus.find((item) => item.key === payee);
+  const defaultSelected: any = PayeeStatus.find((item) => item === payee);
   const [selected, setSelected]: any = useState(null);
 
   // reset selected value on account change
@@ -40,7 +42,7 @@ export const UpdatePayee = () => {
 
   // ensure selected key is valid
   useEffect(() => {
-    const exists = PayeeStatus.find((item) => item.key === selected?.key);
+    const exists = PayeeStatus.find((item) => item === selected?.key);
     setValid(exists !== undefined);
   }, [selected]);
 
@@ -74,13 +76,13 @@ export const UpdatePayee = () => {
 
   // remove active payee option from selectable items
   const payeeItems = PayeeStatus.filter((item) => {
-    return item.key !== _selected.key;
+    return item !== defaultSelected;
   });
 
   return (
     <>
       <Title
-        title="Update Reward Destination"
+        title={t('updateRewardDestination', { ns: 'modals' })}
         icon={faWallet}
         helpKey="Reward Destination"
       />
@@ -93,14 +95,22 @@ export const UpdatePayee = () => {
           }}
         >
           {getControllerNotImported(controller) && (
-            <Warning text="You must have your controller account imported to update your reward destination" />
+            <Warning text={t('mustHaveControllerUpdate', { ns: 'modals' })} />
           )}
           <Dropdown
-            items={payeeItems}
+            items={payeeItems.map((p) => {
+              return {
+                key: p,
+                name: t(`payee.${p.toLowerCase()}`, { ns: 'base' }),
+              };
+            })}
             onChange={handleOnChange}
-            placeholder="Reward Destination"
+            placeholder={t('rewardDestination', { ns: 'modals' })}
             value={selected}
-            current={_selected}
+            current={{
+              key: defaultSelected,
+              name: t(`payee.${defaultSelected.toLowerCase()}`, { ns: 'base' }),
+            }}
             height="17rem"
           />
           <div style={{ marginTop: '1rem' }}>
@@ -109,7 +119,11 @@ export const UpdatePayee = () => {
           <FooterWrapper>
             <div>
               <ButtonSubmit
-                text={`Submit${submitting ? 'ting' : ''}`}
+                text={`${
+                  submitting
+                    ? t('submitting', { ns: 'modals' })
+                    : t('submit', { ns: 'modals' })
+                }`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
                 onClick={() => submitTx()}

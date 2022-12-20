@@ -2,18 +2,18 @@
   "tips": {
     "module": {
       "tips": "提示",
-      "one_moment": "请稍等...",
-      "syncing_with": "同步 {{network}}",
+      "oneMoment": "请稍等",
+      "syncingWith": "同步 {{network}}",
       "more": "更多",
       "close": "关闭",
-      "dismiss_tips": "解除提示",
-      "dismiss_result": "在该页面中去除提示窗口.",
-      "re-enable": "提示可以通过侧菜单左下角的齿轮图标访问从设置中重新启用.",
-      "disable_dashboard_tips": "除去提示",
+      "dismissTips": "解除提示",
+      "dismissResult": "在该页面中去除提示窗口.",
+      "reEnable": "提示可以通过侧菜单左下角的齿轮图标访问从设置中重新启用",
+      "disableDashboardTips": "除去提示",
       "cancel": "取消",
       "of": "/"
     },
-    "connect_extensions": [
+    "connectExtensions": [
       "连接扩展",
       "连接您的帐户,开始使用Polkadot staking.",
       [
@@ -23,7 +23,7 @@
         "该应用支持一系列扩展和钱包."
       ]
     ],
-    "recommended_nominator": [
+    "recommendedNominator": [
       "推荐：成为提名人",
       "您有足够的{NETWORK_UNIT}成为提名人.",
       [
@@ -31,7 +31,7 @@
         "然而，直接提名确实需要您主动检查提名的验证人."
       ]
     ],
-    "recommended_join_pool": [
+    "recommendedJoinPool": [
       "推荐: 加入池",
       "您的帐户最适合加入提名池.",
       [
@@ -39,7 +39,7 @@
         "加入提名池需要最低存款{MIN_POOL_JOIN_BOND} {NETWORK_UNIT}."
       ]
     ],
-    "how_to_stake": [
+    "howToStake": [
       "您会如何抵押?",
       "要么成为提名人，要么成为提名池成员.",
       [
@@ -50,7 +50,7 @@
         "创建提名池至少需要{MIN_POOL_CREATE_BOND} {NETWORK_UNIT}."
       ]
     ],
-    "managing_nominations": [
+    "managingNominations": [
       "管理提名",
       "务必定期检查提名人的表现.",
       [
@@ -58,7 +58,7 @@
         "为了最大化验证人的多样性和分散混合，请从一系列实体中选择验证人."
       ]
     ],
-    "monitoring_pool": [
+    "monitoringPool": [
       "管理提名池成员",
       "最好定期检查您的提名池是否正在活跃地赚取奖励.",
       [
@@ -66,14 +66,14 @@
         "监控您的提名池状态，以确保其正常运行，如果您没有收到任何奖励，请考虑加入另一个提名池."
       ]
     ],
-    "join_another_pool": [
+    "joinAnotherPool": [
       "加入另一个提名池",
       "切换到其它帐户以加入其它提名池.",
       [
         "{NETWORK_NAME}上的每个帐户只能加入一个提名池. 若要加入更多提名池，请首先切换到另一个帐户."
       ]
     ],
-    "keep_pool_nominating": [
+    "keepPoolNominating": [
       "管理您的提名池",
       "保持您的提名池活跃地提名很重要.",
       [
@@ -82,7 +82,7 @@
         "您的主理人和提名人角色对于管理您的提名非常重要。如果提名表现不佳，请选择不同的提名人，以增加您的提名池获得奖励的机会."
       ]
     ],
-    "reviewing_payouts": [
+    "reviewingPayouts": [
       "查看收益",
       "定期审查您的奖金是衡量你的提名表现如何的好方法.",
       [
@@ -90,7 +90,7 @@
         "转到“收益”页面，获取您收到的每一笔付款的详细明细，以及付款来自哪个验证人（或提名池）."
       ]
     ],
-    "understanding_validator_performance": [
+    "understandingValidatorPerformance": [
       "测量验证人性能",
       "各种因素会影响验证人的奖励金额.",
       [

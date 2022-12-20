@@ -5,11 +5,13 @@ import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { isValidAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 
 export const ReadOnlyInput = () => {
   const { formatAccountSs58, accounts, addExternalAccount } = useConnect();
+  const { t } = useTranslation('modals');
 
   // store current input value
   const [value, setValue] = useState('');
@@ -68,24 +70,24 @@ export const ReadOnlyInput = () => {
   let labelClass;
   switch (valid) {
     case 'confirm_reformat':
-      label = 'Address was reformatted. Please confirm.';
+      label = t('confirmReformat');
       labelClass = 'neutral';
 
       break;
     case 'already_imported':
-      label = 'Address Already Imported';
+      label = t('alreadyImported');
       labelClass = 'danger';
       break;
     case 'not_valid':
-      label = 'Address Invalid';
+      label = t('invalid');
       labelClass = 'danger';
       break;
     case 'valid':
-      label = 'Valid Address';
+      label = t('valid');
       labelClass = 'success';
       break;
     default:
-      label = 'Input Address';
+      label = t('inputAddress');
       labelClass = 'neutral';
   }
 
@@ -101,7 +103,7 @@ export const ReadOnlyInput = () => {
       <div className="input">
         <section>
           <input
-            placeholder="Address"
+            placeholder={t('address') || ''}
             type="text"
             onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
             value={value}
@@ -111,11 +113,14 @@ export const ReadOnlyInput = () => {
           {!reformatted ? (
             <ButtonSecondary
               onClick={() => handleImport()}
-              text="Import"
+              text={t('import')}
               disabled={valid !== 'valid'}
             />
           ) : (
-            <ButtonSecondary onClick={() => handleConfirm()} text="Confirm" />
+            <ButtonSecondary
+              onClick={() => handleConfirm()}
+              text={t('confirm')}
+            />
           )}
         </section>
       </div>

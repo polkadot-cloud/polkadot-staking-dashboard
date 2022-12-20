@@ -41,7 +41,7 @@ export const ManageBond = () => {
     <>
       <CardHeaderWrapper>
         <h4>
-          {t('nominate.bonded_funds')}
+          {t('nominate.bondedFunds')}
           <OpenHelpIcon helpKey="Bonding" />
         </h4>
         <h2>

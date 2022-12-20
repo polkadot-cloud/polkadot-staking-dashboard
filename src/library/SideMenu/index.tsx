@@ -14,6 +14,7 @@ import { UIContextInterface } from 'contexts/UI/types';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
 import { ReactComponent as ForumSVG } from 'img/forum.svg';
 import { ReactComponent as InfoSVG } from 'img/info.svg';
+import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
@@ -92,7 +93,7 @@ export const SideMenu = () => {
           minimised={sideMenuMinimised}
           icon={{
             Svg: InfoSVG,
-            size: sideMenuMinimised ? '1.6rem' : '1.4rem',
+            size: sideMenuMinimised ? '1.6em' : '1.4em',
           }}
         />
         <Secondary
@@ -101,7 +102,7 @@ export const SideMenu = () => {
           minimised={sideMenuMinimised}
           icon={{
             Svg: ForumSVG,
-            size: sideMenuMinimised ? '1.6rem' : '1.4rem',
+            size: sideMenuMinimised ? '1.6em' : '1.4em',
           }}
         />
         <Separator />
@@ -142,22 +143,28 @@ export const SideMenu = () => {
             )
           }
         >
-          <LogoGithubSVG width="1.4rem" height="1.4rem" />
+          <LogoGithubSVG width="1.4em" height="1.4em" />
         </button>
         <button
           type="button"
           onClick={() => openModalWith('Settings', {}, 'large')}
         >
-          <CogOutlineSVG width="1.6rem" height="1.6rem" />
+          <CogOutlineSVG width="1.6em" height="1.6em" />
         </button>
 
+        <button
+          type="button"
+          onClick={() => openModalWith('ChooseLanguage', {}, 'small')}
+        >
+          <LanguageSVG width="1.65rem" height="1.65rem" />
+        </button>
         {mode === 'light' ? (
           <button type="button" onClick={() => toggleTheme()}>
-            <SunnyOutlineSVG width="1.7rem" height="1.7rem" />
+            <SunnyOutlineSVG width="1.7em" height="1.7em" />
           </button>
         ) : (
           <button type="button" onClick={() => toggleTheme()}>
-            <MoonOutlineSVG width="1.4rem" height="1.4rem" />
+            <MoonOutlineSVG width="1.4em" height="1.4em" />
           </button>
         )}
       </section>

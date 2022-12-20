@@ -10,6 +10,7 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit } from 'Utils';
 import { UnbondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
@@ -36,16 +37,17 @@ export const UnbondFeedback = ({
   const { isDepositor } = useActivePools();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
-  const { units } = network;
+  const { units, unit } = network;
   const controller = getBondedAccount(activeAccount);
   const { minNominatorBond } = staking;
   const allTransferOptions = getTransferOptions(activeAccount);
+  const { t } = useTranslation('library');
 
   // get bond options for either staking or pooling.
   const transferOptions =
     bondType === 'pool' ? allTransferOptions.pool : allTransferOptions.nominate;
 
-  const { freeToUnbond: freeToUnbondBn, active } = transferOptions;
+  const { active: freeToUnbondBn } = transferOptions;
 
   // store errors
   const [errors, setErrors] = useState<Array<string>>([]);
@@ -87,7 +89,7 @@ export const UnbondFeedback = ({
       : planckBnToUnit(minNominatorBond, units);
 
   // unbond amount to minimum threshold
-  const freeToUnbondToMin =
+  const unbondToMin =
     bondType === 'pool'
       ? inSetup || isDepositor()
         ? planckBnToUnit(
@@ -104,7 +106,7 @@ export const UnbondFeedback = ({
         );
 
   // get the actively bonded amount.
-  const activeBase = planckBnToUnit(active, units);
+  const freeToUnbondBase = planckBnToUnit(freeToUnbondBn, units);
 
   // handle error updates
   const handleErrors = () => {
@@ -113,29 +115,30 @@ export const UnbondFeedback = ({
     const _planck = 1 / new BN(10).pow(new BN(units)).toNumber();
 
     // unbond errors
-    if (Number(bond.bond) > activeBase)
-      _errors.push('Unbond amount is more than your bonded balance.');
+    if (Number(bond.bond) > freeToUnbondBase) _errors.push(t('unbondAmount'));
 
     // unbond errors for staking only
     if (bondType === 'stake')
       if (getControllerNotImported(controller))
-        _errors.push(
-          'You must have your controller account imported to unbond.'
-        );
+        _errors.push(t('importedToUnbond'));
 
     if (bond.bond !== '' && Number(bond.bond) < _planck)
-      _errors.push('Value is too small');
+      _errors.push(t('valueTooSmall'));
 
-    if (Number(bond.bond) > freeToUnbondToMin)
-      _errors.push(
-        `A minimum bond of ${minBondBase} ${network.unit} is required ${
-          bondType === 'stake'
-            ? `when actively nominating`
-            : isDepositor()
-            ? `as the pool depositor`
-            : `as a pool member`
-        }.`
-      );
+    if (Number(bond.bond) > unbondToMin) {
+      // start the error message stating a min bond is required.
+      let err = `${t('minimumBond', { minBondBase, unit })} `;
+
+      // append the subject to the error message.
+      if (bondType === 'stake') {
+        err += t('whenActivelyNominating');
+      } else if (isDepositor()) {
+        err += t('asThePoolDepositor');
+      } else {
+        err += t('asAPoolMember');
+      }
+      _errors.push(err);
+    }
 
     listenIsValid(!_errors.length && _bond !== '');
     setErrors(_errors);
@@ -148,10 +151,10 @@ export const UnbondFeedback = ({
       ))}
       <Spacer />
       <UnbondInput
-        active={active}
+        active={freeToUnbondBn}
         defaultValue={defaultValue}
         disabled={false}
-        freeToUnbondToMin={freeToUnbondToMin}
+        unbondToMin={unbondToMin}
         setters={setters}
         value={bond.bond}
       />

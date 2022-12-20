@@ -7,6 +7,7 @@ import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { useOverlay } from 'contexts/Overlay';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { FunctionComponent } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TitleWrapper } from './Wrappers';
 
 interface TitleProps {
@@ -18,6 +19,7 @@ interface TitleProps {
 
 export const Title = ({ helpKey, title, icon, Svg }: TitleProps) => {
   const { closeOverlay } = useOverlay();
+  const { t } = useTranslation('library');
 
   const graphic = Svg ? (
     <Svg style={{ width: '1.5rem', height: '1.5rem' }} />
@@ -35,7 +37,7 @@ export const Title = ({ helpKey, title, icon, Svg }: TitleProps) => {
         </h2>
       </div>
       <div>
-        <ButtonInvertRounded text="Done" onClick={() => closeOverlay()} />
+        <ButtonInvertRounded text={t('done')} onClick={() => closeOverlay()} />
       </div>
     </TitleWrapper>
   );

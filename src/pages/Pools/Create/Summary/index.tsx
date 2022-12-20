@@ -101,7 +101,7 @@ export const Summary = (props: SetupStepProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
-          <Warning text={t('pools.read_only')} />
+          <Warning text={t('pools.readOnly')} />
         )}
         <SummaryWrapper>
           <section>
@@ -110,9 +110,9 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('pools.pool_name')}:
+              &nbsp; {t('pools.poolName')}:
             </div>
-            <div>{metadata ?? `Not Set`}</div>
+            <div>{metadata ?? `${t('pools.notSet')}`}</div>
           </section>
           <section>
             <div>
@@ -120,7 +120,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('pools.bond_amount')}:
+              &nbsp; {t('pools.bondAmount')}:
             </div>
             <div>
               {humanNumber(bond)} {network.unit}
@@ -165,7 +165,7 @@ export const Summary = (props: SetupStepProps) => {
             disabled={
               submitting || !accountHasSigner(activeAccount) || !txFeesValid
             }
-            text={t('pools.create_pool')}
+            text={t('pools.createPool')}
           />
         </div>
       </MotionContainer>

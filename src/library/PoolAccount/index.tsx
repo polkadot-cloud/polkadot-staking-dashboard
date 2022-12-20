@@ -8,8 +8,9 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTheme } from 'contexts/Themes';
 import Identicon from 'library/Identicon';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
-import { clipAddress, convertRemToPixels } from '../../Utils';
+import { clipAddress, remToUnit } from '../../Utils';
 import { PoolAccountProps } from './types';
 import Wrapper from './Wrapper';
 
@@ -18,6 +19,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
   const { isReady } = useApi();
   const { activeAccount } = useConnect();
   const { fetchPoolsMetaBatch, meta } = useBondedPools();
+  const { t } = useTranslation('library');
 
   const { label } = props;
 
@@ -58,7 +60,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
 
   // display value
   const defaultDisplay = clipAddress(props.pool.addresses.stash);
-  let display = syncing ? 'Syncing...' : metaData ?? defaultDisplay;
+  let display = syncing ? t('syncing') : metaData ?? defaultDisplay;
 
   // check if super identity has been byte encoded
   const displayAsBytes = u8aToString(u8aUnwrapBytes(display));
@@ -83,7 +85,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
       <span className="identicon">
         <Identicon
           value={props.pool.addresses.stash}
-          size={convertRemToPixels(fontSize) * 1.45}
+          size={remToUnit(fontSize) * 1.45}
         />
       </span>
       <span className={`title${syncing === true ? ` syncing` : ``}`}>

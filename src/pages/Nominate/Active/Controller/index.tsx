@@ -1,12 +1,17 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { useNotifications } from 'contexts/Notifications';
+import { NotificationText } from 'contexts/Notifications/types';
 import { useStaking } from 'contexts/Staking';
 import { Identicon } from 'library/Identicon';
 import OpenHelpIcon from 'library/OpenHelpIcon';
@@ -22,6 +27,7 @@ export const Controller = ({ label }: { label: string }) => {
   const { hasController } = useStaking();
   const { getBondedAccount } = useBalances();
   const controller = getBondedAccount(activeAccount);
+  const { addNotification } = useNotifications();
   const { t } = useTranslation('pages');
 
   let display = t('nominate.none');
@@ -31,10 +37,33 @@ export const Controller = ({ label }: { label: string }) => {
 
   const displayName = getAccount(controller)?.name;
 
+  // copy address notification
+  let notificationCopyAddress: NotificationText | null = null;
+  if (controller !== null) {
+    notificationCopyAddress = {
+      title: t('nominate.addressCopied'),
+      subtitle: controller,
+    };
+  }
+
   return (
     <StatWrapper>
       <h4>
         {label} <OpenHelpIcon helpKey="Stash and Controller Accounts" />
+        {controller !== null ? (
+          <button
+            type="button"
+            className="btn"
+            onClick={() => {
+              if (notificationCopyAddress) {
+                addNotification(notificationCopyAddress);
+              }
+              navigator.clipboard.writeText(controller || '');
+            }}
+          >
+            <FontAwesomeIcon icon={faCopy as IconProp} transform="shrink-4" />
+          </button>
+        ) : null}
       </h4>
       <Wrapper paddingLeft={hasController()} paddingRight>
         <h2 className="hide-with-padding">

@@ -14,6 +14,7 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { NotesWrapper, Separator } from '../../Wrappers';
 import { FormsProps } from '../types';
@@ -32,6 +33,7 @@ export const UnbondAll = (props: FormsProps) => {
   const { getTransferOptions } = useTransferOptions();
   const { txFeesValid } = useTxFees();
   const { selectedActivePool } = useActivePools();
+  const { t } = useTranslation('modals');
 
   let { unclaimedRewards } = selectedActivePool || {};
   unclaimedRewards = unclaimedRewards ?? new BN(0);
@@ -46,12 +48,12 @@ export const UnbondAll = (props: FormsProps) => {
   const isPooling = bondType === 'pool';
 
   const allTransferOptions = getTransferOptions(activeAccount);
-  const { freeToUnbond: freeToUnbondBn } = isPooling
+  const { active: activeBn } = isPooling
     ? allTransferOptions.pool
     : allTransferOptions.nominate;
 
   // convert BN values to number
-  const freeToUnbond = planckBnToUnit(freeToUnbondBn, units);
+  const freeToUnbond = planckBnToUnit(activeBn, units);
 
   // local bond value
   const [bond, setBond] = useState({
@@ -125,33 +127,32 @@ export const UnbondAll = (props: FormsProps) => {
       <div className="items">
         <>
           {!accountHasSigner(signingAccount) && (
-            <Warning text="Your account is read only, and cannot sign transactions." />
+            <Warning text={t('readOnly')} />
           )}
           {isStaking && controllerNotImported ? (
-            <Warning text="You must have your controller account imported to unbond." />
+            <Warning text={t('controllerImported')} />
           ) : (
             <></>
           )}
           {isStaking && nominations.length ? (
-            <Warning text="Stop nominating before unbonding all funds." />
+            <Warning text={t('stopNominatingBefore')} />
           ) : (
             <></>
           )}
           {unclaimedRewards > 0 && (
             <Warning
-              text={`Unbonding will also withdraw your outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+              text={`${t('unbondingWithdraw')} ${unclaimedRewards} ${
+                network.unit
+              }.`}
             />
           )}
-          <h4>Amount to unbond:</h4>
+          <h4>{t('amountToUnbond')}</h4>
           <h2>
             {freeToUnbond} {network.unit}
           </h2>
           <Separator />
           <NotesWrapper>
-            <p>
-              Once unbonding, you must wait {bondDuration} eras for your funds
-              to become available.
-            </p>
+            <p>{t('onceUnbonding', { bondDuration })}</p>
             {bondValid && <EstimatedTxFee />}
           </NotesWrapper>
         </>

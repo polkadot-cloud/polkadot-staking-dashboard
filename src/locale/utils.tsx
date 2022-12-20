@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { DefaultLocale } from 'consts';
-import { AnyJson } from 'types';
-import { lngNamespaces } from './index';
+import { AnyApi, AnyJson } from 'types';
+import { fallbackResources, lngNamespaces } from '.';
 
 // Gets the active language
 //
@@ -23,7 +23,7 @@ export const getActiveLanguage = () => {
 //
 // If selected language is DefaultLocale, then we fall back to
 // the default language resources that have already been imported.
-export const getResources = (lng: string, fallbackResources: AnyJson) => {
+export const getResources = (lng: string) => {
   let dynamicLoad = false;
 
   let resources: AnyJson = null;
@@ -68,6 +68,25 @@ export const getResources = (lng: string, fallbackResources: AnyJson) => {
   };
 };
 
+// Change language
+//
+// On click handler for changing language in-app.
+export const changeLanguage = async (lng: string, i18next: AnyApi) => {
+  // check whether resources exist and need to by dynamically loaded.
+  const { resources, dynamicLoad } = getResources(lng);
+
+  // dynamically load default language resources if needed.
+  if (dynamicLoad) {
+    await doDynamicImport(lng, i18next);
+  } else {
+    localStorage.setItem(
+      'lng_resources',
+      JSON.stringify({ l: lng, r: resources })
+    );
+    i18next.changeLanguage(lng);
+  }
+};
+
 // Load language resources dynamically.
 //
 // Bootstraps i18next with additional language resources.
@@ -94,7 +113,7 @@ export const loadLngAsync = async (l: string) => {
 //
 // Once imports have been loaded, they are added to i18next as resources.
 // Finally, the active langauge is changed to the imported language.
-export const doDynamicImport = async (lng: string, i18next: AnyJson) => {
+export const doDynamicImport = async (lng: string, i18next: AnyApi) => {
   const { l, r } = await loadLngAsync(lng);
 
   localStorage.setItem('lng_resources', JSON.stringify({ l: lng, r }));

@@ -41,8 +41,22 @@ export const Inflation = () => {
                 %
               </h2>
               <h4>
-                {t('overview.historical_rewards_rate')}{' '}
+                {t('overview.historicalRewardsRate')}{' '}
                 <OpenHelpIcon helpKey="Historical Rewards Rate" />
+              </h4>
+            </div>
+          </div>
+          <div>
+            <div className="inner">
+              <h2>
+                {totalIssuance.toString() === '0'
+                  ? '0'
+                  : toFixedIfNecessary(stakedReturn - inflation, 2)}
+                %
+              </h2>
+              <h4>
+                {t('overview.adjustedRewardsRate')}{' '}
+                <OpenHelpIcon helpKey="Adjusted Rewards Rate" />
               </h4>
             </div>
           </div>
@@ -63,7 +77,7 @@ export const Inflation = () => {
             <div className="inner">
               <h2>{toFixedIfNecessary(supplyAsPercent, 2)}%</h2>
               <h4>
-                {t('overview.supply_staked')}{' '}
+                {t('overview.supplyStaked')}{' '}
                 <OpenHelpIcon helpKey="Supply Staked" />
               </h4>
             </div>

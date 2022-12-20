@@ -6,6 +6,7 @@ import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
+import { useTranslation } from 'react-i18next';
 import { capitalizeFirstLetter, humanNumber, rmCommas } from 'Utils';
 
 export const EraStatus = (props: any) => {
@@ -17,18 +18,18 @@ export const EraStatus = (props: any) => {
   const { isSyncing } = useUi();
   const { eraStakers, erasStakersSyncing } = useStaking();
   const { stakers } = eraStakers;
+  const { t } = useTranslation('library');
 
   // is the validator in the active era
   const validatorInEra =
     stakers.find((s: any) => s.address === address) || null;
 
   // flag whether validator is active
-
   const validatorStatus = isSyncing
-    ? 'waiting'
+    ? t('waiting')
     : validatorInEra
-    ? 'active'
-    : 'waiting';
+    ? t('listItemActive')
+    : t('waiting');
 
   let totalStakePlanck = new BN(0);
   if (validatorInEra) {
@@ -47,9 +48,9 @@ export const EraStatus = (props: any) => {
     <ValidatorStatusWrapper status={validatorStatus}>
       <h5>
         {isSyncing || erasStakersSyncing
-          ? 'Syncing...'
+          ? t('syncing')
           : validatorInEra
-          ? `Active / ${humanNumber(totalStake)} ${unit}`
+          ? `${t('listItemActive')} / ${humanNumber(totalStake)} ${unit}`
           : capitalizeFirstLetter(validatorStatus ?? '')}
       </h5>
     </ValidatorStatusWrapper>

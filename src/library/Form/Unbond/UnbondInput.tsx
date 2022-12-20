@@ -5,6 +5,7 @@ import { ButtonInvert } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { humanNumber, isNumeric, planckBnToUnit } from 'Utils';
 import { UnbondInputProps } from '../types';
 import { InputWrapper } from '../Wrappers';
@@ -12,13 +13,14 @@ import { InputWrapper } from '../Wrappers';
 export const UnbondInput = ({
   defaultValue,
   disabled,
-  freeToUnbondToMin,
+  unbondToMin,
   setters,
   value,
   active,
 }: UnbondInputProps) => {
   const { network } = useApi();
   const { activeAccount } = useConnect();
+  const { t } = useTranslation('library');
 
   const sets = setters ?? [];
   const _value = value ?? 0;
@@ -58,7 +60,9 @@ export const UnbondInput = ({
 
   return (
     <InputWrapper>
-      <h3>Unbond {network.unit}:</h3>
+      <h3>
+        {t('unbond')} {network.unit}:
+      </h3>
       <div className="inner">
         <section style={{ opacity: disabled ? 0.5 : 1 }}>
           <div className="input">
@@ -80,11 +84,11 @@ export const UnbondInput = ({
         </section>
         <section>
           <ButtonInvert
-            text="Max"
+            text={t('max')}
             disabled={disabled}
             onClick={() => {
-              setLocalBond(freeToUnbondToMin);
-              updateParentState(freeToUnbondToMin);
+              setLocalBond(unbondToMin);
+              updateParentState(unbondToMin);
             }}
           />
         </section>

@@ -10,6 +10,7 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
 import { BondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
@@ -37,6 +38,7 @@ export const BondFeedback = ({
   const { minJoinBond, minCreateBond } = stats;
   const { units, unit } = network;
   const { minNominatorBond } = staking;
+  const { t } = useTranslation('library');
 
   const defBond = defaultBond || '';
 
@@ -117,32 +119,28 @@ export const BondFeedback = ({
     // bond errors
     if (freeBalance === 0) {
       _bondDisabled = true;
-      _errors.push(`You have no free ${network.unit} to bond.`);
+      _errors.push(`${t('noFree', { unit })}`);
     }
 
     if (Number(bond.bond) > freeBalance) {
-      _errors.push('Bond amount is more than your free balance.');
+      _errors.push(t('moreThanBalance'));
     }
 
     if (bond.bond !== '' && Number(bond.bond) < _planck) {
-      _errors.push('Bond amount is too small.');
+      _errors.push(t('tooSmall'));
     }
 
     if (bond.bond !== '' && bondAfterTxFees.toNumber() < 0) {
-      _errors.push(`Not enough ${unit} to bond after transaction fees.`);
+      _errors.push(`${t('notEnoughAfter', { unit })}`);
     }
 
     if (inSetup) {
       if (freeBalance < minBondBase) {
         _bondDisabled = true;
-        _errors.push(
-          `You do not meet the minimum bond of ${minBondBase} ${network.unit}.`
-        );
+        _errors.push(`${t('notMeet')} ${minBondBase} ${unit}.`);
       }
       if (bond.bond !== '' && Number(bond.bond) < minBondBase) {
-        _errors.push(
-          `Bond amount must be at least ${minBondBase} ${network.unit}.`
-        );
+        _errors.push(`${t('atLeast')} ${minBondBase} ${unit}.`);
       }
     }
 
