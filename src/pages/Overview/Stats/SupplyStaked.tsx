@@ -5,9 +5,11 @@ import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, toFixedIfNecessary } from 'Utils';
 
 export const SupplyStakedStatBox = () => {
+  const { t } = useTranslation('pages');
   const { units, unit } = useApi().network;
   const { metrics } = useNetworkMetrics();
   const { staking } = useStaking();
@@ -24,7 +26,7 @@ export const SupplyStakedStatBox = () => {
       : lastTotalStakeBase / (totalIssuanceBase * 0.01);
 
   const params = {
-    label: `${unit} Supply Staked`,
+    label: t('overview.unitSupplyStaked', { unit }),
     stat: {
       value: toFixedIfNecessary(supplyAsPercent, 2),
       unit: '%',

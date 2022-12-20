@@ -98,7 +98,8 @@
       "unlocking": "正在解锁",
 
       "networkCurrentlyStaked": "{{total}} {{unit}} is currently being staked on {{network}}.",
-      "networkCurrentlyStakedSubtitle": "The total {{unit}} currently being staked amongst all validators and nominators."
+      "networkCurrentlyStakedSubtitle": "The total {{unit}} currently being staked amongst all validators and nominators.",
+      "unitSupplyStaked": "{{unit}} Supply Staked"
     },
     "payouts": {
       "deductedFromBond": "从质押里扣除",
