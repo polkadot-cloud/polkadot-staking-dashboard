@@ -197,7 +197,9 @@
       "waitingForActiveNominations": "等待有效提名",
       "withdraw": "提取",
       "withdrawFunds": "取款",
-      "withdrawUnlock": "请取出己解锁金额以继续关闭池"
+      "withdrawUnlock": "请取出己解锁金额以继续关闭池",
+
+      "unlocked": "Unlocked"
     },
     "validators": {
       "activeValidators": "活跃验证人",

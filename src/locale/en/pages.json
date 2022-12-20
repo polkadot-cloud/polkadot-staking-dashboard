@@ -200,7 +200,9 @@
       "waitingForActiveNominations": "Waiting for Active Nominations",
       "withdraw": "Withdraw",
       "withdrawFunds": "Withdraw Funds",
-      "withdrawUnlock": "Withdraw your unlock chunk to proceed with pool closure."
+      "withdrawUnlock": "Withdraw your unlock chunk to proceed with pool closure.",
+
+      "unlocked": "Unlocked"
     },
     "validators": {
       "activeValidators": "Active Validators",
