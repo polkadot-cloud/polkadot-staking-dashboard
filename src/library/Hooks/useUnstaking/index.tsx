@@ -41,10 +41,10 @@ export const useUnstaking = () => {
   const getFastUnstakeText = () => {
     const { checked } = meta;
     if (checking) {
-      return t('fastUnstakeCheckingEras', {
+      return `${t('fastUnstakeCheckingEras', {
         checked: checked.length,
         total: bondDuration,
-      });
+      })}...`;
     }
     if (isExposed) {
       const lastExposed = activeEra.index - (checked[0] || 0);
