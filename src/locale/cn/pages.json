@@ -95,7 +95,10 @@
       "totalNominators": "提名人总数",
       "totalNumAccounts": "已加入提名池的帐户总数",
       "totalValidators": "所有验证人",
-      "unlocking": "正在解锁"
+      "unlocking": "正在解锁",
+
+      "networkCurrentlyStaked": "{{total}} {{ unit }} is currently being staked on {{ network }}.",
+      "networkCurrentlyStakedSubtitle": "The total {{ unit }} currently being staked amongst all validators and nominators."
     },
     "payouts": {
       "deductedFromBond": "从质押里扣除",

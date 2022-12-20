@@ -66,10 +66,16 @@ export const Announcements = () => {
   if (!isSyncing) {
     announcements.push({
       class: 'neutral',
-      title: `${humanNumber(
-        toFixedIfNecessary(planckBnToUnit(totalStaked, units), 0)
-      )} ${network.unit} is currently being staked on ${network.name}.`,
-      subtitle: `The total ${network.unit} currently being staked amongst all validators and nominators.`,
+      title: t('overview.networkCurrentlyStaked', {
+        total: humanNumber(
+          toFixedIfNecessary(planckBnToUnit(totalStaked, units), 0)
+        ),
+        unit: network.unit,
+        network: network.name,
+      }),
+      subtitle: t('overview.networkCurrentlyStakedSubtitle', {
+        unit: network.unit,
+      }),
     });
   }
 

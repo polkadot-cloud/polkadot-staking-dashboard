@@ -96,7 +96,11 @@
       "totalNominators": "Total Nominators",
       "totalNumAccounts": "The total number of accounts that have joined a pool.",
       "totalValidators": "Total Validators",
-      "unlocking": "Unlocking"
+      "unlocking": "Unlocking",
+
+      "networkCurrentlyStaked": "{{total}} {{ unit }} is currently being staked on {{ network }}.",
+      "networkCurrentlyStakedSubtitle": "The total {{ unit }} currently being staked amongst all validators and nominators."
+
     },
     "payouts": {
       "deductedFromBond": "Deducted from bond",
