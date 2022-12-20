@@ -2,18 +2,18 @@
   "tips": {
     "module": {
       "tips": "Astuces",
-      "one_moment": "Un moment s'il vous plaît...",
-      "syncing_with": "Synchronisation avec {{network}}",
+      "oneMoment": "Un moment s'il vous plaît...",
+      "syncingWith": "Synchronisation avec {{network}}",
       "more": "Plus",
       "close": "Fermer",
-      "dismiss_tips": "Ingnorer les astuces",
-      "dismiss_result": "Le fait d'ignorer les astuces les supprimera de votre aperçu.",
-      "re-enable": "Les astuces peuvent être réactivées à partir des paramètres du tableau de bord, accessibles via l'icône en forme de roue dentée dans le coin inférieur gauche du menu latéral.",
-      "disable_dashboard_tips": "Désactiver les astuces du tableau de bord",
+      "dismissTips": "Ingnorer les astuces",
+      "dismissResult": "Le fait d'ignorer les astuces les supprimera de votre aperçu.",
+      "reEnable": "Les astuces peuvent être réactivées à partir des paramètres du tableau de bord, accessibles via l'icône en forme de roue dentée dans le coin inférieur gauche du menu latéral.",
+      "disableDashboardTips": "Désactiver les astuces du tableau de bord",
       "cancel": "Annuler",
       "of": "de"
     },
-    "connect_extensions": [
+    "connectExtensions": [
       "Connecter les extensions",
       "Connecter vos comptes pour commencer à utiliser le Polkadot staking dashboard.",
       [
@@ -23,7 +23,7 @@
         "Le tableau de bord prend en charge une gamme d'extensions et de portefeuilles."
       ]
     ],
-    "recommended_nominator": [
+    "recommendedNominator": [
       "Recommandé : Devenir un Nominateur",
       "Vous avez suffisamment de {NETWORK_UNIT} pour devenir un nominateur.",
       [
@@ -31,7 +31,7 @@
         "Nommer directement vous oblige cependant à vérifier activement vos validateurs soutenus."
       ]
     ],
-    "recommended_join_pool": [
+    "recommendedJoinPool": [
       "Recommandé : Rejoindre un pool",
       "Votre compte est le mieux adapté pour rejoindre un pool.",
       [
@@ -39,7 +39,7 @@
         "Rejoindre un pool nécessite un dépôt minimum de {MIN_POOL_JOIN_BOND}{UNITÉ_RÉSEAU}."
       ]
     ],
-    "how_to_stake": [
+    "howToStake": [
       "Comment voulez-vous investir ?",
       "Soit vous devenez un nominateur, soit vous devenez membre d'un pool.",
       [
@@ -50,7 +50,7 @@
         "La création d'un pool est également possible, ce qui nécessite un minimum de {MIN_POOL_CREATE_BOND} {NETWORK_UNIT}."
       ]
     ],
-    "managing_nominations": [
+    "managingNominations": [
       "Gestion des nominations",
       "Be sure to check the performance of your nominations on a regular basis.",
       [
@@ -58,7 +58,7 @@
         "To maximise variety and a decentralised mix of validators, choose validators from a range of entities."
       ]
     ],
-    "monitoring_pool": [
+    "monitoringPool": [
       "Gestion des membres du pool",
       "Il est judicieux de vérifier régulièrement si votre pool gagne activement des récompenses.",
       [
@@ -66,14 +66,14 @@
         "Surveillez régulièrement le statut de votre pool pour vous assurer qu'il est performant, et envisagez de rejoindre un autre pool si vous ne recevez aucune récompense."
       ]
     ],
-    "join_another_pool": [
+    "joinAnotherPool": [
       "Rejoindre un autre pool",
       "Passez à un compte différent pour rejoindre un autre pool",
       [
         "Un seul pool peut être rejoint par compte sur {NETWORK_NAME}. Pour rejoindre plus de pools, il faut d'abord passer sur un autre compte."
       ]
     ],
-    "keep_pool_nominating": [
+    "keepPoolNominating": [
       "Gestion de votre Pool",
       "Il est important de maintenir votre pool actif.",
       [
@@ -82,7 +82,7 @@
         "Vos rôles de racine et de nominateur sont importants pour gérer vos nominations. Si les nominations ne donnent pas de bons résultats, choisissez-en d'autres pour augmenter les chances de votre pool de gagner des récompenses. "
       ]
     ],
-    "reviewing_payouts": [
+    "reviewingPayouts": [
       "Revu des paiements",
       "Examiner régulièrement les paiements est un bon moyen d'évaluer la performance de vos nominations.",
       [
@@ -90,7 +90,7 @@
         "Allez à la page Paiements pour obtenir le détail de chaque paiement que vous recevez, et par quel validateur (ou pool) le paiement est venu."
       ]
     ],
-    "understanding_validator_performance": [
+    "understandingValidatorPerformance": [
       "Mesurer la performance des validateurs",
       "Divers facteurs affectent la récompense des validateurs.",
       [
