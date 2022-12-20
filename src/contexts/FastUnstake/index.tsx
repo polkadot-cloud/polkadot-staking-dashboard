@@ -131,7 +131,14 @@ export const FastUnstakeProvider = ({
         !activeNominations.length &&
         initialIsExposed === null
       ) {
-        processEligibility(activeAccount);
+        // if localMeta existed, start checking from the next era.
+        const eraTocheck = localMeta
+          ? localMeta.checked[localMeta.checked.length - 1] - 1
+          : activeEra.index;
+
+        // eslint-disable-next-line no-console
+        console.log('check from era: ', eraTocheck);
+        processEligibility(activeAccount, eraTocheck);
       }
 
       // subscribe to fast unstake queue immediately if synced in localStorage and still up to date.
@@ -227,10 +234,10 @@ export const FastUnstakeProvider = ({
   };
 
   // initiate fast unstake eligibility check.
-  const processEligibility = async (a: MaybeAccount) => {
+  const processEligibility = async (a: MaybeAccount, era: number) => {
     // ensure current era has synced
     if (
-      activeEra.index === 0 ||
+      era <= 0 ||
       !bondDuration ||
       !api ||
       !a ||
@@ -240,7 +247,7 @@ export const FastUnstakeProvider = ({
       return;
 
     setStateWithRef(true, setChecking, checkingRef);
-    checkEra(activeEra.index);
+    checkEra(era);
   };
 
   // calls service worker to check exppsures for given era.
