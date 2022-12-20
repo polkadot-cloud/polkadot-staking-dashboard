@@ -156,10 +156,14 @@
 
     "addToBond": "Add to Bond",
     "removeBond": "Remove Bond",
-    "unbondErrorBelowMinimum": "Unable to unbond. Your bonded funds are below the minumum of {{ bond }} {{ unit }}.",
-    "unbondErrorNoFunds": "You have no {{ unit}} to unbond.",
-    "notePoolDepositorMinBond_depositor": "As the pool depositor you must maintain a bond of at least {{ bond }} {{ unit }}.",
-    "notePoolDepositorMinBond_member": "As a pool member you must maintain a bond of at least {{ bond }} {{ unit }}."
+    "unbondErrorBelowMinimum": "Unable to unbond. Your bonded funds are below the minumum of {{bond}} {{unit}}.",
+    "unbondErrorNoFunds": "You have no {{unit}} to unbond.",
+    "notePoolDepositorMinBond_depositor": "As the pool depositor you must maintain a bond of at least {{bond}} {{unit}}.",
+    "notePoolDepositorMinBond_member": "As a pool member you must maintain a bond of at least {{bond}} {{unit}}.",
+    "unstake": "Unstake",
+    "unstakeUnbond": "Unbond {{bond}} {{unit}}",
+    "unstakeStopNominating_one": "Stop Nominating {{count}} Validator",
+    "unstakeStopNominating_other": "Stop Nominating {{count}} Validators"
 
   }
 }

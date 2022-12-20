@@ -105,7 +105,7 @@ export const Unstake = () => {
 
   return (
     <>
-      <Title title="Unstake" icon={faSignOutAlt} />
+      <Title title={t('unstake')} icon={faSignOutAlt} />
       <PaddingWrapper>
         {!accountHasSigner(controller) && <Warning text={t('readOnly')} />}
         {controllerNotImported ? (
@@ -120,7 +120,11 @@ export const Unstake = () => {
                 <FontAwesomeIcon icon={faMinus} transform="shrink-10" />{' '}
               </>
             ) : null}
-            Unbond {humanNumber(freeToUnbond)} {network.unit}
+
+            {t('unstakeUnbond', {
+              bond: humanNumber(freeToUnbond),
+              unit: network.unit,
+            })}
           </h2>
         ) : null}
         <Separator />
@@ -132,8 +136,7 @@ export const Unstake = () => {
                   <FontAwesomeIcon icon={faMinus} transform="shrink-10" />{' '}
                 </>
               ) : null}
-              Stop Nominating {nominations.length} Validator
-              {nominations.length === 1 ? '' : 's'}
+              {t('unstakeStopNominating', { count: nominations.length })}
             </h2>
             <Separator />
           </>

@@ -142,7 +142,7 @@
     "fastUnstake": "Fast Unstake",
     "fastUnstakeCheckingEras": "Checking {{checked}} of {{total}} eras...",
     "fastUnstakeExposed_one": "Exposed {{count}} Era Ago",
-    "fastUnstakeExposed_many": "Exposed {{count}} Eras Ago",
+    "fastUnstakeExposed_other": "Exposed {{count}} Eras Ago",
     "inQueue": "In Queue"
     
   }
