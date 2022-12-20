@@ -67,13 +67,12 @@ export const BalanceChart = () => {
     units
   );
 
-  // total funds not staking
-
   // check account non-staking locks
   const locks = getAccountLocks(activeAccount);
   const locksStaking = locks.find((l: Lock) => l.id.trim() === 'staking');
   const lockStakingAmount = locksStaking ? locksStaking.amount : new BN(0);
 
+  // total funds available, including existential deposit, minus staking.
   const graphAvailable = planckBnToUnit(free.sub(lockStakingAmount), units);
   const notStaking = graphAvailable;
 

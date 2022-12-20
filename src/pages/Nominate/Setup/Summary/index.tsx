@@ -39,9 +39,6 @@ export const Summary = (props: SetupStepProps) => {
     if (!activeAccount || !api) {
       return null;
     }
-    const stashToSubmit = {
-      Id: activeAccount,
-    };
 
     const bondToSubmit = unitToPlanckBn(String(bond), units).toString();
 
@@ -50,6 +47,11 @@ export const Summary = (props: SetupStepProps) => {
         Id: item.address,
       };
     });
+
+    const stashToSubmit = {
+      Id: activeAccount,
+    };
+
     const controllerToSubmit = {
       Id: controller,
     };

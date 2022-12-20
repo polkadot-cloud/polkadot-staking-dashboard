@@ -61,7 +61,7 @@ export const Bond = (props: SetupStepProps) => {
     <>
       <Header
         thisSection={section}
-        complete={setup.bond !== '0'}
+        complete={setup.bond !== '0' && setup.bond !== ''}
         title={t('pools.bond') || ''}
         helpKey="Bonding"
         setupType={SetupType.Pool}

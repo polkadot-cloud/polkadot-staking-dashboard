@@ -34,7 +34,7 @@ export const Main = () => {
     getStakeSetupProgressPercent,
   }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
-  const { t } = useTranslation('base');
+  const { t, i18n } = useTranslation('base');
 
   const [pageConfig, setPageConfig] = useState({
     categories: Object.assign(PAGE_CATEGORIES),
@@ -112,6 +112,7 @@ export const Main = () => {
     inNominatorSetup(),
     getStakeSetupProgressPercent(activeAccount),
     getPoolSetupProgressPercent(activeAccount),
+    i18n.resolvedLanguage,
   ]);
 
   // remove pages that network does not support

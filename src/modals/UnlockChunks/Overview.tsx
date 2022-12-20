@@ -7,6 +7,7 @@ import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
+import useUnstaking from 'library/Hooks/useUnstaking';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -21,6 +22,7 @@ export const Overview = forwardRef(
     const { bondDuration } = consts;
     const { units } = network;
     const { activeEra } = metrics;
+    const { isFastUnstaking } = useUnstaking();
     const { t } = useTranslation('modals');
 
     const isStaking = bondType === 'stake';
@@ -93,6 +95,7 @@ export const Overview = forwardRef(
         {withdrawAvailable.toNumber() > 0 && (
           <div style={{ margin: '1rem 0 0.5rem 0' }}>
             <ButtonSubmit
+              disabled={isFastUnstaking}
               text={t('withdrawUnlocked')}
               onClick={() => {
                 setTask('withdraw');
@@ -128,6 +131,7 @@ export const Overview = forwardRef(
                     <div>
                       <ButtonSubmit
                         text={t('rebond')}
+                        disabled={isFastUnstaking}
                         onClick={() => {
                           setTask('rebond');
                           setUnlock(chunk);

@@ -26,8 +26,8 @@ import { BalanceChart } from './BalanceChart';
 import { NetworkStats } from './NetworkSats';
 import Payouts from './Payouts';
 import ActiveEraStatBox from './Stats/ActiveEra';
-import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
-import TotalNominatorsStatBox from './Stats/TotalNominations';
+import HistoricalRewardsRateStatBox from './Stats/HistoricalRewardsRate';
+import SupplyStakedStatBox from './Stats/SupplyStaked';
 import { Tips } from './Tips';
 
 export const Overview = () => {
@@ -69,8 +69,8 @@ export const Overview = () => {
         </TopBarWrapper>
       </PageRowWrapper>
       <StatBoxList>
-        <TotalNominatorsStatBox />
-        <ActiveNominatorsStatBox />
+        <HistoricalRewardsRateStatBox />
+        <SupplyStakedStatBox />
         <ActiveEraStatBox />
       </StatBoxList>
       {services.includes('tips') && (

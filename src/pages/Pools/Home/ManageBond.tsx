@@ -53,13 +53,7 @@ export const ManageBond = () => {
               state === PoolState.Destroy
             }
             marginRight
-            onClick={() =>
-              openModalWith(
-                'UpdateBond',
-                { fn: 'add', bondType: 'pool' },
-                'small'
-              )
-            }
+            onClick={() => openModalWith('Bond', { bondType: 'pool' }, 'small')}
             text="+"
           />
           <ButtonPrimary
@@ -71,11 +65,7 @@ export const ManageBond = () => {
             }
             marginRight
             onClick={() =>
-              openModalWith(
-                'UpdateBond',
-                { fn: 'remove', bondType: 'pool' },
-                'small'
-              )
+              openModalWith('Unbond', { bondType: 'pool' }, 'small')
             }
             text="-"
           />

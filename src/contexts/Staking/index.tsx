@@ -166,8 +166,13 @@ export const StakingProvider = ({
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
       const { data } = message;
+      const { task } = data;
+      if (task !== 'initialise_exposures') {
+        return;
+      }
       const {
         stakers,
+        totalStaked,
         totalActiveNominators,
         activeValidators,
         minActiveBond,
@@ -184,6 +189,7 @@ export const StakingProvider = ({
           {
             ...eraStakersRef.current,
             stakers,
+            totalStaked: new BN(totalStaked),
             // nominators,
             totalActiveNominators,
             activeValidators,
@@ -254,7 +260,7 @@ export const StakingProvider = ({
     if (!isReady || metrics.activeEra.index === 0 || !api) {
       return;
     }
-    const _exposures = await api.query.staking.erasStakers.entries(
+    const exposuresRaw = await api.query.staking.erasStakers.entries(
       metrics.activeEra.index
     );
 
@@ -262,7 +268,7 @@ export const StakingProvider = ({
     setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
 
     // humanise exposures to send to worker
-    const exposures = _exposures.map(([_keys, _val]: AnyApi) => {
+    const exposures = exposuresRaw.map(([_keys, _val]: AnyApi) => {
       return {
         keys: _keys.toHuman(),
         val: _val.toHuman(),
@@ -271,6 +277,7 @@ export const StakingProvider = ({
 
     // worker to calculate stats
     worker.postMessage({
+      task: 'initialise_exposures',
       activeAccount,
       units: network.units,
       exposures,

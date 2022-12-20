@@ -17,6 +17,7 @@ import { useTranslation } from 'react-i18next';
 import { ButtonRowWrapper, PageRowWrapper } from 'Wrappers';
 
 export const ClosurePrompts = () => {
+  const { t } = useTranslation('pages');
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { mode } = useTheme();
@@ -26,7 +27,6 @@ export const ClosurePrompts = () => {
   const { isBonding, selectedActivePool, isDepositor, poolNominations } =
     useActivePools();
   const { getTransferOptions } = useTransferOptions();
-  const { t } = useTranslation('pages');
 
   const { state, memberCounter } = selectedActivePool?.bondedPool || {};
   const { active, totalUnlockChuncks } = getTransferOptions(activeAccount).pool;
@@ -86,7 +86,11 @@ export const ClosurePrompts = () => {
                 />
                 <ButtonPrimary
                   iconLeft={faLockOpen}
-                  text={String(totalUnlockChuncks ?? 0)}
+                  text={
+                    depositorCanWithdraw
+                      ? t('pools.unlocked')
+                      : String(totalUnlockChuncks ?? 0)
+                  }
                   disabled={poolsSyncing || !isBonding()}
                   onClick={() =>
                     openModalWith(

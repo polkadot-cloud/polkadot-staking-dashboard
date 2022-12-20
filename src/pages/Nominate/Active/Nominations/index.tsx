@@ -12,6 +12,7 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
+import useUnstaking from 'library/Hooks/useUnstaking';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
@@ -30,6 +31,7 @@ export const Nominations = ({
   const { isSyncing } = useUi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { getAccountNominations } = useBalances();
+  const { isFastUnstaking } = useUnstaking();
   const { nominated: stakeNominated, poolNominated } = useValidators();
   const { t } = useTranslation('pages');
   let { favoritesList } = useValidators();
@@ -93,7 +95,8 @@ export const Nominations = ({
     (!isPool && inSetup()) ||
     isSyncing ||
     isReadOnlyAccount(activeAccount) ||
-    poolDestroying;
+    poolDestroying ||
+    isFastUnstaking;
 
   return (
     <Wrapper>
@@ -164,7 +167,7 @@ export const Nominations = ({
                           onSelected: true,
                         },
                         {
-                          disabled: !favoritesList.length,
+                          isDisabled: () => !favoritesList?.length,
                           title: t('nominate.addFromFavorites'),
                           onClick: cbAddNominations,
                           onSelected: false,

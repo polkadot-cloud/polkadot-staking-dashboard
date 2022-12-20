@@ -16,6 +16,7 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
 import { LargeItem } from 'library/Filter/LargeItem';
+import useUnstaking from 'library/Hooks/useUnstaking';
 import { SelectableWrapper } from 'library/List';
 import { ValidatorList } from 'library/ValidatorList';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
@@ -38,6 +39,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
   const { openModalWith } = useModal();
   const { isReady, consts } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { isFastUnstaking } = useUnstaking();
   const { removeValidatorMetaBatch, validators, meta } = useValidators();
   const {
     fetch: fetchFromMethod,
@@ -336,6 +338,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
                     transform="grow-2"
                     active={false}
                     onClick={m.onClick}
+                    disabled={isFastUnstaking}
                   />
                 ))}
               </GenerateOptionsWrapper>

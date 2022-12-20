@@ -86,7 +86,7 @@ export const ClaimReward = () => {
             <Warning text={t('readOnly')} />
           ) : null}
           {!unclaimedRewards?.gtn(0) ? <Warning text={t('noRewards')} /> : null}
-          <h2>
+          <h2 className="title">
             {planckBnToUnit(unclaimedRewards, units)} {unit}
           </h2>
           <Separator />

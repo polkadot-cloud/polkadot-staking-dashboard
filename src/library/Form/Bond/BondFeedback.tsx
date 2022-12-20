@@ -166,7 +166,12 @@ export const BondFeedback = ({
         <Warning key={`setup_error_${i}`} text={err} />
       ))}
       <Spacer />
-      <div style={{ maxWidth: maxWidth ? '500px' : '100%' }}>
+      <div
+        style={{
+          width: '100%',
+          maxWidth: maxWidth ? '500px' : '100%',
+        }}
+      >
         <BondInput
           value={String(bond.bond)}
           defaultValue={defaultBondStr}

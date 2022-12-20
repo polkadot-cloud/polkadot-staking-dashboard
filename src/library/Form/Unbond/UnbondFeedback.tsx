@@ -99,6 +99,12 @@ export const UnbondFeedback = ({
         : BN.max(active.sub(minJoinBond), new BN(0))
       : BN.max(active.sub(minNominatorBond), new BN(0));
 
+  // check if bonded is below the minimum required
+  const nominatorActiveBelowMin =
+    bondType === 'stake' && !active.isZero() && active.lt(minNominatorBond);
+  const poolToMinBn = isDepositor() ? minCreateBond : minJoinBond;
+  const poolActiveBelowMin = bondType === 'pool' && active.lt(poolToMinBn);
+
   // handle error updates
   const handleErrors = () => {
     const _errors = [...warnings];
@@ -149,7 +155,9 @@ export const UnbondFeedback = ({
       <UnbondInput
         active={active}
         defaultValue={defaultValue}
-        disabled={false}
+        disabled={
+          active.isZero() || nominatorActiveBelowMin || poolActiveBelowMin
+        }
         unbondToMin={unbondToMin}
         setters={setters}
         value={bond.bond}
