@@ -1876,10 +1876,19 @@
     "@polkadot/types-codec" "9.10.2"
     "@polkadot/util" "^10.2.1"
 
-"@polkadot/types-codec@9.10.2", "@polkadot/types-codec@^9.10.2":
+"@polkadot/types-codec@9.10.2":
   version "9.10.2"
   resolved "https://registry.npmjs.org/@polkadot/types-codec/-/types-codec-9.10.2.tgz#7f0e33c33292bdfcd959945b2427742b941df712"
   integrity sha512-zQOPzxq2N6PUP6Gkxc3OVT7Ub8AD3qC0PBeCnc/fhKjgX3CoKQK4TC6tDL8pEaaIVFh4LOHlHvhWJhqaUNe95A==
+  dependencies:
+    "@babel/runtime" "^7.20.6"
+    "@polkadot/util" "^10.2.1"
+    "@polkadot/x-bigint" "^10.2.1"
+
+"@polkadot/types-codec@^9.10.3":
+  version "9.10.3"
+  resolved "https://registry.yarnpkg.com/@polkadot/types-codec/-/types-codec-9.10.3.tgz#ec7c8a8a68f021d00a9801a0a45abfa35316d037"
+  integrity sha512-0W2Vn727SJEKCoeRR9YamIeAiAhQ7x/6S8wgISz3er2p7WxbMSS6BfnxYpIf1Lf/S73E15Cz1mIvqtHUG0WAsA==
   dependencies:
     "@babel/runtime" "^7.20.6"
     "@polkadot/util" "^10.2.1"
