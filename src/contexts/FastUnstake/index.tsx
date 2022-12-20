@@ -111,10 +111,7 @@ export const FastUnstakeProvider = ({
         }
       }
 
-      if (localMeta) {
-        // eslint-disable-next-line no-console
-        console.log('initial local meta: ', localMeta);
-      }
+      // checkpoint: initial local meta: localMeta
 
       setStateWithRef(initialMeta, setMeta, metaRef);
       setStateWithRef(initialIsExposed, setIsExposed, isExposedRef);
@@ -136,8 +133,8 @@ export const FastUnstakeProvider = ({
           ? localMeta.checked[localMeta.checked.length - 1] - 1
           : activeEra.index;
 
-        // eslint-disable-next-line no-console
-        console.log('check from era: ', eraTocheck);
+        // checkpoint: check from era eraTocheck
+
         processEligibility(activeAccount, eraTocheck);
       }
 
@@ -175,8 +172,7 @@ export const FastUnstakeProvider = ({
       // ensure still same conditions.
       const { where, who } = data;
       if (where !== network.name || who !== activeAccount) {
-        // eslint-disable-next-line no-console
-        console.log('conditions have changed, cancel fast unstake.');
+        // checkpoint: conditions have changed, cancel fast unstake.
         return;
       }
       const { currentEra, exposed } = data;
@@ -210,10 +206,8 @@ export const FastUnstakeProvider = ({
       }
 
       if (exposed) {
-        // eslint-disable-next-line no-console
-        console.log('exposed! Stop checking.');
-
-        // if exposed, cancel checking and update exposed state.
+        // checkpoint: 'exposed! Stop checking.
+        // cancel checking and update exposed state.
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(true, setIsExposed, isExposedRef);
       } else if (checked.length === 1 + bondDuration) {
@@ -221,8 +215,7 @@ export const FastUnstakeProvider = ({
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(false, setIsExposed, isExposedRef);
 
-        // eslint-disable-next-line no-console
-        console.log('check finished! not exposed!');
+        // checkpoint: check finished, not exposed.
 
         // subscribe to fast unstake queue for user and queue counter.
         subscribeToFastUnstakeQueue();
@@ -253,8 +246,7 @@ export const FastUnstakeProvider = ({
   // calls service worker to check exppsures for given era.
   const checkEra = async (era: number) => {
     if (!api) return;
-    // eslint-disable-next-line no-console
-    console.log('checking era ', era);
+    // checkpoint: checking era: era
 
     const exposuresRaw = await api.query.staking.erasStakers.entries(era);
     const exposures = exposuresRaw.map(([keys, val]: AnyApi) => {
@@ -299,9 +291,7 @@ export const FastUnstakeProvider = ({
       return u;
     };
 
-    // eslint-disable-next-line no-console
-    console.log('subscribing to queue + head');
-
+    // checkpoint: subscribing to queue + head.
     // initiate subscription, add to unsubs.
     await Promise.all([
       subscribeQueue(activeAccount),
