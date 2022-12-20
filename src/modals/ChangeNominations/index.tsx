@@ -139,7 +139,7 @@ export const ChangeNominations = () => {
               }`}
             />
           )}
-          <h2>
+          <h2 className="title">
             {t('stop')}{' '}
             {!remaining
               ? t('allNominations')

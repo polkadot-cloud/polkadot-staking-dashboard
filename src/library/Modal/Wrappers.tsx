@@ -67,31 +67,29 @@ export const StatWrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   margin-bottom: 1rem;
-  padding: 0 0.5rem;
+  padding: 0 0.75rem;
   flex-grow: 1;
   flex-basis: 100%;
 
   @media (min-width: 600px) {
     margin-bottom: 0.5rem;
   }
-  @media (min-width: 600px) and (max-width: 900px) {
-    flex-basis: 50%;
-  }
-  @media (min-width: 901px) {
+
+  @media (min-width: 601px) {
     flex-basis: 33%;
   }
 
   > .inner {
-    padding-bottom: 0.65rem;
+    padding-bottom: 0.5rem;
     border-bottom: 1px solid ${borderPrimary};
 
     > h2,
     h3,
     h4 {
-      margin: 0;
+      margin: 0.25rem 0;
     }
     h4 {
-      margin: 0rem 0 0.6rem 0;
+      margin: 0rem 0 0.75rem 0;
       display: flex;
       align-items: center;
 

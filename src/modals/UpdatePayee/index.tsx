@@ -18,7 +18,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FooterWrapper, PaddingWrapper } from '../Wrappers';
+import { FooterWrapper, PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
   const { t } = useTranslation();
@@ -95,7 +95,9 @@ export const UpdatePayee = () => {
           }}
         >
           {getControllerNotImported(controller) && (
-            <Warning text={t('mustHaveControllerUpdate', { ns: 'modals' })} />
+            <WarningsWrapper>
+              <Warning text={t('mustHaveControllerUpdate', { ns: 'modals' })} />
+            </WarningsWrapper>
           )}
           <Dropdown
             items={payeeItems.map((p) => {
