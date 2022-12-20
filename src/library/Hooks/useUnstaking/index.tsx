@@ -8,9 +8,11 @@ import { useFastUnstake } from 'contexts/FastUnstake';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTranslation } from 'react-i18next';
 import { AnyJson } from 'types';
 
 export const useUnstaking = () => {
+  const { t } = useTranslation('library');
   const { consts } = useApi();
   const { getTransferOptions } = useTransferOptions();
   const { activeAccount } = useConnect();
@@ -39,16 +41,21 @@ export const useUnstaking = () => {
   const getFastUnstakeText = () => {
     const { checked } = meta;
     if (checking) {
-      return `Checking ${checked.length} of ${bondDuration} eras...`;
+      return t('fastUnstakeCheckingEras', {
+        checked: checked.length,
+        total: bondDuration,
+      });
     }
     if (isExposed) {
       const lastExposed = activeEra.index - (checked[0] || 0);
-      return `Exposed ${lastExposed} Era${lastExposed !== 1 ? `s` : ``} Ago`;
+      return t('fastUnstakeExposed', {
+        count: lastExposed,
+      });
     }
     if (registered) {
-      return 'In Queue';
+      return t('inQueue');
     }
-    return 'Fast Unstake';
+    return t('fastUnstake');
   };
 
   return {

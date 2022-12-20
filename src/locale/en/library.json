@@ -137,6 +137,13 @@
     "viewPoolNominations": "View Pool Nominations",
     "waiting": "Waiting",
     "walletNotFound": "wallet not found",
-    "whenActivelyNominating": "when actively nominating."
+    "whenActivelyNominating": "when actively nominating.",
+
+    "fastUnstake": "Fast Unstake",
+    "fastUnstakeCheckingEras": "Checking {{checked}} of {{total}} eras...",
+    "fastUnstakeExposed_one": "Exposed {{count}} Era Ago",
+    "fastUnstakeExposed_many": "Exposed {{count}} Eras Ago",
+    "inQueue": "In Queue"
+    
   }
 }
