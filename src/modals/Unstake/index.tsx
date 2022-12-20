@@ -3,10 +3,8 @@
 
 import {
   faArrowAltCircleUp,
-  faMinus,
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -101,8 +99,6 @@ export const Unstake = () => {
     callbackInBlock: () => {},
   });
 
-  const multiTask = nominations.length && freeToUnbond > 0;
-
   return (
     <>
       <Title title={t('unstake')} icon={faSignOutAlt} />
@@ -115,12 +111,6 @@ export const Unstake = () => {
         )}
         {freeToUnbond > 0 ? (
           <h2 className="title">
-            {multiTask ? (
-              <>
-                <FontAwesomeIcon icon={faMinus} transform="shrink-10" />{' '}
-              </>
-            ) : null}
-
             {t('unstakeUnbond', {
               bond: humanNumber(freeToUnbond),
               unit: network.unit,
@@ -131,11 +121,6 @@ export const Unstake = () => {
         {nominations.length > 0 && (
           <>
             <h2 className="title">
-              {multiTask ? (
-                <>
-                  <FontAwesomeIcon icon={faMinus} transform="shrink-10" />{' '}
-                </>
-              ) : null}
               {t('unstakeStopNominating', { count: nominations.length })}
             </h2>
             <Separator />
