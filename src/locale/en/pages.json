@@ -63,21 +63,21 @@
       "toStash": "To Stash",
       "topUpAccount": "Top up an account to make it eligible to become a controller.",
       "totalSupplyStaked": "Total Supply Staked",
-      "update": "Update",
-      "waitingForActiveNominations": "Waiting for Active Nominations",
-      "yourNominations": "Your Nominations",
-
+      "unlocked": "Unlocked",
       "unstakePromptInQueue": "You are in the fast unstake queue. You will not be able to carry out any nominator tasks while you are registered for fast unstake.",
       "unstakePromptWaitingForUnlocks": "Waiting for unlocks to become available to withdraw.",
       "unstakePromptReadyToWithdraw": "Your bonded funds are now unlocked and ready to withdraw.",
       "unstakePromptRevert": "If you no longer wish to unstake, rebond your {{unit}} and start nominating again.",
       "unstakePromptInProgress_fast": "Fast Unstake in Progress",
       "unstakePromptInProgress_regular": "Unstake in Progress",
-      "unlocked": "Unlocked"
+      "update": "Update",
+      "waitingForActiveNominations": "Waiting for Active Nominations",
+      "yourNominations": "Your Nominations"
     },
     "overview": {
       "activeEra": "Active Era",
       "activeNominators": "Active Nominators",
+      "activePools": "Active Pools",
       "addressCopied": "Address Copied to Clipboard",
       "adjustedRewardsRate": "Adjusted Rewards Rate",
       "available": "Available",
@@ -85,10 +85,13 @@
       "bondedInPools": "The total {{networkUnit}}  currently bonded in nomination pools.",
       "free": "Free",
       "historicalRewardsRate": "Historical Rewards Rate",
+      "inflationRate": "Inflation Rate",
       "inPool": "In a Pool",
       "inPools": "is currently bonded in pools.",
       "locked": "Locked",
       "moreResources": "More Resources",
+      "networkCurrentlyStaked": "{{total}} {{unit}} is currently being staked on {{network}}.",
+      "networkCurrentlyStakedSubtitle": "The total {{unit}} currently being staked amongst all validators and nominators.",
       "networkStats": "Network Stats",
       "noAccountConnected": "No Account Connected",
       "nominating": "Nominating",
@@ -103,14 +106,8 @@
       "totalNominators": "Total Nominators",
       "totalNumAccounts": "The total number of accounts that have joined a pool.",
       "totalValidators": "Total Validators",
-      "unlocking": "Unlocking",
-
-      "networkCurrentlyStaked": "{{total}} {{unit}} is currently being staked on {{network}}.",
-      "networkCurrentlyStakedSubtitle": "The total {{unit}} currently being staked amongst all validators and nominators.",
       "unitSupplyStaked": "{{unit}} Supply Staked",
-      "activePools": "Active Pools",
-      "inflationRate": "Inflation Rate"
-
+      "unlocking": "Unlocking"
     },
     "payouts": {
       "deductedFromBond": "Deducted from bond",
@@ -206,13 +203,12 @@
       "unbond": "Unbond",
       "unbondFunds": "Unbond Funds",
       "unbondYourFunds": "You can now unbond your funds.",
+      "unlocked": "Unlocked",
       "unclaimedRewards": "Unclaimed Rewards",
       "waitingForActiveNominations": "Waiting for Active Nominations",
       "withdraw": "Withdraw",
       "withdrawFunds": "Withdraw Funds",
-      "withdrawUnlock": "Withdraw your unlock chunk to proceed with pool closure.",
-
-      "unlocked": "Unlocked"
+      "withdrawUnlock": "Withdraw your unlock chunk to proceed with pool closure." 
     },
     "validators": {
       "activeValidators": "Active Validators",
