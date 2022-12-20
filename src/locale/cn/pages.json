@@ -66,28 +66,32 @@
       "waitingForActiveNominations": "等待有效提名",
       "yourNominations": "您的提名名单",
 
-      "unstakePromptInQueue": "You are in the fast unstake queue. You will not be able to carry out any nominator tasks while you are registered for fast unstake.",
+      "unstakePromptInQueue": "您正在快速解除抵押队列中。当注册快速解除抵押时，您将无法执行任何提名人任务",
       "unstakePromptWaitingForUnlocks": "Waiting for unlocks to become available to withdraw.",
       "unstakePromptReadyToWithdraw": "Your bonded funds are now unlocked and ready to withdraw.",
       "unstakePromptRevert": "If you no longer wish to unstake, rebond your {{unit}} and start nominating again.",
-      "unstakePromptInProgress_fast": "Fast Unstake in Progress",
-      "unstakePromptInProgress_regular": "Unstake in Progress",
-      "unlocked": "Unlocked"
+      "unstakePromptInProgress_fast": "快速解除抵押正在进行中",
+      "unstakePromptInProgress_regular": "解除抵押正在进行中",
+      "unlocked": "已解锁"
     },
     "overview": {
       "activeEra": "活跃 Era",
       "activeNominators": "活跃提名人",
       "addressCopied": "地址已复制到剪贴板",
       "adjustedRewardsRate": "调整后收益率",
+      "activePools": "活跃提名池",
       "available": "可用",
       "balance": "余额",
       "bondedInPools": "提名池中当前质押的{{networkUnit}}总数",
       "free": "可用余额",
       "historicalRewardsRate": "历史奖励率",
+      "inflationRate": "通货膨胀率"
       "inPool": "提名池中",
       "inPools": "当前质押在提名池中",
       "locked": "己锁",
       "moreResources": "更多资讯",
+      "networkCurrentlyStaked": "{{total}} {{unit}} 目前正在{{network}}进行抵押",
+      "networkCurrentlyStakedSubtitle": "当前共有{{unit}} 在所有验证人和提名人之间做抵押",
       "networkStats": "网络信息",
       "noAccountConnected": "未连接帐户",
       "nominating": "提名中",
@@ -102,13 +106,8 @@
       "totalNominators": "提名人总数",
       "totalNumAccounts": "已加入提名池的帐户总数",
       "totalValidators": "所有验证人",
-      "unlocking": "正在解锁",
-
-      "networkCurrentlyStaked": "{{total}} {{unit}} is currently being staked on {{network}}.",
-      "networkCurrentlyStakedSubtitle": "The total {{unit}} currently being staked amongst all validators and nominators.",
-      "unitSupplyStaked": "{{unit}} Supply Staked",
-      "activePools": "Active Pools",
-      "inflationRate": "Inflation Rate"
+      "unitSupplyStaked": "{{unit}} 抵押比例",
+      "unlocking": "正在解锁"
     },
     "payouts": {
       "deductedFromBond": "从质押里扣除",
@@ -204,12 +203,11 @@
       "unbondFunds": "解除质押资金",
       "unbondYourFunds": "可解锁资金质押",
       "unclaimedRewards": "待申领奖励",
+      "unlocked": "已解锁",
       "waitingForActiveNominations": "等待有效提名",
       "withdraw": "提取",
       "withdrawFunds": "取款",
-      "withdrawUnlock": "请取出己解锁金额以继续关闭池",
-
-      "unlocked": "Unlocked"
+      "withdrawUnlock": "请取出己解锁金额以继续关闭池"
     },
     "validators": {
       "activeValidators": "活跃验证人",
