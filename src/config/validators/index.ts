@@ -420,6 +420,7 @@ export const VALIDATOR_COMMUNITY = [
         'FZ1GFKR6tYx9gNGHV67h5aV6bfhAbh7ZRdU9ypVvXfseyfg',
         'Et9M3rrA7H2kHQEGRXHxufcp9HTEmFirMWtKHvjoJ85r1C9',
         'Dh2ZNKbQMdusURjfZZj7Bczb57PGEoCVmDHdq8hjnH5PZ4E',
+        'FNPCfXrsrA8775HGuRvK9seULKpcnxNTTKTGUL4h267YHvw',
       ],
     },
   },
