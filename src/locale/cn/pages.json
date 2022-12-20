@@ -62,17 +62,16 @@
       "toStash": "到Stash账户",
       "topUpAccount": "为账户充值,使其有资格成为controller",
       "totalSupplyStaked": "所有抵押比例",
-      "update": "更改",
-      "waitingForActiveNominations": "等待有效提名",
-      "yourNominations": "您的提名名单",
-
+      "unlocked": "已解锁",
       "unstakePromptInQueue": "您正在快速解除抵押队列中。当注册快速解除抵押时，您将无法执行任何提名人任务",
-      "unstakePromptWaitingForUnlocks": "Waiting for unlocks to become available to withdraw.",
-      "unstakePromptReadyToWithdraw": "Your bonded funds are now unlocked and ready to withdraw.",
-      "unstakePromptRevert": "If you no longer wish to unstake, rebond your {{unit}} and start nominating again.",
+      "unstakePromptWaitingForUnlocks": "等待己解锁变为可提取",
+      "unstakePromptReadyToWithdraw": "您的质押资金现已解锁并可提取",
+      "unstakePromptRevert": 如果您需要取消解除抵押, 请重新质押您的{{unit}}并再次开始提名",
       "unstakePromptInProgress_fast": "快速解除抵押正在进行中",
       "unstakePromptInProgress_regular": "解除抵押正在进行中",
-      "unlocked": "已解锁"
+      "update": "更改",
+      "waitingForActiveNominations": "等待有效提名",
+      "yourNominations": "您的提名名单" 
     },
     "overview": {
       "activeEra": "活跃 Era",
