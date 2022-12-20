@@ -34,6 +34,7 @@
       "earningRewards": "Earning Rewards",
       "inactiveNominations": "Inactive Nominations",
       "minimumActiveBond": "Minimum Active Bond",
+      "minimumNominateBond":"Minimum Nominate Bond",
       "noNominationsSet": "Inactive: No Nominations Set",
       "nominate": "Nominate",
       "nominatingAnd": "Nominating and",
