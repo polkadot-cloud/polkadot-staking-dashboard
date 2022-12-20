@@ -136,6 +136,12 @@
     "viewPoolNominations": "查看池提名",
     "waiting": "等待中",
     "walletNotFound": "未找到钱包",
-    "whenActivelyNominating": "当活跃提名时"
+    "whenActivelyNominating": "当活跃提名时",
+
+    "fastUnstake": "Fast Unstake",
+    "fastUnstakeCheckingEras": "Checking {{checked}} of {{total}} eras...",
+    "fastUnstakeExposed_one": "Exposed {{count}} Era Ago",
+    "fastUnstakeExposed_many": "Exposed {{count}} Eras Ago",
+    "inQueue": "In Queue"
   }
 }
