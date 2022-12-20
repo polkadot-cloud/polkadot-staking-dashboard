@@ -85,7 +85,7 @@
       "bondedInPools": "提名池中当前质押的{{networkUnit}}总数",
       "free": "可用余额",
       "historicalRewardsRate": "历史奖励率",
-      "inflationRate": "通货膨胀率"
+      "inflationRate": "通货膨胀率",
       "inPool": "提名池中",
       "inPools": "当前质押在提名池中",
       "locked": "己锁",

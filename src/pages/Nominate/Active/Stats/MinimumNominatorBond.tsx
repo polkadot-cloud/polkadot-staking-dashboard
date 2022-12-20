@@ -14,7 +14,7 @@ export const MinimumNominatorBondStatBox = () => {
   const { minNominatorBond } = staking;
 
   const params = {
-    label: t('nominate.minimumNominateBond')},
+    label: t('nominate.minimumNominateBond'),
     value: planckBnToUnit(minNominatorBond, units),
     unit: `${unit}`,
     helpKey: 'Bonding',
