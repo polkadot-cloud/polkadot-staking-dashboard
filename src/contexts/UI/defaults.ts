@@ -11,13 +11,13 @@ export const defaultStakeSetup: StakeSetupProgress = {
   controller: null,
   payee: null,
   nominations: [],
-  bond: '0',
+  bond: '',
   section: 1,
 };
 
 export const defaultPoolSetup: PoolCreateProgress = {
   metadata: '',
-  bond: '0',
+  bond: '',
   nominations: [],
   roles: null,
   section: 1,

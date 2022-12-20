@@ -114,12 +114,12 @@ export const Forms = forwardRef(
 
             <div style={{ marginTop: '2rem' }}>
               {task === 'rebond' && (
-                <h2>
+                <h2 className="title">
                   {t('rebond')} {planckBnToUnit(value, units)} {network.unit}
                 </h2>
               )}
               {task === 'withdraw' && (
-                <h2>
+                <h2 className="title">
                   {t('withdraw')} {planckBnToUnit(value, units)} {network.unit}
                 </h2>
               )}

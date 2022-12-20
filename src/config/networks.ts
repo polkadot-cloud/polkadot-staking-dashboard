@@ -30,8 +30,8 @@ export const NETWORKS: Networks = {
         dark: 'rgb(211, 48, 121)',
       },
       secondary: {
-        light: '#e474bc',
-        dark: '#e474bc',
+        light: '#552bbf',
+        dark: '#6d39ee',
       },
       stroke: {
         light: 'rgb(211, 48, 121)',
@@ -128,8 +128,8 @@ export const NETWORKS: Networks = {
         dark: '#da4e71',
       },
       secondary: {
-        light: '#e37c44',
-        dark: '#e37c44',
+        light: '#de6a50',
+        dark: '#d7674e',
       },
       stroke: {
         light: '#da4e71',

@@ -67,7 +67,7 @@ export interface BondInputProps {
 export interface UnbondFeedbackProps {
   setters: any;
   bondType: string;
-  defaultBond: number | null;
+  defaultBond?: number;
   inSetup?: boolean;
   listenIsValid: { (v: boolean): void } | { (): void };
   warnings?: string[];

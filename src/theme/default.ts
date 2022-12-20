@@ -17,7 +17,7 @@ export const defaultThemes: { [key: string]: any } = {
     primary: v('#333', '#ccc'),
     secondary: v('#444', '#aaa'),
     invert: v('#fafafa', '#0e0e0e'),
-    warning: v('#be7900', '#be7900'),
+    warning: v('#8e6c1a', '#cb9f37'),
     danger: v('#ae2324', '#d14445'),
     success: v('green', 'green'),
   },
@@ -45,6 +45,7 @@ export const defaultThemes: { [key: string]: any } = {
       'linear-gradient(180deg, rgba(244,242,242,0.93) 0%, rgba(228,225,225,0.93) 100%)',
       'linear-gradient(180deg, rgba(20,20,20,0.93) 0%, rgba(14,14,14,0.93) 100%)'
     ),
+    warning: v('#fdf9eb', '#33332a'),
   },
   highlight: {
     primary: v(
@@ -77,6 +78,7 @@ export const defaultThemes: { [key: string]: any } = {
   border: {
     primary: v('#e6e6e6', '#282828'),
     secondary: v('#ccc', '#444'),
+    warning: v('#ebc161', '#7b6a41'),
   },
   modal: {
     overlay: v('rgba(242,240,240,0.6)', 'rgba(16,16,16,0.6)'),

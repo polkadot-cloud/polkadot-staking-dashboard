@@ -4,8 +4,10 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import {
+  faBolt,
   faChevronCircleRight,
   faRedoAlt,
+  faSignOutAlt,
   faWallet,
 } from '@fortawesome/free-solid-svg-icons';
 import { BN } from 'bn.js';
@@ -13,11 +15,14 @@ import { PayeeStatus } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
+import { useFastUnstake } from 'contexts/FastUnstake';
 import { useModal } from 'contexts/Modal';
+import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
+import useUnstaking from 'library/Hooks/useUnstaking';
 import Stat from 'library/Stat';
 import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, registerSaEvent, rmCommas } from 'Utils';
@@ -26,16 +31,22 @@ import { Controller } from './Controller';
 
 export const Status = ({ height }: { height: number }) => {
   const { t } = useTranslation();
-  const { isReady, network } = useApi();
-  const { setOnNominatorSetup, getStakeSetupProgressPercent }: any = useUi();
-  const { openModalWith } = useModal();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { isSyncing } = useUi();
+  const { openModalWith } = useModal();
+  const { isReady, network } = useApi();
+  const { meta, validators } = useValidators();
+  const { getAccountNominations, getBondedAccount } = useBalances();
+  const { metrics } = useNetworkMetrics();
+  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { setOnNominatorSetup, getStakeSetupProgressPercent }: any = useUi();
   const { getNominationsStatus, staking, inSetup, eraStakers } = useStaking();
-  const { getAccountNominations } = useBalances();
+  const { checking, isExposed } = useFastUnstake();
+  const { getFastUnstakeText, isUnstaking, isFastUnstaking } = useUnstaking();
+  const controller = getBondedAccount(activeAccount);
+
+  const { fastUnstakeErasToCheckPerBlock } = metrics;
   const { stakers } = eraStakers;
   const { payee } = staking;
-  const { meta, validators } = useValidators();
   const nominations = getAccountNominations(activeAccount);
   // get nomination status
   const nominationStatuses = getNominationsStatus();
@@ -118,6 +129,31 @@ export const Status = ({ height }: { height: number }) => {
       startTitle += `: ${progress}%`;
     }
   }
+
+  const fastUnstakeText = getFastUnstakeText();
+  const regularUnstakeButton = {
+    title: t('nominate.unstake', { ns: 'pages' }),
+    icon: faSignOutAlt,
+    disabled: !isReady || isReadOnlyAccount(controller) || !activeAccount,
+    onClick: () => openModalWith('Unstake', {}, 'small'),
+  };
+
+  const fastUnstakeButton = {
+    disabled: checking,
+    title: fastUnstakeText,
+    icon: faBolt,
+    onClick: () => {
+      openModalWith('ManageFastUnstake', {}, 'small');
+    },
+  };
+
+  const unstakeButton =
+    fastUnstakeErasToCheckPerBlock > 0 &&
+    !activeNominees.length &&
+    (checking || !isExposed)
+      ? fastUnstakeButton
+      : regularUnstakeButton;
+
   return (
     <CardWrapper height={height}>
       <Stat
@@ -126,7 +162,9 @@ export const Status = ({ height }: { height: number }) => {
         stat={getNominationStatus()}
         buttons={
           !inSetup()
-            ? []
+            ? !isUnstaking && !isReadOnlyAccount(controller)
+              ? [unstakeButton]
+              : []
             : [
                 {
                   title: startTitle,
@@ -169,7 +207,10 @@ export const Status = ({ height }: { height: number }) => {
                   icon: faWallet,
                   small: true,
                   disabled:
-                    inSetup() || isSyncing || isReadOnlyAccount(activeAccount),
+                    inSetup() ||
+                    isSyncing ||
+                    isReadOnlyAccount(activeAccount) ||
+                    isFastUnstaking,
                   onClick: () => openModalWith('UpdatePayee', {}, 'small'),
                 },
               ]

@@ -79,15 +79,15 @@ export const Forms = forwardRef((props: any, ref: any) => {
         message = <p>{t('storedOnChain')}</p>;
         break;
       case 'destroy_pool':
-        title = <h2>{t('destroyIrreversible')}</h2>;
+        title = <h2 className="title">{t('destroyIrreversible')}</h2>;
         message = <p>{t('destroyPool')}</p>;
         break;
       case 'unlock_pool':
-        title = <h2>{t('submitUnlock')}</h2>;
+        title = <h2 className="title">{t('submitUnlock')}</h2>;
         message = <p>{t('unlockPoolResult')}</p>;
         break;
       case 'lock_pool':
-        title = <h2>{t('submitLock')}</h2>;
+        title = <h2 className="title">{t('submitLock')}</h2>;
         message = <p>{t('lockPoolResult')}</p>;
         break;
       default:
