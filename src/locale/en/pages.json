@@ -65,7 +65,15 @@
       "totalSupplyStaked": "Total Supply Staked",
       "update": "Update",
       "waitingForActiveNominations": "Waiting for Active Nominations",
-      "yourNominations": "Your Nominations"
+      "yourNominations": "Your Nominations",
+
+      "unstakePromptInQueue": "You are in the fast unstake queue. You will not be able to carry out any nominator tasks while you are registered for fast unstake.",
+      "unstakePromptWaitingForUnlocks": "Waiting for unlocks to become available to withdraw.",
+      "unstakePromptReadyToWithdraw": "Your bonded funds are now unlocked and ready to withdraw.",
+      "unstakePromptRevert": "If you no longer wish to unstake, rebond your {{unit}} and start nominating again.",
+      "unstakePromptInProgress_fast": "Fast Unstake in Progress",
+      "unstakePromptInProgress_regular": "Unstake in Progress",
+      "unlocked": "Unlocked"
     },
     "overview": {
       "activeEra": "Active Era",

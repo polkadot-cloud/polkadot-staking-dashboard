@@ -11,9 +11,11 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import useUnstaking from 'library/Hooks/useUnstaking';
+import { useTranslation } from 'react-i18next';
 import { ButtonRowWrapper, PageRowWrapper } from 'Wrappers';
 
 export const UnstakePrompts = () => {
+  const { t } = useTranslation('pages');
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { mode } = useTheme();
@@ -43,18 +45,19 @@ export const UnstakePrompts = () => {
           >
             <div className="content">
               <h3>
-                {isFastUnstaking
-                  ? 'Fast Unstake in Progress'
-                  : 'Unstake in Progress'}
+                {t('unstakePromptInProgress', {
+                  context: isFastUnstaking ? 'fast' : 'regular',
+                })}
               </h3>
               <h4>
                 {isFastUnstaking
-                  ? 'You are in the fast unstake queue. You will not be able to carry out any nominator tasks while you are registered for fast unstake.'
+                  ? t('nominate.unstakePromptInQueue')
                   : !canWithdrawUnlocks
-                  ? `Waiting for unlocks to become available to withdraw.`
-                  : `Your bonded funds are now unlocked and ready to withdraw.`}{' '}
-                If you no longer wish to unstake, rebond your {network.unit} and
-                start nominating again.
+                  ? t('nominate.unstakePromptWaitingForUnlocks')
+                  : `${t('nominate.unstakePromptReadyToWithdraw')} ${t(
+                      'nominate.unstakePromptRevert',
+                      { unit: network.unit }
+                    )}`}
               </h4>
               <ButtonRowWrapper verticalSpacing>
                 {isFastUnstaking ? (
@@ -71,7 +74,7 @@ export const UnstakePrompts = () => {
                     iconLeft={faLockOpen}
                     text={
                       canWithdrawUnlocks
-                        ? 'Unlocked'
+                        ? t('nominate.unlocked')
                         : String(totalUnlockChuncks ?? 0)
                     }
                     disabled={false}

@@ -64,7 +64,15 @@
       "totalSupplyStaked": "所有抵押比例",
       "update": "更改",
       "waitingForActiveNominations": "等待有效提名",
-      "yourNominations": "您的提名名单"
+      "yourNominations": "您的提名名单",
+
+      "unstakePromptInQueue": "You are in the fast unstake queue. You will not be able to carry out any nominator tasks while you are registered for fast unstake.",
+      "unstakePromptWaitingForUnlocks": "Waiting for unlocks to become available to withdraw.",
+      "unstakePromptReadyToWithdraw": "Your bonded funds are now unlocked and ready to withdraw.",
+      "unstakePromptRevert": "If you no longer wish to unstake, rebond your {{unit}} and start nominating again.",
+      "unstakePromptInProgress_fast": "Fast Unstake in Progress",
+      "unstakePromptInProgress_regular": "Unstake in Progress",
+      "unlocked": "Unlocked"
     },
     "overview": {
       "activeEra": "活跃 Era",
