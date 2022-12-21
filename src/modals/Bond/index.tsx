@@ -30,12 +30,12 @@ export const Bond = () => {
   const { getTransferOptions } = useTransferOptions();
   const { txFeesValid } = useTxFees();
   const { selectedActivePool } = useActivePools();
-  const { bondType } = config;
-  const isStaking = bondType === 'stake';
-  const isPooling = bondType === 'pool';
+  const { bondFor } = config;
+  const isStaking = bondFor === 'Nominator';
+  const isPooling = bondFor === 'Pool';
   const { freeBalance: freeBalanceBn } = getTransferOptions(activeAccount);
   const freeBalance = planckBnToUnit(freeBalanceBn, units);
-  const largestTxFee = useBondGreatestFee({ bondType });
+  const largestTxFee = useBondGreatestFee({ bondFor });
 
   // calculate any unclaimed pool rewards.
   let { unclaimedRewards } = selectedActivePool || {};
@@ -117,7 +117,7 @@ export const Bond = () => {
     <>
       <Title title={`${t('addToBond')}`} icon={faPlus} />
       <PaddingWrapper>
-        {unclaimedRewards > 0 && bondType === 'pool' && (
+        {unclaimedRewards > 0 && bondFor === 'Pool' && (
           <Warning
             text={`${t('bondingWithdraw')} ${unclaimedRewards} ${
               network.unit
@@ -126,7 +126,7 @@ export const Bond = () => {
         )}
         <BondFeedback
           syncing={largestTxFee.eq(new BN(0))}
-          bondType={bondType}
+          bondFor={bondFor}
           listenIsValid={setBondValid}
           defaultBond={null}
           setters={[

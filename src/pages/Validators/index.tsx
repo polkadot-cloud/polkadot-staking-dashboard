@@ -52,7 +52,7 @@ export const Validators = (props: PageProps) => {
 
               {validators.length > 0 && (
                 <ValidatorList
-                  bondType="stake"
+                  bondFor="Nominator"
                   validators={validators}
                   batchKey="validators_browse"
                   title={t('validators.networkValidators', { ns: 'pages' })}

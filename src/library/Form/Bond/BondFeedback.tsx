@@ -18,7 +18,7 @@ import { Spacer } from '../Wrappers';
 import { BondInput } from './BondInput';
 
 export const BondFeedback = ({
-  bondType,
+  bondFor,
   inSetup = false,
   warnings = [],
   setters = [],
@@ -104,7 +104,7 @@ export const BondFeedback = ({
 
   // bond amount to minimum threshold
   const minBondBn =
-    bondType === 'pool'
+    bondFor === 'Pool'
       ? inSetup || isDepositor()
         ? minCreateBond
         : minJoinBond

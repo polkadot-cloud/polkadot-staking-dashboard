@@ -6,12 +6,13 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useEffect, useMemo, useState } from 'react';
+import { BondFor } from 'types';
 
 interface Props {
-  bondType: string;
+  bondFor: BondFor;
 }
 
-export const useBondGreatestFee = ({ bondType }: Props) => {
+export const useBondGreatestFee = ({ bondFor }: Props) => {
   const { api } = useApi();
   const { activeAccount } = useConnect();
   const { getTransferOptions } = useTransferOptions();
@@ -43,11 +44,11 @@ export const useBondGreatestFee = ({ bondType }: Props) => {
     if (!api) {
       return new BN(0);
     }
-    if (bondType === 'pool') {
+    if (bondFor === 'Pool') {
       tx = api.tx.nominationPools.bondExtra({
         FreeBalance: bond,
       });
-    } else if (bondType === 'stake') {
+    } else if (bondFor === 'Nominator') {
       tx = api.tx.staking.bondExtra(bond);
     }
 

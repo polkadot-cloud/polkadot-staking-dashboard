@@ -33,10 +33,10 @@ export const ChangeNominations = () => {
   const { txFeesValid } = useTxFees();
   const { t } = useTranslation('modals');
 
-  const { nominations: newNominations, provider, bondType } = config;
+  const { nominations: newNominations, provider, bondFor } = config;
 
-  const isPool = bondType === 'pool';
-  const isStaking = bondType === 'stake';
+  const isPool = bondFor === 'Pool';
+  const isStaking = bondFor === 'Nominator';
   const controller = getBondedAccount(activeAccount);
   const signingAccount = isPool ? activeAccount : controller;
 
@@ -133,7 +133,7 @@ export const ChangeNominations = () => {
           {!accountHasSigner(signingAccount) && (
             <Warning
               text={`${
-                bondType === 'stake'
+                bondFor === 'Nominator'
                   ? t('youMust', { context: 'controller' })
                   : t('youMust', { context: 'account' })
               }`}

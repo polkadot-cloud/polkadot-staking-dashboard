@@ -33,8 +33,8 @@ export const NominateFromFavorites = () => {
   const { t } = useTranslation('modals');
 
   const { maxNominations } = consts;
-  const { bondType, nominations } = config;
-  const signingAccount = bondType === 'pool' ? activeAccount : controller;
+  const { bondFor, nominations } = config;
+  const signingAccount = bondFor === 'Pool' ? activeAccount : controller;
 
   // store filtered favorites
   const [availableFavorites, setAvailableFavorites] = useState<
@@ -98,14 +98,14 @@ export const NominateFromFavorites = () => {
     }
 
     const targetsToSubmit = nominationsToSubmit.map((item: any) =>
-      bondType === 'pool'
+      bondFor === 'Pool'
         ? item
         : {
             Id: item,
           }
     );
 
-    if (bondType === 'pool') {
+    if (bondFor === 'Pool') {
       tx = api.tx.nominationPools.nominate(
         selectedActivePool?.id,
         targetsToSubmit
@@ -134,7 +134,7 @@ export const NominateFromFavorites = () => {
           {!accountHasSigner(signingAccount) && (
             <Warning
               text={`${
-                bondType === 'stake'
+                bondFor === 'Nominator'
                   ? t('youMust', { context: 'controller' })
                   : t('youMust', { context: 'account' })
               }`}
@@ -144,7 +144,7 @@ export const NominateFromFavorites = () => {
         <ListWrapper>
           {availableFavorites.length > 0 ? (
             <ValidatorList
-              bondType="stake"
+              bondFor="Nominator"
               validators={availableFavorites}
               batchKey={batchKey}
               title={t('favoriteNotNominated')}
@@ -190,7 +190,7 @@ export const NominateFromFavorites = () => {
               disabled={
                 !valid ||
                 submitting ||
-                (bondType === 'pool' && !isNominator() && !isOwner()) ||
+                (bondFor === 'Pool' && !isNominator() && !isOwner()) ||
                 !accountHasSigner(signingAccount) ||
                 !txFeesValid
               }

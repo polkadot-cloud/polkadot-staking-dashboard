@@ -19,10 +19,10 @@ export const NominationStatus = (props: NominationStatusProps) => {
   } = useApi();
 
   const { ownStake, stakers } = eraStakers;
-  const { address, nominator, bondType } = props;
+  const { address, nominator, bondFor } = props;
 
   let nominationStatus;
-  if (bondType === 'pool') {
+  if (bondFor === 'Pool') {
     // get nomination status from pool metadata
     nominationStatus = getPoolNominationStatus(nominator, address);
   } else {
@@ -34,7 +34,7 @@ export const NominationStatus = (props: NominationStatusProps) => {
 
   // determine staked amount
   let stakedAmount = 0;
-  if (bondType === 'stake') {
+  if (bondFor === 'Nominator') {
     // bonded amount within the validator.
     stakedAmount =
       nominationStatus === 'active'

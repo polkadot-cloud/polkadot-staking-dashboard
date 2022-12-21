@@ -4,6 +4,7 @@
 import BN from 'bn.js';
 import { Balance } from 'contexts/Balances/types';
 import { ExtensionAccount, ExternalAccount } from 'contexts/Connect/types';
+import { BondFor } from 'types';
 
 export interface ExtensionAccountItem extends ExtensionAccount {
   active?: boolean;
@@ -43,7 +44,7 @@ export interface AccountSelectProps {
 export interface BondFeedbackProps {
   syncing?: boolean;
   setters: any;
-  bondType: string;
+  bondFor: BondFor;
   defaultBond: number | null;
   inSetup?: boolean;
   listenIsValid: { (v: boolean): void } | { (): void };
@@ -66,7 +67,7 @@ export interface BondInputProps {
 
 export interface UnbondFeedbackProps {
   setters: any;
-  bondType: string;
+  bondFor: BondFor;
   defaultBond?: number;
   inSetup?: boolean;
   listenIsValid: { (v: boolean): void } | { (): void };

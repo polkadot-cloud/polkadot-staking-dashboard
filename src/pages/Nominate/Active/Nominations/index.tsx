@@ -20,10 +20,10 @@ import { MaybeAccount } from 'types';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({
-  bondType,
+  bondFor,
   nominator,
 }: {
-  bondType: 'pool' | 'stake';
+  bondFor: 'Pool' | 'Nominator';
   nominator: MaybeAccount;
 }) => {
   const { openModalWith } = useModal();
@@ -46,7 +46,7 @@ export const Nominations = ({
     selectedActivePool,
   } = useActivePools();
 
-  const isPool = bondType === 'pool';
+  const isPool = bondFor === 'Pool';
   const nominations = isPool
     ? poolNominations.targets
     : getAccountNominations(nominator);
@@ -66,7 +66,7 @@ export const Nominations = ({
       {
         nominations: _nominations,
         provider,
-        bondType,
+        bondFor,
       },
       'small'
     );
@@ -79,7 +79,7 @@ export const Nominations = ({
       'NominateFromFavorites',
       {
         nominations,
-        bondType,
+        bondFor,
       },
       'xl'
     );
@@ -121,7 +121,7 @@ export const Nominations = ({
                   'ChangeNominations',
                   {
                     nominations: [],
-                    bondType,
+                    bondFor,
                   },
                   'small'
                 )
@@ -147,7 +147,7 @@ export const Nominations = ({
           {nominated.length > 0 ? (
             <div style={{ marginTop: '1rem' }}>
               <ValidatorList
-                bondType={isPool ? 'pool' : 'stake'}
+                bondFor={isPool ? 'Pool' : 'Nominator'}
                 validators={nominated}
                 nominator={nominator}
                 batchKey={batchKey}

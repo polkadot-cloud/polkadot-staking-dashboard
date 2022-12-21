@@ -39,13 +39,13 @@ export const Forms = forwardRef(
     const { txFeesValid } = useTxFees();
     const { t } = useTranslation('modals');
 
-    const { bondType, poolClosure } = config || {};
+    const { bondFor, poolClosure } = config || {};
     const { historyDepth } = consts;
     const { units } = network;
     const controller = getBondedAccount(activeAccount);
 
-    const isStaking = bondType === 'stake';
-    const isPooling = bondType === 'pool';
+    const isStaking = bondFor === 'Nominator';
+    const isPooling = bondFor === 'Pool';
 
     // valid to submit transaction
     const [valid, setValid] = useState<boolean>(
@@ -92,7 +92,7 @@ export const Forms = forwardRef(
         }
 
         // if no more bonded funds from pool, remove from poolMembers list
-        if (bondType === 'pool') {
+        if (bondFor === 'Pool') {
           const points = membership?.points ? rmCommas(membership.points) : 0;
           const bonded = planckBnToUnit(new BN(points), network.units);
           if (bonded === 0) {

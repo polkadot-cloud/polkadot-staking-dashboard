@@ -120,3 +120,5 @@ export enum Sync {
   Syncing,
   Synced,
 }
+
+export type BondFor = 'Pool' | 'Nominator';

@@ -358,7 +358,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
                 }}
               >
                 <ValidatorList
-                  bondType="stake"
+                  bondFor="Nominator"
                   validators={nominations}
                   batchKey={batchKey}
                   selectable
