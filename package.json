@@ -58,7 +58,7 @@
     "@types/react-scroll": "^1.8.5",
     "@types/styled-components": "^5.1.21",
     "@types/styled-theming": "^2.2.5",
-    "@typescript-eslint/eslint-plugin": "^5.46.1",
+    "@typescript-eslint/eslint-plugin": "^5.47.0",
     "@typescript-eslint/parser": "^5.47.0",
     "eslint": "^8.30.0",
     "eslint-config-airbnb": "^19.0.4",
