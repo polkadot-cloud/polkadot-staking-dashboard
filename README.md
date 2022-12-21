@@ -1,7 +1,10 @@
 # Polkadot Staking Dashboard
 
-## Deployment
-Staking dashboard is live on [staking.polkadot.network](https://staking.polkadot.network/dashboard)
+#### Staging (Latest Version):
+https://paritytech.github.io/polkadot-staking-dashboard
+
+#### Production:
+https://staking.polkadot.network
 
 <img width="1744" alt="Screenshot 2022-12-20 at 13 46 30" src="https://user-images.githubusercontent.com/13929023/208601280-5a06b7cb-141e-42c8-a278-50cd4dec018d.png">
 
