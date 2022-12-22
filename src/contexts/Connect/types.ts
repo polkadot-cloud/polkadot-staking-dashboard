@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Extension } from 'contexts/Extensions/types';
+import { Extension, ExtensionAccount } from 'contexts/Extensions/types';
 import { MaybeAccount } from 'types';
 
 export interface ConnectContextInterface {
@@ -18,13 +18,6 @@ export interface ConnectContextInterface {
   accounts: Array<ExtensionAccount>;
   activeAccount: string | null;
   activeAccountMeta: ExtensionAccount | null;
-}
-export interface ExtensionAccount {
-  addedBy?: string;
-  address: string;
-  source: string;
-  name?: string;
-  signer?: unknown;
 }
 
 export type ImportedAccount = ExtensionAccount | ExternalAccount;

@@ -3,8 +3,9 @@
 
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ExtensionConfig, EXTENSIONS } from 'config/extensions';
+import { EXTENSIONS } from 'config/extensions';
 import { useConnect } from 'contexts/Connect';
+import { ExtensionConfig } from 'contexts/Extensions/types';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Extension } from './Extension';

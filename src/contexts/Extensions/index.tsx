@@ -1,9 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ExtensionConfig, EXTENSIONS } from 'config/extensions';
+import { EXTENSIONS } from 'config/extensions';
 import {
   Extension,
+  ExtensionConfig,
   ExtensionsContextInterface,
 } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';

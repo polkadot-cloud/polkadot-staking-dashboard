@@ -4,10 +4,10 @@
 import Keyring from '@polkadot/keyring';
 import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
-import { ExtensionInteface } from 'contexts/Extensions/types';
+import { ExtensionAccount, ExtensionInteface } from 'contexts/Extensions/types';
 import { AnyFunction } from 'types';
 import { isValidAddress } from 'Utils';
-import { ExtensionAccount, ExternalAccount, ImportedAccount } from '../types';
+import { ExternalAccount, ImportedAccount } from '../types';
 import {
   addToLocalExtensions,
   getActiveAccountLocal,
