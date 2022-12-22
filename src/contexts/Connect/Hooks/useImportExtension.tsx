@@ -24,9 +24,9 @@ export const useImportExtension = () => {
   // connected extensions. Calls separate method to handle account importing.
   const handleImportExtension = (
     id: string,
-    accounts: Array<ExtensionAccount>,
+    currentAccounts: Array<ExtensionAccount>,
     extension: ExtensionInteface,
-    injected: Array<ExtensionAccount>,
+    newAccounts: Array<ExtensionAccount>,
     forget: (a: Array<ExternalAccount>) => void
   ) => {
     // update extensions status to connected.
@@ -34,8 +34,14 @@ export const useImportExtension = () => {
     // update local active extensions
     addToLocalExtensions(id);
 
-    if (injected.length) {
-      return handleInjectedAccounts(id, accounts, extension, injected, forget);
+    if (newAccounts.length) {
+      return handleInjectedAccounts(
+        id,
+        currentAccounts,
+        extension,
+        newAccounts,
+        forget
+      );
     }
     return [];
   };
@@ -47,7 +53,7 @@ export const useImportExtension = () => {
     id: string,
     accounts: Array<ExtensionAccount>,
     extension: ExtensionInteface,
-    injected: Array<ExtensionAccount>,
+    newAccounts: Array<ExtensionAccount>,
     forget: (a: Array<ExternalAccount>) => void
   ) => {
     // set network ss58 format
@@ -55,28 +61,28 @@ export const useImportExtension = () => {
     keyring.setSS58Format(network.ss58);
 
     // remove accounts that do not contain correctly formatted addresses.
-    injected = injected.filter((i: ExtensionAccount) => {
+    newAccounts = newAccounts.filter((i: ExtensionAccount) => {
       return isValidAddress(i.address);
     });
 
     // reformat addresses to ensure correct ss58 format
-    injected.forEach(async (account: ExtensionAccount) => {
+    newAccounts.forEach(async (account: ExtensionAccount) => {
       const { address } = keyring.addFromAddress(account.address);
       account.address = address;
       return account;
     });
 
-    // remove injected if they exist in local external accounts
-    forget(getInExternalAccounts(injected, network));
+    // remove newAccounts that exist in local external accounts
+    forget(getInExternalAccounts(newAccounts, network));
 
-    // remove accounts that have already been injected via another extension.
-    injected = injected.filter(
+    // remove accounts that have already been newAccounts via another extension
+    newAccounts = newAccounts.filter(
       (i: ExtensionAccount) =>
         !accounts.map((j: ImportedAccount) => j.address).includes(i.address)
     );
 
-    // format account properties.
-    injected = injected.map((a: ExtensionAccount) => {
+    // format account properties
+    newAccounts = newAccounts.map((a: ExtensionAccount) => {
       return {
         address: a.address,
         source: id,
@@ -84,14 +90,14 @@ export const useImportExtension = () => {
         signer: extension.signer,
       };
     });
-    return injected;
+    return newAccounts;
   };
 
   // Get active extension account.
   //
   // checks if the local active account is in the extension.
-  const getActiveExtensionAccount = (injected: Array<ImportedAccount>) =>
-    injected.find(
+  const getActiveExtensionAccount = (accounts: Array<ImportedAccount>) =>
+    accounts.find(
       (a: ExtensionAccount) => a.address === getActiveAccountLocal(network)
     ) ?? null;
 
