@@ -16,7 +16,7 @@ export interface ExtensionConfig {
 
 // top level required properties the extension must expose via their
 // `injectedWeb3` entry.
-export interface Extension extends ExtensionConfig {
+export interface ExtensionInjected extends ExtensionConfig {
   id: string;
   enable: (n: string) => Promise<ExtensionInteface>;
 }
@@ -46,10 +46,10 @@ export interface ExtensionMetadata {
 
 // dashboard specific: extensions context interface.
 export interface ExtensionsContextInterface {
-  extensions: Array<Extension>;
+  extensions: Array<ExtensionInjected>;
   extensionsStatus: { [key: string]: string };
   extensionsFetched: boolean;
   setExtensionStatus: (id: string, s: string) => void;
   setExtensionsFetched: (s: boolean) => void;
-  setExtensions: (s: Array<Extension>) => void;
+  setExtensions: (s: Array<ExtensionInjected>) => void;
 }

@@ -11,8 +11,8 @@ import {
 } from 'contexts/Connect/types';
 import { useExtensions } from 'contexts/Extensions';
 import {
-  Extension,
   ExtensionAccount,
+  ExtensionInjected,
   ExtensionInteface,
 } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
@@ -221,7 +221,7 @@ export const ConnectProvider = ({
     }
 
     let i = 0;
-    extensions.forEach(async (e: Extension) => {
+    extensions.forEach(async (e: ExtensionInjected) => {
       i++;
 
       // ensure the extension carries an `id` property
@@ -300,7 +300,7 @@ export const ConnectProvider = ({
    * This is invoked by the user by clicking on an extension.
    * If activeAccount is not found here, it is simply ignored.
    */
-  const connectExtensionAccounts = async (e: Extension) => {
+  const connectExtensionAccounts = async (e: ExtensionInjected) => {
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
 
