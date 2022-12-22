@@ -4,7 +4,10 @@
 import Keyring from '@polkadot/keyring';
 import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
-import { ExtensionAccount, ExtensionInteface } from 'contexts/Extensions/types';
+import {
+  ExtensionAccount,
+  ExtensionInterface,
+} from 'contexts/Extensions/types';
 import { AnyFunction } from 'types';
 import { isValidAddress } from 'Utils';
 import { ExternalAccount, ImportedAccount } from '../types';
@@ -25,7 +28,7 @@ export const useImportExtension = () => {
   const handleImportExtension = (
     id: string,
     currentAccounts: Array<ExtensionAccount>,
-    extension: ExtensionInteface,
+    extension: ExtensionInterface,
     newAccounts: Array<ExtensionAccount>,
     forget: (a: Array<ExternalAccount>) => void
   ) => {
@@ -52,7 +55,7 @@ export const useImportExtension = () => {
   const handleInjectedAccounts = (
     id: string,
     accounts: Array<ExtensionAccount>,
-    extension: ExtensionInteface,
+    extension: ExtensionInterface,
     newAccounts: Array<ExtensionAccount>,
     forget: (a: Array<ExternalAccount>) => void
   ) => {

@@ -18,11 +18,11 @@ export interface ExtensionConfig {
 // `injectedWeb3` entry.
 export interface ExtensionInjected extends ExtensionConfig {
   id: string;
-  enable: (n: string) => Promise<ExtensionInteface>;
+  enable: (n: string) => Promise<ExtensionInterface>;
 }
 
 // the rquired properties `enable` must provide after resolution.
-export interface ExtensionInteface {
+export interface ExtensionInterface {
   accounts: {
     subscribe: {
       (a: { (a: Array<ExtensionAccount>): void }): void;

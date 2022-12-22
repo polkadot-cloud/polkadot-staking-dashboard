@@ -12,7 +12,7 @@ import {
 import { useExtensions } from 'contexts/Extensions';
 import {
   ExtensionInjected,
-  ExtensionInteface,
+  ExtensionInterface,
 } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
@@ -234,7 +234,7 @@ export const ConnectProvider = ({
             const { enable } = e;
 
             // summons extension popup
-            const extension: ExtensionInteface = await enable(DappName);
+            const extension: ExtensionInterface = await enable(DappName);
 
             if (extension !== undefined) {
               const unsub = extension.accounts.subscribe((newAccounts) => {
@@ -311,7 +311,7 @@ export const ConnectProvider = ({
         const { enable } = e;
 
         // summons extension popup
-        const extension: ExtensionInteface = await enable(DappName);
+        const extension: ExtensionInterface = await enable(DappName);
 
         if (extension !== undefined) {
           // subscribe to accounts
