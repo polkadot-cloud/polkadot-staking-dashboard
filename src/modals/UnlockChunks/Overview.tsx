@@ -16,7 +16,7 @@ import { NotesWrapper, Separator } from '../Wrappers';
 import { ChunkWrapper, ContentWrapper } from './Wrappers';
 
 export const Overview = forwardRef(
-  ({ unlocking, bondType, setSection, setUnlock, setTask }: any, ref: any) => {
+  ({ unlocking, bondFor, setSection, setUnlock, setTask }: any, ref: any) => {
     const { network, consts } = useApi();
     const { metrics } = useNetworkMetrics();
     const { bondDuration } = consts;
@@ -25,7 +25,7 @@ export const Overview = forwardRef(
     const { isFastUnstaking } = useUnstaking();
     const { t } = useTranslation('modals');
 
-    const isStaking = bondType === 'stake';
+    const isStaking = bondFor === 'nominator';
 
     let withdrawAvailable = new BN(0);
     let totalUnbonding = new BN(0);

@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { MaybeAccount } from 'types';
+import { BondFor, MaybeAccount } from 'types';
 
 export interface NominationProps {
   validator: any;
@@ -9,7 +9,7 @@ export interface NominationProps {
   toggleFavorites: boolean;
   batchIndex: number;
   batchKey: string;
-  bondType: string;
+  bondFor: BondFor;
   inModal: boolean;
 }
 

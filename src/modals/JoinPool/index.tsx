@@ -36,7 +36,7 @@ export const JoinPool = () => {
   const { txFeesValid } = useTxFees();
   const { getTransferOptions } = useTransferOptions();
   const { freeBalance } = getTransferOptions(activeAccount);
-  const largestTxFee = useBondGreatestFee({ bondType: 'pool' });
+  const largestTxFee = useBondGreatestFee({ bondFor: 'pool' });
   const { t } = useTranslation('modals');
 
   // local bond value
@@ -96,7 +96,7 @@ export const JoinPool = () => {
           <div>
             <BondFeedback
               syncing={largestTxFee.eq(new BN(0))}
-              bondType="pool"
+              bondFor="pool"
               listenIsValid={setBondValid}
               defaultBond={null}
               setters={[
