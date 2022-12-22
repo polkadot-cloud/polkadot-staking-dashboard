@@ -4,16 +4,6 @@
 import { FunctionComponent, SVGProps } from 'react';
 import { AnyApi } from 'types';
 
-// configuration item of an extension specific to the dashboard.
-// configured in src/config/extensions/index.tsx.
-export interface ExtensionConfig {
-  id: string;
-  title: string;
-  icon: FunctionComponent<
-    SVGProps<SVGSVGElement> & { title?: string | undefined }
-  >;
-}
-
 // top level required properties the extension must expose via their
 // `injectedWeb3` entry.
 export interface ExtensionInjected extends ExtensionConfig {
@@ -21,7 +11,7 @@ export interface ExtensionInjected extends ExtensionConfig {
   enable: (n: string) => Promise<ExtensionInterface>;
 }
 
-// the rquired properties `enable` must provide after resolution.
+// the required properties `enable` must provide after resolution.
 export interface ExtensionInterface {
   accounts: {
     subscribe: {
@@ -37,6 +27,16 @@ export interface ExtensionAccount extends ExtensionMetadata {
   address: string;
   name: string;
   signer?: AnyApi;
+}
+
+// dashboard specific: configuration item of an extension.
+// configured in src/config/extensions/index.tsx.
+export interface ExtensionConfig {
+  id: string;
+  title: string;
+  icon: FunctionComponent<
+    SVGProps<SVGSVGElement> & { title?: string | undefined }
+  >;
 }
 
 // dashboard specific: miscellaneous metadata added to an extension by the
