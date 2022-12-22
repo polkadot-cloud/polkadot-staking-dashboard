@@ -34,7 +34,7 @@ export const NominateFromFavorites = () => {
 
   const { maxNominations } = consts;
   const { bondFor, nominations } = config;
-  const signingAccount = bondFor === 'Pool' ? activeAccount : controller;
+  const signingAccount = bondFor === 'pool' ? activeAccount : controller;
 
   // store filtered favorites
   const [availableFavorites, setAvailableFavorites] = useState<
@@ -98,14 +98,14 @@ export const NominateFromFavorites = () => {
     }
 
     const targetsToSubmit = nominationsToSubmit.map((item: any) =>
-      bondFor === 'Pool'
+      bondFor === 'pool'
         ? item
         : {
             Id: item,
           }
     );
 
-    if (bondFor === 'Pool') {
+    if (bondFor === 'pool') {
       tx = api.tx.nominationPools.nominate(
         selectedActivePool?.id,
         targetsToSubmit
@@ -134,7 +134,7 @@ export const NominateFromFavorites = () => {
           {!accountHasSigner(signingAccount) && (
             <Warning
               text={`${
-                bondFor === 'Nominator'
+                bondFor === 'nominator'
                   ? t('youMust', { context: 'controller' })
                   : t('youMust', { context: 'account' })
               }`}
@@ -144,7 +144,7 @@ export const NominateFromFavorites = () => {
         <ListWrapper>
           {availableFavorites.length > 0 ? (
             <ValidatorList
-              bondFor="Nominator"
+              bondFor="nominator"
               validators={availableFavorites}
               batchKey={batchKey}
               title={t('favoriteNotNominated')}
@@ -190,7 +190,7 @@ export const NominateFromFavorites = () => {
               disabled={
                 !valid ||
                 submitting ||
-                (bondFor === 'Pool' && !isNominator() && !isOwner()) ||
+                (bondFor === 'pool' && !isNominator() && !isOwner()) ||
                 !accountHasSigner(signingAccount) ||
                 !txFeesValid
               }

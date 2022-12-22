@@ -22,7 +22,7 @@ export const PoolNominations = () => {
           {targets.length > 0 ? (
             <ValidatorList
               format="nomination"
-              bondFor="Pool"
+              bondFor="pool"
               validators={targets}
               nominator={nominator}
               batchKey={batchKey}

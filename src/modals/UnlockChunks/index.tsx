@@ -26,15 +26,13 @@ export const UnlockChunks = () => {
     let unlocking = [];
     let ledger;
     switch (bondFor) {
-      case 'stake':
-        ledger = getLedgerForStash(activeAccount);
-        unlocking = ledger.unlocking;
-        break;
       case 'pool':
         unlocking = getPoolUnlocking();
         break;
       default:
-      // console.error(`unlocking modal bond-type ${bondFor} is not defined.`);
+        ledger = getLedgerForStash(activeAccount);
+        unlocking = ledger.unlocking;
+        break;
     }
     return unlocking;
   };

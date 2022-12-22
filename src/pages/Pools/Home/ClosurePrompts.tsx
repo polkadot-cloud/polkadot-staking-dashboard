@@ -95,7 +95,7 @@ export const ClosurePrompts = () => {
                   onClick={() =>
                     openModalWith(
                       'UnlockChunks',
-                      { bondFor: 'Pool', poolClosure: true },
+                      { bondFor: 'pool', poolClosure: true },
                       'small'
                     )
                   }

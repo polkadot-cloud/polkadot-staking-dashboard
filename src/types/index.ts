@@ -110,7 +110,7 @@ export enum Sync {
 }
 
 // track whether bonding should be for nominator or nomination pool.
-export type BondFor = 'Pool' | 'Nominator';
+export type BondFor = 'pool' | 'nominator';
 
 // any types to compress compiler warnings
 // eslint-disable-next-line

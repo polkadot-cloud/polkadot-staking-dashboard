@@ -45,7 +45,7 @@ export const UnbondFeedback = ({
 
   // get bond options for either nominating or pooling.
   const transferOptions =
-    bondFor === 'Pool' ? allTransferOptions.pool : allTransferOptions.nominate;
+    bondFor === 'pool' ? allTransferOptions.pool : allTransferOptions.nominate;
   const { active } = transferOptions;
 
   // store errors
@@ -84,7 +84,7 @@ export const UnbondFeedback = ({
 
   // bond amount to minimum threshold
   const minBondBn =
-    bondFor === 'Pool'
+    bondFor === 'pool'
       ? inSetup || isDepositor()
         ? minCreateBond
         : minJoinBond
@@ -93,7 +93,7 @@ export const UnbondFeedback = ({
 
   // unbond amount to minimum threshold
   const unbondToMin =
-    bondFor === 'Pool'
+    bondFor === 'pool'
       ? inSetup || isDepositor()
         ? BN.max(active.sub(minCreateBond), new BN(0))
         : BN.max(active.sub(minJoinBond), new BN(0))
@@ -101,9 +101,9 @@ export const UnbondFeedback = ({
 
   // check if bonded is below the minimum required
   const nominatorActiveBelowMin =
-    bondFor === 'Nominator' && !active.isZero() && active.lt(minNominatorBond);
+    bondFor === 'nominator' && !active.isZero() && active.lt(minNominatorBond);
   const poolToMinBn = isDepositor() ? minCreateBond : minJoinBond;
-  const poolActiveBelowMin = bondFor === 'Pool' && active.lt(poolToMinBn);
+  const poolActiveBelowMin = bondFor === 'pool' && active.lt(poolToMinBn);
 
   // handle error updates
   const handleErrors = () => {
@@ -117,7 +117,7 @@ export const UnbondFeedback = ({
     }
 
     // unbond errors for staking only
-    if (bondFor === 'Nominator')
+    if (bondFor === 'nominator')
       if (getControllerNotImported(controller))
         _errors.push(t('importedToUnbond'));
 
@@ -133,7 +133,7 @@ export const UnbondFeedback = ({
       // start the error message stating a min bond is required.
       let err = `${t('minimumBond', { minBondBase, unit })} `;
       // append the subject to the error message.
-      if (bondFor === 'Nominator') {
+      if (bondFor === 'nominator') {
         err += t('whenActivelyNominating');
       } else if (isDepositor()) {
         err += t('asThePoolDepositor');

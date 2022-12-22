@@ -65,7 +65,7 @@ export const Membership = ({ label }: { label: string }) => {
         text={t('pools.leave')}
         iconLeft={faSignOutAlt}
         disabled={!isReady || isReadOnlyAccount(activeAccount)}
-        onClick={() => openModalWith('LeavePool', { bondFor: 'Pool' }, 'small')}
+        onClick={() => openModalWith('LeavePool', { bondFor: 'pool' }, 'small')}
       />
     );
   }

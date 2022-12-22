@@ -34,7 +34,7 @@ export const Favorites = (props: PageProps) => {
                 <>
                   {favoritesList.length > 0 ? (
                     <ValidatorList
-                      bondFor="Nominator"
+                      bondFor="nominator"
                       validators={favoritesList}
                       batchKey={batchKey}
                       title={t('favorites.favoriteValidators', {

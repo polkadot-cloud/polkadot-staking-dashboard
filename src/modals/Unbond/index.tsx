@@ -46,8 +46,8 @@ export const Unbond = () => {
   unclaimedRewards = unclaimedRewards ?? new BN(0);
   unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
 
-  const isStaking = bondFor === 'Nominator';
-  const isPooling = bondFor === 'Pool';
+  const isStaking = bondFor === 'nominator';
+  const isPooling = bondFor === 'pool';
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active: activeBn } = isPooling
@@ -124,19 +124,19 @@ export const Unbond = () => {
   });
 
   const nominatorActiveBelowMin =
-    bondFor === 'Nominator' &&
+    bondFor === 'nominator' &&
     !activeBn.isZero() &&
     activeBn.lt(minNominatorBondBn);
 
   const poolToMinBn = isDepositor() ? minCreateBondBn : minJoinBondBn;
-  const poolActiveBelowMin = bondFor === 'Pool' && activeBn.lt(poolToMinBn);
+  const poolActiveBelowMin = bondFor === 'pool' && activeBn.lt(poolToMinBn);
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
     warnings.push(t('readOnly'));
   }
 
-  if (unclaimedRewards > 0 && bondFor === 'Pool') {
+  if (unclaimedRewards > 0 && bondFor === 'pool') {
     warnings.push(
       `${t('unbondingWithdraw')} ${unclaimedRewards} ${network.unit}.`
     );
@@ -178,7 +178,7 @@ export const Unbond = () => {
           txFees={txFees}
         />
         <NotesWrapper>
-          {bondFor === 'Pool' ? (
+          {bondFor === 'pool' ? (
             <>
               {isDepositor() ? (
                 <p>

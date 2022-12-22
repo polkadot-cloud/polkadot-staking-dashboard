@@ -31,8 +31,8 @@ export const Bond = () => {
   const { txFeesValid } = useTxFees();
   const { selectedActivePool } = useActivePools();
   const { bondFor } = config;
-  const isStaking = bondFor === 'Nominator';
-  const isPooling = bondFor === 'Pool';
+  const isStaking = bondFor === 'nominator';
+  const isPooling = bondFor === 'pool';
   const { freeBalance: freeBalanceBn } = getTransferOptions(activeAccount);
   const freeBalance = planckBnToUnit(freeBalanceBn, units);
   const largestTxFee = useBondGreatestFee({ bondFor });
@@ -117,7 +117,7 @@ export const Bond = () => {
     <>
       <Title title={`${t('addToBond')}`} icon={faPlus} />
       <PaddingWrapper>
-        {unclaimedRewards > 0 && bondFor === 'Pool' && (
+        {unclaimedRewards > 0 && bondFor === 'pool' && (
           <Warning
             text={`${t('bondingWithdraw')} ${unclaimedRewards} ${
               network.unit

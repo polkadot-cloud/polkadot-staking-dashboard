@@ -39,7 +39,7 @@ export const ManagePool = () => {
     <PageRowWrapper className="page-padding" noVerticalSpacer>
       <CardWrapper>
         {isSyncing ? (
-          <Nominations bondFor="Pool" nominator={activeAccount} />
+          <Nominations bondFor="pool" nominator={activeAccount} />
         ) : canNominate && !isNominating && state !== PoolState.Destroy ? (
           <>
             <CardHeaderWrapper withAction>
@@ -69,7 +69,7 @@ export const ManagePool = () => {
             />
           </>
         ) : (
-          <Nominations bondFor="Pool" nominator={nominator} />
+          <Nominations bondFor="pool" nominator={nominator} />
         )}
       </CardWrapper>
     </PageRowWrapper>

@@ -35,8 +35,8 @@ export const ChangeNominations = () => {
 
   const { nominations: newNominations, provider, bondFor } = config;
 
-  const isPool = bondFor === 'Pool';
-  const isStaking = bondFor === 'Nominator';
+  const isPool = bondFor === 'pool';
+  const isStaking = bondFor === 'nominator';
   const controller = getBondedAccount(activeAccount);
   const signingAccount = isPool ? activeAccount : controller;
 
@@ -133,7 +133,7 @@ export const ChangeNominations = () => {
           {!accountHasSigner(signingAccount) && (
             <Warning
               text={`${
-                bondFor === 'Nominator'
+                bondFor === 'nominator'
                   ? t('youMust', { context: 'controller' })
                   : t('youMust', { context: 'account' })
               }`}

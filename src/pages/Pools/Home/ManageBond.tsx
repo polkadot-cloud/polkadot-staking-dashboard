@@ -53,7 +53,7 @@ export const ManageBond = () => {
               state === PoolState.Destroy
             }
             marginRight
-            onClick={() => openModalWith('Bond', { bondFor: 'Pool' }, 'small')}
+            onClick={() => openModalWith('Bond', { bondFor: 'pool' }, 'small')}
             text="+"
           />
           <ButtonPrimary
@@ -65,7 +65,7 @@ export const ManageBond = () => {
             }
             marginRight
             onClick={() =>
-              openModalWith('Unbond', { bondFor: 'Pool' }, 'small')
+              openModalWith('Unbond', { bondFor: 'pool' }, 'small')
             }
             text="-"
           />
@@ -75,7 +75,7 @@ export const ManageBond = () => {
             }
             iconLeft={faLockOpen}
             onClick={() =>
-              openModalWith('UnlockChunks', { bondFor: 'Pool' }, 'small')
+              openModalWith('UnlockChunks', { bondFor: 'pool' }, 'small')
             }
             text={String(totalUnlockChuncks ?? 0)}
           />

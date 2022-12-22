@@ -86,7 +86,7 @@ export const Entity = () => {
             )}
             {activeValidators.length > 0 && (
               <ValidatorList
-                bondFor="Nominator"
+                bondFor="nominator"
                 validators={activeValidators}
                 batchKey={batchKey}
                 title={`${name} ${t('community.validators')}`}

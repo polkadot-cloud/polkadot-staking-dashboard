@@ -25,7 +25,7 @@ export const Overview = forwardRef(
     const { isFastUnstaking } = useUnstaking();
     const { t } = useTranslation('modals');
 
-    const isStaking = bondFor === 'Nominator';
+    const isStaking = bondFor === 'nominator';
 
     let withdrawAvailable = new BN(0);
     let totalUnbonding = new BN(0);

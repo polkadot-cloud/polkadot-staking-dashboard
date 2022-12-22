@@ -23,7 +23,7 @@ export const Nominations = ({
   bondFor,
   nominator,
 }: {
-  bondFor: 'Pool' | 'Nominator';
+  bondFor: 'pool' | 'nominator';
   nominator: MaybeAccount;
 }) => {
   const { openModalWith } = useModal();
@@ -46,7 +46,7 @@ export const Nominations = ({
     selectedActivePool,
   } = useActivePools();
 
-  const isPool = bondFor === 'Pool';
+  const isPool = bondFor === 'pool';
   const nominations = isPool
     ? poolNominations.targets
     : getAccountNominations(nominator);
@@ -147,7 +147,7 @@ export const Nominations = ({
           {nominated.length > 0 ? (
             <div style={{ marginTop: '1rem' }}>
               <ValidatorList
-                bondFor={isPool ? 'Pool' : 'Nominator'}
+                bondFor={isPool ? 'pool' : 'nominator'}
                 validators={nominated}
                 nominator={nominator}
                 batchKey={batchKey}
