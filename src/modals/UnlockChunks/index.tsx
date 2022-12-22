@@ -32,7 +32,6 @@ export const UnlockChunks = () => {
       default:
         ledger = getLedgerForStash(activeAccount);
         unlocking = ledger.unlocking;
-        break;
     }
     return unlocking;
   };
