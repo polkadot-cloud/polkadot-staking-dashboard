@@ -6,12 +6,14 @@ import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import {
   ConnectContextInterface,
-  ExtensionAccount,
   ExternalAccount,
   ImportedAccount,
 } from 'contexts/Connect/types';
 import { useExtensions } from 'contexts/Extensions';
-import { Extension, ExtensionInteface } from 'contexts/Extensions/types';
+import {
+  ExtensionInjected,
+  ExtensionInteface,
+} from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
 import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
@@ -218,30 +220,36 @@ export const ConnectProvider = ({
     }
 
     let i = 0;
-    extensions.forEach(async (e: Extension) => {
+    extensions.forEach(async (e: ExtensionInjected) => {
       i++;
-      const { id, enable } = e;
 
-      // if extension is found locally, subscribe to accounts
-      if (extensionIsLocal(id)) {
-        try {
-          // summons extension popup
-          const extension: ExtensionInteface = await enable(DappName);
+      // ensure the extension carries an `id` property
+      const id = e?.id ?? undefined;
 
-          if (extension !== undefined) {
-            const unsub = (await extension.accounts.subscribe(
-              (injected: ExtensionAccount[]) => {
-                if (injected) {
-                  injected = handleImportExtension(
+      if (id) {
+        // if extension is found locally, subscribe to accounts
+        if (extensionIsLocal(id)) {
+          try {
+            // attempt to get extension `enable` property
+            const { enable } = e;
+
+            // summons extension popup
+            const extension: ExtensionInteface = await enable(DappName);
+
+            if (extension !== undefined) {
+              const unsub = extension.accounts.subscribe((newAccounts) => {
+                if (newAccounts) {
+                  newAccounts = handleImportExtension(
                     id,
                     accountsRef.current,
                     extension,
-                    injected,
+                    newAccounts,
                     forgetAccounts
                   );
                   // store active wallet account if found in this extension
                   if (!activeWalletAccount) {
-                    activeWalletAccount = getActiveExtensionAccount(injected);
+                    activeWalletAccount =
+                      getActiveExtensionAccount(newAccounts);
                   }
                   // set active account for network on final extension
                   if (i === total && activeAccountRef.current === null) {
@@ -251,29 +259,29 @@ export const ConnectProvider = ({
                     );
                   }
                   // concat accounts and store
-                  if (injected.length) {
+                  if (newAccounts.length) {
                     setStateWithRef(
-                      [...accountsRef.current].concat(injected),
+                      [...accountsRef.current].concat(newAccounts),
                       setAccounts,
                       accountsRef
                     );
                   }
                 }
-              }
-            )) as () => void;
+              });
 
-            // update context state
-            setStateWithRef(
-              [...unsubscribeRef.current].concat({
-                key: id,
-                unsub,
-              }),
-              setUnsubscribe,
-              unsubscribeRef
-            );
+              // update context state
+              setStateWithRef(
+                [...unsubscribeRef.current].concat({
+                  key: id,
+                  unsub,
+                }),
+                setUnsubscribe,
+                unsubscribeRef
+              );
+            }
+          } catch (err) {
+            handleExtensionError(id, String(err));
           }
-        } catch (err) {
-          handleExtensionError(id, String(err));
         }
       }
 
@@ -290,56 +298,61 @@ export const ConnectProvider = ({
    * This is invoked by the user by clicking on an extension.
    * If activeAccount is not found here, it is simply ignored.
    */
-  const connectExtensionAccounts = async (e: Extension) => {
+  const connectExtensionAccounts = async (e: ExtensionInjected) => {
     const keyring = new Keyring();
     keyring.setSS58Format(network.ss58);
-    const { id, enable } = e;
 
-    try {
-      // summons extension popup
-      const extension: ExtensionInteface = await enable(DappName);
+    // ensure the extension carries an `id` property
+    const id = e?.id ?? undefined;
 
-      if (extension !== undefined) {
-        // subscribe to accounts
-        const unsub = (await extension.accounts.subscribe(
-          (injected: ExtensionAccount[]) => {
-            if (injected) {
-              injected = handleImportExtension(
+    if (id) {
+      try {
+        // attempt to get extension `enable` property
+        const { enable } = e;
+
+        // summons extension popup
+        const extension: ExtensionInteface = await enable(DappName);
+
+        if (extension !== undefined) {
+          // subscribe to accounts
+          const unsub = extension.accounts.subscribe((newAccounts) => {
+            if (newAccounts) {
+              newAccounts = handleImportExtension(
                 id,
                 accountsRef.current,
                 extension,
-                injected,
+                newAccounts,
                 forgetAccounts
               );
               // set active account for network if not yet set
               if (activeAccountRef.current === null) {
                 connectActiveExtensionAccount(
-                  getActiveExtensionAccount(injected),
+                  getActiveExtensionAccount(newAccounts),
                   connectToAccount
                 );
               }
               // concat accounts and store
               setStateWithRef(
-                [...accountsRef.current].concat(injected),
+                [...accountsRef.current].concat(newAccounts),
                 setAccounts,
                 accountsRef
               );
             }
-          }
-        )) as () => void;
+          });
 
-        // update context state
-        setStateWithRef(
-          [...unsubscribeRef.current].concat({
-            key: id,
-            unsub,
-          }),
-          setUnsubscribe,
-          unsubscribeRef
-        );
+          // update context state
+          setStateWithRef(
+            [...unsubscribeRef.current].concat({
+              key: id,
+              unsub,
+            }),
+            setUnsubscribe,
+            unsubscribeRef
+          );
+        }
+      } catch (err) {
+        handleExtensionError(id, String(err));
       }
-    } catch (err) {
-      handleExtensionError(id, String(err));
     }
   };
 
