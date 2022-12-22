@@ -53,7 +53,7 @@ export const EraStatus = (props: any) => {
           ? t('syncing')
           : validatorInEra
           ? `${t('listItemActive')} / ${humanNumber(totalStake)} ${unit}`
-          : capitalizeFirstLetter(validatorStatus ?? '')}
+          : capitalizeFirstLetter(t(`${validatorStatus}`) ?? '')}
       </h5>
     </ValidatorStatusWrapper>
   );
