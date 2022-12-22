@@ -24,7 +24,9 @@ export interface ExtensionInjected extends ExtensionConfig {
 // the rquired properties `enable` must provide after resolution.
 export interface ExtensionInteface {
   accounts: {
-    subscribe: AnyApi;
+    subscribe: {
+      (a: { (a: Array<ExtensionAccount>): void }): void;
+    };
   };
   provider: AnyApi;
   signer: AnyApi;
@@ -34,7 +36,7 @@ export interface ExtensionInteface {
 export interface ExtensionAccount extends ExtensionMetadata {
   address: string;
   name: string;
-  signer?: unknown;
+  signer?: AnyApi;
 }
 
 // dashboard specific: miscellaneous metadata added to an extension by the

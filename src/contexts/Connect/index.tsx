@@ -11,7 +11,6 @@ import {
 } from 'contexts/Connect/types';
 import { useExtensions } from 'contexts/Extensions';
 import {
-  ExtensionAccount,
   ExtensionInjected,
   ExtensionInteface,
 } from 'contexts/Extensions/types';
@@ -238,39 +237,37 @@ export const ConnectProvider = ({
             const extension: ExtensionInteface = await enable(DappName);
 
             if (extension !== undefined) {
-              const unsub = (await extension.accounts.subscribe(
-                (newAccounts: Array<ExtensionAccount>) => {
-                  if (newAccounts) {
-                    newAccounts = handleImportExtension(
-                      id,
-                      accountsRef.current,
-                      extension,
-                      newAccounts,
-                      forgetAccounts
+              const unsub = extension.accounts.subscribe((newAccounts) => {
+                if (newAccounts) {
+                  newAccounts = handleImportExtension(
+                    id,
+                    accountsRef.current,
+                    extension,
+                    newAccounts,
+                    forgetAccounts
+                  );
+                  // store active wallet account if found in this extension
+                  if (!activeWalletAccount) {
+                    activeWalletAccount =
+                      getActiveExtensionAccount(newAccounts);
+                  }
+                  // set active account for network on final extension
+                  if (i === total && activeAccountRef.current === null) {
+                    connectActiveExtensionAccount(
+                      activeWalletAccount,
+                      connectToAccount
                     );
-                    // store active wallet account if found in this extension
-                    if (!activeWalletAccount) {
-                      activeWalletAccount =
-                        getActiveExtensionAccount(newAccounts);
-                    }
-                    // set active account for network on final extension
-                    if (i === total && activeAccountRef.current === null) {
-                      connectActiveExtensionAccount(
-                        activeWalletAccount,
-                        connectToAccount
-                      );
-                    }
-                    // concat accounts and store
-                    if (newAccounts.length) {
-                      setStateWithRef(
-                        [...accountsRef.current].concat(newAccounts),
-                        setAccounts,
-                        accountsRef
-                      );
-                    }
+                  }
+                  // concat accounts and store
+                  if (newAccounts.length) {
+                    setStateWithRef(
+                      [...accountsRef.current].concat(newAccounts),
+                      setAccounts,
+                      accountsRef
+                    );
                   }
                 }
-              )) as () => void;
+              });
 
               // update context state
               setStateWithRef(
@@ -318,32 +315,30 @@ export const ConnectProvider = ({
 
         if (extension !== undefined) {
           // subscribe to accounts
-          const unsub = (await extension.accounts.subscribe(
-            (newAccounts: Array<ExtensionAccount>) => {
-              if (newAccounts) {
-                newAccounts = handleImportExtension(
-                  id,
-                  accountsRef.current,
-                  extension,
-                  newAccounts,
-                  forgetAccounts
-                );
-                // set active account for network if not yet set
-                if (activeAccountRef.current === null) {
-                  connectActiveExtensionAccount(
-                    getActiveExtensionAccount(newAccounts),
-                    connectToAccount
-                  );
-                }
-                // concat accounts and store
-                setStateWithRef(
-                  [...accountsRef.current].concat(newAccounts),
-                  setAccounts,
-                  accountsRef
+          const unsub = extension.accounts.subscribe((newAccounts) => {
+            if (newAccounts) {
+              newAccounts = handleImportExtension(
+                id,
+                accountsRef.current,
+                extension,
+                newAccounts,
+                forgetAccounts
+              );
+              // set active account for network if not yet set
+              if (activeAccountRef.current === null) {
+                connectActiveExtensionAccount(
+                  getActiveExtensionAccount(newAccounts),
+                  connectToAccount
                 );
               }
+              // concat accounts and store
+              setStateWithRef(
+                [...accountsRef.current].concat(newAccounts),
+                setAccounts,
+                accountsRef
+              );
             }
-          )) as () => void;
+          });
 
           // update context state
           setStateWithRef(
