@@ -1,9 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ExtensionConfig, EXTENSIONS } from 'config/extensions';
+import { EXTENSIONS } from 'config/extensions';
 import {
-  Extension,
+  ExtensionConfig,
+  ExtensionInjected,
   ExtensionsContextInterface,
 } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
@@ -25,7 +26,9 @@ export const ExtensionsProvider = ({
   const [injectedPresent, setInjectedPresent] = useState<boolean>(false);
 
   // store the installed extensions in state
-  const [extensions, setExtensions] = useState<Array<Extension> | null>(null);
+  const [extensions, setExtensions] = useState<Array<ExtensionInjected> | null>(
+    null
+  );
 
   // store whether extensions have been fetched
   const [extensionsFetched, setExtensionsFetched] = useState(false);
@@ -81,7 +84,7 @@ export const ExtensionsProvider = ({
 
   const getInstalledExtensions = () => {
     const { injectedWeb3 }: AnyApi = window;
-    const _exts: Extension[] = [];
+    const _exts: ExtensionInjected[] = [];
     EXTENSIONS.forEach((e: ExtensionConfig) => {
       if (injectedWeb3[e.id] !== undefined) {
         _exts.push({
