@@ -5,6 +5,7 @@ import BN from 'bn.js';
 import { Balance } from 'contexts/Balances/types';
 import { ExternalAccount } from 'contexts/Connect/types';
 import { ExtensionAccount } from 'contexts/Extensions/types';
+import { BondFor } from 'types';
 
 export interface ExtensionAccountItem extends ExtensionAccount {
   active?: boolean;
