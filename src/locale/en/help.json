@@ -88,7 +88,9 @@
       ],
       "idealStaked": [
         "Ideal Staked",
-        ["The percentage of staked total supply in ideal network conditions."]
+        [
+          "The percentage of staked total supply in ideal network conditions."
+        ]
       ],
       "nominationStatus": [
         "Nomination Status",
@@ -174,17 +176,19 @@
       ],
       "activePools": [
         "Active Pools",
-        ["The current amount of active nomination pools on {NETWORK_NAME}."]
+        [
+          "The current amount of active nomination pools on {NETWORK_NAME}."
+        ]
       ],
-      "minimumJoinBond": [
-        "Minimum Join Bond",
+      "minimumToJoinPool": [
+        "Minimum To Join Pool",
         [
           "The minimum amount of {NETWORK_UNIT} needed to bond in order to join a pool.",
           "This amount is different from the bond needed to create a pool."
         ]
       ],
-      "minimumCreateBond": [
-        "Minimum Create Bond",
+      "minimumToCreatePool": [
+        "Minimum To Create Pool",
         [
           "The minimum amount of {NETWORK_UNIT} needed to bond in order to create a pool.",
           "Creating a pool requires a larger deposit than that of joining a pool."

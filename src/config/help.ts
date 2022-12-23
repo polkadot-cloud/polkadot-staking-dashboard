@@ -89,8 +89,8 @@ export const HELP_CONFIG: HelpItems = [
     definitions: [
       'Nomination Pools',
       'Active Pools',
-      'Minimum Join Bond',
-      'Minimum Create Bond',
+      'Minimum To Join Pool',
+      'Minimum To Create Pool',
       'Pool Membership',
       'Bonded in Pool',
       'Pool Rewards',
