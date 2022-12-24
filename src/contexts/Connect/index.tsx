@@ -357,21 +357,21 @@ export const ConnectProvider = ({
   };
 
   const handleExtensionError = (id: string, err: string) => {
-    // authentication error (extension not enabled)
-    if (err.substring(0, 9) === 'AuthError') {
-      removeFromLocalExtensions(id);
-      setExtensionStatus(id, 'not_authenticated');
-    }
-
-    // extension not found (does not exist)
-    if (err.substring(0, 17) === 'NotInstalledError') {
-      removeFromLocalExtensions(id);
-      setExtensionStatus(id, 'not_found');
-    }
-
     // general error (maybe enabled but no accounts trust app)
     if (err.substring(0, 5) === 'Error') {
       setExtensionStatus(id, 'no_accounts');
+    } else {
+      // remove extension from local `active_extensions`.
+      removeFromLocalExtensions(id);
+
+      // authentication error (extension not enabled)
+      if (err.substring(0, 9) === 'AuthError') {
+        setExtensionStatus(id, 'not_authenticated');
+      }
+      // extension not found (does not exist)
+      if (err.substring(0, 17) === 'NotInstalledError') {
+        setExtensionStatus(id, 'not_found');
+      }
     }
   };
 
