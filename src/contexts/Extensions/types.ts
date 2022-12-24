@@ -19,12 +19,14 @@ export interface ExtensionInterface {
     };
   };
   provider: AnyApi;
+  metadata: AnyApi;
   signer: AnyApi;
 }
 
 // the required properties returned after subscribing to accounts.
 export interface ExtensionAccount extends ExtensionMetadata {
   address: string;
+  meta?: AnyApi;
   name: string;
   signer?: AnyApi;
 }
