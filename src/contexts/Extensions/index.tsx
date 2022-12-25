@@ -25,6 +25,10 @@ export const ExtensionsProvider = ({
   // store whether injectedWeb3 is present
   const [injectedPresent, setInjectedPresent] = useState<boolean>(false);
 
+  // store whether initial injectedWeb3 checking is underway
+  const [checkingInjectedWeb3, setCheckingInjectedWeb3] =
+    useState<boolean>(true);
+
   // store the installed extensions in state
   const [extensions, setExtensions] = useState<Array<ExtensionInjected> | null>(
     null
@@ -49,12 +53,14 @@ export const ExtensionsProvider = ({
     injectedWeb3Interval = setInterval(() => {
       if (++injectCounter === 10) {
         clearInterval(injectedWeb3Interval);
+        setCheckingInjectedWeb3(false);
       } else {
         // if injected is present
         const injectedWeb3 = (window as AnyApi)?.injectedWeb3 || null;
         if (injectedWeb3 !== null) {
           clearInterval(injectedWeb3Interval);
           setInjectedPresent(true);
+          setCheckingInjectedWeb3(false);
         }
       }
     }, 500);
@@ -102,6 +108,7 @@ export const ExtensionsProvider = ({
         extensions: extensions ?? [],
         setExtensionStatus,
         extensionsStatus: extensionsStatusRef.current,
+        checkingInjectedWeb3,
         extensionsFetched,
         setExtensionsFetched,
         setExtensions,
