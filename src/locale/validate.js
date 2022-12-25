@@ -1,7 +1,7 @@
 const { join } = require('path');
 const fs = require('fs');
 
-const oneExp = new RegExp('^.+_one$');
+// const oneExp = new RegExp('^.+_one$');
 const otherExp = new RegExp('^.+_other$');
 
 const getDirectories = (source) =>
@@ -14,7 +14,7 @@ const getDirectories = (source) =>
 const getDeepKeys = (obj) => {
     let keys = [];
     for (const key in obj) {
-        if (!(oneExp.test(key) || otherExp.test(key))) {
+        if (!(otherExp.test(key))) {
             keys.push(key);
         }
         if (typeof obj[key] === 'object') {
@@ -25,30 +25,33 @@ const getDeepKeys = (obj) => {
     return keys;
 };
 
-const fullPath = join(__dirname, './en');
-const languages = getDirectories('./src/locale');
+const enPath = join(__dirname, './en');
+const otherLanguages = getDirectories('./src/locale');
 
-fs.readdir(fullPath, (error, files) => {
+fs.readdir(enPath, (error, files) => {
     if (error) console.log(error);
     files.forEach((file) => {
-        const mainJson = JSON.parse(
-            fs.readFileSync(join(fullPath, file)).toString()
-        );
-        languages.forEach((lang) => {
-            const fullPathLanguage = join(__dirname, `./${lang}`);
+        const enJson = JSON.parse(fs.readFileSync(join(enPath, file)).toString());
+        otherLanguages.forEach((lang) => {
+            const languageFullPath = join(__dirname, `./${lang}`);
             const comparedJson = JSON.parse(
-                fs.readFileSync(join(fullPathLanguage, file)).toString()
+                fs.readFileSync(join(languageFullPath, file)).toString()
             );
 
-            const a = getDeepKeys(mainJson);
-            const b = getDeepKeys(comparedJson);
-            console.log('c' < 'd');
+            const en = getDeepKeys(enJson).sort();
+            const lng = getDeepKeys(comparedJson).sort();
 
+            // console.log(en[0]);
+            // fs.writeFile(join(enPath, file), en.indexOf(file), function (err) {
+            //     if (err) { console.err(err); }
+            //     console.log(`----------Keys In ${lang}/${file} Are Ordered Alphabetically-------------`);
+            // })
 
-            if (a.sort().length !== b.sort().length) {
-                const missing = b.filter((item) => a.indexOf(item) < 0);
+            if (en.length !== lng.length) {
+                const missing = lng.filter((item) => en.indexOf(item) < 0);
                 if (missing.join('').trim().length > 0) {
-                    console.log(`File "${file}" In "${lang}" Is Missing The Following "${missing.length}" Keys: \n"${missing}"\n`)
+                    console.log(`File "${file}" In "${lang}" Is Missing The Following "${missing.length}" Keys:`);
+                    console.log(missing);
 
                 }
             }

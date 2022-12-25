@@ -89,7 +89,8 @@
     "lint:fix": "eslint ./src --fix",
     "prettier": "npx prettier --check ./src",
     "prettier:write": "npx prettier --write ./src",
-    "locale": "node ./src/locale/validate.js"
+    "locale": "node ./src/locale/validate.js",
+    "order": "node ./src/locale/check_order.js"
   },
   "browserslist": {
     "production": [
