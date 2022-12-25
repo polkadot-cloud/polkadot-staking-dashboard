@@ -77,7 +77,7 @@ export const ActivePoolsProvider = ({
   // store whether active pool data has been synced.
   // this will be true if no active pool exists for the active account.
   // We just need confirmation this is the case.
-  const [synced, setSynced] = useState<Sync>(Sync.Unsynced);
+  const [synced, setSynced] = useState<Sync>('unsynced');
   const syncedRef = useRef(synced);
 
   // store the currently selected active pool for the UI.
@@ -95,13 +95,13 @@ export const ActivePoolsProvider = ({
     if (unsubNominationsRef.current.length) {
       unsubscribePoolNominations();
     }
-    setStateWithRef(Sync.Unsynced, setSynced, syncedRef);
+    setStateWithRef('unsynced', setSynced, syncedRef);
   }, [activeAccount, accountPools.length]);
 
   // subscribe to pool that the active account is a member of.
   useEffect(() => {
-    if (isReady && synced === Sync.Unsynced) {
-      setStateWithRef(Sync.Syncing, setSynced, syncedRef);
+    if (isReady && synced === 'unsynced') {
+      setStateWithRef('syncing', setSynced, syncedRef);
       handlePoolSubscriptions();
     }
   }, [network, isReady, syncedRef.current]);
@@ -167,7 +167,7 @@ export const ActivePoolsProvider = ({
   // completed.
   useEffect(() => {
     if (unsubNominationsRef.current.length === accountPools.length) {
-      setStateWithRef(Sync.Synced, setSynced, syncedRef);
+      setStateWithRef('synced', setSynced, syncedRef);
     }
   }, [unsubNominationsRef.current]);
 
@@ -176,7 +176,7 @@ export const ActivePoolsProvider = ({
     if (accountPools.length) {
       Promise.all(accountPools.map((p) => subscribeToActivePool(Number(p))));
     } else {
-      setStateWithRef(Sync.Synced, setSynced, syncedRef);
+      setStateWithRef('synced', setSynced, syncedRef);
     }
 
     // assign default pool immediately if active pool not currently selected
