@@ -56,7 +56,12 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
             <h5>
               {isSyncing
                 ? '...'
-                : `${toFixedIfNecessary(minActiveBond, 3)} ${unit}`}
+                : `${toFixedIfNecessary(
+                    minActiveBond < minNominatorBondBase
+                      ? minNominatorBondBase
+                      : minActiveBond,
+                    3
+                  )} ${unit}`}
             </h5>
           </div>
         </section>
