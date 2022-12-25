@@ -88,9 +88,7 @@
       ],
       "idealStaked": [
         "Ideal Staked",
-        [
-          "The percentage of staked total supply in ideal network conditions."
-        ]
+        ["The percentage of staked total supply in ideal network conditions."]
       ],
       "nominationStatus": [
         "Nomination Status",
@@ -176,9 +174,7 @@
       ],
       "activePools": [
         "Active Pools",
-        [
-          "The current amount of active nomination pools on {NETWORK_NAME}."
-        ]
+        ["The current amount of active nomination pools on {NETWORK_NAME}."]
       ],
       "minimumToJoinPool": [
         "Minimum To Join Pool",
