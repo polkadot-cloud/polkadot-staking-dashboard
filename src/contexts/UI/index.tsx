@@ -7,7 +7,7 @@ import { ImportedAccount } from 'contexts/Connect/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyJson, MaybeAccount, Sync } from 'types';
+import { AnyJson, MaybeAccount } from 'types';
 import { localStorageOrDefault, setStateWithRef, unitToPlanckBn } from 'Utils';
 import { useApi } from '../Api';
 import { useBalances } from '../Balances';
@@ -174,7 +174,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     setNetworkSyncing(_networkSyncing);
 
     // active pools have been synced
-    if (activePoolsSynced !== Sync.Synced) {
+    if (activePoolsSynced !== 'synced') {
       _syncing = true;
       _poolsSyncing = true;
     }
