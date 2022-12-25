@@ -234,7 +234,8 @@
       "activeValidator": [
         "Active Validator",
         [
-          "A validator that is actively validating blocks. Rewards are accumulated based on the validator's activity.,'A new set of validators are chosen for each era, so there is no guarantee the same validator will be active in subsequent eras.",
+          "A validator that is actively validating blocks. Rewards are accumulated based on the validator's activity.",
+          "A new set of validators are chosen for each era, so there is no guarantee the same validator will be active in subsequent eras.",
           "{NETWORK_NAME} allows a nominator to nominate up to 16 validators, maximising your chances of nominating an active validator in each era."
         ]
       ],
@@ -262,7 +263,8 @@
       "eraPoints": [
         "Era Points",
         [
-          "Era Points are accumulated by validators during each era, and depend on a validator's performance.As a staker, you do not need to worry about Era Points. In general, better performing validators produce more Era Points, which in-turn lead to higher staking rewards."
+          "Era Points are accumulated by validators during each era, and depend on a validator's performance.",
+          "As a staker, you do not need to worry about Era Points. In general, better performing validators produce more Era Points, which in-turn lead to higher staking rewards."
         ]
       ],
       "selfStake": [
@@ -276,7 +278,8 @@
         "Nominator Stake",
         [
           "The amount of {NETWORK_UNIT} backing the validator from its nominators.",
-          "This value is added to the validator's self stake to form the total stake of the validator.,'Note that this value changes every era as the bonded funds of nominators are re-distributed to the active validators of that session."
+          "This value is added to the validator's self stake to form the total stake of the validator.",
+          "Note that this value changes every era as the bonded funds of nominators are re-distributed to the active validators of that session."
         ]
       ],
       "commission": [

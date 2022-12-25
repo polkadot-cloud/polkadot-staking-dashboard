@@ -29,3 +29,10 @@ export interface ExternalAccount {
   source: string;
   addedBy: string;
 }
+
+export interface HandleImportExtension {
+  newAccounts: Array<ExtensionAccount>;
+  meta: {
+    removedActiveAccount: MaybeAccount;
+  };
+}

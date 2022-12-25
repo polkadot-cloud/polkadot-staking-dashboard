@@ -26,3 +26,10 @@ export const defaultConnectContext: ConnectContextInterface = {
   activeAccount: null,
   activeAccountMeta: null,
 };
+
+export const defaultHandleImportExtension = {
+  newAccounts: [],
+  meta: {
+    removedActiveAccount: null,
+  },
+};
