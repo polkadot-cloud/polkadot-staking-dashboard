@@ -103,11 +103,7 @@ export type MaybeAccount = string | null;
 export type MaybeString = string | null;
 
 // track the status of a syncing / fetching process.
-export enum Sync {
-  Unsynced,
-  Syncing,
-  Synced,
-}
+export type Sync = 'unsynced' | 'syncing' | 'synced';
 
 // track whether bonding should be for nominator or nomination pool.
 export type BondFor = 'pool' | 'nominator';
