@@ -9,11 +9,6 @@ export type Fn = () => void;
 
 export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
-export enum Toggle {
-  Open = 'open',
-  Closed = 'closed',
-}
-
 export interface Networks {
   [key: string]: Network;
 }
