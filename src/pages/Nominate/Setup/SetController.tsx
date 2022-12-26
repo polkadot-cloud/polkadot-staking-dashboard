@@ -3,8 +3,8 @@
 
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useUi } from 'contexts/UI';
-import { SetupType } from 'contexts/UI/types';
+import { useSetup } from 'contexts/Setup';
+import { SetupType } from 'contexts/Setup/types';
 import { AccountSelect } from 'library/Form/AccountSelect';
 import { InputItem } from 'library/Form/types';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
@@ -24,7 +24,7 @@ export const SetController = (props: SetupStepProps) => {
 
   const { consts, network } = useApi();
   const { activeAccount, accounts, getAccount } = useConnect();
-  const { getSetupProgress, setActiveAccountSetup } = useUi();
+  const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress(SetupType.Stake, activeAccount);
   const { existentialDeposit } = consts;
   const existentialDepositBase = planckBnToUnit(

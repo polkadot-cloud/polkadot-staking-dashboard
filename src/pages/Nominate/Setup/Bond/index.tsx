@@ -3,9 +3,9 @@
 
 import { BN } from 'bn.js';
 import { useConnect } from 'contexts/Connect';
+import { useSetup } from 'contexts/Setup';
+import { SetupType } from 'contexts/Setup/types';
 import { useTxFees } from 'contexts/TxFees';
-import { useUi } from 'contexts/UI';
-import { SetupType } from 'contexts/UI/types';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { NominateStatusBar } from 'library/Form/NominateStatusBar';
 import { Footer } from 'library/SetupSteps/Footer';
@@ -19,7 +19,7 @@ export const Bond = (props: SetupStepProps) => {
   const { section } = props;
   const { activeAccount } = useConnect();
   const { txFees } = useTxFees();
-  const { getSetupProgress, setActiveAccountSetup } = useUi();
+  const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress(SetupType.Stake, activeAccount);
   const { t } = useTranslation('pages');
 

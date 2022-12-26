@@ -7,7 +7,7 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
-import { useUi } from 'contexts/UI';
+import { useSetup } from 'contexts/Setup';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 
 export const ManagePool = () => {
-  const { isSyncing } = useUi();
+  const { isSyncing } = useSetup();
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const {

@@ -10,9 +10,9 @@ import { useFilters } from 'contexts/Filters';
 import { FilterType } from 'contexts/Filters/types';
 import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
+import { useSetup } from 'contexts/Setup';
 import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
-import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { motion } from 'framer-motion';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
@@ -36,7 +36,7 @@ export const ValidatorListInner = (props: any) => {
   const { fetchValidatorMetaBatch } = useValidators();
   const provider = useList();
   const modal = useModal();
-  const { isSyncing } = useUi();
+  const { isSyncing } = useSetup();
   const { t } = useTranslation('library');
 
   // determine the nominator of the validator list.

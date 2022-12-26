@@ -6,7 +6,7 @@ import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { useUi } from 'contexts/UI';
+import { useSetup } from 'contexts/Setup';
 import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, toFixedIfNecessary } from 'Utils';
 import { NominateStatusBarProps } from '../types';
@@ -14,7 +14,7 @@ import { Wrapper } from './Wrapper';
 
 export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
   const { minCreateBond } = usePoolsConfig().stats;
-  const { isSyncing } = useUi();
+  const { isSyncing } = useSetup();
   const { unit, units } = useApi().network;
   const { t } = useTranslation('library');
 

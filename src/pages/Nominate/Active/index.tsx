@@ -7,8 +7,8 @@ import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import useUnstaking from 'library/Hooks/useUnstaking';
@@ -33,7 +33,7 @@ import { UnstakePrompts } from './UnstakePrompts';
 export const Active = () => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
-  const { isSyncing } = useUi();
+  const { isSyncing } = useSetup();
   const { targets, setTargets, inSetup } = useStaking();
   const { getAccountNominations } = useBalances();
   const { isFastUnstaking } = useUnstaking();

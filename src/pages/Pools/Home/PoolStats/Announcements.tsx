@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useUi } from 'contexts/UI';
+import { useSetup } from 'contexts/Setup';
 import { motion } from 'framer-motion';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { useTranslation } from 'react-i18next';
@@ -19,7 +19,7 @@ import {
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
-  const { poolsSyncing } = useUi();
+  const { poolsSyncing } = useSetup();
   const { network, consts } = useApi();
   const { selectedActivePool } = useActivePools();
   const { units, unit } = network;

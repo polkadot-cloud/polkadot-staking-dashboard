@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useConnect } from 'contexts/Connect';
-import { useUi } from 'contexts/UI';
-import { SetupType } from 'contexts/UI/types';
+import { useSetup } from 'contexts/Setup';
+import { SetupType } from 'contexts/Setup/types';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
@@ -18,7 +18,7 @@ export const Payee = (props: SetupStepProps) => {
   const { section } = props;
 
   const { activeAccount } = useConnect();
-  const { getSetupProgress, setActiveAccountSetup } = useUi();
+  const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress(SetupType.Stake, activeAccount);
   const { t } = useTranslation('pages');
 

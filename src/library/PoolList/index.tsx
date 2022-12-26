@@ -9,9 +9,9 @@ import { useFilters } from 'contexts/Filters';
 import { FilterType } from 'contexts/Filters/types';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { useSetup } from 'contexts/Setup';
 import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
-import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
 import { usePoolFilters } from 'library/Hooks/usePoolFilters';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
@@ -41,7 +41,7 @@ export const PoolListInner = ({
   const { metrics } = useNetworkMetrics();
   const { fetchPoolsMetaBatch, poolSearchFilter, meta } = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
-  const { isSyncing } = useUi();
+  const { isSyncing } = useSetup();
   const { t } = useTranslation('library');
 
   const { getFilters, setMultiFilters, getSearchTerm, setSearchTerm } =

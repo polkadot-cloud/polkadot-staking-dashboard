@@ -13,7 +13,7 @@ import { NotificationText } from 'contexts/Notifications/types';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { PoolState } from 'contexts/Pools/types';
-import { useUi } from 'contexts/UI';
+import { useSetup } from 'contexts/Setup';
 import { useValidators } from 'contexts/Validators';
 import { FavoritePool } from 'library/ListItem/Labels/FavoritePool';
 import { PoolBonded } from 'library/ListItem/Labels/PoolBonded';
@@ -43,7 +43,7 @@ export const Pool = (props: PoolProps) => {
   const { membership } = usePoolMemberships();
   const { addNotification } = useNotifications();
   const { validators } = useValidators();
-  const { poolsSyncing } = useUi();
+  const { poolsSyncing } = useSetup();
 
   // assumes component is under `PoolsTabsProvider` (Pools page)
   const { setActiveTab } = usePoolsTabs();

@@ -8,8 +8,8 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
+import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import useUnstaking from 'library/Hooks/useUnstaking';
@@ -28,7 +28,7 @@ export const Nominations = ({
 }) => {
   const { openModalWith } = useModal();
   const { inSetup } = useStaking();
-  const { isSyncing } = useUi();
+  const { isSyncing } = useSetup();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { getAccountNominations } = useBalances();
   const { isFastUnstaking } = useUnstaking();

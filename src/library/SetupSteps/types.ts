@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { SetupType } from 'contexts/UI/types';
+import { SetupType } from 'contexts/Setup/types';
 
 export interface NominationsProps {
   batchKey: string;

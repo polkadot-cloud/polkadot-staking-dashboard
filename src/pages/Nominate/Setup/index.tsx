@@ -3,9 +3,9 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
-import { useUi } from 'contexts/UI';
-import { defaultStakeSetup } from 'contexts/UI/defaults';
-import { SetupType } from 'contexts/UI/types';
+import { useSetup } from 'contexts/Setup';
+import { defaultStakeSetup } from 'contexts/Setup/defaults';
+import { SetupType } from 'contexts/Setup/types';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
@@ -18,7 +18,7 @@ import { SetController } from './SetController';
 import { Summary } from './Summary';
 
 export const Setup = () => {
-  const { setOnNominatorSetup, setActiveAccountSetup } = useUi();
+  const { setOnNominatorSetup, setActiveAccountSetup } = useSetup();
   const { t } = useTranslation('pages');
 
   return (

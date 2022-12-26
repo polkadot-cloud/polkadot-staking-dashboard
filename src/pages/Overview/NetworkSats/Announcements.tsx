@@ -8,8 +8,8 @@ import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { BondedPool } from 'contexts/Pools/types';
+import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { useTranslation } from 'react-i18next';
@@ -23,7 +23,7 @@ import { Item } from './Wrappers';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');
-  const { networkSyncing, poolsSyncing, isSyncing } = useUi();
+  const { networkSyncing, poolsSyncing, isSyncing } = useSetup();
   const { network } = useApi();
   const { eraStakers } = useStaking();
   const { units } = network;

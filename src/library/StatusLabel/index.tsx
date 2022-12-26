@@ -4,6 +4,7 @@
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import OpenHelpIcon from 'library/OpenHelpIcon';
@@ -13,7 +14,8 @@ import { Wrapper } from './Wrapper';
 export const StatusLabel = (props: StatusLabelProps) => {
   const status = props.status ?? 'sync_or_setup';
 
-  const { isSyncing, services } = useUi();
+  const { isSyncing } = useSetup();
+  const { services } = useUi();
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
 

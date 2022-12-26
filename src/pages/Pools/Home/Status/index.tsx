@@ -13,8 +13,8 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
+import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { Stat } from 'library/Stat';
@@ -28,7 +28,7 @@ export const Status = ({ height }: { height: number }) => {
   const { network, isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { units, unit } = network;
-  const { poolsSyncing } = useUi();
+  const { poolsSyncing } = useSetup();
   const { selectedActivePool, poolNominations } = useActivePools();
   const { openModalWith } = useModal();
   const { getNominationsStatusFromTargets, eraStakers } = useStaking();

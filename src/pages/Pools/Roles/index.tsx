@@ -12,7 +12,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useUi } from 'contexts/UI';
+import { useSetup } from 'contexts/Setup';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useEffect, useState } from 'react';
@@ -33,7 +33,7 @@ export const Roles = (props: RolesProps) => {
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { fetchAccountMetaBatch } = useAccount();
   const { isOwner, selectedActivePool } = useActivePools();
-  const { poolsSyncing } = useUi();
+  const { poolsSyncing } = useSetup();
   const { openModalWith } = useModal();
   const { id } = selectedActivePool || { id: 0 };
   const roles = defaultRoles;

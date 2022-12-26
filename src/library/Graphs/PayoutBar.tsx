@@ -14,10 +14,10 @@ import {
 } from 'chart.js';
 import { useApi } from 'contexts/Api';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
-import { useUi } from 'contexts/UI';
 import { format, fromUnixTime } from 'date-fns';
 import { locales } from 'locale';
 import { Bar } from 'react-chartjs-2';
@@ -47,7 +47,7 @@ ChartJS.register(
 export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const { mode } = useTheme();
   const { name, unit, units } = useApi().network;
-  const { isSyncing } = useUi();
+  const { isSyncing } = useSetup();
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
