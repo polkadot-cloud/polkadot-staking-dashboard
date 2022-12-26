@@ -6,11 +6,7 @@ import { U8aLike } from '@polkadot/util/types';
 import BN from 'bn.js';
 import { Network, NetworkName } from '../../types';
 
-export enum ConnectionStatus {
-  Connecting = 'connecting',
-  Connected = 'connected',
-  Disconnected = 'disconnected',
-}
+export type ConnectionStatus = 'connecting' | 'connected' | 'disconnected';
 
 export interface NetworkState {
   name: NetworkName;

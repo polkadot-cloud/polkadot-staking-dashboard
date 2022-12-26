@@ -4,11 +4,7 @@
 import { stringToU8a } from '@polkadot/util';
 import BN from 'bn.js';
 import { NETWORKS } from 'config/networks';
-import {
-  APIConstants,
-  APIContextInterface,
-  ConnectionStatus,
-} from 'contexts/Api/types';
+import { APIConstants, APIContextInterface } from 'contexts/Api/types';
 
 export const consts: APIConstants = {
   bondDuration: 0,
@@ -36,6 +32,6 @@ export const defaultApiContext: APIContextInterface = {
   consts,
   isLightClient: false,
   isReady: false,
-  status: ConnectionStatus.Disconnected,
+  status: 'disconnected',
   network: NETWORKS.polkadot,
 };

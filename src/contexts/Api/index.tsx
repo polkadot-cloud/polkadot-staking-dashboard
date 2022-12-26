@@ -53,9 +53,8 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   const [consts, setConsts] = useState<APIConstants>(defaults.consts);
 
   // connection status state
-  const [connectionStatus, setConnectionStatus] = useState<ConnectionStatus>(
-    ConnectionStatus.Disconnected
-  );
+  const [connectionStatus, setConnectionStatus] =
+    useState<ConnectionStatus>('disconnected');
 
   const [isLightClient, setIsLightClient] = useState<boolean>(
     !!localStorage.getItem('isLightClient')
@@ -75,10 +74,10 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (provider !== null) {
       provider.on('connected', () => {
-        setConnectionStatus(ConnectionStatus.Connected);
+        setConnectionStatus('connected');
       });
       provider.on('error', () => {
-        setConnectionStatus(ConnectionStatus.Disconnected);
+        setConnectionStatus('disconnected');
       });
       connectedCallback(provider);
     }
@@ -89,7 +88,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     const _api = await ApiPromise.create({ provider: _provider });
 
     // update connection status
-    setConnectionStatus(ConnectionStatus.Connected);
+    setConnectionStatus('connected');
 
     // put active network in localStorage
     localStorage.setItem('network', String(network.name));
@@ -195,7 +194,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       await api.disconnect();
     }
     setApi(null);
-    setConnectionStatus(ConnectionStatus.Connecting);
+    setConnectionStatus('connecting');
     connect(_network, _isLightClient);
   };
 
@@ -237,8 +236,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
         switchNetwork,
         api,
         consts,
-        isReady:
-          connectionStatus === ConnectionStatus.Connected && api !== null,
+        isReady: connectionStatus === 'connected' && api !== null,
         network: network.meta,
         status: connectionStatus,
         isLightClient,
