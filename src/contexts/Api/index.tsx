@@ -41,7 +41,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // network state
   const _name: NetworkName =
-    (localStorage.getItem('network') as NetworkName) ?? NetworkName.Polkadot;
+    (localStorage.getItem('network') as NetworkName) ?? 'polkadot';
 
   // store the currently active network
   const [network, setNetwork] = useState<NetworkState>({

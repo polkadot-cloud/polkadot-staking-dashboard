@@ -7,11 +7,7 @@ import React, { FunctionComponent, SVGProps } from 'react';
 
 export type Fn = () => void;
 
-export enum NetworkName {
-  Polkadot = 'polkadot',
-  Kusama = 'kusama',
-  Westend = 'westend',
-}
+export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
 export enum Toggle {
   Open = 'open',
