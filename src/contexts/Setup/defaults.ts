@@ -25,19 +25,19 @@ export const defaultPoolSetup: PoolCreateProgress = {
 
 export const defaultSetupContext: SetupContextInterface = {
   // eslint-disable-next-line
-  getSetupProgress: (a, b) => { },
+  getSetupProgress: (a, b) => {},
   // eslint-disable-next-line
   getStakeSetupProgressPercent: (a) => 0,
   // eslint-disable-next-line
   getPoolSetupProgressPercent: (a) => 0,
   // eslint-disable-next-line
-  setActiveAccountSetup: (t, p) => { },
+  setActiveAccountSetup: (t, p) => {},
   // eslint-disable-next-line
-  setActiveAccountSetupSection: (t, s) => { },
+  setActiveAccountSetupSection: (t, s) => {},
   // eslint-disable-next-line
-  setOnNominatorSetup: (v) => { },
+  setOnNominatorSetup: (v) => {},
   // eslint-disable-next-line
-  setOnPoolSetup: (v) => { },
+  setOnPoolSetup: (v) => {},
   onNominatorSetup: 0,
   onPoolSetup: 0,
 };
