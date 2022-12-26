@@ -2,15 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyJson, MaybeAccount } from 'types';
 import { setStateWithRef, unitToPlanckBn } from 'Utils';
 import { useApi } from '../Api';
-
 import { useConnect } from '../Connect';
-
 import { useStaking } from '../Staking';
 import * as defaults from './defaults';
 import { SetupContextInterface, SetupType } from './types';
@@ -21,7 +18,7 @@ export const SetupContext = React.createContext<SetupContextInterface>(
 
 export const useSetup = () => React.useContext(SetupContext);
 
-export const UIProvider = ({ children }: { children: React.ReactNode }) => {
+export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   const { network } = useApi();
   const { accounts: connectAccounts, activeAccount } = useConnect();
   const { inSetup } = useStaking();
