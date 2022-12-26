@@ -2,16 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { ImportedAccount } from 'contexts/Connect/types';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyJson, MaybeAccount } from 'types';
 import { setStateWithRef, unitToPlanckBn } from 'Utils';
 import { useApi } from '../Api';
-import { useBalances } from '../Balances';
+
 import { useConnect } from '../Connect';
-import { useNetworkMetrics } from '../Network';
+
 import { useStaking } from '../Staking';
 import * as defaults from './defaults';
 import { SetupContextInterface, SetupType } from './types';
@@ -23,22 +22,11 @@ export const SetupContext = React.createContext<SetupContextInterface>(
 export const useSetup = () => React.useContext(SetupContext);
 
 export const UIProvider = ({ children }: { children: React.ReactNode }) => {
-  const { isReady, network } = useApi();
+  const { network } = useApi();
   const { accounts: connectAccounts, activeAccount } = useConnect();
-  const { staking, eraStakers, inSetup } = useStaking();
-  const { metrics } = useNetworkMetrics();
-  const { accounts } = useBalances();
+  const { inSetup } = useStaking();
+
   const { membership: poolMembership } = usePoolMemberships();
-  const { synced: activePoolsSynced } = useActivePools();
-
-  // set whether the network has been synced.
-  const [networkSyncing, setNetworkSyncing] = useState(false);
-
-  // set whether pools are being synced.
-  const [poolsSyncing, setPoolsSyncing] = useState(false);
-
-  // set whether app is syncing.ncludes workers (active nominations).
-  const [isSyncing, setIsSyncing] = useState(false);
 
   // is the user actively on the setup page
   const [onNominatorSetup, setOnNominatorSetup] = useState(0);
@@ -67,59 +55,6 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       setStateWithRef(_setup, setSetup, setupRef);
     }
   }, [activeAccount, network, connectAccounts]);
-
-  // app syncing updates
-  useEffect(() => {
-    let _syncing = false;
-    let _networkSyncing = false;
-    let _poolsSyncing = false;
-
-    if (!isReady) {
-      _syncing = true;
-      _networkSyncing = true;
-      _poolsSyncing = true;
-    }
-    // staking metrics have synced
-    if (staking.lastReward === new BN(0)) {
-      _syncing = true;
-      _networkSyncing = true;
-      _poolsSyncing = true;
-    }
-
-    // era has synced from Network
-    if (metrics.activeEra.index === 0) {
-      _syncing = true;
-      _networkSyncing = true;
-      _poolsSyncing = true;
-    }
-
-    // all extension accounts have been synced
-    const extensionAccounts = connectAccounts.filter(
-      (a: ImportedAccount) => a.source !== 'external'
-    );
-    if (accounts.length < extensionAccounts.length) {
-      _syncing = true;
-      _networkSyncing = true;
-      _poolsSyncing = true;
-    }
-
-    setNetworkSyncing(_networkSyncing);
-
-    // active pools have been synced
-    if (activePoolsSynced !== 'synced') {
-      _syncing = true;
-      _poolsSyncing = true;
-    }
-
-    setPoolsSyncing(_poolsSyncing);
-
-    // eraStakers total active nominators has synced
-    if (!eraStakers.totalActiveNominators) {
-      _syncing = true;
-    }
-
-    setIsSyncing(_syncing);
-  }, [isReady, staking, metrics, accounts, eraStakers, activePoolsSynced]);
 
   /*
    * Generates the default setup objects or the currently
@@ -274,9 +209,6 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         setOnPoolSetup,
         onNominatorSetup,
         onPoolSetup,
-        isSyncing,
-        networkSyncing,
-        poolsSyncing,
       }}
     >
       {children}

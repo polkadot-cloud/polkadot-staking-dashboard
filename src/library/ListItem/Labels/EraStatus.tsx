@@ -3,8 +3,8 @@
 
 import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
-import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { capitalizeFirstLetter, humanNumber, rmCommas } from 'Utils';
@@ -15,7 +15,7 @@ export const EraStatus = (props: any) => {
   const {
     network: { unit, units },
   } = useApi();
-  const { isSyncing } = useSetup();
+  const { isSyncing } = useUi();
   const { eraStakers, erasStakersSyncing } = useStaking();
   const { stakers } = eraStakers;
   const { t } = useTranslation('library');

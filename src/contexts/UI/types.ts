@@ -12,4 +12,7 @@ export interface UIContextInterface {
   sideMenuMinimised: number;
   services: string[];
   containerRefs: any;
+  isSyncing: boolean;
+  networkSyncing: boolean;
+  poolsSyncing: boolean;
 }

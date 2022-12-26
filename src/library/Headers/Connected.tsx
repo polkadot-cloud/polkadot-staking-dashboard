@@ -4,8 +4,8 @@
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
 import { PoolAccount } from 'library/PoolAccount';
 import { useTranslation } from 'react-i18next';
 import { clipAddress } from 'Utils';
@@ -18,7 +18,7 @@ export const Connected = () => {
   const { getBondedAccount } = useBalances();
   const controller = getBondedAccount(activeAccount);
   const { selectedActivePool } = useActivePools();
-  const { networkSyncing } = useSetup();
+  const { networkSyncing } = useUi();
   const { t } = useTranslation('library');
 
   let poolAddress = '';

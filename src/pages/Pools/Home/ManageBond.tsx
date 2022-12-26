@@ -8,8 +8,8 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { PoolState } from 'contexts/Pools/types';
-import { useSetup } from 'contexts/Setup';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useUi } from 'contexts/UI';
 import BondedGraph from 'library/Graphs/Bonded';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
@@ -22,7 +22,7 @@ export const ManageBond = () => {
   const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
-  const { poolsSyncing } = useSetup();
+  const { poolsSyncing } = useUi();
   const { isBonding, isMember, selectedActivePool } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
   const { t } = useTranslation('pages');

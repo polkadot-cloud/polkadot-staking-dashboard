@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
@@ -12,8 +11,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const Payouts = () => {
-  const { isSyncing } = useSetup();
-  const { services } = useUi();
+  const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
   const { t } = useTranslation('pages');

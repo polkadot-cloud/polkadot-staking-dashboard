@@ -9,9 +9,9 @@ import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { PoolState } from 'contexts/Pools/types';
-import { useSetup } from 'contexts/Setup';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { ButtonRowWrapper, PageRowWrapper } from 'Wrappers';
@@ -23,7 +23,7 @@ export const ClosurePrompts = () => {
   const { mode } = useTheme();
   const { openModalWith } = useModal();
   const { membership } = usePoolMemberships();
-  const { poolsSyncing } = useSetup();
+  const { poolsSyncing } = useUi();
   const { isBonding, selectedActivePool, isDepositor, poolNominations } =
     useActivePools();
   const { getTransferOptions } = useTransferOptions();

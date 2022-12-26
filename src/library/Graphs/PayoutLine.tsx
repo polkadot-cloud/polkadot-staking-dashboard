@@ -13,10 +13,10 @@ import {
 } from 'chart.js';
 import { useApi } from 'contexts/Api';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
+import { useUi } from 'contexts/UI';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import {
@@ -47,7 +47,7 @@ export const PayoutLine = ({
 }: PayoutLineProps) => {
   const { mode } = useTheme();
   const { name, unit, units } = useApi().network;
-  const { isSyncing } = useSetup();
+  const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership: poolMembership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();

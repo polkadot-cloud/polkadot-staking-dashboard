@@ -30,11 +30,10 @@ export const Main = () => {
   const { membership } = usePoolMemberships();
   const controller = getBondedAccount(activeAccount);
   const {
-    isSyncing,
     getPoolSetupProgressPercent,
     getStakeSetupProgressPercent,
   }: SetupContextInterface = useSetup();
-  const { sideMenuMinimised }: UIContextInterface = useUi();
+  const { isSyncing, sideMenuMinimised }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
   const { t, i18n } = useTranslation('base');
 

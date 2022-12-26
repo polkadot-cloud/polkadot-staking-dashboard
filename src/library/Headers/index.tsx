@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useExtrinsics } from 'contexts/Extrinsics';
-import { useSetup } from 'contexts/Setup';
+import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { useLocation } from 'react-router-dom';
 import { pageFromUri } from 'Utils';
@@ -16,7 +16,7 @@ export const Headers = () => {
   const { pathname } = useLocation();
   const { validators } = useValidators();
   const { pending } = useExtrinsics();
-  const { isSyncing } = useSetup();
+  const { isSyncing } = useUi();
 
   let syncing = isSyncing;
 

@@ -34,7 +34,4 @@ export interface SetupContextInterface {
   setOnPoolSetup: (v: number) => void;
   onNominatorSetup: number;
   onPoolSetup: number;
-  isSyncing: boolean;
-  networkSyncing: boolean;
-  poolsSyncing: boolean;
 }

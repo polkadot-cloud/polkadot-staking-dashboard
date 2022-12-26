@@ -20,6 +20,7 @@ import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import useUnstaking from 'library/Hooks/useUnstaking';
@@ -31,7 +32,7 @@ import { Controller } from './Controller';
 
 export const Status = ({ height }: { height: number }) => {
   const { t } = useTranslation();
-  const { isSyncing } = useSetup();
+  const { isSyncing } = useUi();
   const { openModalWith } = useModal();
   const { isReady, network } = useApi();
   const { meta, validators } = useValidators();
