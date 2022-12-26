@@ -3,7 +3,6 @@
 
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
-import { SetupType } from 'contexts/Setup/types';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
@@ -16,7 +15,7 @@ export const PoolName = (props: SetupStepProps) => {
   const { section } = props;
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
-  const setup = getSetupProgress(SetupType.Pool, activeAccount);
+  const setup = getSetupProgress('pool', activeAccount);
   const { t } = useTranslation('pages');
 
   const initialValue = setup.metadata;
@@ -31,7 +30,7 @@ export const PoolName = (props: SetupStepProps) => {
 
   // handler for updating bond
   const handleSetupUpdate = (value: any) => {
-    setActiveAccountSetup(SetupType.Pool, value);
+    setActiveAccountSetup('pool', value);
   };
 
   // update bond on account change
@@ -45,7 +44,7 @@ export const PoolName = (props: SetupStepProps) => {
   useEffect(() => {
     // only update if this section is currently active
     if (setup.section === section) {
-      setActiveAccountSetup(SetupType.Pool, {
+      setActiveAccountSetup('pool', {
         ...setup,
         metadata: initialValue,
       });
@@ -59,7 +58,7 @@ export const PoolName = (props: SetupStepProps) => {
         complete={setup.metadata !== ''}
         title={t('pools.poolName') || ''}
         // helpKey="Bonding"
-        setupType={SetupType.Pool}
+        setupType="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <Input
@@ -76,7 +75,7 @@ export const PoolName = (props: SetupStepProps) => {
             },
           ]}
         />
-        <Footer complete={valid} setupType={SetupType.Pool} />
+        <Footer complete={valid} setupType="pool" />
       </MotionContainer>
     </>
   );

@@ -5,7 +5,6 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useSetup } from 'contexts/Setup';
 import { defaultPoolSetup } from 'contexts/Setup/defaults';
-import { SetupType } from 'contexts/Setup/types';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
@@ -41,7 +40,7 @@ export const Create = () => {
               text={t('pools.cancel')}
               onClick={() => {
                 setOnPoolSetup(0);
-                setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);
+                setActiveAccountSetup('pool', defaultPoolSetup);
               }}
             />
           </span>
@@ -59,7 +58,7 @@ export const Create = () => {
           <Element name="nominate" style={{ position: 'absolute' }} />
           <Nominate
             batchKey="generate_nominations_create_pool"
-            setupType={SetupType.Pool}
+            setupType="pool"
             section={2}
           />
         </CardWrapper>

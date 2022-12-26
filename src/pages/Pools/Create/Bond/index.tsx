@@ -4,7 +4,6 @@
 import { BN } from 'bn.js';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
-import { SetupType } from 'contexts/Setup/types';
 import { useTxFees } from 'contexts/TxFees';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { CreatePoolStatusBar } from 'library/Form/CreatePoolStatusBar';
@@ -20,7 +19,7 @@ export const Bond = (props: SetupStepProps) => {
   const { activeAccount } = useConnect();
   const { txFees } = useTxFees();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
-  const setup = getSetupProgress(SetupType.Pool, activeAccount);
+  const setup = getSetupProgress('pool', activeAccount);
   const { t } = useTranslation('pages');
 
   // either free to bond or existing setup value
@@ -36,7 +35,7 @@ export const Bond = (props: SetupStepProps) => {
 
   // handler for updating bond
   const handleSetupUpdate = (value: any) => {
-    setActiveAccountSetup(SetupType.Pool, value);
+    setActiveAccountSetup('pool', value);
   };
 
   // update bond on account change
@@ -50,7 +49,7 @@ export const Bond = (props: SetupStepProps) => {
   useEffect(() => {
     // only update if Bond is currently active
     if (setup.section === section) {
-      setActiveAccountSetup(SetupType.Pool, {
+      setActiveAccountSetup('pool', {
         ...setup,
         bond: initialBondValue,
       });
@@ -64,7 +63,7 @@ export const Bond = (props: SetupStepProps) => {
         complete={setup.bond !== '0' && setup.bond !== ''}
         title={t('pools.bond') || ''}
         helpKey="Bonding"
-        setupType={SetupType.Pool}
+        setupType="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondFeedback
@@ -87,7 +86,7 @@ export const Bond = (props: SetupStepProps) => {
           maxWidth
         />
         <CreatePoolStatusBar value={bond.bond} />
-        <Footer complete={bondValid} setupType={SetupType.Pool} />
+        <Footer complete={bondValid} setupType="pool" />
       </MotionContainer>
     </>
   );

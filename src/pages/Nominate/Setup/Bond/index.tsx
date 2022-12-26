@@ -4,7 +4,6 @@
 import { BN } from 'bn.js';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
-import { SetupType } from 'contexts/Setup/types';
 import { useTxFees } from 'contexts/TxFees';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { NominateStatusBar } from 'library/Form/NominateStatusBar';
@@ -20,7 +19,7 @@ export const Bond = (props: SetupStepProps) => {
   const { activeAccount } = useConnect();
   const { txFees } = useTxFees();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
-  const setup = getSetupProgress(SetupType.Stake, activeAccount);
+  const setup = getSetupProgress('stake', activeAccount);
   const { t } = useTranslation('pages');
 
   // either free to bond or existing setup value
@@ -36,7 +35,7 @@ export const Bond = (props: SetupStepProps) => {
 
   // handler for updating bond
   const handleSetupUpdate = (value: any) => {
-    setActiveAccountSetup(SetupType.Stake, value);
+    setActiveAccountSetup('stake', value);
   };
 
   // update bond on account change
@@ -50,7 +49,7 @@ export const Bond = (props: SetupStepProps) => {
   useEffect(() => {
     // only update if Bond is currently active
     if (setup.section === section) {
-      setActiveAccountSetup(SetupType.Stake, {
+      setActiveAccountSetup('stake', {
         ...setup,
         bond: initialBondValue,
       });
@@ -64,7 +63,7 @@ export const Bond = (props: SetupStepProps) => {
         complete={setup.bond !== '0' && setup.bond !== ''}
         title={t('nominate.bond') || ''}
         helpKey="Bonding"
-        setupType={SetupType.Stake}
+        setupType="stake"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondFeedback
@@ -87,7 +86,7 @@ export const Bond = (props: SetupStepProps) => {
           maxWidth
         />
         <NominateStatusBar value={bond.bond} />
-        <Footer complete={bondValid} setupType={SetupType.Stake} />
+        <Footer complete={bondValid} setupType="stake" />
       </MotionContainer>
     </>
   );

@@ -5,7 +5,6 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useSetup } from 'contexts/Setup';
 import { defaultStakeSetup } from 'contexts/Setup/defaults';
-import { SetupType } from 'contexts/Setup/types';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
@@ -41,7 +40,7 @@ export const Setup = () => {
               text={t('nominate.cancel')}
               onClick={() => {
                 setOnNominatorSetup(0);
-                setActiveAccountSetup(SetupType.Stake, defaultStakeSetup);
+                setActiveAccountSetup('stake', defaultStakeSetup);
               }}
             />
           </span>
@@ -65,7 +64,7 @@ export const Setup = () => {
           <Element name="nominate" style={{ position: 'absolute' }} />
           <Nominate
             batchKey="generate_nominations_inactive"
-            setupType={SetupType.Stake}
+            setupType="stake"
             section={3}
           />
         </CardWrapper>

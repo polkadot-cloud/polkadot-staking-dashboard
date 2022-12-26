@@ -3,10 +3,7 @@
 
 import { MaybeAccount, MaybeString } from 'types';
 
-export enum SetupType {
-  Pool = 'pool',
-  Stake = 'stake',
-}
+export type SetupType = 'pool' | 'stake';
 
 export interface StakeSetupProgress {
   controller: MaybeAccount;

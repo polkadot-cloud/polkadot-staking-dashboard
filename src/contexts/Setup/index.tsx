@@ -93,7 +93,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   const getSetupProgress = (type: SetupType, address: MaybeAccount) => {
     const _setup = setupRef.current.find((s: any) => s.address === address);
     if (_setup === undefined) {
-      return type === SetupType.Stake
+      return type === 'stake'
         ? defaults.defaultStakeSetup
         : defaults.defaultPoolSetup;
     }
@@ -105,7 +105,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
    */
   const getStakeSetupProgressPercent = (address: MaybeAccount) => {
     if (!address) return 0;
-    const setupProgress = getSetupProgress(SetupType.Stake, address);
+    const setupProgress = getSetupProgress('stake', address);
     const bondBn = unitToPlanckBn(setupProgress.bond, network.units);
 
     const p = 25;
@@ -122,7 +122,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
    */
   const getPoolSetupProgressPercent = (address: MaybeAccount) => {
     if (!address) return 0;
-    const setupProgress = getSetupProgress(SetupType.Pool, address);
+    const setupProgress = getSetupProgress('pool', address);
     const bondBn = unitToPlanckBn(setupProgress.bond, network.units);
 
     const p = 25;

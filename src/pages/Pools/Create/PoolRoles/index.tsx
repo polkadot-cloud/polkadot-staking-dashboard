@@ -3,7 +3,6 @@
 
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
-import { SetupType } from 'contexts/Setup/types';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
@@ -16,7 +15,7 @@ export const PoolRoles = (props: SetupStepProps) => {
   const { section } = props;
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
-  const setup = getSetupProgress(SetupType.Pool, activeAccount);
+  const setup = getSetupProgress('pool', activeAccount);
   const { t } = useTranslation('pages');
 
   // if no roles in setup already, inject `activeAccount` to be
@@ -38,7 +37,7 @@ export const PoolRoles = (props: SetupStepProps) => {
 
   // handler for updating pool roles
   const handleSetupUpdate = (value: any) => {
-    setActiveAccountSetup(SetupType.Pool, value);
+    setActiveAccountSetup('pool', value);
   };
 
   // update pool roles on account change
@@ -52,7 +51,7 @@ export const PoolRoles = (props: SetupStepProps) => {
   useEffect(() => {
     // only update if this section is currently active
     if (setup.section === section) {
-      setActiveAccountSetup(SetupType.Pool, {
+      setActiveAccountSetup('pool', {
         ...setup,
         roles: initialValue,
       });
@@ -66,7 +65,7 @@ export const PoolRoles = (props: SetupStepProps) => {
         complete={setup.roles !== null}
         title={t('pools.roles') || ''}
         helpKey="Pool Roles"
-        setupType={SetupType.Pool}
+        setupType="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <h4 style={{ margin: '0.5rem 0' }}>
@@ -96,7 +95,7 @@ export const PoolRoles = (props: SetupStepProps) => {
             },
           ]}
         />
-        <Footer complete={rolesValid} setupType={SetupType.Pool} />
+        <Footer complete={rolesValid} setupType="pool" />
       </MotionContainer>
     </>
   );
