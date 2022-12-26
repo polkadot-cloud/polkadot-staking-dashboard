@@ -150,8 +150,8 @@ export const Status = ({ height }: { height: number }) => {
 
   const unstakeButton =
     fastUnstakeErasToCheckPerBlock > 0 &&
-      !activeNominees.length &&
-      (checking || !isExposed)
+    !activeNominees.length &&
+    (checking || !isExposed)
       ? fastUnstakeButton
       : regularUnstakeButton;
 
@@ -167,18 +167,18 @@ export const Status = ({ height }: { height: number }) => {
               ? [unstakeButton]
               : []
             : [
-              {
-                title: startTitle,
-                icon: faChevronCircleRight,
-                transform: 'grow-1',
-                large: true,
-                disabled:
-                  !isReady ||
-                  isReadOnlyAccount(activeAccount) ||
-                  !activeAccount,
-                onClick: () => setOnNominatorSetup(1),
-              },
-            ]
+                {
+                  title: startTitle,
+                  icon: faChevronCircleRight,
+                  transform: 'grow-1',
+                  large: true,
+                  disabled:
+                    !isReady ||
+                    isReadOnlyAccount(activeAccount) ||
+                    !activeAccount,
+                  onClick: () => setOnNominatorSetup(1),
+                },
+              ]
         }
       />
       <Separator />
@@ -189,27 +189,27 @@ export const Status = ({ height }: { height: number }) => {
           (payee === null
             ? faCircle
             : payee === 'Staked'
-              ? faRedoAlt
-              : payee === 'None'
-                ? faCircle
-                : faWallet) as IconProp
+            ? faRedoAlt
+            : payee === 'None'
+            ? faCircle
+            : faWallet) as IconProp
         }
         stat={getPayeeStatus()}
         buttons={
           !inSetup()
             ? [
-              {
-                title: t('nominate.update', { ns: 'pages' }),
-                icon: faWallet,
-                small: true,
-                disabled:
-                  inSetup() ||
-                  isSyncing ||
-                  isReadOnlyAccount(activeAccount) ||
-                  isFastUnstaking,
-                onClick: () => openModalWith('UpdatePayee', {}, 'small'),
-              },
-            ]
+                {
+                  title: t('nominate.update', { ns: 'pages' }),
+                  icon: faWallet,
+                  small: true,
+                  disabled:
+                    inSetup() ||
+                    isSyncing ||
+                    isReadOnlyAccount(activeAccount) ||
+                    isFastUnstaking,
+                  onClick: () => openModalWith('UpdatePayee', {}, 'small'),
+                },
+              ]
             : []
         }
       />
