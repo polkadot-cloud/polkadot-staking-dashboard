@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 
 export const Settings = () => {
-  const { services, toggleService } = usePlugins();
+  const { plugins, togglePlugin } = usePlugins();
   const { t } = useTranslation('modals');
 
   // fetch flag to disable fiat
@@ -20,18 +20,18 @@ export const Settings = () => {
       <PaddingWrapper>
         <h4>{t('toggleServices')}</h4>
         <StatusButton
-          checked={services.includes('subscan')}
+          checked={plugins.includes('subscan')}
           label="Subscan API"
           onClick={() => {
-            toggleService('subscan');
+            togglePlugin('subscan');
           }}
         />
         {!DISABLE_FIAT && (
           <StatusButton
-            checked={services.includes('binance_spot')}
+            checked={plugins.includes('binance_spot')}
             label={t('binanceApi')}
             onClick={() => {
-              toggleService('binance_spot');
+              togglePlugin('binance_spot');
             }}
           />
         )}
@@ -39,10 +39,10 @@ export const Settings = () => {
         <h4>{t('toggleFeatures')}</h4>
 
         <StatusButton
-          checked={services.includes('tips')}
+          checked={plugins.includes('tips')}
           label={t('dashboardTips')}
           onClick={() => {
-            toggleService('tips');
+            togglePlugin('tips');
           }}
         />
       </PaddingWrapper>

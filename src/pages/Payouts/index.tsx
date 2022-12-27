@@ -33,7 +33,7 @@ import LastEraPayoutStatBox from './Stats/LastEraPayout';
 export const Payouts = (props: PageProps) => {
   const { payouts, poolClaims } = useSubscan();
   const { isSyncing } = useUi();
-  const { services } = usePlugins();
+  const { plugins } = usePlugins();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
   const { i18n, t } = useTranslation();
@@ -115,7 +115,7 @@ export const Payouts = (props: PageProps) => {
             </h2>
           </CardHeaderWrapper>
           <div className="inner" ref={ref} style={{ minHeight }}>
-            {!services.includes('subscan') ? (
+            {!plugins.includes('subscan') ? (
               <StatusLabel
                 status="active_service"
                 statusFor="subscan"

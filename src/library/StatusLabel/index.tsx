@@ -15,7 +15,7 @@ export const StatusLabel = (props: StatusLabelProps) => {
   const status = props.status ?? 'sync_or_setup';
 
   const { isSyncing } = useUi();
-  const { services } = usePlugins();
+  const { plugins } = usePlugins();
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
 
@@ -27,7 +27,7 @@ export const StatusLabel = (props: StatusLabelProps) => {
   }
 
   if (status === 'active_service') {
-    if (services.includes(props.statusFor || '')) {
+    if (plugins.includes(props.statusFor || '')) {
       return <></>;
     }
   }

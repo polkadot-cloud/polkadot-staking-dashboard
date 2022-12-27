@@ -11,7 +11,7 @@ import { Status } from './Status';
 import { NetworkInfo, Separator, Summary, Wrapper } from './Wrappers';
 
 export const NetworkBar = () => {
-  const { services } = usePlugins();
+  const { plugins } = usePlugins();
   const { network, isLightClient } = useApi();
   const prices = usePrices();
   const { t } = useTranslation('library');
@@ -91,7 +91,7 @@ export const NetworkBar = () => {
         </section>
         <section>
           <div className="hide-small">
-            {services.includes('binance_spot') && (
+            {plugins.includes('binance_spot') && (
               <>
                 <div className="stat">
                   <span

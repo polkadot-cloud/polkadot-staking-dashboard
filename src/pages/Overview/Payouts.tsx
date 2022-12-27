@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 
 export const Payouts = () => {
   const { isSyncing } = useUi();
-  const { services } = usePlugins();
+  const { plugins } = usePlugins();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
   const { t } = useTranslation('pages');
@@ -25,7 +25,7 @@ export const Payouts = () => {
 
   return (
     <div className="inner" ref={ref} style={{ minHeight }}>
-      {!services.includes('subscan') ? (
+      {!plugins.includes('subscan') ? (
         <StatusLabel
           status="active_service"
           statusFor="subscan"

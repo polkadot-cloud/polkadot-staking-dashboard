@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 
 export const usePrices = () => {
   const { network, fetchDotPrice } = useApi();
-  const { services } = usePlugins();
+  const { plugins } = usePlugins();
 
   const pricesLocalStorage = () => {
     const pricesLocal = localStorage.getItem(`${network.name}_prices`);
@@ -70,14 +70,14 @@ export const usePrices = () => {
 
   // servie toggle
   useEffect(() => {
-    if (services.includes('binance_spot')) {
+    if (plugins.includes('binance_spot')) {
       if (priceHandle === null) {
         initiatePriceInterval();
       }
     } else if (priceHandle !== null) {
       clearInterval(priceHandle);
     }
-  }, [services]);
+  }, [plugins]);
 
   return pricesRef.current;
 };

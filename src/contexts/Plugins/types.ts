@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 export interface PluginsContextInterface {
-  toggleService: (k: string) => void;
-  getServices: () => string[];
-  services: string[];
+  togglePlugin: (k: string) => void;
+  getPlugins: () => string[];
+  plugins: string[];
 }

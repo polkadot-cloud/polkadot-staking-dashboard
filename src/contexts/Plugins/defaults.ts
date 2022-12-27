@@ -5,7 +5,7 @@ import { PluginsContextInterface } from './types';
 
 export const defaultPluginsContext: PluginsContextInterface = {
   // eslint-disable-next-line
-    toggleService: (k) => { },
-  getServices: () => [],
-  services: [],
+  togglePlugin: (k) => { },
+  getPlugins: () => [],
+  plugins: [],
 };

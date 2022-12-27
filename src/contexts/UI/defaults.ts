@@ -13,7 +13,6 @@ export const defaultUIContext: UIContextInterface = {
   sideMenuOpen: 0,
   userSideMenuMinimised: 0,
   sideMenuMinimised: 0,
-  // services: [],
   containerRefs: {},
   isSyncing: false,
   networkSyncing: false,

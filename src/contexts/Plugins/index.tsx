@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ServiceList } from 'consts';
+import { PluginsList } from 'consts';
 import React, { useRef, useState } from 'react';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
@@ -18,53 +18,53 @@ export const PluginsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  // get initial services
-  const getAvailableServices = () => {
-    // get services config from local storage
-    const _services: any = localStorageOrDefault('services', ServiceList, true);
+  // get initial plugins
+  const getAvailablePlugins = () => {
+    // get plugins config from local storage
+    const _plugins: any = localStorageOrDefault('plugins', PluginsList, true);
 
     // if fiat is disabled, remove binance_spot service
     const DISABLE_FIAT = Number(process.env.REACT_APP_DISABLE_FIAT ?? 0);
-    if (DISABLE_FIAT && _services.includes('binance_spot')) {
-      const index = _services.indexOf('binance_spot');
+    if (DISABLE_FIAT && _plugins.includes('binance_spot')) {
+      const index = _plugins.indexOf('binance_spot');
       if (index !== -1) {
-        _services.splice(index, 1);
+        _plugins.splice(index, 1);
       }
     }
-    return _services;
+    return _plugins;
   };
 
-  // services
-  const [services, setServices] = useState(getAvailableServices());
-  const servicesRef = useRef(services);
+  // plugins
+  const [plugins, setPlugins] = useState(getAvailablePlugins());
+  const pluginsRef = useRef(plugins);
 
   /*
-   * Service toggling
+   * Plugin toggling
    */
-  const toggleService = (key: string) => {
-    let _services = [...services];
-    const found = _services.find((item) => item === key);
+  const togglePlugin = (key: string) => {
+    let _plugins = [...plugins];
+    const found = _plugins.find((item) => item === key);
 
     if (found) {
-      _services = _services.filter((_s) => _s !== key);
+      _plugins = _plugins.filter((_s) => _s !== key);
     } else {
-      _services.push(key);
+      _plugins.push(key);
     }
 
-    localStorage.setItem('services', JSON.stringify(_services));
-    setStateWithRef(_services, setServices, servicesRef);
+    localStorage.setItem('plugins', JSON.stringify(_plugins));
+    setStateWithRef(_plugins, setPlugins, pluginsRef);
   };
 
-  const getServices = () => {
-    return servicesRef.current;
+  const getPlugins = () => {
+    return pluginsRef.current;
   };
 
   return (
     <PluginsContext.Provider
       value={{
-        toggleService,
-        getServices,
-        services: servicesRef.current,
+        togglePlugin,
+        getPlugins,
+        plugins: pluginsRef.current,
       }}
     >
       {children}

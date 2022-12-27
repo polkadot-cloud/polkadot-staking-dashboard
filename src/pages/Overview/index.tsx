@@ -34,7 +34,7 @@ export const Overview = () => {
   const { network } = useApi();
   const { units } = network;
   const { payouts, poolClaims } = useSubscan();
-  const { services } = usePlugins();
+  const { plugins } = usePlugins();
   const { lastReward } = formatRewardsForGraphs(
     14,
     1,
@@ -73,7 +73,7 @@ export const Overview = () => {
         <SupplyStakedStatBox />
         <ActiveEraStatBox />
       </StatBoxList>
-      {services.includes('tips') && (
+      {plugins.includes('tips') && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <Tips />
         </PageRowWrapper>

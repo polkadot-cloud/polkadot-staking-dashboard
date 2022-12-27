@@ -9,7 +9,7 @@ import { PaddingWrapper } from 'modals/Wrappers';
 import { useTranslation } from 'react-i18next';
 
 export const DismissTips = () => {
-  const { toggleService } = usePlugins();
+  const { togglePlugin } = usePlugins();
   const { setStatus } = useModal();
   const { t } = useTranslation('tips');
 
@@ -32,7 +32,7 @@ export const DismissTips = () => {
               marginRight
               text={t('module.disableDashboardTips')}
               onClick={() => {
-                toggleService('tips');
+                togglePlugin('tips');
                 setStatus(2);
               }}
             />

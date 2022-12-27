@@ -25,16 +25,16 @@ const Wrapper = styled.div<WrapperProps>`
 export const SubscanButton = () => {
   const { network } = useApi();
   const { mode } = useTheme();
-  const { services } = usePlugins();
+  const { plugins } = usePlugins();
 
   return (
     <Wrapper
       color={
-        services.includes('subscan')
+        plugins.includes('subscan')
           ? networkColors[`${network.name}-${mode}`]
           : defaultThemes.text.secondary[mode]
       }
-      opacity={services.includes('subscan') ? 1 : 0.5}
+      opacity={plugins.includes('subscan') ? 1 : 0.5}
     >
       <FontAwesomeIcon
         icon={faProjectDiagram}
