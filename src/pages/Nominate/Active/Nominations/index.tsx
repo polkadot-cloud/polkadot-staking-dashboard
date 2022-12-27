@@ -7,7 +7,6 @@ import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { PoolState } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
@@ -88,7 +87,7 @@ export const Nominations = ({
   // determine whether buttons are disabled
   const poolDestroying =
     isPool &&
-    selectedActivePool?.bondedPool?.state === PoolState.Destroy &&
+    selectedActivePool?.bondedPool?.state === 'destroying' &&
     !nominating;
 
   const stopBtnDisabled =
