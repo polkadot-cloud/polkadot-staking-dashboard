@@ -6,7 +6,6 @@ import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { PoolState } from 'contexts/Pools/types';
 import { useUi } from 'contexts/UI';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
@@ -40,7 +39,7 @@ export const ManagePool = () => {
       <CardWrapper>
         {isSyncing ? (
           <Nominations bondFor="pool" nominator={activeAccount} />
-        ) : canNominate && !isNominating && state !== PoolState.Destroy ? (
+        ) : canNominate && !isNominating && state !== 'destroying' ? (
           <>
             <CardHeaderWrapper withAction>
               <h3>

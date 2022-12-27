@@ -12,7 +12,6 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { PoolState } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
@@ -78,7 +77,7 @@ export const Status = ({ height }: { height: number }) => {
           disabled:
             !isReady ||
             isReadOnlyAccount(activeAccount) ||
-            poolState === PoolState.Destroy,
+            poolState === 'destroying',
           small: true,
           onClick: () =>
             openModalWith('ClaimReward', { claimType: 'bond' }, 'small'),
@@ -88,10 +87,10 @@ export const Status = ({ height }: { height: number }) => {
 
   let poolStateIcon;
   switch (poolState) {
-    case PoolState.Block:
+    case 'blocked':
       poolStateIcon = faLock;
       break;
-    case PoolState.Destroy:
+    case 'destroying':
       poolStateIcon = faExclamationTriangle;
       break;
     default:
@@ -135,9 +134,9 @@ export const Status = ({ height }: { height: number }) => {
 
   // determine pool status - left side
   const poolStatusLeft =
-    poolState === PoolState.Block
+    poolState === 'blocked'
       ? `${t('pools.locked')} / `
-      : poolState === PoolState.Destroy
+      : poolState === 'destroying'
       ? `${t('pools.destroying')} / `
       : '';
 
