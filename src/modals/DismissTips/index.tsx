@@ -3,13 +3,13 @@
 
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useModal } from 'contexts/Modal';
-import { useUi } from 'contexts/UI';
+import { usePlugins } from 'contexts/Plugins';
 import { Title } from 'library/Modal/Title';
 import { PaddingWrapper } from 'modals/Wrappers';
 import { useTranslation } from 'react-i18next';
 
 export const DismissTips = () => {
-  const { toggleService } = useUi();
+  const { toggleService } = usePlugins();
   const { setStatus } = useModal();
   const { t } = useTranslation('tips');
 

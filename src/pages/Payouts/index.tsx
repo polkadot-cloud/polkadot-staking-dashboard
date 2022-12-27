@@ -3,6 +3,7 @@
 
 import { BN } from 'bn.js';
 import { MaxPayoutDays } from 'consts';
+import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useUi } from 'contexts/UI';
@@ -31,7 +32,8 @@ import LastEraPayoutStatBox from './Stats/LastEraPayout';
 
 export const Payouts = (props: PageProps) => {
   const { payouts, poolClaims } = useSubscan();
-  const { isSyncing, services } = useUi();
+  const { isSyncing } = useUi();
+  const { services } = usePlugins();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
   const { i18n, t } = useTranslation();

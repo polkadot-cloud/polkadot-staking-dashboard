@@ -1,14 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useUi } from 'contexts/UI';
+import { usePlugins } from 'contexts/Plugins';
 import { Title } from 'library/Modal/Title';
 import { StatusButton } from 'library/StatusButton';
 import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 
 export const Settings = () => {
-  const { services, toggleService } = useUi();
+  const { services, toggleService } = usePlugins();
   const { t } = useTranslation('modals');
 
   // fetch flag to disable fiat

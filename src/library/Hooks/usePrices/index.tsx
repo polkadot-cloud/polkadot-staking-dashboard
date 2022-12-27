@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
-import { useUi } from 'contexts/UI';
+import { usePlugins } from 'contexts/Plugins';
 import { useEffect, useRef, useState } from 'react';
 
 export const usePrices = () => {
   const { network, fetchDotPrice } = useApi();
-  const { services } = useUi();
+  const { services } = usePlugins();
 
   const pricesLocalStorage = () => {
     const pricesLocal = localStorage.getItem(`${network.name}_prices`);
