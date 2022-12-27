@@ -13,7 +13,7 @@
     "@polkadot/keyring": "^10.2.1",
     "@polkadot/react-identicon": "^2.9.14",
     "@polkadot/rpc-provider": "^9.10.3",
-    "@polkadot/types": "^9.10.3",
+    "@polkadot/types": "^9.10.4",
     "@polkadot/types-codec": "^9.10.4",
     "@polkadot/util": "^10.2.1",
     "@rossbulat/polkadot-dashboard-ui": "0.1.0-alpha.27",
