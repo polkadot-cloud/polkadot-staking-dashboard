@@ -5,7 +5,7 @@ const getDeepKeys = (obj) => {
     let keys = [];
     for (const key in obj) {
         keys.push(key);
-        //在这把key【1】出来
+
         if (typeof obj[key] === 'object') {
             const subkeys = getDeepKeys(obj[key]);
             keys = keys.concat(subkeys.map((subkey) => `${key}.${subkey}`));
@@ -28,10 +28,16 @@ const isAlphabaticOrder = () => {
                 );
                 //这里要分开各个file的keys
                 const keys = getDeepKeys(json);
+                // for (i in keys) {
+                //     // if (keys[i].length == 2) {
+                //     //     console.log(keys[i])
+                //     // }
+                //     console.log(keys[i].length)
+                // }
+
 
                 let l = keys.length;
                 for (let i = 1; i < l; i++) {
-                    // console.log(keys[i])
                     if (keys[i] < keys[i - 1]) {
                         return false;
                     }
