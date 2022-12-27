@@ -12,7 +12,7 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { BondedPool, PoolState } from 'contexts/Pools/types';
+import { BondedPool } from 'contexts/Pools/types';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
@@ -100,11 +100,11 @@ export const Forms = forwardRef((props: any, ref: any) => {
   const poolStateFromTask = (s: string) => {
     switch (s) {
       case 'destroy_pool':
-        return PoolState.Destroy;
+        return 'destroying';
       case 'lock_pool':
-        return PoolState.Block;
+        return 'blocked';
       default:
-        return PoolState.Open;
+        return 'open';
     }
   };
 
@@ -122,13 +122,13 @@ export const Forms = forwardRef((props: any, ref: any) => {
         tx = api.tx.nominationPools.setMetadata(poolId, metadata);
         break;
       case 'destroy_pool':
-        tx = api.tx.nominationPools.setState(poolId, PoolState.Destroy);
+        tx = api.tx.nominationPools.setState(poolId, 'destroying');
         break;
       case 'unlock_pool':
-        tx = api.tx.nominationPools.setState(poolId, PoolState.Open);
+        tx = api.tx.nominationPools.setState(poolId, 'open');
         break;
       case 'lock_pool':
-        tx = api.tx.nominationPools.setState(poolId, PoolState.Block);
+        tx = api.tx.nominationPools.setState(poolId, 'blocked');
         break;
       default:
         tx = null;
