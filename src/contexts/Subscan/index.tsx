@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ApiEndpoints, ApiSubscanKey } from 'consts';
-import { PluginsContextInterface } from 'contexts/Plugins/types';
 import React, { useEffect, useState } from 'react';
 import { AnyApi, AnySubscan } from 'types';
 import { useApi } from '../Api';
@@ -23,7 +22,7 @@ export const SubscanProvider = ({
   children: React.ReactNode;
 }) => {
   const { network, isReady } = useApi();
-  const { plugins, getPlugins }: PluginsContextInterface = usePlugins();
+  const { plugins, getPlugins } = usePlugins();
   const { activeAccount } = useConnect();
 
   // store fetched payouts from Subscan

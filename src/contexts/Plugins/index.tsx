@@ -21,17 +21,21 @@ export const PluginsProvider = ({
   // get initial plugins
   const getAvailablePlugins = () => {
     // get plugins config from local storage
-    const _plugins: any = localStorageOrDefault('plugins', PluginsList, true);
+    const localPlugins: any = localStorageOrDefault(
+      'plugins',
+      PluginsList,
+      true
+    );
 
     // if fiat is disabled, remove binance_spot service
     const DISABLE_FIAT = Number(process.env.REACT_APP_DISABLE_FIAT ?? 0);
-    if (DISABLE_FIAT && _plugins.includes('binance_spot')) {
-      const index = _plugins.indexOf('binance_spot');
+    if (DISABLE_FIAT && localPlugins.includes('binance_spot')) {
+      const index = localPlugins.indexOf('binance_spot');
       if (index !== -1) {
-        _plugins.splice(index, 1);
+        localPlugins.splice(index, 1);
       }
     }
-    return _plugins;
+    return localPlugins;
   };
 
   // plugins
@@ -42,17 +46,17 @@ export const PluginsProvider = ({
    * Plugin toggling
    */
   const togglePlugin = (key: string) => {
-    let _plugins = [...plugins];
-    const found = _plugins.find((item) => item === key);
+    let localPlugins = [...plugins];
+    const found = localPlugins.find((item) => item === key);
 
     if (found) {
-      _plugins = _plugins.filter((_s) => _s !== key);
+      localPlugins = localPlugins.filter((_s) => _s !== key);
     } else {
-      _plugins.push(key);
+      localPlugins.push(key);
     }
 
-    localStorage.setItem('plugins', JSON.stringify(_plugins));
-    setStateWithRef(_plugins, setPlugins, pluginsRef);
+    localStorage.setItem('plugins', JSON.stringify(localPlugins));
+    setStateWithRef(localPlugins, setPlugins, pluginsRef);
   };
 
   const getPlugins = () => {

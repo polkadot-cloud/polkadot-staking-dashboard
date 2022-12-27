@@ -35,7 +35,7 @@ export const TipsThresholdSmall = 750;
 export const TipsThresholdMedium = 1200;
 
 /*
- * Toggle-able plugins
+ * Available plugins
  */
 export const PluginsList = ['subscan', 'binance_spot', 'tips'];
 
