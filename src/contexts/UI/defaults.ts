@@ -5,18 +5,15 @@ import { UIContextInterface } from './types';
 
 export const defaultUIContext: UIContextInterface = {
   // eslint-disable-next-line
-  setSideMenu: (v) => {},
+  setSideMenu: (v) => { },
   // eslint-disable-next-line
-  setUserSideMenuMinimised: (v) => {},
+  setUserSideMenuMinimised: (v) => { },
   // eslint-disable-next-line
-  toggleService: (k) => {},
-  getServices: () => [],
-  // eslint-disable-next-line
-  setContainerRefs: (v) => {},
+  setContainerRefs: (v) => { },
   sideMenuOpen: 0,
   userSideMenuMinimised: 0,
   sideMenuMinimised: 0,
-  services: [],
+  // services: [],
   containerRefs: {},
   isSyncing: false,
   networkSyncing: false,
