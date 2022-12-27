@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { ServiceList, SideMenuStickyThreshold } from 'consts';
+import { SideMenuStickyThreshold } from 'consts';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import React, { useEffect, useRef, useState } from 'react';
@@ -38,22 +38,6 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   // set whether app is syncing.ncludes workers (active nominations).
   const [isSyncing, setIsSyncing] = useState(false);
 
-  // get initial services
-  const getAvailableServices = () => {
-    // get services config from local storage
-    const _services: any = localStorageOrDefault('services', ServiceList, true);
-
-    // if fiat is disabled, remove binance_spot service
-    const DISABLE_FIAT = Number(process.env.REACT_APP_DISABLE_FIAT ?? 0);
-    if (DISABLE_FIAT && _services.includes('binance_spot')) {
-      const index = _services.indexOf('binance_spot');
-      if (index !== -1) {
-        _services.splice(index, 1);
-      }
-    }
-    return _services;
-  };
-
   // get side menu minimised state from local storage, default to not
   const _userSideMenuMinimised = Number(
     localStorageOrDefault('side_menu_minimised', 0)
@@ -78,10 +62,6 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       ? 1
       : userSideMenuMinimisedRef.current
   );
-
-  // services
-  const [services, setServices] = useState(getAvailableServices());
-  const servicesRef = useRef(services);
 
   // resize side menu callback
   const resizeCallback = () => {
@@ -162,27 +142,6 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     setSideMenuOpen(v);
   };
 
-  /*
-   * Service toggling
-   */
-  const toggleService = (key: string) => {
-    let _services = [...services];
-    const found = _services.find((item) => item === key);
-
-    if (found) {
-      _services = _services.filter((_s) => _s !== key);
-    } else {
-      _services.push(key);
-    }
-
-    localStorage.setItem('services', JSON.stringify(_services));
-    setStateWithRef(_services, setServices, servicesRef);
-  };
-
-  const getServices = () => {
-    return servicesRef.current;
-  };
-
   const [containerRefs, _setContainerRefs] = useState({});
   const setContainerRefs = (v: any) => {
     _setContainerRefs(v);
@@ -193,13 +152,10 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         setSideMenu,
         setUserSideMenuMinimised,
-        toggleService,
-        getServices,
         setContainerRefs,
         sideMenuOpen,
         userSideMenuMinimised: userSideMenuMinimisedRef.current,
         sideMenuMinimised,
-        services: servicesRef.current,
         isSyncing,
         networkSyncing,
         poolsSyncing,

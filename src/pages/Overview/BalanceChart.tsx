@@ -8,8 +8,8 @@ import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { Lock } from 'contexts/Balances/types';
 import { useConnect } from 'contexts/Connect';
+import { usePlugins } from 'contexts/Plugins';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useUi } from 'contexts/UI';
 import usePrices from 'library/Hooks/usePrices';
 import OpenHelpIcon from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
@@ -28,7 +28,7 @@ export const BalanceChart = () => {
     network: { units, unit, name },
   } = useApi();
   const prices = usePrices();
-  const { services } = useUi();
+  const { plugins } = usePlugins();
   const { activeAccount } = useConnect();
   const { getAccountBalance, existentialAmount, getAccountLocks } =
     useBalances();
@@ -113,7 +113,7 @@ export const BalanceChart = () => {
           <span className="amount">{humanNumber(totalBalance)}</span>&nbsp;
           {unit}
           <span className="fiat">
-            {services.includes('binance_spot') && (
+            {plugins.includes('binance_spot') && (
               <>&nbsp;{usdFormatter.format(Number(freeFiat))}</>
             )}
           </span>

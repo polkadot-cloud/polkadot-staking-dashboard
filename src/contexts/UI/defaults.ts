@@ -9,14 +9,10 @@ export const defaultUIContext: UIContextInterface = {
   // eslint-disable-next-line
   setUserSideMenuMinimised: (v) => {},
   // eslint-disable-next-line
-  toggleService: (k) => {},
-  getServices: () => [],
-  // eslint-disable-next-line
   setContainerRefs: (v) => {},
   sideMenuOpen: 0,
   userSideMenuMinimised: 0,
   sideMenuMinimised: 0,
-  services: [],
   containerRefs: {},
   isSyncing: false,
   networkSyncing: false,

@@ -4,8 +4,8 @@
 import BN from 'bn.js';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
+import { usePlugins } from 'contexts/Plugins';
 import { useSubscan } from 'contexts/Subscan';
-import { useUi } from 'contexts/UI';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
@@ -34,7 +34,7 @@ export const Overview = () => {
   const { network } = useApi();
   const { units } = network;
   const { payouts, poolClaims } = useSubscan();
-  const { services } = useUi();
+  const { plugins } = usePlugins();
   const { lastReward } = formatRewardsForGraphs(
     14,
     1,
@@ -73,7 +73,7 @@ export const Overview = () => {
         <SupplyStakedStatBox />
         <ActiveEraStatBox />
       </StatBoxList>
-      {services.includes('tips') && (
+      {plugins.includes('tips') && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <Tips />
         </PageRowWrapper>
