@@ -18,7 +18,7 @@ export const Settings = () => {
     <>
       <Title title={t('settings')} />
       <PaddingWrapper>
-        <h4>{t('toggleServices')}</h4>
+        <h4>{t('togglePlugins')}</h4>
         <StatusButton
           checked={plugins.includes('subscan')}
           label="Subscan API"

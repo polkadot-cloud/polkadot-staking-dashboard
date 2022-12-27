@@ -142,7 +142,7 @@
     "subscanDisabled": "Subscan Disabled",
     "total": "Total",
     "toggleFeatures": "Toggle Features",
-    "toggleServices": "Toggle Services",
+    "togglePlugins": "Toggle Plugins",
     "updateName": "Update the public name of the pool.",
     "updateRewardDestination": "Update Reward Destination",
     "unbond": "Unbond",
