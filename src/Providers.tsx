@@ -15,6 +15,7 @@ import { ModalProvider } from 'contexts/Modal';
 import { NetworkMetricsProvider } from 'contexts/Network';
 import { NotificationsProvider } from 'contexts/Notifications';
 import { OverlayProvider } from 'contexts/Overlay';
+import { PluginsProvider } from 'contexts/Plugins';
 import { ActivePoolsProvider } from 'contexts/Pools/ActivePools';
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools';
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers';
@@ -80,6 +81,7 @@ export const Providers = withProviders(
   ValidatorsProvider,
   FastUnstakeProvider,
   UIProvider,
+  PluginsProvider,
   SetupProvider,
   SubscanProvider,
   MenuProvider,
