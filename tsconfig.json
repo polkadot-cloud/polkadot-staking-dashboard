@@ -27,5 +27,5 @@
   },
   "include": [
     "src"
-  ],
+, ".scripts/check_order.js", ".scripts/validate.js"  ],
 }
