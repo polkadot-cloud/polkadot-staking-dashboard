@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
-import { FilterType } from 'contexts/Filters/types';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { StakingContext } from 'contexts/Staking';
@@ -47,8 +46,8 @@ export const PoolListInner = ({
   const { getFilters, setMultiFilters, getSearchTerm, setSearchTerm } =
     useFilters();
   const { applyFilter } = usePoolFilters();
-  const includes = getFilters(FilterType.Include, 'pools');
-  const excludes = getFilters(FilterType.Exclude, 'pools');
+  const includes = getFilters('include', 'pools');
+  const excludes = getFilters('exclude', 'pools');
   const searchTerm = getSearchTerm('pools');
 
   // current page
@@ -123,10 +122,10 @@ export const PoolListInner = ({
   // set default filters
   useEffect(() => {
     if (defaultFilters?.includes?.length) {
-      setMultiFilters(FilterType.Include, 'pools', defaultFilters?.includes);
+      setMultiFilters('include', 'pools', defaultFilters?.includes);
     }
     if (defaultFilters?.excludes?.length) {
-      setMultiFilters(FilterType.Exclude, 'pools', defaultFilters?.excludes);
+      setMultiFilters('exclude', 'pools', defaultFilters?.excludes);
     }
   }, []);
 

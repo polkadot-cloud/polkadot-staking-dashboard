@@ -13,7 +13,6 @@ import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { PoolState } from 'contexts/Pools/types';
 import { useList } from 'library/List/context';
 import { Identity } from 'library/ListItem/Labels/Identity';
 import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded';
@@ -42,11 +41,11 @@ export const Member = (props: any) => {
   const { who, batchKey, batchIndex } = props;
 
   const canUnbondBlocked =
-    state === PoolState.Block &&
+    state === 'blocked' &&
     (isOwner() || isStateToggler()) &&
     ![root, stateToggler].includes(who);
 
-  const canUnbondDestroying = state === PoolState.Destroy && who !== depositor;
+  const canUnbondDestroying = state === 'destroying' && who !== depositor;
 
   const poolMembers = meta[batchKey]?.poolMembers ?? [];
   const member = poolMembers[batchIndex] ?? null;

@@ -15,12 +15,14 @@ import { ModalProvider } from 'contexts/Modal';
 import { NetworkMetricsProvider } from 'contexts/Network';
 import { NotificationsProvider } from 'contexts/Notifications';
 import { OverlayProvider } from 'contexts/Overlay';
+import { PluginsProvider } from 'contexts/Plugins';
 import { ActivePoolsProvider } from 'contexts/Pools/ActivePools';
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools';
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers';
 import { PoolMembershipsProvider } from 'contexts/Pools/PoolMemberships';
 import { PoolsConfigProvider } from 'contexts/Pools/PoolsConfig';
 import { SessionEraProvider } from 'contexts/SessionEra';
+import { SetupProvider } from 'contexts/Setup';
 import { StakingProvider } from 'contexts/Staking';
 import { SubscanProvider } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
@@ -79,6 +81,8 @@ export const Providers = withProviders(
   ValidatorsProvider,
   FastUnstakeProvider,
   UIProvider,
+  PluginsProvider,
+  SetupProvider,
   SubscanProvider,
   MenuProvider,
   TooltipProvider,

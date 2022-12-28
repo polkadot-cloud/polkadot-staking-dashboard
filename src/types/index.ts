@@ -7,16 +7,7 @@ import React, { FunctionComponent, SVGProps } from 'react';
 
 export type Fn = () => void;
 
-export enum NetworkName {
-  Polkadot = 'polkadot',
-  Kusama = 'kusama',
-  Westend = 'westend',
-}
-
-export enum Toggle {
-  Open = 'open',
-  Closed = 'closed',
-}
+export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
 export interface Networks {
   [key: string]: Network;

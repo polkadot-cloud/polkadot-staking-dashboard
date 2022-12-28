@@ -40,12 +40,12 @@ export const FiltersProvider = ({
 
   // Get stored includes or excludes for a group.
   const getFilters = (t: FilterType, g: string): Array<string> | null => {
-    const current = t === FilterType.Exclude ? excludes : includes;
+    const current = t === 'exclude' ? excludes : includes;
     return current.find((e: FilterItem) => e.key === g)?.filters || null;
   };
 
   const setFilters = (t: FilterType, n: FilterItems) => {
-    if (t === FilterType.Exclude) {
+    if (t === 'exclude') {
       setExcludes(n);
     } else {
       setIncludes(n);
@@ -55,7 +55,7 @@ export const FiltersProvider = ({
   // Toggle a filter for a group.
   // Adds the group to `excludes` or `includes` if it does not already exist.
   const toggleFilter = (t: FilterType, g: string, f: string) => {
-    const current = t === FilterType.Exclude ? excludes : includes;
+    const current = t === 'exclude' ? excludes : includes;
     const exists = getFilters(t, g);
 
     if (!exists) {
@@ -84,7 +84,7 @@ export const FiltersProvider = ({
 
   // Sets an array of filters to a group.
   const setMultiFilters = (t: FilterType, g: string, fs: Array<string>) => {
-    const current = t === FilterType.Exclude ? excludes : includes;
+    const current = t === 'exclude' ? excludes : includes;
     const exists = getFilters(t, g);
 
     if (!exists) {
@@ -147,7 +147,7 @@ export const FiltersProvider = ({
 
   // resets excludes for a given group
   const resetFilters = (t: FilterType, g: string) => {
-    const current = t === FilterType.Exclude ? excludes : includes;
+    const current = t === 'exclude' ? excludes : includes;
     setFilters(
       t,
       [...current].filter((e: FilterItem) => e.key !== g)

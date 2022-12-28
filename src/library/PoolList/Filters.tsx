@@ -11,7 +11,6 @@ import {
   ButtonSecondary,
 } from '@rossbulat/polkadot-dashboard-ui';
 import { useFilters } from 'contexts/Filters';
-import { FilterType } from 'contexts/Filters/types';
 import { useOverlay } from 'contexts/Overlay';
 import { Container } from 'library/Filter/Container';
 import { Item } from 'library/Filter/Item';
@@ -26,8 +25,8 @@ export const Filters = () => {
   const { openOverlayWith } = useOverlay();
   const { t } = useTranslation('library');
 
-  const includes = getFilters(FilterType.Include, 'pools');
-  const excludes = getFilters(FilterType.Exclude, 'pools');
+  const includes = getFilters('include', 'pools');
+  const excludes = getFilters('exclude', 'pools');
   const hasFilters = includes?.length || excludes?.length;
 
   // scroll to top of the window on every filter.
@@ -49,8 +48,8 @@ export const Filters = () => {
         <ButtonSecondary
           text={t('clear')}
           onClick={() => {
-            resetFilters(FilterType.Include, 'pools');
-            resetFilters(FilterType.Exclude, 'pools');
+            resetFilters('include', 'pools');
+            resetFilters('exclude', 'pools');
           }}
           disabled={!hasFilters}
         />
@@ -65,7 +64,7 @@ export const Filters = () => {
               icon={faCheck}
               transform="grow-2"
               onClick={() => {
-                toggleFilter(FilterType.Include, 'pools', e);
+                toggleFilter('include', 'pools', e);
               }}
             />
           ))}
@@ -76,7 +75,7 @@ export const Filters = () => {
               icon={faBan}
               transform="grow-0"
               onClick={() => {
-                toggleFilter(FilterType.Exclude, 'pools', e);
+                toggleFilter('exclude', 'pools', e);
               }}
             />
           ))}

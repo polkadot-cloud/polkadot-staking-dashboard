@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
-import { useUi } from 'contexts/UI';
+import { usePlugins } from 'contexts/Plugins';
 import { useOutsideAlerter } from 'library/Hooks';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useEffect, useRef, useState } from 'react';
@@ -11,7 +11,7 @@ import { Status } from './Status';
 import { NetworkInfo, Separator, Summary, Wrapper } from './Wrappers';
 
 export const NetworkBar = () => {
-  const { services } = useUi();
+  const { plugins } = usePlugins();
   const { network, isLightClient } = useApi();
   const prices = usePrices();
   const { t } = useTranslation('library');
@@ -91,7 +91,7 @@ export const NetworkBar = () => {
         </section>
         <section>
           <div className="hide-small">
-            {services.includes('binance_spot') && (
+            {plugins.includes('binance_spot') && (
               <>
                 <div className="stat">
                   <span

@@ -3,10 +3,7 @@
 
 import { AnyFunction, AnyJson } from 'types';
 
-export enum FilterType {
-  Exclude,
-  Include,
-}
+export type FilterType = 'exclude' | 'include';
 
 export interface FiltersContextInterface {
   getFilters: (t: FilterType, g: string) => Array<string> | null;

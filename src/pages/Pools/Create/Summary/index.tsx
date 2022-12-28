@@ -11,10 +11,9 @@ import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useSetup } from 'contexts/Setup';
+import { defaultPoolSetup } from 'contexts/Setup/defaults';
 import { useTxFees } from 'contexts/TxFees';
-import { useUi } from 'contexts/UI';
-import { defaultPoolSetup } from 'contexts/UI/defaults';
-import { SetupType } from 'contexts/UI/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -30,7 +29,7 @@ export const Summary = (props: SetupStepProps) => {
   const { api, network } = useApi();
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getSetupProgress, setActiveAccountSetup } = useUi();
+  const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const { stats } = usePoolsConfig();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
@@ -39,7 +38,7 @@ export const Summary = (props: SetupStepProps) => {
   const { txFeesValid } = useTxFees();
   const { t } = useTranslation('pages');
 
-  const setup = getSetupProgress(SetupType.Pool, activeAccount);
+  const setup = getSetupProgress('pool', activeAccount);
 
   const { metadata, bond, roles, nominations } = setup;
 
@@ -87,7 +86,7 @@ export const Summary = (props: SetupStepProps) => {
       addToPoolMembers(member);
 
       // reset localStorage setup progress
-      setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);
+      setActiveAccountSetup('pool', defaultPoolSetup);
     },
   });
 
@@ -97,7 +96,7 @@ export const Summary = (props: SetupStepProps) => {
         thisSection={section}
         complete={null}
         title={t('pools.summary') || ''}
-        setupType={SetupType.Pool}
+        setupType="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
