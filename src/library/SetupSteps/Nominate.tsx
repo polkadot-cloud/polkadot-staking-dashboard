@@ -25,7 +25,7 @@ export const Nominate = (props: NominationsProps) => {
     return getSetupProgress(setupType, activeAccount);
   };
 
-  // handler for updating bond
+  // handler for updating setup.bond
   const handleSetupUpdate = (value: any) => {
     setActiveAccountSetup(setupType, value);
   };
