@@ -85,12 +85,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint ./src",
-    "lint:fix": "eslint ./src --fix",
-    "lints": "eslint ./.scripts --fix",
-    "prettier": "npx prettier --check ./src",
-    "prettier:write": "npx prettier --write ./src",
-    "locale": "node ./.scripts/validate.js",
+    "lint": "eslint ./src --fix && npx prettier --write ./src",
+    "lint:scripts": "npx prettier --write ./.scripts",
     "order": "node ./.scripts/order.js"
   },
   "browserslist": {
