@@ -103,11 +103,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "/",
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "node": true
-    }
-  }
+  "homepage": "/"
 }

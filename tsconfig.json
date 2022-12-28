@@ -26,8 +26,6 @@
     ],
   },
   "include": [
-    "src",
-    ".scripts/order.js",
-    ".scripts/validate.js"
+    "src"
   ],
 }
