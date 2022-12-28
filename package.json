@@ -87,10 +87,11 @@
     "eject": "react-scripts eject",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
+    "lints": "eslint ./.scripts --fix",
     "prettier": "npx prettier --check ./src",
     "prettier:write": "npx prettier --write ./src",
-    "locale": "node ./src/locale/validate.js",
-    "order": "node ./src/locale/check_order.js"
+    "locale": "node ./.scripts/validate.js",
+    "order": "node ./.scripts/order.js"
   },
   "browserslist": {
     "production": [
@@ -106,5 +107,11 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "/"
+  "homepage": "/",
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true
+    }
+  }
 }

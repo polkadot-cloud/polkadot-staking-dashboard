@@ -1,29 +1,30 @@
 const fs = require('fs');
 const path = require('path');
-const languageDir = (path.join(__dirname, '..', 'src', 'locale'));
+
+const languageDir = path.join(__dirname, '..', 'src', 'locale');
+console.log(languageDir);
 
 // order keys of a json object.
 const orderKeysAlphabetically = (o) => {
-  const ordered = Object.keys(o).sort().reduce(
-    (obj, key) => { 
-      obj[key] = o[key]; 
+  const ordered = Object.keys(o)
+    .sort()
+    .reduce((obj, key) => {
+      obj[key] = o[key];
       return obj;
-    }, 
-    {}
-  );
+    }, {});
   return ordered;
-}
+};
 
 // check if value is an object. Do not count arrays as objects.
 const isObject = (o) => {
-  if(Array.isArray(o)) {
+  if (Array.isArray(o)) {
     return false;
   }
   if (typeof o === 'object') {
     return true;
   }
   return false;
-}
+};
 
 // order keys of object
 const orderKeys = (json) => {
@@ -40,7 +41,7 @@ const orderKeys = (json) => {
     }
   });
   return jsonOrdered;
-}
+};
 
 // get all language paths to re-order
 const languages = fs
@@ -49,7 +50,7 @@ const languages = fs
   .map((dirent) => dirent.name);
 
 // for each language path
-for (let lng of languages) {
+for (const lng of languages) {
   // concat lng to directory to get language path
   const pathToLanguage = path.join(languageDir, `/${lng}`);
 
@@ -59,7 +60,7 @@ for (let lng of languages) {
       return;
     }
     files.forEach((file) => {
-      let json = JSON.parse(
+      const json = JSON.parse(
         fs.readFileSync(path.join(pathToLanguage, file)).toString()
       );
 
@@ -69,4 +70,4 @@ for (let lng of languages) {
       // TODO: write the updated JSON as a string back into file.
     });
   });
-};
+}

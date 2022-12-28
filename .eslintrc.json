@@ -1,7 +1,10 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true,
+    "es6": true,
+    "commonjs": true
   },
   "extends": [
     "eslint:recommended",
@@ -21,7 +24,11 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["react", "@typescript-eslint", "prefer-arrow-functions"],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "prefer-arrow-functions"
+  ],
   "rules": {
     "import/no-webpack-loader-syntax": "off",
     "react/require-default-props": "off",
@@ -51,11 +58,16 @@
     "@typescript-eslint/ban-ts-comment": "off",
     "no-nested-ternary": "off",
     "no-shadow": "off",
-    "semi": [2, "always"],
+    "semi": [
+      2,
+      "always"
+    ],
     "react/jsx-filename-extension": [
       "warn",
       {
-        "extensions": [".tsx"]
+        "extensions": [
+          ".tsx"
+        ]
       }
     ],
     "import/extensions": [
@@ -66,7 +78,9 @@
         "tsx": "never"
       }
     ],
-    "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/no-shadow": [
+      "error"
+    ],
     "prefer-arrow-functions/prefer-arrow-functions": [
       "warn",
       {
