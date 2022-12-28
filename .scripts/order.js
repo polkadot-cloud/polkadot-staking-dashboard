@@ -59,21 +59,20 @@ for (const lng of languages) {
       return;
     }
     files.forEach((file) => {
+      const pathToFile = path.join(pathToLanguage, file);
+     
+      // get file in raw JSOn
       const json = JSON.parse(
-        fs.readFileSync(path.join(pathToLanguage, file)).toString()
+        fs.readFileSync(pathToFile).toString()
       );
-
       // order json object alphabetically
       const orderedJson = orderKeys(json);
 
-      // TODO: write the updated JSON as a string back into file.
-      for (i in orderedJson) {
-        fs.writeFile(path.join(pathToLanguage, file), JSON.stringify(orderedJson[i]), function (err) {
-          if (err) { console.err(err); }
-          console.log(`----------Keys In ${pathToLanguage}/${file} Are Ordered Alphabetically-------------`);
-        })
-      }
-
+      // write the updated JSON as a string back into file.
+      fs.writeFile(pathToFile, JSON.stringify(orderedJson), function (err) {
+        if (err) { console.err(err); }
+        console.log(`----------Keys In ${pathToLanguage}/${file} Are Ordered Alphabetically-------------`);
+      });
     });
   });
 }
