@@ -61,15 +61,11 @@ for (const lng of languages) {
     }
     files.forEach((file) => {
       const pathToFile = path.join(pathToLanguage, file);
-
-      console.log(fs.readFileSync(pathToFile).toString());
-      console.log('---');
      
       // get file in raw JSOn
       const json = JSON.parse(
         fs.readFileSync(pathToFile).toString()
       );
-
 
       // order json object alphabetically
       const orderedJson = orderKeys(json);
