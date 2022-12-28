@@ -71,7 +71,7 @@ for (const lng of languages) {
       // write the updated JSON as a string back into file.
       fs.writeFile(
         pathToFile,
-        prettier.format(JSON.stringify({ ...orderedJson }), { parser: 'json' }),
+        prettier.format(JSON.stringify(orderedJson), { parser: 'json' }),
         function (err) {
           if (err) {
             console.err(err);
