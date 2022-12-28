@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const prettier = require("prettier");
 
 const languageDir = path.join(__dirname, '..', 'src', 'locale');
 
@@ -60,16 +61,22 @@ for (const lng of languages) {
     }
     files.forEach((file) => {
       const pathToFile = path.join(pathToLanguage, file);
+
+      console.log(fs.readFileSync(pathToFile).toString());
+      console.log('---');
      
       // get file in raw JSOn
       const json = JSON.parse(
         fs.readFileSync(pathToFile).toString()
       );
+
+
       // order json object alphabetically
       const orderedJson = orderKeys(json);
 
       // write the updated JSON as a string back into file.
-      fs.writeFile(pathToFile, JSON.stringify(orderedJson), function (err) {
+      fs.writeFile(pathToFile,  prettier.format(JSON.stringify({...orderedJson}), { parser: "json" }), function (err) {
+
         if (err) { console.err(err); }
         console.log(`----------Keys In ${pathToLanguage}/${file} Are Ordered Alphabetically-------------`);
       });
