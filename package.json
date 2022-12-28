@@ -87,7 +87,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint ./src --fix && npx prettier --write ./src",
     "lint:scripts": "npx prettier --write ./.scripts",
-    "order": "node ./.scripts/order.js"
+    "locale:order": "node ./.scripts/locale-order-keys.js"
   },
   "browserslist": {
     "production": [
