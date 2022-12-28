@@ -1,18 +1,5 @@
 {
   "tips": {
-    "module": {
-      "tips": "Tips",
-      "oneMoment": "One moment please",
-      "syncingWith": "Syncing with {{network}}",
-      "more": "More",
-      "close": "Close",
-      "dismissTips": "Dismiss Tips",
-      "dismissResult": "Dismissing tips will remove them from your overview.",
-      "reEnable": "Tips can be turned re-enabled from dashboard settings, that can be accessed via the cog icon in the bottom left corner of the side menu.",
-      "disableDashboardTips": "Disable Dashboard Tips",
-      "cancel": "Cancel",
-      "of": "of"
-    },
     "connectExtensions": [
       "Connect Extensions",
       "Connect your accounts to begin using Polkadot staking dashboard.",
@@ -21,22 +8,6 @@
         "Accounts are accessed via web extensions, that act as wallets. Your wallet is used to sign transactions that you submit within the dashboard.",
         "Connect your wallets from the Connect button at the top right of the dashboard, and select the account you wish to stake with to continue.",
         "Staking dashboard supports a range of extensions and wallets."
-      ]
-    ],
-    "recommendedNominator": [
-      "Recommended: Become a Nominator",
-      "You have enough {NETWORK_UNIT} to become a nominator.",
-      [
-        "You have enough {NETWORK_UNIT} to become a nominator and start earning rewards.",
-        "Nominating directly does however require you to actively check your backed validators."
-      ]
-    ],
-    "recommendedJoinPool": [
-      "Recommended: Join a Pool",
-      "Your account is best suited to join a pool.",
-      [
-        "Based on the amount of {NETWORK_UNIT} your account currently holds, joining a pool is the best way for you to start staking.",
-        "Joining a pool requires a minimum deposit of {MIN_POOL_JOIN_BOND} {NETWORK_UNIT}."
       ]
     ],
     "howToStake": [
@@ -48,22 +19,6 @@
         "Directly nominating requires you to bond {NETWORK_UNIT} and choose validators you wish to back, and to nominate up to {MAX_NOMINATIONS} of them. To earn rewards as a nominator, you currently need to bond at least {MIN_ACTIVE_BOND} {NETWORK_UNIT}.",
         "Joining a pool is much cheaper, requiring a minimum deposit of {MIN_POOL_JOIN_BOND} {NETWORK_UNIT}. Nominating validators is done on your behalf, and you simply claim rewards from the pool.",
         "Creating a pool is also possible, requiring a minimum of {MIN_POOL_CREATE_BOND} {NETWORK_UNIT}."
-      ]
-    ],
-    "managingNominations": [
-      "Managing Nominations",
-      "Be sure to check the performance of your nominations on a regular basis.",
-      [
-        "Be sure to check the performance of your nominations on a regular basis.",
-        "To maximise variety and a decentralised mix of validators, choose validators from a range of entities."
-      ]
-    ],
-    "monitoringPool": [
-      "Managing Pool Membership",
-      "It's  a good idea to check regularly whether your pool is actively earning rewards.",
-      [
-        "Pools will manage nominations on your behalf, but it is still a good idea to check regularly whether your pool is actively earning rewards.",
-        "Monitor your pool's status to ensure that it is performing well regularly, and consider joining another pool if you are not receiving any rewards."
       ]
     ],
     "joinAnotherPool": [
@@ -80,6 +35,51 @@
         "It is important to keep your pool actively nominating.",
         "If your pool is not earning rewards, members will be tempted to leave and join another pool.",
         "Your root and nominator roles are important for managing your nominations. If nominations are not performing well, choose different ones to increase your pool's chances of earning rewards."
+      ]
+    ],
+    "managingNominations": [
+      "Managing Nominations",
+      "Be sure to check the performance of your nominations on a regular basis.",
+      [
+        "Be sure to check the performance of your nominations on a regular basis.",
+        "To maximise variety and a decentralised mix of validators, choose validators from a range of entities."
+      ]
+    ],
+    "module": {
+      "cancel": "Cancel",
+      "close": "Close",
+      "disableDashboardTips": "Disable Dashboard Tips",
+      "dismissResult": "Dismissing tips will remove them from your overview.",
+      "dismissTips": "Dismiss Tips",
+      "more": "More",
+      "of": "of",
+      "oneMoment": "One moment please",
+      "reEnable": "Tips can be turned re-enabled from dashboard settings, that can be accessed via the cog icon in the bottom left corner of the side menu.",
+      "syncingWith": "Syncing with {{network}}",
+      "tips": "Tips"
+    },
+    "monitoringPool": [
+      "Managing Pool Membership",
+      "It's  a good idea to check regularly whether your pool is actively earning rewards.",
+      [
+        "Pools will manage nominations on your behalf, but it is still a good idea to check regularly whether your pool is actively earning rewards.",
+        "Monitor your pool's status to ensure that it is performing well regularly, and consider joining another pool if you are not receiving any rewards."
+      ]
+    ],
+    "recommendedJoinPool": [
+      "Recommended: Join a Pool",
+      "Your account is best suited to join a pool.",
+      [
+        "Based on the amount of {NETWORK_UNIT} your account currently holds, joining a pool is the best way for you to start staking.",
+        "Joining a pool requires a minimum deposit of {MIN_POOL_JOIN_BOND} {NETWORK_UNIT}."
+      ]
+    ],
+    "recommendedNominator": [
+      "Recommended: Become a Nominator",
+      "You have enough {NETWORK_UNIT} to become a nominator.",
+      [
+        "You have enough {NETWORK_UNIT} to become a nominator and start earning rewards.",
+        "Nominating directly does however require you to actively check your backed validators."
       ]
     ],
     "reviewingPayouts": [

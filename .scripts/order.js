@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 
 const languageDir = path.join(__dirname, '..', 'src', 'locale');
-console.log(languageDir);
 
 // order keys of a json object.
 const orderKeysAlphabetically = (o) => {
@@ -68,6 +67,13 @@ for (const lng of languages) {
       const orderedJson = orderKeys(json);
 
       // TODO: write the updated JSON as a string back into file.
+      for (i in orderedJson) {
+        fs.writeFile(path.join(pathToLanguage, file), JSON.stringify(orderedJson[i]), function (err) {
+          if (err) { console.err(err); }
+          console.log(`----------Keys In ${pathToLanguage}/${file} Are Ordered Alphabetically-------------`);
+        })
+      }
+
     });
   });
 }
