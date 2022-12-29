@@ -7,7 +7,7 @@ const localeDir = join(__dirname, '..', 'src', 'locale');
 const ignoreSubstrings = ['_one', '_two', '_few', '_many', '_other'];
 
 // check whether a key ends with an `ignoreSubstring`.
-const endsWithIgnoreSubstring = (key) => 
+const endsWithIgnoreSubstring = (key) =>
   ignoreSubstrings.some((i) => key.endsWith(i));
 
 // locale directories, ommitting `en` - the langauge to check missing keys against.
@@ -30,18 +30,18 @@ const getDeepKeys = (obj) => {
       if (endsWithIgnoreSubstring(key)) {
         isSubstring = true;
         // get the substring up to the last underscore.
-        const rawKey = key.substring(0, key.lastIndexOf("_"));
+        const rawKey = key.substring(0, key.lastIndexOf('_'));
         // add the key to `keys` if it does not already exist.
-        if(!keys.includes(rawKey)) {
+        if (!keys.includes(rawKey)) {
           keys.push(rawKey);
         }
       }
     }
-    
+
     // full string, if not already added, go ahead and add.
-    if(!isSubstring) {
-      if(!keys.includes(key)) {
-      keys.push(key);
+    if (!isSubstring) {
+      if (!keys.includes(key)) {
+        keys.push(key);
       }
     }
 
