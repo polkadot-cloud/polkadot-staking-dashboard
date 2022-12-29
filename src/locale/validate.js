@@ -1,9 +1,14 @@
 const { join } = require('path');
 const fs = require('fs');
 
-const oneExp = new RegExp('^.+_one$');
-const otherExp = new RegExp('^.+_other$');
+// the suffixes of keys related to i18n functionality that should be ignored.
+const ignoreSubstrings = ['_one', '_two', '_few', '_many', '_other'];
 
+// check whether a key ends with an `ignoreSubstring`.
+const endsWithIgnoreSubstring = (key) => 
+  ignoreSubstrings.some((i) => key.endsWith(i));
+
+// locale directories, ommitting `en` - the langauge to check missing keys against.
 const getDirectories = (source) =>
   fs
     .readdirSync(source, { withFileTypes: true })
@@ -11,12 +16,34 @@ const getDirectories = (source) =>
     .filter((v) => v.name !== 'en')
     .map((dirent) => dirent.name);
 
+// recursive function to get all keys of a locale object.
 const getDeepKeys = (obj) => {
   let keys = [];
   for (const key in obj) {
-    if (!(oneExp.test(key) || otherExp.test(key))) {
-      keys.push(key);
+    let isSubstring = false;
+
+    // not number.
+    if (isNaN(key)) {
+      // check if key includes any special substrings.
+      if (endsWithIgnoreSubstring(key)) {
+        isSubstring = true;
+        // get the substring up to the last underscore.
+        const rawKey = key.substring(0, key.lastIndexOf("_"));
+        // add the key to `keys` if it does not already exist.
+        if(!keys.includes(rawKey)) {
+          keys.push(rawKey);
+        }
+      }
     }
+    
+    // full string, if not already added, go ahead and add.
+    if(!isSubstring) {
+      if(!keys.includes(key)) {
+      keys.push(key);
+      }
+    }
+
+    // if object, recursively get keys.
     if (typeof obj[key] === 'object') {
       const subkeys = getDeepKeys(obj[key]);
       keys = keys.concat(subkeys.map((subkey) => `${key}.${subkey}`));
