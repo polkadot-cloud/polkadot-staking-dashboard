@@ -31,3 +31,16 @@ export interface TextProps {
   secondaryValue?: string;
   helpKey: string;
 }
+
+export interface TimeleftProps {
+  label: string;
+  timeleft: RawTimeleft;
+  graph: {
+    value1: number;
+    value2: number;
+  };
+  tooltip?: string;
+  helpKey: string;
+}
+
+export type RawTimeleft = Array<Array<number | string>>;
