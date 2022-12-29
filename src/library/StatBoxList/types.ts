@@ -25,7 +25,9 @@ export interface PieProps {
 }
 
 export interface TextProps {
+  primary?: boolean;
   label: string;
   value: string;
+  secondaryValue?: string;
   helpKey: string;
 }

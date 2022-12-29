@@ -14,6 +14,7 @@ import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   FooterWrapper,
   NotesWrapper,
@@ -29,6 +30,7 @@ export const NominatePool = () => {
     useActivePools();
   const { txFeesValid } = useTxFees();
   const { nominations } = targets;
+  const { t } = useTranslation('modals');
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
@@ -66,38 +68,35 @@ export const NominatePool = () => {
   // warnings
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push('Your account is read only, and cannot sign transactions.');
+    warnings.push(t('readOnly'));
   }
   if (!nominations.length) {
-    warnings.push('You have no nominations set.');
+    warnings.push(t('noNominationsSet'));
   }
   if (!isOwner() || !isNominator()) {
-    warnings.push(`You do not have a nominator role in any pools.`);
+    warnings.push(`${t('noNominatorRole')}`);
   }
 
   return (
     <>
-      <Title title="Nominate" icon={faPlayCircle} />
+      <Title title={t('nominate')} icon={faPlayCircle} />
       <PaddingWrapper verticalOnly>
         <div style={{ padding: '0 1rem', width: '100%' }}>
           {warnings.map((text: string, index: number) => (
             <Warning key={`warning_${index}`} text={text} />
           ))}
-          <h2>
-            You Have {nominations.length} Nomination
-            {nominations.length === 1 ? '' : 's'}
+          <h2 className="title">
+            {t('haveNomination', { count: nominations.length })}
           </h2>
           <Separator />
           <NotesWrapper>
-            <p>
-              Once submitted, you will start nominating your chosen validators.
-            </p>
+            <p>{t('onceSubmitted')}</p>
             <EstimatedTxFee />
           </NotesWrapper>
           <FooterWrapper>
             <div>
               <ButtonSubmit
-                text={`Submit${submitting ? 'ting' : ''}`}
+                text={`${submitting ? t('submitting') : t('submit')}`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
                 onClick={() => submitTx()}

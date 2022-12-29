@@ -12,11 +12,11 @@ import {
   ButtonSecondary,
 } from '@rossbulat/polkadot-dashboard-ui';
 import { useFilters } from 'contexts/Filters';
-import { FilterType } from 'contexts/Filters/types';
 import { useOverlay } from 'contexts/Overlay';
 import { Container } from 'library/Filter/Container';
 import { Item } from 'library/Filter/Item';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { FilterValidators } from './FilterValidators';
 import { OrderValidators } from './OrderValidators';
@@ -26,9 +26,10 @@ export const Filters = () => {
   const { resetFilters, getFilters, getOrder, toggleFilter } = useFilters();
   const { includesToLabels, excludesToLabels, ordersToLabels } =
     useValidatorFilters();
+  const { t } = useTranslation('library');
 
-  const includes = getFilters(FilterType.Include, 'validators');
-  const excludes = getFilters(FilterType.Exclude, 'validators');
+  const includes = getFilters('include', 'validators');
+  const excludes = getFilters('exclude', 'validators');
   const hasFilters = includes?.length || excludes?.length;
   const order = getOrder('validators');
 
@@ -41,7 +42,7 @@ export const Filters = () => {
     <>
       <div style={{ marginBottom: '1.1rem' }}>
         <ButtonInvertRounded
-          text="Order"
+          text={t('order')}
           marginRight
           iconLeft={faArrowDownWideShort}
           onClick={() => {
@@ -49,7 +50,7 @@ export const Filters = () => {
           }}
         />
         <ButtonInvertRounded
-          text="Filter"
+          text={t('filter')}
           marginRight
           iconLeft={faFilterCircleXmark}
           onClick={() => {
@@ -57,10 +58,10 @@ export const Filters = () => {
           }}
         />
         <ButtonSecondary
-          text="Clear"
+          text={t('clear')}
           onClick={() => {
-            resetFilters(FilterType.Include, 'validators');
-            resetFilters(FilterType.Exclude, 'validators');
+            resetFilters('include', 'validators');
+            resetFilters('exclude', 'validators');
           }}
           disabled={!hasFilters}
         />
@@ -70,12 +71,12 @@ export const Filters = () => {
           <Item
             label={
               order === 'default'
-                ? 'Unordered'
-                : `Order: ${ordersToLabels[order]}`
+                ? t('unordered') || ''
+                : `${t('order') || ''}: ${ordersToLabels[order]}`
             }
             disabled
           />
-          {!hasFilters && <Item label="No filters" disabled />}
+          {!hasFilters && <Item label={t('noFilters') || ''} disabled />}
           {includes?.map((e: string, i: number) => (
             <Item
               key={`validator_include_${i}`}
@@ -83,7 +84,7 @@ export const Filters = () => {
               icon={faCheck}
               transform="grow-2"
               onClick={() => {
-                toggleFilter(FilterType.Include, 'validators', e);
+                toggleFilter('include', 'validators', e);
               }}
             />
           ))}
@@ -94,7 +95,7 @@ export const Filters = () => {
               icon={faBan}
               transform="grow-0"
               onClick={() => {
-                toggleFilter(FilterType.Exclude, 'validators', e);
+                toggleFilter('exclude', 'validators', e);
               }}
             />
           ))}

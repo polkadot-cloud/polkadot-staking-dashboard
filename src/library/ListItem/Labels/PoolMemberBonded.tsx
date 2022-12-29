@@ -4,6 +4,7 @@
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
+import { useTranslation } from 'react-i18next';
 import {
   humanNumber,
   planckBnToUnit,
@@ -15,6 +16,7 @@ export const PoolMemberBonded = (props: any) => {
   const { meta, batchKey, batchIndex } = props;
   const { network } = useApi();
   const { units, unit } = network;
+  const { t } = useTranslation('library');
 
   const poolMembers = meta[batchKey]?.poolMembers ?? [];
   const poolMember = poolMembers[batchIndex] ?? null;
@@ -41,14 +43,15 @@ export const PoolMemberBonded = (props: any) => {
     <>
       {!poolMember ? (
         <ValidatorStatusWrapper status="inactive">
-          <h5>Syncing...</h5>
+          <h5>{t('syncing')}...</h5>
         </ValidatorStatusWrapper>
       ) : (
         <>
           {bonded > 0 && (
             <ValidatorStatusWrapper status={status}>
               <h5>
-                Bonded: {humanNumber(toFixedIfNecessary(bonded, 3))} {unit}
+                {t('bonded')}: {humanNumber(toFixedIfNecessary(bonded, 3))}{' '}
+                {unit}
               </h5>
             </ValidatorStatusWrapper>
           )}
@@ -58,8 +61,8 @@ export const PoolMemberBonded = (props: any) => {
       {poolMember && totalUnbonding > 0 && (
         <ValidatorStatusWrapper status="inactive">
           <h5>
-            Unbonding {humanNumber(toFixedIfNecessary(totalUnbonding, 3))}{' '}
-            {unit}
+            {t('unbonding')}{' '}
+            {humanNumber(toFixedIfNecessary(totalUnbonding, 3))} {unit}
           </h5>
         </ValidatorStatusWrapper>
       )}

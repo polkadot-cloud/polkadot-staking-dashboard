@@ -6,7 +6,6 @@ import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { PoolState } from 'contexts/Pools/types';
 import { useUi } from 'contexts/UI';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
@@ -39,12 +38,12 @@ export const ManagePool = () => {
     <PageRowWrapper className="page-padding" noVerticalSpacer>
       <CardWrapper>
         {isSyncing ? (
-          <Nominations bondType="pool" nominator={activeAccount} />
-        ) : canNominate && !isNominating && state !== PoolState.Destroy ? (
+          <Nominations bondFor="pool" nominator={activeAccount} />
+        ) : canNominate && !isNominating && state !== 'destroying' ? (
           <>
             <CardHeaderWrapper withAction>
               <h3>
-                {t('pools.generate_nominations')}
+                {t('pools.generateNominations')}
                 <OpenHelpIcon helpKey="Nominations" />
               </h3>
               <div>
@@ -69,7 +68,7 @@ export const ManagePool = () => {
             />
           </>
         ) : (
-          <Nominations bondType="pool" nominator={nominator} />
+          <Nominations bondFor="pool" nominator={nominator} />
         )}
       </CardWrapper>
     </PageRowWrapper>

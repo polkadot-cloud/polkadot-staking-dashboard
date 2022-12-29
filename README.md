@@ -1,9 +1,12 @@
 # Polkadot Staking Dashboard
 
-## Deployment
-Staking dashboard is live on [staking.polkadot.network](https://staking.polkadot.network/dashboard)
+#### Staging (Latest Version):
+https://paritytech.github.io/polkadot-staking-dashboard
 
-<img width="1807" alt="Screenshot 2022-10-28 at 09 36 42" src="https://user-images.githubusercontent.com/13929023/198530973-0fff2049-da50-4786-96b9-035fa95dec43.png">
+#### Production:
+https://staking.polkadot.network
+
+<img width="1744" alt="Screenshot 2022-12-20 at 13 46 30" src="https://user-images.githubusercontent.com/13929023/208601280-5a06b7cb-141e-42c8-a278-50cd4dec018d.png">
 
 # Validator Operator Setup Guide
 

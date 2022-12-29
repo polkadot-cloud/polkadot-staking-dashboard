@@ -3,12 +3,14 @@
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { BondedPool } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
+import { useTranslation } from 'react-i18next';
 import { AnyFunction, AnyJson } from 'types';
 
 export const usePoolFilters = () => {
   const { meta } = useBondedPools();
   const { getNominationsStatusFromTargets } = useStaking();
   const { getPoolNominationStatusCode } = useBondedPools();
+  const { t } = useTranslation('library');
 
   /*
    * filterActive
@@ -44,7 +46,7 @@ export const usePoolFilters = () => {
    * Returns the updated filtered list.
    */
   const filterLocked = (list: any) => {
-    return list.filter((p: BondedPool) => p.state !== 'Blocked');
+    return list.filter((p: BondedPool) => p.state !== 'blocked');
   };
 
   /*
@@ -55,16 +57,16 @@ export const usePoolFilters = () => {
    * Returns the updated filtered list.
    */
   const filterDestroying = (list: any) => {
-    return list.filter((p: BondedPool) => p.state !== 'Destroying');
+    return list.filter((p: BondedPool) => p.state !== 'destroying');
   };
 
   const includesToLabels: { [key: string]: string } = {
-    active: 'Active Pools',
+    active: t('activePools'),
   };
 
   const excludesToLabels: { [key: string]: string } = {
-    locked: 'Locked Pools',
-    destroying: 'Destroying Pools',
+    locked: t('lockedPools'),
+    destroying: t('destroyingPools'),
   };
 
   const filterToFunction: { [key: string]: AnyFunction } = {

@@ -4,8 +4,8 @@
 import BN from 'bn.js';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
+import { usePlugins } from 'contexts/Plugins';
 import { useSubscan } from 'contexts/Subscan';
-import { useUi } from 'contexts/UI';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
@@ -22,20 +22,19 @@ import {
   TopBarWrapper,
 } from 'Wrappers';
 import { ActiveAccount } from './ActiveAccount';
-import BalanceGraph from './BalanceGraph';
+import { BalanceChart } from './BalanceChart';
 import { NetworkStats } from './NetworkSats';
 import Payouts from './Payouts';
-import Reserve from './Reserve';
 import ActiveEraStatBox from './Stats/ActiveEra';
-import { ActiveNominatorsStatBox } from './Stats/ActiveNominators';
-import TotalNominatorsStatBox from './Stats/TotalNominations';
+import HistoricalRewardsRateStatBox from './Stats/HistoricalRewardsRate';
+import SupplyStakedStatBox from './Stats/SupplyStaked';
 import { Tips } from './Tips';
 
 export const Overview = () => {
   const { network } = useApi();
   const { units } = network;
   const { payouts, poolClaims } = useSubscan();
-  const { services } = useUi();
+  const { plugins } = usePlugins();
   const { lastReward } = formatRewardsForGraphs(
     14,
     1,
@@ -45,8 +44,7 @@ export const Overview = () => {
   );
   const { i18n, t } = useTranslation('pages');
 
-  const PAYOUTS_HEIGHT = 410;
-  const BALANCE_HEIGHT = PAYOUTS_HEIGHT;
+  const PAYOUTS_HEIGHT = 390;
 
   let formatFrom = new Date();
   let formatTo = new Date();
@@ -71,11 +69,11 @@ export const Overview = () => {
         </TopBarWrapper>
       </PageRowWrapper>
       <StatBoxList>
-        <TotalNominatorsStatBox />
-        <ActiveNominatorsStatBox />
+        <HistoricalRewardsRateStatBox />
+        <SupplyStakedStatBox />
         <ActiveEraStatBox />
       </StatBoxList>
-      {services.includes('tips') && (
+      {plugins.includes('tips') && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <Tips />
         </PageRowWrapper>
@@ -87,9 +85,8 @@ export const Overview = () => {
           thresholdStickyMenu={SideMenuStickyThreshold}
           thresholdFullWidth={SectionFullWidthThreshold}
         >
-          <GraphWrapper style={{ minHeight: BALANCE_HEIGHT }} flex>
-            <BalanceGraph />
-            <Reserve />
+          <GraphWrapper minHeight={PAYOUTS_HEIGHT} flex>
+            <BalanceChart />
           </GraphWrapper>
         </RowSecondaryWrapper>
         <RowPrimaryWrapper
@@ -101,7 +98,7 @@ export const Overview = () => {
           <GraphWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
             <SubscanButton />
             <div className="head">
-              <h4>{t('overview.recent_payouts')}</h4>
+              <h4>{t('overview.recentPayouts')}</h4>
               <h2>
                 {lastReward === null
                   ? 0

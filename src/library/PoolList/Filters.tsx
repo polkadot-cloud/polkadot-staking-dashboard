@@ -11,11 +11,11 @@ import {
   ButtonSecondary,
 } from '@rossbulat/polkadot-dashboard-ui';
 import { useFilters } from 'contexts/Filters';
-import { FilterType } from 'contexts/Filters/types';
 import { useOverlay } from 'contexts/Overlay';
 import { Container } from 'library/Filter/Container';
 import { Item } from 'library/Filter/Item';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { usePoolFilters } from '../Hooks/usePoolFilters';
 import { FilterPools } from './FilterPools';
 
@@ -23,9 +23,10 @@ export const Filters = () => {
   const { resetFilters, getFilters, toggleFilter } = useFilters();
   const { includesToLabels, excludesToLabels } = usePoolFilters();
   const { openOverlayWith } = useOverlay();
+  const { t } = useTranslation('library');
 
-  const includes = getFilters(FilterType.Include, 'pools');
-  const excludes = getFilters(FilterType.Exclude, 'pools');
+  const includes = getFilters('include', 'pools');
+  const excludes = getFilters('exclude', 'pools');
   const hasFilters = includes?.length || excludes?.length;
 
   // scroll to top of the window on every filter.
@@ -37,7 +38,7 @@ export const Filters = () => {
     <>
       <div style={{ marginBottom: '1.1rem' }}>
         <ButtonInvertRounded
-          text="Filter"
+          text={t('filter')}
           marginRight
           iconLeft={faFilterCircleXmark}
           onClick={() => {
@@ -45,17 +46,17 @@ export const Filters = () => {
           }}
         />
         <ButtonSecondary
-          text="Clear"
+          text={t('clear')}
           onClick={() => {
-            resetFilters(FilterType.Include, 'pools');
-            resetFilters(FilterType.Exclude, 'pools');
+            resetFilters('include', 'pools');
+            resetFilters('exclude', 'pools');
           }}
           disabled={!hasFilters}
         />
       </div>
       <Container>
         <div className="items">
-          {!hasFilters && <Item label="No filters" disabled />}
+          {!hasFilters && <Item label={t('noFilters') || ''} disabled />}
           {includes?.map((e: string, i: number) => (
             <Item
               key={`pool_include_${i}`}
@@ -63,7 +64,7 @@ export const Filters = () => {
               icon={faCheck}
               transform="grow-2"
               onClick={() => {
-                toggleFilter(FilterType.Include, 'pools', e);
+                toggleFilter('include', 'pools', e);
               }}
             />
           ))}
@@ -74,7 +75,7 @@ export const Filters = () => {
               icon={faBan}
               transform="grow-0"
               onClick={() => {
-                toggleFilter(FilterType.Exclude, 'pools', e);
+                toggleFilter('exclude', 'pools', e);
               }}
             />
           ))}

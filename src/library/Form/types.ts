@@ -3,7 +3,9 @@
 
 import BN from 'bn.js';
 import { Balance } from 'contexts/Balances/types';
-import { ExtensionAccount, ExternalAccount } from 'contexts/Connect/types';
+import { ExternalAccount } from 'contexts/Connect/types';
+import { ExtensionAccount } from 'contexts/Extensions/types';
+import { BondFor } from 'types';
 
 export interface ExtensionAccountItem extends ExtensionAccount {
   active?: boolean;
@@ -43,7 +45,7 @@ export interface AccountSelectProps {
 export interface BondFeedbackProps {
   syncing?: boolean;
   setters: any;
-  bondType: string;
+  bondFor: BondFor;
   defaultBond: number | null;
   inSetup?: boolean;
   listenIsValid: { (v: boolean): void } | { (): void };
@@ -55,19 +57,19 @@ export interface BondFeedbackProps {
 }
 
 export interface BondInputProps {
+  freeBalance: number;
+  value: string;
+  defaultValue: string;
   syncing?: boolean;
   setters: any;
-  value: any;
-  defaultValue: number | string;
   disabled: boolean;
-  freeBalance: number;
   disableTxFeeUpdate?: boolean;
 }
 
 export interface UnbondFeedbackProps {
   setters: any;
-  bondType: string;
-  defaultBond: number | null;
+  bondFor: BondFor;
+  defaultBond?: number;
   inSetup?: boolean;
   listenIsValid: { (v: boolean): void } | { (): void };
   warnings?: string[];
@@ -77,7 +79,7 @@ export interface UnbondFeedbackProps {
 
 export interface UnbondInputProps {
   active: BN;
-  unbondToMin: number;
+  unbondToMin: BN;
   defaultValue: number | string;
   disabled: boolean;
   setters: any;

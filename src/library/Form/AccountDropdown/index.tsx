@@ -8,6 +8,7 @@ import { useTheme } from 'contexts/Themes';
 import { useCombobox, UseComboboxStateChange } from 'downshift';
 import Identicon from 'library/Identicon';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes, networkColors } from 'theme/default';
 import { remToUnit } from 'Utils';
 import { AccountDropdownProps, InputItem } from '../types';
@@ -23,6 +24,7 @@ export const AccountDropdown = ({
 }: AccountDropdownProps) => {
   // store input items
   const [inputItems, setInputItems] = useState<Array<InputItem>>(items);
+  const { t } = useTranslation('library');
 
   useEffect(() => {
     setInputItems(items);
@@ -53,7 +55,7 @@ export const AccountDropdown = ({
     <StyledDownshift>
       <div>
         <div className="label" {...c.getLabelProps()}>
-          Currently Selected:
+          {t('currentlySelected')}:
         </div>
         <div>
           <div className="current">
@@ -89,7 +91,7 @@ export const AccountDropdown = ({
               {c.selectedItem && (
                 <StyledController
                   onClick={() => c.reset()}
-                  aria-label="clear selection"
+                  aria-label={t('clearSelection')}
                 >
                   <FontAwesomeIcon transform="grow-2" icon={faTimes} />
                 </StyledController>
@@ -114,6 +116,7 @@ export const AccountDropdown = ({
 const DropdownItem = ({ c, item, index }: any) => {
   const { network } = useApi();
   const { mode } = useTheme();
+  const { t } = useTranslation('library');
 
   let color;
   let border;
@@ -142,7 +145,11 @@ const DropdownItem = ({ c, item, index }: any) => {
       <div className="icon">
         <Identicon value={item.address} size={26} />
       </div>
-      {!item.active && <span>Not Enough {network.unit}</span>}
+      {!item.active && (
+        <span>
+          {t('notEnough')} {network.unit}
+        </span>
+      )}
       <p>{item.name}</p>
     </div>
   );

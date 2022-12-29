@@ -15,6 +15,7 @@ import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit } from 'Utils';
 import { FooterWrapper, PaddingWrapper, Separator } from '../Wrappers';
 
@@ -28,6 +29,7 @@ export const ClaimReward = () => {
   let { unclaimedRewards } = selectedActivePool || {};
   unclaimedRewards = unclaimedRewards ?? new BN(0);
   const { claimType } = config;
+  const { t } = useTranslation('modals');
 
   // ensure selected payout is valid
   useEffect(() => {
@@ -69,7 +71,9 @@ export const ClaimReward = () => {
   return (
     <>
       <Title
-        title={`${claimType === 'bond' ? 'Bond' : 'Withdraw'} Rewards`}
+        title={`${claimType === 'bond' ? t('bond') : t('withdraw')} ${t(
+          'rewards'
+        )}`}
         icon={claimType === 'bond' ? faPlus : faShare}
       />
       <PaddingWrapper>
@@ -78,35 +82,26 @@ export const ClaimReward = () => {
             width: '100%',
           }}
         >
-          {!accountHasSigner(activeAccount) && (
-            <Warning text="Your account is read only, and cannot sign transactions." />
-          )}
-          {!unclaimedRewards?.gtn(0) && (
-            <Warning text="You have no rewards to claim." />
-          )}
-          <h2>
+          {!accountHasSigner(activeAccount) ? (
+            <Warning text={t('readOnly')} />
+          ) : null}
+          {!unclaimedRewards?.gtn(0) ? <Warning text={t('noRewards')} /> : null}
+          <h2 className="title">
             {planckBnToUnit(unclaimedRewards, units)} {unit}
           </h2>
           <Separator />
           <div className="notes">
             {claimType === 'bond' ? (
-              <p>
-                Once submitted, your rewards will be bonded back into the pool.
-                You own these additional bonded funds and will be able to
-                withdraw them at any time.
-              </p>
+              <p>{t('claimReward1')}</p>
             ) : (
-              <p>
-                Withdrawing rewards will immediately transfer them to your
-                account as free balance.
-              </p>
+              <p>{t('claimReward2')}</p>
             )}
             <EstimatedTxFee />
           </div>
           <FooterWrapper>
             <div>
               <ButtonSubmit
-                text={`Submit${submitting ? 'ting' : ''}`}
+                text={`${submitting ? t('submitting') : t('submit')}`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
                 onClick={() => submitTx()}

@@ -38,12 +38,7 @@ export const Pie = (props: PieProps) => {
                   value={stat?.value}
                   useLocaleString
                 />
-                {stat?.unit && (
-                  <>
-                    &nbsp;
-                    {stat?.unit}
-                  </>
-                )}
+                {stat?.unit && <>{stat?.unit}</>}
 
                 {showTotal && (
                   <span className="total">

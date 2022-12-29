@@ -7,7 +7,6 @@ import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useFilters } from 'contexts/Filters';
-import { FilterType } from 'contexts/Filters/types';
 import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { StakingContext } from 'contexts/Staking';
@@ -22,6 +21,7 @@ import { SearchInput } from 'library/List/SearchInput';
 import { Selectable } from 'library/List/Selectable';
 import { Validator } from 'library/ValidatorList/Validator';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { networkColors } from 'theme/default';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
@@ -36,6 +36,7 @@ export const ValidatorListInner = (props: any) => {
   const provider = useList();
   const modal = useModal();
   const { isSyncing } = useUi();
+  const { t } = useTranslation('library');
 
   // determine the nominator of the validator list.
   // By default this will be the activeAccount. But for pools,
@@ -55,8 +56,8 @@ export const ValidatorListInner = (props: any) => {
     clearSearchTerm,
   } = useFilters();
   const { applyFilter, applyOrder, applySearch } = useValidatorFilters();
-  const includes = getFilters(FilterType.Include, 'validators');
-  const excludes = getFilters(FilterType.Exclude, 'validators');
+  const includes = getFilters('include', 'validators');
+  const excludes = getFilters('exclude', 'validators');
   const order = getOrder('validators');
   const searchTerm = getSearchTerm('validators');
 
@@ -69,7 +70,7 @@ export const ValidatorListInner = (props: any) => {
     title,
     format,
     selectable,
-    bondType,
+    bondFor,
   }: any = props;
 
   const actions = props.actions ?? [];
@@ -139,23 +140,15 @@ export const ValidatorListInner = (props: any) => {
   useEffect(() => {
     if (allowFilters) {
       if (defaultFilters?.includes?.length) {
-        setMultiFilters(
-          FilterType.Include,
-          'validators',
-          defaultFilters?.includes
-        );
+        setMultiFilters('include', 'validators', defaultFilters?.includes);
       }
       if (defaultFilters?.excludes?.length) {
-        setMultiFilters(
-          FilterType.Exclude,
-          'validators',
-          defaultFilters?.excludes
-        );
+        setMultiFilters('exclude', 'validators', defaultFilters?.excludes);
       }
 
       return () => {
-        resetFilters(FilterType.Exclude, 'validators');
-        resetFilters(FilterType.Include, 'validators');
+        resetFilters('exclude', 'validators');
+        resetFilters('include', 'validators');
         resetOrder('validators');
         clearSearchTerm('validators');
       };
@@ -263,7 +256,7 @@ export const ValidatorListInner = (props: any) => {
     // ensure no duplicates
     filteredValidators = filteredValidators.filter(
       (value: any, index: any, self: any) =>
-        index === self.findIndex((t: any) => t.address === value.address)
+        index === self.findIndex((i: any) => i.address === value.address)
     );
 
     handleValidatorsFilterUpdate(filteredValidators);
@@ -279,9 +272,9 @@ export const ValidatorListInner = (props: any) => {
         <div>
           <h4>
             {title ||
-              `Dispalying ${validators.length} Validator${
-                validators.length === 1 ? '' : 's'
-              }`}
+              `${t('displayingValidators', {
+                count: validators.length,
+              })}`}
           </h4>
         </div>
         <div>
@@ -315,7 +308,7 @@ export const ValidatorListInner = (props: any) => {
         {allowSearch && (
           <SearchInput
             handleChange={handleSearchChange}
-            placeholder="Search Address or Identity"
+            placeholder={t('searchAddress')}
           />
         )}
 
@@ -363,7 +356,7 @@ export const ValidatorListInner = (props: any) => {
                       batchKey={batchKey}
                       format={format}
                       showMenu={showMenu}
-                      bondType={bondType}
+                      bondFor={bondFor}
                       inModal={inModal}
                     />
                   </motion.div>
@@ -372,9 +365,7 @@ export const ValidatorListInner = (props: any) => {
             </>
           ) : (
             <h4 style={{ marginTop: '1rem' }}>
-              {isSearching
-                ? 'No validators match this criteria.'
-                : 'No validators.'}
+              {isSearching ? t('noValidatorsMatch') : t('noValidators')}
             </h4>
           )}
         </MotionContainer>

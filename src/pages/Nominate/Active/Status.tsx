@@ -1,11 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-
+/* eslint-disable */
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import {
+  faBolt,
   faChevronCircleRight,
   faRedoAlt,
+  faSignOutAlt,
   faWallet,
 } from '@fortawesome/free-solid-svg-icons';
 import { BN } from 'bn.js';
@@ -13,11 +15,15 @@ import { PayeeStatus } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
+import { useFastUnstake } from 'contexts/FastUnstake';
 import { useModal } from 'contexts/Modal';
+import { useNetworkMetrics } from 'contexts/Network';
+import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
+import useUnstaking from 'library/Hooks/useUnstaking';
 import Stat from 'library/Stat';
 import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, rmCommas } from 'Utils';
@@ -26,16 +32,22 @@ import { Controller } from './Controller';
 
 export const Status = ({ height }: { height: number }) => {
   const { t } = useTranslation();
-  const { isReady, network } = useApi();
-  const { setOnNominatorSetup, getStakeSetupProgressPercent }: any = useUi();
-  const { openModalWith } = useModal();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { isSyncing } = useUi();
+  const { openModalWith } = useModal();
+  const { isReady, network } = useApi();
+  const { meta, validators } = useValidators();
+  const { getAccountNominations, getBondedAccount } = useBalances();
+  const { metrics } = useNetworkMetrics();
+  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { setOnNominatorSetup, getStakeSetupProgressPercent }: any = useSetup();
   const { getNominationsStatus, staking, inSetup, eraStakers } = useStaking();
-  const { getAccountNominations } = useBalances();
+  const { checking, isExposed } = useFastUnstake();
+  const { getFastUnstakeText, isUnstaking, isFastUnstaking } = useUnstaking();
+  const controller = getBondedAccount(activeAccount);
+
+  const { fastUnstakeErasToCheckPerBlock } = metrics;
   const { stakers } = eraStakers;
   const { payee } = staking;
-  const { meta, validators } = useValidators();
   const nominations = getAccountNominations(activeAccount);
   // get nomination status
   const nominationStatuses = getNominationsStatus();
@@ -84,40 +96,65 @@ export const Status = ({ height }: { height: number }) => {
 
   const getNominationStatus = () => {
     if (inSetup() || isSyncing) {
-      return t('nominate.not_nominating', { ns: 'pages' });
+      return t('nominate.notNominating', { ns: 'pages' });
     }
     if (!nominations.length) {
-      return t('nominate.no_nominations_set', { ns: 'pages' });
+      return t('nominate.noNominationsSet', { ns: 'pages' });
     }
     if (activeNominees.length) {
-      let str = t('nominate.nominating_and', { ns: 'pages' });
+      let str = t('nominate.nominatingAnd', { ns: 'pages' });
       if (earningRewards) {
-        str += ` ${t('nominate.earning_rewards', { ns: 'pages' })}`;
+        str += ` ${t('nominate.earningRewards', { ns: 'pages' })}`;
       } else {
-        str += ` ${t('nominate.not_earning_rewards', { ns: 'pages' })}`;
+        str += ` ${t('nominate.notEarningRewards', { ns: 'pages' })}`;
       }
       return str;
     }
-    return t('nominate.waiting_for_active_nominations', { ns: 'pages' });
+    return t('nominate.waitingForActiveNominations', { ns: 'pages' });
   };
 
   const getPayeeStatus = () => {
     if (inSetup()) {
-      return t('nominate.not_assigned', { ns: 'pages' });
+      return t('nominate.notAssigned', { ns: 'pages' });
     }
     if (payeeStatus) {
       return t(`payee.${payeeStatus?.toLowerCase()}`, { ns: 'base' });
     }
-    return t('nominate.not_assigned', { ns: 'pages' });
+    return t('nominate.notAssigned', { ns: 'pages' });
   };
 
-  let startTitle = t('nominate.start_nominating', { ns: 'pages' });
+  let startTitle = t('nominate.startNominating', { ns: 'pages' });
   if (inSetup()) {
     const progress = getStakeSetupProgressPercent(activeAccount);
     if (progress > 0) {
       startTitle += `: ${progress}%`;
     }
   }
+
+  const fastUnstakeText = getFastUnstakeText();
+  const regularUnstakeButton = {
+    title: t('nominate.unstake', { ns: 'pages' }),
+    icon: faSignOutAlt,
+    disabled: !isReady || isReadOnlyAccount(controller) || !activeAccount,
+    onClick: () => openModalWith('Unstake', {}, 'small'),
+  };
+
+  const fastUnstakeButton = {
+    disabled: checking,
+    title: fastUnstakeText,
+    icon: faBolt,
+    onClick: () => {
+      openModalWith('ManageFastUnstake', {}, 'small');
+    },
+  };
+
+  const unstakeButton =
+    fastUnstakeErasToCheckPerBlock > 0 &&
+    !activeNominees.length &&
+    (checking || !isExposed)
+      ? fastUnstakeButton
+      : regularUnstakeButton;
+
   return (
     <CardWrapper height={height}>
       <Stat
@@ -126,7 +163,9 @@ export const Status = ({ height }: { height: number }) => {
         stat={getNominationStatus()}
         buttons={
           !inSetup()
-            ? []
+            ? !isUnstaking && !isReadOnlyAccount(controller)
+              ? [unstakeButton]
+              : []
             : [
                 {
                   title: startTitle,
@@ -144,7 +183,7 @@ export const Status = ({ height }: { height: number }) => {
       />
       <Separator />
       <Stat
-        label={t('nominate.reward_destination', { ns: 'pages' })}
+        label={t('nominate.rewardDestination', { ns: 'pages' })}
         helpKey="Reward Destination"
         icon={
           (payee === null
@@ -164,7 +203,10 @@ export const Status = ({ height }: { height: number }) => {
                   icon: faWallet,
                   small: true,
                   disabled:
-                    inSetup() || isSyncing || isReadOnlyAccount(activeAccount),
+                    inSetup() ||
+                    isSyncing ||
+                    isReadOnlyAccount(activeAccount) ||
+                    isFastUnstaking,
                   onClick: () => openModalWith('UpdatePayee', {}, 'small'),
                 },
               ]
@@ -172,7 +214,7 @@ export const Status = ({ height }: { height: number }) => {
         }
       />
       <Separator />
-      <Controller label={t('nominate.controller_account', { ns: 'pages' })} />
+      <Controller label={t('nominate.controllerAccount', { ns: 'pages' })} />
     </CardWrapper>
   );
 };

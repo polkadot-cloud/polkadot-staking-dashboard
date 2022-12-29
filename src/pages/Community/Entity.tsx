@@ -59,7 +59,7 @@ export const Entity = () => {
       <TopBarWrapper>
         <ButtonSecondary
           lg
-          text={t('community.go_back')}
+          text={t('community.goBack')}
           iconLeft={faChevronLeft}
           iconTransform="shrink-3"
           onClick={() => setActiveSection(0)}
@@ -71,7 +71,7 @@ export const Entity = () => {
       <CardWrapper>
         {!isReady ? (
           <div className="item">
-            <h3>{t('community.connecting')}</h3>
+            <h3>{t('community.connecting')}...</h3>
           </div>
         ) : (
           <>
@@ -79,14 +79,14 @@ export const Entity = () => {
               <div className="item">
                 <h3>
                   {validators.length
-                    ? t('community.fetching_validators')
-                    : t('community.no_validators')}
+                    ? `${t('community.fetchingValidators')}...`
+                    : t('community.noValidators')}
                 </h3>
               </div>
             )}
             {activeValidators.length > 0 && (
               <ValidatorList
-                bondType="stake"
+                bondFor="nominator"
                 validators={activeValidators}
                 batchKey={batchKey}
                 title={`${name} ${t('community.validators')}`}

@@ -8,7 +8,6 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { PoolState } from 'contexts/Pools/types';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
@@ -17,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { ButtonRowWrapper, PageRowWrapper } from 'Wrappers';
 
 export const ClosurePrompts = () => {
+  const { t } = useTranslation('pages');
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { mode } = useTheme();
@@ -26,7 +26,6 @@ export const ClosurePrompts = () => {
   const { isBonding, selectedActivePool, isDepositor, poolNominations } =
     useActivePools();
   const { getTransferOptions } = useTransferOptions();
-  const { t } = useTranslation('pages');
 
   const { state, memberCounter } = selectedActivePool?.bondedPool || {};
   const { active, totalUnlockChuncks } = getTransferOptions(activeAccount).pool;
@@ -39,7 +38,7 @@ export const ClosurePrompts = () => {
   const depositorCanClose =
     !poolsSyncing &&
     isDepositor() &&
-    state === PoolState.Destroy &&
+    state === 'destroying' &&
     memberCounter === '1';
 
   // depositor needs to unbond funds
@@ -57,16 +56,16 @@ export const ClosurePrompts = () => {
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
             <div className="content">
-              <h3>{t('pools.destroy_pool')}</h3>
+              <h3>{t('pools.destroyPool')}</h3>
               <h4>
-                {t('pools.left_the_pool')}
+                {t('pools.leftThePool')}.{' '}
                 {targets.length > 0
-                  ? t('pools.stop_nominating')
+                  ? t('pools.stopNominating')
                   : depositorCanWithdraw
-                  ? t('pools.close_pool')
+                  ? t('pools.closePool')
                   : depositorCanUnbond
-                  ? t('pools.unbond_your_funds')
-                  : t('pools.withdraw_unlock')}
+                  ? t('pools.unbondYourFunds')
+                  : t('pools.withdrawUnlock')}
               </h4>
               <ButtonRowWrapper verticalSpacing>
                 <ButtonPrimary
@@ -86,12 +85,16 @@ export const ClosurePrompts = () => {
                 />
                 <ButtonPrimary
                   iconLeft={faLockOpen}
-                  text={String(totalUnlockChuncks ?? 0)}
+                  text={
+                    depositorCanWithdraw
+                      ? t('pools.unlocked')
+                      : String(totalUnlockChuncks ?? 0)
+                  }
                   disabled={poolsSyncing || !isBonding()}
                   onClick={() =>
                     openModalWith(
                       'UnlockChunks',
-                      { bondType: 'pool', poolClosure: true },
+                      { bondFor: 'pool', poolClosure: true },
                       'small'
                     )
                   }

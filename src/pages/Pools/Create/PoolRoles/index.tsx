@@ -2,21 +2,20 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useConnect } from 'contexts/Connect';
-import { useUi } from 'contexts/UI';
-import { SetupType } from 'contexts/UI/types';
+import { useSetup } from 'contexts/Setup';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Roles } from '../../Roles';
 
 export const PoolRoles = (props: SetupStepProps) => {
   const { section } = props;
   const { activeAccount } = useConnect();
-  const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const setup = getSetupProgress(SetupType.Pool, activeAccount);
+  const { getSetupProgress, setActiveAccountSetup } = useSetup();
+  const setup = getSetupProgress('pool', activeAccount);
   const { t } = useTranslation('pages');
 
   // if no roles in setup already, inject `activeAccount` to be
@@ -38,7 +37,7 @@ export const PoolRoles = (props: SetupStepProps) => {
 
   // handler for updating pool roles
   const handleSetupUpdate = (value: any) => {
-    setActiveAccountSetup(SetupType.Pool, value);
+    setActiveAccountSetup('pool', value);
   };
 
   // update pool roles on account change
@@ -52,7 +51,7 @@ export const PoolRoles = (props: SetupStepProps) => {
   useEffect(() => {
     // only update if this section is currently active
     if (setup.section === section) {
-      setActiveAccountSetup(SetupType.Pool, {
+      setActiveAccountSetup('pool', {
         ...setup,
         roles: initialValue,
       });
@@ -66,11 +65,21 @@ export const PoolRoles = (props: SetupStepProps) => {
         complete={setup.roles !== null}
         title={t('pools.roles') || ''}
         helpKey="Pool Roles"
-        setupType={SetupType.Pool}
+        setupType="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <h4 style={{ margin: '0.5rem 0' }}>{t('pools.pool_creator')}</h4>
-        <h4 style={{ marginTop: 0 }}>{t('pools.assigned_to_any_account')}</h4>
+        <h4 style={{ margin: '0.5rem 0' }}>
+          <Trans
+            defaults={t('pools.poolCreator') || ''}
+            components={{ b: <b /> }}
+          />
+        </h4>
+        <h4 style={{ marginTop: 0 }}>
+          <Trans
+            defaults={t('pools.assignedToAnyAccount') || ''}
+            components={{ b: <b /> }}
+          />
+        </h4>
         <Roles
           batchKey="pool_roles_create"
           listenIsValid={setRolesValid}
@@ -86,7 +95,7 @@ export const PoolRoles = (props: SetupStepProps) => {
             },
           ]}
         />
-        <Footer complete={rolesValid} setupType={SetupType.Pool} />
+        <Footer complete={rolesValid} setupType="pool" />
       </MotionContainer>
     </>
   );

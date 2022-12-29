@@ -8,6 +8,8 @@ import { initReactI18next } from 'react-i18next';
 import { AnyJson } from 'types';
 import baseEn from './en/base.json';
 import helpEn from './en/help.json';
+import libEn from './en/library.json';
+import modalsEn from './en/modals.json';
 import pagesEn from './en/pages.json';
 import tipsEn from './en/tips.json';
 import { doDynamicImport, getActiveLanguage, getResources } from './utils';
@@ -19,13 +21,30 @@ export const locales: { [key: string]: AnyJson } = {
 };
 
 // available languages as an array of strings.
-export const availableLanguages = ['en', 'cn'];
+export const availableLanguages: Array<Array<string>> = [
+  ['en', 'English'],
+  ['cn', '中文'],
+];
 
 // the supported namespaces.
-export const lngNamespaces = ['base', 'help', 'tips', 'pages'];
+export const lngNamespaces = [
+  'base',
+  'help',
+  'library',
+  'modals',
+  'pages',
+  'tips',
+];
 
 // default structure of language resources.
-const fallbackResources = { ...baseEn, ...helpEn, ...tipsEn, ...pagesEn };
+export const fallbackResources = {
+  ...baseEn,
+  ...helpEn,
+  ...libEn,
+  ...modalsEn,
+  ...pagesEn,
+  ...tipsEn,
+};
 
 // check app version, wipe `lng_resources` if version is different.
 const localAppVersion = localStorage.getItem('app_version');
@@ -43,7 +62,7 @@ const lng: string = getActiveLanguage();
 
 // get default resources and whether a dynamic load is required for
 // the active language.
-const { resources, dynamicLoad } = getResources(lng, fallbackResources);
+const { resources, dynamicLoad } = getResources(lng);
 
 // default language to show before any dynamic load
 const defaultLng = dynamicLoad ? DefaultLocale : lng;
@@ -63,7 +82,9 @@ if (dynamicLoad) {
 
 // map i18n to BCP 47 keys, with any custom amendments.
 const i18ToLocaleMap: { [key: string]: string } = {
-  ...Object.fromEntries(availableLanguages.map((a: string) => [a, a])),
+  ...Object.fromEntries(
+    availableLanguages.map((a: Array<string>) => [a[0], a[0]])
+  ),
   en: 'en-gb',
   cn: 'zh-cn',
 };

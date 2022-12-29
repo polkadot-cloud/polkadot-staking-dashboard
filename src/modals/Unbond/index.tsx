@@ -1,6 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -13,24 +15,22 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
-import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Title } from 'library/Modal/Title';
+import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { NotesWrapper } from '../../Wrappers';
-import { FormsProps } from '../types';
-import { FormFooter } from './FormFooter';
 
-export const UnbondSome = (props: FormsProps) => {
-  const { setSection } = props;
-
+export const Unbond = () => {
+  const { t } = useTranslation('modals');
   const { api, network, consts } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
   const { getBondedAccount } = useBalances();
-  const { bondType } = config;
+  const { bondFor } = config;
   const { stats } = usePoolsConfig();
   const { isDepositor, selectedActivePool } = useActivePools();
   const { txFees, txFeesValid } = useTxFees();
@@ -46,8 +46,8 @@ export const UnbondSome = (props: FormsProps) => {
   unclaimedRewards = unclaimedRewards ?? new BN(0);
   unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
 
-  const isStaking = bondType === 'stake';
-  const isPooling = bondType === 'pool';
+  const isStaking = bondFor === 'nominator';
+  const isPooling = bondFor === 'pool';
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active: activeBn } = isPooling
@@ -100,7 +100,7 @@ export const UnbondSome = (props: FormsProps) => {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(bond.bond, units);
+    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
 
     // determine tx
     if (isPooling) {
@@ -123,48 +123,100 @@ export const UnbondSome = (props: FormsProps) => {
     callbackInBlock: () => {},
   });
 
+  const nominatorActiveBelowMin =
+    bondFor === 'nominator' &&
+    !activeBn.isZero() &&
+    activeBn.lt(minNominatorBondBn);
+
+  const poolToMinBn = isDepositor() ? minCreateBondBn : minJoinBondBn;
+  const poolActiveBelowMin = bondFor === 'pool' && activeBn.lt(poolToMinBn);
+
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push('Your account is read only, and cannot sign transactions.');
+    warnings.push(t('readOnly'));
+  }
+
+  if (unclaimedRewards > 0 && bondFor === 'pool') {
+    warnings.push(
+      `${t('unbondingWithdraw')} ${unclaimedRewards} ${network.unit}.`
+    );
+  }
+  if (nominatorActiveBelowMin) {
+    warnings.push(
+      t('unbondErrorBelowMinimum', {
+        bond: minNominatorBond,
+        unit: network.unit,
+      })
+    );
+  }
+  if (poolActiveBelowMin) {
+    warnings.push(
+      t('unbondErrorBelowMinimum', {
+        bond: planckBnToUnit(poolToMinBn, units),
+        unit: network.unit,
+      })
+    );
+  }
+  if (activeBn.isZero()) {
+    warnings.push(t('unbondErrorNoFunds', { unit: network.unit }));
   }
 
   return (
     <>
-      <div className="items">
-        <>
-          {unclaimedRewards > 0 && bondType === 'pool' && (
-            <Warning
-              text={`Unbonding will also withdraw your outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+      <Title title={`${t('removeBond')}`} icon={faMinus} />
+      <PaddingWrapper>
+        <UnbondFeedback
+          bondFor={bondFor}
+          listenIsValid={setBondValid}
+          setters={[
+            {
+              set: setBond,
+              current: bond,
+            },
+          ]}
+          warnings={warnings}
+          txFees={txFees}
+        />
+        <NotesWrapper>
+          {bondFor === 'pool' ? (
+            <>
+              {isDepositor() ? (
+                <p>
+                  {t('notePoolDepositorMinBond', {
+                    context: 'depositor',
+                    bond: minCreateBond,
+                    unit: network.unit,
+                  })}
+                </p>
+              ) : (
+                <p>
+                  {t('notePoolDepositorMinBond', {
+                    context: 'member',
+                    bond: minCreateBond,
+                    unit: network.unit,
+                  })}
+                </p>
+              )}
+            </>
+          ) : null}
+          <p>{t('onceUnbonding', { bondDuration })}</p>
+          <EstimatedTxFee />
+        </NotesWrapper>
+        <FooterWrapper>
+          <div>
+            <ButtonSubmit
+              text={`${submitting ? t('submitting') : t('submit')}`}
+              iconLeft={faArrowAltCircleUp}
+              iconTransform="grow-2"
+              onClick={() => submitTx()}
+              disabled={
+                submitting ||
+                !(bondValid && accountHasSigner(signingAccount) && txFeesValid)
+              }
             />
-          )}
-          <UnbondFeedback
-            bondType={bondType}
-            listenIsValid={setBondValid}
-            defaultBond={unbondToMin}
-            setters={[
-              {
-                set: setBond,
-                current: bond,
-              },
-            ]}
-            warnings={warnings}
-            txFees={txFees}
-          />
-          <NotesWrapper>
-            <p>
-              Once unbonding, you must wait {bondDuration} eras for your funds
-              to become available.
-            </p>
-            <EstimatedTxFee />
-          </NotesWrapper>
-        </>
-      </div>
-      <FormFooter
-        setSection={setSection}
-        submitTx={submitTx}
-        submitting={submitting}
-        isValid={bondValid && accountHasSigner(signingAccount) && txFeesValid}
-      />
+          </div>
+        </FooterWrapper>
+      </PaddingWrapper>
     </>
   );
 };

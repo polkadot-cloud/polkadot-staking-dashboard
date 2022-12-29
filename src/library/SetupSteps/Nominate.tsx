@@ -3,10 +3,11 @@
 
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useUi } from 'contexts/UI';
+import { useSetup } from 'contexts/Setup';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
+import { useTranslation } from 'react-i18next';
 import { GenerateNominations } from '../GenerateNominations';
 import { NominationsProps } from './types';
 
@@ -15,15 +16,16 @@ export const Nominate = (props: NominationsProps) => {
 
   const { consts } = useApi();
   const { activeAccount } = useConnect();
-  const { getSetupProgress, setActiveAccountSetup } = useUi();
+  const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress(setupType, activeAccount);
   const { maxNominations } = consts;
+  const { t } = useTranslation('library');
 
   const setterFn = () => {
     return getSetupProgress(setupType, activeAccount);
   };
 
-  // handler for updating bond
+  // handler for updating setup.bond
   const handleSetupUpdate = (value: any) => {
     setActiveAccountSetup(setupType, value);
   };
@@ -33,16 +35,13 @@ export const Nominate = (props: NominationsProps) => {
       <Header
         thisSection={section}
         complete={setup.nominations.length > 0}
-        title="Nominate"
+        title={t('nominate') || ''}
         helpKey="Nominating"
         setupType={setupType}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <div style={{ marginTop: '0.5rem' }}>
-          <h4>
-            Choose up to {maxNominations} validators to nominate. Generate your
-            nominations automatically or manually insert them.
-          </h4>
+          <h4>{t('chooseValidators', { maxNominations })}</h4>
           <GenerateNominations
             batchKey={batchKey}
             setters={[

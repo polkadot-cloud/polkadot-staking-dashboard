@@ -4,30 +4,31 @@
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFilters } from 'contexts/Filters';
-import { FilterType } from 'contexts/Filters/types';
 import { usePoolFilters } from 'library/Hooks/usePoolFilters';
 import { Title } from 'library/Overlay/Title';
 import { FilterListButton, FilterListWrapper } from 'library/Overlay/Wrappers';
+import { useTranslation } from 'react-i18next';
 
 export const FilterPools = () => {
   const { getFilters, toggleFilter } = useFilters();
   const { includesToLabels, excludesToLabels } = usePoolFilters();
+  const { t } = useTranslation('library');
 
-  const includes = getFilters(FilterType.Include, 'pools');
-  const excludes = getFilters(FilterType.Exclude, 'pools');
+  const includes = getFilters('include', 'pools');
+  const excludes = getFilters('exclude', 'pools');
 
   return (
     <FilterListWrapper>
-      <Title title="Filter Pools" />
+      <Title title={t('filterPools')} />
       <div className="body">
-        <h4>Include:</h4>
+        <h4>{t('include')}:</h4>
         {Object.entries(includesToLabels).map(([f, l]: any, i: number) => (
           <FilterListButton
             active={includes?.includes(f) ?? false}
             key={`pool_include_${i}`}
             type="button"
             onClick={() => {
-              toggleFilter(FilterType.Include, 'pools', f);
+              toggleFilter('include', 'pools', f);
             }}
           >
             <FontAwesomeIcon
@@ -38,14 +39,14 @@ export const FilterPools = () => {
           </FilterListButton>
         ))}
 
-        <h4>Exclude:</h4>
+        <h4>{t('exclude')}:</h4>
         {Object.entries(excludesToLabels).map(([f, l]: any, i: number) => (
           <FilterListButton
             active={excludes?.includes(f) ?? false}
             key={`validator_filter_${i}`}
             type="button"
             onClick={() => {
-              toggleFilter(FilterType.Exclude, 'pools', f);
+              toggleFilter('exclude', 'pools', f);
             }}
           >
             <FontAwesomeIcon

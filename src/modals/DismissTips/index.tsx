@@ -3,19 +3,19 @@
 
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useModal } from 'contexts/Modal';
-import { useUi } from 'contexts/UI';
+import { usePlugins } from 'contexts/Plugins';
 import { Title } from 'library/Modal/Title';
 import { PaddingWrapper } from 'modals/Wrappers';
 import { useTranslation } from 'react-i18next';
 
 export const DismissTips = () => {
-  const { toggleService } = useUi();
+  const { togglePlugin } = usePlugins();
   const { setStatus } = useModal();
   const { t } = useTranslation('tips');
 
   return (
     <>
-      <Title title={t('module.dismiss_tips')} />
+      <Title title={t('module.dismissTips')} />
       <PaddingWrapper horizontalOnly>
         <div
           style={{
@@ -24,15 +24,15 @@ export const DismissTips = () => {
           }}
         >
           <div>
-            <h4>{t('module.dismiss_result')}</h4>
-            <h4>{t('module.re-enable')}</h4>
+            <h4>{t('module.dismissResult')}</h4>
+            <h4>{t('module.reEnable')}</h4>
           </div>
           <div className="buttons">
             <ButtonSubmit
               marginRight
-              text={t('module.disable_dashboard_tips')}
+              text={t('module.disableDashboardTips')}
               onClick={() => {
-                toggleService('tips');
+                togglePlugin('tips');
                 setStatus(2);
               }}
             />

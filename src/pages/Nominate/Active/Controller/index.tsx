@@ -13,6 +13,7 @@ import { useModal } from 'contexts/Modal';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
 import { useStaking } from 'contexts/Staking';
+import useUnstaking from 'library/Hooks/useUnstaking';
 import { Identicon } from 'library/Identicon';
 import OpenHelpIcon from 'library/OpenHelpIcon';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
@@ -21,6 +22,7 @@ import { clipAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 
 export const Controller = ({ label }: { label: string }) => {
+  const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { activeAccount, isReadOnlyAccount, getAccount } = useConnect();
   const { openModalWith } = useModal();
@@ -28,7 +30,7 @@ export const Controller = ({ label }: { label: string }) => {
   const { getBondedAccount } = useBalances();
   const controller = getBondedAccount(activeAccount);
   const { addNotification } = useNotifications();
-  const { t } = useTranslation('pages');
+  const { isFastUnstaking } = useUnstaking();
 
   let display = t('nominate.none');
   if (hasController() && controller) {
@@ -41,7 +43,7 @@ export const Controller = ({ label }: { label: string }) => {
   let notificationCopyAddress: NotificationText | null = null;
   if (controller !== null) {
     notificationCopyAddress = {
-      title: 'Address Copied to Clipboard',
+      title: t('nominate.addressCopied'),
       subtitle: controller,
     };
   }
@@ -76,7 +78,10 @@ export const Controller = ({ label }: { label: string }) => {
               text={t('nominate.change')}
               iconLeft={faExchangeAlt}
               disabled={
-                !isReady || !hasController() || isReadOnlyAccount(activeAccount)
+                !isReady ||
+                !hasController() ||
+                isReadOnlyAccount(activeAccount) ||
+                isFastUnstaking
               }
               onClick={() => openModalWith('UpdateController', {}, 'large')}
               style={{ minWidth: '7.5rem' }}

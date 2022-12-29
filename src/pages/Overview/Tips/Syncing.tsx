@@ -35,7 +35,7 @@ export const Syncing = () => {
     >
       <ItemWrapper>
         <ItemInnerWrapper inactive>
-          <section>
+          <section style={{ paddingRight: '1.25rem' }}>
             <Lottie
               options={animateOptions}
               width="2.2rem"
@@ -46,10 +46,10 @@ export const Syncing = () => {
           </section>
           <section>
             <div className="title">
-              <h3>{t('module.syncing_with', { network: name })}</h3>
+              <h3>{t('module.syncingWith', { network: name })}</h3>
             </div>
             <div className="desc">
-              <h4>{t('module.one_moment')}</h4>
+              <h4>{t('module.oneMoment')}...</h4>
             </div>
           </section>
         </ItemInnerWrapper>

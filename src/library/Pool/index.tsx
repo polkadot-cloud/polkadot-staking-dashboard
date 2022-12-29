@@ -12,7 +12,6 @@ import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { PoolState } from 'contexts/Pools/types';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { FavoritePool } from 'library/ListItem/Labels/FavoritePool';
@@ -26,6 +25,7 @@ import {
 } from 'library/ListItem/Wrappers';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
 import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
@@ -34,6 +34,7 @@ import { PoolProps } from './types';
 export const Pool = (props: PoolProps) => {
   const { pool, batchKey, batchIndex } = props;
   const { memberCounter, addresses, id, state } = pool;
+  const { t } = useTranslation('library');
 
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -66,7 +67,7 @@ export const Pool = (props: PoolProps) => {
     addresses.stash == null
       ? null
       : {
-          title: 'Address Copied to Clipboard',
+          title: t('addressCopiedToClipboard'),
           subtitle: addresses.stash,
         };
 
@@ -77,7 +78,7 @@ export const Pool = (props: PoolProps) => {
   menuItems.push({
     icon: <FontAwesomeIcon icon={faProjectDiagram as IconProp} />,
     wrap: null,
-    title: `View Pool Nominations`,
+    title: `${t('viewPoolNominations')}`,
     cb: () => {
       openModalWith(
         'PoolNominations',
@@ -94,7 +95,7 @@ export const Pool = (props: PoolProps) => {
   menuItems.push({
     icon: <FontAwesomeIcon icon={faCopy as IconProp} />,
     wrap: null,
-    title: `Copy Pool Address`,
+    title: t('copyPoolAddress'),
     cb: () => {
       navigator.clipboard.writeText(addresses.stash);
       if (notificationCopyAddress) {
@@ -140,7 +141,7 @@ export const Pool = (props: PoolProps) => {
         <div className="row status">
           <PoolBonded pool={pool} batchIndex={batchIndex} batchKey={batchKey} />
           {!poolsSyncing &&
-            state === PoolState.Open &&
+            state === 'open' &&
             !membership &&
             !isReadOnlyAccount(activeAccount) &&
             activeAccount && (

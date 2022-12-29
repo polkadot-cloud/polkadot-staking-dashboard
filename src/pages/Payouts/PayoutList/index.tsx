@@ -3,6 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { BN } from 'bn.js';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -24,7 +25,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { networkColors } from 'theme/default';
 import { AnySubscan } from 'types';
-import { clipAddress, planckToUnit } from 'Utils';
+import { clipAddress, planckBnToUnit } from 'Utils';
 import { PayoutListProps } from '../types';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProvider, usePayoutList } from './context';
@@ -146,7 +147,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
           {listPayouts.map((p: AnySubscan, index: number) => {
             const label =
               p.event_id === 'PaidOut'
-                ? t('payouts.pool_claim')
+                ? t('payouts.poolClaim')
                 : p.event_id === 'Rewarded'
                 ? t('payouts.payout')
                 : p.event_id;
@@ -196,7 +197,8 @@ export const PayoutListInner = (props: PayoutListProps) => {
                         <div>
                           <h4 className={`${labelClass}`}>
                             {p.event_id === 'Slashed' ? '-' : '+'}
-                            {planckToUnit(p.amount, units)} {network.unit}
+                            {planckBnToUnit(new BN(p.amount), units)}{' '}
+                            {network.unit}
                           </h4>
                         </div>
                         <div>
@@ -221,7 +223,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
                               )}
                             </>
                           )}
-                          {label === t('payouts.pool_claim') && (
+                          {label === t('payouts.poolClaim') && (
                             <>
                               {pool ? (
                                 <PoolIdentity
@@ -231,13 +233,13 @@ export const PayoutListInner = (props: PayoutListProps) => {
                                 />
                               ) : (
                                 <h4>
-                                  {t('payouts.from_pool')} {p.pool_id}
+                                  {t('payouts.fromPool')} {p.pool_id}
                                 </h4>
                               )}
                             </>
                           )}
                           {label === t('payouts.slashed') && (
-                            <h4>{t('payouts.deducted_from_bond')}</h4>
+                            <h4>{t('payouts.deductedFromBond')}</h4>
                           )}
                         </div>
                         <div>

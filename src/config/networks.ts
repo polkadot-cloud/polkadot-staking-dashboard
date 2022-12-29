@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { WellKnownChain } from '@polkadot/rpc-provider/substrate-connect';
+import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import { DefaultParams } from 'consts';
 import { ReactComponent as KusamaIconSVG } from 'img/kusama_icon.svg';
 import { ReactComponent as KusamaInlineSVG } from 'img/kusama_inline.svg';
@@ -22,7 +22,7 @@ export const NETWORKS: Networks = {
     name: 'Polkadot',
     endpoints: {
       rpc: 'wss://apps-rpc.polkadot.io',
-      lightClient: WellKnownChain.polkadot,
+      lightClient: ScProvider.WellKnownChain.polkadot,
     },
     colors: {
       primary: {
@@ -30,8 +30,8 @@ export const NETWORKS: Networks = {
         dark: 'rgb(211, 48, 121)',
       },
       secondary: {
-        light: '#e474bc',
-        dark: '#e474bc',
+        light: '#552bbf',
+        dark: '#6d39ee',
       },
       stroke: {
         light: 'rgb(211, 48, 121)',
@@ -70,7 +70,7 @@ export const NETWORKS: Networks = {
     name: 'Kusama',
     endpoints: {
       rpc: 'wss://kusama-rpc.polkadot.io',
-      lightClient: WellKnownChain.ksmcc3,
+      lightClient: ScProvider.WellKnownChain.ksmcc3,
     },
     colors: {
       primary: {
@@ -120,7 +120,7 @@ export const NETWORKS: Networks = {
     name: 'Westend',
     endpoints: {
       rpc: 'wss://westend-rpc.polkadot.io',
-      lightClient: WellKnownChain.westend2,
+      lightClient: ScProvider.WellKnownChain.westend2,
     },
     colors: {
       primary: {
@@ -128,8 +128,8 @@ export const NETWORKS: Networks = {
         dark: '#da4e71',
       },
       secondary: {
-        light: '#e37c44',
-        dark: '#e37c44',
+        light: '#de6a50',
+        dark: '#d7674e',
       },
       stroke: {
         light: '#da4e71',

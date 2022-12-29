@@ -51,7 +51,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation('library');
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts.filter(
@@ -88,7 +88,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
     }),
     datasets: [
       {
-        label: 'Payout',
+        label: t('payout'),
         data: payoutsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPayouts,
         backgroundColor: colorPayouts,
@@ -96,7 +96,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         borderRadius: 3,
       },
       {
-        label: 'Pool Claim',
+        label: t('poolClaim'),
         data: poolClaimsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPoolClaims,
         backgroundColor: colorPoolClaims,

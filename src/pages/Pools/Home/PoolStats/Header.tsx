@@ -5,9 +5,13 @@ import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { PoolState } from 'contexts/Pools/types';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, rmCommas, toFixedIfNecessary } from 'Utils';
+import {
+  humanNumber,
+  planckBnToUnit,
+  rmCommas,
+  toFixedIfNecessary,
+} from 'Utils';
 import { HeaderWrapper } from './Wrappers';
 
 export const Header = () => {
@@ -19,20 +23,22 @@ export const Header = () => {
   const { state, points } = selectedActivePool?.bondedPool || {};
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
 
-  const bonded = toFixedIfNecessary(
-    planckBnToUnit(
-      points ? new BN(rmCommas(points)) : new BN(0),
-      network.units
-    ),
-    3
+  const bonded = humanNumber(
+    toFixedIfNecessary(
+      planckBnToUnit(
+        points ? new BN(rmCommas(points)) : new BN(0),
+        network.units
+      ),
+      3
+    )
   );
 
   let stateDisplay;
   switch (state) {
-    case PoolState.Block:
+    case 'blocked':
       stateDisplay = t('pools.locked');
       break;
-    case PoolState.Destroy:
+    case 'destroying':
       stateDisplay = t('pools.destroying');
       break;
     default:
@@ -47,13 +53,13 @@ export const Header = () => {
           <div>
             <div className="inner">
               <h2>{stateDisplay}</h2>
-              <h4>{t('pools.pool_state')}</h4>
+              <h4>{t('pools.poolState')}</h4>
             </div>
           </div>
           <div>
             <div className="inner">
               <h2>{poolMembers.length}</h2>
-              <h4>{t('pools.pool_members')}</h4>
+              <h4>{t('pools.poolMembers')}</h4>
             </div>
           </div>
           <div>
@@ -61,7 +67,7 @@ export const Header = () => {
               <h2>
                 {bonded} {network.unit}
               </h2>
-              <h4>{t('pools.total_bonded')}</h4>
+              <h4>{t('pools.totalBonded')}</h4>
             </div>
           </div>
         </div>

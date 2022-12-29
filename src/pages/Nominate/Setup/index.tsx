@@ -3,9 +3,8 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
-import { useUi } from 'contexts/UI';
-import { defaultStakeSetup } from 'contexts/UI/defaults';
-import { SetupType } from 'contexts/UI/types';
+import { useSetup } from 'contexts/Setup';
+import { defaultStakeSetup } from 'contexts/Setup/defaults';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
@@ -18,12 +17,12 @@ import { SetController } from './SetController';
 import { Summary } from './Summary';
 
 export const Setup = () => {
-  const { setOnNominatorSetup, setActiveAccountSetup } = useUi();
+  const { setOnNominatorSetup, setActiveAccountSetup } = useSetup();
   const { t } = useTranslation('pages');
 
   return (
     <>
-      <PageTitle title={t('nominate.start_nominating')} />
+      <PageTitle title={t('nominate.startNominating')} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
           <span>
@@ -41,7 +40,7 @@ export const Setup = () => {
               text={t('nominate.cancel')}
               onClick={() => {
                 setOnNominatorSetup(0);
-                setActiveAccountSetup(SetupType.Stake, defaultStakeSetup);
+                setActiveAccountSetup('stake', defaultStakeSetup);
               }}
             />
           </span>
@@ -65,7 +64,7 @@ export const Setup = () => {
           <Element name="nominate" style={{ position: 'absolute' }} />
           <Nominate
             batchKey="generate_nominations_inactive"
-            setupType={SetupType.Stake}
+            setupType="stake"
             section={3}
           />
         </CardWrapper>

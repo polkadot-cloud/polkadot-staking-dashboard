@@ -3,6 +3,7 @@
 
 import { BN } from 'bn.js';
 import { MaxPayoutDays } from 'consts';
+import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useUi } from 'contexts/UI';
@@ -31,7 +32,8 @@ import LastEraPayoutStatBox from './Stats/LastEraPayout';
 
 export const Payouts = (props: PageProps) => {
   const { payouts, poolClaims } = useSubscan();
-  const { isSyncing, services } = useUi();
+  const { isSyncing } = useUi();
+  const { plugins } = usePlugins();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
   const { i18n, t } = useTranslation();
@@ -98,7 +100,7 @@ export const Payouts = (props: PageProps) => {
           <SubscanButton />
           <CardHeaderWrapper padded>
             <h4>
-              {t('payouts.payout_history', { ns: 'pages' })}
+              {t('payouts.payoutHistory', { ns: 'pages' })}
               <OpenHelpIcon helpKey="Payout History" />
             </h4>
             <h2>
@@ -113,17 +115,17 @@ export const Payouts = (props: PageProps) => {
             </h2>
           </CardHeaderWrapper>
           <div className="inner" ref={ref} style={{ minHeight }}>
-            {!services.includes('subscan') ? (
+            {!plugins.includes('subscan') ? (
               <StatusLabel
                 status="active_service"
                 statusFor="subscan"
-                title={t('payouts.subscan_disabled', { ns: 'pages' })}
+                title={t('payouts.subscanDisabled', { ns: 'pages' })}
                 topOffset="30%"
               />
             ) : (
               <StatusLabel
                 status="sync_or_setup"
-                title={t('payouts.not_staking', { ns: 'pages' })}
+                title={t('payouts.notStaking', { ns: 'pages' })}
                 topOffset="30%"
               />
             )}
@@ -138,8 +140,8 @@ export const Payouts = (props: PageProps) => {
                 transition: 'opacity 0.5s',
               }}
             >
-              <PayoutBar days={MaxPayoutDays} height="150px" />
-              <PayoutLine days={MaxPayoutDays} average={10} height="75px" />
+              <PayoutBar days={MaxPayoutDays} height="165px" />
+              <PayoutLine days={MaxPayoutDays} average={10} height="65px" />
             </div>
           </div>
         </GraphWrapper>
@@ -150,7 +152,7 @@ export const Payouts = (props: PageProps) => {
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <CardWrapper>
             <PayoutList
-              title={t('payouts.recent_payouts', { ns: 'pages' })}
+              title={t('payouts.recentPayouts', { ns: 'pages' })}
               payouts={payoutsList}
               pagination
             />

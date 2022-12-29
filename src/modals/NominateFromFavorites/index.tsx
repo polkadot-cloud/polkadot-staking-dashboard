@@ -17,6 +17,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { ValidatorList } from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FooterWrapper, NotesWrapper, PaddingWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
@@ -29,10 +30,11 @@ export const NominateFromFavorites = () => {
   const { selectedActivePool, isNominator, isOwner } = useActivePools();
   const controller = getBondedAccount(activeAccount);
   const { txFeesValid } = useTxFees();
+  const { t } = useTranslation('modals');
 
   const { maxNominations } = consts;
-  const { bondType, nominations } = config;
-  const signingAccount = bondType === 'pool' ? activeAccount : controller;
+  const { bondFor, nominations } = config;
+  const signingAccount = bondFor === 'pool' ? activeAccount : controller;
 
   // store filtered favorites
   const [availableFavorites, setAvailableFavorites] = useState<
@@ -96,14 +98,14 @@ export const NominateFromFavorites = () => {
     }
 
     const targetsToSubmit = nominationsToSubmit.map((item: any) =>
-      bondType === 'pool'
+      bondFor === 'pool'
         ? item
         : {
             Id: item,
           }
     );
 
-    if (bondType === 'pool') {
+    if (bondFor === 'pool') {
       tx = api.tx.nominationPools.nominate(
         selectedActivePool?.id,
         targetsToSubmit
@@ -126,24 +128,26 @@ export const NominateFromFavorites = () => {
 
   return (
     <>
-      <Title title="Nominate Favorites" />
+      <Title title={t('nominateFavorites')} />
       <PaddingWrapper>
         <div style={{ marginBottom: '1rem' }}>
           {!accountHasSigner(signingAccount) && (
             <Warning
-              text={`You must have your${
-                bondType === 'stake' ? ' controller' : ' '
-              }account imported to add nominations.`}
+              text={`${
+                bondFor === 'nominator'
+                  ? t('youMust', { context: 'controller' })
+                  : t('youMust', { context: 'account' })
+              }`}
             />
           )}
         </div>
         <ListWrapper>
           {availableFavorites.length > 0 ? (
             <ValidatorList
-              bondType="stake"
+              bondFor="nominator"
               validators={availableFavorites}
               batchKey={batchKey}
-              title="Favorite Validators / Not Nominated"
+              title={t('favoriteNotNominated')}
               selectable
               selectActive
               selectToggleable={false}
@@ -154,7 +158,7 @@ export const NominateFromFavorites = () => {
               refetchOnListUpdate
             />
           ) : (
-            <h3>No Favorites Available.</h3>
+            <h3>{t('noFavoritesAvailable')}</h3>
           )}
         </ListWrapper>
         <NotesWrapper style={{ paddingBottom: 0 }}>
@@ -171,22 +175,22 @@ export const NominateFromFavorites = () => {
           >
             {selectedFavorites.length > 0
               ? overMaxNominations
-                ? `Adding this many favorites will surpass ${maxNominations} nominations.`
-                : `Adding ${selectedFavorites.length} Nomination${
-                    selectedFavorites.length !== 1 ? `s` : ``
-                  }`
-              : `No Favorites Selected`}
+                ? `${t('willSurpass', { maxNominations })}`
+                : `${t('addingFavorite', {
+                    count: selectedFavorites.length,
+                  })}`
+              : `${t('noFavoritesSelected')}`}
           </h3>
           <div>
             <ButtonSubmit
-              text={`Submit${submitting ? 'ting' : ''}`}
+              text={`${submitting ? t('submitting') : t('submit')}`}
               iconLeft={faArrowAltCircleUp}
               iconTransform="grow-2"
               onClick={() => submitTx()}
               disabled={
                 !valid ||
                 submitting ||
-                (bondType === 'pool' && !isNominator() && !isOwner()) ||
+                (bondFor === 'pool' && !isNominator() && !isOwner()) ||
                 !accountHasSigner(signingAccount) ||
                 !txFeesValid
               }

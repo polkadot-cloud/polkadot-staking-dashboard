@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { PoolState } from 'contexts/Pools/types';
 import { useTheme } from 'contexts/Themes';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useTranslation } from 'react-i18next';
@@ -21,7 +20,7 @@ export const Members = () => {
   const { t } = useTranslation('pages');
 
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
-  const poolMembersTitle = `${t('pools.pool_member', {
+  const poolMembersTitle = `${t('pools.poolMember', {
     count: poolMembers.length,
   })}`;
 
@@ -29,7 +28,7 @@ export const Members = () => {
   const annuncementBorderColor = networkColorsSecondary[mode];
 
   const showBlockedPrompt =
-    selectedActivePool?.bondedPool?.state === PoolState.Block &&
+    selectedActivePool?.bondedPool?.state === 'blocked' &&
     (isOwner() || isStateToggler());
 
   return (
@@ -41,11 +40,11 @@ export const Members = () => {
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
             <div className="content">
-              <h3>{t('pools.pool_currently_locked')}</h3>
+              <h3>{t('pools.poolCurrentlyLocked')}</h3>
               <h4>
-                {t('pools.permission_to_unbond')}({' '}
+                {t('pools.permissionToUnbond')}({' '}
                 <FontAwesomeIcon icon={faBars} transform="shrink-2" /> ){' '}
-                {t('pools.management_options')}
+                {t('pools.managementOptions')}
               </h4>
             </div>
           </CardWrapper>
@@ -53,17 +52,17 @@ export const Members = () => {
       )}
 
       {/* Pool in Destroying state: allow anyone to unbond & withdraw members */}
-      {selectedActivePool?.bondedPool?.state === PoolState.Destroy && (
+      {selectedActivePool?.bondedPool?.state === 'destroying' && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <CardWrapper
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
             <div className="content">
-              <h3>{t('pools.pool_in_destroying_state')}</h3>
+              <h3>{t('pools.poolInDestroyingState')}</h3>
               <h4>
-                {t('pools.permission_to_unbond')} ({' '}
+                {t('pools.permissionToUnbond')} ({' '}
                 <FontAwesomeIcon icon={faBars} transform="shrink-2" /> ){' '}
-                {t('pools.management_options')}
+                {t('pools.managementOptions')}
               </h4>
             </div>
           </CardWrapper>

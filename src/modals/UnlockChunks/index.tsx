@@ -8,6 +8,7 @@ import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
 import { CardsWrapper, FixedContentWrapper, Wrapper } from './Wrappers';
@@ -15,24 +16,22 @@ import { CardsWrapper, FixedContentWrapper, Wrapper } from './Wrappers';
 export const UnlockChunks = () => {
   const { activeAccount } = useConnect();
   const { config, setModalHeight } = useModal();
-  const { bondType } = config || {};
+  const { bondFor } = config || {};
   const { getLedgerForStash } = useBalances();
   const { getPoolUnlocking } = useActivePools();
+  const { t } = useTranslation('modals');
 
-  // get the unlocking per bondType
+  // get the unlocking per bondFor
   const _getUnlocking = () => {
     let unlocking = [];
     let ledger;
-    switch (bondType) {
-      case 'stake':
-        ledger = getLedgerForStash(activeAccount);
-        unlocking = ledger.unlocking;
-        break;
+    switch (bondFor) {
       case 'pool':
         unlocking = getPoolUnlocking();
         break;
       default:
-      // console.error(`unlocking modal bond-type ${bondType} is not defined.`);
+        ledger = getLedgerForStash(activeAccount);
+        unlocking = ledger.unlocking;
     }
     return unlocking;
   };
@@ -83,7 +82,7 @@ export const UnlockChunks = () => {
   return (
     <Wrapper>
       <FixedContentWrapper ref={headerRef}>
-        <Title title="Unlocks" icon={faLockOpen} fixed />
+        <Title title={t('unlocks')} icon={faLockOpen} fixed />
       </FixedContentWrapper>
       <CardsWrapper
         animate={section === 0 ? 'home' : 'next'}
@@ -103,7 +102,7 @@ export const UnlockChunks = () => {
       >
         <Overview
           unlocking={unlocking}
-          bondType={bondType}
+          bondFor={bondFor}
           setSection={setSection}
           setUnlock={setUnlock}
           setTask={setTask}

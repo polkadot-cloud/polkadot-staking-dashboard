@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
@@ -11,7 +12,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const Payouts = () => {
-  const { isSyncing, services } = useUi();
+  const { isSyncing } = useUi();
+  const { plugins } = usePlugins();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
   const { t } = useTranslation('pages');
@@ -19,21 +21,21 @@ export const Payouts = () => {
   const ref = React.useRef<HTMLDivElement>(null);
 
   const size = useSize(ref.current);
-  const { width, height, minHeight } = formatSize(size, 306);
+  const { width, height, minHeight } = formatSize(size, 276);
 
   return (
     <div className="inner" ref={ref} style={{ minHeight }}>
-      {!services.includes('subscan') ? (
+      {!plugins.includes('subscan') ? (
         <StatusLabel
           status="active_service"
           statusFor="subscan"
-          title={t('overview.subscan_disabled')}
+          title={t('overview.subscanDisabled')}
           topOffset="37%"
         />
       ) : (
         <StatusLabel
           status="sync_or_setup"
-          title={t('overview.not_staking')}
+          title={t('overview.notStaking')}
           topOffset="37%"
         />
       )}
@@ -49,9 +51,9 @@ export const Payouts = () => {
           marginTop: '1.5rem',
         }}
       >
-        <PayoutBar days={19} height="160px" />
+        <PayoutBar days={19} height="155px" />
         <div style={{ marginTop: '3rem' }}>
-          <PayoutLine days={19} average={10} height="70px" />
+          <PayoutLine days={19} average={10} height="65px" />
         </div>
       </div>
     </div>

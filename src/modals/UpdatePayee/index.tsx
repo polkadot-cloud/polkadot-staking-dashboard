@@ -18,10 +18,10 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FooterWrapper, PaddingWrapper } from '../Wrappers';
+import { FooterWrapper, PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
-  const { t } = useTranslation('base');
+  const { t } = useTranslation();
   const { api } = useApi();
   const { activeAccount } = useConnect();
   const { getBondedAccount } = useBalances();
@@ -82,7 +82,7 @@ export const UpdatePayee = () => {
   return (
     <>
       <Title
-        title="Update Reward Destination"
+        title={t('updateRewardDestination', { ns: 'modals' })}
         icon={faWallet}
         helpKey="Reward Destination"
       />
@@ -95,21 +95,23 @@ export const UpdatePayee = () => {
           }}
         >
           {getControllerNotImported(controller) && (
-            <Warning text="You must have your controller account imported to update your reward destination" />
+            <WarningsWrapper>
+              <Warning text={t('mustHaveControllerUpdate', { ns: 'modals' })} />
+            </WarningsWrapper>
           )}
           <Dropdown
             items={payeeItems.map((p) => {
               return {
                 key: p,
-                name: t(`payee.${p.toLowerCase()}`),
+                name: t(`payee.${p.toLowerCase()}`, { ns: 'base' }),
               };
             })}
             onChange={handleOnChange}
-            placeholder="Reward Destination"
+            placeholder={t('rewardDestination', { ns: 'modals' })}
             value={selected}
             current={{
               key: defaultSelected,
-              name: t(`payee.${defaultSelected.toLowerCase()}`),
+              name: t(`payee.${defaultSelected.toLowerCase()}`, { ns: 'base' }),
             }}
             height="17rem"
           />
@@ -119,7 +121,11 @@ export const UpdatePayee = () => {
           <FooterWrapper>
             <div>
               <ButtonSubmit
-                text={`Submit${submitting ? 'ting' : ''}`}
+                text={`${
+                  submitting
+                    ? t('submitting', { ns: 'modals' })
+                    : t('submit', { ns: 'modals' })
+                }`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
                 onClick={() => submitTx()}

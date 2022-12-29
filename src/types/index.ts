@@ -2,22 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import type { WellKnownChain } from '@polkadot/rpc-provider/substrate-connect';
 import { PageProps } from 'pages/types';
 import React, { FunctionComponent, SVGProps } from 'react';
 
 export type Fn = () => void;
 
-export enum NetworkName {
-  Polkadot = 'polkadot',
-  Kusama = 'kusama',
-  Westend = 'westend',
-}
-
-export enum Toggle {
-  Open = 'open',
-  Closed = 'closed',
-}
+export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
 export interface Networks {
   [key: string]: Network;
@@ -27,7 +17,7 @@ export interface Network {
   name: string;
   endpoints: {
     rpc: string;
-    lightClient: WellKnownChain;
+    lightClient: AnyApi;
   };
   colors: {
     primary: {
@@ -103,6 +93,12 @@ export type MaybeAccount = string | null;
 
 export type MaybeString = string | null;
 
+// track the status of a syncing / fetching process.
+export type Sync = 'unsynced' | 'syncing' | 'synced';
+
+// track whether bonding should be for nominator or nomination pool.
+export type BondFor = 'pool' | 'nominator';
+
 // any types to compress compiler warnings
 // eslint-disable-next-line
 export type AnyApi = any;
@@ -114,10 +110,3 @@ export type AnyFunction = any;
 export type AnyMetaBatch = any;
 // eslint-disable-next-line
 export type AnySubscan = any;
-
-// track the status of a syncing / fetching process.
-export enum Sync {
-  Unsynced,
-  Syncing,
-  Synced,
-}

@@ -1,6 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faArrowAltCircleUp, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BN, { max } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -13,13 +15,14 @@ import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Title } from 'library/Modal/Title';
+import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { NotesWrapper } from '../../Wrappers';
-import { FormsProps } from '../types';
-import { FormFooter } from './FormFooter';
 
-export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
+export const Bond = () => {
+  const { t } = useTranslation('modals');
   const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, config, setResize } = useModal();
@@ -27,12 +30,12 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
   const { getTransferOptions } = useTransferOptions();
   const { txFeesValid } = useTxFees();
   const { selectedActivePool } = useActivePools();
-  const { bondType } = config;
-  const isStaking = bondType === 'stake';
-  const isPooling = bondType === 'pool';
+  const { bondFor } = config;
+  const isStaking = bondFor === 'nominator';
+  const isPooling = bondFor === 'pool';
   const { freeBalance: freeBalanceBn } = getTransferOptions(activeAccount);
   const freeBalance = planckBnToUnit(freeBalanceBn, units);
-  const largestTxFee = useBondGreatestFee({ bondType });
+  const largestTxFee = useBondGreatestFee({ bondFor });
 
   // calculate any unclaimed pool rewards.
   let { unclaimedRewards } = selectedActivePool || {};
@@ -52,10 +55,10 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
   // bond value after max tx fees have been deducated.
   let bondAfterTxFees: BN;
   if (enoughToCoverTxFees) {
-    bondAfterTxFees = unitToPlanckBn(Number(bond.bond), units);
+    bondAfterTxFees = unitToPlanckBn(String(bond.bond), units);
   } else {
     bondAfterTxFees = max(
-      unitToPlanckBn(Number(bond.bond), units).sub(largestTxFee),
+      unitToPlanckBn(String(bond.bond), units).sub(largestTxFee),
       new BN(0)
     );
   }
@@ -107,23 +110,25 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push('Your account is read only, and cannot sign transactions.');
+    warnings.push(t('readOnly'));
   }
 
   return (
     <>
-      <div className="items">
-        {unclaimedRewards > 0 && bondType === 'pool' && (
+      <Title title={`${t('addToBond')}`} icon={faPlus} />
+      <PaddingWrapper>
+        {unclaimedRewards > 0 && bondFor === 'pool' && (
           <Warning
-            text={`Bonding will also withdraw your outstanding rewards of ${unclaimedRewards} ${network.unit}.`}
+            text={`${t('bondingWithdraw')} ${unclaimedRewards} ${
+              network.unit
+            }.`}
           />
         )}
         <BondFeedback
           syncing={largestTxFee.eq(new BN(0))}
-          bondType={bondType}
+          bondFor={bondFor}
           listenIsValid={setBondValid}
           defaultBond={null}
-          setLocalResize={setLocalResize}
           setters={[
             {
               set: setBond,
@@ -136,13 +141,21 @@ export const BondSome = ({ setSection, setLocalResize }: FormsProps) => {
         <NotesWrapper>
           <EstimatedTxFee />
         </NotesWrapper>
-      </div>
-      <FormFooter
-        setSection={setSection}
-        submitTx={submitTx}
-        submitting={submitting}
-        isValid={bondValid && accountHasSigner(activeAccount) && txFeesValid}
-      />
+        <FooterWrapper>
+          <div>
+            <ButtonSubmit
+              text={`${submitting ? t('submitting') : t('submit')}`}
+              iconLeft={faArrowAltCircleUp}
+              iconTransform="grow-2"
+              onClick={() => submitTx()}
+              disabled={
+                submitting ||
+                !(bondValid && accountHasSigner(activeAccount) && txFeesValid)
+              }
+            />
+          </div>
+        </FooterWrapper>
+      </PaddingWrapper>
     </>
   );
 };

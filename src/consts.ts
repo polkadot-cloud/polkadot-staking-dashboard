@@ -6,7 +6,7 @@ import { stringToU8a } from '@polkadot/util';
 /*
  * Global Constants
  */
-export const AppVersion = '1.0.1';
+export const AppVersion = '1.0.3';
 export const UriPrefix = '/';
 export const TitleDefault = 'Polkadot Staking Dashboard';
 export const DappName = 'Polkadot Staking Dashboard';
@@ -35,9 +35,9 @@ export const TipsThresholdSmall = 750;
 export const TipsThresholdMedium = 1200;
 
 /*
- * Toggle-able services
+ * Available plugins
  */
-export const ServiceList = ['subscan', 'binance_spot', 'tips'];
+export const PluginsList = ['subscan', 'binance_spot', 'tips'];
 
 /*
  * Fallback config values

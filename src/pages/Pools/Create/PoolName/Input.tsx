@@ -41,13 +41,13 @@ export const Input = (props: any) => {
         <input
           className="textbox"
           style={{ width: '100%' }}
-          placeholder="Pool Name"
+          placeholder={t('pools.poolName') || ''}
           type="text"
           onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
           value={metadata ?? ''}
         />
       </div>
-      <p>{t('pools.pool_name_support')}</p>
+      <p>{t('pools.poolNameSupport')}</p>
     </>
   );
 };

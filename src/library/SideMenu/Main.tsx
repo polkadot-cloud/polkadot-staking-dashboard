@@ -8,6 +8,8 @@ import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useSetup } from 'contexts/Setup';
+import { SetupContextInterface } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { UIContextInterface } from 'contexts/UI/types';
@@ -28,13 +30,12 @@ export const Main = () => {
   const { membership } = usePoolMemberships();
   const controller = getBondedAccount(activeAccount);
   const {
-    isSyncing,
-    sideMenuMinimised,
     getPoolSetupProgressPercent,
     getStakeSetupProgressPercent,
-  }: UIContextInterface = useUi();
+  }: SetupContextInterface = useSetup();
+  const { isSyncing, sideMenuMinimised }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
-  const { t } = useTranslation('base');
+  const { t, i18n } = useTranslation('base');
 
   const [pageConfig, setPageConfig] = useState({
     categories: Object.assign(PAGE_CATEGORIES),
@@ -112,6 +113,7 @@ export const Main = () => {
     inNominatorSetup(),
     getStakeSetupProgressPercent(activeAccount),
     getPoolSetupProgressPercent(activeAccount),
+    i18n.resolvedLanguage,
   ]);
 
   // remove pages that network does not support

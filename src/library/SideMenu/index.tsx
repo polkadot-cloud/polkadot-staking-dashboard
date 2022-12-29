@@ -5,7 +5,6 @@ import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
-import { ConnectionStatus } from 'contexts/Api/types';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useTheme } from 'contexts/Themes';
@@ -14,6 +13,7 @@ import { UIContextInterface } from 'contexts/UI/types';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
 import { ReactComponent as ForumSVG } from 'img/forum.svg';
 import { ReactComponent as InfoSVG } from 'img/info.svg';
+import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
@@ -65,17 +65,17 @@ export const SideMenu = () => {
 
   // handle connection symbol
   const symbolColor =
-    status === ConnectionStatus.Connecting
+    status === 'connecting'
       ? defaultThemes.status.warning.solid[mode]
-      : status === ConnectionStatus.Connected
+      : status === 'connected'
       ? defaultThemes.status.success.solid[mode]
       : defaultThemes.status.danger.solid[mode];
 
   // handle transparent border color
   const borderColor =
-    status === ConnectionStatus.Connecting
+    status === 'connecting'
       ? defaultThemes.status.warning.transparent[mode]
-      : status === ConnectionStatus.Connected
+      : status === 'connected'
       ? defaultThemes.status.success.transparent[mode]
       : defaultThemes.status.danger.transparent[mode];
 
@@ -151,6 +151,12 @@ export const SideMenu = () => {
           <CogOutlineSVG width="1.6em" height="1.6em" />
         </button>
 
+        <button
+          type="button"
+          onClick={() => openModalWith('ChooseLanguage', {}, 'small')}
+        >
+          <LanguageSVG width="1.65rem" height="1.65rem" />
+        </button>
         {mode === 'light' ? (
           <button type="button" onClick={() => toggleTheme()}>
             <SunnyOutlineSVG width="1.7em" height="1.7em" />

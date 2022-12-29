@@ -9,6 +9,7 @@ import {
   borderPrimary,
   cardBorder,
   cardShadow,
+  networkColor,
   shadowColor,
   textInvert,
   textSecondary,
@@ -45,9 +46,9 @@ export const StatBoxWrapper = styled(motion.div)`
 
   /* responsive screen sizing */
   h3 {
+    font-variation-settings: 'wght' 580;
     font-size: 1.2rem;
   }
-
   @media (min-width: 950px) {
     max-width: 300px;
     h3 {
@@ -150,12 +151,40 @@ export const StatBoxWrapper = styled(motion.div)`
 
         span.total {
           color: ${textSecondary};
-          font-size: 0.9rem;
+          font-size: 0.95rem;
           margin-left: 0.4rem;
-          margin-top: 0rem;
+          position: relative;
+          bottom: 0.1rem;
         }
       }
     }
+  }
+`;
+
+export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
+  color: ${(props) => (props.primary === true ? networkColor : textSecondary)};
+  font-variation-settings: 'wght' 580;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 0.15rem;
+  font-size: 1.2rem;
+  @media (min-width: 950px) {
+    max-width: 300px;
+    font-size: 1.25rem;
+  }
+
+  &.text {
+    margin-top: 0.15rem;
+  }
+
+  span {
+    color: ${(props) =>
+      props.primary === true ? networkColor : textSecondary};
+    font-size: 0.95rem;
+    margin-left: 0.55rem;
+    margin-top: 0.1rem;
   }
 `;
 
