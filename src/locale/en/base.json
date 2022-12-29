@@ -19,6 +19,14 @@
     "resources": "Resources",
     "stake": "Stake",
     "support": "Support",
+    "time": {
+      "day_one": "day",
+      "day_other": "days",
+      "hr_one": "hr",
+      "hr_other": "hrs",
+      "min_one": "min",
+      "min_other": "mins"
+    },
     "validators": "Validators"
   }
 }
