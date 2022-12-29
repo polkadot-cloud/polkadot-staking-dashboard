@@ -1,6 +1,8 @@
 const { join } = require('path');
 const fs = require('fs');
 
+const localeDir = join(__dirname, '..', 'src', 'locale');
+
 // the suffixes of keys related to i18n functionality that should be ignored.
 const ignoreSubstrings = ['_one', '_two', '_few', '_many', '_other'];
 
@@ -52,29 +54,31 @@ const getDeepKeys = (obj) => {
   return keys;
 };
 
-const fullPath = join(__dirname, './en');
-const languages = getDirectories('./src/locale');
+const defaultPath = join(localeDir, 'en');
+const languages = getDirectories(localeDir);
 
-fs.readdir(fullPath, (error, files) => {
+fs.readdir(defaultPath, (error, files) => {
   if (error) console.log(error);
+
   files.forEach((file) => {
-    const mainJson = JSON.parse(
-      fs.readFileSync(join(fullPath, file)).toString()
+    const defaultJson = JSON.parse(
+      fs.readFileSync(join(defaultPath, file)).toString()
     );
-    languages.forEach((lang) => {
-      const fullPathLanguage = join(__dirname, `./${lang}`);
-      const comparedJson = JSON.parse(
-        fs.readFileSync(join(fullPathLanguage, file)).toString()
+
+    languages.forEach((lng) => {
+      const otherPath = join(localeDir, lng);
+      const otherJson = JSON.parse(
+        fs.readFileSync(join(otherPath, file)).toString()
       );
 
-      const a = getDeepKeys(mainJson);
-      const b = getDeepKeys(comparedJson);
+      const a = getDeepKeys(defaultJson);
+      const b = getDeepKeys(otherJson);
 
       if (a.sort().length !== b.sort().length) {
         const missing = a.filter((item) => b.indexOf(item) < 0);
         if (missing.join('').trim().length > 0) {
           throw new Error(
-            `Missing the following keys from locale "${lang}", file: "${file}":\n"${missing}".`
+            `Missing the following keys from locale "${lng}", file: "${file}":\n"${missing}".`
           );
         }
       }

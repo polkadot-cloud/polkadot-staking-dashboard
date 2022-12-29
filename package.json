@@ -88,7 +88,7 @@
     "lint": "eslint ./src --fix && npx prettier --write ./src",
     "lint:scripts": "npx prettier --write ./.scripts",
     "locale:order": "node ./.scripts/localeOrderKeys.js",
-    "locale:validate": "node ./src/locale/validate.js"
+    "locale:validate": "node ./.scripts/localeValidate.js"
   },
   "browserslist": {
     "production": [
