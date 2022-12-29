@@ -25,7 +25,7 @@ import { ActiveAccount } from './ActiveAccount';
 import { BalanceChart } from './BalanceChart';
 import { NetworkStats } from './NetworkSats';
 import Payouts from './Payouts';
-import ActiveEraStatBox from './Stats/ActiveEra';
+import EraTimeleftStatBox from './Stats/EraTimeleft';
 import HistoricalRewardsRateStatBox from './Stats/HistoricalRewardsRate';
 import SupplyStakedStatBox from './Stats/SupplyStaked';
 import { Tips } from './Tips';
@@ -71,7 +71,7 @@ export const Overview = () => {
       <StatBoxList>
         <HistoricalRewardsRateStatBox />
         <SupplyStakedStatBox />
-        <ActiveEraStatBox />
+        <EraTimeleftStatBox />
       </StatBoxList>
       {plugins.includes('tips') && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>

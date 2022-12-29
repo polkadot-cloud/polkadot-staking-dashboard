@@ -11,7 +11,9 @@ import {
   cardShadow,
   networkColor,
   shadowColor,
+  shadowColorSecondary,
   textInvert,
+  textPrimary,
   textSecondary,
   tooltipBackground,
 } from 'theme';
@@ -26,13 +28,19 @@ export const ListWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   padding-top: 1rem;
+
+  > div:last-child {
+    margin-bottom: 0;
+    .content {
+      margin-right: 0;
+    }
+  }
 `;
 
 export const StatBoxWrapper = styled(motion.div)`
   display: flex;
   flex-flow: column wrap;
   z-index: 0;
-  flex-basis: 100%;
   flex: 1;
   flex-basis: 100%;
   margin-bottom: 1rem;
@@ -57,13 +65,16 @@ export const StatBoxWrapper = styled(motion.div)`
   }
 
   .content {
-    border: ${cardBorder} ${borderPrimary};
-    box-shadow: ${cardShadow} ${shadowColor};
     background: ${backgroundSecondary};
+    border: ${cardBorder} ${borderPrimary};
+    box-shadow: ${cardShadow} ${shadowColorSecondary};
+    @media (max-width: 799px) {
+      box-shadow: ${cardShadow} ${shadowColor};
+    }
     display: flex;
     border-radius: 0.95rem;
     margin-right: 1.25rem;
-    padding: 0.9rem 0;
+    padding: 0.9rem 0rem;
     max-height: 5.25rem;
     flex-flow: row wrap;
 
@@ -97,7 +108,6 @@ export const StatBoxWrapper = styled(motion.div)`
       padding-left: 1rem;
 
       .graph {
-        opacity: 0.75;
         overflow: hidden;
       }
 
@@ -162,7 +172,7 @@ export const StatBoxWrapper = styled(motion.div)`
 `;
 
 export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
-  color: ${(props) => (props.primary === true ? networkColor : textSecondary)};
+  color: ${(props) => (props.primary === true ? networkColor : textPrimary)};
   font-variation-settings: 'wght' 580;
   display: flex;
   flex-flow: row wrap;
@@ -180,11 +190,39 @@ export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
   }
 
   span {
-    color: ${(props) =>
-      props.primary === true ? networkColor : textSecondary};
+    color: ${textSecondary};
     font-size: 0.95rem;
     margin-left: 0.55rem;
     margin-top: 0.1rem;
+    opacity: 0.85;
+  }
+`;
+
+export const TineleftWrapper = styled.div<{ primary?: boolean }>`
+  color: ${(props) => (props.primary === true ? networkColor : textPrimary)};
+  font-variation-settings: 'wght' 550;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  font-size: 1.2rem;
+  @media (min-width: 950px) {
+    max-width: 300px;
+    font-size: 1.25rem;
+  }
+
+  &.text {
+    margin-top: 0.15rem;
+  }
+
+  span {
+    color: ${textSecondary};
+    font-variation-settings: 'wght' 500;
+    font-size: 0.95rem;
+    margin-left: 0.3rem;
+    margin-top: 0.1rem;
+    margin-right: 0.75rem;
+    opacity: 0.85;
   }
 `;
 
