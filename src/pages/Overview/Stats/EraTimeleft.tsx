@@ -3,33 +3,22 @@
 
 import { useNetworkMetrics } from 'contexts/Network';
 import { useSessionEra } from 'contexts/SessionEra';
-import { useEraTimeLeft } from 'library/Hooks/useEraTimeLeft';
 import { useTimeLeft } from 'library/Hooks/useTimeLeft';
 import { Timeleft } from 'library/StatBoxList/Timeleft';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const ActiveEraStatBox = () => {
   const { metrics } = useNetworkMetrics();
   const { sessionEra } = useSessionEra();
-  const eraTimeLeft = useEraTimeLeft();
-  const { timeleft, setFromNow } = useTimeLeft(eraTimeLeft);
+  const { getEraTimeLeft } = useSessionEra();
 
-  // store local `eraTimeLeft` to determine when new era starts.
-  const [localEraTimeLeft, setLocalEraTimeLeft] = useState(eraTimeLeft);
+  const eraTimeLeft = getEraTimeLeft();
 
-  // track if era restarts
-  const eraRestarted = localEraTimeLeft === 0 && eraTimeLeft > 0;
+  const { timeleft, fromNow, setFromNow } = useTimeLeft(eraTimeLeft);
 
-  // reset timeleft when finished era resets.
   useEffect(() => {
-    if (eraTimeLeft === 0) {
-      setLocalEraTimeLeft(0);
-    }
-    if (localEraTimeLeft === 0 && eraTimeLeft > 0) {
-      setLocalEraTimeLeft(eraTimeLeft);
-      setFromNow(eraTimeLeft);
-    }
-  }, [eraRestarted]);
+    setFromNow(fromNow(eraTimeLeft));
+  }, [eraTimeLeft]);
 
   const params = {
     label: 'Time Remaining This Era',

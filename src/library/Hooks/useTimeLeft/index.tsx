@@ -72,8 +72,8 @@ export const useTimeLeft = (initial: TimeleftProps) => {
   };
 
   // calculate resulting timeleft object from latest duration.
-  const getTimeleft = (): TimeLeftAll => {
-    const { days, hours, minutes, seconds } = getDuration(toRef.current);
+  const getTimeleft = (c?: TimeleftDuration): TimeLeftAll => {
+    const { days, hours, minutes, seconds } = c || getDuration(toRef.current);
 
     const raw: TimeLeftRaw = {
       days,
@@ -158,8 +158,9 @@ export const useTimeLeft = (initial: TimeleftProps) => {
     return str;
   })();
 
-  const setFromNow = (dateTo: number) => {
-    setStateWithRef(fromNow(dateTo), setTo, toRef);
+  const setFromNow = (dateTo: Date) => {
+    setTimeleft(getTimeleft(getDuration(new Date())));
+    setStateWithRef(dateTo, setTo, toRef);
   };
 
   return {
