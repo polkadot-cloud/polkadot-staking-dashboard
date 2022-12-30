@@ -75,19 +75,19 @@ fs.readdir(defaultPath, (error, files) => {
       const others = getDeepKeys(otherJson);
       for (i in Object.values(en)) {
         if (en[i].indexOf('.') > 0) {
-          const iLetter = en[i].slice((en[i].indexOf('.') + 1), (en[i].indexOf('.') + 2));
-          const iMinusLetter = en[i - 1].slice((en[i].indexOf('.') + 1), (en[i].indexOf('.') + 2));
+          const iLetter = en[i].slice((en[i].indexOf('.') + 1));
+          const iMinusLetter = en[i - 1].slice((en[i].indexOf('.') + 1));
           if (iLetter < iMinusLetter) {
-            console.log("English JSON is NOT alphabaticlly ordered")
+            console.log(`En/"${file}" JSON is NOT alphabaticlly ordered`)
           }
         }
       }
       for (i in Object.values(others)) {
         if (others[i].indexOf('.') > 0) {
-          const iLetter = others[i].slice((others[i].indexOf('.') + 1), (others[i].indexOf('.') + 2));
-          const iMinusLetter = others[i - 1].slice((others[i].indexOf('.') + 1), (others[i].indexOf('.') + 2));
+          const iLetter = others[i].slice((others[i].indexOf('.') + 1));
+          const iMinusLetter = others[i - 1].slice((others[i].indexOf('.') + 1));
           if (iLetter < iMinusLetter) {
-            console.log(`"${lng}" is NOT alphabaticlly ordered`)
+            console.log(`"${lng}"/"${file}" is NOT alphabaticlly ordered`)
           }
         }
       }
