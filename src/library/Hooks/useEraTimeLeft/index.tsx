@@ -17,7 +17,6 @@ export const useEraTimeLeft = () => {
   };
 
   // update time left every second
-  // clears and resets interval on `eraProgress` update.
   let timeleftInterval: ReturnType<typeof setInterval>;
   useEffect(() => {
     setEraTimeLeft(getEraTimeLeft());
