@@ -8,6 +8,7 @@ import { NETWORKS } from 'config/networks';
 import {
   ApiEndpoints,
   FallbackBondingDuration,
+  FallbackEpochDuration,
   FallbackExpectedBlockTime,
   FallbackMaxElectingVoters,
   FallbackMaxNominations,
@@ -101,6 +102,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       _api.consts.staking.maxNominatorRewardedPerValidator,
       _api.consts.electionProviderMultiPhase.maxElectingVoters,
       _api.consts.babe.expectedBlockTime,
+      _api.consts.babe.epochDuration,
       _api.consts.balances.existentialDeposit,
       _api.consts.staking.historyDepth,
       _api.consts.nominationPools.palletId,
@@ -134,19 +136,23 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       ? Number(_consts[5].toString())
       : FallbackExpectedBlockTime;
 
-    const existentialDeposit = _consts[6]
-      ? new BN(_consts[6].toString())
+    const epochDuration = _consts[6]
+      ? Number(_consts[6].toString())
+      : FallbackEpochDuration;
+
+    const existentialDeposit = _consts[7]
+      ? new BN(_consts[7].toString())
       : new BN(0);
 
     let historyDepth;
-    if (_consts[7] !== undefined) {
-      historyDepth = new BN(_consts[7].toString());
+    if (_consts[8] !== undefined) {
+      historyDepth = new BN(_consts[8].toString());
     } else {
       historyDepth = await _api.query.staking.historyDepth();
       historyDepth = new BN(historyDepth.toString());
     }
 
-    const poolsPalletId = _consts[8] ? _consts[8].toU8a() : new Uint8Array(0);
+    const poolsPalletId = _consts[9] ? _consts[9].toU8a() : new Uint8Array(0);
 
     setApi(_api);
     setConsts({
@@ -156,6 +162,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       maxNominatorRewardedPerValidator,
       historyDepth,
       maxElectingVoters,
+      epochDuration,
       expectedBlockTime,
       poolsPalletId,
       existentialDeposit,
