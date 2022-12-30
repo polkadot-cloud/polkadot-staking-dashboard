@@ -120,8 +120,8 @@ export const StatBoxWrapper = styled(motion.div)`
         z-index: 2;
         border-radius: 0.5rem;
         padding: 0 0.5rem;
-        width: auto;
-        max-width: 200px;
+        width: max-content;
+        max-width: 250px;
         transition: opacity 0.1s;
 
         h3 {
