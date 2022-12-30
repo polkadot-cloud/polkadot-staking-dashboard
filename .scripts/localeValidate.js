@@ -71,11 +71,29 @@ fs.readdir(defaultPath, (error, files) => {
         fs.readFileSync(join(otherPath, file)).toString()
       );
 
-      const a = getDeepKeys(defaultJson);
-      const b = getDeepKeys(otherJson);
+      const en = getDeepKeys(defaultJson);
+      const others = getDeepKeys(otherJson);
+      for (i in Object.values(en)) {
+        if (en[i].indexOf('.') > 0) {
+          const iLetter = en[i].slice((en[i].indexOf('.') + 1), (en[i].indexOf('.') + 2));
+          const iMinusLetter = en[i - 1].slice((en[i].indexOf('.') + 1), (en[i].indexOf('.') + 2));
+          if (iLetter < iMinusLetter) {
+            console.log("English JSON is NOT alphabaticlly ordered")
+          }
+        }
+      }
+      for (i in Object.values(others)) {
+        if (others[i].indexOf('.') > 0) {
+          const iLetter = others[i].slice((others[i].indexOf('.') + 1), (others[i].indexOf('.') + 2));
+          const iMinusLetter = others[i - 1].slice((others[i].indexOf('.') + 1), (others[i].indexOf('.') + 2));
+          if (iLetter < iMinusLetter) {
+            console.log(`"${lng}" is NOT alphabaticlly ordered`)
+          }
+        }
+      }
 
-      if (a.sort().length !== b.sort().length) {
-        const missing = a.filter((item) => b.indexOf(item) < 0);
+      if (en.sort().length !== others.sort().length) {
+        const missing = en.filter((item) => others.indexOf(item) < 0);
         if (missing.join('').trim().length > 0) {
           throw new Error(
             `Missing the following keys from locale "${lng}", file: "${file}":\n"${missing}".`
