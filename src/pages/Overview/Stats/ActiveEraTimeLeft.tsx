@@ -6,9 +6,11 @@ import useEraTimeLeft from 'library/Hooks/useEraTimeLeft';
 import { useTimeLeft } from 'library/Hooks/useTimeLeft';
 import { Timeleft } from 'library/StatBoxList/Timeleft';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { humanNumber } from 'Utils';
 
 const ActiveEraStatBox = () => {
+  const { t } = useTranslation('pages');
   const { metrics } = useNetworkMetrics();
   const { timeleft, fromNow, setFromNow } = useTimeLeft();
   const { activeEra } = metrics;
@@ -24,7 +26,7 @@ const ActiveEraStatBox = () => {
   }, [activeEra]);
 
   const params = {
-    label: 'Time Remaining This Era',
+    label: t('overview.timeRemainingThisEra'),
     timeleft: timeleft.formatted,
     graph: {
       value1: activeEra.index === 0 ? 0 : percentSurpassed,

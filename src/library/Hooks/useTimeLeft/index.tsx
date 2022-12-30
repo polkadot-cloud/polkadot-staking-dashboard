@@ -14,7 +14,7 @@ import {
 } from './types';
 
 export const useTimeLeft = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   // adds `seconds` to the current time and returns the resulting date.
   const fromNow = (seconds: number): Date => {
@@ -143,6 +143,11 @@ export const useTimeLeft = () => {
       }
     }
   }, [to, inLastHour(), lastMinuteCountdown()]);
+
+  // re-render the timeleft upon langauge switch.
+  useEffect(() => {
+    setTimeleft(getTimeleft());
+  }, [i18n.resolvedLanguage]);
 
   // clear intervals on unmount
   useEffect(() => {
