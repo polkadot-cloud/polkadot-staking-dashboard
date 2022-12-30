@@ -25,7 +25,7 @@ import { ActiveAccount } from './ActiveAccount';
 import { BalanceChart } from './BalanceChart';
 import { NetworkStats } from './NetworkSats';
 import Payouts from './Payouts';
-import EraTimeLeftStat from './Stats/EraTimeLeft';
+import EraTimeLeftStat from './Stats/ActiveEraTimeLeft';
 import HistoricalRewardsRateStat from './Stats/HistoricalRewardsRate';
 import SupplyStakedStat from './Stats/SupplyStaked';
 import { Tips } from './Tips';

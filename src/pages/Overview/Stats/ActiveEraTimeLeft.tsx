@@ -18,11 +18,6 @@ const ActiveEraStatBox = () => {
     percentRemaining,
   } = useEraTimeLeft();
 
-  // set initial era time left.
-  useEffect(() => {
-    setFromNow(fromNow(eraTimeLeft));
-  }, []);
-
   // re-set timer on era change (also covers network change).
   useEffect(() => {
     setFromNow(fromNow(eraTimeLeft));
