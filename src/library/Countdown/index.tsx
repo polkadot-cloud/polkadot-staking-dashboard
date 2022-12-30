@@ -25,7 +25,7 @@ export const Countdown = ({ timeleft }: { timeleft: TimeLeftFormatted }) => {
           {minutes[0]} <span>{minutes[1]}</span>
         </>
       ) : null}
-      {days[0] === 0 && hours[0] === 0 && minutes[0] > 0 ? ' : ' : null}
+      {days[0] === 0 && hours[0] === 0 && minutes[0] > 0 ? <>:&nbsp; </> : null}
 
       {days[0] === 0 && hours[0] === 0 && (
         <>

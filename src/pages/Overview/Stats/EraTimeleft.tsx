@@ -10,12 +10,9 @@ import { humanNumber } from 'Utils';
 
 const ActiveEraStatBox = () => {
   const { metrics } = useNetworkMetrics();
-  const { sessionEra } = useSessionEra();
-  const { getEraTimeLeft } = useSessionEra();
-
+  const { sessionEra, getEraTimeLeft } = useSessionEra();
   const eraTimeLeft = getEraTimeLeft();
-
-  const { timeleft, fromNow, setFromNow } = useTimeLeft(eraTimeLeft);
+  const { timeleft, fromNow, setFromNow } = useTimeLeft();
 
   useEffect(() => {
     setFromNow(fromNow(eraTimeLeft));
