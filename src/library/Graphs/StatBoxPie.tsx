@@ -20,7 +20,10 @@ export const StatPie = ({ value, value2 }: StatPieProps) => {
     value2 = 0;
   }
 
-  const backgroundColor = networkColors[`${name}-${mode}`];
+  const backgroundColor = isZero
+    ? defaultThemes.buttons.toggle.background[mode]
+    : networkColors[`${name}-${mode}`];
+
   const options = {
     backgroundColor,
     hoverBackgroundColor: [
