@@ -144,14 +144,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       ? new BN(_consts[7].toString())
       : new BN(0);
 
-    let historyDepth;
-    if (_consts[8] !== undefined) {
-      historyDepth = new BN(_consts[8].toString());
-    } else {
-      historyDepth = await _api.query.staking.historyDepth();
-      historyDepth = new BN(historyDepth.toString());
-    }
-
+    const historyDepth = _consts[8] ? new BN(_consts[8].toString()) : new BN(0);
     const poolsPalletId = _consts[9] ? _consts[9].toU8a() : new Uint8Array(0);
 
     setApi(_api);
