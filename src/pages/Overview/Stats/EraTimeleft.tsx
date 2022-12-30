@@ -13,10 +13,17 @@ const ActiveEraStatBox = () => {
   const { sessionEra, getEraTimeLeft } = useSessionEra();
   const eraTimeLeft = getEraTimeLeft();
   const { timeleft, fromNow, setFromNow } = useTimeLeft();
+  const { activeEra } = metrics;
 
+  // set initial era time left
   useEffect(() => {
     setFromNow(fromNow(eraTimeLeft));
   }, [eraTimeLeft]);
+
+  // re-set timer on era change
+  useEffect(() => {
+    setFromNow(fromNow(getEraTimeLeft()));
+  }, [activeEra]);
 
   const params = {
     label: 'Time Remaining This Era',
@@ -25,7 +32,7 @@ const ActiveEraStatBox = () => {
       value1: sessionEra.eraProgress,
       value2: sessionEra.eraLength - sessionEra.eraProgress,
     },
-    tooltip: `Era ${humanNumber(metrics.activeEra.index)}` ?? undefined,
+    tooltip: `Era ${humanNumber(activeEra.index)}` ?? undefined,
     helpKey: 'Era',
   };
   return <Timeleft {...params} />;

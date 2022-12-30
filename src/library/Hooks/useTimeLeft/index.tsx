@@ -138,7 +138,7 @@ export const useTimeLeft = () => {
               setMinInterval(null);
             }
             setTimeleft(getTimeleft());
-          }, 5000)
+          }, 60000)
         );
       }
     }
