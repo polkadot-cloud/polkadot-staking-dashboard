@@ -10,11 +10,10 @@ import {
   TimeLeftAll,
   TimeleftDuration,
   TimeLeftFormatted,
-  TimeleftProps,
   TimeLeftRaw,
 } from './types';
 
-export const useTimeLeft = (initial: TimeleftProps) => {
+export const useTimeLeft = () => {
   const { t } = useTranslation();
 
   // adds `seconds` to the current time and returns the resulting date.
@@ -55,15 +54,15 @@ export const useTimeLeft = (initial: TimeleftProps) => {
   };
 
   // check whether timeleft is within a minute of finishing.
-  const inLastMinute = () => {
-    const { days, hours, minutes } = getDuration(toRef.current);
-    return !days && !hours && !minutes;
+  const inLastHour = () => {
+    const { days, hours } = getDuration(toRef.current);
+    return !days && !hours;
   };
 
   // get the amount of seconds left if timeleft is in the last minute.
   const lastMinuteCountdown = () => {
     const { seconds } = getDuration(toRef.current);
-    if (!inLastMinute()) {
+    if (!inLastHour()) {
       return 60;
     }
     return seconds;
@@ -98,44 +97,64 @@ export const useTimeLeft = (initial: TimeleftProps) => {
   };
 
   // the end time as a date.
-  const [to, setTo] = useState<Date | null>(fromNow(initial));
+  const [to, setTo] = useState<Date | null>(null);
   const toRef = useRef(to);
 
   // resulting timeleft object to be returned.
   const [timeleft, setTimeleft] = useState<TimeLeftAll>(getTimeleft());
 
   // timeleft refresh intervals.
-  let minInterval: ReturnType<typeof setInterval>;
-  let secInterval: ReturnType<typeof setInterval>;
+  const [minInterval, setMinInterval] = useState<ReturnType<
+    typeof setInterval
+  > | null>(null);
+  const [secInterval, setSecInterval] = useState<ReturnType<
+    typeof setInterval
+  > | null>(null);
 
   // refresh every minute, or every second if in last minute.
   useEffect(() => {
-    if (inLastMinute()) {
+    if (inLastHour()) {
       // refresh timeleft every second
-      secInterval = setInterval(() => {
-        if (!inLastMinute()) {
-          clearInterval(secInterval);
-        }
-        setTimeleft(getTimeleft());
-      }, 1000);
+      if (!secInterval) {
+        setSecInterval(
+          setInterval(() => {
+            if (!inLastHour()) {
+              if (secInterval) clearInterval(secInterval);
+              setSecInterval(null);
+            }
+            setTimeleft(getTimeleft());
+          }, 1000)
+        );
+      }
     } else {
       setTimeleft(getTimeleft());
 
       // refresh timeleft every minute.
-      minInterval = setInterval(() => {
-        if (inLastMinute()) {
-          clearInterval(minInterval);
-        }
-        setTimeleft(getTimeleft());
-      }, 5000);
+      if (!minInterval) {
+        setMinInterval(
+          setInterval(() => {
+            if (inLastHour()) {
+              if (minInterval) clearInterval(minInterval);
+              setMinInterval(null);
+            }
+            setTimeleft(getTimeleft());
+          }, 5000)
+        );
+      }
     }
-  }, [to, inLastMinute(), lastMinuteCountdown()]);
+  }, [to, inLastHour(), lastMinuteCountdown()]);
 
   // clear intervals on unmount
   useEffect(() => {
     return () => {
-      clearInterval(minInterval);
-      clearInterval(secInterval);
+      if (minInterval) {
+        clearInterval(minInterval);
+        setMinInterval(null);
+      }
+      if (secInterval) {
+        clearInterval(secInterval);
+        setSecInterval(null);
+      }
     };
   }, []);
 
