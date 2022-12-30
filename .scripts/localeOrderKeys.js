@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const prettier = require('prettier');
 
-const languageDir = path.join(__dirname, '..', 'src', 'locale');
+const localeDir = path.join(__dirname, '..', 'src', 'locale');
 
 // order keys of a json object.
 const orderKeysAlphabetically = (o) => {
@@ -45,14 +45,14 @@ const orderKeys = (json) => {
 
 // get all language paths to re-order
 const languages = fs
-  .readdirSync(languageDir, { withFileTypes: true })
+  .readdirSync(localeDir, { withFileTypes: true })
   .filter((dirent) => dirent.isDirectory())
   .map((dirent) => dirent.name);
 
 // for each language path
 for (const lng of languages) {
   // concat lng to directory to get language path
-  const pathToLanguage = path.join(languageDir, `/${lng}`);
+  const pathToLanguage = path.join(localeDir, `/${lng}`);
 
   // open language directory & get files
   fs.readdir(pathToLanguage, (error, files) => {

@@ -13,6 +13,15 @@ jobs:
       - uses: actions/checkout@master
       - name: Check License Lines
         uses: kt3k/license_checker@v1.0.6
+  validate-locales:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.1.0
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - run: yarn run locale:validate
   build:
     runs-on: ubuntu-latest
 
@@ -33,7 +42,7 @@ jobs:
 
   all:
     # This job ensures that all jobs above (now we have just build) are successful.
-    needs: [check-license-lines, build]
+    needs: [check-license-lines, build, validate-locales]
     runs-on: ubuntu-latest
     steps:
       - run: echo Success

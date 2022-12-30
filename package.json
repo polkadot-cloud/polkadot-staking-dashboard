@@ -59,7 +59,7 @@
     "@types/styled-components": "^5.1.21",
     "@types/styled-theming": "^2.2.5",
     "@typescript-eslint/eslint-plugin": "^5.47.0",
-    "@typescript-eslint/parser": "^5.47.0",
+    "@typescript-eslint/parser": "^5.47.1",
     "eslint": "^8.30.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^17.0.0",
@@ -87,7 +87,8 @@
     "eject": "react-scripts eject",
     "lint": "eslint ./src --fix && npx prettier --write ./src",
     "lint:scripts": "npx prettier --write ./.scripts",
-    "locale:order": "node ./.scripts/localeOrderKeys.js"
+    "locale:order": "node ./.scripts/localeOrderKeys.js",
+    "locale:validate": "node ./.scripts/localeValidate.js"
   },
   "browserslist": {
     "production": [
