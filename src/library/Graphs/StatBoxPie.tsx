@@ -19,12 +19,16 @@ export const StatPie = ({ value, value2 }: StatPieProps) => {
     value = 1;
     value2 = 0;
   }
+  const borderColor = isZero
+    ? defaultThemes.buttons.toggle.background[mode]
+    : [networkColors[`${name}-${mode}`], defaultThemes.border.secondary[mode]];
 
   const backgroundColor = isZero
     ? defaultThemes.buttons.toggle.background[mode]
     : networkColors[`${name}-${mode}`];
 
   const options = {
+    borderColor,
     backgroundColor,
     hoverBackgroundColor: [
       backgroundColor,
@@ -47,11 +51,12 @@ export const StatPie = ({ value, value2 }: StatPieProps) => {
     datasets: [
       {
         data: [value, value2],
+
         backgroundColor: [
           backgroundColor,
           defaultThemes.buttons.toggle.background[mode],
         ],
-        borderWidth: 0,
+        borderWidth: 0.5,
       },
     ],
   };
