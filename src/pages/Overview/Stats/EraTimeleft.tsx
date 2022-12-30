@@ -6,6 +6,7 @@ import { useSessionEra } from 'contexts/SessionEra';
 import { useTimeLeft } from 'library/Hooks/useTimeLeft';
 import { Timeleft } from 'library/StatBoxList/Timeleft';
 import { useEffect } from 'react';
+import { humanNumber } from 'Utils';
 
 const ActiveEraStatBox = () => {
   const { metrics } = useNetworkMetrics();
@@ -27,7 +28,7 @@ const ActiveEraStatBox = () => {
       value1: sessionEra.eraProgress,
       value2: sessionEra.eraLength - sessionEra.eraProgress,
     },
-    tooltip: `Era ${metrics.activeEra.index}` ?? undefined,
+    tooltip: `Era ${humanNumber(metrics.activeEra.index)}` ?? undefined,
     helpKey: 'Era',
   };
   return <Timeleft {...params} />;
