@@ -1,6 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { TimeLeftFormatted } from 'library/Hooks/useTimeLeft/types';
+
 export interface NumberProps {
   label: string;
   value: string | number;
@@ -34,7 +36,7 @@ export interface TextProps {
 
 export interface TimeleftProps {
   label: string;
-  timeleft: RawTimeleft;
+  timeleft: TimeLeftFormatted;
   graph: {
     value1: number;
     value2: number;
@@ -43,4 +45,4 @@ export interface TimeleftProps {
   helpKey: string;
 }
 
-export type RawTimeleft = Array<Array<number | string>>;
+export type TimeLeftRaw = Array<Array<number | string>>;

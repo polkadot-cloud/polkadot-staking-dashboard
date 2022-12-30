@@ -25,7 +25,9 @@
       "hr_one": "hr",
       "hr_other": "hrs",
       "min_one": "min",
-      "min_other": "mins"
+      "min_other": "mins",
+      "second_one": "second",
+      "second_other": "seconds"
     },
     "validators": "验证人"
   }
