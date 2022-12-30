@@ -29,11 +29,9 @@ export const useTimeLeft = (initial: TimeleftProps) => {
     if (!toDate) {
       return defaultDuration;
     }
-
     if (getUnixTime(toDate) <= getUnixTime(new Date())) {
       return defaultDuration;
     }
-
     toDate.setSeconds(toDate.getSeconds());
     const d = intervalToDuration({
       start: Date.now(),
