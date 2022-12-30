@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useNetworkMetrics } from 'contexts/Network';
-import { useSessionEra } from 'contexts/SessionEra';
+import useEraTimeLeft from 'library/Hooks/useEraTimeLeft';
 import { useTimeLeft } from 'library/Hooks/useTimeLeft';
 import { Timeleft } from 'library/StatBoxList/Timeleft';
 import { useEffect } from 'react';
@@ -10,27 +10,30 @@ import { humanNumber } from 'Utils';
 
 const ActiveEraStatBox = () => {
   const { metrics } = useNetworkMetrics();
-  const { sessionEra, getEraTimeLeft } = useSessionEra();
-  const eraTimeLeft = getEraTimeLeft();
   const { timeleft, fromNow, setFromNow } = useTimeLeft();
   const { activeEra } = metrics;
+  const {
+    timeleft: eraTimeLeft,
+    percentSurpassed,
+    percentRemaining,
+  } = useEraTimeLeft();
 
-  // set initial era time left
+  // set initial era time left.
   useEffect(() => {
     setFromNow(fromNow(eraTimeLeft));
-  }, [eraTimeLeft]);
+  }, []);
 
-  // re-set timer on era change
+  // re-set timer on era change (also covers network change).
   useEffect(() => {
-    setFromNow(fromNow(getEraTimeLeft()));
+    setFromNow(fromNow(eraTimeLeft));
   }, [activeEra]);
 
   const params = {
     label: 'Time Remaining This Era',
     timeleft: timeleft.formatted,
     graph: {
-      value1: sessionEra.eraProgress,
-      value2: sessionEra.eraLength - sessionEra.eraProgress,
+      value1: activeEra.index === 0 ? 0 : percentSurpassed,
+      value2: activeEra.index === 0 ? 100 : percentRemaining,
     },
     tooltip: `Era ${humanNumber(activeEra.index)}` ?? undefined,
     helpKey: 'Era',

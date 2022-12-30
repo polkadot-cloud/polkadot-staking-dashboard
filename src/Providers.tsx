@@ -21,7 +21,6 @@ import { BondedPoolsProvider } from 'contexts/Pools/BondedPools';
 import { PoolMembersProvider } from 'contexts/Pools/PoolMembers';
 import { PoolMembershipsProvider } from 'contexts/Pools/PoolMemberships';
 import { PoolsConfigProvider } from 'contexts/Pools/PoolsConfig';
-import { SessionEraProvider } from 'contexts/SessionEra';
 import { SetupProvider } from 'contexts/Setup';
 import { StakingProvider } from 'contexts/Staking';
 import { SubscanProvider } from 'contexts/Subscan';
@@ -90,7 +89,6 @@ export const Providers = withProviders(
   TxFeesProvider,
   ExtrinsicsProvider,
   ModalProvider,
-  SessionEraProvider,
   OverlayProvider
 )(ThemedRouter);
 
