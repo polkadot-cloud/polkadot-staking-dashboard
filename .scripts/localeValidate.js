@@ -1,6 +1,8 @@
 const { join } = require('path');
 const fs = require('fs');
-//to-remove
+// const localeDir = require('./utils.js');
+// const languages = require('./utils.js');
+
 const localeDir = join(__dirname, '..', 'src', 'locale');
 
 // the suffixes of keys related to i18n functionality that should be ignored.
@@ -55,7 +57,9 @@ const getDeepKeys = (obj) => {
 };
 
 const defaultPath = join(localeDir, 'en');
-const languages = getDirectories(localeDir).filter((v) => v !== 'en');
+const languagesButEn = getDirectories(localeDir).filter((v) => v !== 'en');
+// const languagesButEn = languages.filter((v) => v !== 'en');
+
 
 const para = (lng, index) => {
   const p = lng[index].slice((lng[index].indexOf('.') + 1));
@@ -74,7 +78,7 @@ fs.readdir(defaultPath, (error, files) => {
       fs.readFileSync(join(defaultPath, file)).toString()
     );
 
-    languages.forEach((lng) => {
+    languagesButEn.forEach((lng) => {
       const otherPath = join(localeDir, lng);
       const otherJson = JSON.parse(
         fs.readFileSync(join(otherPath, file)).toString()
