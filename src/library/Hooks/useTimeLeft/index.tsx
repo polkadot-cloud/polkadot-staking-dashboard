@@ -26,7 +26,9 @@ export const useTimeLeft = (initial: TimeleftProps) => {
 
   // calculates the current timeleft duration.
   const getDuration = (toDate: Date | null): TimeleftDuration => {
-    if (!toDate) return defaultDuration;
+    if (!toDate) {
+      return defaultDuration;
+    }
 
     if (getUnixTime(toDate) <= getUnixTime(new Date())) {
       return defaultDuration;
@@ -56,23 +58,22 @@ export const useTimeLeft = (initial: TimeleftProps) => {
 
   // check whether timeleft is within a minute of finishing.
   const inLastMinute = () => {
-    const { days, hours, minutes } = durationRef.current;
+    const { days, hours, minutes } = getDuration(toRef.current);
     return !days && !hours && !minutes;
   };
 
   // get the amount of seconds left if timeleft is in the last minute.
   const lastMinuteCountdown = () => {
-    const { seconds } = durationRef.current;
-    if (!durationRef.current)
-      if (!inLastMinute) {
-        return 60;
-      }
+    const { seconds } = getDuration(toRef.current);
+    if (!inLastMinute()) {
+      return 60;
+    }
     return seconds;
   };
 
   // calculate resulting timeleft object from latest duration.
-  const getTimeleft = (d: TimeleftDuration): TimeLeftAll => {
-    const { days, hours, minutes, seconds } = d;
+  const getTimeleft = (): TimeLeftAll => {
+    const { days, hours, minutes, seconds } = getDuration(toRef.current);
 
     const raw: TimeLeftRaw = {
       days,
@@ -100,15 +101,10 @@ export const useTimeLeft = (initial: TimeleftProps) => {
 
   // the end time as a date.
   const [to, setTo] = useState<Date | null>(fromNow(initial));
-
-  // the the duration object of timeleft.
-  const [duration, setDuration] = useState<TimeleftDuration>(defaultDuration);
-  const durationRef = useRef(duration);
+  const toRef = useRef(to);
 
   // resulting timeleft object to be returned.
-  const [timeleft, setTimeleft] = useState<TimeLeftAll>(
-    getTimeleft(durationRef.current)
-  );
+  const [timeleft, setTimeleft] = useState<TimeLeftAll>(getTimeleft());
 
   // timeleft refresh intervals.
   let minInterval: ReturnType<typeof setInterval>;
@@ -122,42 +118,32 @@ export const useTimeLeft = (initial: TimeleftProps) => {
         if (!inLastMinute()) {
           clearInterval(secInterval);
         }
-        setTimeleft(getTimeleft(durationRef.current));
+        setTimeleft(getTimeleft());
       }, 1000);
     } else {
-      setTimeleft(getTimeleft(durationRef.current));
+      setTimeleft(getTimeleft());
+
       // refresh timeleft every minute.
       minInterval = setInterval(() => {
         if (inLastMinute()) {
           clearInterval(minInterval);
         }
-        setTimeleft(getTimeleft(durationRef.current));
-      }, 60000);
+        setTimeleft(getTimeleft());
+      }, 5000);
     }
+  }, [to, inLastMinute(), lastMinuteCountdown()]);
+
+  // clear intervals on unmount
+  useEffect(() => {
     return () => {
       clearInterval(minInterval);
       clearInterval(secInterval);
     };
-  }, [
-    duration,
-    durationRef.current.minutes,
-    inLastMinute(),
-    lastMinuteCountdown(),
-  ]);
-
-  // update duration if `to` date changes.
-  useEffect(() => {
-    setStateWithRef(getDuration(to), setDuration, durationRef);
-  }, [to]);
-
-  // update component when duration updates.
-  useEffect(() => {
-    setTimeleft(getTimeleft(durationRef.current));
-  }, [duration]);
+  }, []);
 
   // format the duration as a string.
   const timeleftAsString = (() => {
-    const { days, hours, minutes, seconds } = durationRef.current;
+    const { days, hours, minutes, seconds } = getDuration(toRef.current);
 
     let str = '';
     if (days > 0) {
@@ -172,8 +158,12 @@ export const useTimeLeft = (initial: TimeleftProps) => {
     return str;
   })();
 
+  const setFromNow = (dateTo: number) => {
+    setStateWithRef(fromNow(dateTo), setTo, toRef);
+  };
+
   return {
-    setTo,
+    setFromNow,
     fromNow,
     timeleft,
     timeleftAsString,

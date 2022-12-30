@@ -12,14 +12,13 @@ const ActiveEraStatBox = () => {
   const { metrics } = useNetworkMetrics();
   const { sessionEra } = useSessionEra();
   const eraTimeLeft = useEraTimeLeft();
-  const {
-    timeleft: { formatted: timeleft },
-    setTo,
-    fromNow,
-  } = useTimeLeft(eraTimeLeft);
+  const { timeleft, setFromNow } = useTimeLeft(eraTimeLeft);
 
   // store local `eraTimeLeft` to determine when new era starts.
   const [localEraTimeLeft, setLocalEraTimeLeft] = useState(eraTimeLeft);
+
+  // track if era restarts
+  const eraRestarted = localEraTimeLeft === 0 && eraTimeLeft > 0;
 
   // reset timeleft when finished era resets.
   useEffect(() => {
@@ -28,13 +27,13 @@ const ActiveEraStatBox = () => {
     }
     if (localEraTimeLeft === 0 && eraTimeLeft > 0) {
       setLocalEraTimeLeft(eraTimeLeft);
-      setTo(fromNow(eraTimeLeft));
+      setFromNow(eraTimeLeft);
     }
-  }, [eraTimeLeft]);
+  }, [eraRestarted]);
 
   const params = {
     label: 'Time Remaining This Era',
-    timeleft,
+    timeleft: timeleft.formatted,
     graph: {
       value1: sessionEra.eraProgress,
       value2: sessionEra.eraLength - sessionEra.eraProgress,
