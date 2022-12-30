@@ -105,6 +105,7 @@
       "reserved": "己储备",
       "subscanDisabled": "Subscan己断开",
       "supplyStaked": "抵押比例",
+      "timeRemainingThisEra": "该Era里剩余时间",
       "totalNominators": "提名人总数",
       "totalNumAccounts": "已加入提名池的帐户总数",
       "totalValidators": "所有验证人",

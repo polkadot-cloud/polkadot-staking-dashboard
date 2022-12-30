@@ -1742,7 +1742,6 @@
 "@polkadot/api-base@9.10.5":
   version "9.10.5"
   resolved "https://registry.yarnpkg.com/@polkadot/api-base/-/api-base-9.10.5.tgz#be772c5f4fad544dbd0d211811889059f4736b2a"
-  integrity sha512-UGNt/Qq9xwpQR2HbM5qLLH/F2J22lzNtzjhFkXofnohZxgVEERpgtX3kw07tdQZNgAGL7E0lhMGJjvg6M+YQdw==
   dependencies:
     "@babel/runtime" "^7.20.6"
     "@polkadot/rpc-core" "9.10.5"
@@ -1752,7 +1751,7 @@
 
 "@polkadot/api-derive@9.10.5":
   version "9.10.5"
-  resolved "https://registry.yarnpkg.com/@polkadot/api-derive/-/api-derive-9.10.5.tgz#9d6987f74700aa41a3dd627e7173f29f252917f1"
+  resolved "https://registry.npmjs.org/@polkadot/api-derive/-/api-derive-9.10.5.tgz#9d6987f74700aa41a3dd627e7173f29f252917f1"
   integrity sha512-2I4D1icij36UsPbWs+jrVnBKVsKqdIe7bynrTD9Wg+abHNkqt7wJOianiSbFqq8P9zXcruwpnuXzGljgwqzbGw==
   dependencies:
     "@babel/runtime" "^7.20.6"
@@ -1768,7 +1767,7 @@
 
 "@polkadot/api@9.10.5", "@polkadot/api@^9.10.5":
   version "9.10.5"
-  resolved "https://registry.yarnpkg.com/@polkadot/api/-/api-9.10.5.tgz#69c0483121c79b0b3c15fc01ed314ab40a016a7a"
+  resolved "https://registry.npmjs.org/@polkadot/api/-/api-9.10.5.tgz#69c0483121c79b0b3c15fc01ed314ab40a016a7a"
   integrity sha512-nCtQX9+ZNSEN8Cn09ylZs8ckwHfB+ofbf+opW3JeRFm1K5AScH1Hx6jP9YpTa+ii9sDEXzMdUSN90JBYLtzW7w==
   dependencies:
     "@babel/runtime" "^7.20.6"
@@ -1826,7 +1825,7 @@
 
 "@polkadot/rpc-augment@9.10.5":
   version "9.10.5"
-  resolved "https://registry.yarnpkg.com/@polkadot/rpc-augment/-/rpc-augment-9.10.5.tgz#17544ff3013700baa7ec20efd7d0581517678f1b"
+  resolved "https://registry.npmjs.org/@polkadot/rpc-augment/-/rpc-augment-9.10.5.tgz#17544ff3013700baa7ec20efd7d0581517678f1b"
   integrity sha512-ip6jH7XcyvAwd6EUlbHFHglmNt42h0890lKDaDMIKIsC+U2HDNnMHvW16xH0cOGV98LdGiRltHLtCnl7u+EFZg==
   dependencies:
     "@babel/runtime" "^7.20.6"
@@ -1837,7 +1836,7 @@
 
 "@polkadot/rpc-core@9.10.5":
   version "9.10.5"
-  resolved "https://registry.yarnpkg.com/@polkadot/rpc-core/-/rpc-core-9.10.5.tgz#a4385e4915f30d065e2de9c147ca07fcb0a4bb48"
+  resolved "https://registry.npmjs.org/@polkadot/rpc-core/-/rpc-core-9.10.5.tgz#a4385e4915f30d065e2de9c147ca07fcb0a4bb48"
   integrity sha512-HcsQDOw3+vChhp7KcOxsQKod5O8BUISjbGSuHuBKtDCc75MPVr250UTtgi5cvJ3q7OFrYfDM3i0rqIPSa/zykQ==
   dependencies:
     "@babel/runtime" "^7.20.6"
@@ -1847,9 +1846,9 @@
     "@polkadot/util" "^10.2.1"
     rxjs "^7.8.0"
 
-"@polkadot/rpc-provider@9.10.5", "@polkadot/rpc-provider@^9.10.4":
+"@polkadot/rpc-provider@9.10.5", "@polkadot/rpc-provider@^9.10.5":
   version "9.10.5"
-  resolved "https://registry.yarnpkg.com/@polkadot/rpc-provider/-/rpc-provider-9.10.5.tgz#4994bb662c0b99764e638ee6a25afef26dbfee46"
+  resolved "https://registry.npmjs.org/@polkadot/rpc-provider/-/rpc-provider-9.10.5.tgz#4994bb662c0b99764e638ee6a25afef26dbfee46"
   integrity sha512-R9J9JXx3J//cSVKqQKSTC3HPCv14ZyONVdjiHWLsZymX6okb1ORnhms8JeRMRD4h4FnLePOuKsE9IwEmOUiIUg==
   dependencies:
     "@babel/runtime" "^7.20.6"
@@ -1868,7 +1867,7 @@
 
 "@polkadot/types-augment@9.10.5":
   version "9.10.5"
-  resolved "https://registry.yarnpkg.com/@polkadot/types-augment/-/types-augment-9.10.5.tgz#16181c38f3c1d69e39f9d7999cb31e003225c6c1"
+  resolved "https://registry.npmjs.org/@polkadot/types-augment/-/types-augment-9.10.5.tgz#16181c38f3c1d69e39f9d7999cb31e003225c6c1"
   integrity sha512-kuJtsadIal4O/BDAMCkf3z+m+BDTRawMkxvHoN/NUiHZcQhtXhSx5xe6X3SwYSv8YCTLYqNXQzak0YBb0v0p1w==
   dependencies:
     "@babel/runtime" "^7.20.6"
@@ -1876,9 +1875,9 @@
     "@polkadot/types-codec" "9.10.5"
     "@polkadot/util" "^10.2.1"
 
-"@polkadot/types-codec@9.10.5", "@polkadot/types-codec@^9.10.4":
+"@polkadot/types-codec@9.10.5", "@polkadot/types-codec@^9.10.5":
   version "9.10.5"
-  resolved "https://registry.yarnpkg.com/@polkadot/types-codec/-/types-codec-9.10.5.tgz#ec562266865554d57879b2a659ab4a49e368fadb"
+  resolved "https://registry.npmjs.org/@polkadot/types-codec/-/types-codec-9.10.5.tgz#ec562266865554d57879b2a659ab4a49e368fadb"
   integrity sha512-+RUgF1MzPNlQ3Sk61+b2kK9NasXS9NNLxgMwjs/iHaFkK9XjRUcM3qN2UlWkFcqMaUkTnuIrc8lT2wJlHYfR7g==
   dependencies:
     "@babel/runtime" "^7.20.6"
@@ -1887,7 +1886,7 @@
 
 "@polkadot/types-create@9.10.5":
   version "9.10.5"
-  resolved "https://registry.yarnpkg.com/@polkadot/types-create/-/types-create-9.10.5.tgz#bc6e7456d68d341566274b7ae639a00d3c4e7d4b"
+  resolved "https://registry.npmjs.org/@polkadot/types-create/-/types-create-9.10.5.tgz#bc6e7456d68d341566274b7ae639a00d3c4e7d4b"
   integrity sha512-A7n4XG3gE1+d6YAfSq4CDJ1HSd1zvoiPCOY7snxlnpKJCbOHLHq2tWerWtZDvp9IduHS/lXcnywxlhOZLuSQXg==
   dependencies:
     "@babel/runtime" "^7.20.6"
@@ -1896,7 +1895,7 @@
 
 "@polkadot/types-known@9.10.5":
   version "9.10.5"
-  resolved "https://registry.yarnpkg.com/@polkadot/types-known/-/types-known-9.10.5.tgz#70b49ddb3063d80ee756b317b79f468ec4080a59"
+  resolved "https://registry.npmjs.org/@polkadot/types-known/-/types-known-9.10.5.tgz#70b49ddb3063d80ee756b317b79f468ec4080a59"
   integrity sha512-FHNvwEIGAFRVaqWXOSLWlaXlDk23Ug+yfQ0IPucLvQLFEvSQtE7VK2+RKxgT3gXHodX7xh0yBTBBJBV7MWplRg==
   dependencies:
     "@babel/runtime" "^7.20.6"
@@ -1908,15 +1907,15 @@
 
 "@polkadot/types-support@9.10.5":
   version "9.10.5"
-  resolved "https://registry.yarnpkg.com/@polkadot/types-support/-/types-support-9.10.5.tgz#b16e9a92a3d3f1e5a430afe056b86a40c0bae4de"
+  resolved "https://registry.npmjs.org/@polkadot/types-support/-/types-support-9.10.5.tgz#b16e9a92a3d3f1e5a430afe056b86a40c0bae4de"
   integrity sha512-o5wIkWqNV0QsPMrZ0uKM2K2hJ4IP9KhFQzoU+97lE2Yb3TDUCA6XWP9VqyobYjaxXd9DmPdSjzqb2hzhMwunbw==
   dependencies:
     "@babel/runtime" "^7.20.6"
     "@polkadot/util" "^10.2.1"
 
-"@polkadot/types@9.10.5", "@polkadot/types@^9.10.4":
+"@polkadot/types@9.10.5", "@polkadot/types@^9.10.5":
   version "9.10.5"
-  resolved "https://registry.yarnpkg.com/@polkadot/types/-/types-9.10.5.tgz#231e0823046e1b0807fddd385c4ef19da93acd27"
+  resolved "https://registry.npmjs.org/@polkadot/types/-/types-9.10.5.tgz#231e0823046e1b0807fddd385c4ef19da93acd27"
   integrity sha512-+NR+mnLl8bcyDTAHUDm1RH3tm7pCeWQKmg6ihLlPzbihyCoCcLxlL5t9ZkRm+3Q9nVhdC4UEIu1befcZ4jncMA==
   dependencies:
     "@babel/runtime" "^7.20.6"

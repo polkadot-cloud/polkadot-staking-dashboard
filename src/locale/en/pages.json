@@ -106,6 +106,7 @@
       "reserved": "Reserved",
       "subscanDisabled": "Subscan Disabled",
       "supplyStaked": "Supply Staked",
+      "timeRemainingThisEra": "Time Remaining This Era",
       "totalNominators": "Total Nominators",
       "totalNumAccounts": "The total number of accounts that have joined a pool.",
       "totalValidators": "Total Validators",
