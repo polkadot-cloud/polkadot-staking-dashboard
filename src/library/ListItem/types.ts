@@ -3,7 +3,7 @@
 
 import { BondedPool } from 'contexts/Pools/types';
 import React from 'react';
-import { AnyMetaBatch, MaybeAccount } from 'types';
+import { AnyMetaBatch, BondFor, MaybeAccount } from 'types';
 
 export interface BlockedProps {
   prefs: {
@@ -40,7 +40,7 @@ export interface MetricsProps {
 
 export interface NominationStatusProps {
   address: string;
-  bondType: string;
+  bondFor: BondFor;
   nominator: MaybeAccount;
 }
 

@@ -54,7 +54,7 @@ export const MembersListInner = (props: any) => {
   const [members, setMembers] = useState(props.members);
 
   // is this the initial fetch
-  const [fetched, setFetched] = useState<Sync>(Sync.Unsynced);
+  const [fetched, setFetched] = useState<Sync>('unsynced');
 
   // render throttle iteration
   const renderIterationRef = useRef(renderIteration);
@@ -74,13 +74,13 @@ export const MembersListInner = (props: any) => {
   // refetch list when list changes
   useEffect(() => {
     if (props.members !== membersDefault) {
-      setFetched(Sync.Unsynced);
+      setFetched('unsynced');
     }
   }, [props.members]);
 
   // configure list when network is ready to fetch
   useEffect(() => {
-    if (isReady && metrics.activeEra.index !== 0 && fetched === Sync.Unsynced) {
+    if (isReady && metrics.activeEra.index !== 0 && fetched === 'unsynced') {
       setupMembersList();
     }
   }, [isReady, fetched, metrics.activeEra.index]);
@@ -106,7 +106,7 @@ export const MembersListInner = (props: any) => {
     setMembersDefault(props.members);
     setMembers(props.members);
     fetchPoolMembersMetaBatch(batchKey, props.members, false);
-    setFetched(Sync.Synced);
+    setFetched('synced');
   };
 
   // get list items to render

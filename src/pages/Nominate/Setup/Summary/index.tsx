@@ -7,10 +7,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useSetup } from 'contexts/Setup';
+import { defaultStakeSetup } from 'contexts/Setup/defaults';
 import { useTxFees } from 'contexts/TxFees';
-import { useUi } from 'contexts/UI';
-import { defaultStakeSetup } from 'contexts/UI/defaults';
-import { SetupType } from 'contexts/UI/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -27,11 +26,11 @@ export const Summary = (props: SetupStepProps) => {
   const { api, network } = useApi();
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getSetupProgress, setActiveAccountSetup } = useUi();
+  const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const { txFeesValid } = useTxFees();
   const { t } = useTranslation('pages');
 
-  const setup = getSetupProgress(SetupType.Stake, activeAccount);
+  const setup = getSetupProgress('stake', activeAccount);
 
   const { controller, bond, nominations, payee } = setup;
 
@@ -72,7 +71,7 @@ export const Summary = (props: SetupStepProps) => {
     callbackSubmit: () => {},
     callbackInBlock: () => {
       // reset localStorage setup progress
-      setActiveAccountSetup(SetupType.Stake, defaultStakeSetup);
+      setActiveAccountSetup('stake', defaultStakeSetup);
     },
   });
 
@@ -82,7 +81,7 @@ export const Summary = (props: SetupStepProps) => {
         thisSection={section}
         complete={null}
         title={t('nominate.summary') || ''}
-        setupType={SetupType.Stake}
+        setupType="stake"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (

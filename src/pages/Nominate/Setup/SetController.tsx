@@ -3,8 +3,7 @@
 
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useUi } from 'contexts/UI';
-import { SetupType } from 'contexts/UI/types';
+import { useSetup } from 'contexts/Setup';
 import { AccountSelect } from 'library/Form/AccountSelect';
 import { InputItem } from 'library/Form/types';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
@@ -24,8 +23,8 @@ export const SetController = (props: SetupStepProps) => {
 
   const { consts, network } = useApi();
   const { activeAccount, accounts, getAccount } = useConnect();
-  const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const setup = getSetupProgress(SetupType.Stake, activeAccount);
+  const { getSetupProgress, setActiveAccountSetup } = useSetup();
+  const setup = getSetupProgress('stake', activeAccount);
   const { existentialDeposit } = consts;
   const existentialDepositBase = planckBnToUnit(
     existentialDeposit,
@@ -59,7 +58,7 @@ export const SetController = (props: SetupStepProps) => {
 
   const handleOnChange = ({ selectedItem }: { selectedItem: InputItem }) => {
     setSelected(selectedItem);
-    setActiveAccountSetup(SetupType.Stake, {
+    setActiveAccountSetup('stake', {
       ...setup,
       controller: selectedItem?.address ?? null,
     });
@@ -72,7 +71,7 @@ export const SetController = (props: SetupStepProps) => {
         title={t('nominate.setControllerAccount') || ''}
         helpKey="Stash and Controller Accounts"
         complete={setup.controller !== null}
-        setupType={SetupType.Stake}
+        setupType="stake"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {items.length === 0 && (
@@ -96,10 +95,7 @@ export const SetController = (props: SetupStepProps) => {
           placeholder={t('nominate.searchAccount')}
           value={selected}
         />
-        <Footer
-          complete={setup.controller !== null}
-          setupType={SetupType.Stake}
-        />
+        <Footer complete={setup.controller !== null} setupType="stake" />
       </MotionContainer>
     </>
   );

@@ -3,7 +3,7 @@
 
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useUi } from 'contexts/UI';
+import { useSetup } from 'contexts/Setup';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
@@ -16,7 +16,7 @@ export const Nominate = (props: NominationsProps) => {
 
   const { consts } = useApi();
   const { activeAccount } = useConnect();
-  const { getSetupProgress, setActiveAccountSetup } = useUi();
+  const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress(setupType, activeAccount);
   const { maxNominations } = consts;
   const { t } = useTranslation('library');
@@ -25,7 +25,7 @@ export const Nominate = (props: NominationsProps) => {
     return getSetupProgress(setupType, activeAccount);
   };
 
-  // handler for updating bond
+  // handler for updating setup.bond
   const handleSetupUpdate = (value: any) => {
     setActiveAccountSetup(setupType, value);
   };

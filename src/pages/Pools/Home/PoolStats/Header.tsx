@@ -5,7 +5,6 @@ import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { PoolState } from 'contexts/Pools/types';
 import { useTranslation } from 'react-i18next';
 import {
   humanNumber,
@@ -36,10 +35,10 @@ export const Header = () => {
 
   let stateDisplay;
   switch (state) {
-    case PoolState.Block:
+    case 'blocked':
       stateDisplay = t('pools.locked');
       break;
-    case PoolState.Destroy:
+    case 'destroying':
       stateDisplay = t('pools.destroying');
       break;
     default:

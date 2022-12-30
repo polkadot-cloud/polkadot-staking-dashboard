@@ -9,11 +9,10 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { useSetup } from 'contexts/Setup';
+import { defaultPoolSetup } from 'contexts/Setup/defaults';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
-import { useUi } from 'contexts/UI';
-import { defaultPoolSetup } from 'contexts/UI/defaults';
-import { SetupType } from 'contexts/UI/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import useBondGreatestFee from 'library/Hooks/useBondGreatestFee';
@@ -32,11 +31,11 @@ export const JoinPool = () => {
   const { id: poolId, setActiveTab } = config;
   const { activeAccount, accountHasSigner } = useConnect();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
-  const { setActiveAccountSetup } = useUi();
+  const { setActiveAccountSetup } = useSetup();
   const { txFeesValid } = useTxFees();
   const { getTransferOptions } = useTransferOptions();
   const { freeBalance } = getTransferOptions(activeAccount);
-  const largestTxFee = useBondGreatestFee({ bondType: 'pool' });
+  const largestTxFee = useBondGreatestFee({ bondFor: 'pool' });
   const { t } = useTranslation('modals');
 
   // local bond value
@@ -80,7 +79,7 @@ export const JoinPool = () => {
       addToPoolMembers(member);
 
       // reset localStorage setup progress
-      setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);
+      setActiveAccountSetup('pool', defaultPoolSetup);
     },
   });
 
@@ -96,7 +95,7 @@ export const JoinPool = () => {
           <div>
             <BondFeedback
               syncing={largestTxFee.eq(new BN(0))}
-              bondType="pool"
+              bondFor="pool"
               listenIsValid={setBondValid}
               defaultBond={null}
               setters={[
