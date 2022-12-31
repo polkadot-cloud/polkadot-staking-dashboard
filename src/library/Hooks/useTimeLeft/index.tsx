@@ -128,7 +128,6 @@ export const useTimeLeft = ({
     // either handle regular timeleft update, or refresh `to` via `refreshCallback` every
     // `refreshInterval` seconds.
     const handleRefresh = () => {
-      r--;
       if (r !== 0) {
         setTimeleft(getTimeleft());
       } else {
@@ -148,6 +147,7 @@ export const useTimeLeft = ({
             clearInterval(secIntervalRef.current);
             setStateWithRef(undefined, setSecInterval, secIntervalRef);
           }
+          r = Math.max(0, r - 1);
           handleRefresh();
         }, 1000);
 
@@ -162,6 +162,7 @@ export const useTimeLeft = ({
             clearInterval(minIntervalRef.current);
             setStateWithRef(undefined, setMinInterval, minIntervalRef);
           }
+          r = Math.max(0, r - 60);
           handleRefresh();
         }, 60000);
         setStateWithRef(interval, setMinInterval, minIntervalRef);
