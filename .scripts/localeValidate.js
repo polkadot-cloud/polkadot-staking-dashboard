@@ -97,13 +97,12 @@ fs.readdir(defaultPath, (error, files) => {
       //   }
       // }
 
-      if (en === orderKeys(en) && others === orderKeys(others)) {
-        console.log("Keys Are Ordered Alphabetically")
-      } else {
-        console.log("Keys Are Not Ordered Alphabetically")
-      }
-
       if (en.sort().length !== others.sort().length) {
+        if (en === orderKeys(en) && others === orderKeys(others)) {
+          console.log("Keys Are Ordered Alphabetically")
+        } else {
+          console.log("Keys Are Not Ordered Alphabetically")
+        }
         const missing = en.filter((item) => others.indexOf(item) < 0);
         if (missing.join('').trim().length > 0) {
           throw new Error(
