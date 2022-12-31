@@ -1,9 +1,6 @@
 const { join } = require('path');
 const fs = require('fs');
-// const localeDir = require('./utils.js');
-// const languages = require('./utils.js');
-
-const localeDir = join(__dirname, '..', 'src', 'locale');
+const { localeDir, languages } = require('./utils.js');
 
 // the suffixes of keys related to i18n functionality that should be ignored.
 const ignoreSubstrings = ['_one', '_two', '_few', '_many', '_other'];
@@ -11,14 +8,6 @@ const ignoreSubstrings = ['_one', '_two', '_few', '_many', '_other'];
 // check whether a key ends with an `ignoreSubstring`.
 const endsWithIgnoreSubstring = (key) =>
   ignoreSubstrings.some((i) => key.endsWith(i));
-
-//to-remove
-// locale directories, ommitting `en` - the langauge to check missing keys against.
-const getDirectories = (source) =>
-  fs
-    .readdirSync(source, { withFileTypes: true })
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
 
 // recursive function to get all keys of a locale object.
 const getDeepKeys = (obj) => {
@@ -57,8 +46,9 @@ const getDeepKeys = (obj) => {
 };
 
 const defaultPath = join(localeDir, 'en');
-const languagesButEn = getDirectories(localeDir).filter((v) => v !== 'en');
-// const languagesButEn = languages.filter((v) => v !== 'en');
+
+// locale directories, ommitting `en` - the langauge to check missing keys against.
+const languagesButEn = languages.filter((v) => v !== 'en');
 
 
 const para = (lng, index) => {

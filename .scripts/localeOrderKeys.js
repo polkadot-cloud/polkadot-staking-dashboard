@@ -1,10 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const prettier = require('prettier');
-// const localeDir = require('./utils.js');
-// const languages = require('./utils.js');
-
-const localeDir = path.join(__dirname, '..', 'src', 'locale');
+const { localeDir, languages } = require('./utils.js');
 
 // order keys of a json object.
 const orderKeysAlphabetically = (o) => {
@@ -44,12 +41,6 @@ const orderKeys = (json) => {
   });
   return jsonOrdered;
 };
-
-// get all language paths to re-order
-const languages = fs
-  .readdirSync(localeDir, { withFileTypes: true })
-  .filter((dirent) => dirent.isDirectory())
-  .map((dirent) => dirent.name);
 
 // for each language path
 for (const lng of languages) {
