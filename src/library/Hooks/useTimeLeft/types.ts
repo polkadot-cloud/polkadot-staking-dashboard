@@ -27,4 +27,7 @@ export interface TimeLeftAll {
   formatted: TimeLeftFormatted;
 }
 
-export type TimeleftProps = number;
+export interface TimeleftHookProps {
+  refreshCallback: () => number;
+  refreshInterval: number;
+}
