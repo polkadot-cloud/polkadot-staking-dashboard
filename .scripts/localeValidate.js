@@ -3,7 +3,7 @@
 
 const { join } = require('path');
 const fs = require('fs');
-const { localeDir, languages } = require('./utils.js');
+const { localeDir, languages, orderKeys } = require('./utils.js');
 
 // the suffixes of keys related to i18n functionality that should be ignored.
 const ignoreSubstrings = ['_one', '_two', '_few', '_many', '_other'];
@@ -53,15 +53,14 @@ const defaultPath = join(localeDir, 'en');
 // locale directories, ommitting `en` - the langauge to check missing keys against.
 const languagesButEn = languages.filter((v) => v !== 'en');
 
-
-const para = (lng, index) => {
-  const p = lng[index].slice((lng[index].indexOf('.') + 1));
-  return p;
-};
-const paraMinus = (lng, index) => {
-  const p = lng[index - 1].slice((lng[index].indexOf('.') + 1));
-  return p;
-};
+// const para = (lng, index) => {
+//   const p = lng[index].slice((lng[index].indexOf('.') + 1));
+//   return p;
+// };
+// const paraMinus = (lng, index) => {
+//   const p = lng[index - 1].slice((lng[index].indexOf('.') + 1));
+//   return p;
+// };
 
 fs.readdir(defaultPath, (error, files) => {
   if (error) console.log(error);
@@ -79,23 +78,29 @@ fs.readdir(defaultPath, (error, files) => {
 
       const en = getDeepKeys(defaultJson);
       const others = getDeepKeys(otherJson);
-      for (i in Object.values(en)) {
-        if (en[i].indexOf('.') > 0) {
-          const iLetter = para(en, i);
-          const iMinusLetter = paraMinus(en, i);
-          if (iLetter < iMinusLetter) {
-            console.log(`En/"${file}" JSON is NOT alphabaticlly ordered`)
-          }
-        }
-      }
-      for (i in Object.values(others)) {
-        if (others[i].indexOf('.') > 0) {
-          const iLetter = para(others, i);
-          const iMinusLetter = paraMinus(others, i);
-          if (iLetter < iMinusLetter) {
-            console.log(`"${lng}"/"${file}" is NOT alphabaticlly ordered`)
-          }
-        }
+      // for (i in Object.values(en)) {
+      //   if (en[i].indexOf('.') > 0) {
+      //     const iLetter = para(en, i);
+      //     const iMinusLetter = paraMinus(en, i);
+      //     if (iLetter < iMinusLetter) {
+      //       console.log(`En/"${file}" JSON is NOT alphabaticlly ordered`)
+      //     }
+      //   }
+      // }
+      // for (i in Object.values(others)) {
+      //   if (others[i].indexOf('.') > 0) {
+      //     const iLetter = para(others, i);
+      //     const iMinusLetter = paraMinus(others, i);
+      //     if (iLetter < iMinusLetter) {
+      //       console.log(`"${lng}"/"${file}" is NOT alphabaticlly ordered`)
+      //     }
+      //   }
+      // }
+
+      if (en === orderKeys(en) && others === orderKeys(others)) {
+        console.log("Keys Are Ordered Alphabetically")
+      } else {
+        console.log("Keys Are Not Ordered Alphabetically")
       }
 
       if (en.sort().length !== others.sort().length) {
