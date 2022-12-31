@@ -1,3 +1,6 @@
+// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 const fs = require('fs');
 const path = require('path');
 const prettier = require('prettier');
