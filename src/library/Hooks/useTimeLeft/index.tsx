@@ -16,7 +16,7 @@ import {
 
 export const useTimeLeft = ({
   refreshCallback,
-  refreshInterval = 120,
+  refreshInterval,
 }: TimeleftHookProps) => {
   const { t, i18n } = useTranslation();
 
