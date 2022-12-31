@@ -14,6 +14,7 @@ export const consts: APIConstants = {
   historyDepth: new BN(0),
   maxElectingVoters: 0,
   expectedBlockTime: 0,
+  epochDuration: 0,
   existentialDeposit: new BN(0),
   poolsPalletId: stringToU8a('0'),
 };

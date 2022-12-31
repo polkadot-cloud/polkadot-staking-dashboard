@@ -25,9 +25,9 @@ import { ActiveAccount } from './ActiveAccount';
 import { BalanceChart } from './BalanceChart';
 import { NetworkStats } from './NetworkSats';
 import Payouts from './Payouts';
-import ActiveEraStatBox from './Stats/ActiveEra';
-import HistoricalRewardsRateStatBox from './Stats/HistoricalRewardsRate';
-import SupplyStakedStatBox from './Stats/SupplyStaked';
+import EraTimeLeftStat from './Stats/ActiveEraTimeLeft';
+import HistoricalRewardsRateStat from './Stats/HistoricalRewardsRate';
+import SupplyStakedStat from './Stats/SupplyStaked';
 import { Tips } from './Tips';
 
 export const Overview = () => {
@@ -69,9 +69,9 @@ export const Overview = () => {
         </TopBarWrapper>
       </PageRowWrapper>
       <StatBoxList>
-        <HistoricalRewardsRateStatBox />
-        <SupplyStakedStatBox />
-        <ActiveEraStatBox />
+        <HistoricalRewardsRateStat />
+        <SupplyStakedStat />
+        <EraTimeLeftStat />
       </StatBoxList>
       {plugins.includes('tips') && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
