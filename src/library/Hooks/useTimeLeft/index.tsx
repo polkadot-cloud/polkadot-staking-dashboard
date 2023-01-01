@@ -10,10 +10,14 @@ import {
   TimeLeftAll,
   TimeleftDuration,
   TimeLeftFormatted,
+  TimeleftHookProps,
   TimeLeftRaw,
 } from './types';
 
-export const useTimeLeft = () => {
+export const useTimeLeft = ({
+  refreshCallback,
+  refreshInterval,
+}: TimeleftHookProps) => {
   const { t, i18n } = useTranslation();
 
   // adds `seconds` to the current time and returns the resulting date.
@@ -104,42 +108,64 @@ export const useTimeLeft = () => {
   const [timeleft, setTimeleft] = useState<TimeLeftAll>(getTimeleft());
 
   // timeleft refresh intervals.
-  const [minInterval, setMinInterval] = useState<ReturnType<
-    typeof setInterval
-  > | null>(null);
-  const [secInterval, setSecInterval] = useState<ReturnType<
-    typeof setInterval
-  > | null>(null);
+  const [minInterval, setMinInterval] = useState<
+    ReturnType<typeof setInterval> | undefined
+  >(undefined);
+  const minIntervalRef = useRef(minInterval);
 
-  // refresh every minute, or every second if in last minute.
+  const [secInterval, setSecInterval] = useState<
+    ReturnType<typeof setInterval> | undefined
+  >(undefined);
+  const secIntervalRef = useRef(secInterval);
+
+  // refresh callback counter
+  let r = refreshInterval;
+
+  // refresh effects.
   useEffect(() => {
+    // handler for handling timeleft refresh.
+    //
+    // either handle regular timeleft update, or refresh `to` via `refreshCallback` every
+    // `refreshInterval` seconds.
+    const handleRefresh = () => {
+      if (r !== 0) {
+        setTimeleft(getTimeleft());
+      } else {
+        if (refreshCallback) {
+          setStateWithRef(fromNow(refreshCallback()), setTo, toRef);
+          setTimeleft(getTimeleft());
+        }
+        r = refreshInterval;
+      }
+    };
+
     if (inLastHour()) {
-      // refresh timeleft every second
-      if (!secInterval) {
-        setSecInterval(
-          setInterval(() => {
-            if (!inLastHour()) {
-              if (secInterval) clearInterval(secInterval);
-              setSecInterval(null);
-            }
-            setTimeleft(getTimeleft());
-          }, 1000)
-        );
+      // refresh timeleft every second.
+      if (!secIntervalRef.current) {
+        const interval = setInterval(() => {
+          if (!inLastHour()) {
+            clearInterval(secIntervalRef.current);
+            setStateWithRef(undefined, setSecInterval, secIntervalRef);
+          }
+          r = Math.max(0, r - 1);
+          handleRefresh();
+        }, 1000);
+
+        setStateWithRef(interval, setSecInterval, secIntervalRef);
       }
     } else {
       setTimeleft(getTimeleft());
-
       // refresh timeleft every minute.
-      if (!minInterval) {
-        setMinInterval(
-          setInterval(() => {
-            if (inLastHour()) {
-              if (minInterval) clearInterval(minInterval);
-              setMinInterval(null);
-            }
-            setTimeleft(getTimeleft());
-          }, 60000)
-        );
+      if (!minIntervalRef.current) {
+        const interval = setInterval(() => {
+          if (inLastHour()) {
+            clearInterval(minIntervalRef.current);
+            setStateWithRef(undefined, setMinInterval, minIntervalRef);
+          }
+          r = Math.max(0, r - 60);
+          handleRefresh();
+        }, 60000);
+        setStateWithRef(interval, setMinInterval, minIntervalRef);
       }
     }
   }, [to, inLastHour(), lastMinuteCountdown()]);
@@ -152,14 +178,8 @@ export const useTimeLeft = () => {
   // clear intervals on unmount
   useEffect(() => {
     return () => {
-      if (minInterval) {
-        clearInterval(minInterval);
-        setMinInterval(null);
-      }
-      if (secInterval) {
-        clearInterval(secInterval);
-        setSecInterval(null);
-      }
+      clearInterval(minInterval);
+      clearInterval(secInterval);
     };
   }, []);
 
