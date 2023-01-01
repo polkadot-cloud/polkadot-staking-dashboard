@@ -10,7 +10,7 @@ const {
   orderJsonByKeys,
 } = require('./utils');
 
-// missing key validation function.
+// Missing key validation function.
 const validateMissingKeys = () => {
   const defaultPath = join(localeDir, 'en');
   const languages = getDirectories(localeDir, ['en']);
@@ -45,7 +45,7 @@ const validateMissingKeys = () => {
   });
 };
 
-// key order validation function
+// Key order validation function.
 const validateKeyOrder = () => {
   // get all language paths to re-order.
   const languages = getDirectories(localeDir, []);
@@ -74,6 +74,5 @@ const validateKeyOrder = () => {
 
 // validate missing keys
 validateMissingKeys();
-
 // validate key order
 validateKeyOrder();

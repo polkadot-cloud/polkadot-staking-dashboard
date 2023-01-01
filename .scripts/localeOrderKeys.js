@@ -6,10 +6,10 @@ const path = require('path');
 const prettier = require('prettier');
 const { getDirectories, localeDir, orderJsonByKeys } = require('./utils');
 
-// get all language paths to re-order.
+// Get all language paths to re-order.
 const languages = getDirectories(localeDir, []);
 
-// for each language path.
+// Gor each language path.
 for (const lng of languages) {
   const pathToLanguage = path.join(localeDir, `/${lng}`);
 
