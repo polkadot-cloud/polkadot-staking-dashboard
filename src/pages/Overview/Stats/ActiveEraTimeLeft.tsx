@@ -12,13 +12,17 @@ import { humanNumber } from 'Utils';
 const ActiveEraStatBox = () => {
   const { t } = useTranslation('pages');
   const { metrics } = useNetworkMetrics();
-  const { timeleft, fromNow, setFromNow } = useTimeLeft();
   const { activeEra } = metrics;
   const {
     timeleft: eraTimeLeft,
     percentSurpassed,
     percentRemaining,
   } = useEraTimeLeft();
+
+  const { timeleft, fromNow, setFromNow } = useTimeLeft({
+    refreshInterval: 60,
+    refreshCallback: () => eraTimeLeft,
+  });
 
   // re-set timer on era change (also covers network change).
   useEffect(() => {
