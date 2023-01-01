@@ -1,0 +1,105 @@
+// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
+const fs = require('fs');
+const { join } = require('path');
+
+// Project locale directory
+const localeDir = join(__dirname, '..', 'src', 'locale');
+
+// The suffixes of keys related to i18n functionality that should be ignored.
+const ignoreSuffixes = ['_one', '_two', '_few', '_many', '_other'];
+
+// check if value is an object. Do not count arrays as objects.
+const isObject = (o) => {
+  if (Array.isArray(o)) {
+    return false;
+  }
+  if (typeof o === 'object') {
+    return true;
+  }
+  return false;
+};
+
+// Checks whether a key contains an ingore suffix..
+const endsWithIgnoreSuffix = (key) =>
+  ignoreSuffixes.some((i) => key.endsWith(i));
+
+// locale directories, ommitting `en` - the langauge to check missing keys against.
+const getDirectories = (source, omit) =>
+  fs
+    .readdirSync(source, { withFileTypes: true })
+    .filter((dirent) => dirent.isDirectory())
+    .filter((v) => !omit.includes(v.name))
+    .map((dirent) => dirent.name);
+
+// order keys of a json object.
+const orderKeysAlphabetically = (o) =>
+  Object.keys(o)
+    .sort()
+    .reduce((obj, key) => {
+      obj[key] = o[key];
+      return obj;
+    }, {});
+
+// order json object by its keys.
+const orderJsonByKeys = (json) => {
+  // order top level keys
+  json = orderKeysAlphabetically(json);
+
+  // order child objects if they are values.
+  const jsonOrdered = {};
+  Object.entries(json).forEach(([k, v]) => {
+    if (isObject(v)) {
+      jsonOrdered[k] = orderJsonByKeys(v);
+    } else {
+      jsonOrdered[k] = v;
+    }
+  });
+  return jsonOrdered;
+};
+
+// recursive function to get all keys of a locale object.
+const getDeepKeys = (obj) => {
+  let keys = [];
+  for (const key in obj) {
+    let isSubstring = false;
+
+    // not number.
+    if (isNaN(key)) {
+      // check if key includes any special substrings.
+      if (endsWithIgnoreSuffix(key)) {
+        isSubstring = true;
+        // get the substring up to the last underscore.
+        const rawKey = key.substring(0, key.lastIndexOf('_'));
+        // add the key to `keys` if it does not already exist.
+        if (!keys.includes(rawKey)) {
+          keys.push(rawKey);
+        }
+      }
+    }
+    // full string, if not already added, go ahead and add.
+    if (!isSubstring) {
+      if (!keys.includes(key)) {
+        keys.push(key);
+      }
+    }
+    // if object, recursively get keys.
+    if (typeof obj[key] === 'object') {
+      const subkeys = getDeepKeys(obj[key]);
+      keys = keys.concat(subkeys.map((subkey) => `${key}.${subkey}`));
+    }
+  }
+  return keys;
+};
+
+module.exports = {
+  endsWithIgnoreSuffix,
+  getDeepKeys,
+  getDirectories,
+  ignoreSuffixes,
+  isObject,
+  localeDir,
+  orderJsonByKeys,
+  orderKeysAlphabetically,
+};
