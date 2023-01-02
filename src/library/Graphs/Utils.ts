@@ -184,8 +184,8 @@ export const formatRewardsForGraphs = (
 
   return {
     // reverse rewards: most recent last
-    payoutsByDay,
-    poolClaimsByDay,
+    payoutsByDay: payoutsByDay.reverse(),
+    poolClaimsByDay: poolClaimsByDay.reverse(),
     lastReward: getLatestReward(payouts, poolClaims),
   };
 };
