@@ -11,7 +11,6 @@ import {
   getDayOfYear,
   getUnixTime,
   getYear,
-  parse,
   startOfDay,
   subDays,
 } from 'date-fns';
@@ -109,8 +108,7 @@ export const calculatePayoutsByDay = (
   if (average > 1) maxDays += average;
 
   const payoutsByDay: any = [];
-  let curDay = 366;
-  let curYear = 3000;
+  let curDate = new Date();
   let curPayout = {
     amount: new BN(0),
     event_id: '',
@@ -149,63 +147,36 @@ export const calculatePayoutsByDay = (
       }
       // increment payout
       p++;
-
-      // extract day and year from payout timestamp
-      const date = fromUnixTime(payout.block_timestamp);
-      const _day = getDayOfYear(date);
-      const _year = getYear(date);
+      // extract date from payout timestamp
+      const thisDate = fromUnixTime(payout.block_timestamp);
 
       // starting a new day
-      if (_day < curDay || _year < curYear) {
-        // check current day with previous, determine missing days
-        const prevTs = getUnixTime(
-          parse(`${pad(curDay, 3)}/${curYear}`, 'DDD/yyyy', new Date())
-        );
-        const thisTs = getUnixTime(
-          parse(`${pad(_day, 3)}/${_year}`, 'DDD/yyyy', new Date())
-        );
+      if (differenceInDays(curDate, thisDate) > 0) {
         const gapDays = differenceInDays(
-          fromUnixTime(prevTs),
-          fromUnixTime(thisTs)
+          startOfDay(curDate),
+          startOfDay(thisDate)
         );
 
         // increment by `gap `days
-        if (i !== 0) {
-          i += gapDays;
-        } else {
-          // increment 1st day
-          i++;
-        }
+        i = i !== 0 ? (i += gapDays) : i + 1;
 
-        // get timestamp of end of day
-        const dayTs = getUnixTime(
-          endOfDay(
-            parse(`${pad(curDay, 3)}/${curYear}`, 'DDD/yyyy', new Date())
-          )
-        );
-
-        // commit previous day payout
+        // add previous day payout
         if (i > 1) {
           payoutsByDay.push({
             amount: planckBnToUnit(curPayout.amount, units),
             event_id: curPayout.amount.lt(new BN(0)) ? 'Slash' : 'Reward',
-            block_timestamp: dayTs,
+            block_timestamp: getUnixTime(thisDate),
           });
         }
 
-        // commit gap day payouts
-        if (i !== 0) {
-          // fill missing days
-          let gapDayTs = fromUnixTime(prevTs);
-          if (gapDays > 1) {
-            for (let j = 1; j < gapDays; j++) {
-              gapDayTs = subDays(gapDayTs, 1);
-              payoutsByDay.push({
-                amount: 0,
-                event_id: 'Reward',
-                block_timestamp: getUnixTime(gapDayTs),
-              });
-            }
+        // add gap day payouts
+        if (i !== 0 && gapDays > 1) {
+          for (let j = 1; j < gapDays; j++) {
+            payoutsByDay.push({
+              amount: 0,
+              event_id: 'Reward',
+              block_timestamp: getUnixTime(subDays(curDate, j)),
+            });
           }
         }
 
@@ -216,9 +187,8 @@ export const calculatePayoutsByDay = (
           event_id: amount.lt(new BN(0)) ? 'Slash' : 'Reward',
         };
 
-        // update day and year cursors
-        if (_day < curDay) curDay = _day;
-        if (_year < curYear) curYear = _year;
+        // update date cursor
+        curDate = thisDate;
       } else {
         // same day: add to curPayout
         curPayout.amount = curPayout.amount.add(new BN(payout.amount));
@@ -301,6 +271,7 @@ export const formatRewardsForGraphs = (
     calculatePayoutsByDay(payouts, days, average, units),
     days
   );
+
   const poolClaimsByDay = prefillToMaxDays(
     calculatePayoutsByDay(poolClaims, days, average, units),
     days
