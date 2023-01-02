@@ -98,13 +98,9 @@ export const getGradient = (
 export const calculatePayoutsByDay = (
   payouts: any,
   maxDays: number,
-  average: number,
   units: number
 ) => {
   if (!payouts.length) return payouts;
-
-  // if we are taking an average, we will need extra days of data.
-  if (average > 1) maxDays += average;
 
   const payoutsByDay: any = [];
   let curDate = new Date();
@@ -203,6 +199,15 @@ export const calculatePayoutsByDay = (
     }
   }
 
+  return payoutsByDay;
+};
+
+// calculate average payouts per day.
+export const calculatePayoutAverages = (
+  payoutsByDay: AnySubscan,
+  average: number,
+  days: number
+) => {
   // if we don't need to take an average, just return the `payoutsByDay`.
   if (average <= 1) return payoutsByDay;
 
@@ -215,7 +220,7 @@ export const calculatePayoutsByDay = (
       if (payoutsByDay[i + j]) {
         total += payoutsByDay[i + j].amount;
       }
-      // increase by one anyway to treat non-existent as zero value
+      // increase by one to treat non-existent as zero value
       num += 1;
     }
 
@@ -227,7 +232,7 @@ export const calculatePayoutsByDay = (
   }
 
   // return an array with the expected number of items
-  return averagePayoutsByDay.slice(0, maxDays - average);
+  return averagePayoutsByDay.slice(0, days - average);
 };
 
 // fill in the backlog of days up to `maxDays`
@@ -261,18 +266,17 @@ export const prefillToMaxDays = (payoutsByDay: any, maxDays: number) => {
 // format rewards and return last payment
 export const formatRewardsForGraphs = (
   days: number,
-  average: number,
   units: number,
   payouts: AnySubscan,
   poolClaims: AnySubscan
 ) => {
   const payoutsByDay = prefillToMaxDays(
-    calculatePayoutsByDay(payouts, days, average, units),
+    calculatePayoutsByDay(payouts, days, units),
     days
   );
 
   const poolClaimsByDay = prefillToMaxDays(
-    calculatePayoutsByDay(poolClaims, days, average, units),
+    calculatePayoutsByDay(poolClaims, days, units),
     days
   );
 
