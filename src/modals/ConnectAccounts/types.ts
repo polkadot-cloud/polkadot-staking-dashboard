@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { BalanceLedger } from 'contexts/Balances/types';
-import { ExtensionAccount } from 'contexts/Connect/types';
+import { ExtensionAccount } from 'contexts/Extensions/types';
 import { FunctionComponent, SVGProps } from 'react';
 import { MaybeAccount } from 'types';
 

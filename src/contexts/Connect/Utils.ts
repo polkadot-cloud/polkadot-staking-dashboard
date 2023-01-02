@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import Keyring from '@polkadot/keyring';
+import { ExtensionAccount } from 'contexts/Extensions/types';
 import { Network } from 'types';
 import { localStorageOrDefault } from 'Utils';
-import { ExtensionAccount, ExternalAccount, ImportedAccount } from './types';
+import { ExternalAccount, ImportedAccount } from './types';
 
 // extension utils
 
@@ -96,12 +97,13 @@ export const getInExternalAccounts = (
   network: Network
 ) => {
   const localExternalAccounts = getLocalExternalAccounts(network, true);
+
   return (
     localExternalAccounts.filter(
-      (l: ExternalAccount) =>
+      (a: ExternalAccount) =>
         (accounts || []).find(
-          (a: ExtensionAccount) => a.address === l.address
-        ) !== undefined && l.addedBy === 'system'
+          (b: ExtensionAccount) => b.address === a.address
+        ) !== undefined
     ) || []
   );
 };
@@ -113,10 +115,10 @@ export const removeLocalExternalAccounts = (
 ) => {
   let localExternalAccounts = getLocalExternalAccounts(network, true);
   localExternalAccounts = localExternalAccounts.filter(
-    (l: ExternalAccount) =>
+    (a: ExternalAccount) =>
       accounts.find(
-        (a: ImportedAccount) =>
-          a.address === l.address && l.network === network.name
+        (b: ImportedAccount) =>
+          b.address === a.address && a.network === network.name
       ) === undefined
   );
   localStorage.setItem(

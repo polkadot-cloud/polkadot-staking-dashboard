@@ -30,7 +30,7 @@ export const Unbond = () => {
   const { activeAccount, accountHasSigner } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
   const { getBondedAccount } = useBalances();
-  const { bondType } = config;
+  const { bondFor } = config;
   const { stats } = usePoolsConfig();
   const { isDepositor, selectedActivePool } = useActivePools();
   const { txFees, txFeesValid } = useTxFees();
@@ -46,8 +46,8 @@ export const Unbond = () => {
   unclaimedRewards = unclaimedRewards ?? new BN(0);
   unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
 
-  const isStaking = bondType === 'stake';
-  const isPooling = bondType === 'pool';
+  const isStaking = bondFor === 'nominator';
+  const isPooling = bondFor === 'pool';
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active: activeBn } = isPooling
@@ -124,19 +124,19 @@ export const Unbond = () => {
   });
 
   const nominatorActiveBelowMin =
-    bondType === 'stake' &&
+    bondFor === 'nominator' &&
     !activeBn.isZero() &&
     activeBn.lt(minNominatorBondBn);
 
   const poolToMinBn = isDepositor() ? minCreateBondBn : minJoinBondBn;
-  const poolActiveBelowMin = bondType === 'pool' && activeBn.lt(poolToMinBn);
+  const poolActiveBelowMin = bondFor === 'pool' && activeBn.lt(poolToMinBn);
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
     warnings.push(t('readOnly'));
   }
 
-  if (unclaimedRewards > 0 && bondType === 'pool') {
+  if (unclaimedRewards > 0 && bondFor === 'pool') {
     warnings.push(
       `${t('unbondingWithdraw')} ${unclaimedRewards} ${network.unit}.`
     );
@@ -166,7 +166,7 @@ export const Unbond = () => {
       <Title title={`${t('removeBond')}`} icon={faMinus} />
       <PaddingWrapper>
         <UnbondFeedback
-          bondType={bondType}
+          bondFor={bondFor}
           listenIsValid={setBondValid}
           setters={[
             {
@@ -178,7 +178,7 @@ export const Unbond = () => {
           txFees={txFees}
         />
         <NotesWrapper>
-          {bondType === 'pool' ? (
+          {bondFor === 'pool' ? (
             <>
               {isDepositor() ? (
                 <p>

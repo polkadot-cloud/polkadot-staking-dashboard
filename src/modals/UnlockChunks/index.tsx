@@ -16,25 +16,22 @@ import { CardsWrapper, FixedContentWrapper, Wrapper } from './Wrappers';
 export const UnlockChunks = () => {
   const { activeAccount } = useConnect();
   const { config, setModalHeight } = useModal();
-  const { bondType } = config || {};
+  const { bondFor } = config || {};
   const { getLedgerForStash } = useBalances();
   const { getPoolUnlocking } = useActivePools();
   const { t } = useTranslation('modals');
 
-  // get the unlocking per bondType
+  // get the unlocking per bondFor
   const _getUnlocking = () => {
     let unlocking = [];
     let ledger;
-    switch (bondType) {
-      case 'stake':
-        ledger = getLedgerForStash(activeAccount);
-        unlocking = ledger.unlocking;
-        break;
+    switch (bondFor) {
       case 'pool':
         unlocking = getPoolUnlocking();
         break;
       default:
-      // console.error(`unlocking modal bond-type ${bondType} is not defined.`);
+        ledger = getLedgerForStash(activeAccount);
+        unlocking = ledger.unlocking;
     }
     return unlocking;
   };
@@ -105,7 +102,7 @@ export const UnlockChunks = () => {
       >
         <Overview
           unlocking={unlocking}
-          bondType={bondType}
+          bondFor={bondFor}
           setSection={setSection}
           setUnlock={setUnlock}
           setTask={setTask}

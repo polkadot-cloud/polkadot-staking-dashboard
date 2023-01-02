@@ -59,7 +59,7 @@ export const ManageBond = () => {
             }
             marginRight
             onClick={() =>
-              openModalWith('Bond', { bondType: 'stake' }, 'small')
+              openModalWith('Bond', { bondFor: 'nominator' }, 'small')
             }
             text="+"
           />
@@ -72,7 +72,7 @@ export const ManageBond = () => {
             }
             marginRight
             onClick={() =>
-              openModalWith('Unbond', { bondType: 'stake' }, 'small')
+              openModalWith('Unbond', { bondFor: 'nominator' }, 'small')
             }
             text="-"
           />
@@ -83,7 +83,7 @@ export const ManageBond = () => {
             iconLeft={faLockOpen}
             marginRight
             onClick={() =>
-              openModalWith('UnlockChunks', { bondType: 'stake' }, 'small')
+              openModalWith('UnlockChunks', { bondFor: 'nominator' }, 'small')
             }
             text={String(totalUnlockChuncks ?? 0)}
           />

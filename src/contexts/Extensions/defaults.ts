@@ -7,6 +7,7 @@ export const defaultExtensionsContext: ExtensionsContextInterface = {
   extensions: [],
   extensionsStatus: {},
   extensionsFetched: false,
+  checkingInjectedWeb3: false,
   // eslint-disable-next-line
   setExtensionStatus: (id, s) => {},
   // eslint-disable-next-line

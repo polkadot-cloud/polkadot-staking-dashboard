@@ -2,12 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ApiEndpoints, ApiSubscanKey } from 'consts';
-import { UIContextInterface } from 'contexts/UI/types';
 import React, { useEffect, useState } from 'react';
 import { AnyApi, AnySubscan } from 'types';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
-import { useUi } from '../UI';
+import { usePlugins } from '../Plugins';
 import { defaultSubscanContext } from './defaults';
 import { SubscanContextInterface } from './types';
 
@@ -23,7 +22,7 @@ export const SubscanProvider = ({
   children: React.ReactNode;
 }) => {
   const { network, isReady } = useApi();
-  const { services, getServices }: UIContextInterface = useUi();
+  const { plugins, getPlugins } = usePlugins();
   const { activeAccount } = useConnect();
 
   // store fetched payouts from Subscan
@@ -46,11 +45,11 @@ export const SubscanProvider = ({
     }
   }, [isReady, network, activeAccount]);
 
-  // fetch payouts on services toggle
+  // fetch payouts on plugins toggle
   useEffect(() => {
     fetchPayouts();
     fetchPoolClaims();
-  }, [services]);
+  }, [plugins]);
 
   /* fetchPayouts
    * fetches payout history from Subscan.
@@ -60,13 +59,13 @@ export const SubscanProvider = ({
    * Stores resulting payouts in context state.
    */
   const fetchPayouts = async () => {
-    if (activeAccount === null || !services.includes('subscan')) {
+    if (activeAccount === null || !plugins.includes('subscan')) {
       setPayouts([]);
       return;
     }
 
     // fetch 2 pages of results if subscan is enabled
-    if (getServices().includes('subscan')) {
+    if (getPlugins().includes('subscan')) {
       let _payouts: Array<AnySubscan> = [];
 
       // fetch 3 pages of results
@@ -83,7 +82,7 @@ export const SubscanProvider = ({
 
       // user may have turned off service while results were fetching.
       // test again whether subscan service is still active.
-      if (getServices().includes('subscan')) {
+      if (getPlugins().includes('subscan')) {
         for (const result of results) {
           if (!result?.data?.list) {
             break;
@@ -107,13 +106,13 @@ export const SubscanProvider = ({
    * Stores resulting claims in context state.
    */
   const fetchPoolClaims = async () => {
-    if (activeAccount === null || !services.includes('subscan')) {
+    if (activeAccount === null || !plugins.includes('subscan')) {
       setPoolClaims([]);
       return;
     }
 
     // fetch 2 pages of results if subscan is enabled
-    if (getServices().includes('subscan')) {
+    if (getPlugins().includes('subscan')) {
       let _poolClaims: Array<AnySubscan> = [];
 
       // fetch 3 pages of results
@@ -124,7 +123,7 @@ export const SubscanProvider = ({
 
       // user may have turned off service while results were fetching.
       // test again whether subscan service is still active.
-      if (getServices().includes('subscan')) {
+      if (getPlugins().includes('subscan')) {
         for (const result of results) {
           // check incorrectly formatted result object
           if (!result?.data?.list) {
@@ -152,14 +151,14 @@ export const SubscanProvider = ({
    * returns eraPoints
    */
   const fetchEraPoints = async (address: string, era: number) => {
-    if (address === '' || !services.includes('subscan')) {
+    if (address === '' || !plugins.includes('subscan')) {
       return [];
     }
 
     const res = await handleFetch(address, 0, ApiEndpoints.subscanEraStat);
 
     if (res.message === 'Success') {
-      if (getServices().includes('subscan')) {
+      if (getPlugins().includes('subscan')) {
         if (res.data?.list !== null) {
           const list = [];
           for (let i = era; i > era - 100; i--) {

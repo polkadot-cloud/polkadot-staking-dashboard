@@ -18,7 +18,7 @@ import { Spacer } from '../Wrappers';
 import { UnbondInput } from './UnbondInput';
 
 export const UnbondFeedback = ({
-  bondType,
+  bondFor,
   inSetup = false,
   warnings = [],
   setters = [],
@@ -45,7 +45,7 @@ export const UnbondFeedback = ({
 
   // get bond options for either nominating or pooling.
   const transferOptions =
-    bondType === 'pool' ? allTransferOptions.pool : allTransferOptions.nominate;
+    bondFor === 'pool' ? allTransferOptions.pool : allTransferOptions.nominate;
   const { active } = transferOptions;
 
   // store errors
@@ -84,7 +84,7 @@ export const UnbondFeedback = ({
 
   // bond amount to minimum threshold
   const minBondBn =
-    bondType === 'pool'
+    bondFor === 'pool'
       ? inSetup || isDepositor()
         ? minCreateBond
         : minJoinBond
@@ -93,7 +93,7 @@ export const UnbondFeedback = ({
 
   // unbond amount to minimum threshold
   const unbondToMin =
-    bondType === 'pool'
+    bondFor === 'pool'
       ? inSetup || isDepositor()
         ? BN.max(active.sub(minCreateBond), new BN(0))
         : BN.max(active.sub(minJoinBond), new BN(0))
@@ -101,9 +101,9 @@ export const UnbondFeedback = ({
 
   // check if bonded is below the minimum required
   const nominatorActiveBelowMin =
-    bondType === 'stake' && !active.isZero() && active.lt(minNominatorBond);
+    bondFor === 'nominator' && !active.isZero() && active.lt(minNominatorBond);
   const poolToMinBn = isDepositor() ? minCreateBond : minJoinBond;
-  const poolActiveBelowMin = bondType === 'pool' && active.lt(poolToMinBn);
+  const poolActiveBelowMin = bondFor === 'pool' && active.lt(poolToMinBn);
 
   // handle error updates
   const handleErrors = () => {
@@ -117,7 +117,7 @@ export const UnbondFeedback = ({
     }
 
     // unbond errors for staking only
-    if (bondType === 'stake')
+    if (bondFor === 'nominator')
       if (getControllerNotImported(controller))
         _errors.push(t('importedToUnbond'));
 
@@ -133,7 +133,7 @@ export const UnbondFeedback = ({
       // start the error message stating a min bond is required.
       let err = `${t('minimumBond', { minBondBase, unit })} `;
       // append the subject to the error message.
-      if (bondType === 'stake') {
+      if (bondFor === 'nominator') {
         err += t('whenActivelyNominating');
       } else if (isDepositor()) {
         err += t('asThePoolDepositor');

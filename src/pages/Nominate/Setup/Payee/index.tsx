@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useConnect } from 'contexts/Connect';
-import { useUi } from 'contexts/UI';
-import { SetupType } from 'contexts/UI/types';
+import { useSetup } from 'contexts/Setup';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
@@ -18,8 +17,8 @@ export const Payee = (props: SetupStepProps) => {
   const { section } = props;
 
   const { activeAccount } = useConnect();
-  const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const setup = getSetupProgress(SetupType.Stake, activeAccount);
+  const { getSetupProgress, setActiveAccountSetup } = useSetup();
+  const setup = getSetupProgress('stake', activeAccount);
   const { t } = useTranslation('pages');
 
   const options = ['Staked', 'Stash', 'Controller'];
@@ -60,7 +59,7 @@ export const Payee = (props: SetupStepProps) => {
     // set local value to update input element
     setPayee(options[i]);
     // set setup payee
-    setActiveAccountSetup(SetupType.Stake, {
+    setActiveAccountSetup('stake', {
       ...setup,
       payee: options[i],
     });
@@ -73,7 +72,7 @@ export const Payee = (props: SetupStepProps) => {
         complete={setup.payee !== null}
         title={t('nominate.rewardDestination') || ''}
         helpKey="Reward Destination"
-        setupType={SetupType.Stake}
+        setupType="stake"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <Spacer />
@@ -95,7 +94,7 @@ export const Payee = (props: SetupStepProps) => {
             );
           })}
         </Items>
-        <Footer complete={setup.payee !== null} setupType={SetupType.Stake} />
+        <Footer complete={setup.payee !== null} setupType="stake" />
       </MotionContainer>
     </>
   );

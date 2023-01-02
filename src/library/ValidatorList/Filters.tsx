@@ -12,7 +12,6 @@ import {
   ButtonSecondary,
 } from '@rossbulat/polkadot-dashboard-ui';
 import { useFilters } from 'contexts/Filters';
-import { FilterType } from 'contexts/Filters/types';
 import { useOverlay } from 'contexts/Overlay';
 import { Container } from 'library/Filter/Container';
 import { Item } from 'library/Filter/Item';
@@ -29,8 +28,8 @@ export const Filters = () => {
     useValidatorFilters();
   const { t } = useTranslation('library');
 
-  const includes = getFilters(FilterType.Include, 'validators');
-  const excludes = getFilters(FilterType.Exclude, 'validators');
+  const includes = getFilters('include', 'validators');
+  const excludes = getFilters('exclude', 'validators');
   const hasFilters = includes?.length || excludes?.length;
   const order = getOrder('validators');
 
@@ -61,8 +60,8 @@ export const Filters = () => {
         <ButtonSecondary
           text={t('clear')}
           onClick={() => {
-            resetFilters(FilterType.Include, 'validators');
-            resetFilters(FilterType.Exclude, 'validators');
+            resetFilters('include', 'validators');
+            resetFilters('exclude', 'validators');
           }}
           disabled={!hasFilters}
         />
@@ -85,7 +84,7 @@ export const Filters = () => {
               icon={faCheck}
               transform="grow-2"
               onClick={() => {
-                toggleFilter(FilterType.Include, 'validators', e);
+                toggleFilter('include', 'validators', e);
               }}
             />
           ))}
@@ -96,7 +95,7 @@ export const Filters = () => {
               icon={faBan}
               transform="grow-0"
               onClick={() => {
-                toggleFilter(FilterType.Exclude, 'validators', e);
+                toggleFilter('exclude', 'validators', e);
               }}
             />
           ))}

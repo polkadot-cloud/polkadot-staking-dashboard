@@ -5,7 +5,7 @@ import { faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import { Extension as ExtensionInterface } from 'contexts/Extensions/types';
+import { ExtensionInjected } from 'contexts/Extensions/types';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ExtensionProps } from './types';
@@ -18,7 +18,7 @@ export const Extension = (props: ExtensionProps) => {
   const { id } = meta;
   const { t } = useTranslation('modals');
 
-  const installed = extensions.find((e: ExtensionInterface) => e.id === id);
+  const installed = extensions.find((e: ExtensionInjected) => e.id === id);
   const status = !installed ? 'not_found' : extensionsStatus[id];
 
   // determine message to be displayed based on extension status.

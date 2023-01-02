@@ -1,9 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ExtensionConfig, EXTENSIONS } from 'config/extensions';
+import { EXTENSIONS } from 'config/extensions';
 import {
-  Extension,
+  ExtensionConfig,
+  ExtensionInjected,
   ExtensionsContextInterface,
 } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
@@ -24,8 +25,14 @@ export const ExtensionsProvider = ({
   // store whether injectedWeb3 is present
   const [injectedPresent, setInjectedPresent] = useState<boolean>(false);
 
+  // store whether initial injectedWeb3 checking is underway
+  const [checkingInjectedWeb3, setCheckingInjectedWeb3] =
+    useState<boolean>(true);
+
   // store the installed extensions in state
-  const [extensions, setExtensions] = useState<Array<Extension> | null>(null);
+  const [extensions, setExtensions] = useState<Array<ExtensionInjected> | null>(
+    null
+  );
 
   // store whether extensions have been fetched
   const [extensionsFetched, setExtensionsFetched] = useState(false);
@@ -46,12 +53,14 @@ export const ExtensionsProvider = ({
     injectedWeb3Interval = setInterval(() => {
       if (++injectCounter === 10) {
         clearInterval(injectedWeb3Interval);
+        setCheckingInjectedWeb3(false);
       } else {
         // if injected is present
         const injectedWeb3 = (window as AnyApi)?.injectedWeb3 || null;
         if (injectedWeb3 !== null) {
           clearInterval(injectedWeb3Interval);
           setInjectedPresent(true);
+          setCheckingInjectedWeb3(false);
         }
       }
     }, 500);
@@ -81,7 +90,7 @@ export const ExtensionsProvider = ({
 
   const getInstalledExtensions = () => {
     const { injectedWeb3 }: AnyApi = window;
-    const _exts: Extension[] = [];
+    const _exts: ExtensionInjected[] = [];
     EXTENSIONS.forEach((e: ExtensionConfig) => {
       if (injectedWeb3[e.id] !== undefined) {
         _exts.push({
@@ -99,6 +108,7 @@ export const ExtensionsProvider = ({
         extensions: extensions ?? [],
         setExtensionStatus,
         extensionsStatus: extensionsStatusRef.current,
+        checkingInjectedWeb3,
         extensionsFetched,
         setExtensionsFetched,
         setExtensions,

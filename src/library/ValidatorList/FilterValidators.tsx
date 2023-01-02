@@ -4,7 +4,6 @@
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFilters } from 'contexts/Filters';
-import { FilterType } from 'contexts/Filters/types';
 import { Title } from 'library/Overlay/Title';
 import { FilterListButton, FilterListWrapper } from 'library/Overlay/Wrappers';
 import { useTranslation } from 'react-i18next';
@@ -15,8 +14,8 @@ export const FilterValidators = () => {
   const { excludesToLabels, includesToLabels } = useValidatorFilters();
   const { t } = useTranslation('library');
 
-  const includes = getFilters(FilterType.Include, 'validators');
-  const excludes = getFilters(FilterType.Exclude, 'validators');
+  const includes = getFilters('include', 'validators');
+  const excludes = getFilters('exclude', 'validators');
 
   return (
     <FilterListWrapper>
@@ -29,7 +28,7 @@ export const FilterValidators = () => {
             key={`validator_include_${i}`}
             type="button"
             onClick={() => {
-              toggleFilter(FilterType.Include, 'validators', f);
+              toggleFilter('include', 'validators', f);
             }}
           >
             <FontAwesomeIcon
@@ -47,7 +46,7 @@ export const FilterValidators = () => {
             key={`validator_exclude_${i}`}
             type="button"
             onClick={() => {
-              toggleFilter(FilterType.Exclude, 'validators', f);
+              toggleFilter('exclude', 'validators', f);
             }}
           >
             <FontAwesomeIcon

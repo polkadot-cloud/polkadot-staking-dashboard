@@ -27,7 +27,7 @@ export const Nomination = (props: NominationProps) => {
     toggleFavorites,
     batchIndex,
     batchKey,
-    bondType,
+    bondFor,
     inModal,
   } = props;
 
@@ -59,7 +59,7 @@ export const Nomination = (props: NominationProps) => {
         <div className="row status">
           <NominationStatus
             address={address}
-            bondType={bondType}
+            bondFor={bondFor}
             nominator={nominator}
           />
           <Labels>

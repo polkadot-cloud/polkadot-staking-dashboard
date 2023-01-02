@@ -8,7 +8,6 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { PoolState } from 'contexts/Pools/types';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
@@ -39,7 +38,7 @@ export const ClosurePrompts = () => {
   const depositorCanClose =
     !poolsSyncing &&
     isDepositor() &&
-    state === PoolState.Destroy &&
+    state === 'destroying' &&
     memberCounter === '1';
 
   // depositor needs to unbond funds
@@ -95,7 +94,7 @@ export const ClosurePrompts = () => {
                   onClick={() =>
                     openModalWith(
                       'UnlockChunks',
-                      { bondType: 'pool', poolClosure: true },
+                      { bondFor: 'pool', poolClosure: true },
                       'small'
                     )
                   }

@@ -3,6 +3,7 @@
 
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { usePlugins } from 'contexts/Plugins';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
@@ -13,7 +14,8 @@ import { Wrapper } from './Wrapper';
 export const StatusLabel = (props: StatusLabelProps) => {
   const status = props.status ?? 'sync_or_setup';
 
-  const { isSyncing, services } = useUi();
+  const { isSyncing } = useUi();
+  const { plugins } = usePlugins();
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
 
@@ -25,7 +27,7 @@ export const StatusLabel = (props: StatusLabelProps) => {
   }
 
   if (status === 'active_service') {
-    if (services.includes(props.statusFor || '')) {
+    if (plugins.includes(props.statusFor || '')) {
       return <></>;
     }
   }

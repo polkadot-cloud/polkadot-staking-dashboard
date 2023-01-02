@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { BN } from 'bn.js';
-import { Sync } from 'types';
 import { ActivePool, ActivePoolsContextState } from '../types';
 
 export const nominationStatus = {};
@@ -66,5 +65,5 @@ export const defaultActivePoolContext: ActivePoolsContextState = {
   selectedActivePool,
   targets,
   poolNominations,
-  synced: Sync.Unsynced,
+  synced: 'unsynced',
 };

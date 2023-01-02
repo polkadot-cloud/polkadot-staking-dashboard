@@ -7,7 +7,6 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { PoolState } from 'contexts/Pools/types';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import BondedGraph from 'library/Graphs/Bonded';
@@ -50,10 +49,10 @@ export const ManageBond = () => {
               poolsSyncing ||
               !isBonding() ||
               !isMember() ||
-              state === PoolState.Destroy
+              state === 'destroying'
             }
             marginRight
-            onClick={() => openModalWith('Bond', { bondType: 'pool' }, 'small')}
+            onClick={() => openModalWith('Bond', { bondFor: 'pool' }, 'small')}
             text="+"
           />
           <ButtonPrimary
@@ -61,21 +60,19 @@ export const ManageBond = () => {
               poolsSyncing ||
               !isBonding() ||
               !isMember() ||
-              state === PoolState.Destroy
+              state === 'destroying'
             }
             marginRight
             onClick={() =>
-              openModalWith('Unbond', { bondType: 'pool' }, 'small')
+              openModalWith('Unbond', { bondFor: 'pool' }, 'small')
             }
             text="-"
           />
           <ButtonPrimary
-            disabled={
-              poolsSyncing || !isMember() || state === PoolState.Destroy
-            }
+            disabled={poolsSyncing || !isMember() || state === 'destroying'}
             iconLeft={faLockOpen}
             onClick={() =>
-              openModalWith('UnlockChunks', { bondType: 'pool' }, 'small')
+              openModalWith('UnlockChunks', { bondFor: 'pool' }, 'small')
             }
             text={String(totalUnlockChuncks ?? 0)}
           />
