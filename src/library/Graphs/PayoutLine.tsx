@@ -73,11 +73,9 @@ export const PayoutLine = ({
   );
 
   // combine payouts and pool claims into one dataset and calculate averages.
-  const combinedPayouts = calculatePayoutAverages(
-    combineRewardsByDay(payoutsByDay, poolClaimsByDay, days),
-    10,
-    days
-  );
+  const combined = combineRewardsByDay(payoutsByDay, poolClaimsByDay);
+
+  const combinedPayouts = calculatePayoutAverages(combined, 10, days);
 
   // determine color for payouts
   const color = notStaking
