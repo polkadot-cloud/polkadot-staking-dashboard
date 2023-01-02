@@ -22,11 +22,17 @@ export const calculatePayoutsByDay = (
   // eslint-disable-next-line
   subject: string
 ) => {
-  if (!payouts.length) return payouts;
-
   let payoutsByDay: any = [];
 
-  // prefill missing days from last payout leading to current day.
+  // remove days that are beyond end day limit
+  payouts = payouts.filter((p: AnySubscan) => {
+    return daysPassed(fromUnixTime(p.block_timestamp), new Date()) <= maxDays;
+  });
+
+  // return now if no payouts.
+  if (!payouts.length) return payouts;
+
+  // post fill any missing days.
   payoutsByDay = postFillMissingDays(payouts, maxDays);
 
   // start processing payouts, if any.
