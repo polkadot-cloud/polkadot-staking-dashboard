@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { useUi } from 'contexts/UI';
 import {
   differenceInDays,
   endOfDay,
@@ -13,86 +12,23 @@ import {
   startOfDay,
   subDays,
 } from 'date-fns';
-import throttle from 'lodash.throttle';
-import React from 'react';
 import { AnySubscan } from 'types';
 import { planckBnToUnit } from 'Utils';
 
-export const getSize = (element: any) => {
-  const width = element?.offsetWidth;
-  const height = element?.offsetHeight;
-  return { height, width };
-};
-
-export const useSize = (element: any) => {
-  const { containerRefs } = useUi();
-
-  const [size, setSize] = React.useState(getSize(element));
-
-  const throttleCallback = () => {
-    setSize(getSize(element));
-  };
-
-  React.useEffect(() => {
-    const resizeThrottle = throttle(throttleCallback, 100, {
-      trailing: true,
-      leading: false,
-    });
-
-    // listen to main interface resize if ref is available, otherwise
-    // fall back to window resize.
-    const listenFor = containerRefs?.mainInterface?.current ?? window;
-    listenFor.addEventListener('resize', resizeThrottle);
-    return () => {
-      listenFor.removeEventListener('resize', resizeThrottle);
-    };
-  });
-  return size;
-};
-
-interface FormatSizeIf {
-  width: string | number;
-  height: number;
-}
-
 export const formatSize = (
-  { width, height }: FormatSizeIf,
+  {
+    width,
+    height,
+  }: {
+    width: string | number;
+    height: number;
+  },
   minHeight: number
 ) => ({
   width: width || '100%',
   height: height || minHeight,
   minHeight,
 });
-
-interface GetGradientIf {
-  right: number;
-  left: number;
-  top: number;
-  bottom: number;
-}
-
-export const getGradient = (
-  ctx: any,
-  { right, left, top, bottom }: GetGradientIf
-) => {
-  let width;
-  let height;
-  let gradient;
-
-  const chartWidth = right - left;
-  const chartHeight = bottom - top;
-
-  if (!gradient || width !== chartWidth || height !== chartHeight) {
-    // Create the gradient because this is either the first render
-    // or the size of the chart has changed
-    width = chartWidth;
-    height = chartHeight;
-    gradient = ctx.createLinearGradient(0, bottom, 0, top);
-    gradient.addColorStop(0, 'rgba(203, 37, 111, 0.9)');
-    gradient.addColorStop(1, 'rgba(223, 81, 144, 0.7)');
-  }
-  return gradient;
-};
 
 // given payouts, calculate daily income and fill missing days with zero amounts.
 export const calculatePayoutsByDay = (

@@ -10,12 +10,13 @@ import { useUi } from 'contexts/UI';
 import { format, fromUnixTime } from 'date-fns';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
-import { formatSize, useSize } from 'library/Graphs/Utils';
+import { formatSize } from 'library/Graphs/Utils';
 import {
   CardHeaderWrapper,
   CardWrapper,
   GraphWrapper,
 } from 'library/Graphs/Wrappers';
+import { useSize } from 'library/Hooks/useSize';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
