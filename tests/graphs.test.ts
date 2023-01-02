@@ -105,7 +105,6 @@ test('pre fill missing days works', () => {
           fromUnixTime(concatPayouts[i - 1].block_timestamp)
         )
       ).toBe(1);
-
       expect(concatPayouts[i].block_timestamp).toBeLessThan(
         concatPayouts[i - 1].block_timestamp
       );
@@ -141,7 +140,6 @@ test('pre fill and post fill missing days work together', () => {
           fromUnixTime(finalPayouts[i - 1].block_timestamp)
         )
       ).toBe(1);
-
       expect(finalPayouts[i].block_timestamp).toBeLessThan(
         finalPayouts[i - 1].block_timestamp
       );
