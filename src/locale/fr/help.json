@@ -1,33 +1,14 @@
 {
   "help": {
-    "modal": {
-      "helpResources": "Ressources d'aide",
-      "allResources": "Toutes les ressources",
-      "close": "Fermer",
-      "definitions": "Definitions",
-      "articles": "Articles",
-      "related": "Voir aussi"
-    },
     "definitions": {
-      "dashboardTips": [
-        "Conseils sur le tableau de bord",
+      "activeBondThreshold": [
+        "Seuil d'allocation active",
         [
-          "Le tableau de bord vous présente des conseils pour vous aider à chaque étape de votre investissement sur Polkadot.",
-          "Les conseils peuvent être désactivés ou réactivés à partir des paramètres du tableau de bord, accessibles via l'icône en forme de roue dentée dans le coin inférieur gauche du menu latéral."
-        ]
-      ],
-      "supplyStaked": [
-        "Approvisionnement Investi",
-        [
-          "L'offre cumulée actuelle de {NETWORK_UNIT} investis globalement.",
-          "Le pourcentage de {NETWORK_UNIT} investi est relatif à l'offre totale de {NETWORK_UNIT}."
-        ]
-      ],
-      "totalNominators": [
-        "Total des Nominateurs",
-        [
-          "Les comptes qui investisse dans le réseau, qu'ils soient actifs ou inactifs dans la session en cours.",
-          "Afin d'investir des {NETWORK_UNIT}, vous pouvez soit devenir un nominateur, soit rejoindre un pool - qui joue lui-même le rôle de nominateur."
+          "Le nombre de {NETWORK_UNIT} nécessaires pour être activement nominés dans une ère.",
+          "Cette valeur s'applique aux nominateurs et aux pools. Dans le cas du pool, il est important de rejoindre un pool dont le montant total des obligations est au moins égal à cette valeur.",
+          "Être au-dessus de cette métrique garantit simplement que vous serez présent dans l'ensemble des nominateurs actifs pour l'époque. Ce montant ne garantit toujours pas de récompenses, car vos nominations actives peuvent toujours être sursouscrites.",
+          "Seuls les meilleurs {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominateurs sont récompensés par validateur dans {NETWORK_NAME}. En vous assurant que votre lien actif est supérieur à ce seuil, vous augmenterez vos chances d'être récompensé.",
+          "Vous pouvez suivre ces mesures à partir du tableau de bord et modifier votre position de mise si nécessaire, qu'il s'agisse d'augmenter votre caution {NETWORK_UNIT}, de modifier vos nominations ou de rejoindre un autre pool."
         ]
       ],
       "activeNominators": [
@@ -37,18 +18,128 @@
           "Le fait d'être un nominateur actif ne garantit pas l'obtention de récompenses, car vos nominés peuvent être sursouscrits."
         ]
       ],
-      "yourBalance": [
-        "Votre Balance",
+      "activePools": [
+        "Pools Active",
+        ["La quantité actuelle de pools de nomination actifs sur {NETWORK_NAME}."]
+      ],
+      "activeValidator": [
+        "Active Validator",
         [
-          "Votre balance représente le total des {NETWORK_UNIT} dont vous disposez en plus du montant total de vos mises, ce qui inclut le montant que vous avez placé dans un pool.",
-          "À la différence de votre investissement, votre solde de pool cautionné est détenu et verrouillé dans la pool elle-même."
+          "Un validateur qui valide activement des blocs. Les récompenses sont accumulées en fonction de l'activité du validateur. Un nouvel ensemble de validateurs est choisi pour chaque ère, il n'y a donc aucune garantie que le même validateur sera actif dans les ères suivantes.",
+          "A new set of validators are chosen for each era, so there is no guarantee the same validator will be active in subsequent eras.",
+          "{NETWORK_NAME} permet à un nominateur de nommer jusqu'à 16 validateurs, ce qui maximise vos chances de nommer un validateur actif dans chaque ère."
         ]
       ],
-      "reserveBalance": [
-        "Balance de la réserve",
+      "adjustedRewardsRate": [
+        "Ajuster les taux de rémunération",
         [
-          "Dans le {NETWORK_NAME}, vous devez avoir un solde supérieur à un certain montant pour que votre compte existe sur la chaîne. Ce montant est appelé votre 'dépôt existant'.",
-          "Le tableau de bord garantit que cette quantité de {NETWORK_UNIT} ne sera jamais touchée."
+          "Un rendement annuel réalisé estimé basé sur le modèle de distribution des récompenses de {NETWORK_NAME}.",
+          "Ce chiffre correspond effectivement au taux de rémunération historique moins le taux d'inflation"
+        ]
+      ],
+      "averageCommission": [
+        "Commission moyenne",
+        [
+          "Le taux de commission moyen des valideurs sur {NETWORK_NAME}.",
+          "Cette mesure exclut les validateurs qui hébergent une commission de 100 %, car ces nœuds bloquent généralement les nominations sont exécutées à des fins de jalonnement sur les plateformes d'échange centrales."
+        ]
+      ],
+      "blockedNominations": [
+        "Nominations bloquées",
+        [
+          "Lorsqu'un validateur a bloqué des nominations, les nominateurs ne peuvent pas le nommer."
+        ]
+      ],
+      "bondedInPool": [
+        "Investi dans un Pool",
+        [
+          "La quantité de {NETWORK_UNIT} actuellement liée à un pool.",
+          "Contrairement à la nomination directe, où vos fonds alloués restent sur votre compte mais sont bloqués, la {NETWORK_UNIT} que vous alloué à un pool est transférée sur le compte de réserve du pool. Néanmoins, les membres du pool ont toujours la possibilité de libérer leurs fonds à tout moment."
+        ]
+      ],
+      "bonding": [
+        "Allocation",
+        [
+          "L'allocation de fonds consiste à 'vérrouiller' {NETWORK_UNIT}. L'unité {NETWORK_UNIT} liée sera alors automatiquement attribuée à un ou plusieurs de vos validateurs désignés.",
+          "En tant que nominateur, vous attribuez vous-même les nominations. Dans un pool, le propriétaire du pool ou le nominateur du pool allouera les nominations en votre nom, et vos fonds cautionnés soutiendront ces nominations.",
+          "La statistique du lien actif minimum est le minimum de {NETWORK_UNIT} lié à un nominateur pour l'ère actuelle. Cette valeur est également le montant minimum requis pour recevoir des récompenses."
+        ]
+      ],
+      "commission": [
+        "Commission",
+        [
+          "Les validateurs peuvent prendre un pourcentage des récompenses qu'ils gagnent. Ce pourcentage est appelé leur commission.",
+          "La nomination de validateurs ayant un faible taux de commission signifie que vous recevrez une plus grande part des récompenses qu'ils génèrent.",
+          "De nombreux validateurs auront un taux de commission de 100 %, ce qui signifie que vous ne recevrez aucune récompense en désignant ces validateurs.",
+          "Parmi ces validateurs, on peut citer ceux qui opèrent pour le compte de bourses, où la nomination et la distribution des récompenses sont centralisées sur la bourse en question.",
+          "Un validateur peut mettre à jour ses taux de commission comme et quand il le souhaite, et ces changements auront un impact sur votre rentabilité. Veillez à surveiller vos nominations sur ce tableau de bord pour vous tenir au courant de leurs taux de commission. "
+        ]
+      ],
+      "controllerAccountEligibility": [
+        "Admissibilité du compte de contrôleur",
+        [
+          "Pour qu'un compte devienne un contrôleur, il doit avoir un solde d'au moins le dépôt existentiel. Sur {NETWORK_NAME} le montant du dépôt existentiel est de {EXISTENTIAL_DEPOSIT} {NETWORK_UNIT}.",
+          "Si un compte ne dispose pas d'au moins ce montant, le message 'Not Enough {NETWORK_UNIT}' apparaît.",
+          "Le fait de recharger un compte avec au moins {EXISTENTIAL_DEPOSIT} {NETWORK_UNIT} le rendra éligible et sélectionnable en tant que contrôleur."
+        ]
+      ],
+      "dashboardTips": [
+        "Conseils sur le tableau de bord",
+        [
+          "Le tableau de bord vous présente des conseils pour vous aider à chaque étape de votre investissement sur Polkadot.",
+          "Les conseils peuvent être désactivés ou réactivés à partir des paramètres du tableau de bord, accessibles via l'icône en forme de roue dentée dans le coin inférieur gauche du menu latéral."
+        ]
+      ],
+      "epoch": [
+        "Epoch",
+        [
+          "Une époque est un autre nom pour une session dans {NETWORK_NAME}. Un ensemble différent de validateurs est sélectionné pour valider les blocs au début de chaque époque.",
+          "1 époque correspond actuellement à 4 heures dans Polkadot."
+        ]
+      ],
+      "era": [
+        "Ère",
+        [
+          "À la fin de chaque ère, les validateurs sont récompensés par {NETWORK_UNIT} en fonction du nombre de points d'ère qu'ils ont accumulés au cours de cette ère. Cette récompense {NETWORK_UNIT} est ensuite distribuée aux nominateurs du validateur via un paiement.",
+          "1 ère est actuellement 24 heures dans Polkadot."
+        ]
+      ],
+      "eraPoints": [
+        "Points d'ère",
+        [
+          "Les Points d'ère sont accumulés par les validateurs au cours de chaque ère, et dépendent de la performance du validateur. En tant que staker, vous n'avez pas à vous soucier des Era Points. En général, les validateurs les plus performants produisent plus d'Era Points, qui à leur tour conduisent à des récompenses plus élevées.",
+          "En tant que staker, vous n'avez pas à vous soucier des Era Points. En général, les validateurs les plus performants produisent plus de points d'ère, ce qui entraîne des récompenses de piquetage plus élevées."
+        ]
+      ],
+      "historicalRewardsRate": [
+        "Historique des taux de rémunération",
+        [
+          "Un rendement annuel estimé basé sur le modèle de distribution des récompenses de {NETWORK_NAME}."
+        ]
+      ],
+      "idealStaked": [
+        "Investissement idéal",
+        ["Le pourcentage de l'approvisionnement total investi dans des conditions de réseau idéales."]
+      ],
+      "inactiveNominations": [
+        "Nominations inactives",
+        [
+          "Les nominations qui sont dans les actifs du validateurs pour l'ère actuelle, mais les fonds cautionnés n'ont pas été affectés à ces nominations."
+        ]
+      ],
+      "inflation": [
+        "Inflation",
+        [
+          "{NETWORK_UNIT} est inflationniste ; il n'y a pas de nombre maximal de {NETWORK_UNIT}.",
+          "L'inflation est conçue pour être d'environ 10% par an, les récompenses des validateurs étant fonction du montant misé et le reste allant à la trésorerie."
+        ]
+      ],
+      "lastEraPayout": [
+        "Dernier paiement de l'ère",
+        [
+          "Le montant total de {NETWORK_UNIT} payé pour la dernière ère active.",
+          "Les paiements sont répartis de manière égale entre les validateurs actifs pour cette période, et sont ensuite distribués aux nominateurs actifs qui ont participé à cette période.",
+          "Les montants des paiements reçus dépendent du montant de {NETWORK_UNIT} que les nominateurs, et les validateurs eux-mêmes, ont cautionné pour cette ère."
         ]
       ],
       "lockedBalance": [
@@ -59,6 +150,20 @@
           "Vous pouvez désigner un candidat avec tout solde bloqué restant, mais vous ne pouvez pas rejoindre un pool avec ce solde, car cela nécessite un transfert vers le compte de pool."
         ]
       ],
+      "minimumCreateBond": [
+        "Création minimale d'une caution",
+        [
+          "Le montant minimum de {NETWORK_UNIT} nécessaire pour créer un pool.",
+          "La création d'un pool nécessite un dépôt plus important que pour l'adhésion à un pool."
+        ]
+      ],
+      "minimumJoinBond": [
+        "Caution minimum de participation",
+        [
+          "La quantité minimale de {NETWORK_UNIT} nécessaire pour se lier afin de rejoindre un pool..",
+          "Ce montant est différent de l'allocation nécessaire pour créer un pool."
+        ]
+      ],
       "networkStats": [
         "Statistiques du réseau",
         [
@@ -66,30 +171,18 @@
           "Tenez-vous au courant de l'état du réseau depuis votre vue d'ensemble."
         ]
       ],
-      "inflation": [
-        "Inflation",
+      "nominating": [
+        "Désignation",
         [
-          "{NETWORK_UNIT} est inflationniste ; il n'y a pas de nombre maximal de {NETWORK_UNIT}.",
-          "L'inflation est conçue pour être d'environ 10% par an, les récompenses des validateurs étant fonction du montant misé et le reste allant à la trésorerie."
+          "La nomination est le processus de sélection des validateurs auxquels vous souhaitez attribuer votre {NETWORK_UNIT}. Vous pouvez choisir de désigner jusqu'à 16 validateurs pour chacun de vos comptes.",
+          "Une fois que vous avez nommé les validateurs que vous avez sélectionnés, ils deviennent vos nominations."
         ]
       ],
-      "historicalRewardsRate": [
-        "Historique des taux de rémunération",
+      "nominationPools": [
+        "Pools de nominations",
         [
-          "Un rendement annuel estimé basé sur le modèle de distribution des récompenses de {NETWORK_NAME}."
-        ]
-      ],
-      "adjustedRewardsRate": [
-        "Ajuster les taux de rémunération",
-        [
-          "Un rendement annuel réalisé estimé basé sur le modèle de distribution des récompenses de {NETWORK_NAME}.",
-          "Ce chiffre correspond effectivement au taux de rémunération historique moins le taux d'inflation"
-        ]
-      ],
-      "idealStaked": [
-        "Investissement idéal",
-        [
-          "Le pourcentage de l'approvisionnement total investi dans des conditions de réseau idéales."
+          "Les pools de nominations permettent aux utilisateurs de contribuer {NETWORK_UNIT} et de gagner des récompenses sur l'investissement.",
+          "Contrairement à la nomination, l'investissement à l'aide de pools ne nécessite qu'une petite quantité de {NETWORK_UNIT}, et le pool gère les nominés en votre nom."
         ]
       ],
       "nominationStatus": [
@@ -102,56 +195,6 @@
           "Si un nominateur actif n'est pas sursouscrit, vous recevrez des récompenses."
         ]
       ],
-      "stashAndControllerAccounts": [
-        "Comptes Stash et Contrôleur",
-        [
-          "Le Stash et le Controller sont simplement des comptes {NETWORK_NAME} qui gèrent votre activité de jalonnement.",
-          "Votre compte Stash est le compte utilisé pour détenir vos fonds jalonnés, tandis que le compte du contrôleur est utilisé pour effectuer des actions de jalonnement au nom du compte Stash.",
-          "Lorsque vous changez de compte dans cette application, vous changez en fait de compte Stash. Votre compte Contrôleur est alors automatiquement récupéré pour vous.",
-          "Cette application suppose que vous avez importé les deux comptes Stash et Controller. Si ce n'est pas le cas, vous ne pourrez pas utiliser toutes les fonctions de l'application.",
-          "Vous pouvez affecter un autre compte de contrôleur sur la page d'investissement."
-        ]
-      ],
-      "controllerAccountEligibility": [
-        "Admissibilité du compte de contrôleur",
-        [
-          "Pour qu'un compte devienne un contrôleur, il doit avoir un solde d'au moins le dépôt existentiel. Sur {NETWORK_NAME} le montant du dépôt existentiel est de {EXISTENTIAL_DEPOSIT} {NETWORK_UNIT}.",
-          "Si un compte ne dispose pas d'au moins ce montant, le message 'Not Enough {NETWORK_UNIT}' apparaît.",
-          "Le fait de recharger un compte avec au moins {EXISTENTIAL_DEPOSIT} {NETWORK_UNIT} le rendra éligible et sélectionnable en tant que contrôleur."
-        ]
-      ],
-      "bonding": [
-        "Allocation",
-        [
-          "L'allocation de fonds consiste à 'vérrouiller' {NETWORK_UNIT}. L'unité {NETWORK_UNIT} liée sera alors automatiquement attribuée à un ou plusieurs de vos validateurs désignés.",
-          "En tant que nominateur, vous attribuez vous-même les nominations. Dans un pool, le propriétaire du pool ou le nominateur du pool allouera les nominations en votre nom, et vos fonds cautionnés soutiendront ces nominations.",
-          "La statistique du lien actif minimum est le minimum de {NETWORK_UNIT} lié à un nominateur pour l'ère actuelle. Cette valeur est également le montant minimum requis pour recevoir des récompenses."
-        ]
-      ],
-      "activeBondThreshold": [
-        "Seuil d'allocation active",
-        [
-          "Le nombre de {NETWORK_UNIT} nécessaires pour être activement nominés dans une ère.",
-          "Cette valeur s'applique aux nominateurs et aux pools. Dans le cas du pool, il est important de rejoindre un pool dont le montant total des obligations est au moins égal à cette valeur.",
-          "Être au-dessus de cette métrique garantit simplement que vous serez présent dans l'ensemble des nominateurs actifs pour l'époque. Ce montant ne garantit toujours pas de récompenses, car vos nominations actives peuvent toujours être sursouscrites.",
-          "Seuls les meilleurs {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominateurs sont récompensés par validateur dans {NETWORK_NAME}. En vous assurant que votre lien actif est supérieur à ce seuil, vous augmenterez vos chances d'être récompensé.",
-          "Vous pouvez suivre ces mesures à partir du tableau de bord et modifier votre position de mise si nécessaire, qu'il s'agisse d'augmenter votre caution {NETWORK_UNIT}, de modifier vos nominations ou de rejoindre un autre pool."
-        ]
-      ],
-      "rewardDestination": [
-        "Destination des récompenses",
-        [
-          "Votre destination de récompense est l'endroit où vos récompenses sont envoyées.",
-          "Les récompenses peuvent être automatiquement déposées en plus de votre caution actuelle, ou elles peuvent être envoyées dans votre réserve, votre contrôleur ou un compte externe de votre choix."
-        ]
-      ],
-      "nominating": [
-        "Désignation",
-        [
-          "La nomination est le processus de sélection des validateurs auxquels vous souhaitez attribuer votre {NETWORK_UNIT}. Vous pouvez choisir de désigner jusqu'à 16 validateurs pour chacun de vos comptes.",
-          "Une fois que vous avez nommé les validateurs que vous avez sélectionnés, ils deviennent vos nominations."
-        ]
-      ],
       "nominations": [
         "Nominations",
         [
@@ -161,37 +204,33 @@
           "Tant qu'au moins une de vos nominations est en cours de validation dans une session, vos fonds soutiendront ce validateur."
         ]
       ],
-      "inactiveNominations": [
-        "Nominations inactives",
+      "nominatorStake": [
+        "Investissement du nominator",
         [
-          "Les nominations qui sont dans les actifs du validateurs pour l'ère actuelle, mais les fonds cautionnés n'ont pas été affectés à ces nominations."
+          "Le montant de {NETWORK_UNIT} soutenant le validateur de ses nominateurs.",
+          "Cette valeur est ajoutée à la mise personnelle du validateur pour former la mise totale du validateur. Notez que cette valeur change à chaque ère car les fonds cautionnés des nominateurs sont redistribués aux validateurs actifs de cette session."
         ]
       ],
-      "nominationPools": [
-        "Pools de nominations",
+      "overSubscribed": [
+        "Sursouscription",
         [
-          "Les pools de nominations permettent aux utilisateurs de contribuer {NETWORK_UNIT} et de gagner des récompenses sur l'investissement.",
-          "Contrairement à la nomination, l'investissement à l'aide de pools ne nécessite qu'une petite quantité de {NETWORK_UNIT}, et le pool gère les nominés en votre nom."
+          "Seuls les meilleurs {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominateurs pour chaque validateur sont récompensés dans {NETWORK_NAME}. Lorsque ce nombre est dépassé, ce validateur est considéré comme sursouscrit."
         ]
       ],
-      "activePools": [
-        "Pools Active",
+      "payout": [
+        "Paiement",
         [
-          "La quantité actuelle de pools de nomination actifs sur {NETWORK_NAME}."
+          "Les paiements sont des récompenses de jalonnement sur {NETWORK_NAME}. Ils dépendent du nombre des Points d'ère que les validateurs nommés accumulent au fil du temps. Les récompenses sont déterminées à la fin de chaque ère (périodes de 24 heures)",
+          "Pour recevoir des récompenses, un paiement doit être demandé. Tout nominateur soutenant le validateur en question peut demander un paiement",
+          "Une demande de paiement déclenche le paiement de la récompense pour chaque nominateur."
         ]
       ],
-      "minimumJoinBond": [
-        "Caution minimum de participation",
+      "payoutHistory": [
+        "Historique des Paiements",
         [
-          "La quantité minimale de {NETWORK_UNIT} nécessaire pour se lier afin de rejoindre un pool..",
-          "Ce montant est différent de l'allocation nécessaire pour créer un pool."
-        ]
-      ],
-      "minimumCreateBond": [
-        "Création minimale d'une caution",
-        [
-          "Le montant minimum de {NETWORK_UNIT} nécessaire pour créer un pool.",
-          "La création d'un pool nécessite un dépôt plus important que pour l'adhésion à un pool."
+          "Enregistrements historiques des paiements effectués pour avoir été un nominateur actif.",
+          "La demande de paiements est un processus manuel, il se peut donc que vous receviez des paiements pour plusieurs époques en succession rapide ou de façon sporadique. Vos graphiques de paiements peuvent donc avoir plusieurs paiements le même jour, ou avoir des jours où il n'y a pas eu de paiements.",
+          "Cela ne signifie pas que vous n'avez pas désigné ou généré de récompenses au cours de cette période - seulement que le paiement pour cette période n'a pas encore été effectué."
         ]
       ],
       "poolMembership": [
@@ -201,13 +240,6 @@
           "L'adhésion à une pool peut être celle d'un membre ou d'un propriétaire de pool.",
           "Actuellement sur {NETWORK_NAME}, les comptes ne peuvent rejoindre qu'un seul pool à la fois. Si vous souhaitez rejoindre un autre pool, vous devez d'abord quitter votre pool actuel.",
           "Pour quitter un pool, il vous suffit de vous désengager et de retirer toutes vos {NETWORK_UNIT} liées. Le tableau de bord offre un bouton 'Quitter' dédié pour se libérer d'un pool."
-        ]
-      ],
-      "bondedInPool": [
-        "Investi dans un Pool",
-        [
-          "La quantité de {NETWORK_UNIT} actuellement liée à un pool.",
-          "Contrairement à la nomination directe, où vos fonds alloués restent sur votre compte mais sont bloqués, la {NETWORK_UNIT} que vous alloué à un pool est transférée sur le compte de réserve du pool. Néanmoins, les membres du pool ont toujours la possibilité de libérer leurs fonds à tout moment."
         ]
       ],
       "poolRewards": [
@@ -228,45 +260,18 @@
           "State-Toggler: Peut changer l'état du pool et retirer (sans permission, détacher/retrait) les membres si le pool est bloqué."
         ]
       ],
-      "validator": [
-        "Validateur",
+      "reserveBalance": [
+        "Balance de la réserve",
         [
-          "Une entité qui valide les blocs pour la chaîne de relais {NETWORK_NAME} Chaîne de relais. Les validateurs jouent un rôle clé dans le {NETWORK_NAME} pour sécuriser le réseau et produire des blocs.",
-          "En tant que nominateur, vous choisissez les validateurs que vous souhaitez soutenir, et recevez des récompenses pour cela."
+          "Dans le {NETWORK_NAME}, vous devez avoir un solde supérieur à un certain montant pour que votre compte existe sur la chaîne. Ce montant est appelé votre 'dépôt existant'.",
+          "Le tableau de bord garantit que cette quantité de {NETWORK_UNIT} ne sera jamais touchée."
         ]
       ],
-      "activeValidator": [
-        "Active Validator",
+      "rewardDestination": [
+        "Destination des récompenses",
         [
-          "Un validateur qui valide activement des blocs. Les récompenses sont accumulées en fonction de l'activité du validateur. Un nouvel ensemble de validateurs est choisi pour chaque ère, il n'y a donc aucune garantie que le même validateur sera actif dans les ères suivantes.",
-          "{NETWORK_NAME} permet à un nominateur de nommer jusqu'à 16 validateurs, ce qui maximise vos chances de nommer un validateur actif dans chaque ère."
-        ]
-      ],
-      "averageCommission": [
-        "Commission moyenne",
-        [
-          "Le taux de commission moyen des valideurs sur {NETWORK_NAME}.",
-          "Cette mesure exclut les validateurs qui hébergent une commission de 100 %, car ces nœuds bloquent généralement les nominations sont exécutées à des fins de jalonnement sur les plateformes d'échange centrales."
-        ]
-      ],
-      "era": [
-        "Ère",
-        [
-          "À la fin de chaque ère, les validateurs sont récompensés par {NETWORK_UNIT} en fonction du nombre de points d'ère qu'ils ont accumulés au cours de cette ère. Cette récompense {NETWORK_UNIT} est ensuite distribuée aux nominateurs du validateur via un paiement.",
-          "1 ère est actuellement 24 heures dans Polkadot."
-        ]
-      ],
-      "epoch": [
-        "Epoch",
-        [
-          "Une époque est un autre nom pour une session dans {NETWORK_NAME}. Un ensemble différent de validateurs est sélectionné pour valider les blocs au début de chaque époque.",
-          "1 époque correspond actuellement à 4 heures dans Polkadot."
-        ]
-      ],
-      "eraPoints": [
-        "Points d'ère",
-        [
-          "Les Points d'ère sont accumulés par les validateurs au cours de chaque ère, et dépendent de la performance du validateur. En tant que staker, vous n'avez pas à vous soucier des Era Points. En général, les validateurs les plus performants produisent plus d'Era Points, qui à leur tour conduisent à des récompenses plus élevées."
+          "Votre destination de récompense est l'endroit où vos récompenses sont envoyées.",
+          "Les récompenses peuvent être automatiquement déposées en plus de votre caution actuelle, ou elles peuvent être envoyées dans votre réserve, votre contrôleur ou un compte externe de votre choix."
         ]
       ],
       "selfStake": [
@@ -276,73 +281,66 @@
           "Cette valeur est ajoutée au montant de {NETWORK_UNIT} cautionné par les nominateurs pour former la mise totale du valideur."
         ]
       ],
-      "nominatorStake": [
-        "Investissement du nominator",
+      "stashAndControllerAccounts": [
+        "Comptes Stash et Contrôleur",
         [
-          "Le montant de {NETWORK_UNIT} soutenant le validateur de ses nominateurs.",
-          "Cette valeur est ajoutée à la mise personnelle du validateur pour former la mise totale du validateur. Notez que cette valeur change à chaque ère car les fonds cautionnés des nominateurs sont redistribués aux validateurs actifs de cette session."
+          "Le Stash et le Controller sont simplement des comptes {NETWORK_NAME} qui gèrent votre activité de jalonnement.",
+          "Votre compte Stash est le compte utilisé pour détenir vos fonds jalonnés, tandis que le compte du contrôleur est utilisé pour effectuer des actions de jalonnement au nom du compte Stash.",
+          "Lorsque vous changez de compte dans cette application, vous changez en fait de compte Stash. Votre compte Contrôleur est alors automatiquement récupéré pour vous.",
+          "Cette application suppose que vous avez importé les deux comptes Stash et Controller. Si ce n'est pas le cas, vous ne pourrez pas utiliser toutes les fonctions de l'application.",
+          "Vous pouvez affecter un autre compte de contrôleur sur la page d'investissement."
         ]
       ],
-      "commission": [
-        "Commission",
+      "supplyStaked": [
+        "Approvisionnement Investi",
         [
-          "Les validateurs peuvent prendre un pourcentage des récompenses qu'ils gagnent. Ce pourcentage est appelé leur commission.",
-          "La nomination de validateurs ayant un faible taux de commission signifie que vous recevrez une plus grande part des récompenses qu'ils génèrent.",
-          "De nombreux validateurs auront un taux de commission de 100 %, ce qui signifie que vous ne recevrez aucune récompense en désignant ces validateurs.",
-          "Parmi ces validateurs, on peut citer ceux qui opèrent pour le compte de bourses, où la nomination et la distribution des récompenses sont centralisées sur la bourse en question.",
-          "Un validateur peut mettre à jour ses taux de commission comme et quand il le souhaite, et ces changements auront un impact sur votre rentabilité. Veillez à surveiller vos nominations sur ce tableau de bord pour vous tenir au courant de leurs taux de commission. "
+          "L'offre cumulée actuelle de {NETWORK_UNIT} investis globalement.",
+          "Le pourcentage de {NETWORK_UNIT} investi est relatif à l'offre totale de {NETWORK_UNIT}."
         ]
       ],
-      "overSubscribed": [
-        "Sursouscription",
+      "totalNominators": [
+        "Total des Nominateurs",
         [
-          "Seuls les meilleurs {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominateurs pour chaque validateur sont récompensés dans {NETWORK_NAME}. Lorsque ce nombre est dépassé, ce validateur est considéré comme sursouscrit."
+          "Les comptes qui investisse dans le réseau, qu'ils soient actifs ou inactifs dans la session en cours.",
+          "Afin d'investir des {NETWORK_UNIT}, vous pouvez soit devenir un nominateur, soit rejoindre un pool - qui joue lui-même le rôle de nominateur."
         ]
       ],
-      "blockedNominations": [
-        "Nominations bloquées",
+      "validator": [
+        "Validateur",
         [
-          "Lorsqu'un validateur a bloqué des nominations, les nominateurs ne peuvent pas le nommer."
+          "Une entité qui valide les blocs pour la chaîne de relais {NETWORK_NAME} Chaîne de relais. Les validateurs jouent un rôle clé dans le {NETWORK_NAME} pour sécuriser le réseau et produire des blocs.",
+          "En tant que nominateur, vous choisissez les validateurs que vous souhaitez soutenir, et recevez des récompenses pour cela."
         ]
       ],
-      "payout": [
-        "Paiement",
+      "yourBalance": [
+        "Votre Balance",
         [
-          "Les paiements sont des récompenses de jalonnement sur {NETWORK_NAME}. Ils dépendent du nombre des Points d'ère que les validateurs nommés accumulent au fil du temps. Les récompenses sont déterminées à la fin de chaque ère (périodes de 24 heures)",
-          "Pour recevoir des récompenses, un paiement doit être demandé. Tout nominateur soutenant le validateur en question peut demander un paiement",
-          "Une demande de paiement déclenche le paiement de la récompense pour chaque nominateur."
-        ]
-      ],
-      "lastEraPayout": [
-        "Dernier paiement de l'ère",
-        [
-          "Le montant total de {NETWORK_UNIT} payé pour la dernière ère active.",
-          "Les paiements sont répartis de manière égale entre les validateurs actifs pour cette période, et sont ensuite distribués aux nominateurs actifs qui ont participé à cette période.",
-          "Les montants des paiements reçus dépendent du montant de {NETWORK_UNIT} que les nominateurs, et les validateurs eux-mêmes, ont cautionné pour cette ère."
-        ]
-      ],
-      "payoutHistory": [
-        "Historique des Paiements",
-        [
-          "Enregistrements historiques des paiements effectués pour avoir été un nominateur actif.",
-          "La demande de paiements est un processus manuel, il se peut donc que vous receviez des paiements pour plusieurs époques en succession rapide ou de façon sporadique. Vos graphiques de paiements peuvent donc avoir plusieurs paiements le même jour, ou avoir des jours où il n'y a pas eu de paiements.",
-          "Cela ne signifie pas que vous n'avez pas désigné ou généré de récompenses au cours de cette période - seulement que le paiement pour cette période n'a pas encore été effectué."
+          "Votre balance représente le total des {NETWORK_UNIT} dont vous disposez en plus du montant total de vos mises, ce qui inclut le montant que vous avez placé dans un pool.",
+          "À la différence de votre investissement, votre solde de pool cautionné est détenu et verrouillé dans la pool elle-même."
         ]
       ]
     },
     "externals": {
-      "connectAccounts": "Comment connecter vos comptes",
-      "howToUse": "Comment utiliser le tableau de bord : Aperçu",
-      "stakeDot": "Staké vos DOT",
-      "changeDestination": "Changer la destination de vos récompenses",
       "bondMore": "Ajouter plus de jetons à votre mise existante",
-      "unbondingTokens": "Détacher vos jetons",
-      "rebonding": "Rebondir",
       "changeAccount": "Changer votre compte de contrôleur",
+      "changeDestination": "Changer la destination de vos récompenses",
       "changeNominations": "Changer vos nominations",
-      "createPools": "Créer un pool de nominations",
+      "chooseValidators": "Comment puis-je savoir quels validateurs choisir ?",
       "claimRewards": "Réclamer les récompenses du pool",
-      "chooseValidators": "Comment puis-je savoir quels validateurs choisir ?"
+      "connectAccounts": "Comment connecter vos comptes",
+      "createPools": "Créer un pool de nominations",
+      "howToUse": "Comment utiliser le tableau de bord : Aperçu",
+      "rebonding": "Rebondir",
+      "stakeDot": "Staké vos DOT",
+      "unbondingTokens": "Détacher vos jetons"
+    },
+    "modal": {
+      "allResources": "Toutes les ressources",
+      "articles": "Articles",
+      "close": "Fermer",
+      "definitions": "Definitions",
+      "helpResources": "Ressources d'aide",
+      "related": "Voir aussi"
     }
   }
 }

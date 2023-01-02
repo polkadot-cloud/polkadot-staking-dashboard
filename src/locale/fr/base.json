@@ -1,24 +1,34 @@
 {
   "base": {
-    "stake": "Investissement",
-    "validators": "Validateurs",
-    "overview": "Aperçu",
-    "nominate": "Désigner",
-    "pools": "Pools",
-    "payouts": "Paiements",
+    "active": "Actif",
     "community": "Communauté",
     "favorites": "Favoris",
-    "network": "Réseau",
     "feedback": "Feedback",
     "help": "Aide",
     "inactive": "Inactif",
-    "active": "Actif",
-    "support": "Support",
-    "resources": "Resources",
+    "network": "Réseau",
+    "nominate": "Désigner",
+    "overview": "Aperçu",
     "payee": {
+      "controller": "Vers le compte du contrôleur",
       "staked": "Retour à l'investissement",
-      "stash": "Vers le compte de réserve",
-      "controller": "Vers le compte du contrôleur"
-    }
+      "stash": "Vers le compte de réserve"
+    },
+    "payouts": "Paiements",
+    "pools": "Pools",
+    "resources": "Resources",
+    "stake": "Investissement",
+    "support": "Support",
+    "time": {
+      "day_one": "jour",
+      "day_other": "jours",
+      "hr_one": "hr",
+      "hr_other": "hrs",
+      "min_one": "min",
+      "min_other": "mins",
+      "second_one": "seconde",
+      "second_other": "secondes"
+    },
+    "validators": "Validateurs"
   }
 }

@@ -1,18 +1,5 @@
 {
   "tips": {
-    "module": {
-      "tips": "Astuces",
-      "oneMoment": "Un moment s'il vous plaît...",
-      "syncingWith": "Synchronisation avec {{network}}",
-      "more": "Plus",
-      "close": "Fermer",
-      "dismissTips": "Ingnorer les astuces",
-      "dismissResult": "Le fait d'ignorer les astuces les supprimera de votre aperçu.",
-      "reEnable": "Les astuces peuvent être réactivées à partir des paramètres du tableau de bord, accessibles via l'icône en forme de roue dentée dans le coin inférieur gauche du menu latéral.",
-      "disableDashboardTips": "Désactiver les astuces du tableau de bord",
-      "cancel": "Annuler",
-      "of": "de"
-    },
     "connectExtensions": [
       "Connecter les extensions",
       "Connecter vos comptes pour commencer à utiliser le Polkadot staking dashboard.",
@@ -21,22 +8,6 @@
         "Les comptes sont accessibles via des extensions web, qui agissent comme des portefeuilles. Votre porte-monnaie est utilisé pour signer les transactions que vous soumettez dans le tableau de bord.",
         "Connectez vos portefeuilles à partir du bouton Connecter en haut à droite du tableau de bord, et sélectionnez le compte avec lequel vous souhaitez miser pour continuer.",
         "Le tableau de bord prend en charge une gamme d'extensions et de portefeuilles."
-      ]
-    ],
-    "recommendedNominator": [
-      "Recommandé : Devenir un Nominateur",
-      "Vous avez suffisamment de {NETWORK_UNIT} pour devenir un nominateur.",
-      [
-        "Vous avez suffisamment de {NETWORK_UNIT} pour devenir un nominateur et commencer à gagner des récompenses.",
-        "Nommer directement vous oblige cependant à vérifier activement vos validateurs soutenus."
-      ]
-    ],
-    "recommendedJoinPool": [
-      "Recommandé : Rejoindre un pool",
-      "Votre compte est le mieux adapté pour rejoindre un pool.",
-      [
-        "En fonction du montant de {NETWORK_UNIT} que votre compte détient actuellement, rejoindre un pool est la meilleure façon pour vous de commencer à miser.",
-        "Rejoindre un pool nécessite un dépôt minimum de {MIN_POOL_JOIN_BOND}{UNITÉ_RÉSEAU}."
       ]
     ],
     "howToStake": [
@@ -48,22 +19,6 @@
         "Pour désigner directement un candidat, vous devez vous lier à {NETWORK_UNIT} et choisir les validateurs que vous souhaitez soutenir, puis désigner jusqu'à {MAX_NOMINATIONS} d'entre eux. Pour obtenir des récompenses en tant que nominateur, vous devez actuellement vous lier à au moins {MIN_ACTIVE_BOND} {UNITÉ_DE_RÉSEAU}.",
         "L'adhésion à un pool est beaucoup moins coûteuse et ne nécessite qu'un dépôt minimum de {MIN_POOL_JOIN_BOND} {NETWORK_UNIT}. La désignation des validateurs est effectuée en votre nom, et il vous suffit de réclamer les récompenses du pool.",
         "La création d'un pool est également possible, ce qui nécessite un minimum de {MIN_POOL_CREATE_BOND} {NETWORK_UNIT}."
-      ]
-    ],
-    "managingNominations": [
-      "Gestion des nominations",
-      "Be sure to check the performance of your nominations on a regular basis.",
-      [
-        "Be sure to check the performance of your nominations on a regular basis.",
-        "To maximise variety and a decentralised mix of validators, choose validators from a range of entities."
-      ]
-    ],
-    "monitoringPool": [
-      "Gestion des membres du pool",
-      "Il est judicieux de vérifier régulièrement si votre pool gagne activement des récompenses.",
-      [
-        "Les pools géreront les nominations en votre nom, mais il est toujours bon de vérifier régulièrement si votre pool gagne activement des récompenses.",
-        "Surveillez régulièrement le statut de votre pool pour vous assurer qu'il est performant, et envisagez de rejoindre un autre pool si vous ne recevez aucune récompense."
       ]
     ],
     "joinAnotherPool": [
@@ -80,6 +35,51 @@
         "Il est important de maintenir votre pool actif.",
         "Si votre pool ne gagne pas de récompenses, les membres seront tentés de le quitter et de rejoindre un autre pool",
         "Vos rôles de racine et de nominateur sont importants pour gérer vos nominations. Si les nominations ne donnent pas de bons résultats, choisissez-en d'autres pour augmenter les chances de votre pool de gagner des récompenses. "
+      ]
+    ],
+    "managingNominations": [
+      "Gestion des nominations",
+      "Be sure to check the performance of your nominations on a regular basis.",
+      [
+        "Be sure to check the performance of your nominations on a regular basis.",
+        "To maximise variety and a decentralised mix of validators, choose validators from a range of entities."
+      ]
+    ],
+    "module": {
+      "cancel": "Annuler",
+      "close": "Fermer",
+      "disableDashboardTips": "Désactiver les astuces du tableau de bord",
+      "dismissResult": "Le fait d'ignorer les astuces les supprimera de votre aperçu.",
+      "dismissTips": "Ingnorer les astuces",
+      "more": "Plus",
+      "of": "de",
+      "oneMoment": "Un moment s'il vous plaît...",
+      "reEnable": "Les astuces peuvent être réactivées à partir des paramètres du tableau de bord, accessibles via l'icône en forme de roue dentée dans le coin inférieur gauche du menu latéral.",
+      "syncingWith": "Synchronisation avec {{network}}",
+      "tips": "Astuces"
+    },
+    "monitoringPool": [
+      "Gestion des membres du pool",
+      "Il est judicieux de vérifier régulièrement si votre pool gagne activement des récompenses.",
+      [
+        "Les pools géreront les nominations en votre nom, mais il est toujours bon de vérifier régulièrement si votre pool gagne activement des récompenses.",
+        "Surveillez régulièrement le statut de votre pool pour vous assurer qu'il est performant, et envisagez de rejoindre un autre pool si vous ne recevez aucune récompense."
+      ]
+    ],
+    "recommendedJoinPool": [
+      "Recommandé : Rejoindre un pool",
+      "Votre compte est le mieux adapté pour rejoindre un pool.",
+      [
+        "En fonction du montant de {NETWORK_UNIT} que votre compte détient actuellement, rejoindre un pool est la meilleure façon pour vous de commencer à miser.",
+        "Rejoindre un pool nécessite un dépôt minimum de {MIN_POOL_JOIN_BOND}{UNITÉ_RÉSEAU}."
+      ]
+    ],
+    "recommendedNominator": [
+      "Recommandé : Devenir un Nominateur",
+      "Vous avez suffisamment de {NETWORK_UNIT} pour devenir un nominateur.",
+      [
+        "Vous avez suffisamment de {NETWORK_UNIT} pour devenir un nominateur et commencer à gagner des récompenses.",
+        "Nommer directement vous oblige cependant à vérifier activement vos validateurs soutenus."
       ]
     ],
     "reviewingPayouts": [
