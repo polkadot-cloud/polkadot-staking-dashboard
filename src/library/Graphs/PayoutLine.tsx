@@ -27,7 +27,11 @@ import {
 import { AnySubscan } from 'types';
 import { humanNumber } from 'Utils';
 import { PayoutLineProps } from './types';
-import { combineRewardsByDay, formatRewardsForGraphs } from './Utils';
+import {
+  calculatePayoutAverages,
+  combineRewardsByDay,
+  formatRewardsForGraphs,
+} from './Utils';
 
 ChartJS.register(
   CategoryScale,
@@ -63,16 +67,15 @@ export const PayoutLine = ({
 
   const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
     days,
-    average,
     units,
     payoutsNoSlash,
     poolClaims
   );
 
-  // combine payouts and pool claims into one dataset
-  const combinedPayouts = combineRewardsByDay(
-    payoutsByDay,
-    poolClaimsByDay,
+  // combine payouts and pool claims into one dataset and calculate averages.
+  const combinedPayouts = calculatePayoutAverages(
+    combineRewardsByDay(payoutsByDay, poolClaimsByDay, days),
+    10,
     days
   );
 

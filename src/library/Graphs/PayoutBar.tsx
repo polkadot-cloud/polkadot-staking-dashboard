@@ -59,11 +59,8 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   );
 
   const notStaking = !isSyncing && inSetup() && !membership;
-  const average = 1;
-
   const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
     days,
-    average,
     units,
     payoutsNoSlash,
     poolClaims
