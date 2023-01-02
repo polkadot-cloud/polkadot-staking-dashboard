@@ -62,7 +62,12 @@ export const calculatePayoutsByDay = (
       // handle surpassed maximum days.
       const daysSince = daysPassed(thisDay, new Date());
 
-      if (daysSince > maxDays) {
+      if (daysSince >= maxDays) {
+        payoutsByDay.push({
+          amount: planckBnToUnit(curPayout.amount, units),
+          event_id: curPayout.amount.lt(new BN(0)) ? 'Slash' : 'Reward',
+          block_timestamp: getUnixTime(curDay),
+        });
         break;
       }
 
@@ -88,6 +93,16 @@ export const calculatePayoutsByDay = (
       } else {
         // in same day. Aadd payout amount to current payout cursor.
         curPayout.amount = curPayout.amount.add(new BN(payout.amount));
+      }
+
+      // if only 1 payout exists, exit early here.
+      if (payouts.length === 1) {
+        payoutsByDay.push({
+          amount: planckBnToUnit(curPayout.amount, units),
+          event_id: curPayout.amount.lt(new BN(0)) ? 'Slash' : 'Reward',
+          block_timestamp: getUnixTime(curDay),
+        });
+        break;
       }
     }
   }
