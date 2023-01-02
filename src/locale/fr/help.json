@@ -26,7 +26,7 @@
         "Active Validator",
         [
           "Un validateur qui valide activement des blocs. Les récompenses sont accumulées en fonction de l'activité du validateur. Un nouvel ensemble de validateurs est choisi pour chaque ère, il n'y a donc aucune garantie que le même validateur sera actif dans les ères suivantes.",
-          "A new set of validators are chosen for each era, so there is no guarantee the same validator will be active in subsequent eras.",
+          "Un nouvel ensemble de validateurs est choisi pour chaque ère, il n'y a donc aucune garantie que le même validateur sera actif dans les ères suivantes.",
           "{NETWORK_NAME} permet à un nominateur de nommer jusqu'à 16 validateurs, ce qui maximise vos chances de nommer un validateur actif dans chaque ère."
         ]
       ],
