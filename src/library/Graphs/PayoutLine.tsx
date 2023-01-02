@@ -45,13 +45,13 @@ export const PayoutLine = ({
   height,
   background,
 }: PayoutLineProps) => {
+  const { t } = useTranslation('library');
   const { mode } = useTheme();
   const { name, unit, units } = useApi().network;
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership: poolMembership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
-  const { t } = useTranslation('library');
 
   const notStaking = !isSyncing && inSetup() && !poolMembership;
   const poolingOnly = !isSyncing && inSetup() && poolMembership !== null;
@@ -70,7 +70,11 @@ export const PayoutLine = ({
   );
 
   // combine payouts and pool claims into one dataset
-  const combinedPayouts = combineRewardsByDay(payoutsByDay, poolClaimsByDay);
+  const combinedPayouts = combineRewardsByDay(
+    payoutsByDay,
+    poolClaimsByDay,
+    days
+  );
 
   // determine color for payouts
   const color = notStaking
@@ -132,7 +136,7 @@ export const PayoutLine = ({
   };
 
   const data = {
-    labels: payoutsByDay.map(() => ''),
+    labels: combinedPayouts.map(() => ''),
     datasets: [
       {
         label: t('payout'),

@@ -8,9 +8,8 @@ import {
   endOfDay,
   endOfTomorrow,
   fromUnixTime,
-  getDayOfYear,
   getUnixTime,
-  getYear,
+  isSameDay,
   startOfDay,
   subDays,
 } from 'date-fns';
@@ -314,7 +313,8 @@ export const formatRewardsForGraphs = (
  */
 export const combineRewardsByDay = (
   payoutsByDay: AnySubscan,
-  poolClaimsByDay: AnySubscan
+  poolClaimsByDay: AnySubscan,
+  days: number
 ) => {
   // we first check if actual payouts exist, e.g. there are non-zero payout
   // amounts present in either payouts or pool claims.
@@ -329,91 +329,70 @@ export const combineRewardsByDay = (
     (!poolClaimExists && payoutExists) ||
     (!payoutExists && !poolClaimExists)
   ) {
-    return payoutsByDay.map((p: AnySubscan) => {
-      return {
-        amount: p.amount,
-        block_timestamp: p.block_timestamp,
-      };
-    });
+    return payoutsByDay.map((p: AnySubscan) => ({
+      amount: p.amount,
+      block_timestamp: p.block_timestamp,
+    }));
   }
 
   // if no payouts exist but pool claims do, return pool claims w.o. event_id
   if (!payoutExists && poolClaimExists) {
-    return poolClaimsByDay.map((p: AnySubscan) => {
-      return {
-        amount: p.amount,
-        block_timestamp: p.block_timestamp,
-      };
-    });
+    return poolClaimsByDay.map((p: AnySubscan) => ({
+      amount: p.amount,
+      block_timestamp: p.block_timestamp,
+    }));
   }
 
-  // We now know pool claims *and* payouts exist. We can begin to combine them
-  // into one unified `rewards` array.
-  let rewards: AnySubscan = [];
+  // We now know pool claims *and* payouts exist.
+  //
+  // Now determine which dates to display.
+  let payoutDays: Array<any> = [];
+  // prefill `dates` with all pool claim and payout days
+  poolClaimsByDay.forEach((p: AnySubscan) => {
+    if (!payoutDays.includes(startOfDay(p.block_timestamp))) {
+      payoutDays.push(p.block_timestamp);
+    }
+  });
+  payoutsByDay.forEach((p: AnySubscan) => {
+    if (!payoutDays.includes(startOfDay(p.block_timestamp))) {
+      payoutDays.push(p.block_timestamp);
+    }
+  });
+
+  // sort payoutDays by `block_timestamp`;
+  payoutDays = payoutDays.sort(
+    (a: AnySubscan, b: AnySubscan) => a.block_timestamp - b.block_timestamp
+  );
+  // slice by max days
+  payoutDays = payoutDays.slice(0, days + 1);
+
+  // Iterate payout days.
+  //
+  // Combine payouts into one unified `rewards` array.
+  const rewards: AnySubscan = [];
 
   // loop pool claims and consume / combine payouts
-  poolClaimsByDay.forEach((p: AnySubscan) => {
-    let { amount } = p;
+  payoutDays.forEach((d: AnySubscan) => {
+    let amount = 0;
 
     // check payouts exist on this day
-    const payoutsThisDay = payoutsByDay.filter((q: AnySubscan) => {
-      return unixSameDay(q.block_timestamp, p.block_timestamp);
-    });
-
+    const payoutsThisDay = payoutsByDay.filter((p: AnySubscan) =>
+      isSameDay(fromUnixTime(p.block_timestamp), fromUnixTime(d))
+    );
+    // check pool claims exist on this day
+    const poolClaimsThisDay = poolClaimsByDay.filter((p: AnySubscan) =>
+      isSameDay(fromUnixTime(p.block_timestamp), fromUnixTime(d))
+    );
     // add amounts
-    if (payoutsThisDay.length) {
+    if (payoutsThisDay.concat(poolClaimsThisDay).length) {
       for (const payout of payoutsThisDay) {
         amount += payout.amount;
       }
     }
-    // consume used payouts
-    payoutsByDay = payoutsByDay.filter((q: AnySubscan) => {
-      return !unixSameDay(q.block_timestamp, p.block_timestamp);
-    });
     rewards.push({
       amount,
-      block_timestamp: p.block_timestamp,
+      block_timestamp: d,
     });
   });
-
-  // add remaining payouts
-  if (payoutsByDay.length) {
-    rewards = rewards.concat(
-      payoutsByDay.forEach((p: AnySubscan) => {
-        return {
-          amount: p.amount,
-          block_timestamp: p.block_timestamp,
-        };
-      })
-    );
-  }
-
-  // re-order combined rewards based on block timestamp, oldest first
-  rewards = rewards.sort((a: AnySubscan, b: AnySubscan) => {
-    const x = new BN(a.block_timestamp);
-    const y = new BN(b.block_timestamp);
-    return y.add(x);
-  });
-
   return rewards;
-};
-
-// calculate whether 2 unix timestamps are on the same day
-export const unixSameDay = (p: number, q: number) => {
-  const dateQ = getUnixTime(q);
-  const _dayQ = getDayOfYear(dateQ);
-  const _yearQ = getYear(dateQ);
-
-  const dateP = getUnixTime(p);
-  const _dayP = getDayOfYear(dateP);
-  const _yearP = getYear(dateP);
-
-  return _dayQ === _dayP && _yearQ === _yearP;
-};
-
-// ensures leading zeroes of numbers
-export const pad = (num: number, size: number) => {
-  let numStr = num.toString();
-  while (numStr.length < size) numStr = `0${numStr}`;
-  return numStr;
 };

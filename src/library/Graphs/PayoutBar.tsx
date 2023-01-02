@@ -45,13 +45,13 @@ ChartJS.register(
 );
 
 export const PayoutBar = ({ days, height }: PayoutBarProps) => {
+  const { i18n, t } = useTranslation('library');
   const { mode } = useTheme();
   const { name, unit, units } = useApi().network;
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
-  const { i18n, t } = useTranslation('library');
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts.filter(
