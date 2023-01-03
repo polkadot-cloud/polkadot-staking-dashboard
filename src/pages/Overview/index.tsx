@@ -35,13 +35,7 @@ export const Overview = () => {
   const { units } = network;
   const { payouts, poolClaims } = useSubscan();
   const { plugins } = usePlugins();
-  const { lastReward } = formatRewardsForGraphs(
-    14,
-    1,
-    units,
-    payouts,
-    poolClaims
-  );
+  const { lastReward } = formatRewardsForGraphs(14, units, payouts, poolClaims);
   const { i18n, t } = useTranslation('pages');
 
   const PAYOUTS_HEIGHT = 390;
