@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "jest/globals": true
   },
   "extends": [
     "eslint:recommended",
@@ -24,7 +25,8 @@
   "plugins": [
     "react",
     "@typescript-eslint",
-    "prefer-arrow-functions"
+    "prefer-arrow-functions",
+    "jest"
   ],
   "rules": {
     "import/no-webpack-loader-syntax": "off",
