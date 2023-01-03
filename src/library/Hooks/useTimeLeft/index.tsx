@@ -184,7 +184,10 @@ export const useTimeLeft = ({
   }, []);
 
   // format the duration as a string.
-  const timeleftAsString = (() => {
+  const timeleftAsString = ((toDate?: Date) => {
+    // const { days, hours, minutes, seconds } = toDate ?
+    //   (toDate.getDay, toDate.getHours, toDate.getMinutes, toDate.getSeconds)
+    //   :
     const { days, hours, minutes, seconds } = getDuration(toRef.current);
 
     let str = '';
