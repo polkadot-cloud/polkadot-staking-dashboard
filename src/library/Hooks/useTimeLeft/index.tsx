@@ -185,11 +185,10 @@ export const useTimeLeft = ({
 
   // format the duration as a string.
   const timeleftAsString = ((toDate?: Date) => {
-    // const { days, hours, minutes, seconds } = toDate ?
-    //   (toDate.getDay, toDate.getHours, toDate.getMinutes, toDate.getSeconds)
-    //   :
-    const { days, hours, minutes, seconds } = getDuration(toRef.current);
-
+    const { days, hours, minutes, seconds } = toDate
+      ? getDuration(toDate)
+      : getDuration(toRef.current);
+    // toDate.getDay(); toDate.getHours(), toDate.getMinutes(), toDate.getSeconds()
     let str = '';
     if (days > 0) {
       str += `${days} ${t('time.day', { count: days, ns: 'base' })} `;
