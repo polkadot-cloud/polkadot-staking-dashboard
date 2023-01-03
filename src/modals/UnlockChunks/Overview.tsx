@@ -7,6 +7,9 @@ import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
+import { useErasToTimeleft } from 'library/Hooks/useErasToTimeleft';
+import { useEraTimeLeft } from 'library/Hooks/useEraTimeLeft';
+import { useTimeLeft } from 'library/Hooks/useTimeLeft';
 import useUnstaking from 'library/Hooks/useUnstaking';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
 import { forwardRef } from 'react';
@@ -24,6 +27,14 @@ export const Overview = forwardRef(
     const { activeEra } = metrics;
     const { isFastUnstaking } = useUnstaking();
     const { t } = useTranslation('modals');
+
+    const { timeleft: eraTimeLeft } = useEraTimeLeft();
+    const { fromNow, timeleftAsString } = useTimeLeft({
+      refreshInterval: 60,
+      refreshCallback: () => eraTimeLeft,
+    });
+    const { durationSeconds } = useErasToTimeleft(bondDuration);
+    const durationFormatted = timeleftAsString(fromNow(durationSeconds));
 
     const isStaking = bondFor === 'nominator';
 
@@ -148,7 +159,7 @@ export const Overview = forwardRef(
         })}
         <NotesWrapper>
           <p>
-            {t('unlockTake', { bondDuration })}
+            {t('unlockTake', { durationFormatted })}
             {isStaking ? `${t('rebondUnlock')}` : null}
           </p>
           {!isStaking ? <p>{t('unlockChunk')}</p> : null}

@@ -184,11 +184,11 @@ export const useTimeLeft = ({
   }, []);
 
   // format the duration as a string.
-  const timeleftAsString = ((toDate?: Date) => {
+  const timeleftAsString = (toDate?: Date) => {
     const { days, hours, minutes, seconds } = toDate
       ? getDuration(toDate)
       : getDuration(toRef.current);
-    // toDate.getDay(); toDate.getHours(), toDate.getMinutes(), toDate.getSeconds()
+
     let str = '';
     if (days > 0) {
       str += `${days} ${t('time.day', { count: days, ns: 'base' })} `;
@@ -200,7 +200,7 @@ export const useTimeLeft = ({
       str += ` ${seconds}`;
     }
     return str;
-  })();
+  };
 
   const setFromNow = (dateTo: Date) => {
     setTimeleft(getTimeleft(getDuration(new Date())));
