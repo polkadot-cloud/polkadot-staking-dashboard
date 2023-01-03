@@ -3,17 +3,19 @@
 
 import { useApi } from 'contexts/Api';
 
-export const useErasToTimeleft = (eras: number) => {
+export const useErasToTimeleft = () => {
   const { consts } = useApi();
   const { epochDuration, expectedBlockTime, sessionsPerEra } = consts;
 
-  // store the duration of an era in block numbers.
-  const eraDurationBlocks = epochDuration * sessionsPerEra;
+  const erasToTimeLeft = (eras: number) => {
+    // store the duration of an era in block numbers.
+    const eraDurationBlocks = epochDuration * sessionsPerEra;
+    // estimate the duration of the era in seconds
+    const eraDuration = eraDurationBlocks * expectedBlockTime * 0.001;
+    return eras * eraDuration;
+  };
 
-  // estimate the duration of the era in seconds
-  const eraDuration = eraDurationBlocks * expectedBlockTime * 0.001;
-
-  const durationSeconds = eras * eraDuration;
-
-  return { durationSeconds };
+  return {
+    erasToTimeLeft,
+  };
 };
