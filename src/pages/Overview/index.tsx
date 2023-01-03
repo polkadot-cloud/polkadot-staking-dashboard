@@ -4,9 +4,11 @@
 import BN from 'bn.js';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
 import { usePlugins } from 'contexts/Plugins';
 import { useSubscan } from 'contexts/Subscan';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
+import CTACard from 'library/Cards/CTACard';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
@@ -60,6 +62,8 @@ export const Overview = () => {
     };
   }
 
+  const { activeAccount } = useConnect();
+
   return (
     <>
       <PageTitle title={t('overview.overview')} />
@@ -73,22 +77,12 @@ export const Overview = () => {
         <SupplyStakedStat />
         <EraTimeLeftStat />
       </StatBoxList>
-      {plugins.includes('tips') && (
+      {plugins.includes('tips') && activeAccount && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <Tips />
         </PageRowWrapper>
       )}
       <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <RowSecondaryWrapper
-          hOrder={0}
-          vOrder={0}
-          thresholdStickyMenu={SideMenuStickyThreshold}
-          thresholdFullWidth={SectionFullWidthThreshold}
-        >
-          <GraphWrapper minHeight={PAYOUTS_HEIGHT} flex>
-            <BalanceChart />
-          </GraphWrapper>
-        </RowSecondaryWrapper>
         <RowPrimaryWrapper
           hOrder={1}
           vOrder={1}
@@ -117,6 +111,22 @@ export const Overview = () => {
             <Payouts />
           </GraphWrapper>
         </RowPrimaryWrapper>
+        <RowSecondaryWrapper
+          hOrder={0}
+          vOrder={0}
+          thresholdStickyMenu={SideMenuStickyThreshold}
+          thresholdFullWidth={SectionFullWidthThreshold}
+        >
+          {activeAccount ? (
+            <GraphWrapper minHeight={PAYOUTS_HEIGHT} flex>
+              <BalanceChart />
+            </GraphWrapper>
+          ) : (
+            <GraphWrapper>
+              <CTACard />
+            </GraphWrapper>
+          )}
+        </RowSecondaryWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <NetworkStats />
