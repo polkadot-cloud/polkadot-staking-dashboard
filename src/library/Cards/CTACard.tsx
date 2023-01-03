@@ -42,7 +42,15 @@ const CTACard = () => {
         rewards.
       </div>
       <div id="btn-wrapper">
-        <ButtonPrimary text="Start Staking" />
+        <ButtonPrimary
+          text="Start Staking"
+          style={{
+            backgroundColor: '#fff',
+            color: '#E6007A',
+            fontSize: '1.25rem',
+            padding: '0.75rem 1.5rem',
+          }}
+        />
       </div>
     </CTA>
   );
