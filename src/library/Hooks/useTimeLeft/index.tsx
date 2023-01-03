@@ -184,7 +184,7 @@ export const useTimeLeft = ({
   }, []);
 
   // format the duration as a string.
-  const timeleftAsString = (toDate?: Date) => {
+  const timeleftAsString = (toDate?: Date, fullFormat?: boolean) => {
     const { days, hours, minutes, seconds } = toDate
       ? getDuration(toDate)
       : getDuration(toRef.current);
@@ -193,8 +193,12 @@ export const useTimeLeft = ({
     if (days > 0) {
       str += `${days} ${t('time.day', { count: days, ns: 'base' })} `;
     }
-    str += `${hours} ${t('time.hr', { count: hours, ns: 'base' })} `;
-    str += `${minutes} ${t('time.min', { count: minutes, ns: 'base' })}`;
+    str += fullFormat
+      ? `${hours} ${t('time.hour', { count: hours, ns: 'base' })} `
+      : `${hours} ${t('time.hr', { count: hours, ns: 'base' })} `;
+    str += fullFormat
+      ? `${minutes} ${t('time.minute', { count: minutes, ns: 'base' })}`
+      : `${minutes} ${t('time.min', { count: minutes, ns: 'base' })}`;
 
     if (!days && !hours) {
       str += ` ${seconds}`;

@@ -19,7 +19,14 @@
     "resources": "信息",
     "stake": "抵押",
     "support": "支持",
-    "time": { "day": "天", "hr": "小时", "min": "分钟", "second": "秒" },
+    "time": {
+      "day": "天",
+      "hr": "小时",
+      "hour": "小时",
+      "min": "分钟",
+      "minute": "分钟",
+      "second": "秒"
+    },
     "validators": "验证人"
   }
 }

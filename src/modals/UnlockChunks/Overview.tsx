@@ -34,7 +34,7 @@ export const Overview = forwardRef(
       refreshCallback: () => eraTimeLeft,
     });
     const { durationSeconds } = useErasToTimeleft(bondDuration);
-    const durationFormatted = timeleftAsString(fromNow(durationSeconds));
+    const durationFormatted = timeleftAsString(fromNow(durationSeconds), true);
 
     const isStaking = bondFor === 'nominator';
 
