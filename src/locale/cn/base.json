@@ -21,8 +21,8 @@
     "support": "支持",
     "time": {
       "day": "天",
-      "hr": "小时",
       "hour": "小时",
+      "hr": "小时",
       "min": "分钟",
       "minute": "分钟",
       "second": "秒"
