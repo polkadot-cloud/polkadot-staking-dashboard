@@ -27,7 +27,11 @@ import {
 import { AnySubscan } from 'types';
 import { humanNumber } from 'Utils';
 import { PayoutLineProps } from './types';
-import { combineRewardsByDay, formatRewardsForGraphs } from './Utils';
+import {
+  calculatePayoutAverages,
+  combineRewardsByDay,
+  formatRewardsForGraphs,
+} from './Utils';
 
 ChartJS.register(
   CategoryScale,
@@ -45,13 +49,13 @@ export const PayoutLine = ({
   height,
   background,
 }: PayoutLineProps) => {
+  const { t } = useTranslation('library');
   const { mode } = useTheme();
   const { name, unit, units } = useApi().network;
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership: poolMembership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
-  const { t } = useTranslation('library');
 
   const notStaking = !isSyncing && inSetup() && !poolMembership;
   const poolingOnly = !isSyncing && inSetup() && poolMembership !== null;
@@ -63,14 +67,15 @@ export const PayoutLine = ({
 
   const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
     days,
-    average,
     units,
     payoutsNoSlash,
     poolClaims
   );
 
-  // combine payouts and pool claims into one dataset
-  const combinedPayouts = combineRewardsByDay(payoutsByDay, poolClaimsByDay);
+  // combine payouts and pool claims into one dataset and calculate averages.
+  const combined = combineRewardsByDay(payoutsByDay, poolClaimsByDay);
+
+  const combinedPayouts = calculatePayoutAverages(combined, 10, days);
 
   // determine color for payouts
   const color = notStaking
@@ -132,7 +137,7 @@ export const PayoutLine = ({
   };
 
   const data = {
-    labels: payoutsByDay.map(() => ''),
+    labels: combinedPayouts.map(() => ''),
     datasets: [
       {
         label: t('payout'),
@@ -148,7 +153,7 @@ export const PayoutLine = ({
 
   return (
     <>
-      <h5 className="secondary">
+      <h5 className="secondary" style={{ paddingLeft: '1.5rem' }}>
         {average > 1 ? `${average} ${t('dayAverage')}` : null}
       </h5>
       <div
