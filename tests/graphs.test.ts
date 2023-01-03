@@ -65,6 +65,7 @@ test('post fill missing days works', () => {
   // concatenated payouts are correct
   const concatPayouts = missingDays.concat(payouts);
 
+  // days passed and ordering are correct.
   for (let i = 0; i < concatPayouts.length; i++) {
     if (i > 0) {
       expect(
@@ -98,6 +99,7 @@ test('pre fill missing days works', () => {
   // concatenated payouts are correct
   const concatPayouts = payouts.concat(missingDays);
 
+  // days passed and ordering are correct.
   for (let i = 0; i < concatPayouts.length; i++) {
     if (i > 0) {
       expect(
@@ -117,8 +119,8 @@ test('pre fill missing days works', () => {
 //
 // Test filling days from both directions.
 test('pre fill and post fill missing days work together', () => {
-  //  p0,  p1,  p2,   p3,   p4,   p5,   p6
-  //  -    -    x     x     x     -     -
+  //  p0,  p1,  p2,   p3,   p4,   p5,   p6,   p7,   p8,   p9
+  //  -    -    x     x     x     -     -     -     -     -
   const payouts = normalisePayouts(mockPayouts);
   const maxDays = 10;
 
@@ -132,7 +134,7 @@ test('pre fill and post fill missing days work together', () => {
   const finalPayouts = missingPostDays.concat(payouts).concat(missingPreDays);
   expect(finalPayouts.length).toBe(10);
 
-  // concatenated payouts are correct
+  // days passed and ordering are correct.
   for (let i = 0; i < finalPayouts.length; i++) {
     if (i > 0) {
       expect(
