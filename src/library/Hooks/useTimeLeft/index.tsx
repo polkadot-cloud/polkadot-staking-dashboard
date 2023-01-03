@@ -193,12 +193,16 @@ export const useTimeLeft = ({
     if (days > 0) {
       str += `${days} ${t('time.day', { count: days, ns: 'base' })} `;
     }
-    str += fullFormat
-      ? `${hours} ${t('time.hour', { count: hours, ns: 'base' })} `
-      : `${hours} ${t('time.hr', { count: hours, ns: 'base' })} `;
-    str += fullFormat
-      ? `${minutes} ${t('time.minute', { count: minutes, ns: 'base' })}`
-      : `${minutes} ${t('time.min', { count: minutes, ns: 'base' })}`;
+    if (hours > 0) {
+      str += fullFormat
+        ? `${hours} ${t('time.hour', { count: hours, ns: 'base' })} `
+        : `${hours} ${t('time.hr', { count: hours, ns: 'base' })} `;
+    }
+    if (minutes > 0) {
+      str += fullFormat
+        ? `${minutes} ${t('time.minute', { count: minutes, ns: 'base' })}`
+        : `${minutes} ${t('time.min', { count: minutes, ns: 'base' })}`;
+    }
 
     if (!days && !hours) {
       str += ` ${seconds}`;
