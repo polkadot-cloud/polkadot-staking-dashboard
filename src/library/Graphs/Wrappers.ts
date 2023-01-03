@@ -252,7 +252,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   }
   .graph_line {
     margin-top: 0.6rem;
-    padding: 0rem 1rem 0.5rem 0rem;
+    padding: 0rem 0rem 0.5rem 1.5rem;
   }
   .graph_with_extra {
     width: 100%;

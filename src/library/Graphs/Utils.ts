@@ -13,8 +13,9 @@ import {
 } from 'date-fns';
 import { AnySubscan } from 'types';
 import { planckBnToUnit } from 'Utils';
+import { PayoutDayCursor } from './types';
 
-// given payouts, calculate daily income and fill missing days with zero amounts.
+// Given payouts, calculate daily income and fill missing days with zero amounts.
 export const calculatePayoutsByDay = (
   payouts: any,
   maxDays: number,
@@ -32,107 +33,101 @@ export const calculatePayoutsByDay = (
   // return now if no payouts.
   if (!payouts.length) return payouts;
 
-  // post fill any missing days.
+  // post-fill any missing days. [current day -> last payout]
   payoutsByDay = postFillMissingDays(payouts, maxDays);
 
-  // start processing payouts, if any.
-  if (payouts.length > 0) {
-    // payouts passed
-    let p = 0;
-    // current day cursor.
-    let curDay = new Date();
-    // current payout cursor.
-    let curPayout = {
-      amount: new BN(0),
-      event_id: '',
-    };
+  // start iterating payouts, most recent first.
+  //
+  // payouts passed.
+  let p = 0;
+  // current day cursor.
+  let curDay: Date = new Date();
+  // current payout cursor.
+  let curPayout: PayoutDayCursor = {
+    amount: new BN(0),
+    event_id: '',
+  };
+  for (const payout of payouts) {
+    p++;
 
-    // start iterating payouts, most recent first.
-    for (const payout of payouts) {
-      p++;
+    // extract day from current payout.
+    const thisDay = startOfDay(fromUnixTime(payout.block_timestamp));
 
-      // extract day from current payout.
-      const thisDay = startOfDay(fromUnixTime(payout.block_timestamp));
+    // initialise current day if first payout.
+    if (p === 1) {
+      curDay = thisDay;
+    }
 
-      // initialise current day if first payout.
-      if (p === 1) {
-        curDay = thisDay;
-      }
+    // handle surpassed maximum days.
+    if (daysPassed(thisDay, new Date()) >= maxDays) {
+      payoutsByDay.push({
+        amount: planckBnToUnit(curPayout.amount, units),
+        event_id: getEventId(curPayout),
+        block_timestamp: getUnixTime(curDay),
+      });
+      break;
+    }
 
-      // handle surpassed maximum days.
-      const daysSince = daysPassed(thisDay, new Date());
+    // get day difference between cursor and currentpayout.
+    const daysDiff = daysPassed(thisDay, curDay);
 
-      if (daysSince >= maxDays) {
-        payoutsByDay.push({
-          amount: planckBnToUnit(curPayout.amount, units),
-          event_id: curPayout.amount.lt(new BN(0)) ? 'Slash' : 'Reward',
-          block_timestamp: getUnixTime(curDay),
-        });
-        break;
-      }
+    // handle new day.
+    if (daysDiff > 0) {
+      // add current payout cursor to payoutsByDay.
+      payoutsByDay.push({
+        amount: planckBnToUnit(curPayout.amount, units),
+        event_id: getEventId(curPayout),
+        block_timestamp: getUnixTime(curDay),
+      });
 
-      // get difference between day cursor and payout day.
-      const daysDiff = daysPassed(thisDay, curDay);
+      // update day cursor to the new day.
+      curDay = thisDay;
+      // reset current payout cursor for the new day.
+      curPayout = {
+        amount: new BN(payout.amount),
+        event_id: new BN(payout.amount).lt(new BN(0)) ? 'Slash' : 'Reward',
+      };
+    } else {
+      // in same day. Aadd payout amount to current payout cursor.
+      curPayout.amount = curPayout.amount.add(new BN(payout.amount));
+    }
 
-      // handle new day.
-      if (daysDiff > 0) {
-        // add current payout cursor to payoutsByDay.
-        payoutsByDay.push({
-          amount: planckBnToUnit(curPayout.amount, units),
-          event_id: curPayout.amount.lt(new BN(0)) ? 'Slash' : 'Reward',
-          block_timestamp: getUnixTime(curDay),
-        });
-
-        // update date cursor to the new day.
-        curDay = thisDay;
-        // update current payout cursor for the new day.
-        curPayout = {
-          amount: new BN(payout.amount),
-          event_id: new BN(payout.amount).lt(new BN(0)) ? 'Slash' : 'Reward',
-        };
-      } else {
-        // in same day. Aadd payout amount to current payout cursor.
-        curPayout.amount = curPayout.amount.add(new BN(payout.amount));
-      }
-
-      // if only 1 payout exists, exit early here.
-      if (payouts.length === 1) {
-        payoutsByDay.push({
-          amount: planckBnToUnit(curPayout.amount, units),
-          event_id: curPayout.amount.lt(new BN(0)) ? 'Slash' : 'Reward',
-          block_timestamp: getUnixTime(curDay),
-        });
-        break;
-      }
+    // if only 1 payout exists, exit early here.
+    if (payouts.length === 1) {
+      payoutsByDay.push({
+        amount: planckBnToUnit(curPayout.amount, units),
+        event_id: getEventId(curPayout),
+        block_timestamp: getUnixTime(curDay),
+      });
+      break;
     }
   }
   return payoutsByDay;
 };
 
-// calculate average payouts per day.
+// Calculate average payouts per day.
 export const calculatePayoutAverages = (
   payoutsByDay: AnySubscan,
   average: number,
   days: number
 ) => {
-  // if we don't need to take an average, just return the `payoutsByDay`.
+  // if we don't need to take an average, just return `payoutsByDay`.
   if (average <= 1) return payoutsByDay;
 
-  // create moving average value over `average` days.
-  const averagePayoutsByDay = [];
+  // create moving average value over `average` past days, if any.
+  const payoutsAverages = [];
   for (let i = 0; i < payoutsByDay.length; i++) {
-    // period end.
+    // average period end.
     const end = Math.max(0, i - average);
 
-    // the total amount earned in average period.
+    // the total amount earned in period.
     let total = 0;
     // period length to be determined.
     let num = 0;
 
     for (let j = i; j >= end; j--) {
-      const index = i - j;
-      if (payoutsByDay[index]) {
-        total += payoutsByDay[index].amount;
+      if (payoutsByDay[j]) {
+        total += payoutsByDay[j].amount;
       }
       // increase by one to treat non-existent as zero value
       num += 1;
@@ -142,7 +137,7 @@ export const calculatePayoutAverages = (
       total = payoutsByDay[i].amount;
     }
 
-    averagePayoutsByDay.push({
+    payoutsAverages.push({
       amount: total / num,
       event_id: payoutsByDay[i].event_id,
       block_timestamp: payoutsByDay[i].block_timestamp,
@@ -150,10 +145,12 @@ export const calculatePayoutAverages = (
   }
 
   // return an array with the expected number of items
-  return averagePayoutsByDay.slice(0, days - average);
+  return payoutsAverages.slice(0, days);
 };
 
-// format rewards and return last payment
+// Fetch rewards and graph meta data.
+//
+// Format provided payouts and returns the last payment.
 export const formatRewardsForGraphs = (
   days: number,
   units: number,
@@ -161,39 +158,42 @@ export const formatRewardsForGraphs = (
   poolClaims: AnySubscan
 ) => {
   // process staking payouts.
-  let payoutsByDay = calculatePayoutsByDay(
-    normalisePayouts(payouts),
-    days,
-    units,
-    'staking'
-  );
-  payoutsByDay = payoutsByDay.concat(prefillMissingDays(payoutsByDay, days));
-  payoutsByDay = fillGapDays(payoutsByDay);
-
-  // process pool payouts.
-  let poolClaimsByDay = calculatePayoutsByDay(
-    normalisePayouts(poolClaims),
-    days,
-    units,
-    'pools'
-  );
-  poolClaimsByDay = poolClaimsByDay.concat(
-    prefillMissingDays(poolClaimsByDay, days)
-  );
-  poolClaimsByDay = fillGapDays(poolClaimsByDay);
+  const payoutsByDay = processPayouts(payouts, days, units, 'staking');
+  const poolClaimsByDay = processPayouts(poolClaims, days, units, 'pools');
 
   return {
     // reverse rewards: most recent last
-    payoutsByDay: payoutsByDay.reverse(),
-    poolClaimsByDay: poolClaimsByDay.reverse(),
+    payoutsByDay,
+    poolClaimsByDay,
     lastReward: getLatestReward(payouts, poolClaims),
   };
 };
 
-/* combineRewardsByDay
- * combines payouts and pool claims into daily records.
- * removes the `event_id` field from records.
- */
+// Process payouts.
+//
+// calls the relevant functions on raw payouts to format them correctly.
+const processPayouts = (
+  payouts: AnySubscan,
+  days: number,
+  units: number,
+  subject: string
+) => {
+  // normalise payout timestamps.
+  const normalised = normalisePayouts(payouts);
+  // calculate payouts per day from the current day.
+  let p = calculatePayoutsByDay(normalised, days, units, subject);
+  // pre-fill payouts if max days have not been reached.
+  p = p.concat(prefillMissingDays(p, days));
+  // fill in gap days between payouts with zero values.
+  p = fillGapDays(p);
+  // reverse payouts: most recent last.
+  p = p.reverse();
+  return p;
+};
+
+// Combine reward payouts.
+//
+// combines payouts and pool claims into daily records. Removes the `event_id` field from records.
 export const combineRewardsByDay = (
   payoutsByDay: AnySubscan,
   poolClaimsByDay: AnySubscan
@@ -277,7 +277,7 @@ export const combineRewardsByDay = (
   return rewards;
 };
 
-// getLastReward
+// Get latest reward.
 //
 // Gets the latest reward from pool claims and nominator payouts.
 export const getLatestReward = (
@@ -399,6 +399,10 @@ export const normalisePayouts = (payouts: AnySubscan) =>
 // Utility: days passed since 2 dates.
 export const daysPassed = (from: Date, to: Date) =>
   differenceInDays(startOfDay(to), startOfDay(from));
+
+// Utility: extract whether an event id should be a slash or reward, based on the net day amount.
+const getEventId = (c: PayoutDayCursor) =>
+  c.amount.lt(new BN(0)) ? 'Slash' : 'Reward';
 
 // Utility: Formats a width and height pair.
 export const formatSize = (
