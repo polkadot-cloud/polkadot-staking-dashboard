@@ -1,4 +1,6 @@
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
+import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
 import styled from 'styled-components';
 
 const CTACard = () => {
@@ -33,6 +35,9 @@ const CTACard = () => {
     }
   `;
 
+  const { openModalWith } = useModal();
+  const { accounts } = useConnect();
+
   return (
     <CTA>
       <h3>Get Started with Staking</h3>
@@ -49,6 +54,13 @@ const CTACard = () => {
             color: '#E6007A',
             fontSize: '1.25rem',
             padding: '0.75rem 1.5rem',
+          }}
+          onClick={() => {
+            openModalWith(
+              'ConnectAccounts',
+              { section: accounts.length ? 1 : 0 },
+              'large'
+            );
           }}
         />
       </div>
