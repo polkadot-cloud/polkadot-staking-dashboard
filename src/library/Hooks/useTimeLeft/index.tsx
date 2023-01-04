@@ -5,7 +5,7 @@ import { getUnixTime, intervalToDuration } from 'date-fns';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { setStateWithRef } from 'Utils';
-import { defaultDuration } from './defaults';
+import { defaultDuration, defaultRefreshInterval } from './defaults';
 import {
   TimeLeftAll,
   TimeleftDuration,
@@ -14,7 +14,7 @@ import {
   TimeLeftRaw,
 } from './types';
 
-export const useTimeLeft = (TimeleftHook?: TimeleftHookProps) => {
+export const useTimeLeft = (timeleftHook?: TimeleftHookProps) => {
   const { t, i18n } = useTranslation();
 
   // adds `seconds` to the current time and returns the resulting date.
@@ -114,63 +114,63 @@ export const useTimeLeft = (TimeleftHook?: TimeleftHookProps) => {
     ReturnType<typeof setInterval> | undefined
   >(undefined);
   const secIntervalRef = useRef(secInterval);
-  if (TimeleftHook) {
-    // refresh callback counter
-    let r = TimeleftHook.refreshInterval;
 
-    // refresh effects.
-    useEffect(() => {
-      // handler for handling timeleft refresh.
-      //
-      // either handle regular timeleft update, or refresh `to` via `refreshCallback` every
-      // `refreshInterval` seconds.
-      const handleRefresh = () => {
-        if (r !== 0) {
-          setTimeleft(getTimeleft());
-        } else {
-          if (TimeleftHook.refreshCallback()) {
-            setStateWithRef(
-              fromNow(TimeleftHook.refreshCallback()),
-              setTo,
-              toRef
-            );
-            setTimeleft(getTimeleft());
-          }
-          r = TimeleftHook.refreshInterval;
-        }
-      };
+  // refresh callback interval in seconds.
+  const refreshInterval =
+    timeleftHook?.refreshInterval || defaultRefreshInterval;
 
-      if (inLastHour()) {
-        // refresh timeleft every second.
-        if (!secIntervalRef.current) {
-          const interval = setInterval(() => {
-            if (!inLastHour()) {
-              clearInterval(secIntervalRef.current);
-              setStateWithRef(undefined, setSecInterval, secIntervalRef);
-            }
-            r = Math.max(0, r - 1);
-            handleRefresh();
-          }, 1000);
+  // refresh interval counter, defaults to interval time.
+  let r = refreshInterval;
 
-          setStateWithRef(interval, setSecInterval, secIntervalRef);
+  // refresh effects.
+  useEffect(() => {
+    // handler for handling timeleft refresh.
+    //
+    // either handle regular timeleft update, or refresh `to` via `refreshCallback` every
+    // `refreshInterval` seconds.
+    const handleRefresh = () => {
+      // end of a refresh interval.
+      if (r === 0) {
+        // call refresh callback if one is present.
+        const refreshCallback = timeleftHook?.refreshCallback || undefined;
+        if (refreshCallback) {
+          setStateWithRef(fromNow(refreshCallback()), setTo, toRef);
         }
-      } else {
-        setTimeleft(getTimeleft());
-        // refresh timeleft every minute.
-        if (!minIntervalRef.current) {
-          const interval = setInterval(() => {
-            if (inLastHour()) {
-              clearInterval(minIntervalRef.current);
-              setStateWithRef(undefined, setMinInterval, minIntervalRef);
-            }
-            r = Math.max(0, r - 60);
-            handleRefresh();
-          }, 60000);
-          setStateWithRef(interval, setMinInterval, minIntervalRef);
-        }
+        r = refreshInterval;
       }
-    }, [to, inLastHour(), lastMinuteCountdown()]);
-  }
+      setTimeleft(getTimeleft());
+    };
+
+    if (inLastHour()) {
+      // refresh timeleft every second.
+      if (!secIntervalRef.current) {
+        const interval = setInterval(() => {
+          if (!inLastHour()) {
+            clearInterval(secIntervalRef.current);
+            setStateWithRef(undefined, setSecInterval, secIntervalRef);
+          }
+          r = Math.max(0, r - 1);
+          handleRefresh();
+        }, 1000);
+
+        setStateWithRef(interval, setSecInterval, secIntervalRef);
+      }
+    } else {
+      setTimeleft(getTimeleft());
+      // refresh timeleft every minute.
+      if (!minIntervalRef.current) {
+        const interval = setInterval(() => {
+          if (inLastHour()) {
+            clearInterval(minIntervalRef.current);
+            setStateWithRef(undefined, setMinInterval, minIntervalRef);
+          }
+          r = Math.max(0, r - 60);
+          handleRefresh();
+        }, 60000);
+        setStateWithRef(interval, setMinInterval, minIntervalRef);
+      }
+    }
+  }, [to, inLastHour(), lastMinuteCountdown()]);
 
   // re-render the timeleft upon langauge switch.
   useEffect(() => {
