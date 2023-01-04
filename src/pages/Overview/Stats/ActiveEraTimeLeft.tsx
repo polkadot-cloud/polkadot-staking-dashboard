@@ -5,6 +5,7 @@ import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import useEraTimeLeft from 'library/Hooks/useEraTimeLeft';
 import { useTimeLeft } from 'library/Hooks/useTimeLeft';
+import { fromNow } from 'library/Hooks/useTimeLeft/utils';
 import { Timeleft } from 'library/StatBoxList/Timeleft';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -21,7 +22,7 @@ const ActiveEraStatBox = () => {
     percentRemaining,
   } = useEraTimeLeft();
 
-  const { timeleft, fromNow, setFromNow } = useTimeLeft({
+  const { timeleft, setFromNow } = useTimeLeft({
     refreshInterval: 60,
     refreshCallback: () => eraTimeLeft,
   });

@@ -1,11 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { getUnixTime, intervalToDuration } from 'date-fns';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { setStateWithRef } from 'Utils';
-import { defaultDuration, defaultRefreshInterval } from './defaults';
+import { defaultRefreshInterval } from './defaults';
 import {
   TimeLeftAll,
   TimeleftDuration,
@@ -13,46 +12,10 @@ import {
   TimeleftHookProps,
   TimeLeftRaw,
 } from './types';
+import { fromNow, getDuration } from './utils';
 
 export const useTimeLeft = (props?: TimeleftHookProps) => {
   const { t, i18n } = useTranslation();
-
-  // adds `seconds` to the current time and returns the resulting date.
-  const fromNow = (seconds: number): Date => {
-    const end = new Date();
-    end.setSeconds(end.getSeconds() + seconds);
-    return end;
-  };
-
-  // calculates the current timeleft duration.
-  const getDuration = (toDate: Date | null): TimeleftDuration => {
-    if (!toDate) {
-      return defaultDuration;
-    }
-    if (getUnixTime(toDate) <= getUnixTime(new Date())) {
-      return defaultDuration;
-    }
-    toDate.setSeconds(toDate.getSeconds());
-    const d = intervalToDuration({
-      start: Date.now(),
-      end: toDate,
-    });
-
-    const days = d?.days || 0;
-    const hours = d?.hours || 0;
-    const minutes = d?.minutes || 0;
-    const seconds = d?.seconds || 0;
-    const lastHour = days === 0 && hours === 0;
-    const lastMinute = lastHour && minutes === 0;
-
-    return {
-      days,
-      hours,
-      minutes,
-      seconds,
-      lastMinute,
-    };
-  };
 
   // check whether timeleft is within a minute of finishing.
   const inLastHour = () => {
@@ -184,33 +147,6 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
     };
   }, []);
 
-  // format the duration as a string.
-  const timeleftAsString = (toDate?: Date, full?: boolean) => {
-    const { days, hours, minutes, seconds } = getDuration(
-      toDate || toRef.current
-    );
-
-    let str = '';
-    if (days > 0) {
-      str += `${days} ${t('time.day', { count: days, ns: 'base' })} `;
-    }
-
-    const tHour = `time.${full ? `hour` : `hr`}`;
-    const tMinute = `time.${full ? `minute` : `min`}`;
-
-    if (hours > 0) {
-      str += `${hours} ${t(tHour, { count: hours, ns: 'base' })} `;
-    }
-    if (minutes > 0) {
-      `${minutes} ${t(tMinute, { count: minutes, ns: 'base' })}`;
-    }
-
-    if (!days && !hours) {
-      str += ` ${seconds}`;
-    }
-    return str;
-  };
-
   const setFromNow = (dateTo: Date) => {
     setTimeleft(getTimeleft(getDuration(new Date())));
     setStateWithRef(dateTo, setTo, toRef);
@@ -218,8 +154,6 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
 
   return {
     setFromNow,
-    fromNow,
     timeleft,
-    timeleftAsString,
   };
 };
