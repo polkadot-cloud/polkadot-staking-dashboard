@@ -3,18 +3,20 @@
 
 import { BN } from 'bn.js';
 import { MaxPayoutDays } from 'consts';
+import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useUi } from 'contexts/UI';
 import { format, fromUnixTime } from 'date-fns';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
-import { formatSize, useSize } from 'library/Graphs/Utils';
+import { formatSize } from 'library/Graphs/Utils';
 import {
   CardHeaderWrapper,
   CardWrapper,
   GraphWrapper,
 } from 'library/Graphs/Wrappers';
+import { useSize } from 'library/Hooks/useSize';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
@@ -31,7 +33,8 @@ import LastEraPayoutStatBox from './Stats/LastEraPayout';
 
 export const Payouts = (props: PageProps) => {
   const { payouts, poolClaims } = useSubscan();
-  const { isSyncing, services } = useUi();
+  const { isSyncing } = useUi();
+  const { plugins } = usePlugins();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
   const { i18n, t } = useTranslation();
@@ -113,7 +116,7 @@ export const Payouts = (props: PageProps) => {
             </h2>
           </CardHeaderWrapper>
           <div className="inner" ref={ref} style={{ minHeight }}>
-            {!services.includes('subscan') ? (
+            {!plugins.includes('subscan') ? (
               <StatusLabel
                 status="active_service"
                 statusFor="subscan"

@@ -5,7 +5,6 @@ import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
-import { ConnectionStatus } from 'contexts/Api/types';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useTheme } from 'contexts/Themes';
@@ -66,17 +65,17 @@ export const SideMenu = () => {
 
   // handle connection symbol
   const symbolColor =
-    status === ConnectionStatus.Connecting
+    status === 'connecting'
       ? defaultThemes.status.warning.solid[mode]
-      : status === ConnectionStatus.Connected
+      : status === 'connected'
       ? defaultThemes.status.success.solid[mode]
       : defaultThemes.status.danger.solid[mode];
 
   // handle transparent border color
   const borderColor =
-    status === ConnectionStatus.Connecting
+    status === 'connecting'
       ? defaultThemes.status.warning.transparent[mode]
-      : status === ConnectionStatus.Connected
+      : status === 'connected'
       ? defaultThemes.status.success.transparent[mode]
       : defaultThemes.status.danger.transparent[mode];
 

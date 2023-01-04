@@ -1,14 +1,14 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useUi } from 'contexts/UI';
+import { usePlugins } from 'contexts/Plugins';
 import { Title } from 'library/Modal/Title';
 import { StatusButton } from 'library/StatusButton';
 import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 
 export const Settings = () => {
-  const { services, toggleService } = useUi();
+  const { plugins, togglePlugin } = usePlugins();
   const { t } = useTranslation('modals');
 
   // fetch flag to disable fiat
@@ -18,20 +18,20 @@ export const Settings = () => {
     <>
       <Title title={t('settings')} />
       <PaddingWrapper>
-        <h4>{t('toggleServices')}</h4>
+        <h4>{t('togglePlugins')}</h4>
         <StatusButton
-          checked={services.includes('subscan')}
+          checked={plugins.includes('subscan')}
           label="Subscan API"
           onClick={() => {
-            toggleService('subscan');
+            togglePlugin('subscan');
           }}
         />
         {!DISABLE_FIAT && (
           <StatusButton
-            checked={services.includes('binance_spot')}
+            checked={plugins.includes('binance_spot')}
             label={t('binanceApi')}
             onClick={() => {
-              toggleService('binance_spot');
+              togglePlugin('binance_spot');
             }}
           />
         )}
@@ -39,10 +39,10 @@ export const Settings = () => {
         <h4>{t('toggleFeatures')}</h4>
 
         <StatusButton
-          checked={services.includes('tips')}
+          checked={plugins.includes('tips')}
           label={t('dashboardTips')}
           onClick={() => {
-            toggleService('tips');
+            togglePlugin('tips');
           }}
         />
       </PaddingWrapper>

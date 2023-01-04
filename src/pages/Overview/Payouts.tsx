@@ -1,17 +1,20 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
-import { formatSize, useSize } from 'library/Graphs/Utils';
+import { formatSize } from 'library/Graphs/Utils';
+import { useSize } from 'library/Hooks/useSize';
 import { StatusLabel } from 'library/StatusLabel';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const Payouts = () => {
-  const { isSyncing, services } = useUi();
+  const { isSyncing } = useUi();
+  const { plugins } = usePlugins();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
   const { t } = useTranslation('pages');
@@ -23,7 +26,7 @@ export const Payouts = () => {
 
   return (
     <div className="inner" ref={ref} style={{ minHeight }}>
-      {!services.includes('subscan') ? (
+      {!plugins.includes('subscan') ? (
         <StatusLabel
           status="active_service"
           statusFor="subscan"

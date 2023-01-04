@@ -8,7 +8,7 @@ import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useUi } from 'contexts/UI';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit } from 'Utils';
+import { planckBnToUnit, toFixedIfNecessary } from 'Utils';
 import { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 
@@ -37,7 +37,11 @@ export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
             &nbsp;{t('createPool')}
           </h4>
           <div className="bar">
-            <h5>{isSyncing ? '...' : `${minCreateBondBase} ${unit}`}</h5>
+            <h5>
+              {isSyncing
+                ? '...'
+                : `${toFixedIfNecessary(minCreateBondBase, 3)} ${unit}`}
+            </h5>
           </div>
         </section>
       </div>

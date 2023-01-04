@@ -1,24 +1,38 @@
 {
   "base": {
-    "stake": "Stake",
-    "validators": "Validators",
-    "overview": "Overview",
-    "nominate": "Nominate",
-    "pools": "Pools",
-    "payouts": "Payouts",
+    "active": "Active",
     "community": "Community",
     "favorites": "Favorites",
-    "network": "Network",
     "feedback": "Feedback",
     "help": "Help",
     "inactive": "Inactive",
-    "active": "Active",
-    "support": "Support",
-    "resources": "Resources",
+    "network": "Network",
+    "nominate": "Nominate",
+    "overview": "Overview",
     "payee": {
+      "controller": "To Controller Account",
       "staked": "Back to Staking",
-      "stash": "To Stash Account",
-      "controller": "To Controller Account"
-    }
+      "stash": "To Stash Account"
+    },
+    "payouts": "Payouts",
+    "pools": "Pools",
+    "resources": "Resources",
+    "stake": "Stake",
+    "support": "Support",
+    "time": {
+      "day_one": "day",
+      "day_other": "days",
+      "hour_one": "hour",
+      "hour_other": "hours",
+      "hr_one": "hr",
+      "hr_other": "hrs",
+      "min_one": "min",
+      "min_other": "mins",
+      "minute_one": "minute",
+      "minute_other": "minutes",
+      "second_one": "second",
+      "second_other": "seconds"
+    },
+    "validators": "Validators"
   }
 }

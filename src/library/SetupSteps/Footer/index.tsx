@@ -3,7 +3,7 @@
 
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
-import { useUi } from 'contexts/UI';
+import { useSetup } from 'contexts/Setup';
 import { useTranslation } from 'react-i18next';
 import { FooterProps } from '../types';
 import { Wrapper } from './Wrapper';
@@ -13,7 +13,7 @@ export const Footer = (props: FooterProps) => {
   const { t } = useTranslation('library');
 
   const { activeAccount } = useConnect();
-  const { getSetupProgress, setActiveAccountSetupSection } = useUi();
+  const { getSetupProgress, setActiveAccountSetupSection } = useSetup();
   const setup = getSetupProgress(setupType, activeAccount);
 
   return (

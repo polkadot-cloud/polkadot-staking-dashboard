@@ -9,7 +9,7 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit } from 'Utils';
+import { planckBnToUnit, toFixedIfNecessary } from 'Utils';
 import { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 
@@ -42,7 +42,7 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
           </h4>
           <div className="bar">
             <h5>
-              {minNominatorBondBase} {unit}
+              {toFixedIfNecessary(minNominatorBondBase, 3)} {unit}
             </h5>
           </div>
         </section>
@@ -53,7 +53,16 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
             <OpenHelpIcon helpKey="Active Bond Threshold" />
           </h4>
           <div className="bar">
-            <h5>{isSyncing ? '...' : `${minActiveBond} ${unit}`}</h5>
+            <h5>
+              {isSyncing
+                ? '...'
+                : `${toFixedIfNecessary(
+                    minActiveBond < minNominatorBondBase
+                      ? minNominatorBondBase
+                      : minActiveBond,
+                    3
+                  )} ${unit}`}
+            </h5>
           </div>
         </section>
       </div>

@@ -12,7 +12,7 @@ const v = (light: string, dark: string) => ({
 
 // eslint-disable-next-line
 export const defaultThemes: { [key: string]: any } = {
-  transparent: v('rgba(255,255,255,0', 'rgba(0,0,0,0)'),
+  transparent: v('rgba(255,255,255,0)', 'rgba(0,0,0,0)'),
   text: {
     primary: v('#333', '#ccc'),
     secondary: v('#444', '#aaa'),

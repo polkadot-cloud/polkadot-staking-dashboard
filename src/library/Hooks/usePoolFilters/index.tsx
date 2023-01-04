@@ -46,7 +46,7 @@ export const usePoolFilters = () => {
    * Returns the updated filtered list.
    */
   const filterLocked = (list: any) => {
-    return list.filter((p: BondedPool) => p.state !== 'Blocked');
+    return list.filter((p: BondedPool) => p.state !== 'blocked');
   };
 
   /*
@@ -57,7 +57,7 @@ export const usePoolFilters = () => {
    * Returns the updated filtered list.
    */
   const filterDestroying = (list: any) => {
-    return list.filter((p: BondedPool) => p.state !== 'Destroying');
+    return list.filter((p: BondedPool) => p.state !== 'destroying');
   };
 
   const includesToLabels: { [key: string]: string } = {

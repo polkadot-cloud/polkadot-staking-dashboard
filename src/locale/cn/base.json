@@ -1,24 +1,32 @@
 {
   "base": {
-    "stake": "抵押",
-    "validators": "验证人",
-    "overview": "总览",
-    "nominate": "抵押",
-    "pools": "提名池",
-    "payouts": "收益",
+    "active": "激活",
     "community": "社区",
     "favorites": "收藏夹",
-    "network": "网络",
     "feedback": "反馈",
     "help": "帮助",
-    "support": "支持",
     "inactive": "未激活",
-    "active": "激活",
-    "resources": "信息",
+    "network": "网络",
+    "nominate": "抵押",
+    "overview": "总览",
     "payee": {
+      "controller": "到Controller账户",
       "staked": "回到抵押中",
-      "stash": "到Stash账户",
-      "controller": "到Controller账户"
-    }
+      "stash": "到Stash账户"
+    },
+    "payouts": "收益",
+    "pools": "提名池",
+    "resources": "信息",
+    "stake": "抵押",
+    "support": "支持",
+    "time": {
+      "day": "天",
+      "hour": "小时",
+      "hr": "小时",
+      "min": "分钟",
+      "minute": "分钟",
+      "second": "秒"
+    },
+    "validators": "验证人"
   }
 }

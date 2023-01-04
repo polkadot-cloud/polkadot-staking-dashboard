@@ -19,12 +19,14 @@ export interface ExtensionInterface {
     };
   };
   provider: AnyApi;
+  metadata: AnyApi;
   signer: AnyApi;
 }
 
 // the required properties returned after subscribing to accounts.
 export interface ExtensionAccount extends ExtensionMetadata {
   address: string;
+  meta?: AnyApi;
   name: string;
   signer?: AnyApi;
 }
@@ -51,6 +53,7 @@ export interface ExtensionsContextInterface {
   extensions: Array<ExtensionInjected>;
   extensionsStatus: { [key: string]: string };
   extensionsFetched: boolean;
+  checkingInjectedWeb3: boolean;
   setExtensionStatus: (id: string, s: string) => void;
   setExtensionsFetched: (s: boolean) => void;
   setExtensions: (s: Array<ExtensionInjected>) => void;

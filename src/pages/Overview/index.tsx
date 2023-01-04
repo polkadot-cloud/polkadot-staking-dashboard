@@ -4,8 +4,8 @@
 import BN from 'bn.js';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
+import { usePlugins } from 'contexts/Plugins';
 import { useSubscan } from 'contexts/Subscan';
-import { useUi } from 'contexts/UI';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
@@ -25,23 +25,17 @@ import { ActiveAccount } from './ActiveAccount';
 import { BalanceChart } from './BalanceChart';
 import { NetworkStats } from './NetworkSats';
 import Payouts from './Payouts';
-import ActiveEraStatBox from './Stats/ActiveEra';
-import HistoricalRewardsRateStatBox from './Stats/HistoricalRewardsRate';
-import SupplyStakedStatBox from './Stats/SupplyStaked';
+import EraTimeLeftStat from './Stats/ActiveEraTimeLeft';
+import HistoricalRewardsRateStat from './Stats/HistoricalRewardsRate';
+import SupplyStakedStat from './Stats/SupplyStaked';
 import { Tips } from './Tips';
 
 export const Overview = () => {
   const { network } = useApi();
   const { units } = network;
   const { payouts, poolClaims } = useSubscan();
-  const { services } = useUi();
-  const { lastReward } = formatRewardsForGraphs(
-    14,
-    1,
-    units,
-    payouts,
-    poolClaims
-  );
+  const { plugins } = usePlugins();
+  const { lastReward } = formatRewardsForGraphs(14, units, payouts, poolClaims);
   const { i18n, t } = useTranslation('pages');
 
   const PAYOUTS_HEIGHT = 390;
@@ -69,11 +63,11 @@ export const Overview = () => {
         </TopBarWrapper>
       </PageRowWrapper>
       <StatBoxList>
-        <HistoricalRewardsRateStatBox />
-        <SupplyStakedStatBox />
-        <ActiveEraStatBox />
+        <HistoricalRewardsRateStat />
+        <SupplyStakedStat />
+        <EraTimeLeftStat />
       </StatBoxList>
-      {services.includes('tips') && (
+      {plugins.includes('tips') && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <Tips />
         </PageRowWrapper>
