@@ -7,7 +7,7 @@ import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
-import { useErasTo } from 'library/Hooks/useErasTo';
+import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { fromNow, timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import useUnstaking from 'library/Hooks/useUnstaking';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
@@ -27,7 +27,7 @@ export const Overview = forwardRef(
     const { isFastUnstaking } = useUnstaking();
     const { t } = useTranslation('modals');
 
-    const { getTimeLeftFromEras } = useErasTo();
+    const { getTimeLeftFromEras } = useErasToTimeLeft();
     const durationSeconds = getTimeLeftFromEras(bondDuration);
     const durationFormatted = timeleftAsString(
       t,
