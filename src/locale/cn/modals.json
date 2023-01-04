@@ -150,7 +150,7 @@
     "unlockChunk": "己解锁的金额当前无法在池中重新质押。如果您希望重新质押，请先取出解锁金额并添加到您的质押中",
     "unlockPool": "解锁",
     "unlockPoolResult": "解锁提名池后，新用户可以加入提名池",
-    "unlockTake": "解锁需等待{{durationFormatted}} 才能被提款",
+    "unlockTake": "{{durationFormatted}}后解锁金额可被提取",
     "unlocked": "已解锁",
     "unlocks": "解锁",
     "unlocksAfterEra": "解锁于era",

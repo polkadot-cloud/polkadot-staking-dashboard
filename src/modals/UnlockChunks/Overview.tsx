@@ -29,8 +29,8 @@ export const Overview = forwardRef(
 
     const { fromNow, timeleftAsString } = useTimeLeft();
 
-    const { erasToTimeLeft } = useErasToTimeleft();
-    const durationSeconds = erasToTimeLeft(bondDuration);
+    const { getErasToTimeLeft } = useErasToTimeleft();
+    const durationSeconds = getErasToTimeLeft(bondDuration);
     const durationFormatted = timeleftAsString(fromNow(durationSeconds), true);
 
     const isStaking = bondFor === 'nominator';

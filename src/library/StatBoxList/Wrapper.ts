@@ -198,7 +198,7 @@ export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
   }
 `;
 
-export const TimeleftWrapper = styled.div<{ primary?: boolean }>`
+export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
   color: ${(props) => (props.primary === true ? networkColor : textPrimary)};
   font-variation-settings: 'wght' 550;
   display: flex;

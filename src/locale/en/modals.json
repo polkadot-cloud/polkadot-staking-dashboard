@@ -159,7 +159,7 @@
     "unlockChunk": "Unlock chunks cannot currently be rebonded in a pool. If you wish to rebond, withdraw the unlock chunk first and re-bond the funds.",
     "unlockPool": "Unlock Pool",
     "unlockPoolResult": "Once you Unlock the pool new people can join the pool",
-    "unlockTake": "Unlocks take {{durationFormatted}} before they can be withdrawn.",
+    "unlockTake": "Unlocks can be withdrawn after {{durationFormatted}} hours.",
     "unlocked": "Unlocked",
     "unlocks": "Unlocks",
     "unlocksAfterEra": "Unlocks after era",

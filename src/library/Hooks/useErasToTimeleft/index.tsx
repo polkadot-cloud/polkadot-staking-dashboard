@@ -8,7 +8,7 @@ export const useErasToTimeleft = () => {
   const { epochDuration, expectedBlockTime, sessionsPerEra } = consts;
 
   // converts a number of eras to timeleft in seconds.
-  const erasToTimeLeft = (eras: number) => {
+  const getErasToTimeLeft = (eras: number) => {
     if (!eras) {
       return 0;
     }
@@ -21,6 +21,6 @@ export const useErasToTimeleft = () => {
   };
 
   return {
-    erasToTimeLeft,
+    getErasToTimeLeft,
   };
 };

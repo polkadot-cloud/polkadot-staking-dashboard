@@ -186,23 +186,23 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
 
   // format the duration as a string.
   const timeleftAsString = (toDate?: Date, full?: boolean) => {
-    const { days, hours, minutes, seconds } = toDate
-      ? getDuration(toDate)
-      : getDuration(toRef.current);
+    const { days, hours, minutes, seconds } = getDuration(
+      toDate || toRef.current
+    );
 
     let str = '';
     if (days > 0) {
       str += `${days} ${t('time.day', { count: days, ns: 'base' })} `;
     }
+
+    const tHour = `time.${full ? `hour` : `hr`}`;
+    const tMinute = `time.${full ? `minute` : `min`}`;
+
     if (hours > 0) {
-      str += full
-        ? `${hours} ${t('time.hour', { count: hours, ns: 'base' })} `
-        : `${hours} ${t('time.hr', { count: hours, ns: 'base' })} `;
+      str += `${hours} ${t(tHour, { count: hours, ns: 'base' })} `;
     }
     if (minutes > 0) {
-      str += full
-        ? `${minutes} ${t('time.minute', { count: minutes, ns: 'base' })}`
-        : `${minutes} ${t('time.min', { count: minutes, ns: 'base' })}`;
+      `${minutes} ${t(tMinute, { count: minutes, ns: 'base' })}`;
     }
 
     if (!days && !hours) {
