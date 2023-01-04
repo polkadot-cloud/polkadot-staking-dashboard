@@ -8,7 +8,6 @@ import BN from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useErasToTimeleft } from 'library/Hooks/useErasToTimeleft';
-import { useEraTimeLeft } from 'library/Hooks/useEraTimeLeft';
 import { useTimeLeft } from 'library/Hooks/useTimeLeft';
 import useUnstaking from 'library/Hooks/useUnstaking';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
@@ -28,11 +27,7 @@ export const Overview = forwardRef(
     const { isFastUnstaking } = useUnstaking();
     const { t } = useTranslation('modals');
 
-    const { timeleft: eraTimeLeft } = useEraTimeLeft();
-    const { fromNow, timeleftAsString } = useTimeLeft({
-      refreshInterval: 60,
-      refreshCallback: () => eraTimeLeft,
-    });
+    const { fromNow, timeleftAsString } = useTimeLeft();
 
     const { erasToTimeLeft } = useErasToTimeleft();
     const durationSeconds = erasToTimeLeft(bondDuration);
