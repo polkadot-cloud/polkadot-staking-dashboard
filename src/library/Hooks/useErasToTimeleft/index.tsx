@@ -3,7 +3,7 @@
 
 import { useApi } from 'contexts/Api';
 
-export const useErasToTimeleft = () => {
+export const useErasToTimeLeft = () => {
   const { consts } = useApi();
   const { epochDuration, expectedBlockTime, sessionsPerEra } = consts;
 
