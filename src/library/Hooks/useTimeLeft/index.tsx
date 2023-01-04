@@ -14,7 +14,7 @@ import {
   TimeLeftRaw,
 } from './types';
 
-export const useTimeLeft = (defaultTimeleftHook?: TimeleftHookProps) => {
+export const useTimeLeft = (TimeleftHook?: TimeleftHookProps) => {
   const { t, i18n } = useTranslation();
 
   // adds `seconds` to the current time and returns the resulting date.
@@ -114,9 +114,9 @@ export const useTimeLeft = (defaultTimeleftHook?: TimeleftHookProps) => {
     ReturnType<typeof setInterval> | undefined
   >(undefined);
   const secIntervalRef = useRef(secInterval);
-  if (defaultTimeleftHook) {
+  if (TimeleftHook) {
     // refresh callback counter
-    let r = defaultTimeleftHook.refreshInterval;
+    let r = TimeleftHook.refreshInterval;
 
     // refresh effects.
     useEffect(() => {
@@ -128,15 +128,15 @@ export const useTimeLeft = (defaultTimeleftHook?: TimeleftHookProps) => {
         if (r !== 0) {
           setTimeleft(getTimeleft());
         } else {
-          if (defaultTimeleftHook.refreshCallback()) {
+          if (TimeleftHook.refreshCallback()) {
             setStateWithRef(
-              fromNow(defaultTimeleftHook.refreshCallback()),
+              fromNow(TimeleftHook.refreshCallback()),
               setTo,
               toRef
             );
             setTimeleft(getTimeleft());
           }
-          r = defaultTimeleftHook.refreshInterval;
+          r = TimeleftHook.refreshInterval;
         }
       };
 
