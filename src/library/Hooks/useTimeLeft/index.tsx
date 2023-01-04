@@ -14,7 +14,7 @@ import {
   TimeLeftRaw,
 } from './types';
 
-export const useTimeLeft = (timeleftHook?: TimeleftHookProps) => {
+export const useTimeLeft = (props?: TimeleftHookProps) => {
   const { t, i18n } = useTranslation();
 
   // adds `seconds` to the current time and returns the resulting date.
@@ -116,8 +116,7 @@ export const useTimeLeft = (timeleftHook?: TimeleftHookProps) => {
   const secIntervalRef = useRef(secInterval);
 
   // refresh callback interval in seconds.
-  const refreshInterval =
-    timeleftHook?.refreshInterval || defaultRefreshInterval;
+  const refreshInterval = props?.refreshInterval || defaultRefreshInterval;
 
   // refresh interval counter, defaults to interval time.
   let r = refreshInterval;
@@ -132,7 +131,7 @@ export const useTimeLeft = (timeleftHook?: TimeleftHookProps) => {
       // end of a refresh interval.
       if (r === 0) {
         // call refresh callback if one is present.
-        const refreshCallback = timeleftHook?.refreshCallback || undefined;
+        const refreshCallback = props?.refreshCallback || undefined;
         if (refreshCallback) {
           setStateWithRef(fromNow(refreshCallback()), setTo, toRef);
         }
