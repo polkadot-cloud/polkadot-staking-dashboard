@@ -8,7 +8,12 @@ export type FilterType = 'exclude' | 'include';
 export interface FiltersContextInterface {
   getFilters: (t: FilterType, g: string) => Array<string> | null;
   toggleFilter: (t: FilterType, g: string, f: string) => void;
-  setMultiFilters: (t: FilterType, g: string, fs: Array<string>) => void;
+  setMultiFilters: (
+    t: FilterType,
+    g: string,
+    fs: Array<string>,
+    r: boolean
+  ) => void;
   getOrder: (g: string) => string;
   setOrder: (g: string, o: string) => void;
   getSearchTerm: (g: string) => string | null;
