@@ -35,13 +35,13 @@ export const PoolListInner = ({
   title,
   defaultFilters,
 }: PoolListProps) => {
+  const { t } = useTranslation('library');
   const { mode } = useTheme();
   const { isReady, network } = useApi();
   const { metrics } = useNetworkMetrics();
   const { fetchPoolsMetaBatch, poolSearchFilter, meta } = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
   const { isSyncing } = useUi();
-  const { t } = useTranslation('library');
 
   const { getFilters, setMultiFilters, getSearchTerm, setSearchTerm } =
     useFilters();
@@ -177,17 +177,17 @@ export const PoolListInner = ({
 
   const filterTabsConfig = [
     {
-      label: 'Active',
+      label: t('active'),
       includes: ['active'],
       excludes: ['locked', 'destroying'],
     },
     {
-      label: 'Locked',
+      label: t('locked'),
       includes: ['locked'],
       excludes: [],
     },
     {
-      label: 'Destroying',
+      label: t('destroying'),
       includes: ['destroying'],
       excludes: [],
     },
