@@ -1,6 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-
+/* eslint-disable */
 import { PAGES_CONFIG } from 'config/pages';
 import { TitleDefault } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -16,7 +16,7 @@ import { Overlay } from 'library/Overlay';
 import SideMenu from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
 import { Modal } from 'modals';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
@@ -27,18 +27,47 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
+import { extractUrlValue } from 'Utils';
 import {
   BodyInterfaceWrapper,
   MainInterfaceWrapper,
   PageWrapper,
   SideInterfaceWrapper,
 } from 'Wrappers';
+import { DefaultNetwork, DefaultLocale } from 'consts';
+import { locales } from 'locale';
+import { getActiveLanguage } from 'locale/utils';
 
 export const RouterInner = () => {
   const { network } = useApi();
   const { pathname } = useLocation();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
   const { t } = useTranslation('base');
+
+  const [urlNetworkExists, setUrlNetworkExists] = useState<boolean>(false);
+  const [urlNetwork, setUrlNetwork] = useState<any>('');
+  const [urlLngExists, setUrlLngExists] = useState<boolean>(false);
+  const [urlLng, setUrlLng] = useState<any>('');
+
+  // staking.polkadot.network?n=polkadot&l=fr'
+  useEffect(() => {
+    const urlNetworkSource = extractUrlValue('n');
+    if (urlNetworkSource && urlNetworkSource === 'polkadot' || 'kusama' || 'westend') {
+      setUrlNetworkExists(true);
+      setUrlNetwork(urlNetworkSource);
+    }
+    const _network = urlNetworkExists ? urlNetwork : network ? network.name : DefaultNetwork;
+
+    // localStorage.setItem('network', _network);
+    // to-do: if _network == "polkadot" {change favicon}(switch case)
+
+    const urlLngSource = extractUrlValue('l');
+    if (urlLngSource && urlLngSource === 'cn' || 'en') {
+      setUrlLngExists(true);
+      setUrlLng(urlLngSource);
+    }
+    const _lng = urlLngExists ? urlLng : getActiveLanguage() ? getActiveLanguage() : DefaultLocale;
+  }, []);
 
   // scroll to top of the window on every page change or network change
   useEffect(() => {

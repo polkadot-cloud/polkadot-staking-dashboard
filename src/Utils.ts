@@ -214,7 +214,7 @@ export const determinePoolDisplay = (
 };
 
 // extracts a URL value from a URL string
-export const extractUrlValue = (key: string, url: string) => {
+export const extractUrlValue = (key: string, url?: string) => {
   if (typeof url === 'undefined') url = window.location.href;
   const match = url.match(`[?&]${key}=([^&]+)`);
   return match ? match[1] : null;
