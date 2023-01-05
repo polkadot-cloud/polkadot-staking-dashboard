@@ -12,6 +12,7 @@ import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
+import { Tabs } from 'library/Filter/Tabs';
 import { usePoolFilters } from 'library/Hooks/usePoolFilters';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
@@ -22,7 +23,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { networkColors } from 'theme/default';
 import { PoolListProvider, usePoolList } from './context';
-import { Filters } from './Filters';
 import { PoolListProps } from './types';
 
 export const PoolListInner = ({
@@ -117,15 +117,20 @@ export const PoolListInner = ({
     if (!isSyncing && meta[batchKey]?.nominations) {
       handlePoolsFilterUpdate();
     }
-  }, [isSyncing, includes?.length, excludes?.length, meta]);
+  }, [isSyncing, includes, excludes, meta]);
+
+  // scroll to top of the window on every filter.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [includes, excludes]);
 
   // set default filters
   useEffect(() => {
     if (defaultFilters?.includes?.length) {
-      setMultiFilters('include', 'pools', defaultFilters?.includes);
+      setMultiFilters('include', 'pools', defaultFilters?.includes, false);
     }
     if (defaultFilters?.excludes?.length) {
-      setMultiFilters('exclude', 'pools', defaultFilters?.excludes);
+      setMultiFilters('exclude', 'pools', defaultFilters?.excludes, false);
     }
   }, []);
 
@@ -170,6 +175,24 @@ export const PoolListInner = ({
     setSearchTerm('pools', newValue);
   };
 
+  const filterTabsConfig = [
+    {
+      label: 'Active',
+      includes: ['active'],
+      excludes: ['locked', 'destroying'],
+    },
+    {
+      label: 'Locked',
+      includes: ['locked'],
+      excludes: [],
+    },
+    {
+      label: 'Destroying',
+      includes: ['destroying'],
+      excludes: [],
+    },
+  ];
+
   return (
     <ListWrapper>
       <Header>
@@ -206,7 +229,7 @@ export const PoolListInner = ({
             placeholder={t('search')}
           />
         )}
-        <Filters />
+        <Tabs config={filterTabsConfig} activeIndex={0} />
         {pagination && listPools.length > 0 && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}

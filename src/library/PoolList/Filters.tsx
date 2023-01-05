@@ -14,7 +14,6 @@ import { useFilters } from 'contexts/Filters';
 import { useOverlay } from 'contexts/Overlay';
 import { Container } from 'library/Filter/Container';
 import { Item } from 'library/Filter/Item';
-import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { usePoolFilters } from '../Hooks/usePoolFilters';
 import { FilterPools } from './FilterPools';
@@ -28,11 +27,6 @@ export const Filters = () => {
   const includes = getFilters('include', 'pools');
   const excludes = getFilters('exclude', 'pools');
   const hasFilters = includes?.length || excludes?.length;
-
-  // scroll to top of the window on every filter.
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [includes, excludes]);
 
   return (
     <>
