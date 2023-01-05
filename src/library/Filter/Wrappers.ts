@@ -106,12 +106,10 @@ export const LargeItemWrapper = styled.div`
         margin: 0;
       }
     }
-
     svg {
       color: ${networkColor};
       margin-right: 0.75rem;
     }
-
     p {
       color: ${textSecondary};
       margin: 0;
