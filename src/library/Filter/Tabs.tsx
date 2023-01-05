@@ -16,15 +16,20 @@ export const Tabs = ({ config, activeIndex }: any) => {
         <TabWrapper
           key={`pools_tab_filter_${i}`}
           active={i === active}
+          disabled={i === active}
           onClick={() => {
-            resetFilters('include', 'pools');
-            resetFilters('exclude', 'pools');
             if (c.includes?.length) {
-              setMultiFilters('include', 'pools', c.includes);
+              setMultiFilters('include', 'pools', c.includes, true);
+            } else {
+              resetFilters('include', 'pools');
             }
+
             if (c.excludes?.length) {
-              setMultiFilters('exclude', 'pools', c.excludes);
+              setMultiFilters('exclude', 'pools', c.excludes, true);
+            } else {
+              resetFilters('exclude', 'pools');
             }
+
             setActive(i);
           }}
         >
