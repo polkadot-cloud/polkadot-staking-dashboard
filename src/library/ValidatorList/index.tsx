@@ -140,10 +140,20 @@ export const ValidatorListInner = (props: any) => {
   useEffect(() => {
     if (allowFilters) {
       if (defaultFilters?.includes?.length) {
-        setMultiFilters('include', 'validators', defaultFilters?.includes);
+        setMultiFilters(
+          'include',
+          'validators',
+          defaultFilters?.includes,
+          false
+        );
       }
       if (defaultFilters?.excludes?.length) {
-        setMultiFilters('exclude', 'validators', defaultFilters?.excludes);
+        setMultiFilters(
+          'exclude',
+          'validators',
+          defaultFilters?.excludes,
+          false
+        );
       }
 
       return () => {
@@ -183,7 +193,7 @@ export const ValidatorListInner = (props: any) => {
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate();
     }
-  }, [order, isSyncing, includes?.length, excludes?.length]);
+  }, [order, isSyncing, includes, excludes]);
 
   // handle modal resize on list format change
   useEffect(() => {
