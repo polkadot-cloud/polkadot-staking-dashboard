@@ -1,8 +1,8 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable */
+
 import { PAGES_CONFIG } from 'config/pages';
-import { TitleDefault } from 'consts';
+import { DefaultLocale, DefaultNetwork, TitleDefault } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { AnimatePresence } from 'framer-motion';
@@ -15,6 +15,7 @@ import Notifications from 'library/Notifications';
 import { Overlay } from 'library/Overlay';
 import SideMenu from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
+import { getActiveLanguage } from 'locale/utils';
 import { Modal } from 'modals';
 import { useEffect, useRef, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -34,9 +35,6 @@ import {
   PageWrapper,
   SideInterfaceWrapper,
 } from 'Wrappers';
-import { DefaultNetwork, DefaultLocale } from 'consts';
-import { locales } from 'locale';
-import { getActiveLanguage } from 'locale/utils';
 
 export const RouterInner = () => {
   const { network } = useApi();
@@ -52,22 +50,52 @@ export const RouterInner = () => {
   // staking.polkadot.network?n=polkadot&l=fr'
   useEffect(() => {
     const urlNetworkSource = extractUrlValue('n');
-    if (urlNetworkSource && urlNetworkSource === 'polkadot' || 'kusama' || 'westend') {
+    if (
+      (urlNetworkSource && urlNetworkSource === 'polkadot') ||
+      'kusama' ||
+      'westend'
+    ) {
       setUrlNetworkExists(true);
       setUrlNetwork(urlNetworkSource);
     }
-    const _network = urlNetworkExists ? urlNetwork : network ? network.name : DefaultNetwork;
+    const _network = urlNetworkExists
+      ? urlNetwork
+      : network
+      ? network.name
+      : DefaultNetwork;
 
     // localStorage.setItem('network', _network);
-    // to-do: if _network == "polkadot" {change favicon}(switch case)
+
+    switch (_network) {
+      case 'kusama':
+        changeFavicon('kusama');
+        break;
+      case 'westend':
+        changeFavicon('westend');
+        break;
+      default:
+        changeFavicon('polkadot');
+    }
 
     const urlLngSource = extractUrlValue('l');
-    if (urlLngSource && urlLngSource === 'cn' || 'en') {
+    if ((urlLngSource && urlLngSource === 'cn') || 'en') {
       setUrlLngExists(true);
       setUrlLng(urlLngSource);
     }
-    const _lng = urlLngExists ? urlLng : getActiveLanguage() ? getActiveLanguage() : DefaultLocale;
+    const _lng = urlLngExists
+      ? urlLng
+      : getActiveLanguage()
+      ? getActiveLanguage()
+      : DefaultLocale;
   }, []);
+
+  const changeFavicon = (networkName: string) => {
+    const currentFavicons = document.querySelectorAll("link[rel*='icon']");
+    currentFavicons.forEach((e) => e.parentNode?.removeChild(e)); // get href only
+    const newFavicons = document.createElement('link');
+    newFavicons.href = networkName;
+    document.head.appendChild(newFavicons);
+  };
 
   // scroll to top of the window on every page change or network change
   useEffect(() => {
