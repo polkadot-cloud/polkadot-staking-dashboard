@@ -128,7 +128,7 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
           }
           r = Math.max(0, r - 60);
           handleRefresh();
-        }, 60000);
+        }, 2000);
         setStateWithRef(interval, setMinInterval, minIntervalRef);
       }
     }

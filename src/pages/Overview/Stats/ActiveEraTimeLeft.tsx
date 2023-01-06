@@ -12,25 +12,24 @@ import { useTranslation } from 'react-i18next';
 import { humanNumber } from 'Utils';
 
 const ActiveEraStatBox = () => {
-  const { status: connectionStatus } = useApi();
   const { t } = useTranslation('pages');
+  const { status: connectionStatus } = useApi();
   const { metrics } = useNetworkMetrics();
   const { activeEra } = metrics;
-  const {
-    timeleft: eraTimeLeft,
-    percentSurpassed,
-    percentRemaining,
-  } = useEraTimeLeft();
+  const { get: getEraTimeleft } = useEraTimeLeft();
 
   const { timeleft, setFromNow } = useTimeLeft({
     refreshInterval: 60,
-    refreshCallback: () => eraTimeLeft,
+    refreshCallback: () => getEraTimeleft().timeleft,
   });
 
   // re-set timer on era change (also covers network change).
   useEffect(() => {
-    setFromNow(fromNow(eraTimeLeft));
+    setFromNow(fromNow(getEraTimeleft().timeleft));
   }, [connectionStatus, activeEra]);
+
+  // NOTE: this maybe should be called in an interval. Needs more testing.
+  const { percentSurpassed, percentRemaining } = getEraTimeleft();
 
   const params = {
     label: t('overview.timeRemainingThisEra'),
