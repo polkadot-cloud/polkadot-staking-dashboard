@@ -1,6 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-
+/* eslint-disable */
 import { PAGES_CONFIG } from 'config/pages';
 import { DefaultLocale, DefaultNetwork, TitleDefault } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -60,21 +60,23 @@ export const RouterInner = () => {
     const _network = urlNetworkExists
       ? urlNetwork
       : network
-      ? network.name
-      : DefaultNetwork;
+        ? network.name
+        : DefaultNetwork;
+
+    console.log(_network);
 
     // localStorage.setItem('network', _network);
 
-    // switch (_network) {
-    //   case 'kusama':
-    //     changeFavicon('kusama');
-    //     break;
-    //   case 'westend':
-    //     changeFavicon('westend');
-    //     break;
-    //   default:
-    //     changeFavicon('polkadot');
-    // }
+    switch (_network) {
+      case 'Kusama':
+        changeFavicon('kusama');
+        break;
+      case 'Westend':
+        changeFavicon('westend');
+        break;
+      default:
+        changeFavicon('polkadot');
+    }
 
     const urlLngSource = extractUrlValue('l');
     if ((urlLngSource && urlLngSource === 'cn') || 'en') {
@@ -84,8 +86,8 @@ export const RouterInner = () => {
     const _lng = urlLngExists
       ? urlLng
       : getActiveLanguage()
-      ? getActiveLanguage()
-      : DefaultLocale;
+        ? getActiveLanguage()
+        : DefaultLocale;
   }, []);
 
   const changeFavicon = (networkName: string) => {
