@@ -323,6 +323,18 @@ export const VALIDATOR_COMMUNITY = [
     },
   },
   {
+    name: 'Sekoya Labs',
+    thumbnail: 'SekoyaLabs',
+    bio: 'Focused on improving blockchain decentralization, Sekoya Labs runs world class validators that return the best product for our nominators.',
+    email: 'tom@sekoyalabs.com',
+    twitter: '@sekoyalabs',
+    website: 'http://sekoyalabs.com',
+    validators: {
+      polkadot: ['15PeEsbJeU2BZDgoCmo6xdzsuRaZv1PxLaCUyFmfWPwkZPJ4'],
+      kusama: ['Dtf5sKpKrQ3mc9SK1WmRTR3oaKyAS3p27LEeWCLPF6gsDuU'],
+    },
+  },
+  {
     name: 'Stakely',
     thumbnail: 'Stakely',
     bio: '🔥 Professional validator highly experienced in PoS 🔥 Slashing protection & Eligible for airdrops | Learn with our staking guides, video tutorials and FAQs | Part of the commission of our nodes will go to our Multicoin Faucet funds and other tools 🌱 Carbon Neutral 🌱',
