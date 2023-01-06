@@ -51,9 +51,8 @@ export const RouterInner = () => {
   useEffect(() => {
     const urlNetworkSource = extractUrlValue('n');
     if (
-      (urlNetworkSource && urlNetworkSource === 'polkadot') ||
-      'kusama' ||
-      'westend'
+      urlNetworkSource &&
+      (urlNetworkSource === 'polkadot' || 'kusama' || 'westend')
     ) {
       setUrlNetworkExists(true);
       setUrlNetwork(urlNetworkSource);
@@ -66,16 +65,16 @@ export const RouterInner = () => {
 
     // localStorage.setItem('network', _network);
 
-    switch (_network) {
-      case 'kusama':
-        changeFavicon('kusama');
-        break;
-      case 'westend':
-        changeFavicon('westend');
-        break;
-      default:
-        changeFavicon('polkadot');
-    }
+    // switch (_network) {
+    //   case 'kusama':
+    //     changeFavicon('kusama');
+    //     break;
+    //   case 'westend':
+    //     changeFavicon('westend');
+    //     break;
+    //   default:
+    //     changeFavicon('polkadot');
+    // }
 
     const urlLngSource = extractUrlValue('l');
     if ((urlLngSource && urlLngSource === 'cn') || 'en') {
@@ -91,10 +90,16 @@ export const RouterInner = () => {
 
   const changeFavicon = (networkName: string) => {
     const currentFavicons = document.querySelectorAll("link[rel*='icon']");
-    currentFavicons.forEach((e) => e.parentNode?.removeChild(e)); // get href only
-    const newFavicons = document.createElement('link');
-    newFavicons.href = networkName;
-    document.head.appendChild(newFavicons);
+    currentFavicons.forEach((e) => {
+      const _network: any = e
+        .getAttribute('href')
+        ?.substring(
+          (e.getAttribute('href')?.indexOf('s') as number) + 2,
+          e.getAttribute('href')?.lastIndexOf('/')
+        );
+      const hlink: any = e.getAttribute('href')?.replace(_network, networkName);
+      e.setAttribute('href', hlink);
+    });
   };
 
   // scroll to top of the window on every page change or network change
