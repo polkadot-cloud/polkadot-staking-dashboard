@@ -42,7 +42,7 @@ import {
 export const RouterInner = () => {
   const { t, i18n } = useTranslation('base');
   const { pathname } = useLocation();
-  const { network, switchNetwork, updateNetworkMetaTags } = useApi();
+  const { network, switchNetwork, updateIconMetaTags } = useApi();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
 
   const [urlVarsInitiated, setUrlVarsInitiated] = useState<boolean>(false);
@@ -79,7 +79,7 @@ export const RouterInner = () => {
 
       // this only needs to happen when `n` is in URL and a change needs to take place.
       if (!isValid || urlIsDifferentNetwork) {
-        updateNetworkMetaTags(network.name as NetworkName);
+        updateIconMetaTags(network.name as NetworkName);
       }
 
       if (availableLanguages.find((n: any) => n[0] === lngFromUrl)) {

@@ -186,7 +186,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   //
   // Determines if icons need to be updated and the current network in place. Iterates icons and
   // updates network paths for icons. Updates theme color and ms title color.
-  const updateNetworkMetaTags = (name: NetworkName) => {
+  const updateIconMetaTags = (name: NetworkName) => {
     try {
       const icons = document.querySelectorAll("link[rel*='icon']");
 
@@ -236,7 +236,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       await api.disconnect();
     }
     setApi(null);
-    updateNetworkMetaTags(_network);
+    updateIconMetaTags(_network);
     setConnectionStatus('connecting');
     connect(_network, _isLightClient);
   };
@@ -283,7 +283,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
         network: network.meta,
         status: connectionStatus,
         isLightClient,
-        updateNetworkMetaTags,
+        updateIconMetaTags,
       }}
     >
       {children}
