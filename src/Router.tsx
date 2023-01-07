@@ -61,21 +61,6 @@ export const RouterInner = () => {
     }
   }, []);
 
-  // msapplication-TileColor and theme-color tags
-  const changeFavicon = (nw: NetworkName) => {
-    const currentFavicons = document.querySelectorAll("link[rel*='icon']");
-    currentFavicons.forEach((e) => {
-      const _network: any = e
-        .getAttribute('href')
-        ?.substring(
-          (e.getAttribute('href')?.indexOf('s') as number) + 2,
-          e.getAttribute('href')?.lastIndexOf('/')
-        );
-      const hlink: any = e.getAttribute('href')?.replace(_network, nw);
-      e.setAttribute('href', hlink);
-    });
-  };
-
   // scroll to top of the window on every page change or network change
   useEffect(() => {
     window.scrollTo(0, 0);

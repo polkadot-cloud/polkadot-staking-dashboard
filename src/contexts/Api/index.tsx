@@ -182,6 +182,21 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
+  // msapplication-TileColor and theme-color tags
+  const updateNetworkMetaTags = (nw: NetworkName) => {
+    const currentFavicons = document.querySelectorAll("link[rel*='icon']");
+    currentFavicons.forEach((e) => {
+      const _network: any = e
+        .getAttribute('href')
+        ?.substring(
+          (e.getAttribute('href')?.indexOf('s') as number) + 2,
+          e.getAttribute('href')?.lastIndexOf('/')
+        );
+      const hlink: any = e.getAttribute('href')?.replace(_network, nw);
+      e.setAttribute('href', hlink);
+    });
+  };
+
   // handle network switching
   const switchNetwork = async (
     _network: NetworkName,
@@ -194,6 +209,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       await api.disconnect();
     }
     setApi(null);
+    updateNetworkMetaTags(_network);
     setConnectionStatus('connecting');
     connect(_network, _isLightClient);
   };
