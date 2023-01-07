@@ -47,6 +47,7 @@ export const RouterInner = () => {
 
   const [urlVarsInitiated, setUrlVarsInitiated] = useState<boolean>(false);
 
+  // handle url variable initialisation.
   useEffect(() => {
     if (!urlVarsInitiated) {
       // TODO: move all this to a hook useUrlVars: initialise()
@@ -90,12 +91,12 @@ export const RouterInner = () => {
     }
   });
 
-  // scroll to top of the window on every page change or network change
+  // scroll to top of the window on every page change or network change.
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname, network]);
 
-  // set references to UI context and make available throughout app
+  // set references to UI context and make available throughout app.
   useEffect(() => {
     setContainerRefs({
       mainInterface: mainInterfaceRef,
