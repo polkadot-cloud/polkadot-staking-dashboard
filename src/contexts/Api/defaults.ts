@@ -29,6 +29,7 @@ export const defaultApiContext: APIContextInterface = {
   switchNetwork: async (_network, _isLightClient) => {
     await new Promise((resolve) => resolve(null));
   },
+  updateNetworkMetaTags: () => {},
   api: null,
   consts,
   isLightClient: false,

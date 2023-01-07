@@ -256,6 +256,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
         network: network.meta,
         status: connectionStatus,
         isLightClient,
+        updateNetworkMetaTags,
       }}
     >
       {children}

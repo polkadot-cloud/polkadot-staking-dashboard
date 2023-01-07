@@ -40,7 +40,7 @@ import {
 } from 'Wrappers';
 
 export const RouterInner = () => {
-  const { network, switchNetwork } = useApi();
+  const { network, switchNetwork, updateNetworkMetaTags } = useApi();
   const { pathname } = useLocation();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
   const { t, i18n } = useTranslation('base');
@@ -59,6 +59,7 @@ export const RouterInner = () => {
     if (availableLanguages.find((n: any) => n[0] === urlLngSource)) {
       changeLanguage(urlLngSource as string, i18n);
     }
+    updateNetworkMetaTags(network.name as NetworkName);
   }, []);
 
   // scroll to top of the window on every page change or network change

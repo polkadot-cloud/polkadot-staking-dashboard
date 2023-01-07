@@ -32,6 +32,7 @@ export interface APIContextInterface {
     _network: NetworkName,
     _isLightClient: boolean
   ) => Promise<void>;
+  updateNetworkMetaTags: (_network: NetworkName) => void;
   api: ApiPromise | null;
   consts: APIConstants;
   isReady: boolean;
