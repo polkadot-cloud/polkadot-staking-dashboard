@@ -19,7 +19,7 @@ import { Tooltip } from 'library/Tooltip';
 import { availableLanguages } from 'locale';
 import { changeLanguage } from 'locale/utils';
 import { Modal } from 'modals';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
@@ -40,27 +40,55 @@ import {
 } from 'Wrappers';
 
 export const RouterInner = () => {
-  const { network, switchNetwork, updateNetworkMetaTags } = useApi();
-  const { pathname } = useLocation();
-  const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
   const { t, i18n } = useTranslation('base');
+  const { pathname } = useLocation();
+  const { network, switchNetwork, updateNetworkMetaTags } = useApi();
+  const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
+
+  const [urlVarsInitiated, setUrlVarsInitiated] = useState<boolean>(false);
 
   useEffect(() => {
-    const urlNetworkSource = extractUrlValue('n');
-    if (
-      Object.values(NETWORKS).find(
-        (n: any) => n.name.toLowerCase() === urlNetworkSource
-      )
-    ) {
-      switchNetwork(urlNetworkSource as NetworkName, true);
-    }
+    if (!urlVarsInitiated) {
+      // TODO: move all this to a hook useUrlVars: initialise()
 
-    const urlLngSource = extractUrlValue('l');
-    if (availableLanguages.find((n: any) => n[0] === urlLngSource)) {
-      changeLanguage(urlLngSource as string, i18n);
+      // get url variables
+      const networkFromUrl = extractUrlValue('n');
+      const lngFromUrl = extractUrlValue('l');
+
+      // is the url-provided network valid or not.
+      const urlNetworkValid = !!Object.values(NETWORKS).find(
+        (n: any) => n.name.toLowerCase() === networkFromUrl
+      );
+
+      const urlIsDifferentNetwork =
+        urlNetworkValid && networkFromUrl !== network.name;
+
+      // if valid network differs from currently active network, switch to network.
+      if (urlNetworkValid && urlIsDifferentNetwork) {
+        switchNetwork(networkFromUrl as NetworkName, true);
+      }
+
+      // check if favicons are up to date.
+      const icons = document.querySelectorAll("link[rel*='icon']");
+      const isValid =
+        icons[0]
+          ?.getAttribute('href')
+          ?.toLowerCase()
+          .includes(network.name.toLowerCase()) ?? false;
+
+      // this only needs to happen when `n` is in URL and a change needs to take place.
+      if (!isValid || urlIsDifferentNetwork) {
+        updateNetworkMetaTags(network.name as NetworkName);
+      }
+
+      if (availableLanguages.find((n: any) => n[0] === lngFromUrl)) {
+        changeLanguage(lngFromUrl as string, i18n);
+      }
+      // -- end of initialise()
+
+      setUrlVarsInitiated(true);
     }
-    updateNetworkMetaTags(network.name as NetworkName);
-  }, []);
+  });
 
   // scroll to top of the window on every page change or network change
   useEffect(() => {

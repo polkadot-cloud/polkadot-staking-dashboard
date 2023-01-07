@@ -182,25 +182,46 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
-  const updateNetworkMetaTags = (nw: NetworkName) => {
-    const currentFavicons = document.querySelectorAll("link[rel*='icon']");
-    currentFavicons.forEach((e) => {
-      const _network: any = e
-        .getAttribute('href')
-        ?.substring(
-          (e.getAttribute('href')?.indexOf('s') as number) + 2,
-          e.getAttribute('href')?.lastIndexOf('/')
-        );
-      const hlink: any = e.getAttribute('href')?.replace(_network, nw);
-      e.setAttribute('href', hlink);
-    });
-    // TO-DO: add colors as parameters
-    const currentTileColor = document.querySelector(
-      "meta[name='msapplication-TileColor']"
-    );
-    currentTileColor?.setAttribute('content', '#e6007a');
-    const themeColor = document.querySelector("meta[name='theme-color']");
-    themeColor?.setAttribute('content', '#fff');
+  // Update head meta tags to reflect the current network.
+  //
+  // Determines if icons need to be updated and the current network in place. Iterates icons and
+  // updates network paths for icons. Updates theme color and ms title color.
+  const updateNetworkMetaTags = (name: NetworkName) => {
+    try {
+      const icons = document.querySelectorAll("link[rel*='icon']");
+
+      // TODO: utility function: networkFromMetaTags(name: NetworkName): NetworkName | null;
+      // determine current network used in meta tags.
+      let current = '';
+      if (icons[0]) {
+        Object.values(NETWORKS).every((n: Network) => {
+          if (icons[0].getAttribute('href')?.includes(n.name.toLowerCase())) {
+            current = n.name.toLowerCase();
+            return false;
+          }
+          return true;
+        });
+      }
+
+      // if current network is determined, commit network update in `href` values.
+      if (current.length) {
+        icons.forEach((e) => {
+          const href = e.getAttribute('href');
+          if (href) {
+            e.setAttribute('href', href.replace(current, name.toLowerCase()));
+          }
+        });
+        // TODO: add colors as parameters
+        document
+          .querySelector("meta[name='msapplication-TileColor']")
+          ?.setAttribute('content', '#e6007a');
+        document
+          .querySelector("meta[name='theme-color']")
+          ?.setAttribute('content', '#fff');
+      }
+    } catch (e) {
+      /* error */
+    }
   };
 
   // handle network switching
