@@ -182,7 +182,6 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
-  // msapplication-TileColor and theme-color tags
   const updateNetworkMetaTags = (nw: NetworkName) => {
     const currentFavicons = document.querySelectorAll("link[rel*='icon']");
     currentFavicons.forEach((e) => {
@@ -195,6 +194,13 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       const hlink: any = e.getAttribute('href')?.replace(_network, nw);
       e.setAttribute('href', hlink);
     });
+    // TO-DO: add colors as parameters
+    const currentTileColor = document.querySelector(
+      "meta[name='msapplication-TileColor']"
+    );
+    currentTileColor?.setAttribute('content', '#e6007a');
+    const themeColor = document.querySelector("meta[name='theme-color']");
+    themeColor?.setAttribute('content', '#fff');
   };
 
   // handle network switching
