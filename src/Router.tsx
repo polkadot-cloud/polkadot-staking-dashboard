@@ -1,8 +1,9 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { NETWORKS } from 'config/networks';
 import { PAGES_CONFIG } from 'config/pages';
-import { DefaultLocale, DefaultNetwork, TitleDefault } from 'consts';
+import { TitleDefault } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { AnimatePresence } from 'framer-motion';
@@ -15,9 +16,10 @@ import Notifications from 'library/Notifications';
 import { Overlay } from 'library/Overlay';
 import SideMenu from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
-import { getActiveLanguage } from 'locale/utils';
+import { availableLanguages } from 'locale';
+import { changeLanguage } from 'locale/utils';
 import { Modal } from 'modals';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
@@ -28,6 +30,7 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
+import { NetworkName } from 'types';
 import { extractUrlValue } from 'Utils';
 import {
   BodyInterfaceWrapper,
@@ -37,60 +40,29 @@ import {
 } from 'Wrappers';
 
 export const RouterInner = () => {
-  const { network } = useApi();
+  const { network, switchNetwork } = useApi();
   const { pathname } = useLocation();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
-  const { t } = useTranslation('base');
+  const { t, i18n } = useTranslation('base');
 
-  const [urlNetworkExists, setUrlNetworkExists] = useState<boolean>(false);
-  const [urlNetwork, setUrlNetwork] = useState<any>('');
-  const [urlLngExists, setUrlLngExists] = useState<boolean>(false);
-  const [urlLng, setUrlLng] = useState<any>('');
-
-  // staking.polkadot.network?n=polkadot&l=fr'
   useEffect(() => {
     const urlNetworkSource = extractUrlValue('n');
     if (
-      urlNetworkSource &&
-      (urlNetworkSource === 'polkadot' || 'kusama' || 'westend')
+      Object.values(NETWORKS).find(
+        (n: any) => n.name.toLowerCase() === urlNetworkSource
+      )
     ) {
-      setUrlNetworkExists(true);
-      setUrlNetwork(urlNetworkSource);
-    }
-    const _network = urlNetworkExists
-      ? urlNetwork
-      : network
-      ? network.name.toLowerCase()
-      : DefaultNetwork;
-
-    localStorage.setItem('network', _network);
-
-    switch (_network) {
-      case 'kusama':
-        changeFavicon('kusama');
-        break;
-      case 'westend':
-        changeFavicon('westend');
-        break;
-      default:
-        changeFavicon('polkadot');
+      switchNetwork(urlNetworkSource as NetworkName, true);
     }
 
     const urlLngSource = extractUrlValue('l');
-    if (urlLngSource && (urlLngSource === 'cn' || 'en')) {
-      setUrlLngExists(true);
-      setUrlLng(urlLngSource);
+    if (availableLanguages.find((n: any) => n[0] === urlLngSource)) {
+      changeLanguage(urlLngSource as string, i18n);
     }
-    const _lng = urlLngExists
-      ? urlLng
-      : getActiveLanguage()
-      ? getActiveLanguage()
-      : DefaultLocale;
-
-    localStorage.setItem('lng', _lng);
   }, []);
 
-  const changeFavicon = (networkName: string) => {
+  // msapplication-TileColor and theme-color tags
+  const changeFavicon = (nw: NetworkName) => {
     const currentFavicons = document.querySelectorAll("link[rel*='icon']");
     currentFavicons.forEach((e) => {
       const _network: any = e
@@ -99,7 +71,7 @@ export const RouterInner = () => {
           (e.getAttribute('href')?.indexOf('s') as number) + 2,
           e.getAttribute('href')?.lastIndexOf('/')
         );
-      const hlink: any = e.getAttribute('href')?.replace(_network, networkName);
+      const hlink: any = e.getAttribute('href')?.replace(_network, nw);
       e.setAttribute('href', hlink);
     });
   };
