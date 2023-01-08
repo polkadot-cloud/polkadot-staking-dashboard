@@ -210,13 +210,15 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
             e.setAttribute('href', href.replace(current, name.toLowerCase()));
           }
         });
-        // TODO: add colors as parameters
+
+        const c = NETWORKS[name].colors.primary.light;
+
         document
           .querySelector("meta[name='msapplication-TileColor']")
-          ?.setAttribute('content', '#e6007a');
+          ?.setAttribute('content', c);
         document
           .querySelector("meta[name='theme-color']")
-          ?.setAttribute('content', '#fff');
+          ?.setAttribute('content', c);
       }
     } catch (e) {
       /* error */
