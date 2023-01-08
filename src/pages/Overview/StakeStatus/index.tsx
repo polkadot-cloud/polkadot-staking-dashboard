@@ -19,7 +19,7 @@ import { StatusWrapper } from './Wrappers';
 
 export const StakeStatus = () => {
   const navigate = useNavigate();
-  const { isSyncing } = useUi();
+  const { networkSyncing, isSyncing } = useUi();
   const { activeAccount } = useConnect();
   const { openModalWith } = useModal();
   const { membership } = usePoolMemberships();
@@ -54,7 +54,7 @@ export const StakeStatus = () => {
   return (
     <CardWrapper>
       <StatusWrapper includeBorder={showTips}>
-        {isSyncing ? (
+        {networkSyncing ? (
           <Item
             leftIcon={{ show: true, active: false }}
             text="Syncing Status..."
@@ -69,36 +69,47 @@ export const StakeStatus = () => {
               />
             ) : (
               <>
-                {!isStaking ? (
-                  <Item
-                    leftIcon={{ show: true, active: false }}
-                    text="Not Staking"
-                  />
+                {isSyncing ? (
+                  <>
+                    <Item
+                      leftIcon={{ show: true, active: false }}
+                      text="Syncing Status..."
+                    />
+                  </>
                 ) : (
                   <>
-                    {isNominating() ? (
+                    {!isStaking ? (
                       <Item
-                        leftIcon={{ show: true, active: true }}
-                        text={
-                          getNominationStatus(activeAccount, 'nominator')
-                            .message
-                        }
-                        ctaText="Manage"
-                        onClick={() => navigate('/nominate')}
+                        leftIcon={{ show: true, active: false }}
+                        text="Not Staking"
                       />
-                    ) : null}
-                    {membership ? (
-                      <Item
-                        leftIcon={{ show: true, active: true }}
-                        text={`Member of ${
-                          poolDisplay() === ''
-                            ? `Pool ${membership.poolId}`
-                            : poolDisplay()
-                        }`}
-                        ctaText="Manage"
-                        onClick={() => navigate('/pools')}
-                      />
-                    ) : null}
+                    ) : (
+                      <>
+                        {isNominating() ? (
+                          <Item
+                            leftIcon={{ show: true, active: true }}
+                            text={
+                              getNominationStatus(activeAccount, 'nominator')
+                                .message
+                            }
+                            ctaText="Manage"
+                            onClick={() => navigate('/nominate')}
+                          />
+                        ) : null}
+                        {membership ? (
+                          <Item
+                            leftIcon={{ show: true, active: true }}
+                            text={`Member of ${
+                              poolDisplay() === ''
+                                ? `Pool ${membership.poolId}`
+                                : poolDisplay()
+                            }`}
+                            ctaText="Manage"
+                            onClick={() => navigate('/pools')}
+                          />
+                        ) : null}
+                      </>
+                    )}
                   </>
                 )}
               </>
