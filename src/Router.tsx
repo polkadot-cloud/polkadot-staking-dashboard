@@ -3,7 +3,6 @@
 
 import { NETWORKS } from 'config/networks';
 import { PAGES_CONFIG } from 'config/pages';
-import { TitleDefault } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { AnimatePresence } from 'framer-motion';
@@ -152,7 +151,9 @@ export const RouterInner = () => {
                           transition={{ duration: 0.2 }}
                         >
                           <Helmet>
-                            <title>{`${t(key)} : ${TitleDefault}`}</title>
+                            <title>{`${t(key)} : ${t('title', {
+                              context: `${network.name.toLowerCase()}`,
+                            })}`}</title>
                           </Helmet>
                           <Entry page={page} />
                         </PageWrapper>
