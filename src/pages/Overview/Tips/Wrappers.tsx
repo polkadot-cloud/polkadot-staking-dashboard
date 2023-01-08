@@ -22,7 +22,7 @@ export const ItemsWrapper = styled(motion.div)`
   margin: 0.25rem 0 0rem 0;
 `;
 export const ItemWrapper = styled(motion.div)`
-  padding: 0;
+  padding: 0 0.25rem;
   flex-basis: 100%;
   &:last-child {
     margin-right: 0.25rem;

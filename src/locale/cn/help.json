@@ -81,13 +81,6 @@
           "用至少{EXISTENTIAL_DEPOSIT} {NETWORK_UNIT}将使其符合资格并可选择作为Controller."
         ]
       ],
-      "dashboardTips": [
-        "实用提示",
-        [
-          "该应用将为您提供提示，帮助您完成在波卡抵押中的每一步.",
-          "您可通过侧菜单左下角的齿轮图标访问设置中关闭或启用提示."
-        ]
-      ],
       "epoch": [
         "Epoch",
         [

@@ -12,7 +12,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import useFillVariables from 'library/Hooks/useFillVariables';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import OpenHelpIcon from 'library/OpenHelpIcon';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -166,10 +166,10 @@ export const Tips = () => {
 
   return (
     <CardWrapper>
-      <CardHeaderWrapper withAction>
+      <CardHeaderWrapper>
         <h4>
-          {t('module.tips', { ns: 'tips' })}
-          <OpenHelpIcon helpKey="Dashboard Tips" />
+          Status
+          <OpenHelpIcon helpKey="Status" />
         </h4>
       </CardHeaderWrapper>
 
