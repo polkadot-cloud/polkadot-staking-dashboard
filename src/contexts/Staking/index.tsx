@@ -344,7 +344,7 @@ export const StakingProvider = ({
    */
   const getNominationsStatusFromTargets = (
     who: MaybeAccount,
-    _targets: [any]
+    _targets: Array<any>
   ) => {
     const statuses: { [key: string]: string } = {};
 

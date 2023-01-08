@@ -22,6 +22,7 @@ import { Syncing } from './Syncing';
 import { TipsWrapper } from './Wrappers';
 
 export const Tips = () => {
+  const { t, i18n } = useTranslation();
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { networkSyncing } = useUi();
@@ -32,7 +33,6 @@ export const Tips = () => {
   const { getTransferOptions } = useTransferOptions();
   const { minNominatorBond } = staking;
   const transferOptions = getTransferOptions(activeAccount);
-  const { t, i18n } = useTranslation();
 
   // multiple tips per row is currently turned off.
   const multiTipsPerRow = false;

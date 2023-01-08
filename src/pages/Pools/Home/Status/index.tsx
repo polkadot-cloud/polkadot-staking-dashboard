@@ -12,41 +12,33 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
+import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, rmCommas } from 'Utils';
+import { planckBnToUnit } from 'Utils';
 import { Separator } from 'Wrappers';
 import { Membership } from './Membership';
 import { useStatusButtons } from './useStatusButtons';
 
 export const Status = ({ height }: { height: number }) => {
+  const { t } = useTranslation('pages');
   const { network, isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { units, unit } = network;
   const { poolsSyncing } = useUi();
   const { selectedActivePool, poolNominations } = useActivePools();
   const { openModalWith } = useModal();
-  const { getNominationsStatusFromTargets, eraStakers } = useStaking();
-  const { meta, validators } = useValidators();
-  const { stakers } = eraStakers;
   const poolStash = selectedActivePool?.addresses?.stash || '';
-  const { t } = useTranslation('pages');
-
-  const nominationStatuses = getNominationsStatusFromTargets(
+  const { getNominationStatus } = useNominationStatus();
+  const { earningRewards, activeNominees } = getNominationStatus(
     poolStash,
-    poolNominations?.targets ?? []
+    'pool'
   );
 
   // determine pool state
   const poolState = selectedActivePool?.bondedPool?.state ?? null;
-
-  const activeNominees = Object.entries(nominationStatuses)
-    .map(([k, v]: any) => (v === 'active' ? k : false))
-    .filter((v) => v !== false);
 
   const isNominating = !!poolNominations?.targets?.length;
 
@@ -95,41 +87,6 @@ export const Status = ({ height }: { height: number }) => {
       break;
     default:
       poolStateIcon = undefined;
-  }
-
-  // check if rewards are being earned
-  const stake = meta.validators_browse?.stake ?? [];
-  const stakeSynced = stake.length > 0 ?? false;
-
-  let earningRewards = false;
-  if (stakeSynced) {
-    for (const nominee of activeNominees) {
-      const validator = validators.find((v: any) => v.address === nominee);
-      if (validator) {
-        const batchIndex = validators.indexOf(validator);
-        const nomineeMeta = stake[batchIndex];
-        const { lowestReward } = nomineeMeta;
-
-        const validatorInEra =
-          stakers.find((s: any) => s.address === nominee) || null;
-
-        if (validatorInEra) {
-          const { others } = validatorInEra;
-          const stakedValue =
-            others?.find((o: any) => o.who === poolStash)?.value ?? false;
-          if (stakedValue) {
-            const stakedValueBase = planckBnToUnit(
-              new BN(rmCommas(stakedValue)),
-              network.units
-            );
-            if (stakedValueBase >= lowestReward) {
-              earningRewards = true;
-              break;
-            }
-          }
-        }
-      }
-    }
   }
 
   // determine pool status - left side
