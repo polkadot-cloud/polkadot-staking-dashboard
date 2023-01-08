@@ -5,7 +5,7 @@ import { decodeAddress, encodeAddress } from '@polkadot/keyring';
 import { hexToU8a, isHex, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import BN from 'bn.js';
 import { MutableRefObject } from 'react';
-import { AnyMetaBatch } from 'types/index';
+import { AnyMetaBatch, NetworkName } from 'types/index';
 
 export const clipAddress = (val: string) => {
   if (typeof val !== 'string') {
@@ -227,4 +227,14 @@ export const camelize = (str: string) => {
       index === 0 ? word.toLowerCase() : word.toUpperCase()
     )
     .replace(/\s+/g, '');
+};
+
+export const isNetworkFromMetaTags = (name: NetworkName) => {
+  const icons = document.querySelectorAll("link[rel*='icon']");
+  const isValid =
+    icons[0]
+      ?.getAttribute('href')
+      ?.toLowerCase()
+      .includes(name.toLowerCase()) ?? false;
+  return isValid;
 };

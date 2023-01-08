@@ -23,6 +23,7 @@ import {
 } from 'contexts/Api/types';
 import React, { useEffect, useState } from 'react';
 import { AnyApi, Network, NetworkName } from 'types';
+import { isNetworkFromMetaTags } from 'Utils';
 import * as defaults from './defaults';
 
 export const APIContext = React.createContext<APIContextInterface>(
@@ -190,12 +191,10 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const icons = document.querySelectorAll("link[rel*='icon']");
 
-      // TODO: utility function: networkFromMetaTags(name: NetworkName): NetworkName | null;
-      // determine current network used in meta tags.
       let current = '';
       if (icons[0]) {
         Object.values(NETWORKS).every((n: Network) => {
-          if (icons[0].getAttribute('href')?.includes(n.name.toLowerCase())) {
+          if (isNetworkFromMetaTags(n.name as NetworkName)) {
             current = n.name.toLowerCase();
             return false;
           }
