@@ -1,16 +1,12 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useApi } from 'contexts/Api';
 import * as refreshChangeJson from 'img/json/refresh-change-outline.json';
 import { useTranslation } from 'react-i18next';
 import Lottie from 'react-lottie';
 import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers';
 
-export const Syncing = ({ showTitle }: { showTitle: boolean }) => {
-  const {
-    network: { name },
-  } = useApi();
+export const Syncing = () => {
   const { t } = useTranslation('tips');
 
   const animateOptions = {
@@ -35,21 +31,16 @@ export const Syncing = ({ showTitle }: { showTitle: boolean }) => {
     >
       <ItemWrapper>
         <ItemInnerWrapper inactive>
-          <section style={{ paddingRight: '1.25rem' }}>
+          <section style={{ paddingRight: '0.5rem' }}>
             <Lottie
               options={animateOptions}
-              width="2.2rem"
-              height="2.2rem"
+              width="1.6rem"
+              height="1.6rem"
               isStopped={false}
               isPaused={false}
             />
           </section>
           <section>
-            {showTitle ? (
-              <div className="title">
-                <h3>{t('module.syncingWith', { network: name })}</h3>
-              </div>
-            ) : null}
             <div className="desc">
               <h4>{t('module.oneMoment')}...</h4>
             </div>

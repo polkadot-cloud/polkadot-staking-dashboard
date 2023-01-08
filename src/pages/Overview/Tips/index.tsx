@@ -176,7 +176,7 @@ export const Tips = () => {
       <TipsWrapper>
         <div style={{ flexGrow: 1 }}>
           {networkSyncing ? (
-            <Syncing showTitle={false} />
+            <Syncing />
           ) : (
             <Items
               items={itemsDisplay}

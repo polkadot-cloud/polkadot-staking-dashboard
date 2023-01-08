@@ -9,7 +9,7 @@ import { Tip } from 'library/Tips/Tip';
 import React, { useEffect, useState } from 'react';
 import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers';
 
-export const ItemsInner = ({ items, page, showTitle }: any) => {
+export const ItemsInner = ({ items, page }: any) => {
   const controls = useAnimationControls();
 
   // stores whether this is the initial display of tips
@@ -47,7 +47,6 @@ export const ItemsInner = ({ items, page, showTitle }: any) => {
           {...item}
           controls={controls}
           initial={initial}
-          showTitle={showTitle}
         />
       ))}
     </ItemsWrapper>
@@ -61,7 +60,6 @@ const Item = ({
   index,
   controls,
   initial,
-  showTitle,
 }: any) => {
   const { openOverlayWith } = useOverlay();
   const [isStopped, setIsStopped] = useState(true);
@@ -100,11 +98,6 @@ const Item = ({
       <ItemInnerWrapper>
         <section />
         <section>
-          {showTitle ? (
-            <div className="title">
-              <h3>{title}</h3>
-            </div>
-          ) : null}
           <div className="desc">
             <h4>
               {subtitle}
