@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { NETWORKS } from 'config/networks';
 import { PAGES_CONFIG } from 'config/pages';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
@@ -9,14 +8,13 @@ import { AnimatePresence } from 'framer-motion';
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
 import { Headers } from 'library/Headers';
 import { Help } from 'library/Help';
+import { useUrlVars } from 'library/Hooks/useUrlVars';
 import { Menu } from 'library/Menu';
 import { NetworkBar } from 'library/NetworkBar';
 import Notifications from 'library/Notifications';
 import { Overlay } from 'library/Overlay';
 import SideMenu from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
-import { availableLanguages } from 'locale';
-import { changeLanguage } from 'locale/utils';
 import { Modal } from 'modals';
 import { useEffect, useRef, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -29,8 +27,6 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
-import { NetworkName } from 'types';
-import { extractUrlValue } from 'Utils';
 import {
   BodyInterfaceWrapper,
   MainInterfaceWrapper,
@@ -39,52 +35,18 @@ import {
 } from 'Wrappers';
 
 export const RouterInner = () => {
-  const { t, i18n } = useTranslation('base');
+  const { t } = useTranslation('base');
   const { pathname } = useLocation();
-  const { network, switchNetwork, updateIconMetaTags } = useApi();
+  const { network } = useApi();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
+  const { initialise } = useUrlVars();
 
   const [urlVarsInitiated, setUrlVarsInitiated] = useState<boolean>(false);
 
   // handle url variable initialisation.
   useEffect(() => {
     if (!urlVarsInitiated) {
-      // TODO: move all this to a hook useUrlVars: initialise()
-
-      // get url variables
-      const networkFromUrl = extractUrlValue('n');
-      const lngFromUrl = extractUrlValue('l');
-
-      // is the url-provided network valid or not.
-      const urlNetworkValid = !!Object.values(NETWORKS).find(
-        (n: any) => n.name.toLowerCase() === networkFromUrl
-      );
-
-      const urlIsDifferentNetwork =
-        urlNetworkValid && networkFromUrl !== network.name;
-
-      // if valid network differs from currently active network, switch to network.
-      if (urlNetworkValid && urlIsDifferentNetwork) {
-        switchNetwork(networkFromUrl as NetworkName, true);
-      }
-
-      // check if favicons are up to date.
-      const icons = document.querySelectorAll("link[rel*='icon']");
-      const isValid =
-        icons[0]
-          ?.getAttribute('href')
-          ?.toLowerCase()
-          .includes(network.name.toLowerCase()) ?? false;
-
-      // this only needs to happen when `n` is in URL and a change needs to take place.
-      if (!isValid || urlIsDifferentNetwork) {
-        updateIconMetaTags(network.name as NetworkName);
-      }
-
-      if (availableLanguages.find((n: any) => n[0] === lngFromUrl)) {
-        changeLanguage(lngFromUrl as string, i18n);
-      }
-      // -- end of initialise()
+      initialise();
 
       setUrlVarsInitiated(true);
     }
