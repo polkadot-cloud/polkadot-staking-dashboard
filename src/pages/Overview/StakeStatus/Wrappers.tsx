@@ -9,8 +9,12 @@ export const StatusWrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
   margin-top: 0.25rem;
-  > div:last-child {
-    margin-bottom: 0;
+  position: relative;
+  top: -0.1rem;
+  > div {
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 `;
 
@@ -20,8 +24,8 @@ export const StatusRowWrapper = styled.div`
   flex-flow: row nowrap;
   align-items: center;
   border-bottom: 1px solid ${borderPrimary};
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
   > div {
     display: flex;
     flex-flow: row nowrap;

@@ -6,12 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
-import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
-import OpenHelpIcon from 'library/OpenHelpIcon';
 import { useNavigate } from 'react-router-dom';
+import { determinePoolDisplay } from 'Utils';
 import { Tips } from './Tips';
 import { StatusRowWrapper, StatusWrapper } from './Wrappers';
 
@@ -22,16 +24,29 @@ export const StakeStatus = () => {
   const { membership } = usePoolMemberships();
   const { isNominating } = useStaking();
   const { getNominationStatus } = useNominationStatus();
+  const { bondedPools, meta } = useBondedPools();
+  const { selectedActivePool } = useActivePools();
   const isStaking = isNominating() || membership;
+
+  const poolDisplay = () => {
+    if (selectedActivePool) {
+      const pool = bondedPools.find((p: any) => {
+        return p.addresses.stash === selectedActivePool.addresses.stash;
+      });
+      if (pool) {
+        const metadata = meta.bonded_pools?.metadata ?? [];
+        const batchIndex = bondedPools.indexOf(pool);
+        return determinePoolDisplay(
+          selectedActivePool.addresses.stash,
+          metadata[batchIndex]
+        );
+      }
+    }
+    return '';
+  };
 
   return (
     <CardWrapper>
-      <CardHeaderWrapper>
-        <h4>
-          Status
-          <OpenHelpIcon helpKey="Status" />
-        </h4>
-      </CardHeaderWrapper>
       <StatusWrapper>
         {!activeAccount ? (
           <StatusRowWrapper>
@@ -56,12 +71,12 @@ export const StakeStatus = () => {
                   <FontAwesomeIcon
                     icon={faCircle}
                     transform="shrink-4"
-                    style={{ marginRight: '0.6rem', opacity: 0.1 }}
+                    style={{ marginRight: '0.75rem', opacity: 0.1 }}
                   />
                   <h3>Not Staking</h3>
                 </div>
                 <div>
-                  <ButtonInvertRounded
+                  {/* <ButtonInvertRounded
                     text="Start Staking"
                     iconRight={faChevronRight}
                     iconTransform="shrink-4"
@@ -69,7 +84,7 @@ export const StakeStatus = () => {
                     onClick={() => {
                       // TODO: open start staking overlay.
                     }}
-                  />
+                  /> */}
                 </div>
               </StatusRowWrapper>
             ) : (
@@ -81,7 +96,7 @@ export const StakeStatus = () => {
                         icon={faCircle}
                         transform="shrink-4"
                         color="green"
-                        style={{ marginRight: '0.6rem', opacity: 1 }}
+                        style={{ marginRight: '0.75rem', opacity: 1 }}
                       />
                       <h3>
                         {
@@ -101,31 +116,31 @@ export const StakeStatus = () => {
                     </div>
                   </StatusRowWrapper>
                 ) : null}
-                <StatusRowWrapper>
-                  <div>
-                    <FontAwesomeIcon
-                      icon={faCircle}
-                      transform="shrink-4"
-                      color="green"
-                      style={{ marginRight: '0.6rem', opacity: 1 }}
-                    />
-                    <h3>
-                      Member of Pool:{' '}
-                      <span style={{ opacity: 0.75 }}>
-                        JKRB | Tower Bridge Pool 🇬🇧
-                      </span>
-                    </h3>
-                  </div>
-                  <div>
-                    <ButtonInvertRounded
-                      text="Manage"
-                      iconRight={faChevronRight}
-                      iconTransform="shrink-4"
-                      lg
-                      onClick={() => navigate('/pools')}
-                    />
-                  </div>
-                </StatusRowWrapper>
+                {membership ? (
+                  <StatusRowWrapper>
+                    <div>
+                      <FontAwesomeIcon
+                        icon={faCircle}
+                        transform="shrink-4"
+                        color="green"
+                        style={{ marginRight: '0.75rem', opacity: 1 }}
+                      />
+                      <h3>
+                        Member of Pool:{' '}
+                        <span style={{ opacity: 0.75 }}>{poolDisplay()}</span>
+                      </h3>
+                    </div>
+                    <div>
+                      <ButtonInvertRounded
+                        text="Manage"
+                        iconRight={faChevronRight}
+                        iconTransform="shrink-4"
+                        lg
+                        onClick={() => navigate('/pools')}
+                      />
+                    </div>
+                  </StatusRowWrapper>
+                ) : null}
               </>
             )}
           </>
