@@ -11,7 +11,6 @@ import { usePlugins } from 'contexts/Plugins';
 import { Title } from 'library/Overlay/Title';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Separator } from 'Wrappers';
 
 export const Tip = ({ title, description }: any) => {
   const { t } = useTranslation();
@@ -55,8 +54,7 @@ export const Tip = ({ title, description }: any) => {
                 {item}
               </h4>
             ))}
-            <Separator style={{ marginTop: '1.5rem' }} />
-            <div style={{ marginTop: '1rem' }}>
+            <div style={{ marginTop: '1.75rem' }}>
               <ButtonSecondary
                 marginRight
                 text={t('module.disableTips', { ns: 'tips' })}
