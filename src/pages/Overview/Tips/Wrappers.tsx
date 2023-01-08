@@ -1,14 +1,24 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import {
   backgroundLabel,
+  borderPrimary,
   networkColor,
   textPrimary,
   textSecondary,
 } from 'theme';
+
+export const TipsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  position: relative;
+  top: 0.35rem;
+`;
 
 export const ItemsWrapper = styled(motion.div)`
   width: 100%;
@@ -26,12 +36,8 @@ export const ItemWrapper = styled(motion.div)`
 `;
 
 export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
-  border-radius: 1.25rem;
-  transition: border 0.05s;
   display: flex;
   flex-flow: row wrap;
-  height: 4rem;
-  transition: border 0.2s;
 
   > section {
     height: 100%;
@@ -122,7 +128,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           height: 1.85rem;
           max-width: 100%;
           margin: 0;
-          padding: 0.15rem 6.3rem 0rem 0;
+          padding: 0.15rem 1.75rem 0rem 0;
           text-align: left;
           font-size: 1.05rem;
           text-overflow: ellipsis;
@@ -132,16 +138,12 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
         .more {
           position: absolute;
           right: 0.2rem;
-          top: 0rem;
+          top: 0.43rem;
           display: flex;
           flex-flow: row nowrap;
           align-items: center;
-          border: 1px solid ${networkColor};
           color: ${networkColor};
-          border-radius: 1.5rem;
-          padding: 0rem 0.8rem;
           font-size: 1rem;
-
           > svg {
             margin-left: 0.4rem;
           }
@@ -152,31 +154,28 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
 `;
 
 export const PageToggleWrapper = styled.div`
-  background: ${backgroundLabel};
   color: ${textSecondary};
-  padding: 0.25rem 0.5rem;
+  padding: 0.1rem 0.1rem;
   border-radius: 1.5rem;
+  border: 1px solid ${borderPrimary};
   position: relative;
-  top: -0.2rem;
+  top: 0.1rem;
   display: flex;
   flex-flow: row wrap;
-  margin-left: 0.75rem;
+  margin-left: 0.5rem;
 
   > button {
     margin: 0 0.5rem;
     opacity: 0.75;
     font-size: 1.1rem;
     transition: color 0.2s;
-
     > svg {
       color: ${textSecondary};
     }
-
     &:hover {
       opacity: 1;
       color: ${networkColor};
     }
-
     &:disabled {
       color: ${textSecondary};
       opacity: 0.1;
@@ -184,6 +183,9 @@ export const PageToggleWrapper = styled.div`
   }
 
   h4 {
+    @media (max-width: ${SmallFontSizeMaxWidth}px) {
+      display: none;
+    }
     margin: 0;
     span {
       margin: 0 0.5rem;

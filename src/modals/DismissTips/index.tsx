@@ -30,7 +30,7 @@ export const DismissTips = () => {
           <div className="buttons">
             <ButtonSubmit
               marginRight
-              text={t('module.disableDashboardTips')}
+              text={t('module.disableTips')}
               onClick={() => {
                 togglePlugin('tips');
                 setStatus(2);

@@ -1,16 +1,15 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useOverlay } from 'contexts/Overlay';
 import { motion, useAnimationControls } from 'framer-motion';
 import { Tip } from 'library/Tips/Tip';
 import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers';
 
-export const ItemsInner = ({ items, page }: any) => {
+export const ItemsInner = ({ items, page, showTitle }: any) => {
   const controls = useAnimationControls();
 
   // stores whether this is the initial display of tips
@@ -48,6 +47,7 @@ export const ItemsInner = ({ items, page }: any) => {
           {...item}
           controls={controls}
           initial={initial}
+          showTitle={showTitle}
         />
       ))}
     </ItemsWrapper>
@@ -61,10 +61,9 @@ const Item = ({
   index,
   controls,
   initial,
+  showTitle,
 }: any) => {
   const { openOverlayWith } = useOverlay();
-  const { t } = useTranslation('tips');
-
   const [isStopped, setIsStopped] = useState(true);
 
   useEffect(() => {
@@ -101,9 +100,11 @@ const Item = ({
       <ItemInnerWrapper>
         <section />
         <section>
-          <div className="title">
-            <h3>{title}</h3>
-          </div>
+          {showTitle ? (
+            <div className="title">
+              <h3>{title}</h3>
+            </div>
+          ) : null}
           <div className="desc">
             <h4>
               {subtitle}
@@ -118,8 +119,10 @@ const Item = ({
                 type="button"
                 className="more"
               >
-                {t('module.more')}
-                <FontAwesomeIcon icon={faChevronRight} transform="shrink-2" />
+                <FontAwesomeIcon
+                  icon={faExternalLinkAlt}
+                  transform="shrink-1"
+                />
               </motion.button>
             </h4>
           </div>

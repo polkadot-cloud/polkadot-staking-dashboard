@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import Lottie from 'react-lottie';
 import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers';
 
-export const Syncing = () => {
+export const Syncing = ({ showTitle }: { showTitle: boolean }) => {
   const {
     network: { name },
   } = useApi();
@@ -45,9 +45,11 @@ export const Syncing = () => {
             />
           </section>
           <section>
-            <div className="title">
-              <h3>{t('module.syncingWith', { network: name })}</h3>
-            </div>
+            {showTitle ? (
+              <div className="title">
+                <h3>{t('module.syncingWith', { network: name })}</h3>
+              </div>
+            ) : null}
             <div className="desc">
               <h4>{t('module.oneMoment')}...</h4>
             </div>
