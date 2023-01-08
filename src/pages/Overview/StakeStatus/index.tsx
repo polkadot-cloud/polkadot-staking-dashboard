@@ -19,7 +19,7 @@ import { StatusWrapper } from './Wrappers';
 
 export const StakeStatus = () => {
   const navigate = useNavigate();
-  const { networkSyncing } = useUi();
+  const { networkSyncing, isSyncing } = useUi();
   const { activeAccount } = useConnect();
   const { openModalWith } = useModal();
   const { membership } = usePoolMemberships();
@@ -54,7 +54,7 @@ export const StakeStatus = () => {
   return (
     <CardWrapper>
       <StatusWrapper includeBorder={showTips}>
-        {networkSyncing ? (
+        {isSyncing ? (
           <Item
             leftIcon={{ show: true, active: false }}
             text="Syncing Status..."
