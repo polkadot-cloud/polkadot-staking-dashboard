@@ -67,6 +67,16 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
         height: 1.85rem;
         position: relative;
 
+        &:hover {
+          h4 {
+            color: ${networkColor};
+          }
+          .more {
+            color: ${networkColor};
+            opacity: 1;
+          }
+        }
+
         h4 {
           color: ${textSecondary};
           position: absolute;
@@ -82,6 +92,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
+          transition: color 0.15s;
         }
         .more {
           position: absolute;
@@ -90,8 +101,10 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           display: flex;
           flex-flow: row nowrap;
           align-items: center;
-          color: ${networkColor};
+          color: ${textSecondary};
+          transition: all 0.15s;
           font-size: 1rem;
+          opacity: 0.5;
           > svg {
             margin-left: 0.4rem;
           }

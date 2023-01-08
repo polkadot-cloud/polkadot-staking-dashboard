@@ -4,7 +4,7 @@
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useOverlay } from 'contexts/Overlay';
-import { motion, useAnimationControls } from 'framer-motion';
+import { useAnimationControls } from 'framer-motion';
 import { Tip } from 'library/Tips/Tip';
 import React, { useEffect, useState } from 'react';
 import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers';
@@ -99,25 +99,25 @@ const Item = ({
         <section />
         <section>
           <div className="desc">
-            <h4>
-              {subtitle}
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                onClick={() =>
-                  openOverlayWith(
-                    <Tip title={title} description={description} />,
-                    'large'
-                  )
-                }
-                type="button"
-                className="more"
-              >
+            <button
+              onClick={() =>
+                openOverlayWith(
+                  <Tip title={title} description={description} />,
+                  'large'
+                )
+              }
+              type="button"
+              className="desc"
+            >
+              <h4>
+                {subtitle}
                 <FontAwesomeIcon
                   icon={faExternalLinkAlt}
-                  transform="shrink-1"
+                  transform="shrink-2"
+                  className="more"
                 />
-              </motion.button>
-            </h4>
+              </h4>
+            </button>
           </div>
         </section>
       </ItemInnerWrapper>
