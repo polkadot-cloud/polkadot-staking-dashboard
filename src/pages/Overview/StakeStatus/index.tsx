@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
@@ -26,7 +27,9 @@ export const StakeStatus = () => {
   const { getNominationStatus } = useNominationStatus();
   const { bondedPools, meta } = useBondedPools();
   const { selectedActivePool } = useActivePools();
+  const { plugins } = usePlugins();
   const isStaking = isNominating() || membership;
+  const showTips = plugins.includes('tips');
 
   const poolDisplay = () => {
     if (selectedActivePool) {
@@ -47,7 +50,7 @@ export const StakeStatus = () => {
 
   return (
     <CardWrapper>
-      <StatusWrapper>
+      <StatusWrapper includeBorder={showTips}>
         {!activeAccount ? (
           <StatusRowWrapper>
             <div>
@@ -146,7 +149,7 @@ export const StakeStatus = () => {
           </>
         )}
       </StatusWrapper>
-      <Tips />
+      {showTips ? <Tips /> : null}
     </CardWrapper>
   );
 };

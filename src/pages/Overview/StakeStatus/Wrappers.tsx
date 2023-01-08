@@ -4,16 +4,23 @@
 import styled from 'styled-components';
 import { borderPrimary } from 'theme';
 
-export const StatusWrapper = styled.div`
+export const StatusWrapper = styled.div<{ includeBorder: boolean }>`
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
   margin-top: 0.25rem;
   position: relative;
-  top: -0.1rem;
+  top: ${(props) => (props.includeBorder ? '-0.1rem' : 0)};
   > div {
     &:last-child {
       margin-bottom: 0;
+      ${(props) =>
+        props.includeBorder !== true
+          ? `
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;`
+          : ``};
     }
   }
 `;
