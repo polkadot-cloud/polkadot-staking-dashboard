@@ -11,12 +11,13 @@ import { extractUrlValue, isNetworkFromMetaTags } from 'Utils';
 
 export const useUrlVars = () => {
   const { i18n } = useTranslation();
-  // get url variables
-  const networkFromUrl = extractUrlValue('n');
-  const lngFromUrl = extractUrlValue('l');
   const { network, switchNetwork, updateIconMetaTags } = useApi();
 
   const initialise = () => {
+    // get url variables
+    const networkFromUrl = extractUrlValue('n');
+    const lngFromUrl = extractUrlValue('l');
+
     // is the url-provided network valid or not.
     const urlNetworkValid = !!Object.values(NETWORKS).find(
       (n: any) => n.name.toLowerCase() === networkFromUrl
