@@ -25,10 +25,10 @@ import { ActiveAccount } from './ActiveAccount';
 import { BalanceChart } from './BalanceChart';
 import { NetworkStats } from './NetworkSats';
 import Payouts from './Payouts';
+import { StakeStatus } from './StakeStatus';
 import EraTimeLeftStat from './Stats/ActiveEraTimeLeft';
 import HistoricalRewardsRateStat from './Stats/HistoricalRewardsRate';
 import SupplyStakedStat from './Stats/SupplyStaked';
-import { Tips } from './Tips';
 
 export const Overview = () => {
   const { network } = useApi();
@@ -69,7 +69,7 @@ export const Overview = () => {
       </StatBoxList>
       {plugins.includes('tips') && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
-          <Tips />
+          <StakeStatus />
         </PageRowWrapper>
       )}
       <PageRowWrapper className="page-padding" noVerticalSpacer>

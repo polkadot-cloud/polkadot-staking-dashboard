@@ -10,15 +10,13 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
-import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import useFillVariables from 'library/Hooks/useFillVariables';
-import OpenHelpIcon from 'library/OpenHelpIcon';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnyJson } from 'types';
 import { setStateWithRef } from 'Utils';
-import { Items } from './Items';
+import Items from './Items';
 import { PageToggle } from './PageToggle';
 import { Syncing } from './Syncing';
 import { TipsWrapper } from './Wrappers';
@@ -163,46 +161,36 @@ export const Tips = () => {
   const setPageHandler = (newPage: number) => {
     setStateWithRef(newPage, setPage, pageRef);
   };
-
   return (
-    <CardWrapper>
-      <CardHeaderWrapper>
-        <h4>
-          Status
-          <OpenHelpIcon helpKey="Status" />
-        </h4>
-      </CardHeaderWrapper>
-
-      <TipsWrapper>
-        <div style={{ flexGrow: 1 }}>
-          {networkSyncing ? (
-            <Syncing />
-          ) : (
-            <Items
-              items={itemsDisplay}
-              page={pageRef.current}
-              showTitle={false}
-            />
-          )}
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            flexFlow: 'row nowrap',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <PageToggle
-            start={start}
-            end={end}
-            page={page}
-            itemsPerPage={itemsPerPage}
-            totalItems={items.length}
-            setPageHandler={setPageHandler}
+    <TipsWrapper>
+      <div style={{ flexGrow: 1 }}>
+        {networkSyncing ? (
+          <Syncing />
+        ) : (
+          <Items
+            items={itemsDisplay}
+            page={pageRef.current}
+            showTitle={false}
           />
-        </div>
-      </TipsWrapper>
-    </CardWrapper>
+        )}
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          flexFlow: 'row nowrap',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <PageToggle
+          start={start}
+          end={end}
+          page={page}
+          itemsPerPage={itemsPerPage}
+          totalItems={items.length}
+          setPageHandler={setPageHandler}
+        />
+      </div>
+    </TipsWrapper>
   );
 };

@@ -11,7 +11,8 @@ export const TipsWrapper = styled.div`
   display: flex;
   flex-flow: row nowrap;
   position: relative;
-  top: 0.35rem;
+  top: 0.25rem;
+  margin-top: 0.35rem;
 `;
 
 export const ItemsWrapper = styled(motion.div)`
@@ -106,7 +107,7 @@ export const PageToggleWrapper = styled.div`
   border-radius: 1.5rem;
   border: 1px solid ${borderPrimary};
   position: relative;
-  top: 0rem;
+  top: 0.1rem;
   display: flex;
   flex-flow: row wrap;
   margin-left: 0.5rem;
