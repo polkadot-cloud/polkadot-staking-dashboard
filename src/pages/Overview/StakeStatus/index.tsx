@@ -11,6 +11,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { useNavigate } from 'react-router-dom';
@@ -20,6 +21,7 @@ import { StatusRowWrapper, StatusWrapper } from './Wrappers';
 
 export const StakeStatus = () => {
   const navigate = useNavigate();
+  const { networkSyncing } = useUi();
   const { activeAccount } = useConnect();
   const { openModalWith } = useModal();
   const { membership } = usePoolMemberships();
@@ -51,99 +53,104 @@ export const StakeStatus = () => {
   return (
     <CardWrapper>
       <StatusWrapper includeBorder={showTips}>
-        {!activeAccount ? (
-          <StatusRowWrapper>
-            <div>
-              <h3>No Account Connected</h3>
-            </div>
-            <div>
-              <ButtonInvertRounded
-                text="Connect"
-                iconRight={faChevronRight}
-                iconTransform="shrink-4"
-                lg
-                onClick={() => openModalWith('ConnectAccounts', {}, 'large')}
+        {networkSyncing ? (
+          <>
+            <StatusRowWrapper>
+              <FontAwesomeIcon
+                icon={faCircle}
+                transform="shrink-4"
+                style={{ marginRight: '0.75rem', opacity: 0.1 }}
               />
-            </div>
-          </StatusRowWrapper>
+              <div>
+                <h3>Syncing Status...</h3>
+              </div>
+            </StatusRowWrapper>
+          </>
         ) : (
           <>
-            {!isStaking ? (
+            {!activeAccount ? (
               <StatusRowWrapper>
                 <div>
-                  <FontAwesomeIcon
-                    icon={faCircle}
-                    transform="shrink-4"
-                    style={{ marginRight: '0.75rem', opacity: 0.1 }}
-                  />
-                  <h3>Not Staking</h3>
+                  <h3>No Account Connected</h3>
                 </div>
                 <div>
-                  {/* <ButtonInvertRounded
-                    text="Start Staking"
+                  <ButtonInvertRounded
+                    text="Connect"
                     iconRight={faChevronRight}
                     iconTransform="shrink-4"
                     lg
-                    onClick={() => {
-                      // TODO: open start staking overlay.
-                    }}
-                  /> */}
+                    onClick={() =>
+                      openModalWith('ConnectAccounts', {}, 'large')
+                    }
+                  />
                 </div>
               </StatusRowWrapper>
             ) : (
               <>
-                {isNominating() ? (
+                {!isStaking ? (
                   <StatusRowWrapper>
                     <div>
                       <FontAwesomeIcon
                         icon={faCircle}
                         transform="shrink-4"
-                        color="green"
-                        style={{ marginRight: '0.75rem', opacity: 1 }}
+                        style={{ marginRight: '0.75rem', opacity: 0.1 }}
                       />
-                      <h3>
-                        {
-                          getNominationStatus(activeAccount, 'nominator')
-                            .message
-                        }
-                      </h3>
-                    </div>
-                    <div>
-                      <ButtonInvertRounded
-                        text="Manage"
-                        iconRight={faChevronRight}
-                        iconTransform="shrink-4"
-                        lg
-                        onClick={() => navigate('/nominate')}
-                      />
+                      <h3>Not Staking</h3>
                     </div>
                   </StatusRowWrapper>
-                ) : null}
-                {membership ? (
-                  <StatusRowWrapper>
-                    <div>
-                      <FontAwesomeIcon
-                        icon={faCircle}
-                        transform="shrink-4"
-                        color="green"
-                        style={{ marginRight: '0.75rem', opacity: 1 }}
-                      />
-                      <h3>
-                        Member of Pool:{' '}
-                        <span style={{ opacity: 0.75 }}>{poolDisplay()}</span>
-                      </h3>
-                    </div>
-                    <div>
-                      <ButtonInvertRounded
-                        text="Manage"
-                        iconRight={faChevronRight}
-                        iconTransform="shrink-4"
-                        lg
-                        onClick={() => navigate('/pools')}
-                      />
-                    </div>
-                  </StatusRowWrapper>
-                ) : null}
+                ) : (
+                  <>
+                    {isNominating() ? (
+                      <StatusRowWrapper>
+                        <div>
+                          <FontAwesomeIcon
+                            icon={faCircle}
+                            transform="shrink-4"
+                            color="green"
+                            style={{ marginRight: '0.75rem', opacity: 1 }}
+                          />
+                          <h3>
+                            {
+                              getNominationStatus(activeAccount, 'nominator')
+                                .message
+                            }
+                          </h3>
+                        </div>
+                        <div>
+                          <ButtonInvertRounded
+                            text="Manage"
+                            iconRight={faChevronRight}
+                            iconTransform="shrink-4"
+                            lg
+                            onClick={() => navigate('/nominate')}
+                          />
+                        </div>
+                      </StatusRowWrapper>
+                    ) : null}
+                    {membership ? (
+                      <StatusRowWrapper>
+                        <div>
+                          <FontAwesomeIcon
+                            icon={faCircle}
+                            transform="shrink-4"
+                            color="green"
+                            style={{ marginRight: '0.75rem', opacity: 1 }}
+                          />
+                          <h3>Member of {poolDisplay()}</h3>
+                        </div>
+                        <div>
+                          <ButtonInvertRounded
+                            text="Manage"
+                            iconRight={faChevronRight}
+                            iconTransform="shrink-4"
+                            lg
+                            onClick={() => navigate('/pools')}
+                          />
+                        </div>
+                      </StatusRowWrapper>
+                    ) : null}
+                  </>
+                )}
               </>
             )}
           </>
