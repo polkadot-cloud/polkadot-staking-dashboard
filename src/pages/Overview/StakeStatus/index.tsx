@@ -19,7 +19,7 @@ import { StatusWrapper } from './Wrappers';
 
 export const StakeStatus = () => {
   const navigate = useNavigate();
-  const { networkSyncing, isSyncing } = useUi();
+  const { isSyncing } = useUi();
   const { activeAccount } = useConnect();
   const { openModalWith } = useModal();
   const { membership } = usePoolMemberships();
