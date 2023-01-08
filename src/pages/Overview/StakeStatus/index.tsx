@@ -39,10 +39,13 @@ export const StakeStatus = () => {
       if (pool) {
         const metadata = meta.bonded_pools?.metadata ?? [];
         const batchIndex = bondedPools.indexOf(pool);
-        return determinePoolDisplay(
-          selectedActivePool.addresses.stash,
-          metadata[batchIndex]
-        );
+
+        if (metadata[batchIndex]) {
+          return determinePoolDisplay(
+            selectedActivePool.addresses.stash,
+            metadata[batchIndex]
+          );
+        }
       }
     }
     return '';
@@ -87,11 +90,11 @@ export const StakeStatus = () => {
                     {membership ? (
                       <Item
                         leftIcon={{ show: true, active: true }}
-                        text={
+                        text={`Member of ${
                           poolDisplay() === ''
-                            ? 'Syncing Status...'
-                            : `Member of ${poolDisplay()}`
-                        }
+                            ? `Pool ${membership.poolId}`
+                            : poolDisplay()
+                        }`}
                         ctaText="Manage"
                         onClick={() => navigate('/pools')}
                       />
