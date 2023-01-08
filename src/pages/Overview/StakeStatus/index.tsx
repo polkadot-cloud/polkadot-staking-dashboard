@@ -1,9 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faChevronRight, faCircle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { usePlugins } from 'contexts/Plugins';
@@ -16,8 +13,9 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { useNavigate } from 'react-router-dom';
 import { determinePoolDisplay } from 'Utils';
+import { Item } from './Item';
 import { Tips } from './Tips';
-import { StatusRowWrapper, StatusWrapper } from './Wrappers';
+import { StatusWrapper } from './Wrappers';
 
 export const StakeStatus = () => {
   const navigate = useNavigate();
@@ -54,100 +52,49 @@ export const StakeStatus = () => {
     <CardWrapper>
       <StatusWrapper includeBorder={showTips}>
         {networkSyncing ? (
-          <>
-            <StatusRowWrapper>
-              <FontAwesomeIcon
-                icon={faCircle}
-                transform="shrink-4"
-                style={{ marginRight: '0.75rem', opacity: 0.1 }}
-              />
-              <div>
-                <h3>Syncing Status...</h3>
-              </div>
-            </StatusRowWrapper>
-          </>
+          <Item
+            leftIcon={{ show: true, active: false }}
+            text="Syncing Status..."
+          />
         ) : (
           <>
             {!activeAccount ? (
-              <StatusRowWrapper>
-                <div>
-                  <h3>No Account Connected</h3>
-                </div>
-                <div>
-                  <ButtonInvertRounded
-                    text="Connect"
-                    iconRight={faChevronRight}
-                    iconTransform="shrink-4"
-                    lg
-                    onClick={() =>
-                      openModalWith('ConnectAccounts', {}, 'large')
-                    }
-                  />
-                </div>
-              </StatusRowWrapper>
+              <Item
+                text="No Account Connected"
+                ctaText="Connect"
+                onClick={() => openModalWith('ConnectAccounts', {}, 'large')}
+              />
             ) : (
               <>
                 {!isStaking ? (
-                  <StatusRowWrapper>
-                    <div>
-                      <FontAwesomeIcon
-                        icon={faCircle}
-                        transform="shrink-4"
-                        style={{ marginRight: '0.75rem', opacity: 0.1 }}
-                      />
-                      <h3>Not Staking</h3>
-                    </div>
-                  </StatusRowWrapper>
+                  <Item
+                    leftIcon={{ show: true, active: false }}
+                    text="Not Staking"
+                  />
                 ) : (
                   <>
                     {isNominating() ? (
-                      <StatusRowWrapper>
-                        <div>
-                          <FontAwesomeIcon
-                            icon={faCircle}
-                            transform="shrink-4"
-                            color="green"
-                            style={{ marginRight: '0.75rem', opacity: 1 }}
-                          />
-                          <h3>
-                            {
-                              getNominationStatus(activeAccount, 'nominator')
-                                .message
-                            }
-                          </h3>
-                        </div>
-                        <div>
-                          <ButtonInvertRounded
-                            text="Manage"
-                            iconRight={faChevronRight}
-                            iconTransform="shrink-4"
-                            lg
-                            onClick={() => navigate('/nominate')}
-                          />
-                        </div>
-                      </StatusRowWrapper>
+                      <Item
+                        leftIcon={{ show: true, active: true }}
+                        text={
+                          getNominationStatus(activeAccount, 'nominator')
+                            .message
+                        }
+                        ctaText="Manage"
+                        onClick={() => navigate('/nominate')}
+                      />
                     ) : null}
                     {membership ? (
-                      <StatusRowWrapper>
-                        <div>
-                          <FontAwesomeIcon
-                            icon={faCircle}
-                            transform="shrink-4"
-                            color="green"
-                            style={{ marginRight: '0.75rem', opacity: 1 }}
-                          />
-                          <h3>Member of {poolDisplay()}</h3>
-                        </div>
-                        <div>
-                          <ButtonInvertRounded
-                            text="Manage"
-                            iconRight={faChevronRight}
-                            iconTransform="shrink-4"
-                            lg
-                            onClick={() => navigate('/pools')}
-                          />
-                        </div>
-                      </StatusRowWrapper>
+                      <Item
+                        leftIcon={{ show: true, active: true }}
+                        text={
+                          poolDisplay() === ''
+                            ? 'Syncing Status...'
+                            : `Member of ${poolDisplay()}`
+                        }
+                        ctaText="Manage"
+                        onClick={() => navigate('/pools')}
+                      />
                     ) : null}
                   </>
                 )}
