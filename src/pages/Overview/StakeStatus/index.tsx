@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { usePlugins } from 'contexts/Plugins';
@@ -9,8 +10,10 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
+import { getUnixTime } from 'date-fns';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { determinePoolDisplay } from 'Utils';
 import { Item } from './Item';
@@ -18,6 +21,7 @@ import { Tips } from './Tips';
 import { StatusWrapper } from './Wrappers';
 
 export const StakeStatus = () => {
+  const { network } = useApi();
   const navigate = useNavigate();
   const { networkSyncing, isSyncing } = useUi();
   const { activeAccount } = useConnect();
@@ -30,6 +34,32 @@ export const StakeStatus = () => {
   const { plugins } = usePlugins();
   const isStaking = isNominating() || membership;
   const showTips = plugins.includes('tips');
+
+  // delay refresh to avoid flashing updates.
+  const delay = 1000;
+
+  // state to control min wait time for syncing.
+  const [syncStart, setSyncStart] = useState<number>(0);
+
+  const [syncing, setSyncing] = useState<boolean>(true);
+
+  // update status content after time.
+  useEffect(() => {
+    const remaining = Math.max(0, syncStart + delay - getUnixTime(new Date()));
+    if (remaining > 0) {
+      setTimeout(() => {
+        setSyncing(false);
+      }, remaining);
+    } else {
+      setSyncing(false);
+    }
+  }, [syncStart]);
+
+  // re-sync: set sync start time
+  useEffect(() => {
+    setSyncing(true);
+    setSyncStart(getUnixTime(new Date()));
+  }, [network, activeAccount]);
 
   const poolDisplay = () => {
     if (selectedActivePool) {
@@ -54,7 +84,7 @@ export const StakeStatus = () => {
   return (
     <CardWrapper>
       <StatusWrapper includeBorder={showTips}>
-        {networkSyncing ? (
+        {networkSyncing || syncing ? (
           <Item
             leftIcon={{ show: true, active: false }}
             text="Syncing Status..."
