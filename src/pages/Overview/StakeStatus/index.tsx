@@ -14,6 +14,7 @@ import { getUnixTime } from 'date-fns';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { determinePoolDisplay } from 'Utils';
 import { Item } from './Item';
@@ -21,6 +22,7 @@ import { Tips } from './Tips';
 import { StatusWrapper } from './Wrappers';
 
 export const StakeStatus = () => {
+  const { t } = useTranslation('pages');
   const { network } = useApi();
   const navigate = useNavigate();
   const {
@@ -107,14 +109,14 @@ export const StakeStatus = () => {
         {networkSyncing || !getSyncSynced(syncId) ? (
           <Item
             leftIcon={{ show: true, active: false }}
-            text="Syncing Status..."
+            text={`${t('overview.syncingStatus')}...`}
           />
         ) : (
           <>
             {!activeAccount ? (
               <Item
-                text="No Account Connected"
-                ctaText="Connect"
+                text={t('overview.noAccountConnected')}
+                ctaText={t('overview.connect') || ''}
                 onClick={() => openModalWith('ConnectAccounts', {}, 'large')}
               />
             ) : (
@@ -123,7 +125,7 @@ export const StakeStatus = () => {
                   <>
                     <Item
                       leftIcon={{ show: true, active: false }}
-                      text="Syncing Status..."
+                      text={`${t('overview.syncingStatus')}...`}
                     />
                   </>
                 ) : (
@@ -131,7 +133,7 @@ export const StakeStatus = () => {
                     {!isStaking ? (
                       <Item
                         leftIcon={{ show: true, active: false }}
-                        text="Not Staking"
+                        text={t('overview.notStaking')}
                       />
                     ) : (
                       <>
@@ -142,19 +144,19 @@ export const StakeStatus = () => {
                               getNominationStatus(activeAccount, 'nominator')
                                 .message
                             }
-                            ctaText="Manage"
+                            ctaText={t('overview.manage') || ''}
                             onClick={() => navigate('/nominate')}
                           />
                         ) : null}
                         {membership ? (
                           <Item
                             leftIcon={{ show: true, active: true }}
-                            text={`Member of ${
+                            text={`${t('overview.memberOf')} ${
                               poolDisplay() === ''
-                                ? `Pool ${membership.poolId}`
+                                ? `${t('overview.pool')} ${membership.poolId}`
                                 : poolDisplay()
                             }`}
-                            ctaText="Manage"
+                            ctaText={t('overview.manage') || ''}
                             onClick={() => navigate('/pools')}
                           />
                         ) : null}
