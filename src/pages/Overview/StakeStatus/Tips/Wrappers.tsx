@@ -66,14 +66,15 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
         width: 100%;
         height: 1.85rem;
         position: relative;
-
-        &:hover {
-          h4 {
-            color: ${networkColor};
-          }
-          .more {
-            color: ${networkColor};
-            opacity: 1;
+        &.active {
+          &:hover {
+            h4 {
+              color: ${networkColor};
+            }
+            .more {
+              color: ${networkColor};
+              opacity: 1;
+            }
           }
         }
 

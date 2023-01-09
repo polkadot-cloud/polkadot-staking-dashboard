@@ -98,7 +98,7 @@ const Item = ({
       <ItemInnerWrapper>
         <section />
         <section>
-          <div className="desc">
+          <div className="desc active">
             <button
               onClick={() =>
                 openOverlayWith(
@@ -107,7 +107,6 @@ const Item = ({
                 )
               }
               type="button"
-              className="desc"
             >
               <h4>
                 {subtitle}
