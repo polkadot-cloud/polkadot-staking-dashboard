@@ -33,56 +33,6 @@ export const APIContext = React.createContext<APIContextInterface>(
 export const useApi = () => React.useContext(APIContext);
 
 export const APIProvider = ({ children }: { children: React.ReactNode }) => {
-  // provider instance state
-  const [provider, setProvider] = useState<WsProvider | ScProvider | null>(
-    null
-  );
-
-  // api instance state
-  const [api, setApi] = useState<ApiPromise | null>(null);
-
-  // network state
-  const _name: NetworkName =
-    (localStorage.getItem('network') as NetworkName) ?? 'polkadot';
-
-  // store the currently active network
-  const [network, setNetwork] = useState<NetworkState>({
-    name: _name,
-    meta: NETWORKS[localStorage.getItem('network') as NetworkName],
-  });
-
-  // constants state
-  const [consts, setConsts] = useState<APIConstants>(defaults.consts);
-
-  // connection status state
-  const [connectionStatus, setConnectionStatus] =
-    useState<ConnectionStatus>('disconnected');
-
-  const [isLightClient, setIsLightClient] = useState<boolean>(
-    !!localStorage.getItem('isLightClient')
-  );
-
-  // initial connection
-  useEffect(() => {
-    if (!provider) {
-      const _network = getInitialNetwork() as NetworkName;
-      connect(_network, isLightClient);
-    }
-  });
-
-  // provider event handlers
-  useEffect(() => {
-    if (provider !== null) {
-      provider.on('connected', () => {
-        setConnectionStatus('connected');
-      });
-      provider.on('error', () => {
-        setConnectionStatus('disconnected');
-      });
-      connectedCallback(provider);
-    }
-  }, [provider]);
-
   // Get the initial network and prepare meta tags if necessary.
   const getInitialNetwork = (): NetworkName => {
     const urlNetworkRaw = extractUrlValue('n');
@@ -96,7 +46,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       const urlNetwork = urlNetworkRaw as NetworkName;
       initialiseMetaTags(urlNetwork);
 
-      if (urlNetworkValid && urlNetwork !== network.name) {
+      if (urlNetworkValid) {
         return urlNetwork;
       }
     }
@@ -113,18 +63,153 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       return localNetwork;
     }
     // fallback to default network.
-    return network.name;
+    return 'polkadot';
+  };
+
+  // Update head meta tags to reflect the current network.
+  //
+  // Determines if icons need to be updated and the current network in place. Iterates icons and
+  // updates network paths for icons. Updates theme color and ms title color.
+  const updateIconMetaTags = (name: NetworkName) => {
+    try {
+      const icons = document.querySelectorAll("link[rel*='icon']");
+      let current = '';
+      if (icons[0]) {
+        Object.values(NETWORKS).every((n: Network) => {
+          if (isNetworkFromMetaTags(n.name as NetworkName)) {
+            current = n.name.toLowerCase();
+            return false;
+          }
+          return true;
+        });
+      }
+
+      // if current network is determined, commit network update in `href` values.
+      if (current.length) {
+        icons.forEach((e) => {
+          const href = e.getAttribute('href');
+          if (href) {
+            e.setAttribute('href', href.replace(current, name.toLowerCase()));
+          }
+        });
+
+        const c = NETWORKS[name].colors.primary.light;
+
+        document
+          .querySelector("meta[name='msapplication-TileColor']")
+          ?.setAttribute('content', c);
+        document
+          .querySelector("meta[name='theme-color']")
+          ?.setAttribute('content', c);
+      }
+    } catch (e) {
+      /* error */
+    }
   };
 
   // Update meta tags if network is from URL.
-  const initialiseMetaTags = (urlNetwork: NetworkName) => {
+  const initialiseMetaTags = (n: NetworkName) => {
     // check if favicons are up to date.
-    const metaValid = isNetworkFromMetaTags(network.name as NetworkName);
+    const metaValid = isNetworkFromMetaTags(n);
     // this only needs to happen when `n` is in URL and a change needs to take place.
-    if (!metaValid || urlNetwork !== network.name) {
-      updateIconMetaTags(network.name as NetworkName);
+    if (!metaValid) {
+      updateIconMetaTags(n);
     }
   };
+  // provider instance state
+  const [provider, setProvider] = useState<WsProvider | ScProvider | null>(
+    null
+  );
+
+  // handle network switching
+  const switchNetwork = async (
+    _network: NetworkName,
+    _isLightClient: boolean
+  ) => {
+    localStorage.setItem('isLightClient', _isLightClient ? 'true' : '');
+    setIsLightClient(_isLightClient);
+
+    // disconnect api if not null
+    if (api) {
+      await api.disconnect();
+    }
+    setApi(null);
+    updateIconMetaTags(_network);
+    setConnectionStatus('connecting');
+    connect(_network, _isLightClient);
+  };
+
+  // handles fetching of DOT price and updates context state.
+  const fetchDotPrice = async () => {
+    const urls = [
+      `${ApiEndpoints.priceChange}${NETWORKS[network.name].api.priceTicker}`,
+    ];
+    const responses = await Promise.all(
+      urls.map((u) => fetch(u, { method: 'GET' }))
+    );
+    const texts = await Promise.all(responses.map((res) => res.json()));
+    const _change = texts[0];
+
+    if (
+      _change.lastPrice !== undefined &&
+      _change.priceChangePercent !== undefined
+    ) {
+      const price: string = (Math.ceil(_change.lastPrice * 100) / 100).toFixed(
+        2
+      );
+      const change: string = (
+        Math.round(_change.priceChangePercent * 100) / 100
+      ).toFixed(2);
+
+      return {
+        lastPrice: price,
+        change,
+      };
+    }
+    return null;
+  };
+
+  // API instance state.
+  const [api, setApi] = useState<ApiPromise | null>(null);
+
+  // Store the initial active network.
+  const initialNetwork = getInitialNetwork();
+  const [network, setNetwork] = useState<NetworkState>({
+    name: initialNetwork,
+    meta: NETWORKS[initialNetwork],
+  });
+
+  // Store network constants.
+  const [consts, setConsts] = useState<APIConstants>(defaults.consts);
+
+  // Store API connection status.
+  const [connectionStatus, setConnectionStatus] =
+    useState<ConnectionStatus>('disconnected');
+
+  const [isLightClient, setIsLightClient] = useState<boolean>(
+    !!localStorage.getItem('isLightClient')
+  );
+
+  // Handle the initial connection
+  useEffect(() => {
+    if (!provider) {
+      const _network = getInitialNetwork();
+      connect(_network, isLightClient);
+    }
+  });
+
+  // Provider event handlers
+  useEffect(() => {
+    if (provider !== null) {
+      provider.on('connected', () => {
+        setConnectionStatus('connected');
+      });
+      provider.on('error', () => {
+        setConnectionStatus('disconnected');
+      });
+      connectedCallback(provider);
+    }
+  }, [provider]);
 
   // connection callback
   const connectedCallback = async (_provider: WsProvider | ScProvider) => {
@@ -222,96 +307,6 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       name: _network,
       meta: NETWORKS[_network],
     });
-  };
-
-  // Update head meta tags to reflect the current network.
-  //
-  // Determines if icons need to be updated and the current network in place. Iterates icons and
-  // updates network paths for icons. Updates theme color and ms title color.
-  const updateIconMetaTags = (name: NetworkName) => {
-    try {
-      const icons = document.querySelectorAll("link[rel*='icon']");
-
-      let current = '';
-      if (icons[0]) {
-        Object.values(NETWORKS).every((n: Network) => {
-          if (isNetworkFromMetaTags(n.name as NetworkName)) {
-            current = n.name.toLowerCase();
-            return false;
-          }
-          return true;
-        });
-      }
-
-      // if current network is determined, commit network update in `href` values.
-      if (current.length) {
-        icons.forEach((e) => {
-          const href = e.getAttribute('href');
-          if (href) {
-            e.setAttribute('href', href.replace(current, name.toLowerCase()));
-          }
-        });
-
-        const c = NETWORKS[name].colors.primary.light;
-
-        document
-          .querySelector("meta[name='msapplication-TileColor']")
-          ?.setAttribute('content', c);
-        document
-          .querySelector("meta[name='theme-color']")
-          ?.setAttribute('content', c);
-      }
-    } catch (e) {
-      /* error */
-    }
-  };
-
-  // handle network switching
-  const switchNetwork = async (
-    _network: NetworkName,
-    _isLightClient: boolean
-  ) => {
-    localStorage.setItem('isLightClient', _isLightClient ? 'true' : '');
-    setIsLightClient(_isLightClient);
-
-    // disconnect api if not null
-    if (api) {
-      await api.disconnect();
-    }
-    setApi(null);
-    updateIconMetaTags(_network);
-    setConnectionStatus('connecting');
-    connect(_network, _isLightClient);
-  };
-
-  // handles fetching of DOT price and updates context state.
-  const fetchDotPrice = async () => {
-    const urls = [
-      `${ApiEndpoints.priceChange}${NETWORKS[network.name].api.priceTicker}`,
-    ];
-    const responses = await Promise.all(
-      urls.map((u) => fetch(u, { method: 'GET' }))
-    );
-    const texts = await Promise.all(responses.map((res) => res.json()));
-    const _change = texts[0];
-
-    if (
-      _change.lastPrice !== undefined &&
-      _change.priceChangePercent !== undefined
-    ) {
-      const price: string = (Math.ceil(_change.lastPrice * 100) / 100).toFixed(
-        2
-      );
-      const change: string = (
-        Math.round(_change.priceChangePercent * 100) / 100
-      ).toFixed(2);
-
-      return {
-        lastPrice: price,
-        change,
-      };
-    }
-    return null;
   };
 
   return (
