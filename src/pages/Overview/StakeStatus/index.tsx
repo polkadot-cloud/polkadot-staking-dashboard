@@ -89,7 +89,7 @@ export const StakeStatus = () => {
         {networkSyncing || syncing ? (
           <Item
             leftIcon={{ show: true, active: false }}
-            text={t('overview.syncingStatus')}
+            text={`${t('overview.syncingStatus')}...`}
           />
         ) : (
           <>
@@ -105,7 +105,7 @@ export const StakeStatus = () => {
                   <>
                     <Item
                       leftIcon={{ show: true, active: false }}
-                      text={t('overview.syncingStatus')}
+                      text={`${t('overview.syncingStatus')}...`}
                     />
                   </>
                 ) : (
