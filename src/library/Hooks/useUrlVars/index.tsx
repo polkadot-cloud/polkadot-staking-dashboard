@@ -7,16 +7,17 @@ import { availableLanguages } from 'locale';
 import { changeLanguage } from 'locale/utils';
 import { useTranslation } from 'react-i18next';
 import { NetworkName } from 'types';
-import { extractUrlValue } from 'Utils';
+import { extractUrlValue, isNetworkFromMetaTags } from 'Utils';
 
 export const useUrlVars = () => {
   const { i18n } = useTranslation();
-  // get url variables
-  const networkFromUrl = extractUrlValue('n');
-  const lngFromUrl = extractUrlValue('l');
   const { network, switchNetwork, updateIconMetaTags } = useApi();
 
   const initialise = () => {
+    // get url variables
+    const networkFromUrl = extractUrlValue('n');
+    const lngFromUrl = extractUrlValue('l');
+
     // is the url-provided network valid or not.
     const urlNetworkValid = !!Object.values(NETWORKS).find(
       (n: any) => n.name.toLowerCase() === networkFromUrl
@@ -31,12 +32,7 @@ export const useUrlVars = () => {
     }
 
     // check if favicons are up to date.
-    const icons = document.querySelectorAll("link[rel*='icon']");
-    const isValid =
-      icons[0]
-        ?.getAttribute('href')
-        ?.toLowerCase()
-        .includes(network.name.toLowerCase()) ?? false;
+    const isValid = isNetworkFromMetaTags(network.name as NetworkName);
 
     // this only needs to happen when `n` is in URL and a change needs to take place.
     if (!isValid || urlIsDifferentNetwork) {
