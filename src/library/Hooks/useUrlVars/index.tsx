@@ -28,7 +28,7 @@ export const useUrlVars = () => {
 
     // if valid network differs from currently active network, switch to network.
     if (urlNetworkValid && urlIsDifferentNetwork) {
-      switchNetwork(networkFromUrl as NetworkName, true);
+      switchNetwork(networkFromUrl as NetworkName, false);
     }
 
     // check if favicons are up to date.
