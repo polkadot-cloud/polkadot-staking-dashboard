@@ -44,7 +44,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     // use network from url if valid.
     if (urlNetworkValid) {
       const urlNetwork = urlNetworkRaw as NetworkName;
-      initialiseMetaTags(urlNetwork);
+      // initialiseMetaTags(urlNetwork); // NOTE: needs further testing.
 
       if (urlNetworkValid) {
         return urlNetwork;
@@ -59,7 +59,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     );
 
     if (localNetworkValid) {
-      initialiseMetaTags(localNetwork);
+      // initialiseMetaTags(localNetwork); // NOTE: needs further testing.
       return localNetwork;
     }
     // fallback to default network.
@@ -70,6 +70,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   //
   // Determines if icons need to be updated and the current network in place. Iterates icons and
   // updates network paths for icons. Updates theme color and ms title color.
+  // eslint-disable-next-line
   const updateIconMetaTags = (name: NetworkName) => {
     try {
       const icons = document.querySelectorAll("link[rel*='icon']");
@@ -108,12 +109,13 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Update meta tags if network is from URL.
+  // eslint-disable-next-line
   const initialiseMetaTags = (n: NetworkName) => {
     // check if favicons are up to date.
     const metaValid = isNetworkFromMetaTags(n);
     // this only needs to happen when `n` is in URL and a change needs to take place.
     if (!metaValid) {
-      updateIconMetaTags(n);
+      // updateIconMetaTags(n); // NOTE: needs further testing.
     }
   };
   // provider instance state
@@ -134,7 +136,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       await api.disconnect();
     }
     setApi(null);
-    updateIconMetaTags(_network);
+    // updateIconMetaTags(_network); // NOTE: needs further testing.
     setConnectionStatus('connecting');
     connect(_network, _isLightClient);
   };
