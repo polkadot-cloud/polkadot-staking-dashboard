@@ -96,7 +96,7 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
         // call refresh callback if one is present.
         const refreshCallback = props?.refreshCallback || undefined;
         if (refreshCallback) {
-          setStateWithRef(fromNow(refreshCallback()), setTo, toRef);
+          setStateWithRef(fromNow(refreshCallback), setTo, toRef);
         }
         r = refreshInterval;
       }
