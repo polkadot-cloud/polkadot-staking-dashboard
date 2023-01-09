@@ -3,19 +3,30 @@
 
 import { DefaultLocale } from 'consts';
 import { AnyApi, AnyJson } from 'types';
-import { fallbackResources, lngNamespaces } from '.';
+import { extractUrlValue } from 'Utils';
+import { availableLanguages, fallbackResources, lngNamespaces } from '.';
 
 // Gets the active language
 //
 // Get the stored language from localStorage, or fallback to
 // DefaultLocale otherwise.
-export const getActiveLanguage = () => {
-  const localLng = localStorage.getItem('lng');
-  if (!localLng) {
-    localStorage.setItem('lng', DefaultLocale);
-    return DefaultLocale;
+
+export const getInitialLanguage = () => {
+  // get language from url if present
+  const urlLng = extractUrlValue('l');
+  if (availableLanguages.find((n: any) => n[0] === urlLng) && urlLng) {
+    localStorage.setItem('lng', urlLng);
+    return urlLng;
   }
-  return localLng;
+
+  // fall back to localStorage if present.
+  const localLng = localStorage.getItem('lng');
+  if (availableLanguages.find((n: any) => n[0] === localLng) && localLng) {
+    return localLng;
+  }
+
+  localStorage.setItem('lng', DefaultLocale);
+  return DefaultLocale;
 };
 
 // Determine resources of selected language, and whether a dynamic
@@ -75,6 +86,7 @@ export const changeLanguage = async (lng: string, i18next: AnyApi) => {
   // check whether resources exist and need to by dynamically loaded.
   const { resources, dynamicLoad } = getResources(lng);
 
+  localStorage.setItem('lng', lng);
   // dynamically load default language resources if needed.
   if (dynamicLoad) {
     await doDynamicImport(lng, i18next);
@@ -83,7 +95,10 @@ export const changeLanguage = async (lng: string, i18next: AnyApi) => {
       'lng_resources',
       JSON.stringify({ l: lng, r: resources })
     );
-    i18next.changeLanguage(lng);
+
+    setTimeout(() => {
+      i18next.changeLanguage(lng);
+    }, 50);
   }
 };
 
@@ -115,7 +130,6 @@ export const loadLngAsync = async (l: string) => {
 // Finally, the active langauge is changed to the imported language.
 export const doDynamicImport = async (lng: string, i18next: AnyApi) => {
   const { l, r } = await loadLngAsync(lng);
-
   localStorage.setItem('lng_resources', JSON.stringify({ l: lng, r }));
 
   Object.entries(r).forEach(([ns, inner]: [string, AnyJson]) => {

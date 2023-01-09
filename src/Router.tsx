@@ -8,7 +8,6 @@ import { AnimatePresence } from 'framer-motion';
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
 import { Headers } from 'library/Headers';
 import { Help } from 'library/Help';
-import { useUrlVars } from 'library/Hooks/useUrlVars';
 import { Menu } from 'library/Menu';
 import { NetworkBar } from 'library/NetworkBar';
 import Notifications from 'library/Notifications';
@@ -16,7 +15,7 @@ import { Overlay } from 'library/Overlay';
 import SideMenu from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
 import { Modal } from 'modals';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
@@ -39,17 +38,6 @@ export const RouterInner = () => {
   const { pathname } = useLocation();
   const { network } = useApi();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
-  const { initialise } = useUrlVars();
-
-  const [urlVarsInitiated, setUrlVarsInitiated] = useState<boolean>(false);
-
-  // handle url variable initialisation.
-  useEffect(() => {
-    if (!urlVarsInitiated) {
-      initialise();
-      setUrlVarsInitiated(true);
-    }
-  });
 
   // scroll to top of the window on every page change or network change.
   useEffect(() => {
