@@ -323,6 +323,18 @@ export const VALIDATOR_COMMUNITY = [
     },
   },
   {
+    name: 'Sekoya Labs',
+    thumbnail: 'SekoyaLabs',
+    bio: 'Focused on improving blockchain decentralization, Sekoya Labs runs world class validators that return the best product for our nominators.',
+    email: 'tom@sekoyalabs.com',
+    twitter: '@sekoyalabs',
+    website: 'http://sekoyalabs.com',
+    validators: {
+      polkadot: ['15PeEsbJeU2BZDgoCmo6xdzsuRaZv1PxLaCUyFmfWPwkZPJ4'],
+      kusama: ['Dtf5sKpKrQ3mc9SK1WmRTR3oaKyAS3p27LEeWCLPF6gsDuU'],
+    },
+  },
+  {
     name: 'Stakely',
     thumbnail: 'Stakely',
     bio: '🔥 Professional validator highly experienced in PoS 🔥 Slashing protection & Eligible for airdrops | Learn with our staking guides, video tutorials and FAQs | Part of the commission of our nodes will go to our Multicoin Faucet funds and other tools 🌱 Carbon Neutral 🌱',
@@ -405,11 +417,11 @@ export const VALIDATOR_COMMUNITY = [
     },
   },
   {
-    name: 'STAKEWORLD',
+    name: 'Stakeworld',
     thumbnail: 'StakeWorld',
-    bio: 'STAKEWORLD is based in the Netherlands and provides highly reliable, low commission Polkadot and Kusama validator services with nodes hosted on dedicated (bare metal) hardware.',
-    email: 'info@stakeworld.nl',
-    website: 'https://stakeworld.nl',
+    bio: 'Stakeworld is based in the Netherlands and provides highly reliable, low commission Polkadot and Kusama validator services with nodes hosted on dedicated (bare metal) hardware.',
+    email: 'info@stakeworld.io',
+    website: 'https://stakeworld.io',
     validators: {
       polkadot: [
         '14kpNbU4XjEHfYdqp95Gq3NkBWbgFd6J8Yjd2SneWNzvf1Yp',
@@ -421,6 +433,7 @@ export const VALIDATOR_COMMUNITY = [
         'Et9M3rrA7H2kHQEGRXHxufcp9HTEmFirMWtKHvjoJ85r1C9',
         'Dh2ZNKbQMdusURjfZZj7Bczb57PGEoCVmDHdq8hjnH5PZ4E',
         'FNPCfXrsrA8775HGuRvK9seULKpcnxNTTKTGUL4h267YHvw',
+        'Hqk9zDKr84PF84ScDQJ29FHyGnKyQsXZPmLuAWFBgKZUybi',
       ],
     },
   },

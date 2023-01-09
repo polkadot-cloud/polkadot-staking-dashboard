@@ -28,6 +28,6 @@ export interface TimeLeftAll {
 }
 
 export interface TimeleftHookProps {
-  refreshCallback: () => number;
+  refreshCallback: number;
   refreshInterval: number;
 }

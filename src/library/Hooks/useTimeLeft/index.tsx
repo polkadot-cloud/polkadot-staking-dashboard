@@ -1,11 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { getUnixTime, intervalToDuration } from 'date-fns';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { setStateWithRef } from 'Utils';
-import { defaultDuration } from './defaults';
+import { defaultRefreshInterval } from './defaults';
 import {
   TimeLeftAll,
   TimeleftDuration,
@@ -13,49 +12,10 @@ import {
   TimeleftHookProps,
   TimeLeftRaw,
 } from './types';
+import { fromNow, getDuration } from './utils';
 
-export const useTimeLeft = ({
-  refreshCallback,
-  refreshInterval,
-}: TimeleftHookProps) => {
+export const useTimeLeft = (props?: TimeleftHookProps) => {
   const { t, i18n } = useTranslation();
-
-  // adds `seconds` to the current time and returns the resulting date.
-  const fromNow = (seconds: number): Date => {
-    const end = new Date();
-    end.setSeconds(end.getSeconds() + seconds);
-    return end;
-  };
-
-  // calculates the current timeleft duration.
-  const getDuration = (toDate: Date | null): TimeleftDuration => {
-    if (!toDate) {
-      return defaultDuration;
-    }
-    if (getUnixTime(toDate) <= getUnixTime(new Date())) {
-      return defaultDuration;
-    }
-    toDate.setSeconds(toDate.getSeconds());
-    const d = intervalToDuration({
-      start: Date.now(),
-      end: toDate,
-    });
-
-    const days = d?.days || 0;
-    const hours = d?.hours || 0;
-    const minutes = d?.minutes || 0;
-    const seconds = d?.seconds || 0;
-    const lastHour = days === 0 && hours === 0;
-    const lastMinute = lastHour && minutes === 0;
-
-    return {
-      days,
-      hours,
-      minutes,
-      seconds,
-      lastMinute,
-    };
-  };
 
   // check whether timeleft is within a minute of finishing.
   const inLastHour = () => {
@@ -118,7 +78,10 @@ export const useTimeLeft = ({
   >(undefined);
   const secIntervalRef = useRef(secInterval);
 
-  // refresh callback counter
+  // refresh callback interval in seconds.
+  const refreshInterval = props?.refreshInterval || defaultRefreshInterval;
+
+  // refresh interval counter, defaults to interval time.
   let r = refreshInterval;
 
   // refresh effects.
@@ -128,15 +91,16 @@ export const useTimeLeft = ({
     // either handle regular timeleft update, or refresh `to` via `refreshCallback` every
     // `refreshInterval` seconds.
     const handleRefresh = () => {
-      if (r !== 0) {
-        setTimeleft(getTimeleft());
-      } else {
+      // end of a refresh interval.
+      if (r === 0) {
+        // call refresh callback if one is present.
+        const refreshCallback = props?.refreshCallback || undefined;
         if (refreshCallback) {
-          setStateWithRef(fromNow(refreshCallback()), setTo, toRef);
-          setTimeleft(getTimeleft());
+          setStateWithRef(fromNow(refreshCallback), setTo, toRef);
         }
         r = refreshInterval;
       }
+      setTimeleft(getTimeleft());
     };
 
     if (inLastHour()) {
@@ -183,23 +147,6 @@ export const useTimeLeft = ({
     };
   }, []);
 
-  // format the duration as a string.
-  const timeleftAsString = (() => {
-    const { days, hours, minutes, seconds } = getDuration(toRef.current);
-
-    let str = '';
-    if (days > 0) {
-      str += `${days} ${t('time.day', { count: days, ns: 'base' })} `;
-    }
-    str += `${hours} ${t('time.hr', { count: hours, ns: 'base' })} `;
-    str += `${minutes} ${t('time.min', { count: minutes, ns: 'base' })}`;
-
-    if (!days && !hours) {
-      str += ` ${seconds}`;
-    }
-    return str;
-  })();
-
   const setFromNow = (dateTo: Date) => {
     setTimeleft(getTimeleft(getDuration(new Date())));
     setStateWithRef(dateTo, setTo, toRef);
@@ -207,8 +154,6 @@ export const useTimeLeft = ({
 
   return {
     setFromNow,
-    fromNow,
     timeleft,
-    timeleftAsString,
   };
 };

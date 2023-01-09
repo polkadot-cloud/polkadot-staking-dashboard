@@ -1,14 +1,19 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  backgroundLabel,
-  networkColor,
-  textPrimary,
-  textSecondary,
-} from 'theme';
+import { borderPrimary, networkColor, textSecondary } from 'theme';
+
+export const TipsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  position: relative;
+  top: 0.25rem;
+  margin-top: 0.35rem;
+`;
 
 export const ItemsWrapper = styled(motion.div)`
   width: 100%;
@@ -18,7 +23,7 @@ export const ItemsWrapper = styled(motion.div)`
   margin: 0.25rem 0 0rem 0;
 `;
 export const ItemWrapper = styled(motion.div)`
-  padding: 0;
+  padding: 0 0.25rem;
   flex-basis: 100%;
   &:last-child {
     margin-right: 0.25rem;
@@ -26,12 +31,8 @@ export const ItemWrapper = styled(motion.div)`
 `;
 
 export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
-  border-radius: 1.25rem;
-  transition: border 0.05s;
   display: flex;
   flex-flow: row wrap;
-  height: 4rem;
-  transition: border 0.2s;
 
   > section {
     height: 100%;
@@ -40,8 +41,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
       display: flex;
       flex-flow: row wrap;
       align-items: center;
-      padding-right: 0.25rem;
-
+      padding-top: 0.1rem;
       .lpf {
         fill: ${networkColor};
       }
@@ -57,52 +57,6 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
       justify-content: center;
       flex: 1;
 
-      .title {
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-        text-align: left;
-        overflow: hidden;
-        position: relative;
-        width: 100%;
-        height: 1.9rem;
-        position: relative;
-        top: 0.2rem;
-
-        > h3 {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: auto;
-          max-width: 100%;
-          color: ${textPrimary};
-          font-variation-settings: 'wght' 625;
-          margin: 0;
-          font-size: 1.2rem;
-
-          padding-right: 6.75rem;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          height: 1.9rem;
-
-          > span {
-            position: absolute;
-            right: 0;
-            min-width: 6.2rem;
-            font-variation-settings: 'wght' 500;
-            background: ${backgroundLabel};
-            color: ${textSecondary};
-            font-size: 0.97rem;
-            margin-left: 0.25rem;
-            padding: 0rem 0.6rem;
-            border-radius: 1.5rem;
-            opacity: 0.9;
-            text-align: center;
-          }
-        }
-      }
-
       .desc {
         display: flex;
         flex-flow: column nowrap;
@@ -113,6 +67,16 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
         height: 1.85rem;
         position: relative;
 
+        &.active {
+          h4:hover {
+            color: ${networkColor};
+            .more {
+              color: ${networkColor};
+              opacity: 1;
+            }
+          }
+        }
+
         h4 {
           color: ${textSecondary};
           position: absolute;
@@ -122,26 +86,25 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           height: 1.85rem;
           max-width: 100%;
           margin: 0;
-          padding: 0.15rem 6.3rem 0rem 0;
+          padding: 0.15rem 1.75rem 0rem 0;
           text-align: left;
           font-size: 1.05rem;
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
+          transition: color 0.15s;
         }
         .more {
           position: absolute;
           right: 0.2rem;
-          top: 0rem;
+          top: 0.43rem;
           display: flex;
           flex-flow: row nowrap;
           align-items: center;
-          border: 1px solid ${networkColor};
-          color: ${networkColor};
-          border-radius: 1.5rem;
-          padding: 0rem 0.8rem;
+          color: ${textSecondary};
+          transition: all 0.15s;
           font-size: 1rem;
-
+          opacity: 0.5;
           > svg {
             margin-left: 0.4rem;
           }
@@ -152,31 +115,28 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
 `;
 
 export const PageToggleWrapper = styled.div`
-  background: ${backgroundLabel};
   color: ${textSecondary};
-  padding: 0.25rem 0.5rem;
+  padding: 0.1rem 0.1rem;
   border-radius: 1.5rem;
+  border: 1px solid ${borderPrimary};
   position: relative;
-  top: -0.2rem;
+  top: 0.1rem;
   display: flex;
   flex-flow: row wrap;
-  margin-left: 0.75rem;
+  margin-left: 0.5rem;
 
   > button {
     margin: 0 0.5rem;
     opacity: 0.75;
     font-size: 1.1rem;
     transition: color 0.2s;
-
     > svg {
       color: ${textSecondary};
     }
-
     &:hover {
       opacity: 1;
       color: ${networkColor};
     }
-
     &:disabled {
       color: ${textSecondary};
       opacity: 0.1;
@@ -184,6 +144,9 @@ export const PageToggleWrapper = styled.div`
   }
 
   h4 {
+    @media (max-width: ${SmallFontSizeMaxWidth}px) {
+      display: none;
+    }
     margin: 0;
     span {
       margin: 0 0.5rem;

@@ -13,7 +13,7 @@ import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useStaking } from '../Staking';
 import * as defaults from './defaults';
-import { UIContextInterface } from './types';
+import { SyncStart, UIContextInterface } from './types';
 
 export const UIContext = React.createContext<UIContextInterface>(
   defaults.defaultUIContext
@@ -37,6 +37,53 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // set whether app is syncing.ncludes workers (active nominations).
   const [isSyncing, setIsSyncing] = useState(false);
+
+  // store sync start times.
+  const [syncStarts, setSyncStarts] = useState<Array<SyncStart>>([]);
+
+  // gets the id of a sync
+  const getSyncById = (id: string) => {
+    const existing = syncStarts.find((s: SyncStart) => s.id === id);
+    return existing?.start || null;
+  };
+
+  // get a sync start for an id
+  const getSyncStart = (id: string) => {
+    const existing = syncStarts.find((s: SyncStart) => s.id === id);
+    return existing?.start || 0;
+  };
+
+  // set a sync start time for an id.
+  const setSyncStart = (id: string, start: number | null) => {
+    setSyncStarts([
+      {
+        id,
+        start,
+        synced: false,
+      },
+    ]);
+  };
+
+  // get whether a syncStart has been synced. Fall back to true if not existing.
+  const getSyncSynced = (id: string) => {
+    const existing = [...syncStarts].find((s: SyncStart) => s.id === id);
+    return existing?.synced || false;
+  };
+
+  // set whether a syncStart has been synced.
+  const setSyncSynced = (id: string) => {
+    const existing = [...syncStarts].find((s: SyncStart) => s.id === id);
+    if (existing) {
+      setSyncStarts(
+        [...syncStarts]
+          .filter((s: SyncStart) => s.id !== id)
+          .concat({
+            ...existing,
+            synced: true,
+          })
+      );
+    }
+  };
 
   // get side menu minimised state from local storage, default to not
   const _userSideMenuMinimised = Number(
@@ -152,6 +199,11 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         setSideMenu,
         setUserSideMenuMinimised,
+        getSyncById,
+        getSyncStart,
+        setSyncStart,
+        getSyncSynced,
+        setSyncSynced,
         setContainerRefs,
         sideMenuOpen,
         userSideMenuMinimised: userSideMenuMinimisedRef.current,

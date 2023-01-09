@@ -6,7 +6,7 @@ import { StatPie } from 'library/Graphs/StatBoxPie';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatBox } from './Item';
 import { TimeleftProps } from './types';
-import { TineleftWrapper } from './Wrapper';
+import { TimeLeftWrapper } from './Wrapper';
 
 export const Timeleft = (props: TimeleftProps) => {
   const { label, timeleft, graph, tooltip, helpKey } = props;
@@ -25,9 +25,9 @@ export const Timeleft = (props: TimeleftProps) => {
         </div>
 
         <div className="labels">
-          <TineleftWrapper>
+          <TimeLeftWrapper>
             <Countdown timeleft={timeleft} />
-          </TineleftWrapper>
+          </TimeLeftWrapper>
           <h4>
             {label} {help && <OpenHelpIcon helpKey={helpKey} />}
           </h4>

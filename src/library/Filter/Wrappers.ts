@@ -73,7 +73,6 @@ export const ItemWrapper = styled.div`
     font-size: 0.9rem;
     margin: 0;
     text-align: left;
-    padding-top: 0.15rem;
     line-height: 0.95rem;
   }
 `;
@@ -107,12 +106,10 @@ export const LargeItemWrapper = styled.div`
         margin: 0;
       }
     }
-
     svg {
       color: ${networkColor};
       margin-right: 0.75rem;
     }
-
     p {
       color: ${textSecondary};
       margin: 0;
@@ -122,4 +119,26 @@ export const LargeItemWrapper = styled.div`
   }
 `;
 
-export default Wrapper;
+export const TabsWrapper = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+  margin-bottom: 0.75rem;
+
+  > button {
+    &:first-child {
+      border-top-left-radius: 1.5rem;
+      border-bottom-left-radius: 1.5rem;
+    }
+    &:last-child {
+      border-top-right-radius: 1.5rem;
+      border-bottom-right-radius: 1.5rem;
+    }
+  }
+`;
+
+export const TabWrapper = styled.button<{ active?: boolean }>`
+  border: 1px solid ${(props) => (props.active ? networkColor : borderPrimary)};
+  color: ${(props) => (props.active ? networkColor : textSecondary)};
+  font-size: 0.9rem;
+  padding: 0.5rem 1.25rem;
+`;

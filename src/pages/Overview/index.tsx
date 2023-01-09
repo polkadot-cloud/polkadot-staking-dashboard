@@ -4,7 +4,6 @@
 import BN from 'bn.js';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
-import { usePlugins } from 'contexts/Plugins';
 import { useSubscan } from 'contexts/Subscan';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
@@ -25,16 +24,15 @@ import { ActiveAccount } from './ActiveAccount';
 import { BalanceChart } from './BalanceChart';
 import { NetworkStats } from './NetworkSats';
 import Payouts from './Payouts';
+import { StakeStatus } from './StakeStatus';
 import EraTimeLeftStat from './Stats/ActiveEraTimeLeft';
 import HistoricalRewardsRateStat from './Stats/HistoricalRewardsRate';
 import SupplyStakedStat from './Stats/SupplyStaked';
-import { Tips } from './Tips';
 
 export const Overview = () => {
   const { network } = useApi();
   const { units } = network;
   const { payouts, poolClaims } = useSubscan();
-  const { plugins } = usePlugins();
   const { lastReward } = formatRewardsForGraphs(14, units, payouts, poolClaims);
   const { i18n, t } = useTranslation('pages');
 
@@ -67,11 +65,9 @@ export const Overview = () => {
         <SupplyStakedStat />
         <EraTimeLeftStat />
       </StatBoxList>
-      {plugins.includes('tips') && (
-        <PageRowWrapper className="page-padding" noVerticalSpacer>
-          <Tips />
-        </PageRowWrapper>
-      )}
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
+        <StakeStatus />
+      </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <RowSecondaryWrapper
           hOrder={0}

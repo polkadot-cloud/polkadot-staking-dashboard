@@ -17,6 +17,7 @@ import { determinePoolDisplay } from 'Utils';
 import { Wrapper } from './Wrapper';
 
 export const Membership = ({ label }: { label: string }) => {
+  const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { openModalWith } = useModal();
@@ -25,7 +26,6 @@ export const Membership = ({ label }: { label: string }) => {
     useActivePools();
   const { getTransferOptions } = useTransferOptions();
   const { active } = getTransferOptions(activeAccount).pool;
-  const { t } = useTranslation('pages');
 
   let display = t('pools.notInPool');
   if (selectedActivePool) {
