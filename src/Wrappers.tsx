@@ -249,19 +249,23 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   }
 
   h1 {
+    font-size: 1.75rem;
     font-family: 'Unbounded', 'sans-serif', sans-serif;
-    font-size: ${(props) => (props.sticky ? '1.4rem ' : '1.75rem')};
+    position: relative;
+    transform: ${(props) => (props.sticky ? 'scale(0.75) ' : 'scale(1)')};
+    left: ${(props) => (props.sticky ? '-0.6rem ' : 0)};
+
     @media (max-width: ${SideMenuStickyThreshold}px) {
-      font-size: 1.5rem;
+      left: -0.6rem;
+      transform: scale(0.75);
     }
-    transition: font 0.5s;
+    transition: transform 0.25s, position 0.25s;
     margin: 0;
   }
 
   .tabs {
     overflow: hidden;
     max-width: ${InterfaceMaximumWidth}px;
-    transition: margin 0.2s;
     height: 3.6rem;
     border-bottom: ${(props) => (props.sticky ? '0px' : '1px solid')};
     border-bottom-color: ${borderPrimary};
