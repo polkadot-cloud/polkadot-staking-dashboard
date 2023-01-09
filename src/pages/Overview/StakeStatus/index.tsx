@@ -13,11 +13,8 @@ import { useUi } from 'contexts/UI';
 import { getUnixTime } from 'date-fns';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
-<<<<<<< HEAD
-import { useTranslation } from 'react-i18next';
-=======
 import { useEffect, useState } from 'react';
->>>>>>> 6f7aa6d284a98bf42fb8cb109db36824c79c1664
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { determinePoolDisplay } from 'Utils';
 import { Item } from './Item';
