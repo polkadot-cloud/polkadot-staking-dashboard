@@ -47,7 +47,6 @@ export const RouterInner = () => {
   useEffect(() => {
     if (!urlVarsInitiated) {
       initialise();
-
       setUrlVarsInitiated(true);
     }
   });

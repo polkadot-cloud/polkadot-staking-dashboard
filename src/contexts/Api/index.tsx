@@ -23,7 +23,7 @@ import {
 } from 'contexts/Api/types';
 import React, { useEffect, useState } from 'react';
 import { AnyApi, Network, NetworkName } from 'types';
-import { isNetworkFromMetaTags } from 'Utils';
+import { extractUrlValue, isNetworkFromMetaTags } from 'Utils';
 import * as defaults from './defaults';
 
 export const APIContext = React.createContext<APIContextInterface>(
@@ -65,9 +65,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // initial connection
   useEffect(() => {
     if (!provider) {
-      const _network: NetworkName = localStorage.getItem(
-        'network'
-      ) as NetworkName;
+      const _network = getInitialNetwork() as NetworkName;
       connect(_network, isLightClient);
     }
   });
@@ -84,6 +82,49 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       connectedCallback(provider);
     }
   }, [provider]);
+
+  // Get the initial network and prepare meta tags if necessary.
+  const getInitialNetwork = (): NetworkName => {
+    const urlNetworkRaw = extractUrlValue('n');
+
+    const urlNetworkValid = !!Object.values(NETWORKS).find(
+      (n: any) => n.name.toLowerCase() === urlNetworkRaw
+    );
+
+    // use network from url if valid.
+    if (urlNetworkValid) {
+      const urlNetwork = urlNetworkRaw as NetworkName;
+      initialiseMetaTags(urlNetwork);
+
+      if (urlNetworkValid && urlNetwork !== network.name) {
+        return urlNetwork;
+      }
+    }
+    // fallback to localStorage network if there.
+    const localNetwork: NetworkName = localStorage.getItem(
+      'network'
+    ) as NetworkName;
+    const localNetworkValid = !!Object.values(NETWORKS).find(
+      (n: any) => n.name.toLowerCase() === localNetwork
+    );
+
+    if (localNetworkValid) {
+      initialiseMetaTags(localNetwork);
+      return localNetwork;
+    }
+    // fallback to default network.
+    return network.name;
+  };
+
+  // Update meta tags if network is from URL.
+  const initialiseMetaTags = (urlNetwork: NetworkName) => {
+    // check if favicons are up to date.
+    const metaValid = isNetworkFromMetaTags(network.name as NetworkName);
+    // this only needs to happen when `n` is in URL and a change needs to take place.
+    if (!metaValid || urlNetwork !== network.name) {
+      updateIconMetaTags(network.name as NetworkName);
+    }
+  };
 
   // connection callback
   const connectedCallback = async (_provider: WsProvider | ScProvider) => {
@@ -232,6 +273,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   ) => {
     localStorage.setItem('isLightClient', _isLightClient ? 'true' : '');
     setIsLightClient(_isLightClient);
+
     // disconnect api if not null
     if (api) {
       await api.disconnect();
