@@ -97,6 +97,12 @@ export const changeLanguage = async (lng: string, i18next: AnyApi) => {
     );
     i18next.changeLanguage(lng);
   }
+  if (window.location.hash.includes('l=')) {
+    window.location.hash = window.location.hash.replace(
+      window.location.hash.substring(window.location.hash.indexOf('l=') + 2),
+      lng
+    );
+  }
 };
 
 // Load language resources dynamically.
