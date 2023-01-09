@@ -7,7 +7,6 @@ export const HELP_CONFIG: HelpItems = [
   {
     key: 'overview',
     definitions: [
-      'Dashboard Tips',
       'Total Nominators',
       'Active Nominators',
       'Your Balance',

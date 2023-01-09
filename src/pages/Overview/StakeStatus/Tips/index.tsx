@@ -1,39 +1,31 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  faChevronCircleLeft,
-  faChevronCircleRight,
-  faCog,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TIPS_CONFIG } from 'config/tips';
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
-import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import useFillVariables from 'library/Hooks/useFillVariables';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnyJson } from 'types';
 import { setStateWithRef } from 'Utils';
-import { Items } from './Items';
+import Items from './Items';
+import { PageToggle } from './PageToggle';
 import { Syncing } from './Syncing';
-import { PageToggleWrapper } from './Wrappers';
+import { TipsWrapper } from './Wrappers';
 
 export const Tips = () => {
+  const { t, i18n } = useTranslation();
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { networkSyncing } = useUi();
-  const { openModalWith } = useModal();
   const { fillVariables } = useFillVariables();
   const { membership } = usePoolMemberships();
   const { isNominating, staking } = useStaking();
@@ -41,7 +33,6 @@ export const Tips = () => {
   const { getTransferOptions } = useTransferOptions();
   const { minNominatorBond } = staking;
   const transferOptions = getTransferOptions(activeAccount);
-  const { t, i18n } = useTranslation();
 
   // multiple tips per row is currently turned off.
   const multiTipsPerRow = false;
@@ -158,84 +149,48 @@ export const Tips = () => {
   });
 
   // determine items to be displayed
-  const endItem = networkSyncing
+  const end = networkSyncing
     ? 1
     : Math.min(_page * _itemsPerPage, items.length);
-  const startItem = networkSyncing
+  const start = networkSyncing
     ? 1
     : _page * _itemsPerPage - (_itemsPerPage - 1);
 
-  const totalItems = networkSyncing ? 1 : items.length;
-  const itemsDisplay = items.slice(startItem - 1, endItem);
-  const totalPages = Math.ceil(totalItems / _itemsPerPage);
+  const itemsDisplay = items.slice(start - 1, end);
 
+  const setPageHandler = (newPage: number) => {
+    setStateWithRef(newPage, setPage, pageRef);
+  };
   return (
-    <CardWrapper>
-      <CardHeaderWrapper withAction>
-        <h4>
-          {t('module.tips', { ns: 'tips' })}
-          <OpenHelpIcon helpKey="Dashboard Tips" />
-        </h4>
-        <div>
-          <PageToggleWrapper>
-            <button
-              type="button"
-              disabled={totalPages === 1 || _page === 1}
-              onClick={() => {
-                setStateWithRef(_page - 1, setPage, pageRef);
-              }}
-            >
-              <FontAwesomeIcon
-                icon={faChevronCircleLeft}
-                className="icon"
-                transform="grow-1"
-              />
-            </button>
-            <h4 className={totalPages === 1 ? `disabled` : undefined}>
-              <span>
-                {startItem}
-                {_itemsPerPage > 1 &&
-                  totalItems > 1 &&
-                  startItem !== endItem &&
-                  ` - ${endItem}`}
-              </span>
-              {totalPages > 1 && (
-                <>
-                  {t('module.of', { ns: 'tips' })} <span>{items.length}</span>
-                </>
-              )}
-            </h4>
-            <button
-              type="button"
-              disabled={totalPages === 1 || _page === totalPages}
-              onClick={() => {
-                setStateWithRef(_page + 1, setPage, pageRef);
-              }}
-            >
-              <FontAwesomeIcon
-                icon={faChevronCircleRight}
-                className="icon"
-                transform="grow-1"
-              />
-            </button>
-          </PageToggleWrapper>
-          <PageToggleWrapper>
-            <button
-              type="button"
-              onClick={() => {
-                openModalWith('DismissTips', {});
-              }}
-            >
-              <FontAwesomeIcon icon={faCog} />
-            </button>
-          </PageToggleWrapper>
-        </div>
-      </CardHeaderWrapper>
-      {networkSyncing ? (
-        <Syncing />
-      ) : (
-        <Items items={itemsDisplay} page={pageRef.current} />
-      )}
-    </CardWrapper>
+    <TipsWrapper>
+      <div style={{ flexGrow: 1 }}>
+        {networkSyncing ? (
+          <Syncing />
+        ) : (
+          <Items
+            items={itemsDisplay}
+            page={pageRef.current}
+            showTitle={false}
+          />
+        )}
+      </div>
+      <div
+        style={{
+          display: 'flex',
+          flexFlow: 'row nowrap',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <PageToggle
+          start={start}
+          end={end}
+          page={page}
+          itemsPerPage={itemsPerPage}
+          totalItems={items.length}
+          setPageHandler={setPageHandler}
+        />
+      </div>
+    </TipsWrapper>
   );
 };
