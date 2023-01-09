@@ -1,6 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useApi } from 'contexts/Api';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { setStateWithRef } from 'Utils';
@@ -15,6 +16,7 @@ import {
 import { fromNow, getDuration } from './utils';
 
 export const useTimeLeft = (props?: TimeleftHookProps) => {
+  const { network } = useApi();
   const { t, i18n } = useTranslation();
 
   // check whether timeleft is within a minute of finishing.
@@ -60,6 +62,10 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
     };
   };
 
+  // store refresh callback
+  const [callback, setCallback] = useState<any>(props?.refreshCallback);
+  const callbackRef = useRef(callback);
+
   // the end time as a date.
   const [to, setTo] = useState<Date | null>(null);
   const toRef = useRef(to);
@@ -88,15 +94,14 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
   useEffect(() => {
     // handler for handling timeleft refresh.
     //
-    // either handle regular timeleft update, or refresh `to` via `refreshCallback` every
+    // either handle regular timeleft update, or refresh `to` via `callback` every
     // `refreshInterval` seconds.
     const handleRefresh = () => {
       // end of a refresh interval.
       if (r === 0) {
         // call refresh callback if one is present.
-        const refreshCallback = props?.refreshCallback || undefined;
-        if (refreshCallback) {
-          setStateWithRef(fromNow(refreshCallback()), setTo, toRef);
+        if (callbackRef.current) {
+          setStateWithRef(fromNow(callbackRef.current()), setTo, toRef);
         }
         r = refreshInterval;
       }
@@ -132,7 +137,7 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
         setStateWithRef(interval, setMinInterval, minIntervalRef);
       }
     }
-  }, [to, inLastHour(), lastMinuteCountdown()]);
+  }, [to, inLastHour(), lastMinuteCountdown(), network]);
 
   // re-render the timeleft upon langauge switch.
   useEffect(() => {
@@ -155,5 +160,6 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
   return {
     setFromNow,
     timeleft,
+    setCallback,
   };
 };
