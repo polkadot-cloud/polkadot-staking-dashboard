@@ -55,7 +55,7 @@ export const StakeStatus = () => {
     const synced = getSyncSynced(syncId);
     const syncStart = getSyncStart(syncId);
 
-    // if syncing, get remaining time.
+    // if syncing, get remaining time & then set synced.
     if (!synced) {
       const remaining = Math.max(
         0,
@@ -64,20 +64,16 @@ export const StakeStatus = () => {
 
       if (remaining > 0) {
         setTimeout(() => {
-          // console.log('remaining ', remaining);
           setSyncSynced(syncId);
         }, remaining);
       } else {
-        // console.log('synced');
         setSyncSynced(syncId);
       }
     }
   }, [getSyncStart(syncId), getSyncSynced(syncId)]);
 
-  // re-sync: set sync start time
+  // re-sync when network / account pair changes.
   useEffect(() => {
-    // this is firing when we switch tabs AND when network is switched...
-
     if (getSyncById(syncId) === null) {
       setSyncStart(syncId, getUnixTime(new Date()));
     }
