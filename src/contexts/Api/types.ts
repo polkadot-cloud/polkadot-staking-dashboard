@@ -29,7 +29,6 @@ export interface APIContextInterface {
   connect: (n: NetworkName) => Promise<void>;
   fetchDotPrice: () => void;
   switchNetwork: (n: NetworkName, l: boolean) => Promise<void>;
-  updateIconMetaTags: (n: NetworkName) => void;
   api: ApiPromise | null;
   consts: APIConstants;
   isReady: boolean;
