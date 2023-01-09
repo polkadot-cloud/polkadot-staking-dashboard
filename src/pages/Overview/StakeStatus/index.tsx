@@ -37,12 +37,12 @@ export const StakeStatus = () => {
   const { activeAccount } = useConnect();
   const { openModalWith } = useModal();
   const { membership } = usePoolMemberships();
-  const { isNominating } = useStaking();
+  const { inSetup } = useStaking();
   const { getNominationStatus } = useNominationStatus();
   const { bondedPools, meta } = useBondedPools();
   const { selectedActivePool } = useActivePools();
   const { plugins } = usePlugins();
-  const isStaking = isNominating() || membership;
+  const isStaking = !inSetup() || membership;
   const showTips = plugins.includes('tips');
 
   // sync start id
@@ -100,7 +100,7 @@ export const StakeStatus = () => {
   };
 
   // determine whether active staking positions are earning rewards.
-  const earningRewardsNominator = !isNominating()
+  const earningRewardsNominator = inSetup()
     ? false
     : getNominationStatus(activeAccount, 'nominator').earningRewards;
   const earningRewardsPool = !membership
@@ -142,7 +142,7 @@ export const StakeStatus = () => {
                       />
                     ) : (
                       <>
-                        {isNominating() ? (
+                        {!inSetup() ? (
                           <Item
                             leftIcon={{
                               show: true,
