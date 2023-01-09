@@ -95,10 +95,7 @@ export const changeLanguage = async (lng: string, i18next: AnyApi) => {
       'lng_resources',
       JSON.stringify({ l: lng, r: resources })
     );
-
-    setTimeout(() => {
-      i18next.changeLanguage(lng);
-    }, 50);
+    i18next.changeLanguage(lng);
   }
 };
 
