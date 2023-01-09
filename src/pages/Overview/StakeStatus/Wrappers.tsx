@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary } from 'theme';
+import { borderPrimary, textSecondary } from 'theme';
 
 export const StatusWrapper = styled.div<{ includeBorder: boolean }>`
   width: 100%;
@@ -59,6 +59,7 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
     width: 100%;
 
     .text {
+      color: ${textSecondary};
       font-size: 1.25rem;
       line-height: 1.55rem;
       position: absolute;

@@ -7,6 +7,6 @@ export interface ItemProps {
   onClick?: () => void;
   leftIcon?: {
     show: boolean;
-    active: boolean;
+    status: 'active' | 'inactive' | 'off';
   };
 }

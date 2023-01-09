@@ -4,10 +4,13 @@
 import { faChevronRight, faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
+import { useTheme } from 'contexts/Themes';
+import { defaultThemes } from 'theme/default';
 import { ItemProps } from './types';
 import { StatusRowWrapper } from './Wrappers';
 
 export const Item = ({ text, ctaText, onClick, leftIcon }: ItemProps) => {
+  const { mode } = useTheme();
   return (
     <StatusRowWrapper leftIcon={leftIcon?.show}>
       <div>
@@ -20,8 +23,13 @@ export const Item = ({ text, ctaText, onClick, leftIcon }: ItemProps) => {
                   transform="shrink-6"
                   className="bull"
                   style={{
-                    opacity: leftIcon.active ? 1 : 0.1,
-                    color: leftIcon.active ? 'green' : 'inherit',
+                    opacity: leftIcon.status === 'off' ? 0.1 : 1,
+                    color:
+                      leftIcon.status === 'active'
+                        ? defaultThemes.text.success[mode]
+                        : leftIcon.status === 'inactive'
+                        ? defaultThemes.text.warning[mode]
+                        : 'inherit',
                   }}
                 />
               ) : null

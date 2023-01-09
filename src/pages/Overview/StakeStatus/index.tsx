@@ -99,12 +99,21 @@ export const StakeStatus = () => {
     return '';
   };
 
+  // determine whether active staking positions are earning rewards.
+  const earningRewardsNominator = !isNominating()
+    ? false
+    : getNominationStatus(activeAccount, 'nominator').earningRewards;
+  const earningRewardsPool = !membership
+    ? false
+    : getNominationStatus(selectedActivePool?.addresses?.stash || '', 'pool')
+        .earningRewards;
+
   return (
     <CardWrapper>
       <StatusWrapper includeBorder={showTips}>
         {networkSyncing || (activeAccount && !getSyncSynced(syncId)) ? (
           <Item
-            leftIcon={{ show: true, active: false }}
+            leftIcon={{ show: true, status: 'off' }}
             text={`${t('overview.syncingStatus')}...`}
           />
         ) : (
@@ -120,7 +129,7 @@ export const StakeStatus = () => {
                 {isSyncing ? (
                   <>
                     <Item
-                      leftIcon={{ show: true, active: false }}
+                      leftIcon={{ show: true, status: 'off' }}
                       text={`${t('overview.syncingStatus')}...`}
                     />
                   </>
@@ -128,14 +137,19 @@ export const StakeStatus = () => {
                   <>
                     {!isStaking ? (
                       <Item
-                        leftIcon={{ show: true, active: false }}
+                        leftIcon={{ show: true, status: 'off' }}
                         text={t('overview.notStaking')}
                       />
                     ) : (
                       <>
                         {isNominating() ? (
                           <Item
-                            leftIcon={{ show: true, active: true }}
+                            leftIcon={{
+                              show: true,
+                              status: earningRewardsNominator
+                                ? 'active'
+                                : 'inactive',
+                            }}
                             text={
                               getNominationStatus(activeAccount, 'nominator')
                                 .message
@@ -146,7 +160,12 @@ export const StakeStatus = () => {
                         ) : null}
                         {membership ? (
                           <Item
-                            leftIcon={{ show: true, active: true }}
+                            leftIcon={{
+                              show: true,
+                              status: earningRewardsPool
+                                ? 'active'
+                                : 'inactive',
+                            }}
                             text={`${t('overview.memberOf')} ${
                               poolDisplay() === ''
                                 ? `${t('overview.pool')} ${membership.poolId}`
