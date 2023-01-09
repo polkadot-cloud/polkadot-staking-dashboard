@@ -18,9 +18,13 @@ const ActiveEraStatBox = () => {
   const { activeEra } = metrics;
   const { get: getEraTimeleft } = useEraTimeLeft();
 
+  const callback = () => {
+    return getEraTimeleft().timeleft;
+  };
+
   const { timeleft, setFromNow } = useTimeLeft({
     refreshInterval: 60,
-    refreshCallback: getEraTimeleft().timeleft,
+    refreshCallback: callback,
   });
 
   // re-set timer on era change (also covers network change).
