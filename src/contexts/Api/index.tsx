@@ -139,6 +139,17 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     // updateIconMetaTags(_network); // NOTE: needs further testing.
     setConnectionStatus('connecting');
     connect(_network, _isLightClient);
+
+    // staking.polkadot.network?n=polkadot&l=fr
+    if (window.location.hash.includes('n=')) {
+      window.location.hash = window.location.hash.replace(
+        window.location.hash.substring(
+          window.location.hash.indexOf('n=') + 2,
+          window.location.hash.indexOf('&')
+        ),
+        _network
+      );
+    }
   };
 
   // handles fetching of DOT price and updates context state.
