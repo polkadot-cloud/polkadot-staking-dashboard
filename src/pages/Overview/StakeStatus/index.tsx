@@ -49,7 +49,7 @@ export const StakeStatus = () => {
   const syncId = `${JSON.stringify(activeAccount)}_${network.name}`;
 
   // delay refresh to avoid flashing updates.
-  const delay = 1000;
+  const delay = 500;
 
   useEffect(() => {
     const synced = getSyncSynced(syncId);
@@ -106,7 +106,7 @@ export const StakeStatus = () => {
   return (
     <CardWrapper>
       <StatusWrapper includeBorder={showTips}>
-        {networkSyncing || !getSyncSynced(syncId) ? (
+        {networkSyncing || (activeAccount && !getSyncSynced(syncId)) ? (
           <Item
             leftIcon={{ show: true, active: false }}
             text={`${t('overview.syncingStatus')}...`}
