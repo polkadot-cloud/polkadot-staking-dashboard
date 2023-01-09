@@ -68,11 +68,10 @@ export const ContentWrapper = styled.div`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    padding: 1rem 1rem 0 1rem;
+    padding: 1rem 2rem 0 2rem;
   }
   .body {
-    padding: 0.5rem 1.5rem 1rem 1.5rem;
-
+    padding: 0.5rem 1.5rem 1.25rem 1.5rem;
     h4 {
       margin: 1rem 0;
     }

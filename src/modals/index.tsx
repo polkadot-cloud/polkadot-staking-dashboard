@@ -14,7 +14,6 @@ import { ChangePoolRoles } from './ChangePoolRoles';
 import { ChooseLanguage } from './ChooseLanguage';
 import { ClaimReward } from './ClaimReward';
 import { ConnectAccounts } from './ConnectAccounts';
-import { DismissTips } from './DismissTips';
 import { GoToFeedback } from './GoToFeedback';
 import { JoinPool } from './JoinPool';
 import { LeavePool } from './LeavePool';
@@ -119,7 +118,6 @@ export const Modal = () => {
               {modal === 'ChooseLanguage' && <ChooseLanguage />}
               {modal === 'ClaimReward' && <ClaimReward />}
               {modal === 'ConnectAccounts' && <ConnectAccounts />}
-              {modal === 'DismissTips' && <DismissTips />}
               {modal === 'GoToFeedback' && <GoToFeedback />}
               {modal === 'JoinPool' && <JoinPool />}
               {modal === 'LeavePool' && <LeavePool />}
