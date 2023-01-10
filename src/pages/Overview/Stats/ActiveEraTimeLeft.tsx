@@ -13,25 +13,14 @@ import { humanNumber } from 'Utils';
 
 const ActiveEraStatBox = () => {
   const { t } = useTranslation('pages');
-  const { status: connectionStatus, network } = useApi();
+  const { status: connectionStatus } = useApi();
   const { metrics } = useNetworkMetrics();
   const { activeEra } = metrics;
   const { get: getEraTimeleft } = useEraTimeLeft();
 
-  const callback = () => {
-    return getEraTimeleft().timeleft;
-  };
-
-  const { timeleft, setFromNow, setCallback } = useTimeLeft({
+  const { timeleft, setFromNow } = useTimeLeft({
     refreshInterval: 60,
-    refreshCallback: callback,
   });
-
-  useEffect(() => {
-    setCallback(() => {
-      return getEraTimeleft().timeleft;
-    });
-  }, [network]);
 
   // re-set timer on era change (also covers network change).
   useEffect(() => {

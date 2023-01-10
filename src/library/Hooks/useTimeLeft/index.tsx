@@ -13,7 +13,7 @@ import {
   TimeleftHookProps,
   TimeLeftRaw,
 } from './types';
-import { fromNow, getDuration } from './utils';
+import { getDuration } from './utils';
 
 export const useTimeLeft = (props?: TimeleftHookProps) => {
   const { network } = useApi();
@@ -62,10 +62,6 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
     };
   };
 
-  // store refresh callback
-  const [callback, setCallback] = useState<any>(props?.refreshCallback);
-  const callbackRef = useRef(callback);
-
   // the end time as a date.
   const [to, setTo] = useState<Date | null>(null);
   const toRef = useRef(to);
@@ -92,22 +88,6 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
 
   // refresh effects.
   useEffect(() => {
-    // handler for handling timeleft refresh.
-    //
-    // either handle regular timeleft update, or refresh `to` via `callback` every
-    // `refreshInterval` seconds.
-    const handleRefresh = () => {
-      // end of a refresh interval.
-      if (r === 0) {
-        // call refresh callback if one is present.
-        if (callbackRef.current) {
-          setStateWithRef(fromNow(callbackRef.current()), setTo, toRef);
-        }
-        r = refreshInterval;
-      }
-      setTimeleft(getTimeleft());
-    };
-
     if (inLastHour()) {
       // refresh timeleft every second.
       if (!secIntervalRef.current) {
@@ -117,7 +97,7 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
             setStateWithRef(undefined, setSecInterval, secIntervalRef);
           }
           r = Math.max(0, r - 1);
-          handleRefresh();
+          setTimeleft(getTimeleft());
         }, 1000);
 
         setStateWithRef(interval, setSecInterval, secIntervalRef);
@@ -132,8 +112,8 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
             setStateWithRef(undefined, setMinInterval, minIntervalRef);
           }
           r = Math.max(0, r - 60);
-          handleRefresh();
-        }, 60000);
+          setTimeleft(getTimeleft());
+        }, 5000);
         setStateWithRef(interval, setMinInterval, minIntervalRef);
       }
     }
@@ -160,6 +140,5 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
   return {
     setFromNow,
     timeleft,
-    setCallback,
   };
 };
