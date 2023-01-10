@@ -24,7 +24,7 @@ import {
 } from 'contexts/Api/types';
 import React, { useEffect, useState } from 'react';
 import { AnyApi, Network, NetworkName } from 'types';
-import { extractUrlValue, isNetworkFromMetaTags, varToUrlHash } from 'Utils';
+import { extractUrlValue, varToUrlHash } from 'Utils';
 import * as defaults from './defaults';
 
 export const APIContext = React.createContext<APIContextInterface>(
@@ -45,7 +45,6 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     // use network from url if valid.
     if (urlNetworkValid) {
       const urlNetwork = urlNetworkRaw as NetworkName;
-      // initialiseMetaTags(urlNetwork); // NOTE: needs further testing.
 
       if (urlNetworkValid) {
         return urlNetwork;
@@ -60,65 +59,12 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     );
 
     if (localNetworkValid) {
-      // initialiseMetaTags(localNetwork); // NOTE: needs further testing.
       return localNetwork;
     }
     // fallback to default network.
     return 'polkadot';
   };
 
-  // Update head meta tags to reflect the current network.
-  //
-  // Determines if icons need to be updated and the current network in place. Iterates icons and
-  // updates network paths for icons. Updates theme color and ms title color.
-  // eslint-disable-next-line
-  const updateIconMetaTags = (name: NetworkName) => {
-    try {
-      const icons = document.querySelectorAll("link[rel*='icon']");
-      let current = '';
-      if (icons[0]) {
-        Object.values(NETWORKS).every((n: Network) => {
-          if (isNetworkFromMetaTags(n.name as NetworkName)) {
-            current = n.name.toLowerCase();
-            return false;
-          }
-          return true;
-        });
-      }
-
-      // if current network is determined, commit network update in `href` values.
-      if (current.length) {
-        icons.forEach((e) => {
-          const href = e.getAttribute('href');
-          if (href) {
-            e.setAttribute('href', href.replace(current, name.toLowerCase()));
-          }
-        });
-
-        const c = NETWORKS[name].colors.primary.light;
-
-        document
-          .querySelector("meta[name='msapplication-TileColor']")
-          ?.setAttribute('content', c);
-        document
-          .querySelector("meta[name='theme-color']")
-          ?.setAttribute('content', c);
-      }
-    } catch (e) {
-      /* error */
-    }
-  };
-
-  // Update meta tags if network is from URL.
-  // eslint-disable-next-line
-  const initialiseMetaTags = (n: NetworkName) => {
-    // check if favicons are up to date.
-    const metaValid = isNetworkFromMetaTags(n);
-    // this only needs to happen when `n` is in URL and a change needs to take place.
-    if (!metaValid) {
-      // updateIconMetaTags(n); // NOTE: needs further testing.
-    }
-  };
   // provider instance state
   const [provider, setProvider] = useState<WsProvider | ScProvider | null>(
     null
@@ -140,7 +86,6 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       await api.disconnect();
     }
     setApi(null);
-    // updateIconMetaTags(_network); // NOTE: needs further testing.
     setConnectionStatus('connecting');
     connect(_network, _isLightClient);
   };
