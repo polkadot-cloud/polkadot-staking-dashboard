@@ -1,6 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable */
+
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SideMenuStickyThreshold } from 'consts';
@@ -69,16 +69,16 @@ export const SideMenu = () => {
     status === 'connecting'
       ? defaultThemes.status.warning.solid[mode]
       : status === 'connected'
-        ? defaultThemes.status.success.solid[mode]
-        : defaultThemes.status.danger.solid[mode];
+      ? defaultThemes.status.success.solid[mode]
+      : defaultThemes.status.danger.solid[mode];
 
   // handle transparent border color
   const borderColor =
     status === 'connecting'
       ? defaultThemes.status.warning.transparent[mode]
       : status === 'connected'
-        ? defaultThemes.status.success.transparent[mode]
-        : defaultThemes.status.danger.transparent[mode];
+      ? defaultThemes.status.success.transparent[mode]
+      : defaultThemes.status.danger.transparent[mode];
 
   return (
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
