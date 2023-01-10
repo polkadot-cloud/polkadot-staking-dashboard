@@ -12,7 +12,7 @@ import libEn from './en/library.json';
 import modalsEn from './en/modals.json';
 import pagesEn from './en/pages.json';
 import tipsEn from './en/tips.json';
-import { doDynamicImport, getActiveLanguage, getResources } from './utils';
+import { doDynamicImport, getInitialLanguage, getResources } from './utils';
 
 // available locales as key value pairs
 export const locales: { [key: string]: AnyJson } = {
@@ -57,8 +57,8 @@ if (localAppVersion !== AppVersion || process.env.NODE_ENV === 'development') {
   localStorage.setItem('app_version', AppVersion);
 }
 
-// get active language.
-const lng: string = getActiveLanguage();
+// get initial language.
+const lng: string = getInitialLanguage();
 
 // get default resources and whether a dynamic load is required for
 // the active language.

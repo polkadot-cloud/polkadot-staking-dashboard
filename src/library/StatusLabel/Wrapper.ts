@@ -11,19 +11,21 @@ export const Wrapper = styled.div<WrapperProps>`
   left: 0;
   width: 100%;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
   z-index: 2;
 
   > div {
+    min-width: 125px;
     background: ${backgroundLabel};
     opacity: 0.75;
     padding: 1rem 1.25rem;
     border-radius: 1rem;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     align-items: center;
+    justify-content: center;
 
     > svg {
       color: ${textSecondary};

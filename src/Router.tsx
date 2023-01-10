@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PAGES_CONFIG } from 'config/pages';
-import { TitleDefault } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { AnimatePresence } from 'framer-motion';
@@ -35,17 +34,17 @@ import {
 } from 'Wrappers';
 
 export const RouterInner = () => {
-  const { network } = useApi();
-  const { pathname } = useLocation();
-  const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
   const { t } = useTranslation('base');
+  const { pathname } = useLocation();
+  const { network } = useApi();
+  const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
 
-  // scroll to top of the window on every page change or network change
+  // scroll to top of the window on every page change or network change.
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname, network]);
 
-  // set references to UI context and make available throughout app
+  // set references to UI context and make available throughout app.
   useEffect(() => {
     setContainerRefs({
       mainInterface: mainInterfaceRef,
@@ -101,7 +100,9 @@ export const RouterInner = () => {
                           transition={{ duration: 0.2 }}
                         >
                           <Helmet>
-                            <title>{`${t(key)} : ${TitleDefault}`}</title>
+                            <title>{`${t(key)} : ${t('title', {
+                              context: `${network.name.toLowerCase()}`,
+                            })}`}</title>
                           </Helmet>
                           <Entry page={page} />
                         </PageWrapper>
