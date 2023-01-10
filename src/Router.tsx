@@ -101,7 +101,7 @@ export const RouterInner = () => {
                         >
                           <Helmet>
                             <title>{`${t(key)} : ${t('title', {
-                              context: `${network.name.toLowerCase()}`,
+                              context: `${network.name}`,
                             })}`}</title>
                           </Helmet>
                           <Entry page={page} />

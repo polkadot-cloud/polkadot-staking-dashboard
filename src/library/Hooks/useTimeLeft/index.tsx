@@ -5,17 +5,15 @@ import { useApi } from 'contexts/Api';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { setStateWithRef } from 'Utils';
-import { defaultRefreshInterval } from './defaults';
 import {
   TimeLeftAll,
   TimeleftDuration,
   TimeLeftFormatted,
-  TimeleftHookProps,
   TimeLeftRaw,
 } from './types';
-import { fromNow, getDuration } from './utils';
+import { getDuration } from './utils';
 
-export const useTimeLeft = (props?: TimeleftHookProps) => {
+export const useTimeLeft = () => {
   const { network } = useApi();
   const { t, i18n } = useTranslation();
 
@@ -62,10 +60,6 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
     };
   };
 
-  // store refresh callback
-  const [callback, setCallback] = useState<any>(props?.refreshCallback);
-  const callbackRef = useRef(callback);
-
   // the end time as a date.
   const [to, setTo] = useState<Date | null>(null);
   const toRef = useRef(to);
@@ -84,30 +78,8 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
   >(undefined);
   const secIntervalRef = useRef(secInterval);
 
-  // refresh callback interval in seconds.
-  const refreshInterval = props?.refreshInterval || defaultRefreshInterval;
-
-  // refresh interval counter, defaults to interval time.
-  let r = refreshInterval;
-
   // refresh effects.
   useEffect(() => {
-    // handler for handling timeleft refresh.
-    //
-    // either handle regular timeleft update, or refresh `to` via `callback` every
-    // `refreshInterval` seconds.
-    const handleRefresh = () => {
-      // end of a refresh interval.
-      if (r === 0) {
-        // call refresh callback if one is present.
-        if (callbackRef.current) {
-          setStateWithRef(fromNow(callbackRef.current()), setTo, toRef);
-        }
-        r = refreshInterval;
-      }
-      setTimeleft(getTimeleft());
-    };
-
     if (inLastHour()) {
       // refresh timeleft every second.
       if (!secIntervalRef.current) {
@@ -116,8 +88,7 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
             clearInterval(secIntervalRef.current);
             setStateWithRef(undefined, setSecInterval, secIntervalRef);
           }
-          r = Math.max(0, r - 1);
-          handleRefresh();
+          setTimeleft(getTimeleft());
         }, 1000);
 
         setStateWithRef(interval, setSecInterval, secIntervalRef);
@@ -131,8 +102,7 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
             clearInterval(minIntervalRef.current);
             setStateWithRef(undefined, setMinInterval, minIntervalRef);
           }
-          r = Math.max(0, r - 60);
-          handleRefresh();
+          setTimeleft(getTimeleft());
         }, 60000);
         setStateWithRef(interval, setMinInterval, minIntervalRef);
       }
@@ -160,6 +130,5 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
   return {
     setFromNow,
     timeleft,
-    setCallback,
   };
 };

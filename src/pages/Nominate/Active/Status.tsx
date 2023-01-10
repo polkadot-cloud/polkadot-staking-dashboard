@@ -1,6 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-/* eslint-disable */
+
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -37,7 +37,7 @@ export const Status = ({ height }: { height: number }) => {
   const { metrics } = useNetworkMetrics();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { setOnNominatorSetup, getStakeSetupProgressPercent }: any = useSetup();
-  const { getNominationsStatus, staking, inSetup, eraStakers } = useStaking();
+  const { getNominationsStatus, staking, inSetup } = useStaking();
   const { checking, isExposed } = useFastUnstake();
   const { getFastUnstakeText, isUnstaking, isFastUnstaking } = useUnstaking();
   const controller = getBondedAccount(activeAccount);
