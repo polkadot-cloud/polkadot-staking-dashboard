@@ -155,11 +155,11 @@ export const SideMenu = () => {
           type="button"
           onClick={() => openModalWith('ChooseLanguage', {}, 'small')}
         >
-          <LanguageSVG width="1.5em" height="1.5em" />
+          <LanguageSVG width="1.55em" height="1.55em" />
         </button>
         {mode === 'light' ? (
           <button type="button" onClick={() => toggleTheme()}>
-            <SunnyOutlineSVG width="1.5em" height="1.5em" />
+            <SunnyOutlineSVG width="1.55em" height="1.55em" />
           </button>
         ) : (
           <button type="button" onClick={() => toggleTheme()}>
