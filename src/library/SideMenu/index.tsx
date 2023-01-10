@@ -22,6 +22,7 @@ import throttle from 'lodash.throttle';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
+import { capitalizeFirstLetter } from 'Utils';
 import Heading from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
@@ -107,7 +108,7 @@ export const SideMenu = () => {
         <Separator />
         <Heading title={t('network')} minimised={sideMenuMinimised} />
         <Secondary
-          name={network.name}
+          name={capitalizeFirstLetter(network.name)}
           borderColor={borderColor}
           onClick={() => openModalWith('Networks')}
           icon={{

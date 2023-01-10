@@ -92,7 +92,11 @@ const DropdownItem = ({ c, item, index }: any) => {
   return (
     <div
       className="item"
-      {...c.getItemProps({ key: item.name, index, item })}
+      {...c.getItemProps({
+        key: item.name,
+        index,
+        item,
+      })}
       style={{
         color,
         border,

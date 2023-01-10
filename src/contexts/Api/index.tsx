@@ -39,7 +39,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     const urlNetworkRaw = extractUrlValue('n');
 
     const urlNetworkValid = !!Object.values(NETWORKS).find(
-      (n: any) => n.name.toLowerCase() === urlNetworkRaw
+      (n: any) => n.name === urlNetworkRaw
     );
 
     // use network from url if valid.
@@ -55,7 +55,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       'network'
     ) as NetworkName;
     const localNetworkValid = !!Object.values(NETWORKS).find(
-      (n: any) => n.name.toLowerCase() === localNetwork
+      (n: any) => n.name === localNetwork
     );
 
     if (localNetworkValid) {
@@ -95,6 +95,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     const urls = [
       `${ApiEndpoints.priceChange}${NETWORKS[network.name].api.priceTicker}`,
     ];
+
     const responses = await Promise.all(
       urls.map((u) => fetch(u, { method: 'GET' }))
     );
@@ -247,7 +248,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
     let _provider: WsProvider | ScProvider;
     if (_isLightClient) {
-      _provider = new ScProvider(Sc, endpoints.lightClient);
+      _provider = new ScProvider(Sc as any, endpoints.lightClient);
       await _provider.connect();
     } else {
       _provider = new WsProvider(endpoints.rpc);

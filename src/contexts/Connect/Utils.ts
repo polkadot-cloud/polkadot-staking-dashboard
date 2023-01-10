@@ -63,7 +63,7 @@ export const getActiveAccountLocal = (network: Network) => {
   const keyring = new Keyring();
   keyring.setSS58Format(network.ss58);
   let _activeAccount = localStorageOrDefault(
-    `${network.name.toLowerCase()}_active_account`,
+    `${network.name}_active_account`,
     null
   );
   if (_activeAccount !== null) {

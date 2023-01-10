@@ -19,7 +19,7 @@ import { Networks } from 'types';
  */
 export const NETWORKS: Networks = {
   polkadot: {
-    name: 'Polkadot',
+    name: 'polkadot',
     endpoints: {
       rpc: 'wss://apps-rpc.polkadot.io',
       lightClient: Sc.WellKnownChain.polkadot,
@@ -67,7 +67,7 @@ export const NETWORKS: Networks = {
     },
   },
   kusama: {
-    name: 'Kusama',
+    name: 'kusama',
     endpoints: {
       rpc: 'wss://kusama-rpc.polkadot.io',
       lightClient: Sc.WellKnownChain.ksmcc3,
@@ -117,7 +117,7 @@ export const NETWORKS: Networks = {
     },
   },
   westend: {
-    name: 'Westend',
+    name: 'westend',
     endpoints: {
       rpc: 'wss://westend-rpc.polkadot.io',
       lightClient: Sc.WellKnownChain.westend2,

@@ -61,10 +61,10 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     // generate setup objects from connected accounts
     const _setup = connectAccounts.map((item) => {
       const localStakeSetup = localStorage.getItem(
-        `${network.name.toLowerCase()}_stake_setup_${item.address}`
+        `${network.name}_stake_setup_${item.address}`
       );
       const localPoolSetup = localStorage.getItem(
-        `${network.name.toLowerCase()}_pool_setup_${item.address}`
+        `${network.name}_pool_setup_${item.address}`
       );
       const stakeProgress =
         localStakeSetup !== null
@@ -142,7 +142,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     if (!activeAccount) return;
 
     localStorage.setItem(
-      `${network.name.toLowerCase()}_${type}_setup_${activeAccount}`,
+      `${network.name}_${type}_setup_${activeAccount}`,
       JSON.stringify(progress)
     );
 
@@ -186,7 +186,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
 
     // update local storage
     localStorage.setItem(
-      `${network.name.toLowerCase()}_${type}_setup_${activeAccount}`,
+      `${network.name}_${type}_setup_${activeAccount}`,
       JSON.stringify(_accountSetup.progress[type])
     );
 
