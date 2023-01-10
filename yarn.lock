@@ -2191,7 +2191,7 @@
   resolved "https://registry.npmjs.org/@substrate/connect-extension-protocol/-/connect-extension-protocol-1.0.1.tgz#fa5738039586c648013caa6a0c95c43265dbe77d"
   integrity sha512-161JhCC1csjH3GE5mPLEd7HbWtwNSPJBg3p1Ksz9SFlTzj/bgEwudiRN2y5i0MoLGCIJRYKyKGMxVnd29PzNjg==
 
-"@substrate/connect@0.7.18":
+"@substrate/connect@0.7.18", "@substrate/connect@^0.7.18":
   version "0.7.18"
   resolved "https://registry.npmjs.org/@substrate/connect/-/connect-0.7.18.tgz#ed4a95a4f5f60132dd26dbaf98820044b622763e"
   integrity sha512-T1CaZJhe+uaeyM/cBdmD/oMWnaGf+tJdfG+3Os4H5YR0NVKXWsHpSfBryBP5wEce2hQhRiNnzQ+9ny8siKqRgg==
@@ -2838,14 +2838,6 @@
   version "5.48.1"
   resolved "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-5.48.1.tgz#39c71e4de639f5fe08b988005beaaf6d79f9d64d"
   integrity sha512-S035ueRrbxRMKvSTv9vJKIWgr86BD8s3RqoRZmsSh/s8HhIs90g6UlK8ZabUSjUZQkhVxt7nmZ63VJ9dcZhtDQ==
-  dependencies:
-    "@typescript-eslint/types" "5.48.1"
-    "@typescript-eslint/visitor-keys" "5.48.1"
-
-"@typescript-eslint/type-utils@5.48.0":
-  version "5.48.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/type-utils/-/type-utils-5.48.0.tgz#40496dccfdc2daa14a565f8be80ad1ae3882d6d6"
-  integrity sha512-vbtPO5sJyFjtHkGlGK4Sthmta0Bbls4Onv0bEqOGm7hP9h8UpRsHJwsrCiWtCUndTRNQO/qe6Ijz9rnT/DB+7g==
   dependencies:
     "@typescript-eslint/types" "5.48.1"
     "@typescript-eslint/visitor-keys" "5.48.1"

@@ -3,6 +3,7 @@
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
+import * as Sc from '@substrate/connect';
 import BN from 'bn.js';
 import { NETWORKS } from 'config/networks';
 import {
@@ -169,7 +170,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
     let _provider: WsProvider | ScProvider;
     if (_isLightClient) {
-      _provider = new ScProvider(endpoints.lightClient);
+      _provider = new ScProvider(Sc, endpoints.lightClient);
       await _provider.connect();
     } else {
       _provider = new WsProvider(endpoints.rpc);

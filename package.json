@@ -17,6 +17,7 @@
     "@polkadot/types-codec": "^9.11.1",
     "@polkadot/util": "^10.2.3",
     "@rossbulat/polkadot-dashboard-ui": "0.1.0-alpha.27",
+    "@substrate/connect": "^0.7.18",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
