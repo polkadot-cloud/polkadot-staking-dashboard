@@ -5,17 +5,15 @@ import { useApi } from 'contexts/Api';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { setStateWithRef } from 'Utils';
-import { defaultRefreshInterval } from './defaults';
 import {
   TimeLeftAll,
   TimeleftDuration,
   TimeLeftFormatted,
-  TimeleftHookProps,
   TimeLeftRaw,
 } from './types';
 import { getDuration } from './utils';
 
-export const useTimeLeft = (props?: TimeleftHookProps) => {
+export const useTimeLeft = () => {
   const { network } = useApi();
   const { t, i18n } = useTranslation();
 
@@ -80,12 +78,6 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
   >(undefined);
   const secIntervalRef = useRef(secInterval);
 
-  // refresh callback interval in seconds.
-  const refreshInterval = props?.refreshInterval || defaultRefreshInterval;
-
-  // refresh interval counter, defaults to interval time.
-  let r = refreshInterval;
-
   // refresh effects.
   useEffect(() => {
     if (inLastHour()) {
@@ -96,7 +88,6 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
             clearInterval(secIntervalRef.current);
             setStateWithRef(undefined, setSecInterval, secIntervalRef);
           }
-          r = Math.max(0, r - 1);
           setTimeleft(getTimeleft());
         }, 1000);
 
@@ -111,9 +102,8 @@ export const useTimeLeft = (props?: TimeleftHookProps) => {
             clearInterval(minIntervalRef.current);
             setStateWithRef(undefined, setMinInterval, minIntervalRef);
           }
-          r = Math.max(0, r - 60);
           setTimeleft(getTimeleft());
-        }, 5000);
+        }, 60000);
         setStateWithRef(interval, setMinInterval, minIntervalRef);
       }
     }
