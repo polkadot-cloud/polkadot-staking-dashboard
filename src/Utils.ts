@@ -232,7 +232,7 @@ export const camelize = (str: string) => {
 // Puts a variable into the URL hash as a param.
 //
 // Since url variables are added to the hash and are not treated as URL params, the params are split
-// and parsed into a `URLSearchParams.
+// and parsed into a `URLSearchParams`.
 export const varToUrlHash = (
   key: string,
   val: string,
