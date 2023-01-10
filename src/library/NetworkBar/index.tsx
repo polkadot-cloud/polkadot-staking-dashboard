@@ -51,9 +51,7 @@ export const NetworkBar = () => {
 
   useEffect(() => {
     setNetworkName(
-      isLightClient
-        ? capitalizeFirstLetter(network.name).concat(' Light')
-        : capitalizeFirstLetter(network.name)
+      `${capitalizeFirstLetter(network.name)}${isLightClient ? ` Light` : ``}`
     );
   }, [network.name, isLightClient]);
 
