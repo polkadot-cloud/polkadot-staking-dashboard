@@ -24,7 +24,7 @@ import {
 } from 'contexts/Api/types';
 import React, { useEffect, useState } from 'react';
 import { AnyApi, Network, NetworkName } from 'types';
-import { extractUrlValue, isNetworkFromMetaTags } from 'Utils';
+import { extractUrlValue, isNetworkFromMetaTags, varToUrlHash } from 'Utils';
 import * as defaults from './defaults';
 
 export const APIContext = React.createContext<APIContextInterface>(
@@ -132,6 +132,9 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem('isLightClient', _isLightClient ? 'true' : '');
     setIsLightClient(_isLightClient);
 
+    // update url `n` if needed.
+    varToUrlHash('n', _network, false);
+
     // disconnect api if not null
     if (api) {
       await api.disconnect();
@@ -140,17 +143,6 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     // updateIconMetaTags(_network); // NOTE: needs further testing.
     setConnectionStatus('connecting');
     connect(_network, _isLightClient);
-
-    // staking.polkadot.network?n=polkadot&l=fr
-    if (window.location.hash.includes('n=')) {
-      window.location.hash = window.location.hash.replace(
-        window.location.hash.substring(
-          window.location.hash.indexOf('n=') + 2,
-          window.location.hash.indexOf('&')
-        ),
-        _network
-      );
-    }
   };
 
   // handles fetching of DOT price and updates context state.

@@ -238,3 +238,23 @@ export const isNetworkFromMetaTags = (name: NetworkName) => {
       .includes(name.toLowerCase()) ?? false;
   return isValid;
 };
+
+// Puts a variable into the URL hash as a param.
+//
+// Since url variables are added to the hash and are not treated as URL params, the params are split
+// and parsed into a `URLSearchParams.
+export const varToUrlHash = (
+  key: string,
+  val: string,
+  addIfMissing: boolean
+) => {
+  const hash = window.location.hash;
+  const [page, params] = hash.split('?');
+  const searchParams = new URLSearchParams(params);
+
+  if (searchParams.get(key) === null && !addIfMissing) {
+    return;
+  }
+  searchParams.set(key, val);
+  window.location.hash = `${page}?${searchParams.toString()}`;
+};

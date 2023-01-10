@@ -3,7 +3,7 @@
 
 import { DefaultLocale } from 'consts';
 import { AnyApi, AnyJson } from 'types';
-import { extractUrlValue } from 'Utils';
+import { extractUrlValue, varToUrlHash } from 'Utils';
 import { availableLanguages, fallbackResources, lngNamespaces } from '.';
 
 // Gets the active language
@@ -64,7 +64,6 @@ export const getResources = (lng: string) => {
         };
       }
     }
-
     if (!localValid) {
       // no resources exist locally, dynamic import needed.
       dynamicLoad = true;
@@ -97,12 +96,8 @@ export const changeLanguage = async (lng: string, i18next: AnyApi) => {
     );
     i18next.changeLanguage(lng);
   }
-  if (window.location.hash.includes('l=')) {
-    window.location.hash = window.location.hash.replace(
-      window.location.hash.substring(window.location.hash.indexOf('l=') + 2),
-      lng
-    );
-  }
+  // update url `l` if needed.
+  varToUrlHash('l', lng, false);
 };
 
 // Load language resources dynamically.
