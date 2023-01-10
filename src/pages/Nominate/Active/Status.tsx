@@ -37,7 +37,7 @@ export const Status = ({ height }: { height: number }) => {
   const { metrics } = useNetworkMetrics();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { setOnNominatorSetup, getStakeSetupProgressPercent }: any = useSetup();
-  const { getNominationsStatus, staking, inSetup, eraStakers } = useStaking();
+  const { getNominationsStatus, staking, inSetup } = useStaking();
   const { checking, isExposed } = useFastUnstake();
   const { getFastUnstakeText, isUnstaking, isFastUnstaking } = useUnstaking();
   const controller = getBondedAccount(activeAccount);
