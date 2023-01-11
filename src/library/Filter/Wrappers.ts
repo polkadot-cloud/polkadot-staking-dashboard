@@ -35,9 +35,6 @@ export const Wrapper = styled.div`
 
       > .items {
         display: flex;
-        flex-flow: row nowrap;
-        justify-content: flex-start;
-
         > button {
           padding: 0 0.25rem;
         }
@@ -50,7 +47,6 @@ export const ItemWrapper = styled.div`
   border: 1px solid ${borderPrimary};
   border-radius: 1.5rem;
   display: flex;
-  flex-flow: row nowrap;
   position: relative;
   padding: 0.6rem 1rem;
   margin-right: 1rem;
@@ -121,7 +117,6 @@ export const LargeItemWrapper = styled.div`
 
 export const TabsWrapper = styled.div`
   display: flex;
-  flex-flow: row nowrap;
   margin-bottom: 0.75rem;
 
   > button {
