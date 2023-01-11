@@ -8,6 +8,20 @@ https://staking.polkadot.network
 
 <img width="1744" alt="Screenshot 2022-12-20 at 13 46 30" src="https://user-images.githubusercontent.com/13929023/208601280-5a06b7cb-141e-42c8-a278-50cd4dec018d.png">
 
+
+## URL Variables Support Guide
+
+2 URL variables : n and l, have been introduced to load a default locale and a default network upon the first page visit. 
+Take the following example:
+
+staking.polkadot.network?n=polkadot&l=cn
+
+The n  variable(which is polkadot) is passed to load the polkadot network resource, and the l variable (which is cn) is passed to load the Chinese language resource. 
+
+And  the url will be amended when a network is switched.
+
+e.g. if n=kusama is in the URL, and a user switches to polkadot, change the URL to be n=polkadot
+
 ## Validator Operator Setup Guide
 
 Validator operators can add their contact information, icon, and which validators they operate, to the dashboard’s Community section. The Community feature is designed to give non-biased exposure to validator operators, and to host a fully-featured validator browser just for that operator's validators.
