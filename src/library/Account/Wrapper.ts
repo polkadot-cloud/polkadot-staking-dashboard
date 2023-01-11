@@ -29,7 +29,6 @@ export const Wrapper = styled(motion.button)<any>`
     color: ${textSecondary};
     font-size: 0.8em;
     display: flex;
-    flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-end;
     margin-right: 0.5rem;
