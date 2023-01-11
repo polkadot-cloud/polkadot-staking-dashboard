@@ -18,7 +18,6 @@ import {
 export const CardsWrapper = styled(motion.div)`
   width: 200%;
   display: flex;
-  flex-flow: row nowrap;
   overflow: hidden;
   position: relative;
 `;
@@ -159,7 +158,6 @@ export const AccountWrapper = styled.div`
     transition: background 0.15s;
     color: ${textPrimary};
     display: flex;
-    flex-flow: row nowrap;
     align-items: center;
     min-height: 3.5rem;
     padding-left: 0.4rem;
@@ -167,7 +165,6 @@ export const AccountWrapper = styled.div`
 
     > div {
       display: flex;
-      flex-flow: row nowrap;
       justify-content: flex-start;
       align-items: center;
       padding: 0 0.25rem;
@@ -232,14 +229,11 @@ export const ExtensionWrapper = styled.div<{ noSpacing?: boolean }>`
     transition: background 0.15s;
     color: ${textPrimary};
     display: flex;
-    flex-flow: row nowrap;
     align-items: center;
     min-height: 3.5rem;
 
     > div {
       display: flex;
-      flex-flow: row nowrap;
-      justify-content: flex-start;
       align-items: center;
       padding: 0 1rem;
       h3,

@@ -20,7 +20,6 @@ export const FixedContentWrapper = styled.div`
 export const CardsWrapper = styled(motion.div)`
   width: 200%;
   display: flex;
-  flex-flow: row nowrap;
   overflow: hidden;
   overflow-y: auto;
   position: relative;

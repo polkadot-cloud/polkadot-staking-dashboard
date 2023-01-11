@@ -26,7 +26,6 @@ export const Header = styled.div`
 
   > div {
     display: flex;
-    flex-flow: row nowrap;
     align-items: center;
   }
 
@@ -147,7 +146,6 @@ export const List = styled.div<ListProps>`
 
     > .item {
       display: flex;
-      flex-flow: row nowrap;
       align-items: center;
       overflow: hidden;
 
