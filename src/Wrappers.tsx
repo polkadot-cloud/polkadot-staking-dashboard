@@ -125,7 +125,6 @@ export const EntryWrapper = styled.div`
  */
 export const BodyInterfaceWrapper = styled.div`
   display: flex;
-  flex-flow: row nowrap;
   position: relative;
   flex-grow: 1;
 `;
@@ -284,8 +283,6 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
 
     .inner {
       display: flex;
-      flex-flow: row nowrap;
-
       > button {
         padding: 0.65rem 1rem;
         margin-bottom: 0.5rem;

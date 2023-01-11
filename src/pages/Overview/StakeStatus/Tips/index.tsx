@@ -177,7 +177,6 @@ export const Tips = () => {
       <div
         style={{
           display: 'flex',
-          flexFlow: 'row nowrap',
           justifyContent: 'center',
           alignItems: 'center',
         }}
