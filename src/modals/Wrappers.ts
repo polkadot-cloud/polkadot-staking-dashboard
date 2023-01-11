@@ -201,8 +201,6 @@ export const FooterWrapper = styled.div`
     border-radius: 0.7rem;
     font-size: 1rem;
     display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
     align-items: center;
     &.primary {
       color: white;
