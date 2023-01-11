@@ -8,7 +8,7 @@ https://staking.polkadot.network
 
 <img width="1744" alt="Screenshot 2022-12-20 at 13 46 30" src="https://user-images.githubusercontent.com/13929023/208601280-5a06b7cb-141e-42c8-a278-50cd4dec018d.png">
 
-# Validator Operator Setup Guide
+## Validator Operator Setup Guide
 
 Validator operators can add their contact information, icon, and which validators they operate, to the dashboard’s Community section. The Community feature is designed to give non-biased exposure to validator operators, and to host a fully-featured validator browser just for that operator's validators.
 
@@ -17,7 +17,7 @@ To add an operator, submit a PR with the following changes:
 - **Thumbnail:** Add your operator's thumbnail as an SVG Component in [this folder](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/config/validators/thumbnails).
 - **Operator details:** Add your operator details to the `VALIDATORS_COMMUNITY`JSON object in [this file](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/config/validators/index.ts).
 
-## Operator Structure
+### Operator Structure
  
 The following table outlines the structure of a `VALIDATOR_COMMUNITY` entry:
 
@@ -31,7 +31,7 @@ The following table outlines the structure of a `VALIDATOR_COMMUNITY` entry:
 | Website URL | `website` | No |  A live and vlid secure URL to your website. | `https://parity.io` |
 | Validator List | `validators` | Yes |  A list of validators grouped by network. At least 1 validator in 1 network must be defined. | *See Below* |
 
-## Example Operator
+### Example Operator
 
 Upload your SVG icon as a React component. Look at the existing icons as examples, or use the [SVGR Playground](https://react-svgr.com/playground/) to convert your raw SVG file into a component.
 
@@ -62,7 +62,7 @@ export const VALIDATOR_COMMUNITY = [
 
 ```
 
-## General Requirements
+### General Requirements
 
 | Requirement | Notes
 | ----------- | ----- |
@@ -72,6 +72,6 @@ export const VALIDATOR_COMMUNITY = [
 
 Please submit an issue for any queries around adding your operator details.
 
-# Presentations
+## Presentations
 
 - 30/06/2022: [[Video] Polkadot Decoded 2022: Polkadot Staking Dashboard Demo](https://youtu.be/H1WGu6mf1Ls)
