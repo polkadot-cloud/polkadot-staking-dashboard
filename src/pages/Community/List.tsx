@@ -15,16 +15,12 @@ export const List = () => {
   const { scrollPos } = useCommunitySections();
 
   const [entityItems, setEntityItems] = useState(
-    validatorCommunity.filter(
-      (v) => v.validators[network.name.toLowerCase()] !== undefined
-    )
+    validatorCommunity.filter((v) => v.validators[network.name] !== undefined)
   );
 
   useEffect(() => {
     setEntityItems(
-      validatorCommunity.filter(
-        (v) => v.validators[network.name.toLowerCase()] !== undefined
-      )
+      validatorCommunity.filter((v) => v.validators[network.name] !== undefined)
     );
   }, [network]);
 

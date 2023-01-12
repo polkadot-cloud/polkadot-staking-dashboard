@@ -102,7 +102,6 @@ export const StatBoxWrapper = styled(motion.div)`
     > .chart {
       position: relative;
       display: flex;
-      flex-flow: row nowrap;
       justify-content: center;
       align-items: center;
       padding-left: 1rem;

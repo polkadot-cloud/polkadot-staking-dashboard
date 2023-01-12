@@ -83,9 +83,7 @@ export const ValidatorsProvider = ({
 
   // get favorites from local storage
   const getFavorites = () => {
-    const _favorites = localStorage.getItem(
-      `${network.name.toLowerCase()}_favorites`
-    );
+    const _favorites = localStorage.getItem(`${network.name}_favorites`);
     return _favorites !== null ? JSON.parse(_favorites) : [];
   };
 
@@ -613,7 +611,7 @@ export const ValidatorsProvider = ({
     }
 
     localStorage.setItem(
-      `${network.name.toLowerCase()}_favorites`,
+      `${network.name}_favorites`,
       JSON.stringify(_favorites)
     );
     setFavorites([..._favorites]);
@@ -628,7 +626,7 @@ export const ValidatorsProvider = ({
       (validator: string) => validator !== address
     );
     localStorage.setItem(
-      `${network.name.toLowerCase()}_favorites`,
+      `${network.name}_favorites`,
       JSON.stringify(_favorites)
     );
     setFavorites([..._favorites]);

@@ -63,7 +63,7 @@ export const FastUnstakeProvider = ({
 
   // localStorage key to fetch local metadata.
   const getLocalkey = (a: MaybeAccount) => {
-    return `${network.name.toLowerCase()}_fast_unstake_${a}`;
+    return `${network.name}_fast_unstake_${a}`;
   };
 
   // check until bond duration eras surpasssed.

@@ -50,8 +50,6 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
       flex: 1 0 100%;
       height: 3.25rem;
       display: flex;
-      flex-flow: row nowrap;
-      justify-content: flex-start;
       align-items: center;
       padding: 0 0.5rem;
 
@@ -67,7 +65,6 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
 
 export const Labels = styled.div`
   display: flex;
-  flex-flow: row nowrap;
   justify-content: flex-end;
   align-items: center;
   overflow: hidden;
@@ -96,7 +93,6 @@ export const Labels = styled.div`
   .label {
     position: relative;
     display: flex;
-    flex-flow: row nowrap;
     align-items: center;
     color: ${textSecondary};
     margin: 0 0.2rem;
@@ -137,7 +133,6 @@ export const Labels = styled.div`
 
 export const OverSubscribedWrapper = styled.div`
   display: flex;
-  flex-flow: row nowrap;
   align-items: center;
   width: 100%;
   height: 100%;
@@ -152,7 +147,6 @@ export const OverSubscribedWrapper = styled.div`
 export const IdentityWrapper = styled(motion.div)`
   display: flex;
   margin-right: 0.5rem;
-  flex-flow: row nowrap;
   align-items: center;
   align-content: center;
   overflow: hidden;
@@ -203,7 +197,6 @@ export const ValidatorStatusWrapper = styled.div<{ status: string }>`
     opacity: ${(props) => (props.status === 'active' ? 0.8 : 0.5)};
     margin: 0;
     display: flex;
-    flex-flow: row nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

@@ -268,7 +268,7 @@ export const BalanceChart = () => {
               <ButtonInvertRounded
                 onClick={() =>
                   window.open(
-                    `https://${name.toLowerCase()}.subscan.io/account/${activeAccount}`,
+                    `https://${name}.subscan.io/account/${activeAccount}`,
                     '_blank'
                   )
                 }

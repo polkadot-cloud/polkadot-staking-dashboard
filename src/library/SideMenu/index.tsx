@@ -22,6 +22,7 @@ import throttle from 'lodash.throttle';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
+import { capitalizeFirstLetter } from 'Utils';
 import Heading from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
@@ -107,7 +108,7 @@ export const SideMenu = () => {
         <Separator />
         <Heading title={t('network')} minimised={sideMenuMinimised} />
         <Secondary
-          name={network.name}
+          name={capitalizeFirstLetter(network.name)}
           borderColor={borderColor}
           onClick={() => openModalWith('Networks')}
           icon={{
@@ -150,16 +151,15 @@ export const SideMenu = () => {
         >
           <CogOutlineSVG width="1.6em" height="1.6em" />
         </button>
-
         <button
           type="button"
           onClick={() => openModalWith('ChooseLanguage', {}, 'small')}
         >
-          <LanguageSVG width="1.65rem" height="1.65rem" />
+          <LanguageSVG width="1.55em" height="1.55em" />
         </button>
         {mode === 'light' ? (
           <button type="button" onClick={() => toggleTheme()}>
-            <SunnyOutlineSVG width="1.7em" height="1.7em" />
+            <SunnyOutlineSVG width="1.55em" height="1.55em" />
           </button>
         ) : (
           <button type="button" onClick={() => toggleTheme()}>

@@ -62,7 +62,6 @@ export const Item = styled(motion.button)`
   border-radius: 1.5rem;
   box-shadow: none;
   display: flex;
-  flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
   cursor: pointer;

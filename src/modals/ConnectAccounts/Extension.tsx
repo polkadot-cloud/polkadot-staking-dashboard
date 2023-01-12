@@ -12,8 +12,7 @@ import { ExtensionProps } from './types';
 import { ExtensionWrapper } from './Wrappers';
 
 export const Extension = (props: ExtensionProps) => {
-  const { extensions } = useExtensions();
-  const { extensionsStatus } = useExtensions();
+  const { extensions, extensionsStatus } = useExtensions();
   const { meta } = props;
   const { id } = meta;
   const { t } = useTranslation('modals');
@@ -31,7 +30,7 @@ export const Extension = (props: ExtensionProps) => {
       message = t('notAuthenticated');
       break;
     default:
-      message = status === 'no_accounts' ? t('noAccounts') : t('notConnected');
+      message = status === 'no_accounts' ? t('noAccounts') : '';
   }
 
   return (
@@ -41,6 +40,7 @@ export const Extension = (props: ExtensionProps) => {
           {...props}
           message={message}
           status={status}
+          installed={installed}
           size="1.5rem"
         />
       ) : (
@@ -95,14 +95,14 @@ export const ExtensionButton = (props: any) => {
 
 export const ExtensionElement = (props: any) => {
   return (
-    <div>
+    <div style={{ opacity: !props.installed ? 0.5 : 1 }}>
       <ExtensionInner {...props} />
     </div>
   );
 };
 
 export const ExtensionInner = (props: any) => {
-  const { size, message, flag, meta, status } = props;
+  const { size, message, flag, meta, status, installed } = props;
   const { title, icon: Icon } = meta;
 
   return (
@@ -123,11 +123,13 @@ export const ExtensionInner = (props: any) => {
           </span>
         </h4>
         {flag && flag}
-        <FontAwesomeIcon
-          icon={status === 'connected' ? faCheckCircle : faPlus}
-          transform="shrink-0"
-          className="icon"
-        />
+        {installed || status === 'connected' ? (
+          <FontAwesomeIcon
+            icon={status === 'connected' ? faCheckCircle : faPlus}
+            transform="shrink-0"
+            className="icon"
+          />
+        ) : null}
       </div>
     </>
   );

@@ -5,6 +5,7 @@ import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EXTENSIONS } from 'config/extensions';
 import { useConnect } from 'contexts/Connect';
+import { useExtensions } from 'contexts/Extensions';
 import { ExtensionConfig } from 'contexts/Extensions/types';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,9 +21,18 @@ import {
 
 export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
   const { setSection } = props;
-
   const { accounts } = useConnect();
+  const { extensions } = useExtensions();
   const { t } = useTranslation('modals');
+
+  const installed = EXTENSIONS.filter((a: ExtensionConfig) =>
+    extensions.find((b: ExtensionConfig) => b.id === a.id)
+  );
+
+  const other = EXTENSIONS.filter(
+    (a: ExtensionConfig) =>
+      !installed.find((b: ExtensionConfig) => b.id === a.id)
+  );
 
   return (
     <ContentWrapper>
@@ -50,15 +60,17 @@ export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
           </button>
         </ExtensionWrapper>
         <Separator />
-        {EXTENSIONS.map((extension: ExtensionConfig, i: number) => {
-          return (
-            <Extension
-              key={`active_extension_${i}`}
-              meta={extension}
-              setSection={setSection}
-            />
-          );
-        })}
+        {installed
+          .concat(other)
+          .map((extension: ExtensionConfig, i: number) => {
+            return (
+              <Extension
+                key={`active_extension_${i}`}
+                meta={extension}
+                setSection={setSection}
+              />
+            );
+          })}
         <ReadOnly {...props} />
       </PaddingWrapper>
     </ContentWrapper>

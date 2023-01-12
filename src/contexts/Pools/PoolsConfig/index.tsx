@@ -34,9 +34,7 @@ export const PoolsConfigProvider = ({
 
   // get favorite pools from local storage
   const getFavorites = () => {
-    const _favorites = localStorage.getItem(
-      `${network.name.toLowerCase()}_favorite_pools`
-    );
+    const _favorites = localStorage.getItem(`${network.name}_favorite_pools`);
     return _favorites !== null ? JSON.parse(_favorites) : [];
   };
 
@@ -140,7 +138,7 @@ export const PoolsConfigProvider = ({
     }
 
     localStorage.setItem(
-      `${network.name.toLowerCase()}_favorite_pools`,
+      `${network.name}_favorite_pools`,
       JSON.stringify(_favorites)
     );
     setFavorites([..._favorites]);
@@ -155,7 +153,7 @@ export const PoolsConfigProvider = ({
       (validator: string) => validator !== address
     );
     localStorage.setItem(
-      `${network.name.toLowerCase()}_favorite_pools`,
+      `${network.name}_favorite_pools`,
       JSON.stringify(_favorites)
     );
     setFavorites([..._favorites]);

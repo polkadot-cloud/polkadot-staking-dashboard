@@ -28,7 +28,6 @@ export const StatusWrapper = styled.div<{ includeBorder: boolean }>`
 export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
   width: 100%;
   display: flex;
-  flex-flow: row nowrap;
   align-items: center;
   border-bottom: 1px solid ${borderPrimary};
   padding-bottom: 0.75rem;
@@ -36,7 +35,6 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
 
   > div {
     display: flex;
-    flex-flow: row nowrap;
     align-items: center;
     position: relative;
     flex-grow: 1;

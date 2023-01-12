@@ -168,7 +168,7 @@ export const ConnectProvider = ({
     );
 
     if (activeAccountUnsub !== undefined) {
-      localStorage.removeItem(`${network.name.toLowerCase()}_active_account`);
+      localStorage.removeItem(`${network.name}_active_account`);
       setStateWithRef(null, setActiveAccount, activeAccountRef);
       setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
     }
@@ -415,12 +415,9 @@ export const ConnectProvider = ({
 
   const setActiveAccount = (address: string | null) => {
     if (address === null) {
-      localStorage.removeItem(`${network.name.toLowerCase()}_active_account`);
+      localStorage.removeItem(`${network.name}_active_account`);
     } else {
-      localStorage.setItem(
-        `${network.name.toLowerCase()}_active_account`,
-        address
-      );
+      localStorage.setItem(`${network.name}_active_account`, address);
     }
     setStateWithRef(address, _setActiveAccount, activeAccountRef);
   };
@@ -431,7 +428,7 @@ export const ConnectProvider = ({
   };
 
   const disconnectFromAccount = () => {
-    localStorage.removeItem(`${network.name.toLowerCase()}_active_account`);
+    localStorage.removeItem(`${network.name}_active_account`);
     setActiveAccount(null);
     setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
   };

@@ -22,7 +22,7 @@ export const Entity = () => {
   const { t } = useTranslation('pages');
 
   const { name, validators: entityAllValidators } = activeItem;
-  const validators = entityAllValidators[network.name.toLowerCase()] ?? [];
+  const validators = entityAllValidators[network.name] ?? [];
 
   // include validators that exist in `erasStakers`
   const [activeValidators, setActiveValidators] = useState(

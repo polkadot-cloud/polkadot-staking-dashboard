@@ -9,7 +9,6 @@ import { borderPrimary, networkColor, textSecondary } from 'theme';
 export const TipsWrapper = styled.div`
   width: 100%;
   display: flex;
-  flex-flow: row nowrap;
   position: relative;
   top: 0.25rem;
   margin-top: 0.35rem;
@@ -18,7 +17,6 @@ export const TipsWrapper = styled.div`
 export const ItemsWrapper = styled(motion.div)`
   width: 100%;
   display: flex;
-  flex-flow: row nowrap;
   justify-items: center;
   margin: 0.25rem 0 0rem 0;
 `;
@@ -99,7 +97,6 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           right: 0.2rem;
           top: 0.43rem;
           display: flex;
-          flex-flow: row nowrap;
           align-items: center;
           color: ${textSecondary};
           transition: all 0.15s;
