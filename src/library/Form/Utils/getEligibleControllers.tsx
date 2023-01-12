@@ -8,6 +8,7 @@ import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AnyJson } from 'types';
 import { planckBnToUnit } from 'Utils';
 import { InputItem } from '../types';
 
@@ -59,10 +60,10 @@ export const getEligibleControllers = (): Array<InputItem> => {
     );
 
     // sort accounts with at least free balance first
-    _accountsAsInput = _accountsAsInput.sort((a: InputItem, b: InputItem) => {
+    _accountsAsInput = _accountsAsInput.sort((a: AnyJson, b: AnyJson) => {
       const aFree = a?.balance?.free ?? new BN(0);
       const bFree = b?.balance?.free ?? new BN(0);
-      return bFree.sub(aFree).toNumber();
+      return bFree.sub(aFree);
     });
 
     return _accountsAsInput;
