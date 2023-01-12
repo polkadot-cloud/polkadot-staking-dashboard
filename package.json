@@ -78,7 +78,7 @@
     "prettier": "^2.8.1",
     "prettier-plugin-organize-imports": "^3.2.0",
     "terser-webpack-plugin": "^5.3.3",
-    "ts-jest": "^29.0.3",
+    "ts-jest": "^29.0.4",
     "worker-loader": "^3.0.8"
   },
   "scripts": {
