@@ -15,9 +15,10 @@ interface TitleProps {
   icon?: IconProp;
   Svg?: FunctionComponent<any>;
   helpKey?: string;
+  hideDone?: boolean;
 }
 
-export const Title = ({ helpKey, title, icon, Svg }: TitleProps) => {
+export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
   const { closeOverlay } = useOverlay();
   const { t } = useTranslation('library');
 
@@ -36,9 +37,14 @@ export const Title = ({ helpKey, title, icon, Svg }: TitleProps) => {
           {helpKey && <OpenHelpIcon helpKey={helpKey} />}
         </h2>
       </div>
-      <div>
-        <ButtonInvertRounded text={t('done')} onClick={() => closeOverlay()} />
-      </div>
+      {hideDone !== true ? (
+        <div>
+          <ButtonInvertRounded
+            text={t('done')}
+            onClick={() => closeOverlay()}
+          />
+        </div>
+      ) : null}
     </TitleWrapper>
   );
 };

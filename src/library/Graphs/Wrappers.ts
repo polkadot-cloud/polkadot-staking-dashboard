@@ -58,7 +58,6 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
 
   > div {
     display: flex;
-    flex-flow: row nowrap;
     align-items: center;
   }
 `;
@@ -257,9 +256,6 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   .graph_with_extra {
     width: 100%;
     display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
-    align-items: flex-start;
     height: 190px;
     flex: 1;
 

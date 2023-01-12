@@ -214,7 +214,7 @@ export const determinePoolDisplay = (
 };
 
 // extracts a URL value from a URL string
-export const extractUrlValue = (key: string, url: string) => {
+export const extractUrlValue = (key: string, url?: string) => {
   if (typeof url === 'undefined') url = window.location.href;
   const match = url.match(`[?&]${key}=([^&]+)`);
   return match ? match[1] : null;
@@ -227,4 +227,24 @@ export const camelize = (str: string) => {
       index === 0 ? word.toLowerCase() : word.toUpperCase()
     )
     .replace(/\s+/g, '');
+};
+
+// Puts a variable into the URL hash as a param.
+//
+// Since url variables are added to the hash and are not treated as URL params, the params are split
+// and parsed into a `URLSearchParams`.
+export const varToUrlHash = (
+  key: string,
+  val: string,
+  addIfMissing: boolean
+) => {
+  const hash = window.location.hash;
+  const [page, params] = hash.split('?');
+  const searchParams = new URLSearchParams(params);
+
+  if (searchParams.get(key) === null && !addIfMissing) {
+    return;
+  }
+  searchParams.set(key, val);
+  window.location.hash = `${page}?${searchParams.toString()}`;
 };

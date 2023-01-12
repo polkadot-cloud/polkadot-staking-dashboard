@@ -48,7 +48,7 @@
     "module": {
       "cancel": "取消",
       "close": "关闭",
-      "disableDashboardTips": "除去提示",
+      "disableTips": "除去提示",
       "dismissResult": "在该页面中去除提示窗口.",
       "dismissTips": "解除提示",
       "more": "更多",

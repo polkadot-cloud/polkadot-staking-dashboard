@@ -83,8 +83,15 @@ export const FiltersProvider = ({
   };
 
   // Sets an array of filters to a group.
-  const setMultiFilters = (t: FilterType, g: string, fs: Array<string>) => {
-    const current = t === 'exclude' ? excludes : includes;
+  const setMultiFilters = (
+    t: FilterType,
+    g: string,
+    fs: Array<string>,
+    reset: boolean
+  ) => {
+    // get the current filters from the group.
+    const current = reset ? [] : t === 'exclude' ? excludes : includes;
+    // check if filters currently exist in the group.
     const exists = getFilters(t, g);
 
     if (!exists) {
@@ -92,16 +99,23 @@ export const FiltersProvider = ({
       setFilters(t, newFilters);
       return;
     }
-    const newFilters = [...current].map((e: FilterItem) => {
-      if (e.key !== g) return e;
-      let { filters } = e;
-      filters = filters.filter((f: string) => !fs.includes(f)).concat(fs);
 
-      return {
-        key: e.key,
-        filters,
-      };
-    });
+    let newFilters: FilterItems;
+    if (current.length) {
+      newFilters = [...current].map((e: FilterItem) => {
+        // return groups we are not manipulating.
+        if (e.key !== g) return e;
+
+        let { filters } = e;
+        filters = filters.filter((f: string) => !fs.includes(f)).concat(fs);
+        return {
+          key: e.key,
+          filters,
+        };
+      });
+    } else {
+      newFilters = [{ key: g, filters: fs }];
+    }
     setFilters(t, newFilters);
   };
 

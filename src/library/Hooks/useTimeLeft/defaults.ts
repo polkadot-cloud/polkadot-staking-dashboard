@@ -10,3 +10,5 @@ export const defaultDuration: TimeleftDuration = {
   seconds: 0,
   lastMinute: false,
 };
+
+export const defaultRefreshInterval = 60;

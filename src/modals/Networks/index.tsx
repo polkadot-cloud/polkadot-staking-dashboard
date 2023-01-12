@@ -10,6 +10,7 @@ import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { NetworkName } from 'types';
+import { capitalizeFirstLetter } from 'Utils';
 import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
 import { PaddingWrapper } from '../Wrappers';
 import {
@@ -24,7 +25,7 @@ export const Networks = () => {
   const [braveBrowser, setBraveBrowser] = useState<boolean>(false);
   const { switchNetwork, network, isLightClient } = useApi();
   const { setStatus } = useModal();
-  const networkKey: string = network.name.toLowerCase();
+  const networkKey: string = network.name;
   const { t } = useTranslation('modals');
 
   useEffect(() => {
@@ -64,7 +65,7 @@ export const Networks = () => {
                       height={item.brand.inline.size}
                     />
                   </div>
-                  <h3>{item.name}</h3>
+                  <h3>{capitalizeFirstLetter(item.name)}</h3>
                   {networkKey === key && (
                     <h4 className="selected">{t('selected')}</h4>
                   )}

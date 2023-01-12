@@ -21,9 +21,6 @@ export const Wrapper = styled.div`
 export const Item = styled(motion.div)`
   list-style: none;
   flex: 1;
-  flex-flow: row nowrap;
-  justify-content: flex-start;
-  align-items: flex-start;
   margin-bottom: 1rem;
   padding: 0.75rem;
   padding-bottom: 1.5rem;
@@ -116,7 +113,6 @@ export const HeaderWrapper = styled.div`
           width: 100%;
           padding: 0.5rem 0.5rem 1rem 0.5rem;
           display: flex;
-          flex-flow: row nowrap;
           border-bottom: 1px solid ${borderPrimary};
 
           @media (min-width: ${SmallFontSizeMaxWidth + 150}px) {

@@ -2,16 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { NETWORKS } from 'config/networks';
-import { Network } from 'types';
+import { AnyJson, Network } from 'types';
 
-// configure theme
 const v = (light: string, dark: string) => ({
   light,
   dark,
 });
 
-// eslint-disable-next-line
-export const defaultThemes: { [key: string]: any } = {
+export const defaultThemes: { [key: string]: AnyJson } = {
   transparent: v('rgba(255,255,255,0)', 'rgba(0,0,0,0)'),
   text: {
     primary: v('#333', '#ccc'),
@@ -123,7 +121,6 @@ const c = (flat: string, border: string, shadow: string) => ({
   shadow,
 });
 
-// eslint-disable-next-line
 export const cardThemes = {
   card: {
     border: c('none', '1px solid', 'none'),

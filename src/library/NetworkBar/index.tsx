@@ -7,6 +7,7 @@ import { useOutsideAlerter } from 'library/Hooks';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { capitalizeFirstLetter } from 'Utils';
 import { Status } from './Status';
 import { NetworkInfo, Separator, Summary, Wrapper } from './Wrappers';
 
@@ -36,7 +37,9 @@ export const NetworkBar = () => {
   const DISCLAIMER_URL = process.env.REACT_APP_DISCLAIMER_URL;
   const ORGANISATION = process.env.REACT_APP_ORGANISATION;
 
-  const [networkName, setNetworkName] = useState<string>(network.name);
+  const [networkName, setNetworkName] = useState<string>(
+    capitalizeFirstLetter(network.name)
+  );
 
   useOutsideAlerter(
     ref,
@@ -48,7 +51,7 @@ export const NetworkBar = () => {
 
   useEffect(() => {
     setNetworkName(
-      isLightClient ? network.name.concat(' Light') : network.name
+      `${capitalizeFirstLetter(network.name)}${isLightClient ? ` Light` : ``}`
     );
   }, [network.name, isLightClient]);
 

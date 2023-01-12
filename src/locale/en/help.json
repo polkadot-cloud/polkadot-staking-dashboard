@@ -83,13 +83,6 @@
           "Topping up an account with at least {EXISTENTIAL_DEPOSIT} {NETWORK_UNIT} will make it eligible and selectable as a controller."
         ]
       ],
-      "dashboardTips": [
-        "Dashboard Tips",
-        [
-          "Staking dashboard will present you tips to help you along each step of staking on Polkadot.",
-          "Tips can be turned off or re-enabled from dashboard settings, that can be accessed via the cog icon in the bottom left corner of the side menu."
-        ]
-      ],
       "epoch": [
         "Epoch",
         [

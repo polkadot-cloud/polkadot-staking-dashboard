@@ -102,7 +102,6 @@ export const StatBoxWrapper = styled(motion.div)`
     > .chart {
       position: relative;
       display: flex;
-      flex-flow: row nowrap;
       justify-content: center;
       align-items: center;
       padding-left: 1rem;
@@ -198,7 +197,7 @@ export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
   }
 `;
 
-export const TineleftWrapper = styled.div<{ primary?: boolean }>`
+export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
   color: ${(props) => (props.primary === true ? networkColor : textPrimary)};
   font-variation-settings: 'wght' 550;
   display: flex;

@@ -26,12 +26,9 @@ export interface APIConstants {
 }
 
 export interface APIContextInterface {
-  connect: (_network: NetworkName) => Promise<void>;
+  connect: (n: NetworkName) => Promise<void>;
   fetchDotPrice: () => void;
-  switchNetwork: (
-    _network: NetworkName,
-    _isLightClient: boolean
-  ) => Promise<void>;
+  switchNetwork: (n: NetworkName, l: boolean) => Promise<void>;
   api: ApiPromise | null;
   consts: APIConstants;
   isReady: boolean;

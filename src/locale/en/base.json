@@ -22,13 +22,20 @@
     "time": {
       "day_one": "day",
       "day_other": "days",
+      "hour_one": "hour",
+      "hour_other": "hours",
       "hr_one": "hr",
       "hr_other": "hrs",
       "min_one": "min",
       "min_other": "mins",
+      "minute_one": "minute",
+      "minute_other": "minutes",
       "second_one": "second",
       "second_other": "seconds"
     },
+    "title_kusama": "Kusama Staking Dashboard",
+    "title_polkadot": "Polkadot Staking Dashboard",
+    "title_westend": "Westend Staking Dashboard",
     "validators": "Validators"
   }
 }
