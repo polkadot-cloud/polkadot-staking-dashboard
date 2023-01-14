@@ -8,6 +8,7 @@ import { useSetup } from 'contexts/Setup';
 import { Title } from 'library/Modal/Title';
 import { PaddingWrapper } from 'modals/Wrappers';
 import { useNavigate } from 'react-router-dom';
+import { varToUrlHash } from 'Utils';
 
 export const StartStaking = () => {
   const navigate = useNavigate();
@@ -23,12 +24,13 @@ export const StartStaking = () => {
           disabled={false}
           onClick={() => {
             setOnNominatorSetup(true);
+            varToUrlHash('t', String(3), true);
             navigate('/nominate');
             setStatus(2);
           }}
         >
           <div>
-            <h3>Directly Nominate</h3>
+            <h3>Become a Nominator</h3>
             <p>Have full control over your nominations.</p>
           </div>
           <div>

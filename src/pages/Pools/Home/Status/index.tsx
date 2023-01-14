@@ -69,7 +69,7 @@ export const Status = ({ height }: { height: number }) => {
           disabled:
             !isReady ||
             isReadOnlyAccount(activeAccount) ||
-            poolState === 'destroying',
+            poolState === 'Destroying',
           small: true,
           onClick: () =>
             openModalWith('ClaimReward', { claimType: 'bond' }, 'small'),
@@ -79,10 +79,10 @@ export const Status = ({ height }: { height: number }) => {
 
   let poolStateIcon;
   switch (poolState) {
-    case 'blocked':
+    case 'Blocked':
       poolStateIcon = faLock;
       break;
-    case 'destroying':
+    case 'Destroying':
       poolStateIcon = faExclamationTriangle;
       break;
     default:
@@ -91,9 +91,9 @@ export const Status = ({ height }: { height: number }) => {
 
   // determine pool status - left side
   const poolStatusLeft =
-    poolState === 'blocked'
+    poolState === 'Blocked'
       ? `${t('pools.locked')} / `
-      : poolState === 'destroying'
+      : poolState === 'Destroying'
       ? `${t('pools.destroying')} / `
       : '';
 

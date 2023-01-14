@@ -14,8 +14,8 @@ export const Tasks = forwardRef((props: any, ref: any) => {
   const { t } = useTranslation('modals');
 
   const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
-  const poolLocked = selectedActivePool?.bondedPool?.state === 'blocked';
-  const poolDestroying = selectedActivePool?.bondedPool?.state === 'destroying';
+  const poolLocked = selectedActivePool?.bondedPool?.state === 'Blocked';
+  const poolDestroying = selectedActivePool?.bondedPool?.state === 'Destroying';
 
   return (
     <ContentWrapper>

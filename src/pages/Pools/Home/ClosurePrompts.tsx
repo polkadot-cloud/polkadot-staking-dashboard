@@ -38,7 +38,7 @@ export const ClosurePrompts = () => {
   const depositorCanClose =
     !poolsSyncing &&
     isDepositor() &&
-    state === 'destroying' &&
+    state === 'Destroying' &&
     memberCounter === '1';
 
   // depositor needs to unbond funds

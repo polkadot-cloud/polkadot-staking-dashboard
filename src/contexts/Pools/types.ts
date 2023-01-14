@@ -137,4 +137,4 @@ export interface PoolAddresses {
 
 export type MaybePool = number | null;
 
-export type PoolState = 'open' | 'blocked' | 'destroying';
+export type PoolState = 'Open' | 'Blocked' | 'Destroying';
