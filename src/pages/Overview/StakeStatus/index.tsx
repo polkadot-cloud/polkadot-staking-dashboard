@@ -139,6 +139,10 @@ export const StakeStatus = () => {
                       <Item
                         leftIcon={{ show: true, status: 'off' }}
                         text={t('overview.notStaking')}
+                        ctaText="Start"
+                        onClick={() =>
+                          openModalWith('StartStaking', {}, 'small')
+                        }
                       />
                     ) : (
                       <>
