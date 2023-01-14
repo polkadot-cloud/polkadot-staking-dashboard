@@ -32,12 +32,12 @@ import PoolMembershipBox from './Stats/PoolMembership';
 import { Status } from './Status';
 
 export const HomeInner = () => {
+  const { t } = useTranslation('pages');
   const { activeAccount } = useConnect();
   const { bondedPools, getAccountPools } = useBondedPools();
   const { getPoolRoles, selectedActivePool } = useActivePools();
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { openModalWith } = useModal();
-  const { t } = useTranslation('pages');
 
   const accountPools = getAccountPools(activeAccount);
   const totalAccountPools = Object.entries(accountPools).length;

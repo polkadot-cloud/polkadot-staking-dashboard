@@ -42,7 +42,7 @@ export const StartStaking = () => {
           className="action-button"
           disabled={false}
           onClick={() => {
-            navigate('/pools'); // TODO: support tab switching
+            navigate('/pools?t=2');
             setStatus(2);
           }}
         >

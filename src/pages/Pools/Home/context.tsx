@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
+import { extractUrlValue } from 'Utils';
 import { PoolsTabsContextInterface } from '../types';
 
 export const PoolsTabsContext: React.Context<PoolsTabsContextInterface> =
@@ -18,7 +19,12 @@ export const PoolsTabsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [activeTab, _setActiveTab] = useState<number>(0);
+  const tabFromUrl = extractUrlValue('t');
+  const initialActiveTab = [0, 1, 2, 3].includes(Number(tabFromUrl))
+    ? Number(tabFromUrl)
+    : 0;
+
+  const [activeTab, _setActiveTab] = useState<number>(initialActiveTab);
 
   const setActiveTab = (t: number) => {
     _setActiveTab(t);
