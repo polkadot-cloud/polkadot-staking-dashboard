@@ -30,6 +30,8 @@ export const Main = () => {
   const { membership } = usePoolMemberships();
   const controller = getBondedAccount(activeAccount);
   const {
+    onNominatorSetup,
+    onPoolSetup,
     getPoolSetupProgressPercent,
     getStakeSetupProgressPercent,
   }: SetupContextInterface = useSetup();
@@ -65,12 +67,14 @@ export const Main = () => {
             status: 'success',
             text: t('active'),
           };
-        } else if (warning) {
+        }
+        if (warning) {
           _pages[i].action = {
             type: 'bullet',
             status: 'warning',
           };
-        } else if (setupPercent > 0 && !staking) {
+        }
+        if (!staking && (onNominatorSetup || setupPercent > 0)) {
           _pages[i].action = {
             type: 'text',
             status: 'warning',
@@ -90,7 +94,8 @@ export const Main = () => {
             status: 'success',
             text: t('active'),
           };
-        } else if (setupPercent > 0 && !inPool) {
+        }
+        if (!inPool && (setupPercent > 0 || onPoolSetup)) {
           _pages[i].action = {
             type: 'text',
             status: 'warning',
@@ -114,6 +119,8 @@ export const Main = () => {
     getStakeSetupProgressPercent(activeAccount),
     getPoolSetupProgressPercent(activeAccount),
     i18n.resolvedLanguage,
+    onNominatorSetup,
+    onPoolSetup,
   ]);
 
   // remove pages that network does not support

@@ -11,11 +11,16 @@ import { Link } from 'react-router-dom';
 import { PrimaryProps } from '../types';
 import { MinimisedWrapper, Wrapper } from './Wrappers';
 
-export const Primary = (props: PrimaryProps) => {
+export const Primary = ({
+  name,
+  active,
+  to,
+  icon,
+  action,
+  minimised,
+  animate,
+}: PrimaryProps) => {
   const { setSideMenu } = useUi();
-
-  const { name, active, to, icon, action, minimised } = props;
-
   const StyledWrapper = minimised ? MinimisedWrapper : Wrapper;
 
   let Action = null;
@@ -40,9 +45,6 @@ export const Primary = (props: PrimaryProps) => {
       Action = null;
   }
 
-  // animate icon config
-
-  const { animate } = props;
   const [isStopped, setIsStopped] = useState(true);
 
   const animateOptions = {
