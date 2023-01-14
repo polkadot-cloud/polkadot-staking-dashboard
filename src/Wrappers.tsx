@@ -252,13 +252,13 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
     font-family: 'Unbounded', 'sans-serif', sans-serif;
     position: relative;
     transform: ${(props) => (props.sticky ? 'scale(0.75) ' : 'scale(1)')};
-    left: ${(props) => (props.sticky ? '-0.6rem ' : 0)};
+    left: ${(props) => (props.sticky ? '-1.25rem ' : 0)};
 
     @media (max-width: ${SideMenuStickyThreshold}px) {
-      left: -0.6rem;
+      left: -1rem;
       transform: scale(0.75);
     }
-    transition: transform 0.25s, position 0.25s;
+    transition: all 0.25s;
     margin: 0;
   }
 
