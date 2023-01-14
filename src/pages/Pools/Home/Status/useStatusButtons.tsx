@@ -43,7 +43,7 @@ export const useStatusButtons = () => {
       !activeAccount ||
       stats.maxPools.toNumber() === 0 ||
       bondedPools.length === stats.maxPools.toNumber(),
-    onClick: () => setOnPoolSetup(1),
+    onClick: () => setOnPoolSetup(true),
   };
 
   const joinPoolBtn = {
