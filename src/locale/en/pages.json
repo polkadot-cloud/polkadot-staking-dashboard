@@ -108,6 +108,7 @@
       "recentPayouts": "Recent Payouts",
       "reserve": "Reserve",
       "reserved": "Reserved",
+      "start": "Start",
       "subscanDisabled": "Subscan Disabled",
       "supplyStaked": "Supply Staked",
       "syncingStatus": "Syncing Status",
@@ -116,8 +117,7 @@
       "totalNumAccounts": "The total number of accounts that have joined a pool.",
       "totalValidators": "Total Validators",
       "unitSupplyStaked": "{{unit}} Supply Staked",
-      "unlocking": "Unlocking",
-      "start": "Start"
+      "unlocking": "Unlocking"
     },
     "payouts": {
       "deductedFromBond": "Deducted from bond",

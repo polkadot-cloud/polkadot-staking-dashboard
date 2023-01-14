@@ -107,6 +107,7 @@
       "recentPayouts": "最近收益",
       "reserve": "储备",
       "reserved": "己储备",
+      "start": "开始",
       "subscanDisabled": "Subscan己断开",
       "supplyStaked": "抵押比例",
       "syncingStatus": "正在同步状态",
@@ -115,8 +116,7 @@
       "totalNumAccounts": "已加入提名池的帐户总数",
       "totalValidators": "所有验证人",
       "unitSupplyStaked": "{{unit}} 抵押比例",
-      "unlocking": "正在解锁",
-      "start": "开始"
+      "unlocking": "正在解锁"
     },
     "payouts": {
       "deductedFromBond": "从质押里扣除",

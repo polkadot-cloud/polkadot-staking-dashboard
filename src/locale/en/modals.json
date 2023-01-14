@@ -16,6 +16,7 @@
     "alreadyImported": "Address Already Imported",
     "amountToBond": "Amount to bond:",
     "back": "Back",
+    "becomeNominator": "Become a Nominator",
     "beingDestroyed": "This pool is being destroyed. There are no management options available.",
     "binanceApi": "Binance Spot API",
     "bond": "Bond",
@@ -42,6 +43,7 @@
     "destroyPool": "Destroy Pool",
     "destroyPoolResult": " Once you Destroy the pool, all members can be permissionlessly unbonded, and the pool can never be reopened.",
     "disconnect": "Disconnect",
+    "easyStaking": "Easy staking with competitive rewards.",
     "exitYourStakingPosition": "Exit your staking position.",
     "extensions": "Extensions",
     "fastUnstakeCurrentQueue": "Number of accounts currently in the fast unstake queue",
@@ -65,6 +67,7 @@
     "feedback": "Feedback",
     "feedbackPage": "We host a feedback page on",
     "forget": "Forget",
+    "fullControl": "Have full control over who you nominate.",
     "haveNomination_one": "You Have {{count}} Nomination",
     "haveNomination_other": "You Have {{count}} Nominations",
     "import": "Import",
@@ -73,6 +76,7 @@
     "inPool": "In Pool",
     "inputAddress": "Input Address",
     "invalid": "Address Invalid",
+    "joinNominationPool": "Join a Nomination Pool",
     "joinPool": "Join Pool",
     "learnMoreHere": "Learn more here.",
     "leavePool": "Leave Pool",
@@ -129,6 +133,7 @@
     "selected": "Selected",
     "selfStake": "Self Stake",
     "settings": "Settings",
+    "startStaking": "Start Staking",
     "stateToggler": "State Toggler",
     "stop": "Stop",
     "stopJoiningPool": "Stop new members from joining the pool.",
@@ -177,11 +182,6 @@
     "withdrawMemberFunds": "Withdraw Member Funds",
     "withdrawUnlocked": "Withdraw Unlocked",
     "youMust_account": "You must have your account imported to stop nominating.",
-    "youMust_controller": "You must have your controller account imported to stop nominating.",
-    "startStaking": "Start Staking",
-    "becomeNominator": "Become a Nominator",
-    "fullControl": "Have full control over who you nominate.",
-    "joinNominationPool": "Join a Nomination Pool",
-    "easyStaking": "Easy staking with competitive rewards."
+    "youMust_controller": "You must have your controller account imported to stop nominating."
   }
 }
