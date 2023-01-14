@@ -17,8 +17,8 @@ import { PoolRoles } from './PoolRoles';
 import { Summary } from './Summary';
 
 export const Create = () => {
-  const { setOnPoolSetup, setActiveAccountSetup } = useSetup();
   const { t } = useTranslation('pages');
+  const { setOnPoolSetup, setActiveAccountSetup } = useSetup();
 
   return (
     <>

@@ -3,10 +3,16 @@
 
 import { faChevronRight, faCog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useModal } from 'contexts/Modal';
+import { useSetup } from 'contexts/Setup';
 import { Title } from 'library/Modal/Title';
 import { PaddingWrapper } from 'modals/Wrappers';
+import { useNavigate } from 'react-router-dom';
 
 export const StartStaking = () => {
+  const navigate = useNavigate();
+  const { setOnNominatorSetup } = useSetup();
+  const { setStatus } = useModal();
   return (
     <>
       <Title title="Start Staking" icon={faCog} />
@@ -16,7 +22,9 @@ export const StartStaking = () => {
           className="action-button"
           disabled={false}
           onClick={() => {
-            /* navigate */
+            setOnNominatorSetup(true);
+            navigate('/nominate');
+            setStatus(2);
           }}
         >
           <div>
@@ -32,7 +40,8 @@ export const StartStaking = () => {
           className="action-button"
           disabled={false}
           onClick={() => {
-            /* navigate */
+            navigate('/pools'); // TODO: support tab switching
+            setStatus(2);
           }}
         >
           <div>
