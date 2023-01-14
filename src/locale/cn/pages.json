@@ -115,7 +115,8 @@
       "totalNumAccounts": "已加入提名池的帐户总数",
       "totalValidators": "所有验证人",
       "unitSupplyStaked": "{{unit}} 抵押比例",
-      "unlocking": "正在解锁"
+      "unlocking": "正在解锁",
+      "start": "开始"
     },
     "payouts": {
       "deductedFromBond": "从质押里扣除",

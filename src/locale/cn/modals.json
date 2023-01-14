@@ -167,6 +167,11 @@
     "withdrawMemberFunds": "取出会员资金",
     "withdrawUnlocked": "取出己解锁",
     "youMust_account": "您必须导入帐户才能停止提名",
-    "youMust_controller": "您必须导入controller帐户才能停止提名"
+    "youMust_controller": "您必须导入controller帐户才能停止提名",
+    "startStaking": "开始抵押",
+    "becomeNominator": "成为提名人",
+    "fullControl": "对提名的人选有完全控制权",
+    "joinNominationPool": "加入提名池",
+    "easyStaking": "轻松下注并获得有竞争力的奖励"
   }
 }

@@ -7,6 +7,7 @@ import { useModal } from 'contexts/Modal';
 import { useSetup } from 'contexts/Setup';
 import { Title } from 'library/Modal/Title';
 import { PaddingWrapper } from 'modals/Wrappers';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { varToUrlHash } from 'Utils';
 
@@ -14,9 +15,10 @@ export const StartStaking = () => {
   const navigate = useNavigate();
   const { setOnNominatorSetup } = useSetup();
   const { setStatus } = useModal();
+  const { t } = useTranslation('modals');
   return (
     <>
-      <Title title="Start Staking" icon={faCog} />
+      <Title title={t('startStaking')} icon={faCog} />
       <PaddingWrapper>
         <button
           type="button"
@@ -30,8 +32,8 @@ export const StartStaking = () => {
           }}
         >
           <div>
-            <h3>Become a Nominator</h3>
-            <p>Have full control over who you nominate.</p>
+            <h3>{t('becomeNominator')}</h3>
+            <p>{t('fullControl')}</p>
           </div>
           <div>
             <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
@@ -47,8 +49,8 @@ export const StartStaking = () => {
           }}
         >
           <div>
-            <h3>Join a Nomination Pool</h3>
-            <p>Easy staking with competitive rewards.</p>
+            <h3>{t('joinNominationPool')}</h3>
+            <p>{t('easyStaking')}</p>
           </div>
           <div>
             <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />

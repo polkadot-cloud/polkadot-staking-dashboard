@@ -177,6 +177,11 @@
     "withdrawMemberFunds": "Withdraw Member Funds",
     "withdrawUnlocked": "Withdraw Unlocked",
     "youMust_account": "You must have your account imported to stop nominating.",
-    "youMust_controller": "You must have your controller account imported to stop nominating."
+    "youMust_controller": "You must have your controller account imported to stop nominating.",
+    "startStaking": "Start Staking",
+    "becomeNominator": "Become a Nominator",
+    "fullControl": "Have full control over who you nominate.",
+    "joinNominationPool": "Join a Nomination Pool",
+    "easyStaking": "Easy staking with competitive rewards."
   }
 }
