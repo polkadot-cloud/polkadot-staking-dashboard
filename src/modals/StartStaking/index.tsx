@@ -33,7 +33,7 @@ export const StartStaking = () => {
         >
           <div>
             <h3>{t('becomeNominator')}</h3>
-            <p>{t('fullControl')}</p>
+            <p>{t('becomeNominatorDescription')}</p>
           </div>
           <div>
             <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
@@ -50,7 +50,7 @@ export const StartStaking = () => {
         >
           <div>
             <h3>{t('joinNominationPool')}</h3>
-            <p>{t('easyStaking')}</p>
+            <p>{t('joinNominationPoolDescription')}</p>
           </div>
           <div>
             <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
