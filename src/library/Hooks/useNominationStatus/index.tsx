@@ -75,8 +75,7 @@ export const useNominationStatus = () => {
     let str;
     if (inSetup() || isSyncing) {
       str = t('nominate.notNominating', { ns: 'pages' });
-    }
-    if (!nominations.length) {
+    } else if (!nominations.length) {
       str = t('nominate.noNominationsSet', { ns: 'pages' });
     } else if (activeNominees.length) {
       str = t('nominate.nominatingAnd', { ns: 'pages' });

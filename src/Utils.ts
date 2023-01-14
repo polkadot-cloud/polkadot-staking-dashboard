@@ -248,3 +248,22 @@ export const varToUrlHash = (
   searchParams.set(key, val);
   window.location.hash = `${page}?${searchParams.toString()}`;
 };
+
+// Removes a variable `key` from the URL hash if it exists.
+//
+// Removes dangling `?` if no URL variables exist.
+export const removeVarFromUrlHash = (key: string) => {
+  const hash = window.location.hash;
+  const [page, params] = hash.split('?');
+  const searchParams = new URLSearchParams(params);
+  if (searchParams.get(key) === null) {
+    return;
+  }
+  searchParams.delete(key);
+  let str = `${page}?${searchParams.toString()}`;
+
+  if (str.slice(-1) === '?') {
+    str = str.slice(0, -1);
+  }
+  window.location.hash = str;
+};
