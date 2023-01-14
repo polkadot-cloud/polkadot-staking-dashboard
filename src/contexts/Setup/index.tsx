@@ -26,10 +26,10 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   const { membership: poolMembership } = usePoolMemberships();
 
   // is the user actively on the setup page
-  const [onNominatorSetup, setOnNominatorSetup] = useState(0);
+  const [onNominatorSetup, setOnNominatorSetup] = useState<boolean>(false);
 
   // is the user actively on the pool creation page
-  const [onPoolSetup, setOnPoolSetup] = useState(0);
+  const [onPoolSetup, setOnPoolSetup] = useState<boolean>(false);
 
   // staking setup persist
   const [setup, setSetup]: any = useState([]);
@@ -38,10 +38,10 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   // move away from setup pages on completion / network change
   useEffect(() => {
     if (!inSetup()) {
-      setOnNominatorSetup(0);
+      setOnNominatorSetup(false);
     }
     if (poolMembership) {
-      setOnPoolSetup(0);
+      setOnPoolSetup(false);
     }
   }, [inSetup(), network, poolMembership]);
 
@@ -135,7 +135,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   /*
-   * Sets stake setup progress for an address.
+   * Sets stak∑e setup progress for an address.
    * Updates localStorage followed by app state.
    */
   const setActiveAccountSetup = (type: SetupType, progress: AnyJson) => {

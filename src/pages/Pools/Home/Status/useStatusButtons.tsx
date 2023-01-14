@@ -14,6 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
+  const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { setOnPoolSetup, getPoolSetupProgressPercent } = useSetup();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -23,7 +24,6 @@ export const useStatusButtons = () => {
   const { bondedPools } = useBondedPools();
   const { isOwner } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
-  const { t } = useTranslation('pages');
 
   const { active } = getTransferOptions(activeAccount).pool;
   const poolSetupPercent = getPoolSetupProgressPercent(activeAccount);
@@ -43,7 +43,7 @@ export const useStatusButtons = () => {
       !activeAccount ||
       stats.maxPools.toNumber() === 0 ||
       bondedPools.length === stats.maxPools.toNumber(),
-    onClick: () => setOnPoolSetup(1),
+    onClick: () => setOnPoolSetup(true),
   };
 
   const joinPoolBtn = {

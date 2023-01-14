@@ -38,6 +38,6 @@ export const defaultSetupContext: SetupContextInterface = {
   setOnNominatorSetup: (v) => {},
   // eslint-disable-next-line
   setOnPoolSetup: (v) => {},
-  onNominatorSetup: 0,
-  onPoolSetup: 0,
+  onNominatorSetup: false,
+  onPoolSetup: false,
 };

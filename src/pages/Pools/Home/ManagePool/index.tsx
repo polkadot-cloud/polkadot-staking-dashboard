@@ -39,7 +39,7 @@ export const ManagePool = () => {
       <CardWrapper>
         {isSyncing ? (
           <Nominations bondFor="pool" nominator={activeAccount} />
-        ) : canNominate && !isNominating && state !== 'destroying' ? (
+        ) : canNominate && !isNominating && state !== 'Destroying' ? (
           <>
             <CardHeaderWrapper withAction>
               <h3>

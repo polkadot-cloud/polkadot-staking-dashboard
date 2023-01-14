@@ -41,11 +41,11 @@ export const Member = (props: any) => {
   const { who, batchKey, batchIndex } = props;
 
   const canUnbondBlocked =
-    state === 'blocked' &&
+    state === 'Blocked' &&
     (isOwner() || isStateToggler()) &&
     ![root, stateToggler].includes(who);
 
-  const canUnbondDestroying = state === 'destroying' && who !== depositor;
+  const canUnbondDestroying = state === 'Destroying' && who !== depositor;
 
   const poolMembers = meta[batchKey]?.poolMembers ?? [];
   const member = poolMembers[batchIndex] ?? null;

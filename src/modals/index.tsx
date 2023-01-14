@@ -26,6 +26,7 @@ import { NominatePool } from './NominatePool';
 import { PoolNominations } from './PoolNominations';
 import { SelectFavorites } from './SelectFavorites';
 import { Settings } from './Settings';
+import { StartStaking } from './StartStaking';
 import { Unbond } from './Unbond';
 import { UnbondPoolMember } from './UnbondPoolMember';
 import { UnlockChunks } from './UnlockChunks';
@@ -130,6 +131,7 @@ export const Modal = () => {
               {modal === 'PoolNominations' && <PoolNominations />}
               {modal === 'SelectFavorites' && <SelectFavorites />}
               {modal === 'Settings' && <Settings />}
+              {modal === 'StartStaking' && <StartStaking />}
               {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
               {modal === 'UnbondPoolMember' && <UnbondPoolMember />}
               {modal === 'UnlockChunks' && <UnlockChunks />}

@@ -87,7 +87,7 @@ export const Nominations = ({
   // determine whether buttons are disabled
   const poolDestroying =
     isPool &&
-    selectedActivePool?.bondedPool?.state === 'destroying' &&
+    selectedActivePool?.bondedPool?.state === 'Destroying' &&
     !nominating;
 
   const stopBtnDisabled =

@@ -49,7 +49,7 @@ export const ManageBond = () => {
               poolsSyncing ||
               !isBonding() ||
               !isMember() ||
-              state === 'destroying'
+              state === 'Destroying'
             }
             marginRight
             onClick={() => openModalWith('Bond', { bondFor: 'pool' }, 'small')}
@@ -60,7 +60,7 @@ export const ManageBond = () => {
               poolsSyncing ||
               !isBonding() ||
               !isMember() ||
-              state === 'destroying'
+              state === 'Destroying'
             }
             marginRight
             onClick={() =>
@@ -69,7 +69,7 @@ export const ManageBond = () => {
             text="-"
           />
           <ButtonPrimary
-            disabled={poolsSyncing || !isMember() || state === 'destroying'}
+            disabled={poolsSyncing || !isMember() || state === 'Destroying'}
             iconLeft={faLockOpen}
             onClick={() =>
               openModalWith('UnlockChunks', { bondFor: 'pool' }, 'small')

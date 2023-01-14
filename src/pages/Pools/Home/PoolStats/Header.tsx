@@ -35,10 +35,10 @@ export const Header = () => {
 
   let stateDisplay;
   switch (state) {
-    case 'blocked':
+    case 'Blocked':
       stateDisplay = t('pools.locked');
       break;
-    case 'destroying':
+    case 'Destroying':
       stateDisplay = t('pools.destroying');
       break;
     default:

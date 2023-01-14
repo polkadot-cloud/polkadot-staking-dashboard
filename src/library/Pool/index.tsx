@@ -141,7 +141,7 @@ export const Pool = (props: PoolProps) => {
         <div className="row status">
           <PoolBonded pool={pool} batchIndex={batchIndex} batchKey={batchKey} />
           {!poolsSyncing &&
-            state === 'open' &&
+            state === 'Open' &&
             !membership &&
             !isReadOnlyAccount(activeAccount) &&
             activeAccount && (

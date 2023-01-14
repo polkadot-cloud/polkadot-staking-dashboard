@@ -100,11 +100,11 @@ export const Forms = forwardRef((props: any, ref: any) => {
   const poolStateFromTask = (s: string) => {
     switch (s) {
       case 'destroy_pool':
-        return 'destroying';
+        return 'Destroying';
       case 'lock_pool':
-        return 'blocked';
+        return 'Blocked';
       default:
-        return 'open';
+        return 'Open';
     }
   };
 
@@ -122,13 +122,13 @@ export const Forms = forwardRef((props: any, ref: any) => {
         tx = api.tx.nominationPools.setMetadata(poolId, metadata);
         break;
       case 'destroy_pool':
-        tx = api.tx.nominationPools.setState(poolId, 'destroying');
+        tx = api.tx.nominationPools.setState(poolId, 'Destroying');
         break;
       case 'unlock_pool':
-        tx = api.tx.nominationPools.setState(poolId, 'open');
+        tx = api.tx.nominationPools.setState(poolId, 'Open');
         break;
       case 'lock_pool':
-        tx = api.tx.nominationPools.setState(poolId, 'blocked');
+        tx = api.tx.nominationPools.setState(poolId, 'Blocked');
         break;
       default:
         tx = null;
