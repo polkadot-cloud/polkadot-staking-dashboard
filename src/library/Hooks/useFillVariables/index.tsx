@@ -5,7 +5,12 @@ import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { AnyJson } from 'types';
-import { planckBnToUnit, replaceAll, toFixedIfNecessary } from 'Utils';
+import {
+  capitalizeFirstLetter,
+  planckBnToUnit,
+  replaceAll,
+  toFixedIfNecessary,
+} from 'Utils';
 
 export const useFillVariables = () => {
   const { network, consts } = useApi();
@@ -27,7 +32,7 @@ export const useFillVariables = () => {
       ([, [key, val]]: AnyJson) => {
         const varsToValues = [
           ['{NETWORK_UNIT}', network.unit],
-          ['{NETWORK_NAME}', network.name],
+          ['{NETWORK_NAME}', capitalizeFirstLetter(network.name)],
           [
             '{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}',
             String(maxNominatorRewardedPerValidator),

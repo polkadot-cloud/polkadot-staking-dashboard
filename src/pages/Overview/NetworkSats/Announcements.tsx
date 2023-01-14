@@ -14,6 +14,7 @@ import { motion } from 'framer-motion';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { useTranslation } from 'react-i18next';
 import {
+  capitalizeFirstLetter,
   humanNumber,
   planckBnToUnit,
   rmCommas,
@@ -71,7 +72,7 @@ export const Announcements = () => {
           toFixedIfNecessary(planckBnToUnit(totalStaked, units), 0)
         ),
         unit: network.unit,
-        network: network.name,
+        network: capitalizeFirstLetter(network.name),
       }),
       subtitle: t('overview.networkCurrentlyStakedSubtitle', {
         unit: network.unit,
