@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { BondedPool } from 'contexts/Pools/types';
