@@ -31,7 +31,7 @@ export const StartStaking = () => {
         >
           <div>
             <h3>Become a Nominator</h3>
-            <p>Have full control over your nominations.</p>
+            <p>Have full control over who you nominate.</p>
           </div>
           <div>
             <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
