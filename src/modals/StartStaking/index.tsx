@@ -27,7 +27,7 @@ export const StartStaking = () => {
           onClick={() => {
             setOnNominatorSetup(true);
             varToUrlHash('t', String(3), true);
-            navigate('/nominate');
+            navigate('/nominate?f=overview');
             setStatus(2);
           }}
         >
