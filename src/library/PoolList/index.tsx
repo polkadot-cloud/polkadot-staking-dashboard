@@ -175,8 +175,6 @@ export const PoolListInner = ({
     setSearchTerm('pools', newValue);
   };
 
-  console.log(excludes);
-
   const filterTabsConfig = [
     {
       label: t('active'),
