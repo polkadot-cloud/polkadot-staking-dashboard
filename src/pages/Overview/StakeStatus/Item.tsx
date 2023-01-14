@@ -8,6 +8,7 @@ import { useTheme } from 'contexts/Themes';
 import { useLayoutEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
+import { remToUnit } from 'Utils';
 import { ItemProps } from './types';
 import { StatusRowWrapper } from './Wrappers';
 
@@ -20,7 +21,7 @@ export const Item = ({ text, ctaText, onClick, leftIcon }: ItemProps) => {
   useLayoutEffect(() => {
     if (containerRef.current && subjectRef.current) {
       containerRef.current.style.paddingRight = `${
-        subjectRef.current.offsetWidth + 7
+        subjectRef.current.offsetWidth + remToUnit('1rem')
       }px`;
     }
   }, [containerRef, subjectRef, i18n.resolvedLanguage]);
