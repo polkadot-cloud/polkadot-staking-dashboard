@@ -50,7 +50,6 @@ export const BalanceChartWrapper = styled.div`
 
 export const Legend = styled.div`
   width: 100%;
-  margin-top: 0.3rem;
   margin-bottom: 0.4rem;
   display: flex;
   justify-content: flex-start;
@@ -58,7 +57,7 @@ export const Legend = styled.div`
   > h4 {
     display: flex;
     align-items: center;
-    padding: 0.35rem 1rem;
+    padding: 0.5rem 1rem;
     font-variation-settings: 'wght' 600;
     font-size: 1.1rem;
 
