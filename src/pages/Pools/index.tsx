@@ -5,10 +5,7 @@ import { useSetup } from 'contexts/Setup';
 import { Create } from './Create';
 import { Home } from './Home';
 
-export const Stake = () => {
+export const Pools = () => {
   const { onPoolSetup } = useSetup();
-
   return <>{onPoolSetup ? <Create /> : <Home />}</>;
 };
-
-export default Stake;

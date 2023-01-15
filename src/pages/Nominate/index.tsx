@@ -8,8 +8,5 @@ import { Wrapper } from './Wrappers';
 
 export const Nominate = () => {
   const { onNominatorSetup } = useSetup();
-
   return <Wrapper>{onNominatorSetup ? <Setup /> : <Active />}</Wrapper>;
 };
-
-export default Nominate;

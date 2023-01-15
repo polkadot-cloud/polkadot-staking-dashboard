@@ -32,5 +32,3 @@ export const Community = (props: PageProps) => {
     </CommunitySectionsProvider>
   );
 };
-
-export default Community;
