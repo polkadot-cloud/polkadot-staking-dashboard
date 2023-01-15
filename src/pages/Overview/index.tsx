@@ -22,6 +22,7 @@ import {
 } from 'Wrappers';
 import { ActiveAccount } from './ActiveAccount';
 import { BalanceChart } from './BalanceChart';
+import { BalanceLinks } from './BalanceLinks';
 import { NetworkStats } from './NetworkSats';
 import Payouts from './Payouts';
 import { StakeStatus } from './StakeStatus';
@@ -77,6 +78,7 @@ export const Overview = () => {
         >
           <GraphWrapper minHeight={PAYOUTS_HEIGHT} flex>
             <BalanceChart />
+            <BalanceLinks />
           </GraphWrapper>
         </RowSecondaryWrapper>
         <RowPrimaryWrapper
