@@ -48,6 +48,31 @@ export const BalanceChartWrapper = styled.div`
   }
 `;
 
+export const Legend = styled.div`
+  width: 100%;
+  margin-top: 0.3rem;
+  margin-bottom: 0.4rem;
+  display: flex;
+  justify-content: flex-start;
+
+  > h4 {
+    display: flex;
+    align-items: center;
+    padding: 0.35rem 1rem;
+    font-variation-settings: 'wght' 600;
+    font-size: 1.1rem;
+
+    &:first-child {
+      padding-left: 0;
+    }
+    > span {
+      width: 1rem;
+      height: 1rem;
+      margin-right: 0.5rem;
+    }
+  }
+`;
+
 export const Bar = styled.div`
   background: ${buttonSecondaryBackground};
   display: flex;
@@ -73,31 +98,6 @@ export const Bar = styled.div`
       font-variation-settings: 'wght' 550;
       padding: 0 0.75rem;
       width: 100%;
-    }
-  }
-`;
-
-export const LegendWrapper = styled.div`
-  width: 100%;
-  margin-top: 0.3rem;
-  margin-bottom: 0.4rem;
-  display: flex;
-  justify-content: flex-start;
-
-  > h4 {
-    display: flex;
-    align-items: center;
-    padding: 0.35rem 1rem;
-    font-variation-settings: 'wght' 600;
-    font-size: 1.1rem;
-
-    &:first-child {
-      padding-left: 0;
-    }
-    > span {
-      width: 1rem;
-      height: 1rem;
-      margin-right: 0.5rem;
     }
   }
 `;

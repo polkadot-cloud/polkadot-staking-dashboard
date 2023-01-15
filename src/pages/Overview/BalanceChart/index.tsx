@@ -17,8 +17,9 @@ import {
   toFixedIfNecessary,
   usdFormatter,
 } from 'Utils';
+import { BarSegment } from './BarSegment';
 import { LegendItem } from './LegendItem';
-import { BalanceChartWrapper, Bar, LegendWrapper } from './Wrappers';
+import { BalanceChartWrapper, Bar, Legend } from './Wrappers';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
@@ -97,9 +98,6 @@ export const BalanceChart = () => {
     fundsReserved = graphAvailable;
   }
 
-  // width threshold (percentage) to display graph values
-  const WidthThreshold = 10;
-
   return (
     <>
       <div className="head">
@@ -119,7 +117,7 @@ export const BalanceChart = () => {
       </div>
 
       <BalanceChartWrapper>
-        <LegendWrapper>
+        <Legend>
           {nominating > 0 && (
             <LegendItem dataClass="d1" label={t('overview.nominating')} />
           )}
@@ -127,48 +125,27 @@ export const BalanceChart = () => {
             <LegendItem dataClass="d2" label={t('overview.inPool')} />
           )}
           <LegendItem dataClass="d4" label={t('overview.notStaking')} />
-        </LegendWrapper>
+        </Legend>
         <Bar>
-          <div
-            className="d1"
-            style={{
-              width: `${graphNominating.toFixed(2)}%`,
-              flexGrow: !inPool && !notStaking && nominating ? 1 : 0,
-            }}
-          >
-            {graphNominating > WidthThreshold ? (
-              <span>{`${humanNumber(
-                toFixedIfNecessary(nominating, 3)
-              )} ${unit}`}</span>
-            ) : null}
-          </div>
-          <div
-            className="d2"
-            style={{
-              width: `${graphInPool.toFixed(2)}%`,
-              flexGrow: !nominating && !notStaking && inPool ? 1 : 0,
-            }}
-          >
-            {graphInPool > WidthThreshold && (
-              <span>{`${humanNumber(
-                toFixedIfNecessary(inPool, 3)
-              )} ${unit}`}</span>
-            )}
-          </div>
-          <div
-            className="d4"
-            style={{
-              width: `${graphNotStaking.toFixed(2)}%`,
-              flexGrow: !nominating && !inPool ? 1 : 0,
-            }}
-          >
-            {graphNotStaking > WidthThreshold ||
-              (graphNotStaking === 0 && (
-                <span>{`${humanNumber(
-                  toFixedIfNecessary(notStaking, 3)
-                )} ${unit}`}</span>
-              ))}
-          </div>
+          <BarSegment
+            dataClass="d1"
+            widthPercent={Number(graphNominating.toFixed(2))}
+            flexGrow={!inPool && !notStaking && nominating ? 1 : 0}
+            label={`${humanNumber(toFixedIfNecessary(nominating, 3))} ${unit}`}
+          />
+          <BarSegment
+            dataClass="d2"
+            widthPercent={Number(graphInPool.toFixed(2))}
+            flexGrow={!nominating && !notStaking && inPool ? 1 : 0}
+            label={`${humanNumber(toFixedIfNecessary(inPool, 3))} ${unit}`}
+          />
+          <BarSegment
+            dataClass="d4"
+            widthPercent={Number(graphNotStaking.toFixed(2))}
+            flexGrow={!nominating && !inPool ? 1 : 0}
+            label={`${humanNumber(toFixedIfNecessary(notStaking, 3))} ${unit}`}
+            forceShowLabel={graphNotStaking === 0}
+          />
         </Bar>
         <section className="available">
           <div
@@ -182,20 +159,18 @@ export const BalanceChart = () => {
               }`,
             }}
           >
-            <LegendWrapper>
+            <Legend>
               <LegendItem label={t('overview.free')} helpKey="Your Balance" />
-            </LegendWrapper>
+            </Legend>
             <Bar>
-              <div
-                className="d4"
-                style={{
-                  width: '100%',
-                }}
-              >
-                <span>
-                  {humanNumber(toFixedIfNecessary(fundsFree, 3))} {unit}
-                </span>
-              </div>
+              <BarSegment
+                dataClass="d4"
+                widthPercent={100}
+                flexGrow={1}
+                label={`${humanNumber(
+                  toFixedIfNecessary(fundsFree, 3)
+                )} ${unit}`}
+              />
             </Bar>
           </div>
           {fundsLocked > 0 ? (
@@ -206,18 +181,21 @@ export const BalanceChart = () => {
                 flexBasis: `${graphLocked.toFixed(2)}%`,
               }}
             >
-              <LegendWrapper>
+              <Legend>
                 <LegendItem
                   label={t('overview.locked')}
                   helpKey="Reserve Balance"
                 />
-              </LegendWrapper>
+              </Legend>
               <Bar>
-                <div className="d4" style={{ width: '100%' }}>
-                  <span>
-                    {humanNumber(toFixedIfNecessary(fundsLocked, 3))} {unit}
-                  </span>
-                </div>
+                <BarSegment
+                  dataClass="d4"
+                  widthPercent={100}
+                  flexGrow={1}
+                  label={`${humanNumber(
+                    toFixedIfNecessary(fundsLocked, 3)
+                  )} ${unit}`}
+                />
               </Bar>
             </div>
           ) : null}
@@ -230,18 +208,21 @@ export const BalanceChart = () => {
                 flexBasis: '50%',
               }}
             >
-              <LegendWrapper>
+              <Legend>
                 <LegendItem
                   label={t('overview.reserve')}
                   helpKey="Reserve Balance"
                 />
-              </LegendWrapper>
+              </Legend>
               <Bar>
-                <div className="d4" style={{ width: '100%' }}>
-                  <span>
-                    {`${toFixedIfNecessary(fundsReserved, 4)} ${unit}`}
-                  </span>
-                </div>
+                <BarSegment
+                  dataClass="d4"
+                  widthPercent={100}
+                  flexGrow={1}
+                  label={`${humanNumber(
+                    toFixedIfNecessary(fundsReserved, 3)
+                  )} ${unit}`}
+                />
               </Bar>
             </div>
           )}
