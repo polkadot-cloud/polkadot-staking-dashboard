@@ -260,10 +260,6 @@ export const removeVarFromUrlHash = (key: string) => {
     return;
   }
   searchParams.delete(key);
-  let str = `${page}?${searchParams.toString()}`;
-
-  if (str.slice(-1) === '?') {
-    str = str.slice(0, -1);
-  }
-  window.location.hash = str;
+  const paramsAsStr = searchParams.toString();
+  window.location.hash = `${page}${paramsAsStr ? `?${paramsAsStr}` : ``}`;
 };

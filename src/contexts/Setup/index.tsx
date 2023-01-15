@@ -135,7 +135,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   /*
-   * Sets stak∑e setup progress for an address.
+   * Sets stake setup progress for an address.
    * Updates localStorage followed by app state.
    */
   const setActiveAccountSetup = (type: SetupType, progress: AnyJson) => {
