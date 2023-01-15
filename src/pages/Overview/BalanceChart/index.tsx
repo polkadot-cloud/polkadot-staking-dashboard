@@ -17,6 +17,7 @@ import {
   toFixedIfNecessary,
   usdFormatter,
 } from 'Utils';
+import { LegendItem } from './LegendItem';
 import { BalanceChartWrapper, Bar, LegendWrapper } from './Wrappers';
 
 export const BalanceChart = () => {
@@ -119,21 +120,14 @@ export const BalanceChart = () => {
 
       <BalanceChartWrapper>
         <LegendWrapper>
-          {nominating > 0 ? (
-            <h4>
-              <span className="d1" /> {t('overview.nominating')}
-            </h4>
-          ) : null}
-          {inPool > 0 ? (
-            <h4>
-              <span className="d2" /> {t('overview.inPool')}
-            </h4>
-          ) : null}
-          <h4>
-            <span className="d4" /> {t('overview.notStaking')}
-          </h4>
+          {nominating > 0 && (
+            <LegendItem dataClass="d1" label={t('overview.nominating')} />
+          )}
+          {inPool > 0 && (
+            <LegendItem dataClass="d2" label={t('overview.inPool')} />
+          )}
+          <LegendItem dataClass="d4" label={t('overview.notStaking')} />
         </LegendWrapper>
-
         <Bar>
           <div
             className="d1"
@@ -155,11 +149,11 @@ export const BalanceChart = () => {
               flexGrow: !nominating && !notStaking && inPool ? 1 : 0,
             }}
           >
-            {graphInPool > WidthThreshold ? (
+            {graphInPool > WidthThreshold && (
               <span>{`${humanNumber(
                 toFixedIfNecessary(inPool, 3)
               )} ${unit}`}</span>
-            ) : null}
+            )}
           </div>
           <div
             className="d4"
@@ -168,11 +162,12 @@ export const BalanceChart = () => {
               flexGrow: !nominating && !inPool ? 1 : 0,
             }}
           >
-            {graphNotStaking > WidthThreshold || graphNotStaking === 0 ? (
-              <span>{`${humanNumber(
-                toFixedIfNecessary(notStaking, 3)
-              )} ${unit}`}</span>
-            ) : null}
+            {graphNotStaking > WidthThreshold ||
+              (graphNotStaking === 0 && (
+                <span>{`${humanNumber(
+                  toFixedIfNecessary(notStaking, 3)
+                )} ${unit}`}</span>
+              ))}
           </div>
         </Bar>
         <section className="available">
@@ -188,9 +183,7 @@ export const BalanceChart = () => {
             }}
           >
             <LegendWrapper>
-              <h4>
-                {t('overview.free')} <OpenHelpIcon helpKey="Your Balance" />
-              </h4>
+              <LegendItem label={t('overview.free')} helpKey="Your Balance" />
             </LegendWrapper>
             <Bar>
               <div
@@ -214,10 +207,10 @@ export const BalanceChart = () => {
               }}
             >
               <LegendWrapper>
-                <h4>
-                  {t('overview.locked')}
-                  <OpenHelpIcon helpKey="Reserve Balance" />
-                </h4>
+                <LegendItem
+                  label={t('overview.locked')}
+                  helpKey="Reserve Balance"
+                />
               </LegendWrapper>
               <Bar>
                 <div className="d4" style={{ width: '100%' }}>
@@ -238,10 +231,10 @@ export const BalanceChart = () => {
               }}
             >
               <LegendWrapper>
-                <h4>
-                  {t('overview.reserve')}
-                  <OpenHelpIcon helpKey="Reserve Balance" />
-                </h4>
+                <LegendItem
+                  label={t('overview.reserve')}
+                  helpKey="Reserve Balance"
+                />
               </LegendWrapper>
               <Bar>
                 <div className="d4" style={{ width: '100%' }}>

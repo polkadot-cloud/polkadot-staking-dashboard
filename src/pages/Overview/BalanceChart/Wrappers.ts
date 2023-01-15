@@ -23,35 +23,10 @@ export const BalanceChartWrapper = styled.div`
       flex-flow: row wrap;
       padding: 0 0.35rem;
       &:first-child {
-        padding-left: 0rem;
+        padding-left: 0;
       }
       &:last-child {
-        padding-right: 0rem;
-      }
-      > h4,
-      .heading {
-        color: ${textSecondary};
-        font-variation-settings: 'wght' 600;
-        font-size: 1.1rem;
-        width: 100%;
-        margin: 0.5rem 0 0.75rem 0;
-        padding: 0.2rem;
-        height: 1.75rem;
-        position: relative;
-        overflow: hidden;
-        > div {
-          position: absolute;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          max-width: 100%;
-          padding-right: 2rem;
-          .help-icon {
-            position: absolute;
-            right: 0;
-            top: 0;
-          }
-        }
+        padding-right: 0;
       }
     }
   }
