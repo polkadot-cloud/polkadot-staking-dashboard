@@ -16,6 +16,7 @@ export const consts: APIConstants = {
   expectedBlockTime: 0,
   epochDuration: 0,
   existentialDeposit: new BN(0),
+  fastUnstakeDeposit: new BN(0),
   poolsPalletId: stringToU8a('0'),
 };
 
