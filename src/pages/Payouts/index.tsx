@@ -163,5 +163,3 @@ export const Payouts = (props: PageProps) => {
     </>
   );
 };
-
-export default Payouts;

@@ -57,5 +57,3 @@ export const Favorites = (props: PageProps) => {
     </>
   );
 };
-
-export default Favorites;

@@ -1,8 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -19,13 +17,14 @@ import {
   toFixedIfNecessary,
   usdFormatter,
 } from 'Utils';
-import { Separator } from 'Wrappers';
-import { BalanceChartWrapper } from './Wrappers';
+import { BarSegment } from './BarSegment';
+import { LegendItem } from './LegendItem';
+import { BalanceChartWrapper, Bar, Legend } from './Wrappers';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
   const {
-    network: { units, unit, name },
+    network: { units, unit },
   } = useApi();
   const prices = usePrices();
   const { plugins } = usePlugins();
@@ -99,9 +98,6 @@ export const BalanceChart = () => {
     fundsReserved = graphAvailable;
   }
 
-  // width threshold (percentage) to display graph values
-  const WidthThreshold = 10;
-
   return (
     <>
       <div className="head">
@@ -119,70 +115,39 @@ export const BalanceChart = () => {
           </span>
         </h2>
       </div>
+
       <BalanceChartWrapper>
-        <div className="legend">
-          {nominating > 0 ? (
-            <section>
-              <h4 className="l">
-                <span className="d1" /> {t('overview.nominating')}
-              </h4>
-            </section>
-          ) : null}
-          {inPool > 0 ? (
-            <section>
-              <h4 className="l">
-                <span className="d2" /> {t('overview.inPool')}
-              </h4>
-            </section>
-          ) : null}
-          <section>
-            <h4 className="l">
-              <span className="d4" /> {t('overview.notStaking')}
-            </h4>
-          </section>
-        </div>
-        <div className="chart main">
-          <div
-            className="d1"
-            style={{
-              width: `${graphNominating.toFixed(2)}%`,
-              flexGrow: !inPool && !notStaking && nominating ? 1 : 0,
-            }}
-          >
-            {graphNominating > WidthThreshold ? (
-              <span>{`${humanNumber(
-                toFixedIfNecessary(nominating, 3)
-              )} ${unit}`}</span>
-            ) : null}
-          </div>
-          <div
-            className="d2"
-            style={{
-              width: `${graphInPool.toFixed(2)}%`,
-              flexGrow: !nominating && !notStaking && inPool ? 1 : 0,
-            }}
-          >
-            {graphInPool > WidthThreshold ? (
-              <span>{`${humanNumber(
-                toFixedIfNecessary(inPool, 3)
-              )} ${unit}`}</span>
-            ) : null}
-          </div>
-          <div
-            className="d4"
-            style={{
-              width: `${graphNotStaking.toFixed(2)}%`,
-              flexGrow: !nominating && !inPool ? 1 : 0,
-            }}
-          >
-            {graphNotStaking > WidthThreshold || graphNotStaking === 0 ? (
-              <span>{`${humanNumber(
-                toFixedIfNecessary(notStaking, 3)
-              )} ${unit}`}</span>
-            ) : null}
-          </div>
-        </div>
-        <div className="available">
+        <Legend>
+          {nominating > 0 && (
+            <LegendItem dataClass="d1" label={t('overview.nominating')} />
+          )}
+          {inPool > 0 && (
+            <LegendItem dataClass="d2" label={t('overview.inPool')} />
+          )}
+          <LegendItem dataClass="d4" label={t('overview.notStaking')} />
+        </Legend>
+        <Bar>
+          <BarSegment
+            dataClass="d1"
+            widthPercent={Number(graphNominating.toFixed(2))}
+            flexGrow={!inPool && !notStaking && nominating ? 1 : 0}
+            label={`${humanNumber(toFixedIfNecessary(nominating, 3))} ${unit}`}
+          />
+          <BarSegment
+            dataClass="d2"
+            widthPercent={Number(graphInPool.toFixed(2))}
+            flexGrow={!nominating && !notStaking && inPool ? 1 : 0}
+            label={`${humanNumber(toFixedIfNecessary(inPool, 3))} ${unit}`}
+          />
+          <BarSegment
+            dataClass="d4"
+            widthPercent={Number(graphNotStaking.toFixed(2))}
+            flexGrow={!nominating && !inPool ? 1 : 0}
+            label={`${humanNumber(toFixedIfNecessary(notStaking, 3))} ${unit}`}
+            forceShowLabel={graphNotStaking === 0}
+          />
+        </Bar>
+        <section className="available">
           <div
             style={{
               flex: 1,
@@ -194,23 +159,19 @@ export const BalanceChart = () => {
               }`,
             }}
           >
-            <div className="l heading">
-              <div>
-                {t('overview.free')} <OpenHelpIcon helpKey="Your Balance" />
-              </div>
-            </div>
-            <div className="chart">
-              <div
-                className="d4"
-                style={{
-                  width: '100%',
-                }}
-              >
-                <span>
-                  {humanNumber(toFixedIfNecessary(fundsFree, 3))} {unit}
-                </span>
-              </div>
-            </div>
+            <Legend>
+              <LegendItem label={t('overview.free')} helpKey="Your Balance" />
+            </Legend>
+            <Bar>
+              <BarSegment
+                dataClass="d4"
+                widthPercent={100}
+                flexGrow={1}
+                label={`${humanNumber(
+                  toFixedIfNecessary(fundsFree, 3)
+                )} ${unit}`}
+              />
+            </Bar>
           </div>
           {fundsLocked > 0 ? (
             <div
@@ -220,19 +181,22 @@ export const BalanceChart = () => {
                 flexBasis: `${graphLocked.toFixed(2)}%`,
               }}
             >
-              <div className="l heading">
-                <div>
-                  {t('overview.locked')}
-                  <OpenHelpIcon helpKey="Reserve Balance" />
-                </div>
-              </div>
-              <div className="chart">
-                <div className="d4" style={{ width: '100%' }}>
-                  <span>
-                    {humanNumber(toFixedIfNecessary(fundsLocked, 3))} {unit}
-                  </span>
-                </div>
-              </div>
+              <Legend>
+                <LegendItem
+                  label={t('overview.locked')}
+                  helpKey="Reserve Balance"
+                />
+              </Legend>
+              <Bar>
+                <BarSegment
+                  dataClass="d4"
+                  widthPercent={100}
+                  flexGrow={1}
+                  label={`${humanNumber(
+                    toFixedIfNecessary(fundsLocked, 3)
+                  )} ${unit}`}
+                />
+              </Bar>
             </div>
           ) : null}
           {fundsReserved > 0 && (
@@ -244,42 +208,25 @@ export const BalanceChart = () => {
                 flexBasis: '50%',
               }}
             >
-              <div className="l heading">
-                <div>
-                  {t('overview.reserve')}
-                  <OpenHelpIcon helpKey="Reserve Balance" />
-                </div>
-              </div>
-              <div className="chart">
-                <div className="d4" style={{ width: '100%' }}>
-                  <span>
-                    {`${toFixedIfNecessary(fundsReserved, 4)} ${unit}`}
-                  </span>
-                </div>
-              </div>
+              <Legend>
+                <LegendItem
+                  label={t('overview.reserve')}
+                  helpKey="Reserve Balance"
+                />
+              </Legend>
+              <Bar>
+                <BarSegment
+                  dataClass="d4"
+                  widthPercent={100}
+                  flexGrow={1}
+                  label={`${humanNumber(
+                    toFixedIfNecessary(fundsReserved, 3)
+                  )} ${unit}`}
+                />
+              </Bar>
             </div>
           )}
-        </div>
-        <div className="more">
-          <Separator />
-          <h4>{t('overview.moreResources')}</h4>
-          <section>
-            <div>
-              <ButtonInvertRounded
-                onClick={() =>
-                  window.open(
-                    `https://${name}.subscan.io/account/${activeAccount}`,
-                    '_blank'
-                  )
-                }
-                lg
-                iconRight={faExternalLinkAlt}
-                iconTransform="shrink-2"
-                text="Subscan"
-              />
-            </div>
-          </section>
-        </div>
+        </section>
       </BalanceChartWrapper>
     </>
   );

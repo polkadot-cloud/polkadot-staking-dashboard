@@ -72,5 +72,3 @@ export const Validators = (props: PageProps) => {
     </>
   );
 };
-
-export default Validators;
