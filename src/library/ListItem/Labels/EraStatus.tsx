@@ -42,9 +42,7 @@ export const EraStatus = (props: any) => {
     }
   }
 
-  const totalStake = totalStakePlanck
-    .div(new BN(10).pow(new BN(units)))
-    .toNumber();
+  const totalStake = totalStakePlanck.div(new BN(10).pow(new BN(units)));
 
   return (
     <ValidatorStatusWrapper status={validatorStatus}>
@@ -52,7 +50,9 @@ export const EraStatus = (props: any) => {
         {isSyncing || erasStakersSyncing
           ? t('syncing')
           : validatorInEra
-          ? `${t('listItemActive')} / ${humanNumber(totalStake)} ${unit}`
+          ? `${t('listItemActive')} / ${humanNumber(
+              totalStake.toString()
+            )} ${unit}`
           : capitalizeFirstLetter(t(`${validatorStatus}`) ?? '')}
       </h5>
     </ValidatorStatusWrapper>
