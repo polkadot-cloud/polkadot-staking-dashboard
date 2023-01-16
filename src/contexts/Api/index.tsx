@@ -184,6 +184,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       _api.consts.babe.epochDuration,
       _api.consts.balances.existentialDeposit,
       _api.consts.staking.historyDepth,
+      _api.consts.fastUnstake.deposit,
       _api.consts.nominationPools.palletId,
     ];
 
@@ -224,7 +225,10 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       : new BN(0);
 
     const historyDepth = _consts[8] ? new BN(_consts[8].toString()) : new BN(0);
-    const poolsPalletId = _consts[9] ? _consts[9].toU8a() : new Uint8Array(0);
+    const fastUnstakeDeposit = _consts[9]
+      ? new BN(_consts[9].toString())
+      : new BN(0);
+    const poolsPalletId = _consts[10] ? _consts[10].toU8a() : new Uint8Array(0);
 
     setApi(_api);
     setConsts({
@@ -238,6 +242,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       expectedBlockTime,
       poolsPalletId,
       existentialDeposit,
+      fastUnstakeDeposit,
     });
   };
 

@@ -22,6 +22,7 @@ export interface APIConstants {
   expectedBlockTime: number;
   epochDuration: number;
   existentialDeposit: BN;
+  fastUnstakeDeposit: BN;
   poolsPalletId: U8aLike;
 }
 
