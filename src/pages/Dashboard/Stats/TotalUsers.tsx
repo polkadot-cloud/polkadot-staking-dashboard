@@ -4,15 +4,15 @@
 import { useNetworkMetrics } from 'contexts/Network';
 import { Text } from 'library/StatBoxList/Text';
 import { useTranslation } from 'react-i18next';
-import { toReadableNum } from 'utils';
+import { humanNumber } from 'Utils';
 
 const TotalUsers = () => {
   const { t } = useTranslation('pages');
   const { metrics } = useNetworkMetrics();
 
   const params = {
-    label: 'Total Users',
-    value: `${toReadableNum(metrics.totalUsers.toString())}`,
+    label: t('dashboard.totalUsers'),
+    value: `${humanNumber(metrics.totalUsers)}`,
   };
   return <Text {...params} />;
 };

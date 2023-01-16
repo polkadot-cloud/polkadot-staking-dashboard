@@ -75,7 +75,7 @@
       "waitingForActiveNominations": "等待有效提名",
       "yourNominations": "您的提名名单"
     },
-    "overview": {
+    "dashboard": {
       "activeEra": "活跃 Era",
       "activeNominators": "活跃提名人",
       "activePools": "活跃提名池",
@@ -88,6 +88,8 @@
       "connect": "连接",
       "free": "可用余额",
       "historicalRewardsRate": "历史奖励率",
+      "housingFund": "Housing Fund",
+      "totalUsers": "Total Users",
       "inPool": "提名池中",
       "inPools": "当前质押在提名池中",
       "inflationRate": "通货膨胀率",

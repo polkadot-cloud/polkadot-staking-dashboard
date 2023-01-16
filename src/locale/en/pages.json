@@ -76,7 +76,7 @@
       "waitingForActiveNominations": "Waiting for Active Nominations",
       "yourNominations": "Your Nominations"
     },
-    "overview": {
+    "dashboard": {
       "activeEra": "Active Era",
       "activeNominators": "Active Nominators",
       "activePools": "Active Pools",
@@ -89,6 +89,7 @@
       "connect": "Connect",
       "free": "Free",
       "historicalRewardsRate": "Historical Rewards Rate",
+      "housingFund": "Housing Fund",
       "inPool": "In a Pool",
       "inPools": "is currently bonded in pools.",
       "inflationRate": "Inflation Rate",
@@ -116,6 +117,7 @@
       "totalNominators": "Total Nominators",
       "totalNumAccounts": "The total number of accounts that have joined a pool.",
       "totalValidators": "Total Validators",
+      "totalUsers": "Total Users",
       "unitSupplyStaked": "{{unit}} Supply Staked",
       "unlocking": "Unlocking"
     },

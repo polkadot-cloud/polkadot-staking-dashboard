@@ -14,7 +14,7 @@ export const Dashboard = () => {
 
   return (
     <>
-      <PageTitle title={t('overview.dashboard')} />
+      <PageTitle title={t('dashboard.dashboard')} />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
           <ActiveAccount />

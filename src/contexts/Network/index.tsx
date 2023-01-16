@@ -3,7 +3,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { AnyApi } from 'types';
-import { parseBalance } from 'utils';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 import { NetworkMetrics, NetworkMetricsContextInterface } from './types';
@@ -58,7 +57,7 @@ export const NetworkMetricsProvider = ({
           const decimals = api.registry.chainDecimals[0];
           const _metrics = {
             totalUsers,
-            totalHousingFund: parseBalance(fund.total, decimals),
+            totalHousingFund: fund.total,
             decimals,
           };
           setMetrics(_metrics);

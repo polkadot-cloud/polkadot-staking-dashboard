@@ -20,7 +20,9 @@
       ],
       "activePools": [
         "Active Pools",
-        ["The current amount of active nomination pools on {NETWORK_NAME}."]
+        [
+          "The current amount of active nomination pools on {NETWORK_NAME}."
+        ]
       ],
       "activeValidator": [
         "Active Validator",
@@ -112,7 +114,9 @@
       ],
       "idealStaked": [
         "Ideal Staked",
-        ["The percentage of staked total supply in ideal network conditions."]
+        [
+          "The percentage of staked total supply in ideal network conditions."
+        ]
       ],
       "inactiveNominations": [
         "Inactive Nominations",
@@ -161,7 +165,7 @@
         "Network Stats",
         [
           "Real time network statistics that may affect your staking positions.",
-          "Keep up to date on the state of the network from your overview."
+          "Keep up to date on the state of the network from your dashboard."
         ]
       ],
       "nominating": [

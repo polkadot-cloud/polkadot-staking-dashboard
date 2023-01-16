@@ -4,15 +4,15 @@
 import { useNetworkMetrics } from 'contexts/Network';
 import { Text } from 'library/StatBoxList/Text';
 import { useTranslation } from 'react-i18next';
-import { toReadableNum } from 'utils';
+import { humanNumberBn } from 'Utils';
 
 const TotalHousingFund = () => {
   const { t } = useTranslation('pages');
   const { metrics } = useNetworkMetrics();
 
   const params = {
-    label: 'Housing Fund',
-    value: `$ ${toReadableNum(metrics.totalHousingFund.toString())}`,
+    label: t('dashboard.housingFund'),
+    value: `$ ${humanNumberBn(metrics.totalHousingFund, metrics.decimals)}`,
   };
   return <Text {...params} />;
 };
