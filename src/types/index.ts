@@ -7,7 +7,7 @@ import React, { FunctionComponent, SVGProps } from 'react';
 
 export type Fn = () => void;
 
-export type NetworkName = 'polkadot' | 'kusama' | 'westend';
+export type NetworkName = 'fs' | 'polkadot' | 'kusama' | 'westend';
 
 export interface Networks {
   [key: string]: Network;

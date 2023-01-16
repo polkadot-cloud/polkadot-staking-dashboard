@@ -11,8 +11,6 @@ import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { UIContextInterface } from 'contexts/UI/types';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
-import { ReactComponent as ForumSVG } from 'img/forum.svg';
-import { ReactComponent as InfoSVG } from 'img/info.svg';
 import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
@@ -26,7 +24,7 @@ import { capitalizeFirstLetter } from 'Utils';
 import Heading from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
-import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
+import { ConnectionSymbol, Wrapper } from './Wrapper';
 
 export const SideMenu = () => {
   const { network, status } = useApi();
@@ -84,33 +82,12 @@ export const SideMenu = () => {
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
       <section>
         <Main />
-        <Heading title={t('support')} minimised={sideMenuMinimised} />
-        <Secondary
-          onClick={() => {
-            openHelpWith(null, {});
-          }}
-          name={t('resources')}
-          minimised={sideMenuMinimised}
-          icon={{
-            Svg: InfoSVG,
-            size: sideMenuMinimised ? '1.6em' : '1.4em',
-          }}
-        />
-        <Secondary
-          onClick={() => openModalWith('GoToFeedback')}
-          name={t('feedback')}
-          minimised={sideMenuMinimised}
-          icon={{
-            Svg: ForumSVG,
-            size: sideMenuMinimised ? '1.6em' : '1.4em',
-          }}
-        />
-        <Separator />
         <Heading title={t('network')} minimised={sideMenuMinimised} />
         <Secondary
           name={capitalizeFirstLetter(network.name)}
           borderColor={borderColor}
-          onClick={() => openModalWith('Networks')}
+          // onClick={() => openModalWith('Networks')}
+          onClick={() => {}}
           icon={{
             Svg: network.brand.inline.svg,
             size: network.brand.inline.size,
@@ -137,10 +114,7 @@ export const SideMenu = () => {
         <button
           type="button"
           onClick={() =>
-            window.open(
-              'https://github.com/paritytech/polkadot-staking-dashboard',
-              '_blank'
-            )
+            window.open('https://github.com/Fair-Squares/fs-frontend', '_blank')
           }
         >
           <LogoGithubSVG width="1.4em" height="1.4em" />

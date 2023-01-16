@@ -31,7 +31,7 @@ export interface TextProps {
   label: string;
   value: string;
   secondaryValue?: string;
-  helpKey: string;
+  helpKey?: string;
 }
 
 export interface TimeleftProps {

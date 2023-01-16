@@ -7,7 +7,6 @@ import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { useCombobox, UseComboboxStateChange } from 'downshift';
 import Identicon from 'library/Identicon';
-import { StatusLabel } from 'library/StatusLabel';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { defaultThemes, networkColors } from 'theme/default';
@@ -108,15 +107,6 @@ const DropdownItem = ({ c, item, index }: any) => {
 
   return (
     <div className="wrapper" key={item.name} {...itemProps}>
-      {!item.active && (
-        <StatusLabel
-          status="not_enough_unit"
-          title={item.alert}
-          topOffset="40%"
-          helpKey="Controller Account Eligibility"
-          hideIcon
-        />
-      )}
       <div
         className="item"
         style={{

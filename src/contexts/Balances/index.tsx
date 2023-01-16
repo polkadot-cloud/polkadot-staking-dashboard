@@ -11,7 +11,7 @@ import {
 import { ImportedAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
-import { rmCommas, setStateWithRef } from 'Utils';
+import { setStateWithRef } from 'Utils';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import * as defaults from './defaults';
@@ -136,10 +136,6 @@ export const BalancesProvider = ({
     Promise.all(
       accountsAdded.map((a: ImportedAccount) => subscribeToBalances(a.address))
     );
-    // subscribe to ledgers
-    Promise.all(
-      accountsAdded.map((a: ImportedAccount) => subscribeToLedger(a.address))
-    );
   };
 
   /*
@@ -154,26 +150,21 @@ export const BalancesProvider = ({
     });
   };
 
-  // subscribe to account balances, ledger, bonded and nominators
+  // subscribe to account balances
   const subscribeToBalances = async (address: string) => {
     if (!api) return;
 
     const unsub: () => void = await api.queryMulti<
       [AnyApi, AnyApi, Option<AnyApi>, Option<AnyApi>]
     >(
-      [
-        [api.query.system.account, address],
-        [api.query.balances.locks, address],
-        [api.query.staking.bonded, address],
-        [api.query.staking.nominators, address],
-      ],
-      async ([{ data }, locks, bonded, nominations]): Promise<void> => {
+      [[api.query.system.account, address]],
+      async ([{ data }]): Promise<void> => {
         const _account: BalancesAccount = {
           address,
         };
 
         // get account balances
-        const { free, reserved, miscFrozen, feeFrozen } = data;
+        const { free } = data;
 
         // calculate free balance after app reserve
         let freeAfterReserve = new BN(free).sub(existentialAmount);
@@ -183,49 +174,8 @@ export const BalancesProvider = ({
 
         // set account balances to context
         _account.balance = {
-          free: free.toBn(),
-          reserved: reserved.toBn(),
-          miscFrozen: miscFrozen.toBn(),
-          feeFrozen: feeFrozen.toBn(),
-          freeAfterReserve,
+          total: free,
         };
-
-        // get account locks
-        const _locks = locks.toHuman();
-        for (let i = 0; i < _locks.length; i++) {
-          _locks[i].amount = new BN(rmCommas(_locks[i].amount));
-        }
-        _account.locks = _locks;
-
-        // set account bonded (controller) or null
-        let _bonded = bonded.unwrapOr(null);
-        _bonded =
-          _bonded === null ? null : (_bonded.toHuman() as string | null);
-        _account.bonded = _bonded;
-
-        // add bonded (controller) account as external account if not presently imported
-        if (_bonded) {
-          if (
-            connectAccounts.find(
-              (s: ImportedAccount) => s.address === _bonded
-            ) === undefined
-          ) {
-            addExternalAccount(_bonded, 'system');
-          }
-        }
-
-        // set account nominations
-        let _nominations = nominations.unwrapOr(null);
-        if (_nominations === null) {
-          _nominations = defaults.nominations;
-        } else {
-          _nominations = {
-            targets: _nominations.targets.toHuman(),
-            submittedIn: _nominations.submittedIn.toHuman(),
-          };
-        }
-
-        _account.nominations = _nominations;
 
         // update account in context state
         let _accounts = Object.values(accountsRef.current);
@@ -246,73 +196,6 @@ export const BalancesProvider = ({
     return unsub;
   };
 
-  const subscribeToLedger = async (address: string) => {
-    if (!api) return;
-
-    const unsub: () => void = await api.queryMulti<[AnyApi]>(
-      [[api.query.staking.ledger, address]],
-      async ([l]): Promise<void> => {
-        let ledger: BalanceLedger;
-
-        const _ledger = l.unwrapOr(null);
-        // fallback to default ledger if not present
-        if (_ledger !== null) {
-          const { stash, total, active, unlocking } = _ledger;
-
-          // format unlocking chunks
-          const _unlocking = [];
-          for (const u of unlocking.toHuman()) {
-            const era = rmCommas(u.era);
-            const value = rmCommas(u.value);
-            _unlocking.push({
-              era: Number(era),
-              value: new BN(value),
-            });
-          }
-
-          // add stash as external account if not present
-          if (
-            connectAccounts.find(
-              (s: ImportedAccount) => s.address === stash.toHuman()
-            ) === undefined
-          ) {
-            addExternalAccount(stash.toHuman(), 'system');
-          }
-
-          ledger = {
-            address,
-            stash: stash.toHuman(),
-            active: active.toBn(),
-            total: total.toBn(),
-            unlocking: _unlocking,
-          };
-
-          // remove stale account if it's already in list, and concat.
-          let _ledgers = Object.values(ledgersRef.current);
-          _ledgers = _ledgers
-            .filter((_l: BalanceLedger) => _l.stash !== ledger.stash)
-            .concat(ledger);
-
-          setStateWithRef(_ledgers, setLedgers, ledgersRef);
-        } else {
-          // no ledger: remove stale account if it's already in list.
-          let _ledgers = Object.values(ledgersRef.current);
-          _ledgers = _ledgers.filter(
-            (_l: BalanceLedger) => _l.address !== address
-          );
-          setStateWithRef(_ledgers, setLedgers, ledgersRef);
-        }
-      }
-    );
-
-    const _unsubs = unsubsLedgersRef.current.concat({
-      key: address,
-      unsub,
-    });
-    setStateWithRef(_unsubs, setUnsubsLedgers, unsubsLedgersRef);
-    return unsub;
-  };
-
   // get an account's balance metadata
   const getAccountBalance = (address: MaybeAccount) => {
     const account = accountsRef.current.find(
@@ -322,7 +205,7 @@ export const BalancesProvider = ({
       return defaults.balance;
     }
     const { balance } = account;
-    if (balance?.free === undefined) {
+    if (balance?.total === undefined) {
       return defaults.balance;
     }
     return balance;
@@ -356,49 +239,6 @@ export const BalancesProvider = ({
     }
     return ledger;
   };
-
-  // get an account's locks metadata
-  const getAccountLocks = (address: MaybeAccount) => {
-    const account = accountsRef.current.find(
-      (a: BalancesAccount) => a.address === address
-    );
-    if (account === undefined) {
-      return [];
-    }
-
-    const locks = account.locks ?? [];
-    return locks;
-  };
-
-  // get an account's bonded (controller) account)
-  const getBondedAccount = (address: MaybeAccount) => {
-    const account = accountsRef.current.find(
-      (a: BalancesAccount) => a.address === address
-    );
-    if (account === undefined) {
-      return null;
-    }
-    const bonded = account.bonded ?? null;
-    return bonded;
-  };
-
-  // get an account's nominations
-  const getAccountNominations = (address: MaybeAccount) => {
-    const account = accountsRef.current.find(
-      (a: BalancesAccount) => a.address === address
-    );
-    if (account === undefined) {
-      return [];
-    }
-    const nominations = account.nominations;
-    if (nominations === undefined) {
-      return [];
-    }
-
-    const targets = nominations.targets ?? [];
-    return targets;
-  };
-
   // get an account
   const getAccount = (address: MaybeAccount) => {
     const account = accountsRef.current.find(
@@ -410,14 +250,6 @@ export const BalancesProvider = ({
     return account;
   };
 
-  // check if an account is a controller account
-  const isController = (address: MaybeAccount) => {
-    const existsAsController = accountsRef.current.filter(
-      (a: BalancesAccount) => (a?.bonded || '') === address
-    );
-    return existsAsController.length > 0;
-  };
-
   return (
     <BalancesContext.Provider
       value={{
@@ -425,10 +257,6 @@ export const BalancesProvider = ({
         getAccountBalance,
         getLedgerForStash,
         getLedgerForController,
-        getAccountLocks,
-        getBondedAccount,
-        getAccountNominations,
-        isController,
         existentialAmount,
         accounts: accountsRef.current,
         ledgers: ledgersRef.current,

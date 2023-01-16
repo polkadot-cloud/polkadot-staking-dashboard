@@ -7,7 +7,6 @@ import { useUi } from 'contexts/UI';
 import { AnimatePresence } from 'framer-motion';
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
 import { Headers } from 'library/Headers';
-import { Help } from 'library/Help';
 import { Menu } from 'library/Menu';
 import { NetworkBar } from 'library/NetworkBar';
 import Notifications from 'library/Notifications';
@@ -59,8 +58,6 @@ export const RouterInner = () => {
       <BodyInterfaceWrapper>
         {/* Modal: closed by default */}
         <Modal />
-        {/* Help: closed by default */}
-        <Help />
 
         {/* Menu: closed by default */}
         <Menu />
@@ -113,7 +110,7 @@ export const RouterInner = () => {
                 <Route
                   key="main_interface_navigate"
                   path="*"
-                  element={<Navigate to="/overview" />}
+                  element={<Navigate to="/dashboard" />}
                 />
               </Routes>
             </AnimatePresence>

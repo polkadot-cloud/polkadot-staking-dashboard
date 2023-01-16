@@ -9,7 +9,7 @@ import { TextTitleWrapper } from './Wrapper';
 export const Text = (props: TextProps) => {
   const { label, value, secondaryValue, helpKey, primary } = props;
 
-  const help = helpKey !== undefined;
+  const help = helpKey !== undefined && helpKey !== '';
 
   return (
     <StatBox>

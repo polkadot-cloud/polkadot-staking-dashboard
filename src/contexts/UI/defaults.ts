@@ -26,5 +26,4 @@ export const defaultUIContext: UIContextInterface = {
   containerRefs: {},
   isSyncing: false,
   networkSyncing: false,
-  poolsSyncing: false,
 };

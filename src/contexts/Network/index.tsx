@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN } from 'bn.js';
 import React, { useEffect, useState } from 'react';
 import { AnyApi } from 'types';
+import { parseBalance } from 'utils';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 import { NetworkMetrics, NetworkMetricsContextInterface } from './types';
@@ -51,36 +51,15 @@ export const NetworkMetricsProvider = ({
     if (isReady) {
       const _unsub = await api.queryMulti(
         [
-          api.query.staking.activeEra,
-          api.query.balances.totalIssuance,
-          api.query.auctions.auctionCounter,
-          api.query.paraSessionInfo.earliestStoredSession,
-          api.query.fastUnstake.erasToCheckPerBlock,
+          api.query.housingFundModule.fundBalance,
+          api.query.roleModule.totalMembers,
         ],
-        ([
-          activeEra,
-          _totalIssuance,
-          _auctionCounter,
-          _earliestStoredSession,
-          _erasToCheckPerBlock,
-        ]: AnyApi) => {
-          // determine activeEra: toString used as alternative to `toHuman`, that puts commas in numbers
-          let _activeEra = activeEra
-            .unwrapOrDefault({
-              index: 0,
-              start: 0,
-            })
-            .toString();
-
-          // convert JSON string to object
-          _activeEra = JSON.parse(_activeEra);
-
+        ([fund, totalUsers]: AnyApi) => {
+          const decimals = api.registry.chainDecimals[0];
           const _metrics = {
-            activeEra: _activeEra,
-            totalIssuance: _totalIssuance.toBn(),
-            auctionCounter: new BN(_auctionCounter.toString()),
-            earliestStoredSession: new BN(_earliestStoredSession.toString()),
-            fastUnstakeErasToCheckPerBlock: _erasToCheckPerBlock.toHuman(),
+            totalUsers,
+            totalHousingFund: parseBalance(fund.total, decimals),
+            decimals,
           };
           setMetrics(_metrics);
         }
@@ -92,14 +71,7 @@ export const NetworkMetricsProvider = ({
   return (
     <NetworkMetricsContext.Provider
       value={{
-        metrics: {
-          activeEra: metrics.activeEra,
-          totalIssuance: metrics.totalIssuance,
-          auctionCounter: metrics.auctionCounter,
-          earliestStoredSession: metrics.earliestStoredSession,
-          fastUnstakeErasToCheckPerBlock:
-            metrics.fastUnstakeErasToCheckPerBlock,
-        },
+        metrics,
       }}
     >
       {children}

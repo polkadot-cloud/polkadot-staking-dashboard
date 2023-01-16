@@ -6,35 +6,12 @@ import { useAnimation } from 'framer-motion';
 import { ErrorFallbackModal } from 'library/ErrorBoundary';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { AccountPoolRoles } from './AccountPoolRoles';
 import { Bio } from './Bio';
-import { Bond } from './Bond';
-import { ChangeNominations } from './ChangeNominations';
-import { ChangePoolRoles } from './ChangePoolRoles';
 import { ChooseLanguage } from './ChooseLanguage';
-import { ClaimReward } from './ClaimReward';
 import { ConnectAccounts } from './ConnectAccounts';
 import { GoToFeedback } from './GoToFeedback';
-import { JoinPool } from './JoinPool';
-import { LeavePool } from './LeavePool';
-import { ManageFastUnstake } from './ManageFastUnstake';
-import { ManagePool } from './ManagePool';
 import { Networks } from './Networks';
-import { Nominate } from './Nominate';
-import { NominateFromFavorites } from './NominateFromFavorites';
-import { NominatePool } from './NominatePool';
-import { PoolNominations } from './PoolNominations';
-import { SelectFavorites } from './SelectFavorites';
 import { Settings } from './Settings';
-import { StartStaking } from './StartStaking';
-import { Unbond } from './Unbond';
-import { UnbondPoolMember } from './UnbondPoolMember';
-import { UnlockChunks } from './UnlockChunks';
-import { Unstake } from './Unstake';
-import { UpdateController } from './UpdateController';
-import { UpdatePayee } from './UpdatePayee';
-import { ValidatorMetrics } from './ValidatorMetrics';
-import { WithdrawPoolMember } from './WithdrawPoolMember';
 import { ContentWrapper, HeightWrapper, ModalWrapper } from './Wrappers';
 
 export const Modal = () => {
@@ -111,35 +88,12 @@ export const Modal = () => {
         >
           <ContentWrapper ref={modalRef}>
             <ErrorBoundary FallbackComponent={ErrorFallbackModal}>
-              {modal === 'AccountPoolRoles' && <AccountPoolRoles />}
               {modal === 'Bio' && <Bio />}
-              {modal === 'Bond' && <Bond />}
-              {modal === 'ChangeNominations' && <ChangeNominations />}
-              {modal === 'ChangePoolRoles' && <ChangePoolRoles />}
               {modal === 'ChooseLanguage' && <ChooseLanguage />}
-              {modal === 'ClaimReward' && <ClaimReward />}
               {modal === 'ConnectAccounts' && <ConnectAccounts />}
               {modal === 'GoToFeedback' && <GoToFeedback />}
-              {modal === 'JoinPool' && <JoinPool />}
-              {modal === 'LeavePool' && <LeavePool />}
-              {modal === 'ManagePool' && <ManagePool />}
-              {modal === 'ManageFastUnstake' && <ManageFastUnstake />}
               {modal === 'Networks' && <Networks />}
-              {modal === 'Nominate' && <Nominate />}
-              {modal === 'NominateFromFavorites' && <NominateFromFavorites />}
-              {modal === 'NominatePool' && <NominatePool />}
-              {modal === 'PoolNominations' && <PoolNominations />}
-              {modal === 'SelectFavorites' && <SelectFavorites />}
               {modal === 'Settings' && <Settings />}
-              {modal === 'StartStaking' && <StartStaking />}
-              {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
-              {modal === 'UnbondPoolMember' && <UnbondPoolMember />}
-              {modal === 'UnlockChunks' && <UnlockChunks />}
-              {modal === 'Unstake' && <Unstake />}
-              {modal === 'UpdateController' && <UpdateController />}
-              {modal === 'Unbond' && <Unbond />}
-              {modal === 'UpdatePayee' && <UpdatePayee />}
-              {modal === 'WithdrawPoolMember' && <WithdrawPoolMember />}
             </ErrorBoundary>
           </ContentWrapper>
         </HeightWrapper>
