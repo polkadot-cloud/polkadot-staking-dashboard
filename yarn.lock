@@ -1896,7 +1896,7 @@
     "@polkadot/types-codec" "9.11.2"
     "@polkadot/util" "^10.2.4"
 
-"@polkadot/types-codec@9.11.2", "@polkadot/types-codec@^9.11.2":
+"@polkadot/types-codec@9.11.2":
   version "9.11.2"
   resolved "https://registry.npmjs.org/@polkadot/types-codec/-/types-codec-9.11.2.tgz#e4533f2970c536bca6d3cae4367a4e3250434e48"
   integrity sha512-zT+cMIP4aw/VpCvdU+yGyVQyZSiDq5WUCl8I41UZ1J83tmYiAFXIw/5WsTWneYjhVHklurKQVSjzrUbsalHjag==
@@ -1904,6 +1904,15 @@
     "@babel/runtime" "^7.20.7"
     "@polkadot/util" "^10.2.4"
     "@polkadot/x-bigint" "^10.2.4"
+
+"@polkadot/types-codec@^9.11.3":
+  version "9.11.3"
+  resolved "https://registry.yarnpkg.com/@polkadot/types-codec/-/types-codec-9.11.3.tgz#c07b8b4ea213e0eec33498fa62362b1217287cc5"
+  integrity sha512-bYgDr6762snxqV9V4Fd3DtValZOv7psoC1kMJUaOb5I1cS+F8cuQ8gTpT2TEpMUSwDlGPJH0HdJknAO7PH/ZdA==
+  dependencies:
+    "@babel/runtime" "^7.20.7"
+    "@polkadot/util" "^10.2.6"
+    "@polkadot/x-bigint" "^10.2.6"
 
 "@polkadot/types-create@9.11.2":
   version "9.11.2"
@@ -2001,7 +2010,7 @@
     ed2curve "^0.3.0"
     tweetnacl "^1.0.3"
 
-"@polkadot/util@10.2.3", "@polkadot/util@^10.2.3":
+"@polkadot/util@10.2.3":
   version "10.2.3"
   resolved "https://registry.npmjs.org/@polkadot/util/-/util-10.2.3.tgz#05a18641c639838370af332dd2e9077253a5df23"
   integrity sha512-Zs+G2iFmdG2jUXyiuBF6HMGHdpHX+58yrKPgt1S7kBBh1Odfw3GTX9vljwJ25mznkLhGBjERAmt6wNWuvPmpJA==
@@ -2014,7 +2023,7 @@
     "@types/bn.js" "^5.1.1"
     bn.js "^5.2.1"
 
-"@polkadot/util@10.2.6", "@polkadot/util@^10.2.4", "@polkadot/util@^10.2.6":
+"@polkadot/util@10.2.6", "@polkadot/util@^10.2.3", "@polkadot/util@^10.2.4", "@polkadot/util@^10.2.6":
   version "10.2.6"
   resolved "https://registry.npmjs.org/@polkadot/util/-/util-10.2.6.tgz#79f71a149f0afe3988d45ca944c64b9b7b628870"
   integrity sha512-vCQHk36MifmM//iX5GSlQPlnT6gDAHizeHSahRu9RIcKt0maEH2ETEeF5peHvQ8SsBwvMFQMzY3OA21NlY9uHw==
@@ -2086,7 +2095,7 @@
     "@babel/runtime" "^7.20.7"
     "@polkadot/x-global" "10.2.3"
 
-"@polkadot/x-bigint@10.2.6", "@polkadot/x-bigint@^10.2.4":
+"@polkadot/x-bigint@10.2.6", "@polkadot/x-bigint@^10.2.4", "@polkadot/x-bigint@^10.2.6":
   version "10.2.6"
   resolved "https://registry.npmjs.org/@polkadot/x-bigint/-/x-bigint-10.2.6.tgz#94a7a10f00ae3df05448456879ab4709fa99defc"
   integrity sha512-C49pzOJ/spdRAcyTPHxBzvvi1JsOxeRIV20MvJyRHJ0u9W3Smj1UH+1VhkeoPsKGqswG5ql6AwjESEbXQgZtIw==
