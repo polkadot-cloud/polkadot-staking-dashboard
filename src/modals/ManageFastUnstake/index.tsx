@@ -107,7 +107,7 @@ export const ManageFastUnstake = () => {
   if (!isFastUnstaking) {
     if (freeBalance.lt(fastUnstakeDeposit)) {
       warnings.push(
-        `You do not have enough free balance to register for fast unstake. Fast unstake requires a deposit of ${planckBnToUnit(
+        `${t('noEnough')} ${planckBnToUnit(
           fastUnstakeDeposit,
           network.units
         )} ${network.unit}`
@@ -163,7 +163,7 @@ export const ManageFastUnstake = () => {
                 <Separator />
                 <NotesWrapper>
                   <p>
-                    Registering for fast unstake requires a deposit of{' '}
+                    ${t('registerFastUnstake')}{' '}
                     {planckBnToUnit(fastUnstakeDeposit, network.units)}{' '}
                     {network.unit}. {t('fastUnstakeOnceRegistered')}
                   </p>
