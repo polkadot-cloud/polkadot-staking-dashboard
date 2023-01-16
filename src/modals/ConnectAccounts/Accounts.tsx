@@ -34,10 +34,27 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
 
   // store local copy of accounts
   const [localAccounts, setLocalAccounts] = useState(accounts);
+  const [inactive, setInactive] = useState<string[]>([]);
 
   useEffect(() => {
     setLocalAccounts(accounts);
   }, [isReady, accounts]);
+
+  useEffect(() => {
+    getInactiveAccounts();
+  }, [localAccounts]);
+
+  const getInactiveAccounts = () => {
+    // construct account groupings
+    const _inactive: string[] = [];
+
+    for (const account of localAccounts) {
+      if (!_inactive.includes(account.address)) {
+        _inactive.push(account.address);
+      }
+    }
+    setInactive(_inactive);
+  };
 
   return (
     <ContentWrapper>
@@ -71,6 +88,23 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
               <div />
             </div>
           </AccountWrapper>
+        )}
+        {inactive.length > 0 && (
+          <>
+            <h3 className="heading">{t('chooseAccount')}</h3>
+            {inactive.map((item: string, i: number) => {
+              const account = getAccount(item);
+              const address = account?.address ?? '';
+
+              return (
+                <AccountButton
+                  address={address}
+                  meta={account}
+                  key={`not_staking_${i}`}
+                />
+              );
+            })}
+          </>
         )}
       </PaddingWrapper>
     </ContentWrapper>
