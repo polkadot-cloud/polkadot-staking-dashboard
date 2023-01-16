@@ -1,21 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faHashtag } from '@fortawesome/free-solid-svg-icons';
 import { UriPrefix } from 'consts';
-import * as analyticsJson from 'img/json/analytics-solid.json';
-import * as favoriteHeartJson from 'img/json/favorite-heart-solid.json';
-import * as viewGroupJson from 'img/json/groups-solid.json';
-import * as viewTrendingUpJson from 'img/json/trending-up-solid.json';
-import * as view1SolidJson from 'img/json/view-1-solid.json';
-import * as viewAgendaJson from 'img/json/view-agenda-solid.json';
-import { Community } from 'pages/Community';
-import { Favorites } from 'pages/Favorites';
-import { Nominate } from 'pages/Nominate';
-import { Overview } from 'pages/Overview';
-import { Payouts } from 'pages/Payouts';
-import { Pools } from 'pages/Pools';
-import { Validators } from 'pages/Validators';
+import Dashboard from 'pages/Dashboard';
 import { PageCategories, PagesConfig } from 'types';
 
 export const PAGE_CATEGORIES: PageCategories = [
@@ -23,72 +10,43 @@ export const PAGE_CATEGORIES: PageCategories = [
     id: 1,
     key: 'default',
   },
-  {
-    id: 2,
-    key: 'stake',
-  },
-  {
-    id: 3,
-    key: 'validators',
-  },
 ];
 
 export const PAGES_CONFIG: PagesConfig = [
   {
     category: 1,
-    key: 'overview',
+    key: 'Dashboard',
     uri: `${UriPrefix}/`,
-    hash: '/overview',
-    Entry: Overview,
-    animate: view1SolidJson,
+    hash: '/dashboard',
+    Entry: Dashboard,
   },
   {
-    category: 2,
-    key: 'nominate',
-    uri: `${UriPrefix}/nominate`,
-    hash: '/nominate',
-    Entry: Nominate,
-    animate: viewTrendingUpJson,
+    category: 1,
+    key: 'Investors',
+    uri: `${UriPrefix}/`,
+    hash: '/investors',
+    Entry: Dashboard,
   },
   {
-    category: 2,
-    key: 'pools',
-    uri: `${UriPrefix}/pools`,
-    hash: '/pools',
-    Entry: Pools,
-    animate: viewGroupJson,
+    category: 1,
+    key: 'Sellers',
+    uri: `${UriPrefix}/`,
+    hash: '/sellers',
+    Entry: Dashboard,
   },
   {
-    category: 2,
-    key: 'payouts',
-    uri: `${UriPrefix}/payouts`,
-    hash: '/payouts',
-    Entry: Payouts,
-    animate: analyticsJson,
+    category: 1,
+    key: 'Tenant Registry',
+    uri: `${UriPrefix}/`,
+    hash: '/tenants',
+    Entry: Dashboard,
   },
   {
-    category: 3,
-    key: 'validators',
-    uri: `${UriPrefix}/validators`,
-    hash: '/validators',
-    Entry: Validators,
-    animate: viewAgendaJson,
-  },
-  {
-    category: 3,
-    key: 'community',
-    uri: `${UriPrefix}/community`,
-    hash: '/community',
-    Entry: Community,
-    icon: faHashtag,
-  },
-  {
-    category: 3,
-    key: 'favorites',
-    uri: `${UriPrefix}/favorites`,
-    hash: '/favorites',
-    Entry: Favorites,
-    animate: favoriteHeartJson,
+    category: 1,
+    key: 'Toolbox',
+    uri: `${UriPrefix}/`,
+    hash: '/toolbox',
+    Entry: Dashboard,
   },
 ];
 

@@ -16,7 +16,6 @@ export interface UIContextInterface {
   containerRefs: any;
   isSyncing: boolean;
   networkSyncing: boolean;
-  poolsSyncing: boolean;
 }
 
 export interface SyncStart {

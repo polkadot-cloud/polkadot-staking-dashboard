@@ -3,6 +3,7 @@
 
 import * as Sc from '@substrate/connect';
 import { DefaultParams } from 'consts';
+import { ReactComponent as FsIconSVG } from 'img/fs_icon.svg';
 import { ReactComponent as KusamaIconSVG } from 'img/kusama_icon.svg';
 import { ReactComponent as KusamaInlineSVG } from 'img/kusama_inline.svg';
 import { ReactComponent as KusamaLogoSVG } from 'img/kusama_logo.svg';
@@ -12,12 +13,60 @@ import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
 import { ReactComponent as WestendIconSVG } from 'img/westend_icon.svg';
 import { ReactComponent as WestendInlineSVG } from 'img/westend_inline.svg';
 import { ReactComponent as WestendLogoSVG } from 'img/westend_logo.svg';
+import spec from 'spec/fs.json';
 import { Networks } from 'types';
 
 /*
  * Network Configuration
  */
 export const NETWORKS: Networks = {
+  fs: {
+    name: 'Fair Squares',
+    endpoints: {
+      rpc: 'ws://127.0.0.1:9944',
+      lightClient: JSON.stringify(spec),
+    },
+    colors: {
+      primary: {
+        light: 'rgb(211, 48, 121)',
+        dark: 'rgb(211, 48, 121)',
+      },
+      secondary: {
+        light: '#552bbf',
+        dark: '#6d39ee',
+      },
+      stroke: {
+        light: 'rgb(211, 48, 121)',
+        dark: 'rgb(211, 48, 121)',
+      },
+      transparent: {
+        light: 'rgb(211, 48, 121, 0.05)',
+        dark: 'rgb(211, 48, 121, 0.05)',
+      },
+    },
+    subscanEndpoint: '',
+    unit: 'FS',
+    units: 12,
+    ss58: 42,
+    brand: {
+      icon: FsIconSVG,
+      logo: {
+        svg: FsIconSVG,
+        width: '8.5em',
+      },
+      inline: {
+        svg: FsIconSVG,
+        size: '1.2em',
+      },
+    },
+    api: {
+      unit: 'DOT',
+      priceTicker: 'DOTUSDT',
+    },
+    params: {
+      ...DefaultParams,
+    },
+  },
   polkadot: {
     name: 'polkadot',
     endpoints: {

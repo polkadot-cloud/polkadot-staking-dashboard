@@ -28,20 +28,12 @@ export interface Lock {
   reasons: string;
 }
 export interface Balance {
-  free: BN;
-  reserved: BN;
-  miscFrozen: BN;
-  feeFrozen: BN;
-  freeAfterReserve: BN;
+  total: BN;
 }
 
 export interface BalancesAccount {
   address?: string;
   balance?: Balance;
-  bonded?: string;
-  ledger?: BalanceLedger;
-  locks?: Array<Lock>;
-  nominations?: Nominations;
 }
 
 export interface Nominations {
@@ -56,10 +48,6 @@ export interface BalancesContextInterface {
   getAccountBalance: (address: MaybeAccount) => Balance;
   getLedgerForStash: (address: MaybeAccount) => BalanceLedger;
   getLedgerForController: (address: MaybeAccount) => BalanceLedger | null;
-  getAccountLocks: (address: MaybeAccount) => Array<Lock>;
-  getBondedAccount: (address: MaybeAccount) => string | null;
-  getAccountNominations: (address: MaybeAccount) => Targets;
-  isController: (address: MaybeAccount) => boolean;
   accounts: Array<BalancesAccount>;
   existentialAmount: BN;
   ledgers: AnyApi;

@@ -5,14 +5,9 @@ import BN from 'bn.js';
 import { NetworkMetrics, NetworkMetricsContextInterface } from './types';
 
 export const metrics: NetworkMetrics = {
-  activeEra: {
-    index: 0,
-    start: 0,
-  },
-  totalIssuance: new BN(0),
-  auctionCounter: new BN(0),
-  earliestStoredSession: new BN(0),
-  fastUnstakeErasToCheckPerBlock: 0,
+  totalHousingFund: new BN(0),
+  totalUsers: 0,
+  decimals: 12,
 };
 
 export const defaultNetworkContext: NetworkMetricsContextInterface = {

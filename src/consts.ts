@@ -6,11 +6,11 @@ import { stringToU8a } from '@polkadot/util';
 /*
  * Global Constants
  */
-export const AppVersion = '1.0.3';
+export const AppVersion = '0.0.1';
 export const UriPrefix = '/';
-export const DappName = 'Polkadot Staking Dashboard';
-export const PolkadotUrl = 'https://polkadot.network/staking/';
-export const DefaultNetwork = 'polkadot';
+export const DappName = 'Fair Squares UI';
+export const FairSquaresUrl = 'https://www.fair-squares.nl/';
+export const DefaultNetwork = 'fs';
 
 /*
  * Data Structure Helpers

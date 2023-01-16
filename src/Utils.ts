@@ -92,7 +92,7 @@ export const usdFormatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',
 });
 
-export const humanNumber = (val: number | string): string => {
+export const humanNumber = (val: number): string => {
   const str = val.toString().split('.');
   str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   return str.join('.');
@@ -260,6 +260,10 @@ export const removeVarFromUrlHash = (key: string) => {
     return;
   }
   searchParams.delete(key);
-  const paramsAsStr = searchParams.toString();
-  window.location.hash = `${page}${paramsAsStr ? `?${paramsAsStr}` : ``}`;
+  let str = `${page}?${searchParams.toString()}`;
+
+  if (str.slice(-1) === '?') {
+    str = str.slice(0, -1);
+  }
+  window.location.hash = str;
 };

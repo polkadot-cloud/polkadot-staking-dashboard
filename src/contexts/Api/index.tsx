@@ -62,7 +62,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       return localNetwork;
     }
     // fallback to default network.
-    return 'polkadot';
+    return 'fs';
   };
 
   // provider instance state
@@ -174,19 +174,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem('network', String(network.name));
 
     // constants
-    const promises = [
-      _api.consts.staking.bondingDuration,
-      _api.consts.staking.maxNominations,
-      _api.consts.staking.sessionsPerEra,
-      _api.consts.staking.maxNominatorRewardedPerValidator,
-      _api.consts.electionProviderMultiPhase.maxElectingVoters,
-      _api.consts.babe.expectedBlockTime,
-      _api.consts.babe.epochDuration,
-      _api.consts.balances.existentialDeposit,
-      _api.consts.staking.historyDepth,
-      _api.consts.fastUnstake.deposit,
-      _api.consts.nominationPools.palletId,
-    ];
+    const promises = [_api.consts.balances.existentialDeposit];
 
     // fetch constants
     const _consts: AnyApi = await Promise.all(promises);
@@ -225,10 +213,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       : new BN(0);
 
     const historyDepth = _consts[8] ? new BN(_consts[8].toString()) : new BN(0);
-    const fastUnstakeDeposit = _consts[9]
-      ? new BN(_consts[9].toString())
-      : new BN(0);
-    const poolsPalletId = _consts[10] ? _consts[10].toU8a() : new Uint8Array(0);
+    const poolsPalletId = _consts[9] ? _consts[9].toU8a() : new Uint8Array(0);
 
     setApi(_api);
     setConsts({
@@ -242,7 +227,6 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       expectedBlockTime,
       poolsPalletId,
       existentialDeposit,
-      fastUnstakeDeposit,
     });
   };
 

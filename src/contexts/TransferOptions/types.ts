@@ -10,18 +10,4 @@ export interface TransferOptionsContextInterface {
 
 export interface TransferOptions {
   freeBalance: BN;
-  nominate: {
-    active: BN;
-    totalUnlocking: BN;
-    totalUnlocked: BN;
-    totalPossibleBond: BN;
-    totalUnlockChuncks: number;
-  };
-  pool: {
-    active: BN;
-    totalUnlocking: BN;
-    totalUnlocked: BN;
-    totalPossibleBond: BN;
-    totalUnlockChuncks: number;
-  };
 }

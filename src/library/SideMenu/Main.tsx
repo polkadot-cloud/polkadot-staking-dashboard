@@ -1,16 +1,11 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 Fair Squares
 // SPDX-License-Identifier: Apache-2.0
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PAGES_CONFIG, PAGE_CATEGORIES } from 'config/pages';
-import { PolkadotUrl, UriPrefix } from 'consts';
+import { FairSquaresUrl } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { useSetup } from 'contexts/Setup';
-import { SetupContextInterface } from 'contexts/Setup/types';
-import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { UIContextInterface } from 'contexts/UI/types';
 import React, { useEffect, useState } from 'react';
@@ -25,18 +20,7 @@ export const Main = () => {
   const { network } = useApi();
   const { activeAccount, accounts } = useConnect();
   const { pathname } = useLocation();
-  const { getBondedAccount } = useBalances();
-  const { getControllerNotImported, inSetup: inNominatorSetup } = useStaking();
-  const { membership } = usePoolMemberships();
-  const controller = getBondedAccount(activeAccount);
-  const {
-    onNominatorSetup,
-    onPoolSetup,
-    getPoolSetupProgressPercent,
-    getStakeSetupProgressPercent,
-  }: SetupContextInterface = useSetup();
   const { isSyncing, sideMenuMinimised }: UIContextInterface = useUi();
-  const controllerNotImported = getControllerNotImported(controller);
   const { t, i18n } = useTranslation('base');
 
   const [pageConfig, setPageConfig] = useState({
@@ -50,78 +34,14 @@ export const Main = () => {
     // inject actions into menu items
     const _pages = Object.assign(pageConfig.pages);
     for (let i = 0; i < _pages.length; i++) {
-      const { uri } = _pages[i];
-
       // set undefined action as default
       _pages[i].action = undefined;
-
-      if (uri === `${UriPrefix}/nominate`) {
-        // configure Stake action
-        const warning = !isSyncing && controllerNotImported;
-        const staking = !inNominatorSetup();
-        const setupPercent = getStakeSetupProgressPercent(activeAccount);
-
-        if (staking) {
-          _pages[i].action = {
-            type: 'text',
-            status: 'success',
-            text: t('active'),
-          };
-        }
-        if (warning) {
-          _pages[i].action = {
-            type: 'bullet',
-            status: 'warning',
-          };
-        }
-        if (!staking && (onNominatorSetup || setupPercent > 0)) {
-          _pages[i].action = {
-            type: 'text',
-            status: 'warning',
-            text: `${setupPercent}%`,
-          };
-        }
-      }
-
-      if (uri === `${UriPrefix}/pools`) {
-        // configure Pools action
-        const inPool = membership;
-        const setupPercent = getPoolSetupProgressPercent(activeAccount);
-
-        if (inPool) {
-          _pages[i].action = {
-            type: 'text',
-            status: 'success',
-            text: t('active'),
-          };
-        }
-        if (!inPool && (setupPercent > 0 || onPoolSetup)) {
-          _pages[i].action = {
-            type: 'text',
-            status: 'warning',
-            text: `${setupPercent}%`,
-          };
-        }
-      }
     }
     setPageConfig({
       categories: pageConfig.categories,
       pages: _pages,
     });
-  }, [
-    network,
-    activeAccount,
-    accounts,
-    controllerNotImported,
-    isSyncing,
-    membership,
-    inNominatorSetup(),
-    getStakeSetupProgressPercent(activeAccount),
-    getPoolSetupProgressPercent(activeAccount),
-    i18n.resolvedLanguage,
-    onNominatorSetup,
-    onPoolSetup,
-  ]);
+  }, [network, activeAccount, accounts, isSyncing, i18n.resolvedLanguage]);
 
   // remove pages that network does not support
   const pagesToDisplay: PagesConfig = Object.values(pageConfig.pages);
@@ -130,7 +50,7 @@ export const Main = () => {
     <>
       <LogoWrapper
         onClick={() => {
-          window.open(PolkadotUrl, '_blank');
+          window.open(FairSquaresUrl, '_blank');
         }}
         minimised={sideMenuMinimised}
       >

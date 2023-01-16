@@ -92,7 +92,7 @@ export const NetworkBar = () => {
             </>
           )}
         </section>
-        <section>
+        {/* <section>
           <div className="hide-small">
             {plugins.includes('binance_spot') && (
               <>
@@ -116,7 +116,7 @@ export const NetworkBar = () => {
               </>
             )}
           </div>
-        </section>
+        </section> */}
       </Summary>
 
       <NetworkInfo />

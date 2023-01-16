@@ -8,12 +8,7 @@ export interface NetworkMetricsContextInterface {
 }
 
 export interface NetworkMetrics {
-  activeEra: {
-    index: number;
-    start: number;
-  };
-  totalIssuance: BN;
-  auctionCounter: BN;
-  earliestStoredSession: BN;
-  fastUnstakeErasToCheckPerBlock: number;
+  totalHousingFund: BN;
+  totalUsers: number;
+  decimals: number;
 }
