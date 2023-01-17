@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
 import { useTranslation } from 'react-i18next';
@@ -14,9 +14,9 @@ const TotalValidatorsStatBox = () => {
 
   // total validators as percent
   let totalValidatorsAsPercent = 0;
-  if (maxValidatorsCount.gt(new BN(0))) {
+  if (maxValidatorsCount.isGreaterThan(new BigNumber(0))) {
     totalValidatorsAsPercent = totalValidators
-      .div(maxValidatorsCount.div(new BN(100)))
+      .div(maxValidatorsCount.dividedBy(new BigNumber(100)))
       .toNumber();
   }
 
@@ -29,7 +29,7 @@ const TotalValidatorsStatBox = () => {
     },
     graph: {
       value1: totalValidators.toNumber(),
-      value2: maxValidatorsCount.sub(totalValidators).toNumber(),
+      value2: maxValidatorsCount.minus(totalValidators).toNumber(),
     },
     tooltip: `${toFixedIfNecessary(totalValidatorsAsPercent, 2)}%`,
     helpKey: 'Validator',

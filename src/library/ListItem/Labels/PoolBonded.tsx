@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import {
   capitalizeFirstLetter,
   humanNumber,
-  planckBnToUnit,
+  planckToUnit,
   rmCommas,
   toFixedIfNecessary,
 } from 'Utils';
@@ -73,7 +73,7 @@ export const PoolBonded = ({
   }, [meta, pool, eraStakers.stakers.length]);
 
   // calculate total bonded pool amount
-  const poolBonded = planckBnToUnit(new BN(rmCommas(points)), units);
+  const poolBonded = planckToUnit(new BigNumber(rmCommas(points)), units);
 
   // determine nominations status and display
   const nominationStatus = getPoolNominationStatusCode(nominationsStatus);

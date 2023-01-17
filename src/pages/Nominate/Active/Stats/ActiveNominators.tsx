@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
@@ -20,7 +20,7 @@ export const ActiveNominatorsStatBox = () => {
   if (maxElectingVoters > 0) {
     totalNominatorsAsPercent =
       totalActiveNominators /
-      new BN(maxElectingVoters).div(new BN(100)).toNumber();
+      new BigNumber(maxElectingVoters).dividedBy(new BigNumber(100)).toNumber();
   }
 
   const params = {

@@ -3,7 +3,7 @@
 
 import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -20,7 +20,7 @@ import { Title } from 'library/Modal/Title';
 import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { planckToUnit, unitToPlanck } from 'Utils';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');
@@ -43,8 +43,8 @@ export const Unbond = () => {
   const { bondDuration } = consts;
 
   let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BN(0);
-  unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
+  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
+  unclaimedRewards = planckToUnit(unclaimedRewards, network.units);
 
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
@@ -54,11 +54,11 @@ export const Unbond = () => {
     ? allTransferOptions.pool
     : allTransferOptions.nominate;
 
-  // convert BN values to number
-  const freeToUnbond = planckBnToUnit(activeBn, units);
-  const minJoinBond = planckBnToUnit(minJoinBondBn, units);
-  const minCreateBond = planckBnToUnit(minCreateBondBn, units);
-  const minNominatorBond = planckBnToUnit(minNominatorBondBn, units);
+  // convert BigNumber values to number
+  const freeToUnbond = planckToUnit(activeBn, units);
+  const minJoinBond = planckToUnit(minJoinBondBn, units);
+  const minCreateBond = planckToUnit(minCreateBondBn, units);
+  const minNominatorBond = planckToUnit(minNominatorBondBn, units);
 
   // local bond value
   const [bond, setBond] = useState({ bond: freeToUnbond });
@@ -100,7 +100,7 @@ export const Unbond = () => {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
+    const bondToSubmit = unitToPlanck(String(bond.bond), units);
 
     // determine tx
     if (isPooling) {
@@ -126,10 +126,11 @@ export const Unbond = () => {
   const nominatorActiveBelowMin =
     bondFor === 'nominator' &&
     !activeBn.isZero() &&
-    activeBn.lt(minNominatorBondBn);
+    activeBn.isLessThan(minNominatorBondBn);
 
   const poolToMinBn = isDepositor() ? minCreateBondBn : minJoinBondBn;
-  const poolActiveBelowMin = bondFor === 'pool' && activeBn.lt(poolToMinBn);
+  const poolActiveBelowMin =
+    bondFor === 'pool' && activeBn.isLessThan(poolToMinBn);
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
@@ -152,7 +153,7 @@ export const Unbond = () => {
   if (poolActiveBelowMin) {
     warnings.push(
       t('unbondErrorBelowMinimum', {
-        bond: planckBnToUnit(poolToMinBn, units),
+        bond: planckToUnit(poolToMinBn, units),
         unit: network.unit,
       })
     );

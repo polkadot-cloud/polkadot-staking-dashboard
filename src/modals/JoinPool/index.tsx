@@ -4,7 +4,7 @@
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -20,7 +20,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { planckToUnit, unitToPlanck } from 'Utils';
 import { FooterWrapper, NotesWrapper, PaddingWrapper } from '../Wrappers';
 import { ContentWrapper } from './Wrapper';
 
@@ -40,7 +40,7 @@ export const JoinPool = () => {
 
   // local bond value
   const [bond, setBond] = useState({
-    bond: planckBnToUnit(freeBalance, units),
+    bond: planckToUnit(freeBalance, units),
   });
 
   // bond valid
@@ -59,7 +59,7 @@ export const JoinPool = () => {
     }
 
     // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
+    const bondToSubmit = unitToPlanck(String(bond.bond), units);
     tx = api.tx.nominationPools.join(bondToSubmit, poolId);
 
     return tx;
@@ -94,7 +94,7 @@ export const JoinPool = () => {
         <ContentWrapper>
           <div>
             <BondFeedback
-              syncing={largestTxFee.eq(new BN(0))}
+              syncing={largestTxFee.isEqualTo(new BigNumber(0))}
               bondFor="pool"
               listenIsValid={setBondValid}
               defaultBond={null}

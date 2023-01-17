@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { VALIDATOR_COMMUNITY } from 'config/validators';
 import { MinBondPrecision } from 'consts';
 import {
@@ -14,12 +14,10 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyMetaBatch, Fn } from 'types';
 import {
-  planckBnToUnit,
-  removePercentage,
+  planckToUnit,
   rmCommas,
   setStateWithRef,
   shuffle,
-  sleep,
   toFixedIfNecessary,
 } from 'Utils';
 import { useApi } from '../Api';
@@ -136,7 +134,7 @@ export const ValidatorsProvider = ({
 
   // fetch parachain session validators when earliestStoredSession ready
   useEffect(() => {
-    if (isReady && earliestStoredSession.gt(new BN(0))) {
+    if (isReady && earliestStoredSession.isGreaterThan(new BigNumber(0))) {
       subscribeParachainValidators(api);
     }
   }, [isReady, earliestStoredSession]);
@@ -243,40 +241,41 @@ export const ValidatorsProvider = ({
 
     // fetch validator set
     const v: Array<Validator> = [];
-    let totalNonAllCommission: BN = new BN(0);
+    let totalNonAllCommission = new BigNumber(0);
     const exposures = await api.query.staking.validators.entries();
     exposures.forEach(([_args, _prefs]: AnyApi) => {
       const address = _args.args[0].toHuman();
       const prefs = _prefs.toHuman();
 
-      const _commission = removePercentage(prefs.commission);
-      if (_commission !== 100) {
-        totalNonAllCommission = totalNonAllCommission.add(new BN(_commission));
+      const commission = new BigNumber(prefs.commission.slice(0, -1));
+
+      if (!commission.isEqualTo(new BigNumber(100))) {
+        totalNonAllCommission = totalNonAllCommission.plus(commission);
       }
 
       v.push({
         address,
         prefs: {
-          commission: parseFloat(_commission.toFixed(2)),
+          commission: Number(commission.toFixed(2)),
           blocked: prefs.blocked,
         },
       });
     });
 
     // get average network commission for all non-100% commissioned validators.
-    const nonCommissionCount = exposures.filter(
+    const notFullCommissionCount = exposures.filter(
       (e: AnyApi) => e.commission !== '100%'
     ).length;
 
-    const _avgCommission = nonCommissionCount
+    const average = notFullCommissionCount
       ? toFixedIfNecessary(
-          totalNonAllCommission.toNumber() / nonCommissionCount,
+          totalNonAllCommission.dividedBy(notFullCommissionCount).toNumber(),
           2
         )
       : 0;
 
     setFetchedValidators(2);
-    setAvgCommission(_avgCommission);
+    setAvgCommission(average);
     // shuffle validators before setting them.
     setValidators(shuffle(v));
   };
@@ -336,12 +335,10 @@ export const ValidatorsProvider = ({
     for (const _prefs of prefsAll) {
       const prefs: AnyApi = _prefs.toHuman();
 
-      const commission = removePercentage(prefs?.commission ?? '0%');
-
       validatorsWithPrefs.push({
         address: v[i],
         prefs: {
-          commission,
+          commission: prefs?.commission.slice(0, -1) ?? '0',
           blocked: prefs.blocked,
         },
       });
@@ -494,9 +491,6 @@ export const ValidatorsProvider = ({
       addMetaBatchUnsubs(key, unsubs);
     });
 
-    // intentional throttle to prevent slow render updates.
-    await sleep(250);
-
     // subscribe to validator nominators
     const args: AnyApi = [];
 
@@ -518,15 +512,15 @@ export const ValidatorsProvider = ({
 
           // get lowest active stake for the validator
           others = others.sort((a: AnyApi, b: AnyApi) => {
-            const x = new BN(rmCommas(a.value));
-            const y = new BN(rmCommas(b.value));
-            return x.sub(y);
+            const x = new BigNumber(rmCommas(a.value));
+            const y = new BigNumber(rmCommas(b.value));
+            return x.minus(y);
           });
 
           const lowestActive =
             others.length > 0
               ? toFixedIfNecessary(
-                  planckBnToUnit(new BN(rmCommas(others[0].value)), units),
+                  planckToUnit(new BigNumber(rmCommas(others[0].value)), units),
                   MinBondPrecision
                 )
               : 0;
@@ -542,8 +536,8 @@ export const ValidatorsProvider = ({
           const lowestReward =
             others.length > 0
               ? toFixedIfNecessary(
-                  planckBnToUnit(
-                    new BN(rmCommas(others[lowestRewardIndex]?.value)),
+                  planckToUnit(
+                    new BigNumber(rmCommas(others[lowestRewardIndex]?.value)),
                     units
                   ),
                   MinBondPrecision

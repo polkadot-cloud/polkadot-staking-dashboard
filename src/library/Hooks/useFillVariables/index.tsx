@@ -5,12 +5,7 @@ import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { AnyJson } from 'types';
-import {
-  capitalizeFirstLetter,
-  planckBnToUnit,
-  replaceAll,
-  toFixedIfNecessary,
-} from 'Utils';
+import { capitalizeFirstLetter, planckToUnit, toFixedIfNecessary } from 'Utils';
 
 export const useFillVariables = () => {
   const { network, consts } = useApi();
@@ -42,31 +37,28 @@ export const useFillVariables = () => {
           [
             '{MIN_POOL_JOIN_BOND}',
             String(
-              toFixedIfNecessary(planckBnToUnit(minJoinBond, network.units), 3)
+              toFixedIfNecessary(planckToUnit(minJoinBond, network.units), 3)
             ),
           ],
           [
             '{MIN_POOL_CREATE_BOND}',
             String(
-              toFixedIfNecessary(
-                planckBnToUnit(minCreateBond, network.units),
-                3
-              )
+              toFixedIfNecessary(planckToUnit(minCreateBond, network.units), 3)
             ),
           ],
           [
             '{EXISTENTIAL_DEPOSIT}',
-            String(planckBnToUnit(existentialDeposit, network.units)),
+            String(planckToUnit(existentialDeposit, network.units)),
           ],
         ];
 
         for (const varToVal of varsToValues) {
           if (val.constructor === Array) {
             val = val.map((_d: string) =>
-              replaceAll(_d, varToVal[0], varToVal[1])
+              _d.replaceAll(varToVal[0], varToVal[1])
             );
           } else {
-            val = replaceAll(val, varToVal[0], varToVal[1]);
+            val = val.replaceAll(varToVal[0], varToVal[1]);
           }
         }
         return [key, val];

@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import {
   ActivePool,
   ActivePoolsContextState,
@@ -151,7 +151,7 @@ export const ActivePoolsProvider = ({
       const unclaimedRewards = calculatePayout(
         acitvePoolMembership.bondedPool ?? defaults.bondedPool,
         acitvePoolMembership.rewardPool ?? defaults.rewardPool,
-        acitvePoolMembership.rewardAccountBalance ?? new BN(0)
+        acitvePoolMembership.rewardAccountBalance ?? new BigNumber(0)
       );
       updateUnclaimedRewards(unclaimedRewards, acitvePoolMembership?.id || 0);
     }
@@ -349,7 +349,7 @@ export const ActivePoolsProvider = ({
    * updateUnclaimedRewards
    * A helper function to set the unclaimed rewards of an active pool.
    */
-  const updateUnclaimedRewards = (amount: BN, poolId: number) => {
+  const updateUnclaimedRewards = (amount: BigNumber, poolId: number) => {
     if (!poolId) return;
 
     // update the active pool the account is a member of
@@ -526,56 +526,60 @@ export const ActivePoolsProvider = ({
   const calculatePayout = (
     bondedPool: BondedPool,
     rewardPool: any,
-    rewardAccountBalance: BN
-  ): BN => {
+    rewardAccountBalance: BigNumber
+  ): BigNumber => {
     const membershipPoolId = membership?.poolId
       ? String(membership.poolId)
       : '-1';
 
     // exit early if the currently selected pool is not membership pool
     if (selectedPoolId !== membershipPoolId || !membership) {
-      return new BN(0);
+      return new BigNumber(0);
     }
 
-    const rewardCounterBase = new BN(10).pow(new BN(18));
+    const rewardCounterBase = new BigNumber(10).exponentiatedBy(
+      new BigNumber(18)
+    );
 
-    // convert needed values into BNs
-    const totalRewardsClaimed = new BN(
+    // convert needed values into BigNumbers
+    const totalRewardsClaimed = new BigNumber(
       rmCommas(rewardPool.totalRewardsClaimed)
     );
-    const lastRecordedTotalPayouts = new BN(
+    const lastRecordedTotalPayouts = new BigNumber(
       rmCommas(rewardPool.lastRecordedTotalPayouts)
     );
-    const memberLastRecordedRewardCounter = new BN(
+    const memberLastRecordedRewardCounter = new BigNumber(
       rmCommas(membership.lastRecordedRewardCounter)
     );
-    const poolLastRecordedRewardCounter = new BN(
+    const poolLastRecordedRewardCounter = new BigNumber(
       rmCommas(rewardPool.lastRecordedRewardCounter)
     );
-    const bondedPoolPoints = new BN(rmCommas(bondedPool.points));
-    const points = new BN(rmCommas(membership.points));
+    const bondedPoolPoints = new BigNumber(rmCommas(bondedPool.points));
+    const points = new BigNumber(rmCommas(membership.points));
 
     // calculate the latest reward account balance minus the existential deposit
-    const rewardPoolBalance = BN.max(
-      new BN(0),
-      new BN(rewardAccountBalance).sub(consts.existentialDeposit)
+    const rewardPoolBalance = BigNumber.max(
+      new BigNumber(0),
+      new BigNumber(rewardAccountBalance).minus(consts.existentialDeposit)
     );
 
     // calculate the current reward counter
     const payoutsSinceLastRecord = rewardPoolBalance
-      .add(totalRewardsClaimed)
-      .sub(lastRecordedTotalPayouts);
+      .plus(totalRewardsClaimed)
+      .minus(lastRecordedTotalPayouts);
 
     const currentRewardCounter = (
-      bondedPoolPoints.eq(new BN(0))
-        ? new BN(0)
-        : payoutsSinceLastRecord.mul(rewardCounterBase).div(bondedPoolPoints)
-    ).add(poolLastRecordedRewardCounter);
+      bondedPoolPoints.isEqualTo(new BigNumber(0))
+        ? new BigNumber(0)
+        : payoutsSinceLastRecord
+            .multipliedBy(rewardCounterBase)
+            .dividedBy(bondedPoolPoints)
+    ).plus(poolLastRecordedRewardCounter);
 
     const pendingRewards = currentRewardCounter
-      .sub(memberLastRecordedRewardCounter)
-      .mul(points)
-      .div(rewardCounterBase);
+      .minus(memberLastRecordedRewardCounter)
+      .multipliedBy(points)
+      .dividedBy(rewardCounterBase);
 
     return pendingRewards;
   };

@@ -3,19 +3,14 @@
 
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { useTranslation } from 'react-i18next';
-import {
-  humanNumber,
-  planckBnToUnit,
-  rmCommas,
-  toFixedIfNecessary,
-} from 'Utils';
+import { humanNumber, planckToUnit, rmCommas, toFixedIfNecessary } from 'Utils';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
@@ -29,19 +24,21 @@ export const Announcements = () => {
   const { t } = useTranslation('pages');
 
   // calculate the latest reward account balance
-  const rewardPoolBalance = BN.max(
-    new BN(0),
-    new BN(rewardAccountBalance).sub(existentialDeposit)
+  const rewardPoolBalance = BigNumber.max(
+    new BigNumber(0),
+    new BigNumber(rewardAccountBalance).minus(existentialDeposit)
   );
   const rewardBalance = toFixedIfNecessary(
-    planckBnToUnit(rewardPoolBalance, units),
+    planckToUnit(rewardPoolBalance, units),
     3
   );
 
   // calculate total rewards claimed
   const rewardsClaimed = toFixedIfNecessary(
-    planckBnToUnit(
-      totalRewardsClaimed ? new BN(rmCommas(totalRewardsClaimed)) : new BN(0),
+    planckToUnit(
+      totalRewardsClaimed
+        ? new BigNumber(rmCommas(totalRewardsClaimed))
+        : new BigNumber(0),
       network.units
     ),
     3

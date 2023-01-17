@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useSubscan } from 'contexts/Subscan';
@@ -13,7 +13,7 @@ import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, planckBnToUnit } from 'Utils';
+import { humanNumber, planckToUnit } from 'Utils';
 import {
   PageRowWrapper,
   RowPrimaryWrapper,
@@ -95,7 +95,7 @@ export const Overview = () => {
                 {lastReward === null
                   ? 0
                   : humanNumber(
-                      planckBnToUnit(new BN(lastReward.amount), units)
+                      planckToUnit(new BigNumber(lastReward.amount), units)
                     )}
                 &nbsp;{network.unit}
                 &nbsp;

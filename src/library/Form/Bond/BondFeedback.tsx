@@ -1,8 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN_ZERO } from '@polkadot/util';
-import BN, { max } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -11,7 +10,7 @@ import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { planckToUnit, unitToPlanck } from 'Utils';
 import { BondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
@@ -48,11 +47,11 @@ export const BondFeedback = ({
 
   // if we are bonding, subtract tx fees from bond amount
   const freeBondAmount = !disableTxFeeUpdate
-    ? BN.max(freeBalanceBn.sub(txFees), BN_ZERO)
+    ? BigNumber.max(freeBalanceBn.minus(txFees), new BigNumber(0))
     : freeBalanceBn;
 
   // the default bond balance
-  const freeBalance = planckBnToUnit(freeBondAmount, units);
+  const freeBalance = planckToUnit(freeBondAmount, units);
 
   // store errors
   const [errors, setErrors] = useState<Array<string>>([]);
@@ -62,18 +61,20 @@ export const BondFeedback = ({
     bond: defaultBondStr,
   });
 
-  // current bond value BN
-  const bondBn = unitToPlanckBn(bond.bond, units);
+  // current bond value BigNumber
+  const bondBn = unitToPlanck(bond.bond, units);
 
   // whether bond is disabled
   const [bondDisabled, setBondDisabled] = useState(false);
 
   // bond minus tx fees if too much
-  const enoughToCoverTxFees: boolean = freeBondAmount.sub(bondBn).gt(txFees);
+  const enoughToCoverTxFees: boolean = freeBondAmount
+    .minus(bondBn)
+    .isGreaterThan(txFees);
 
   const bondAfterTxFees = enoughToCoverTxFees
     ? bondBn
-    : max(bondBn.sub(txFees), new BN(0));
+    : BigNumber.max(bondBn.minus(txFees), new BigNumber(0));
 
   // update bond on account change
   useEffect(() => {
@@ -90,7 +91,7 @@ export const BondFeedback = ({
   // update max bond after txFee sync
   useEffect(() => {
     if (!disableTxFeeUpdate) {
-      if (bondBn.gt(freeBondAmount)) {
+      if (bondBn.isGreaterThan(freeBondAmount)) {
         setBond({ bond: String(freeBalance) });
       }
     }
@@ -109,7 +110,7 @@ export const BondFeedback = ({
         ? minCreateBond
         : minJoinBond
       : minNominatorBond;
-  const minBondBase = planckBnToUnit(minBondBn, units);
+  const minBondBase = planckToUnit(minBondBn, units);
 
   // handle error updates
   const handleErrors = () => {
@@ -118,23 +119,23 @@ export const BondFeedback = ({
     const _decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
 
     // bond errors
-    if (freeBondAmount.eq(new BN(0))) {
+    if (freeBondAmount.isEqualTo(new BigNumber(0))) {
       disabled = true;
       _errors.push(`${t('noFree', { unit })}`);
     }
 
     // bond amount must not surpass freeBalalance
-    if (bondBn.gt(freeBondAmount)) {
+    if (bondBn.isGreaterThan(freeBondAmount)) {
       _errors.push(t('moreThanBalance'));
     }
 
     // bond amount must not be smaller than 1 planck
-    if (bond.bond !== '' && bondBn.lt(new BN(1))) {
+    if (bond.bond !== '' && bondBn.isLessThan(new BigNumber(1))) {
       _errors.push(t('tooSmall'));
     }
 
     // check bond after transaction fees is still valid
-    if (bond.bond !== '' && bondAfterTxFees.lt(new BN(0))) {
+    if (bond.bond !== '' && bondAfterTxFees.isLessThan(new BigNumber(0))) {
       _errors.push(`${t('notEnoughAfter', { unit })}`);
     }
 
@@ -144,12 +145,12 @@ export const BondFeedback = ({
     }
 
     if (inSetup) {
-      if (freeBondAmount.lt(minBondBn)) {
+      if (freeBondAmount.isLessThan(minBondBn)) {
         disabled = true;
         _errors.push(`${t('notMeet')} ${minBondBase} ${unit}.`);
       }
       // bond amount must be more than minimum required bond
-      if (bond.bond !== '' && bondBn.lt(minBondBn)) {
+      if (bond.bond !== '' && bondBn.isLessThan(minBondBn)) {
         _errors.push(`${t('atLeast')} ${minBondBase} ${unit}.`);
       }
     }

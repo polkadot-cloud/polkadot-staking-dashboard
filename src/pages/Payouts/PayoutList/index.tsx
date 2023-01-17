@@ -3,7 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -25,7 +25,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { networkColors } from 'theme/default';
 import { AnySubscan } from 'types';
-import { clipAddress, planckBnToUnit } from 'Utils';
+import { clipAddress, planckToUnit } from 'Utils';
 import { PayoutListProps } from '../types';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProvider, usePayoutList } from './context';
@@ -197,7 +197,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
                         <div>
                           <h4 className={`${labelClass}`}>
                             {p.event_id === 'Slashed' ? '-' : '+'}
-                            {planckBnToUnit(new BN(p.amount), units)}{' '}
+                            {planckToUnit(new BigNumber(p.amount), units)}{' '}
                             {network.unit}
                           </h4>
                         </div>

@@ -20,7 +20,7 @@ import useUnstaking from 'library/Hooks/useUnstaking';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 import {
   FooterWrapper,
   NotesWrapper,
@@ -57,7 +57,7 @@ export const ManageFastUnstake = () => {
     setValid(
       fastUnstakeErasToCheckPerBlock > 0 &&
         ((!isFastUnstaking &&
-          freeBalance.gte(fastUnstakeDeposit) &&
+          freeBalance.isGreaterThanOrEqualTo(fastUnstakeDeposit) &&
           isExposed === false &&
           totalUnlockChuncks === 0) ||
           isFastUnstaking)
@@ -105,12 +105,11 @@ export const ManageFastUnstake = () => {
     warnings.push(t('mustHaveController'));
   }
   if (!isFastUnstaking) {
-    if (freeBalance.lt(fastUnstakeDeposit)) {
+    if (freeBalance.isLessThan(fastUnstakeDeposit)) {
       warnings.push(
-        `${t('noEnough')} ${planckBnToUnit(
-          fastUnstakeDeposit,
-          network.units
-        )} ${network.unit}`
+        `${t('noEnough')} ${planckToUnit(fastUnstakeDeposit, network.units)} ${
+          network.unit
+        }`
       );
     }
 
@@ -164,7 +163,7 @@ export const ManageFastUnstake = () => {
                 <NotesWrapper>
                   <p>
                     ${t('registerFastUnstake')}{' '}
-                    {planckBnToUnit(fastUnstakeDeposit, network.units)}{' '}
+                    {planckToUnit(fastUnstakeDeposit, network.units)}{' '}
                     {network.unit}. {t('fastUnstakeOnceRegistered')}
                   </p>
                   <p>

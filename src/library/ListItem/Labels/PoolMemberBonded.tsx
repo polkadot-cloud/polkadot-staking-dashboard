@@ -1,16 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
-import {
-  humanNumber,
-  planckBnToUnit,
-  rmCommas,
-  toFixedIfNecessary,
-} from 'Utils';
+import { humanNumber, planckToUnit, rmCommas, toFixedIfNecessary } from 'Utils';
 
 export const PoolMemberBonded = (props: any) => {
   const { meta, batchKey, batchIndex } = props;
@@ -27,16 +22,19 @@ export const PoolMemberBonded = (props: any) => {
   if (poolMember) {
     const { points, unbondingEras } = poolMember;
 
-    bonded = planckBnToUnit(new BN(rmCommas(points)), units);
+    bonded = planckToUnit(new BigNumber(rmCommas(points)), units);
     status = bonded > 0 ? 'active' : 'inactive';
 
     // converting unbonding eras from points to units
-    let totalUnbondingBase: BN = new BN(0);
+    let totalUnbondingBase = new BigNumber(0);
     Object.values(unbondingEras).forEach((amount: any) => {
-      const amountBn: BN = new BN(rmCommas(amount));
-      totalUnbondingBase = totalUnbondingBase.add(amountBn);
+      const amountBn = new BigNumber(rmCommas(amount));
+      totalUnbondingBase = totalUnbondingBase.plus(amountBn);
     });
-    totalUnbonding = planckBnToUnit(new BN(totalUnbondingBase), network.units);
+    totalUnbonding = planckToUnit(
+      new BigNumber(totalUnbondingBase),
+      network.units
+    );
   }
 
   return (

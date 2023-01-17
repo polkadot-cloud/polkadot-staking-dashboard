@@ -20,7 +20,7 @@ import { Title } from 'library/Modal/Title';
 import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { humanNumber, planckToUnit, unitToPlanck } from 'Utils';
 import { Separator } from '../../Wrappers';
 
 export const Unstake = () => {
@@ -41,8 +41,8 @@ export const Unstake = () => {
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active } = allTransferOptions.nominate;
 
-  // convert BN values to number
-  const freeToUnbond = planckBnToUnit(active, units);
+  // convert BigNumber values to number
+  const freeToUnbond = planckToUnit(active, units);
 
   // local bond value
   const [bond, setBond] = useState({
@@ -80,7 +80,7 @@ export const Unstake = () => {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
+    const bondToSubmit = unitToPlanck(String(bond.bond), units);
 
     if (bondToSubmit.isZero()) {
       return api.tx.staking.chill();

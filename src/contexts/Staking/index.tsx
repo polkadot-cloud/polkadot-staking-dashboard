@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import {
   EraStakers,
@@ -14,7 +14,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
 import {
   localStorageOrDefault,
-  planckBnToUnit,
+  planckToUnit,
   rmCommas,
   setStateWithRef,
 } from 'Utils';
@@ -107,7 +107,7 @@ export const StakingProvider = ({
   useEffect(() => {
     if (activeAccount) {
       // calculates minimum bond of the user's chosen nominated validators.
-      let _stakingMinActiveBond = new BN(0);
+      let _stakingMinActiveBond = new BigNumber(0);
 
       const stakers = eraStakersRef.current?.stakers ?? null;
       const nominations = getAccountNominations(activeAccount);
@@ -121,17 +121,19 @@ export const StakingProvider = ({
 
             // order others by bonded value, largest first.
             others = others.sort((a: any, b: any) => {
-              const x = new BN(rmCommas(a.value));
-              const y = new BN(rmCommas(b.value));
-              return y.sub(x);
+              const x = new BigNumber(rmCommas(a.value));
+              const y = new BigNumber(rmCommas(b.value));
+              return y.minus(x);
             });
 
             if (others.length) {
-              const _minActive = new BN(rmCommas(others[0].value.toString()));
+              const _minActive = new BigNumber(
+                rmCommas(others[0].value.toString())
+              );
               // set new minimum active bond if less than current value
               if (
-                _minActive.lt(_stakingMinActiveBond) ||
-                _stakingMinActiveBond !== new BN(0)
+                _minActive.isLessThan(_stakingMinActiveBond) ||
+                _stakingMinActiveBond !== new BigNumber(0)
               ) {
                 _stakingMinActiveBond = _minActive;
               }
@@ -141,7 +143,7 @@ export const StakingProvider = ({
       }
 
       // convert _stakingMinActiveBond to base value
-      const stakingMinActiveBond = planckBnToUnit(_stakingMinActiveBond, units);
+      const stakingMinActiveBond = planckToUnit(_stakingMinActiveBond, units);
 
       setStateWithRef(
         {
@@ -189,7 +191,7 @@ export const StakingProvider = ({
           {
             ...eraStakersRef.current,
             stakers,
-            totalStaked: new BN(totalStaked),
+            totalStaked: new BigNumber(totalStaked),
             // nominators,
             totalActiveNominators,
             activeValidators,
@@ -219,28 +221,18 @@ export const StakingProvider = ({
           api.query.staking.minNominatorBond,
           [api.query.staking.payee, activeAccount],
         ],
-        ([
-          _totalNominators,
-          _totalValidators,
-          _maxValidatorsCount,
-          _validatorCount,
-          _lastReward,
-          _lastTotalStake,
-          _minNominatorBond,
-          _payee,
-        ]) => {
+        (q: AnyApi) =>
           setStakingMetrics({
             ...stakingMetrics,
-            payee: _payee.toHuman(),
-            lastTotalStake: _lastTotalStake.toBn(),
-            validatorCount: _validatorCount.toBn(),
-            totalNominators: _totalNominators.toBn(),
-            totalValidators: _totalValidators.toBn(),
-            minNominatorBond: _minNominatorBond.toBn(),
-            lastReward: _lastReward.unwrapOrDefault(new BN(0)),
-            maxValidatorsCount: new BN(_maxValidatorsCount.toString()),
-          });
-        }
+            totalNominators: new BigNumber(q[0].toString()),
+            totalValidators: new BigNumber(q[1].toString()),
+            maxValidatorsCount: new BigNumber(q[2].toString()),
+            validatorCount: new BigNumber(q[3].toString()),
+            lastReward: new BigNumber(q[4].toString()),
+            lastTotalStake: new BigNumber(q[5].toString()),
+            minNominatorBond: new BigNumber(q[6].toString()),
+            payee: q[7].toString(),
+          })
       );
 
       setStakingMetrics({
@@ -407,7 +399,7 @@ export const StakingProvider = ({
     }
 
     const ledger = getLedgerForStash(activeAccount);
-    return ledger.active.gt(new BN(0));
+    return ledger.active.isGreaterThan(new BigNumber(0));
   };
 
   /*

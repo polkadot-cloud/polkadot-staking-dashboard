@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
@@ -31,18 +31,22 @@ export const EraStatus = (props: any) => {
     ? 'active'
     : 'waiting';
 
-  let totalStakePlanck = new BN(0);
+  let totalStakePlanck = new BigNumber(0);
   if (validatorInEra) {
     const { others, own } = validatorInEra;
     others.forEach((o: any) => {
-      totalStakePlanck = totalStakePlanck.add(new BN(rmCommas(o.value)));
+      totalStakePlanck = totalStakePlanck.plus(
+        new BigNumber(rmCommas(o.value))
+      );
     });
     if (own) {
-      totalStakePlanck = totalStakePlanck.add(new BN(rmCommas(own)));
+      totalStakePlanck = totalStakePlanck.plus(new BigNumber(rmCommas(own)));
     }
   }
 
-  const totalStake = totalStakePlanck.div(new BN(10).pow(new BN(units)));
+  const totalStake = totalStakePlanck.div(
+    new BigNumber(10).pow(new BigNumber(units))
+  );
 
   return (
     <ValidatorStatusWrapper status={validatorStatus}>

@@ -58,7 +58,7 @@ export const Membership = ({ label }: { label: string }) => {
     );
   }
 
-  if (isMember() && !isDepositor() && active?.gtn(0)) {
+  if (isMember() && !isDepositor() && active?.isGreaterThan(0)) {
     paddingRight += 8.5;
     buttons.push(
       <ButtonPrimary

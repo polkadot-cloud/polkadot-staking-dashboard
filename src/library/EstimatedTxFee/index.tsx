@@ -7,7 +7,7 @@ import { EstimatedFeeContext, TxFeesContext, useTxFees } from 'contexts/TxFees';
 import React, { Context, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
-import { humanNumber, planckBnToUnit } from 'Utils';
+import { humanNumber, planckToUnit } from 'Utils';
 import { EstimatedTxFeeProps } from './types';
 import { Wrapper } from './Wrapper';
 
@@ -25,7 +25,7 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
     };
   }, []);
 
-  const txFeesBase = humanNumber(planckBnToUnit(txFees, units));
+  const txFeesBase = humanNumber(planckToUnit(txFees, units));
 
   return (
     <>

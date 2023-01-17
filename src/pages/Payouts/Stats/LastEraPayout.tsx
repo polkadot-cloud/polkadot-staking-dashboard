@@ -5,7 +5,7 @@ import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { Number } from 'library/StatBoxList/Number';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 
 export const LastEraPayoutStatBox = () => {
   const { network } = useApi();
@@ -14,7 +14,7 @@ export const LastEraPayoutStatBox = () => {
   const { lastReward } = staking;
   const { t } = useTranslation('pages');
 
-  const lastRewardBase = planckBnToUnit(lastReward, units).toFixed(0);
+  const lastRewardBase = planckToUnit(lastReward, units).toFixed(0);
 
   const params = {
     label: t('payouts.lastEraPayout'),

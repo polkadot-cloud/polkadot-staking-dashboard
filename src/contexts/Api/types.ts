@@ -3,7 +3,7 @@
 
 import { ApiPromise } from '@polkadot/api';
 import { U8aLike } from '@polkadot/util/types';
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { Network, NetworkName } from '../../types';
 
 export type ConnectionStatus = 'connecting' | 'connected' | 'disconnected';
@@ -17,18 +17,17 @@ export interface APIConstants {
   maxNominations: number;
   sessionsPerEra: number;
   maxNominatorRewardedPerValidator: number;
-  historyDepth: BN;
+  historyDepth: BigNumber;
   maxElectingVoters: number;
   expectedBlockTime: number;
   epochDuration: number;
-  existentialDeposit: BN;
-  fastUnstakeDeposit: BN;
+  existentialDeposit: BigNumber;
+  fastUnstakeDeposit: BigNumber;
   poolsPalletId: U8aLike;
 }
 
 export interface APIContextInterface {
   connect: (n: NetworkName) => Promise<void>;
-  fetchDotPrice: () => void;
   switchNetwork: (n: NetworkName, l: boolean) => Promise<void>;
   api: ApiPromise | null;
   consts: APIConstants;

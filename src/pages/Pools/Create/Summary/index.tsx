@@ -5,7 +5,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -21,7 +21,7 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, unitToPlanckBn } from 'Utils';
+import { humanNumber, unitToPlanck } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -34,7 +34,7 @@ export const Summary = (props: SetupStepProps) => {
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
   const { lastPoolId } = stats;
-  const poolId = lastPoolId.add(new BN(1));
+  const poolId = lastPoolId.plus(new BigNumber(1));
   const { txFeesValid } = useTxFees();
   const { t } = useTranslation('pages');
 
@@ -54,7 +54,7 @@ export const Summary = (props: SetupStepProps) => {
       return null;
     }
 
-    const bondToSubmit = unitToPlanckBn(bond, units).toString();
+    const bondToSubmit = unitToPlanck(bond, units).toString();
     const targetsToSubmit = nominations.map((item: any) => item.address);
 
     // construct a batch of transactions

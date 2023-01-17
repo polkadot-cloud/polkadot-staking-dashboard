@@ -5,7 +5,7 @@ import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { Number } from 'library/StatBoxList/Number';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 
 const MinCreateBondStatBox = () => {
   const { network } = useApi();
@@ -15,7 +15,7 @@ const MinCreateBondStatBox = () => {
 
   const params = {
     label: t('pools.minimumToCreatePool'),
-    value: planckBnToUnit(stats.minCreateBond, units),
+    value: planckToUnit(stats.minCreateBond, units),
     unit: network.unit,
     helpKey: 'Minimum To Create Pool',
   };

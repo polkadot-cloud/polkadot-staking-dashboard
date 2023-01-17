@@ -16,7 +16,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 import {
   FooterWrapper,
   NotesWrapper,
@@ -40,8 +40,8 @@ export const Nominate = () => {
   const { active } = ledger;
   const { t } = useTranslation('modals');
 
-  const activeBase = planckBnToUnit(active, units);
-  const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
+  const activeBase = planckToUnit(active, units);
+  const minNominatorBondBase = planckToUnit(minNominatorBond, units);
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);

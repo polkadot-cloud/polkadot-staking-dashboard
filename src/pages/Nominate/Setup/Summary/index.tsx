@@ -17,7 +17,7 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, unitToPlanckBn } from 'Utils';
+import { humanNumber, unitToPlanck } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -39,7 +39,7 @@ export const Summary = (props: SetupStepProps) => {
       return null;
     }
 
-    const bondToSubmit = unitToPlanckBn(String(bond), units).toString();
+    const bondToSubmit = unitToPlanck(String(bond), units).toString();
 
     const targetsToSubmit = nominations.map((item: any) => {
       return {

@@ -13,7 +13,7 @@ import BondedGraph from 'library/Graphs/Bonded';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, planckBnToUnit } from 'Utils';
+import { humanNumber, planckToUnit } from 'Utils';
 import { ButtonRowWrapper } from 'Wrappers';
 
 export const ManageBond = () => {
@@ -41,7 +41,7 @@ export const ManageBond = () => {
           <OpenHelpIcon helpKey="Bonded in Pool" />
         </h4>
         <h2>
-          {humanNumber(planckBnToUnit(active, units))}&nbsp;{network.unit}
+          {humanNumber(planckToUnit(active, units))}&nbsp;{network.unit}
         </h2>
         <ButtonRowWrapper>
           <ButtonPrimary
@@ -79,10 +79,10 @@ export const ManageBond = () => {
         </ButtonRowWrapper>
       </CardHeaderWrapper>
       <BondedGraph
-        active={planckBnToUnit(active, units)}
-        unlocking={planckBnToUnit(totalUnlocking, units)}
-        unlocked={planckBnToUnit(totalUnlocked, units)}
-        free={planckBnToUnit(freeBalance, units)}
+        active={planckToUnit(active, units)}
+        unlocking={planckToUnit(totalUnlocking, units)}
+        unlocked={planckToUnit(totalUnlocked, units)}
+        free={planckToUnit(freeBalance, units)}
         inactive={!isMember()}
       />
     </>

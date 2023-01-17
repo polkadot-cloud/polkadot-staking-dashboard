@@ -5,8 +5,6 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { PageProps } from 'pages/types';
 import React, { FunctionComponent, SVGProps } from 'react';
 
-export type Fn = () => void;
-
 export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
 export interface Networks {
@@ -98,6 +96,9 @@ export type Sync = 'unsynced' | 'syncing' | 'synced';
 
 // track whether bonding should be for nominator or nomination pool.
 export type BondFor = 'pool' | 'nominator';
+
+// generic function with no args or return type.
+export type Fn = () => void;
 
 // any types to compress compiler warnings
 // eslint-disable-next-line

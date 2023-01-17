@@ -9,7 +9,6 @@ import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isNumeric } from 'Utils';
 import { Spacer } from '../../Wrappers';
 import { Item, Items } from './Wrappers';
 
@@ -49,7 +48,7 @@ export const Payee = (props: SetupStepProps) => {
 
   const handleChangePayee = (i: number) => {
     // not in options
-    if (!isNumeric(i)) {
+    if (Number.isNaN(i)) {
       return;
     }
     if (i >= options.length) {

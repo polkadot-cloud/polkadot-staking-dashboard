@@ -5,7 +5,7 @@ import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -21,7 +21,7 @@ import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, rmCommas } from 'Utils';
+import { planckToUnit, rmCommas } from 'Utils';
 import { FooterWrapper, NotesWrapper, Separator } from '../Wrappers';
 import { ContentWrapper } from './Wrappers';
 
@@ -94,7 +94,7 @@ export const Forms = forwardRef(
         // if no more bonded funds from pool, remove from poolMembers list
         if (bondFor === 'pool') {
           const points = membership?.points ? rmCommas(membership.points) : 0;
-          const bonded = planckBnToUnit(new BN(points), network.units);
+          const bonded = planckToUnit(new BigNumber(points), network.units);
           if (bonded === 0) {
             removePoolMember(activeAccount);
           }
@@ -102,7 +102,7 @@ export const Forms = forwardRef(
       },
     });
 
-    const value = unlock?.value ?? new BN(0);
+    const value = unlock?.value ?? new BigNumber(0);
 
     return (
       <ContentWrapper>
@@ -115,12 +115,12 @@ export const Forms = forwardRef(
             <div style={{ marginTop: '2rem' }}>
               {task === 'rebond' && (
                 <h2 className="title">
-                  {t('rebond')} {planckBnToUnit(value, units)} {network.unit}
+                  {t('rebond')} {planckToUnit(value, units)} {network.unit}
                 </h2>
               )}
               {task === 'withdraw' && (
                 <h2 className="title">
-                  {t('withdraw')} {planckBnToUnit(value, units)} {network.unit}
+                  {t('withdraw')} {planckToUnit(value, units)} {network.unit}
                 </h2>
               )}
             </div>

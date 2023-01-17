@@ -3,7 +3,7 @@
 
 import { faArrowAltCircleUp, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
-import BN, { max } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -19,7 +19,7 @@ import { Title } from 'library/Modal/Title';
 import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { planckToUnit, unitToPlanck } from 'Utils';
 
 export const Bond = () => {
   const { t } = useTranslation('modals');
@@ -34,13 +34,13 @@ export const Bond = () => {
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
   const { freeBalance: freeBalanceBn } = getTransferOptions(activeAccount);
-  const freeBalance = planckBnToUnit(freeBalanceBn, units);
+  const freeBalance = planckToUnit(freeBalanceBn, units);
   const largestTxFee = useBondGreatestFee({ bondFor });
 
   // calculate any unclaimed pool rewards.
   let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BN(0);
-  unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
+  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
+  unclaimedRewards = planckToUnit(unclaimedRewards, network.units);
 
   // local bond value.
   const [bond, setBond] = useState({ bond: freeBalance });
@@ -50,16 +50,16 @@ export const Bond = () => {
 
   // bond minus tx fees.
   const enoughToCoverTxFees: boolean =
-    freeBalance - Number(bond.bond) > planckBnToUnit(largestTxFee, units);
+    freeBalance - Number(bond.bond) > planckToUnit(largestTxFee, units);
 
   // bond value after max tx fees have been deducated.
-  let bondAfterTxFees: BN;
+  let bondAfterTxFees: BigNumber;
   if (enoughToCoverTxFees) {
-    bondAfterTxFees = unitToPlanckBn(String(bond.bond), units);
+    bondAfterTxFees = unitToPlanck(String(bond.bond), units);
   } else {
-    bondAfterTxFees = max(
-      unitToPlanckBn(String(bond.bond), units).sub(largestTxFee),
-      new BN(0)
+    bondAfterTxFees = BigNumber.max(
+      unitToPlanck(String(bond.bond), units).minus(largestTxFee),
+      new BigNumber(0)
     );
   }
 
@@ -125,7 +125,7 @@ export const Bond = () => {
           />
         )}
         <BondFeedback
-          syncing={largestTxFee.eq(new BN(0))}
+          syncing={largestTxFee.isEqualTo(new BigNumber(0))}
           bondFor={bondFor}
           listenIsValid={setBondValid}
           defaultBond={null}

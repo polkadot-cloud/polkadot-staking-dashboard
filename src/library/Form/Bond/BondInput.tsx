@@ -6,7 +6,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, isNumeric } from 'Utils';
+import { humanNumber } from 'Utils';
 import { BondInputProps } from '../types';
 import { InputWrapper } from '../Wrappers';
 
@@ -45,7 +45,7 @@ export const BondInput = ({
   const handleChangeBond = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value as string;
     // ensure the value is numeric before it is put into state.
-    if (!isNumeric(val) && val !== '') {
+    if (Number.isNaN(val) && val !== '') {
       return;
     }
     setLocalBond(val);

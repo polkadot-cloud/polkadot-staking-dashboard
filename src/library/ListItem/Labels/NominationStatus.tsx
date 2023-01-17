@@ -1,13 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, planckBnToUnit, rmCommas } from 'Utils';
+import { humanNumber, planckToUnit, rmCommas } from 'Utils';
 import { NominationStatusProps } from '../types';
 
 export const NominationStatus = (props: NominationStatusProps) => {
@@ -44,7 +44,7 @@ export const NominationStatus = (props: NominationStatusProps) => {
     const s = stakers?.find((_n: any) => _n.address === address);
     const exists = (s?.others ?? []).find((_o: any) => _o.who === nominator);
     if (exists) {
-      stakedAmount = planckBnToUnit(new BN(rmCommas(exists.value)), units);
+      stakedAmount = planckToUnit(new BigNumber(rmCommas(exists.value)), units);
     }
   }
 

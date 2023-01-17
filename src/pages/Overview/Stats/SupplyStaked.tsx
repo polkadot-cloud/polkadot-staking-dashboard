@@ -6,7 +6,7 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, toFixedIfNecessary } from 'Utils';
+import { planckToUnit, toFixedIfNecessary } from 'Utils';
 
 export const SupplyStakedStatBox = () => {
   const { t } = useTranslation('pages');
@@ -18,8 +18,8 @@ export const SupplyStakedStatBox = () => {
   const { totalIssuance } = metrics;
 
   // total supply as percent
-  const totalIssuanceBase = planckBnToUnit(totalIssuance, units);
-  const lastTotalStakeBase = planckBnToUnit(lastTotalStake, units);
+  const totalIssuanceBase = planckToUnit(totalIssuance, units);
+  const lastTotalStakeBase = planckToUnit(lastTotalStake, units);
   const supplyAsPercent =
     lastTotalStakeBase === 0
       ? 0

@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { Lock } from 'contexts/Balances/types';
@@ -11,12 +11,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import usePrices from 'library/Hooks/usePrices';
 import OpenHelpIcon from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
-import {
-  humanNumber,
-  planckBnToUnit,
-  toFixedIfNecessary,
-  usdFormatter,
-} from 'Utils';
+import { humanNumber, planckToUnit, toFixedIfNecessary } from 'Utils';
 import { BarSegment } from './BarSegment';
 import { LegendItem } from './LegendItem';
 import { BalanceChartWrapper, Bar, Legend } from './Wrappers';
@@ -35,14 +30,14 @@ export const BalanceChart = () => {
   const balance = getAccountBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
   const poolBondOpions = allTransferOptions.pool;
-  const unlockingPools = poolBondOpions.totalUnlocking.add(
+  const unlockingPools = poolBondOpions.totalUnlocking.plus(
     poolBondOpions.totalUnlocked
   );
 
   // user's total balance
   const { free, miscFrozen } = balance;
-  const totalBalance = planckBnToUnit(
-    free.add(poolBondOpions.active).add(unlockingPools),
+  const totalBalance = planckToUnit(
+    free.plus(poolBondOpions.active).plus(unlockingPools),
     units
   );
   // convert balance to fiat value
@@ -52,27 +47,29 @@ export const BalanceChart = () => {
   );
 
   // total funds nominating
-  const nominating = planckBnToUnit(
+  const nominating = planckToUnit(
     allTransferOptions.nominate.active
-      .add(allTransferOptions.nominate.totalUnlocking)
-      .add(allTransferOptions.nominate.totalUnlocked),
+      .plus(allTransferOptions.nominate.totalUnlocking)
+      .plus(allTransferOptions.nominate.totalUnlocked),
     units
   );
   // total funds in pool
-  const inPool = planckBnToUnit(
+  const inPool = planckToUnit(
     allTransferOptions.pool.active
-      .add(allTransferOptions.pool.totalUnlocking)
-      .add(allTransferOptions.pool.totalUnlocked),
+      .plus(allTransferOptions.pool.totalUnlocking)
+      .plus(allTransferOptions.pool.totalUnlocked),
     units
   );
 
   // check account non-staking locks
   const locks = getAccountLocks(activeAccount);
   const locksStaking = locks.find((l: Lock) => l.id.trim() === 'staking');
-  const lockStakingAmount = locksStaking ? locksStaking.amount : new BN(0);
+  const lockStakingAmount = locksStaking
+    ? locksStaking.amount
+    : new BigNumber(0);
 
   // total funds available, including existential deposit, minus staking.
-  const graphAvailable = planckBnToUnit(free.sub(lockStakingAmount), units);
+  const graphAvailable = planckToUnit(free.minus(lockStakingAmount), units);
   const notStaking = graphAvailable;
 
   // graph percentages
@@ -83,10 +80,10 @@ export const BalanceChart = () => {
     graphTotal > 0 ? 100 - graphNominating - graphInPool : 0;
 
   // available balance data
-  const fundsLocked = planckBnToUnit(miscFrozen.sub(lockStakingAmount), units);
-  let fundsReserved = planckBnToUnit(existentialAmount, units);
+  const fundsLocked = planckToUnit(miscFrozen.minus(lockStakingAmount), units);
+  let fundsReserved = planckToUnit(existentialAmount, units);
   const fundsFree =
-    planckBnToUnit(allTransferOptions.freeBalance, units) - fundsLocked;
+    planckToUnit(allTransferOptions.freeBalance, units) - fundsLocked;
 
   // available balance percentages
   const graphLocked =
@@ -97,6 +94,12 @@ export const BalanceChart = () => {
   if (graphAvailable < fundsReserved) {
     fundsReserved = graphAvailable;
   }
+
+  // formatter for price feed.
+  const usdFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
 
   return (
     <>

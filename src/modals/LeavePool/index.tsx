@@ -6,7 +6,7 @@ import {
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -25,7 +25,7 @@ import {
 } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { planckToUnit, unitToPlanck } from 'Utils';
 import { Separator } from '../../Wrappers';
 
 export const LeavePool = () => {
@@ -43,11 +43,11 @@ export const LeavePool = () => {
   const { bondDuration } = consts;
 
   let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BN(0);
-  unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
+  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
+  unclaimedRewards = planckToUnit(unclaimedRewards, network.units);
 
-  // convert BN values to number
-  const freeToUnbond = planckBnToUnit(activeBn, units);
+  // convert BigNumber values to number
+  const freeToUnbond = planckToUnit(activeBn, units);
 
   // local bond value
   const [bond, setBond] = useState({
@@ -81,7 +81,7 @@ export const LeavePool = () => {
       return tx;
     }
 
-    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
+    const bondToSubmit = unitToPlanck(String(bond.bond), units);
     tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
     return tx;
   };

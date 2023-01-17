@@ -3,7 +3,7 @@
 
 import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -20,7 +20,7 @@ import {
 } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, rmCommas, unitToPlanckBn } from 'Utils';
+import { planckToUnit, rmCommas, unitToPlanck } from 'Utils';
 
 export const UnbondPoolMember = () => {
   const { api, network, consts } = useApi();
@@ -31,7 +31,7 @@ export const UnbondPoolMember = () => {
   const { bondDuration } = consts;
   const { member, who } = config;
   const { points } = member;
-  const freeToUnbond = planckBnToUnit(new BN(rmCommas(points)), units);
+  const freeToUnbond = planckToUnit(new BigNumber(rmCommas(points)), units);
 
   // local bond value
   const [bond, setBond] = useState({
@@ -66,7 +66,7 @@ export const UnbondPoolMember = () => {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
+    const bondToSubmit = unitToPlanck(String(bond.bond), units);
     tx = api.tx.nominationPools.unbond(who, bondToSubmit);
     return tx;
   };

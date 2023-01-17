@@ -6,7 +6,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, isNumeric, planckBnToUnit } from 'Utils';
+import { humanNumber, planckToUnit } from 'Utils';
 import { UnbondInputProps } from '../types';
 import { InputWrapper } from '../Wrappers';
 
@@ -26,7 +26,7 @@ export const UnbondInput = ({
   const _value = value ?? 0;
 
   // get the actively bonded amount.
-  const activeBase = planckBnToUnit(active, network.units);
+  const activeBase = planckToUnit(active, network.units);
 
   // the current local bond value
   const [localBond, setLocalBond] = useState(_value);
@@ -42,7 +42,7 @@ export const UnbondInput = ({
     const element = e.currentTarget as HTMLInputElement;
     const val = element.value;
 
-    if (!(!isNumeric(val) && val !== '')) {
+    if (!(Number.isNaN(val) && val !== '')) {
       setLocalBond(val);
       updateParentState(val);
     }
@@ -59,7 +59,7 @@ export const UnbondInput = ({
   };
 
   // unbond to min as unit
-  const unbondToMinBase = planckBnToUnit(unbondToMin, network.units);
+  const unbondToMinBase = planckToUnit(unbondToMin, network.units);
 
   return (
     <InputWrapper>

@@ -14,7 +14,7 @@ import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 import { Spacer } from '../Wrappers';
 
 export const SetController = (props: SetupStepProps) => {
@@ -26,7 +26,7 @@ export const SetController = (props: SetupStepProps) => {
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress('stake', activeAccount);
   const { existentialDeposit } = consts;
-  const existentialDepositBase = planckBnToUnit(
+  const existentialDepositBase = planckToUnit(
     existentialDeposit,
     network.units
   );
@@ -44,7 +44,7 @@ export const SetController = (props: SetupStepProps) => {
   const itemsWithEnoughBalance = items
     .map(
       (i: InputItem) =>
-        i?.balance?.freeAfterReserve.gt(existentialDeposit) ?? false
+        i?.balance?.freeAfterReserve.isGreaterThan(existentialDeposit) ?? false
     )
     .filter((i: boolean) => i).length;
 

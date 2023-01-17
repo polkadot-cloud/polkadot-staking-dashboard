@@ -1,8 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Option } from '@polkadot/types-codec';
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import {
   BalanceLedger,
   BalancesAccount,
@@ -158,9 +157,7 @@ export const BalancesProvider = ({
   const subscribeToBalances = async (address: string) => {
     if (!api) return;
 
-    const unsub: () => void = await api.queryMulti<
-      [AnyApi, AnyApi, Option<AnyApi>, Option<AnyApi>]
-    >(
+    const unsub = await api.queryMulti<AnyApi>(
       [
         [api.query.system.account, address],
         [api.query.balances.locks, address],
@@ -171,29 +168,28 @@ export const BalancesProvider = ({
         const _account: BalancesAccount = {
           address,
         };
-
-        // get account balances
-        const { free, reserved, miscFrozen, feeFrozen } = data;
-
-        // calculate free balance after app reserve
-        let freeAfterReserve = new BN(free).sub(existentialAmount);
-        freeAfterReserve = freeAfterReserve.lt(new BN(0))
-          ? new BN(0)
-          : freeAfterReserve;
+        const free = new BigNumber(data.free.toString());
+        const reserved = new BigNumber(data.reserved.toString());
+        const miscFrozen = new BigNumber(data.miscFrozen.toString());
+        const feeFrozen = new BigNumber(data.feeFrozen.toString());
+        const freeAfterReserve = BigNumber.max(
+          free.minus(existentialAmount),
+          new BigNumber(0)
+        );
 
         // set account balances to context
         _account.balance = {
-          free: free.toBn(),
-          reserved: reserved.toBn(),
-          miscFrozen: miscFrozen.toBn(),
-          feeFrozen: feeFrozen.toBn(),
+          free,
+          reserved,
+          miscFrozen,
+          feeFrozen,
           freeAfterReserve,
         };
 
         // get account locks
         const _locks = locks.toHuman();
         for (let i = 0; i < _locks.length; i++) {
-          _locks[i].amount = new BN(rmCommas(_locks[i].amount));
+          _locks[i].amount = new BigNumber(rmCommas(_locks[i].amount));
         }
         _account.locks = _locks;
 
@@ -262,11 +258,11 @@ export const BalancesProvider = ({
           // format unlocking chunks
           const _unlocking = [];
           for (const u of unlocking.toHuman()) {
-            const era = rmCommas(u.era);
-            const value = rmCommas(u.value);
+            const { era, value } = u;
+
             _unlocking.push({
-              era: Number(era),
-              value: new BN(value),
+              era: Number(rmCommas(era)),
+              value: new BigNumber(rmCommas(value)),
             });
           }
 
@@ -282,8 +278,8 @@ export const BalancesProvider = ({
           ledger = {
             address,
             stash: stash.toHuman(),
-            active: active.toBn(),
-            total: total.toBn(),
+            active: new BigNumber(rmCommas(active.toString())),
+            total: new BigNumber(rmCommas(total.toString())),
             unlocking: _unlocking,
           };
 
