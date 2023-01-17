@@ -162,7 +162,7 @@ export const ManageFastUnstake = () => {
                 <Separator />
                 <NotesWrapper>
                   <p>
-                    ${t('registerFastUnstake')}{' '}
+                    {t('registerFastUnstake')}{' '}
                     {planckToUnit(fastUnstakeDeposit, network.units)}{' '}
                     {network.unit}. {t('fastUnstakeOnceRegistered')}
                   </p>
