@@ -3,8 +3,8 @@
 
 import { useApi } from 'contexts/Api';
 import { usePlugins } from 'contexts/Plugins';
+import { useUnitPrice } from 'library/Hooks/useUnitPrice';
 import { useEffect, useRef, useState } from 'react';
-import { useUnitPrice } from '../useUnitPrice';
 
 export const usePrices = () => {
   const { network } = useApi();

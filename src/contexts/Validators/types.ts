@@ -15,8 +15,8 @@ export interface ValidatorsContextInterface {
   avgCommission: number;
   meta: AnyMetaBatch;
   session: SessionValidators;
-  sessionParachain: string[];
-  favorites: string[];
+  sessionParachain: Array<string>;
+  favorites: Array<string>;
   nominated: Array<Validator> | null;
   poolNominated: Array<Validator> | null;
   favoritesList: Array<Validator> | null;

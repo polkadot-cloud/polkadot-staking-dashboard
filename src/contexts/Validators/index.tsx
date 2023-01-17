@@ -81,8 +81,8 @@ export const ValidatorsProvider = ({
 
   // get favorites from local storage
   const getFavorites = () => {
-    const _favorites = localStorage.getItem(`${network.name}_favorites`);
-    return _favorites !== null ? JSON.parse(_favorites) : [];
+    const localFavourites = localStorage.getItem(`${network.name}_favorites`);
+    return localFavourites !== null ? JSON.parse(localFavourites) : [];
   };
 
   // stores the user's favorite validators
@@ -119,7 +119,7 @@ export const ValidatorsProvider = ({
   useEffect(() => {
     if (isReady) {
       fetchValidators();
-      subscribeSessionValidators(api);
+      subscribeSessionValidators();
     }
 
     return () => {
@@ -135,7 +135,7 @@ export const ValidatorsProvider = ({
   // fetch parachain session validators when earliestStoredSession ready
   useEffect(() => {
     if (isReady && earliestStoredSession.isGreaterThan(new BigNumber(0))) {
-      subscribeParachainValidators(api);
+      subscribeParachainValidators();
     }
   }, [isReady, earliestStoredSession]);
 
@@ -166,12 +166,13 @@ export const ValidatorsProvider = ({
     });
     // fetch preferences
     const nominationsWithPrefs = await fetchValidatorPrefs(targetsFormatted);
-
     if (nominationsWithPrefs) {
       setNominated(nominationsWithPrefs);
-    } else {
-      setNominated([]);
+      return;
     }
+
+    // return empty otherwise.
+    setNominated([]);
   };
 
   // fetch active account's pool nominations in validator list format
@@ -243,9 +244,9 @@ export const ValidatorsProvider = ({
     const v: Array<Validator> = [];
     let totalNonAllCommission = new BigNumber(0);
     const exposures = await api.query.staking.validators.entries();
-    exposures.forEach(([_args, _prefs]: AnyApi) => {
-      const address = _args.args[0].toHuman();
-      const prefs = _prefs.toHuman();
+    exposures.forEach(([a, p]: AnyApi) => {
+      const address = a.args[0].toHuman();
+      const prefs = p.toHuman();
 
       const commission = new BigNumber(prefs.commission.slice(0, -1));
 
@@ -283,31 +284,29 @@ export const ValidatorsProvider = ({
   /*
    * subscribe to active session
    */
-  const subscribeSessionValidators = async (_api: AnyApi) => {
-    if (isReady) {
-      const unsub = await _api.query.session.validators(
-        (_validators: AnyApi) => {
-          setSessionValidators({
-            ...sessionValidators,
-            list: _validators.toHuman(),
-            unsub,
-          });
-        }
-      );
+  const subscribeSessionValidators = async () => {
+    if (api !== null && isReady) {
+      const unsub: AnyApi = await api.query.session.validators((v: AnyApi) => {
+        setSessionValidators({
+          ...sessionValidators,
+          list: v.toHuman(),
+          unsub,
+        });
+      });
     }
   };
 
   /*
    * subscribe to active parachain validators
    */
-  const subscribeParachainValidators = async (_api: AnyApi) => {
-    if (isReady) {
-      const unsub = await _api.query.paraSessionInfo.accountKeys(
+  const subscribeParachainValidators = async () => {
+    if (api !== null && isReady) {
+      const unsub: AnyApi = await api.query.paraSessionInfo.accountKeys(
         earliestStoredSession.toString(),
-        (_validators: AnyApi) => {
+        (v: AnyApi) => {
           setSessionParachainValidators({
             ...sessionParachainValidators,
-            list: _validators.toHuman(),
+            list: v.toHuman(),
             unsub,
           });
         }
@@ -318,22 +317,22 @@ export const ValidatorsProvider = ({
   /*
    * fetches prefs for a list of validators
    */
-  const fetchValidatorPrefs = async (_validators: ValidatorAddresses) => {
-    if (!_validators.length || !api) {
+  const fetchValidatorPrefs = async (addresses: ValidatorAddresses) => {
+    if (!addresses.length || !api) {
       return null;
     }
 
     const v: string[] = [];
-    for (const _v of _validators) {
-      v.push(_v.address);
+    for (const address of addresses) {
+      v.push(address.address);
     }
 
-    const prefsAll = await api.query.staking.validators.multi(v);
+    const allPrefs = await api.query.staking.validators.multi(v);
 
     const validatorsWithPrefs = [];
     let i = 0;
-    for (const _prefs of prefsAll) {
-      const prefs: AnyApi = _prefs.toHuman();
+    for (const p of allPrefs) {
+      const prefs: AnyApi = p.toHuman();
 
       validatorsWithPrefs.push({
         address: v[i],
@@ -393,8 +392,8 @@ export const ValidatorsProvider = ({
     }
 
     const addresses = [];
-    for (const _v of v) {
-      addresses.push(_v.address);
+    for (const address of v) {
+      addresses.push(address.address);
     }
 
     // store batch addresses

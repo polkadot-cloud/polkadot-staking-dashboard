@@ -38,7 +38,7 @@ export const NominationStatus = (props: NominationStatusProps) => {
     // bonded amount within the validator.
     stakedAmount =
       nominationStatus === 'active'
-        ? ownStake?.find((_own: any) => _own.address)?.value ?? 0
+        ? ownStake?.find((own: any) => own.address)?.value ?? 0
         : 0;
   } else {
     const s = stakers?.find((_n: any) => _n.address === address);
