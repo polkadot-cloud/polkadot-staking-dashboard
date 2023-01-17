@@ -6,5 +6,6 @@ import { AnySubscan } from 'types';
 export interface SubscanContextInterface {
   fetchEraPoints: (v: string, e: number) => void;
   payouts: AnySubscan;
+  unclaimedPayouts: AnySubscan;
   poolClaims: AnySubscan;
 }

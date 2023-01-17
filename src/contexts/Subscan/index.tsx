@@ -28,12 +28,16 @@ export const SubscanProvider = ({
   // store fetched payouts from Subscan
   const [payouts, setPayouts] = useState<AnySubscan>([]);
 
+  // store fetched unclaimed payouts from Subscan
+  const [unclaimedPayouts, setUnclaimedPayouts] = useState<AnyApi>([]);
+
   // store fetched pool claims from Subscan
   const [poolClaims, setPoolClaims] = useState<AnySubscan>([]);
 
   // reset payouts on network switch
   useEffect(() => {
     setPayouts([]);
+    setUnclaimedPayouts([]);
     setPoolClaims([]);
   }, [network]);
 
@@ -41,6 +45,7 @@ export const SubscanProvider = ({
   useEffect(() => {
     if (isReady) {
       fetchPayouts();
+      fetchUnclaimedPayouts();
       fetchPoolClaims();
     }
   }, [isReady, network, activeAccount]);
@@ -48,6 +53,7 @@ export const SubscanProvider = ({
   // fetch payouts on plugins toggle
   useEffect(() => {
     fetchPayouts();
+    fetchUnclaimedPayouts();
     fetchPoolClaims();
   }, [plugins]);
 
@@ -94,6 +100,44 @@ export const SubscanProvider = ({
           _payouts = _payouts.concat(list);
         }
         setPayouts(_payouts);
+      }
+    }
+  };
+
+  const fetchUnclaimedPayouts = async () => {
+    if (activeAccount === null || !plugins.includes('subscan')) {
+      setUnclaimedPayouts([]);
+      return;
+    }
+    // fetch 2 pages of results if subscan is enabled
+    if (getPlugins().includes('subscan')) {
+      let _unclaimedPayouts: Array<AnySubscan> = [];
+
+      // fetch 3 pages of results
+      const results = await Promise.all([
+        handleFetch(activeAccount, 0, ApiEndpoints.subscanRewardSlash, {
+          is_stash: true,
+          claimed_filter: 'unclaimed',
+        }),
+        handleFetch(activeAccount, 1, ApiEndpoints.subscanRewardSlash, {
+          is_stash: true,
+          claimed_filter: 'unclaimed',
+        }),
+      ]);
+      // user may have turned off service while results were fetching.
+      // test again whether subscan service is still active.
+      if (getPlugins().includes('subscan')) {
+        for (const result of results) {
+          if (!result?.data?.list) {
+            break;
+          }
+          // ensure no payouts have block_timestamp of 0
+          const list = result.data.list.filter(
+            (l: AnyApi) => l.block_timestamp !== 0
+          );
+          _unclaimedPayouts = _unclaimedPayouts.concat(list);
+        }
+        setPayouts(_unclaimedPayouts);
       }
     }
   };
@@ -211,6 +255,7 @@ export const SubscanProvider = ({
       value={{
         fetchEraPoints,
         payouts,
+        unclaimedPayouts,
         poolClaims,
       }}
     >
