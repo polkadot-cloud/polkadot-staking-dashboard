@@ -85,6 +85,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "yarn run build",
     "deploy": "gh-pages -d build",
     "test": "jest",
     "lint": "eslint ./src --fix && npx prettier --write ./src",
