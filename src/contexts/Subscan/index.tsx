@@ -45,7 +45,6 @@ export const SubscanProvider = ({
   useEffect(() => {
     if (isReady) {
       fetchPayouts();
-      fetchUnclaimedPayouts();
       fetchPoolClaims();
     }
   }, [isReady, network, activeAccount]);
@@ -53,7 +52,6 @@ export const SubscanProvider = ({
   // fetch payouts on plugins toggle
   useEffect(() => {
     fetchPayouts();
-    fetchUnclaimedPayouts();
     fetchPoolClaims();
   }, [plugins]);
 
@@ -73,9 +71,10 @@ export const SubscanProvider = ({
     // fetch 2 pages of results if subscan is enabled
     if (getPlugins().includes('subscan')) {
       let _payouts: Array<AnySubscan> = [];
+      let _unclaimedPayouts: Array<AnySubscan> = [];
 
       // fetch 3 pages of results
-      const results = await Promise.all([
+      const claimedResults = await Promise.all([
         handleFetch(activeAccount, 0, ApiEndpoints.subscanRewardSlash, {
           is_stash: true,
           claimed_filter: 'claimed',
@@ -85,11 +84,21 @@ export const SubscanProvider = ({
           claimed_filter: 'claimed',
         }),
       ]);
+      const unclaimedResults = await Promise.all([
+        handleFetch(activeAccount, 0, ApiEndpoints.subscanRewardSlash, {
+          is_stash: true,
+          claimed_filter: 'unclaimed',
+        }),
+        handleFetch(activeAccount, 1, ApiEndpoints.subscanRewardSlash, {
+          is_stash: true,
+          claimed_filter: 'unclaimed',
+        }),
+      ]);
 
       // user may have turned off service while results were fetching.
       // test again whether subscan service is still active.
       if (getPlugins().includes('subscan')) {
-        for (const result of results) {
+        for (const result of claimedResults) {
           if (!result?.data?.list) {
             break;
           }
@@ -100,34 +109,8 @@ export const SubscanProvider = ({
           _payouts = _payouts.concat(list);
         }
         setPayouts(_payouts);
-      }
-    }
-  };
 
-  const fetchUnclaimedPayouts = async () => {
-    if (activeAccount === null || !plugins.includes('subscan')) {
-      setUnclaimedPayouts([]);
-      return;
-    }
-    // fetch 2 pages of results if subscan is enabled
-    if (getPlugins().includes('subscan')) {
-      let _unclaimedPayouts: Array<AnySubscan> = [];
-
-      // fetch 3 pages of results
-      const results = await Promise.all([
-        handleFetch(activeAccount, 0, ApiEndpoints.subscanRewardSlash, {
-          is_stash: true,
-          claimed_filter: 'unclaimed',
-        }),
-        handleFetch(activeAccount, 1, ApiEndpoints.subscanRewardSlash, {
-          is_stash: true,
-          claimed_filter: 'unclaimed',
-        }),
-      ]);
-      // user may have turned off service while results were fetching.
-      // test again whether subscan service is still active.
-      if (getPlugins().includes('subscan')) {
-        for (const result of results) {
+        for (const result of unclaimedResults) {
           if (!result?.data?.list) {
             break;
           }
@@ -137,7 +120,7 @@ export const SubscanProvider = ({
           );
           _unclaimedPayouts = _unclaimedPayouts.concat(list);
         }
-        setPayouts(_unclaimedPayouts);
+        setUnclaimedPayouts(_unclaimedPayouts);
       }
     }
   };

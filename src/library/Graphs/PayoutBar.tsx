@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
 import {
   BarElement,
   CategoryScale,
@@ -14,7 +13,7 @@ import {
   Tooltip,
 } from 'chart.js';
 import { useApi } from 'contexts/Api';
-import { useActivePools } from 'contexts/Pools/ActivePools';
+
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
@@ -31,7 +30,7 @@ import {
   networkColorsTransparent,
 } from 'theme/default';
 import { AnySubscan } from 'types';
-import { humanNumber, planckBnToUnit } from 'Utils';
+import { humanNumber } from 'Utils';
 import { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
 
@@ -54,22 +53,15 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
   const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
-  const { selectedActivePool } = useActivePools();
-
-  let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BN(0);
-  unclaimedRewards = planckBnToUnit(unclaimedRewards, units);
-  // console.log(unclaimedRewards);
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts.filter(
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
-  // console.log(payoutsNoSlash);
+
   const unclaimedPayoutsNoSlash = unclaimedPayouts.filter(
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
-  // console.log(unclaimedPayouts);
 
   const notStaking = !isSyncing && inSetup() && !membership;
   const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
@@ -117,15 +109,12 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
       },
       {
         label: 'Unclaimed Payouts',
-        data: unclaimedPayoutsNoSlash,
-        borderColor: colorPoolClaims,
-        backgroundColor: colorUnclaimsClaims,
-        pointRadius: 0,
-        borderRadius: 3,
-      },
-      {
-        label: 'Unclaimed Pool Payouts',
-        data: unclaimedRewards,
+        data: formatRewardsForGraphs(
+          days,
+          units,
+          unclaimedPayoutsNoSlash,
+          poolClaims
+        ).payoutsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPoolClaims,
         backgroundColor: colorUnclaimsClaims,
         pointRadius: 0,
