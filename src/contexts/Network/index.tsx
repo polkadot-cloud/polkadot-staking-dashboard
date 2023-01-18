@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import React, { useEffect, useState } from 'react';
 import { AnyApi } from 'types';
 import { useApi } from '../Api';
@@ -77,10 +77,12 @@ export const NetworkMetricsProvider = ({
 
           const _metrics = {
             activeEra: _activeEra,
-            totalIssuance: _totalIssuance.toBn(),
-            auctionCounter: new BN(_auctionCounter.toString()),
-            earliestStoredSession: new BN(_earliestStoredSession.toString()),
-            fastUnstakeErasToCheckPerBlock: _erasToCheckPerBlock.toHuman(),
+            totalIssuance: new BigNumber(_totalIssuance.toString()),
+            auctionCounter: new BigNumber(_auctionCounter.toString()),
+            earliestStoredSession: new BigNumber(
+              _earliestStoredSession.toString()
+            ),
+            fastUnstakeErasToCheckPerBlock: _erasToCheckPerBlock.toNumber(),
           };
           setMetrics(_metrics);
         }

@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
@@ -39,7 +39,7 @@ export const ManagePool = () => {
       <CardWrapper>
         {isSyncing ? (
           <Nominations bondFor="pool" nominator={activeAccount} />
-        ) : canNominate && !isNominating && state !== 'destroying' ? (
+        ) : canNominate && !isNominating && state !== 'Destroying' ? (
           <>
             <CardHeaderWrapper withAction>
               <h3>

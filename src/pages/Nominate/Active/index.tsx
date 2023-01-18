@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
@@ -31,6 +31,7 @@ import { Status } from './Status';
 import { UnstakePrompts } from './UnstakePrompts';
 
 export const Active = () => {
+  const { t } = useTranslation('pages');
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
@@ -38,7 +39,6 @@ export const Active = () => {
   const { getAccountNominations } = useBalances();
   const { isFastUnstaking } = useUnstaking();
   const nominations = getAccountNominations(activeAccount);
-  const { t } = useTranslation('pages');
 
   const ROW_HEIGHT = 275;
 

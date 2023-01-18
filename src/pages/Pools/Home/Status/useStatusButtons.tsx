@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faPlusCircle, faUserPlus } from '@fortawesome/free-solid-svg-icons';
@@ -15,6 +15,7 @@ import { registerSaEvent } from 'Utils';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
+  const { t } = useTranslation('pages');
   const { isReady, network } = useApi();
   const { setOnPoolSetup, getPoolSetupProgressPercent } = useSetup();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -24,7 +25,6 @@ export const useStatusButtons = () => {
   const { bondedPools } = useBondedPools();
   const { isOwner } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
-  const { t } = useTranslation('pages');
 
   const { active } = getTransferOptions(activeAccount).pool;
   const poolSetupPercent = getPoolSetupProgressPercent(activeAccount);
@@ -48,7 +48,7 @@ export const useStatusButtons = () => {
       registerSaEvent(
         `${network.name.toLowerCase()}_pool_create_button_pressed`
       );
-      setOnPoolSetup(1);
+      setOnPoolSetup(true);
     },
   };
 
@@ -73,7 +73,7 @@ export const useStatusButtons = () => {
     _buttons = [createBtn, joinPoolBtn];
   } else if (isOwner()) {
     _label = `${t('pools.ownerOfPool')} ${membership.poolId}`;
-  } else if (active?.gtn(0)) {
+  } else if (active?.isGreaterThan(0)) {
     _label = `${t('pools.memberOfPool')} ${membership.poolId}`;
   } else {
     _label = `${t('pools.leavingPool')} ${membership.poolId}`;

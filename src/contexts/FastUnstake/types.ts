@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { AnyApi, MaybeAccount } from 'types';
 
 export interface LocalMeta {
@@ -17,7 +17,7 @@ export interface FastUnstakeContextInterface {
   checking: boolean;
   meta: MetaInterface;
   isExposed: boolean | null;
-  queueDeposit: BN | null;
+  queueDeposit: BigNumber | null;
   head: AnyApi;
   counterForQueue: number | null;
 }

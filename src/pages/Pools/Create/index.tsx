@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -17,8 +17,8 @@ import { PoolRoles } from './PoolRoles';
 import { Summary } from './Summary';
 
 export const Create = () => {
-  const { setOnPoolSetup, setActiveAccountSetup } = useSetup();
   const { t } = useTranslation('pages');
+  const { setOnPoolSetup, setActiveAccountSetup } = useSetup();
 
   return (
     <>
@@ -31,7 +31,7 @@ export const Create = () => {
               text={t('pools.back')}
               iconLeft={faChevronLeft}
               iconTransform="shrink-3"
-              onClick={() => setOnPoolSetup(0)}
+              onClick={() => setOnPoolSetup(false)}
             />
           </span>
           <span>
@@ -39,7 +39,7 @@ export const Create = () => {
               lg
               text={t('pools.cancel')}
               onClick={() => {
-                setOnPoolSetup(0);
+                setOnPoolSetup(false);
                 setActiveAccountSetup('pool', defaultPoolSetup);
               }}
             />

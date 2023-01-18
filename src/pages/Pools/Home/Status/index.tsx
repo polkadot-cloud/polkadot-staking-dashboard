@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import {
@@ -7,7 +7,7 @@ import {
   faPlus,
   faShare,
 } from '@fortawesome/free-solid-svg-icons';
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -17,7 +17,7 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 import { Separator } from 'Wrappers';
 import { Membership } from './Membership';
 import { useStatusButtons } from './useStatusButtons';
@@ -43,17 +43,17 @@ export const Status = ({ height }: { height: number }) => {
   const isNominating = !!poolNominations?.targets?.length;
 
   // Set the minimum unclaimed planck value to prevent e numbers
-  const minUnclaimedDisplay = new BN(1_000_000);
+  const minUnclaimedDisplay = new BigNumber(1_000_000);
 
   // Unclaimed rewards `Stat` props
   let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BN(0);
+  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
 
-  const labelRewards = unclaimedRewards.gt(minUnclaimedDisplay)
-    ? `${planckBnToUnit(unclaimedRewards, units)} ${unit}`
+  const labelRewards = unclaimedRewards.isGreaterThan(minUnclaimedDisplay)
+    ? `${planckToUnit(unclaimedRewards, units)} ${unit}`
     : `0 ${unit}`;
 
-  const buttonsRewards = unclaimedRewards.gt(minUnclaimedDisplay)
+  const buttonsRewards = unclaimedRewards.isGreaterThan(minUnclaimedDisplay)
     ? [
         {
           title: t('pools.withdraw'),
@@ -69,7 +69,7 @@ export const Status = ({ height }: { height: number }) => {
           disabled:
             !isReady ||
             isReadOnlyAccount(activeAccount) ||
-            poolState === 'destroying',
+            poolState === 'Destroying',
           small: true,
           onClick: () =>
             openModalWith('ClaimReward', { claimType: 'bond' }, 'small'),
@@ -79,10 +79,10 @@ export const Status = ({ height }: { height: number }) => {
 
   let poolStateIcon;
   switch (poolState) {
-    case 'blocked':
+    case 'Blocked':
       poolStateIcon = faLock;
       break;
-    case 'destroying':
+    case 'Destroying':
       poolStateIcon = faExclamationTriangle;
       break;
     default:
@@ -91,9 +91,9 @@ export const Status = ({ height }: { height: number }) => {
 
   // determine pool status - left side
   const poolStatusLeft =
-    poolState === 'blocked'
+    poolState === 'Blocked'
       ? `${t('pools.locked')} / `
-      : poolState === 'destroying'
+      : poolState === 'Destroying'
       ? `${t('pools.destroying')} / `
       : '';
 

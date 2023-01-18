@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { ImportedAccount } from 'contexts/Connect/types';
 import {
   PoolMembership,
@@ -91,7 +91,7 @@ export const PoolMembershipsProvider = ({
             const value = rmCommas(v as string);
             unlocking.push({
               era: Number(era),
-              value: new BN(value),
+              value: new BigNumber(value),
             });
           }
           membership.points = membership.points

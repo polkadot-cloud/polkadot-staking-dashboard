@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { SideMenuStickyThreshold } from 'consts';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -144,7 +144,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       _poolsSyncing = true;
     }
     // staking metrics have synced
-    if (staking.lastReward === new BN(0)) {
+    if (staking.lastReward === new BigNumber(0)) {
       _syncing = true;
       _networkSyncing = true;
       _poolsSyncing = true;

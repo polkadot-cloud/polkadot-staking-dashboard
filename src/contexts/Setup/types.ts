@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { MaybeAccount, MaybeString } from 'types';
@@ -27,8 +27,8 @@ export interface SetupContextInterface {
   getPoolSetupProgressPercent: (a: MaybeAccount) => number;
   setActiveAccountSetup: (t: SetupType, p: any) => void;
   setActiveAccountSetupSection: (t: SetupType, s: number) => void;
-  setOnNominatorSetup: (v: number) => void;
-  setOnPoolSetup: (v: number) => void;
-  onNominatorSetup: number;
-  onPoolSetup: number;
+  setOnNominatorSetup: (v: boolean) => void;
+  setOnPoolSetup: (v: boolean) => void;
+  onNominatorSetup: boolean;
+  onPoolSetup: boolean;
 }

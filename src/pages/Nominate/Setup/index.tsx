@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useSetup } from 'contexts/Setup';
 import { defaultStakeSetup } from 'contexts/Setup/defaults';
@@ -9,7 +9,9 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { Element } from 'react-scroll';
+import { extractUrlValue, removeVarFromUrlHash } from 'Utils';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
@@ -17,6 +19,7 @@ import { SetController } from './SetController';
 import { Summary } from './Summary';
 
 export const Setup = () => {
+  const navigate = useNavigate();
   const { setOnNominatorSetup, setActiveAccountSetup } = useSetup();
   const { t } = useTranslation('pages');
 
@@ -31,15 +34,24 @@ export const Setup = () => {
               text={t('nominate.back')}
               iconLeft={faChevronLeft}
               iconTransform="shrink-3"
-              onClick={() => setOnNominatorSetup(0)}
+              onClick={() => {
+                if (extractUrlValue('f') === 'overview') {
+                  navigate('/overview');
+                } else {
+                  removeVarFromUrlHash('f');
+                  setOnNominatorSetup(false);
+                }
+              }}
             />
           </span>
           <span>
             <ButtonSecondary
               lg
               text={t('nominate.cancel')}
+              iconLeft={faTimes}
               onClick={() => {
-                setOnNominatorSetup(0);
+                removeVarFromUrlHash('f');
+                setOnNominatorSetup(false);
                 setActiveAccountSetup('stake', defaultStakeSetup);
               }}
             />

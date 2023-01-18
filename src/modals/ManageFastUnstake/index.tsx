@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
@@ -20,6 +20,7 @@ import useUnstaking from 'library/Hooks/useUnstaking';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { planckToUnit } from 'Utils';
 import {
   FooterWrapper,
   NotesWrapper,
@@ -30,7 +31,7 @@ import {
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
-  const { api, consts } = useApi();
+  const { api, consts, network } = useApi();
   const { activeAccount } = useConnect();
   const { getControllerNotImported } = useStaking();
   const { getBondedAccount } = useBalances();
@@ -41,12 +42,12 @@ export const ManageFastUnstake = () => {
   const { getTransferOptions } = useTransferOptions();
   const { isFastUnstaking } = useUnstaking();
 
-  const { bondDuration } = consts;
+  const { bondDuration, fastUnstakeDeposit } = consts;
   const { activeEra, fastUnstakeErasToCheckPerBlock } = metrics;
   const { checked } = meta;
   const controller = getBondedAccount(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
-  const { nominate } = allTransferOptions;
+  const { nominate, freeBalance } = allTransferOptions;
   const { totalUnlockChuncks } = nominate;
 
   // valid to submit transaction
@@ -56,11 +57,19 @@ export const ManageFastUnstake = () => {
     setValid(
       fastUnstakeErasToCheckPerBlock > 0 &&
         ((!isFastUnstaking &&
+          freeBalance.isGreaterThanOrEqualTo(fastUnstakeDeposit) &&
           isExposed === false &&
           totalUnlockChuncks === 0) ||
           isFastUnstaking)
     );
-  }, [isExposed, fastUnstakeErasToCheckPerBlock, totalUnlockChuncks]);
+  }, [
+    isExposed,
+    fastUnstakeErasToCheckPerBlock,
+    totalUnlockChuncks,
+    isFastUnstaking,
+    fastUnstakeDeposit,
+    freeBalance,
+  ]);
 
   useEffect(() => {
     setResize();
@@ -95,12 +104,23 @@ export const ManageFastUnstake = () => {
   if (getControllerNotImported(controller)) {
     warnings.push(t('mustHaveController'));
   }
-  if (totalUnlockChuncks > 0 && !isFastUnstaking) {
-    warnings.push(
-      `${t('fastUnstakeWarningUnlocksActive', {
-        count: totalUnlockChuncks,
-      })} ${t('fastUnstakeWarningUnlocksActiveMore')}`
-    );
+  if (!isFastUnstaking) {
+    if (freeBalance.isLessThan(fastUnstakeDeposit)) {
+      warnings.push(
+        `${t('noEnough')} ${planckToUnit(
+          fastUnstakeDeposit,
+          network.units
+        ).toString()} ${network.unit}`
+      );
+    }
+
+    if (totalUnlockChuncks > 0) {
+      warnings.push(
+        `${t('fastUnstakeWarningUnlocksActive', {
+          count: totalUnlockChuncks,
+        })} ${t('fastUnstakeWarningUnlocksActiveMore')}`
+      );
+    }
   }
 
   // manage last exposed
@@ -142,7 +162,16 @@ export const ManageFastUnstake = () => {
                 </h2>
                 <Separator />
                 <NotesWrapper>
-                  <p>{t('fastUnstakeOnceRegistered')}</p>
+                  <p>
+                    <>
+                      {t('registerFastUnstake')}{' '}
+                      {planckToUnit(
+                        fastUnstakeDeposit,
+                        network.units
+                      ).toString()}{' '}
+                      {network.unit}. {t('fastUnstakeOnceRegistered')}
+                    </>
+                  </p>
                   <p>
                     {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
                   </p>

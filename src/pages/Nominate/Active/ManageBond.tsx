@@ -1,9 +1,9 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -16,7 +16,7 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import useUnstaking from 'library/Hooks/useUnstaking';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, planckBnToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 import { ButtonRowWrapper } from 'Wrappers';
 
 export const ManageBond = () => {
@@ -30,7 +30,7 @@ export const ManageBond = () => {
   const { isSyncing } = useUi();
   const ledger = getLedgerForStash(activeAccount);
   const { isFastUnstaking } = useUnstaking();
-  const { active }: { active: BN } = ledger;
+  const { active }: { active: BigNumber } = ledger;
 
   const allTransferOptions = getTransferOptions(activeAccount);
 
@@ -46,9 +46,7 @@ export const ManageBond = () => {
           {t('nominate.bondedFunds')}
           <OpenHelpIcon helpKey="Bonding" />
         </h4>
-        <h2>
-          {humanNumber(planckBnToUnit(active, units))}&nbsp;{network.unit}
-        </h2>
+        <h2>{`${planckToUnit(active, units).toFormat()} ${network.unit}`}</h2>
         <ButtonRowWrapper>
           <ButtonPrimary
             disabled={
@@ -90,10 +88,10 @@ export const ManageBond = () => {
         </ButtonRowWrapper>
       </CardHeaderWrapper>
       <BondedGraph
-        active={planckBnToUnit(active, units)}
-        unlocking={planckBnToUnit(totalUnlocking, units)}
-        unlocked={planckBnToUnit(totalUnlocked, units)}
-        free={planckBnToUnit(freeBalance, units)}
+        active={planckToUnit(active, units)}
+        unlocking={planckToUnit(totalUnlocking, units)}
+        unlocked={planckToUnit(totalUnlocked, units)}
+        free={planckToUnit(freeBalance, units)}
         inactive={inSetup()}
       />
     </>

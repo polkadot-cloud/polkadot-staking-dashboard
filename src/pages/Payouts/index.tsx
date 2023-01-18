@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { MaxPayoutDays } from 'consts';
 import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
@@ -58,9 +58,9 @@ export const Payouts = (props: PageProps) => {
 
     // re-order rewards based on block timestamp
     pList = pList.sort((a: AnySubscan, b: AnySubscan) => {
-      const x = new BN(a.block_timestamp);
-      const y = new BN(b.block_timestamp);
-      return y.sub(x);
+      const x = new BigNumber(a.block_timestamp);
+      const y = new BigNumber(b.block_timestamp);
+      return y.minus(x);
     });
     setPayoutLists(pList);
   }, [payouts]);
@@ -163,5 +163,3 @@ export const Payouts = (props: PageProps) => {
     </>
   );
 };
-
-export default Payouts;

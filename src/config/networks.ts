@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import * as Sc from '@substrate/connect';
@@ -14,10 +14,7 @@ import { ReactComponent as WestendInlineSVG } from 'img/westend_inline.svg';
 import { ReactComponent as WestendLogoSVG } from 'img/westend_logo.svg';
 import { Networks } from 'types';
 
-/*
- * Network Configuration
- */
-export const NETWORKS: Networks = {
+export const NetworkList: Networks = {
   polkadot: {
     name: 'polkadot',
     endpoints: {

@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { TIPS_CONFIG } from 'config/tips';
@@ -111,7 +111,7 @@ export const Tips = () => {
   if (!activeAccount) {
     segments.push(1);
   } else if (!isNominating() && !membership) {
-    if (transferOptions.freeBalance.gt(minNominatorBond)) {
+    if (transferOptions.freeBalance.isGreaterThan(minNominatorBond)) {
       segments.push(2);
     } else {
       segments.push(3);

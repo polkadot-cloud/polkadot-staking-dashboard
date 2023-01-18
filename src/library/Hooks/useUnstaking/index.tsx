@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
@@ -33,7 +33,7 @@ export const useUnstaking = () => {
   // determine if user is fast unstaking.
   const inHead =
     head?.stashes.find((s: AnyJson) => s[0] === activeAccount) ?? undefined;
-  const inQueue = queueDeposit?.gt(new BN(0)) ?? false;
+  const inQueue = queueDeposit?.isGreaterThan(new BigNumber(0)) ?? false;
 
   const registered = inHead || inQueue;
 

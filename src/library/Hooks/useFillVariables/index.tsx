@@ -1,11 +1,11 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { AnyJson } from 'types';
-import { planckBnToUnit, replaceAll, toFixedIfNecessary } from 'Utils';
+import { capitalizeFirstLetter, planckToUnit } from 'Utils';
 
 export const useFillVariables = () => {
   const { network, consts } = useApi();
@@ -27,41 +27,38 @@ export const useFillVariables = () => {
       ([, [key, val]]: AnyJson) => {
         const varsToValues = [
           ['{NETWORK_UNIT}', network.unit],
-          ['{NETWORK_NAME}', network.name],
+          ['{NETWORK_NAME}', capitalizeFirstLetter(network.name)],
           [
             '{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}',
             String(maxNominatorRewardedPerValidator),
           ],
           ['{MAX_NOMINATIONS}', String(maxNominations)],
-          ['{MIN_ACTIVE_BOND}', String(toFixedIfNecessary(minActiveBond, 3))],
+          ['{MIN_ACTIVE_BOND}', minActiveBond.decimalPlaces(3).toFormat()],
           [
             '{MIN_POOL_JOIN_BOND}',
-            String(
-              toFixedIfNecessary(planckBnToUnit(minJoinBond, network.units), 3)
-            ),
+            planckToUnit(minJoinBond, network.units)
+              .decimalPlaces(3)
+              .toFormat(),
           ],
           [
             '{MIN_POOL_CREATE_BOND}',
-            String(
-              toFixedIfNecessary(
-                planckBnToUnit(minCreateBond, network.units),
-                3
-              )
-            ),
+            planckToUnit(minCreateBond, network.units)
+              .decimalPlaces(3)
+              .toFormat(),
           ],
           [
             '{EXISTENTIAL_DEPOSIT}',
-            String(planckBnToUnit(existentialDeposit, network.units)),
+            planckToUnit(existentialDeposit, network.units).toFormat(),
           ],
         ];
 
         for (const varToVal of varsToValues) {
           if (val.constructor === Array) {
             val = val.map((_d: string) =>
-              replaceAll(_d, varToVal[0], varToVal[1])
+              _d.replaceAll(varToVal[0], varToVal[1])
             );
           } else {
-            val = replaceAll(val, varToVal[0], varToVal[1]);
+            val = val.replaceAll(varToVal[0], varToVal[1]);
           }
         }
         return [key, val];

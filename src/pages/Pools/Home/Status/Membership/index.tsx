@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
@@ -26,6 +26,7 @@ export const Membership = ({ label }: { label: string }) => {
     useActivePools();
   const { getTransferOptions } = useTransferOptions();
   const { active } = getTransferOptions(activeAccount).pool;
+  const poolState = selectedActivePool?.bondedPool?.state ?? null;
 
   let display = t('pools.notInPool');
   if (selectedActivePool) {
@@ -46,7 +47,7 @@ export const Membership = ({ label }: { label: string }) => {
   const buttons = [];
   let paddingRight = 0;
 
-  if (isOwner() || isStateToggler()) {
+  if (poolState !== 'Destroying' && (isOwner() || isStateToggler())) {
     paddingRight += 9;
     buttons.push(
       <ButtonPrimary
@@ -58,7 +59,7 @@ export const Membership = ({ label }: { label: string }) => {
     );
   }
 
-  if (isMember() && !isDepositor() && active?.gtn(0)) {
+  if (isMember() && !isDepositor() && active?.isGreaterThan(0)) {
     paddingRight += 8.5;
     buttons.push(
       <ButtonPrimary

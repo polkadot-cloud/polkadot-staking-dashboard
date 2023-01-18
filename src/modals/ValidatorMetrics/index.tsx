@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -20,7 +20,7 @@ import { SubscanButton } from 'library/SubscanButton';
 import { PaddingWrapper } from 'modals/Wrappers';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { clipAddress, humanNumber, planckBnToUnit, rmCommas } from 'Utils';
+import { clipAddress, planckToUnit, rmCommas } from 'Utils';
 
 export const ValidatorMetrics = () => {
   const {
@@ -38,16 +38,16 @@ export const ValidatorMetrics = () => {
   const validatorInEra =
     stakers.find((s: any) => s.address === address) || null;
 
-  let ownStake = new BN(0);
-  let otherStake = new BN(0);
+  let validatorOwnStake = new BigNumber(0);
+  let otherStake = new BigNumber(0);
   if (validatorInEra) {
     const { others, own } = validatorInEra;
 
     others.forEach((o: any) => {
-      otherStake = otherStake.add(new BN(rmCommas(o.value)));
+      otherStake = otherStake.plus(new BigNumber(rmCommas(o.value)));
     });
     if (own) {
-      ownStake = new BN(rmCommas(own));
+      validatorOwnStake = new BigNumber(rmCommas(own));
     }
   }
   const [list, setList] = useState([]);
@@ -68,12 +68,12 @@ export const ValidatorMetrics = () => {
   const stats = [
     {
       label: t('selfStake'),
-      value: `${humanNumber(planckBnToUnit(ownStake, units))} ${unit}`,
+      value: `${planckToUnit(validatorOwnStake, units).toFormat()} ${unit}`,
       help: 'Self Stake',
     },
     {
       label: t('nominatorStake'),
-      value: `${humanNumber(planckBnToUnit(otherStake, units))} ${unit}`,
+      value: `${planckToUnit(otherStake, units).toFormat()} ${unit}`,
       help: 'Nominator Stake',
     },
   ];

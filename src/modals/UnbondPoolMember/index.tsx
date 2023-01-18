@@ -1,9 +1,9 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -20,9 +20,10 @@ import {
 } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, rmCommas, unitToPlanckBn } from 'Utils';
+import { greaterThanZero, planckToUnit, rmCommas, unitToPlanck } from 'Utils';
 
 export const UnbondPoolMember = () => {
+  const { t } = useTranslation('modals');
   const { api, network, consts } = useApi();
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
@@ -31,28 +32,26 @@ export const UnbondPoolMember = () => {
   const { bondDuration } = consts;
   const { member, who } = config;
   const { points } = member;
-  const freeToUnbond = planckBnToUnit(new BN(rmCommas(points)), units);
+  const freeToUnbond = planckToUnit(new BigNumber(rmCommas(points)), units);
 
   // local bond value
-  const [bond, setBond] = useState({
-    bond: freeToUnbond,
+  const [bond, setBond] = useState<{ bond: string }>({
+    bond: freeToUnbond.toString(),
   });
 
   // bond valid
   const [bondValid, setBondValid] = useState(false);
-  const { t } = useTranslation('modals');
 
   // unbond all validation
   const isValid = (() => {
-    return freeToUnbond > 0;
+    return greaterThanZero(freeToUnbond);
   })();
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = freeToUnbond;
-    setBond({ bond: _bond });
+    setBond({ bond: freeToUnbond.toString() });
     setBondValid(isValid);
-  }, [freeToUnbond, isValid]);
+  }, [freeToUnbond.toString(), isValid]);
 
   // modal resize on form update
   useEffect(() => {
@@ -66,8 +65,9 @@ export const UnbondPoolMember = () => {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
-    tx = api.tx.nominationPools.unbond(who, bondToSubmit);
+    const bondToSubmit = unitToPlanck(bond.bond, units);
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+    tx = api.tx.nominationPools.unbond(who, bondAsString);
     return tx;
   };
 
@@ -87,7 +87,7 @@ export const UnbondPoolMember = () => {
       <PaddingWrapper>
         {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
         <h2 className="title">
-          {t('unbond')} {freeToUnbond} {network.unit}
+          {`${t('unbond')} ${freeToUnbond} ${network.unit}`}
         </h2>
         <Separator />
         <NotesWrapper>

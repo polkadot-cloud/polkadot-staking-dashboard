@@ -1,6 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BigNumber from 'bignumber.js';
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -25,7 +26,6 @@ import {
   networkColorsSecondary,
 } from 'theme/default';
 import { AnySubscan } from 'types';
-import { humanNumber } from 'Utils';
 import { PayoutLineProps } from './types';
 import {
   calculatePayoutAverages,
@@ -126,7 +126,8 @@ export const PayoutLine = ({
         },
         callbacks: {
           title: () => [],
-          label: (context: any) => ` ${humanNumber(context.parsed.y)} ${unit}`,
+          label: (context: any) =>
+            ` ${new BigNumber(context.parsed.y).toFormat()} ${unit}`,
         },
         intersect: false,
         interaction: {

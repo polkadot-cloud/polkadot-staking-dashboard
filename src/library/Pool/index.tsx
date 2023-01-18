@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -141,7 +141,7 @@ export const Pool = (props: PoolProps) => {
         <div className="row status">
           <PoolBonded pool={pool} batchIndex={batchIndex} batchKey={batchKey} />
           {!poolsSyncing &&
-            state === 'open' &&
+            state === 'Open' &&
             !membership &&
             !isReadOnlyAccount(activeAccount) &&
             activeAccount && (

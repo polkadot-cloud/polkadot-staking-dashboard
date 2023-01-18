@@ -1,10 +1,11 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
@@ -17,18 +18,16 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, unitToPlanckBn } from 'Utils';
+import { unitToPlanck } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
-export const Summary = (props: SetupStepProps) => {
-  const { section } = props;
-
+export const Summary = ({ section }: SetupStepProps) => {
+  const { t } = useTranslation('pages');
   const { api, network } = useApi();
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const { txFeesValid } = useTxFees();
-  const { t } = useTranslation('pages');
 
   const setup = getSetupProgress('stake', activeAccount);
 
@@ -38,8 +37,6 @@ export const Summary = (props: SetupStepProps) => {
     if (!activeAccount || !api) {
       return null;
     }
-
-    const bondToSubmit = unitToPlanckBn(String(bond), units).toString();
 
     const targetsToSubmit = nominations.map((item: any) => {
       return {
@@ -55,9 +52,11 @@ export const Summary = (props: SetupStepProps) => {
       Id: controller,
     };
 
-    // construct a batch of transactions
+    const bondToSubmit = unitToPlanck(bond, units);
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+
     const txs = [
-      api.tx.staking.bond(stashToSubmit, bondToSubmit, payee),
+      api.tx.staking.bond(stashToSubmit, bondAsString, payee),
       api.tx.staking.nominate(targetsToSubmit),
       api.tx.staking.setController(controllerToSubmit),
     ];
@@ -127,7 +126,7 @@ export const Summary = (props: SetupStepProps) => {
               &nbsp; {t('nominate.bondAmount')}:
             </div>
             <div>
-              {humanNumber(bond)} {network.unit}
+              {new BigNumber(bond).toFormat()} {network.unit}
             </div>
           </section>
           <section>

@@ -1,6 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -8,7 +9,7 @@ import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyJson, MaybeAccount } from 'types';
 // eslint-disable-next-line import/no-unresolved
-import { setStateWithRef } from 'Utils';
+import { rmCommas, setStateWithRef } from 'Utils';
 import Worker from 'worker-loader!../../workers/stakers';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
 import { FastUnstakeContextInterface, LocalMeta, MetaInterface } from './types';
@@ -265,10 +266,13 @@ export const FastUnstakeProvider = ({
   const subscribeToFastUnstakeQueue = async () => {
     if (!api || !activeAccount) return;
     const subscribeQueue = async (a: MaybeAccount) => {
-      const u = await api.query.fastUnstake.queue(a, (_queue: AnyApi) => {
-        const q = _queue.unwrapOrDefault(null).toBn();
-        setStateWithRef(q, setqueueDeposit, queueDepositRef);
-      });
+      const u = await api.query.fastUnstake.queue(a, (q: AnyApi) =>
+        setStateWithRef(
+          new BigNumber(rmCommas(q.unwrapOrDefault(0).toString())),
+          setqueueDeposit,
+          queueDepositRef
+        )
+      );
       return u;
     };
     const subscribeHead = async () => {

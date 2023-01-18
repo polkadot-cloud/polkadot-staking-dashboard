@@ -1,22 +1,22 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
 import { useTranslation } from 'react-i18next';
-import { toFixedIfNecessary } from 'Utils';
+import { greaterThanZero } from 'Utils';
 
 const TotalValidatorsStatBox = () => {
+  const { t } = useTranslation('pages');
   const { staking } = useStaking();
   const { totalValidators, maxValidatorsCount } = staking;
-  const { t } = useTranslation('pages');
 
   // total validators as percent
   let totalValidatorsAsPercent = 0;
-  if (maxValidatorsCount.gt(new BN(0))) {
+  if (greaterThanZero(maxValidatorsCount)) {
     totalValidatorsAsPercent = totalValidators
-      .div(maxValidatorsCount.div(new BN(100)))
+      .div(maxValidatorsCount.dividedBy(new BigNumber(100)))
       .toNumber();
   }
 
@@ -29,9 +29,11 @@ const TotalValidatorsStatBox = () => {
     },
     graph: {
       value1: totalValidators.toNumber(),
-      value2: maxValidatorsCount.sub(totalValidators).toNumber(),
+      value2: maxValidatorsCount.minus(totalValidators).toNumber(),
     },
-    tooltip: `${toFixedIfNecessary(totalValidatorsAsPercent, 2)}%`,
+    tooltip: `${new BigNumber(totalValidatorsAsPercent)
+      .decimalPlaces(2)
+      .toFormat()}%`,
     helpKey: 'Validator',
   };
   return <Pie {...params} />;

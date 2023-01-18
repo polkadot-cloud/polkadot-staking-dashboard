@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
@@ -14,7 +14,7 @@ export const MinimumActiveBondStatBox = () => {
 
   const params = {
     label: t('nominate.minimumActiveBond'),
-    value: minActiveBond,
+    value: minActiveBond.toNumber(),
     unit: `${network.unit}`,
     helpKey: 'Bonding',
   };

@@ -81,7 +81,7 @@
     "manualSelectionSubtitle": "Add validators from scratch.",
     "manual_selection": "Manual Selection",
     "max": "Max",
-    "minimumBond": "A minimum bond of {{minBondBase}} {{unit}} is required",
+    "minimumBond": "A minimum bond of {{minBondUnit}} {{unit}} is required",
     "missingIdentity": "Missing Identity",
     "moreThanBalance": "Bond amount is more than your free balance.",
     "next": "Next",

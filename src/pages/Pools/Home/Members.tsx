@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faBars } from '@fortawesome/free-solid-svg-icons';
@@ -28,7 +28,7 @@ export const Members = () => {
   const annuncementBorderColor = networkColorsSecondary[mode];
 
   const showBlockedPrompt =
-    selectedActivePool?.bondedPool?.state === 'blocked' &&
+    selectedActivePool?.bondedPool?.state === 'Blocked' &&
     (isOwner() || isStateToggler());
 
   return (
@@ -52,7 +52,7 @@ export const Members = () => {
       )}
 
       {/* Pool in Destroying state: allow anyone to unbond & withdraw members */}
-      {selectedActivePool?.bondedPool?.state === 'destroying' && (
+      {selectedActivePool?.bondedPool?.state === 'Destroying' && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <CardWrapper
             style={{ border: `1px solid ${annuncementBorderColor}` }}

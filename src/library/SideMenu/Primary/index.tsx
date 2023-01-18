@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -13,12 +13,17 @@ import { registerSaEvent } from 'Utils';
 import { PrimaryProps } from '../types';
 import { MinimisedWrapper, Wrapper } from './Wrappers';
 
-export const Primary = (props: PrimaryProps) => {
+export const Primary = ({
+  name,
+  active,
+  to,
+  icon,
+  action,
+  minimised,
+  animate,
+}: PrimaryProps) => {
   const { setSideMenu } = useUi();
   const { network } = useApi();
-
-  const { name, active, to, icon, action, minimised } = props;
-
   const StyledWrapper = minimised ? MinimisedWrapper : Wrapper;
 
   let Action = null;
@@ -43,9 +48,6 @@ export const Primary = (props: PrimaryProps) => {
       Action = null;
   }
 
-  // animate icon config
-
-  const { animate } = props;
   const [isStopped, setIsStopped] = useState(true);
 
   const animateOptions = {

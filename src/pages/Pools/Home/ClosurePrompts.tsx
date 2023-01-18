@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
@@ -38,7 +38,7 @@ export const ClosurePrompts = () => {
   const depositorCanClose =
     !poolsSyncing &&
     isDepositor() &&
-    state === 'destroying' &&
+    state === 'Destroying' &&
     memberCounter === '1';
 
   // depositor needs to unbond funds

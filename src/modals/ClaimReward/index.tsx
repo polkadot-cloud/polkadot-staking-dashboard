@@ -1,10 +1,10 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faPlus, faShare } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -16,7 +16,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 import { FooterWrapper, PaddingWrapper, Separator } from '../Wrappers';
 
 export const ClaimReward = () => {
@@ -27,13 +27,13 @@ export const ClaimReward = () => {
   const { txFeesValid } = useTxFees();
   const { units, unit } = network;
   let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BN(0);
+  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
   const { claimType } = config;
   const { t } = useTranslation('modals');
 
   // ensure selected payout is valid
   useEffect(() => {
-    if (unclaimedRewards?.gtn(0)) {
+    if (unclaimedRewards?.isGreaterThan(0)) {
       setValid(true);
     } else {
       setValid(false);
@@ -85,9 +85,11 @@ export const ClaimReward = () => {
           {!accountHasSigner(activeAccount) ? (
             <Warning text={t('readOnly')} />
           ) : null}
-          {!unclaimedRewards?.gtn(0) ? <Warning text={t('noRewards')} /> : null}
+          {!unclaimedRewards?.isGreaterThan(0) ? (
+            <Warning text={t('noRewards')} />
+          ) : null}
           <h2 className="title">
-            {planckBnToUnit(unclaimedRewards, units)} {unit}
+            {`${planckToUnit(unclaimedRewards, units)} ${unit}`}
           </h2>
           <Separator />
           <div className="notes">

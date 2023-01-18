@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -14,8 +14,8 @@ export const Tasks = forwardRef((props: any, ref: any) => {
   const { t } = useTranslation('modals');
 
   const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
-  const poolLocked = selectedActivePool?.bondedPool?.state === 'blocked';
-  const poolDestroying = selectedActivePool?.bondedPool?.state === 'destroying';
+  const poolLocked = selectedActivePool?.bondedPool?.state === 'Blocked';
+  const poolDestroying = selectedActivePool?.bondedPool?.state === 'Destroying';
 
   return (
     <ContentWrapper>

@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
@@ -23,14 +23,19 @@ export const useInflation = () => {
     stakeTarget,
   } = params;
 
-  const BN_MILLION = new BN('1000000');
+  const BIGNUMBER_MILLION = new BigNumber('1000000');
 
-  const calculateInflation = (totalStaked: BN, numAuctions: BN) => {
+  const calculateInflation = (
+    totalStaked: BigNumber,
+    numAuctions: BigNumber
+  ) => {
     const stakedFraction =
       totalStaked.isZero() || totalIssuance.isZero()
         ? 0
-        : totalStaked.mul(BN_MILLION).div(totalIssuance).toNumber() /
-          BN_MILLION.toNumber();
+        : totalStaked
+            .multipliedBy(BIGNUMBER_MILLION)
+            .dividedBy(totalIssuance)
+            .toNumber() / BIGNUMBER_MILLION.toNumber();
     const idealStake =
       stakeTarget -
       Math.min(auctionMax, numAuctions.toNumber()) * auctionAdjust;

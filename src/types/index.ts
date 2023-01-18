@@ -1,11 +1,9 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { PageProps } from 'pages/types';
 import React, { FunctionComponent, SVGProps } from 'react';
-
-export type Fn = () => void;
 
 export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
@@ -98,6 +96,9 @@ export type Sync = 'unsynced' | 'syncing' | 'synced';
 
 // track whether bonding should be for nominator or nomination pool.
 export type BondFor = 'pool' | 'nominator';
+
+// generic function with no args or return type.
+export type Fn = () => void;
 
 // any types to compress compiler warnings
 // eslint-disable-next-line

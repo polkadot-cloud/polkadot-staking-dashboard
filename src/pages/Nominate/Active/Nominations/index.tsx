@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
@@ -87,7 +87,7 @@ export const Nominations = ({
   // determine whether buttons are disabled
   const poolDestroying =
     isPool &&
-    selectedActivePool?.bondedPool?.state === 'destroying' &&
+    selectedActivePool?.bondedPool?.state === 'Destroying' &&
     !nominating;
 
   const stopBtnDisabled =

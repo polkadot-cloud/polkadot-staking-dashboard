@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { Balance } from 'contexts/Balances/types';
 import { ExternalAccount } from 'contexts/Connect/types';
 import { ExtensionAccount } from 'contexts/Extensions/types';
@@ -52,12 +52,12 @@ export interface BondFeedbackProps {
   warnings?: string[];
   disableTxFeeUpdate?: boolean;
   setLocalResize?: () => void;
-  txFees: BN;
+  txFees: BigNumber;
   maxWidth?: boolean;
 }
 
 export interface BondInputProps {
-  freeBalance: number;
+  freeBalance: BigNumber;
   value: string;
   defaultValue: string;
   syncing?: boolean;
@@ -74,12 +74,12 @@ export interface UnbondFeedbackProps {
   listenIsValid: { (v: boolean): void } | { (): void };
   warnings?: string[];
   setLocalResize?: () => void;
-  txFees: BN;
+  txFees: BigNumber;
 }
 
 export interface UnbondInputProps {
-  active: BN;
-  unbondToMin: BN;
+  active: BigNumber;
+  unbondToMin: BigNumber;
   defaultValue: number | string;
   disabled: boolean;
   setters: any;
@@ -87,7 +87,7 @@ export interface UnbondInputProps {
 }
 
 export interface NominateStatusBarProps {
-  value: number;
+  value: BigNumber;
 }
 
 export interface DropdownProps {
