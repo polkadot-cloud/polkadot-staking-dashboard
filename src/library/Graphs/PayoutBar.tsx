@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BN from 'bn.js';
 import {
   BarElement,
   CategoryScale,
@@ -13,6 +14,7 @@ import {
   Tooltip,
 } from 'chart.js';
 import { useApi } from 'contexts/Api';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
@@ -51,10 +53,17 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
-  const { payouts, poolClaims } = useSubscan();
+  const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
+  const { selectedActivePool } = useActivePools();
+
+  let { unclaimedRewards } = selectedActivePool || {};
+  unclaimedRewards = unclaimedRewards ?? new BN(0);
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts.filter(
+    (p: AnySubscan) => p.event_id !== 'Slashed'
+  );
+  const unclaimedPayoutsNoSlash = unclaimedPayouts.filter(
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
 
@@ -75,6 +84,8 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const colorPoolClaims = notStaking
     ? networkColorsTransparent[`${name}-${mode}`]
     : networkColorsSecondary[`${name}-${mode}`];
+
+  const colorUnclaimsClaims = networkColorsTransparent[`${name}-${mode}`];
 
   const data = {
     labels: payoutsByDay.map((item: AnySubscan) => {
@@ -97,6 +108,22 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         data: poolClaimsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPoolClaims,
         backgroundColor: colorPoolClaims,
+        pointRadius: 0,
+        borderRadius: 3,
+      },
+      {
+        label: 'Unclaimed Payouts',
+        data: unclaimedPayoutsNoSlash,
+        borderColor: colorPoolClaims,
+        backgroundColor: colorUnclaimsClaims,
+        pointRadius: 0,
+        borderRadius: 3,
+      },
+      {
+        label: 'Unclaimed Pool Payouts',
+        data: unclaimedRewards,
+        borderColor: colorPoolClaims,
+        backgroundColor: colorUnclaimsClaims,
         pointRadius: 0,
         borderRadius: 3,
       },
