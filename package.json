@@ -23,7 +23,7 @@
     "@testing-library/user-event": "^14.4.3",
     "bignumber.js": "^9.1.1",
     "bn.js": "^5.2.1",
-    "chart.js": "^4.1.2",
+    "chart.js": "^4.2.0",
     "chartjs-plugin-datalabels": "^2.2.0",
     "che-react-number-easing": "^0.1.4",
     "date-fns": "^2.29.3",
