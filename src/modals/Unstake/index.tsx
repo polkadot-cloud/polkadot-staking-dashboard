@@ -20,7 +20,7 @@ import { Title } from 'library/Modal/Title';
 import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { greaterThanZero, planckToUnit, unitToPlanck } from 'Utils';
 import { Separator } from '../../Wrappers';
 
 export const Unstake = () => {
@@ -41,12 +41,12 @@ export const Unstake = () => {
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active } = allTransferOptions.nominate;
 
-  // convert BN values to number
-  const freeToUnbond = planckBnToUnit(active, units);
+  // convert BigNumber values to number
+  const freeToUnbond = planckToUnit(active, units);
 
   // local bond value
-  const [bond, setBond] = useState({
-    bond: freeToUnbond,
+  const [bond, setBond] = useState<{ bond: string }>({
+    bond: freeToUnbond.toString(),
   });
 
   // bond valid
@@ -54,15 +54,14 @@ export const Unstake = () => {
 
   // unbond all validation
   const isValid = (() => {
-    return freeToUnbond > 0 && !controllerNotImported;
+    return greaterThanZero(freeToUnbond) && !controllerNotImported;
   })();
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = freeToUnbond;
-    setBond({ bond: _bond });
+    setBond({ bond: freeToUnbond.toString() });
     setBondValid(isValid);
-  }, [freeToUnbond, isValid]);
+  }, [freeToUnbond.toString(), isValid]);
 
   // modal resize on form update
   useEffect(() => {
@@ -80,12 +79,13 @@ export const Unstake = () => {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
+    const bondToSubmit = unitToPlanck(String(bond.bond), units);
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
-    if (bondToSubmit.isZero()) {
+    if (!bondAsString) {
       return api.tx.staking.chill();
     }
-    const txs = [api.tx.staking.chill(), api.tx.staking.unbond(bondToSubmit)];
+    const txs = [api.tx.staking.chill(), api.tx.staking.unbond(bondAsString)];
     return api.tx.utility.batch(txs);
   };
 
@@ -109,10 +109,10 @@ export const Unstake = () => {
         ) : (
           <></>
         )}
-        {freeToUnbond > 0 ? (
+        {greaterThanZero(freeToUnbond) ? (
           <h2 className="title">
             {t('unstakeUnbond', {
-              bond: humanNumber(freeToUnbond),
+              bond: freeToUnbond.toFormat(),
               unit: network.unit,
             })}
           </h2>

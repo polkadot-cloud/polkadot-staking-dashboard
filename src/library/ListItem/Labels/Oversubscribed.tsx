@@ -3,6 +3,8 @@
 
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BigNumber from 'bignumber.js';
+import { MinBondPrecision } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useTooltip } from 'contexts/Tooltip';
 import { useValidators } from 'contexts/Validators';
@@ -47,9 +49,13 @@ export const Oversubscribed = (props: OversubscribedProps) => {
 
   const posRef = useRef(null);
 
-  const tooltipText = `${t('overSubscribedMinReward')} ${lowestReward} ${
-    network.unit
-  }`;
+  const lowestRewardFormatted = new BigNumber(lowestReward)
+    .decimalPlaces(MinBondPrecision)
+    .toFormat();
+
+  const tooltipText = `${t(
+    'overSubscribedMinReward'
+  )} ${lowestRewardFormatted} ${network.unit}`;
 
   const toggleTooltip = () => {
     if (!open) {
@@ -81,7 +87,7 @@ export const Oversubscribed = (props: OversubscribedProps) => {
                   className="warning"
                 />
               </span>
-              {lowestReward} {network.unit}
+              {lowestRewardFormatted} {network.unit}
             </OverSubscribedWrapper>
           </div>
         </motion.div>

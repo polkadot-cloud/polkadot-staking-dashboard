@@ -1,9 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { VALIDATOR_COMMUNITY } from 'config/validators';
-import { MinBondPrecision } from 'consts';
 import {
   SessionParachainValidators,
   SessionValidators,
@@ -14,13 +13,11 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyMetaBatch, Fn } from 'types';
 import {
-  planckBnToUnit,
-  removePercentage,
+  greaterThanZero,
+  planckToUnit,
   rmCommas,
   setStateWithRef,
   shuffle,
-  sleep,
-  toFixedIfNecessary,
 } from 'Utils';
 import { useApi } from '../Api';
 import { useBalances } from '../Balances';
@@ -83,8 +80,8 @@ export const ValidatorsProvider = ({
 
   // get favorites from local storage
   const getFavorites = () => {
-    const _favorites = localStorage.getItem(`${network.name}_favorites`);
-    return _favorites !== null ? JSON.parse(_favorites) : [];
+    const localFavourites = localStorage.getItem(`${network.name}_favorites`);
+    return localFavourites !== null ? JSON.parse(localFavourites) : [];
   };
 
   // stores the user's favorite validators
@@ -121,7 +118,7 @@ export const ValidatorsProvider = ({
   useEffect(() => {
     if (isReady) {
       fetchValidators();
-      subscribeSessionValidators(api);
+      subscribeSessionValidators();
     }
 
     return () => {
@@ -136,8 +133,8 @@ export const ValidatorsProvider = ({
 
   // fetch parachain session validators when earliestStoredSession ready
   useEffect(() => {
-    if (isReady && earliestStoredSession.gt(new BN(0))) {
-      subscribeParachainValidators(api);
+    if (isReady && greaterThanZero(earliestStoredSession)) {
+      subscribeParachainValidators();
     }
   }, [isReady, earliestStoredSession]);
 
@@ -168,12 +165,13 @@ export const ValidatorsProvider = ({
     });
     // fetch preferences
     const nominationsWithPrefs = await fetchValidatorPrefs(targetsFormatted);
-
     if (nominationsWithPrefs) {
       setNominated(nominationsWithPrefs);
-    } else {
-      setNominated([]);
+      return;
     }
+
+    // return empty otherwise.
+    setNominated([]);
   };
 
   // fetch active account's pool nominations in validator list format
@@ -243,40 +241,41 @@ export const ValidatorsProvider = ({
 
     // fetch validator set
     const v: Array<Validator> = [];
-    let totalNonAllCommission: BN = new BN(0);
+    let totalNonAllCommission = new BigNumber(0);
     const exposures = await api.query.staking.validators.entries();
-    exposures.forEach(([_args, _prefs]: AnyApi) => {
-      const address = _args.args[0].toHuman();
-      const prefs = _prefs.toHuman();
+    exposures.forEach(([a, p]: AnyApi) => {
+      const address = a.args[0].toHuman();
+      const prefs = p.toHuman();
 
-      const _commission = removePercentage(prefs.commission);
-      if (_commission !== 100) {
-        totalNonAllCommission = totalNonAllCommission.add(new BN(_commission));
+      const commission = new BigNumber(prefs.commission.slice(0, -1));
+
+      if (!commission.isEqualTo(new BigNumber(100))) {
+        totalNonAllCommission = totalNonAllCommission.plus(commission);
       }
 
       v.push({
         address,
         prefs: {
-          commission: parseFloat(_commission.toFixed(2)),
+          commission: Number(commission.toFixed(2)),
           blocked: prefs.blocked,
         },
       });
     });
 
     // get average network commission for all non-100% commissioned validators.
-    const nonCommissionCount = exposures.filter(
+    const notFullCommissionCount = exposures.filter(
       (e: AnyApi) => e.commission !== '100%'
     ).length;
 
-    const _avgCommission = nonCommissionCount
-      ? toFixedIfNecessary(
-          totalNonAllCommission.toNumber() / nonCommissionCount,
-          2
-        )
+    const average = notFullCommissionCount
+      ? totalNonAllCommission
+          .dividedBy(notFullCommissionCount)
+          .decimalPlaces(2)
+          .toNumber()
       : 0;
 
     setFetchedValidators(2);
-    setAvgCommission(_avgCommission);
+    setAvgCommission(average);
     // shuffle validators before setting them.
     setValidators(shuffle(v));
   };
@@ -284,31 +283,29 @@ export const ValidatorsProvider = ({
   /*
    * subscribe to active session
    */
-  const subscribeSessionValidators = async (_api: AnyApi) => {
-    if (isReady) {
-      const unsub = await _api.query.session.validators(
-        (_validators: AnyApi) => {
-          setSessionValidators({
-            ...sessionValidators,
-            list: _validators.toHuman(),
-            unsub,
-          });
-        }
-      );
+  const subscribeSessionValidators = async () => {
+    if (api !== null && isReady) {
+      const unsub: AnyApi = await api.query.session.validators((v: AnyApi) => {
+        setSessionValidators({
+          ...sessionValidators,
+          list: v.toHuman(),
+          unsub,
+        });
+      });
     }
   };
 
   /*
    * subscribe to active parachain validators
    */
-  const subscribeParachainValidators = async (_api: AnyApi) => {
-    if (isReady) {
-      const unsub = await _api.query.paraSessionInfo.accountKeys(
+  const subscribeParachainValidators = async () => {
+    if (api !== null && isReady) {
+      const unsub: AnyApi = await api.query.paraSessionInfo.accountKeys(
         earliestStoredSession.toString(),
-        (_validators: AnyApi) => {
+        (v: AnyApi) => {
           setSessionParachainValidators({
             ...sessionParachainValidators,
-            list: _validators.toHuman(),
+            list: v.toHuman(),
             unsub,
           });
         }
@@ -319,29 +316,27 @@ export const ValidatorsProvider = ({
   /*
    * fetches prefs for a list of validators
    */
-  const fetchValidatorPrefs = async (_validators: ValidatorAddresses) => {
-    if (!_validators.length || !api) {
+  const fetchValidatorPrefs = async (addresses: ValidatorAddresses) => {
+    if (!addresses.length || !api) {
       return null;
     }
 
     const v: string[] = [];
-    for (const _v of _validators) {
-      v.push(_v.address);
+    for (const address of addresses) {
+      v.push(address.address);
     }
 
-    const prefsAll = await api.query.staking.validators.multi(v);
+    const allPrefs = await api.query.staking.validators.multi(v);
 
     const validatorsWithPrefs = [];
     let i = 0;
-    for (const _prefs of prefsAll) {
-      const prefs: AnyApi = _prefs.toHuman();
-
-      const commission = removePercentage(prefs?.commission ?? '0%');
+    for (const p of allPrefs) {
+      const prefs: AnyApi = p.toHuman();
 
       validatorsWithPrefs.push({
         address: v[i],
         prefs: {
-          commission,
+          commission: prefs?.commission.slice(0, -1) ?? '0',
           blocked: prefs.blocked,
         },
       });
@@ -396,8 +391,8 @@ export const ValidatorsProvider = ({
     }
 
     const addresses = [];
-    for (const _v of v) {
-      addresses.push(_v.address);
+    for (const address of v) {
+      addresses.push(address.address);
     }
 
     // store batch addresses
@@ -494,9 +489,6 @@ export const ValidatorsProvider = ({
       addMetaBatchUnsubs(key, unsubs);
     });
 
-    // intentional throttle to prevent slow render updates.
-    await sleep(250);
-
     // subscribe to validator nominators
     const args: AnyApi = [];
 
@@ -516,20 +508,12 @@ export const ValidatorsProvider = ({
           // account for yourself being an additional nominator
           const totalNominations = others.length + 1;
 
-          // get lowest active stake for the validator
+          // sort others lowest first.
           others = others.sort((a: AnyApi, b: AnyApi) => {
-            const x = new BN(rmCommas(a.value));
-            const y = new BN(rmCommas(b.value));
-            return x.sub(y);
+            const x = new BigNumber(rmCommas(a.value));
+            const y = new BigNumber(rmCommas(b.value));
+            return x.minus(y);
           });
-
-          const lowestActive =
-            others.length > 0
-              ? toFixedIfNecessary(
-                  planckBnToUnit(new BN(rmCommas(others[0].value)), units),
-                  MinBondPrecision
-                )
-              : 0;
 
           // get the lowest reward stake of the validator, which is
           // the largest index - `maxNominatorRewardedPerValidator`,
@@ -541,12 +525,9 @@ export const ValidatorsProvider = ({
 
           const lowestReward =
             others.length > 0
-              ? toFixedIfNecessary(
-                  planckBnToUnit(
-                    new BN(rmCommas(others[lowestRewardIndex]?.value)),
-                    units
-                  ),
-                  MinBondPrecision
+              ? planckToUnit(
+                  new BigNumber(rmCommas(others[lowestRewardIndex]?.value)),
+                  units
                 )
               : 0;
 
@@ -554,7 +535,6 @@ export const ValidatorsProvider = ({
             total: _validator.total,
             own: _validator.own,
             total_nominations: totalNominations,
-            lowest: lowestActive,
             lowestReward,
           });
         }

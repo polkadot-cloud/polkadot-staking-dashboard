@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import {
   addDays,
   differenceInDays,
@@ -11,8 +11,8 @@ import {
   startOfDay,
   subDays,
 } from 'date-fns';
-import { AnySubscan } from 'types';
-import { planckBnToUnit } from 'Utils';
+import { AnyApi, AnySubscan } from 'types';
+import { greaterThanZero, planckToUnit } from 'Utils';
 import { PayoutDayCursor } from './types';
 
 // Given payouts, calculate daily income and fill missing days with zero amounts.
@@ -44,7 +44,7 @@ export const calculatePayoutsByDay = (
   let curDay: Date = new Date();
   // current payout cursor.
   let curPayout: PayoutDayCursor = {
-    amount: new BN(0),
+    amount: new BigNumber(0),
     event_id: '',
   };
   for (const payout of payouts) {
@@ -61,7 +61,7 @@ export const calculatePayoutsByDay = (
     // handle surpassed maximum days.
     if (daysPassed(thisDay, new Date()) >= maxDays) {
       payoutsByDay.push({
-        amount: planckBnToUnit(curPayout.amount, units),
+        amount: planckToUnit(curPayout.amount, units),
         event_id: getEventId(curPayout),
         block_timestamp: getUnixTime(curDay),
       });
@@ -75,7 +75,7 @@ export const calculatePayoutsByDay = (
     if (daysDiff > 0) {
       // add current payout cursor to payoutsByDay.
       payoutsByDay.push({
-        amount: planckBnToUnit(curPayout.amount, units),
+        amount: planckToUnit(curPayout.amount, units),
         event_id: getEventId(curPayout),
         block_timestamp: getUnixTime(curDay),
       });
@@ -84,25 +84,32 @@ export const calculatePayoutsByDay = (
       curDay = thisDay;
       // reset current payout cursor for the new day.
       curPayout = {
-        amount: new BN(payout.amount),
-        event_id: new BN(payout.amount).lt(new BN(0)) ? 'Slash' : 'Reward',
+        amount: new BigNumber(payout.amount),
+        event_id: new BigNumber(payout.amount).isLessThan(new BigNumber(0))
+          ? 'Slash'
+          : 'Reward',
       };
     } else {
       // in same day. Aadd payout amount to current payout cursor.
-      curPayout.amount = curPayout.amount.add(new BN(payout.amount));
+      curPayout.amount = curPayout.amount.plus(new BigNumber(payout.amount));
     }
 
     // if only 1 payout exists, exit early here.
     if (payouts.length === 1) {
       payoutsByDay.push({
-        amount: planckBnToUnit(curPayout.amount, units),
+        amount: planckToUnit(curPayout.amount, units),
         event_id: getEventId(curPayout),
         block_timestamp: getUnixTime(curDay),
       });
       break;
     }
   }
-  return payoutsByDay;
+
+  // return payout amounts as plain numbers.
+  return payoutsByDay.map((q: AnyApi) => ({
+    ...q,
+    amount: Number(q.amount.toString()),
+  }));
 };
 
 // Calculate average payouts per day.
@@ -286,9 +293,12 @@ export const getLatestReward = (
 ) => {
   // get most recent payout
   const payoutExists =
-    payouts.find((p: AnySubscan) => new BN(p.amount).gt(new BN(0))) ?? null;
+    payouts.find((p: AnySubscan) => greaterThanZero(new BigNumber(p.amount))) ??
+    null;
   const poolClaimExists =
-    poolClaims.find((p: AnySubscan) => new BN(p.amount).gt(new BN(0))) ?? null;
+    poolClaims.find((p: AnySubscan) =>
+      greaterThanZero(new BigNumber(p.amount))
+    ) ?? null;
 
   // calculate which payout was most recent
   let lastReward = null;
@@ -402,7 +412,7 @@ export const daysPassed = (from: Date, to: Date) =>
 
 // Utility: extract whether an event id should be a slash or reward, based on the net day amount.
 const getEventId = (c: PayoutDayCursor) =>
-  c.amount.lt(new BN(0)) ? 'Slash' : 'Reward';
+  c.amount.isLessThan(new BigNumber(0)) ? 'Slash' : 'Reward';
 
 // Utility: Formats a width and height pair.
 export const formatSize = (

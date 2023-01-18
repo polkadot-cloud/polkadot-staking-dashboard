@@ -1,8 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Option } from '@polkadot/types-codec';
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import {
   BalanceLedger,
   BalancesAccount,
@@ -53,10 +52,10 @@ export const BalancesProvider = ({
   useEffect(() => {
     if (isReady) {
       // local updated values
-      let _accounts = accountsRef.current;
-      let _ledgers = ledgersRef.current;
-      const _unsubsBalances = unsubsBalancesRef.current;
-      const _unsubsLedgers = unsubsLedgersRef.current;
+      let newAccounts = accountsRef.current;
+      let newLedgers = ledgersRef.current;
+      const newUnsubsBalances = unsubsBalancesRef.current;
+      const newUnsubsLedgers = unsubsLedgersRef.current;
 
       // get accounts removed: use these to unsubscribe
       const accountsRemoved = accountsRef.current.filter(
@@ -71,16 +70,16 @@ export const BalancesProvider = ({
           )
       );
       // update accounts state for removal
-      _accounts = accountsRef.current.filter((a: BalancesAccount) =>
+      newAccounts = accountsRef.current.filter((a: BalancesAccount) =>
         connectAccounts.find((c: ImportedAccount) => c.address === a.address)
       );
       // update ledgers state for removal
-      _ledgers = ledgersRef.current.filter((l: BalanceLedger) =>
+      newLedgers = ledgersRef.current.filter((l: BalanceLedger) =>
         connectAccounts.find((c: ImportedAccount) => c.address === l.address)
       );
 
       // update accounts state and unsubscribe if accounts have been removed
-      if (_accounts.length < accountsRef.current.length) {
+      if (newAccounts.length < accountsRef.current.length) {
         // unsubscribe from removed balances
         accountsRemoved.forEach((a: BalancesAccount) => {
           const unsub = unsubsBalancesRef.current.find(
@@ -89,16 +88,20 @@ export const BalancesProvider = ({
           if (unsub) {
             unsub.unsub();
             // remove unsub from balances
-            _unsubsBalances.filter((u: AnyApi) => u.key !== a.address);
+            newUnsubsBalances.filter((u: AnyApi) => u.key !== a.address);
           }
         });
         // commit state updates
-        setStateWithRef(_unsubsBalances, setUnsubsBalances, unsubsBalancesRef);
-        setStateWithRef(_accounts, setAccounts, accountsRef);
+        setStateWithRef(
+          newUnsubsBalances,
+          setUnsubsBalances,
+          unsubsBalancesRef
+        );
+        setStateWithRef(newAccounts, setAccounts, accountsRef);
       }
 
       // update ledgers state and unsubscribe if accounts have been removed
-      if (_ledgers.length < ledgersRef.current.length) {
+      if (newLedgers.length < ledgersRef.current.length) {
         // unsubscribe from removed ledgers if it exists
         accountsRemoved.forEach((a: BalancesAccount) => {
           const unsub = unsubsLedgersRef.current.find(
@@ -107,12 +110,12 @@ export const BalancesProvider = ({
           if (unsub) {
             unsub.unsub();
             // remove unsub from balances
-            _unsubsLedgers.filter((u: AnyApi) => u.key !== a.address);
+            newUnsubsLedgers.filter((u: AnyApi) => u.key !== a.address);
           }
         });
         // commit state updates
-        setStateWithRef(_unsubsLedgers, setUnsubsLedgers, unsubsLedgersRef);
-        setStateWithRef(_ledgers, setLedgers, ledgersRef);
+        setStateWithRef(newUnsubsLedgers, setUnsubsLedgers, unsubsLedgersRef);
+        setStateWithRef(newLedgers, setLedgers, ledgersRef);
       }
 
       // if accounts have changed, update state with new unsubs / accounts
@@ -158,9 +161,7 @@ export const BalancesProvider = ({
   const subscribeToBalances = async (address: string) => {
     if (!api) return;
 
-    const unsub: () => void = await api.queryMulti<
-      [AnyApi, AnyApi, Option<AnyApi>, Option<AnyApi>]
-    >(
+    const unsub = await api.queryMulti<AnyApi>(
       [
         [api.query.system.account, address],
         [api.query.balances.locks, address],
@@ -168,40 +169,39 @@ export const BalancesProvider = ({
         [api.query.staking.nominators, address],
       ],
       async ([{ data }, locks, bonded, nominations]): Promise<void> => {
-        const _account: BalancesAccount = {
+        const newAccount: BalancesAccount = {
           address,
         };
-
-        // get account balances
-        const { free, reserved, miscFrozen, feeFrozen } = data;
-
-        // calculate free balance after app reserve
-        let freeAfterReserve = new BN(free).sub(existentialAmount);
-        freeAfterReserve = freeAfterReserve.lt(new BN(0))
-          ? new BN(0)
-          : freeAfterReserve;
+        const free = new BigNumber(data.free.toString());
+        const reserved = new BigNumber(data.reserved.toString());
+        const miscFrozen = new BigNumber(data.miscFrozen.toString());
+        const feeFrozen = new BigNumber(data.feeFrozen.toString());
+        const freeAfterReserve = BigNumber.max(
+          free.minus(existentialAmount),
+          new BigNumber(0)
+        );
 
         // set account balances to context
-        _account.balance = {
-          free: free.toBn(),
-          reserved: reserved.toBn(),
-          miscFrozen: miscFrozen.toBn(),
-          feeFrozen: feeFrozen.toBn(),
+        newAccount.balance = {
+          free,
+          reserved,
+          miscFrozen,
+          feeFrozen,
           freeAfterReserve,
         };
 
         // get account locks
         const _locks = locks.toHuman();
         for (let i = 0; i < _locks.length; i++) {
-          _locks[i].amount = new BN(rmCommas(_locks[i].amount));
+          _locks[i].amount = new BigNumber(rmCommas(_locks[i].amount));
         }
-        _account.locks = _locks;
+        newAccount.locks = _locks;
 
         // set account bonded (controller) or null
         let _bonded = bonded.unwrapOr(null);
         _bonded =
           _bonded === null ? null : (_bonded.toHuman() as string | null);
-        _account.bonded = _bonded;
+        newAccount.bonded = _bonded;
 
         // add bonded (controller) account as external account if not presently imported
         if (_bonded) {
@@ -214,35 +214,33 @@ export const BalancesProvider = ({
           }
         }
 
-        // set account nominations
-        let _nominations = nominations.unwrapOr(null);
-        if (_nominations === null) {
-          _nominations = defaults.nominations;
-        } else {
-          _nominations = {
-            targets: _nominations.targets.toHuman(),
-            submittedIn: _nominations.submittedIn.toHuman(),
-          };
-        }
+        // set account nominations.
+        const newNominations = nominations.unwrapOr(null);
+        newAccount.nominations =
+          newNominations === null
+            ? defaults.nominations
+            : {
+                targets: newNominations.targets.toHuman(),
+                submittedIn: newNominations.submittedIn.toHuman(),
+              };
 
-        _account.nominations = _nominations;
-
-        // update account in context state
-        let _accounts = Object.values(accountsRef.current);
-        // remove stale account if it's already in list
-        _accounts = _accounts
+        // remove stale account if it's already in list.
+        const newAccounts = Object.values(accountsRef.current)
           .filter((a: BalancesAccount) => a.address !== address)
-          .concat(_account);
+          .concat(newAccount);
 
-        setStateWithRef(_accounts, setAccounts, accountsRef);
+        setStateWithRef(newAccounts, setAccounts, accountsRef);
       }
     );
 
-    const _unsubs = unsubsBalancesRef.current.concat({
-      key: address,
-      unsub,
-    });
-    setStateWithRef(_unsubs, setUnsubsBalances, unsubsBalancesRef);
+    setStateWithRef(
+      unsubsBalancesRef.current.concat({
+        key: address,
+        unsub,
+      }),
+      setUnsubsBalances,
+      unsubsBalancesRef
+    );
     return unsub;
   };
 
@@ -262,11 +260,11 @@ export const BalancesProvider = ({
           // format unlocking chunks
           const _unlocking = [];
           for (const u of unlocking.toHuman()) {
-            const era = rmCommas(u.era);
-            const value = rmCommas(u.value);
+            const { era, value } = u;
+
             _unlocking.push({
-              era: Number(era),
-              value: new BN(value),
+              era: Number(rmCommas(era)),
+              value: new BigNumber(rmCommas(value)),
             });
           }
 
@@ -282,8 +280,8 @@ export const BalancesProvider = ({
           ledger = {
             address,
             stash: stash.toHuman(),
-            active: active.toBn(),
-            total: total.toBn(),
+            active: new BigNumber(rmCommas(active.toString())),
+            total: new BigNumber(rmCommas(total.toString())),
             unlocking: _unlocking,
           };
 

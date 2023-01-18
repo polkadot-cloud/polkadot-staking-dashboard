@@ -9,18 +9,18 @@ export const BarSegment = ({
   widthPercent,
   flexGrow,
   label,
-  forceShowLabel,
+  forceShow,
 }: BarSegmentProps) => {
   return (
     <div
       className={dataClass}
       style={{
-        width: `${flexGrow ? 100 : widthPercent}%`,
+        width: `${flexGrow || forceShow ? 100 : widthPercent}%`,
         flexGrow,
       }}
     >
       {widthPercent >= BarSegmentShowLabelThreshold ||
-      (widthPercent < BarSegmentShowLabelThreshold && forceShowLabel) ? (
+      (widthPercent < BarSegmentShowLabelThreshold && forceShow) ? (
         <span>{label}</span>
       ) : null}
     </div>

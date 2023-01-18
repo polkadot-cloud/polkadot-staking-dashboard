@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -11,7 +11,7 @@ import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { planckToUnit, unitToPlanck } from 'Utils';
 import { UnbondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
@@ -56,8 +56,8 @@ export const UnbondFeedback = ({
     bond: defaultValue,
   });
 
-  // current bond value BN
-  const bondBn = unitToPlanckBn(String(bond.bond), units);
+  // current bond value BigNumber
+  const bondBn = unitToPlanck(String(bond.bond), units);
 
   // update bond on account change
   useEffect(() => {
@@ -89,21 +89,24 @@ export const UnbondFeedback = ({
         ? minCreateBond
         : minJoinBond
       : minNominatorBond;
-  const minBondBase = planckBnToUnit(minBondBn, units);
+  const minBondUnit = planckToUnit(minBondBn, units);
 
   // unbond amount to minimum threshold
   const unbondToMin =
     bondFor === 'pool'
       ? inSetup || isDepositor()
-        ? BN.max(active.sub(minCreateBond), new BN(0))
-        : BN.max(active.sub(minJoinBond), new BN(0))
-      : BN.max(active.sub(minNominatorBond), new BN(0));
+        ? BigNumber.max(active.minus(minCreateBond), new BigNumber(0))
+        : BigNumber.max(active.minus(minJoinBond), new BigNumber(0))
+      : BigNumber.max(active.minus(minNominatorBond), new BigNumber(0));
 
   // check if bonded is below the minimum required
   const nominatorActiveBelowMin =
-    bondFor === 'nominator' && !active.isZero() && active.lt(minNominatorBond);
+    bondFor === 'nominator' &&
+    !active.isZero() &&
+    active.isLessThan(minNominatorBond);
   const poolToMinBn = isDepositor() ? minCreateBond : minJoinBond;
-  const poolActiveBelowMin = bondFor === 'pool' && active.lt(poolToMinBn);
+  const poolActiveBelowMin =
+    bondFor === 'pool' && active.isLessThan(poolToMinBn);
 
   // handle error updates
   const handleErrors = () => {
@@ -112,7 +115,7 @@ export const UnbondFeedback = ({
     const _decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
 
     // unbond errors
-    if (bondBn.gt(active)) {
+    if (bondBn.isGreaterThan(active)) {
       _errors.push(t('unbondAmount'));
     }
 
@@ -121,7 +124,7 @@ export const UnbondFeedback = ({
       if (getControllerNotImported(controller))
         _errors.push(t('importedToUnbond'));
 
-    if (bond.bond !== '' && bondBn.lt(new BN(1))) {
+    if (bond.bond !== '' && bondBn.isLessThan(new BigNumber(1))) {
       _errors.push(t('valueTooSmall'));
     }
 
@@ -129,9 +132,9 @@ export const UnbondFeedback = ({
       _errors.push(`Bond amount can only have at most ${units} decimals.`);
     }
 
-    if (bondBn.gt(unbondToMin)) {
+    if (bondBn.isGreaterThan(unbondToMin)) {
       // start the error message stating a min bond is required.
-      let err = `${t('minimumBond', { minBondBase, unit })} `;
+      let err = `${t('minimumBond', { minBondUnit, unit })} `;
       // append the subject to the error message.
       if (bondFor === 'nominator') {
         err += t('whenActivelyNominating');

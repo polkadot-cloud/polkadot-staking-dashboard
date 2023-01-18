@@ -111,7 +111,7 @@ export const Tips = () => {
   if (!activeAccount) {
     segments.push(1);
   } else if (!isNominating() && !membership) {
-    if (transferOptions.freeBalance.gt(minNominatorBond)) {
+    if (transferOptions.freeBalance.isGreaterThan(minNominatorBond)) {
       segments.push(2);
     } else {
       segments.push(3);

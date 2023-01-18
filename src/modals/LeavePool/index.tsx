@@ -6,7 +6,7 @@ import {
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -25,7 +25,7 @@ import {
 } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { greaterThanZero, planckToUnit, unitToPlanck } from 'Utils';
 import { Separator } from '../../Wrappers';
 
 export const LeavePool = () => {
@@ -43,15 +43,15 @@ export const LeavePool = () => {
   const { bondDuration } = consts;
 
   let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BN(0);
-  unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
+  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
+  unclaimedRewards = planckToUnit(unclaimedRewards, network.units);
 
-  // convert BN values to number
-  const freeToUnbond = planckBnToUnit(activeBn, units);
+  // convert BigNumber values to number
+  const freeToUnbond = planckToUnit(activeBn, units);
 
   // local bond value
-  const [bond, setBond] = useState({
-    bond: freeToUnbond,
+  const [bond, setBond] = useState<{ bond: string }>({
+    bond: freeToUnbond.toString(),
   });
 
   // bond valid
@@ -59,15 +59,14 @@ export const LeavePool = () => {
 
   // unbond all validation
   const isValid = (() => {
-    return freeToUnbond > 0;
+    return greaterThanZero(freeToUnbond);
   })();
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = freeToUnbond;
-    setBond({ bond: _bond });
+    setBond({ bond: freeToUnbond.toString() });
     setBondValid(isValid);
-  }, [freeToUnbond, isValid]);
+  }, [freeToUnbond.toString(), isValid]);
 
   // modal resize on form update
   useEffect(() => {
@@ -81,8 +80,9 @@ export const LeavePool = () => {
       return tx;
     }
 
-    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
-    tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
+    const bondToSubmit = unitToPlanck(bond.bond, units);
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+    tx = api.tx.nominationPools.unbond(activeAccount, bondAsString);
     return tx;
   };
 
@@ -111,7 +111,7 @@ export const LeavePool = () => {
           </WarningsWrapper>
         )}
         <h2 className="title">
-          {t('unbond')} {freeToUnbond} {network.unit}
+          {`${t('unbond')} ${freeToUnbond} ${network.unit}`}
         </h2>
         <Separator />
         <NotesWrapper>

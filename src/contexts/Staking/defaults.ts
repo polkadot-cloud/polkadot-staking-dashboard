@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import {
   EraStakers,
   NominationStatuses,
@@ -11,26 +11,25 @@ import {
 } from 'contexts/Staking/types';
 
 export const stakingMetrics: StakingMetrics = {
-  totalNominators: new BN(0),
-  totalValidators: new BN(0),
-  lastReward: new BN(0),
-  lastTotalStake: new BN(0),
-  validatorCount: new BN(0),
-  maxValidatorsCount: new BN(0),
-  minNominatorBond: new BN(0),
+  totalNominators: new BigNumber(0),
+  totalValidators: new BigNumber(0),
+  lastReward: new BigNumber(0),
+  lastTotalStake: new BigNumber(0),
+  validatorCount: new BigNumber(0),
+  maxValidatorsCount: new BigNumber(0),
+  minNominatorBond: new BigNumber(0),
   payee: null,
   unsub: null,
 };
 
 export const eraStakers: EraStakers = {
   stakers: [],
-  totalStaked: new BN(0),
+  totalStaked: new BigNumber(0),
+  minActiveBond: new BigNumber(0),
   nominators: undefined,
   totalActiveNominators: 0,
   activeValidators: 0,
-  minActiveBond: 0,
-  minStakingActiveBond: 0,
-  ownStake: 0,
+  activeAccountOwnStake: [],
 };
 
 export const targets: StakingTargets = {

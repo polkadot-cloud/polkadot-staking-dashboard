@@ -9,7 +9,7 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, toFixedIfNecessary } from 'Utils';
+import { planckToUnit } from 'Utils';
 import { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 
@@ -21,9 +21,9 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { minActiveBond } = eraStakers;
   const { t } = useTranslation('library');
 
-  const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
-  const gtMinNominatorBond = value >= minNominatorBondBase;
-  const gtMinActiveBond = value >= minActiveBond;
+  const minNominatorBondUnit = planckToUnit(minNominatorBond, units);
+  const gtMinNominatorBond = value.isGreaterThanOrEqualTo(minNominatorBondUnit);
+  const gtMinActiveBond = value.isGreaterThanOrEqualTo(minActiveBond);
 
   return (
     <Wrapper>
@@ -42,7 +42,7 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
           </h4>
           <div className="bar">
             <h5>
-              {toFixedIfNecessary(minNominatorBondBase, 3)} {unit}
+              {minNominatorBondUnit.decimalPlaces(3).toFormat()} {unit}
             </h5>
           </div>
         </section>
@@ -56,12 +56,12 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
             <h5>
               {isSyncing
                 ? '...'
-                : `${toFixedIfNecessary(
-                    minActiveBond < minNominatorBondBase
-                      ? minNominatorBondBase
-                      : minActiveBond,
-                    3
-                  )} ${unit}`}
+                : `${(minActiveBond.isLessThan(minNominatorBondUnit)
+                    ? minNominatorBondUnit
+                    : minActiveBond
+                  )
+                    .decimalPlaces(3)
+                    .toFormat()} ${unit}`}
             </h5>
           </div>
         </section>

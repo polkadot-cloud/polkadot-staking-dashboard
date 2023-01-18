@@ -14,10 +14,7 @@ import { ReactComponent as WestendInlineSVG } from 'img/westend_inline.svg';
 import { ReactComponent as WestendLogoSVG } from 'img/westend_logo.svg';
 import { Networks } from 'types';
 
-/*
- * Network Configuration
- */
-export const NETWORKS: Networks = {
+export const NetworkList: Networks = {
   polkadot: {
     name: 'polkadot',
     endpoints: {
