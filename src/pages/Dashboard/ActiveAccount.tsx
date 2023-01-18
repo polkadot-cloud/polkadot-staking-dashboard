@@ -4,7 +4,7 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useConnect } from 'contexts/Connect';
+import { useAccount } from 'contexts/Account';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
 import { Identicon } from 'library/Identicon';
@@ -14,16 +14,15 @@ import { ActiveAccounWrapper } from './Wrappers';
 
 export const ActiveAccount = () => {
   const { addNotification } = useNotifications();
-  const { activeAccount, getAccount } = useConnect();
-  const accountData = getAccount(activeAccount);
+  const { address, role } = useAccount();
   const { t } = useTranslation('pages');
 
   // click to copy notification
   let notification: NotificationText | null = null;
-  if (accountData !== null) {
+  if (address !== undefined) {
     notification = {
       title: t('dashboard.addressCopied'),
-      subtitle: accountData.address,
+      subtitle: address,
     };
   }
 
@@ -32,19 +31,16 @@ export const ActiveAccount = () => {
       <div className="account">
         <div className="title">
           <h3>
-            {accountData && (
+            {address && (
               <>
                 <div className="icon">
-                  <Identicon
-                    value={accountData.address}
-                    size={remToUnit('1.7rem')}
-                  />
+                  <Identicon value={address} size={remToUnit('1.7rem')} />
                 </div>
-                {clipAddress(accountData.address)}
+                {clipAddress(address)}
                 <button
                   type="button"
                   onClick={() => {
-                    navigator.clipboard.writeText(accountData.address);
+                    navigator.clipboard.writeText(address);
                     if (notification) {
                       addNotification(notification);
                     }
@@ -56,18 +52,14 @@ export const ActiveAccount = () => {
                     transform="shrink-1"
                   />
                 </button>
-                {accountData.name !== clipAddress(accountData.address) && (
-                  <>
-                    <div className="sep" />
-                    <div className="rest">
-                      <span className="name">{accountData.name}</span>
-                    </div>
-                  </>
-                )}
+                <div className="sep" />
+                <div className="rest">
+                  <span className="name">{!role ? 'No Role' : role}</span>
+                </div>
               </>
             )}
 
-            {!accountData && t('dashboard.noAccountConnected')}
+            {!address && t('dashboard.noAccountConnected')}
           </h3>
         </div>
       </div>

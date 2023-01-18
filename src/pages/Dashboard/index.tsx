@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { useTranslation } from 'react-i18next';
@@ -24,6 +25,10 @@ export const Dashboard = () => {
         <TotalHousingFund />
         <TotalUsers />
       </StatBoxList>
+
+      <PageRowWrapper className="page-padding" noVerticalSpacer>
+        <CardWrapper>{/* <ValidatorList /> */}</CardWrapper>
+      </PageRowWrapper>
     </>
   );
 };
