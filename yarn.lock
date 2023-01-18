@@ -1785,7 +1785,7 @@
     eventemitter3 "^4.0.7"
     rxjs "^7.8.0"
 
-"@polkadot/keyring@^10.2.3", "@polkadot/keyring@^10.2.6":
+"@polkadot/keyring@^10.2.6":
   version "10.2.6"
   resolved "https://registry.npmjs.org/@polkadot/keyring/-/keyring-10.2.6.tgz#79ffbfe961fbd83f266147c280e26c116112f7be"
   integrity sha512-ippK6zLRZFGqlAEKO9SpGPk+AJh798hHjI+WnCpzsHU2qFWqkZtePdv0FMZ9r3XqkA75ftV5ML/+/JctMN3kSg==
@@ -1801,15 +1801,6 @@
   dependencies:
     "@babel/runtime" "^7.20.7"
     "@polkadot/util" "10.2.6"
-    "@substrate/ss58-registry" "^1.37.0"
-
-"@polkadot/networks@^10.2.3":
-  version "10.2.3"
-  resolved "https://registry.npmjs.org/@polkadot/networks/-/networks-10.2.3.tgz#89940078f9c4967bf5edbc66dd22207bdebc3a73"
-  integrity sha512-YE2/UzrYrf8IZpZ4jfK7rWJdXjW10ISqlePzDx02BCkEB7GZj9al9c3m+lJPaqmpwcGPZpn0UVw6UtBSIt4pNA==
-  dependencies:
-    "@babel/runtime" "^7.20.7"
-    "@polkadot/util" "10.2.3"
     "@substrate/ss58-registry" "^1.37.0"
 
 "@polkadot/react-identicon@^2.9.15":
@@ -1934,10 +1925,10 @@
     "@polkadot/util-crypto" "^10.2.6"
     rxjs "^7.8.0"
 
-"@polkadot/ui-settings@2.9.15":
-  version "2.9.15"
-  resolved "https://registry.npmjs.org/@polkadot/ui-settings/-/ui-settings-2.9.15.tgz#164da9e4998ce129d60c03d20bcb3eb60b4fc064"
-  integrity sha512-OSBZsb4Z42g1KpA/Vihkbm4jtRe1BHqqglMIAjKlAJ892X2XP5T+c0FgFrlFJrv5fmAF1QbjjT9Y6V8H8hqYCw==
+"@polkadot/ui-settings@2.10.1":
+  version "2.10.1"
+  resolved "https://registry.yarnpkg.com/@polkadot/ui-settings/-/ui-settings-2.10.1.tgz#979a0241e7c4d60a5e86b152a3355bf197e30d0f"
+  integrity sha512-Fv5DhLG36rdHax9y2bh432BvHbohosDqdlrqp/s7qt+6DYWaed/xrpIxySCWeMO7C/G7vvkYJs9mR66/VBPApw==
   dependencies:
     "@babel/runtime" "^7.20.7"
     "@polkadot/networks" "^10.2.6"
@@ -1953,7 +1944,7 @@
     "@babel/runtime" "^7.20.7"
     color "^3.2.1"
 
-"@polkadot/util-crypto@10.2.6", "@polkadot/util-crypto@^10.2.3", "@polkadot/util-crypto@^10.2.6":
+"@polkadot/util-crypto@10.2.6", "@polkadot/util-crypto@^10.2.6":
   version "10.2.6"
   resolved "https://registry.npmjs.org/@polkadot/util-crypto/-/util-crypto-10.2.6.tgz#3fcd4df4a85c67235136c6987624642636070f03"
   integrity sha512-UPk7DRFXTEEm2tM7Xy5hcPvhI8C/Ln0KJgCBxYtyBq4yCTrUEtJjQVuDr6yE/cUVtNDDRGUjXIW8rW1mNpMyuA==
@@ -2034,14 +2025,6 @@
   dependencies:
     "@babel/runtime" "^7.20.6"
 
-"@polkadot/x-bigint@10.2.3":
-  version "10.2.3"
-  resolved "https://registry.npmjs.org/@polkadot/x-bigint/-/x-bigint-10.2.3.tgz#6dceb291892491384de567aa3f9f31a6472c23de"
-  integrity sha512-xPblZVmIpXV7rMzwArOA3BfiDjBZ296jfkpMRaa90sSUEAxFTu8f0SEAxNkUIXrpyyzNiwqL5DhCp1pRuqg36w==
-  dependencies:
-    "@babel/runtime" "^7.20.7"
-    "@polkadot/x-global" "10.2.3"
-
 "@polkadot/x-bigint@10.2.6", "@polkadot/x-bigint@^10.2.6":
   version "10.2.6"
   resolved "https://registry.npmjs.org/@polkadot/x-bigint/-/x-bigint-10.2.6.tgz#94a7a10f00ae3df05448456879ab4709fa99defc"
@@ -2059,13 +2042,6 @@
     "@polkadot/x-global" "10.2.6"
     "@types/node-fetch" "^2.6.2"
     node-fetch "^3.3.0"
-
-"@polkadot/x-global@10.2.3":
-  version "10.2.3"
-  resolved "https://registry.npmjs.org/@polkadot/x-global/-/x-global-10.2.3.tgz#7d8ab3750f078c963759a498a65152d809c67eea"
-  integrity sha512-lloJGTilvEi9gnviHacnRphv2zMhOxgXf4Ajn+dSF8zR7UzyCL9Gphg3G/nagebBtGAq1BSOS6QWOiRcuAeZrA==
-  dependencies:
-    "@babel/runtime" "^7.20.7"
 
 "@polkadot/x-global@10.2.6", "@polkadot/x-global@^10.2.6":
   version "10.2.6"
@@ -2189,19 +2165,10 @@
   resolved "https://registry.npmjs.org/@substrate/connect-extension-protocol/-/connect-extension-protocol-1.0.1.tgz#fa5738039586c648013caa6a0c95c43265dbe77d"
   integrity sha512-161JhCC1csjH3GE5mPLEd7HbWtwNSPJBg3p1Ksz9SFlTzj/bgEwudiRN2y5i0MoLGCIJRYKyKGMxVnd29PzNjg==
 
-"@substrate/connect@0.7.19":
+"@substrate/connect@0.7.19", "@substrate/connect@^0.7.19":
   version "0.7.19"
   resolved "https://registry.yarnpkg.com/@substrate/connect/-/connect-0.7.19.tgz#7c879cb275bc7ac2fe9edbf797572d4ff8d8b86a"
   integrity sha512-+DDRadc466gCmDU71sHrYOt1HcI2Cbhm7zdCFjZfFVHXhC/E8tOdrVSglAH2HDEHR0x2SiHRxtxOGC7ak2Zjog==
-  dependencies:
-    "@substrate/connect-extension-protocol" "^1.0.1"
-    "@substrate/smoldot-light" "0.7.9"
-    eventemitter3 "^4.0.7"
-
-"@substrate/connect@^0.7.18":
-  version "0.7.18"
-  resolved "https://registry.npmjs.org/@substrate/connect/-/connect-0.7.18.tgz#ed4a95a4f5f60132dd26dbaf98820044b622763e"
-  integrity sha512-T1CaZJhe+uaeyM/cBdmD/oMWnaGf+tJdfG+3Os4H5YR0NVKXWsHpSfBryBP5wEce2hQhRiNnzQ+9ny8siKqRgg==
   dependencies:
     "@substrate/connect-extension-protocol" "^1.0.1"
     "@substrate/smoldot-light" "0.7.9"
