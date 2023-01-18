@@ -4,16 +4,13 @@
 import { faChevronRight, faCog } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
-import { useSetup } from 'contexts/Setup';
 import { Title } from 'library/Modal/Title';
 import { PaddingWrapper } from 'modals/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { varToUrlHash } from 'Utils';
 
 export const StartStaking = () => {
   const navigate = useNavigate();
-  const { setOnNominatorSetup } = useSetup();
   const { setStatus } = useModal();
   const { t } = useTranslation('modals');
   return (
@@ -25,9 +22,7 @@ export const StartStaking = () => {
           className="action-button"
           disabled={false}
           onClick={() => {
-            setOnNominatorSetup(true);
-            varToUrlHash('t', String(3), true);
-            navigate('/nominate?f=overview');
+            navigate('/nominate');
             setStatus(2);
           }}
         >
