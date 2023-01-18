@@ -31,7 +31,7 @@ import {
   networkColorsTransparent,
 } from 'theme/default';
 import { AnySubscan } from 'types';
-import { humanNumber } from 'Utils';
+import { humanNumber, planckBnToUnit } from 'Utils';
 import { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
 
@@ -58,14 +58,18 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
 
   let { unclaimedRewards } = selectedActivePool || {};
   unclaimedRewards = unclaimedRewards ?? new BN(0);
+  unclaimedRewards = planckBnToUnit(unclaimedRewards, units);
+  // console.log(unclaimedRewards);
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts.filter(
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
+  // console.log(payoutsNoSlash);
   const unclaimedPayoutsNoSlash = unclaimedPayouts.filter(
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
+  // console.log(unclaimedPayouts);
 
   const notStaking = !isSyncing && inSetup() && !membership;
   const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
