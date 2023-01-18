@@ -57,6 +57,7 @@ export const Bond = () => {
 
   // bond value after max tx fees have been deducated.
   let bondAfterTxFees: BigNumber;
+
   if (enoughToCoverTxFees) {
     bondAfterTxFees = unitToPlanck(String(bond.bond), units);
   } else {
@@ -77,23 +78,26 @@ export const Bond = () => {
   }, [bond]);
 
   // determine whether this is a pool or staking transaction.
-  const determineTx = (bondToSubmit: string) => {
+  const determineTx = (bondToSubmit: BigNumber) => {
     let tx = null;
     if (!api) {
       return tx;
     }
+
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+
     if (isPooling) {
       tx = api.tx.nominationPools.bondExtra({
-        FreeBalance: bondToSubmit,
+        FreeBalance: bondAsString,
       });
     } else if (isStaking) {
-      tx = api.tx.staking.bondExtra(bondToSubmit);
+      tx = api.tx.staking.bondExtra(bondAsString);
     }
     return tx;
   };
 
   // the actual bond tx to submit
-  const getTx = (bondToSubmit: string) => {
+  const getTx = (bondToSubmit: BigNumber) => {
     if (!bondValid || !activeAccount) {
       return null;
     }
@@ -101,7 +105,7 @@ export const Bond = () => {
   };
 
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: getTx(bondAfterTxFees.toString()),
+    tx: getTx(bondAfterTxFees),
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {

@@ -21,15 +21,13 @@ import { useTranslation } from 'react-i18next';
 import { unitToPlanck } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
-export const Summary = (props: SetupStepProps) => {
-  const { section } = props;
-
+export const Summary = ({ section }: SetupStepProps) => {
+  const { t } = useTranslation('pages');
   const { api, network } = useApi();
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const { txFeesValid } = useTxFees();
-  const { t } = useTranslation('pages');
 
   const setup = getSetupProgress('stake', activeAccount);
 
@@ -39,8 +37,6 @@ export const Summary = (props: SetupStepProps) => {
     if (!activeAccount || !api) {
       return null;
     }
-
-    const bondToSubmit = unitToPlanck(String(bond), units).toString();
 
     const targetsToSubmit = nominations.map((item: any) => {
       return {
@@ -56,9 +52,11 @@ export const Summary = (props: SetupStepProps) => {
       Id: controller,
     };
 
-    // construct a batch of transactions
+    const bondToSubmit = unitToPlanck(bond, units);
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+
     const txs = [
-      api.tx.staking.bond(stashToSubmit, bondToSubmit, payee),
+      api.tx.staking.bond(stashToSubmit, bondAsString, payee),
       api.tx.staking.nominate(targetsToSubmit),
       api.tx.staking.setController(controllerToSubmit),
     ];

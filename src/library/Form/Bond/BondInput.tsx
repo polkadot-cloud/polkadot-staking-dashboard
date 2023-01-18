@@ -26,7 +26,7 @@ export const BondInput = ({
   // the current local bond value
   const [localBond, setLocalBond] = useState<string>(value);
 
-  // reset value to default when changing account
+  // reset value to default when changing account.
   useEffect(() => {
     setLocalBond(defaultValue ?? '0');
   }, [activeAccount]);
@@ -37,18 +37,17 @@ export const BondInput = ({
     }
   }, [value]);
 
-  // handle change for bonding
+  // handle change for bonding.
   const handleChangeBond = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value as string;
-    // ensure the value is numeric before it is put into state.
-    if (Number.isNaN(val) && val !== '') {
+    const val = e.target.value;
+    if (new BigNumber(val).isNaN() && val !== '') {
       return;
     }
     setLocalBond(val);
     updateParentState(val);
   };
 
-  // apply bond to parent setters
+  // apply bond to parent setters.
   const updateParentState = (val: string) => {
     for (const s of setters) {
       s.set({

@@ -87,7 +87,8 @@ export const Nominate = () => {
   if (!nominations.length) {
     warnings.push(`${t('noNominationsSet')}`);
   }
-  if (activeUnit.isGreaterThan(minNominatorBondUnit)) {
+
+  if (!activeUnit.isGreaterThan(minNominatorBondUnit)) {
     warnings.push(`${t('notMeetMinimum', { minNominatorBondUnit, unit })}`);
   }
 

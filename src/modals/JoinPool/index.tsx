@@ -25,6 +25,7 @@ import { FooterWrapper, NotesWrapper, PaddingWrapper } from '../Wrappers';
 import { ContentWrapper } from './Wrapper';
 
 export const JoinPool = () => {
+  const { t } = useTranslation('modals');
   const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, config, setResize } = useModal();
@@ -36,11 +37,10 @@ export const JoinPool = () => {
   const { getTransferOptions } = useTransferOptions();
   const { freeBalance } = getTransferOptions(activeAccount);
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' });
-  const { t } = useTranslation('modals');
 
   // local bond value
-  const [bond, setBond] = useState({
-    bond: planckToUnit(freeBalance, units),
+  const [bond, setBond] = useState<{ bond: string }>({
+    bond: planckToUnit(freeBalance, units).toString(),
   });
 
   // bond valid
@@ -58,10 +58,9 @@ export const JoinPool = () => {
       return tx;
     }
 
-    // remove decimal errors
-    const bondToSubmit = unitToPlanck(String(bond.bond), units).toString();
-    tx = api.tx.nominationPools.join(bondToSubmit, poolId);
-
+    const bondToSubmit = unitToPlanck(bond.bond, units);
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+    tx = api.tx.nominationPools.join(bondAsString, poolId);
     return tx;
   };
 

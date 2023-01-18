@@ -24,8 +24,8 @@ import { useTranslation } from 'react-i18next';
 import { unitToPlanck } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
-export const Summary = (props: SetupStepProps) => {
-  const { section } = props;
+export const Summary = ({ section }: SetupStepProps) => {
+  const { t } = useTranslation('pages');
   const { api, network } = useApi();
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
@@ -36,7 +36,6 @@ export const Summary = (props: SetupStepProps) => {
   const { lastPoolId } = stats;
   const poolId = lastPoolId.plus(new BigNumber(1));
   const { txFeesValid } = useTxFees();
-  const { t } = useTranslation('pages');
 
   const setup = getSetupProgress('pool', activeAccount);
 
@@ -54,13 +53,14 @@ export const Summary = (props: SetupStepProps) => {
       return null;
     }
 
-    const bondToSubmit = unitToPlanck(bond, units).toString();
     const targetsToSubmit = nominations.map((item: any) => item.address);
 
-    // construct a batch of transactions
+    const bondToSubmit = unitToPlanck(bond, units);
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+
     const txs = [
       api.tx.nominationPools.create(
-        bondToSubmit,
+        bondAsString,
         roles.root,
         roles.nominator,
         roles.stateToggler

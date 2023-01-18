@@ -45,8 +45,8 @@ export const Unstake = () => {
   const freeToUnbond = planckToUnit(active, units);
 
   // local bond value
-  const [bond, setBond] = useState({
-    bond: freeToUnbond,
+  const [bond, setBond] = useState<{ bond: string }>({
+    bond: freeToUnbond.toString(),
   });
 
   // bond valid
@@ -59,8 +59,7 @@ export const Unstake = () => {
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = freeToUnbond;
-    setBond({ bond: _bond });
+    setBond({ bond: freeToUnbond.toString() });
     setBondValid(isValid);
   }, [freeToUnbond.toString(), isValid]);
 
@@ -80,12 +79,13 @@ export const Unstake = () => {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanck(String(bond.bond), units).toString();
+    const bondToSubmit = unitToPlanck(String(bond.bond), units);
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
-    if (!bondToSubmit) {
+    if (!bondAsString) {
       return api.tx.staking.chill();
     }
-    const txs = [api.tx.staking.chill(), api.tx.staking.unbond(bondToSubmit)];
+    const txs = [api.tx.staking.chill(), api.tx.staking.unbond(bondAsString)];
     return api.tx.utility.batch(txs);
   };
 

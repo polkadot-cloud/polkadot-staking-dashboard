@@ -38,7 +38,7 @@ export const planckToUnit = (val: BigNumber, units: number) => {
  * point. (1 token = 10^units planck).
  */
 export const unitToPlanck = (val: string, units: number): BigNumber =>
-  new BigNumber(!val.length || !val ? val : '0')
+  new BigNumber(!val.length || !val ? '0' : val)
     .multipliedBy(new BigNumber(10).exponentiatedBy(new BigNumber(units)))
     .integerValue();
 

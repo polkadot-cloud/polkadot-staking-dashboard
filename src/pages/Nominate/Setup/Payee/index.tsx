@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BigNumber from 'bignumber.js';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { Footer } from 'library/SetupSteps/Footer';
@@ -47,14 +48,9 @@ export const Payee = (props: SetupStepProps) => {
   }, [activeAccount]);
 
   const handleChangePayee = (i: number) => {
-    // not in options
-    if (Number.isNaN(i)) {
+    if (new BigNumber(i).isNaN() || i >= options.length) {
       return;
     }
-    if (i >= options.length) {
-      return;
-    }
-
     // set local value to update input element
     setPayee(options[i]);
     // set setup payee

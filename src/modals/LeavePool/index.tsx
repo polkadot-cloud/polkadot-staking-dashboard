@@ -50,8 +50,8 @@ export const LeavePool = () => {
   const freeToUnbond = planckToUnit(activeBn, units);
 
   // local bond value
-  const [bond, setBond] = useState({
-    bond: freeToUnbond,
+  const [bond, setBond] = useState<{ bond: string }>({
+    bond: freeToUnbond.toString(),
   });
 
   // bond valid
@@ -64,8 +64,7 @@ export const LeavePool = () => {
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = freeToUnbond;
-    setBond({ bond: _bond });
+    setBond({ bond: freeToUnbond.toString() });
     setBondValid(isValid);
   }, [freeToUnbond.toString(), isValid]);
 
@@ -81,8 +80,9 @@ export const LeavePool = () => {
       return tx;
     }
 
-    const bondToSubmit = unitToPlanck(String(bond.bond), units).toString();
-    tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
+    const bondToSubmit = unitToPlanck(bond.bond, units);
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+    tx = api.tx.nominationPools.unbond(activeAccount, bondAsString);
     return tx;
   };
 

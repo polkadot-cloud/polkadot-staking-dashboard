@@ -100,12 +100,14 @@ export const Unbond = () => {
       return tx;
     }
 
-    const bondToSubmit = unitToPlanck(String(bond.bond), units).toString();
+    const bondToSubmit = unitToPlanck(bond.bond, units);
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+
     // determine tx
     if (isPooling) {
-      tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
+      tx = api.tx.nominationPools.unbond(activeAccount, bondAsString);
     } else if (isStaking) {
-      tx = api.tx.staking.unbond(bondToSubmit);
+      tx = api.tx.staking.unbond(bondAsString);
     }
     return tx;
   };
