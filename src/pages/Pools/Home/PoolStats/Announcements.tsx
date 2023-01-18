@@ -10,7 +10,7 @@ import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, planckToUnit, rmCommas, toFixedIfNecessary } from 'Utils';
+import { greaterThanZero, planckToUnit, rmCommas } from 'Utils';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
@@ -28,20 +28,14 @@ export const Announcements = () => {
     new BigNumber(0),
     new BigNumber(rewardAccountBalance).minus(existentialDeposit)
   );
-  const rewardBalance = toFixedIfNecessary(
-    planckToUnit(rewardPoolBalance, units),
-    3
-  );
+  const rewardBalance = planckToUnit(rewardPoolBalance, units);
 
   // calculate total rewards claimed
-  const rewardsClaimed = toFixedIfNecessary(
-    planckToUnit(
-      totalRewardsClaimed
-        ? new BigNumber(rmCommas(totalRewardsClaimed))
-        : new BigNumber(0),
-      network.units
-    ),
-    3
+  const rewardsClaimed = planckToUnit(
+    totalRewardsClaimed
+      ? new BigNumber(rmCommas(totalRewardsClaimed))
+      : new BigNumber(0),
+    network.units
   );
 
   const container = {
@@ -67,14 +61,16 @@ export const Announcements = () => {
 
   announcements.push({
     class: 'neutral',
-    title: `${humanNumber(rewardsClaimed)} ${unit} ${t('pools.beenClaimed')}`,
+    title: `${rewardsClaimed.decimalPlaces(3).toFormat()} ${unit} ${t(
+      'pools.beenClaimed'
+    )}`,
     subtitle: `${t('pools.beenClaimedBy', { unit })}`,
   });
 
-  if (rewardBalance > 0) {
+  if (greaterThanZero(rewardBalance)) {
     announcements.push({
       class: 'neutral',
-      title: `${humanNumber(rewardBalance)} ${unit} ${t(
+      title: `${rewardBalance.decimalPlaces(3).toFormat()} ${unit} ${t(
         'pools.outstandingReward'
       )}`,
       subtitle: `${t('pools.availableToClaim', { unit })}`,

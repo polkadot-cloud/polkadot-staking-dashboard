@@ -43,14 +43,17 @@ export const Bond = () => {
   unclaimedRewards = planckToUnit(unclaimedRewards, network.units);
 
   // local bond value.
-  const [bond, setBond] = useState({ bond: freeBalance });
+  const [bond, setBond] = useState<{ bond: string }>({
+    bond: freeBalance.toString(),
+  });
 
   // bond valid.
   const [bondValid, setBondValid] = useState<boolean>(false);
 
   // bond minus tx fees.
-  const enoughToCoverTxFees: boolean =
-    freeBalance - Number(bond.bond) > planckToUnit(largestTxFee, units);
+  const enoughToCoverTxFees: boolean = freeBalance
+    .minus(new BigNumber(bond.bond))
+    .isGreaterThan(planckToUnit(largestTxFee, units));
 
   // bond value after max tx fees have been deducated.
   let bondAfterTxFees: BigNumber;
@@ -65,9 +68,8 @@ export const Bond = () => {
 
   // update bond value on task change.
   useEffect(() => {
-    const _bond = freeBalance;
-    setBond({ bond: _bond });
-  }, [freeBalance]);
+    setBond({ bond: freeBalance.toString() });
+  }, [freeBalance.toString()]);
 
   // modal resize on form update
   useEffect(() => {

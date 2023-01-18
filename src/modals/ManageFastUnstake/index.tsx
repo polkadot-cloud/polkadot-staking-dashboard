@@ -107,9 +107,10 @@ export const ManageFastUnstake = () => {
   if (!isFastUnstaking) {
     if (freeBalance.isLessThan(fastUnstakeDeposit)) {
       warnings.push(
-        `${t('noEnough')} ${planckToUnit(fastUnstakeDeposit, network.units)} ${
-          network.unit
-        }`
+        `${t('noEnough')} ${planckToUnit(
+          fastUnstakeDeposit,
+          network.units
+        ).toString()} ${network.unit}`
       );
     }
 
@@ -162,9 +163,14 @@ export const ManageFastUnstake = () => {
                 <Separator />
                 <NotesWrapper>
                   <p>
-                    {t('registerFastUnstake')}{' '}
-                    {planckToUnit(fastUnstakeDeposit, network.units)}{' '}
-                    {network.unit}. {t('fastUnstakeOnceRegistered')}
+                    <>
+                      {t('registerFastUnstake')}{' '}
+                      {planckToUnit(
+                        fastUnstakeDeposit,
+                        network.units
+                      ).toString()}{' '}
+                      {network.unit}. {t('fastUnstakeOnceRegistered')}
+                    </>
                   </p>
                   <p>
                     {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>

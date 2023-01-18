@@ -13,7 +13,7 @@ import BondedGraph from 'library/Graphs/Bonded';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, planckToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 import { ButtonRowWrapper } from 'Wrappers';
 
 export const ManageBond = () => {
@@ -40,9 +40,7 @@ export const ManageBond = () => {
           {t('pools.bondedFunds')}
           <OpenHelpIcon helpKey="Bonded in Pool" />
         </h4>
-        <h2>
-          {humanNumber(planckToUnit(active, units))}&nbsp;{network.unit}
-        </h2>
+        <h2>{`${planckToUnit(active, units).toFormat()} ${network.unit}`}</h2>
         <ButtonRowWrapper>
           <ButtonPrimary
             disabled={

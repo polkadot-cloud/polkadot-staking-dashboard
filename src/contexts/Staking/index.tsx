@@ -12,12 +12,7 @@ import {
 } from 'contexts/Staking/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
-import {
-  localStorageOrDefault,
-  planckToUnit,
-  rmCommas,
-  setStateWithRef,
-} from 'Utils';
+import { greaterThanZero, localStorageOrDefault, setStateWithRef } from 'Utils';
 // eslint-disable-next-line import/no-unresolved
 import Worker from 'worker-loader!../../workers/stakers';
 import { useApi } from '../Api';
@@ -52,7 +47,6 @@ export const StakingProvider = ({
     getLedgerForStash,
     getAccountNominations,
   } = useBalances();
-  const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
 
   // store staking metrics in state
@@ -106,54 +100,6 @@ export const StakingProvider = ({
 
   useEffect(() => {
     if (activeAccount) {
-      // calculates minimum bond of the user's chosen nominated validators.
-      let _stakingMinActiveBond = new BigNumber(0);
-
-      const stakers = eraStakersRef.current?.stakers ?? null;
-      const nominations = getAccountNominations(activeAccount);
-
-      if (nominations.length && stakers !== null) {
-        for (const n of nominations) {
-          const staker = stakers.find((item) => item.address === n);
-
-          if (staker !== undefined) {
-            let { others } = staker;
-
-            // order others by bonded value, largest first.
-            others = others.sort((a: any, b: any) => {
-              const x = new BigNumber(rmCommas(a.value));
-              const y = new BigNumber(rmCommas(b.value));
-              return y.minus(x);
-            });
-
-            if (others.length) {
-              const _minActive = new BigNumber(
-                rmCommas(others[0].value.toString())
-              );
-              // set new minimum active bond if less than current value
-              if (
-                _minActive.isLessThan(_stakingMinActiveBond) ||
-                _stakingMinActiveBond !== new BigNumber(0)
-              ) {
-                _stakingMinActiveBond = _minActive;
-              }
-            }
-          }
-        }
-      }
-
-      // convert _stakingMinActiveBond to base value
-      const stakingMinActiveBond = planckToUnit(_stakingMinActiveBond, units);
-
-      setStateWithRef(
-        {
-          ...eraStakersRef.current,
-          minStakingActiveBond: stakingMinActiveBond,
-        },
-        setEraStakers,
-        eraStakersRef
-      );
-
       // set account's targets
       _setTargets(
         localStorageOrDefault(
@@ -178,25 +124,25 @@ export const StakingProvider = ({
         totalActiveNominators,
         activeValidators,
         minActiveBond,
-        ownStake,
-        _activeAccount,
+        activeAccountOwnStake,
+        who,
       } = data;
 
       // finish sync
       setStateWithRef(false, setErasStakersSyncing, erasStakersSyncingRef);
 
       // check if account hasn't changed since worker started
-      if (getActiveAccount() === _activeAccount) {
+      if (getActiveAccount() === who) {
         setStateWithRef(
           {
             ...eraStakersRef.current,
             stakers,
             totalStaked: new BigNumber(totalStaked),
+            minActiveBond: new BigNumber(minActiveBond),
             // nominators,
             totalActiveNominators,
             activeValidators,
-            minActiveBond,
-            ownStake,
+            activeAccountOwnStake,
           },
           setEraStakers,
           eraStakersRef
@@ -397,9 +343,7 @@ export const StakingProvider = ({
     if (!hasController() || !activeAccount) {
       return false;
     }
-
-    const ledger = getLedgerForStash(activeAccount);
-    return ledger.active.isGreaterThan(new BigNumber(0));
+    return greaterThanZero(getLedgerForStash(activeAccount).active);
   };
 
   /*

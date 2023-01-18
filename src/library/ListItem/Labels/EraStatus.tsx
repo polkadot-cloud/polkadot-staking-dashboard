@@ -7,7 +7,7 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
-import { capitalizeFirstLetter, humanNumber, rmCommas } from 'Utils';
+import { capitalizeFirstLetter, planckToUnit, rmCommas } from 'Utils';
 
 export const EraStatus = (props: any) => {
   const { address } = props;
@@ -44,9 +44,7 @@ export const EraStatus = (props: any) => {
     }
   }
 
-  const totalStake = totalStakePlanck.div(
-    new BigNumber(10).pow(new BigNumber(units))
-  );
+  const totalStake = planckToUnit(totalStakePlanck, units);
 
   return (
     <ValidatorStatusWrapper status={validatorStatus}>
@@ -54,9 +52,9 @@ export const EraStatus = (props: any) => {
         {isSyncing || erasStakersSyncing
           ? t('syncing')
           : validatorInEra
-          ? `${t('listItemActive')} / ${humanNumber(
-              totalStake.toString()
-            )} ${unit}`
+          ? `${t('listItemActive')} / ${totalStake
+              .integerValue()
+              .toFormat()} ${unit}`
           : capitalizeFirstLetter(t(`${validatorStatus}`) ?? '')}
       </h5>
     </ValidatorStatusWrapper>

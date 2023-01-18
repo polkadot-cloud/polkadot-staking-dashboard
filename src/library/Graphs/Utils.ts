@@ -11,8 +11,8 @@ import {
   startOfDay,
   subDays,
 } from 'date-fns';
-import { AnySubscan } from 'types';
-import { planckToUnit } from 'Utils';
+import { AnyApi, AnySubscan } from 'types';
+import { greaterThanZero, planckToUnit } from 'Utils';
 import { PayoutDayCursor } from './types';
 
 // Given payouts, calculate daily income and fill missing days with zero amounts.
@@ -104,7 +104,12 @@ export const calculatePayoutsByDay = (
       break;
     }
   }
-  return payoutsByDay;
+
+  // return payout amounts as plain numbers.
+  return payoutsByDay.map((q: AnyApi) => ({
+    ...q,
+    amount: Number(q.amount.toString()),
+  }));
 };
 
 // Calculate average payouts per day.
@@ -288,12 +293,11 @@ export const getLatestReward = (
 ) => {
   // get most recent payout
   const payoutExists =
-    payouts.find((p: AnySubscan) =>
-      new BigNumber(p.amount).isGreaterThan(new BigNumber(0))
-    ) ?? null;
+    payouts.find((p: AnySubscan) => greaterThanZero(new BigNumber(p.amount))) ??
+    null;
   const poolClaimExists =
     poolClaims.find((p: AnySubscan) =>
-      new BigNumber(p.amount).isGreaterThan(new BigNumber(0))
+      greaterThanZero(new BigNumber(p.amount))
     ) ?? null;
 
   // calculate which payout was most recent

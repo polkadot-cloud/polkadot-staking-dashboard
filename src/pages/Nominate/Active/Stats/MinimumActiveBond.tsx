@@ -14,7 +14,7 @@ export const MinimumActiveBondStatBox = () => {
 
   const params = {
     label: t('nominate.minimumActiveBond'),
-    value: minActiveBond,
+    value: minActiveBond.toNumber(),
     unit: `${network.unit}`,
     helpKey: 'Bonding',
   };

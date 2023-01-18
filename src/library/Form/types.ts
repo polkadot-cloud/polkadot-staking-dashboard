@@ -57,7 +57,7 @@ export interface BondFeedbackProps {
 }
 
 export interface BondInputProps {
-  freeBalance: number;
+  freeBalance: BigNumber;
   value: string;
   defaultValue: string;
   syncing?: boolean;
@@ -87,7 +87,7 @@ export interface UnbondInputProps {
 }
 
 export interface NominateStatusBarProps {
-  value: number;
+  value: BigNumber;
 }
 
 export interface DropdownProps {

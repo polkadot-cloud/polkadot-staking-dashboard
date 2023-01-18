@@ -19,12 +19,11 @@ export interface StakingMetrics {
 export interface EraStakers {
   stakers: Array<any>;
   totalStaked: BigNumber;
+  minActiveBond: BigNumber;
   nominators: Array<any> | undefined;
   totalActiveNominators: number;
   activeValidators: number;
-  minActiveBond: number;
-  minStakingActiveBond: number;
-  ownStake: any;
+  activeAccountOwnStake: Array<any>;
 }
 
 export type NominationStatuses = { [key: string]: string };

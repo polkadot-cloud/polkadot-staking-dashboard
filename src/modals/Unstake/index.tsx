@@ -20,7 +20,7 @@ import { Title } from 'library/Modal/Title';
 import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, planckToUnit, unitToPlanck } from 'Utils';
+import { greaterThanZero, planckToUnit, unitToPlanck } from 'Utils';
 import { Separator } from '../../Wrappers';
 
 export const Unstake = () => {
@@ -54,7 +54,7 @@ export const Unstake = () => {
 
   // unbond all validation
   const isValid = (() => {
-    return freeToUnbond > 0 && !controllerNotImported;
+    return greaterThanZero(freeToUnbond) && !controllerNotImported;
   })();
 
   // update bond value on task change
@@ -62,7 +62,7 @@ export const Unstake = () => {
     const _bond = freeToUnbond;
     setBond({ bond: _bond });
     setBondValid(isValid);
-  }, [freeToUnbond, isValid]);
+  }, [freeToUnbond.toString(), isValid]);
 
   // modal resize on form update
   useEffect(() => {
@@ -80,9 +80,9 @@ export const Unstake = () => {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanck(String(bond.bond), units);
+    const bondToSubmit = unitToPlanck(String(bond.bond), units).toString();
 
-    if (bondToSubmit.isZero()) {
+    if (!bondToSubmit) {
       return api.tx.staking.chill();
     }
     const txs = [api.tx.staking.chill(), api.tx.staking.unbond(bondToSubmit)];
@@ -109,10 +109,10 @@ export const Unstake = () => {
         ) : (
           <></>
         )}
-        {freeToUnbond > 0 ? (
+        {greaterThanZero(freeToUnbond) ? (
           <h2 className="title">
             {t('unstakeUnbond', {
-              bond: humanNumber(freeToUnbond),
+              bond: freeToUnbond.toFormat(),
               unit: network.unit,
             })}
           </h2>

@@ -58,11 +58,11 @@ export const useNominationStatus = () => {
             const stakedValue =
               others?.find((o: any) => o.who === who)?.value ?? false;
             if (stakedValue) {
-              const stakedValueBase = planckToUnit(
+              const stakedValueUnit = planckToUnit(
                 new BigNumber(rmCommas(stakedValue)),
                 network.units
               );
-              if (stakedValueBase >= lowestReward) {
+              if (stakedValueUnit.isGreaterThanOrEqualTo(lowestReward)) {
                 earningRewards = true;
                 break;
               }

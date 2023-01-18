@@ -110,55 +110,55 @@ export const BondFeedback = ({
         ? minCreateBond
         : minJoinBond
       : minNominatorBond;
-  const minBondBase = planckToUnit(minBondBn, units);
+  const minBondUnit = planckToUnit(minBondBn, units);
 
   // handle error updates
   const handleErrors = () => {
     let disabled = false;
-    const _errors = warnings;
-    const _decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
+    const newErrors = warnings;
+    const decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
 
     // bond errors
     if (freeBondAmount.isEqualTo(new BigNumber(0))) {
       disabled = true;
-      _errors.push(`${t('noFree', { unit })}`);
+      newErrors.push(`${t('noFree', { unit })}`);
     }
 
     // bond amount must not surpass freeBalalance
     if (bondBn.isGreaterThan(freeBondAmount)) {
-      _errors.push(t('moreThanBalance'));
+      newErrors.push(t('moreThanBalance'));
     }
 
     // bond amount must not be smaller than 1 planck
     if (bond.bond !== '' && bondBn.isLessThan(new BigNumber(1))) {
-      _errors.push(t('tooSmall'));
+      newErrors.push(t('tooSmall'));
     }
 
     // check bond after transaction fees is still valid
     if (bond.bond !== '' && bondAfterTxFees.isLessThan(new BigNumber(0))) {
-      _errors.push(`${t('notEnoughAfter', { unit })}`);
+      newErrors.push(`${t('notEnoughAfter', { unit })}`);
     }
 
     // cbond amount must not surpass network supported units
-    if (_decimals > units) {
-      _errors.push(`${t('bondDecimalsError', { units })}`);
+    if (decimals > units) {
+      newErrors.push(`${t('bondDecimalsError', { units })}`);
     }
 
     if (inSetup) {
       if (freeBondAmount.isLessThan(minBondBn)) {
         disabled = true;
-        _errors.push(`${t('notMeet')} ${minBondBase} ${unit}.`);
+        newErrors.push(`${t('notMeet')} ${minBondUnit} ${unit}.`);
       }
       // bond amount must be more than minimum required bond
       if (bond.bond !== '' && bondBn.isLessThan(minBondBn)) {
-        _errors.push(`${t('atLeast')} ${minBondBase} ${unit}.`);
+        newErrors.push(`${t('atLeast')} ${minBondUnit} ${unit}.`);
       }
     }
 
-    const bondValid = !_errors.length && bond.bond !== '';
+    const bondValid = !newErrors.length && bond.bond !== '';
     setBondDisabled(disabled);
     listenIsValid(bondValid);
-    setErrors(_errors);
+    setErrors(newErrors);
   };
 
   return (

@@ -5,16 +5,16 @@ import BigNumber from 'bignumber.js';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
 import { useTranslation } from 'react-i18next';
-import { toFixedIfNecessary } from 'Utils';
+import { greaterThanZero } from 'Utils';
 
 const TotalValidatorsStatBox = () => {
+  const { t } = useTranslation('pages');
   const { staking } = useStaking();
   const { totalValidators, maxValidatorsCount } = staking;
-  const { t } = useTranslation('pages');
 
   // total validators as percent
   let totalValidatorsAsPercent = 0;
-  if (maxValidatorsCount.isGreaterThan(new BigNumber(0))) {
+  if (greaterThanZero(maxValidatorsCount)) {
     totalValidatorsAsPercent = totalValidators
       .div(maxValidatorsCount.dividedBy(new BigNumber(100)))
       .toNumber();
@@ -31,7 +31,9 @@ const TotalValidatorsStatBox = () => {
       value1: totalValidators.toNumber(),
       value2: maxValidatorsCount.minus(totalValidators).toNumber(),
     },
-    tooltip: `${toFixedIfNecessary(totalValidatorsAsPercent, 2)}%`,
+    tooltip: `${new BigNumber(totalValidatorsAsPercent)
+      .decimalPlaces(2)
+      .toFormat()}%`,
     helpKey: 'Validator',
   };
   return <Pie {...params} />;

@@ -89,7 +89,7 @@ export const ClaimReward = () => {
             <Warning text={t('noRewards')} />
           ) : null}
           <h2 className="title">
-            {planckToUnit(unclaimedRewards, units)} {unit}
+            {`${planckToUnit(unclaimedRewards, units)} ${unit}`}
           </h2>
           <Separator />
           <div className="notes">

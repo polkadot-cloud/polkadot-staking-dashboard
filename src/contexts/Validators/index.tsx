@@ -3,7 +3,6 @@
 
 import BigNumber from 'bignumber.js';
 import { VALIDATOR_COMMUNITY } from 'config/validators';
-import { MinBondPrecision } from 'consts';
 import {
   SessionParachainValidators,
   SessionValidators,
@@ -14,11 +13,11 @@ import {
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyMetaBatch, Fn } from 'types';
 import {
+  greaterThanZero,
   planckToUnit,
   rmCommas,
   setStateWithRef,
   shuffle,
-  toFixedIfNecessary,
 } from 'Utils';
 import { useApi } from '../Api';
 import { useBalances } from '../Balances';
@@ -134,7 +133,7 @@ export const ValidatorsProvider = ({
 
   // fetch parachain session validators when earliestStoredSession ready
   useEffect(() => {
-    if (isReady && earliestStoredSession.isGreaterThan(new BigNumber(0))) {
+    if (isReady && greaterThanZero(earliestStoredSession)) {
       subscribeParachainValidators();
     }
   }, [isReady, earliestStoredSession]);
@@ -269,10 +268,10 @@ export const ValidatorsProvider = ({
     ).length;
 
     const average = notFullCommissionCount
-      ? toFixedIfNecessary(
-          totalNonAllCommission.dividedBy(notFullCommissionCount).toNumber(),
-          2
-        )
+      ? totalNonAllCommission
+          .dividedBy(notFullCommissionCount)
+          .decimalPlaces(2)
+          .toNumber()
       : 0;
 
     setFetchedValidators(2);
@@ -509,20 +508,12 @@ export const ValidatorsProvider = ({
           // account for yourself being an additional nominator
           const totalNominations = others.length + 1;
 
-          // get lowest active stake for the validator
+          // sort others lowest first.
           others = others.sort((a: AnyApi, b: AnyApi) => {
             const x = new BigNumber(rmCommas(a.value));
             const y = new BigNumber(rmCommas(b.value));
             return x.minus(y);
           });
-
-          const lowestActive =
-            others.length > 0
-              ? toFixedIfNecessary(
-                  planckToUnit(new BigNumber(rmCommas(others[0].value)), units),
-                  MinBondPrecision
-                )
-              : 0;
 
           // get the lowest reward stake of the validator, which is
           // the largest index - `maxNominatorRewardedPerValidator`,
@@ -534,12 +525,9 @@ export const ValidatorsProvider = ({
 
           const lowestReward =
             others.length > 0
-              ? toFixedIfNecessary(
-                  planckToUnit(
-                    new BigNumber(rmCommas(others[lowestRewardIndex]?.value)),
-                    units
-                  ),
-                  MinBondPrecision
+              ? planckToUnit(
+                  new BigNumber(rmCommas(others[lowestRewardIndex]?.value)),
+                  units
                 )
               : 0;
 
@@ -547,7 +535,6 @@ export const ValidatorsProvider = ({
             total: _validator.total,
             own: _validator.own,
             total_nominations: totalNominations,
-            lowest: lowestActive,
             lowestReward,
           });
         }

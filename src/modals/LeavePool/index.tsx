@@ -25,7 +25,7 @@ import {
 } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit, unitToPlanck } from 'Utils';
+import { greaterThanZero, planckToUnit, unitToPlanck } from 'Utils';
 import { Separator } from '../../Wrappers';
 
 export const LeavePool = () => {
@@ -59,7 +59,7 @@ export const LeavePool = () => {
 
   // unbond all validation
   const isValid = (() => {
-    return freeToUnbond > 0;
+    return greaterThanZero(freeToUnbond);
   })();
 
   // update bond value on task change
@@ -67,7 +67,7 @@ export const LeavePool = () => {
     const _bond = freeToUnbond;
     setBond({ bond: _bond });
     setBondValid(isValid);
-  }, [freeToUnbond, isValid]);
+  }, [freeToUnbond.toString(), isValid]);
 
   // modal resize on form update
   useEffect(() => {
@@ -81,7 +81,7 @@ export const LeavePool = () => {
       return tx;
     }
 
-    const bondToSubmit = unitToPlanck(String(bond.bond), units);
+    const bondToSubmit = unitToPlanck(String(bond.bond), units).toString();
     tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
     return tx;
   };
@@ -111,7 +111,7 @@ export const LeavePool = () => {
           </WarningsWrapper>
         )}
         <h2 className="title">
-          {t('unbond')} {freeToUnbond} {network.unit}
+          {`${t('unbond')} ${freeToUnbond} ${network.unit}`}
         </h2>
         <Separator />
         <NotesWrapper>

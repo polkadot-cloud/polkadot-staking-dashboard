@@ -39,12 +39,12 @@ export const WithdrawPoolMember = () => {
   const { unbondingEras, points } = member;
 
   // calculate total for withdraw
-  let totalWithdrawBase = new BigNumber(0);
+  let totalWithdrawUnit = new BigNumber(0);
 
   Object.entries(unbondingEras).forEach((entry: any) => {
     const [era, amount] = entry;
     if (activeEra.index > era) {
-      totalWithdrawBase = totalWithdrawBase.plus(
+      totalWithdrawUnit = totalWithdrawUnit.plus(
         new BigNumber(rmCommas(amount))
       );
     }
@@ -53,12 +53,12 @@ export const WithdrawPoolMember = () => {
   const bonded = planckToUnit(new BigNumber(rmCommas(points)), network.units);
 
   const totalWithdraw = planckToUnit(
-    new BigNumber(totalWithdrawBase),
+    new BigNumber(totalWithdrawUnit),
     network.units
   );
 
   // valid to submit transaction
-  const [valid] = useState<boolean>(totalWithdraw > 0 ?? false);
+  const [valid] = useState<boolean>(!totalWithdraw.isZero() ?? false);
 
   // tx to submit
   const getTx = () => {
@@ -78,7 +78,7 @@ export const WithdrawPoolMember = () => {
     },
     callbackInBlock: () => {
       // remove the pool member from context if no more funds bonded
-      if (bonded === 0) {
+      if (bonded.isZero()) {
         removePoolMember(who);
       }
     },
@@ -90,7 +90,7 @@ export const WithdrawPoolMember = () => {
       <PaddingWrapper>
         {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
         <h2 className="title">
-          {t('withdraw')} {totalWithdraw} {network.unit}
+          {`${t('withdraw')} ${totalWithdraw} ${network.unit}`}
         </h2>
         <Separator />
         <NotesWrapper>

@@ -16,7 +16,7 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import useUnstaking from 'library/Hooks/useUnstaking';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, planckToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 import { ButtonRowWrapper } from 'Wrappers';
 
 export const ManageBond = () => {
@@ -46,9 +46,7 @@ export const ManageBond = () => {
           {t('nominate.bondedFunds')}
           <OpenHelpIcon helpKey="Bonding" />
         </h4>
-        <h2>
-          {humanNumber(planckToUnit(active, units))}&nbsp;{network.unit}
-        </h2>
+        <h2>{`${planckToUnit(active, units).toFormat()} ${network.unit}`}</h2>
         <ButtonRowWrapper>
           <ButtonPrimary
             disabled={

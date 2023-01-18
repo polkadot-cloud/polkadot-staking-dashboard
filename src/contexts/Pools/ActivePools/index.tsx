@@ -537,7 +537,7 @@ export const ActivePoolsProvider = ({
       return new BigNumber(0);
     }
 
-    const rewardCounterBase = new BigNumber(10).exponentiatedBy(
+    const rewardCounterUnit = new BigNumber(10).exponentiatedBy(
       new BigNumber(18)
     );
 
@@ -572,14 +572,14 @@ export const ActivePoolsProvider = ({
       bondedPoolPoints.isEqualTo(new BigNumber(0))
         ? new BigNumber(0)
         : payoutsSinceLastRecord
-            .multipliedBy(rewardCounterBase)
+            .multipliedBy(rewardCounterUnit)
             .dividedBy(bondedPoolPoints)
     ).plus(poolLastRecordedRewardCounter);
 
     const pendingRewards = currentRewardCounter
       .minus(memberLastRecordedRewardCounter)
       .multipliedBy(points)
-      .dividedBy(rewardCounterBase);
+      .dividedBy(rewardCounterUnit);
 
     return pendingRewards;
   };

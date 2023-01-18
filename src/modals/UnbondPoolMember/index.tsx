@@ -20,9 +20,10 @@ import {
 } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit, rmCommas, unitToPlanck } from 'Utils';
+import { greaterThanZero, planckToUnit, rmCommas, unitToPlanck } from 'Utils';
 
 export const UnbondPoolMember = () => {
+  const { t } = useTranslation('modals');
   const { api, network, consts } = useApi();
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
@@ -40,11 +41,10 @@ export const UnbondPoolMember = () => {
 
   // bond valid
   const [bondValid, setBondValid] = useState(false);
-  const { t } = useTranslation('modals');
 
   // unbond all validation
   const isValid = (() => {
-    return freeToUnbond > 0;
+    return greaterThanZero(freeToUnbond);
   })();
 
   // update bond value on task change
@@ -52,7 +52,7 @@ export const UnbondPoolMember = () => {
     const _bond = freeToUnbond;
     setBond({ bond: _bond });
     setBondValid(isValid);
-  }, [freeToUnbond, isValid]);
+  }, [freeToUnbond.toString(), isValid]);
 
   // modal resize on form update
   useEffect(() => {
@@ -87,7 +87,7 @@ export const UnbondPoolMember = () => {
       <PaddingWrapper>
         {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
         <h2 className="title">
-          {t('unbond')} {freeToUnbond} {network.unit}
+          {`${t('unbond')} ${freeToUnbond} ${network.unit}`}
         </h2>
         <Separator />
         <NotesWrapper>

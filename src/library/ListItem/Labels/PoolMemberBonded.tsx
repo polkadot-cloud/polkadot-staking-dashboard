@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, planckToUnit, rmCommas, toFixedIfNecessary } from 'Utils';
+import { greaterThanZero, planckToUnit, rmCommas } from 'Utils';
 
 export const PoolMemberBonded = (props: any) => {
   const { meta, batchKey, batchIndex } = props;
@@ -16,23 +16,24 @@ export const PoolMemberBonded = (props: any) => {
   const poolMembers = meta[batchKey]?.poolMembers ?? [];
   const poolMember = poolMembers[batchIndex] ?? null;
 
-  let bonded = 0;
+  let bonded = new BigNumber(0);
+  let totalUnbonding = new BigNumber(0);
+
   let status = '';
-  let totalUnbonding = 0;
   if (poolMember) {
     const { points, unbondingEras } = poolMember;
 
     bonded = planckToUnit(new BigNumber(rmCommas(points)), units);
-    status = bonded > 0 ? 'active' : 'inactive';
+    status = greaterThanZero(bonded) ? 'active' : 'inactive';
 
     // converting unbonding eras from points to units
-    let totalUnbondingBase = new BigNumber(0);
+    let totalUnbondingUnit = new BigNumber(0);
     Object.values(unbondingEras).forEach((amount: any) => {
       const amountBn = new BigNumber(rmCommas(amount));
-      totalUnbondingBase = totalUnbondingBase.plus(amountBn);
+      totalUnbondingUnit = totalUnbondingUnit.plus(amountBn);
     });
     totalUnbonding = planckToUnit(
-      new BigNumber(totalUnbondingBase),
+      new BigNumber(totalUnbondingUnit),
       network.units
     );
   }
@@ -45,22 +46,20 @@ export const PoolMemberBonded = (props: any) => {
         </ValidatorStatusWrapper>
       ) : (
         <>
-          {bonded > 0 && (
+          {greaterThanZero(bonded) && (
             <ValidatorStatusWrapper status={status}>
               <h5>
-                {t('bonded')}: {humanNumber(toFixedIfNecessary(bonded, 3))}{' '}
-                {unit}
+                {t('bonded')}: {bonded.decimalPlaces(3).toFormat()} {unit}
               </h5>
             </ValidatorStatusWrapper>
           )}
         </>
       )}
 
-      {poolMember && totalUnbonding > 0 && (
+      {poolMember && greaterThanZero(totalUnbonding) && (
         <ValidatorStatusWrapper status="inactive">
           <h5>
-            {t('unbonding')}{' '}
-            {humanNumber(toFixedIfNecessary(totalUnbonding, 3))} {unit}
+            {t('unbonding')} {totalUnbonding.decimalPlaces(3).toFormat()} {unit}
           </h5>
         </ValidatorStatusWrapper>
       )}

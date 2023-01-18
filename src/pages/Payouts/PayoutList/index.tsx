@@ -196,9 +196,14 @@ export const PayoutListInner = (props: PayoutListProps) => {
                       <div>
                         <div>
                           <h4 className={`${labelClass}`}>
-                            {p.event_id === 'Slashed' ? '-' : '+'}
-                            {planckToUnit(new BigNumber(p.amount), units)}{' '}
-                            {network.unit}
+                            <>
+                              {p.event_id === 'Slashed' ? '-' : '+'}
+                              {planckToUnit(
+                                new BigNumber(p.amount),
+                                units
+                              ).toString()}{' '}
+                              {network.unit}
+                            </>
                           </h4>
                         </div>
                         <div>

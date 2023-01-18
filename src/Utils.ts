@@ -21,36 +21,31 @@ export const remToUnit = (rem: string) =>
   Number(rem.slice(0, rem.length - 3)) *
   parseFloat(getComputedStyle(document.documentElement).fontSize);
 
-export const toFixedIfNecessary = (value: number, dp: number) =>
-  +parseFloat(String(value)).toFixed(dp);
-
 /**
- * Converts an on chain balance value in BigNumber planck to a decimal value in token unit (1 token
+ * Converts an on chain balance value in BigNumber planck to a decimal value in token unit. (1 token
  * token = 10^units planck).
  */
-export const planckToUnit = (val: BigNumber, units: number): number =>
-  Number(
+export const planckToUnit = (val: BigNumber, units: number) => {
+  return new BigNumber(
     val
       .dividedBy(new BigNumber(10).exponentiatedBy(new BigNumber(units)))
-      .toFixed(units + 1, BigNumber.ROUND_FLOOR)
+      .toFixed(units)
   );
+};
 
 /**
  * Converts a balance in token unit to an equivalent value in planck by applying the chain decimals
  * point. (1 token = 10^units planck).
  */
 export const unitToPlanck = (val: string, units: number): BigNumber =>
-  new BigNumber(val ?? 0)
+  new BigNumber(!val.length || !val ? val : '0')
     .multipliedBy(new BigNumber(10).exponentiatedBy(new BigNumber(units)))
     .integerValue();
 
-export const humanNumber = (val: number | string | BigNumber): string => {
-  const str = val.toString().split('.');
-  str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  return str.join('.');
-};
-
 export const rmCommas = (val: string): string => val.replace(/,/g, '');
+
+export const greaterThanZero = (val: BigNumber) =>
+  val.isGreaterThan(new BigNumber(0));
 
 export const shuffle = <T>(array: Array<T>) => {
   let currentIndex = array.length;

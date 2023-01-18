@@ -7,7 +7,7 @@ import { EstimatedFeeContext, TxFeesContext, useTxFees } from 'contexts/TxFees';
 import React, { Context, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
-import { humanNumber, planckToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 import { EstimatedTxFeeProps } from './types';
 import { Wrapper } from './Wrapper';
 
@@ -25,20 +25,20 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
     };
   }, []);
 
-  const txFeesBase = humanNumber(planckToUnit(txFees, units));
+  const txFeesUnit = planckToUnit(txFees, units).toFormat();
 
   return (
     <>
       {format === 'table' ? (
         <>
           <div>{t('estimatedFee')}:</div>
-          <div>{txFees.isZero() ? '...' : `${txFeesBase} ${unit}`}</div>
+          <div>{txFees.isZero() ? '...' : `${txFeesUnit} ${unit}`}</div>
         </>
       ) : (
         <Wrapper>
           <p>
             {t('estimatedFee')}:{' '}
-            {txFees.isZero() ? '...' : `${txFeesBase} ${unit}`}
+            {txFees.isZero() ? '...' : `${txFeesUnit} ${unit}`}
           </p>
           {notEnoughFunds === true && (
             <p style={{ color: defaultThemes.text.danger[mode] }}>

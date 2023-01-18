@@ -6,7 +6,6 @@ import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
 import { useTranslation } from 'react-i18next';
-import { toFixedIfNecessary } from 'Utils';
 
 export const ActiveNominatorsStatBox = () => {
   const { consts } = useApi();
@@ -34,7 +33,9 @@ export const ActiveNominatorsStatBox = () => {
       value1: totalActiveNominators,
       value2: maxElectingVoters - totalActiveNominators,
     },
-    tooltip: `${toFixedIfNecessary(totalNominatorsAsPercent, 2)}%`,
+    tooltip: `${new BigNumber(totalNominatorsAsPercent)
+      .decimalPlaces(2)
+      .toFormat()}%`,
     helpKey: 'Active Nominators',
   };
 

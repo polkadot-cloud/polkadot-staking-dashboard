@@ -13,13 +13,7 @@ import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { useTranslation } from 'react-i18next';
-import {
-  capitalizeFirstLetter,
-  humanNumber,
-  planckToUnit,
-  rmCommas,
-  toFixedIfNecessary,
-} from 'Utils';
+import { capitalizeFirstLetter, planckToUnit, rmCommas } from 'Utils';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
@@ -36,9 +30,7 @@ export const Announcements = () => {
   bondedPools.forEach((b: BondedPool) => {
     totalPoolPoints = totalPoolPoints.plus(new BigNumber(rmCommas(b.points)));
   });
-  const totalPoolPointsBase = humanNumber(
-    toFixedIfNecessary(planckToUnit(totalPoolPoints, units), 0)
-  );
+  const totalPoolPointsUnit = planckToUnit(totalPoolPoints, units);
 
   const container = {
     hidden: { opacity: 0 },
@@ -68,9 +60,7 @@ export const Announcements = () => {
     announcements.push({
       class: 'neutral',
       title: t('overview.networkCurrentlyStaked', {
-        total: humanNumber(
-          toFixedIfNecessary(planckToUnit(totalStaked, units), 0)
-        ),
+        total: planckToUnit(totalStaked, units).integerValue().toFormat(),
         unit: network.unit,
         network: capitalizeFirstLetter(network.name),
       }),
@@ -84,7 +74,9 @@ export const Announcements = () => {
   if (bondedPools.length) {
     announcements.push({
       class: 'neutral',
-      title: `${totalPoolPointsBase} ${network.unit} ${t('overview.inPools')}`,
+      title: `${totalPoolPointsUnit.integerValue().toFormat()} ${
+        network.unit
+      } ${t('overview.inPools')}`,
       subtitle: `${t('overview.bondedInPools', { networkUnit })}`,
     });
 
@@ -92,7 +84,7 @@ export const Announcements = () => {
       // total locked in pols
       announcements.push({
         class: 'neutral',
-        title: `${humanNumber(poolMembers.length)} ${t(
+        title: `${new BigNumber(poolMembers.length).toFormat()} ${t(
           'overview.poolMembersBonding'
         )}`,
         subtitle: `${t('overview.totalNumAccounts')}`,

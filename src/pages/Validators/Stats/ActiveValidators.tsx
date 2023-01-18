@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
 import { useTranslation } from 'react-i18next';
-import { toFixedIfNecessary } from 'Utils';
+import { greaterThanZero } from 'Utils';
 
 const ActiveValidatorsStatBox = () => {
   const { staking, eraStakers } = useStaking();
@@ -13,11 +13,12 @@ const ActiveValidatorsStatBox = () => {
   const { activeValidators } = eraStakers;
   const { t } = useTranslation('pages');
 
-  // active validators as percent
-  let activeValidatorsAsPercent = 0;
-  if (validatorCount.isGreaterThan(new BigNumber(0))) {
-    activeValidatorsAsPercent =
-      activeValidators / (validatorCount.toNumber() * 0.01);
+  // active validators as percent. Avoiding dividing by zero.
+  let activeValidatorsAsPercent = new BigNumber(0);
+  if (greaterThanZero(validatorCount)) {
+    activeValidatorsAsPercent = new BigNumber(activeValidators).dividedBy(
+      validatorCount.multipliedBy(new BigNumber(0.01))
+    );
   }
 
   const params = {
@@ -31,7 +32,7 @@ const ActiveValidatorsStatBox = () => {
       value1: activeValidators,
       value2: validatorCount.minus(new BigNumber(activeValidators)).toNumber(),
     },
-    tooltip: `${toFixedIfNecessary(activeValidatorsAsPercent, 2)}%`,
+    tooltip: `${activeValidatorsAsPercent.decimalPlaces(2).toFormat()}%`,
     helpKey: 'Active Validator',
   };
 

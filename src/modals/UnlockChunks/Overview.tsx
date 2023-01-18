@@ -13,7 +13,7 @@ import useUnstaking from 'library/Hooks/useUnstaking';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, planckToUnit, toFixedIfNecessary } from 'Utils';
+import { planckToUnit } from 'Utils';
 import { NotesWrapper, Separator } from '../Wrappers';
 import { ChunkWrapper, ContentWrapper } from './Wrappers';
 
@@ -59,9 +59,9 @@ export const Overview = forwardRef(
                 {t('unlocked')}
               </h4>
               <h2>
-                {humanNumber(
-                  toFixedIfNecessary(planckToUnit(withdrawAvailable, units), 3)
-                )}{' '}
+                {planckToUnit(withdrawAvailable, units)
+                  .decimalPlaces(3)
+                  .toFormat()}{' '}
                 {network.unit}
               </h2>
             </div>
@@ -73,15 +73,9 @@ export const Overview = forwardRef(
                 {t('unbonding')}
               </h4>
               <h2>
-                {humanNumber(
-                  toFixedIfNecessary(
-                    planckToUnit(
-                      totalUnbonding.minus(withdrawAvailable),
-                      units
-                    ),
-                    3
-                  )
-                )}{' '}
+                {planckToUnit(totalUnbonding.minus(withdrawAvailable), units)
+                  .decimalPlaces(3)
+                  .toFormat()}{' '}
                 {network.unit}
               </h2>
             </div>
@@ -90,9 +84,9 @@ export const Overview = forwardRef(
             <div className="inner">
               <h4>{t('total')}</h4>
               <h2>
-                {humanNumber(
-                  toFixedIfNecessary(planckToUnit(totalUnbonding, units), 3)
-                )}{' '}
+                {planckToUnit(totalUnbonding, units)
+                  .decimalPlaces(3)
+                  .toFormat()}{' '}
                 {network.unit}
               </h2>
             </div>
@@ -124,9 +118,7 @@ export const Overview = forwardRef(
             <ChunkWrapper key={`unlock_chunk_${i}`}>
               <div>
                 <section>
-                  <h2>
-                    {planckToUnit(value, units)} {network.unit}
-                  </h2>
+                  <h2>{`${planckToUnit(value, units)} ${network.unit}`}</h2>
                   <h4>
                     {left <= 0
                       ? t('unlocked')

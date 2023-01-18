@@ -20,7 +20,7 @@ import { SubscanButton } from 'library/SubscanButton';
 import { PaddingWrapper } from 'modals/Wrappers';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { clipAddress, humanNumber, planckToUnit, rmCommas } from 'Utils';
+import { clipAddress, planckToUnit, rmCommas } from 'Utils';
 
 export const ValidatorMetrics = () => {
   const {
@@ -38,7 +38,7 @@ export const ValidatorMetrics = () => {
   const validatorInEra =
     stakers.find((s: any) => s.address === address) || null;
 
-  let ownStake = new BigNumber(0);
+  let validatorOwnStake = new BigNumber(0);
   let otherStake = new BigNumber(0);
   if (validatorInEra) {
     const { others, own } = validatorInEra;
@@ -47,7 +47,7 @@ export const ValidatorMetrics = () => {
       otherStake = otherStake.plus(new BigNumber(rmCommas(o.value)));
     });
     if (own) {
-      ownStake = new BigNumber(rmCommas(own));
+      validatorOwnStake = new BigNumber(rmCommas(own));
     }
   }
   const [list, setList] = useState([]);
@@ -68,12 +68,12 @@ export const ValidatorMetrics = () => {
   const stats = [
     {
       label: t('selfStake'),
-      value: `${humanNumber(planckToUnit(ownStake, units))} ${unit}`,
+      value: `${planckToUnit(validatorOwnStake, units).toFormat()} ${unit}`,
       help: 'Self Stake',
     },
     {
       label: t('nominatorStake'),
-      value: `${humanNumber(planckToUnit(otherStake, units))} ${unit}`,
+      value: `${planckToUnit(otherStake, units).toFormat()} ${unit}`,
       help: 'Nominator Stake',
     },
   ];

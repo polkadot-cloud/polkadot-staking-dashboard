@@ -26,7 +26,7 @@ export const Bond = (props: SetupStepProps) => {
   const initialBondValue = setup.bond === '0' ? '0' : setup.bond;
 
   // store local bond amount for form control
-  const [bond, setBond] = useState({
+  const [bond, setBond] = useState<{ bond: string }>({
     bond: initialBondValue,
   });
 
@@ -85,7 +85,7 @@ export const Bond = (props: SetupStepProps) => {
           txFees={txFees}
           maxWidth
         />
-        <NominateStatusBar value={bond.bond} />
+        <NominateStatusBar value={new BigNumber(bond.bond)} />
         <Footer complete={bondValid} setupType="stake" />
       </MotionContainer>
     </>

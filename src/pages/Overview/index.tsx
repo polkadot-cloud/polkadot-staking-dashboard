@@ -13,7 +13,7 @@ import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, planckToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 import {
   PageRowWrapper,
   RowPrimaryWrapper,
@@ -94,9 +94,10 @@ export const Overview = () => {
               <h2>
                 {lastReward === null
                   ? 0
-                  : humanNumber(
-                      planckToUnit(new BigNumber(lastReward.amount), units)
-                    )}
+                  : planckToUnit(
+                      new BigNumber(lastReward.amount),
+                      units
+                    ).toFormat()}
                 &nbsp;{network.unit}
                 &nbsp;
                 <span className="fiat">

@@ -15,7 +15,7 @@ const MinCreateBondStatBox = () => {
 
   const params = {
     label: t('pools.minimumToCreatePool'),
-    value: planckToUnit(stats.minCreateBond, units),
+    value: planckToUnit(stats.minCreateBond, units).toNumber(),
     unit: network.unit,
     helpKey: 'Minimum To Create Pool',
   };

@@ -9,13 +9,7 @@ import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { Pool } from 'library/Pool/types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  capitalizeFirstLetter,
-  humanNumber,
-  planckToUnit,
-  rmCommas,
-  toFixedIfNecessary,
-} from 'Utils';
+import { capitalizeFirstLetter, planckToUnit, rmCommas } from 'Utils';
 
 export const PoolBonded = ({
   pool,
@@ -88,7 +82,7 @@ export const PoolBonded = ({
             ? capitalizeFirstLetter(t(`${nominationStatus}`) ?? '')
             : t('notNominating')}
           {' / '}
-          {t('bonded')}: {humanNumber(toFixedIfNecessary(poolBonded, 3))} {unit}
+          {t('bonded')}: {poolBonded.decimalPlaces(3).toFormat()} {unit}
         </h5>
       </ValidatorStatusWrapper>
     </>

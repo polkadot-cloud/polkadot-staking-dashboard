@@ -13,5 +13,5 @@ export interface BarSegmentProps {
   label?: string;
   widthPercent: number;
   flexGrow: number;
-  forceShowLabel?: boolean;
+  forceShow?: boolean;
 }

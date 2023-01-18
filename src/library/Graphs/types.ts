@@ -5,11 +5,11 @@ import BigNumber from 'bignumber.js';
 import { AnySubscan } from 'types';
 
 export interface BondedProps {
-  active: number;
-  unlocking: number;
-  unlocked: number;
+  active: BigNumber;
+  free: BigNumber;
+  unlocking: BigNumber;
+  unlocked: BigNumber;
   inactive: boolean;
-  free: number;
 }
 
 export interface EraPointsProps {

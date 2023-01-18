@@ -5,7 +5,7 @@ import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { AnyJson } from 'types';
-import { capitalizeFirstLetter, planckToUnit, toFixedIfNecessary } from 'Utils';
+import { capitalizeFirstLetter, planckToUnit } from 'Utils';
 
 export const useFillVariables = () => {
   const { network, consts } = useApi();
@@ -33,22 +33,22 @@ export const useFillVariables = () => {
             String(maxNominatorRewardedPerValidator),
           ],
           ['{MAX_NOMINATIONS}', String(maxNominations)],
-          ['{MIN_ACTIVE_BOND}', String(toFixedIfNecessary(minActiveBond, 3))],
+          ['{MIN_ACTIVE_BOND}', minActiveBond.decimalPlaces(3).toFormat()],
           [
             '{MIN_POOL_JOIN_BOND}',
-            String(
-              toFixedIfNecessary(planckToUnit(minJoinBond, network.units), 3)
-            ),
+            planckToUnit(minJoinBond, network.units)
+              .decimalPlaces(3)
+              .toFormat(),
           ],
           [
             '{MIN_POOL_CREATE_BOND}',
-            String(
-              toFixedIfNecessary(planckToUnit(minCreateBond, network.units), 3)
-            ),
+            planckToUnit(minCreateBond, network.units)
+              .decimalPlaces(3)
+              .toFormat(),
           ],
           [
             '{EXISTENTIAL_DEPOSIT}',
-            String(planckToUnit(existentialDeposit, network.units)),
+            planckToUnit(existentialDeposit, network.units).toFormat(),
           ],
         ];
 

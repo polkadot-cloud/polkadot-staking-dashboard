@@ -95,7 +95,7 @@ export const Forms = forwardRef(
         if (bondFor === 'pool') {
           const points = membership?.points ? rmCommas(membership.points) : 0;
           const bonded = planckToUnit(new BigNumber(points), network.units);
-          if (bonded === 0) {
+          if (bonded.isZero()) {
             removePoolMember(activeAccount);
           }
         }
@@ -115,12 +115,16 @@ export const Forms = forwardRef(
             <div style={{ marginTop: '2rem' }}>
               {task === 'rebond' && (
                 <h2 className="title">
-                  {t('rebond')} {planckToUnit(value, units)} {network.unit}
+                  {`${t('rebond')} ${planckToUnit(value, units)} ${
+                    network.unit
+                  }`}
                 </h2>
               )}
               {task === 'withdraw' && (
                 <h2 className="title">
-                  {t('withdraw')} {planckToUnit(value, units)} {network.unit}
+                  {`${t('withdraw')} ${planckToUnit(value, units)} ${
+                    network.unit
+                  }`}
                 </h2>
               )}
             </div>

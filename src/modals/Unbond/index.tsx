@@ -61,7 +61,9 @@ export const Unbond = () => {
   const minNominatorBond = planckToUnit(minNominatorBondBn, units);
 
   // local bond value
-  const [bond, setBond] = useState({ bond: freeToUnbond });
+  const [bond, setBond] = useState<{ bond: string }>({
+    bond: freeToUnbond.toString(),
+  });
 
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(false);
@@ -69,20 +71,18 @@ export const Unbond = () => {
   // get the max amount available to unbond
   const unbondToMin = isPooling
     ? isDepositor()
-      ? Math.max(freeToUnbond - minCreateBond, 0)
-      : Math.max(freeToUnbond - minJoinBond, 0)
-    : Math.max(freeToUnbond - minNominatorBond, 0);
+      ? BigNumber.max(freeToUnbond.minus(minCreateBond), new BigNumber(0))
+      : BigNumber.max(freeToUnbond.minus(minJoinBond), new BigNumber(0))
+    : BigNumber.max(freeToUnbond.minus(minNominatorBond), new BigNumber(0));
 
   // unbond some validation
   const isValid = isPooling ? true : !controllerNotImported;
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = unbondToMin;
-    setBond({ bond: _bond });
-
+    setBond({ bond: unbondToMin.toString() });
     setBondValid(isValid);
-  }, [unbondToMin, isValid]);
+  }, [freeToUnbond.toString(), isValid]);
 
   // modal resize on form update
   useEffect(() => {
@@ -99,9 +99,8 @@ export const Unbond = () => {
     if (isStaking && controllerNotImported) {
       return tx;
     }
-    // remove decimal errors
-    const bondToSubmit = unitToPlanck(String(bond.bond), units);
 
+    const bondToSubmit = unitToPlanck(String(bond.bond), units).toString();
     // determine tx
     if (isPooling) {
       tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);

@@ -6,7 +6,7 @@ import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, planckToUnit, rmCommas, toFixedIfNecessary } from 'Utils';
+import { planckToUnit, rmCommas } from 'Utils';
 import { HeaderWrapper } from './Wrappers';
 
 export const Header = () => {
@@ -18,15 +18,12 @@ export const Header = () => {
   const { state, points } = selectedActivePool?.bondedPool || {};
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
 
-  const bonded = humanNumber(
-    toFixedIfNecessary(
-      planckToUnit(
-        points ? new BigNumber(rmCommas(points)) : new BigNumber(0),
-        network.units
-      ),
-      3
-    )
-  );
+  const bonded = planckToUnit(
+    new BigNumber(points ? rmCommas(points) : 0),
+    network.units
+  )
+    .decimalPlaces(3)
+    .toFormat();
 
   let stateDisplay;
   switch (state) {

@@ -89,7 +89,7 @@ export const UnbondFeedback = ({
         ? minCreateBond
         : minJoinBond
       : minNominatorBond;
-  const minBondBase = planckToUnit(minBondBn, units);
+  const minBondUnit = planckToUnit(minBondBn, units);
 
   // unbond amount to minimum threshold
   const unbondToMin =
@@ -134,7 +134,7 @@ export const UnbondFeedback = ({
 
     if (bondBn.isGreaterThan(unbondToMin)) {
       // start the error message stating a min bond is required.
-      let err = `${t('minimumBond', { minBondBase, unit })} `;
+      let err = `${t('minimumBond', { minBondUnit, unit })} `;
       // append the subject to the error message.
       if (bondFor === 'nominator') {
         err += t('whenActivelyNominating');
