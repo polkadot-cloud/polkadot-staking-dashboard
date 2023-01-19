@@ -39,16 +39,6 @@ export const NetworkMetricsProvider = ({
   const [unsubs, setUnsubs] = useState<Array<AnyApi>>([]);
   const unsubsRef = useRef(unsubs);
 
-  // manage unsubscribe
-  useEffect(() => {
-    initialiseSubscriptions();
-    return () => {
-      Object.values(unsubsRef.current).forEach((unsub: AnyJson) => {
-        unsub();
-      });
-    };
-  }, [isReady]);
-
   // active subscription
   const initialiseSubscriptions = async () => {
     if (!api) return;
@@ -111,11 +101,28 @@ export const NetworkMetricsProvider = ({
     }
   };
 
+  // Unsubscribe from unsubs
+  const unsubscribe = () => {
+    Object.values(unsubsRef.current).forEach((unsub: AnyJson) => {
+      unsub();
+    });
+  };
+
   // Set defaults for all metrics.
   const handleResetMetrics = () => {
+    unsubscribe();
+    setStateWithRef([], setUnsubs, unsubsRef);
     setStateWithRef(defaults.activeEra, setActiveEra, activeEraRef);
     setStateWithRef(defaults.metrics, setMetrics, metricsRef);
   };
+
+  // manage unsubscribe
+  useEffect(() => {
+    initialiseSubscriptions();
+    return () => {
+      unsubscribe();
+    };
+  }, [isReady]);
 
   // Reset active era and metrics on network change.
   useEffect(() => {
