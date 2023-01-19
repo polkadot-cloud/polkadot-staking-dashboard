@@ -33,8 +33,14 @@ import SupplyStakedStat from './Stats/SupplyStaked';
 export const Overview = () => {
   const { network } = useApi();
   const { units } = network;
-  const { payouts, poolClaims } = useSubscan();
-  const { lastReward } = formatRewardsForGraphs(14, units, payouts, poolClaims);
+  const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
+  const { lastReward } = formatRewardsForGraphs(
+    14,
+    units,
+    payouts,
+    unclaimedPayouts,
+    poolClaims
+  );
   const { i18n, t } = useTranslation('pages');
 
   const PAYOUTS_HEIGHT = 390;

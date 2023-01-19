@@ -77,21 +77,9 @@ export const SubscanProvider = ({
       const claimedResults = await Promise.all([
         handleFetch(activeAccount, 0, ApiEndpoints.subscanRewardSlash, {
           is_stash: true,
-          claimed_filter: 'claimed',
         }),
         handleFetch(activeAccount, 1, ApiEndpoints.subscanRewardSlash, {
           is_stash: true,
-          claimed_filter: 'claimed',
-        }),
-      ]);
-      const unclaimedResults = await Promise.all([
-        handleFetch(activeAccount, 0, ApiEndpoints.subscanRewardSlash, {
-          is_stash: true,
-          claimed_filter: 'unclaimed',
-        }),
-        handleFetch(activeAccount, 1, ApiEndpoints.subscanRewardSlash, {
-          is_stash: true,
-          claimed_filter: 'unclaimed',
         }),
       ]);
 
@@ -107,19 +95,13 @@ export const SubscanProvider = ({
             (l: AnyApi) => l.block_timestamp !== 0
           );
           _payouts = _payouts.concat(list);
+
+          const unclaimedList = result.data.list.filter(
+            (l: AnyApi) => l.block_timestamp === 0
+          );
+          _unclaimedPayouts = _unclaimedPayouts.concat(unclaimedList);
         }
         setPayouts(_payouts);
-
-        for (const result of unclaimedResults) {
-          if (!result?.data?.list) {
-            break;
-          }
-          // ensure no payouts have block_timestamp of 0
-          const list = result.data.list.filter(
-            (l: AnyApi) => l.block_timestamp !== 0
-          );
-          _unclaimedPayouts = _unclaimedPayouts.concat(list);
-        }
         setUnclaimedPayouts(_unclaimedPayouts);
       }
     }

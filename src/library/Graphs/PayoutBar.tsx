@@ -64,12 +64,14 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   );
 
   const notStaking = !isSyncing && inSetup() && !membership;
-  const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
-    days,
-    units,
-    payoutsNoSlash,
-    poolClaims
-  );
+  const { payoutsByDay, poolClaimsByDay, unclaimPayoutsByDay } =
+    formatRewardsForGraphs(
+      days,
+      units,
+      payoutsNoSlash,
+      unclaimedPayoutsNoSlash,
+      poolClaims
+    );
 
   // determine color for payouts
   const colorPayouts = notStaking
@@ -109,13 +111,8 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
       },
       {
         label: 'Unclaimed Payouts',
-        data: formatRewardsForGraphs(
-          days,
-          units,
-          unclaimedPayoutsNoSlash,
-          poolClaims
-        ).payoutsByDay.map((item: AnySubscan) => item.amount),
-        borderColor: colorPoolClaims,
+        data: unclaimPayoutsByDay.map((item: AnySubscan) => item.amount),
+        borderColor: colorPayouts,
         backgroundColor: colorUnclaimsClaims,
         pointRadius: 0,
         borderRadius: 3,

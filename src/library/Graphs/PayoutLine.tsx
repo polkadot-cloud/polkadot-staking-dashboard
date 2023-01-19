@@ -55,7 +55,7 @@ export const PayoutLine = ({
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership: poolMembership } = usePoolMemberships();
-  const { payouts, poolClaims } = useSubscan();
+  const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
 
   const notStaking = !isSyncing && inSetup() && !poolMembership;
   const poolingOnly = !isSyncing && inSetup() && poolMembership !== null;
@@ -64,13 +64,18 @@ export const PayoutLine = ({
   const payoutsNoSlash = payouts.filter(
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
-
-  const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
-    days,
-    units,
-    payoutsNoSlash,
-    poolClaims
+  const unclaimedPayoutsNoSlash = unclaimedPayouts.filter(
+    (p: AnySubscan) => p.event_id !== 'Slashed'
   );
+
+  const { payoutsByDay, poolClaimsByDay, unclaimPayoutsByDay } =
+    formatRewardsForGraphs(
+      days,
+      units,
+      payoutsNoSlash,
+      unclaimedPayoutsNoSlash,
+      poolClaims
+    );
 
   // combine payouts and pool claims into one dataset and calculate averages.
   const combined = combineRewardsByDay(payoutsByDay, poolClaimsByDay);
