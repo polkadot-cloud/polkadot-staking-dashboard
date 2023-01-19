@@ -134,7 +134,9 @@ const processExposures = (data: AnyJson) => {
   });
 
   // get the smallest actve nominator bond
-  const minActiveBond = getMinBonds[0]?.value ?? new BigNumber(0);
+  const minActiveBond = getMinBonds[0]?.value
+    ? new BigNumber(getMinBonds[0]?.value)
+    : new BigNumber(0);
 
   return {
     stakers,

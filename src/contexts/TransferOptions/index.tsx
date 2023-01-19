@@ -24,11 +24,10 @@ export const TransferOptionsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { getAccount, getAccountBalance, getLedgerForStash, getAccountLocks } =
     useBalances();
   const { membership } = usePoolMemberships();
-  const { activeEra } = metrics;
 
   // get the bond and unbond amounts available to the user
   const getTransferOptions = (address: MaybeAccount): TransferOptions => {

@@ -27,16 +27,15 @@ import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const Member = (props: any) => {
+  const { t } = useTranslation('pages');
   const { meta } = usePoolMembers();
   const { openModalWith } = useModal();
   const { selectActive } = useList();
-  const { metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
-  const { activeEra } = metrics;
   const { state, roles } = selectedActivePool?.bondedPool || {};
   const { stateToggler, root, depositor } = roles || {};
-  const { t } = useTranslation('pages');
 
   const { who, batchKey, batchIndex } = props;
 
@@ -76,7 +75,7 @@ export const Member = (props: any) => {
     if (Object.values(unbondingEras).length) {
       let canWithdraw = false;
       for (const k of Object.keys(unbondingEras)) {
-        if (Number(activeEra.index) > Number(k)) {
+        if (activeEra.index > Number(k)) {
           canWithdraw = true;
         }
       }

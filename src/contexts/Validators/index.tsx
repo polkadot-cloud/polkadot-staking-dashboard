@@ -41,12 +41,12 @@ export const ValidatorsProvider = ({
 }) => {
   const { isReady, api, network, consts } = useApi();
   const { activeAccount } = useConnect();
-  const { metrics } = useNetworkMetrics();
+  const { activeEra, metrics } = useNetworkMetrics();
   const { accounts, getAccountNominations } = useBalances();
   const { poolNominations } = useActivePools();
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
-  const { activeEra, earliestStoredSession } = metrics;
+  const { earliestStoredSession } = metrics;
 
   // stores the total validator entries
   const [validators, setValidators] = useState<Array<Validator>>([]);

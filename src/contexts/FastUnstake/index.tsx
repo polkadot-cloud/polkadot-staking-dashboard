@@ -28,9 +28,9 @@ export const FastUnstakeProvider = ({
 }) => {
   const { api, isReady, consts, network } = useApi();
   const { activeAccount } = useConnect();
-  const { metrics } = useNetworkMetrics();
+  const { metrics, activeEra } = useNetworkMetrics();
   const { inSetup, getNominationsStatus } = useStaking();
-  const { activeEra, fastUnstakeErasToCheckPerBlock } = metrics;
+  const { fastUnstakeErasToCheckPerBlock } = metrics;
   const { bondDuration } = consts;
   const nominationStatuses = getNominationsStatus();
 

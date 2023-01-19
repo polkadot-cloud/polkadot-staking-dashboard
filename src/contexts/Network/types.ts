@@ -4,16 +4,18 @@
 import BigNumber from 'bignumber.js';
 
 export interface NetworkMetricsContextInterface {
+  activeEra: ActiveEra;
   metrics: NetworkMetrics;
 }
 
 export interface NetworkMetrics {
-  activeEra: {
-    index: number;
-    start: number;
-  };
   totalIssuance: BigNumber;
   auctionCounter: BigNumber;
   earliestStoredSession: BigNumber;
   fastUnstakeErasToCheckPerBlock: number;
+}
+
+export interface ActiveEra {
+  index: number;
+  start: number;
 }

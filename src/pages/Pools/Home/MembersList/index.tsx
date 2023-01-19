@@ -27,7 +27,7 @@ export const MembersListInner = (props: any) => {
   const { mode } = useTheme();
   const provider = useList();
   const { isReady, network } = useApi();
-  const { metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { fetchPoolMembersMetaBatch } = usePoolMembers();
 
   // get list provider props
@@ -80,10 +80,10 @@ export const MembersListInner = (props: any) => {
 
   // configure list when network is ready to fetch
   useEffect(() => {
-    if (isReady && metrics.activeEra.index !== 0 && fetched === 'unsynced') {
+    if (isReady && activeEra.index !== 0 && fetched === 'unsynced') {
       setupMembersList();
     }
-  }, [isReady, fetched, metrics.activeEra.index]);
+  }, [isReady, fetched, activeEra.index]);
 
   // render throttle
   useEffect(() => {

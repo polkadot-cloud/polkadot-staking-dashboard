@@ -31,7 +31,7 @@ export const ValidatorListInner = (props: any) => {
   const { mode } = useTheme();
   const { isReady, network } = useApi();
   const { activeAccount } = useConnect();
-  const { metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { fetchValidatorMetaBatch } = useValidators();
   const provider = useList();
   const modal = useModal();
@@ -167,10 +167,10 @@ export const ValidatorListInner = (props: any) => {
 
   // configure validator list when network is ready to fetch
   useEffect(() => {
-    if (isReady && metrics.activeEra.index !== 0 && !fetched) {
+    if (isReady && activeEra.index !== 0 && !fetched) {
       setupValidatorList();
     }
-  }, [isReady, metrics.activeEra.index, fetched]);
+  }, [isReady, activeEra.index, fetched]);
 
   // render throttle
   useEffect(() => {

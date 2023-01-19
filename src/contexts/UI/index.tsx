@@ -25,7 +25,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { isReady } = useApi();
   const { accounts: connectAccounts } = useConnect();
   const { staking, eraStakers } = useStaking();
-  const { metrics } = useNetworkMetrics();
+  const { activeEra, metrics } = useNetworkMetrics();
   const { accounts } = useBalances();
   const { synced: activePoolsSynced } = useActivePools();
 
@@ -151,7 +151,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     // era has synced from Network
-    if (metrics.activeEra.index === 0) {
+    if (activeEra.index === 0) {
       _syncing = true;
       _networkSyncing = true;
       _poolsSyncing = true;
