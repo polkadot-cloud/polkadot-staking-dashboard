@@ -36,7 +36,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
   const { mode } = useTheme();
   const { isReady, network } = useApi();
   const { units } = network;
-  const { metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { listFormat, setListFormat } = usePayoutList();
   const { validators, meta } = useValidators();
   const { bondedPools } = useBondedPools();
@@ -78,11 +78,11 @@ export const PayoutListInner = (props: PayoutListProps) => {
 
   // configure list when network is ready to fetch
   useEffect(() => {
-    if (isReady && metrics.activeEra.index !== 0 && !fetched) {
+    if (isReady && activeEra.index !== 0 && !fetched) {
       setPayouts(props.payouts);
       setFetched(true);
     }
-  }, [isReady, fetched, metrics.activeEra.index]);
+  }, [isReady, fetched, activeEra.index]);
 
   // render throttle
   useEffect(() => {

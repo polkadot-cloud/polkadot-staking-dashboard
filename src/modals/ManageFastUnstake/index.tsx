@@ -36,14 +36,14 @@ export const ManageFastUnstake = () => {
   const { getControllerNotImported } = useStaking();
   const { getBondedAccount } = useBalances();
   const { txFeesValid } = useTxFees();
-  const { metrics } = useNetworkMetrics();
+  const { activeEra, metrics } = useNetworkMetrics();
   const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
   const { setResize, setStatus } = useModal();
   const { getTransferOptions } = useTransferOptions();
   const { isFastUnstaking } = useUnstaking();
 
   const { bondDuration, fastUnstakeDeposit } = consts;
-  const { activeEra, fastUnstakeErasToCheckPerBlock } = metrics;
+  const { fastUnstakeErasToCheckPerBlock } = metrics;
   const { checked } = meta;
   const controller = getBondedAccount(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);

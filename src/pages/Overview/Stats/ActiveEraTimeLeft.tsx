@@ -14,8 +14,7 @@ import { useTranslation } from 'react-i18next';
 const ActiveEraStatBox = () => {
   const { t } = useTranslation('pages');
   const { status: connectionStatus } = useApi();
-  const { metrics } = useNetworkMetrics();
-  const { activeEra } = metrics;
+  const { activeEra } = useNetworkMetrics();
   const { get: getEraTimeleft } = useEraTimeLeft();
 
   const { timeleft, setFromNow } = useTimeLeft();

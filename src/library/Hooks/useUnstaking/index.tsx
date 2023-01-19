@@ -17,12 +17,11 @@ export const useUnstaking = () => {
   const { getTransferOptions } = useTransferOptions();
   const { activeAccount } = useConnect();
   const { getNominationsStatus, inSetup } = useStaking();
-  const { metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { checking, head, isExposed, queueDeposit, meta } = useFastUnstake();
   const { bondDuration } = consts;
   const transferOptions = getTransferOptions(activeAccount).nominate;
   const nominationStatuses = getNominationsStatus();
-  const { activeEra } = metrics;
 
   // determine if user is regular unstaking
   const { active } = transferOptions;

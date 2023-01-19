@@ -40,7 +40,7 @@ export const StakingProvider = ({
     getActiveAccount,
   } = useConnect();
   const { isReady, api, consts, status, network } = useApi();
-  const { metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const {
     accounts,
     getBondedAccount,
@@ -89,14 +89,14 @@ export const StakingProvider = ({
         stakingMetrics.unsub();
       }
     };
-  }, [isReady, metrics.activeEra]);
+  }, [isReady, activeEra]);
 
   // handle syncing with eraStakers
   useEffect(() => {
     if (isReady) {
       fetchEraStakers();
     }
-  }, [isReady, metrics.activeEra.index, activeAccount]);
+  }, [isReady, activeEra.index, activeAccount]);
 
   useEffect(() => {
     if (activeAccount) {
@@ -152,8 +152,8 @@ export const StakingProvider = ({
   };
 
   const subscribeToStakingkMetrics = async () => {
-    if (api !== null && isReady && metrics.activeEra.index !== 0) {
-      const previousEra = metrics.activeEra.index - 1;
+    if (api !== null && isReady && activeEra.index !== 0) {
+      const previousEra = activeEra.index - 1;
 
       // subscribe to staking metrics
       const unsub = await api.queryMulti<AnyApi>(
@@ -195,21 +195,21 @@ export const StakingProvider = ({
    * the minimum nominator bond is calculated by summing a particular bond of a nominator.
    */
   const fetchEraStakers = async () => {
-    if (!isReady || metrics.activeEra.index === 0 || !api) {
+    if (!isReady || activeEra.index === 0 || !api) {
       return;
     }
     const exposuresRaw = await api.query.staking.erasStakers.entries(
-      metrics.activeEra.index
+      activeEra.index
     );
 
     // flag eraStakers is recyncing
     setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
 
     // humanise exposures to send to worker
-    const exposures = exposuresRaw.map(([_keys, _val]: AnyApi) => {
+    const exposures = exposuresRaw.map(([keys, val]: AnyApi) => {
       return {
-        keys: _keys.toHuman(),
-        val: _val.toHuman(),
+        keys: keys.toHuman(),
+        val: val.toHuman(),
       };
     });
 

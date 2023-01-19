@@ -20,10 +20,9 @@ import { ChunkWrapper, ContentWrapper } from './Wrappers';
 export const Overview = forwardRef(
   ({ unlocking, bondFor, setSection, setUnlock, setTask }: any, ref: any) => {
     const { network, consts } = useApi();
-    const { metrics } = useNetworkMetrics();
+    const { activeEra } = useNetworkMetrics();
     const { bondDuration } = consts;
     const { units } = network;
-    const { activeEra } = metrics;
     const { isFastUnstaking } = useUnstaking();
     const { t } = useTranslation('modals');
 

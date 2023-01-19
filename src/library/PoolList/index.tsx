@@ -38,7 +38,7 @@ export const PoolListInner = ({
   const { t } = useTranslation('library');
   const { mode } = useTheme();
   const { isReady, network } = useApi();
-  const { metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { fetchPoolsMetaBatch, poolSearchFilter, meta } = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
   const { isSyncing } = useUi();
@@ -89,10 +89,10 @@ export const PoolListInner = ({
 
   // configure pool list when network is ready to fetch
   useEffect(() => {
-    if (isReady && metrics.activeEra.index !== 0 && !fetched) {
+    if (isReady && activeEra.index !== 0 && !fetched) {
       setupPoolList();
     }
-  }, [isReady, fetched, metrics.activeEra.index]);
+  }, [isReady, fetched, activeEra.index]);
 
   // handle pool list bootstrapping
   const setupPoolList = () => {
