@@ -71,12 +71,12 @@ export const NetworkList: Networks = {
     },
     colors: {
       primary: {
-        light: '#201f37',
-        dark: '#6c6b80',
+        light: 'rgb(31, 41, 55)',
+        dark: 'rgb(126, 131, 141)',
       },
       secondary: {
-        light: '#999',
-        dark: '#AAA',
+        light: 'rgb(31, 41, 55)',
+        dark: 'rgb(141, 144, 150)',
       },
       stroke: {
         light: '#4c4b63',

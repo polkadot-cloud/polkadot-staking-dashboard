@@ -2,11 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import React, { useEffect, useState } from 'react';
-import { AnyApi } from 'types';
+import React, { useEffect, useRef, useState } from 'react';
+import { AnyApi, AnyJson } from 'types';
+import { setStateWithRef } from 'Utils';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
-import { NetworkMetrics, NetworkMetricsContextInterface } from './types';
+import {
+  ActiveEra,
+  NetworkMetrics,
+  NetworkMetricsContextInterface,
+} from './types';
 
 export const NetworkMetricsContext =
   React.createContext<NetworkMetricsContextInterface>(
@@ -20,88 +25,108 @@ export const NetworkMetricsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isReady, api, status } = useApi();
+  const { isReady, api, network } = useApi();
 
-  useEffect(() => {
-    if (status === 'connecting') {
-      setMetrics(defaults.metrics);
-    }
-  }, [status]);
+  // Store active era in state.
+  const [activeEra, setActiveEra] = useState<ActiveEra>(defaults.activeEra);
+  const activeEraRef = useRef(activeEra);
 
-  // store network metrics in state
+  // Store network metrics in state.
   const [metrics, setMetrics] = useState<NetworkMetrics>(defaults.metrics);
+  const metricsRef = useRef(metrics);
 
-  // store network metrics unsubscribe
-  const [unsub, setUnsub] = useState<AnyApi>(undefined);
+  // Store unsubscribe objects.
+  const [unsubs, setUnsubs] = useState<Array<AnyApi>>([]);
+  const unsubsRef = useRef(unsubs);
 
   // manage unsubscribe
   useEffect(() => {
-    subscribeToNetworkMetrics();
+    initialiseSubscriptions();
     return () => {
-      if (unsub) {
+      Object.values(unsubsRef.current).forEach((unsub: AnyJson) => {
         unsub();
-      }
+      });
     };
   }, [isReady]);
 
   // active subscription
-  const subscribeToNetworkMetrics = async () => {
+  const initialiseSubscriptions = async () => {
     if (!api) return;
 
     if (isReady) {
-      const _unsub = await api.queryMulti(
-        [
-          api.query.staking.activeEra,
-          api.query.balances.totalIssuance,
-          api.query.auctions.auctionCounter,
-          api.query.paraSessionInfo.earliestStoredSession,
-          api.query.fastUnstake.erasToCheckPerBlock,
-        ],
-        ([
-          activeEra,
-          _totalIssuance,
-          _auctionCounter,
-          _earliestStoredSession,
-          _erasToCheckPerBlock,
-        ]: AnyApi) => {
-          // determine activeEra: toString used as alternative to `toHuman`, that puts commas in numbers
-          let _activeEra = activeEra
+      const subscribeToMetrics = async () => {
+        const unsub = await api.queryMulti(
+          [
+            api.query.balances.totalIssuance,
+            api.query.auctions.auctionCounter,
+            api.query.paraSessionInfo.earliestStoredSession,
+            api.query.fastUnstake.erasToCheckPerBlock,
+          ],
+          ([
+            totalIssuance,
+            auctionCounter,
+            earliestStoredSession,
+            erasToCheckPerBlock,
+          ]: AnyApi) => {
+            setStateWithRef(
+              {
+                totalIssuance: new BigNumber(totalIssuance.toString()),
+                auctionCounter: new BigNumber(auctionCounter.toString()),
+                earliestStoredSession: new BigNumber(
+                  earliestStoredSession.toString()
+                ),
+                fastUnstakeErasToCheckPerBlock: erasToCheckPerBlock.toNumber(),
+              },
+              setMetrics,
+              metricsRef
+            );
+          }
+        );
+        return unsub;
+      };
+
+      const subscribeToActiveEra = async () => {
+        const unsub = await api.query.staking.activeEra((result: AnyApi) => {
+          // determine activeEra: toString used as alternative to `toHuman`, that puts commas in
+          // numbers
+          let newActiveEra = result
             .unwrapOrDefault({
               index: 0,
               start: 0,
             })
             .toString();
 
-          // convert JSON string to object
-          _activeEra = JSON.parse(_activeEra);
+          newActiveEra = JSON.parse(newActiveEra);
+          setStateWithRef(newActiveEra, setActiveEra, activeEraRef);
+        });
+        return unsub;
+      };
 
-          const _metrics = {
-            activeEra: _activeEra,
-            totalIssuance: new BigNumber(_totalIssuance.toString()),
-            auctionCounter: new BigNumber(_auctionCounter.toString()),
-            earliestStoredSession: new BigNumber(
-              _earliestStoredSession.toString()
-            ),
-            fastUnstakeErasToCheckPerBlock: _erasToCheckPerBlock.toNumber(),
-          };
-          setMetrics(_metrics);
+      // initiate subscription, add to unsubs.
+      await Promise.all([subscribeToMetrics(), subscribeToActiveEra()]).then(
+        (u: any) => {
+          setStateWithRef([...unsubsRef.current, ...u], setUnsubs, unsubsRef);
         }
       );
-      setUnsub(_unsub);
     }
   };
+
+  // Set defaults for all metrics.
+  const handleResetMetrics = () => {
+    setStateWithRef(defaults.activeEra, setActiveEra, activeEraRef);
+    setStateWithRef(defaults.metrics, setMetrics, metricsRef);
+  };
+
+  // Reset active era and metrics on network change.
+  useEffect(() => {
+    handleResetMetrics();
+  }, [network]);
 
   return (
     <NetworkMetricsContext.Provider
       value={{
-        metrics: {
-          activeEra: metrics.activeEra,
-          totalIssuance: metrics.totalIssuance,
-          auctionCounter: metrics.auctionCounter,
-          earliestStoredSession: metrics.earliestStoredSession,
-          fastUnstakeErasToCheckPerBlock:
-            metrics.fastUnstakeErasToCheckPerBlock,
-        },
+        activeEra: activeEraRef.current,
+        metrics: metricsRef.current,
       }}
     >
       {children}

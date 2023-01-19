@@ -8,8 +8,7 @@ import { getUnixTime } from 'date-fns';
 export const useEraTimeLeft = () => {
   const { consts } = useApi();
   const { epochDuration, expectedBlockTime, sessionsPerEra } = consts;
-  const { metrics } = useNetworkMetrics();
-  const { activeEra } = metrics;
+  const { activeEra } = useNetworkMetrics();
 
   // important to fetch the actual timeleft from when other components ask for it.
   const get = () => {

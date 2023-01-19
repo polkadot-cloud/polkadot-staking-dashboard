@@ -25,15 +25,14 @@ import { useTranslation } from 'react-i18next';
 import { planckToUnit, rmCommas } from 'Utils';
 
 export const WithdrawPoolMember = () => {
+  const { t } = useTranslation('modals');
   const { api, network, consts } = useApi();
   const { activeAccount, accountHasSigner } = useConnect();
   const { setStatus: setModalStatus, config } = useModal();
-  const { metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
   const { txFeesValid } = useTxFees();
-  const { t } = useTranslation('modals');
 
-  const { activeEra } = metrics;
   const { member, who } = config;
   const { historyDepth } = consts;
   const { unbondingEras, points } = member;
