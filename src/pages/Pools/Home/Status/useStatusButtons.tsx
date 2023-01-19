@@ -64,7 +64,7 @@ export const useStatusButtons = () => {
     _buttons = [createBtn, joinPoolBtn];
   } else if (isOwner()) {
     _label = `${t('pools.ownerOfPool')} ${membership.poolId}`;
-  } else if (active?.gtn(0)) {
+  } else if (active?.isGreaterThan(0)) {
     _label = `${t('pools.memberOfPool')} ${membership.poolId}`;
   } else {
     _label = `${t('pools.leavingPool')} ${membership.poolId}`;

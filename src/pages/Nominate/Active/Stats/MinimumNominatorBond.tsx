@@ -5,7 +5,7 @@ import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { Number } from 'library/StatBoxList/Number';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 
 export const MinimumNominatorBondStatBox = () => {
   const { t } = useTranslation('pages');
@@ -15,7 +15,7 @@ export const MinimumNominatorBondStatBox = () => {
 
   const params = {
     label: t('nominate.minimumNominateBond'),
-    value: planckBnToUnit(minNominatorBond, units),
+    value: planckToUnit(minNominatorBond, units).toNumber(),
     unit: `${unit}`,
     helpKey: 'Bonding',
   };

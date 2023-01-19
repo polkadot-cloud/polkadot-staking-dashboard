@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { bnToU8a, u8aConcat } from '@polkadot/util';
+import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
 import { EmptyH256, ModPrefix, U32Opts } from 'consts';
 import { PoolConfigState, PoolsConfigContextState } from 'contexts/Pools/types';
@@ -83,33 +84,41 @@ export const PoolsConfigProvider = ({
         _minCreateBond,
         _minJoinBond,
       ]) => {
-        // format optional configs to BN or null
+        // format optional configs to BigNumber or null
         _maxPoolMembers = _maxPoolMembers.toHuman();
         if (_maxPoolMembers !== null) {
-          _maxPoolMembers = new BN(rmCommas(_maxPoolMembers));
+          _maxPoolMembers = new BigNumber(rmCommas(_maxPoolMembers));
         }
         _maxPoolMembersPerPool = _maxPoolMembersPerPool.toHuman();
         if (_maxPoolMembersPerPool !== null) {
-          _maxPoolMembersPerPool = new BN(rmCommas(_maxPoolMembersPerPool));
+          _maxPoolMembersPerPool = new BigNumber(
+            rmCommas(_maxPoolMembersPerPool)
+          );
         }
         _maxPools = _maxPools.toHuman();
         if (_maxPools !== null) {
-          _maxPools = new BN(rmCommas(_maxPools));
+          _maxPools = new BigNumber(rmCommas(_maxPools));
         }
 
         setStateWithRef(
           {
             ...poolsConfigRef.current,
             stats: {
-              counterForPoolMembers: _counterForPoolMembers.toBn(),
-              counterForBondedPools: _counterForBondedPools.toBn(),
-              counterForRewardPools: _counterForRewardPools.toBn(),
-              lastPoolId: _lastPoolId.toBn(),
+              counterForPoolMembers: new BigNumber(
+                _counterForPoolMembers.toString()
+              ),
+              counterForBondedPools: new BigNumber(
+                _counterForBondedPools.toString()
+              ),
+              counterForRewardPools: new BigNumber(
+                _counterForRewardPools.toString()
+              ),
+              lastPoolId: new BigNumber(_lastPoolId.toString()),
               maxPoolMembers: _maxPoolMembers,
               maxPoolMembersPerPool: _maxPoolMembersPerPool,
               maxPools: _maxPools,
-              minCreateBond: _minCreateBond.toBn(),
-              minJoinBond: _minJoinBond.toBn(),
+              minCreateBond: new BigNumber(_minCreateBond.toString()),
+              minJoinBond: new BigNumber(_minJoinBond.toString()),
             },
           },
           setPoolsConfig,
@@ -161,14 +170,14 @@ export const PoolsConfigProvider = ({
 
   // Helper: generates pool stash and reward accounts. assumes poolsPalletId is synced.
   const createAccounts = (poolId: number) => {
-    const poolIdBN = new BN(poolId);
+    const poolIdBigNumber = new BigNumber(poolId);
     return {
-      stash: createAccount(poolIdBN, 0),
-      reward: createAccount(poolIdBN, 1),
+      stash: createAccount(poolIdBigNumber, 0),
+      reward: createAccount(poolIdBigNumber, 1),
     };
   };
 
-  const createAccount = (poolId: BN, index: number): string => {
+  const createAccount = (poolId: BigNumber, index: number): string => {
     if (!api) return '';
     return api.registry
       .createType(
@@ -177,7 +186,7 @@ export const PoolsConfigProvider = ({
           ModPrefix,
           poolsPalletId,
           new Uint8Array([index]),
-          bnToU8a(poolId, U32Opts),
+          bnToU8a(new BN(poolId.toString()), U32Opts),
           EmptyH256
         )
       )

@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { NETWORKS } from 'config/networks';
+import { NetworkList } from 'config/networks';
 import { AnyJson, Network } from 'types';
 
 const v = (light: string, dark: string) => ({
@@ -134,7 +134,7 @@ export const networkColorsSecondary: { [key: string]: string } = {};
 export const networkColorsStroke: { [key: string]: string } = {};
 export const networkColorsTransparent: { [key: string]: string } = {};
 
-Object.values(NETWORKS).forEach((node: Network) => {
+Object.values(NetworkList).forEach((node: Network) => {
   const { name, colors } = node;
   const { primary, secondary, stroke, transparent } = colors;
 

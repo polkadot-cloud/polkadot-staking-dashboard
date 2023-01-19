@@ -16,7 +16,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 import {
   FooterWrapper,
   NotesWrapper,
@@ -26,6 +26,7 @@ import {
 } from '../Wrappers';
 
 export const Nominate = () => {
+  const { t } = useTranslation('modals');
   const { api, network } = useApi();
   const { activeAccount } = useConnect();
   const { targets, staking, getControllerNotImported } = useStaking();
@@ -38,17 +39,19 @@ export const Nominate = () => {
   const { nominations } = targets;
   const ledger = getLedgerForStash(activeAccount);
   const { active } = ledger;
-  const { t } = useTranslation('modals');
 
-  const activeBase = planckBnToUnit(active, units);
-  const minNominatorBondBase = planckBnToUnit(minNominatorBond, units);
+  const activeUnit = planckToUnit(active, units);
+  const minNominatorBondUnit = planckToUnit(minNominatorBond, units);
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
 
   // ensure selected key is valid
   useEffect(() => {
-    setValid(nominations.length > 0 && activeBase >= minNominatorBondBase);
+    setValid(
+      nominations.length > 0 &&
+        activeUnit.isGreaterThanOrEqualTo(minNominatorBondUnit)
+    );
   }, [targets]);
 
   // tx to submit
@@ -84,8 +87,9 @@ export const Nominate = () => {
   if (!nominations.length) {
     warnings.push(`${t('noNominationsSet')}`);
   }
-  if (activeBase < minNominatorBondBase) {
-    warnings.push(`${t('notMeetMinimum', { minNominatorBondBase, unit })}`);
+
+  if (!activeUnit.isGreaterThan(minNominatorBondUnit)) {
+    warnings.push(`${t('notMeetMinimum', { minNominatorBondUnit, unit })}`);
   }
 
   return (

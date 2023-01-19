@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { Lock } from 'contexts/Balances/types';
@@ -11,12 +11,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import usePrices from 'library/Hooks/usePrices';
 import OpenHelpIcon from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
-import {
-  humanNumber,
-  planckBnToUnit,
-  toFixedIfNecessary,
-  usdFormatter,
-} from 'Utils';
+import { greaterThanZero, planckToUnit } from 'Utils';
 import { BarSegment } from './BarSegment';
 import { LegendItem } from './LegendItem';
 import { BalanceChartWrapper, Bar, Legend } from './Wrappers';
@@ -35,68 +30,90 @@ export const BalanceChart = () => {
   const balance = getAccountBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
   const poolBondOpions = allTransferOptions.pool;
-  const unlockingPools = poolBondOpions.totalUnlocking.add(
+  const unlockingPools = poolBondOpions.totalUnlocking.plus(
     poolBondOpions.totalUnlocked
   );
 
   // user's total balance
   const { free, miscFrozen } = balance;
-  const totalBalance = planckBnToUnit(
-    free.add(poolBondOpions.active).add(unlockingPools),
+  const totalBalance = planckToUnit(
+    free.plus(poolBondOpions.active).plus(unlockingPools),
     units
   );
   // convert balance to fiat value
-  const freeFiat = toFixedIfNecessary(
-    Number(totalBalance * prices.lastPrice),
-    2
+  const freeFiat = totalBalance.multipliedBy(
+    new BigNumber(prices.lastPrice).decimalPlaces(2)
   );
 
   // total funds nominating
-  const nominating = planckBnToUnit(
+  const nominating = planckToUnit(
     allTransferOptions.nominate.active
-      .add(allTransferOptions.nominate.totalUnlocking)
-      .add(allTransferOptions.nominate.totalUnlocked),
+      .plus(allTransferOptions.nominate.totalUnlocking)
+      .plus(allTransferOptions.nominate.totalUnlocked),
     units
   );
   // total funds in pool
-  const inPool = planckBnToUnit(
+  const inPool = planckToUnit(
     allTransferOptions.pool.active
-      .add(allTransferOptions.pool.totalUnlocking)
-      .add(allTransferOptions.pool.totalUnlocked),
+      .plus(allTransferOptions.pool.totalUnlocking)
+      .plus(allTransferOptions.pool.totalUnlocked),
     units
   );
 
   // check account non-staking locks
   const locks = getAccountLocks(activeAccount);
   const locksStaking = locks.find((l: Lock) => l.id.trim() === 'staking');
-  const lockStakingAmount = locksStaking ? locksStaking.amount : new BN(0);
+  const lockStakingAmount = locksStaking
+    ? locksStaking.amount
+    : new BigNumber(0);
 
   // total funds available, including existential deposit, minus staking.
-  const graphAvailable = planckBnToUnit(free.sub(lockStakingAmount), units);
+  const graphAvailable = planckToUnit(free.minus(lockStakingAmount), units);
   const notStaking = graphAvailable;
 
   // graph percentages
-  const graphTotal = nominating + inPool + graphAvailable;
-  const graphNominating = nominating > 0 ? nominating / (graphTotal * 0.01) : 0;
-  const graphInPool = inPool > 0 ? inPool / (graphTotal * 0.01) : 0;
-  const graphNotStaking =
-    graphTotal > 0 ? 100 - graphNominating - graphInPool : 0;
+  const graphTotal = nominating.plus(inPool).plus(graphAvailable);
+  const graphNominating = greaterThanZero(nominating)
+    ? nominating.dividedBy(graphTotal.multipliedBy(new BigNumber(0.01)))
+    : new BigNumber(0);
+
+  const graphInPool = greaterThanZero(inPool)
+    ? inPool.dividedBy(graphTotal.multipliedBy(new BigNumber(0.01)))
+    : new BigNumber(0);
+
+  const graphNotStaking = greaterThanZero(graphTotal)
+    ? new BigNumber(100).minus(graphNominating).minus(graphInPool)
+    : new BigNumber(0);
 
   // available balance data
-  const fundsLocked = planckBnToUnit(miscFrozen.sub(lockStakingAmount), units);
-  let fundsReserved = planckBnToUnit(existentialAmount, units);
-  const fundsFree =
-    planckBnToUnit(allTransferOptions.freeBalance, units) - fundsLocked;
+  const fundsLocked = planckToUnit(miscFrozen.minus(lockStakingAmount), units);
+  let fundsReserved = planckToUnit(existentialAmount, units);
+  const fundsFree = planckToUnit(allTransferOptions.freeBalance, units).minus(
+    fundsLocked
+  );
 
   // available balance percentages
-  const graphLocked =
-    fundsLocked > 0 ? fundsLocked / (graphAvailable * 0.01) : 0;
-  const graphFree = fundsFree > 0 ? fundsFree / (graphAvailable * 0.01) : 0;
+  const graphLocked = greaterThanZero(fundsLocked)
+    ? fundsLocked.dividedBy(graphAvailable.multipliedBy(0.01))
+    : new BigNumber(0);
+
+  const graphFree = greaterThanZero(fundsFree)
+    ? fundsFree.dividedBy(graphAvailable.multipliedBy(0.01))
+    : new BigNumber(0);
 
   // get total available balance, including reserve and locks
   if (graphAvailable < fundsReserved) {
     fundsReserved = graphAvailable;
   }
+
+  // formatter for price feed.
+  const usdFormatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+
+  const isNominating = greaterThanZero(nominating);
+  const isInPool = greaterThanZero(poolBondOpions.active);
 
   return (
     <>
@@ -106,45 +123,45 @@ export const BalanceChart = () => {
           <OpenHelpIcon helpKey="Your Balance" />
         </h4>
         <h2>
-          <span className="amount">{humanNumber(totalBalance)}</span>&nbsp;
+          <span className="amount">{totalBalance.toFormat()}</span>&nbsp;
           {unit}
           <span className="fiat">
-            {plugins.includes('binance_spot') && (
-              <>&nbsp;{usdFormatter.format(Number(freeFiat))}</>
-            )}
+            {plugins.includes('binance_spot') ? (
+              <>&nbsp;{usdFormatter.format(freeFiat.toNumber())}</>
+            ) : null}
           </span>
         </h2>
       </div>
 
       <BalanceChartWrapper>
         <Legend>
-          {nominating > 0 && (
+          {isNominating ? (
             <LegendItem dataClass="d1" label={t('overview.nominating')} />
-          )}
-          {inPool > 0 && (
+          ) : null}
+          {greaterThanZero(inPool) ? (
             <LegendItem dataClass="d2" label={t('overview.inPool')} />
-          )}
+          ) : null}
           <LegendItem dataClass="d4" label={t('overview.notStaking')} />
         </Legend>
         <Bar>
           <BarSegment
             dataClass="d1"
             widthPercent={Number(graphNominating.toFixed(2))}
-            flexGrow={!inPool && !notStaking && nominating ? 1 : 0}
-            label={`${humanNumber(toFixedIfNecessary(nominating, 3))} ${unit}`}
+            flexGrow={!inPool && !notStaking && isNominating ? 1 : 0}
+            label={`${nominating.decimalPlaces(3).toFormat()} ${unit}`}
           />
           <BarSegment
             dataClass="d2"
             widthPercent={Number(graphInPool.toFixed(2))}
-            flexGrow={!nominating && !notStaking && inPool ? 1 : 0}
-            label={`${humanNumber(toFixedIfNecessary(inPool, 3))} ${unit}`}
+            flexGrow={!isNominating && !notStaking && inPool ? 1 : 0}
+            label={`${inPool.decimalPlaces(3).toFormat()} ${unit}`}
           />
           <BarSegment
             dataClass="d4"
             widthPercent={Number(graphNotStaking.toFixed(2))}
-            flexGrow={!nominating && !inPool ? 1 : 0}
-            label={`${humanNumber(toFixedIfNecessary(notStaking, 3))} ${unit}`}
-            forceShowLabel={graphNotStaking === 0}
+            flexGrow={!isNominating && !inPool ? 1 : 0}
+            label={`${notStaking.decimalPlaces(3).toFormat()} ${unit}`}
+            forceShow={!isNominating && !isInPool}
           />
         </Bar>
         <section className="available">
@@ -153,7 +170,7 @@ export const BalanceChart = () => {
               flex: 1,
               minWidth: '8.5rem',
               flexBasis: `${
-                graphFree > 0 && graphLocked > 0
+                greaterThanZero(graphFree) && greaterThanZero(graphLocked)
                   ? `${graphFree.toFixed(2)}%`
                   : 'auto'
               }`,
@@ -167,13 +184,11 @@ export const BalanceChart = () => {
                 dataClass="d4"
                 widthPercent={100}
                 flexGrow={1}
-                label={`${humanNumber(
-                  toFixedIfNecessary(fundsFree, 3)
-                )} ${unit}`}
+                label={`${fundsFree.decimalPlaces(3).toFormat()} ${unit}`}
               />
             </Bar>
           </div>
-          {fundsLocked > 0 ? (
+          {greaterThanZero(fundsLocked) ? (
             <div
               style={{
                 flex: 1,
@@ -192,14 +207,12 @@ export const BalanceChart = () => {
                   dataClass="d4"
                   widthPercent={100}
                   flexGrow={1}
-                  label={`${humanNumber(
-                    toFixedIfNecessary(fundsLocked, 3)
-                  )} ${unit}`}
+                  label={`${fundsLocked.decimalPlaces(3).toFormat()} ${unit}`}
                 />
               </Bar>
             </div>
           ) : null}
-          {fundsReserved > 0 && (
+          {greaterThanZero(fundsReserved) ? (
             <div
               style={{
                 flex: 0,
@@ -219,13 +232,11 @@ export const BalanceChart = () => {
                   dataClass="d4"
                   widthPercent={100}
                   flexGrow={1}
-                  label={`${humanNumber(
-                    toFixedIfNecessary(fundsReserved, 3)
-                  )} ${unit}`}
+                  label={`${fundsReserved.decimalPlaces(3).toFormat()} ${unit}`}
                 />
               </Bar>
             </div>
-          )}
+          ) : null}
         </section>
       </BalanceChartWrapper>
     </>

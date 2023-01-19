@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BigNumber from 'bignumber.js';
 import {
   BarElement,
   CategoryScale,
@@ -30,7 +31,6 @@ import {
   networkColorsTransparent,
 } from 'theme/default';
 import { AnySubscan } from 'types';
-import { humanNumber } from 'Utils';
 import { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
 
@@ -170,7 +170,8 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         },
         callbacks: {
           title: () => [],
-          label: (context: any) => `${humanNumber(context.parsed.y)} ${unit}`,
+          label: (context: any) =>
+            `${new BigNumber(context.parsed.y).toFormat()} ${unit}`,
         },
       },
     },

@@ -79,7 +79,7 @@
     "manualSelectionSubtitle": "从头开始添加验证人",
     "manual_selection": "手动选择",
     "max": "最高",
-    "minimumBond": "最低质押为 {{minBondBase}} {{unit}}",
+    "minimumBond": "最低质押为 {{minBondUnit}} {{unit}}",
     "missingIdentity": "无ID",
     "moreThanBalance": "质押金额超过余额",
     "next": "下一页",

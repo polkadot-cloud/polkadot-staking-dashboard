@@ -3,7 +3,7 @@
 
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -13,13 +13,7 @@ import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { useTranslation } from 'react-i18next';
-import {
-  capitalizeFirstLetter,
-  humanNumber,
-  planckBnToUnit,
-  rmCommas,
-  toFixedIfNecessary,
-} from 'Utils';
+import { capitalizeFirstLetter, planckToUnit, rmCommas } from 'Utils';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
@@ -32,13 +26,11 @@ export const Announcements = () => {
   const { bondedPools } = useBondedPools();
   const { totalStaked } = eraStakers;
 
-  let totalPoolPoints = new BN(0);
+  let totalPoolPoints = new BigNumber(0);
   bondedPools.forEach((b: BondedPool) => {
-    totalPoolPoints = totalPoolPoints.add(new BN(rmCommas(b.points)));
+    totalPoolPoints = totalPoolPoints.plus(new BigNumber(rmCommas(b.points)));
   });
-  const totalPoolPointsBase = humanNumber(
-    toFixedIfNecessary(planckBnToUnit(totalPoolPoints, units), 0)
-  );
+  const totalPoolPointsUnit = planckToUnit(totalPoolPoints, units);
 
   const container = {
     hidden: { opacity: 0 },
@@ -68,9 +60,7 @@ export const Announcements = () => {
     announcements.push({
       class: 'neutral',
       title: t('overview.networkCurrentlyStaked', {
-        total: humanNumber(
-          toFixedIfNecessary(planckBnToUnit(totalStaked, units), 0)
-        ),
+        total: planckToUnit(totalStaked, units).integerValue().toFormat(),
         unit: network.unit,
         network: capitalizeFirstLetter(network.name),
       }),
@@ -84,7 +74,9 @@ export const Announcements = () => {
   if (bondedPools.length) {
     announcements.push({
       class: 'neutral',
-      title: `${totalPoolPointsBase} ${network.unit} ${t('overview.inPools')}`,
+      title: `${totalPoolPointsUnit.integerValue().toFormat()} ${
+        network.unit
+      } ${t('overview.inPools')}`,
       subtitle: `${t('overview.bondedInPools', { networkUnit })}`,
     });
 
@@ -92,7 +84,7 @@ export const Announcements = () => {
       // total locked in pols
       announcements.push({
         class: 'neutral',
-        title: `${humanNumber(poolMembers.length)} ${t(
+        title: `${new BigNumber(poolMembers.length).toFormat()} ${t(
           'overview.poolMembersBonding'
         )}`,
         subtitle: `${t('overview.totalNumAccounts')}`,

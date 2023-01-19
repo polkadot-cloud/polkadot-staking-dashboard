@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { useTxFees } from 'contexts/TxFees';
@@ -26,7 +26,7 @@ export const Bond = (props: SetupStepProps) => {
   const initialBondValue = setup.bond === '0' ? '0' : setup.bond;
 
   // store local bond amount for form control
-  const [bond, setBond] = useState({
+  const [bond, setBond] = useState<{ bond: string }>({
     bond: initialBondValue,
   });
 
@@ -67,7 +67,7 @@ export const Bond = (props: SetupStepProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondFeedback
-          syncing={txFees.eq(new BN(0))}
+          syncing={txFees.isEqualTo(new BigNumber(0))}
           bondFor="nominator"
           inSetup
           listenIsValid={setBondValid}
@@ -85,7 +85,7 @@ export const Bond = (props: SetupStepProps) => {
           txFees={txFees}
           maxWidth
         />
-        <NominateStatusBar value={bond.bond} />
+        <NominateStatusBar value={new BigNumber(bond.bond)} />
         <Footer complete={bondValid} setupType="stake" />
       </MotionContainer>
     </>

@@ -5,7 +5,7 @@ import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { Number } from 'library/StatBoxList/Number';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 
 const MinJoinBondStatBox = () => {
   const { network } = useApi();
@@ -15,7 +15,7 @@ const MinJoinBondStatBox = () => {
 
   const params = {
     label: t('pools.minimumToJoinPool'),
-    value: planckBnToUnit(stats.minJoinBond, units),
+    value: planckToUnit(stats.minJoinBond, units).toNumber(),
     unit: ` ${network.unit}`,
     helpKey: 'Minimum To Join Pool',
   };

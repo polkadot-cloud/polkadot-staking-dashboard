@@ -35,7 +35,7 @@ export const Pie = (props: PieProps) => {
                   precision={2}
                   speed={250}
                   trail={false}
-                  value={stat?.value}
+                  value={Number(stat?.value ?? 0)}
                   useLocaleString
                 />
                 {stat?.unit && <>{stat?.unit}</>}
@@ -48,7 +48,7 @@ export const Pie = (props: PieProps) => {
                       precision={2}
                       speed={250}
                       trail={false}
-                      value={stat?.total}
+                      value={Number(stat?.total ?? 0)}
                       useLocaleString
                     />
                     {stat?.unit && (

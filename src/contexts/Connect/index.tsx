@@ -373,7 +373,6 @@ export const ConnectProvider = ({
               updateInitialisedExtensions(id);
             }
           });
-
           addToUnsubscribe(id, unsub);
         }
       } catch (err) {

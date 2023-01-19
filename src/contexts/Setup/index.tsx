@@ -1,11 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyJson, MaybeAccount } from 'types';
-import { setStateWithRef, unitToPlanckBn } from 'Utils';
+import { greaterThanZero, setStateWithRef, unitToPlanck } from 'Utils';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useStaking } from '../Staking';
@@ -48,8 +47,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   // update setup state when activeAccount changes
   useEffect(() => {
     if (connectAccounts.length) {
-      const _setup = setupDefault();
-      setStateWithRef(_setup, setSetup, setupRef);
+      setStateWithRef(setupDefault(), setSetup, setupRef);
     }
   }, [activeAccount, network, connectAccounts]);
 
@@ -57,9 +55,8 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
    * Generates the default setup objects or the currently
    * connected accounts.
    */
-  const setupDefault = () => {
-    // generate setup objects from connected accounts
-    const _setup = connectAccounts.map((item) => {
+  const setupDefault = () =>
+    connectAccounts.map((item) => {
       const localStakeSetup = localStorage.getItem(
         `${network.name}_stake_setup_${item.address}`
       );
@@ -84,20 +81,18 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
         },
       };
     });
-    return _setup;
-  };
 
   /*
    * Gets the stake setup progress for a connected account.
    */
   const getSetupProgress = (type: SetupType, address: MaybeAccount) => {
-    const _setup = setupRef.current.find((s: any) => s.address === address);
-    if (_setup === undefined) {
+    const progress = setupRef.current.find((s: any) => s.address === address);
+    if (progress === undefined) {
       return type === 'stake'
         ? defaults.defaultStakeSetup
         : defaults.defaultPoolSetup;
     }
-    return _setup.progress[type];
+    return progress.progress[type];
   };
 
   /*
@@ -105,16 +100,16 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
    */
   const getStakeSetupProgressPercent = (address: MaybeAccount) => {
     if (!address) return 0;
-    const setupProgress = getSetupProgress('stake', address);
-    const bondBn = unitToPlanckBn(setupProgress.bond, network.units);
+    const progress = getSetupProgress('stake', address);
+    const bond = unitToPlanck(progress.bond, network.units);
 
     const p = 25;
-    let progress = 0;
-    if (bondBn.gt(new BN(0))) progress += p;
-    if (setupProgress.controller !== null) progress += p;
-    if (setupProgress.nominations.length) progress += p;
-    if (setupProgress.payee !== null) progress += p - 1;
-    return progress;
+    let percentageComplete = 0;
+    if (greaterThanZero(bond)) percentageComplete += p;
+    if (progress.controller !== null) percentageComplete += p;
+    if (progress.nominations.length) percentageComplete += p;
+    if (progress.payee !== null) percentageComplete += p - 1;
+    return percentageComplete;
   };
 
   /*
@@ -122,16 +117,16 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
    */
   const getPoolSetupProgressPercent = (address: MaybeAccount) => {
     if (!address) return 0;
-    const setupProgress = getSetupProgress('pool', address);
-    const bondBn = unitToPlanckBn(setupProgress.bond, network.units);
+    const progress = getSetupProgress('pool', address);
+    const bond = unitToPlanck(progress.bond, network.units);
 
     const p = 25;
-    let progress = 0;
-    if (setupProgress.metadata !== '') progress += p;
-    if (bondBn.gt(new BN(0))) progress += p;
-    if (setupProgress.nominations.length) progress += p;
-    if (setupProgress.roles !== null) progress += p - 1;
-    return progress;
+    let percentageComplete = 0;
+    if (progress.metadata !== '') percentageComplete += p;
+    if (greaterThanZero(bond)) percentageComplete += p;
+    if (progress.nominations.length) percentageComplete += p;
+    if (progress.roles !== null) percentageComplete += p - 1;
+    return percentageComplete;
   };
 
   /*
@@ -161,37 +156,37 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   /*
-   * Sets active setup section for an address
+   * Sets active setup section for an address.
    */
   const setActiveAccountSetupSection = (type: SetupType, section: number) => {
     if (!activeAccount) return;
 
-    // get current progress
-    const _accountSetup = [...setupRef.current].find(
+    // get current progress.
+    const accountSetup = [...setupRef.current].find(
       (item) => item.address === activeAccount
     );
 
-    // abort if setup does not exist
-    if (_accountSetup === null) {
+    // abort if setup does not exist.
+    if (accountSetup === null) {
       return;
     }
 
-    // amend section
-    _accountSetup.progress[type].section = section;
+    // amend section.
+    accountSetup.progress[type].section = section;
 
-    // update context setup
-    const _setup = setupRef.current.map((obj: any) =>
-      obj.address === activeAccount ? _accountSetup : obj
+    // update context setup.
+    const progress = setupRef.current.map((obj: any) =>
+      obj.address === activeAccount ? accountSetup : obj
     );
 
-    // update local storage
+    // update local storage.
     localStorage.setItem(
       `${network.name}_${type}_setup_${activeAccount}`,
-      JSON.stringify(_accountSetup.progress[type])
+      JSON.stringify(accountSetup.progress[type])
     );
 
-    // update context
-    setStateWithRef(_setup, setSetup, setupRef);
+    // update context.
+    setStateWithRef(progress, setSetup, setupRef);
   };
 
   return (

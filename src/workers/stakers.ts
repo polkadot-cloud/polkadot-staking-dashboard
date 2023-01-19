@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { AnyJson } from 'types';
-import { planckBnToUnit, rmCommas } from 'Utils';
+import { planckToUnit, rmCommas } from 'Utils';
 
 // eslint-disable-next-line no-restricted-globals
 export const ctx: Worker = self as any;
@@ -67,14 +67,16 @@ const processExposures = (data: AnyJson) => {
 
   const stakers: any = [];
   let activeValidators = 0;
-  const ownStake: Array<any> = [];
+  const activeAccountOwnStake: Array<any> = [];
   const nominators: any = [];
-  let totalStaked = new BN(0);
+  let totalStaked = new BigNumber(0);
 
   exposures.forEach(({ keys, val }: any) => {
     const address = keys[1];
-    const total = val?.total ? new BN(rmCommas(val.total)) : new BN(0);
-    totalStaked = totalStaked.add(total);
+    const total = val?.total
+      ? new BigNumber(rmCommas(val.total))
+      : new BigNumber(0);
+    totalStaked = totalStaked.plus(total);
     activeValidators++;
 
     stakers.push({
@@ -85,16 +87,16 @@ const processExposures = (data: AnyJson) => {
     // sort `others` by value bonded, largest first
     let others = val?.others ?? [];
     others = others.sort((a: any, b: any) => {
-      const x = new BN(rmCommas(a.value));
-      const y = new BN(rmCommas(b.value));
-      return y.sub(x);
+      const x = new BigNumber(rmCommas(a.value));
+      const y = new BigNumber(rmCommas(b.value));
+      return y.minus(x);
     });
 
     // accumulate active nominators and min active bond threshold.
     if (others.length) {
       // accumulate active bond for all nominators
       for (const o of others) {
-        const _value = new BN(rmCommas(o.value));
+        const value = new BigNumber(rmCommas(o.value));
 
         // check nominator already exists
         const index = nominators.findIndex((_o: any) => _o.who === o.who);
@@ -103,43 +105,45 @@ const processExposures = (data: AnyJson) => {
         if (index === -1) {
           nominators.push({
             who: o.who,
-            value: _value,
+            value,
           });
         } else {
-          nominators[index].value = nominators[index].value.add(_value);
+          nominators[index].value = new BigNumber(nominators[index].value)
+            .plus(value)
+            .toString();
         }
       }
 
       // get own stake if present
       const own = others.find((_o: any) => _o.who === activeAccount);
       if (own !== undefined) {
-        ownStake.push({
+        activeAccountOwnStake.push({
           address,
-          value: planckBnToUnit(new BN(rmCommas(own.value)), units),
+          value: planckToUnit(
+            new BigNumber(rmCommas(own.value)),
+            units
+          ).toString(),
         });
       }
     }
   });
 
   // order nominators by bond size, smallest first
-  const _getMinBonds = nominators.sort((a: any, b: any) => {
-    return a.value.sub(b.value);
+  const getMinBonds = nominators.sort((a: any, b: any) => {
+    return new BigNumber(a.value).minus(b.value).toString();
   });
 
   // get the smallest actve nominator bond
-  let minActiveBond = _getMinBonds[0]?.value ?? new BN(0);
-
-  // convert minActiveBond to base value
-  minActiveBond = planckBnToUnit(minActiveBond, units);
+  const minActiveBond = getMinBonds[0]?.value ?? new BigNumber(0);
 
   return {
     stakers,
     totalStaked: totalStaked.toString(),
-    ownStake,
+    minActiveBond: planckToUnit(minActiveBond, units).toString(),
     totalActiveNominators: nominators.length,
+    activeAccountOwnStake,
     activeValidators,
-    minActiveBond,
-    _activeAccount: activeAccount,
+    who: activeAccount,
   };
 };
 

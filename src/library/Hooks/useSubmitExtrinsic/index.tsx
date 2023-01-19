@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -48,7 +48,7 @@ export const useSubmitExtrinsic = ({
     }
     // get payment info
     const { partialFee } = await tx.paymentInfo(submitAddress);
-    const partialFeeBn = new BN(partialFee.toString());
+    const partialFeeBn = new BigNumber(partialFee.toString());
 
     // give tx fees to global useTxFees context
     if (partialFeeBn.toString() !== txFees.toString()) {

@@ -3,7 +3,7 @@
 
 import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -22,7 +22,7 @@ import {
 } from 'modals/Wrappers';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, rmCommas } from 'Utils';
+import { planckToUnit, rmCommas } from 'Utils';
 
 export const WithdrawPoolMember = () => {
   const { api, network, consts } = useApi();
@@ -39,24 +39,26 @@ export const WithdrawPoolMember = () => {
   const { unbondingEras, points } = member;
 
   // calculate total for withdraw
-  let totalWithdrawBase: BN = new BN(0);
+  let totalWithdrawUnit = new BigNumber(0);
 
   Object.entries(unbondingEras).forEach((entry: any) => {
     const [era, amount] = entry;
     if (activeEra.index > era) {
-      totalWithdrawBase = totalWithdrawBase.add(new BN(rmCommas(amount)));
+      totalWithdrawUnit = totalWithdrawUnit.plus(
+        new BigNumber(rmCommas(amount))
+      );
     }
   });
 
-  const bonded = planckBnToUnit(new BN(rmCommas(points)), network.units);
+  const bonded = planckToUnit(new BigNumber(rmCommas(points)), network.units);
 
-  const totalWithdraw = planckBnToUnit(
-    new BN(totalWithdrawBase),
+  const totalWithdraw = planckToUnit(
+    new BigNumber(totalWithdrawUnit),
     network.units
   );
 
   // valid to submit transaction
-  const [valid] = useState<boolean>(totalWithdraw > 0 ?? false);
+  const [valid] = useState<boolean>(!totalWithdraw.isZero() ?? false);
 
   // tx to submit
   const getTx = () => {
@@ -76,7 +78,7 @@ export const WithdrawPoolMember = () => {
     },
     callbackInBlock: () => {
       // remove the pool member from context if no more funds bonded
-      if (bonded === 0) {
+      if (bonded.isZero()) {
         removePoolMember(who);
       }
     },
@@ -88,7 +90,7 @@ export const WithdrawPoolMember = () => {
       <PaddingWrapper>
         {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
         <h2 className="title">
-          {t('withdraw')} {totalWithdraw} {network.unit}
+          {`${t('withdraw')} ${totalWithdraw} ${network.unit}`}
         </h2>
         <Separator />
         <NotesWrapper>
