@@ -1,9 +1,10 @@
 # Contribution Guide
 
 ## Introduction
-This section aims to familiarise developers to the Polkadot Staking Dashboard [[GitHub](https://github.com/paritytech/polkadot-staking-dashboard), [Demo](https://paritytech.github.io/polkadot-staking-dashboard/#/overview)] for the purpose of contributing to the project.
 
-Reach out to ross@parity.io for clarification of any content within this document.
+This section aims to familiarise developers to the Fair Squares dAppp [GitHub](https://github.com/fair-squares/fs-dapp) for the purpose of contributing to the project.
+
+Reach out to hello@fair-squares.nl for clarification of any content within this document.
 
 ## Major Packages Used
 
@@ -16,7 +17,9 @@ Reach out to ross@parity.io for clarification of any content within this documen
 - Styled Components [[docs](https://styled-components.com/docs)] alongside Styled Theming [[docs](https://www.npmjs.com/package/styled-theming)] for theme configuration.
 
 ## Environment Variables
-Optionally apply the following envrionment variables in an environment file such as `.env` or with `yarn build` to customise the build of staking dashboard:
+
+Optionally apply the following envrionment variables in an environment file such as `.env` or with `yarn build` to customise the build of the dApp:
+
 ```
 # disable all mentioning of fiat values and token prices
 REACT_APP_DISABLE_FIAT=1
@@ -27,8 +30,11 @@ REACT_APP_ORGANISATION="© Parity Technologies"
 # provide a privacy policy url in the network bar
 REACT_APP_PRIVACY_URL=https://www.parity.io/privacy/
 ```
+
 ## Config Files
+
 There are some ad-hoc files defining app configuration where needed. These just provide a means of bootstrapping app data, and further abstraction could be explored in the future.
+
 - [`config/pages.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/config/pages.ts): provides the pages and page categories of the app.
 - [`config/help.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/config/help.ts): provides the help content.
 - [`Utils.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/Utils.ts): Various general helper functions used throughout the app, such as formatting utilities.
@@ -36,6 +42,7 @@ There are some ad-hoc files defining app configuration where needed. These just 
 ## Folders
 
 Folders are structured in the [`src/`](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src) directory to separate functional, presentational and context components:
+
 - [`contexts`](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/contexts): context providers for the app. All Polkadot JS API interaction happens in these files.
 - [`img`](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/img): app SVGs.
 - [`library`](https://github.com/paritytech/polkadot-staking-dashboard/tree/master/src/library): reusable components that could eventually be abstracted into a separate UI library.
@@ -47,6 +54,7 @@ Folders are structured in the [`src/`](https://github.com/paritytech/polkadot-st
 ## App Entry
 
 Going from the top-most component, the component hierarchy is set up as follows:
+
 - [`index.tsx`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/index.tsx): DOM render, of little interest.
 - [`App.tsx`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/App.tsx): wraps `<App />` in the theme provider context and determines the active network from local storage.
 - [`Providers.tsx`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/Providers.tsx): imports and wraps `<Router />` with all the contexts using a withProviders hook. We also wrap styled component's theme provider context here to make the theme configuration work.
