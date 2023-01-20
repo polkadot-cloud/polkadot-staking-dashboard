@@ -188,9 +188,11 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     const historyDepth = result[8]
       ? new BigNumber(rmCommas(result[8].toString()))
       : new BigNumber(0);
+
     const fastUnstakeDeposit = result[9]
       ? new BigNumber(rmCommas(result[9].toString()))
       : new BigNumber(0);
+
     const poolsPalletId = result[10] ? result[10].toU8a() : new Uint8Array(0);
 
     setApi(newApi);

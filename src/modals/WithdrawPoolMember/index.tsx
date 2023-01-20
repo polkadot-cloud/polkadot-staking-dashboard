@@ -65,7 +65,7 @@ export const WithdrawPoolMember = () => {
     if (!valid || !api) {
       return tx;
     }
-    tx = api.tx.nominationPools.withdrawUnbonded(who, historyDepth);
+    tx = api.tx.nominationPools.withdrawUnbonded(who, historyDepth.toString());
     return tx;
   };
   const { submitTx, submitting } = useSubmitExtrinsic({
