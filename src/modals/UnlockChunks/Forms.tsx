@@ -67,11 +67,11 @@ export const Forms = forwardRef(
       if (task === 'rebond' && isStaking) {
         tx = api.tx.staking.rebond(unlock.value.toNumber());
       } else if (task === 'withdraw' && isStaking) {
-        tx = api.tx.staking.withdrawUnbonded(historyDepth);
+        tx = api.tx.staking.withdrawUnbonded(historyDepth.toString());
       } else if (task === 'withdraw' && isPooling && selectedActivePool) {
         tx = api.tx.nominationPools.withdrawUnbonded(
           activeAccount,
-          historyDepth
+          historyDepth.toString()
         );
       }
       return tx;
