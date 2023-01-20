@@ -14,7 +14,6 @@ import {
   Tooltip,
 } from 'chart.js';
 import { useApi } from 'contexts/Api';
-
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
@@ -92,6 +91,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
       });
       return `${dateObj}`;
     }),
+
     datasets: [
       {
         label: t('payout'),

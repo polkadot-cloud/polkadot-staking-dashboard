@@ -27,6 +27,9 @@ export const calculatePayoutsByDay = (
 
   // remove days that are beyond end day limit
   payouts = payouts.filter((p: AnySubscan) => {
+    if (p.block_timestamp < 1) {
+      return p;
+    }
     return daysPassed(fromUnixTime(p.block_timestamp), new Date()) <= maxDays;
   });
 
@@ -358,6 +361,9 @@ export const prefillMissingDays = (payoutsByDay: any, maxDays: number) => {
 // Takes the first payout (most recent) and fills the missing days from current day.
 export const postFillMissingDays = (payouts: AnySubscan, maxDays: number) => {
   const newPayouts = [];
+  if (payouts[0].block_timestamp < 1) {
+    return payouts;
+  }
   const payoutsEndDay = startOfDay(fromUnixTime(payouts[0].block_timestamp));
   const daysSinceLast = Math.min(
     daysPassed(payoutsEndDay, startOfDay(new Date())),
