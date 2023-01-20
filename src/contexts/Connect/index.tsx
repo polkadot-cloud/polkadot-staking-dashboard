@@ -236,9 +236,6 @@ export const ConnectProvider = ({
    * no guarantee it still exists - must explicitly find it.
    */
   const connectActiveExtensions = async () => {
-    const keyring = new Keyring();
-    keyring.setSS58Format(network.ss58);
-
     // iterate extensions and add accounts to state
     const total = extensions?.length ?? 0;
     let activeWalletAccount: ImportedAccount | null = null;
@@ -323,9 +320,6 @@ export const ConnectProvider = ({
    * If activeAccount is not found here, it is simply ignored.
    */
   const connectExtensionAccounts = async (e: ExtensionInjected) => {
-    const keyring = new Keyring();
-    keyring.setSS58Format(network.ss58);
-
     // ensure the extension carries an `id` property
     const id = e?.id ?? undefined;
 
