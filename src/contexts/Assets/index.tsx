@@ -1,8 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
+import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import React, { useEffect, useState } from 'react';
 import { AnyApi } from 'types';
+import { rmCommas } from 'Utils';
 import * as defaults from './defaults';
 import { Asset, AssetsContextInterface } from './types';
 
@@ -55,7 +57,7 @@ export const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
           status: nft?.status,
           created: nft?.created,
           metadata: nft?.infos.metadata,
-          price: nft?.price,
+          price: new BN(rmCommas(nft?.price)),
           tenants: nft?.tenants,
         }));
       setAssets(_assets);

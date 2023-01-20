@@ -54,7 +54,7 @@ export const NetworkMetricsProvider = ({
           api.query.roleModule.totalMembers,
         ],
         ([fund, totalUsers]: AnyApi) => {
-          const decimals = api.registry.chainDecimals[0];
+          const decimals = Number(api.registry.chainDecimals[0]);
           const _metrics = {
             totalUsers,
             totalHousingFund: fund.total,
