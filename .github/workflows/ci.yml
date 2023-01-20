@@ -1,4 +1,4 @@
-name: Staking Dashboard CI
+stname: Fair Squares dApp CI
 
 on:
   push:
