@@ -6,7 +6,6 @@ import { ItemsWrapper, ItemWrapper } from './Wrappers';
 
 export const HouseList = ({ assets }: HouseProps) => {
   const { metrics } = useNetworkMetrics();
-  console.log(metrics);
 
   const listItem = {
     hidden: {
