@@ -1,4 +1,4 @@
-stname: Fair Squares dApp CI
+name: Fair Squares dApp CI
 
 on:
   push:
