@@ -93,6 +93,7 @@
     "nominate": "Nominate",
     "nominateActive": "Active",
     "nominateInactive": "Inactive",
+    "nominator": "Nominator",
     "notEnough": "Not Enough",
     "notEnoughAfter": "Not enough {{unit}} to bond after transaction fees.",
     "notEnoughFunds": "The sender does have enough {{unit}} to submit this transaction.",
