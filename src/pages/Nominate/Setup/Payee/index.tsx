@@ -13,13 +13,11 @@ import { useTranslation } from 'react-i18next';
 import { Spacer } from '../../Wrappers';
 import { Item, Items } from './Wrappers';
 
-export const Payee = (props: SetupStepProps) => {
-  const { section } = props;
-
+export const Payee = ({ section }: SetupStepProps) => {
+  const { t } = useTranslation('pages');
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress('stake', activeAccount);
-  const { t } = useTranslation('pages');
 
   const options = ['Staked', 'Stash', 'Controller'];
   const buttons = [
@@ -94,5 +92,3 @@ export const Payee = (props: SetupStepProps) => {
     </>
   );
 };
-
-export default Payee;

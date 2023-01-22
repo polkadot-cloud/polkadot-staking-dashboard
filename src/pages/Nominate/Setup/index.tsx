@@ -15,13 +15,12 @@ import { extractUrlValue, removeVarFromUrlHash } from 'Utils';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
-import { SetController } from './SetController';
 import { Summary } from './Summary';
 
 export const Setup = () => {
+  const { t } = useTranslation('pages');
   const navigate = useNavigate();
   const { setOnNominatorSetup, setActiveAccountSetup } = useSetup();
-  const { t } = useTranslation('pages');
 
   return (
     <>
@@ -61,14 +60,8 @@ export const Setup = () => {
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
-          <Element name="controller" style={{ position: 'absolute' }} />
-          <SetController section={1} />
-        </CardWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <CardWrapper>
           <Element name="payee" style={{ position: 'absolute' }} />
-          <Payee section={2} />
+          <Payee section={1} />
         </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
@@ -77,24 +70,22 @@ export const Setup = () => {
           <Nominate
             batchKey="generate_nominations_inactive"
             setupType="stake"
-            section={3}
+            section={2}
           />
         </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           <Element name="bond" style={{ position: 'absolute' }} />
-          <Bond section={4} />
+          <Bond section={3} />
         </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           <Element name="summary" style={{ position: 'absolute' }} />
-          <Summary section={5} />
+          <Summary section={4} />
         </CardWrapper>
       </PageRowWrapper>
     </>
   );
 };
-
-export default Setup;

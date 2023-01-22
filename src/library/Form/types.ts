@@ -35,13 +35,6 @@ export interface AccountDropdownProps {
   height: string | number | undefined;
 }
 
-export interface AccountSelectProps {
-  items: Array<InputItem>;
-  onChange: (o: any) => void;
-  placeholder: string;
-  value: InputItem;
-}
-
 export interface BondFeedbackProps {
   syncing?: boolean;
   setters: any;
