@@ -6,4 +6,5 @@ import { AccountContextInterface } from './types';
 export const defaultAccountContext: AccountContextInterface = {
   address: undefined,
   role: undefined,
+  update: () => {},
 };

@@ -11,6 +11,7 @@ import { ChooseLanguage } from './ChooseLanguage';
 import { ConnectAccounts } from './ConnectAccounts';
 import { GoToFeedback } from './GoToFeedback';
 import { Networks } from './Networks';
+import { SelectRole } from './SelectRole';
 import { Settings } from './Settings';
 import { ContentWrapper, HeightWrapper, ModalWrapper } from './Wrappers';
 
@@ -94,6 +95,7 @@ export const Modal = () => {
               {modal === 'GoToFeedback' && <GoToFeedback />}
               {modal === 'Networks' && <Networks />}
               {modal === 'Settings' && <Settings />}
+              {modal === 'SelectRole' && <SelectRole />}
             </ErrorBoundary>
           </ContentWrapper>
         </HeightWrapper>

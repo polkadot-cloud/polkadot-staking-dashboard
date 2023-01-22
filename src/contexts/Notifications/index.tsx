@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { setStateWithRef } from 'Utils';
 import { defaultNotificationsContext } from './defaults';
 import {
@@ -22,6 +23,8 @@ export const NotificationsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { t } = useTranslation('library');
+
   const [index, _setIndex] = useState(0);
   const [notifications, setNotifications] = useState<NotificationInterface[]>(
     []
@@ -66,10 +69,26 @@ export const NotificationsProvider = ({
     setStateWithRef(_notifications, setNotifications, notificationsRef);
   };
 
+  const notifySuccess = (msg: string) => {
+    addNotification({
+      title: t('success'),
+      subtitle: msg,
+    });
+  };
+
+  const notifyError = (msg: string) => {
+    addNotification({
+      title: t('error'),
+      subtitle: msg,
+    });
+  };
+
   return (
     <NotificationsContext.Provider
       value={{
         addNotification,
+        notifySuccess,
+        notifyError,
         removeNotification,
         notifications: notificationsRef.current,
       }}

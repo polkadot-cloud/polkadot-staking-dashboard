@@ -5,7 +5,12 @@ import { useConnect } from 'contexts/Connect';
 import React, { useEffect, useState } from 'react';
 import { useApi } from '../Api';
 import { defaultAccountContext } from './defaults';
-import { AccountContextInterface, AccountRole, Address } from './types';
+import {
+  AccountContextInterface,
+  AccountRole,
+  Address,
+  isRoleValid,
+} from './types';
 
 // context definition
 export const AccountContext = React.createContext<AccountContextInterface>(
@@ -28,21 +33,26 @@ export const AccountProvider = ({
   const fetchRole = async (_account: string) => {
     setAddress(_account);
 
-    const _role = await api?.query.roleModule.accountsRolesLog(_account);
-    setRole(_role?.toString());
+    const res = await api?.query.roleModule.accountsRolesLog(_account);
+    const _role = res?.toString();
+    setRole(isRoleValid(_role) ? _role : undefined);
   };
 
-  useEffect(() => {
+  const update = () => {
     if (api && activeAccount) {
       fetchRole(activeAccount);
     } else {
       setAddress(undefined);
       setRole(undefined);
     }
+  };
+
+  useEffect(() => {
+    update();
   }, [isReady, activeAccount]);
 
   return (
-    <AccountContext.Provider value={{ address, role }}>
+    <AccountContext.Provider value={{ address, role, update }}>
       {children}
     </AccountContext.Provider>
   );

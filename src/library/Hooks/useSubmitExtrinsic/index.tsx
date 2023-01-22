@@ -20,6 +20,8 @@ export const useSubmitExtrinsic = ({
   shouldSubmit,
   callbackSubmit,
   callbackInBlock,
+  callbackSuccess,
+  callbackError,
   from,
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { api } = useApi();
@@ -89,7 +91,7 @@ export const useSubmitExtrinsic = ({
         from,
         { signer },
         ({ status, events = [] }: AnyApi) => {
-          // extrinsic is ready ( has been signed), add to pending
+          // extrinsic is ready (has been signed), add to pending
           if (status.isReady) {
             addPending(accountNonce);
             addNotification({
@@ -114,16 +116,25 @@ export const useSubmitExtrinsic = ({
           if (status.isFinalized) {
             events.forEach(({ event: { method } }: AnyApi) => {
               if (method === 'ExtrinsicSuccess') {
-                addNotification({
-                  title: t('finalized'),
-                  subtitle: t('transactionSuccessful'),
-                });
+                if (callbackSuccess) callbackSuccess();
+                else {
+                  // default callback on success
+                  addNotification({
+                    title: t('finalized'),
+                    subtitle: t('transactionSuccessful'),
+                  });
+                }
                 unsub();
               } else if (method === 'ExtrinsicFailed') {
-                addNotification({
-                  title: t('failed'),
-                  subtitle: t('errorWithTransaction'),
-                });
+                if (callbackError) {
+                  callbackError();
+                } else {
+                  // default callback on error
+                  addNotification({
+                    title: t('failed'),
+                    subtitle: t('errorWithTransaction'),
+                  });
+                }
                 setSubmitting(false);
                 removePending(accountNonce);
                 unsub();
@@ -135,10 +146,14 @@ export const useSubmitExtrinsic = ({
     } catch (e) {
       setSubmitting(false);
       removePending(accountNonce);
-      addNotification({
-        title: t('cancelled'),
-        subtitle: t('transactionCancelled'),
-      });
+      if (callbackError) {
+        callbackError();
+      } else {
+        addNotification({
+          title: t('cancelled'),
+          subtitle: t('transactionCancelled'),
+        });
+      }
     }
   };
 
