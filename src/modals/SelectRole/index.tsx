@@ -44,6 +44,7 @@ export const SelectRole = () => {
     },
     callbackError: () => {
       notifyError(t('setRoleFailed'));
+      setPending(false);
     },
   });
 
