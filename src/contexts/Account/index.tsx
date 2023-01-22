@@ -33,8 +33,12 @@ export const AccountProvider = ({
   };
 
   useEffect(() => {
-    if (!api || activeAccount === null) return;
-    fetchRole(activeAccount);
+    if (api && activeAccount) {
+      fetchRole(activeAccount);
+    } else {
+      setAddress(undefined);
+      setRole(undefined);
+    }
   }, [isReady, activeAccount]);
 
   return (
