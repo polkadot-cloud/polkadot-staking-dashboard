@@ -2,13 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useConnect } from 'contexts/Connect';
-import { useTranslation } from 'react-i18next';
 import { Account } from '../Account';
 import { HeadingWrapper } from './Wrappers';
 
 export const Connected = () => {
   const { activeAccount, accountHasSigner } = useConnect();
-  const { t } = useTranslation('library');
 
   return (
     <>
