@@ -18,7 +18,7 @@ export const SelectRole = () => {
   const { setStatus } = useModal();
   const { api } = useApi();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { address, update } = useAccount();
+  const { address } = useAccount();
   const { notifyError, notifySuccess } = useNotifications();
 
   const [role, selectRole] = useState<AccountRole>('');
@@ -39,7 +39,6 @@ export const SelectRole = () => {
     callbackSuccess: () => {
       setPending(false);
       notifySuccess(t('setRoleSuccess'));
-      update();
       setStatus(2);
     },
     callbackError: () => {

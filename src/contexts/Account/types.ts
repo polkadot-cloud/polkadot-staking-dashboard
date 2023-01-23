@@ -15,5 +15,4 @@ export interface AccountContextInterface {
   address: Address;
   role: AccountRole;
   balance: BN;
-  update: () => void;
 }

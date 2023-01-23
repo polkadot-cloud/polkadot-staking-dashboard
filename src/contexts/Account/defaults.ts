@@ -8,5 +8,4 @@ export const defaultAccountContext: AccountContextInterface = {
   address: undefined,
   role: undefined,
   balance: ZERO,
-  update: () => {},
 };
