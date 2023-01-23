@@ -75,5 +75,3 @@ export const useFillVariables = () => {
     fillVariables,
   };
 };
-
-export default useFillVariables;

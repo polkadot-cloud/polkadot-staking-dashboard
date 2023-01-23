@@ -11,7 +11,7 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import useUnstaking from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
@@ -192,5 +192,3 @@ export const Nominations = ({
     </Wrapper>
   );
 };
-
-export default Nominations;

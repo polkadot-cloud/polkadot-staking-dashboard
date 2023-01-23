@@ -9,7 +9,7 @@ import { Pie } from 'library/StatBoxList/Pie';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
 
-export const SupplyStakedStatBox = () => {
+export const SupplyStakedStat = () => {
   const { t } = useTranslation('pages');
   const { units, unit } = useApi().network;
   const { metrics } = useNetworkMetrics();
@@ -46,5 +46,3 @@ export const SupplyStakedStatBox = () => {
 
   return <Pie {...params} />;
 };
-
-export default SupplyStakedStatBox;

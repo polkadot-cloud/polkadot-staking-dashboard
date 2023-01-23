@@ -33,5 +33,3 @@ export const Wrapper = styled.button`
     }
   }
 `;
-
-export default Wrapper;

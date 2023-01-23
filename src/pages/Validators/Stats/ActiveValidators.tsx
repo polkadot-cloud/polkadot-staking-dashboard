@@ -7,7 +7,7 @@ import { Pie } from 'library/StatBoxList/Pie';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero } from 'Utils';
 
-const ActiveValidatorsStatBox = () => {
+export const ActiveValidatorsStat = () => {
   const { staking, eraStakers } = useStaking();
   const { validatorCount } = staking;
   const { activeValidators } = eraStakers;
@@ -38,5 +38,3 @@ const ActiveValidatorsStatBox = () => {
 
   return <Pie {...params} />;
 };
-
-export default ActiveValidatorsStatBox;

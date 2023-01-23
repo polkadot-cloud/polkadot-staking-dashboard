@@ -63,5 +63,3 @@ export const useUnstaking = () => {
     isFastUnstaking: !!registered,
   };
 };
-
-export default useUnstaking;

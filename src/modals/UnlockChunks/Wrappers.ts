@@ -77,5 +77,3 @@ export const ChunkWrapper = styled.div<any>`
     margin: 0.75rem 0 0 0;
   }
 `;
-
-export default Wrapper;

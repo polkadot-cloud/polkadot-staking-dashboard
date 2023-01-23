@@ -7,7 +7,7 @@ import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
 import { useTranslation } from 'react-i18next';
 
-export const ActiveNominatorsStatBox = () => {
+export const ActiveNominatorsStat = () => {
   const { consts } = useApi();
   const { maxElectingVoters } = consts;
   const { eraStakers } = useStaking();
@@ -41,5 +41,3 @@ export const ActiveNominatorsStatBox = () => {
 
   return <Pie {...params} />;
 };
-
-export default ActiveNominatorsStatBox;

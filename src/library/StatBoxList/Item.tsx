@@ -22,7 +22,7 @@ export const StatBox = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const StatBoxListItem = ({ format, params }: any) => {
+export const StatBoxListItem = ({ format, params }: any) => {
   switch (format) {
     case 'chart-pie':
       return <Pie {...params} />;
@@ -37,5 +37,3 @@ const StatBoxListItem = ({ format, params }: any) => {
       return null;
   }
 };
-
-export default StatBoxListItem;

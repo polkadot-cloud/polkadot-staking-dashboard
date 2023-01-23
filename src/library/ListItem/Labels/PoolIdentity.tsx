@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import Identicon from 'library/Identicon';
+import { Identicon } from 'library/Identicon';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import { clipAddress, determinePoolDisplay } from 'Utils';
 import { PoolIdentityProps } from '../types';

@@ -63,5 +63,3 @@ export const NominationStatus = (props: NominationStatusProps) => {
     </ValidatorStatusWrapper>
   );
 };
-
-export default NominationStatus;

@@ -168,5 +168,3 @@ export const List = styled.div<ListProps>`
     }
   }
 `;
-
-export default List;

@@ -11,5 +11,3 @@ export const StatBoxList = ({ children }: { children: React.ReactNode }) => {
     </Wrapper>
   );
 };
-
-export default StatBoxList;

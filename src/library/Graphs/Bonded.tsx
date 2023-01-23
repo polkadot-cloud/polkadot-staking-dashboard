@@ -125,5 +125,3 @@ export const Bonded = ({
     </GraphWrapper>
   );
 };
-
-export default Bonded;

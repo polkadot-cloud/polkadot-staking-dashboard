@@ -133,5 +133,3 @@ export class Items extends React.Component<any, any> {
     return <ItemsInner {...this.props} />;
   }
 }
-
-export default Items;

@@ -16,7 +16,7 @@ import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import useUnstaking from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';

@@ -7,7 +7,7 @@ import { usePlugins } from 'contexts/Plugins';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import OpenHelpIcon from 'library/OpenHelpIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatusLabelProps } from './types';
 import { Wrapper } from './Wrapper';
 
@@ -54,5 +54,3 @@ export const StatusLabel = (props: StatusLabelProps) => {
     </Wrapper>
   );
 };
-
-export default StatusLabel;

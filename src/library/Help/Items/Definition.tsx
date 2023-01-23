@@ -31,5 +31,3 @@ export const Definition = ({ title, description, open: _open }: any) => {
     </DefinitionWrapper>
   );
 };
-
-export default Definition;

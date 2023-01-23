@@ -9,7 +9,7 @@ import { useMenu } from 'contexts/Menu';
 import { useModal } from 'contexts/Modal';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
-import CopyAddress from 'library/ListItem/Labels/CopyAddress';
+import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
 import {
   Labels,
@@ -153,5 +153,3 @@ export const Default = (props: DefaultProps) => {
     </Wrapper>
   );
 };
-
-export default Default;

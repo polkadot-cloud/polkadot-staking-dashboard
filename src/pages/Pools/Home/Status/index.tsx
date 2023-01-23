@@ -145,5 +145,3 @@ export const Status = ({ height }: { height: number }) => {
     </CardWrapper>
   );
 };
-
-export default Status;

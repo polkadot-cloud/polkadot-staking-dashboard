@@ -84,5 +84,3 @@ export const Nomination = (props: NominationProps) => {
     </Wrapper>
   );
 };
-
-export default Nomination;

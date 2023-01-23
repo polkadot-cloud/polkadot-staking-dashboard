@@ -80,5 +80,3 @@ export const PageTitle = (props: PageTitleProps) => {
     </>
   );
 };
-
-export default PageTitle;

@@ -38,5 +38,3 @@ export const useEraTimeLeft = () => {
 
   return { get };
 };
-
-export default useEraTimeLeft;

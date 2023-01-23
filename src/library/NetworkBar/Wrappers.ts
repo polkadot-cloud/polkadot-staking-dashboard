@@ -163,5 +163,3 @@ export const Separator = styled.div`
   width: 1px;
   height: 1rem;
 `;
-
-export default Wrapper;

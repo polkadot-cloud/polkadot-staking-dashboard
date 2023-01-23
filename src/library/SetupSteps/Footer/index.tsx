@@ -36,5 +36,3 @@ export const Footer = (props: FooterProps) => {
     </Wrapper>
   );
 };
-
-export default Footer;

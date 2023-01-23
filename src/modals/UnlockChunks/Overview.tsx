@@ -9,7 +9,7 @@ import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { fromNow, timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
-import useUnstaking from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';

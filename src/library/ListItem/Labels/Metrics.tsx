@@ -31,5 +31,3 @@ export const Metrics = (props: MetricsProps) => {
     </div>
   );
 };
-
-export default Metrics;

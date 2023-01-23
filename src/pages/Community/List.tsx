@@ -51,5 +51,3 @@ export const List = () => {
     </PageRowWrapper>
   );
 };
-
-export default List;

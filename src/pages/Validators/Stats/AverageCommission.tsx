@@ -5,7 +5,7 @@ import { useValidators } from 'contexts/Validators';
 import { Text } from 'library/StatBoxList/Text';
 import { useTranslation } from 'react-i18next';
 
-export const AverageCommission = () => {
+export const AverageCommissionStat = () => {
   const { avgCommission } = useValidators();
   const { t } = useTranslation('pages');
 
@@ -16,5 +16,3 @@ export const AverageCommission = () => {
   };
   return <Text {...params} />;
 };
-
-export default AverageCommission;

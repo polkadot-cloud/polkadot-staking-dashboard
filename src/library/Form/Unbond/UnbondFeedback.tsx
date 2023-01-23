@@ -168,5 +168,3 @@ export const UnbondFeedback = ({
     </>
   );
 };
-
-export default UnbondFeedback;

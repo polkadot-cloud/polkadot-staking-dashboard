@@ -29,7 +29,7 @@ import { AnySubscan } from 'types';
 import { PageRowWrapper } from 'Wrappers';
 import { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
-import LastEraPayoutStatBox from './Stats/LastEraPayout';
+import { LastEraPayoutStat } from './Stats/LastEraPayout';
 
 export const Payouts = (props: PageProps) => {
   const { payouts, poolClaims } = useSubscan();
@@ -94,7 +94,7 @@ export const Payouts = (props: PageProps) => {
     <>
       <PageTitle title={t(key, { ns: 'base' })} />
       <StatBoxList>
-        <LastEraPayoutStatBox />
+        <LastEraPayoutStat />
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <GraphWrapper>

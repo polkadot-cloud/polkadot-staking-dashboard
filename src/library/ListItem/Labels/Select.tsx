@@ -38,5 +38,3 @@ export const Select = (props: SelectProps) => {
     </SelectWrapper>
   );
 };
-
-export default Select;

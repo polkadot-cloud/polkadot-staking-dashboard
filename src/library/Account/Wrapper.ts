@@ -69,5 +69,3 @@ export const Wrapper = styled(motion.button)<any>`
     }
   }
 `;
-
-export default Wrapper;

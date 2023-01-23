@@ -11,9 +11,9 @@ import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
-import BondedGraph from 'library/Graphs/Bonded';
+import { Bonded as BondedGraph } from 'library/Graphs/Bonded';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import useUnstaking from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
@@ -97,5 +97,3 @@ export const ManageBond = () => {
     </>
   );
 };
-
-export default ManageBond;

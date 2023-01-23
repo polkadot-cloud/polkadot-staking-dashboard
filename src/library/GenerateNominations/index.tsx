@@ -15,7 +15,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
-import useUnstaking from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { SelectableWrapper } from 'library/List';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
@@ -376,5 +376,3 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     </>
   );
 };
-
-export default GenerateNominations;

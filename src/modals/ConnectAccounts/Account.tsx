@@ -8,7 +8,7 @@ import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import { ExtensionInjected } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
-import Identicon from 'library/Identicon';
+import { Identicon } from 'library/Identicon';
 import { clipAddress } from 'Utils';
 import { AccountElementProps } from './types';
 import { AccountWrapper } from './Wrappers';

@@ -61,5 +61,3 @@ export const useBondGreatestFee = ({ bondFor }: Props) => {
 
   return largestTxFee;
 };
-
-export default useBondGreatestFee;

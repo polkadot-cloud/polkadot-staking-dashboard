@@ -74,5 +74,3 @@ export const ActiveAccount = () => {
     </ActiveAccounWrapper>
   );
 };
-
-export default ActiveAccount;

@@ -170,5 +170,3 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
     </div>
   );
 };
-
-export default PayoutBar;

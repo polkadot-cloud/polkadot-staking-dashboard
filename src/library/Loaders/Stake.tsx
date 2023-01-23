@@ -133,5 +133,3 @@ export const Stake = () => {
     </>
   );
 };
-
-export default Stake;

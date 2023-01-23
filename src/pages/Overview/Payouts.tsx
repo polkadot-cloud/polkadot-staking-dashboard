@@ -60,5 +60,3 @@ export const Payouts = () => {
     </div>
   );
 };
-
-export default Payouts;

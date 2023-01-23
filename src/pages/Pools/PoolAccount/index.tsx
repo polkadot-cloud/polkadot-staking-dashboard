@@ -92,5 +92,3 @@ export const PoolAccount = (props: PoolAccountProps) => {
     </Wrapper>
   );
 };
-
-export default PoolAccount;

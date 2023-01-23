@@ -55,5 +55,3 @@ export const Tooltip = () => {
     </>
   );
 };
-
-export default Tooltip;

@@ -7,7 +7,7 @@ import { Number } from 'library/StatBoxList/Number';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
 
-export const MinimumNominatorBondStatBox = () => {
+export const MinimumNominatorBondStat = () => {
   const { t } = useTranslation('pages');
   const { unit, units } = useApi().network;
   const { staking } = useStaking();
@@ -22,5 +22,3 @@ export const MinimumNominatorBondStatBox = () => {
 
   return <Number {...params} />;
 };
-
-export default MinimumNominatorBondStatBox;

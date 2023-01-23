@@ -10,7 +10,7 @@ import { useUi } from 'contexts/UI';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import Nominations from 'pages/Nominate/Active/Nominations';
+import { Nominations } from 'pages/Nominate/Active/Nominations';
 import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 
@@ -74,5 +74,3 @@ export const ManagePool = () => {
     </PageRowWrapper>
   );
 };
-
-export default ManagePool;

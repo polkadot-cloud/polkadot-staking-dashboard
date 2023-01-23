@@ -31,7 +31,7 @@ import { TxFeesProvider } from 'contexts/TxFees';
 import { UIProvider } from 'contexts/UI';
 import { ValidatorsProvider } from 'contexts/Validators';
 import { withProviders } from 'library/Hooks';
-import Router from 'Router';
+import { Router } from 'Router';
 import { ThemeProvider } from 'styled-components';
 import { EntryWrapper as Wrapper } from 'Wrappers';
 
@@ -91,5 +91,3 @@ export const Providers = withProviders(
   ModalProvider,
   OverlayProvider
 )(ThemedRouter);
-
-export default Providers;

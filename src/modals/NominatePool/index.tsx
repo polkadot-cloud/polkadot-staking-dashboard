@@ -115,5 +115,3 @@ export const NominatePool = () => {
     </>
   );
 };
-
-export default NominatePool;
