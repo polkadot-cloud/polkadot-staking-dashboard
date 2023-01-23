@@ -16,5 +16,3 @@ export const Wrapper = styled.div`
     overflow: hidden;
   }
 `;
-
-export default Wrapper;

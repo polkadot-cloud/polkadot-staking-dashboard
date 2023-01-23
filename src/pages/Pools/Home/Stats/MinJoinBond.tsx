@@ -7,7 +7,7 @@ import { Number } from 'library/StatBoxList/Number';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
 
-const MinJoinBondStatBox = () => {
+export const MinJoinBondStat = () => {
   const { network } = useApi();
   const { units } = network;
   const { stats } = usePoolsConfig();
@@ -21,5 +21,3 @@ const MinJoinBondStatBox = () => {
   };
   return <Number {...params} />;
 };
-
-export default MinJoinBondStatBox;

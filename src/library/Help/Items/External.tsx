@@ -42,5 +42,3 @@ export const External = ({
     </ItemWrapper>
   );
 };
-
-export default External;

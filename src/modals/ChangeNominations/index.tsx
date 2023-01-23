@@ -171,5 +171,3 @@ export const ChangeNominations = () => {
     </>
   );
 };
-
-export default ChangeNominations;

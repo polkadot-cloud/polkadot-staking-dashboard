@@ -21,5 +21,3 @@ export const Dropdown = ({ toggleMenu, items }: DropdownProps) => {
     </ul>
   );
 };
-
-export default Dropdown;

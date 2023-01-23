@@ -75,5 +75,3 @@ export class BlockNumber extends React.Component<any, any> {
     return <BlockNumberInner {...this.props} block={this.state.block} />;
   }
 }
-
-export default BlockNumber;

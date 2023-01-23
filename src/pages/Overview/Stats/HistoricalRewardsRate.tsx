@@ -3,11 +3,11 @@
 
 import BigNumber from 'bignumber.js';
 import { useNetworkMetrics } from 'contexts/Network';
-import useInflation from 'library/Hooks/useInflation';
+import { useInflation } from 'library/Hooks/useInflation';
 import { Text } from 'library/StatBoxList/Text';
 import { useTranslation } from 'react-i18next';
 
-export const HistoricalRewardsRateStatBox = () => {
+export const HistoricalRewardsRateStat = () => {
   const { t } = useTranslation('pages');
   const { metrics } = useNetworkMetrics();
   const { inflation, stakedReturn } = useInflation();
@@ -36,5 +36,3 @@ export const HistoricalRewardsRateStatBox = () => {
 
   return <Text {...params} />;
 };
-
-export default HistoricalRewardsRateStatBox;

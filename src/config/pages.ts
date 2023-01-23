@@ -91,5 +91,3 @@ export const PAGES_CONFIG: PagesConfig = [
     animate: favoriteHeartJson,
   },
 ];
-
-export default PAGES_CONFIG;

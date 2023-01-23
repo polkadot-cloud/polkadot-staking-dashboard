@@ -6,7 +6,7 @@ import { useStaking } from 'contexts/Staking';
 import { Number } from 'library/StatBoxList/Number';
 import { useTranslation } from 'react-i18next';
 
-export const MinimumActiveBondStatBox = () => {
+export const MinimumActiveBondStat = () => {
   const { network } = useApi();
   const { eraStakers } = useStaking();
   const { minActiveBond } = eraStakers;
@@ -21,5 +21,3 @@ export const MinimumActiveBondStatBox = () => {
 
   return <Number {...params} />;
 };
-
-export default MinimumActiveBondStatBox;

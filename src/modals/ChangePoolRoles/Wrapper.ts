@@ -60,5 +60,3 @@ export const RoleChangeWrapper = styled.div`
     overflow: hidden;
   }
 `;
-
-export default Wrapper;

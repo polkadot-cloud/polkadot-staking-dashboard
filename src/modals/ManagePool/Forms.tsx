@@ -242,5 +242,3 @@ export const Forms = forwardRef((props: any, ref: any) => {
     </ContentWrapper>
   );
 });
-
-export default Forms;

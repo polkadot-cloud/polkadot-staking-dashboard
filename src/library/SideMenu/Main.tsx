@@ -17,7 +17,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { PageCategory, PageItem, PagesConfig } from 'types';
-import Heading from './Heading/Heading';
+import { Heading } from './Heading/Heading';
 import { Primary } from './Primary';
 import { LogoWrapper } from './Wrapper';
 

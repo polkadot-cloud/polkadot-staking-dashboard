@@ -274,5 +274,3 @@ export const TooltipTrigger = styled.div`
     cursor: pointer;
   }
 `;
-
-export default Wrapper;

@@ -28,5 +28,3 @@ export const DataList = () => {
     </ContentLoader>
   );
 };
-
-export default DataList;

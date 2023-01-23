@@ -7,7 +7,7 @@ import { Pie } from 'library/StatBoxList/Pie';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero } from 'Utils';
 
-const TotalValidatorsStatBox = () => {
+export const TotalValidatorsStat = () => {
   const { t } = useTranslation('pages');
   const { staking } = useStaking();
   const { totalValidators, maxValidatorsCount } = staking;
@@ -38,5 +38,3 @@ const TotalValidatorsStatBox = () => {
   };
   return <Pie {...params} />;
 };
-
-export default TotalValidatorsStatBox;

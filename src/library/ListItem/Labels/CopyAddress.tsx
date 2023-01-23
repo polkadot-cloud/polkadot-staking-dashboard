@@ -39,5 +39,3 @@ export const CopyAddress = (props: CopyAddressProps) => {
     </div>
   );
 };
-
-export default CopyAddress;

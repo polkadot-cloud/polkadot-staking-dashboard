@@ -5,7 +5,7 @@ import BigNumber from 'bignumber.js';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
-import useInflation from 'library/Hooks/useInflation';
+import { useInflation } from 'library/Hooks/useInflation';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
 import { InflationWrapper } from './Wrappers';

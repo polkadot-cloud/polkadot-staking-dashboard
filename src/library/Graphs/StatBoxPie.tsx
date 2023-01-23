@@ -67,5 +67,3 @@ export const StatPie = ({ value, value2 }: StatPieProps) => {
     </div>
   );
 };
-
-export default StatPie;

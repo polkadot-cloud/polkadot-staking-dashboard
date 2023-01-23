@@ -75,5 +75,3 @@ const StyledSpinner = styled.div`
 export const Spinner = () => {
   return <StyledSpinner />;
 };
-
-export default Spinner;

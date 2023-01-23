@@ -27,5 +27,3 @@ export const Wrapper = styled.button<{ light?: boolean }>`
     fill: ${networkColor};
   }
 `;
-
-export default Wrapper;

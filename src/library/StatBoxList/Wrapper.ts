@@ -224,5 +224,3 @@ export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
     opacity: 0.85;
   }
 `;
-
-export default Wrapper;

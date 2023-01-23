@@ -287,5 +287,3 @@ export class PayoutListShouldUpdate extends React.Component {
     return <PayoutListInner {...this.props} />;
   }
 }
-
-export default PayoutList;

@@ -104,5 +104,3 @@ export const Primary = ({
     </Link>
   );
 };
-
-export default Primary;

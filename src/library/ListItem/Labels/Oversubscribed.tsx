@@ -95,5 +95,3 @@ export const Oversubscribed = (props: OversubscribedProps) => {
     </>
   );
 };
-
-export default Oversubscribed;

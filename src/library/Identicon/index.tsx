@@ -21,5 +21,3 @@ export const Identicon = ({ value, size }: IdenticonProps) => (
     />
   </Wrapper>
 );
-
-export default Identicon;

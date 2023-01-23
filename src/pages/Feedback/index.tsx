@@ -59,5 +59,3 @@ const Feedback = (props: PageProps) => {
     </Wrapper>
   );
 };
-
-export default Feedback;

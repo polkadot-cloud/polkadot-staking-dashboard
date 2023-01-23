@@ -44,5 +44,3 @@ export const GoToFeedback = () => {
     </>
   );
 };
-
-export default GoToFeedback;

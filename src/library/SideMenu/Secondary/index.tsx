@@ -74,5 +74,3 @@ export const Secondary = (props: SecondaryProps) => {
     </StyledWrapper>
   );
 };
-
-export default Secondary;

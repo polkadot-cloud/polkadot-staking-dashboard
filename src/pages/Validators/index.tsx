@@ -10,9 +10,9 @@ import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 import { PageProps } from '../types';
-import ActiveValidatorsStatBox from './Stats/ActiveValidators';
-import AverageCommissionStatBox from './Stats/AverageCommission';
-import TotalValidatorsStatBox from './Stats/TotalValidators';
+import { ActiveValidatorsStat } from './Stats/ActiveValidators';
+import { AverageCommissionStat } from './Stats/AverageCommission';
+import { TotalValidatorsStat } from './Stats/TotalValidators';
 
 export const Validators = (props: PageProps) => {
   const { page } = props;
@@ -30,9 +30,9 @@ export const Validators = (props: PageProps) => {
     <>
       <PageTitle title={t(key, { ns: 'base' })} />
       <StatBoxList>
-        <ActiveValidatorsStatBox />
-        <TotalValidatorsStatBox />
-        <AverageCommissionStatBox />
+        <ActiveValidatorsStat />
+        <TotalValidatorsStat />
+        <AverageCommissionStat />
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>

@@ -26,5 +26,3 @@ export const OpenHelpIcon = (props: OpenHelpIconProps) => {
     </Wrapper>
   );
 };
-
-export default OpenHelpIcon;

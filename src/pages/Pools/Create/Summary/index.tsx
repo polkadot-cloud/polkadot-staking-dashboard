@@ -171,5 +171,3 @@ export const Summary = ({ section }: SetupStepProps) => {
     </>
   );
 };
-
-export default Summary;

@@ -45,5 +45,3 @@ export const SubscanButton = () => {
     </Wrapper>
   );
 };
-
-export default SubscanButton;

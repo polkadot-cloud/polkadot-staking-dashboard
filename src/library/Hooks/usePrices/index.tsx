@@ -83,5 +83,3 @@ export const usePrices = () => {
 
   return pricesRef.current;
 };
-
-export default usePrices;

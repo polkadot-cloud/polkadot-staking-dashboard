@@ -103,5 +103,3 @@ export const Tasks = forwardRef((props: any, ref: any) => {
     </ContentWrapper>
   );
 });
-
-export default Tasks;

@@ -106,5 +106,3 @@ const DropdownItem = ({ c, item, index }: any) => {
     </div>
   );
 };
-
-export default Dropdown;

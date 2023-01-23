@@ -32,5 +32,3 @@ export const Announcement = () => {
     </>
   );
 };
-
-export default Announcement;

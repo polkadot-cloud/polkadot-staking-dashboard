@@ -154,5 +154,3 @@ export const Networks = () => {
     </>
   );
 };
-
-export default Networks;

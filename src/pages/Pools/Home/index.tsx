@@ -25,10 +25,10 @@ import { ManageBond } from './ManageBond';
 import { ManagePool } from './ManagePool';
 import { Members } from './Members';
 import { PoolStats } from './PoolStats';
-import ActivePoolsStatBox from './Stats/ActivePools';
-import MinCreateBondStatBox from './Stats/MinCreateBond';
-import MinJoinBondStatBox from './Stats/MinJoinBond';
-import PoolMembershipBox from './Stats/PoolMembership';
+import { ActivePoolsStat } from './Stats/ActivePools';
+import { MinCreateBondStat } from './Stats/MinCreateBond';
+import { MinJoinBondStat } from './Stats/MinJoinBond';
+import { PoolMembershipStat } from './Stats/PoolMembership';
 import { Status } from './Status';
 
 export const HomeInner = () => {
@@ -98,9 +98,9 @@ export const HomeInner = () => {
       {activeTab === 0 && (
         <>
           <StatBoxList>
-            <ActivePoolsStatBox />
-            <MinJoinBondStatBox />
-            <MinCreateBondStatBox />
+            <ActivePoolsStat />
+            <MinJoinBondStat />
+            <MinCreateBondStat />
           </StatBoxList>
 
           <ClosurePrompts />
@@ -147,9 +147,9 @@ export const HomeInner = () => {
       {activeTab === 2 && (
         <>
           <StatBoxList>
-            <PoolMembershipBox />
-            <ActivePoolsStatBox />
-            <MinJoinBondStatBox />
+            <PoolMembershipStat />
+            <ActivePoolsStat />
+            <MinJoinBondStat />
           </StatBoxList>
           <PageRowWrapper className="page-padding" noVerticalSpacer>
             <CardWrapper>
@@ -185,5 +185,3 @@ export const Home = () => {
     </PoolsTabsProvider>
   );
 };
-
-export default Home;

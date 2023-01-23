@@ -125,5 +125,3 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
     </div>
   );
 };
-
-export default EraPoints;

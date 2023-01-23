@@ -59,5 +59,3 @@ export const useInflation = () => {
 
   return calculateInflation(lastTotalStake, auctionCounter);
 };
-
-export default useInflation;

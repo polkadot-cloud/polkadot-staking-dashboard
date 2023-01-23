@@ -86,5 +86,3 @@ export const ConnectAccounts = () => {
     </Wrapper>
   );
 };
-
-export default ConnectAccounts;

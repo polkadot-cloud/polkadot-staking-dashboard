@@ -29,5 +29,3 @@ export const StatusButton = (props: StatusButtonProps) => {
     </Wrapper>
   );
 };
-
-export default StatusButton;

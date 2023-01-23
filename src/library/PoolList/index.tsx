@@ -294,5 +294,3 @@ export class PoolListShouldUpdate extends React.Component<any, any> {
     return <PoolListInner {...this.props} />;
   }
 }
-
-export default PoolList;

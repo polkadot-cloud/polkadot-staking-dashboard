@@ -13,5 +13,3 @@ export const Heading = (props: HeadingProps) => {
     </Wrapper>
   );
 };
-
-export default Heading;

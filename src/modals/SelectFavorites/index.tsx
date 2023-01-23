@@ -105,5 +105,3 @@ export const SelectFavorites = () => {
     </>
   );
 };
-
-export default SelectFavorites;
