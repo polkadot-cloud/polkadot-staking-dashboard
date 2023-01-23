@@ -10,13 +10,13 @@ import { humanNumberBn } from 'Utils';
 const UserBalance = () => {
   const { t } = useTranslation('pages');
   const { metrics } = useNetworkMetrics();
-  const { balance } = useAccount();
+  const { address, balance } = useAccount();
 
   const params = {
     label: t('dashboard.userBalance'),
     value: `$ ${humanNumberBn(balance, metrics.decimals)}`,
   };
-  return <Text {...params} />;
+  return address ? <Text {...params} /> : <></>;
 };
 
 export default UserBalance;
