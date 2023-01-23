@@ -340,6 +340,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
                     disabled={isFastUnstaking}
                     includeToggle={false}
                     grow={false}
+                    hoverBorder
                   />
                 ))}
               </SelectItems>

@@ -4,6 +4,7 @@
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { SelectItemProps } from './types';
 import { Wrapper } from './Wrapper';
 
 export const SelectItem = ({
@@ -12,14 +13,15 @@ export const SelectItem = ({
   icon,
   selected,
   onClick,
+  hoverBorder = false,
   grow = true,
   disabled = false,
   includeToggle = true,
   bodyRef,
   containerRef,
-}: any) => {
+}: SelectItemProps) => {
   return (
-    <Wrapper selected={selected} grow={grow}>
+    <Wrapper selected={selected} grow={grow} hoverBorder={hoverBorder}>
       <div className="inner" ref={containerRef}>
         <button type="button" onClick={() => onClick()} disabled={disabled}>
           <div className="icon">

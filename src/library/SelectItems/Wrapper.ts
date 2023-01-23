@@ -42,7 +42,11 @@ export const SelectItemsWrapper = styled.div`
 `;
 
 // Button and surrounding padded area.
-export const Wrapper = styled.div<{ selected?: boolean; grow: boolean }>`
+export const Wrapper = styled.div<{
+  selected?: boolean;
+  grow: boolean;
+  hoverBorder: boolean;
+}>`
   padding: 0.6rem;
   width: 33.33%;
   flex-grow: ${(props) => (props.grow ? 1 : 0)};
@@ -65,6 +69,16 @@ export const Wrapper = styled.div<{ selected?: boolean; grow: boolean }>`
     width: 100%;
     position: relative;
     overflow: hidden;
+    transition: border 0.2s;
+
+    &:hover {
+      border-color: ${(props) =>
+        props.hoverBorder
+          ? networkColor
+          : props.selected
+          ? networkColor
+          : borderPrimary};
+    }
 
     > button {
       position: absolute;
@@ -75,7 +89,6 @@ export const Wrapper = styled.div<{ selected?: boolean; grow: boolean }>`
       display: flex;
       flex-flow: row wrap;
       align-items: center;
-      transition: all 0.15s;
 
       &:disabled {
         opacity: 0.3;
