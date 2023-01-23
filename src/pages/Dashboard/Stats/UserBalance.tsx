@@ -13,7 +13,7 @@ const UserBalance = () => {
   const { balance } = useAccount();
 
   const params = {
-    label: t('dashboard.housingFund'),
+    label: t('dashboard.userBalance'),
     value: `$ ${humanNumberBn(balance, metrics.decimals)}`,
   };
   return <Text {...params} />;
