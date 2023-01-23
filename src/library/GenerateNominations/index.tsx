@@ -17,8 +17,8 @@ import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
 import useUnstaking from 'library/Hooks/useUnstaking';
 import { SelectableWrapper } from 'library/List';
-import { SelectItem } from 'library/SelectItem';
-import { SelectItemsWrapper } from 'library/SelectItem/Wrapper';
+import { SelectItems } from 'library/SelectItems';
+import { SelectItem } from 'library/SelectItems/Item';
 import { ValidatorList } from 'library/ValidatorList';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { useEffect, useRef, useState } from 'react';
@@ -328,7 +328,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
         <div>
           {!isReadOnlyAccount(activeAccount) && !method && (
             <>
-              <SelectItemsWrapper>
+              <SelectItems>
                 {methods.map((m: any, n: number) => (
                   <SelectItem
                     key={`gen_method_${n}`}
@@ -342,7 +342,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
                     grow={false}
                   />
                 ))}
-              </SelectItemsWrapper>
+              </SelectItems>
             </>
           )}
         </div>

@@ -8,12 +8,13 @@ import {
 import BigNumber from 'bignumber.js';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
-import { SelectItem } from 'library/SelectItem';
-import { SelectItemsWrapper } from 'library/SelectItem/Wrapper';
+import { SelectItems } from 'library/SelectItems';
+import { SelectItem } from 'library/SelectItems/Item';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Spacer } from '../../Wrappers';
 
@@ -46,12 +47,15 @@ export const Payee = ({ section }: SetupStepProps) => {
   ];
 
   // set initial payee value to `Staked` if not yet set.
-  if (!setup.payee) {
-    setActiveAccountSetup('stake', {
-      ...setup,
-      payee: options[0],
-    });
-  }
+
+  useEffect(() => {
+    if (!setup.payee) {
+      setActiveAccountSetup('stake', {
+        ...setup,
+        payee: options[0],
+      });
+    }
+  }, [activeAccount]);
 
   const handleChangePayee = (i: number) => {
     if (new BigNumber(i).isNaN() || i >= options.length) {
@@ -76,7 +80,7 @@ export const Payee = ({ section }: SetupStepProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <Spacer />
-        <SelectItemsWrapper>
+        <SelectItems>
           {buttons.map(({ index, title, subtitle, icon }: any, i: number) => (
             <SelectItem
               key={`payee_option_${i}`}
@@ -87,7 +91,7 @@ export const Payee = ({ section }: SetupStepProps) => {
               onClick={() => handleChangePayee(index)}
             />
           ))}
-        </SelectItemsWrapper>
+        </SelectItems>
         <Footer complete={setup.payee !== null} setupType="stake" />
       </MotionContainer>
     </>

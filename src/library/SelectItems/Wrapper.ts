@@ -9,7 +9,7 @@ import {
   textSecondary,
 } from 'theme';
 
-const TwoThreshold = 800;
+export const TwoThreshold = 800;
 const ThreeRowThreshold = 1300;
 
 // The outer container of select items.
@@ -43,8 +43,7 @@ export const SelectItemsWrapper = styled.div`
 
 // Button and surrounding padded area.
 export const Wrapper = styled.div<{ selected?: boolean; grow: boolean }>`
-  --select-item-height: 7rem;
-  padding: 0.75rem;
+  padding: 0.6rem;
   width: 33.33%;
   flex-grow: ${(props) => (props.grow ? 1 : 0)};
 
@@ -59,58 +58,62 @@ export const Wrapper = styled.div<{ selected?: boolean; grow: boolean }>`
     width: 100%;
   }
 
-  > button {
+  > .inner {
     border: 1.75px solid
       ${(props) => (props.selected ? networkColor : borderPrimary)};
-    width: 100%;
-    text-align: left;
     border-radius: 1rem;
-    display: flex;
-    flex-flow: row wrap;
-    padding: 0;
+    width: 100%;
+    position: relative;
     overflow: hidden;
-    transition: all 0.15s;
 
-    &:disabled {
-      opacity: 0.3;
-    }
-
-    > .icon {
-      background: ${backgroundLabel};
-      color: ${networkColor};
-      width: 6rem;
-      height: var(--select-item-height);
+    > button {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      text-align: left;
       display: flex;
+      flex-flow: row wrap;
       align-items: center;
-      justify-content: center;
-    }
+      transition: all 0.15s;
 
-    > .body {
-      height: var(--select-item-height);
-      max-height: var(--select-item-height);
-      flex: 1;
-      display: flex;
-      flex-flow: column wrap;
-      justify-content: center;
-      padding: 0 1.25rem;
-      overflow: hidden;
-
-      h3 {
-        margin: 0;
+      &:disabled {
+        opacity: 0.3;
       }
-      p {
-        margin: 0.4rem 0 0 0;
-      }
-    }
 
-    > .toggle {
-      color: ${(props) => (props.selected ? networkColor : textSecondary)};
-      opacity: ${(props) => (props.selected ? 1 : 0.5)};
-      height: var(--select-item-height);
-      width: 4rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      > .icon {
+        background: ${backgroundLabel};
+        color: ${networkColor};
+        width: 6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      > .body {
+        flex: 1;
+        display: flex;
+        flex-flow: column wrap;
+        justify-content: center;
+        padding: 1.25rem 1.35rem;
+        overflow: hidden;
+
+        h3 {
+          margin: 0;
+        }
+        p {
+          margin: 0.4rem 0 0 0;
+        }
+      }
+
+      > .toggle {
+        color: ${(props) => (props.selected ? networkColor : textSecondary)};
+        opacity: ${(props) => (props.selected ? 1 : 0.5)};
+        width: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
   }
 `;
