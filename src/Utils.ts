@@ -267,3 +267,5 @@ export const removeVarFromUrlHash = (key: string) => {
   }
   window.location.hash = str;
 };
+
+export const ZERO = new BN('0');

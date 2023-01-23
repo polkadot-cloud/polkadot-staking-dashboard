@@ -1,5 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 
+import BN from 'bn.js';
 import { ROLES } from 'config/accounts';
 
 export type Address = string | undefined;
@@ -13,5 +14,6 @@ export const isRoleValid = (_role: AccountRole): boolean => {
 export interface AccountContextInterface {
   address: Address;
   role: AccountRole;
+  balance: BN;
   update: () => void;
 }

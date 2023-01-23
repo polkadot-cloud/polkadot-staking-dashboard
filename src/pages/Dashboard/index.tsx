@@ -11,6 +11,7 @@ import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { ActiveAccount } from './ActiveAccount';
 import TotalHousingFund from './Stats/TotalHousingFund';
 import TotalUsers from './Stats/TotalUsers';
+import UserBalance from './Stats/UserBalance';
 
 export const Dashboard = () => {
   const { t } = useTranslation('pages');
@@ -27,6 +28,7 @@ export const Dashboard = () => {
       <StatBoxList>
         <TotalHousingFund />
         <TotalUsers />
+        <UserBalance />
       </StatBoxList>
 
       <PageRowWrapper className="page-padding" noVerticalSpacer>
