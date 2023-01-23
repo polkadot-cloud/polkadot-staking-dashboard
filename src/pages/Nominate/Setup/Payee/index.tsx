@@ -28,7 +28,7 @@ export const Payee = ({ section }: SetupStepProps) => {
     {
       index: 0,
       title: t('nominate.backToStaking'),
-      subtitle: 'Automatically bond payouts to your existing staked balance',
+      subtitle: t('nominate.automaticallyBonded'),
       icon: faRotate,
     },
     {

@@ -20,7 +20,7 @@
       "activeNominations": "活跃提名人",
       "addFromFavorites": "从收藏夹添加",
       "addressCopied": "地址已复制到剪贴板",
-      "automaticallyBonded": "将自动质押到现有的质押余额中",
+      "automaticallyBonded": "Automatically bond payouts to your existing staked balance",
       "back": "返回",
       "backToStaking": "回到Staking",
       "bond": "质押",

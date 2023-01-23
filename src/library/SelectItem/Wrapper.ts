@@ -17,7 +17,7 @@ const ThreeRowThreshold = 1300;
 export const SelectItemsWrapper = styled.div`
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
 
   /* Remove outer padding for 2-per-row layout */
   @media (min-width: ${TwoThreshold +
@@ -42,21 +42,21 @@ export const SelectItemsWrapper = styled.div`
 `;
 
 // Button and surrounding padded area.
-export const Wrapper = styled.div<{ selected?: boolean }>`
+export const Wrapper = styled.div<{ selected?: boolean; grow: boolean }>`
   --select-item-height: 7rem;
-  padding: 0.5rem;
-  flex-basis: 33%;
-  flex: 1;
+  padding: 0.75rem;
+  width: 33.33%;
+  flex-grow: ${(props) => (props.grow ? 1 : 0)};
 
   /* flex basis for 2-per-row layout */
   @media (min-width: ${TwoThreshold +
     1}px) and (max-width: ${ThreeRowThreshold}px) {
-    flex-basis: 50%;
+    width: 50%;
   }
 
   /* flex basis for 3-per-row layout */
   @media (max-width: ${TwoThreshold}px) {
-    flex-basis: 100%;
+    width: 100%;
   }
 
   > button {
@@ -70,6 +70,10 @@ export const Wrapper = styled.div<{ selected?: boolean }>`
     padding: 0;
     overflow: hidden;
     transition: all 0.15s;
+
+    &:disabled {
+      opacity: 0.3;
+    }
 
     > .icon {
       background: ${backgroundLabel};
@@ -95,7 +99,7 @@ export const Wrapper = styled.div<{ selected?: boolean }>`
         margin: 0;
       }
       p {
-        margin: 0.5rem 0 0 0;
+        margin: 0.4rem 0 0 0;
       }
     }
 

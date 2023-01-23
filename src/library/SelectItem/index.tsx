@@ -12,11 +12,13 @@ export const SelectItem = ({
   icon,
   selected,
   onClick,
+  grow = true,
+  disabled = false,
   includeToggle = true,
 }: any) => {
   return (
-    <Wrapper selected={selected}>
-      <button type="button" onClick={() => onClick()}>
+    <Wrapper selected={selected} grow={grow}>
+      <button type="button" onClick={() => onClick()} disabled={disabled}>
         <div className="icon">
           <FontAwesomeIcon icon={icon} transform="grow-8" />
         </div>
