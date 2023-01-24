@@ -33,14 +33,16 @@ export const PoolsConfigProvider = ({
   });
   const poolsConfigRef = useRef(poolsConfig);
 
-  // get favorite pools from local storage
-  const getFavorites = () => {
-    const _favorites = localStorage.getItem(`${network.name}_favorite_pools`);
-    return _favorites !== null ? JSON.parse(_favorites) : [];
+  // get favorite pools from local storage.
+  const getLocalFavorites = () => {
+    const localFavorites = localStorage.getItem(
+      `${network.name}_favorite_pools`
+    );
+    return localFavorites !== null ? JSON.parse(localFavorites) : [];
   };
 
   // stores the user's favorite pools
-  const [favorites, setFavorites] = useState<string[]>(getFavorites());
+  const [favorites, setFavorites] = useState<string[]>(getLocalFavorites());
 
   useEffect(() => {
     if (isReady) {
@@ -141,31 +143,31 @@ export const PoolsConfigProvider = ({
    * Adds a favorite validator.
    */
   const addFavorite = (address: string) => {
-    const _favorites: any = Object.assign(favorites);
-    if (!_favorites.includes(address)) {
-      _favorites.push(address);
+    const newFavorites: any = Object.assign(favorites);
+    if (!newFavorites.includes(address)) {
+      newFavorites.push(address);
     }
 
     localStorage.setItem(
       `${network.name}_favorite_pools`,
-      JSON.stringify(_favorites)
+      JSON.stringify(newFavorites)
     );
-    setFavorites([..._favorites]);
+    setFavorites([...newFavorites]);
   };
 
   /*
    * Removes a favorite validator if they exist.
    */
   const removeFavorite = (address: string) => {
-    let _favorites = Object.assign(favorites);
-    _favorites = _favorites.filter(
+    let newFavorites = Object.assign(favorites);
+    newFavorites = newFavorites.filter(
       (validator: string) => validator !== address
     );
     localStorage.setItem(
       `${network.name}_favorite_pools`,
-      JSON.stringify(_favorites)
+      JSON.stringify(newFavorites)
     );
-    setFavorites([..._favorites]);
+    setFavorites([...newFavorites]);
   };
 
   // Helper: generates pool stash and reward accounts. assumes poolsPalletId is synced.
