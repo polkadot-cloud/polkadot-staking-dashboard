@@ -31,7 +31,7 @@ export const Summary = ({ section }: SetupStepProps) => {
 
   const setup = getSetupProgress('stake', activeAccount);
 
-  const { controller, bond, nominations, payee } = setup;
+  const { bond, nominations, payee } = setup;
 
   const getTxs = () => {
     if (!activeAccount || !api) {
@@ -44,21 +44,16 @@ export const Summary = ({ section }: SetupStepProps) => {
       };
     });
 
-    const stashToSubmit = {
-      Id: activeAccount,
-    };
-
     const controllerToSubmit = {
-      Id: controller,
+      Id: activeAccount,
     };
 
     const bondToSubmit = unitToPlanck(bond, units);
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
     const txs = [
-      api.tx.staking.bond(stashToSubmit, bondAsString, payee),
+      api.tx.staking.bond(controllerToSubmit, bondAsString, payee),
       api.tx.staking.nominate(targetsToSubmit),
-      api.tx.staking.setController(controllerToSubmit),
     ];
     return api.tx.utility.batch(txs);
   };
@@ -87,16 +82,6 @@ export const Summary = ({ section }: SetupStepProps) => {
           <Warning text={t('nominate.readOnly')} />
         )}
         <SummaryWrapper>
-          <section>
-            <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
-                transform="grow-1"
-              />{' '}
-              &nbsp; Controller:
-            </div>
-            <div>{controller}</div>
-          </section>
           <section>
             <div>
               <FontAwesomeIcon
@@ -157,5 +142,3 @@ export const Summary = ({ section }: SetupStepProps) => {
     </>
   );
 };
-
-export default Summary;

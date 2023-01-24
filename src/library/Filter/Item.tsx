@@ -34,5 +34,3 @@ export const Item = ({
     </ItemWrapper>
   </motion.button>
 );
-
-export default Item;

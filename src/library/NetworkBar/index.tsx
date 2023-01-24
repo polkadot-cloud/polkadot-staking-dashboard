@@ -123,5 +123,3 @@ export const NetworkBar = () => {
     </Wrapper>
   );
 };
-
-export default NetworkBar;

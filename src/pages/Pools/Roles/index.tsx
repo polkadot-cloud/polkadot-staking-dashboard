@@ -19,7 +19,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import { PoolAccount } from '../PoolAccount';
-import RoleEditInput from './RoleEditInput';
+import { RoleEditInput } from './RoleEditInput';
 import { RoleEditEntry, RolesProps } from './types';
 
 export const Roles = (props: RolesProps) => {

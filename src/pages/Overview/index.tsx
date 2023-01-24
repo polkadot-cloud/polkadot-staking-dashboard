@@ -24,11 +24,11 @@ import { ActiveAccount } from './ActiveAccount';
 import { BalanceChart } from './BalanceChart';
 import { BalanceLinks } from './BalanceLinks';
 import { NetworkStats } from './NetworkSats';
-import Payouts from './Payouts';
+import { Payouts } from './Payouts';
 import { StakeStatus } from './StakeStatus';
-import EraTimeLeftStat from './Stats/ActiveEraTimeLeft';
-import HistoricalRewardsRateStat from './Stats/HistoricalRewardsRate';
-import SupplyStakedStat from './Stats/SupplyStaked';
+import { ActiveEraStat } from './Stats/ActiveEraTimeLeft';
+import { HistoricalRewardsRateStat } from './Stats/HistoricalRewardsRate';
+import { SupplyStakedStat } from './Stats/SupplyStaked';
 
 export const Overview = () => {
   const { network } = useApi();
@@ -64,7 +64,7 @@ export const Overview = () => {
       <StatBoxList>
         <HistoricalRewardsRateStat />
         <SupplyStakedStat />
-        <EraTimeLeftStat />
+        <ActiveEraStat />
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <StakeStatus />

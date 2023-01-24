@@ -37,5 +37,3 @@ export const MotionContainer = ({
     </motion.div>
   );
 };
-
-export default MotionContainer;

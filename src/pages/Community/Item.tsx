@@ -171,5 +171,3 @@ export const Item = (props: ItemProps) => {
     </ItemWrapper>
   );
 };
-
-export default Item;

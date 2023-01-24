@@ -43,5 +43,3 @@ export const Wrapper = styled.ul`
     }
   }
 `;
-
-export default Wrapper;

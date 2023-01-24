@@ -8,7 +8,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { BondedPool } from 'contexts/Pools/types';
-import Identicon from 'library/Identicon';
+import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
 import { useTranslation } from 'react-i18next';
@@ -96,5 +96,3 @@ const Button = ({ item, poolId }: { item: Array<string>; poolId: string }) => {
     </StyledButton>
   );
 };
-
-export default AccountPoolRoles;

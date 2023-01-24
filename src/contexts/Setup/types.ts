@@ -6,7 +6,6 @@ import { MaybeAccount, MaybeString } from 'types';
 export type SetupType = 'pool' | 'stake';
 
 export interface StakeSetupProgress {
-  controller: MaybeAccount;
   payee: MaybeAccount;
   nominations: Array<any>;
   bond: MaybeString;

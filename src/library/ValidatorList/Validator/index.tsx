@@ -28,5 +28,3 @@ export class Validator extends React.Component<any, any> {
     return <ValidatorInner {...this.props} />;
   }
 }
-
-export default Validator;

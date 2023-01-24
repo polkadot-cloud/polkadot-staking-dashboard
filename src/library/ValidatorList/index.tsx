@@ -407,5 +407,3 @@ export class ValidatorListShouldUpdate extends React.Component<any, any> {
     return <ValidatorListInner {...this.props} />;
   }
 }
-
-export default ValidatorList;

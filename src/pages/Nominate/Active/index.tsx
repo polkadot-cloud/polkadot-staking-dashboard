@@ -11,7 +11,7 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
-import useUnstaking from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
@@ -24,9 +24,9 @@ import {
 import { ControllerNotImported } from './ControllerNotImported';
 import { ManageBond } from './ManageBond';
 import { Nominations } from './Nominations';
-import ActiveNominatorsStatBox from './Stats/ActiveNominators';
-import MinimumActiveBondStatBox from './Stats/MinimumActiveBond';
-import MinimumNominatorBondStatBox from './Stats/MinimumNominatorBond';
+import { ActiveNominatorsStat } from './Stats/ActiveNominators';
+import { MinimumActiveBondStat } from './Stats/MinimumActiveBond';
+import { MinimumNominatorBondStat } from './Stats/MinimumNominatorBond';
 import { Status } from './Status';
 import { UnstakePrompts } from './UnstakePrompts';
 
@@ -46,9 +46,9 @@ export const Active = () => {
     <>
       <PageTitle title={t('nominate.nominate')} />
       <StatBoxList>
-        <ActiveNominatorsStatBox />
-        <MinimumNominatorBondStatBox />
-        <MinimumActiveBondStatBox />
+        <ActiveNominatorsStat />
+        <MinimumNominatorBondStat />
+        <MinimumActiveBondStat />
       </StatBoxList>
       <ControllerNotImported />
       <UnstakePrompts />
@@ -115,5 +115,3 @@ export const Active = () => {
     </>
   );
 };
-
-export default Active;

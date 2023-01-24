@@ -47,5 +47,3 @@ export const Stat = (props: StatProps) => {
     </Wrapper>
   );
 };
-
-export default Stat;

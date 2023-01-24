@@ -143,5 +143,3 @@ export const UpdatePayee = () => {
     </>
   );
 };
-
-export default UpdatePayee;

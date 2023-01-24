@@ -91,6 +91,7 @@
     "nominate": "提名",
     "nominateActive": "激活",
     "nominateInactive": "未激活",
+    "nominator": "提名人",
     "notEnough": "不足",
     "notEnoughAfter": "交易费用后 {{unit}} 不足以质押",
     "notEnoughFunds": "您的 {{unit}} 不足以提交这次交易",

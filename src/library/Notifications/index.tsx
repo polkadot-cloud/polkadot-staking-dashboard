@@ -3,7 +3,7 @@
 
 import { useNotifications } from 'contexts/Notifications';
 import { AnimatePresence, motion } from 'framer-motion';
-import Wrapper from './Wrapper';
+import { Wrapper } from './Wrapper';
 
 export const Notifications = () => {
   const { notifications, removeNotification } = useNotifications();
@@ -40,5 +40,3 @@ export const Notifications = () => {
     </Wrapper>
   );
 };
-
-export default Notifications;

@@ -128,5 +128,3 @@ export const Nominate = () => {
     </>
   );
 };
-
-export default Nominate;

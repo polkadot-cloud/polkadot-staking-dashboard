@@ -555,7 +555,7 @@ export const ActivePoolsProvider = ({
       rmCommas(rewardPool.lastRecordedRewardCounter)
     );
     const bondedPoolPoints = new BigNumber(rmCommas(bondedPool.points));
-    const points = new BigNumber(rmCommas(membership.points));
+    const memberPoints = new BigNumber(rmCommas(membership.points));
 
     // calculate the latest reward account balance minus the existential deposit
     const rewardPoolBalance = BigNumber.max(
@@ -578,7 +578,7 @@ export const ActivePoolsProvider = ({
 
     const pendingRewards = currentRewardCounter
       .minus(memberLastRecordedRewardCounter)
-      .multipliedBy(points)
+      .multipliedBy(memberPoints)
       .dividedBy(rewardCounterUnit);
 
     return pendingRewards;

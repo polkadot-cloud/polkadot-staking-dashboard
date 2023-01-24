@@ -7,7 +7,7 @@ import { Number } from 'library/StatBoxList/Number';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
 
-export const LastEraPayoutStatBox = () => {
+export const LastEraPayoutStat = () => {
   const { t } = useTranslation('pages');
   const { network } = useApi();
   const { staking } = useStaking();
@@ -24,5 +24,3 @@ export const LastEraPayoutStatBox = () => {
   };
   return <Number {...params} />;
 };
-
-export default LastEraPayoutStatBox;

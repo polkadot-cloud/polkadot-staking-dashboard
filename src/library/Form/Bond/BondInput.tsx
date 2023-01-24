@@ -103,5 +103,3 @@ export const BondInput = ({
     </InputWrapper>
   );
 };
-
-export default BondInput;

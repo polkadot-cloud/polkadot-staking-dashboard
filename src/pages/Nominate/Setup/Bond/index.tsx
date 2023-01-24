@@ -91,5 +91,3 @@ export const Bond = (props: SetupStepProps) => {
     </>
   );
 };
-
-export default Bond;

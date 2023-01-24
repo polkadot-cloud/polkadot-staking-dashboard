@@ -45,5 +45,3 @@ export const Header = (props: HeaderProps) => {
     </Wrapper>
   );
 };
-
-export default Header;

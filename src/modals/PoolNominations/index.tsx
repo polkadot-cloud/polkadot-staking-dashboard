@@ -39,5 +39,3 @@ export const PoolNominations = () => {
     </>
   );
 };
-
-export default PoolNominations;

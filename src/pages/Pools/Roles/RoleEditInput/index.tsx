@@ -65,5 +65,3 @@ export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
     </Wrapper>
   );
 };
-
-export default RoleEditInput;

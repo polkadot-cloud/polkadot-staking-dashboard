@@ -36,4 +36,3 @@ export const FooterWrapper = styled.div`
     }
   }
 `;
-export default ListWrapper;

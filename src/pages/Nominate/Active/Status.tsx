@@ -22,8 +22,8 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
-import useUnstaking from 'library/Hooks/useUnstaking';
-import Stat from 'library/Stat';
+import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
 import { registerSaEvent } from 'Utils';
 import { Separator } from 'Wrappers';
@@ -166,5 +166,3 @@ export const Status = ({ height }: { height: number }) => {
     </CardWrapper>
   );
 };
-
-export default Status;

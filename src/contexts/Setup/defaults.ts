@@ -8,7 +8,6 @@ import {
 } from './types';
 
 export const defaultStakeSetup: StakeSetupProgress = {
-  controller: null,
   payee: null,
   nominations: [],
   bond: '',

@@ -11,7 +11,7 @@ import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints';
 import { formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
 import { useSize } from 'library/Hooks/useSize';
-import Identicon from 'library/Identicon';
+import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
@@ -144,5 +144,3 @@ export const ValidatorMetrics = () => {
     </>
   );
 };
-
-export default ValidatorMetrics;

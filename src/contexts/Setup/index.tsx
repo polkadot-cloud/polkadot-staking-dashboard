@@ -103,12 +103,11 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     const progress = getSetupProgress('stake', address);
     const bond = unitToPlanck(progress.bond, network.units);
 
-    const p = 25;
+    const p = 33;
     let percentageComplete = 0;
     if (greaterThanZero(bond)) percentageComplete += p;
-    if (progress.controller !== null) percentageComplete += p;
     if (progress.nominations.length) percentageComplete += p;
-    if (progress.payee !== null) percentageComplete += p - 1;
+    if (progress.payee !== null) percentageComplete += p;
     return percentageComplete;
   };
 

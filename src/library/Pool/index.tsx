@@ -154,5 +154,3 @@ export const Pool = (props: PoolProps) => {
     </Wrapper>
   );
 };
-
-export default Pool;

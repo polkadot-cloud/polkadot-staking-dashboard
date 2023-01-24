@@ -10,7 +10,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Identicon } from 'library/Identicon';
-import OpenHelpIcon from 'library/OpenHelpIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
 import { useTranslation } from 'react-i18next';
 import { determinePoolDisplay } from 'Utils';

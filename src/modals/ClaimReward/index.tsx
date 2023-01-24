@@ -121,5 +121,3 @@ export const ClaimReward = () => {
     </>
   );
 };
-
-export default ClaimReward;

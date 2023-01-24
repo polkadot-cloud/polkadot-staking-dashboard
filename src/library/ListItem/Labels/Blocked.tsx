@@ -48,5 +48,3 @@ export const Blocked = (props: BlockedProps) => {
     </>
   );
 };
-
-export default Blocked;

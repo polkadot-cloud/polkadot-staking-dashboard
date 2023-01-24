@@ -201,5 +201,3 @@ export const NominateFromFavorites = () => {
     </>
   );
 };
-
-export default NominateFromFavorites;

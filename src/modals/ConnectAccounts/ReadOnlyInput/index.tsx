@@ -127,5 +127,3 @@ export const ReadOnlyInput = () => {
     </Wrapper>
   );
 };
-
-export default ReadOnlyInput;

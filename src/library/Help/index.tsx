@@ -13,12 +13,12 @@ import {
   HelpItem,
 } from 'contexts/Help/types';
 import { useAnimation } from 'framer-motion';
-import useFillVariables from 'library/Hooks/useFillVariables';
+import { useFillVariables } from 'library/Hooks/useFillVariables';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { camelize } from 'Utils';
-import Definition from './Items/Definition';
-import External from './Items/External';
+import { Definition } from './Items/Definition';
+import { External } from './Items/External';
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
 
 export const Help = () => {

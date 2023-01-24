@@ -5,7 +5,7 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { Number } from 'library/StatBoxList/Number';
 import { useTranslation } from 'react-i18next';
 
-const ActivePoolsStatBox = () => {
+export const ActivePoolsStat = () => {
   const { stats } = usePoolsConfig();
   const { t } = useTranslation('pages');
 
@@ -17,5 +17,3 @@ const ActivePoolsStatBox = () => {
   };
   return <Number {...params} />;
 };
-
-export default ActivePoolsStatBox;

@@ -15,9 +15,10 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
-import { LargeItem } from 'library/Filter/LargeItem';
-import useUnstaking from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { SelectableWrapper } from 'library/List';
+import { SelectItems } from 'library/SelectItems';
+import { SelectItem } from 'library/SelectItems/Item';
 import { ValidatorList } from 'library/ValidatorList';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { useEffect, useRef, useState } from 'react';
@@ -28,7 +29,6 @@ import {
   Nominations,
 } from '../SetupSteps/types';
 import { useFetchMehods } from './useFetchMethods';
-import { GenerateOptionsWrapper } from './Wrappers';
 
 export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
   // functional props
@@ -328,20 +328,22 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
         <div>
           {!isReadOnlyAccount(activeAccount) && !method && (
             <>
-              <GenerateOptionsWrapper>
+              <SelectItems>
                 {methods.map((m: any, n: number) => (
-                  <LargeItem
+                  <SelectItem
                     key={`gen_method_${n}`}
                     title={m.title}
                     subtitle={m.subtitle}
                     icon={m.icon}
-                    transform="grow-2"
-                    active={false}
+                    selected={false}
                     onClick={m.onClick}
                     disabled={isFastUnstaking}
+                    includeToggle={false}
+                    grow={false}
+                    hoverBorder
                   />
                 ))}
-              </GenerateOptionsWrapper>
+              </SelectItems>
             </>
           )}
         </div>
@@ -374,5 +376,3 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     </>
   );
 };
-
-export default GenerateNominations;

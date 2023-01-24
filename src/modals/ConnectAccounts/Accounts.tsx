@@ -295,5 +295,3 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
     </ContentWrapper>
   );
 });
-
-export default Accounts;
