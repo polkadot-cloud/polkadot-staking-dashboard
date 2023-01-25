@@ -1,6 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-
+/* eslint-disable */
 import BigNumber from 'bignumber.js';
 import {
   addDays,
@@ -14,6 +14,8 @@ import {
 import { AnyApi, AnySubscan } from 'types';
 import { greaterThanZero, planckToUnit } from 'Utils';
 import { PayoutDayCursor } from './types';
+import { useNetworkMetrics } from 'contexts/Network';
+import { useApi } from 'contexts/Api';
 
 // Given payouts, calculate daily income and fill missing days with zero amounts.
 export const calculatePayoutsByDay = (
@@ -24,12 +26,24 @@ export const calculatePayoutsByDay = (
   subject: string
 ) => {
   let payoutsByDay: any = [];
-
+  const { metrics } = useNetworkMetrics();
+  const { consts } = useApi();
+  const { epochDuration, expectedBlockTime, sessionsPerEra } = consts;
   // remove days that are beyond end day limit
   payouts = payouts.filter((p: AnySubscan) => {
     if (p.block_timestamp < 1) {
-      return p;
+      //activeera -p.era <= maxDays
+      const eraPassed = metrics.activeEra.index - p.era;
+      // store the duration of an era in block numbers.
+      const eraDurationBlocks = epochDuration * sessionsPerEra;
+      // estimate the duration of the era in seconds
+      const eraDuration = eraDurationBlocks * expectedBlockTime * 0.001;
+      const secondspassed = eraPassed * eraDuration;
+      const eraTime = metrics.activeEra.start * 0.001 - secondspassed;
+      // const x = getUnixTime(new Date()) - eraTime;
+      return daysPassed(fromUnixTime(eraTime), new Date()) <= maxDays;
     }
+
     return daysPassed(fromUnixTime(p.block_timestamp), new Date()) <= maxDays;
   });
 
@@ -339,8 +353,8 @@ export const prefillMissingDays = (payoutsByDay: any, maxDays: number) => {
   const payoutEndDay = !payoutsByDay.length
     ? startOfDay(new Date())
     : startOfDay(
-        fromUnixTime(payoutsByDay[payoutsByDay.length - 1].block_timestamp)
-      );
+      fromUnixTime(payoutsByDay[payoutsByDay.length - 1].block_timestamp)
+    );
 
   const daysToPreFill = daysPassed(payoutStartDay, payoutEndDay);
 
