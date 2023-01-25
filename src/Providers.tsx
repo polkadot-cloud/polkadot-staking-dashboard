@@ -3,6 +3,7 @@
 
 import { AccountProvider } from 'contexts/Account';
 import { APIProvider, useApi } from 'contexts/Api';
+import { AssetsProvider } from 'contexts/Assets';
 import { BalancesProvider } from 'contexts/Balances';
 import { ConnectProvider } from 'contexts/Connect';
 import { ExtensionsProvider } from 'contexts/Extensions';
@@ -67,7 +68,8 @@ export const Providers = withProviders(
   ExtrinsicsProvider,
   ModalProvider,
   OverlayProvider,
-  TxFeesProvider
+  TxFeesProvider,
+  AssetsProvider
 )(ThemedRouter);
 
 export default Providers;

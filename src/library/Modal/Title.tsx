@@ -5,9 +5,10 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
+import Spinner from 'library/Headers/Spinner';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { FunctionComponent } from 'react';
-import { TitleWrapper } from './Wrappers';
+import { SpinWrapper, TitleWrapper } from './Wrappers';
 
 interface TitleProps {
   title: string;
@@ -15,9 +16,17 @@ interface TitleProps {
   Svg?: FunctionComponent<any>;
   fixed?: boolean;
   helpKey?: string;
+  loading?: boolean;
 }
 
-export const Title = ({ helpKey, title, icon, fixed, Svg }: TitleProps) => {
+export const Title = ({
+  helpKey,
+  title,
+  icon,
+  fixed,
+  Svg,
+  loading = false,
+}: TitleProps) => {
   const { setStatus } = useModal();
 
   const graphic = Svg ? (
@@ -32,6 +41,11 @@ export const Title = ({ helpKey, title, icon, fixed, Svg }: TitleProps) => {
         {graphic}
         <h2>
           {title}
+          {loading && (
+            <SpinWrapper>
+              <Spinner />
+            </SpinWrapper>
+          )}
           {helpKey && <OpenHelpIcon helpKey={helpKey} />}
         </h2>
       </div>

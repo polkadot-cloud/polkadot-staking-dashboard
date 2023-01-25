@@ -1,9 +1,18 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
 
-import { AnyMetaBatch } from 'types';
+import BN from 'bn.js';
+import { ROLES } from 'config/accounts';
+
+export type Address = string | undefined;
+export type AccountRole = string | undefined;
+
+export const isRoleValid = (_role: AccountRole): boolean => {
+  if (!_role) return false;
+  return ROLES.indexOf(_role) !== -1;
+};
 
 export interface AccountContextInterface {
-  fetchAccountMetaBatch: (k: string, v: string[], r?: boolean) => void;
-  meta: AnyMetaBatch;
+  address: Address;
+  role: AccountRole;
+  balance: BN;
 }

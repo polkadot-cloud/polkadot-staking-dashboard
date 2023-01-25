@@ -3,6 +3,8 @@
 
 export interface NotificationsContextInterface {
   addNotification: (n: NotificationItem) => void;
+  notifySuccess: (msg: string) => void;
+  notifyError: (msg: string) => void;
   removeNotification: (i: number) => void;
   notifications: NotificationInterface[];
 }
