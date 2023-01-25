@@ -51,7 +51,7 @@
     "exclude": "Exclude",
     "failed": "Failed",
     "fastUnstake": "Fast Unstake",
-    "fastUnstakeCheckingEras": "Checking {{checked}} of {{total}} eras",
+    "fastUnstakeCheckingEras": "Checking {{checked}} of {{total}} Eras",
     "fastUnstakeExposed_one": "Exposed {{count}} Era Ago",
     "fastUnstakeExposed_other": "Exposed {{count}} Eras Ago",
     "favorite": "Favorite",

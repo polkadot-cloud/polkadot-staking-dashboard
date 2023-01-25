@@ -38,7 +38,7 @@ export const Tip = ({ title, description }: any) => {
                 }}
               />
               <ButtonInvertRounded
-                text="Cancel"
+                text={t('module.cancel', { ns: 'tips' })}
                 onClick={() => setDisabling(false)}
                 style={{ marginLeft: '0.5rem' }}
               />
