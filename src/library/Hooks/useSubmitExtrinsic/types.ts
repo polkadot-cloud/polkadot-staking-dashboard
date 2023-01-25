@@ -8,6 +8,8 @@ export interface UseSubmitExtrinsicProps {
   shouldSubmit: boolean;
   callbackSubmit: { (): void };
   callbackInBlock: { (): void };
+  callbackSuccess?: { (): void };
+  callbackError?: { (): void };
   from: MaybeAccount;
 }
 

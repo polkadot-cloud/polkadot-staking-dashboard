@@ -107,3 +107,7 @@ export const StatWrapper = styled.div`
     }
   }
 `;
+
+export const SpinWrapper = styled.span`
+  padding: 0 1rem;
+`;

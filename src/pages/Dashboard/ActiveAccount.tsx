@@ -4,7 +4,9 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useAccount } from 'contexts/Account';
+import { useModal } from 'contexts/Modal';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
 import { Identicon } from 'library/Identicon';
@@ -16,6 +18,7 @@ export const ActiveAccount = () => {
   const { addNotification } = useNotifications();
   const { address, role } = useAccount();
   const { t } = useTranslation('pages');
+  const { openModalWith } = useModal();
 
   // click to copy notification
   let notification: NotificationText | null = null;
@@ -39,6 +42,7 @@ export const ActiveAccount = () => {
                 {clipAddress(address)}
                 <button
                   type="button"
+                  className="copy-address"
                   onClick={() => {
                     navigator.clipboard.writeText(address);
                     if (notification) {
@@ -55,6 +59,15 @@ export const ActiveAccount = () => {
                 <div className="sep" />
                 <div className="rest">
                   <span className="name">{!role ? 'No Role' : role}</span>
+                  {!role && (
+                    <>
+                      &nbsp;&nbsp;&nbsp;
+                      <ButtonPrimary
+                        text="Select a role"
+                        onClick={() => openModalWith('SelectRole')}
+                      />
+                    </>
+                  )}
                 </div>
               </>
             )}

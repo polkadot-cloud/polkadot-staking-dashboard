@@ -56,7 +56,8 @@
       "totalUsers": "Total Users",
       "totalValidators": "Total Validators",
       "unitSupplyStaked": "{{unit}} Supply Staked",
-      "unlocking": "Unlocking"
+      "unlocking": "Unlocking",
+      "userBalance": "User Balance"
     },
     "favorites": {
       "favoriteValidators": "Favorite Validators",

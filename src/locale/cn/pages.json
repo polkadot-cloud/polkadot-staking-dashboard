@@ -56,7 +56,8 @@
       "totalUsers": "Total Users",
       "totalValidators": "所有验证人",
       "unitSupplyStaked": "{{unit}} 抵押比例",
-      "unlocking": "正在解锁"
+      "unlocking": "正在解锁",
+      "userBalance": "余额"
     },
     "favorites": {
       "favoriteValidators": "藏夹中的验证人",
