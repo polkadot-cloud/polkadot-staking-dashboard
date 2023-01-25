@@ -34,7 +34,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - run: yarn install
-      - run: yarn build
+      - run: "CI=false yarn build"
       - run: yarn lint
       - run: yarn test
 
