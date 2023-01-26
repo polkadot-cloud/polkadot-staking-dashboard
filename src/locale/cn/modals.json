@@ -159,7 +159,7 @@
     "unlockTake": "{{durationFormatted}}后解锁金额可被提取",
     "unlocked": "已解锁",
     "unlocks": "解锁",
-    "unlocksAfterEra": "解锁于Era",
+    "unlocksAfter": "解锁于",
     "unstake": "解除抵押",
     "unstakeStopNominating": "停止提名 {{count}} 个验证人",
     "unstakeUnbond": "解除质押 {{bond}} {{unit}}",

@@ -128,7 +128,7 @@ export const Overview = forwardRef(
                   <h4>
                     {left <= 0
                       ? t('unlocked')
-                      : `${t('unlocksAfterEra')} ${unlockingTimeLeft}`}
+                      : `${t('unlocksAfter')} ${unlockingTimeLeft}`}
                   </h4>
                 </section>
                 {isStaking && (
