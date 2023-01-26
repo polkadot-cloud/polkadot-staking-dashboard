@@ -116,11 +116,11 @@ export const Overview = forwardRef(
           const { era, value } = chunk;
           const left = era - activeEra.index;
           const { timeleft, setFromNow } = useTimeLeft();
+
           useEffect(() => {
             setFromNow(fromNow(getDynamicTimeLeftFromEras(left)));
           }, [connectionStatus, activeEra]);
           const unlockingTimeLeft = timeleft.formatted;
-          // `${t('unlocksAfter')}`
 
           return (
             <ChunkWrapper key={`unlock_chunk_${i}`}>
@@ -132,7 +132,7 @@ export const Overview = forwardRef(
                       t('unlocked')
                     ) : (
                       <>
-                        {t('unlocksAfter')}{' '}
+                        {t('unlocksIn')}{' '}
                         <Countdown timeleft={unlockingTimeLeft} />
                       </>
                     )}
