@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -13,7 +13,6 @@ import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { PoolState } from 'contexts/Pools/types';
 import { useList } from 'library/List/context';
 import { Identity } from 'library/ListItem/Labels/Identity';
 import { PoolMemberBonded } from 'library/ListItem/Labels/PoolMemberBonded';
@@ -28,25 +27,24 @@ import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const Member = (props: any) => {
+  const { t } = useTranslation('pages');
   const { meta } = usePoolMembers();
   const { openModalWith } = useModal();
   const { selectActive } = useList();
-  const { metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
-  const { activeEra } = metrics;
   const { state, roles } = selectedActivePool?.bondedPool || {};
   const { stateToggler, root, depositor } = roles || {};
-  const { t } = useTranslation('pages');
 
   const { who, batchKey, batchIndex } = props;
 
   const canUnbondBlocked =
-    state === PoolState.Block &&
+    state === 'Blocked' &&
     (isOwner() || isStateToggler()) &&
     ![root, stateToggler].includes(who);
 
-  const canUnbondDestroying = state === PoolState.Destroy && who !== depositor;
+  const canUnbondDestroying = state === 'Destroying' && who !== depositor;
 
   const poolMembers = meta[batchKey]?.poolMembers ?? [];
   const member = poolMembers[batchIndex] ?? null;
@@ -77,7 +75,7 @@ export const Member = (props: any) => {
     if (Object.values(unbondingEras).length) {
       let canWithdraw = false;
       for (const k of Object.keys(unbondingEras)) {
-        if (Number(activeEra.index) > Number(k)) {
+        if (activeEra.index > Number(k)) {
           canWithdraw = true;
         }
       }

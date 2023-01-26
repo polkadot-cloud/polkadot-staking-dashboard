@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { HeadingProps } from '../types';
@@ -13,5 +13,3 @@ export const Heading = (props: HeadingProps) => {
     </Wrapper>
   );
 };
-
-export default Heading;

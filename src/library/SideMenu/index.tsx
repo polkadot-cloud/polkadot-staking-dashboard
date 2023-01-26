@@ -1,11 +1,10 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
-import { ConnectionStatus } from 'contexts/Api/types';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useTheme } from 'contexts/Themes';
@@ -23,7 +22,8 @@ import throttle from 'lodash.throttle';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
-import Heading from './Heading/Heading';
+import { capitalizeFirstLetter } from 'Utils';
+import { Heading } from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
 import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
@@ -66,17 +66,17 @@ export const SideMenu = () => {
 
   // handle connection symbol
   const symbolColor =
-    status === ConnectionStatus.Connecting
+    status === 'connecting'
       ? defaultThemes.status.warning.solid[mode]
-      : status === ConnectionStatus.Connected
+      : status === 'connected'
       ? defaultThemes.status.success.solid[mode]
       : defaultThemes.status.danger.solid[mode];
 
   // handle transparent border color
   const borderColor =
-    status === ConnectionStatus.Connecting
+    status === 'connecting'
       ? defaultThemes.status.warning.transparent[mode]
-      : status === ConnectionStatus.Connected
+      : status === 'connected'
       ? defaultThemes.status.success.transparent[mode]
       : defaultThemes.status.danger.transparent[mode];
 
@@ -108,7 +108,7 @@ export const SideMenu = () => {
         <Separator />
         <Heading title={t('network')} minimised={sideMenuMinimised} />
         <Secondary
-          name={network.name}
+          name={capitalizeFirstLetter(network.name)}
           borderColor={borderColor}
           onClick={() => openModalWith('Networks')}
           icon={{
@@ -151,16 +151,15 @@ export const SideMenu = () => {
         >
           <CogOutlineSVG width="1.6em" height="1.6em" />
         </button>
-
         <button
           type="button"
           onClick={() => openModalWith('ChooseLanguage', {}, 'small')}
         >
-          <LanguageSVG width="1.65rem" height="1.65rem" />
+          <LanguageSVG width="1.55em" height="1.55em" />
         </button>
         {mode === 'light' ? (
           <button type="button" onClick={() => toggleTheme()}>
-            <SunnyOutlineSVG width="1.7em" height="1.7em" />
+            <SunnyOutlineSVG width="1.55em" height="1.55em" />
           </button>
         ) : (
           <button type="button" onClick={() => toggleTheme()}>
@@ -171,5 +170,3 @@ export const SideMenu = () => {
     </Wrapper>
   );
 };
-
-export default SideMenu;

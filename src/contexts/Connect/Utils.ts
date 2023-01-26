@@ -1,10 +1,11 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import Keyring from '@polkadot/keyring';
+import { ExtensionAccount } from 'contexts/Extensions/types';
 import { Network } from 'types';
 import { localStorageOrDefault } from 'Utils';
-import { ExtensionAccount, ExternalAccount, ImportedAccount } from './types';
+import { ExternalAccount, ImportedAccount } from './types';
 
 // extension utils
 
@@ -62,7 +63,7 @@ export const getActiveAccountLocal = (network: Network) => {
   const keyring = new Keyring();
   keyring.setSS58Format(network.ss58);
   let _activeAccount = localStorageOrDefault(
-    `${network.name.toLowerCase()}_active_account`,
+    `${network.name}_active_account`,
     null
   );
   if (_activeAccount !== null) {
@@ -96,12 +97,13 @@ export const getInExternalAccounts = (
   network: Network
 ) => {
   const localExternalAccounts = getLocalExternalAccounts(network, true);
+
   return (
     localExternalAccounts.filter(
-      (l: ExternalAccount) =>
+      (a: ExternalAccount) =>
         (accounts || []).find(
-          (a: ExtensionAccount) => a.address === l.address
-        ) !== undefined && l.addedBy === 'system'
+          (b: ExtensionAccount) => b.address === a.address
+        ) !== undefined
     ) || []
   );
 };
@@ -113,10 +115,10 @@ export const removeLocalExternalAccounts = (
 ) => {
   let localExternalAccounts = getLocalExternalAccounts(network, true);
   localExternalAccounts = localExternalAccounts.filter(
-    (l: ExternalAccount) =>
+    (a: ExternalAccount) =>
       accounts.find(
-        (a: ImportedAccount) =>
-          a.address === l.address && l.network === network.name
+        (b: ImportedAccount) =>
+          b.address === a.address && a.network === network.name
       ) === undefined
   );
   localStorage.setItem(

@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
@@ -6,13 +6,13 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTheme } from 'contexts/Themes';
-import Identicon from 'library/Identicon';
+import { Identicon } from 'library/Identicon';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
 import { clipAddress, remToUnit } from '../../Utils';
 import { PoolAccountProps } from './types';
-import Wrapper from './Wrapper';
+import { Wrapper } from './Wrapper';
 
 export const PoolAccount = (props: PoolAccountProps) => {
   const { mode } = useTheme();

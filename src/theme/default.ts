@@ -1,18 +1,16 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { NETWORKS } from 'config/networks';
-import { Network } from 'types';
+import { NetworkList } from 'config/networks';
+import { AnyJson, Network } from 'types';
 
-// configure theme
 const v = (light: string, dark: string) => ({
   light,
   dark,
 });
 
-// eslint-disable-next-line
-export const defaultThemes: { [key: string]: any } = {
-  transparent: v('rgba(255,255,255,0', 'rgba(0,0,0,0)'),
+export const defaultThemes: { [key: string]: AnyJson } = {
+  transparent: v('rgba(255,255,255,0)', 'rgba(0,0,0,0)'),
   text: {
     primary: v('#333', '#ccc'),
     secondary: v('#444', '#aaa'),
@@ -123,7 +121,6 @@ const c = (flat: string, border: string, shadow: string) => ({
   shadow,
 });
 
-// eslint-disable-next-line
 export const cardThemes = {
   card: {
     border: c('none', '1px solid', 'none'),
@@ -137,7 +134,7 @@ export const networkColorsSecondary: { [key: string]: string } = {};
 export const networkColorsStroke: { [key: string]: string } = {};
 export const networkColorsTransparent: { [key: string]: string } = {};
 
-Object.values(NETWORKS).forEach((node: Network) => {
+Object.values(NetworkList).forEach((node: Network) => {
   const { name, colors } = node;
   const { primary, secondary, stroke, transparent } = colors;
 

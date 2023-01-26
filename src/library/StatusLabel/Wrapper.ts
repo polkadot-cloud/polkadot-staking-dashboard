@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
@@ -11,19 +11,19 @@ export const Wrapper = styled.div<WrapperProps>`
   left: 0;
   width: 100%;
   display: flex;
-  flex-flow: row wrap;
   justify-content: center;
   align-items: center;
   z-index: 2;
 
   > div {
+    min-width: 125px;
     background: ${backgroundLabel};
     opacity: 0.75;
     padding: 1rem 1.25rem;
     border-radius: 1rem;
     display: flex;
-    flex-flow: row wrap;
     align-items: center;
+    justify-content: center;
 
     > svg {
       color: ${textSecondary};

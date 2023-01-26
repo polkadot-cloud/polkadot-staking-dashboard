@@ -1,24 +1,23 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import { Extension as ExtensionInterface } from 'contexts/Extensions/types';
+import { ExtensionInjected } from 'contexts/Extensions/types';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ExtensionProps } from './types';
 import { ExtensionWrapper } from './Wrappers';
 
 export const Extension = (props: ExtensionProps) => {
-  const { extensions } = useExtensions();
-  const { extensionsStatus } = useExtensions();
+  const { extensions, extensionsStatus } = useExtensions();
   const { meta } = props;
   const { id } = meta;
   const { t } = useTranslation('modals');
 
-  const installed = extensions.find((e: ExtensionInterface) => e.id === id);
+  const installed = extensions.find((e: ExtensionInjected) => e.id === id);
   const status = !installed ? 'not_found' : extensionsStatus[id];
 
   // determine message to be displayed based on extension status.
@@ -31,7 +30,7 @@ export const Extension = (props: ExtensionProps) => {
       message = t('notAuthenticated');
       break;
     default:
-      message = status === 'no_accounts' ? t('noAccounts') : t('notConnected');
+      message = status === 'no_accounts' ? t('noAccounts') : '';
   }
 
   return (
@@ -41,6 +40,7 @@ export const Extension = (props: ExtensionProps) => {
           {...props}
           message={message}
           status={status}
+          installed={installed}
           size="1.5rem"
         />
       ) : (
@@ -95,14 +95,14 @@ export const ExtensionButton = (props: any) => {
 
 export const ExtensionElement = (props: any) => {
   return (
-    <div>
+    <div style={{ opacity: !props.installed ? 0.5 : 1 }}>
       <ExtensionInner {...props} />
     </div>
   );
 };
 
 export const ExtensionInner = (props: any) => {
-  const { size, message, flag, meta, status } = props;
+  const { size, message, flag, meta, status, installed } = props;
   const { title, icon: Icon } = meta;
 
   return (
@@ -123,11 +123,13 @@ export const ExtensionInner = (props: any) => {
           </span>
         </h4>
         {flag && flag}
-        <FontAwesomeIcon
-          icon={status === 'connected' ? faCheckCircle : faPlus}
-          transform="shrink-0"
-          className="icon"
-        />
+        {installed || status === 'connected' ? (
+          <FontAwesomeIcon
+            icon={status === 'connected' ? faCheckCircle : faPlus}
+            transform="shrink-0"
+            className="icon"
+          />
+        ) : null}
       </div>
     </>
   );

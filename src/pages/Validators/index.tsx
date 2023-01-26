@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
@@ -10,9 +10,9 @@ import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 import { PageProps } from '../types';
-import ActiveValidatorsStatBox from './Stats/ActiveValidators';
-import AverageCommissionStatBox from './Stats/AverageCommission';
-import TotalValidatorsStatBox from './Stats/TotalValidators';
+import { ActiveValidatorsStat } from './Stats/ActiveValidators';
+import { AverageCommissionStat } from './Stats/AverageCommission';
+import { TotalValidatorsStat } from './Stats/TotalValidators';
 
 export const Validators = (props: PageProps) => {
   const { page } = props;
@@ -30,9 +30,9 @@ export const Validators = (props: PageProps) => {
     <>
       <PageTitle title={t(key, { ns: 'base' })} />
       <StatBoxList>
-        <ActiveValidatorsStatBox />
-        <TotalValidatorsStatBox />
-        <AverageCommissionStatBox />
+        <ActiveValidatorsStat />
+        <TotalValidatorsStat />
+        <AverageCommissionStat />
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
@@ -52,7 +52,7 @@ export const Validators = (props: PageProps) => {
 
               {validators.length > 0 && (
                 <ValidatorList
-                  bondType="stake"
+                  bondFor="nominator"
                   validators={validators}
                   batchKey="validators_browse"
                   title={t('validators.networkValidators', { ns: 'pages' })}
@@ -72,5 +72,3 @@ export const Validators = (props: PageProps) => {
     </>
   );
 };
-
-export default Validators;

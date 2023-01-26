@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { DefaultNetwork } from 'consts';
@@ -8,7 +8,7 @@ import { Providers } from 'Providers';
 import React from 'react';
 import { I18nextProvider } from 'react-i18next';
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   let network = localStorage.getItem('network');
 
   if (network === null) {
@@ -24,5 +24,3 @@ const App: React.FC = () => {
     </I18nextProvider>
   );
 };
-
-export default App;

@@ -1,20 +1,19 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useSetup } from 'contexts/Setup';
+import { defaultPoolSetup } from 'contexts/Setup/defaults';
 import { useTxFees } from 'contexts/TxFees';
-import { useUi } from 'contexts/UI';
-import { defaultPoolSetup } from 'contexts/UI/defaults';
-import { SetupType } from 'contexts/UI/types';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -22,24 +21,23 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, unitToPlanckBn } from 'Utils';
+import { unitToPlanck } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
-export const Summary = (props: SetupStepProps) => {
-  const { section } = props;
+export const Summary = ({ section }: SetupStepProps) => {
+  const { t } = useTranslation('pages');
   const { api, network } = useApi();
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getSetupProgress, setActiveAccountSetup } = useUi();
+  const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const { stats } = usePoolsConfig();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
   const { lastPoolId } = stats;
-  const poolId = lastPoolId.add(new BN(1));
+  const poolId = lastPoolId.plus(new BigNumber(1));
   const { txFeesValid } = useTxFees();
-  const { t } = useTranslation('pages');
 
-  const setup = getSetupProgress(SetupType.Pool, activeAccount);
+  const setup = getSetupProgress('pool', activeAccount);
 
   const { metadata, bond, roles, nominations } = setup;
 
@@ -55,13 +53,14 @@ export const Summary = (props: SetupStepProps) => {
       return null;
     }
 
-    const bondToSubmit = unitToPlanckBn(bond, units).toString();
     const targetsToSubmit = nominations.map((item: any) => item.address);
 
-    // construct a batch of transactions
+    const bondToSubmit = unitToPlanck(bond, units);
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+
     const txs = [
       api.tx.nominationPools.create(
-        bondToSubmit,
+        bondAsString,
         roles.root,
         roles.nominator,
         roles.stateToggler
@@ -87,7 +86,7 @@ export const Summary = (props: SetupStepProps) => {
       addToPoolMembers(member);
 
       // reset localStorage setup progress
-      setActiveAccountSetup(SetupType.Pool, defaultPoolSetup);
+      setActiveAccountSetup('pool', defaultPoolSetup);
     },
   });
 
@@ -97,7 +96,7 @@ export const Summary = (props: SetupStepProps) => {
         thisSection={section}
         complete={null}
         title={t('pools.summary') || ''}
-        setupType={SetupType.Pool}
+        setupType="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
@@ -123,7 +122,7 @@ export const Summary = (props: SetupStepProps) => {
               &nbsp; {t('pools.bondAmount')}:
             </div>
             <div>
-              {humanNumber(bond)} {network.unit}
+              {new BigNumber(bond).toFormat()} {network.unit}
             </div>
           </section>
           <section>
@@ -174,5 +173,3 @@ export const Summary = (props: SetupStepProps) => {
     </>
   );
 };
-
-export default Summary;

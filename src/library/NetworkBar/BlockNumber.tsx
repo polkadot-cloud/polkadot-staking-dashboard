@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { APIContext } from 'contexts/Api';
@@ -75,5 +75,3 @@ export class BlockNumber extends React.Component<any, any> {
     return <BlockNumberInner {...this.props} block={this.state.block} />;
   }
 }
-
-export default BlockNumber;

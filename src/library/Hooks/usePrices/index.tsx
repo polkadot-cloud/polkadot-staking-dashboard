@@ -1,13 +1,15 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
-import { useUi } from 'contexts/UI';
+import { usePlugins } from 'contexts/Plugins';
+import { useUnitPrice } from 'library/Hooks/useUnitPrice';
 import { useEffect, useRef, useState } from 'react';
 
 export const usePrices = () => {
-  const { network, fetchDotPrice } = useApi();
-  const { services } = useUi();
+  const { network } = useApi();
+  const { plugins } = usePlugins();
+  const fetchUnitPrice = useUnitPrice();
 
   const pricesLocalStorage = () => {
     const pricesLocal = localStorage.getItem(`${network.name}_prices`);
@@ -35,7 +37,7 @@ export const usePrices = () => {
   };
 
   const initiatePriceInterval = async () => {
-    const _prices = await fetchDotPrice();
+    const _prices = await fetchUnitPrice();
     setPrices(_prices);
     if (priceHandle === null) {
       setPriceInterval();
@@ -45,7 +47,7 @@ export const usePrices = () => {
   let priceHandle: any = null;
   const setPriceInterval = async () => {
     priceHandle = setInterval(async () => {
-      const _prices = await fetchDotPrice();
+      const _prices = await fetchUnitPrice();
       setPrices(_prices);
     }, 1000 * 30);
   };
@@ -70,16 +72,14 @@ export const usePrices = () => {
 
   // servie toggle
   useEffect(() => {
-    if (services.includes('binance_spot')) {
+    if (plugins.includes('binance_spot')) {
       if (priceHandle === null) {
         initiatePriceInterval();
       }
     } else if (priceHandle !== null) {
       clearInterval(priceHandle);
     }
-  }, [services]);
+  }, [plugins]);
 
   return pricesRef.current;
 };
-
-export default usePrices;

@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
@@ -9,13 +9,7 @@ import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { Pool } from 'library/Pool/types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  capitalizeFirstLetter,
-  humanNumber,
-  planckBnToUnit,
-  rmCommas,
-  toFixedIfNecessary,
-} from 'Utils';
+import { capitalizeFirstLetter, planckToUnit, rmCommas } from 'Utils';
 
 export const PoolBonded = ({
   pool,
@@ -73,7 +67,7 @@ export const PoolBonded = ({
   }, [meta, pool, eraStakers.stakers.length]);
 
   // calculate total bonded pool amount
-  const poolBonded = planckBnToUnit(new BN(rmCommas(points)), units);
+  const poolBonded = planckToUnit(new BigNumber(rmCommas(points)), units);
 
   // determine nominations status and display
   const nominationStatus = getPoolNominationStatusCode(nominationsStatus);
@@ -88,7 +82,7 @@ export const PoolBonded = ({
             ? capitalizeFirstLetter(t(`${nominationStatus}`) ?? '')
             : t('notNominating')}
           {' / '}
-          {t('bonded')}: {humanNumber(toFixedIfNecessary(poolBonded, 3))} {unit}
+          {t('bonded')}: {poolBonded.decimalPlaces(3).toFormat()} {unit}
         </h5>
       </ValidatorStatusWrapper>
     </>

@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faAnglesRight, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { useCombobox, UseComboboxStateChange } from 'downshift';
-import Identicon from 'library/Identicon';
+import { Identicon } from 'library/Identicon';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { defaultThemes, networkColors } from 'theme/default';
@@ -154,5 +154,3 @@ const DropdownItem = ({ c, item, index }: any) => {
     </div>
   );
 };
-
-export default AccountDropdown;

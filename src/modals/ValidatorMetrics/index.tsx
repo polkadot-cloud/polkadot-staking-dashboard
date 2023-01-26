@@ -1,16 +1,17 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints';
-import { formatSize, useSize } from 'library/Graphs/Utils';
+import { formatSize } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
-import Identicon from 'library/Identicon';
+import { useSize } from 'library/Hooks/useSize';
+import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
@@ -19,34 +20,34 @@ import { SubscanButton } from 'library/SubscanButton';
 import { PaddingWrapper } from 'modals/Wrappers';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { clipAddress, humanNumber, planckBnToUnit, rmCommas } from 'Utils';
+import { clipAddress, planckToUnit, rmCommas } from 'Utils';
 
 export const ValidatorMetrics = () => {
+  const { t } = useTranslation('modals');
   const {
     network: { units, unit },
   } = useApi();
   const { config } = useModal();
   const { address, identity } = config;
   const { fetchEraPoints }: any = useSubscan();
-  const { metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { eraStakers } = useStaking();
   const { stakers } = eraStakers;
-  const { t } = useTranslation('modals');
 
   // is the validator in the active era
   const validatorInEra =
     stakers.find((s: any) => s.address === address) || null;
 
-  let ownStake = new BN(0);
-  let otherStake = new BN(0);
+  let validatorOwnStake = new BigNumber(0);
+  let otherStake = new BigNumber(0);
   if (validatorInEra) {
     const { others, own } = validatorInEra;
 
     others.forEach((o: any) => {
-      otherStake = otherStake.add(new BN(rmCommas(o.value)));
+      otherStake = otherStake.plus(new BigNumber(rmCommas(o.value)));
     });
     if (own) {
-      ownStake = new BN(rmCommas(own));
+      validatorOwnStake = new BigNumber(rmCommas(own));
     }
   }
   const [list, setList] = useState([]);
@@ -56,7 +57,7 @@ export const ValidatorMetrics = () => {
   const { width, height, minHeight } = formatSize(size, 300);
 
   const handleEraPoints = async () => {
-    const _list = await fetchEraPoints(address, metrics.activeEra.index);
+    const _list = await fetchEraPoints(address, activeEra.index);
     setList(_list);
   };
 
@@ -67,12 +68,12 @@ export const ValidatorMetrics = () => {
   const stats = [
     {
       label: t('selfStake'),
-      value: `${humanNumber(planckBnToUnit(ownStake, units))} ${unit}`,
+      value: `${planckToUnit(validatorOwnStake, units).toFormat()} ${unit}`,
       help: 'Self Stake',
     },
     {
       label: t('nominatorStake'),
-      value: `${humanNumber(planckBnToUnit(otherStake, units))} ${unit}`,
+      value: `${planckToUnit(otherStake, units).toFormat()} ${unit}`,
       help: 'Nominator Stake',
     },
   ];
@@ -143,5 +144,3 @@ export const ValidatorMetrics = () => {
     </>
   );
 };
-
-export default ValidatorMetrics;

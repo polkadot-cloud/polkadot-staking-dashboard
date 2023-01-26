@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
@@ -32,7 +32,6 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
 
       > h2 {
         display: flex;
-        flex-flow: row nowrap;
         align-items: center;
         font-family: 'Unbounded', 'sans-serif', sans-serif;
         font-size: 1.3rem;

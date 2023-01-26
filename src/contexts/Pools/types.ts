@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { AnyApi, AnyJson, AnyMetaBatch, MaybeAccount, Sync } from 'types';
 
 // PoolsConfig types
@@ -19,15 +19,15 @@ export interface PoolConfigState {
 }
 
 export interface PoolStats {
-  counterForPoolMembers: BN;
-  counterForBondedPools: BN;
-  counterForRewardPools: BN;
-  lastPoolId: BN;
-  maxPoolMembers: BN;
-  maxPoolMembersPerPool: BN;
-  maxPools: BN;
-  minCreateBond: BN;
-  minJoinBond: BN;
+  counterForPoolMembers: BigNumber;
+  counterForBondedPools: BigNumber;
+  counterForRewardPools: BigNumber;
+  lastPoolId: BigNumber;
+  maxPoolMembers: BigNumber;
+  maxPoolMembersPerPool: BigNumber;
+  maxPools: BigNumber;
+  minCreateBond: BigNumber;
+  minJoinBond: BigNumber;
 }
 
 // PoolMemberships types
@@ -44,7 +44,7 @@ export interface PoolMembership {
   unbondingEras: { [key: number]: string };
   unlocking: Array<{
     era: number;
-    value: BN;
+    value: BigNumber;
   }>;
 }
 
@@ -137,14 +137,4 @@ export interface PoolAddresses {
 
 export type MaybePool = number | null;
 
-export enum PoolState {
-  /// The pool is open to be joined, and is working normally.
-  Open = 'Open',
-  /// The pool is blocked. No one else can join.
-  Block = 'Blocked',
-  /// The pool is in the process of being destroyed.
-  ///
-  /// All members can now be permissionlessly unbonded, and the pool can never go back to any
-  /// other state other than being dissolved.
-  Destroy = 'Destroying',
-}
+export type PoolState = 'Open' | 'Blocked' | 'Destroying';

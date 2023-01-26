@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -22,7 +22,7 @@ export const StatBox = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const StatBoxListItem = ({ format, params }: any) => {
+export const StatBoxListItem = ({ format, params }: any) => {
   switch (format) {
     case 'chart-pie':
       return <Pie {...params} />;
@@ -37,5 +37,3 @@ const StatBoxListItem = ({ format, params }: any) => {
       return null;
   }
 };
-
-export default StatBoxListItem;

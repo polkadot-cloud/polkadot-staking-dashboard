@@ -1,20 +1,22 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { MaxPayoutDays } from 'consts';
+import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useUi } from 'contexts/UI';
 import { format, fromUnixTime } from 'date-fns';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
-import { formatSize, useSize } from 'library/Graphs/Utils';
+import { formatSize } from 'library/Graphs/Utils';
 import {
   CardHeaderWrapper,
   CardWrapper,
   GraphWrapper,
 } from 'library/Graphs/Wrappers';
+import { useSize } from 'library/Hooks/useSize';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
@@ -27,11 +29,12 @@ import { AnySubscan } from 'types';
 import { PageRowWrapper } from 'Wrappers';
 import { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
-import LastEraPayoutStatBox from './Stats/LastEraPayout';
+import { LastEraPayoutStat } from './Stats/LastEraPayout';
 
 export const Payouts = (props: PageProps) => {
   const { payouts, poolClaims } = useSubscan();
-  const { isSyncing, services } = useUi();
+  const { isSyncing } = useUi();
+  const { plugins } = usePlugins();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
   const { i18n, t } = useTranslation();
@@ -55,9 +58,9 @@ export const Payouts = (props: PageProps) => {
 
     // re-order rewards based on block timestamp
     pList = pList.sort((a: AnySubscan, b: AnySubscan) => {
-      const x = new BN(a.block_timestamp);
-      const y = new BN(b.block_timestamp);
-      return y.sub(x);
+      const x = new BigNumber(a.block_timestamp);
+      const y = new BigNumber(b.block_timestamp);
+      return y.minus(x);
     });
     setPayoutLists(pList);
   }, [payouts]);
@@ -91,7 +94,7 @@ export const Payouts = (props: PageProps) => {
     <>
       <PageTitle title={t(key, { ns: 'base' })} />
       <StatBoxList>
-        <LastEraPayoutStatBox />
+        <LastEraPayoutStat />
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <GraphWrapper>
@@ -113,7 +116,7 @@ export const Payouts = (props: PageProps) => {
             </h2>
           </CardHeaderWrapper>
           <div className="inner" ref={ref} style={{ minHeight }}>
-            {!services.includes('subscan') ? (
+            {!plugins.includes('subscan') ? (
               <StatusLabel
                 status="active_service"
                 statusFor="subscan"
@@ -160,5 +163,3 @@ export const Payouts = (props: PageProps) => {
     </>
   );
 };
-
-export default Payouts;

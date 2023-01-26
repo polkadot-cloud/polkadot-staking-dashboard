@@ -1,41 +1,50 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
-import useUnstaking from 'library/Hooks/useUnstaking';
+import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
+import { fromNow, timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
+import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, planckBnToUnit, toFixedIfNecessary } from 'Utils';
+import { planckToUnit } from 'Utils';
 import { NotesWrapper, Separator } from '../Wrappers';
 import { ChunkWrapper, ContentWrapper } from './Wrappers';
 
 export const Overview = forwardRef(
-  ({ unlocking, bondType, setSection, setUnlock, setTask }: any, ref: any) => {
+  ({ unlocking, bondFor, setSection, setUnlock, setTask }: any, ref: any) => {
     const { network, consts } = useApi();
-    const { metrics } = useNetworkMetrics();
+    const { activeEra } = useNetworkMetrics();
     const { bondDuration } = consts;
     const { units } = network;
-    const { activeEra } = metrics;
     const { isFastUnstaking } = useUnstaking();
     const { t } = useTranslation('modals');
 
-    const isStaking = bondType === 'stake';
+    const { getTimeLeftFromEras } = useErasToTimeLeft();
+    const durationSeconds = getTimeLeftFromEras(bondDuration);
+    const durationFormatted = timeleftAsString(
+      t,
+      fromNow(durationSeconds),
+      true
+    );
 
-    let withdrawAvailable = new BN(0);
-    let totalUnbonding = new BN(0);
+    const isStaking = bondFor === 'nominator';
+
+    let withdrawAvailable = new BigNumber(0);
+    let totalUnbonding = new BigNumber(0);
     for (const _chunk of unlocking) {
       const { era, value } = _chunk;
       const left = era - activeEra.index;
 
-      totalUnbonding = totalUnbonding.add(value);
+      totalUnbonding = totalUnbonding.plus(value);
       if (left <= 0) {
-        withdrawAvailable = withdrawAvailable.add(value);
+        withdrawAvailable = withdrawAvailable.plus(value);
       }
     }
 
@@ -49,12 +58,9 @@ export const Overview = forwardRef(
                 {t('unlocked')}
               </h4>
               <h2>
-                {humanNumber(
-                  toFixedIfNecessary(
-                    planckBnToUnit(withdrawAvailable, units),
-                    3
-                  )
-                )}{' '}
+                {planckToUnit(withdrawAvailable, units)
+                  .decimalPlaces(3)
+                  .toFormat()}{' '}
                 {network.unit}
               </h2>
             </div>
@@ -66,15 +72,9 @@ export const Overview = forwardRef(
                 {t('unbonding')}
               </h4>
               <h2>
-                {humanNumber(
-                  toFixedIfNecessary(
-                    planckBnToUnit(
-                      totalUnbonding.sub(withdrawAvailable),
-                      units
-                    ),
-                    3
-                  )
-                )}{' '}
+                {planckToUnit(totalUnbonding.minus(withdrawAvailable), units)
+                  .decimalPlaces(3)
+                  .toFormat()}{' '}
                 {network.unit}
               </h2>
             </div>
@@ -83,9 +83,9 @@ export const Overview = forwardRef(
             <div className="inner">
               <h4>{t('total')}</h4>
               <h2>
-                {humanNumber(
-                  toFixedIfNecessary(planckBnToUnit(totalUnbonding, units), 3)
-                )}{' '}
+                {planckToUnit(totalUnbonding, units)
+                  .decimalPlaces(3)
+                  .toFormat()}{' '}
                 {network.unit}
               </h2>
             </div>
@@ -117,9 +117,7 @@ export const Overview = forwardRef(
             <ChunkWrapper key={`unlock_chunk_${i}`}>
               <div>
                 <section>
-                  <h2>
-                    {planckBnToUnit(value, units)} {network.unit}
-                  </h2>
+                  <h2>{`${planckToUnit(value, units)} ${network.unit}`}</h2>
                   <h4>
                     {left <= 0
                       ? t('unlocked')
@@ -148,7 +146,7 @@ export const Overview = forwardRef(
         })}
         <NotesWrapper>
           <p>
-            {t('unlockTake', { bondDuration })}
+            {t('unlockTake', { durationFormatted })}
             {isStaking ? `${t('rebondUnlock')}` : null}
           </p>
           {!isStaking ? <p>{t('unlockChunk')}</p> : null}

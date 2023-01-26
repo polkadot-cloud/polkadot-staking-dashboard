@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
@@ -92,7 +92,11 @@ const DropdownItem = ({ c, item, index }: any) => {
   return (
     <div
       className="item"
-      {...c.getItemProps({ key: item.name, index, item })}
+      {...c.getItemProps({
+        key: item.name,
+        index,
+        item,
+      })}
       style={{
         color,
         border,
@@ -102,5 +106,3 @@ const DropdownItem = ({ c, item, index }: any) => {
     </div>
   );
 };
-
-export default Dropdown;

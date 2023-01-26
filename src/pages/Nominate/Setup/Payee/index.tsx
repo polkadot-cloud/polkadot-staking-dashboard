@@ -1,66 +1,69 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  faArrowRightToBracket,
+  faRotate,
+} from '@fortawesome/free-solid-svg-icons';
+import BigNumber from 'bignumber.js';
 import { useConnect } from 'contexts/Connect';
-import { useUi } from 'contexts/UI';
-import { SetupType } from 'contexts/UI/types';
+import { useSetup } from 'contexts/Setup';
+import { SelectItems } from 'library/SelectItems';
+import { SelectItem } from 'library/SelectItems/Item';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isNumeric } from 'Utils';
 import { Spacer } from '../../Wrappers';
-import { Item, Items } from './Wrappers';
 
-export const Payee = (props: SetupStepProps) => {
-  const { section } = props;
-
-  const { activeAccount } = useConnect();
-  const { getSetupProgress, setActiveAccountSetup } = useUi();
-  const setup = getSetupProgress(SetupType.Stake, activeAccount);
+export const Payee = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
+  const { activeAccount } = useConnect();
+  const { getSetupProgress, setActiveAccountSetup } = useSetup();
+  const setup = getSetupProgress('stake', activeAccount);
 
   const options = ['Staked', 'Stash', 'Controller'];
   const buttons = [
     {
+      index: 0,
       title: t('nominate.backToStaking'),
       subtitle: t('nominate.automaticallyBonded'),
-      index: 0,
+      icon: faRotate,
     },
     {
+      index: 1,
       title: t('nominate.toStash'),
       subtitle: t('nominate.sentToStash'),
-      index: 1,
+      icon: faArrowRightToBracket,
     },
     {
+      index: 2,
       title: t('nominate.toController'),
       subtitle: t('nominate.sentToController'),
-      index: 2,
+      icon: faArrowRightToBracket,
     },
   ];
 
-  const [payee, setPayee]: any = useState(setup.payee);
+  // set initial payee value to `Staked` if not yet set.
 
-  // update selected value on account switch
   useEffect(() => {
-    setPayee(setup.payee);
+    if (!setup.payee) {
+      setActiveAccountSetup('stake', {
+        ...setup,
+        payee: options[0],
+      });
+    }
   }, [activeAccount]);
 
   const handleChangePayee = (i: number) => {
-    // not in options
-    if (!isNumeric(i)) {
+    if (new BigNumber(i).isNaN() || i >= options.length) {
       return;
     }
-    if (i >= options.length) {
-      return;
-    }
-
     // set local value to update input element
-    setPayee(options[i]);
     // set setup payee
-    setActiveAccountSetup(SetupType.Stake, {
+    setActiveAccountSetup('stake', {
       ...setup,
       payee: options[i],
     });
@@ -73,32 +76,24 @@ export const Payee = (props: SetupStepProps) => {
         complete={setup.payee !== null}
         title={t('nominate.rewardDestination') || ''}
         helpKey="Reward Destination"
-        setupType={SetupType.Stake}
+        setupType="stake"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <Spacer />
-        <Items>
-          {buttons.map((item: any, index: number) => {
-            return (
-              <Item
-                key={`payee_option_${index}`}
-                selected={payee === options[item.index]}
-                onClick={() => handleChangePayee(item.index)}
-              >
-                <div>
-                  <h3>{item.title}</h3>
-                  <div>
-                    <p>{item.subtitle}</p>
-                  </div>
-                </div>
-              </Item>
-            );
-          })}
-        </Items>
-        <Footer complete={setup.payee !== null} setupType={SetupType.Stake} />
+        <SelectItems>
+          {buttons.map(({ index, title, subtitle, icon }: any, i: number) => (
+            <SelectItem
+              key={`payee_option_${i}`}
+              selected={setup.payee === options[index]}
+              title={title}
+              subtitle={subtitle}
+              icon={icon}
+              onClick={() => handleChangePayee(index)}
+            />
+          ))}
+        </SelectItems>
+        <Footer complete={setup.payee !== null} setupType="stake" />
       </MotionContainer>
     </>
   );
 };
-
-export default Payee;

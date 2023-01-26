@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { stringToU8a } from '@polkadot/util';
@@ -6,9 +6,8 @@ import { stringToU8a } from '@polkadot/util';
 /*
  * Global Constants
  */
-export const AppVersion = '1.0.2';
+export const AppVersion = '1.0.3';
 export const UriPrefix = '/';
-export const TitleDefault = 'Polkadot Staking Dashboard';
 export const DappName = 'Polkadot Staking Dashboard';
 export const PolkadotUrl = 'https://polkadot.network/staking/';
 export const DefaultNetwork = 'polkadot';
@@ -35,9 +34,9 @@ export const TipsThresholdSmall = 750;
 export const TipsThresholdMedium = 1200;
 
 /*
- * Toggle-able services
+ * Available plugins
  */
-export const ServiceList = ['subscan', 'binance_spot', 'tips'];
+export const PluginsList = ['subscan', 'binance_spot', 'tips'];
 
 /*
  * Fallback config values
@@ -48,6 +47,7 @@ export const FallbackSessionsPerEra = 6;
 export const FallbackNominatorRewardedPerValidator = 256;
 export const FallbackMaxElectingVoters = 22500;
 export const FallbackExpectedBlockTime = 6000;
+export const FallbackEpochDuration = 2400;
 
 /*
  * Misc values

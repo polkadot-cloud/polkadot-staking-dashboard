@@ -1,9 +1,9 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
-import { useUi } from 'contexts/UI';
+import { useSetup } from 'contexts/Setup';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
 import { HeaderProps } from '../types';
@@ -14,7 +14,7 @@ export const Header = (props: HeaderProps) => {
   const { t } = useTranslation('library');
 
   const { activeAccount } = useConnect();
-  const { getSetupProgress, setActiveAccountSetupSection } = useUi();
+  const { getSetupProgress, setActiveAccountSetupSection } = useSetup();
   const setup = getSetupProgress(setupType, activeAccount);
 
   return (
@@ -45,5 +45,3 @@ export const Header = (props: HeaderProps) => {
     </Wrapper>
   );
 };
-
-export default Header;

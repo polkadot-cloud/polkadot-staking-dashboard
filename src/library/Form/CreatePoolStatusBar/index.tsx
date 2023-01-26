@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -8,19 +8,19 @@ import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useUi } from 'contexts/UI';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 import { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 
 export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
-  const { minCreateBond } = usePoolsConfig().stats;
+  const { t } = useTranslation('library');
   const { isSyncing } = useUi();
   const { unit, units } = useApi().network;
-  const { t } = useTranslation('library');
+  const { minCreateBond } = usePoolsConfig().stats;
 
-  const minCreateBondBase = planckBnToUnit(minCreateBond, units);
+  const minCreateBondUnit = planckToUnit(minCreateBond, units);
   const sectionClassName =
-    value >= minCreateBondBase && !isSyncing ? 'invert' : '';
+    value >= minCreateBondUnit && !isSyncing ? 'invert' : '';
 
   return (
     <Wrapper>
@@ -37,7 +37,11 @@ export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
             &nbsp;{t('createPool')}
           </h4>
           <div className="bar">
-            <h5>{isSyncing ? '...' : `${minCreateBondBase} ${unit}`}</h5>
+            <h5>
+              {isSyncing
+                ? '...'
+                : `${minCreateBondUnit.decimalPlaces(3).toFormat()} ${unit}`}
+            </h5>
           </div>
         </section>
       </div>

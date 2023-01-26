@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -6,9 +6,9 @@ import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import { Extension } from 'contexts/Extensions/types';
+import { ExtensionInjected } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
-import Identicon from 'library/Identicon';
+import { Identicon } from 'library/Identicon';
 import { clipAddress } from 'Utils';
 import { AccountElementProps } from './types';
 import { AccountWrapper } from './Wrappers';
@@ -56,7 +56,9 @@ export const AccountInner = (props: AccountElementProps) => {
   const { address, meta } = props;
 
   const { extensions } = useExtensions();
-  const extension = extensions.find((e: Extension) => e.id === meta?.source);
+  const extension = extensions.find(
+    (e: ExtensionInjected) => e.id === meta?.source
+  );
   const Icon = extension?.icon ?? null;
   const label = props.label ?? null;
   const source = meta?.source ?? null;

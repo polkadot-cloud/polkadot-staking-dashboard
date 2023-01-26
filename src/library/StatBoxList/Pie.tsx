@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import NumberEasing from 'che-react-number-easing';
@@ -35,7 +35,7 @@ export const Pie = (props: PieProps) => {
                   precision={2}
                   speed={250}
                   trail={false}
-                  value={stat?.value}
+                  value={Number(stat?.value ?? 0)}
                   useLocaleString
                 />
                 {stat?.unit && <>{stat?.unit}</>}
@@ -48,7 +48,7 @@ export const Pie = (props: PieProps) => {
                       precision={2}
                       speed={250}
                       trail={false}
-                      value={stat?.total}
+                      value={Number(stat?.total ?? 0)}
                       useLocaleString
                     />
                     {stat?.unit && (

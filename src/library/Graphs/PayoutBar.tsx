@@ -1,6 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BigNumber from 'bignumber.js';
 import {
   BarElement,
   CategoryScale,
@@ -29,7 +30,6 @@ import {
   networkColorsTransparent,
 } from 'theme/default';
 import { AnySubscan } from 'types';
-import { humanNumber } from 'Utils';
 import { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
 
@@ -45,13 +45,13 @@ ChartJS.register(
 );
 
 export const PayoutBar = ({ days, height }: PayoutBarProps) => {
+  const { i18n, t } = useTranslation('library');
   const { mode } = useTheme();
   const { name, unit, units } = useApi().network;
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
-  const { i18n, t } = useTranslation('library');
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts.filter(
@@ -59,11 +59,8 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   );
 
   const notStaking = !isSyncing && inSetup() && !membership;
-  const average = 1;
-
   const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
     days,
-    average,
     units,
     payoutsNoSlash,
     poolClaims
@@ -156,7 +153,8 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         },
         callbacks: {
           title: () => [],
-          label: (context: any) => `${humanNumber(context.parsed.y)} ${unit}`,
+          label: (context: any) =>
+            `${new BigNumber(context.parsed.y).toFormat()} ${unit}`,
         },
       },
     },
@@ -172,5 +170,3 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
     </div>
   );
 };
-
-export default PayoutBar;

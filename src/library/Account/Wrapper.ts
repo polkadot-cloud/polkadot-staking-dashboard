@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { motion } from 'framer-motion';
@@ -29,7 +29,6 @@ export const Wrapper = styled(motion.button)<any>`
     color: ${textSecondary};
     font-size: 0.8em;
     display: flex;
-    flex-flow: row nowrap;
     align-items: center;
     justify-content: flex-end;
     margin-right: 0.5rem;
@@ -70,5 +69,3 @@ export const Wrapper = styled(motion.button)<any>`
     }
   }
 `;
-
-export default Wrapper;

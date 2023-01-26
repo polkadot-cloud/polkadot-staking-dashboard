@@ -1,17 +1,18 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
-import { useUi } from 'contexts/UI';
+import { usePlugins } from 'contexts/Plugins';
 import { useOutsideAlerter } from 'library/Hooks';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { capitalizeFirstLetter } from 'Utils';
 import { Status } from './Status';
 import { NetworkInfo, Separator, Summary, Wrapper } from './Wrappers';
 
 export const NetworkBar = () => {
-  const { services } = useUi();
+  const { plugins } = usePlugins();
   const { network, isLightClient } = useApi();
   const prices = usePrices();
   const { t } = useTranslation('library');
@@ -36,7 +37,9 @@ export const NetworkBar = () => {
   const DISCLAIMER_URL = process.env.REACT_APP_DISCLAIMER_URL;
   const ORGANISATION = process.env.REACT_APP_ORGANISATION;
 
-  const [networkName, setNetworkName] = useState<string>(network.name);
+  const [networkName, setNetworkName] = useState<string>(
+    capitalizeFirstLetter(network.name)
+  );
 
   useOutsideAlerter(
     ref,
@@ -48,7 +51,7 @@ export const NetworkBar = () => {
 
   useEffect(() => {
     setNetworkName(
-      isLightClient ? network.name.concat(' Light') : network.name
+      `${capitalizeFirstLetter(network.name)}${isLightClient ? ` Light` : ``}`
     );
   }, [network.name, isLightClient]);
 
@@ -91,7 +94,7 @@ export const NetworkBar = () => {
         </section>
         <section>
           <div className="hide-small">
-            {services.includes('binance_spot') && (
+            {plugins.includes('binance_spot') && (
               <>
                 <div className="stat">
                   <span
@@ -120,5 +123,3 @@ export const NetworkBar = () => {
     </Wrapper>
   );
 };
-
-export default NetworkBar;

@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
@@ -69,7 +69,7 @@ export const SelectFavorites = () => {
         <ListWrapper>
           {availableFavorites.length > 0 ? (
             <ValidatorList
-              bondType="stake"
+              bondFor="nominator"
               validators={availableFavorites}
               batchKey={batchKey}
               title={t('favoriteValidators')}
@@ -105,5 +105,3 @@ export const SelectFavorites = () => {
     </>
   );
 };
-
-export default SelectFavorites;

@@ -1,5 +1,5 @@
 /* eslint-disable */
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageTitle } from 'library/PageTitle';
@@ -37,8 +37,8 @@ const Feedback = (props: PageProps) => {
           'complete' === d.readyState
             ? l()
             : w.attachEvent
-              ? w.attachEvent('onload', l)
-              : w.addEventListener('load', l, !1);
+            ? w.attachEvent('onload', l)
+            : w.addEventListener('load', l, !1);
       }
     })(window, document, 'canny-jssdk', 'script');
 
@@ -59,5 +59,3 @@ const Feedback = (props: PageProps) => {
     </Wrapper>
   );
 };
-
-export default Feedback;

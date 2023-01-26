@@ -1,9 +1,9 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -25,7 +25,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { networkColors } from 'theme/default';
 import { AnySubscan } from 'types';
-import { clipAddress, planckBnToUnit } from 'Utils';
+import { clipAddress, planckToUnit } from 'Utils';
 import { PayoutListProps } from '../types';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProvider, usePayoutList } from './context';
@@ -36,7 +36,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
   const { mode } = useTheme();
   const { isReady, network } = useApi();
   const { units } = network;
-  const { metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { listFormat, setListFormat } = usePayoutList();
   const { validators, meta } = useValidators();
   const { bondedPools } = useBondedPools();
@@ -78,11 +78,11 @@ export const PayoutListInner = (props: PayoutListProps) => {
 
   // configure list when network is ready to fetch
   useEffect(() => {
-    if (isReady && metrics.activeEra.index !== 0 && !fetched) {
+    if (isReady && activeEra.index !== 0 && !fetched) {
       setPayouts(props.payouts);
       setFetched(true);
     }
-  }, [isReady, fetched, metrics.activeEra.index]);
+  }, [isReady, fetched, activeEra.index]);
 
   // render throttle
   useEffect(() => {
@@ -196,9 +196,14 @@ export const PayoutListInner = (props: PayoutListProps) => {
                       <div>
                         <div>
                           <h4 className={`${labelClass}`}>
-                            {p.event_id === 'Slashed' ? '-' : '+'}
-                            {planckBnToUnit(new BN(p.amount), units)}{' '}
-                            {network.unit}
+                            <>
+                              {p.event_id === 'Slashed' ? '-' : '+'}
+                              {planckToUnit(
+                                new BigNumber(p.amount),
+                                units
+                              ).toString()}{' '}
+                              {network.unit}
+                            </>
                           </h4>
                         </div>
                         <div>
@@ -282,5 +287,3 @@ export class PayoutListShouldUpdate extends React.Component {
     return <PayoutListInner {...this.props} />;
   }
 }
-
-export default PayoutList;

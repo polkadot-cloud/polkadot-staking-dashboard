@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
@@ -9,9 +9,9 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
 import { clipAddress, remToUnit } from 'Utils';
-import Identicon from '../Identicon';
+import { Identicon } from '../Identicon';
 import { AccountProps } from './types';
-import Wrapper from './Wrapper';
+import { Wrapper } from './Wrapper';
 
 export const Account = ({
   filled = false,
@@ -85,5 +85,3 @@ export const Account = ({
     </Wrapper>
   );
 };
-
-export default Account;

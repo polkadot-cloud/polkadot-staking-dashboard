@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faHashtag } from '@fortawesome/free-solid-svg-icons';
@@ -9,13 +9,13 @@ import * as viewGroupJson from 'img/json/groups-solid.json';
 import * as viewTrendingUpJson from 'img/json/trending-up-solid.json';
 import * as view1SolidJson from 'img/json/view-1-solid.json';
 import * as viewAgendaJson from 'img/json/view-agenda-solid.json';
-import Community from 'pages/Community';
-import Favorites from 'pages/Favorites';
-import Nominate from 'pages/Nominate';
-import Overview from 'pages/Overview';
-import Payouts from 'pages/Payouts';
-import Pools from 'pages/Pools';
-import Browse from 'pages/Validators';
+import { Community } from 'pages/Community';
+import { Favorites } from 'pages/Favorites';
+import { Nominate } from 'pages/Nominate';
+import { Overview } from 'pages/Overview';
+import { Payouts } from 'pages/Payouts';
+import { Pools } from 'pages/Pools';
+import { Validators } from 'pages/Validators';
 import { PageCategories, PagesConfig } from 'types';
 
 export const PAGE_CATEGORIES: PageCategories = [
@@ -71,7 +71,7 @@ export const PAGES_CONFIG: PagesConfig = [
     key: 'validators',
     uri: `${UriPrefix}/validators`,
     hash: '/validators',
-    Entry: Browse,
+    Entry: Validators,
     animate: viewAgendaJson,
   },
   {
@@ -91,5 +91,3 @@ export const PAGES_CONFIG: PagesConfig = [
     animate: favoriteHeartJson,
   },
 ];
-
-export default PAGES_CONFIG;

@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -28,5 +28,3 @@ export class Validator extends React.Component<any, any> {
     return <ValidatorInner {...this.props} />;
   }
 }
-
-export default Validator;

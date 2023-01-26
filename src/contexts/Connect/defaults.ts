@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { ConnectContextInterface } from 'contexts/Connect/types';
@@ -25,4 +25,11 @@ export const defaultConnectContext: ConnectContextInterface = {
   accounts: [],
   activeAccount: null,
   activeAccountMeta: null,
+};
+
+export const defaultHandleImportExtension = {
+  newAccounts: [],
+  meta: {
+    removedActiveAccount: null,
+  },
 };

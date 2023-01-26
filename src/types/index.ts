@@ -1,22 +1,11 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { PageProps } from 'pages/types';
 import React, { FunctionComponent, SVGProps } from 'react';
 
-export type Fn = () => void;
-
-export enum NetworkName {
-  Polkadot = 'polkadot',
-  Kusama = 'kusama',
-  Westend = 'westend',
-}
-
-export enum Toggle {
-  Open = 'open',
-  Closed = 'closed',
-}
+export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
 export interface Networks {
   [key: string]: Network;
@@ -102,6 +91,15 @@ export type MaybeAccount = string | null;
 
 export type MaybeString = string | null;
 
+// track the status of a syncing / fetching process.
+export type Sync = 'unsynced' | 'syncing' | 'synced';
+
+// track whether bonding should be for nominator or nomination pool.
+export type BondFor = 'pool' | 'nominator';
+
+// generic function with no args or return type.
+export type Fn = () => void;
+
 // any types to compress compiler warnings
 // eslint-disable-next-line
 export type AnyApi = any;
@@ -113,10 +111,3 @@ export type AnyFunction = any;
 export type AnyMetaBatch = any;
 // eslint-disable-next-line
 export type AnySubscan = any;
-
-// track the status of a syncing / fetching process.
-export enum Sync {
-  Unsynced,
-  Syncing,
-  Synced,
-}

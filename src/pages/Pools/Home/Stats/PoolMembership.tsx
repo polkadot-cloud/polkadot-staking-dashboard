@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -6,7 +6,7 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Text } from 'library/StatBoxList/Text';
 import { useTranslation } from 'react-i18next';
 
-const PoolMembership = () => {
+export const PoolMembershipStat = () => {
   const { membership } = usePoolMemberships();
   const { isOwner } = useActivePools();
   const { t } = useTranslation('pages');
@@ -24,5 +24,3 @@ const PoolMembership = () => {
   };
   return <Text {...params} />;
 };
-
-export default PoolMembership;

@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
@@ -7,7 +7,6 @@ import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useFilters } from 'contexts/Filters';
-import { FilterType } from 'contexts/Filters/types';
 import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { StakingContext } from 'contexts/Staking';
@@ -32,7 +31,7 @@ export const ValidatorListInner = (props: any) => {
   const { mode } = useTheme();
   const { isReady, network } = useApi();
   const { activeAccount } = useConnect();
-  const { metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { fetchValidatorMetaBatch } = useValidators();
   const provider = useList();
   const modal = useModal();
@@ -57,8 +56,8 @@ export const ValidatorListInner = (props: any) => {
     clearSearchTerm,
   } = useFilters();
   const { applyFilter, applyOrder, applySearch } = useValidatorFilters();
-  const includes = getFilters(FilterType.Include, 'validators');
-  const excludes = getFilters(FilterType.Exclude, 'validators');
+  const includes = getFilters('include', 'validators');
+  const excludes = getFilters('exclude', 'validators');
   const order = getOrder('validators');
   const searchTerm = getSearchTerm('validators');
 
@@ -71,7 +70,7 @@ export const ValidatorListInner = (props: any) => {
     title,
     format,
     selectable,
-    bondType,
+    bondFor,
   }: any = props;
 
   const actions = props.actions ?? [];
@@ -142,22 +141,24 @@ export const ValidatorListInner = (props: any) => {
     if (allowFilters) {
       if (defaultFilters?.includes?.length) {
         setMultiFilters(
-          FilterType.Include,
+          'include',
           'validators',
-          defaultFilters?.includes
+          defaultFilters?.includes,
+          false
         );
       }
       if (defaultFilters?.excludes?.length) {
         setMultiFilters(
-          FilterType.Exclude,
+          'exclude',
           'validators',
-          defaultFilters?.excludes
+          defaultFilters?.excludes,
+          false
         );
       }
 
       return () => {
-        resetFilters(FilterType.Exclude, 'validators');
-        resetFilters(FilterType.Include, 'validators');
+        resetFilters('exclude', 'validators');
+        resetFilters('include', 'validators');
         resetOrder('validators');
         clearSearchTerm('validators');
       };
@@ -166,10 +167,10 @@ export const ValidatorListInner = (props: any) => {
 
   // configure validator list when network is ready to fetch
   useEffect(() => {
-    if (isReady && metrics.activeEra.index !== 0 && !fetched) {
+    if (isReady && activeEra.index !== 0 && !fetched) {
       setupValidatorList();
     }
-  }, [isReady, metrics.activeEra.index, fetched]);
+  }, [isReady, activeEra.index, fetched]);
 
   // render throttle
   useEffect(() => {
@@ -192,7 +193,7 @@ export const ValidatorListInner = (props: any) => {
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate();
     }
-  }, [order, isSyncing, includes?.length, excludes?.length]);
+  }, [order, isSyncing, includes, excludes]);
 
   // handle modal resize on list format change
   useEffect(() => {
@@ -365,7 +366,7 @@ export const ValidatorListInner = (props: any) => {
                       batchKey={batchKey}
                       format={format}
                       showMenu={showMenu}
-                      bondType={bondType}
+                      bondFor={bondFor}
                       inModal={inModal}
                     />
                   </motion.div>
@@ -406,5 +407,3 @@ export class ValidatorListShouldUpdate extends React.Component<any, any> {
     return <ValidatorListInner {...this.props} />;
   }
 }
-
-export default ValidatorList;

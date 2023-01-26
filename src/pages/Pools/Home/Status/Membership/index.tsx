@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
@@ -10,13 +10,14 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Identicon } from 'library/Identicon';
-import OpenHelpIcon from 'library/OpenHelpIcon';
+import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
 import { useTranslation } from 'react-i18next';
 import { determinePoolDisplay } from 'Utils';
 import { Wrapper } from './Wrapper';
 
 export const Membership = ({ label }: { label: string }) => {
+  const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { openModalWith } = useModal();
@@ -25,7 +26,7 @@ export const Membership = ({ label }: { label: string }) => {
     useActivePools();
   const { getTransferOptions } = useTransferOptions();
   const { active } = getTransferOptions(activeAccount).pool;
-  const { t } = useTranslation('pages');
+  const poolState = selectedActivePool?.bondedPool?.state ?? null;
 
   let display = t('pools.notInPool');
   if (selectedActivePool) {
@@ -46,7 +47,7 @@ export const Membership = ({ label }: { label: string }) => {
   const buttons = [];
   let paddingRight = 0;
 
-  if (isOwner() || isStateToggler()) {
+  if (poolState !== 'Destroying' && (isOwner() || isStateToggler())) {
     paddingRight += 9;
     buttons.push(
       <ButtonPrimary
@@ -58,16 +59,14 @@ export const Membership = ({ label }: { label: string }) => {
     );
   }
 
-  if (isMember() && !isDepositor() && active?.gtn(0)) {
+  if (isMember() && !isDepositor() && active?.isGreaterThan(0)) {
     paddingRight += 8.5;
     buttons.push(
       <ButtonPrimary
         text={t('pools.leave')}
         iconLeft={faSignOutAlt}
         disabled={!isReady || isReadOnlyAccount(activeAccount)}
-        onClick={() =>
-          openModalWith('LeavePool', { bondType: 'pool' }, 'small')
-        }
+        onClick={() => openModalWith('LeavePool', { bondFor: 'pool' }, 'small')}
       />
     );
   }

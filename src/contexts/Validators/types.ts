@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { AnyMetaBatch } from 'types';
@@ -15,8 +15,8 @@ export interface ValidatorsContextInterface {
   avgCommission: number;
   meta: AnyMetaBatch;
   session: SessionValidators;
-  sessionParachain: string[];
-  favorites: string[];
+  sessionParachain: Array<string>;
+  favorites: Array<string>;
   nominated: Array<Validator> | null;
   poolNominated: Array<Validator> | null;
   favoritesList: Array<Validator> | null;

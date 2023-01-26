@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
@@ -27,7 +27,7 @@ export const MembersListInner = (props: any) => {
   const { mode } = useTheme();
   const provider = useList();
   const { isReady, network } = useApi();
-  const { metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { fetchPoolMembersMetaBatch } = usePoolMembers();
 
   // get list provider props
@@ -54,7 +54,7 @@ export const MembersListInner = (props: any) => {
   const [members, setMembers] = useState(props.members);
 
   // is this the initial fetch
-  const [fetched, setFetched] = useState<Sync>(Sync.Unsynced);
+  const [fetched, setFetched] = useState<Sync>('unsynced');
 
   // render throttle iteration
   const renderIterationRef = useRef(renderIteration);
@@ -74,16 +74,16 @@ export const MembersListInner = (props: any) => {
   // refetch list when list changes
   useEffect(() => {
     if (props.members !== membersDefault) {
-      setFetched(Sync.Unsynced);
+      setFetched('unsynced');
     }
   }, [props.members]);
 
   // configure list when network is ready to fetch
   useEffect(() => {
-    if (isReady && metrics.activeEra.index !== 0 && fetched === Sync.Unsynced) {
+    if (isReady && activeEra.index !== 0 && fetched === 'unsynced') {
       setupMembersList();
     }
-  }, [isReady, fetched, metrics.activeEra.index]);
+  }, [isReady, fetched, activeEra.index]);
 
   // render throttle
   useEffect(() => {
@@ -106,7 +106,7 @@ export const MembersListInner = (props: any) => {
     setMembersDefault(props.members);
     setMembers(props.members);
     fetchPoolMembersMetaBatch(batchKey, props.members, false);
-    setFetched(Sync.Synced);
+    setFetched('synced');
   };
 
   // get list items to render

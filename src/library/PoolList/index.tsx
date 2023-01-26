@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
@@ -6,13 +6,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
-import { FilterType } from 'contexts/Filters/types';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
+import { Tabs } from 'library/Filter/Tabs';
 import { usePoolFilters } from 'library/Hooks/usePoolFilters';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
@@ -23,7 +23,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { networkColors } from 'theme/default';
 import { PoolListProvider, usePoolList } from './context';
-import { Filters } from './Filters';
 import { PoolListProps } from './types';
 
 export const PoolListInner = ({
@@ -36,19 +35,19 @@ export const PoolListInner = ({
   title,
   defaultFilters,
 }: PoolListProps) => {
+  const { t } = useTranslation('library');
   const { mode } = useTheme();
   const { isReady, network } = useApi();
-  const { metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { fetchPoolsMetaBatch, poolSearchFilter, meta } = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
   const { isSyncing } = useUi();
-  const { t } = useTranslation('library');
 
   const { getFilters, setMultiFilters, getSearchTerm, setSearchTerm } =
     useFilters();
   const { applyFilter } = usePoolFilters();
-  const includes = getFilters(FilterType.Include, 'pools');
-  const excludes = getFilters(FilterType.Exclude, 'pools');
+  const includes = getFilters('include', 'pools');
+  const excludes = getFilters('exclude', 'pools');
   const searchTerm = getSearchTerm('pools');
 
   // current page
@@ -90,10 +89,10 @@ export const PoolListInner = ({
 
   // configure pool list when network is ready to fetch
   useEffect(() => {
-    if (isReady && metrics.activeEra.index !== 0 && !fetched) {
+    if (isReady && activeEra.index !== 0 && !fetched) {
       setupPoolList();
     }
-  }, [isReady, fetched, metrics.activeEra.index]);
+  }, [isReady, fetched, activeEra.index]);
 
   // handle pool list bootstrapping
   const setupPoolList = () => {
@@ -118,15 +117,20 @@ export const PoolListInner = ({
     if (!isSyncing && meta[batchKey]?.nominations) {
       handlePoolsFilterUpdate();
     }
-  }, [isSyncing, includes?.length, excludes?.length, meta]);
+  }, [isSyncing, includes, excludes, meta]);
+
+  // scroll to top of the window on every filter.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [includes, excludes]);
 
   // set default filters
   useEffect(() => {
     if (defaultFilters?.includes?.length) {
-      setMultiFilters(FilterType.Include, 'pools', defaultFilters?.includes);
+      setMultiFilters('include', 'pools', defaultFilters?.includes, false);
     }
     if (defaultFilters?.excludes?.length) {
-      setMultiFilters(FilterType.Exclude, 'pools', defaultFilters?.excludes);
+      setMultiFilters('exclude', 'pools', defaultFilters?.excludes, false);
     }
   }, []);
 
@@ -171,6 +175,24 @@ export const PoolListInner = ({
     setSearchTerm('pools', newValue);
   };
 
+  const filterTabsConfig = [
+    {
+      label: t('active'),
+      includes: ['active'],
+      excludes: ['locked', 'destroying'],
+    },
+    {
+      label: t('locked'),
+      includes: ['locked'],
+      excludes: [],
+    },
+    {
+      label: t('destroying'),
+      includes: ['destroying'],
+      excludes: [],
+    },
+  ];
+
   return (
     <ListWrapper>
       <Header>
@@ -207,7 +229,7 @@ export const PoolListInner = ({
             placeholder={t('search')}
           />
         )}
-        <Filters />
+        <Tabs config={filterTabsConfig} activeIndex={0} />
         {pagination && listPools.length > 0 && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
@@ -272,5 +294,3 @@ export class PoolListShouldUpdate extends React.Component<any, any> {
     return <PoolListInner {...this.props} />;
   }
 }
-
-export default PoolList;

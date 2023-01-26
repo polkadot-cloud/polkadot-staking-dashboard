@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { SideMenuStickyThreshold } from 'consts';
@@ -29,16 +29,12 @@ export const Wrapper = styled(motion.div)`
 export const Summary = styled.div`
   width: 100%;
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-start;
   align-items: center;
   align-content: center;
 
   /* hide connection status text on small screens */
   .hide-small {
     display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-start;
     align-items: center;
     align-content: center;
 
@@ -57,7 +53,6 @@ export const Summary = styled.div`
   .stat {
     margin: 0 0.25rem;
     display: flex;
-    flex-flow: row nowrap;
     align-items: center;
   }
 
@@ -116,10 +111,7 @@ export const NetworkInfo = styled(motion.div)`
 
   > .row {
     display: flex;
-    flex-flow: row nowrap;
     justify-content: flex-end;
-    align-content: flex-start;
-    align-items: flex-start;
 
     h2 {
       color: #eee;
@@ -171,5 +163,3 @@ export const Separator = styled.div`
   width: 1px;
   height: 1rem;
 `;
-
-export default Wrapper;

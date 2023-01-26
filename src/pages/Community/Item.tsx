@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -32,8 +32,7 @@ export const Item = (props: ItemProps) => {
     thumbnail,
     validators: entityAllValidators,
   } = item;
-  const validatorCount =
-    entityAllValidators[network.name.toLowerCase()]?.length ?? 0;
+  const validatorCount = entityAllValidators[network.name]?.length ?? 0;
 
   const { setActiveSection, setActiveItem, setScrollPos } =
     useCommunitySections();
@@ -172,5 +171,3 @@ export const Item = (props: ItemProps) => {
     </ItemWrapper>
   );
 };
-
-export default Item;

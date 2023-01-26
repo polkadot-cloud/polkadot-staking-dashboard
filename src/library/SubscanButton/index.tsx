@@ -1,11 +1,11 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
+import { usePlugins } from 'contexts/Plugins';
 import { useTheme } from 'contexts/Themes';
-import { useUi } from 'contexts/UI';
 import styled from 'styled-components';
 import { defaultThemes, networkColors } from 'theme/default';
 import { WrapperProps } from './types';
@@ -25,16 +25,16 @@ const Wrapper = styled.div<WrapperProps>`
 export const SubscanButton = () => {
   const { network } = useApi();
   const { mode } = useTheme();
-  const { services } = useUi();
+  const { plugins } = usePlugins();
 
   return (
     <Wrapper
       color={
-        services.includes('subscan')
+        plugins.includes('subscan')
           ? networkColors[`${network.name}-${mode}`]
           : defaultThemes.text.secondary[mode]
       }
-      opacity={services.includes('subscan') ? 1 : 0.5}
+      opacity={plugins.includes('subscan') ? 1 : 0.5}
     >
       <FontAwesomeIcon
         icon={faProjectDiagram}
@@ -45,5 +45,3 @@ export const SubscanButton = () => {
     </Wrapper>
   );
 };
-
-export default SubscanButton;

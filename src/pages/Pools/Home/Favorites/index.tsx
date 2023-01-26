@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
@@ -6,7 +6,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Graphs/Wrappers';
-import PoolList from 'library/PoolList';
+import { PoolList } from 'library/PoolList';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
@@ -67,5 +67,3 @@ export const Favorites = () => {
     </>
   );
 };
-
-export default Favorites;

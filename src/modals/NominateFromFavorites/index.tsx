@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
@@ -33,8 +33,8 @@ export const NominateFromFavorites = () => {
   const { t } = useTranslation('modals');
 
   const { maxNominations } = consts;
-  const { bondType, nominations } = config;
-  const signingAccount = bondType === 'pool' ? activeAccount : controller;
+  const { bondFor, nominations } = config;
+  const signingAccount = bondFor === 'pool' ? activeAccount : controller;
 
   // store filtered favorites
   const [availableFavorites, setAvailableFavorites] = useState<
@@ -98,14 +98,14 @@ export const NominateFromFavorites = () => {
     }
 
     const targetsToSubmit = nominationsToSubmit.map((item: any) =>
-      bondType === 'pool'
+      bondFor === 'pool'
         ? item
         : {
             Id: item,
           }
     );
 
-    if (bondType === 'pool') {
+    if (bondFor === 'pool') {
       tx = api.tx.nominationPools.nominate(
         selectedActivePool?.id,
         targetsToSubmit
@@ -134,7 +134,7 @@ export const NominateFromFavorites = () => {
           {!accountHasSigner(signingAccount) && (
             <Warning
               text={`${
-                bondType === 'stake'
+                bondFor === 'nominator'
                   ? t('youMust', { context: 'controller' })
                   : t('youMust', { context: 'account' })
               }`}
@@ -144,7 +144,7 @@ export const NominateFromFavorites = () => {
         <ListWrapper>
           {availableFavorites.length > 0 ? (
             <ValidatorList
-              bondType="stake"
+              bondFor="nominator"
               validators={availableFavorites}
               batchKey={batchKey}
               title={t('favoriteNotNominated')}
@@ -190,7 +190,7 @@ export const NominateFromFavorites = () => {
               disabled={
                 !valid ||
                 submitting ||
-                (bondType === 'pool' && !isNominator() && !isOwner()) ||
+                (bondFor === 'pool' && !isNominator() && !isOwner()) ||
                 !accountHasSigner(signingAccount) ||
                 !txFeesValid
               }
@@ -201,5 +201,3 @@ export const NominateFromFavorites = () => {
     </>
   );
 };
-
-export default NominateFromFavorites;

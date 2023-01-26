@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { HelpItems } from 'contexts/Help/types';
@@ -7,7 +7,6 @@ export const HELP_CONFIG: HelpItems = [
   {
     key: 'overview',
     definitions: [
-      'Dashboard Tips',
       'Total Nominators',
       'Active Nominators',
       'Your Balance',
@@ -89,8 +88,8 @@ export const HELP_CONFIG: HelpItems = [
     definitions: [
       'Nomination Pools',
       'Active Pools',
-      'Minimum Join Bond',
-      'Minimum Create Bond',
+      'Minimum To Join Pool',
+      'Minimum To Create Pool',
       'Pool Membership',
       'Bonded in Pool',
       'Pool Rewards',

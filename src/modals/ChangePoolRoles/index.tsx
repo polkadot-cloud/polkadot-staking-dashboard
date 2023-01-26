@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
@@ -15,7 +15,7 @@ import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
 import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import { RoleChange } from './RoleChange';
-import Wrapper from './Wrapper';
+import { Wrapper } from './Wrapper';
 
 export const ChangePoolRoles = () => {
   const { api } = useApi();
@@ -109,5 +109,3 @@ export const ChangePoolRoles = () => {
     </>
   );
 };
-
-export default ChangePoolRoles;

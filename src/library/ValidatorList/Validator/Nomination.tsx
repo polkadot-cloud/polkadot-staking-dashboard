@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useValidators } from 'contexts/Validators';
@@ -27,7 +27,7 @@ export const Nomination = (props: NominationProps) => {
     toggleFavorites,
     batchIndex,
     batchKey,
-    bondType,
+    bondFor,
     inModal,
   } = props;
 
@@ -59,7 +59,7 @@ export const Nomination = (props: NominationProps) => {
         <div className="row status">
           <NominationStatus
             address={address}
-            bondType={bondType}
+            bondFor={bondFor}
             nominator={nominator}
           />
           <Labels>
@@ -84,5 +84,3 @@ export const Nomination = (props: NominationProps) => {
     </Wrapper>
   );
 };
-
-export default Nomination;

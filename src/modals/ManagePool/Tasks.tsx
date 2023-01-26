@@ -1,10 +1,9 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { PoolState } from 'contexts/Pools/types';
 import { Warning } from 'library/Form/Warning';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,9 +14,8 @@ export const Tasks = forwardRef((props: any, ref: any) => {
   const { t } = useTranslation('modals');
 
   const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
-  const poolLocked = selectedActivePool?.bondedPool?.state === PoolState.Block;
-  const poolDestroying =
-    selectedActivePool?.bondedPool?.state === PoolState.Destroy;
+  const poolLocked = selectedActivePool?.bondedPool?.state === 'Blocked';
+  const poolDestroying = selectedActivePool?.bondedPool?.state === 'Destroying';
 
   return (
     <ContentWrapper>
@@ -105,5 +103,3 @@ export const Tasks = forwardRef((props: any, ref: any) => {
     </ContentWrapper>
   );
 });
-
-export default Tasks;

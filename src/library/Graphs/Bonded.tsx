@@ -1,13 +1,13 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BigNumber from 'bignumber.js';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { Doughnut } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import { defaultThemes, networkColors } from 'theme/default';
-import { humanNumber } from 'Utils';
 import { BondedProps } from './types';
 import { GraphWrapper } from './Wrappers';
 
@@ -26,14 +26,14 @@ export const Bonded = ({
 
   // graph data
   let graphActive = active;
-  let graphUnlocking = unlocking + unlocked;
+  let graphUnlocking = unlocking.plus(unlocked);
   let graphAvailable = free;
 
   let zeroBalance = false;
   if (inactive) {
-    graphActive = -1;
-    graphUnlocking = -1;
-    graphAvailable = -1;
+    graphActive = new BigNumber(-1);
+    graphUnlocking = new BigNumber(-1);
+    graphAvailable = new BigNumber(-1);
     zeroBalance = true;
   }
 
@@ -72,7 +72,9 @@ export const Bonded = ({
               return t('graphInactive');
             }
             return `${
-              context.parsed === -1 ? 0 : humanNumber(context.parsed)
+              context.parsed === -1
+                ? 0
+                : new BigNumber(context.parsed).toFormat()
             } ${network.unit}`;
           },
         },
@@ -123,5 +125,3 @@ export const Bonded = ({
     </GraphWrapper>
   );
 };
-
-export default Bonded;

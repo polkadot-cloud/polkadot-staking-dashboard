@@ -1,25 +1,26 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
-import { useUi } from 'contexts/UI';
-import { defaultStakeSetup } from 'contexts/UI/defaults';
-import { SetupType } from 'contexts/UI/types';
+import { useSetup } from 'contexts/Setup';
+import { defaultStakeSetup } from 'contexts/Setup/defaults';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { Element } from 'react-scroll';
+import { extractUrlValue, removeVarFromUrlHash } from 'Utils';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
-import { SetController } from './SetController';
 import { Summary } from './Summary';
 
 export const Setup = () => {
-  const { setOnNominatorSetup, setActiveAccountSetup } = useUi();
   const { t } = useTranslation('pages');
+  const navigate = useNavigate();
+  const { setOnNominatorSetup, setActiveAccountSetup } = useSetup();
 
   return (
     <>
@@ -32,16 +33,25 @@ export const Setup = () => {
               text={t('nominate.back')}
               iconLeft={faChevronLeft}
               iconTransform="shrink-3"
-              onClick={() => setOnNominatorSetup(0)}
+              onClick={() => {
+                if (extractUrlValue('f') === 'overview') {
+                  navigate('/overview');
+                } else {
+                  removeVarFromUrlHash('f');
+                  setOnNominatorSetup(false);
+                }
+              }}
             />
           </span>
           <span>
             <ButtonSecondary
               lg
               text={t('nominate.cancel')}
+              iconLeft={faTimes}
               onClick={() => {
-                setOnNominatorSetup(0);
-                setActiveAccountSetup(SetupType.Stake, defaultStakeSetup);
+                removeVarFromUrlHash('f');
+                setOnNominatorSetup(false);
+                setActiveAccountSetup('stake', defaultStakeSetup);
               }}
             />
           </span>
@@ -50,14 +60,8 @@ export const Setup = () => {
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
-          <Element name="controller" style={{ position: 'absolute' }} />
-          <SetController section={1} />
-        </CardWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <CardWrapper>
           <Element name="payee" style={{ position: 'absolute' }} />
-          <Payee section={2} />
+          <Payee section={1} />
         </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
@@ -65,25 +69,23 @@ export const Setup = () => {
           <Element name="nominate" style={{ position: 'absolute' }} />
           <Nominate
             batchKey="generate_nominations_inactive"
-            setupType={SetupType.Stake}
-            section={3}
+            setupType="stake"
+            section={2}
           />
         </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           <Element name="bond" style={{ position: 'absolute' }} />
-          <Bond section={4} />
+          <Bond section={3} />
         </CardWrapper>
       </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           <Element name="summary" style={{ position: 'absolute' }} />
-          <Summary section={5} />
+          <Summary section={4} />
         </CardWrapper>
       </PageRowWrapper>
     </>
   );
 };
-
-export default Setup;

@@ -1,14 +1,15 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, toFixedIfNecessary } from 'Utils';
+import { planckToUnit } from 'Utils';
 
-export const SupplyStakedStatBox = () => {
+export const SupplyStakedStat = () => {
   const { t } = useTranslation('pages');
   const { units, unit } = useApi().network;
   const { metrics } = useNetworkMetrics();
@@ -17,29 +18,31 @@ export const SupplyStakedStatBox = () => {
   const { lastTotalStake } = staking;
   const { totalIssuance } = metrics;
 
-  // total supply as percent
-  const totalIssuanceBase = planckBnToUnit(totalIssuance, units);
-  const lastTotalStakeBase = planckBnToUnit(lastTotalStake, units);
-  const supplyAsPercent =
-    lastTotalStakeBase === 0
-      ? 0
-      : lastTotalStakeBase / (totalIssuanceBase * 0.01);
+  // total supply as percent.
+  const totalIssuanceUnit = planckToUnit(totalIssuance, units);
+  const lastTotalStakeUnit = planckToUnit(lastTotalStake, units);
+  const supplyAsPercent = lastTotalStakeUnit.isEqualTo(new BigNumber(0))
+    ? new BigNumber(0)
+    : lastTotalStakeUnit.dividedBy(
+        totalIssuanceUnit.multipliedBy(new BigNumber(0.01))
+      );
 
   const params = {
     label: t('overview.unitSupplyStaked', { unit }),
     stat: {
-      value: toFixedIfNecessary(supplyAsPercent, 2),
+      value: `${supplyAsPercent.decimalPlaces(2).toFormat()}`,
       unit: '%',
     },
     graph: {
-      value1: supplyAsPercent,
-      value2: 100 - supplyAsPercent,
+      value1: supplyAsPercent.decimalPlaces(2).toNumber(),
+      value2: new BigNumber(100)
+        .minus(supplyAsPercent)
+        .decimalPlaces(2)
+        .toNumber(),
     },
-    tooltip: `${toFixedIfNecessary(supplyAsPercent, 2)}%`,
+    tooltip: `${supplyAsPercent.decimalPlaces(2).toFormat()}%`,
     helpKey: 'Supply Staked',
   };
 
   return <Pie {...params} />;
 };
-
-export default SupplyStakedStatBox;

@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
@@ -6,12 +6,11 @@ import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { PoolState } from 'contexts/Pools/types';
 import { useUi } from 'contexts/UI';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import Nominations from 'pages/Nominate/Active/Nominations';
+import { Nominations } from 'pages/Nominate/Active/Nominations';
 import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 
@@ -39,8 +38,8 @@ export const ManagePool = () => {
     <PageRowWrapper className="page-padding" noVerticalSpacer>
       <CardWrapper>
         {isSyncing ? (
-          <Nominations bondType="pool" nominator={activeAccount} />
-        ) : canNominate && !isNominating && state !== PoolState.Destroy ? (
+          <Nominations bondFor="pool" nominator={activeAccount} />
+        ) : canNominate && !isNominating && state !== 'Destroying' ? (
           <>
             <CardHeaderWrapper withAction>
               <h3>
@@ -69,11 +68,9 @@ export const ManagePool = () => {
             />
           </>
         ) : (
-          <Nominations bondType="pool" nominator={nominator} />
+          <Nominations bondFor="pool" nominator={nominator} />
         )}
       </CardWrapper>
     </PageRowWrapper>
   );
 };
-
-export default ManagePool;

@@ -1,9 +1,9 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useNotifications } from 'contexts/Notifications';
 import { AnimatePresence, motion } from 'framer-motion';
-import Wrapper from './Wrapper';
+import { Wrapper } from './Wrapper';
 
 export const Notifications = () => {
   const { notifications, removeNotification } = useNotifications();
@@ -40,5 +40,3 @@ export const Notifications = () => {
     </Wrapper>
   );
 };
-
-export default Notifications;

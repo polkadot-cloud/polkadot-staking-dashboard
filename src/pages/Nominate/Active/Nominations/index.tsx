@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
@@ -7,12 +7,11 @@ import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { PoolState } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import useUnstaking from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
@@ -20,10 +19,10 @@ import { MaybeAccount } from 'types';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({
-  bondType,
+  bondFor,
   nominator,
 }: {
-  bondType: 'pool' | 'stake';
+  bondFor: 'pool' | 'nominator';
   nominator: MaybeAccount;
 }) => {
   const { openModalWith } = useModal();
@@ -46,7 +45,7 @@ export const Nominations = ({
     selectedActivePool,
   } = useActivePools();
 
-  const isPool = bondType === 'pool';
+  const isPool = bondFor === 'pool';
   const nominations = isPool
     ? poolNominations.targets
     : getAccountNominations(nominator);
@@ -66,7 +65,7 @@ export const Nominations = ({
       {
         nominations: _nominations,
         provider,
-        bondType,
+        bondFor,
       },
       'small'
     );
@@ -79,7 +78,7 @@ export const Nominations = ({
       'NominateFromFavorites',
       {
         nominations,
-        bondType,
+        bondFor,
       },
       'xl'
     );
@@ -88,7 +87,7 @@ export const Nominations = ({
   // determine whether buttons are disabled
   const poolDestroying =
     isPool &&
-    selectedActivePool?.bondedPool?.state === PoolState.Destroy &&
+    selectedActivePool?.bondedPool?.state === 'Destroying' &&
     !nominating;
 
   const stopBtnDisabled =
@@ -121,7 +120,7 @@ export const Nominations = ({
                   'ChangeNominations',
                   {
                     nominations: [],
-                    bondType,
+                    bondFor,
                   },
                   'small'
                 )
@@ -147,7 +146,7 @@ export const Nominations = ({
           {nominated.length > 0 ? (
             <div style={{ marginTop: '1rem' }}>
               <ValidatorList
-                bondType={isPool ? 'pool' : 'stake'}
+                bondFor={isPool ? 'pool' : 'nominator'}
                 validators={nominated}
                 nominator={nominator}
                 batchKey={batchKey}
@@ -193,5 +192,3 @@ export const Nominations = ({
     </Wrapper>
   );
 };
-
-export default Nominations;

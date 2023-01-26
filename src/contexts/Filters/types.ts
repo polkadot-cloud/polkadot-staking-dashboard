@@ -1,17 +1,19 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { AnyFunction, AnyJson } from 'types';
 
-export enum FilterType {
-  Exclude,
-  Include,
-}
+export type FilterType = 'exclude' | 'include';
 
 export interface FiltersContextInterface {
   getFilters: (t: FilterType, g: string) => Array<string> | null;
   toggleFilter: (t: FilterType, g: string, f: string) => void;
-  setMultiFilters: (t: FilterType, g: string, fs: Array<string>) => void;
+  setMultiFilters: (
+    t: FilterType,
+    g: string,
+    fs: Array<string>,
+    r: boolean
+  ) => void;
   getOrder: (g: string) => string;
   setOrder: (g: string, o: string) => void;
   getSearchTerm: (g: string) => string | null;

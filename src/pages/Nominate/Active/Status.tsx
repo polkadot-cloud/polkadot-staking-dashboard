@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -10,7 +10,6 @@ import {
   faSignOutAlt,
   faWallet,
 } from '@fortawesome/free-solid-svg-icons';
-import { BN } from 'bn.js';
 import { PayeeStatus } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -18,14 +17,15 @@ import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
 import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
+import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
-import useUnstaking from 'library/Hooks/useUnstaking';
-import Stat from 'library/Stat';
+import { useNominationStatus } from 'library/Hooks/useNominationStatus';
+import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, registerSaEvent, rmCommas } from 'Utils';
+import { registerSaEvent } from 'Utils';
 import { Separator } from 'Wrappers';
 import { Controller } from './Controller';
 
@@ -34,20 +34,18 @@ export const Status = ({ height }: { height: number }) => {
   const { isSyncing } = useUi();
   const { openModalWith } = useModal();
   const { isReady, network } = useApi();
-  const { meta, validators } = useValidators();
-  const { getAccountNominations, getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBalances();
   const { metrics } = useNetworkMetrics();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { setOnNominatorSetup, getStakeSetupProgressPercent }: any = useUi();
-  const { getNominationsStatus, staking, inSetup, eraStakers } = useStaking();
+  const { setOnNominatorSetup, getStakeSetupProgressPercent }: any = useSetup();
+  const { getNominationsStatus, staking, inSetup } = useStaking();
   const { checking, isExposed } = useFastUnstake();
   const { getFastUnstakeText, isUnstaking, isFastUnstaking } = useUnstaking();
   const controller = getBondedAccount(activeAccount);
-
+  const { getNominationStatus } = useNominationStatus();
   const { fastUnstakeErasToCheckPerBlock } = metrics;
-  const { stakers } = eraStakers;
   const { payee } = staking;
-  const nominations = getAccountNominations(activeAccount);
+
   // get nomination status
   const nominationStatuses = getNominationsStatus();
 
@@ -56,61 +54,7 @@ export const Status = ({ height }: { height: number }) => {
     .map(([k, v]: any) => (v === 'active' ? k : false))
     .filter((v) => v !== false);
 
-  // check if rewards are being earned
-  const stake = meta.validators_browse?.stake ?? [];
-  const stakeSynced = stake.length > 0 ?? false;
-
-  let earningRewards = false;
-  if (stakeSynced) {
-    for (const nominee of activeNominees) {
-      const validator = validators.find((v: any) => v.address === nominee);
-      if (validator) {
-        const batchIndex = validators.indexOf(validator);
-        const nomineeMeta = stake[batchIndex];
-        const { lowestReward } = nomineeMeta;
-
-        const validatorInEra =
-          stakers.find((s: any) => s.address === nominee) || null;
-
-        if (validatorInEra) {
-          const { others } = validatorInEra;
-          const stakedValue =
-            others?.find((o: any) => o.who === activeAccount)?.value ?? false;
-          if (stakedValue) {
-            const stakedValueBase = planckBnToUnit(
-              new BN(rmCommas(stakedValue)),
-              network.units
-            );
-            if (stakedValueBase >= lowestReward) {
-              earningRewards = true;
-              break;
-            }
-          }
-        }
-      }
-    }
-  }
-
   const payeeStatus = PayeeStatus.find((item) => item === payee);
-
-  const getNominationStatus = () => {
-    if (inSetup() || isSyncing) {
-      return t('nominate.notNominating', { ns: 'pages' });
-    }
-    if (!nominations.length) {
-      return t('nominate.noNominationsSet', { ns: 'pages' });
-    }
-    if (activeNominees.length) {
-      let str = t('nominate.nominatingAnd', { ns: 'pages' });
-      if (earningRewards) {
-        str += ` ${t('nominate.earningRewards', { ns: 'pages' })}`;
-      } else {
-        str += ` ${t('nominate.notEarningRewards', { ns: 'pages' })}`;
-      }
-      return str;
-    }
-    return t('nominate.waitingForActiveNominations', { ns: 'pages' });
-  };
 
   const getPayeeStatus = () => {
     if (inSetup()) {
@@ -159,7 +103,7 @@ export const Status = ({ height }: { height: number }) => {
       <Stat
         label={t('nominate.status', { ns: 'pages' })}
         helpKey="Nomination Status"
-        stat={getNominationStatus()}
+        stat={getNominationStatus(activeAccount, 'nominator').message}
         buttons={
           !inSetup()
             ? !isUnstaking && !isReadOnlyAccount(controller)
@@ -179,7 +123,7 @@ export const Status = ({ height }: { height: number }) => {
                     registerSaEvent(
                       `${network.name.toLowerCase()}_nominate_setup_button_pressed`
                     );
-                    setOnNominatorSetup(1);
+                    setOnNominatorSetup(true);
                   },
                 },
               ]
@@ -222,5 +166,3 @@ export const Status = ({ height }: { height: number }) => {
     </CardWrapper>
   );
 };
-
-export default Status;

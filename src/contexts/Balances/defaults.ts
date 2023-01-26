@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import {
   Balance,
   BalanceLedger,
@@ -10,18 +10,18 @@ import {
 } from 'contexts/Balances/types';
 
 export const balance: Balance = {
-  free: new BN(0),
-  reserved: new BN(0),
-  miscFrozen: new BN(0),
-  feeFrozen: new BN(0),
-  freeAfterReserve: new BN(0),
+  free: new BigNumber(0),
+  reserved: new BigNumber(0),
+  miscFrozen: new BigNumber(0),
+  feeFrozen: new BigNumber(0),
+  freeAfterReserve: new BigNumber(0),
 };
 
 export const ledger: BalanceLedger = {
   address: null,
   stash: null,
-  active: new BN(0),
-  total: new BN(0),
+  active: new BigNumber(0),
+  total: new BigNumber(0),
   unlocking: [],
 };
 
@@ -48,6 +48,6 @@ export const defaultBalancesContext: BalancesContextInterface = {
   // eslint-disable-next-line
   isController: (address) => false,
   accounts: [],
-  existentialAmount: new BN(0),
+  existentialAmount: new BigNumber(0),
   ledgers: [],
 };

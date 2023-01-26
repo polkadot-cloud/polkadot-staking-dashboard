@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -6,7 +6,7 @@ import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
-import ValidatorList from 'library/ValidatorList';
+import { ValidatorList } from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
@@ -22,7 +22,7 @@ export const Entity = () => {
   const { t } = useTranslation('pages');
 
   const { name, validators: entityAllValidators } = activeItem;
-  const validators = entityAllValidators[network.name.toLowerCase()] ?? [];
+  const validators = entityAllValidators[network.name] ?? [];
 
   // include validators that exist in `erasStakers`
   const [activeValidators, setActiveValidators] = useState(
@@ -86,7 +86,7 @@ export const Entity = () => {
             )}
             {activeValidators.length > 0 && (
               <ValidatorList
-                bondType="stake"
+                bondFor="nominator"
                 validators={activeValidators}
                 batchKey={batchKey}
                 title={`${name} ${t('community.validators')}`}
@@ -104,5 +104,3 @@ export const Entity = () => {
     </PageRowWrapper>
   );
 };
-
-export default Entity;

@@ -1,12 +1,12 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import { Extension } from 'contexts/Extensions/types';
+import { ExtensionInjected } from 'contexts/Extensions/types';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useNotifications } from 'contexts/Notifications';
 import { useTxFees } from 'contexts/TxFees';
@@ -50,7 +50,7 @@ export const useSubmitExtrinsic = ({
     }
     // get payment info
     const { partialFee } = await tx.paymentInfo(submitAddress);
-    const partialFeeBn = new BN(partialFee.toString());
+    const partialFeeBn = new BigNumber(partialFee.toString());
 
     // give tx fees to global useTxFees context
     if (partialFeeBn.toString() !== txFees.toString()) {
@@ -73,7 +73,9 @@ export const useSubmitExtrinsic = ({
 
     const { signer, source } = account;
 
-    const extension = extensions.find((e: Extension) => e.id === source);
+    const extension = extensions.find(
+      (e: ExtensionInjected) => e.id === source
+    );
     if (extension === undefined) {
       throw new Error(t('walletNotFound') || '');
     } else {

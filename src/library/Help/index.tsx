@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faReplyAll, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { HELP_CONFIG } from 'config/help';
 import { useHelp } from 'contexts/Help';
@@ -13,12 +13,12 @@ import {
   HelpItem,
 } from 'contexts/Help/types';
 import { useAnimation } from 'framer-motion';
-import useFillVariables from 'library/Hooks/useFillVariables';
+import { useFillVariables } from 'library/Hooks/useFillVariables';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { camelize } from 'Utils';
-import Definition from './Items/Definition';
-import External from './Items/External';
+import { Definition } from './Items/Definition';
+import { External } from './Items/External';
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
 
 export const Help = () => {
@@ -159,7 +159,7 @@ export const Help = () => {
                 <ButtonInvertRounded
                   lg
                   text={t('modal.allResources')}
-                  iconLeft={faReplyAll}
+                  iconLeft={faChevronLeft}
                   onClick={() => setDefinition(null)}
                 />
               )}

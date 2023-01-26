@@ -1,6 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BigNumber from 'bignumber.js';
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -25,9 +26,12 @@ import {
   networkColorsSecondary,
 } from 'theme/default';
 import { AnySubscan } from 'types';
-import { humanNumber } from 'Utils';
 import { PayoutLineProps } from './types';
-import { combineRewardsByDay, formatRewardsForGraphs } from './Utils';
+import {
+  calculatePayoutAverages,
+  combineRewardsByDay,
+  formatRewardsForGraphs,
+} from './Utils';
 
 ChartJS.register(
   CategoryScale,
@@ -45,13 +49,13 @@ export const PayoutLine = ({
   height,
   background,
 }: PayoutLineProps) => {
+  const { t } = useTranslation('library');
   const { mode } = useTheme();
   const { name, unit, units } = useApi().network;
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership: poolMembership } = usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
-  const { t } = useTranslation('library');
 
   const notStaking = !isSyncing && inSetup() && !poolMembership;
   const poolingOnly = !isSyncing && inSetup() && poolMembership !== null;
@@ -63,14 +67,15 @@ export const PayoutLine = ({
 
   const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
     days,
-    average,
     units,
     payoutsNoSlash,
     poolClaims
   );
 
-  // combine payouts and pool claims into one dataset
-  const combinedPayouts = combineRewardsByDay(payoutsByDay, poolClaimsByDay);
+  // combine payouts and pool claims into one dataset and calculate averages.
+  const combined = combineRewardsByDay(payoutsByDay, poolClaimsByDay);
+
+  const combinedPayouts = calculatePayoutAverages(combined, 10, days);
 
   // determine color for payouts
   const color = notStaking
@@ -121,7 +126,8 @@ export const PayoutLine = ({
         },
         callbacks: {
           title: () => [],
-          label: (context: any) => ` ${humanNumber(context.parsed.y)} ${unit}`,
+          label: (context: any) =>
+            ` ${new BigNumber(context.parsed.y).toFormat()} ${unit}`,
         },
         intersect: false,
         interaction: {
@@ -132,7 +138,7 @@ export const PayoutLine = ({
   };
 
   const data = {
-    labels: payoutsByDay.map(() => ''),
+    labels: combinedPayouts.map(() => ''),
     datasets: [
       {
         label: t('payout'),
@@ -148,7 +154,7 @@ export const PayoutLine = ({
 
   return (
     <>
-      <h5 className="secondary">
+      <h5 className="secondary" style={{ paddingLeft: '1.5rem' }}>
         {average > 1 ? `${average} ${t('dayAverage')}` : null}
       </h5>
       <div
@@ -163,5 +169,3 @@ export const PayoutLine = ({
     </>
   );
 };
-
-export default PayoutLine;

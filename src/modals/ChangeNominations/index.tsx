@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
@@ -33,10 +33,10 @@ export const ChangeNominations = () => {
   const { txFeesValid } = useTxFees();
   const { t } = useTranslation('modals');
 
-  const { nominations: newNominations, provider, bondType } = config;
+  const { nominations: newNominations, provider, bondFor } = config;
 
-  const isPool = bondType === 'pool';
-  const isStaking = bondType === 'stake';
+  const isPool = bondFor === 'pool';
+  const isStaking = bondFor === 'nominator';
   const controller = getBondedAccount(activeAccount);
   const signingAccount = isPool ? activeAccount : controller;
 
@@ -133,7 +133,7 @@ export const ChangeNominations = () => {
           {!accountHasSigner(signingAccount) && (
             <Warning
               text={`${
-                bondType === 'stake'
+                bondFor === 'nominator'
                   ? t('youMust', { context: 'controller' })
                   : t('youMust', { context: 'account' })
               }`}
@@ -171,5 +171,3 @@ export const ChangeNominations = () => {
     </>
   );
 };
-
-export default ChangeNominations;
