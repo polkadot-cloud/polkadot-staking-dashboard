@@ -13,9 +13,7 @@ export interface BlockedProps {
 }
 
 export interface CopyAddressProps {
-  validator: {
-    address: string;
-  };
+  address: string;
 }
 
 export interface FavoriteProps {

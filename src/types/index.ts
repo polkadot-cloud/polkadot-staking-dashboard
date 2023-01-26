@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import type { WellKnownChain } from '@polkadot/rpc-provider/substrate-connect';
 import { PageProps } from 'pages/types';
 import React, { FunctionComponent, SVGProps } from 'react';
 
@@ -27,7 +26,7 @@ export interface Network {
   name: string;
   endpoints: {
     rpc: string;
-    lightClient: WellKnownChain;
+    lightClient: AnyApi;
   };
   colors: {
     primary: {
@@ -35,6 +34,10 @@ export interface Network {
       dark: string;
     };
     secondary: {
+      light: string;
+      dark: string;
+    };
+    stroke: {
       light: string;
       dark: string;
     };
@@ -104,6 +107,8 @@ export type MaybeString = string | null;
 export type AnyApi = any;
 // eslint-disable-next-line
 export type AnyJson = any;
+// eslint-disable-next-line
+export type AnyFunction = any;
 // eslint-disable-next-line
 export type AnyMetaBatch = any;
 // eslint-disable-next-line

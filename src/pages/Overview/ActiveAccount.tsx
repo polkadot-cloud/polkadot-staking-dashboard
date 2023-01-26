@@ -8,19 +8,21 @@ import { useConnect } from 'contexts/Connect';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
 import { Identicon } from 'library/Identicon';
-import { clipAddress, convertRemToPixels } from 'Utils';
+import { useTranslation } from 'react-i18next';
+import { clipAddress, remToUnit } from 'Utils';
 import { ActiveAccounWrapper } from './Wrappers';
 
 export const ActiveAccount = () => {
   const { addNotification } = useNotifications();
   const { activeAccount, getAccount } = useConnect();
   const accountData = getAccount(activeAccount);
+  const { t } = useTranslation('pages');
 
   // click to copy notification
   let notification: NotificationText | null = null;
   if (accountData !== null) {
     notification = {
-      title: 'Address Copied to Clipboard',
+      title: t('overview.addressCopied'),
       subtitle: accountData.address,
     };
   }
@@ -35,7 +37,7 @@ export const ActiveAccount = () => {
                 <div className="icon">
                   <Identicon
                     value={accountData.address}
-                    size={convertRemToPixels('1.7rem')}
+                    size={remToUnit('1.7rem')}
                   />
                 </div>
                 {clipAddress(accountData.address)}
@@ -65,7 +67,7 @@ export const ActiveAccount = () => {
               </>
             )}
 
-            {!accountData && 'No Account Connected'}
+            {!accountData && t('overview.noAccountConnected')}
           </h3>
         </div>
       </div>

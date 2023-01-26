@@ -13,6 +13,7 @@ import { useUi } from 'contexts/UI';
 import BondedGraph from 'library/Graphs/Bonded';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { useTranslation } from 'react-i18next';
 import { humanNumber, planckBnToUnit } from 'Utils';
 import { ButtonRowWrapper } from 'Wrappers';
 
@@ -24,6 +25,7 @@ export const ManageBond = () => {
   const { poolsSyncing } = useUi();
   const { isBonding, isMember, selectedActivePool } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
+  const { t } = useTranslation('pages');
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { freeBalance } = allTransferOptions;
@@ -36,7 +38,7 @@ export const ManageBond = () => {
     <>
       <CardHeaderWrapper>
         <h4>
-          Bonded Funds
+          {t('pools.bondedFunds')}
           <OpenHelpIcon helpKey="Bonded in Pool" />
         </h4>
         <h2>
@@ -51,13 +53,7 @@ export const ManageBond = () => {
               state === PoolState.Destroy
             }
             marginRight
-            onClick={() =>
-              openModalWith(
-                'UpdateBond',
-                { fn: 'add', bondType: 'pool' },
-                'small'
-              )
-            }
+            onClick={() => openModalWith('Bond', { bondType: 'pool' }, 'small')}
             text="+"
           />
           <ButtonPrimary
@@ -69,11 +65,7 @@ export const ManageBond = () => {
             }
             marginRight
             onClick={() =>
-              openModalWith(
-                'UpdateBond',
-                { fn: 'remove', bondType: 'pool' },
-                'small'
-              )
+              openModalWith('Unbond', { bondType: 'pool' }, 'small')
             }
             text="-"
           />

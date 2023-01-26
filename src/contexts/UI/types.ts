@@ -1,11 +1,27 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { MaybeAccount } from 'types';
+import { MaybeAccount, MaybeString } from 'types';
 
 export enum SetupType {
   Pool = 'pool',
   Stake = 'stake',
+}
+
+export interface StakeSetupProgress {
+  controller: MaybeAccount;
+  payee: MaybeAccount;
+  nominations: Array<any>;
+  bond: MaybeString;
+  section: number;
+}
+
+export interface PoolCreateProgress {
+  metadata: string;
+  bond: string;
+  nominations: Array<any>;
+  roles: any;
+  section: number;
 }
 
 export interface UIContextInterface {

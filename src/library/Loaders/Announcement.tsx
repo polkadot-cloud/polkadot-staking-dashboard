@@ -18,7 +18,7 @@ export const Announcement = () => {
         opacity={0.2}
         style={{ marginTop: '0.75rem', marginBottom: '0.75rem' }}
       >
-        <rect x="0" y="0" rx="0.5rem" ry="0.5rem" width="100%" height="100%" />
+        <rect x="0" y="0" rx="0.5em" ry="0.5em" width="100%" height="100%" />
       </ContentLoader>
       <ContentLoader
         height={90}
@@ -27,7 +27,7 @@ export const Announcement = () => {
         foregroundColor={defaultThemes.loader.foreground[mode]}
         opacity={0.2}
       >
-        <rect x="0" y="0" rx="0.5rem" ry="0.5rem" width="100%" height="100%" />
+        <rect x="0" y="0" rx="0.5em" ry="0.5em" width="100%" height="100%" />
       </ContentLoader>
     </>
   );

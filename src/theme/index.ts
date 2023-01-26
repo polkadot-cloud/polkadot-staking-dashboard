@@ -7,6 +7,7 @@ import {
   defaultThemes,
   networkColors,
   networkColorsSecondary,
+  networkColorsStroke,
   networkColorsTransparent,
 } from './default';
 
@@ -82,6 +83,11 @@ export const backgroundIdenticon: theme.ThemeSet = theme(
 export const backgroundOverlay: theme.ThemeSet = theme(
   v,
   defaultThemes.background.overlay
+);
+
+export const backgroundWarning: theme.ThemeSet = theme(
+  v,
+  defaultThemes.background.warning
 );
 
 // highlights
@@ -161,6 +167,11 @@ export const borderSecondary: theme.ThemeSet = theme(
   defaultThemes.border.secondary
 );
 
+export const borderWarning: theme.ThemeSet = theme(
+  v,
+  defaultThemes.border.warning
+);
+
 // modal
 
 export const modalOverlayBackground: theme.ThemeSet = theme(
@@ -171,6 +182,13 @@ export const modalOverlayBackground: theme.ThemeSet = theme(
 export const modalBackground: theme.ThemeSet = theme(
   v,
   defaultThemes.modal.background
+);
+
+// overlay
+
+export const overlayBackground: theme.ThemeSet = theme(
+  v,
+  defaultThemes.overlay.background
 );
 
 // help
@@ -244,6 +262,8 @@ export const networkColorSecondary: theme.ThemeSet = theme(
   n,
   networkColorsSecondary
 );
+
+export const networkColorStroke: theme.ThemeSet = theme(n, networkColorsStroke);
 
 export const networkColorTransparent: theme.ThemeSet = theme(
   n,

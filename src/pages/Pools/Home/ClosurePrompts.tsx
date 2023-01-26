@@ -13,9 +13,11 @@ import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Graphs/Wrappers';
+import { useTranslation } from 'react-i18next';
 import { ButtonRowWrapper, PageRowWrapper } from 'Wrappers';
 
 export const ClosurePrompts = () => {
+  const { t } = useTranslation('pages');
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { mode } = useTheme();
@@ -55,21 +57,21 @@ export const ClosurePrompts = () => {
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
             <div className="content">
-              <h3>Destroy Pool</h3>
+              <h3>{t('pools.destroyPool')}</h3>
               <h4>
-                All members have now left the pool.{' '}
+                {t('pools.leftThePool')}.{' '}
                 {targets.length > 0
-                  ? 'To continue with pool closure, stop nominating.'
+                  ? t('pools.stopNominating')
                   : depositorCanWithdraw
-                  ? 'You can now withdraw and close the pool.'
+                  ? t('pools.closePool')
                   : depositorCanUnbond
-                  ? 'You can now unbond your funds.'
-                  : 'Withdraw your unlock chunk to proceed with pool closure.'}
+                  ? t('pools.unbondYourFunds')
+                  : t('pools.withdrawUnlock')}
               </h4>
               <ButtonRowWrapper verticalSpacing>
                 <ButtonPrimary
                   marginRight
-                  text="Unbond"
+                  text={t('pools.unbond')}
                   disabled={
                     poolsSyncing ||
                     (!depositorCanWithdraw && !depositorCanUnbond)
@@ -84,7 +86,11 @@ export const ClosurePrompts = () => {
                 />
                 <ButtonPrimary
                   iconLeft={faLockOpen}
-                  text={String(totalUnlockChuncks ?? 0)}
+                  text={
+                    depositorCanWithdraw
+                      ? t('pools.unlocked')
+                      : String(totalUnlockChuncks ?? 0)
+                  }
                   disabled={poolsSyncing || !isBonding()}
                   onClick={() =>
                     openModalWith(

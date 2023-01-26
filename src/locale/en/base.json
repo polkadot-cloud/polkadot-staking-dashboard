@@ -13,6 +13,12 @@
     "help": "Help",
     "inactive": "Inactive",
     "active": "Active",
-    "support": "Support"
+    "support": "Support",
+    "resources": "Resources",
+    "payee": {
+      "staked": "Back to Staking",
+      "stash": "To Stash Account",
+      "controller": "To Controller Account"
+    }
   }
 }

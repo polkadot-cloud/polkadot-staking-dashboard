@@ -4,19 +4,21 @@
 import { useUi } from 'contexts/UI';
 import { Title } from 'library/Modal/Title';
 import { StatusButton } from 'library/StatusButton';
+import { useTranslation } from 'react-i18next';
 import { PaddingWrapper } from '../Wrappers';
 
 export const Settings = () => {
   const { services, toggleService } = useUi();
+  const { t } = useTranslation('modals');
 
   // fetch flag to disable fiat
   const DISABLE_FIAT = Number(process.env.REACT_APP_DISABLE_FIAT ?? 0);
 
   return (
     <>
-      <Title title="Settings" />
+      <Title title={t('settings')} />
       <PaddingWrapper>
-        <h4>Toggle Services</h4>
+        <h4>{t('toggleServices')}</h4>
         <StatusButton
           checked={services.includes('subscan')}
           label="Subscan API"
@@ -27,18 +29,18 @@ export const Settings = () => {
         {!DISABLE_FIAT && (
           <StatusButton
             checked={services.includes('binance_spot')}
-            label="Binance Spot API"
+            label={t('binanceApi')}
             onClick={() => {
               toggleService('binance_spot');
             }}
           />
         )}
 
-        <h4>Toggle Features</h4>
+        <h4>{t('toggleFeatures')}</h4>
 
         <StatusButton
           checked={services.includes('tips')}
-          label="Dashboard Tips"
+          label={t('dashboardTips')}
           onClick={() => {
             toggleService('tips');
           }}

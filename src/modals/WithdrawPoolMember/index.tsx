@@ -14,7 +14,6 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
-import { ContentWrapper } from 'modals/UpdateBond/Wrappers';
 import {
   FooterWrapper,
   NotesWrapper,
@@ -22,6 +21,7 @@ import {
   Separator,
 } from 'modals/Wrappers';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, rmCommas } from 'Utils';
 
 export const WithdrawPoolMember = () => {
@@ -31,6 +31,7 @@ export const WithdrawPoolMember = () => {
   const { metrics } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
   const { txFeesValid } = useTxFees();
+  const { t } = useTranslation('modals');
 
   const { activeEra } = metrics;
   const { member, who } = config;
@@ -83,41 +84,33 @@ export const WithdrawPoolMember = () => {
 
   return (
     <>
-      <Title title="Withdraw Member Funds" icon={faMinus} />
-      <PaddingWrapper verticalOnly />
-      <ContentWrapper>
-        <div>
+      <Title title={t('withdrawMemberFunds')} icon={faMinus} />
+      <PaddingWrapper>
+        {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
+        <h2 className="title">
+          {t('withdraw')} {totalWithdraw} {network.unit}
+        </h2>
+        <Separator />
+        <NotesWrapper>
+          <EstimatedTxFee />
+        </NotesWrapper>
+        <FooterWrapper>
           <div>
-            {!accountHasSigner(activeAccount) && (
-              <Warning text="Your account is read only, and cannot sign transactions." />
-            )}
-            <h2>
-              Withdraw {totalWithdraw} {network.unit}
-            </h2>
-
-            <Separator />
-            <NotesWrapper>
-              <EstimatedTxFee />
-            </NotesWrapper>
+            <ButtonSubmit
+              text={`${submitting ? t('submitting') : t('submit')}`}
+              iconLeft={faArrowAltCircleUp}
+              iconTransform="grow-2"
+              onClick={() => submitTx()}
+              disabled={
+                !valid ||
+                submitting ||
+                !accountHasSigner(activeAccount) ||
+                !txFeesValid
+              }
+            />
           </div>
-          <FooterWrapper>
-            <div>
-              <ButtonSubmit
-                text={`Submit${submitting ? 'ting' : ''}`}
-                iconLeft={faArrowAltCircleUp}
-                iconTransform="grow-2"
-                onClick={() => submitTx()}
-                disabled={
-                  !valid ||
-                  submitting ||
-                  !accountHasSigner(activeAccount) ||
-                  !txFeesValid
-                }
-              />
-            </div>
-          </FooterWrapper>
-        </div>
-      </ContentWrapper>
+        </FooterWrapper>
+      </PaddingWrapper>
     </>
   );
 };

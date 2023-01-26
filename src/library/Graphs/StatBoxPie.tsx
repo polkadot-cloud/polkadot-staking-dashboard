@@ -62,7 +62,7 @@ export const StatPie = ({ value, value2 }: StatPieProps) => {
           networkColorsTransparent[`${name}-${mode}`],
           defaultThemes.transparent[mode],
         ],
-        borderWidth: 1.6,
+        borderWidth: 1.75,
       },
     ],
   };

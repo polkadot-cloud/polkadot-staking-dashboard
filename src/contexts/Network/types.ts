@@ -15,4 +15,5 @@ export interface NetworkMetrics {
   totalIssuance: BN;
   auctionCounter: BN;
   earliestStoredSession: BN;
+  fastUnstakeErasToCheckPerBlock: number;
 }

@@ -3,6 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { BN } from 'bn.js';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -12,17 +13,19 @@ import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useValidators } from 'contexts/Validators';
 import { Validator } from 'contexts/Validators/types';
+import { formatDistance, fromUnixTime } from 'date-fns';
 import { motion } from 'framer-motion';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { Identity } from 'library/ListItem/Labels/Identity';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
-import moment from 'moment';
+import { locales } from 'locale';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { networkColors } from 'theme/default';
 import { AnySubscan } from 'types';
-import { clipAddress, planckToUnit } from 'Utils';
+import { clipAddress, planckBnToUnit } from 'Utils';
 import { PayoutListProps } from '../types';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProvider, usePayoutList } from './context';
@@ -37,6 +40,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
   const { listFormat, setListFormat } = usePayoutList();
   const { validators, meta } = useValidators();
   const { bondedPools } = useBondedPools();
+  const { i18n, t } = useTranslation('pages');
 
   const disableThrottle = props.disableThrottle ?? false;
 
@@ -143,9 +147,9 @@ export const PayoutListInner = (props: PayoutListProps) => {
           {listPayouts.map((p: AnySubscan, index: number) => {
             const label =
               p.event_id === 'PaidOut'
-                ? 'Pool Claim'
+                ? t('payouts.poolClaim')
                 : p.event_id === 'Rewarded'
-                ? 'Payout'
+                ? t('payouts.payout')
                 : p.event_id;
 
             const labelClass =
@@ -193,7 +197,8 @@ export const PayoutListInner = (props: PayoutListProps) => {
                         <div>
                           <h4 className={`${labelClass}`}>
                             {p.event_id === 'Slashed' ? '-' : '+'}
-                            {planckToUnit(p.amount, units)} {network.unit}
+                            {planckBnToUnit(new BN(p.amount), units)}{' '}
+                            {network.unit}
                           </h4>
                         </div>
                         <div>
@@ -204,7 +209,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
                     <div className="row">
                       <div>
                         <div>
-                          {label === 'Payout' && (
+                          {label === t('payouts.payout') && (
                             <>
                               {batchIndex > 0 ? (
                                 <Identity
@@ -218,7 +223,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
                               )}
                             </>
                           )}
-                          {label === 'Pool Claim' && (
+                          {label === t('payouts.poolClaim') && (
                             <>
                               {pool ? (
                                 <PoolIdentity
@@ -227,14 +232,27 @@ export const PayoutListInner = (props: PayoutListProps) => {
                                   pool={pool}
                                 />
                               ) : (
-                                <h4>From Pool {p.pool_id}</h4>
+                                <h4>
+                                  {t('payouts.fromPool')} {p.pool_id}
+                                </h4>
                               )}
                             </>
                           )}
-                          {label === 'Slashed' && <h4>Deducted from bond</h4>}
+                          {label === t('payouts.slashed') && (
+                            <h4>{t('payouts.deductedFromBond')}</h4>
+                          )}
                         </div>
                         <div>
-                          <h5>{moment.unix(p.block_timestamp).fromNow()}</h5>
+                          <h5>
+                            {formatDistance(
+                              fromUnixTime(p.block_timestamp),
+                              new Date(),
+                              {
+                                addSuffix: true,
+                                locale: locales[i18n.resolvedLanguage],
+                              }
+                            )}
+                          </h5>
                         </div>
                       </div>
                     </div>

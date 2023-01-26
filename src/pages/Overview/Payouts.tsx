@@ -8,16 +8,18 @@ import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { formatSize, useSize } from 'library/Graphs/Utils';
 import { StatusLabel } from 'library/StatusLabel';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Payouts = () => {
   const { isSyncing, services } = useUi();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
+  const { t } = useTranslation('pages');
 
   const ref = React.useRef<HTMLDivElement>(null);
 
   const size = useSize(ref.current);
-  const { width, height, minHeight } = formatSize(size, 306);
+  const { width, height, minHeight } = formatSize(size, 276);
 
   return (
     <div className="inner" ref={ref} style={{ minHeight }}>
@@ -25,13 +27,13 @@ export const Payouts = () => {
         <StatusLabel
           status="active_service"
           statusFor="subscan"
-          title="Subscan Disabled"
+          title={t('overview.subscanDisabled')}
           topOffset="37%"
         />
       ) : (
         <StatusLabel
           status="sync_or_setup"
-          title="Not Staking"
+          title={t('overview.notStaking')}
           topOffset="37%"
         />
       )}
@@ -47,9 +49,9 @@ export const Payouts = () => {
           marginTop: '1.5rem',
         }}
       >
-        <PayoutBar days={19} height="160px" />
+        <PayoutBar days={19} height="155px" />
         <div style={{ marginTop: '3rem' }}>
-          <PayoutLine days={19} average={10} height="70px" />
+          <PayoutLine days={19} average={10} height="65px" />
         </div>
       </div>
     </div>

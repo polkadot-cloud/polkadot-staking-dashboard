@@ -5,7 +5,8 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
-import { Extension } from 'contexts/Connect/types';
+import { useExtensions } from 'contexts/Extensions';
+import { Extension } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
 import Identicon from 'library/Identicon';
 import { clipAddress } from 'Utils';
@@ -54,7 +55,7 @@ export const AccountButton = (props: AccountElementProps) => {
 export const AccountInner = (props: AccountElementProps) => {
   const { address, meta } = props;
 
-  const { extensions } = useConnect();
+  const { extensions } = useExtensions();
   const extension = extensions.find((e: Extension) => e.id === meta?.source);
   const Icon = extension?.icon ?? null;
   const label = props.label ?? null;

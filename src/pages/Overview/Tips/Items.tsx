@@ -3,10 +3,11 @@
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTips } from 'contexts/Tips';
+import { useOverlay } from 'contexts/Overlay';
 import { motion, useAnimationControls } from 'framer-motion';
+import { Tip } from 'library/Tips/Tip';
 import React, { useEffect, useState } from 'react';
-import Lottie from 'react-lottie';
+import { useTranslation } from 'react-i18next';
 import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers';
 
 export const ItemsInner = ({ items, page }: any) => {
@@ -53,8 +54,16 @@ export const ItemsInner = ({ items, page }: any) => {
   );
 };
 
-const Item = ({ id, title, subtitle, icon, index, controls, initial }: any) => {
-  const { openTipWith } = useTips();
+const Item = ({
+  title,
+  subtitle,
+  description,
+  index,
+  controls,
+  initial,
+}: any) => {
+  const { openOverlayWith } = useOverlay();
+  const { t } = useTranslation('tips');
 
   const [isStopped, setIsStopped] = useState(true);
 
@@ -69,15 +78,6 @@ const Item = ({ id, title, subtitle, icon, index, controls, initial }: any) => {
       }, delay);
     }
   }, []);
-
-  const animateOptions = {
-    loop: false,
-    autoplay: false,
-    animationData: icon,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
-    },
-  };
 
   return (
     <ItemWrapper
@@ -99,21 +99,7 @@ const Item = ({ id, title, subtitle, icon, index, controls, initial }: any) => {
       }}
     >
       <ItemInnerWrapper>
-        <section>
-          <Lottie
-            options={animateOptions}
-            width="2.2rem"
-            height="2.2rem"
-            isStopped={isStopped}
-            isPaused={isStopped}
-            eventListeners={[
-              {
-                eventName: 'loopComplete',
-                callback: () => setIsStopped(true),
-              },
-            ]}
-          />
-        </section>
+        <section />
         <section>
           <div className="title">
             <h3>{title}</h3>
@@ -123,11 +109,16 @@ const Item = ({ id, title, subtitle, icon, index, controls, initial }: any) => {
               {subtitle}
               <motion.button
                 whileHover={{ scale: 1.02 }}
-                onClick={() => openTipWith(id, {})}
+                onClick={() =>
+                  openOverlayWith(
+                    <Tip title={title} description={description} />,
+                    'large'
+                  )
+                }
                 type="button"
                 className="more"
               >
-                More
+                {t('module.more')}
                 <FontAwesomeIcon icon={faChevronRight} transform="shrink-2" />
               </motion.button>
             </h4>

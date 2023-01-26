@@ -2,23 +2,79 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
+import { AnyJson } from 'types';
 import { planckBnToUnit, rmCommas } from 'Utils';
 
 // eslint-disable-next-line no-restricted-globals
 export const ctx: Worker = self as any;
 
-ctx.addEventListener('message', (event: any) => {
+// handle incoming message and route to correct handler.
+ctx.addEventListener('message', (event: AnyJson) => {
   const { data } = event;
+  const { task } = data;
+  let message: AnyJson = {};
+  switch (task) {
+    case 'initialise_exposures':
+      message = processExposures(data);
+      break;
+    case 'process_fast_unstake_era':
+      message = processFastUnstakeEra(data);
+      break;
+    default:
+  }
+  postMessage({ task, ...message });
+});
 
+// process fast unstake era exposures.
+//
+// checks if an account has been exposed in an
+// era.
+const processFastUnstakeEra = (data: AnyJson) => {
+  const { currentEra, exposures, task, where, who } = data;
+  let exposed = false;
+
+  // check exposed as validator or nominator.
+  exposures.every(({ keys, val }: any) => {
+    const validator = keys[1];
+    if (validator === who) {
+      exposed = true;
+      return false;
+    }
+    const others = val?.others ?? [];
+    const inOthers = others.find((o: AnyJson) => o.who === who);
+    if (inOthers) {
+      exposed = true;
+      return false;
+    }
+    return true;
+  });
+
+  return {
+    currentEra,
+    exposed,
+    task,
+    where,
+    who,
+  };
+};
+
+// process exposures.
+//
+// abstracts active nominators and minimum active
+// bond from erasStakers.
+const processExposures = (data: AnyJson) => {
   const { units, exposures, activeAccount } = data;
 
   const stakers: any = [];
   let activeValidators = 0;
   const ownStake: Array<any> = [];
   const nominators: any = [];
+  let totalStaked = new BN(0);
 
   exposures.forEach(({ keys, val }: any) => {
     const address = keys[1];
+    const total = val?.total ? new BN(rmCommas(val.total)) : new BN(0);
+    totalStaked = totalStaked.add(total);
     activeValidators++;
 
     stakers.push({
@@ -76,14 +132,15 @@ ctx.addEventListener('message', (event: any) => {
   // convert minActiveBond to base value
   minActiveBond = planckBnToUnit(minActiveBond, units);
 
-  postMessage({
+  return {
     stakers,
+    totalStaked: totalStaked.toString(),
     ownStake,
     totalActiveNominators: nominators.length,
     activeValidators,
     minActiveBond,
     _activeAccount: activeAccount,
-  });
-});
+  };
+};
 
 export default null as any;

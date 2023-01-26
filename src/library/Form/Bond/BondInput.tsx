@@ -4,7 +4,8 @@
 import { ButtonInvert } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { humanNumber, isNumeric } from 'Utils';
 import { BondInputProps } from '../types';
 import { InputWrapper } from '../Wrappers';
@@ -24,13 +25,14 @@ export const BondInput = ({
 
   const { network } = useApi();
   const { activeAccount } = useConnect();
+  const { t } = useTranslation('library');
 
   // the current local bond value
-  const [localBond, setLocalBond] = useState(_value);
+  const [localBond, setLocalBond] = useState<string>(_value);
 
   // reset value to default when changing account
   useEffect(() => {
-    setLocalBond(defaultValue ?? 0);
+    setLocalBond(defaultValue ?? '0');
   }, [activeAccount]);
 
   useEffect(() => {
@@ -40,8 +42,9 @@ export const BondInput = ({
   }, [_value]);
 
   // handle change for bonding
-  const handleChangeBond = (e: any) => {
-    const val = e.target.value;
+  const handleChangeBond = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value as string;
+    // ensure the value is numeric before it is put into state.
     if (!isNumeric(val) && val !== '') {
       return;
     }
@@ -50,7 +53,7 @@ export const BondInput = ({
   };
 
   // apply bond to parent setters
-  const updateParentState = (val: any) => {
+  const updateParentState = (val: string) => {
     for (const s of sets) {
       s.set({
         ...s.current,
@@ -61,7 +64,9 @@ export const BondInput = ({
 
   return (
     <InputWrapper>
-      <h3>Bond {network.unit}:</h3>
+      <h3>
+        {t('bond')} {network.unit}:
+      </h3>
       <div className="inner">
         <section style={{ opacity: disabled ? 0.5 : 1 }}>
           <div className="input">
@@ -80,18 +85,20 @@ export const BondInput = ({
               <p>
                 {syncing
                   ? '...'
-                  : `${humanNumber(freeBalance)} ${network.unit} available`}
+                  : `${humanNumber(freeBalance)} ${network.unit} ${t(
+                      'available'
+                    )}`}
               </p>
             </div>
           </div>
         </section>
         <section>
           <ButtonInvert
-            text="Max"
+            text={t('max')}
             disabled={disabled || syncing || freeBalance === 0}
             onClick={() => {
-              setLocalBond(freeBalance);
-              updateParentState(freeBalance);
+              setLocalBond(String(freeBalance));
+              updateParentState(String(freeBalance));
             }}
           />
         </section>

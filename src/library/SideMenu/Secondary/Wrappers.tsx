@@ -21,7 +21,7 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
   justify-content: flex-start;
   align-items: center;
   padding: 0.75rem 0rem 0.75rem 0.5rem;
-  margin: 0.55rem 0.2rem 0.55rem 0;
+  margin: 0.8rem 0.2rem 0.8rem 0;
   position: relative;
   height: 3.2rem;
 
@@ -58,7 +58,7 @@ export const MinimisedWrapper = styled(motion.button)`
   justify-content: center;
   align-items: center;
   padding: 0rem 0rem;
-  margin: 0.3rem 0 0.3rem 0;
+  margin: 0.6rem 0 0.6rem 0;
   position: relative;
   min-height: 2.8rem;
 

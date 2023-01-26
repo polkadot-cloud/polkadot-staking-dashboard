@@ -98,7 +98,7 @@ export const SelectableWrapper = styled.div`
     border: 1px solid ${borderPrimary};
     font-size: 1rem;
     color: ${textSecondary};
-    border-radius: 1rem;
+    border-radius: 1.5rem;
     padding: 0.45rem 1rem;
     margin-right: 0.5rem;
     margin-bottom: 0.75rem;
@@ -128,10 +128,14 @@ export const List = styled.div<ListProps>`
     flex-flow: row wrap;
 
     > input {
-      border: 1px solid ${borderPrimary};
+      border: 1.75px solid ${borderPrimary};
       border-radius: 1.75rem;
-      padding: 0.85rem 1.25rem;
-      font-size: 1.25rem;
+      padding: 0.75rem 1.25rem;
+      font-size: 1.15rem;
+      font-variation-settings: 'wght' 525;
+      &:focus {
+        border-width: 1.75px;
+      }
     }
   }
 

@@ -10,29 +10,33 @@ import { useTooltip } from 'contexts/Tooltip';
 import { useValidators } from 'contexts/Validators';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FavoriteProps } from '../types';
 
 export const FavoriteValidator = (props: FavoriteProps) => {
   const { addNotification } = useNotifications();
   const { favorites, addFavorite, removeFavorite } = useValidators();
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
+  const { t } = useTranslation('library');
 
   const { address } = props;
   const isFavorite = favorites.includes(address);
 
   const notificationFavorite = !isFavorite
     ? {
-        title: 'Favorite Validator Added',
+        title: t('favoriteValidatorAdded'),
         subtitle: address,
       }
     : {
-        title: 'Favorite Validator Removed',
+        title: t('favoriteValidatorRemoved'),
         subtitle: address,
       };
 
   const posRef = useRef<HTMLDivElement>(null);
 
-  const tooltipText = `${isFavorite ? `Remove` : `Add`} Favorite`;
+  const tooltipText = `${isFavorite ? `${t('remove')}` : `${t('add')}`} ${t(
+    'favorite'
+  )}`;
 
   const toggleTooltip = () => {
     if (!open) {

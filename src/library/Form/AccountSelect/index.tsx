@@ -9,8 +9,9 @@ import { useCombobox, UseComboboxStateChange } from 'downshift';
 import Identicon from 'library/Identicon';
 import { StatusLabel } from 'library/StatusLabel';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes, networkColors } from 'theme/default';
-import { clipAddress, convertRemToPixels } from 'Utils';
+import { clipAddress, remToUnit } from 'Utils';
 import { AccountSelectProps, InputItem } from '../types';
 import { StyledController, StyledDownshift, StyledSelect } from './Wrappers';
 
@@ -21,6 +22,7 @@ export const AccountSelect = ({
   value,
 }: AccountSelectProps) => {
   const [inputItems, setInputItems] = useState<Array<InputItem>>(items);
+  const { t } = useTranslation('library');
 
   useEffect(() => {
     setInputItems(items);
@@ -55,7 +57,7 @@ export const AccountSelect = ({
             {value !== null && (
               <Identicon
                 value={value?.address ?? ''}
-                size={convertRemToPixels('2rem')}
+                size={remToUnit('2rem')}
               />
             )}
             <input {...c.getInputProps({ placeholder })} className="input" />
@@ -64,7 +66,7 @@ export const AccountSelect = ({
           {c.selectedItem && (
             <StyledController
               onClick={() => c.reset()}
-              aria-label="clear selection"
+              aria-label={t('currentlySelected')}
             >
               <FontAwesomeIcon transform="grow-4" icon={faTimes} />
             </StyledController>

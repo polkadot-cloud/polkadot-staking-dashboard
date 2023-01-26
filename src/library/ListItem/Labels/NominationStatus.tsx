@@ -6,15 +6,12 @@ import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
-import {
-  capitalizeFirstLetter,
-  humanNumber,
-  planckBnToUnit,
-  rmCommas,
-} from 'Utils';
+import { useTranslation } from 'react-i18next';
+import { humanNumber, planckBnToUnit, rmCommas } from 'Utils';
 import { NominationStatusProps } from '../types';
 
 export const NominationStatus = (props: NominationStatusProps) => {
+  const { t } = useTranslation('library');
   const { getNominationsStatus, eraStakers, erasStakersSyncing } = useStaking();
   const { getPoolNominationStatus } = useBondedPools();
   const {
@@ -54,7 +51,7 @@ export const NominationStatus = (props: NominationStatusProps) => {
   return (
     <ValidatorStatusWrapper status={nominationStatus}>
       <h5>
-        {capitalizeFirstLetter(nominationStatus ?? '')}
+        {t(`${nominationStatus}`)}
         {stakedAmount > 0 &&
           ` / ${
             erasStakersSyncing ? '...' : `${humanNumber(stakedAmount)} ${unit}`

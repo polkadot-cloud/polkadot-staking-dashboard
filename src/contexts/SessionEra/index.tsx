@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import moment from 'moment';
+import { getUnixTime } from 'date-fns';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi } from 'types';
 import { setStateWithRef } from 'Utils';
@@ -73,8 +73,10 @@ export const SessionEraProvider = ({
     const eraBlocksLeft =
       sessionEraRef.current.eraLength - sessionEraRef.current.eraProgress;
     const eraTimeLeftSeconds = eraBlocksLeft * (expectedBlockTime * 0.001);
-    const eventTime = moment().unix() + eraTimeLeftSeconds;
-    const diffTime = eventTime - moment().unix();
+
+    const unixTime = getUnixTime(new Date());
+    const eventTime = unixTime + eraTimeLeftSeconds;
+    const diffTime = eventTime - unixTime;
     return diffTime;
   };
 

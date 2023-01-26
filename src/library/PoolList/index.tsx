@@ -5,20 +5,25 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
+import { useFilters } from 'contexts/Filters';
+import { FilterType } from 'contexts/Filters/types';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
+import { usePoolFilters } from 'library/Hooks/usePoolFilters';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { SearchInput } from 'library/List/SearchInput';
 import { Pool } from 'library/Pool';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { networkColors } from 'theme/default';
 import { PoolListProvider, usePoolList } from './context';
+import { Filters } from './Filters';
 import { PoolListProps } from './types';
 
 export const PoolListInner = ({
@@ -29,13 +34,22 @@ export const PoolListInner = ({
   allowSearch,
   pools,
   title,
+  defaultFilters,
 }: PoolListProps) => {
   const { mode } = useTheme();
   const { isReady, network } = useApi();
   const { metrics } = useNetworkMetrics();
-  const { fetchPoolsMetaBatch, poolSearchFilter } = useBondedPools();
+  const { fetchPoolsMetaBatch, poolSearchFilter, meta } = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
   const { isSyncing } = useUi();
+  const { t } = useTranslation('library');
+
+  const { getFilters, setMultiFilters, getSearchTerm, setSearchTerm } =
+    useFilters();
+  const { applyFilter } = usePoolFilters();
+  const includes = getFilters(FilterType.Include, 'pools');
+  const excludes = getFilters(FilterType.Exclude, 'pools');
+  const searchTerm = getSearchTerm('pools');
 
   // current page
   const [page, setPage] = useState<number>(1);
@@ -98,6 +112,37 @@ export const PoolListInner = ({
     }
   }, [renderIterationRef.current]);
 
+  // list ui changes / validator changes trigger re-render of list
+  useEffect(() => {
+    // only filter when pool nominations have been synced.
+    if (!isSyncing && meta[batchKey]?.nominations) {
+      handlePoolsFilterUpdate();
+    }
+  }, [isSyncing, includes?.length, excludes?.length, meta]);
+
+  // set default filters
+  useEffect(() => {
+    if (defaultFilters?.includes?.length) {
+      setMultiFilters(FilterType.Include, 'pools', defaultFilters?.includes);
+    }
+    if (defaultFilters?.excludes?.length) {
+      setMultiFilters(FilterType.Exclude, 'pools', defaultFilters?.excludes);
+    }
+  }, []);
+
+  // handle filter / order update
+  const handlePoolsFilterUpdate = (
+    filteredPools: any = Object.assign(poolsDefault)
+  ) => {
+    filteredPools = applyFilter(includes, excludes, filteredPools, batchKey);
+    if (searchTerm) {
+      filteredPools = poolSearchFilter(filteredPools, batchKey, searchTerm);
+    }
+    _setPools(filteredPools);
+    setPage(1);
+    setRenderIteration(1);
+  };
+
   // get pools to render
   let listPools = [];
 
@@ -110,19 +155,20 @@ export const PoolListInner = ({
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
-
     let filteredPools = Object.assign(poolsDefault);
+    filteredPools = applyFilter(includes, excludes, filteredPools, batchKey);
     filteredPools = poolSearchFilter(filteredPools, batchKey, newValue);
 
     // ensure no duplicates
     filteredPools = filteredPools.filter(
       (value: any, index: any, self: any) =>
-        index === self.findIndex((t: any) => t.id === value.id)
+        index === self.findIndex((i: any) => i.id === value.id)
     );
 
     setPage(1);
     setRenderIteration(1);
     _setPools(filteredPools);
+    setSearchTerm('pools', newValue);
   };
 
   return (
@@ -158,9 +204,10 @@ export const PoolListInner = ({
         {allowSearch && poolsDefault.length > 0 && (
           <SearchInput
             handleChange={handleSearchChange}
-            placeholder="Search Pool ID, Name or Address"
+            placeholder={t('search')}
           />
         )}
+        <Filters />
         {pagination && listPools.length > 0 && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
@@ -197,9 +244,7 @@ export const PoolListInner = ({
             </>
           ) : (
             <h4 style={{ padding: '1rem 1rem 0 1rem' }}>
-              {isSyncing
-                ? 'Syncing Pool list...'
-                : 'No pools match this criteria.'}
+              {isSyncing ? `${t('syncingPoolList')}...` : t('noMatch')}
             </h4>
           )}
         </MotionContainer>

@@ -16,7 +16,7 @@ import { useAnimation } from 'framer-motion';
 import useFillVariables from 'library/Hooks/useFillVariables';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { stringToKey } from 'Utils';
+import { camelize } from 'Utils';
 import Definition from './Items/Definition';
 import External from './Items/External';
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
@@ -83,7 +83,7 @@ export const Help = () => {
   const activeDefinitions = definitions
     .filter((d: string) => d !== definition)
     .map((d: string) => {
-      const localeKey = stringToKey(d);
+      const localeKey = camelize(d);
 
       return fillVariables(
         {
@@ -105,7 +105,7 @@ export const Help = () => {
 
   let activeDefinition: DefinitionWithKeys | null = null;
   if (activeRecord) {
-    const localeKey = stringToKey(activeRecord);
+    const localeKey = camelize(activeRecord);
 
     const title = t(`definitions.${localeKey}.0`);
     const description = i18n.getResource(
@@ -158,7 +158,7 @@ export const Help = () => {
               {definition && (
                 <ButtonInvertRounded
                   lg
-                  text={t('modal.all_resources')}
+                  text={t('modal.allResources')}
                   iconLeft={faReplyAll}
                   onClick={() => setDefinition(null)}
                 />
@@ -173,7 +173,7 @@ export const Help = () => {
             <h1>
               {activeDefinition
                 ? `${activeDefinition.title}`
-                : `${t('modal.help_resources')}`}
+                : `${t('modal.helpResources')}`}
             </h1>
 
             {activeDefinition !== null && (

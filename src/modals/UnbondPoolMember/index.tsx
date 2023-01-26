@@ -12,7 +12,6 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
-import { ContentWrapper } from 'modals/UpdateBond/Wrappers';
 import {
   FooterWrapper,
   NotesWrapper,
@@ -20,6 +19,7 @@ import {
   Separator,
 } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit, rmCommas, unitToPlanckBn } from 'Utils';
 
 export const UnbondPoolMember = () => {
@@ -40,6 +40,7 @@ export const UnbondPoolMember = () => {
 
   // bond valid
   const [bondValid, setBondValid] = useState(false);
+  const { t } = useTranslation('modals');
 
   // unbond all validation
   const isValid = (() => {
@@ -65,7 +66,7 @@ export const UnbondPoolMember = () => {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(bond.bond, units);
+    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
     tx = api.tx.nominationPools.unbond(who, bondToSubmit);
     return tx;
   };
@@ -82,30 +83,21 @@ export const UnbondPoolMember = () => {
 
   return (
     <>
-      <Title title="Unbond Member Funds" icon={faMinus} />
-      <PaddingWrapper verticalOnly />
-      <ContentWrapper>
-        {!accountHasSigner(activeAccount) && (
-          <Warning text="Your account is read only, and cannot sign transactions." />
-        )}
-        <div className="items">
-          <h4>Amount to unbond:</h4>
-          <h2>
-            {freeToUnbond} {network.unit}
-          </h2>
-          <Separator />
-          <NotesWrapper>
-            <p>
-              Once unbonding, your funds to become available after{' '}
-              {bondDuration} eras.
-            </p>
-            {bondValid && <EstimatedTxFee />}
-          </NotesWrapper>
-        </div>
+      <Title title={t('unbondMemberFunds')} icon={faMinus} />
+      <PaddingWrapper>
+        {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
+        <h2 className="title">
+          {t('unbond')} {freeToUnbond} {network.unit}
+        </h2>
+        <Separator />
+        <NotesWrapper>
+          <p>{t('onceUnbonding', { bondDuration })}</p>
+          {bondValid && <EstimatedTxFee />}
+        </NotesWrapper>
         <FooterWrapper>
           <div>
             <ButtonSubmit
-              text={`Submit${submitting ? 'ting' : ''}`}
+              text={`${submitting ? t('submitting') : t('submit')}`}
               iconLeft={faArrowAltCircleUp}
               iconTransform="grow-2"
               onClick={() => submitTx()}
@@ -118,7 +110,7 @@ export const UnbondPoolMember = () => {
             />
           </div>
         </FooterWrapper>
-      </ContentWrapper>
+      </PaddingWrapper>
     </>
   );
 };

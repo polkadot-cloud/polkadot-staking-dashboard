@@ -98,7 +98,7 @@ export const InflationWrapper = styled.div`
           border-right: 0;
         }
 
-        @media (min-width: ${SmallFontSizeMaxWidth + 150}px) {
+        @media (min-width: ${SmallFontSizeMaxWidth + 225}px) {
           flex-basis: 25%;
           max-width: 275px;
           padding-left: 1rem;
@@ -118,7 +118,7 @@ export const InflationWrapper = styled.div`
           flex-flow: row nowrap;
           border-bottom: 1px solid ${borderPrimary};
 
-          @media (min-width: ${SmallFontSizeMaxWidth + 150}px) {
+          @media (min-width: ${SmallFontSizeMaxWidth + 225}px) {
             margin-bottom: 0;
           }
 

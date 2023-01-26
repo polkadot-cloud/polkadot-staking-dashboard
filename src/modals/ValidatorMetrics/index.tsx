@@ -18,6 +18,7 @@ import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
 import { PaddingWrapper } from 'modals/Wrappers';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { clipAddress, humanNumber, planckBnToUnit, rmCommas } from 'Utils';
 
 export const ValidatorMetrics = () => {
@@ -30,6 +31,7 @@ export const ValidatorMetrics = () => {
   const { metrics } = useNetworkMetrics();
   const { eraStakers } = useStaking();
   const { stakers } = eraStakers;
+  const { t } = useTranslation('modals');
 
   // is the validator in the active era
   const validatorInEra =
@@ -64,19 +66,19 @@ export const ValidatorMetrics = () => {
 
   const stats = [
     {
-      label: 'Self Stake',
+      label: t('selfStake'),
       value: `${humanNumber(planckBnToUnit(ownStake, units))} ${unit}`,
       help: 'Self Stake',
     },
     {
-      label: 'Nominator Stake',
+      label: t('nominatorStake'),
       value: `${humanNumber(planckBnToUnit(otherStake, units))} ${unit}`,
       help: 'Nominator Stake',
     },
   ];
   return (
     <>
-      <Title title="Validator Metrics" />
+      <Title title={t('validatorMetrics')} />
       <div className="header">
         <Identicon value={address} size={33} />
         <h2>
@@ -116,13 +118,13 @@ export const ValidatorMetrics = () => {
           flex
         >
           <h4>
-            Recent Era Points <OpenHelpIcon helpKey="Era Points" />
+            {t('recentEraPoints')} <OpenHelpIcon helpKey="Era Points" />
           </h4>
           <div className="inner" ref={ref} style={{ minHeight }}>
             <StatusLabel
               status="active_service"
               statusFor="subscan"
-              title="Subscan Disabled"
+              title={t('subscanDisabled')}
             />
             <div
               className="graph"

@@ -7,6 +7,7 @@ import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { planckBnToUnit } from 'Utils';
 import { InputItem } from '../types';
 
@@ -19,6 +20,7 @@ export const getEligibleControllers = (): Array<InputItem> => {
     getAccountBalance,
     accounts: balanceAccounts,
   } = useBalances();
+  const { t } = useTranslation('library');
 
   const [accounts, setAccounts] = useState<Array<InputItem>>([]);
 
@@ -51,7 +53,7 @@ export const getEligibleControllers = (): Array<InputItem> => {
           active:
             planckBnToUnit(balance.free, network.units) >
             planckBnToUnit(existentialAmount, network.units),
-          alert: `Not Enough ${network.unit}`,
+          alert: `${t('notEnough')} ${network.unit}`,
         };
       }
     );

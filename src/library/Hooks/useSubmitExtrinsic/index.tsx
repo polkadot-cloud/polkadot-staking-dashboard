@@ -5,11 +5,13 @@ import BN from 'bn.js';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { Extension } from 'contexts/Connect/types';
+import { useExtensions } from 'contexts/Extensions';
+import { Extension } from 'contexts/Extensions/types';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useNotifications } from 'contexts/Notifications';
 import { useTxFees } from 'contexts/TxFees';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AnyApi } from 'types';
 import { registerSaEvent } from 'Utils';
 import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
@@ -25,8 +27,10 @@ export const useSubmitExtrinsic = ({
   const { setTxFees, setSender, txFees } = useTxFees();
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
-  const { getAccount, extensions } = useConnect();
+  const { extensions } = useExtensions();
+  const { getAccount } = useConnect();
   const networkLower = network.name.toLowerCase();
+  const { t } = useTranslation('library');
 
   // if null account is provided, fallback to empty string
   const submitAddress: string = from ?? '';
@@ -71,7 +75,7 @@ export const useSubmitExtrinsic = ({
 
     const extension = extensions.find((e: Extension) => e.id === source);
     if (extension === undefined) {
-      throw new Error('wallet not found');
+      throw new Error(t('walletNotFound') || '');
     } else {
       // summons extension popup if not already connected.
       extension.enable(DappName);
@@ -89,8 +93,8 @@ export const useSubmitExtrinsic = ({
           if (status.isReady) {
             addPending(accountNonce);
             addNotification({
-              title: 'Pending',
-              subtitle: 'Transaction was initiated.',
+              title: t('pending'),
+              subtitle: t('transactionInitiated'),
             });
             callbackSubmit();
           }
@@ -108,8 +112,8 @@ export const useSubmitExtrinsic = ({
             setSubmitting(false);
             removePending(accountNonce);
             addNotification({
-              title: 'In Block',
-              subtitle: 'Transaction in block',
+              title: t('inBlock'),
+              subtitle: t('transactionInBlock'),
             });
             callbackInBlock();
           }
@@ -119,14 +123,14 @@ export const useSubmitExtrinsic = ({
             events.forEach(({ event: { method } }: AnyApi) => {
               if (method === 'ExtrinsicSuccess') {
                 addNotification({
-                  title: 'Finalized',
-                  subtitle: 'Transaction successful',
+                  title: t('finalized'),
+                  subtitle: t('transactionSuccessful'),
                 });
                 unsub();
               } else if (method === 'ExtrinsicFailed') {
                 addNotification({
-                  title: 'Failed',
-                  subtitle: 'Error with transaction',
+                  title: t('failed'),
+                  subtitle: t('errorWithTransaction'),
                 });
                 setSubmitting(false);
                 removePending(accountNonce);
@@ -140,8 +144,8 @@ export const useSubmitExtrinsic = ({
       setSubmitting(false);
       removePending(accountNonce);
       addNotification({
-        title: 'Cancelled',
-        subtitle: 'Transaction was cancelled',
+        title: t('cancelled'),
+        subtitle: t('transactionCancelled'),
       });
     }
   };

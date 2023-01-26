@@ -17,7 +17,8 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
-import { humanNumber } from 'Utils';
+import { useTranslation } from 'react-i18next';
+import { humanNumber, unitToPlanckBn } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = (props: SetupStepProps) => {
@@ -28,6 +29,7 @@ export const Summary = (props: SetupStepProps) => {
   const { activeAccount, accountHasSigner } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const { txFeesValid } = useTxFees();
+  const { t } = useTranslation('pages');
 
   const setup = getSetupProgress(SetupType.Stake, activeAccount);
 
@@ -37,15 +39,19 @@ export const Summary = (props: SetupStepProps) => {
     if (!activeAccount || !api) {
       return null;
     }
-    const stashToSubmit = {
-      Id: activeAccount,
-    };
-    const bondToSubmit = bond * 10 ** units;
+
+    const bondToSubmit = unitToPlanckBn(String(bond), units).toString();
+
     const targetsToSubmit = nominations.map((item: any) => {
       return {
         Id: item.address,
       };
     });
+
+    const stashToSubmit = {
+      Id: activeAccount,
+    };
+
     const controllerToSubmit = {
       Id: controller,
     };
@@ -75,12 +81,12 @@ export const Summary = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title="Summary"
+        title={t('nominate.summary') || ''}
         setupType={SetupType.Stake}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
-          <Warning text="Your account is read only, and cannot sign transactions." />
+          <Warning text={t('nominate.readOnly')} />
         )}
         <SummaryWrapper>
           <section>
@@ -99,7 +105,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; Reward Destination:
+              &nbsp; {t('nominate.rewardDestination')}:
             </div>
             <div>{payee}</div>
           </section>
@@ -109,7 +115,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; Nominations:
+              &nbsp; {t('nominate.nominate')}:
             </div>
             <div>{nominations.length}</div>
           </section>
@@ -119,7 +125,7 @@ export const Summary = (props: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; Bond Amount:
+              &nbsp; {t('nominate.bondAmount')}:
             </div>
             <div>
               {humanNumber(bond)} {network.unit}
@@ -146,7 +152,7 @@ export const Summary = (props: SetupStepProps) => {
             disabled={
               submitting || !accountHasSigner(activeAccount) || !txFeesValid
             }
-            text="Start Nominating"
+            text={t('nominate.startNominating')}
           />
         </div>
       </MotionContainer>

@@ -4,7 +4,7 @@
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Identicon from 'library/Identicon';
-import { clipAddress, convertRemToPixels } from 'Utils';
+import { clipAddress, remToUnit } from 'Utils';
 import { RoleChangeWrapper } from './Wrapper';
 
 export const RoleChange = ({ roleName, oldAddress, newAddress }: any) => {
@@ -13,10 +13,7 @@ export const RoleChange = ({ roleName, oldAddress, newAddress }: any) => {
       <div className="label">{roleName}</div>
       <div className="role-change">
         <div className="input-wrap selected">
-          <Identicon
-            value={oldAddress ?? ''}
-            size={convertRemToPixels('2rem')}
-          />
+          <Identicon value={oldAddress ?? ''} size={remToUnit('2rem')} />
           <input
             className="input"
             disabled
@@ -27,10 +24,7 @@ export const RoleChange = ({ roleName, oldAddress, newAddress }: any) => {
           <FontAwesomeIcon icon={faAnglesRight} />
         </span>
         <div className="input-wrap selected">
-          <Identicon
-            value={newAddress ?? ''}
-            size={convertRemToPixels('2rem')}
-          />
+          <Identicon value={newAddress ?? ''} size={remToUnit('2rem')} />
           <input
             className="input"
             disabled

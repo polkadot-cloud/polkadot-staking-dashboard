@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FunctionComponent, SVGProps } from 'react';
-import { ReactComponent as EnkryptSVG } from './icons/enkrypt_icon.svg';
 import { ReactComponent as NovaWalletSVG } from './icons/nova_wallet.svg';
 import { ReactComponent as PolkadotJSSVG } from './icons/polkadot_js.svg';
 import { ReactComponent as SignerSVG } from './icons/signer_icon.svg';
@@ -17,11 +16,6 @@ export interface ExtensionConfig {
   >;
 }
 export const EXTENSIONS: ExtensionConfig[] = [
-  {
-    id: 'enkrypt',
-    title: 'Enkrypt',
-    icon: EnkryptSVG,
-  },
   {
     id: 'polkadot-js',
     title: (window as any)?.walletExtension?.isNovaWallet

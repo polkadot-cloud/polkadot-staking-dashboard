@@ -7,7 +7,7 @@ export interface PayoutListProps {
   allowMoreCols?: boolean;
   pagination?: boolean;
   disableThrottle?: boolean;
-  title?: string;
+  title?: string | null;
   payoutsList?: AnySubscan;
   payouts?: AnySubscan;
 }

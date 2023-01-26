@@ -9,6 +9,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
+import { useTranslation } from 'react-i18next';
 import {
   humanNumber,
   planckBnToUnit,
@@ -21,10 +22,11 @@ export const Announcements = () => {
   const { poolsSyncing } = useUi();
   const { network, consts } = useApi();
   const { selectedActivePool } = useActivePools();
-  const { units } = network;
+  const { units, unit } = network;
   const { rewardAccountBalance } = selectedActivePool || {};
   const { totalRewardsClaimed } = selectedActivePool?.rewardPool || {};
   const { existentialDeposit } = consts;
+  const { t } = useTranslation('pages');
 
   // calculate the latest reward account balance
   const rewardPoolBalance = BN.max(
@@ -68,19 +70,17 @@ export const Announcements = () => {
 
   announcements.push({
     class: 'neutral',
-    title: `${humanNumber(rewardsClaimed)} ${
-      network.unit
-    } in rewards have been claimed.`,
-    subtitle: `The total amount of ${network.unit} that has been claimed by pool members.`,
+    title: `${humanNumber(rewardsClaimed)} ${unit} ${t('pools.beenClaimed')}`,
+    subtitle: `${t('pools.beenClaimedBy', { unit })}`,
   });
 
   if (rewardBalance > 0) {
     announcements.push({
       class: 'neutral',
-      title: `${humanNumber(rewardBalance)} ${
-        network.unit
-      } outstanding reward balance.`,
-      subtitle: `The outstanding amount of ${network.unit} available to claim by pool members.`,
+      title: `${humanNumber(rewardBalance)} ${unit} ${t(
+        'pools.outstandingReward'
+      )}`,
+      subtitle: `${t('pools.availableToClaim', { unit })}`,
     });
   }
 

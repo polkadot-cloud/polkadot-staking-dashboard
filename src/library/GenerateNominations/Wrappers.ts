@@ -11,7 +11,7 @@ export const GenerateOptionsWrapper = styled.div`
   margin-top: 1rem;
 
   .item {
-    flex-basis: 33%;
+    flex-basis: 50%;
     @media (max-width: ${SectionFullWidthThreshold}px) {
       flex-basis: 100%;
     }

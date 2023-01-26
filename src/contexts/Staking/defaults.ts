@@ -16,7 +16,6 @@ export const stakingMetrics: StakingMetrics = {
   lastReward: new BN(0),
   lastTotalStake: new BN(0),
   validatorCount: new BN(0),
-  maxNominatorsCount: new BN(0),
   maxValidatorsCount: new BN(0),
   minNominatorBond: new BN(0),
   payee: null,
@@ -25,6 +24,7 @@ export const stakingMetrics: StakingMetrics = {
 
 export const eraStakers: EraStakers = {
   stakers: [],
+  totalStaked: new BN(0),
   nominators: undefined,
   totalActiveNominators: 0,
   activeValidators: 0,

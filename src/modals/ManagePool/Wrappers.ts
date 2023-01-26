@@ -3,7 +3,6 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { backgroundToggle, buttonPrimaryBackground, textPrimary } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -49,57 +48,6 @@ export const ContentWrapper = styled.div`
 
     h4 {
       margin: 0.2rem 0;
-    }
-    h2 {
-      margin: 0.75rem 0;
-    }
-
-    .action-button {
-      background: ${buttonPrimaryBackground};
-      padding: 1rem;
-      cursor: pointer;
-      margin-bottom: 1rem;
-      border-radius: 0.75rem;
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: flex-start;
-      align-items: center;
-      transition: all 0.15s;
-      width: 100%;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-
-      h3,
-      p {
-        text-align: left;
-        margin: 0;
-      }
-      h3 {
-        margin-bottom: 0.5rem;
-      }
-      > *:last-child {
-        flex: 1;
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: flex-end;
-      }
-      &:hover {
-        background: ${backgroundToggle};
-      }
-      .icon {
-        margin-right: 0.5rem;
-      }
-      p {
-        color: ${textPrimary};
-        font-size: 1rem;
-      }
-
-      &:disabled {
-        opacity: 0.5;
-        cursor: default;
-      }
     }
   }
 `;

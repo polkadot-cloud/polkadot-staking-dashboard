@@ -3,12 +3,14 @@
 
 import { useConnect } from 'contexts/Connect';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Input = (props: any) => {
   const { listenIsValid, defaultValue } = props;
   const setters = props.setters ?? [];
   const _value = props.value ?? 0;
   const { activeAccount } = useConnect();
+  const { t } = useTranslation('pages');
 
   // the current local bond value
   const [metadata, setMetadata] = useState(_value);
@@ -39,13 +41,13 @@ export const Input = (props: any) => {
         <input
           className="textbox"
           style={{ width: '100%' }}
-          placeholder="Pool Name"
+          placeholder={t('pools.poolName') || ''}
           type="text"
           onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
           value={metadata ?? ''}
         />
       </div>
-      <p>Pool names support characters, symbols and emojis - be creative!</p>
+      <p>{t('pools.poolNameSupport')}</p>
     </>
   );
 };

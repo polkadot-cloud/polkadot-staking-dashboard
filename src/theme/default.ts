@@ -17,7 +17,7 @@ export const defaultThemes: { [key: string]: any } = {
     primary: v('#333', '#ccc'),
     secondary: v('#444', '#aaa'),
     invert: v('#fafafa', '#0e0e0e'),
-    warning: v('#be7900', '#be7900'),
+    warning: v('#8e6c1a', '#cb9f37'),
     danger: v('#ae2324', '#d14445'),
     success: v('green', 'green'),
   },
@@ -45,6 +45,7 @@ export const defaultThemes: { [key: string]: any } = {
       'linear-gradient(180deg, rgba(244,242,242,0.93) 0%, rgba(228,225,225,0.93) 100%)',
       'linear-gradient(180deg, rgba(20,20,20,0.93) 0%, rgba(14,14,14,0.93) 100%)'
     ),
+    warning: v('#fdf9eb', '#33332a'),
   },
   highlight: {
     primary: v(
@@ -77,10 +78,14 @@ export const defaultThemes: { [key: string]: any } = {
   border: {
     primary: v('#e6e6e6', '#282828'),
     secondary: v('#ccc', '#444'),
+    warning: v('#ebc161', '#7b6a41'),
   },
   modal: {
-    overlay: v('rgba(242,240,240, 0.6)', 'rgba(16,16,16, 0.6)'),
+    overlay: v('rgba(242,240,240,0.6)', 'rgba(16,16,16,0.6)'),
     background: v('#fff', '#0b0b0b'),
+  },
+  overlay: {
+    background: v('rgba(200,200,200,0.45)', 'rgba(30,30,30,0.6)'),
   },
   help: {
     button: {
@@ -129,17 +134,21 @@ export const cardThemes = {
 // configure network colors
 export const networkColors: { [key: string]: string } = {};
 export const networkColorsSecondary: { [key: string]: string } = {};
+export const networkColorsStroke: { [key: string]: string } = {};
 export const networkColorsTransparent: { [key: string]: string } = {};
 
 Object.values(NETWORKS).forEach((node: Network) => {
   const { name, colors } = node;
-  const { primary, secondary, transparent } = colors;
+  const { primary, secondary, stroke, transparent } = colors;
 
   networkColors[`${name}-light`] = primary.light;
   networkColors[`${name}-dark`] = primary.dark;
 
   networkColorsSecondary[`${name}-light`] = secondary.light;
   networkColorsSecondary[`${name}-dark`] = secondary.dark;
+
+  networkColorsStroke[`${name}-light`] = stroke.light;
+  networkColorsStroke[`${name}-dark`] = stroke.dark;
 
   networkColorsTransparent[`${name}-light`] = transparent.light;
   networkColorsTransparent[`${name}-dark`] = transparent.dark;

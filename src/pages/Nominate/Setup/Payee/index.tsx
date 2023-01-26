@@ -9,6 +9,7 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { isNumeric } from 'Utils';
 import { Spacer } from '../../Wrappers';
 import { Item, Items } from './Wrappers';
@@ -19,24 +20,23 @@ export const Payee = (props: SetupStepProps) => {
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useUi();
   const setup = getSetupProgress(SetupType.Stake, activeAccount);
+  const { t } = useTranslation('pages');
 
   const options = ['Staked', 'Stash', 'Controller'];
   const buttons = [
     {
-      title: 'Back to Staking',
-      subtitle:
-        'Payouts are automatically bonded to your existing bonded balance.',
+      title: t('nominate.backToStaking'),
+      subtitle: t('nominate.automaticallyBonded'),
       index: 0,
     },
     {
-      title: 'To Stash',
-      subtitle: 'Payouts will be sent to your stash account as free balance.',
+      title: t('nominate.toStash'),
+      subtitle: t('nominate.sentToStash'),
       index: 1,
     },
     {
-      title: 'To Controller',
-      subtitle:
-        'Payouts will be sent to your controller account as free balance.',
+      title: t('nominate.toController'),
+      subtitle: t('nominate.sentToController'),
       index: 2,
     },
   ];
@@ -71,7 +71,7 @@ export const Payee = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={setup.payee !== null}
-        title="Reward Destination"
+        title={t('nominate.rewardDestination') || ''}
         helpKey="Reward Destination"
         setupType={SetupType.Stake}
       />

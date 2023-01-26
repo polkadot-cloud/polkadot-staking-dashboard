@@ -7,15 +7,17 @@ import { useTooltip } from 'contexts/Tooltip';
 import { useValidators } from 'contexts/Validators';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ParaValidatorProps } from '../types';
 
 export const ParaValidator = ({ address }: ParaValidatorProps) => {
   const { sessionParachain } = useValidators();
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
+  const { t } = useTranslation('library');
 
   const posRef = useRef(null);
 
-  const tooltipText = 'Validating Parachain Blocks';
+  const tooltipText = t('validatingParachainBlocks');
 
   const toggleTooltip = () => {
     if (!open) {

@@ -166,8 +166,13 @@ export const StakingProvider = ({
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
       const { data } = message;
+      const { task } = data;
+      if (task !== 'initialise_exposures') {
+        return;
+      }
       const {
         stakers,
+        totalStaked,
         totalActiveNominators,
         activeValidators,
         minActiveBond,
@@ -184,6 +189,7 @@ export const StakingProvider = ({
           {
             ...eraStakersRef.current,
             stakers,
+            totalStaked: new BN(totalStaked),
             // nominators,
             totalActiveNominators,
             activeValidators,
@@ -206,7 +212,6 @@ export const StakingProvider = ({
         [
           api.query.staking.counterForNominators,
           api.query.staking.counterForValidators,
-          api.query.staking.maxNominatorsCount,
           api.query.staking.maxValidatorsCount,
           api.query.staking.validatorCount,
           [api.query.staking.erasValidatorReward, previousEra],
@@ -217,7 +222,6 @@ export const StakingProvider = ({
         ([
           _totalNominators,
           _totalValidators,
-          _maxNominatorsCount,
           _maxValidatorsCount,
           _validatorCount,
           _lastReward,
@@ -235,7 +239,6 @@ export const StakingProvider = ({
             minNominatorBond: _minNominatorBond.toBn(),
             lastReward: _lastReward.unwrapOrDefault(new BN(0)),
             maxValidatorsCount: new BN(_maxValidatorsCount.toString()),
-            maxNominatorsCount: new BN(_maxNominatorsCount.toString()),
           });
         }
       );
@@ -257,7 +260,7 @@ export const StakingProvider = ({
     if (!isReady || metrics.activeEra.index === 0 || !api) {
       return;
     }
-    const _exposures = await api.query.staking.erasStakers.entries(
+    const exposuresRaw = await api.query.staking.erasStakers.entries(
       metrics.activeEra.index
     );
 
@@ -265,7 +268,7 @@ export const StakingProvider = ({
     setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
 
     // humanise exposures to send to worker
-    const exposures = _exposures.map(([_keys, _val]: AnyApi) => {
+    const exposures = exposuresRaw.map(([_keys, _val]: AnyApi) => {
       return {
         keys: _keys.toHuman(),
         val: _val.toHuman(),
@@ -274,6 +277,7 @@ export const StakingProvider = ({
 
     // worker to calculate stats
     worker.postMessage({
+      task: 'initialise_exposures',
       activeAccount,
       units: network.units,
       exposures,

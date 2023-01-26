@@ -15,12 +15,14 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
-import { ValidatorFilterProvider } from 'library/Filter/context';
 import { LargeItem } from 'library/Filter/LargeItem';
+import useUnstaking from 'library/Hooks/useUnstaking';
 import { SelectableWrapper } from 'library/List';
 import { ValidatorList } from 'library/ValidatorList';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { camelize } from 'Utils';
 import {
   GenerateNominationsInnerProps,
   Nominations,
@@ -28,9 +30,7 @@ import {
 import { useFetchMehods } from './useFetchMethods';
 import { GenerateOptionsWrapper } from './Wrappers';
 
-export const GenerateNominationsInner = (
-  props: GenerateNominationsInnerProps
-) => {
+export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
   // functional props
   const setters = props.setters ?? [];
   const defaultNominations = props.nominations;
@@ -39,6 +39,7 @@ export const GenerateNominationsInner = (
   const { openModalWith } = useModal();
   const { isReady, consts } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { isFastUnstaking } = useUnstaking();
   const { removeValidatorMetaBatch, validators, meta } = useValidators();
   const {
     fetch: fetchFromMethod,
@@ -46,6 +47,7 @@ export const GenerateNominationsInner = (
     available: availableToNominate,
   } = useFetchMehods();
   const { maxNominations } = consts;
+  const { t } = useTranslation('library');
 
   let { favoritesList } = useValidators();
   if (favoritesList === null) {
@@ -203,8 +205,8 @@ export const GenerateNominationsInner = (
   // accumulate generation methods
   const methods = [
     {
-      title: 'Optimal Selection',
-      subtitle: 'Selects a mix of majority active and inactive validators.',
+      title: t('optimalSelection'),
+      subtitle: t('optimalSelectionSubtitle'),
       icon: faChartPie as IconProp,
       onClick: () => {
         setMethod('Optimal Selection');
@@ -214,8 +216,8 @@ export const GenerateNominationsInner = (
       },
     },
     {
-      title: 'Active Low Commission',
-      subtitle: 'Gets a set of active validators with low commission.',
+      title: t('activeLowCommission'),
+      subtitle: t('activeLowCommissionSubtitle'),
       icon: faCoins as IconProp,
       onClick: () => {
         setMethod('Active Low Commission');
@@ -225,8 +227,8 @@ export const GenerateNominationsInner = (
       },
     },
     {
-      title: 'From Favorites',
-      subtitle: 'Gets a set of your favorite validators.',
+      title: t('fromFavorites'),
+      subtitle: t('fromFavoritesSubtitle'),
       icon: faHeart as IconProp,
       onClick: () => {
         setMethod('From Favorites');
@@ -236,8 +238,8 @@ export const GenerateNominationsInner = (
       },
     },
     {
-      title: 'Manual Selection',
-      subtitle: 'Add validators from scratch.',
+      title: t('manual_selection'),
+      subtitle: t('manualSelectionSubtitle'),
       icon: faUserEdit as IconProp,
       onClick: () => {
         setMethod('Manual');
@@ -250,19 +252,19 @@ export const GenerateNominationsInner = (
   // accumulate actions
   const actions = [
     {
-      title: 'Add From Favorites',
+      title: t('addFromFavorites'),
       onClick: cbAddNominations,
       onSelected: false,
       isDisabled: disabledAddFavorites,
     },
     {
-      title: `Remove Selected`,
+      title: `${t('removeSelected')}`,
       onClick: cbRemoveSelected,
       onSelected: true,
       isDisabled: () => false,
     },
     {
-      title: 'Parachain Validator',
+      title: t('parachainValidator'),
       onClick: () => addNominationByType('Parachain Validator'),
       onSelected: false,
       icon: faPlus,
@@ -271,7 +273,7 @@ export const GenerateNominationsInner = (
         !availableToNominate(nominations).parachainValidators.length,
     },
     {
-      title: 'Active Validator',
+      title: t('activeValidator'),
       onClick: () => addNominationByType('Active Validator'),
       onSelected: false,
       icon: faPlus,
@@ -280,7 +282,7 @@ export const GenerateNominationsInner = (
         !availableToNominate(nominations).activeValidators.length,
     },
     {
-      title: 'Random Validator',
+      title: t('randomValidator'),
       onClick: () => addNominationByType('Random Validator'),
       onSelected: false,
       icon: faPlus,
@@ -296,7 +298,7 @@ export const GenerateNominationsInner = (
         <SelectableWrapper>
           <button type="button" onClick={() => clearNominations()}>
             <FontAwesomeIcon icon={faTimes as IconProp} />
-            {method}
+            {t(`${camelize(method)}`)}
           </button>
 
           {['Active Low Commission', 'Optimal Selection'].includes(
@@ -312,7 +314,7 @@ export const GenerateNominationsInner = (
                 setFetching(true);
               }}
             >
-              Re-Generate
+              {t('reGenerate')}
             </button>
           )}
         </SelectableWrapper>
@@ -336,6 +338,7 @@ export const GenerateNominationsInner = (
                     transform="grow-2"
                     active={false}
                     onClick={m.onClick}
+                    disabled={isFastUnstaking}
                   />
                 ))}
               </GenerateOptionsWrapper>
@@ -369,14 +372,6 @@ export const GenerateNominationsInner = (
         )}
       </Wrapper>
     </>
-  );
-};
-
-export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
-  return (
-    <ValidatorFilterProvider>
-      <GenerateNominationsInner {...props} />
-    </ValidatorFilterProvider>
   );
 };
 

@@ -13,7 +13,9 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import BondedGraph from 'library/Graphs/Bonded';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
+import useUnstaking from 'library/Hooks/useUnstaking';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { useTranslation } from 'react-i18next';
 import { humanNumber, planckBnToUnit } from 'Utils';
 import { ButtonRowWrapper } from 'Wrappers';
 
@@ -27,6 +29,7 @@ export const ManageBond = () => {
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const ledger = getLedgerForStash(activeAccount);
+  const { isFastUnstaking } = useUnstaking();
   const { active }: { active: BN } = ledger;
 
   const allTransferOptions = getTransferOptions(activeAccount);
@@ -34,13 +37,13 @@ export const ManageBond = () => {
   const { freeBalance } = allTransferOptions;
   const { totalUnlocking, totalUnlocked, totalUnlockChuncks } =
     allTransferOptions.nominate;
-  const { active: activePool } = allTransferOptions.pool;
+  const { t } = useTranslation('pages');
 
   return (
     <>
       <CardHeaderWrapper>
         <h4>
-          Bonded Funds
+          {t('nominate.bondedFunds')}
           <OpenHelpIcon helpKey="Bonding" />
         </h4>
         <h2>
@@ -49,29 +52,27 @@ export const ManageBond = () => {
         <ButtonRowWrapper>
           <ButtonPrimary
             disabled={
-              inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
+              inSetup() ||
+              isSyncing ||
+              isReadOnlyAccount(activeAccount) ||
+              isFastUnstaking
             }
             marginRight
             onClick={() =>
-              openModalWith(
-                'UpdateBond',
-                { fn: 'add', bondType: 'stake' },
-                'small'
-              )
+              openModalWith('Bond', { bondType: 'stake' }, 'small')
             }
             text="+"
           />
           <ButtonPrimary
             disabled={
-              inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
+              inSetup() ||
+              isSyncing ||
+              isReadOnlyAccount(activeAccount) ||
+              isFastUnstaking
             }
             marginRight
             onClick={() =>
-              openModalWith(
-                'UpdateBond',
-                { fn: 'remove', bondType: 'stake' },
-                'small'
-              )
+              openModalWith('Unbond', { bondType: 'stake' }, 'small')
             }
             text="-"
           />
@@ -80,6 +81,7 @@ export const ManageBond = () => {
               inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
             }
             iconLeft={faLockOpen}
+            marginRight
             onClick={() =>
               openModalWith('UnlockChunks', { bondType: 'stake' }, 'small')
             }
@@ -91,7 +93,7 @@ export const ManageBond = () => {
         active={planckBnToUnit(active, units)}
         unlocking={planckBnToUnit(totalUnlocking, units)}
         unlocked={planckBnToUnit(totalUnlocked, units)}
-        free={planckBnToUnit(freeBalance.sub(activePool), units)}
+        free={planckBnToUnit(freeBalance, units)}
         inactive={inSetup()}
       />
     </>

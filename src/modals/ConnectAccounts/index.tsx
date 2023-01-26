@@ -3,6 +3,7 @@
 
 import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
+import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
 import { useEffect, useRef, useState } from 'react';
 import { Accounts } from './Accounts';
@@ -11,7 +12,8 @@ import { CardsWrapper, Wrapper } from './Wrappers';
 
 export const ConnectAccounts = () => {
   const modal = useModal();
-  const { activeAccount, extensions } = useConnect();
+  const { extensions } = useExtensions();
+  const { activeAccount } = useConnect();
   let { accounts } = useConnect();
   const { config } = modal;
   const _section = config?.section ?? null;
