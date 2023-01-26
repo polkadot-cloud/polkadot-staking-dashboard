@@ -68,7 +68,7 @@ export const SelectItems = ({ children }: any) => {
     handleAdjustHeight();
   }, [children, bodyRefs, containerRefs]);
 
-  // Resize event listener.
+  // Adjust height on window resize.
   useEffect(() => {
     window.addEventListener('resize', handleAdjustHeight);
     return () => {

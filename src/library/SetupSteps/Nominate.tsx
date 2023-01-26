@@ -40,22 +40,23 @@ export const Nominate = (props: NominationsProps) => {
         setupType={setupType}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <div style={{ marginTop: '0.5rem' }}>
-          <h4>{t('chooseValidators', { maxNominations })}</h4>
-          <GenerateNominations
-            batchKey={batchKey}
-            setters={[
-              {
-                current: {
-                  callable: true,
-                  fn: setterFn,
-                },
-                set: handleSetupUpdate,
+        <h4 style={{ marginTop: '0.5rem' }}>
+          {t('chooseValidators', { maxNominations })}
+        </h4>
+        <GenerateNominations
+          batchKey={batchKey}
+          setters={[
+            {
+              current: {
+                callable: true,
+                fn: setterFn,
               },
-            ]}
-            nominations={setup.nominations}
-          />
-        </div>
+              set: handleSetupUpdate,
+            },
+          ]}
+          nominations={setup.nominations}
+        />
+
         <Footer complete={setup.nominations.length > 0} setupType={setupType} />
       </MotionContainer>
     </>

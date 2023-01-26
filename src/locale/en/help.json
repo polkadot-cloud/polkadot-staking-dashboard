@@ -261,7 +261,7 @@
         ]
       ],
       "rewardDestination": [
-        "Reward Destination",
+        "Payout Destination",
         [
           "Your reward destination is where your rewards are sent to.",
           "Rewards can be automatically bonded on top of your current bond, or they can be sent to your stash, controller, or an external account of your choosing."

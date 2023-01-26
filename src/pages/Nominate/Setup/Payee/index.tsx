@@ -2,12 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
-  faArrowRightToBracket,
+  faArrowDown,
+  faArrowRightFromBracket,
   faRotate,
 } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
+import { Spacer } from 'library/Form/Wrappers';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
 import { Footer } from 'library/SetupSteps/Footer';
@@ -15,34 +17,32 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Spacer } from '../../Wrappers';
+import { AccountInput } from './AccountInput';
 
 export const Payee = ({ section }: SetupStepProps) => {
-  const { t } = useTranslation('pages');
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress('stake', activeAccount);
 
-  const options = ['Staked', 'Stash', 'Controller'];
+  const options = ['Staked', 'Stash', 'Account'];
   const buttons = [
     {
       index: 0,
-      title: t('nominate.backToStaking'),
-      subtitle: t('nominate.automaticallyBonded'),
+      title: 'Compound',
+      subtitle: 'Add payouts to your existing staked balance automatically.',
       icon: faRotate,
     },
     {
       index: 1,
-      title: t('nominate.toStash'),
-      subtitle: t('nominate.sentToStash'),
-      icon: faArrowRightToBracket,
+      title: 'To Staking Account',
+      subtitle: 'Payouts are sent to your account as free balance.',
+      icon: faArrowDown,
     },
     {
       index: 2,
-      title: t('nominate.toController'),
-      subtitle: t('nominate.sentToController'),
-      icon: faArrowRightToBracket,
+      title: 'To Another Account',
+      subtitle: 'Send payouts to another account as free balance.',
+      icon: faArrowRightFromBracket,
     },
   ];
 
@@ -74,12 +74,16 @@ export const Payee = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={setup.payee !== null}
-        title={t('nominate.rewardDestination') || ''}
+        title="Payout Destination"
         helpKey="Reward Destination"
         setupType="stake"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <Spacer />
+        <h4 style={{ marginTop: '0.5rem' }}>
+          Choose how payouts will be received. Payouts can either be compounded
+          or sent to an account as free balance.
+        </h4>
+
         <SelectItems>
           {buttons.map(({ index, title, subtitle, icon }: any, i: number) => (
             <SelectItem
@@ -92,6 +96,9 @@ export const Payee = ({ section }: SetupStepProps) => {
             />
           ))}
         </SelectItems>
+        <Spacer />
+        <AccountInput />
+
         <Footer complete={setup.payee !== null} setupType="stake" />
       </MotionContainer>
     </>
