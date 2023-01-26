@@ -7,6 +7,7 @@ import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
+import { Countdown } from 'library/Countdown';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useTimeLeft } from 'library/Hooks/useTimeLeft';
 import { fromNow, timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
@@ -119,6 +120,7 @@ export const Overview = forwardRef(
             setFromNow(fromNow(getDynamicTimeLeftFromEras(left)));
           }, [connectionStatus, activeEra]);
           const unlockingTimeLeft = timeleft.formatted;
+          // `${t('unlocksAfter')}`
 
           return (
             <ChunkWrapper key={`unlock_chunk_${i}`}>
@@ -126,9 +128,14 @@ export const Overview = forwardRef(
                 <section>
                   <h2>{`${planckToUnit(value, units)} ${network.unit}`}</h2>
                   <h4>
-                    {left <= 0
-                      ? t('unlocked')
-                      : `${t('unlocksAfter')} ${unlockingTimeLeft}`}
+                    {left <= 0 ? (
+                      t('unlocked')
+                    ) : (
+                      <>
+                        {t('unlocksAfter')}{' '}
+                        <Countdown timeleft={unlockingTimeLeft} />
+                      </>
+                    )}
                   </h4>
                 </section>
                 {isStaking && (
