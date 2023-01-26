@@ -1,0 +1,5 @@
+
+
+[context.production]
+  command = "yarn build && cp .netlify/_headers public/_headers"
+  publish = "public/"
