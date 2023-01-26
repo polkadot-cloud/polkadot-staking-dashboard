@@ -1,0 +1,4 @@
+/*
+  Content-Security-Policy: frame-ancestors 'self' https://staking-dashboard.polkadot.network
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
