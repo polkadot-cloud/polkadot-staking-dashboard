@@ -19,10 +19,9 @@ export const useSetup = () => React.useContext(SetupContext);
 
 export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   const { network } = useApi();
-  const { accounts: connectAccounts, activeAccount } = useConnect();
   const { inSetup } = useStaking();
-
   const { membership: poolMembership } = usePoolMemberships();
+  const { accounts: connectAccounts, activeAccount } = useConnect();
 
   // is the user actively on the setup page
   const [onNominatorSetup, setOnNominatorSetup] = useState<boolean>(false);

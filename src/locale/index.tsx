@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { AppVersion, DefaultLocale } from 'consts';
+import { DefaultLocale } from 'consts';
 import { enGB, zhCN } from 'date-fns/locale';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
@@ -45,17 +45,6 @@ export const fallbackResources = {
   ...pagesEn,
   ...tipsEn,
 };
-
-// check app version, wipe `lng_resources` if version is different.
-const localAppVersion = localStorage.getItem('app_version');
-if (localAppVersion !== AppVersion || process.env.NODE_ENV === 'development') {
-  localStorage.removeItem('lng_resources');
-  // localisation is currently the only feature that uses AppVersion.
-  // if more features require AppVersion in the future, this should be
-  // abstracted into a separate script that checks / updates AppVersion
-  // after any tidy up is completed.
-  localStorage.setItem('app_version', AppVersion);
-}
 
 // get initial language.
 const lng: string = getInitialLanguage();
