@@ -64,11 +64,26 @@ export const AccountWrapper = styled.div<{ activeInput?: boolean }>`
     }
   }
 
-  h5 {
-    color: ${textSecondary};
-    margin-top: 0.6rem;
-    > svg {
-      margin-right: 0.4rem;
+  .label {
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+    height: 2rem;
+    margin-top: 0.65rem;
+
+    h5 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: ${textSecondary};
+      max-width: 100%;
+      margin: 0;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      > svg {
+        margin-right: 0.4rem;
+      }
     }
   }
 `;

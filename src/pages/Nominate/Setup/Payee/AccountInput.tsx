@@ -93,27 +93,29 @@ export const AccountInput = () => {
             </div>
           </div>
         </div>
-        <h5>
-          {setup.payee === 'Account' ? (
-            <>
-              {value === '' ? (
-                'Insert a payout address'
-              ) : !valid ? (
-                'Not a valid address'
-              ) : (
-                <>
-                  <FontAwesomeIcon icon={faCheck} />
-                  Valid Address
-                </>
-              )}
-            </>
-          ) : (
-            <>
-              <FontAwesomeIcon icon={faCheck} />
-              {accountMeta?.name || ''}
-            </>
-          )}
-        </h5>
+        <div className="label">
+          <h5>
+            {setup.payee === 'Account' ? (
+              <>
+                {value === '' ? (
+                  'Insert a payout address'
+                ) : !valid ? (
+                  'Not a valid address'
+                ) : (
+                  <>
+                    <FontAwesomeIcon icon={faCheck} />
+                    Valid Address
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faCheck} />
+                {accountMeta?.name || ''}
+              </>
+            )}
+          </h5>
+        </div>
       </AccountWrapper>
     </>
   );
