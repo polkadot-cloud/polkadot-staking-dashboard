@@ -104,6 +104,7 @@
     "optimalSelection": "Optimal Selection",
     "optimalSelectionSubtitle": "Selects a mix of majority active and inactive validators.",
     "order": "Order",
+    "orderValidators": "Order Validators",
     "overSubscribed": "Over Subscribed",
     "overSubscribedMinReward": "Over subscribed: Minimum reward bond is",
     "page": "Page {{page}} of {{total}}",

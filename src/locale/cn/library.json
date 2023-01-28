@@ -102,6 +102,7 @@
     "optimalSelection": "最佳选择",
     "optimalSelectionSubtitle": "混合选择大多数活动和非活动验证人",
     "order": "顺序",
+    "orderValidators": "验证人排序",
     "overSubscribed": " 己超额认选",
     "overSubscribedMinReward": "超额认选：最低奖励质押为",
     "page": "{{page}} / {{total}}",
