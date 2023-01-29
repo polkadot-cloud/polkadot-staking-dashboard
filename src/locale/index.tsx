@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { DefaultLocale } from 'consts';
+import { AppVersion, DefaultLocale } from 'consts';
 import { enGB, zhCN } from 'date-fns/locale';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
@@ -45,6 +45,14 @@ export const fallbackResources = {
   ...pagesEn,
   ...tipsEn,
 };
+
+// Refresh local storage resources if in development, or if new app version is present.
+if (
+  localStorage.getItem('app_version') !== AppVersion ||
+  process.env.NODE_ENV === 'development'
+) {
+  localStorage.removeItem('lng_resources');
+}
 
 // get initial language.
 const lng: string = getInitialLanguage();
