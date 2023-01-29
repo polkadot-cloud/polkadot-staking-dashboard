@@ -1,20 +1,19 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  PoolCreateProgress,
-  SetupContextInterface,
-  StakeSetupProgress,
-} from './types';
+import { NominatorSetup, PoolSetup, SetupContextInterface } from './types';
 
-export const defaultStakeSetup: StakeSetupProgress = {
-  payee: null,
+export const defaultStakeSetup: NominatorSetup = {
+  payee: {
+    destination: null,
+    account: null,
+  },
   nominations: [],
   bond: '',
   section: 1,
 };
 
-export const defaultPoolSetup: PoolCreateProgress = {
+export const defaultPoolSetup: PoolSetup = {
   metadata: '',
   bond: '',
   nominations: [],
@@ -26,9 +25,9 @@ export const defaultSetupContext: SetupContextInterface = {
   // eslint-disable-next-line
   getSetupProgress: (a, b) => {},
   // eslint-disable-next-line
-  getStakeSetupProgressPercent: (a) => 0,
+  getNominatorSetupPercent: (a) => 0,
   // eslint-disable-next-line
-  getPoolSetupProgressPercent: (a) => 0,
+  getPoolSetupPercent: (a) => 0,
   // eslint-disable-next-line
   setActiveAccountSetup: (t, p) => {},
   // eslint-disable-next-line

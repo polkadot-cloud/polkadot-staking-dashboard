@@ -9,7 +9,12 @@ import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useStaking } from '../Staking';
 import * as defaults from './defaults';
-import { SetupContextInterface, SetupType } from './types';
+import {
+  NominatorSetup,
+  PoolSetup,
+  SetupContextInterface,
+  SetupType,
+} from './types';
 
 export const SetupContext = React.createContext<SetupContextInterface>(
   defaults.defaultSetupContext
@@ -84,7 +89,10 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   /*
    * Gets the stake setup progress for a connected account.
    */
-  const getSetupProgress = (type: SetupType, address: MaybeAccount) => {
+  const getSetupProgress = (
+    type: SetupType,
+    address: MaybeAccount
+  ): NominatorSetup | PoolSetup => {
     const progress = setupRef.current.find((s: any) => s.address === address);
     if (progress === undefined) {
       return type === 'stake'
@@ -97,26 +105,26 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   /*
    * Gets the stake setup progress as a percentage for an address.
    */
-  const getStakeSetupProgressPercent = (address: MaybeAccount) => {
+  const getNominatorSetupPercent = (address: MaybeAccount) => {
     if (!address) return 0;
-    const progress = getSetupProgress('stake', address);
-    const bond = unitToPlanck(progress.bond, network.units);
+    const progress = getSetupProgress('stake', address) as NominatorSetup;
+    const bond = unitToPlanck(progress?.bond || '0', network.units);
 
     const p = 33;
     let percentageComplete = 0;
     if (greaterThanZero(bond)) percentageComplete += p;
     if (progress.nominations.length) percentageComplete += p;
-    if (progress.payee !== null) percentageComplete += p;
+    if (progress.payee.destination !== null) percentageComplete += p;
     return percentageComplete;
   };
 
   /*
    * Gets the stake setup progress as a percentage for an address.
    */
-  const getPoolSetupProgressPercent = (address: MaybeAccount) => {
+  const getPoolSetupPercent = (address: MaybeAccount) => {
     if (!address) return 0;
-    const progress = getSetupProgress('pool', address);
-    const bond = unitToPlanck(progress.bond, network.units);
+    const progress = getSetupProgress('pool', address) as PoolSetup;
+    const bond = unitToPlanck(progress?.bond || '0', network.units);
 
     const p = 25;
     let percentageComplete = 0;
@@ -128,10 +136,12 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   /*
-   * Sets stake setup progress for an address.
-   * Updates localStorage followed by app state.
+   * Sets stake setup progress for an address. Updates localStorage followed by app state.
    */
-  const setActiveAccountSetup = (type: SetupType, progress: AnyJson) => {
+  const setActiveAccountSetup = (
+    type: SetupType,
+    progress: NominatorSetup | PoolSetup
+  ) => {
     if (!activeAccount) return;
 
     localStorage.setItem(
@@ -191,8 +201,8 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     <SetupContext.Provider
       value={{
         getSetupProgress,
-        getStakeSetupProgressPercent,
-        getPoolSetupProgressPercent,
+        getNominatorSetupPercent,
+        getPoolSetupPercent,
         setActiveAccountSetup,
         setActiveAccountSetupSection,
         setOnNominatorSetup,

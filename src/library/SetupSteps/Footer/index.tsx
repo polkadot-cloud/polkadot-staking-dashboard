@@ -9,9 +9,8 @@ import { FooterProps } from '../types';
 import { Wrapper } from './Wrapper';
 
 export const Footer = (props: FooterProps) => {
-  const { complete, setupType } = props;
   const { t } = useTranslation('library');
-
+  const { complete, setupType } = props;
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetupSection } = useSetup();
   const setup = getSetupProgress(setupType, activeAccount);

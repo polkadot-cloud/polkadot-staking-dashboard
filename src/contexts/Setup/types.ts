@@ -5,14 +5,21 @@ import { MaybeAccount, MaybeString } from 'types';
 
 export type SetupType = 'pool' | 'stake';
 
-export interface StakeSetupProgress {
-  payee: MaybeAccount;
+export type PayeeConfig = 'Staked' | 'Stash' | 'Account';
+
+export interface NominatorSetup {
+  payee: PayeeSetup;
   nominations: Array<any>;
   bond: MaybeString;
   section: number;
 }
 
-export interface PoolCreateProgress {
+export interface PayeeSetup {
+  destination: PayeeConfig | null;
+  account: MaybeAccount;
+}
+
+export interface PoolSetup {
   metadata: string;
   bond: string;
   nominations: Array<any>;
@@ -22,8 +29,8 @@ export interface PoolCreateProgress {
 
 export interface SetupContextInterface {
   getSetupProgress: (t: SetupType, a: MaybeAccount) => any;
-  getStakeSetupProgressPercent: (a: MaybeAccount) => number;
-  getPoolSetupProgressPercent: (a: MaybeAccount) => number;
+  getNominatorSetupPercent: (a: MaybeAccount) => number;
+  getPoolSetupPercent: (a: MaybeAccount) => number;
   setActiveAccountSetup: (t: SetupType, p: any) => void;
   setActiveAccountSetupSection: (t: SetupType, s: number) => void;
   setOnNominatorSetup: (v: boolean) => void;

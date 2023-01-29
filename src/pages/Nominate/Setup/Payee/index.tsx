@@ -6,9 +6,9 @@ import {
   faArrowRightFromBracket,
   faRotate,
 } from '@fortawesome/free-solid-svg-icons';
-import BigNumber from 'bignumber.js';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
+import { PayeeConfig, PayeeSetup } from 'contexts/Setup/types';
 import { Spacer } from 'library/Form/Wrappers';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
@@ -16,64 +16,85 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { MaybeAccount } from 'types';
 import { AccountInput } from './AccountInput';
+import { PayeeItem } from './types';
 
 export const Payee = ({ section }: SetupStepProps) => {
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
-  const setup = getSetupProgress('stake', activeAccount);
 
-  const options = ['Staked', 'Stash', 'Account'];
-  const buttons = [
+  const setup = getSetupProgress('stake', activeAccount);
+  const { payee } = setup;
+
+  // Store the current user-inputted custom payout account.
+  const [account, setAccount] = useState<MaybeAccount>(null);
+
+  const DefaultPayeeConfig: PayeeSetup = {
+    destination: 'Staked',
+    account: null,
+  };
+
+  const items: Array<PayeeItem> = [
     {
-      index: 0,
+      value: 'Staked',
       title: 'Compound',
       subtitle: 'Add payouts to your existing staked balance automatically.',
       icon: faRotate,
     },
     {
-      index: 1,
+      value: 'Stash',
       title: 'To Staking Account',
       subtitle: 'Payouts are sent to your account as free balance.',
       icon: faArrowDown,
     },
     {
-      index: 2,
+      value: 'Account',
       title: 'To Another Account',
       subtitle: 'Send payouts to another account as free balance.',
       icon: faArrowRightFromBracket,
     },
   ];
 
-  // set initial payee value to `Staked` if not yet set.
+  // determine whether this section is completed.
+  const isComplete = () =>
+    payee.destination !== null &&
+    !(payee.destination === 'Account' && payee.account === null);
 
+  // update setup progress with payee config.
+  const handleChangeDestination = (destination: PayeeConfig) => {
+    // set local value to update input element set setup payee
+    setActiveAccountSetup('stake', {
+      ...setup,
+      payee: { destination, account },
+    });
+  };
+
+  // update setup progress with payee account.
+  const handleChangeAccount = (newAccount: MaybeAccount) => {
+    // set local value to update input element set setup payee
+    setActiveAccountSetup('stake', {
+      ...setup,
+      payee: { ...payee, account: newAccount },
+    });
+  };
+
+  // set initial payee value to `Staked` if not yet set.
   useEffect(() => {
-    if (!setup.payee) {
+    if (!setup.payee || (!payee.destination && !payee.account)) {
       setActiveAccountSetup('stake', {
         ...setup,
-        payee: options[0],
+        payee: DefaultPayeeConfig,
       });
     }
   }, [activeAccount]);
-
-  const handleChangePayee = (i: number) => {
-    if (new BigNumber(i).isNaN() || i >= options.length) {
-      return;
-    }
-    // set local value to update input element
-    // set setup payee
-    setActiveAccountSetup('stake', {
-      ...setup,
-      payee: options[i],
-    });
-  };
 
   return (
     <>
       <Header
         thisSection={section}
-        complete={setup.payee !== null}
+        complete={isComplete()}
         title="Payout Destination"
         helpKey="Reward Destination"
         setupType="stake"
@@ -85,21 +106,24 @@ export const Payee = ({ section }: SetupStepProps) => {
         </h4>
 
         <SelectItems>
-          {buttons.map(({ index, title, subtitle, icon }: any, i: number) => (
+          {items.map((item: PayeeItem) => (
             <SelectItem
-              key={`payee_option_${i}`}
-              selected={setup.payee === options[index]}
-              title={title}
-              subtitle={subtitle}
-              icon={icon}
-              onClick={() => handleChangePayee(index)}
+              key={`payee_option_${item.value}`}
+              account={account}
+              setAccount={setAccount}
+              selected={setup.payee.destination === item.value}
+              onClick={() => handleChangeDestination(item.value)}
+              {...item}
             />
           ))}
         </SelectItems>
         <Spacer />
-        <AccountInput />
-
-        <Footer complete={setup.payee !== null} setupType="stake" />
+        <AccountInput
+          account={account}
+          setAccount={setAccount}
+          handleChange={handleChangeAccount}
+        />
+        <Footer complete={isComplete()} setupType="stake" />
       </MotionContainer>
     </>
   );

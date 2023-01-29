@@ -30,7 +30,6 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { txFeesValid } = useTxFees();
 
   const setup = getSetupProgress('stake', activeAccount);
-
   const { bond, nominations, payee } = setup;
 
   const getTxs = () => {
@@ -48,11 +47,18 @@ export const Summary = ({ section }: SetupStepProps) => {
       Id: activeAccount,
     };
 
+    const payeeToSubmit =
+      payee.destination === 'Account'
+        ? {
+            Account: payee.account,
+          }
+        : payee.destination;
+
     const bondToSubmit = unitToPlanck(bond, units);
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
     const txs = [
-      api.tx.staking.bond(controllerToSubmit, bondAsString, payee),
+      api.tx.staking.bond(controllerToSubmit, bondAsString, payeeToSubmit),
       api.tx.staking.nominate(targetsToSubmit),
     ];
     return api.tx.utility.batch(txs);
@@ -90,7 +96,11 @@ export const Summary = ({ section }: SetupStepProps) => {
               />{' '}
               &nbsp; {t('nominate.rewardDestination')}:
             </div>
-            <div>{payee}</div>
+            <div>
+              {payee.destination === 'Account'
+                ? `To account ${payee.account}`
+                : payee.destination}
+            </div>
           </section>
           <section>
             <div>

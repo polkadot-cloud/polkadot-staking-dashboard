@@ -32,8 +32,8 @@ export const Main = () => {
   const {
     onNominatorSetup,
     onPoolSetup,
-    getPoolSetupProgressPercent,
-    getStakeSetupProgressPercent,
+    getPoolSetupPercent,
+    getNominatorSetupPercent,
   }: SetupContextInterface = useSetup();
   const { isSyncing, sideMenuMinimised }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
@@ -59,7 +59,7 @@ export const Main = () => {
         // configure Stake action
         const warning = !isSyncing && controllerNotImported;
         const staking = !inNominatorSetup();
-        const setupPercent = getStakeSetupProgressPercent(activeAccount);
+        const setupPercent = getNominatorSetupPercent(activeAccount);
 
         if (staking) {
           _pages[i].action = {
@@ -86,7 +86,7 @@ export const Main = () => {
       if (uri === `${UriPrefix}/pools`) {
         // configure Pools action
         const inPool = membership;
-        const setupPercent = getPoolSetupProgressPercent(activeAccount);
+        const setupPercent = getPoolSetupPercent(activeAccount);
 
         if (inPool) {
           _pages[i].action = {
@@ -116,8 +116,8 @@ export const Main = () => {
     isSyncing,
     membership,
     inNominatorSetup(),
-    getStakeSetupProgressPercent(activeAccount),
-    getPoolSetupProgressPercent(activeAccount),
+    getNominatorSetupPercent(activeAccount),
+    getPoolSetupPercent(activeAccount),
     i18n.resolvedLanguage,
     onNominatorSetup,
     onPoolSetup,

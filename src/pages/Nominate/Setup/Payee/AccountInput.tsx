@@ -7,23 +7,28 @@ import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { useSetup } from 'contexts/Setup';
 import { Identicon } from 'library/Identicon';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { isValidAddress, remToUnit } from 'Utils';
+import { AccountInputProps } from './types';
 import { AccountWrapper } from './Wrappers';
 
-export const AccountInput = () => {
-  const { activeAccount, formatAccountSs58, accounts } = useConnect();
+export const AccountInput = ({
+  account,
+  setAccount,
+  handleChange,
+}: AccountInputProps) => {
   const { getSetupProgress } = useSetup();
+  const { activeAccount, formatAccountSs58, accounts } = useConnect();
+
   const setup = getSetupProgress('stake', activeAccount);
+  const { payee } = setup;
 
   const accountMeta = accounts.find(
     (a: ImportedAccount) => a.address === activeAccount
   );
 
-  // Store the current user-inputted custom payout account.
-  const [value, setValue] = useState<string>('');
   const accountDisplay =
-    setup.payee === 'Account' ? value : activeAccount || '';
+    payee.destination === 'Account' ? account : activeAccount || '';
 
   // Store whether input is currently active.
   const [inputActive, setInputActive] = useState<boolean>(false);
@@ -42,10 +47,26 @@ export const AccountInput = () => {
     }
   };
 
+  // Handle change of account value. Updates setup progress if the account is a valid value.
+  const handleChangeAccount = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newAddress = e.target.value;
+    const formatted = formatAccountSs58(newAddress) || newAddress || null;
+    const isValid = isValidAddress(formatted || '');
+
+    setValid(isValid);
+    setAccount(formatted);
+
+    if (isValid) {
+      handleChange(formatted);
+    } else {
+      handleChange(null);
+    }
+  };
+
   // Adjust width as ref values change.
   useEffect(() => {
     handleAdjustWidth();
-  }, [hiddenRef.current, showingRef.current, setup.payee]);
+  }, [hiddenRef.current, showingRef.current, payee.destination]);
 
   // Adjust width on window resize.
   useEffect(() => {
@@ -61,43 +82,37 @@ export const AccountInput = () => {
         <div className="inner">
           <h4>Payout Account:</h4>
           <div className="account">
-            {setup.payee === 'Account' && !valid ? (
+            {payee.destination === 'Account' && !valid ? (
               <div className="emptyIcon" />
             ) : (
-              <Identicon value={accountDisplay} size={remToUnit('2.5rem')} />
+              <Identicon
+                value={accountDisplay || ''}
+                size={remToUnit('2.5rem')}
+              />
             )}
             <div className="input" ref={showingRef}>
               <input
                 type="text"
                 placeholder="Payout Address"
-                disabled={setup.payee !== 'Account'}
-                value={accountDisplay}
+                disabled={payee.destination !== 'Account'}
+                value={accountDisplay || ''}
                 onFocus={() => setInputActive(true)}
                 onBlur={() => setInputActive(false)}
-                onChange={(e) => {
-                  const newAddress = e.target.value;
-                  const formatted = formatAccountSs58(newAddress) || newAddress;
-                  const isValid = isValidAddress(formatted);
-                  setValid(isValid);
-
-                  if (isValid) {
-                    setValue(formatted);
-                  } else {
-                    setValue(e.target.value);
-                  }
-                }}
+                onChange={handleChangeAccount}
               />
               <div ref={hiddenRef} className="hidden">
-                {setup.payee === 'Account' ? activeAccount : accountDisplay}
+                {payee.destination === 'Account'
+                  ? activeAccount
+                  : accountDisplay}
               </div>
             </div>
           </div>
         </div>
         <div className="label">
           <h5>
-            {setup.payee === 'Account' ? (
+            {payee.destination === 'Account' ? (
               <>
-                {value === '' ? (
+                {account === '' ? (
                   'Insert a payout address'
                 ) : !valid ? (
                   'Not a valid address'

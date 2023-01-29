@@ -36,7 +36,7 @@ export const Status = ({ height }: { height: number }) => {
   const { getBondedAccount } = useBalances();
   const { metrics } = useNetworkMetrics();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { setOnNominatorSetup, getStakeSetupProgressPercent }: any = useSetup();
+  const { setOnNominatorSetup, getNominatorSetupPercent }: any = useSetup();
   const { getNominationsStatus, staking, inSetup } = useStaking();
   const { checking, isExposed } = useFastUnstake();
   const { getFastUnstakeText, isUnstaking, isFastUnstaking } = useUnstaking();
@@ -67,7 +67,7 @@ export const Status = ({ height }: { height: number }) => {
 
   let startTitle = t('nominate.startNominating', { ns: 'pages' });
   if (inSetup()) {
-    const progress = getStakeSetupProgressPercent(activeAccount);
+    const progress = getNominatorSetupPercent(activeAccount);
     if (progress > 0) {
       startTitle += `: ${progress}%`;
     }
