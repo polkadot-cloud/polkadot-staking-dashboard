@@ -175,7 +175,6 @@
     "unstakeUnbond": "Unbond {{bond}} {{unit}}",
     "updateName": "Update the public name of the pool.",
     "updatePoolName": "Update Pool Name",
-    "updateRewardDestination": "Update Reward Destination",
     "valid": "Valid Address",
     "validatorMetrics": "Validator Metrics",
     "welcomeToReport": "Bug reports, feature requests and improvements are all welcome.",

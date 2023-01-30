@@ -82,7 +82,7 @@ export const UpdatePayee = () => {
   return (
     <>
       <Title
-        title={t('updateRewardDestination', { ns: 'modals' })}
+        title="Update Payout Destination"
         icon={faWallet}
         helpKey="Reward Destination"
       />

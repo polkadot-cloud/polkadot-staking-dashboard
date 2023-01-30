@@ -165,7 +165,6 @@
     "unstakeUnbond": "解除质押 {{bond}} {{unit}}",
     "updateName": "更改名称",
     "updatePoolName": "更改提名池名称",
-    "updateRewardDestination": "更新奖励地址",
     "valid": "可用地址",
     "validatorMetrics": "验证人指标",
     "welcomeToReport": "欢迎Bug报告、功能请求和改进.",
