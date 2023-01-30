@@ -18,7 +18,7 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useTranslation } from 'react-i18next';
-import { unitToPlanck } from 'Utils';
+import { clipAddress, unitToPlanck } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
@@ -95,11 +95,11 @@ export const Summary = ({ section }: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('nominate.rewardDestination')}:
+              &nbsp; Payout Destination:
             </div>
             <div>
               {payee.destination === 'Account'
-                ? `To account ${payee.account}`
+                ? `To Account ${clipAddress(payee.account)}`
                 : payee.destination}
             </div>
           </section>
@@ -109,9 +109,12 @@ export const Summary = ({ section }: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('nominate.nominate')}:
+              &nbsp; Nominating:
             </div>
-            <div>{nominations.length}</div>
+            <div>
+              {nominations.length} Validator
+              {nominations.length === 1 ? '' : 's'}
+            </div>
           </section>
           <section>
             <div>

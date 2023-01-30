@@ -17,7 +17,7 @@ export const SummaryWrapper = styled.div`
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
-    align-items: flex-end;
+    align-items: flex-start;
     border-bottom: 1px solid ${borderPrimary};
     margin-top: 1rem;
     padding: 0.5rem 0 0.75rem 0;
@@ -38,8 +38,12 @@ export const SummaryWrapper = styled.div`
       color: ${textSecondary};
       flex-grow: 1;
       display: flex;
-      flex-flow: row wrap;
-      align-items: center;
+      flex-flow: column nowrap;
+      align-items: flex-start;
+
+      p {
+        margin: 0.25rem 0;
+      }
     }
   }
 `;
