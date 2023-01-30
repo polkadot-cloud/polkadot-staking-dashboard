@@ -80,16 +80,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
         ([k]) => k !== address
       )
     );
-    // Update setups with updated progress.
-    localStorage.setItem(
-      type === 'stake' ? 'nominator_setups' : 'pool_setups',
-      JSON.stringify(updatedSetups)
-    );
-    if (type === 'stake') {
-      setNominatorSetups(updatedSetups);
-    } else {
-      setPoolSetups(updatedSetups);
-    }
+    setSetups(type, updatedSetups);
   };
 
   // Sets setup progress for an address. Updates localStorage followed by app state.
@@ -104,17 +95,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
       progress,
       activeAccount
     );
-    // Update setups with updated progress.
-    localStorage.setItem(
-      type === 'stake' ? 'nominator_setups' : 'pool_setups',
-      JSON.stringify(updatedSetups)
-    );
-
-    if (type === 'stake') {
-      setNominatorSetups(updatedSetups as NominatorSetups);
-    } else {
-      setPoolSetups(updatedSetups as PoolSetups);
-    }
+    setSetups(type, updatedSetups);
   };
 
   // Sets active setup section for an address.
@@ -128,16 +109,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
       activeAccount,
       section
     );
-    localStorage.setItem(
-      type === 'stake' ? 'nominator_setups' : 'pool_setups',
-      JSON.stringify(updatedSetups)
-    );
-
-    if (type === 'stake') {
-      setNominatorSetups(updatedSetups as NominatorSetups);
-    } else {
-      setPoolSetups(updatedSetups as PoolSetups);
-    }
+    setSetups(type, updatedSetups);
   };
 
   // Utility to update the progress item of either a nominator setup or pool setup,
@@ -193,7 +165,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     return percentage;
   };
 
-  // Utility to copy the current setup state based on setup type
+  // Utility to copy the current setup state based on setup type.
   const assignSetups = (type: SetupType) =>
     type === 'stake' ? { ...nominatorSetups } : { ...poolSetups };
 
@@ -208,6 +180,32 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   // Utility to get pool setups, type casted as PoolSetups.
   const localPoolSetups = () =>
     localStorageOrDefault('pool_setups', {}, true) as PoolSetups;
+
+  // Utility to update setups state depending on type.
+  const setSetups = (type: SetupType, setups: NominatorSetups | PoolSetups) => {
+    setLocalSetups(type, setups);
+
+    if (type === 'stake') {
+      setNominatorSetups(setups as NominatorSetups);
+    } else {
+      setPoolSetups(setups as PoolSetups);
+    }
+  };
+
+  // Utility to either update local setups or remove if empty.
+  const setLocalSetups = (
+    type: SetupType,
+    setups: NominatorSetups | PoolSetups
+  ) => {
+    const key = type === 'stake' ? 'nominator_setups' : 'pool_setups';
+    const setupsStr = JSON.stringify(setups);
+
+    if (setupsStr === '{}') {
+      localStorage.removeItem(key);
+    } else {
+      localStorage.setItem(key, setupsStr);
+    }
+  };
 
   // Move away from setup pages on completion / network change.
   useEffect(() => {
