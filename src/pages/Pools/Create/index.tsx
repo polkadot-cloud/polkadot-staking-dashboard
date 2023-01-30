@@ -4,7 +4,7 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useSetup } from 'contexts/Setup';
-import { defaultPoolSetup } from 'contexts/Setup/defaults';
+import { defaultPoolProgress } from 'contexts/Setup/defaults';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
@@ -40,7 +40,7 @@ export const Create = () => {
               text={t('pools.cancel')}
               onClick={() => {
                 setOnPoolSetup(false);
-                setActiveAccountSetup('pool', defaultPoolSetup);
+                setActiveAccountSetup('pool', defaultPoolProgress);
               }}
             />
           </span>

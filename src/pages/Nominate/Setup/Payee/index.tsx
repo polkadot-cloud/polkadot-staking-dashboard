@@ -26,7 +26,8 @@ export const Payee = ({ section }: SetupStepProps) => {
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
 
   const setup = getSetupProgress('stake', activeAccount);
-  const { payee } = setup;
+  const progress = setup.setup;
+  const { payee } = progress;
 
   // Store the current user-inputted custom payout account.
   const [account, setAccount] = useState<MaybeAccount>(payee.account);
@@ -66,7 +67,7 @@ export const Payee = ({ section }: SetupStepProps) => {
   const handleChangeDestination = (destination: PayeeConfig) => {
     // set local value to update input element set setup payee
     setActiveAccountSetup('stake', {
-      ...setup,
+      ...progress,
       payee: { destination, account },
     });
   };
@@ -75,16 +76,16 @@ export const Payee = ({ section }: SetupStepProps) => {
   const handleChangeAccount = (newAccount: MaybeAccount) => {
     // set local value to update input element set setup payee
     setActiveAccountSetup('stake', {
-      ...setup,
+      ...progress,
       payee: { ...payee, account: newAccount },
     });
   };
 
   // set initial payee value to `Staked` if not yet set.
   useEffect(() => {
-    if (!setup.payee || (!payee.destination && !payee.account)) {
+    if (!progress.payee || (!payee.destination && !payee.account)) {
       setActiveAccountSetup('stake', {
-        ...setup,
+        ...progress,
         payee: DefaultPayeeConfig,
       });
     }
@@ -111,7 +112,7 @@ export const Payee = ({ section }: SetupStepProps) => {
               key={`payee_option_${item.value}`}
               account={account}
               setAccount={setAccount}
-              selected={setup.payee.destination === item.value}
+              selected={progress.payee.destination === item.value}
               onClick={() => handleChangeDestination(item.value)}
               {...item}
             />

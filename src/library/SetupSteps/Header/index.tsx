@@ -9,10 +9,14 @@ import { useTranslation } from 'react-i18next';
 import { HeaderProps } from '../types';
 import { Wrapper } from './Wrapper';
 
-export const Header = (props: HeaderProps) => {
-  const { title, helpKey, complete, thisSection, setupType } = props;
+export const Header = ({
+  title,
+  helpKey,
+  complete,
+  thisSection,
+  setupType,
+}: HeaderProps) => {
   const { t } = useTranslation('library');
-
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetupSection } = useSetup();
   const setup = getSetupProgress(setupType, activeAccount);

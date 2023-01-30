@@ -1,9 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { NominatorSetup, PoolSetup, SetupContextInterface } from './types';
+import {
+  NominatorProgress,
+  PoolProgress,
+  SetupContextInterface,
+} from './types';
 
-export const defaultStakeSetup: NominatorSetup = {
+export const defaultNominatorProgress: NominatorProgress = {
   payee: {
     destination: null,
     account: null,
@@ -13,7 +17,7 @@ export const defaultStakeSetup: NominatorSetup = {
   section: 1,
 };
 
-export const defaultPoolSetup: PoolSetup = {
+export const defaultPoolProgress: PoolProgress = {
   metadata: '',
   bond: '',
   nominations: [],

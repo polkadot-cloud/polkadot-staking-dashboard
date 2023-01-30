@@ -12,7 +12,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useSetup } from 'contexts/Setup';
-import { defaultPoolSetup } from 'contexts/Setup/defaults';
+import { defaultPoolProgress } from 'contexts/Setup/defaults';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
@@ -38,8 +38,9 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { txFeesValid } = useTxFees();
 
   const setup = getSetupProgress('pool', activeAccount);
+  const progress = setup.setup;
 
-  const { metadata, bond, roles, nominations } = setup;
+  const { metadata, bond, roles, nominations } = progress;
 
   const getTxs = () => {
     if (
@@ -86,7 +87,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       addToPoolMembers(member);
 
       // reset localStorage setup progress
-      setActiveAccountSetup('pool', defaultPoolSetup);
+      setActiveAccountSetup('pool', defaultPoolProgress);
     },
   });
 

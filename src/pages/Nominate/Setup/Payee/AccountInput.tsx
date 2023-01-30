@@ -21,7 +21,7 @@ export const AccountInput = ({
   const { activeAccount, formatAccountSs58, accounts } = useConnect();
 
   const setup = getSetupProgress('stake', activeAccount);
-  const { payee } = setup;
+  const { payee } = setup.setup;
 
   const accountMeta = accounts.find(
     (a: ImportedAccount) => a.address === activeAccount

@@ -4,7 +4,7 @@
 import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useSetup } from 'contexts/Setup';
-import { defaultStakeSetup } from 'contexts/Setup/defaults';
+import { defaultNominatorProgress } from 'contexts/Setup/defaults';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
@@ -51,7 +51,7 @@ export const Setup = () => {
               onClick={() => {
                 removeVarFromUrlHash('f');
                 setOnNominatorSetup(false);
-                setActiveAccountSetup('stake', defaultStakeSetup);
+                setActiveAccountSetup('stake', defaultNominatorProgress);
               }}
             />
           </span>

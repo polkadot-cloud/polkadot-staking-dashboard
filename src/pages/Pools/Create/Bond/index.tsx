@@ -14,16 +14,16 @@ import { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const Bond = (props: SetupStepProps) => {
-  const { section } = props;
+export const Bond = ({ section }: SetupStepProps) => {
+  const { t } = useTranslation('pages');
   const { activeAccount } = useConnect();
   const { txFees } = useTxFees();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress('pool', activeAccount);
-  const { t } = useTranslation('pages');
+  const progress = setup.setup;
 
   // either free to bond or existing setup value
-  const initialBondValue = setup.bond === '0' ? '' : setup.bond;
+  const initialBondValue = progress.bond === '0' ? '' : progress.bond;
 
   // store local bond amount for form control
   const [bond, setBond] = useState<{ bond: string }>({
@@ -50,7 +50,7 @@ export const Bond = (props: SetupStepProps) => {
     // only update if Bond is currently active
     if (setup.section === section) {
       setActiveAccountSetup('pool', {
-        ...setup,
+        ...progress,
         bond: initialBondValue,
       });
     }
@@ -60,7 +60,7 @@ export const Bond = (props: SetupStepProps) => {
     <>
       <Header
         thisSection={section}
-        complete={setup.bond !== '0' && setup.bond !== ''}
+        complete={progress.bond !== '0' && progress.bond !== ''}
         title={t('pools.bond') || ''}
         helpKey="Bonding"
         setupType="pool"
@@ -75,7 +75,7 @@ export const Bond = (props: SetupStepProps) => {
           setters={[
             {
               set: handleSetupUpdate,
-              current: setup,
+              current: progress,
             },
             {
               set: setBond,

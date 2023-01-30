@@ -7,7 +7,16 @@ export type SetupType = 'pool' | 'stake';
 
 export type PayeeConfig = 'Staked' | 'Stash' | 'Account';
 
+export type NominatorSetups = {
+  [key: string]: NominatorSetup;
+};
+
 export interface NominatorSetup {
+  setup: NominatorProgress;
+  section: number;
+}
+
+export interface NominatorProgress {
   payee: PayeeSetup;
   nominations: Array<any>;
   bond: MaybeString;
@@ -19,7 +28,16 @@ export interface PayeeSetup {
   account: MaybeAccount;
 }
 
+export type PoolSetups = {
+  [key: string]: PoolSetup;
+};
+
 export interface PoolSetup {
+  setup: PoolProgress;
+  section: number;
+}
+
+export interface PoolProgress {
   metadata: string;
   bond: string;
   nominations: Array<any>;

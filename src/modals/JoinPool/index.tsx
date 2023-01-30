@@ -10,7 +10,7 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useSetup } from 'contexts/Setup';
-import { defaultPoolSetup } from 'contexts/Setup/defaults';
+import { defaultPoolProgress } from 'contexts/Setup/defaults';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
@@ -78,7 +78,7 @@ export const JoinPool = () => {
       addToPoolMembers(member);
 
       // reset localStorage setup progress
-      setActiveAccountSetup('pool', defaultPoolSetup);
+      setActiveAccountSetup('pool', defaultPoolProgress);
     },
   });
 

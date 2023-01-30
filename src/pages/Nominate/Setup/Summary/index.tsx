@@ -9,7 +9,7 @@ import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
-import { defaultStakeSetup } from 'contexts/Setup/defaults';
+import { defaultNominatorProgress } from 'contexts/Setup/defaults';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
@@ -30,7 +30,8 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { txFeesValid } = useTxFees();
 
   const setup = getSetupProgress('stake', activeAccount);
-  const { bond, nominations, payee } = setup;
+  const progress = setup.setup;
+  const { bond, nominations, payee } = progress;
 
   const getTxs = () => {
     if (!activeAccount || !api) {
@@ -71,7 +72,7 @@ export const Summary = ({ section }: SetupStepProps) => {
     callbackSubmit: () => {},
     callbackInBlock: () => {
       // reset localStorage setup progress
-      setActiveAccountSetup('stake', defaultStakeSetup);
+      setActiveAccountSetup('stake', defaultNominatorProgress);
     },
   });
 

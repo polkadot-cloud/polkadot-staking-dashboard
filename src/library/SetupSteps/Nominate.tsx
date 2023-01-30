@@ -11,18 +11,21 @@ import { useTranslation } from 'react-i18next';
 import { GenerateNominations } from '../GenerateNominations';
 import { NominationsProps } from './types';
 
-export const Nominate = (props: NominationsProps) => {
-  const { batchKey, setupType, section } = props;
-
+export const Nominate = ({
+  batchKey,
+  setupType,
+  section,
+}: NominationsProps) => {
+  const { t } = useTranslation('library');
   const { consts } = useApi();
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress(setupType, activeAccount);
+  const progress = setup.setup;
   const { maxNominations } = consts;
-  const { t } = useTranslation('library');
 
   const setterFn = () => {
-    return getSetupProgress(setupType, activeAccount);
+    return getSetupProgress(setupType, activeAccount).setup;
   };
 
   // handler for updating setup.bond
@@ -34,7 +37,7 @@ export const Nominate = (props: NominationsProps) => {
     <>
       <Header
         thisSection={section}
-        complete={setup.nominations.length > 0}
+        complete={progress.nominations.length > 0}
         title={t('nominate') || ''}
         helpKey="Nominating"
         setupType={setupType}
@@ -54,10 +57,13 @@ export const Nominate = (props: NominationsProps) => {
               set: handleSetupUpdate,
             },
           ]}
-          nominations={setup.nominations}
+          nominations={progress.nominations}
         />
 
-        <Footer complete={setup.nominations.length > 0} setupType={setupType} />
+        <Footer
+          complete={progress.nominations.length > 0}
+          setupType={setupType}
+        />
       </MotionContainer>
     </>
   );
