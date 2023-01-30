@@ -9,7 +9,6 @@ import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
-import { defaultNominatorProgress } from 'contexts/Setup/defaults';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
@@ -26,7 +25,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const { api, network } = useApi();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getSetupProgress, setActiveAccountSetup } = useSetup();
+  const { getSetupProgress, removeSetupProgress } = useSetup();
   const { items: payeeItems } = usePayeeConfig();
   const { txFeesValid } = useTxFees();
   const { units } = network;
@@ -73,8 +72,7 @@ export const Summary = ({ section }: SetupStepProps) => {
     shouldSubmit: true,
     callbackSubmit: () => {},
     callbackInBlock: () => {
-      // reset localStorage setup progress
-      setActiveAccountSetup('nominator', defaultNominatorProgress);
+      removeSetupProgress('nominator', activeAccount);
     },
   });
 
