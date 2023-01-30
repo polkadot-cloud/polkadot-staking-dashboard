@@ -12,7 +12,9 @@
     "payee": {
       "controller": "到Controller账户",
       "staked": "回到抵押中",
-      "stash": "到Stash账户"
+      "stash": "到Stash账户",
+      "account": "To Another Account",
+      "none": "None"
     },
     "payouts": "收益",
     "pools": "提名池",

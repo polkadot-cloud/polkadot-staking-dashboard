@@ -3,6 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
+import { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import {
   EraStakers,
   NominationStatuses,
@@ -81,6 +82,9 @@ export const StakingProvider = ({
   // handle staking metrics subscription
   useEffect(() => {
     if (isReady) {
+      if (stakingMetrics.unsub !== null) {
+        stakingMetrics.unsub();
+      }
       subscribeToStakingkMetrics();
     }
     return () => {
@@ -89,7 +93,7 @@ export const StakingProvider = ({
         stakingMetrics.unsub();
       }
     };
-  }, [isReady, activeEra]);
+  }, [isReady, activeEra, activeAccount]);
 
   // handle syncing with eraStakers
   useEffect(() => {
@@ -167,7 +171,26 @@ export const StakingProvider = ({
           api.query.staking.minNominatorBond,
           [api.query.staking.payee, activeAccount],
         ],
-        (q: AnyApi) =>
+        (q: AnyApi) => {
+          const payeeHuman = q[7].toHuman();
+
+          let payeeFinal: PayeeConfig;
+          if (typeof payeeHuman === 'string') {
+            const destination = payeeHuman as PayeeOptions;
+            payeeFinal = {
+              destination,
+              account: null,
+            };
+          } else {
+            const payeeEntry = Object.entries(payeeHuman);
+            const destination = `${payeeEntry[0][0]}` as PayeeOptions;
+            const account = `${payeeEntry[0][1]}` as MaybeAccount;
+            payeeFinal = {
+              destination,
+              account,
+            };
+          }
+
           setStakingMetrics({
             ...stakingMetrics,
             totalNominators: new BigNumber(q[0].toString()),
@@ -177,8 +200,9 @@ export const StakingProvider = ({
             lastReward: new BigNumber(q[4].toString()),
             lastTotalStake: new BigNumber(q[5].toString()),
             minNominatorBond: new BigNumber(q[6].toString()),
-            payee: q[7].toString(),
-          })
+            payee: payeeFinal,
+          });
+        }
       );
 
       setStakingMetrics({

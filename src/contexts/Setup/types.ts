@@ -5,7 +5,12 @@ import { PoolRoles } from 'contexts/Pools/types';
 import { ValidatorPrefs } from 'contexts/Validators/types';
 import { BondFor, MaybeAccount, MaybeString } from 'types';
 
-export type PayeeOptions = 'Staked' | 'Stash' | 'Account';
+export type PayeeOptions =
+  | 'Staked'
+  | 'Stash'
+  | 'Controller'
+  | 'Account'
+  | 'None';
 
 export type NominatorSetups = {
   [key: string]: NominatorSetup;

@@ -12,7 +12,9 @@
     "payee": {
       "controller": "To Controller Account",
       "staked": "Back to Staking",
-      "stash": "To Stash Account"
+      "stash": "To Stash Account",
+      "account": "To Another Account",
+      "none": "None"
     },
     "payouts": "Payouts",
     "pools": "Pools",

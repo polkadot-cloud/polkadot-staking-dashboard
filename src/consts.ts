@@ -19,7 +19,12 @@ export const EmptyH256 = new Uint8Array(32);
 export const ModPrefix = stringToU8a('modl');
 export const U32Opts = { bitLength: 32, isLe: true };
 
-export const PayeeStatus: Array<string> = ['Staked', 'Stash', 'Controller'];
+export const PayeeStatus: Array<string> = [
+  'Staked',
+  'Stash',
+  'Controller',
+  'Account',
+];
 
 export const InterfaceMaximumWidth = 1550;
 export const SideMenuMaximisedWidth = 185;

@@ -55,7 +55,7 @@ export const Status = ({ height }: { height: number }) => {
     .map(([k, v]: any) => (v === 'active' ? k : false))
     .filter((v) => v !== false);
 
-  const payeeStatus = PayeeStatus.find((item) => item === payee);
+  const payeeStatus = PayeeStatus.find((item) => item === payee.destination);
 
   const getPayeeStatus = () => {
     if (inSetup()) {
@@ -63,8 +63,8 @@ export const Status = ({ height }: { height: number }) => {
     }
     if (payeeStatus) {
       return (
-        payeeItems.find((p: PayeeItem) => p.value === payee)?.activeTitle ||
-        payeeStatus
+        payeeItems.find((p: PayeeItem) => p.value === payee.destination)
+          ?.activeTitle || payeeStatus
       );
     }
     return t('nominate.notAssigned', { ns: 'pages' });
@@ -135,9 +135,9 @@ export const Status = ({ height }: { height: number }) => {
         icon={
           (payee === null
             ? faCircle
-            : payee === 'Staked'
+            : payee.destination === 'Staked'
             ? faRedoAlt
-            : payee === 'None'
+            : payee.destination === 'None'
             ? faCircle
             : faWallet) as IconProp
         }

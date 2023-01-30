@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
+import { PayeeConfig } from 'contexts/Setup/types';
 import { MaybeAccount } from 'types';
 
 export interface StakingMetrics {
@@ -12,7 +13,7 @@ export interface StakingMetrics {
   validatorCount: BigNumber;
   maxValidatorsCount: BigNumber;
   minNominatorBond: BigNumber;
-  payee: string | null;
+  payee: PayeeConfig;
   unsub: { (): void } | null;
 }
 
