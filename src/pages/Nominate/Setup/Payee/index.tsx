@@ -96,6 +96,7 @@ export const Payee = ({ section }: SetupStepProps) => {
         </SelectItems>
         <Spacer />
         <AccountInput
+          payee={payee}
           account={account}
           setAccount={setAccount}
           handleChange={handleChangeAccount}

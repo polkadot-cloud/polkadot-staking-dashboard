@@ -5,7 +5,6 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
-import { useSetup } from 'contexts/Setup';
 import { Identicon } from 'library/Identicon';
 import React, { useEffect, useRef, useState } from 'react';
 import { isValidAddress, remToUnit } from 'Utils';
@@ -13,14 +12,12 @@ import { AccountInputProps } from './types';
 import { AccountWrapper } from './Wrappers';
 
 export const AccountInput = ({
+  payee,
   account,
   setAccount,
   handleChange,
 }: AccountInputProps) => {
-  const { getSetupProgress } = useSetup();
   const { activeAccount, formatAccountSs58, accounts } = useConnect();
-  const setup = getSetupProgress('nominator', activeAccount);
-  const { payee } = setup.progress;
 
   const accountMeta = accounts.find(
     (a: ImportedAccount) => a.address === activeAccount
