@@ -26,15 +26,14 @@ export const AccountInput = ({
   const accountMeta = accounts.find(
     (a: ImportedAccount) => a.address === activeAccount
   );
-
   const accountDisplay =
-    payee.destination === 'Account' ? account : activeAccount || '';
+    payee.destination === 'Account' ? account : activeAccount;
+
+  // store whether account value is valid.
+  const [valid, setValid] = useState<boolean>(isValidAddress(account || ''));
 
   // Store whether input is currently active.
   const [inputActive, setInputActive] = useState<boolean>(false);
-
-  // store whether account value is valid.
-  const [valid, setValid] = useState<boolean>(false);
 
   const hiddenRef = useRef<HTMLInputElement>(null);
   const showingRef = useRef<HTMLInputElement>(null);

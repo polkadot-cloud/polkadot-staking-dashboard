@@ -29,7 +29,7 @@ export const Payee = ({ section }: SetupStepProps) => {
   const { payee } = setup;
 
   // Store the current user-inputted custom payout account.
-  const [account, setAccount] = useState<MaybeAccount>(null);
+  const [account, setAccount] = useState<MaybeAccount>(payee.account);
 
   const DefaultPayeeConfig: PayeeSetup = {
     destination: 'Staked',
