@@ -61,9 +61,9 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     address: MaybeAccount
   ): NominatorSetup | PoolSetup => {
     const setup = Object.fromEntries(
-      Object.entries(type === 'stake' ? nominatorSetups : poolSetups).filter(
-        ([k]) => k === address
-      )
+      Object.entries(
+        type === 'nominator' ? nominatorSetups : poolSetups
+      ).filter(([k]) => k === address)
     );
     return (
       setup[address || ''] || {
@@ -76,9 +76,9 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   // Remove setup progress for an account.
   const removeSetupProgress = (type: SetupType, address: MaybeAccount) => {
     const updatedSetups = Object.fromEntries(
-      Object.entries(type === 'stake' ? nominatorSetups : poolSetups).filter(
-        ([k]) => k !== address
-      )
+      Object.entries(
+        type === 'nominator' ? nominatorSetups : poolSetups
+      ).filter(([k]) => k !== address)
     );
     setSetups(type, updatedSetups);
   };
@@ -137,7 +137,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   // Gets the stake setup progress as a percentage for an address.
   const getNominatorSetupPercent = (address: MaybeAccount) => {
     if (!address) return 0;
-    const setup = getSetupProgress('stake', address) as NominatorSetup;
+    const setup = getSetupProgress('nominator', address) as NominatorSetup;
     const { progress } = setup;
     const bond = unitToPlanck(progress?.bond || '0', network.units);
 
@@ -167,11 +167,11 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Utility to copy the current setup state based on setup type.
   const assignSetups = (type: SetupType) =>
-    type === 'stake' ? { ...nominatorSetups } : { ...poolSetups };
+    type === 'nominator' ? { ...nominatorSetups } : { ...poolSetups };
 
   // Utility to get the default progress based on type.
   const defaultProgress = (type: SetupType) =>
-    type === 'stake' ? defaultNominatorProgress : defaultPoolProgress;
+    type === 'nominator' ? defaultNominatorProgress : defaultPoolProgress;
 
   // Utility to get nominator setups, type casted as NominatorSetups.
   const localNominatorSetups = () =>
@@ -185,7 +185,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   const setSetups = (type: SetupType, setups: NominatorSetups | PoolSetups) => {
     setLocalSetups(type, setups);
 
-    if (type === 'stake') {
+    if (type === 'nominator') {
       setNominatorSetups(setups as NominatorSetups);
     } else {
       setPoolSetups(setups as PoolSetups);
@@ -197,7 +197,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     type: SetupType,
     setups: NominatorSetups | PoolSetups
   ) => {
-    const key = type === 'stake' ? 'nominator_setups' : 'pool_setups';
+    const key = type === 'nominator' ? 'nominator_setups' : 'pool_setups';
     const setupsStr = JSON.stringify(setups);
 
     if (setupsStr === '{}') {

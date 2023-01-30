@@ -32,7 +32,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { txFeesValid } = useTxFees();
   const { units } = network;
 
-  const setup = getSetupProgress('stake', activeAccount);
+  const setup = getSetupProgress('nominator', activeAccount);
   const { progress } = setup;
   const { bond, nominations, payee } = progress;
 
@@ -75,7 +75,7 @@ export const Summary = ({ section }: SetupStepProps) => {
     callbackSubmit: () => {},
     callbackInBlock: () => {
       // reset localStorage setup progress
-      setActiveAccountSetup('stake', defaultNominatorProgress);
+      setActiveAccountSetup('nominator', defaultNominatorProgress);
     },
   });
 
@@ -89,7 +89,7 @@ export const Summary = ({ section }: SetupStepProps) => {
         thisSection={section}
         complete={null}
         title={t('nominate.summary') || ''}
-        setupType="stake"
+        setupType="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (

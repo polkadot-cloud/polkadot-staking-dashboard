@@ -22,7 +22,7 @@ export const Payee = ({ section }: SetupStepProps) => {
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
 
-  const setup = getSetupProgress('stake', activeAccount);
+  const setup = getSetupProgress('nominator', activeAccount);
   const { progress } = setup;
   const { payee } = progress;
 
@@ -42,7 +42,7 @@ export const Payee = ({ section }: SetupStepProps) => {
   // update setup progress with payee config.
   const handleChangeDestination = (destination: PayeeOptions) => {
     // set local value to update input element set setup payee
-    setActiveAccountSetup('stake', {
+    setActiveAccountSetup('nominator', {
       ...progress,
       payee: { destination, account },
     });
@@ -51,7 +51,7 @@ export const Payee = ({ section }: SetupStepProps) => {
   // update setup progress with payee account.
   const handleChangeAccount = (newAccount: MaybeAccount) => {
     // set local value to update input element set setup payee
-    setActiveAccountSetup('stake', {
+    setActiveAccountSetup('nominator', {
       ...progress,
       payee: { ...payee, account: newAccount },
     });
@@ -60,7 +60,7 @@ export const Payee = ({ section }: SetupStepProps) => {
   // set initial payee value to `Staked` if not yet set.
   useEffect(() => {
     if (!payee || (!payee.destination && !payee.account)) {
-      setActiveAccountSetup('stake', {
+      setActiveAccountSetup('nominator', {
         ...progress,
         payee: DefaultPayeeConfig,
       });
@@ -74,7 +74,7 @@ export const Payee = ({ section }: SetupStepProps) => {
         complete={isComplete()}
         title="Payout Destination"
         helpKey="Reward Destination"
-        setupType="stake"
+        setupType="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <h4 style={{ marginTop: '0.5rem' }}>
@@ -100,7 +100,7 @@ export const Payee = ({ section }: SetupStepProps) => {
           setAccount={setAccount}
           handleChange={handleChangeAccount}
         />
-        <Footer complete={isComplete()} setupType="stake" />
+        <Footer complete={isComplete()} setupType="nominator" />
       </MotionContainer>
     </>
   );

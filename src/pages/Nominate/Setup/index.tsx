@@ -52,7 +52,7 @@ export const Setup = () => {
               onClick={() => {
                 removeVarFromUrlHash('f');
                 setOnNominatorSetup(false);
-                removeSetupProgress('stake', activeAccount);
+                removeSetupProgress('nominator', activeAccount);
               }}
             />
           </span>
@@ -70,7 +70,7 @@ export const Setup = () => {
           <Element name="nominate" style={{ position: 'absolute' }} />
           <Nominate
             batchKey="generate_nominations_inactive"
-            setupType="stake"
+            setupType="nominator"
             section={2}
           />
         </CardWrapper>

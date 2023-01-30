@@ -19,7 +19,7 @@ export const AccountInput = ({
 }: AccountInputProps) => {
   const { getSetupProgress } = useSetup();
   const { activeAccount, formatAccountSs58, accounts } = useConnect();
-  const setup = getSetupProgress('stake', activeAccount);
+  const setup = getSetupProgress('nominator', activeAccount);
   const { payee } = setup.progress;
 
   const accountMeta = accounts.find(

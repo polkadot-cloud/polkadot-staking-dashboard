@@ -20,7 +20,7 @@ export const Bond = ({ section }: SetupStepProps) => {
   const { activeAccount } = useConnect();
   const { txFees } = useTxFees();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
-  const setup = getSetupProgress('stake', activeAccount);
+  const setup = getSetupProgress('nominator', activeAccount);
   const { progress } = setup;
 
   // either free to bond or existing setup value
@@ -36,7 +36,7 @@ export const Bond = ({ section }: SetupStepProps) => {
 
   // handler for updating bond
   const handleSetupUpdate = (value: any) => {
-    setActiveAccountSetup('stake', value);
+    setActiveAccountSetup('nominator', value);
   };
 
   // update bond on account change
@@ -50,7 +50,7 @@ export const Bond = ({ section }: SetupStepProps) => {
   useEffect(() => {
     // only update if Bond is currently active
     if (setup.section === section) {
-      setActiveAccountSetup('stake', {
+      setActiveAccountSetup('nominator', {
         ...progress,
         bond: initialBondValue,
       });
@@ -64,7 +64,7 @@ export const Bond = ({ section }: SetupStepProps) => {
         complete={progress.bond !== '0' && progress.bond !== ''}
         title={t('nominate.bond') || ''}
         helpKey="Bonding"
-        setupType="stake"
+        setupType="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondFeedback
@@ -87,7 +87,7 @@ export const Bond = ({ section }: SetupStepProps) => {
           maxWidth
         />
         <NominateStatusBar value={new BigNumber(bond.bond)} />
-        <Footer complete={bondValid} setupType="stake" />
+        <Footer complete={bondValid} setupType="nominator" />
       </MotionContainer>
     </>
   );

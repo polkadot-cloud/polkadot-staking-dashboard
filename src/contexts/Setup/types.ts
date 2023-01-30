@@ -5,7 +5,7 @@ import { PoolRoles } from 'contexts/Pools/types';
 import { ValidatorPrefs } from 'contexts/Validators/types';
 import { MaybeAccount, MaybeString } from 'types';
 
-export type SetupType = 'pool' | 'stake';
+export type SetupType = 'pool' | 'nominator';
 
 export type PayeeOptions = 'Staked' | 'Stash' | 'Account';
 
