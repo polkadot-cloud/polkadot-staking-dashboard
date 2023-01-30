@@ -9,7 +9,7 @@ import {
   textSecondary,
 } from 'theme';
 
-export const AccountWrapper = styled.div<{ activeInput?: boolean }>`
+export const Wrapper = styled.div<{ activeInput?: boolean }>`
   > .inner {
     width: 100%;
     display: flex;

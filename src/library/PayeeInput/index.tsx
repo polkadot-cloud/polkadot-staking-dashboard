@@ -8,15 +8,15 @@ import { ImportedAccount } from 'contexts/Connect/types';
 import { Identicon } from 'library/Identicon';
 import React, { useEffect, useRef, useState } from 'react';
 import { isValidAddress, remToUnit } from 'Utils';
-import { AccountInputProps } from './types';
-import { AccountWrapper } from './Wrappers';
+import { PayeeInputProps } from './types';
+import { Wrapper } from './Wrapper';
 
-export const AccountInput = ({
+export const PayeeInput = ({
   payee,
   account,
   setAccount,
   handleChange,
-}: AccountInputProps) => {
+}: PayeeInputProps) => {
   const { activeAccount, formatAccountSs58, accounts } = useConnect();
 
   const accountMeta = accounts.find(
@@ -73,7 +73,7 @@ export const AccountInput = ({
 
   return (
     <>
-      <AccountWrapper activeInput={inputActive}>
+      <Wrapper activeInput={inputActive}>
         <div className="inner">
           <h4>Payout Account:</h4>
           <div className="account">
@@ -126,7 +126,7 @@ export const AccountInput = ({
             )}
           </h5>
         </div>
-      </AccountWrapper>
+      </Wrapper>
     </>
   );
 };

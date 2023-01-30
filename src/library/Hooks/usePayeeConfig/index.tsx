@@ -1,12 +1,21 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faArrowDown,
   faArrowRightFromBracket,
   faRotate,
 } from '@fortawesome/free-solid-svg-icons';
-import { PayeeItem } from 'pages/Nominate/Setup/Payee/types';
+import { PayeeOptions } from 'contexts/Setup/types';
+
+export interface PayeeItem {
+  icon: IconProp;
+  value: PayeeOptions;
+  title: string;
+  activeTitle: string;
+  subtitle: string;
+}
 
 export const usePayeeConfig = () => {
   const items: Array<PayeeItem> = [

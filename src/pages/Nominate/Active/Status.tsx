@@ -22,12 +22,11 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
-import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
+import { PayeeItem, usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
 import { Separator } from 'Wrappers';
-import { PayeeItem } from '../Setup/Payee/types';
 import { Controller } from './Controller';
 
 export const Status = ({ height }: { height: number }) => {

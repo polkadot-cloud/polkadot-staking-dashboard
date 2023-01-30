@@ -5,7 +5,8 @@ import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { Spacer } from 'library/Form/Wrappers';
-import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
+import { PayeeItem, usePayeeConfig } from 'library/Hooks/usePayeeConfig';
+import { PayeeInput } from 'library/PayeeInput';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
 import { Footer } from 'library/SetupSteps/Footer';
@@ -14,8 +15,6 @@ import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect, useState } from 'react';
 import { MaybeAccount } from 'types';
-import { AccountInput } from './AccountInput';
-import { PayeeItem } from './types';
 
 export const Payee = ({ section }: SetupStepProps) => {
   const { items } = usePayeeConfig();
@@ -95,7 +94,7 @@ export const Payee = ({ section }: SetupStepProps) => {
           ))}
         </SelectItems>
         <Spacer />
-        <AccountInput
+        <PayeeInput
           payee={payee}
           account={account}
           setAccount={setAccount}

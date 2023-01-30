@@ -13,14 +13,13 @@ import { defaultNominatorProgress } from 'contexts/Setup/defaults';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
-import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
+import { PayeeItem, usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useTranslation } from 'react-i18next';
 import { clipAddress, unitToPlanck } from 'Utils';
-import { PayeeItem } from '../Payee/types';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
