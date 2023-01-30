@@ -3,9 +3,7 @@
 
 import { PoolRoles } from 'contexts/Pools/types';
 import { ValidatorPrefs } from 'contexts/Validators/types';
-import { MaybeAccount, MaybeString } from 'types';
-
-export type SetupType = 'pool' | 'nominator';
+import { BondFor, MaybeAccount, MaybeString } from 'types';
 
 export type PayeeOptions = 'Staked' | 'Stash' | 'Account';
 
@@ -46,15 +44,15 @@ export interface PoolProgress {
 }
 
 export interface SetupContextInterface {
-  getSetupProgress: (t: SetupType, a: MaybeAccount) => any;
-  removeSetupProgress: (t: SetupType, a: MaybeAccount) => void;
+  getSetupProgress: (t: BondFor, a: MaybeAccount) => any;
+  removeSetupProgress: (t: BondFor, a: MaybeAccount) => void;
   getNominatorSetupPercent: (a: MaybeAccount) => number;
   getPoolSetupPercent: (a: MaybeAccount) => number;
   setActiveAccountSetup: (
-    t: SetupType,
+    t: BondFor,
     p: NominatorProgress | PoolProgress
   ) => void;
-  setActiveAccountSetupSection: (t: SetupType, s: number) => void;
+  setActiveAccountSetupSection: (t: BondFor, s: number) => void;
   setOnNominatorSetup: (v: boolean) => void;
   setOnPoolSetup: (v: boolean) => void;
   onNominatorSetup: boolean;

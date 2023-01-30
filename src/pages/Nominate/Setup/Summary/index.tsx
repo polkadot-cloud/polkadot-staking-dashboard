@@ -89,7 +89,7 @@ export const Summary = ({ section }: SetupStepProps) => {
         thisSection={section}
         complete={null}
         title={t('nominate.summary') || ''}
-        setupType="nominator"
+        bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (

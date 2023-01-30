@@ -74,7 +74,7 @@ export const Payee = ({ section }: SetupStepProps) => {
         complete={isComplete()}
         title="Payout Destination"
         helpKey="Reward Destination"
-        setupType="nominator"
+        bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <h4 style={{ marginTop: '0.5rem' }}>
@@ -100,7 +100,7 @@ export const Payee = ({ section }: SetupStepProps) => {
           setAccount={setAccount}
           handleChange={handleChangeAccount}
         />
-        <Footer complete={isComplete()} setupType="nominator" />
+        <Footer complete={isComplete()} bondFor="nominator" />
       </MotionContainer>
     </>
   );

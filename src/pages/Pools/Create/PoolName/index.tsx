@@ -58,7 +58,7 @@ export const PoolName = ({ section }: SetupStepProps) => {
         complete={progress.metadata !== ''}
         title={t('pools.poolName') || ''}
         // helpKey="Bonding"
-        setupType="pool"
+        bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <Input
@@ -75,7 +75,7 @@ export const PoolName = ({ section }: SetupStepProps) => {
             },
           ]}
         />
-        <Footer complete={valid} setupType="pool" />
+        <Footer complete={valid} bondFor="pool" />
       </MotionContainer>
     </>
   );

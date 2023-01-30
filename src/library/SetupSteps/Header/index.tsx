@@ -14,12 +14,12 @@ export const Header = ({
   helpKey,
   complete,
   thisSection,
-  setupType,
+  bondFor,
 }: HeaderProps) => {
   const { t } = useTranslation('library');
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetupSection } = useSetup();
-  const setup = getSetupProgress(setupType, activeAccount);
+  const setup = getSetupProgress(bondFor, activeAccount);
 
   return (
     <Wrapper>
@@ -37,7 +37,7 @@ export const Header = ({
                 <ButtonSecondary
                   text={t('update')}
                   onClick={() => {
-                    setActiveAccountSetupSection(setupType, thisSection);
+                    setActiveAccountSetupSection(bondFor, thisSection);
                   }}
                 />
               </span>

@@ -64,7 +64,7 @@ export const Bond = ({ section }: SetupStepProps) => {
         complete={progress.bond !== '0' && progress.bond !== ''}
         title={t('nominate.bond') || ''}
         helpKey="Bonding"
-        setupType="nominator"
+        bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondFeedback
@@ -87,7 +87,7 @@ export const Bond = ({ section }: SetupStepProps) => {
           maxWidth
         />
         <NominateStatusBar value={new BigNumber(bond.bond)} />
-        <Footer complete={bondValid} setupType="nominator" />
+        <Footer complete={bondValid} bondFor="nominator" />
       </MotionContainer>
     </>
   );

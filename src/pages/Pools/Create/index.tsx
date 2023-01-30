@@ -59,7 +59,7 @@ export const Create = () => {
           <Element name="nominate" style={{ position: 'absolute' }} />
           <Nominate
             batchKey="generate_nominations_create_pool"
-            setupType="pool"
+            bondFor="pool"
             section={2}
           />
         </CardWrapper>

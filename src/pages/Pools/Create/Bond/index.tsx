@@ -63,7 +63,7 @@ export const Bond = ({ section }: SetupStepProps) => {
         complete={progress.bond !== '0' && progress.bond !== ''}
         title={t('pools.bond') || ''}
         helpKey="Bonding"
-        setupType="pool"
+        bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondFeedback
@@ -86,7 +86,7 @@ export const Bond = ({ section }: SetupStepProps) => {
           maxWidth
         />
         <CreatePoolStatusBar value={new BigNumber(bond.bond)} />
-        <Footer complete={bondValid} setupType="pool" />
+        <Footer complete={bondValid} bondFor="pool" />
       </MotionContainer>
     </>
   );

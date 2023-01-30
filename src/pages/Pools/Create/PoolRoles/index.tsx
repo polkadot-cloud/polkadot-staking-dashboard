@@ -65,7 +65,7 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
         complete={progress.roles !== null}
         title={t('pools.roles') || ''}
         helpKey="Pool Roles"
-        setupType="pool"
+        bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <h4 style={{ margin: '0.5rem 0' }}>
@@ -95,7 +95,7 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
             },
           ]}
         />
-        <Footer complete={rolesValid} setupType="pool" />
+        <Footer complete={rolesValid} bondFor="pool" />
       </MotionContainer>
     </>
   );

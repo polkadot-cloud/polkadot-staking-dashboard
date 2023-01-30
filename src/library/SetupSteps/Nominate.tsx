@@ -11,26 +11,22 @@ import { useTranslation } from 'react-i18next';
 import { GenerateNominations } from '../GenerateNominations';
 import { NominationsProps } from './types';
 
-export const Nominate = ({
-  batchKey,
-  setupType,
-  section,
-}: NominationsProps) => {
+export const Nominate = ({ batchKey, bondFor, section }: NominationsProps) => {
   const { t } = useTranslation('library');
   const { consts } = useApi();
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
-  const setup = getSetupProgress(setupType, activeAccount);
+  const setup = getSetupProgress(bondFor, activeAccount);
   const { progress } = setup;
   const { maxNominations } = consts;
 
   const setterFn = () => {
-    return getSetupProgress(setupType, activeAccount).progress;
+    return getSetupProgress(bondFor, activeAccount).progress;
   };
 
   // handler for updating setup.bond
   const handleSetupUpdate = (value: any) => {
-    setActiveAccountSetup(setupType, value);
+    setActiveAccountSetup(bondFor, value);
   };
 
   return (
@@ -40,7 +36,7 @@ export const Nominate = ({
         complete={progress.nominations.length > 0}
         title={t('nominate') || ''}
         helpKey="Nominating"
-        setupType={setupType}
+        bondFor={bondFor}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <h4 style={{ marginTop: '0.5rem' }}>
@@ -60,10 +56,7 @@ export const Nominate = ({
           nominations={progress.nominations}
         />
 
-        <Footer
-          complete={progress.nominations.length > 0}
-          setupType={setupType}
-        />
+        <Footer complete={progress.nominations.length > 0} bondFor={bondFor} />
       </MotionContainer>
     </>
   );

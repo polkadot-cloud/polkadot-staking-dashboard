@@ -97,7 +97,7 @@ export const Summary = ({ section }: SetupStepProps) => {
         thisSection={section}
         complete={null}
         title={t('pools.summary') || ''}
-        setupType="pool"
+        bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
