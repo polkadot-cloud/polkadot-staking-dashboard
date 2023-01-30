@@ -26,10 +26,17 @@ export const MigrateProvider = ({
   const [done, setDone] = useState<boolean>(localAppVersion === AppVersion);
 
   // Removes the previous nominator setup objects from local storage.
-  const removeNominatorSetups = () =>
+  const removeDeprecatedNominatorSetups = () =>
     Object.values(NetworkList).forEach((n: any) => {
       for (const a of accounts)
         localStorage.removeItem(`${n.name}_stake_setup_${a.address}`);
+    });
+
+  // Removes the previous pool setup objects from local storage.
+  const removeDeprecatedPoolSetups = () =>
+    Object.values(NetworkList).forEach((n: any) => {
+      for (const a of accounts)
+        localStorage.removeItem(`${n.name}_pool_setup_${a.address}`);
     });
 
   useEffect(() => {
@@ -43,8 +50,9 @@ export const MigrateProvider = ({
 
         // Added in 1.0.4.
         //
-        // Remove legacy local nominator setup items.
-        removeNominatorSetups();
+        // Remove legacy local nominator setup and pool setup items.
+        removeDeprecatedNominatorSetups();
+        removeDeprecatedPoolSetups();
 
         // Finally,
         //
