@@ -13,21 +13,24 @@ import { defaultNominatorProgress } from 'contexts/Setup/defaults';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
+import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useTranslation } from 'react-i18next';
 import { clipAddress, unitToPlanck } from 'Utils';
+import { PayeeItem } from '../Payee/types';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const { api, network } = useApi();
-  const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
+  const { items: payeeItems } = usePayeeConfig();
   const { txFeesValid } = useTxFees();
+  const { units } = network;
 
   const setup = getSetupProgress('stake', activeAccount);
   const { progress } = setup;
@@ -76,6 +79,10 @@ export const Summary = ({ section }: SetupStepProps) => {
     },
   });
 
+  const payeeDisplay =
+    payeeItems.find((p: PayeeItem) => p.value === payee.destination)?.title ||
+    payee.destination;
+
   return (
     <>
       <Header
@@ -99,8 +106,8 @@ export const Summary = ({ section }: SetupStepProps) => {
             </div>
             <div>
               {payee.destination === 'Account'
-                ? `To Account ${clipAddress(payee.account)}`
-                : payee.destination}
+                ? `${payeeDisplay}: ${clipAddress(payee.account)}`
+                : payeeDisplay}
             </div>
           </section>
           <section>

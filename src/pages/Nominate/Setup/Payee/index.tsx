@@ -1,15 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  faArrowDown,
-  faArrowRightFromBracket,
-  faRotate,
-} from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { Spacer } from 'library/Form/Wrappers';
+import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
 import { Footer } from 'library/SetupSteps/Footer';
@@ -22,6 +18,7 @@ import { AccountInput } from './AccountInput';
 import { PayeeItem } from './types';
 
 export const Payee = ({ section }: SetupStepProps) => {
+  const { items } = usePayeeConfig();
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
 
@@ -36,27 +33,6 @@ export const Payee = ({ section }: SetupStepProps) => {
     destination: 'Staked',
     account: null,
   };
-
-  const items: Array<PayeeItem> = [
-    {
-      value: 'Staked',
-      title: 'Compound',
-      subtitle: 'Add payouts to your existing staked balance automatically.',
-      icon: faRotate,
-    },
-    {
-      value: 'Stash',
-      title: 'To Staking Account',
-      subtitle: 'Payouts are sent to your account as free balance.',
-      icon: faArrowDown,
-    },
-    {
-      value: 'Account',
-      title: 'To Another Account',
-      subtitle: 'Send payouts to another account as free balance.',
-      icon: faArrowRightFromBracket,
-    },
-  ];
 
   // determine whether this section is completed.
   const isComplete = () =>
