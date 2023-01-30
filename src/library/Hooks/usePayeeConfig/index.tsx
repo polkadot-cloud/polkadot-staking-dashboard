@@ -13,18 +13,21 @@ export const usePayeeConfig = () => {
     {
       value: 'Staked',
       title: 'Compound',
+      activeTitle: 'Compounding',
       subtitle: 'Add payouts to your existing staked balance automatically.',
       icon: faRotate,
     },
     {
       value: 'Stash',
       title: 'To Staking Account',
+      activeTitle: 'To Staking Account',
       subtitle: 'Payouts are sent to your account as free balance.',
       icon: faArrowDown,
     },
     {
       value: 'Account',
       title: 'To Another Account',
+      activeTitle: 'To Another Account',
       subtitle: 'Send payouts to another account as free balance.',
       icon: faArrowRightFromBracket,
     },

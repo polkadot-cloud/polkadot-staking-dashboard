@@ -22,10 +22,12 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
+import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
 import { Separator } from 'Wrappers';
+import { PayeeItem } from '../Setup/Payee/types';
 import { Controller } from './Controller';
 
 export const Status = ({ height }: { height: number }) => {
@@ -42,6 +44,7 @@ export const Status = ({ height }: { height: number }) => {
   const { getFastUnstakeText, isUnstaking, isFastUnstaking } = useUnstaking();
   const controller = getBondedAccount(activeAccount);
   const { getNominationStatus } = useNominationStatus();
+  const { items: payeeItems } = usePayeeConfig();
   const { fastUnstakeErasToCheckPerBlock } = metrics;
   const { payee } = staking;
 
@@ -60,7 +63,10 @@ export const Status = ({ height }: { height: number }) => {
       return t('nominate.notAssigned', { ns: 'pages' });
     }
     if (payeeStatus) {
-      return t(`payee.${payeeStatus?.toLowerCase()}`, { ns: 'base' });
+      return (
+        payeeItems.find((p: PayeeItem) => p.value === payee)?.activeTitle ||
+        payeeStatus
+      );
     }
     return t('nominate.notAssigned', { ns: 'pages' });
   };
@@ -125,7 +131,7 @@ export const Status = ({ height }: { height: number }) => {
       />
       <Separator />
       <Stat
-        label={t('nominate.rewardDestination', { ns: 'pages' })}
+        label="Payout Destination"
         helpKey="Reward Destination"
         icon={
           (payee === null

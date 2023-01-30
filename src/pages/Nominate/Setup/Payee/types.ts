@@ -10,6 +10,7 @@ export interface PayeeItem {
   icon: IconProp;
   value: PayeeOptions;
   title: string;
+  activeTitle: string;
   subtitle: string;
 }
 
