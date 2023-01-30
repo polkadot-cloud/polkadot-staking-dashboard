@@ -38,7 +38,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { txFeesValid } = useTxFees();
 
   const setup = getSetupProgress('pool', activeAccount);
-  const progress = setup.setup;
+  const { progress } = setup;
 
   const { metadata, bond, roles, nominations } = progress;
 

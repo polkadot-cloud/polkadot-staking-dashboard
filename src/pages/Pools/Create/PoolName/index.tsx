@@ -16,7 +16,7 @@ export const PoolName = ({ section }: SetupStepProps) => {
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress('pool', activeAccount);
-  const progress = setup.setup;
+  const { progress } = setup;
 
   const initialValue = progress.metadata;
 

@@ -21,11 +21,11 @@ export const Nominate = ({
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress(setupType, activeAccount);
-  const progress = setup.setup;
+  const { progress } = setup;
   const { maxNominations } = consts;
 
   const setterFn = () => {
-    return getSetupProgress(setupType, activeAccount).setup;
+    return getSetupProgress(setupType, activeAccount).progress;
   };
 
   // handler for updating setup.bond

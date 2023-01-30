@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
-import { PayeeConfig, PayeeSetup } from 'contexts/Setup/types';
+import { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { Spacer } from 'library/Form/Wrappers';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
@@ -26,13 +26,13 @@ export const Payee = ({ section }: SetupStepProps) => {
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
 
   const setup = getSetupProgress('stake', activeAccount);
-  const progress = setup.setup;
+  const { progress } = setup;
   const { payee } = progress;
 
   // Store the current user-inputted custom payout account.
   const [account, setAccount] = useState<MaybeAccount>(payee.account);
 
-  const DefaultPayeeConfig: PayeeSetup = {
+  const DefaultPayeeConfig: PayeeConfig = {
     destination: 'Staked',
     account: null,
   };
@@ -64,7 +64,7 @@ export const Payee = ({ section }: SetupStepProps) => {
     !(payee.destination === 'Account' && payee.account === null);
 
   // update setup progress with payee config.
-  const handleChangeDestination = (destination: PayeeConfig) => {
+  const handleChangeDestination = (destination: PayeeOptions) => {
     // set local value to update input element set setup payee
     setActiveAccountSetup('stake', {
       ...progress,
@@ -83,7 +83,7 @@ export const Payee = ({ section }: SetupStepProps) => {
 
   // set initial payee value to `Staked` if not yet set.
   useEffect(() => {
-    if (!progress.payee || (!payee.destination && !payee.account)) {
+    if (!payee || (!payee.destination && !payee.account)) {
       setActiveAccountSetup('stake', {
         ...progress,
         payee: DefaultPayeeConfig,
@@ -112,7 +112,7 @@ export const Payee = ({ section }: SetupStepProps) => {
               key={`payee_option_${item.value}`}
               account={account}
               setAccount={setAccount}
-              selected={progress.payee.destination === item.value}
+              selected={payee.destination === item.value}
               onClick={() => handleChangeDestination(item.value)}
               {...item}
             />

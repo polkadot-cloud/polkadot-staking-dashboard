@@ -30,7 +30,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { txFeesValid } = useTxFees();
 
   const setup = getSetupProgress('stake', activeAccount);
-  const progress = setup.setup;
+  const { progress } = setup;
   const { bond, nominations, payee } = progress;
 
   const getTxs = () => {

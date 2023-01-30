@@ -14,7 +14,6 @@ export const defaultNominatorProgress: NominatorProgress = {
   },
   nominations: [],
   bond: '',
-  section: 1,
 };
 
 export const defaultPoolProgress: PoolProgress = {
@@ -22,7 +21,6 @@ export const defaultPoolProgress: PoolProgress = {
   bond: '',
   nominations: [],
   roles: null,
-  section: 1,
 };
 
 export const defaultSetupContext: SetupContextInterface = {

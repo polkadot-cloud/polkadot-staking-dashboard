@@ -20,7 +20,7 @@ export const Bond = ({ section }: SetupStepProps) => {
   const { txFees } = useTxFees();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress('pool', activeAccount);
-  const progress = setup.setup;
+  const { progress } = setup;
 
   // either free to bond or existing setup value
   const initialBondValue = progress.bond === '0' ? '' : progress.bond;

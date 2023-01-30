@@ -68,7 +68,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
 
     return (
       setup[address || ''] || {
-        setup: defaultProgress(type),
+        progress: defaultProgress(type),
         section: 1,
       }
     );
@@ -106,7 +106,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     const setups = assignSetups(type);
     const updatedSetups = updateSetups(
       setups,
-      setups[activeAccount]?.setup ?? defaultProgress(type),
+      setups[activeAccount]?.progress ?? defaultProgress(type),
       activeAccount,
       section
     );
@@ -137,7 +137,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
 
     all[account] = {
       ...current,
-      setup: newSetup,
+      progress: newSetup,
       section,
     };
 
@@ -148,7 +148,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   const getNominatorSetupPercent = (address: MaybeAccount) => {
     if (!address) return 0;
     const setup = getSetupProgress('stake', address) as NominatorSetup;
-    const progress = setup.setup;
+    const { progress } = setup;
     const bond = unitToPlanck(progress?.bond || '0', network.units);
 
     const p = 33;
@@ -163,7 +163,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   const getPoolSetupPercent = (address: MaybeAccount) => {
     if (!address) return 0;
     const setup = getSetupProgress('pool', address) as PoolSetup;
-    const progress = setup.setup;
+    const { progress } = setup;
     const bond = unitToPlanck(progress?.bond || '0', network.units);
 
     const p = 25;

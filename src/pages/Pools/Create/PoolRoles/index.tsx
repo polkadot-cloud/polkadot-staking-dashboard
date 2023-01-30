@@ -16,7 +16,7 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress('pool', activeAccount);
-  const progress = setup.setup;
+  const { progress } = setup;
 
   // if no roles in setup already, inject `activeAccount` to be
   // root and depositor roles.
