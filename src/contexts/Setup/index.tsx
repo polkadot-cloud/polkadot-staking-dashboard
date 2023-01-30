@@ -65,13 +65,31 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
         ([k]) => k === address
       )
     );
-
     return (
       setup[address || ''] || {
         progress: defaultProgress(type),
         section: 1,
       }
     );
+  };
+
+  // Remove setup progress for an account.
+  const removeSetupProgress = (type: SetupType, address: MaybeAccount) => {
+    const updatedSetups = Object.fromEntries(
+      Object.entries(type === 'stake' ? nominatorSetups : poolSetups).filter(
+        ([k]) => k !== address
+      )
+    );
+    // Update setups with updated progress.
+    localStorage.setItem(
+      type === 'stake' ? 'nominator_setups' : 'pool_setups',
+      JSON.stringify(updatedSetups)
+    );
+    if (type === 'stake') {
+      setNominatorSetups(updatedSetups);
+    } else {
+      setPoolSetups(updatedSetups);
+    }
   };
 
   // Sets setup progress for an address. Updates localStorage followed by app state.
@@ -210,6 +228,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     <SetupContext.Provider
       value={{
         getSetupProgress,
+        removeSetupProgress,
         getNominatorSetupPercent,
         getPoolSetupPercent,
         setActiveAccountSetup,

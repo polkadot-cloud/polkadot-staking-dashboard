@@ -47,6 +47,7 @@ export interface PoolProgress {
 
 export interface SetupContextInterface {
   getSetupProgress: (t: SetupType, a: MaybeAccount) => any;
+  removeSetupProgress: (t: SetupType, a: MaybeAccount) => void;
   getNominatorSetupPercent: (a: MaybeAccount) => number;
   getPoolSetupPercent: (a: MaybeAccount) => number;
   setActiveAccountSetup: (

@@ -25,7 +25,9 @@ export const defaultPoolProgress: PoolProgress = {
 
 export const defaultSetupContext: SetupContextInterface = {
   // eslint-disable-next-line
-  getSetupProgress: (a, b) => {},
+  getSetupProgress: (a, b) => ({ section: 1, progress: defaultNominatorProgress}),
+  // eslint-disable-next-line
+  removeSetupProgress: (a, b) => {},
   // eslint-disable-next-line
   getNominatorSetupPercent: (a) => 0,
   // eslint-disable-next-line
