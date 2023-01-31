@@ -4,21 +4,25 @@
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
-import { PayeeStatus } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import { Dropdown } from 'library/Form/Dropdown';
 import { Warning } from 'library/Form/Warning';
+import { PayeeItem, usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
+import { SelectItems } from 'library/SelectItems';
+import { SelectItem } from 'library/SelectItems/Item';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { MaybeAccount } from 'types';
 import { FooterWrapper, PaddingWrapper, WarningsWrapper } from '../Wrappers';
+import { Header } from './Header';
 
 export const UpdatePayee = () => {
   const { t } = useTranslation();
@@ -29,39 +33,32 @@ export const UpdatePayee = () => {
   const controller = getBondedAccount(activeAccount);
   const { staking, getControllerNotImported } = useStaking();
   const { txFeesValid } = useTxFees();
+  const { getPayeeItems } = usePayeeConfig();
   const { payee } = staking;
 
-  const defaultSelected: any = PayeeStatus.find(
-    (item) => item === payee.destination
-  );
-  const [selected, setSelected]: any = useState(null);
-
-  // reset selected value on account change
-  useEffect(() => {
-    setSelected(null);
-  }, [activeAccount]);
-
-  // ensure selected key is valid
-  useEffect(() => {
-    const exists = PayeeStatus.find((item) => item === selected?.key);
-    setValid(exists !== undefined);
-  }, [selected]);
-
-  const handleOnChange = ({ selectedItem }: any) => {
-    setSelected(selectedItem);
+  // update setup progress with payee config.
+  const handleChangeDestination = (destination: PayeeOptions) => {
+    // set local value to update input element set setup payee
+    setSelected({ destination, account });
   };
 
-  // bond valid
+  // Store the current user-inputted custom payout account.
+  const [account, setAccount] = useState<MaybeAccount>(payee.account);
+
+  // Store the currently selected payee option.
+  const [selected, setSelected]: any = useState<PayeeConfig | null>(null);
+
+  // Store whether the selected option is valid.
   const [valid, setValid] = useState<boolean>(false);
 
-  // tx to submit
+  // Tx to submit.
   const getTx = () => {
     let tx = null;
 
     if (!api || !valid) {
       return tx;
     }
-    tx = api.tx.staking.setPayee(selected.key);
+    tx = api.tx.staking.setPayee(selected.destination);
     return tx;
   };
 
@@ -75,10 +72,34 @@ export const UpdatePayee = () => {
     callbackInBlock: () => {},
   });
 
-  // remove active payee option from selectable items
-  const payeeItems = PayeeStatus.filter((item) => {
-    return item !== defaultSelected;
-  });
+  // Reset selected value on account change.
+  useEffect(() => {
+    setSelected(null);
+  }, [activeAccount]);
+
+  // Inject default value after component mount.
+  useEffect(() => {
+    const defaultSelected = getPayeeItems(true).find(
+      (item) => item.value === payee.destination
+    );
+    setSelected(
+      defaultSelected
+        ? {
+            destination: defaultSelected.value,
+            account,
+          }
+        : null
+    );
+  }, []);
+
+  // Ensure selected item is valid on change.
+  useEffect(() => {
+    setValid(
+      getPayeeItems(true).find(
+        (item) => item.value === selected?.destination
+      ) !== undefined
+    );
+  }, [selected]);
 
   return (
     <>
@@ -100,22 +121,22 @@ export const UpdatePayee = () => {
               <Warning text={t('mustHaveControllerUpdate', { ns: 'modals' })} />
             </WarningsWrapper>
           )}
-          <Dropdown
-            items={payeeItems.map((p) => {
-              return {
-                key: p,
-                name: t(`payee.${p.toLowerCase()}`, { ns: 'base' }),
-              };
-            })}
-            onChange={handleOnChange}
-            placeholder={t('rewardDestination', { ns: 'modals' })}
-            value={selected}
-            current={{
-              key: defaultSelected,
-              name: t(`payee.${defaultSelected.toLowerCase()}`, { ns: 'base' }),
-            }}
-            height="17rem"
+          <Header
+            current={payee?.destination}
+            selected={selected?.destination}
           />
+          <SelectItems>
+            {getPayeeItems(true).map((item: PayeeItem) => (
+              <SelectItem
+                key={`payee_option_${item.value}`}
+                account={account}
+                setAccount={setAccount}
+                selected={selected?.destination === item.value}
+                onClick={() => handleChangeDestination(item.value)}
+                {...item}
+              />
+            ))}
+          </SelectItems>
           <div style={{ marginTop: '1rem' }}>
             <EstimatedTxFee />
           </div>
