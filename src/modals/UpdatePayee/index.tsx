@@ -16,6 +16,7 @@ import { Warning } from 'library/Form/Warning';
 import { PayeeItem, usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
+import { PayeeInput } from 'library/PayeeInput';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
 import { useEffect, useState } from 'react';
@@ -36,26 +37,40 @@ export const UpdatePayee = () => {
   const { getPayeeItems } = usePayeeConfig();
   const { payee } = staking;
 
-  // update setup progress with payee config.
-  const handleChangeDestination = (destination: PayeeOptions) => {
-    // set local value to update input element set setup payee
-    setSelected({ destination, account });
+  const DefaultSelected: PayeeConfig = {
+    destination: null,
+    account: null,
   };
 
   // Store the current user-inputted custom payout account.
   const [account, setAccount] = useState<MaybeAccount>(payee.account);
 
   // Store the currently selected payee option.
-  const [selected, setSelected]: any = useState<PayeeConfig | null>(null);
+  const [selected, setSelected]: any = useState<PayeeConfig>(DefaultSelected);
 
-  // Store whether the selected option is valid.
-  const [valid, setValid] = useState<boolean>(false);
+  // update setup progress with payee config.
+  const handleChangeDestination = (destination: PayeeOptions) => {
+    setSelected({ destination, account });
+  };
+
+  // update setup progress with payee account.
+  const handleChangeAccount = (newAccount: MaybeAccount) => {
+    setSelected({
+      destination: selected?.destination ?? null,
+      account: newAccount,
+    });
+  };
+
+  // determine whether this section is completed.
+  const isComplete = () =>
+    selected.destination !== null &&
+    !(selected.destination === 'Account' && selected.account === null);
 
   // Tx to submit.
   const getTx = () => {
     let tx = null;
 
-    if (!api || !valid) {
+    if (!api || !isComplete()) {
       return tx;
     }
     tx = api.tx.staking.setPayee(selected.destination);
@@ -65,7 +80,7 @@ export const UpdatePayee = () => {
   const { submitTx, submitting } = useSubmitExtrinsic({
     tx: getTx(),
     from: controller,
-    shouldSubmit: valid,
+    shouldSubmit: isComplete(),
     callbackSubmit: () => {
       setModalStatus(2);
     },
@@ -74,32 +89,26 @@ export const UpdatePayee = () => {
 
   // Reset selected value on account change.
   useEffect(() => {
-    setSelected(null);
+    setSelected(DefaultSelected);
   }, [activeAccount]);
 
   // Inject default value after component mount.
   useEffect(() => {
-    const defaultSelected = getPayeeItems(true).find(
+    const initialSelected = getPayeeItems(true).find(
       (item) => item.value === payee.destination
     );
     setSelected(
-      defaultSelected
+      initialSelected
         ? {
-            destination: defaultSelected.value,
+            destination: initialSelected.value,
             account,
           }
-        : null
+        : DefaultSelected
     );
   }, []);
 
   // Ensure selected item is valid on change.
-  useEffect(() => {
-    setValid(
-      getPayeeItems(true).find(
-        (item) => item.value === selected?.destination
-      ) !== undefined
-    );
-  }, [selected]);
+  useEffect(() => {}, [selected]);
 
   return (
     <>
@@ -131,12 +140,18 @@ export const UpdatePayee = () => {
                 key={`payee_option_${item.value}`}
                 account={account}
                 setAccount={setAccount}
-                selected={selected?.destination === item.value}
+                selected={selected.destination === item.value}
                 onClick={() => handleChangeDestination(item.value)}
                 {...item}
               />
             ))}
           </SelectItems>
+          <PayeeInput
+            payee={selected}
+            account={account}
+            setAccount={setAccount}
+            handleChange={handleChangeAccount}
+          />
           <div style={{ marginTop: '1rem' }}>
             <EstimatedTxFee />
           </div>
@@ -152,7 +167,7 @@ export const UpdatePayee = () => {
                 iconTransform="grow-2"
                 onClick={() => submitTx()}
                 disabled={
-                  !valid ||
+                  !isComplete() ||
                   submitting ||
                   getControllerNotImported(controller) ||
                   !txFeesValid

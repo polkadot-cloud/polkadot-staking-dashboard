@@ -25,7 +25,7 @@ export const HeaderWrapper = styled.div`
 
     > h4 {
       margin: 0;
-      padding: 0.6rem 1rem;
+      padding: 0.5rem 1rem;
     }
   }
 `;
