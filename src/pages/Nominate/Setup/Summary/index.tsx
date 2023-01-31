@@ -26,7 +26,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { api, network } = useApi();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getSetupProgress, removeSetupProgress } = useSetup();
-  const { items: payeeItems } = usePayeeConfig();
+  const { getPayeeItems } = usePayeeConfig();
   const { txFeesValid } = useTxFees();
   const { units } = network;
 
@@ -77,8 +77,8 @@ export const Summary = ({ section }: SetupStepProps) => {
   });
 
   const payeeDisplay =
-    payeeItems.find((p: PayeeItem) => p.value === payee.destination)?.title ||
-    payee.destination;
+    getPayeeItems().find((p: PayeeItem) => p.value === payee.destination)
+      ?.title || payee.destination;
 
   return (
     <>

@@ -10,7 +10,6 @@ import {
   faSignOutAlt,
   faWallet,
 } from '@fortawesome/free-solid-svg-icons';
-import { PayeeStatus } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -43,7 +42,7 @@ export const Status = ({ height }: { height: number }) => {
   const { getFastUnstakeText, isUnstaking, isFastUnstaking } = useUnstaking();
   const controller = getBondedAccount(activeAccount);
   const { getNominationStatus } = useNominationStatus();
-  const { items: payeeItems } = usePayeeConfig();
+  const { getPayeeItems } = usePayeeConfig();
   const { fastUnstakeErasToCheckPerBlock } = metrics;
   const { payee } = staking;
 
@@ -55,17 +54,16 @@ export const Status = ({ height }: { height: number }) => {
     .map(([k, v]: any) => (v === 'active' ? k : false))
     .filter((v) => v !== false);
 
-  const payeeStatus = PayeeStatus.find((item) => item === payee.destination);
-
   const getPayeeStatus = () => {
     if (inSetup()) {
       return t('nominate.notAssigned', { ns: 'pages' });
     }
-    if (payeeStatus) {
-      return (
-        payeeItems.find((p: PayeeItem) => p.value === payee.destination)
-          ?.activeTitle || payeeStatus
-      );
+    const status = getPayeeItems(true).find(
+      (p: PayeeItem) => p.value === payee.destination
+    )?.activeTitle;
+
+    if (status) {
+      return status;
     }
     return t('nominate.notAssigned', { ns: 'pages' });
   };

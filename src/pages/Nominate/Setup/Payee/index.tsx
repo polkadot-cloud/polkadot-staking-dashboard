@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
 import { MaybeAccount } from 'types';
 
 export const Payee = ({ section }: SetupStepProps) => {
-  const { items } = usePayeeConfig();
+  const { getPayeeItems } = usePayeeConfig();
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
 
@@ -82,7 +82,7 @@ export const Payee = ({ section }: SetupStepProps) => {
         </h4>
 
         <SelectItems>
-          {items.map((item: PayeeItem) => (
+          {getPayeeItems().map((item: PayeeItem) => (
             <SelectItem
               key={`payee_option_${item.value}`}
               account={account}
