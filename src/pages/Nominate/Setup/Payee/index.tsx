@@ -81,7 +81,7 @@ export const Payee = ({ section }: SetupStepProps) => {
           or sent to an account as free balance.
         </h4>
 
-        <SelectItems supportFlex>
+        <SelectItems flex>
           {getPayeeItems().map((item: PayeeItem) => (
             <SelectItem
               key={`payee_option_${item.value}`}
@@ -89,7 +89,7 @@ export const Payee = ({ section }: SetupStepProps) => {
               setAccount={setAccount}
               selected={payee.destination === item.value}
               onClick={() => handleChangeDestination(item.value)}
-              supportFlex
+              flex
               {...item}
             />
           ))}

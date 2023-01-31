@@ -10,7 +10,7 @@ export interface SelectItemProps {
   icon: AnyJson;
   selected: boolean;
   onClick: () => void;
-  supportFlex?: boolean;
+  flex?: boolean;
   hoverBorder?: boolean;
   grow?: boolean;
   disabled?: boolean;

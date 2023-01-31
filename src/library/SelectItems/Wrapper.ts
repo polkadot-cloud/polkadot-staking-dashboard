@@ -19,7 +19,7 @@ export const SelectItemsWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
 
-  &.supportFlex {
+  &.flex {
     /* Remove outer padding for 2-per-row layout */
     @media (min-width: ${TwoThreshold +
       1}px) and (max-width: ${ThreeRowThreshold}px) {
@@ -52,7 +52,7 @@ export const Wrapper = styled.div<{
   padding: 0.6rem;
   width: 100%;
 
-  &.supportFlex {
+  &.flex {
     width: 33.33%;
     flex-grow: ${(props) => (props.grow ? 1 : 0)};
 

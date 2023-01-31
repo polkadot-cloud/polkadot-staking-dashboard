@@ -13,7 +13,7 @@ export const SelectItem = ({
   icon,
   selected,
   onClick,
-  supportFlex = false,
+  flex = false,
   hoverBorder = false,
   grow = true,
   disabled = false,
@@ -26,7 +26,7 @@ export const SelectItem = ({
       selected={selected}
       grow={grow}
       hoverBorder={hoverBorder}
-      className={supportFlex ? 'supportFlex' : undefined}
+      className={flex ? 'flex' : undefined}
     >
       <div className="inner" ref={containerRef}>
         <button type="button" onClick={() => onClick()} disabled={disabled}>
