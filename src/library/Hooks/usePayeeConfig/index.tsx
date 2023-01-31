@@ -4,6 +4,7 @@
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faArrowDown,
+  faArrowRight,
   faArrowRightFromBracket,
   faRotate,
   faStop,
@@ -52,7 +53,7 @@ export const usePayeeConfig = () => {
           activeTitle: 'To Controller Account',
           subtitle:
             'Payouts are sent to your controller account as free balance.',
-          icon: faArrowDown as IconProp,
+          icon: faArrowRight,
         },
         {
           value: 'None',
