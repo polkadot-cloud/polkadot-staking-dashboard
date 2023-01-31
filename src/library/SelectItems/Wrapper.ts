@@ -19,24 +19,26 @@ export const SelectItemsWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
 
-  /* Remove outer padding for 2-per-row layout */
-  @media (min-width: ${TwoThreshold +
-    1}px) and (max-width: ${ThreeRowThreshold}px) {
-    > div:nth-child(2n) {
-      padding-right: 0;
+  &.supportFlex {
+    /* Remove outer padding for 2-per-row layout */
+    @media (min-width: ${TwoThreshold +
+      1}px) and (max-width: ${ThreeRowThreshold}px) {
+      > div:nth-child(2n) {
+        padding-right: 0;
+      }
+      > div:nth-child(2n + 1) {
+        padding-left: 0;
+      }
     }
-    > div:nth-child(2n + 1) {
-      padding-left: 0;
-    }
-  }
 
-  /* Remove outer padding for 3-per-row layout */
-  @media (min-width: ${ThreeRowThreshold + 1}px) {
-    > div:nth-child(3n) {
-      padding-right: 0;
-    }
-    > div:nth-child(3n + 1) {
-      padding-left: 0;
+    /* Remove outer padding for 3-per-row layout */
+    @media (min-width: ${ThreeRowThreshold + 1}px) {
+      > div:nth-child(3n) {
+        padding-right: 0;
+      }
+      > div:nth-child(3n + 1) {
+        padding-left: 0;
+      }
     }
   }
 `;
@@ -48,18 +50,22 @@ export const Wrapper = styled.div<{
   hoverBorder: boolean;
 }>`
   padding: 0.6rem;
-  width: 33.33%;
-  flex-grow: ${(props) => (props.grow ? 1 : 0)};
+  width: 100%;
 
-  /* flex basis for 2-per-row layout */
-  @media (min-width: ${TwoThreshold +
-    1}px) and (max-width: ${ThreeRowThreshold}px) {
-    width: 50%;
-  }
+  &.supportFlex {
+    width: 33.33%;
+    flex-grow: ${(props) => (props.grow ? 1 : 0)};
 
-  /* flex basis for 3-per-row layout */
-  @media (max-width: ${TwoThreshold}px) {
-    width: 100%;
+    /* flex basis for 2-per-row layout */
+    @media (min-width: ${TwoThreshold +
+      1}px) and (max-width: ${ThreeRowThreshold}px) {
+      width: 50%;
+    }
+
+    /* flex basis for 3-per-row layout */
+    @media (max-width: ${TwoThreshold}px) {
+      width: 100%;
+    }
   }
 
   > .inner {
