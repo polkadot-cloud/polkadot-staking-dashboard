@@ -43,6 +43,7 @@ export const Wrapper = styled.div<{ activeInput?: boolean }>`
         display: flex;
         flex-flow: column nowrap;
         margin-left: 0.75rem;
+        min-width: 150px;
         max-width: 100%;
 
         > input {
@@ -50,7 +51,11 @@ export const Wrapper = styled.div<{ activeInput?: boolean }>`
           font-size: 1.25rem;
           z-index: 1;
           font-variation-settings: 'wght' 550;
-          opacity: 0.9;
+          opacity: 1;
+
+          &:disabled {
+            opacity: 0.75;
+          }
         }
 
         .hidden {

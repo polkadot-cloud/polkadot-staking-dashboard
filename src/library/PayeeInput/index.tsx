@@ -3,6 +3,7 @@
 
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { Identicon } from 'library/Identicon';
@@ -18,12 +19,12 @@ export const PayeeInput = ({
   handleChange,
 }: PayeeInputProps) => {
   const { activeAccount, formatAccountSs58, accounts } = useConnect();
+  const { getBondedAccount } = useBalances();
+  const controller = getBondedAccount(activeAccount);
 
   const accountMeta = accounts.find(
     (a: ImportedAccount) => a.address === activeAccount
   );
-  const accountDisplay =
-    payee.destination === 'Account' ? account : activeAccount;
 
   // store whether account value is valid.
   const [valid, setValid] = useState<boolean>(isValidAddress(account || ''));
@@ -71,13 +72,29 @@ export const PayeeInput = ({
     };
   }, []);
 
+  // Show empty Identicon on `None` and invalid `Account` accounts.
+  const showEmpty =
+    payee.destination === 'None' || (payee.destination === 'Account' && !valid);
+
+  const accountDisplay =
+    payee.destination === 'Account'
+      ? account
+      : payee.destination === 'None'
+      ? ''
+      : payee.destination === 'Controller'
+      ? controller
+      : activeAccount;
+
+  const placeholderDisplay =
+    payee.destination === 'None' ? 'No Payout Address' : 'Payout Address';
+
   return (
     <>
       <Wrapper activeInput={inputActive}>
         <div className="inner">
           <h4>Payout Account:</h4>
           <div className="account">
-            {payee.destination === 'Account' && !valid ? (
+            {showEmpty ? (
               <div className="emptyIcon" />
             ) : (
               <Identicon
@@ -88,7 +105,7 @@ export const PayeeInput = ({
             <div className="input" ref={showingRef}>
               <input
                 type="text"
-                placeholder="Payout Address"
+                placeholder={placeholderDisplay}
                 disabled={payee.destination !== 'Account'}
                 value={accountDisplay || ''}
                 onFocus={() => setInputActive(true)}
