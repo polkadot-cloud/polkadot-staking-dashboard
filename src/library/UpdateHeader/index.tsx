@@ -6,7 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PayeeItem, usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { Wrapper } from './Wrapper';
 
-export const UpdateHeader = ({ current, selected }: any) => {
+interface UpdateHeaderProps {
+  current: string | null;
+  selected: string | null;
+}
+
+export const UpdateHeader = ({ current, selected }: UpdateHeaderProps) => {
   const { getPayeeItems } = usePayeeConfig();
 
   const currentTitle =
