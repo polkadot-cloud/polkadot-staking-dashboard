@@ -8,7 +8,7 @@ interface WrapperProps {
   paddingRight: boolean;
 }
 
-export const Wrapper = styled.div<WrapperProps>`
+export const ControllerWrapper = styled.div<WrapperProps>`
   display: flex;
   flex-flow: row wrap;
 

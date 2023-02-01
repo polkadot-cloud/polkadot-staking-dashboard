@@ -54,9 +54,6 @@ export const AccountDropdown = ({
   return (
     <StyledDownshift>
       <div>
-        <div className="label" {...c.getLabelProps()}>
-          {t('currentlySelected')}:
-        </div>
         <div>
           <div className="current">
             <div className="input-wrap selected">

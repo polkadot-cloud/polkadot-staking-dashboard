@@ -19,7 +19,7 @@ import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
 import { useTranslation } from 'react-i18next';
 import { clipAddress } from 'Utils';
-import { Wrapper } from './Wrapper';
+import { ControllerWrapper } from './Wrappers';
 
 export const Controller = ({ label }: { label: string }) => {
   const { t } = useTranslation('pages');
@@ -67,7 +67,7 @@ export const Controller = ({ label }: { label: string }) => {
           </button>
         ) : null}
       </h4>
-      <Wrapper paddingLeft={hasController()} paddingRight>
+      <ControllerWrapper paddingLeft={hasController()} paddingRight>
         <h2 className="hide-with-padding">
           <div className="icon">
             <Identicon value={controller || ''} size={26} />
@@ -88,7 +88,7 @@ export const Controller = ({ label }: { label: string }) => {
             />
           </div>
         </h2>
-      </Wrapper>
+      </ControllerWrapper>
     </StatWrapper>
   );
 };
