@@ -226,8 +226,6 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     setProvider(newProvider);
-
-    // TODO: simplify to just NetworkList[name]
     setNetwork({
       name,
       meta: NetworkList[name],
