@@ -115,7 +115,7 @@ export const UpdatePayee = () => {
       <Title
         title="Update Payout Destination"
         icon={faWallet}
-        helpKey="Reward Destination"
+        helpKey="Payout Destination"
       />
       <PaddingWrapper verticalOnly>
         <div

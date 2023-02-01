@@ -72,7 +72,7 @@ export const Payee = ({ section }: SetupStepProps) => {
         thisSection={section}
         complete={isComplete()}
         title="Payout Destination"
-        helpKey="Reward Destination"
+        helpKey="Payout Destination"
         bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>

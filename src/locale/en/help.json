@@ -260,11 +260,11 @@
           "Staking dashboard ensures that this amount of {NETWORK_UNIT} is never touched."
         ]
       ],
-      "rewardDestination": [
+      "payoutDestination": [
         "Payout Destination",
         [
-          "Your reward destination is where your rewards are sent to.",
-          "Rewards can be automatically bonded on top of your current bond, or they can be sent to your stash, controller, or an external account of your choosing."
+          "Your payout destination determines to which account your payouts are sent to.",
+          "Payouts can be automatically bonded on top of your current bond, or they can be sent to your stash, controller, or an external account of your choosing."
         ]
       ],
       "selfStake": [
@@ -316,7 +316,7 @@
     "externals": {
       "bondMore": "Bond More Tokens to Your Existing Stake",
       "changeAccount": "Changing your Controller Account",
-      "changeDestination": "Changing Your Reward Destination",
+      "changeDestination": "Changing Your Payout Destination",
       "changeNominations": "Changing Your Nominations",
       "chooseValidators": "How do I Know Which Validators to Choose?",
       "claimRewards": "Claiming Nomination Pool Rewards",

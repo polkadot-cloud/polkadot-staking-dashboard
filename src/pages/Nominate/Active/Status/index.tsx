@@ -129,7 +129,7 @@ export const Status = ({ height }: { height: number }) => {
       <Separator />
       <Stat
         label="Payout Destination"
-        helpKey="Reward Destination"
+        helpKey="Payout Destination"
         icon={
           (payee === null
             ? faCircle

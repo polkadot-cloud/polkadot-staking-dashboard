@@ -245,7 +245,7 @@
           "该应用确保账户永远不会低于这个数额."
         ]
       ],
-      "rewardDestination": [
+      "payoutDestination": [
         "奖励地址",
         [
           "奖励地址是奖励被发送到的地方.",
