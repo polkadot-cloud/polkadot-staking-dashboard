@@ -3,6 +3,7 @@
 
 import { UriPrefix } from 'consts';
 import Dashboard from 'pages/Dashboard';
+import { InvestorsView } from 'pages/Investors';
 import { PageCategories, PagesConfig } from 'types';
 
 export const PAGE_CATEGORIES: PageCategories = [
@@ -25,7 +26,7 @@ export const PAGES_CONFIG: PagesConfig = [
     key: 'Investors',
     uri: `${UriPrefix}/`,
     hash: '/investors',
-    Entry: Dashboard,
+    Entry: InvestorsView,
   },
   {
     category: 1,

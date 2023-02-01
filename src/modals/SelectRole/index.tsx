@@ -17,7 +17,7 @@ export const SelectRole = () => {
 
   const { setStatus } = useModal();
   const { api } = useApi();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { activeAccount } = useConnect();
   const { address } = useAccount();
   const { notifyError, notifySuccess } = useNotifications();
 
@@ -55,7 +55,7 @@ export const SelectRole = () => {
           {ROLES.map((_role, index) => (
             <h3 key={index}>
               <RoleButton
-                disabled={pending}
+                disabled={pending || submitting}
                 onClick={() => {
                   setPending(true);
                   selectRole(_role);
