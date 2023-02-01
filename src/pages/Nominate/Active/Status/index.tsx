@@ -1,12 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import {
   faBolt,
   faChevronCircleRight,
-  faRedoAlt,
   faSignOutAlt,
   faWallet,
 } from '@fortawesome/free-solid-svg-icons';
@@ -67,6 +64,11 @@ export const Status = ({ height }: { height: number }) => {
     }
     return t('nominate.notAssigned', { ns: 'pages' });
   };
+
+  const payeeIcon = inSetup()
+    ? undefined
+    : getPayeeItems(true).find((p: PayeeItem) => p.value === payee.destination)
+        ?.icon || faWallet;
 
   let startTitle = t('nominate.startNominating', { ns: 'pages' });
   if (inSetup()) {
@@ -130,15 +132,7 @@ export const Status = ({ height }: { height: number }) => {
       <Stat
         label="Payout Destination"
         helpKey="Payout Destination"
-        icon={
-          (payee === null
-            ? faCircle
-            : payee.destination === 'Staked'
-            ? faRedoAlt
-            : payee.destination === 'None'
-            ? faCircle
-            : faWallet) as IconProp
-        }
+        icon={payeeIcon}
         stat={getPayeeStatus()}
         buttons={
           !inSetup()
