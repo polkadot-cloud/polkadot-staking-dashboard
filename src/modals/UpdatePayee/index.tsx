@@ -26,7 +26,7 @@ import { MaybeAccount } from 'types';
 import { FooterWrapper, PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('modals');
   const { api } = useApi();
   const { activeAccount } = useConnect();
   const { getBondedAccount } = useBalances();
@@ -113,7 +113,7 @@ export const UpdatePayee = () => {
   return (
     <>
       <Title
-        title="Update Payout Destination"
+        title={t('updatePayoutDestination')}
         icon={faWallet}
         helpKey="Payout Destination"
       />
@@ -127,7 +127,7 @@ export const UpdatePayee = () => {
         >
           {getControllerNotImported(controller) && (
             <WarningsWrapper>
-              <Warning text={t('mustHaveControllerUpdate', { ns: 'modals' })} />
+              <Warning text={t('mustHaveControllerUpdate')} />
             </WarningsWrapper>
           )}
           <UpdateHeader
@@ -158,11 +158,7 @@ export const UpdatePayee = () => {
           <FooterWrapper>
             <div>
               <ButtonSubmit
-                text={`${
-                  submitting
-                    ? t('submitting', { ns: 'modals' })
-                    : t('submit', { ns: 'modals' })
-                }`}
+                text={`${submitting ? t('submitting') : t('submit')}`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
                 onClick={() => submitTx()}

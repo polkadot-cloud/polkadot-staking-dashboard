@@ -62,7 +62,12 @@
       "unstakePromptWaitingForUnlocks": "等待己解锁变为可提取",
       "update": "更改",
       "waitingForActiveNominations": "等待有效提名",
-      "yourNominations": "您的提名名单"
+      "yourNominations": "您的提名名单",
+      "payoutDestination": "Payout Destination",
+      "payoutDestinationSubtitle": "Choose how payouts will be received. Payouts can either be compounded or sent to an account as free balance.",
+      "nominating": "Nominating",
+      "validator_one": "{{count}} Validator",
+      "validator_other": "{{count}} Validators"
     },
     "overview": {
       "activeEra": "活跃 Era",

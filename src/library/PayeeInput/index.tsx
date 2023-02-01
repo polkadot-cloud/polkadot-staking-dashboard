@@ -8,6 +8,7 @@ import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { Identicon } from 'library/Identicon';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { isValidAddress, remToUnit } from 'Utils';
 import { PayeeInputProps } from './types';
 import { Wrapper } from './Wrapper';
@@ -18,6 +19,7 @@ export const PayeeInput = ({
   setAccount,
   handleChange,
 }: PayeeInputProps) => {
+  const { t } = useTranslation('library');
   const { activeAccount, formatAccountSs58, accounts } = useConnect();
   const { getBondedAccount } = useBalances();
   const controller = getBondedAccount(activeAccount);
@@ -86,13 +88,13 @@ export const PayeeInput = ({
       : activeAccount;
 
   const placeholderDisplay =
-    payee.destination === 'None' ? 'No Payout Address' : 'Payout Address';
+    payee.destination === 'None' ? t('noPayoutAddress') : t('payoutAddress');
 
   return (
     <>
       <Wrapper activeInput={inputActive}>
         <div className="inner">
-          <h4>Payout Account:</h4>
+          <h4>{t('payoutAccount')}:</h4>
           <div className="account">
             {showEmpty ? (
               <div className="emptyIcon" />
@@ -125,13 +127,13 @@ export const PayeeInput = ({
             {payee.destination === 'Account' ? (
               <>
                 {account === '' ? (
-                  'Insert a payout address'
+                  t('insertPayoutAddress')
                 ) : !valid ? (
-                  'Not a valid address'
+                  t('notValidAddress')
                 ) : (
                   <>
                     <FontAwesomeIcon icon={faCheck} />
-                    Valid Address
+                    {t('validAddress')}
                   </>
                 )}
               </>

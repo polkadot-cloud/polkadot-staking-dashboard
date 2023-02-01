@@ -144,6 +144,12 @@
     "viewPoolNominations": "View Pool Nominations",
     "waiting": "Waiting",
     "walletNotFound": "wallet not found",
-    "whenActivelyNominating": "when actively nominating."
+    "whenActivelyNominating": "when actively nominating.",
+    "payoutAddress": "Payout Adddress",
+    "noPayoutAddress": "No Payout Adddress",
+    "payoutAccount": "Payout Account",
+    "insertPayoutAddress": "Insert a payout address",
+    "notValidAddress": "Not a valid address",
+    "validAddress": "Valid address"
   }
 }

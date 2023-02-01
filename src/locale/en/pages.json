@@ -63,7 +63,12 @@
       "unstakePromptWaitingForUnlocks": "Waiting for unlocks to become available to withdraw.",
       "update": "Update",
       "waitingForActiveNominations": "Waiting for Active Nominations",
-      "yourNominations": "Your Nominations"
+      "yourNominations": "Your Nominations",
+      "payoutDestination": "Payout Destination",
+      "payoutDestinationSubtitle": "Choose how payouts will be received. Payouts can either be compounded or sent to an account as free balance.",
+      "nominating": "Nominating",
+      "validator_one": "{{count}} Validator",
+      "validator_other": "{{count}} Validators"
     },
     "overview": {
       "activeEra": "Active Era",

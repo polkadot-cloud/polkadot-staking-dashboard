@@ -10,6 +10,7 @@ import {
   faStop,
 } from '@fortawesome/free-solid-svg-icons';
 import { PayeeOptions } from 'contexts/Setup/types';
+import { useTranslation } from 'react-i18next';
 
 export interface PayeeItem {
   icon: IconProp;
@@ -20,27 +21,28 @@ export interface PayeeItem {
 }
 
 export const usePayeeConfig = () => {
+  const { t } = useTranslation('base');
   const getPayeeItems = (extended?: boolean): Array<PayeeItem> => {
     let items: Array<PayeeItem> = [
       {
         value: 'Staked',
-        title: 'Compound',
-        activeTitle: 'Compounding',
-        subtitle: 'Add payouts to your existing staked balance automatically.',
+        title: t('payee.staked.title', { context: 'default' }),
+        activeTitle: t('payee.staked.title', { context: 'active' }),
+        subtitle: t('payee.staked.subtitle'),
         icon: faRotate,
       },
       {
         value: 'Stash',
-        title: 'To Your Account',
-        activeTitle: 'To Staking Account',
-        subtitle: 'Payouts are sent to your account as free balance.',
+        title: t('payee.stash.title', { context: 'default' }),
+        activeTitle: t('payee.stash.title', { context: 'active' }),
+        subtitle: t('payee.stash.subtitle'),
         icon: faArrowDown,
       },
       {
         value: 'Account',
-        title: 'To Another Account',
-        activeTitle: 'To Another Account',
-        subtitle: 'Send payouts to another account as free balance.',
+        title: t('payee.account.title', { context: 'default' }),
+        activeTitle: t('payee.account.title', { context: 'active' }),
+        subtitle: t('payee.account.subtitle'),
         icon: faArrowRightFromBracket,
       },
     ];
@@ -49,17 +51,16 @@ export const usePayeeConfig = () => {
       items = items.concat([
         {
           value: 'Controller',
-          title: 'To Controller Account',
-          activeTitle: 'To Controller Account',
-          subtitle:
-            'Payouts are sent to your controller account as free balance.',
+          title: t('payee.controller.title', { context: 'default' }),
+          activeTitle: t('payee.controller.title', { context: 'active' }),
+          subtitle: t('payee.controller.subtitle'),
           icon: faArrowRight,
         },
         {
           value: 'None',
-          title: 'None',
-          activeTitle: 'Not Assigned',
-          subtitle: 'Have no payout destination set.',
+          title: t('payee.none.title', { context: 'default' }),
+          activeTitle: t('payee.none.title', { context: 'active' }),
+          subtitle: t('payee.none.subtitle'),
           icon: faStop,
         },
       ]);

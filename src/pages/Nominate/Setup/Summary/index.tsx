@@ -99,7 +99,7 @@ export const Summary = ({ section }: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; Payout Destination:
+              &nbsp; {t('nominate.payoutDestination')}:
             </div>
             <div>
               {payee.destination === 'Account'
@@ -113,12 +113,9 @@ export const Summary = ({ section }: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; Nominating:
+              &nbsp; {t('nominate.nominating')}:
             </div>
-            <div>
-              {nominations.length} Validator
-              {nominations.length === 1 ? '' : 's'}
-            </div>
+            <div>{t('nominate.validator', { count: nominations.length })}</div>
           </section>
           <section>
             <div>

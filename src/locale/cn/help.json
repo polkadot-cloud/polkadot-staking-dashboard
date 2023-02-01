@@ -204,10 +204,10 @@
         ]
       ],
       "payoutDestination": [
-        "奖励地址",
+        "Payout Destination",
         [
-          "奖励地址是奖励被发送到的地方.",
-          "奖励可以自动绑定到当前的绑定金额上,也可以发送到Stash、Controller或外部帐户上."
+          "Your payout destination determines to which account your payouts are sent to.",
+          "Payouts can be automatically bonded on top of your current bond, or they can be sent to your stash, controller, or an external account of your choosing."
         ]
       ],
       "payoutHistory": [

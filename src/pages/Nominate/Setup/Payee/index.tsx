@@ -14,9 +14,11 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { MaybeAccount } from 'types';
 
 export const Payee = ({ section }: SetupStepProps) => {
+  const { t } = useTranslation('pages');
   const { getPayeeItems } = usePayeeConfig();
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
@@ -71,14 +73,13 @@ export const Payee = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={isComplete()}
-        title="Payout Destination"
+        title={t('nominate.payoutDestination') || ''}
         helpKey="Payout Destination"
         bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <h4 style={{ marginTop: '0.5rem' }}>
-          Choose how payouts will be received. Payouts can either be compounded
-          or sent to an account as free balance.
+          {t('nominate.payoutDestinationSubtitle')}
         </h4>
 
         <SelectItems flex>

@@ -112,7 +112,6 @@
     "onceSubmitted": "Once submitted, you will start nominating your chosen validators.",
     "onceUnbonding": "Once unbonding, your funds to become available after {{bondDuration}} Eras.",
     "openFeedback": "Open Feedback on Canny.io",
-    "payoutDestination": "Payout Destination",
     "pool": "Pool",
     "poolIsNotNominating": "Pool is Not Nominating.",
     "poolName": "Pool Name",
@@ -183,6 +182,8 @@
     "withdrawMemberFunds": "Withdraw Member Funds",
     "withdrawUnlocked": "Withdraw Unlocked",
     "youMust_account": "You must have your account imported to stop nominating.",
-    "youMust_controller": "You must have your controller account imported to stop nominating."
+    "payoutDestination": "Payout Destination",
+    "youMust_controller": "You must have your controller account imported to stop nominating.",
+    "updatePayoutDestination": "Update Payout Destination"
   }
 }
