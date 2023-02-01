@@ -4,6 +4,7 @@
 import {
   faBolt,
   faChevronCircleRight,
+  faGear,
   faSignOutAlt,
   faWallet,
 } from '@fortawesome/free-solid-svg-icons';
@@ -139,6 +140,7 @@ export const Status = ({ height }: { height: number }) => {
             ? [
                 {
                   title: t('nominate.update', { ns: 'pages' }),
+                  icon: faGear,
                   small: true,
                   disabled:
                     inSetup() ||

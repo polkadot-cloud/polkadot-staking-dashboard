@@ -12,13 +12,11 @@
     "payee": {
       "account": {
         "subtitle": "Send payouts to another account as free balance.",
-        "title_active": "To Another Account",
-        "title_default": "To Another Account"
+        "title": "To Another Account"
       },
       "controller": {
         "subtitle": "Payouts are sent to your controller account as free balance.",
-        "title_active": "To Controller Account",
-        "title_default": "To Controller Account"
+        "title": "To Controller Account"
       },
       "none": {
         "subtitle": "Have no payout destination set.'",
@@ -32,8 +30,7 @@
       },
       "stash": {
         "subtitle": "Payouts are sent to your account as free balance.",
-        "title_active": "To Your Account",
-        "title_default": "To Your Account"
+        "title": "To Your Account"
       }
     },
     "payouts": "Payouts",

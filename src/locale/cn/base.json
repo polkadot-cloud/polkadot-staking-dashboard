@@ -12,13 +12,11 @@
     "payee": {
       "account": {
         "subtitle": "收益作为自由余额发到其他帐户",
-        "title_active": "转到其他帐户",
-        "title_default": "转到其他帐户"
+        "title": "转到其他帐户"
       },
       "controller": {
         "subtitle": "收益作为自由余额发到Controller帐户",
-        "title_active": "转到Controller帐户",
-        "title_default": "转到Controller帐户"
+        "title": "转到Controller帐户"
       },
       "none": {
         "subtitle": "未设置收益到账地址'",
@@ -32,8 +30,7 @@
       },
       "stash": {
         "subtitle": "收益作为自由余额发回账户",
-        "title_active": "转到您的帐户",
-        "title_default": "转到您的帐户"
+        "title": "转到您的帐户"
       }
     },
     "payouts": "收益",

@@ -33,16 +33,16 @@ export const usePayeeConfig = () => {
       },
       {
         value: 'Stash',
-        title: t('payee.stash.title', { context: 'default' }),
-        activeTitle: t('payee.stash.title', { context: 'active' }),
+        title: t('payee.stash.title'),
+        activeTitle: t('payee.stash.title'),
         subtitle: t('payee.stash.subtitle'),
         icon: faArrowDown,
       },
       {
         value: 'Account',
         title: t('payee.account.title', { context: 'default' }),
-        activeTitle: t('payee.account.title', { context: 'active' }),
-        subtitle: t('payee.account.subtitle'),
+        activeTitle: t('payee.account.title'),
+        subtitle: t('payee.account.title'),
         icon: faArrowRightFromBracket,
       },
     ];
@@ -51,8 +51,8 @@ export const usePayeeConfig = () => {
       items = items.concat([
         {
           value: 'Controller',
-          title: t('payee.controller.title', { context: 'default' }),
-          activeTitle: t('payee.controller.title', { context: 'active' }),
+          title: t('payee.controller.title'),
+          activeTitle: t('payee.controller.title'),
           subtitle: t('payee.controller.subtitle'),
           icon: faArrowRight,
         },
