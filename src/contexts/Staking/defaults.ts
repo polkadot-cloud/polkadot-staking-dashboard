@@ -22,7 +22,6 @@ export const stakingMetrics: StakingMetrics = {
     destination: null,
     account: null,
   },
-  unsub: null,
 };
 
 export const eraStakers: EraStakers = {

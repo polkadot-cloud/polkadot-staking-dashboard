@@ -50,20 +50,23 @@ export const StakingProvider = ({
   } = useBalances();
   const { maxNominatorRewardedPerValidator } = consts;
 
-  // store staking metrics in state
+  // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
     defaults.stakingMetrics
   );
 
-  // store stakers metadata in state
+  // Store unsub object fro staking metrics.
+  const [unsub, setUnsub] = useState<{ (): void } | null>(null);
+
+  // Store eras stakers in state.
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaults.eraStakers);
   const eraStakersRef = useRef(eraStakers);
 
-  // flags whether erasStakers is resyncing
+  // Flags whether `eraStakers` is resyncing.
   const [erasStakersSyncing, setErasStakersSyncing] = useState(false);
   const erasStakersSyncingRef = useRef(erasStakersSyncing);
 
-  // store account target validators
+  // Store target validators for the active account.
   const [targets, _setTargets] = useState<StakingTargets>(
     localStorageOrDefault<StakingTargets>(
       `${activeAccount ?? ''}_targets`,
@@ -82,15 +85,14 @@ export const StakingProvider = ({
   // handle staking metrics subscription
   useEffect(() => {
     if (isReady) {
-      if (stakingMetrics.unsub !== null) {
-        stakingMetrics.unsub();
+      if (unsub !== null) {
+        unsub();
       }
       subscribeToStakingkMetrics();
     }
     return () => {
-      // unsubscribe from staking metrics
-      if (stakingMetrics.unsub !== null) {
-        stakingMetrics.unsub();
+      if (unsub !== null) {
+        unsub();
       }
     };
   }, [isReady, activeEra, activeAccount]);
@@ -159,8 +161,7 @@ export const StakingProvider = ({
     if (api !== null && isReady && activeEra.index !== 0) {
       const previousEra = activeEra.index - 1;
 
-      // subscribe to staking metrics
-      const unsub = await api.queryMulti<AnyApi>(
+      const u = await api.queryMulti<AnyApi>(
         [
           api.query.staking.counterForNominators,
           api.query.staking.counterForValidators,
@@ -173,7 +174,6 @@ export const StakingProvider = ({
         ],
         (q: AnyApi) => {
           setStakingMetrics({
-            ...stakingMetrics,
             totalNominators: new BigNumber(q[0].toString()),
             totalValidators: new BigNumber(q[1].toString()),
             maxValidatorsCount: new BigNumber(q[2].toString()),
@@ -186,10 +186,7 @@ export const StakingProvider = ({
         }
       );
 
-      setStakingMetrics({
-        ...stakingMetrics,
-        unsub,
-      });
+      setUnsub(u);
     }
   };
 

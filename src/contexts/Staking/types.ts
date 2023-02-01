@@ -14,7 +14,6 @@ export interface StakingMetrics {
   maxValidatorsCount: BigNumber;
   minNominatorBond: BigNumber;
   payee: PayeeConfig;
-  unsub: { (): void } | null;
 }
 
 export interface EraStakers {
