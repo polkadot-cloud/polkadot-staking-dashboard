@@ -57,6 +57,7 @@ export const StakingProvider = ({
 
   // Store unsub object fro staking metrics.
   const [unsub, setUnsub] = useState<{ (): void } | null>(null);
+  const unsubRef = useRef(unsub);
 
   // Store eras stakers in state.
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaults.eraStakers);
@@ -85,17 +86,21 @@ export const StakingProvider = ({
   // handle staking metrics subscription
   useEffect(() => {
     if (isReady) {
-      if (unsub !== null) {
-        unsub();
-      }
+      unsubscribeMetrics();
       subscribeToStakingkMetrics();
     }
     return () => {
-      if (unsub !== null) {
-        unsub();
-      }
+      unsubscribeMetrics();
     };
   }, [isReady, activeEra, activeAccount]);
+
+  // Handle metrics unsubscribe.
+  const unsubscribeMetrics = () => {
+    if (unsubRef.current !== null) {
+      unsubRef.current();
+      setUnsub(null);
+    }
+  };
 
   // handle syncing with eraStakers
   useEffect(() => {
