@@ -14,7 +14,7 @@ export const ControllerWrapper = styled.div<WrapperProps>`
 
   > .hide-with-padding {
     padding-left: ${(props) => (props.paddingLeft ? '3rem' : '0')};
-    padding-right: ${(props) => (props.paddingRight ? '8.2rem' : '0')};
+    padding-right: ${(props) => (props.paddingRight ? '6.5rem' : '0')};
     padding-top: 0.4rem;
     padding-bottom: 0.4rem;
     flex-shrink: 1;
