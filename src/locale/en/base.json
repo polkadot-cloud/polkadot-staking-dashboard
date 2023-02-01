@@ -12,7 +12,7 @@
     "payee": {
       "staked": {
         "title_default": "Compound",
-        "title_active": "Compounting",
+        "title_active": "Compounding",
         "subtitle": "Add payouts to your existing staked balance automatically."
       },
       "stash": {
