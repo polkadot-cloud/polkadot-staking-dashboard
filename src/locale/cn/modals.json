@@ -104,6 +104,7 @@
     "onceSubmitted": "提交后，您将开始提名验证人.",
     "onceUnbonding": "一旦解除质押，您的资金过了{{bondDuration}} Era 后就能获回",
     "openFeedback": "在 Canny.io反馈",
+    "payoutDestination": "收益到账地址",
     "pool": "池",
     "poolIsNotNominating": "该提名池未提名任何验证人",
     "poolName": "提名池名称",
@@ -163,6 +164,7 @@
     "unstakeStopNominating": "停止提名 {{count}} 个验证人",
     "unstakeUnbond": "解除质押 {{bond}} {{unit}}",
     "updateName": "更改名称",
+    "updatePayoutDestination": "更新收益到账地址",
     "updatePoolName": "更改提名池名称",
     "valid": "可用地址",
     "validatorMetrics": "验证人指标",
@@ -172,8 +174,6 @@
     "withdrawMemberFunds": "取出会员资金",
     "withdrawUnlocked": "取出己解锁",
     "youMust_account": "您必须导入帐户才能停止提名",
-    "youMust_controller": "您必须导入Controller帐户才能停止提名",
-    "payoutDestination": "收益到账地址",
-    "updatePayoutDestination": "更新收益到账地址"
+    "youMust_controller": "您必须导入Controller帐户才能停止提名"
   }
 }

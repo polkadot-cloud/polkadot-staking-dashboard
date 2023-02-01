@@ -10,30 +10,30 @@
     "nominate": "抵押",
     "overview": "总览",
     "payee": {
-      "staked": {
-        "title_default": "复利",
-        "title_active": "复利中",
-        "subtitle": "自动将收益添加到现有的抵押余额中"
-      },
-      "stash": {
-        "title_default": "转到您的帐户",
-        "title_active": "转到您的帐户",
-        "subtitle": "收益作为自由余额发回账户"
-      },
       "account": {
-        "title_default": "转到其他帐户",
+        "subtitle": "收益作为自由余额发到其他帐户",
         "title_active": "转到其他帐户",
-        "subtitle": "收益作为自由余额发到其他帐户"
+        "title_default": "转到其他帐户"
       },
       "controller": {
-        "title_default": "转到Controller帐户",
+        "subtitle": "收益作为自由余额发到Controller帐户",
         "title_active": "转到Controller帐户",
-        "subtitle": "收益作为自由余额发到Controller帐户"
+        "title_default": "转到Controller帐户"
       },
       "none": {
-        "title_default": "无",
+        "subtitle": "未设置收益到账地址'",
         "title_active": "未分配",
-        "subtitle": "未设置收益到账地址'"
+        "title_default": "无"
+      },
+      "staked": {
+        "subtitle": "自动将收益添加到现有的抵押余额中",
+        "title_active": "复利中",
+        "title_default": "复利"
+      },
+      "stash": {
+        "subtitle": "收益作为自由余额发回账户",
+        "title_active": "转到您的帐户",
+        "title_default": "转到您的帐户"
       }
     },
     "payouts": "收益",

@@ -10,30 +10,30 @@
     "nominate": "Nominate",
     "overview": "Overview",
     "payee": {
-      "staked": {
-        "title_default": "Compound",
-        "title_active": "Compounding",
-        "subtitle": "Add payouts to your existing staked balance automatically."
-      },
-      "stash": {
-        "title_default": "To Your Account",
-        "title_active": "To Your Account",
-        "subtitle": "Payouts are sent to your account as free balance."
-      },
       "account": {
-        "title_default": "To Another Account",
+        "subtitle": "Send payouts to another account as free balance.",
         "title_active": "To Another Account",
-        "subtitle": "Send payouts to another account as free balance."
+        "title_default": "To Another Account"
       },
       "controller": {
-        "title_default": "To Controller Account",
+        "subtitle": "Payouts are sent to your controller account as free balance.",
         "title_active": "To Controller Account",
-        "subtitle": "Payouts are sent to your controller account as free balance."
+        "title_default": "To Controller Account"
       },
       "none": {
-        "title_default": "None",
+        "subtitle": "Have no payout destination set.'",
         "title_active": "Not Assigned",
-        "subtitle": "Have no payout destination set.'"
+        "title_default": "None"
+      },
+      "staked": {
+        "subtitle": "Add payouts to your existing staked balance automatically.",
+        "title_active": "Compounding",
+        "title_default": "Compound"
+      },
+      "stash": {
+        "subtitle": "Payouts are sent to your account as free balance.",
+        "title_active": "To Your Account",
+        "title_default": "To Your Account"
       }
     },
     "payouts": "Payouts",
