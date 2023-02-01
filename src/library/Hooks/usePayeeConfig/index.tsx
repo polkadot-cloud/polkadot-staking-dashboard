@@ -6,7 +6,7 @@ import {
   faArrowDown,
   faArrowRight,
   faArrowRightFromBracket,
-  faRotate,
+  faRedoAlt,
   faStop,
 } from '@fortawesome/free-solid-svg-icons';
 import { PayeeOptions } from 'contexts/Setup/types';
@@ -29,7 +29,7 @@ export const usePayeeConfig = () => {
         title: t('payee.staked.title', { context: 'default' }),
         activeTitle: t('payee.staked.title', { context: 'active' }),
         subtitle: t('payee.staked.subtitle'),
-        icon: faRotate,
+        icon: faRedoAlt,
       },
       {
         value: 'Stash',
