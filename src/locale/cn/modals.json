@@ -173,7 +173,7 @@
     "withdrawUnlocked": "取出己解锁",
     "youMust_account": "您必须导入帐户才能停止提名",
     "youMust_controller": "您必须导入Controller帐户才能停止提名",
-    "payoutDestination": "Payout Destination",
-    "updatePayoutDestination": "Update Payout Destination"
+    "payoutDestination": "收益到账地址",
+    "updatePayoutDestination": "更新收益到账地址"
   }
 }

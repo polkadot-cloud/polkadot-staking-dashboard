@@ -63,11 +63,10 @@
       "update": "更改",
       "waitingForActiveNominations": "等待有效提名",
       "yourNominations": "您的提名名单",
-      "payoutDestination": "Payout Destination",
-      "payoutDestinationSubtitle": "Choose how payouts will be received. Payouts can either be compounded or sent to an account as free balance.",
-      "nominating": "Nominating",
-      "validator_one": "{{count}} Validator",
-      "validator_other": "{{count}} Validators"
+      "payoutDestination": "收益到账地址",
+      "payoutDestinationSubtitle": "选择如何接收收益。收益可以是复合式增长，也可以作为自由余额发回账户",
+      "nominating": "提名中",
+      "validator": "{{count}} 提名人"
     },
     "overview": {
       "activeEra": "活跃 Era",

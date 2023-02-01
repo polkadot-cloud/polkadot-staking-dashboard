@@ -11,29 +11,29 @@
     "overview": "总览",
     "payee": {
       "staked": {
-        "title_default": "Compound",
-        "title_active": "Compounding",
-        "subtitle": "Add payouts to your existing staked balance automatically."
+        "title_default": "复利",
+        "title_active": "复利中",
+        "subtitle": "自动将收益添加到现有的抵押余额中"
       },
       "stash": {
-        "title_default": "To Your Account",
-        "title_active": "To Your Account",
-        "subtitle": "Payouts are sent to your account as free balance."
+        "title_default": "转到您的帐户",
+        "title_active": "转到您的帐户",
+        "subtitle": "收益作为自由余额发回账户"
       },
       "account": {
-        "title_default": "To Another Account",
-        "title_active": "To Another Account",
-        "subtitle": "Send payouts to another account as free balance."
+        "title_default": "转到其他帐户",
+        "title_active": "转到其他帐户",
+        "subtitle": "收益作为自由余额发到其他帐户"
       },
       "controller": {
-        "title_default": "To Controller Account",
-        "title_active": "To Controller Account",
-        "subtitle": "Payouts are sent to your controller account as free balance."
+        "title_default": "转到Controller帐户",
+        "title_active": "转到Controller帐户",
+        "subtitle": "收益作为自由余额发到Controller帐户"
       },
       "none": {
-        "title_default": "None",
-        "title_active": "Not Assigned",
-        "subtitle": "Have no payout destination set.'"
+        "title_default": "无",
+        "title_active": "未分配",
+        "subtitle": "未设置收益到账地址'"
       }
     },
     "payouts": "收益",
