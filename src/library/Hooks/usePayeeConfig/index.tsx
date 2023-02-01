@@ -31,7 +31,7 @@ export const usePayeeConfig = () => {
       },
       {
         value: 'Stash',
-        title: 'To Staking Account',
+        title: 'To Your Account',
         activeTitle: 'To Staking Account',
         subtitle: 'Payouts are sent to your account as free balance.',
         icon: faArrowDown,
