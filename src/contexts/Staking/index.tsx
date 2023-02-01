@@ -3,6 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
+import { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import {
   EraStakers,
   NominationStatuses,
@@ -49,20 +50,24 @@ export const StakingProvider = ({
   } = useBalances();
   const { maxNominatorRewardedPerValidator } = consts;
 
-  // store staking metrics in state
+  // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
     defaults.stakingMetrics
   );
 
-  // store stakers metadata in state
+  // Store unsub object fro staking metrics.
+  const [unsub, setUnsub] = useState<{ (): void } | null>(null);
+  const unsubRef = useRef(unsub);
+
+  // Store eras stakers in state.
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaults.eraStakers);
   const eraStakersRef = useRef(eraStakers);
 
-  // flags whether erasStakers is resyncing
+  // Flags whether `eraStakers` is resyncing.
   const [erasStakersSyncing, setErasStakersSyncing] = useState(false);
   const erasStakersSyncingRef = useRef(erasStakersSyncing);
 
-  // store account target validators
+  // Store target validators for the active account.
   const [targets, _setTargets] = useState<StakingTargets>(
     localStorageOrDefault<StakingTargets>(
       `${activeAccount ?? ''}_targets`,
@@ -81,15 +86,21 @@ export const StakingProvider = ({
   // handle staking metrics subscription
   useEffect(() => {
     if (isReady) {
+      unsubscribeMetrics();
       subscribeToStakingkMetrics();
     }
     return () => {
-      // unsubscribe from staking metrics
-      if (stakingMetrics.unsub !== null) {
-        stakingMetrics.unsub();
-      }
+      unsubscribeMetrics();
     };
-  }, [isReady, activeEra]);
+  }, [isReady, activeEra, activeAccount]);
+
+  // Handle metrics unsubscribe.
+  const unsubscribeMetrics = () => {
+    if (unsubRef.current !== null) {
+      unsubRef.current();
+      setUnsub(null);
+    }
+  };
 
   // handle syncing with eraStakers
   useEffect(() => {
@@ -155,8 +166,7 @@ export const StakingProvider = ({
     if (api !== null && isReady && activeEra.index !== 0) {
       const previousEra = activeEra.index - 1;
 
-      // subscribe to staking metrics
-      const unsub = await api.queryMulti<AnyApi>(
+      const u = await api.queryMulti<AnyApi>(
         [
           api.query.staking.counterForNominators,
           api.query.staking.counterForValidators,
@@ -167,9 +177,8 @@ export const StakingProvider = ({
           api.query.staking.minNominatorBond,
           [api.query.staking.payee, activeAccount],
         ],
-        (q: AnyApi) =>
+        (q: AnyApi) => {
           setStakingMetrics({
-            ...stakingMetrics,
             totalNominators: new BigNumber(q[0].toString()),
             totalValidators: new BigNumber(q[1].toString()),
             maxValidatorsCount: new BigNumber(q[2].toString()),
@@ -177,15 +186,37 @@ export const StakingProvider = ({
             lastReward: new BigNumber(q[4].toString()),
             lastTotalStake: new BigNumber(q[5].toString()),
             minNominatorBond: new BigNumber(q[6].toString()),
-            payee: q[7].toString(),
-          })
+            payee: processPayee(q[7]),
+          });
+        }
       );
 
-      setStakingMetrics({
-        ...stakingMetrics,
-        unsub,
-      });
+      setUnsub(u);
     }
+  };
+
+  // process raw payee object from API. payee with `Account` type is returned as an key value pair,
+  // with all others strings. This function handles both cases and formats into a unified structure.
+  const processPayee = (rawPayee: AnyApi) => {
+    const payeeHuman = rawPayee.toHuman();
+
+    let payeeFinal: PayeeConfig;
+    if (typeof payeeHuman === 'string') {
+      const destination = payeeHuman as PayeeOptions;
+      payeeFinal = {
+        destination,
+        account: null,
+      };
+    } else {
+      const payeeEntry = Object.entries(payeeHuman);
+      const destination = `${payeeEntry[0][0]}` as PayeeOptions;
+      const account = `${payeeEntry[0][1]}` as MaybeAccount;
+      payeeFinal = {
+        destination,
+        account,
+      };
+    }
+    return payeeFinal;
   };
 
   /*

@@ -46,15 +46,12 @@ export const fallbackResources = {
   ...tipsEn,
 };
 
-// check app version, wipe `lng_resources` if version is different.
-const localAppVersion = localStorage.getItem('app_version');
-if (localAppVersion !== AppVersion || process.env.NODE_ENV === 'development') {
+// Refresh local storage resources if in development, or if new app version is present.
+if (
+  localStorage.getItem('app_version') !== AppVersion ||
+  process.env.NODE_ENV === 'development'
+) {
   localStorage.removeItem('lng_resources');
-  // localisation is currently the only feature that uses AppVersion.
-  // if more features require AppVersion in the future, this should be
-  // abstracted into a separate script that checks / updates AppVersion
-  // after any tidy up is completed.
-  localStorage.setItem('app_version', AppVersion);
 }
 
 // get initial language.

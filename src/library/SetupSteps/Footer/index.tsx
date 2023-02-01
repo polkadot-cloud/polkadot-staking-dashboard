@@ -9,12 +9,11 @@ import { FooterProps } from '../types';
 import { Wrapper } from './Wrapper';
 
 export const Footer = (props: FooterProps) => {
-  const { complete, setupType } = props;
   const { t } = useTranslation('library');
-
+  const { complete, bondFor } = props;
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetupSection } = useSetup();
-  const setup = getSetupProgress(setupType, activeAccount);
+  const setup = getSetupProgress(bondFor, activeAccount);
 
   return (
     <Wrapper>
@@ -24,7 +23,7 @@ export const Footer = (props: FooterProps) => {
             lg
             text={t('continue')}
             onClick={() =>
-              setActiveAccountSetupSection(setupType, setup.section + 1)
+              setActiveAccountSetupSection(bondFor, setup.section + 1)
             }
           />
         ) : (

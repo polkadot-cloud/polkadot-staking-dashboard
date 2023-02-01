@@ -13,6 +13,7 @@ export const SelectItem = ({
   icon,
   selected,
   onClick,
+  flex = false,
   hoverBorder = false,
   grow = true,
   disabled = false,
@@ -21,7 +22,12 @@ export const SelectItem = ({
   containerRef,
 }: SelectItemProps) => {
   return (
-    <Wrapper selected={selected} grow={grow} hoverBorder={hoverBorder}>
+    <Wrapper
+      selected={selected}
+      grow={grow}
+      hoverBorder={hoverBorder}
+      className={flex ? 'flex' : undefined}
+    >
       <div className="inner" ref={containerRef}>
         <button type="button" onClick={() => onClick()} disabled={disabled}>
           <div className="icon">

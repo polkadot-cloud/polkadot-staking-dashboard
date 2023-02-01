@@ -11,14 +11,14 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Input } from './Input';
 
-export const PoolName = (props: SetupStepProps) => {
-  const { section } = props;
+export const PoolName = ({ section }: SetupStepProps) => {
+  const { t } = useTranslation('pages');
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress('pool', activeAccount);
-  const { t } = useTranslation('pages');
+  const { progress } = setup;
 
-  const initialValue = setup.metadata;
+  const initialValue = progress.metadata;
 
   // store local pool name for form control
   const [metadata, setMetadata] = useState({
@@ -45,7 +45,7 @@ export const PoolName = (props: SetupStepProps) => {
     // only update if this section is currently active
     if (setup.section === section) {
       setActiveAccountSetup('pool', {
-        ...setup,
+        ...progress,
         metadata: initialValue,
       });
     }
@@ -55,10 +55,10 @@ export const PoolName = (props: SetupStepProps) => {
     <>
       <Header
         thisSection={section}
-        complete={setup.metadata !== ''}
+        complete={progress.metadata !== ''}
         title={t('pools.poolName') || ''}
         // helpKey="Bonding"
-        setupType="pool"
+        bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <Input
@@ -67,7 +67,7 @@ export const PoolName = (props: SetupStepProps) => {
           setters={[
             {
               set: handleSetupUpdate,
-              current: setup,
+              current: progress,
             },
             {
               set: setMetadata,
@@ -75,7 +75,7 @@ export const PoolName = (props: SetupStepProps) => {
             },
           ]}
         />
-        <Footer complete={valid} setupType="pool" />
+        <Footer complete={valid} bondFor="pool" />
       </MotionContainer>
     </>
   );

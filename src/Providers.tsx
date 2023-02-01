@@ -11,6 +11,7 @@ import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
 import { HelpProvider } from 'contexts/Help';
 import { MenuProvider } from 'contexts/Menu';
+import { MigrateProvider } from 'contexts/Migrate';
 import { ModalProvider } from 'contexts/Modal';
 import { NetworkMetricsProvider } from 'contexts/Network';
 import { NotificationsProvider } from 'contexts/Notifications';
@@ -89,5 +90,6 @@ export const Providers = withProviders(
   TxFeesProvider,
   ExtrinsicsProvider,
   ModalProvider,
-  OverlayProvider
+  OverlayProvider,
+  MigrateProvider
 )(ThemedRouter);

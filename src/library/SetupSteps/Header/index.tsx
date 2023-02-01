@@ -9,13 +9,17 @@ import { useTranslation } from 'react-i18next';
 import { HeaderProps } from '../types';
 import { Wrapper } from './Wrapper';
 
-export const Header = (props: HeaderProps) => {
-  const { title, helpKey, complete, thisSection, setupType } = props;
+export const Header = ({
+  title,
+  helpKey,
+  complete,
+  thisSection,
+  bondFor,
+}: HeaderProps) => {
   const { t } = useTranslation('library');
-
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetupSection } = useSetup();
-  const setup = getSetupProgress(setupType, activeAccount);
+  const setup = getSetupProgress(bondFor, activeAccount);
 
   return (
     <Wrapper>
@@ -33,7 +37,7 @@ export const Header = (props: HeaderProps) => {
                 <ButtonSecondary
                   text={t('update')}
                   onClick={() => {
-                    setActiveAccountSetupSection(setupType, thisSection);
+                    setActiveAccountSetupSection(bondFor, thisSection);
                   }}
                 />
               </span>

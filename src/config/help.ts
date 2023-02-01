@@ -45,7 +45,7 @@ export const HELP_CONFIG: HelpItems = [
       'Controller Account Eligibility',
       'Bonding',
       'Active Bond Threshold',
-      'Reward Destination',
+      'Payout Destination',
       'Nominating',
       'Nominations',
       'Inactive Nominations',

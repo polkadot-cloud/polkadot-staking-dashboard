@@ -9,29 +9,30 @@ import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
-import { defaultStakeSetup } from 'contexts/Setup/defaults';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
+import { PayeeItem, usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useTranslation } from 'react-i18next';
-import { unitToPlanck } from 'Utils';
+import { clipAddress, unitToPlanck } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const { api, network } = useApi();
-  const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getSetupProgress, setActiveAccountSetup } = useSetup();
+  const { getSetupProgress, removeSetupProgress } = useSetup();
+  const { getPayeeItems } = usePayeeConfig();
   const { txFeesValid } = useTxFees();
+  const { units } = network;
 
-  const setup = getSetupProgress('stake', activeAccount);
-
-  const { bond, nominations, payee } = setup;
+  const setup = getSetupProgress('nominator', activeAccount);
+  const { progress } = setup;
+  const { bond, nominations, payee } = progress;
 
   const getTxs = () => {
     if (!activeAccount || !api) {
@@ -48,11 +49,18 @@ export const Summary = ({ section }: SetupStepProps) => {
       Id: activeAccount,
     };
 
+    const payeeToSubmit =
+      payee.destination === 'Account'
+        ? {
+            Account: payee.account,
+          }
+        : payee.destination;
+
     const bondToSubmit = unitToPlanck(bond, units);
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
     const txs = [
-      api.tx.staking.bond(controllerToSubmit, bondAsString, payee),
+      api.tx.staking.bond(controllerToSubmit, bondAsString, payeeToSubmit),
       api.tx.staking.nominate(targetsToSubmit),
     ];
     return api.tx.utility.batch(txs);
@@ -64,10 +72,13 @@ export const Summary = ({ section }: SetupStepProps) => {
     shouldSubmit: true,
     callbackSubmit: () => {},
     callbackInBlock: () => {
-      // reset localStorage setup progress
-      setActiveAccountSetup('stake', defaultStakeSetup);
+      removeSetupProgress('nominator', activeAccount);
     },
   });
+
+  const payeeDisplay =
+    getPayeeItems().find((p: PayeeItem) => p.value === payee.destination)
+      ?.title || payee.destination;
 
   return (
     <>
@@ -75,7 +86,7 @@ export const Summary = ({ section }: SetupStepProps) => {
         thisSection={section}
         complete={null}
         title={t('nominate.summary') || ''}
-        setupType="stake"
+        bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
@@ -88,9 +99,13 @@ export const Summary = ({ section }: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('nominate.rewardDestination')}:
+              &nbsp; {t('nominate.payoutDestination')}:
             </div>
-            <div>{payee}</div>
+            <div>
+              {payee.destination === 'Account'
+                ? `${payeeDisplay}: ${clipAddress(payee.account)}`
+                : payeeDisplay}
+            </div>
           </section>
           <section>
             <div>
@@ -98,9 +113,9 @@ export const Summary = ({ section }: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('nominate.nominate')}:
+              &nbsp; {t('nominate.nominating')}:
             </div>
-            <div>{nominations.length}</div>
+            <div>{t('nominate.validator', { count: nominations.length })}</div>
           </section>
           <section>
             <div>
