@@ -19,11 +19,11 @@ import { Title } from 'library/Modal/Title';
 import { PayeeInput } from 'library/PayeeInput';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
+import { UpdateHeader } from 'library/UpdateHeader';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MaybeAccount } from 'types';
 import { FooterWrapper, PaddingWrapper, WarningsWrapper } from '../Wrappers';
-import { Header } from './Header';
 
 export const UpdatePayee = () => {
   const { t } = useTranslation();
@@ -130,7 +130,7 @@ export const UpdatePayee = () => {
               <Warning text={t('mustHaveControllerUpdate', { ns: 'modals' })} />
             </WarningsWrapper>
           )}
-          <Header
+          <UpdateHeader
             current={payee?.destination}
             selected={selected?.destination}
           />

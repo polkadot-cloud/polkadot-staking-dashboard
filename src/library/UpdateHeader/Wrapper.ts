@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 import { borderPrimary, textSecondary } from 'theme';
 
-export const HeaderWrapper = styled.div`
+export const Wrapper = styled.div`
   flex: 1;
   display: flex;
   align-items: center;
