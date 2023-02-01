@@ -172,25 +172,6 @@ export const StakingProvider = ({
           [api.query.staking.payee, activeAccount],
         ],
         (q: AnyApi) => {
-          const payeeHuman = q[7].toHuman();
-
-          let payeeFinal: PayeeConfig;
-          if (typeof payeeHuman === 'string') {
-            const destination = payeeHuman as PayeeOptions;
-            payeeFinal = {
-              destination,
-              account: null,
-            };
-          } else {
-            const payeeEntry = Object.entries(payeeHuman);
-            const destination = `${payeeEntry[0][0]}` as PayeeOptions;
-            const account = `${payeeEntry[0][1]}` as MaybeAccount;
-            payeeFinal = {
-              destination,
-              account,
-            };
-          }
-
           setStakingMetrics({
             ...stakingMetrics,
             totalNominators: new BigNumber(q[0].toString()),
@@ -200,7 +181,7 @@ export const StakingProvider = ({
             lastReward: new BigNumber(q[4].toString()),
             lastTotalStake: new BigNumber(q[5].toString()),
             minNominatorBond: new BigNumber(q[6].toString()),
-            payee: payeeFinal,
+            payee: processPayee(q[7]),
           });
         }
       );
@@ -210,6 +191,30 @@ export const StakingProvider = ({
         unsub,
       });
     }
+  };
+
+  // process raw payee object from API. payee with `Account` type is returned as an key value pair,
+  // with all others strings. This function handles both cases and formats into a unified structure.
+  const processPayee = (rawPayee: AnyApi) => {
+    const payeeHuman = rawPayee.toHuman();
+
+    let payeeFinal: PayeeConfig;
+    if (typeof payeeHuman === 'string') {
+      const destination = payeeHuman as PayeeOptions;
+      payeeFinal = {
+        destination,
+        account: null,
+      };
+    } else {
+      const payeeEntry = Object.entries(payeeHuman);
+      const destination = `${payeeEntry[0][0]}` as PayeeOptions;
+      const account = `${payeeEntry[0][1]}` as MaybeAccount;
+      payeeFinal = {
+        destination,
+        account,
+      };
+    }
+    return payeeFinal;
   };
 
   /*
