@@ -89,18 +89,15 @@ export const ActivePoolsProvider = ({
   // are edited within the dashboard, or when pool
   // membership changes.
   useEffect(() => {
-    if (unsubActivePoolsRef.current.length) {
-      unsubscribeActivePools();
-    }
-    if (unsubNominationsRef.current.length) {
-      unsubscribePoolNominations();
-    }
+    unsubscribeActivePools();
+    unsubscribePoolNominations();
+
     setStateWithRef('unsynced', setSynced, syncedRef);
   }, [activeAccount, accountPools.length]);
 
   // subscribe to pool that the active account is a member of.
   useEffect(() => {
-    if (isReady && synced === 'unsynced') {
+    if (isReady && syncedRef.current === 'unsynced') {
       setStateWithRef('syncing', setSynced, syncedRef);
       handlePoolSubscriptions();
     }

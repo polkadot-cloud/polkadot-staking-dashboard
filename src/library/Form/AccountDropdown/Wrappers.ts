@@ -43,8 +43,6 @@ export const StyledDownshift = styled.div`
     flex: 1;
 
     &.selected {
-      border: 1px solid ${borderPrimary};
-      border-radius: 1rem;
       margin: 0;
       padding: 0.1rem 0.75rem;
     }

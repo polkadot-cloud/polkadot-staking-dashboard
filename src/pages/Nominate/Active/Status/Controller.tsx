@@ -3,7 +3,7 @@
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
-import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
@@ -19,7 +19,7 @@ import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
 import { useTranslation } from 'react-i18next';
 import { clipAddress } from 'Utils';
-import { Wrapper } from './Wrapper';
+import { ControllerWrapper } from './Wrappers';
 
 export const Controller = ({ label }: { label: string }) => {
   const { t } = useTranslation('pages');
@@ -67,7 +67,7 @@ export const Controller = ({ label }: { label: string }) => {
           </button>
         ) : null}
       </h4>
-      <Wrapper paddingLeft={hasController()} paddingRight>
+      <ControllerWrapper paddingLeft={hasController()} paddingRight>
         <h2 className="hide-with-padding">
           <div className="icon">
             <Identicon value={controller || ''} size={26} />
@@ -76,7 +76,7 @@ export const Controller = ({ label }: { label: string }) => {
           <div className="btn">
             <ButtonPrimary
               text={t('nominate.change')}
-              iconLeft={faExchangeAlt}
+              iconLeft={faGear}
               disabled={
                 !isReady ||
                 !hasController() ||
@@ -84,11 +84,11 @@ export const Controller = ({ label }: { label: string }) => {
                 isFastUnstaking
               }
               onClick={() => openModalWith('UpdateController', {}, 'large')}
-              style={{ minWidth: '7.5rem' }}
+              style={{ minWidth: '7rem' }}
             />
           </div>
         </h2>
-      </Wrapper>
+      </ControllerWrapper>
     </StatWrapper>
   );
 };

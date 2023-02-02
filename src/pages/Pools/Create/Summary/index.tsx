@@ -12,7 +12,6 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useSetup } from 'contexts/Setup';
-import { defaultPoolSetup } from 'contexts/Setup/defaults';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
@@ -29,7 +28,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { api, network } = useApi();
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getSetupProgress, setActiveAccountSetup } = useSetup();
+  const { getSetupProgress, removeSetupProgress } = useSetup();
   const { stats } = usePoolsConfig();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
@@ -38,8 +37,9 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { txFeesValid } = useTxFees();
 
   const setup = getSetupProgress('pool', activeAccount);
+  const { progress } = setup;
 
-  const { metadata, bond, roles, nominations } = setup;
+  const { metadata, bond, roles, nominations } = progress;
 
   const getTxs = () => {
     if (
@@ -86,7 +86,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       addToPoolMembers(member);
 
       // reset localStorage setup progress
-      setActiveAccountSetup('pool', defaultPoolSetup);
+      removeSetupProgress('pool', activeAccount);
     },
   });
 
@@ -96,7 +96,7 @@ export const Summary = ({ section }: SetupStepProps) => {
         thisSection={section}
         complete={null}
         title={t('pools.summary') || ''}
-        setupType="pool"
+        bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
@@ -131,9 +131,12 @@ export const Summary = ({ section }: SetupStepProps) => {
                 icon={faCheckCircle as IconProp}
                 transform="grow-1"
               />{' '}
-              &nbsp; {t('pools.nominations')}:
+              &nbsp; Nominating:
             </div>
-            <div>{nominations.length}</div>
+            <div>
+              {nominations.length} Validator
+              {nominations.length === 1 ? '' : 's'}
+            </div>
           </section>
           <section>
             <div>

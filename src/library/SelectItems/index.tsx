@@ -10,7 +10,7 @@ import React, {
 import { AnyJson } from 'types';
 import { SelectItemsWrapper, TwoThreshold } from './Wrapper';
 
-export const SelectItems = ({ children }: any) => {
+export const SelectItems = ({ flex, children }: any) => {
   // Initialise refs for container and body of items.
   const containerRefs: Array<MutableRefObject<AnyJson>> = [];
   const bodyRefs: Array<MutableRefObject<AnyJson>> = [];
@@ -68,7 +68,7 @@ export const SelectItems = ({ children }: any) => {
     handleAdjustHeight();
   }, [children, bodyRefs, containerRefs]);
 
-  // Resize event listener.
+  // Adjust height on window resize.
   useEffect(() => {
     window.addEventListener('resize', handleAdjustHeight);
     return () => {
@@ -77,7 +77,7 @@ export const SelectItems = ({ children }: any) => {
   }, []);
 
   return (
-    <SelectItemsWrapper>
+    <SelectItemsWrapper className={flex ? 'flex' : undefined}>
       {children.map((child: any, i: number) => (
         <React.Fragment key={i}>
           {React.cloneElement(child, {

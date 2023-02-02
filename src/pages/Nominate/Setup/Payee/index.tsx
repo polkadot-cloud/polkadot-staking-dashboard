@@ -1,98 +1,108 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  faArrowRightToBracket,
-  faRotate,
-} from '@fortawesome/free-solid-svg-icons';
-import BigNumber from 'bignumber.js';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
+import { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
+import { Spacer } from 'library/Form/Wrappers';
+import { PayeeItem, usePayeeConfig } from 'library/Hooks/usePayeeConfig';
+import { PayeeInput } from 'library/PayeeInput';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Spacer } from '../../Wrappers';
+import { MaybeAccount } from 'types';
 
 export const Payee = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
+  const { getPayeeItems } = usePayeeConfig();
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
-  const setup = getSetupProgress('stake', activeAccount);
 
-  const options = ['Staked', 'Stash', 'Controller'];
-  const buttons = [
-    {
-      index: 0,
-      title: t('nominate.backToStaking'),
-      subtitle: t('nominate.automaticallyBonded'),
-      icon: faRotate,
-    },
-    {
-      index: 1,
-      title: t('nominate.toStash'),
-      subtitle: t('nominate.sentToStash'),
-      icon: faArrowRightToBracket,
-    },
-    {
-      index: 2,
-      title: t('nominate.toController'),
-      subtitle: t('nominate.sentToController'),
-      icon: faArrowRightToBracket,
-    },
-  ];
+  const setup = getSetupProgress('nominator', activeAccount);
+  const { progress } = setup;
+  const { payee } = progress;
+
+  // Store the current user-inputted custom payout account.
+  const [account, setAccount] = useState<MaybeAccount>(payee.account);
+
+  const DefaultPayeeConfig: PayeeConfig = {
+    destination: 'Staked',
+    account: null,
+  };
+
+  // determine whether this section is completed.
+  const isComplete = () =>
+    payee.destination !== null &&
+    !(payee.destination === 'Account' && payee.account === null);
+
+  // update setup progress with payee config.
+  const handleChangeDestination = (destination: PayeeOptions) => {
+    // set local value to update input element set setup payee
+    setActiveAccountSetup('nominator', {
+      ...progress,
+      payee: { destination, account },
+    });
+  };
+
+  // update setup progress with payee account.
+  const handleChangeAccount = (newAccount: MaybeAccount) => {
+    // set local value to update input element set setup payee
+    setActiveAccountSetup('nominator', {
+      ...progress,
+      payee: { ...payee, account: newAccount },
+    });
+  };
 
   // set initial payee value to `Staked` if not yet set.
-
   useEffect(() => {
-    if (!setup.payee) {
-      setActiveAccountSetup('stake', {
-        ...setup,
-        payee: options[0],
+    if (!payee || (!payee.destination && !payee.account)) {
+      setActiveAccountSetup('nominator', {
+        ...progress,
+        payee: DefaultPayeeConfig,
       });
     }
   }, [activeAccount]);
-
-  const handleChangePayee = (i: number) => {
-    if (new BigNumber(i).isNaN() || i >= options.length) {
-      return;
-    }
-    // set local value to update input element
-    // set setup payee
-    setActiveAccountSetup('stake', {
-      ...setup,
-      payee: options[i],
-    });
-  };
 
   return (
     <>
       <Header
         thisSection={section}
-        complete={setup.payee !== null}
-        title={t('nominate.rewardDestination') || ''}
-        helpKey="Reward Destination"
-        setupType="stake"
+        complete={isComplete()}
+        title={t('nominate.payoutDestination') || ''}
+        helpKey="Payout Destination"
+        bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <Spacer />
-        <SelectItems>
-          {buttons.map(({ index, title, subtitle, icon }: any, i: number) => (
+        <h4 style={{ marginTop: '0.5rem' }}>
+          {t('nominate.payoutDestinationSubtitle')}
+        </h4>
+
+        <SelectItems flex>
+          {getPayeeItems().map((item: PayeeItem) => (
             <SelectItem
-              key={`payee_option_${i}`}
-              selected={setup.payee === options[index]}
-              title={title}
-              subtitle={subtitle}
-              icon={icon}
-              onClick={() => handleChangePayee(index)}
+              key={`payee_option_${item.value}`}
+              account={account}
+              setAccount={setAccount}
+              selected={payee.destination === item.value}
+              onClick={() => handleChangeDestination(item.value)}
+              flex
+              {...item}
             />
           ))}
         </SelectItems>
-        <Footer complete={setup.payee !== null} setupType="stake" />
+        <Spacer />
+        <PayeeInput
+          payee={payee}
+          account={account}
+          setAccount={setAccount}
+          handleChange={handleChangeAccount}
+        />
+        <Footer complete={isComplete()} bondFor="nominator" />
       </MotionContainer>
     </>
   );
