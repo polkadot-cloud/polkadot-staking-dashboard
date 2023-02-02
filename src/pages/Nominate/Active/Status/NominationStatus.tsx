@@ -14,6 +14,7 @@ import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
@@ -24,6 +25,7 @@ export const NominationStatus = () => {
 
   const { isReady } = useApi();
   const { inSetup } = useStaking();
+  const { networkSyncing } = useUi();
   const { openModalWith } = useModal();
   const { metrics } = useNetworkMetrics();
   const { getBondedAccount } = useBalances();
@@ -77,6 +79,8 @@ export const NominationStatus = () => {
           ? !isUnstaking && !isReadOnlyAccount(controller)
             ? [unstakeButton]
             : []
+          : networkSyncing
+          ? []
           : [
               {
                 title: startTitle,

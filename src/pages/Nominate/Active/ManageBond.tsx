@@ -20,6 +20,8 @@ import { ButtonRowWrapper } from 'Wrappers';
 import { BondedChart } from '../../../library/BarChart/BondedChart';
 
 export const ManageBond = () => {
+  const { t } = useTranslation('pages');
+
   const { network } = useApi();
   const { units } = network;
   const { openModalWith } = useModal();
@@ -30,14 +32,13 @@ export const ManageBond = () => {
   const { isSyncing } = useUi();
   const ledger = getLedgerForStash(activeAccount);
   const { isFastUnstaking } = useUnstaking();
-  const { active }: { active: BigNumber } = ledger;
 
+  const { active }: { active: BigNumber } = ledger;
   const allTransferOptions = getTransferOptions(activeAccount);
 
   const { freeBalance } = allTransferOptions;
   const { totalUnlocking, totalUnlocked, totalUnlockChuncks } =
     allTransferOptions.nominate;
-  const { t } = useTranslation('pages');
 
   return (
     <>
@@ -92,7 +93,7 @@ export const ManageBond = () => {
         unlocking={planckToUnit(totalUnlocking, units)}
         unlocked={planckToUnit(totalUnlocked, units)}
         free={planckToUnit(freeBalance, units)}
-        inactive={inSetup()}
+        inactive={active.isZero()}
       />
     </>
   );

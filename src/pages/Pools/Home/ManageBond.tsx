@@ -17,6 +17,8 @@ import { planckToUnit } from 'Utils';
 import { ButtonRowWrapper } from 'Wrappers';
 
 export const ManageBond = () => {
+  const { t } = useTranslation('pages');
+
   const { network } = useApi();
   const { units } = network;
   const { openModalWith } = useModal();
@@ -24,7 +26,6 @@ export const ManageBond = () => {
   const { poolsSyncing } = useUi();
   const { isBonding, isMember, selectedActivePool } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
-  const { t } = useTranslation('pages');
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { freeBalance } = allTransferOptions;
@@ -81,7 +82,7 @@ export const ManageBond = () => {
         unlocking={planckToUnit(totalUnlocking, units)}
         unlocked={planckToUnit(totalUnlocked, units)}
         free={planckToUnit(freeBalance, units)}
-        inactive={!isMember()}
+        inactive={active.isZero()}
       />
     </>
   );
