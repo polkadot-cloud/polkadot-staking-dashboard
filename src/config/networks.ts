@@ -45,7 +45,7 @@ export const NETWORKS: Networks = {
       },
     },
     subscanEndpoint: '',
-    unit: 'FS',
+    unit: 'FST',
     units: 12,
     ss58: 42,
     brand: {
@@ -63,9 +63,7 @@ export const NETWORKS: Networks = {
       unit: 'DOT',
       priceTicker: 'DOTUSDT',
     },
-    params: {
-      ...DefaultParams,
-    },
+    params: {},
   },
   polkadot: {
     name: 'polkadot',

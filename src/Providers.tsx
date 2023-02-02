@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { AccountProvider } from 'contexts/Account';
-import { APIProvider, useApi } from 'contexts/Api';
+import { APIProvider } from 'contexts/Api';
 import { AssetsProvider } from 'contexts/Assets';
 import { BalancesProvider } from 'contexts/Balances';
 import { ConnectProvider } from 'contexts/Connect';
@@ -10,6 +10,7 @@ import { ExtensionsProvider } from 'contexts/Extensions';
 import { ExtrinsicsProvider } from 'contexts/Extrinsics';
 import { FiltersProvider } from 'contexts/Filters';
 import { HelpProvider } from 'contexts/Help';
+import { InvestProvider } from 'contexts/Invest';
 import { MenuProvider } from 'contexts/Menu';
 import { ModalProvider } from 'contexts/Modal';
 import { NetworkMetricsProvider } from 'contexts/Network';
@@ -28,10 +29,11 @@ import { EntryWrapper as Wrapper } from 'Wrappers';
 // `polkadot-dashboard-ui` theme classes are inserted here.
 export const WrappedRouter = () => {
   const { mode } = useTheme();
-  const { network } = useApi();
+  // const { network } = useApi();
 
+  // FIXME: use network.name
   return (
-    <Wrapper className={`theme-${network.name} theme-${mode}`}>
+    <Wrapper className={`theme-polkadot theme-${mode}`}>
       <Router />
     </Wrapper>
   );
@@ -40,11 +42,12 @@ export const WrappedRouter = () => {
 // App-specific theme classes are inserted here.
 export const ThemedRouter = () => {
   const { mode } = useTheme();
-  const { network } = useApi();
+  // const { network } = useApi();
 
   return (
+    // FIXME: use network.name
     <ThemeProvider
-      theme={{ mode, card: 'shadow', network: `${network.name}-${mode}` }}
+      theme={{ mode, card: 'shadow', network: `polkadot-${mode}` }}
     >
       <WrappedRouter />
     </ThemeProvider>
@@ -69,7 +72,8 @@ export const Providers = withProviders(
   ModalProvider,
   OverlayProvider,
   TxFeesProvider,
-  AssetsProvider
+  AssetsProvider,
+  InvestProvider
 )(ThemedRouter);
 
 export default Providers;

@@ -9,10 +9,12 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { Bio } from './Bio';
 import { ChooseLanguage } from './ChooseLanguage';
 import { ConnectAccounts } from './ConnectAccounts';
+import { DepositFund } from './Deposit';
 import { GoToFeedback } from './GoToFeedback';
 import { Networks } from './Networks';
 import { SelectRole } from './SelectRole';
 import { Settings } from './Settings';
+import { WithdrawFund } from './Withdraw';
 import { ContentWrapper, HeightWrapper, ModalWrapper } from './Wrappers';
 
 export const Modal = () => {
@@ -96,6 +98,8 @@ export const Modal = () => {
               {modal === 'Networks' && <Networks />}
               {modal === 'Settings' && <Settings />}
               {modal === 'SelectRole' && <SelectRole />}
+              {modal === 'DepositFund' && <DepositFund />}
+              {modal === 'WithdrawFund' && <WithdrawFund />}
             </ErrorBoundary>
           </ContentWrapper>
         </HeightWrapper>

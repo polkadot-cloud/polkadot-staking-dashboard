@@ -1,46 +1,28 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
-
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 import { useApi } from 'contexts/Api';
+import { useInvest } from 'contexts/Invest';
+import { useNetworkMetrics } from 'contexts/Network';
 import { useTheme } from 'contexts/Themes';
 import { Doughnut } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import { defaultThemes, networkColors } from 'theme/default';
-import { humanNumber } from 'Utils';
-import { BondedProps } from './types';
+import { humanNumber, planckBnToUnit } from 'Utils';
 import { GraphWrapper } from './Wrappers';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const Bonded = ({
-  active,
-  free,
-  unlocking,
-  unlocked,
-  inactive,
-}: BondedProps) => {
-  const { mode } = useTheme();
+export const InvestGraph = () => {
+  const { t } = useTranslation('pages');
+
   const { network } = useApi();
-  const { t } = useTranslation('library');
-
-  // graph data
-  let graphActive = active;
-  let graphUnlocking = unlocking + unlocked;
-  let graphAvailable = free;
-
-  let zeroBalance = false;
-  if (inactive) {
-    graphActive = -1;
-    graphUnlocking = -1;
-    graphAvailable = -1;
-    zeroBalance = true;
-  }
+  const { mode } = useTheme();
+  const { metrics } = useNetworkMetrics();
+  const { contributedBalance, availableBalance, reservedBalance } = useInvest();
 
   const options = {
     responsive: true,
     maintainAspectRatio: false,
-    spacing: zeroBalance ? 0 : 2,
+    spacing: 0,
     plugins: {
       legend: {
         padding: {
@@ -68,38 +50,36 @@ export const Bonded = ({
         },
         callbacks: {
           label: (context: any) => {
-            if (inactive) {
-              return t('graphInactive');
-            }
             return `${
               context.parsed === -1 ? 0 : humanNumber(context.parsed)
-            } ${network.unit}`;
+            }$`;
           },
         },
       },
     },
-    cutout: '75%',
+    cutout: '65%',
   };
-  const _colors = zeroBalance
-    ? [
-        defaultThemes.graphs.colors[1][mode],
-        defaultThemes.graphs.inactive2[mode],
-        defaultThemes.graphs.inactive[mode],
-      ]
-    : [
-        networkColors[`${network.name}-${mode}`],
-        defaultThemes.graphs.colors[0][mode],
-        defaultThemes.graphs.colors[1][mode],
-      ];
-
+  const _colors = [
+    networkColors[`${network.name}-${mode}`],
+    defaultThemes.graphs.colors[0][mode],
+    defaultThemes.graphs.colors[1][mode],
+  ];
   const data = {
-    labels: [t('active'), t('unlocking'), t('available')],
+    labels: [
+      t('investors.contributed'),
+      t('investors.reserved'),
+      t('investors.withdrawable'),
+    ],
     datasets: [
       {
-        label: network.unit,
-        data: [graphActive, graphUnlocking, graphAvailable],
+        label: 'FST',
+        data: [
+          planckBnToUnit(contributedBalance, metrics.decimals),
+          planckBnToUnit(reservedBalance, metrics.decimals),
+          planckBnToUnit(availableBalance, metrics.decimals),
+        ],
         backgroundColor: _colors,
-        borderWidth: 0,
+        borderWidth: 1,
       },
     ],
   };
@@ -112,16 +92,10 @@ export const Bonded = ({
     >
       <div
         className="graph"
-        style={{
-          flex: 0,
-          paddingRight: '1rem',
-          height: 160,
-        }}
+        style={{ flex: 0, paddingRight: '1rem', height: 160 }}
       >
         <Doughnut options={options} data={data} />
       </div>
     </GraphWrapper>
   );
 };
-
-export default Bonded;

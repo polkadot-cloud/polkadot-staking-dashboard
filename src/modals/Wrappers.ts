@@ -182,6 +182,8 @@ export const FooterWrapper = styled.div`
   justify-content: flex-end;
   align-items: center;
   width: 100%;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 
   h3 {
     color: ${textSecondary};

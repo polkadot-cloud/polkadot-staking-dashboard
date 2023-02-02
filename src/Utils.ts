@@ -268,4 +268,9 @@ export const removeVarFromUrlHash = (key: string) => {
   window.location.hash = str;
 };
 
+export const parseHumanBN = (str: string) => {
+  if (!str) return ZERO;
+  return new BN(rmCommas(str));
+};
+
 export const ZERO = new BN('0');
