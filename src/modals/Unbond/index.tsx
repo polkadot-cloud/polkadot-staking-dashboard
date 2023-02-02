@@ -15,6 +15,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
+import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
@@ -167,6 +168,9 @@ export const Unbond = () => {
     <>
       <Title title={`${t('removeBond')}`} icon={faMinus} />
       <PaddingWrapper>
+        {warnings.map((err: string, i: number) => (
+          <Warning key={`unbond_error_${i}`} text={err} />
+        ))}
         <UnbondFeedback
           bondFor={bondFor}
           listenIsValid={setBondValid}
@@ -176,7 +180,6 @@ export const Unbond = () => {
               current: bond,
             },
           ]}
-          warnings={warnings}
           txFees={txFees}
         />
         <NotesWrapper>
