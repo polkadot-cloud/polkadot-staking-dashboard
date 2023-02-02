@@ -7,7 +7,7 @@ import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { useTheme } from 'contexts/Themes';
 import { useLayoutEffect, useRef } from 'react';
 import { defaultThemes } from 'theme/default';
-import { remToUnit } from 'Utils';
+import { applyWidthAsPadding } from 'Utils';
 import { ItemProps } from './types';
 import { StatusRowWrapper } from './Wrappers';
 
@@ -17,11 +17,7 @@ export const Item = ({ text, ctaText, onClick, leftIcon }: ItemProps) => {
   const subjectRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    if (containerRef.current && subjectRef.current) {
-      containerRef.current.style.paddingRight = `${
-        subjectRef.current.offsetWidth + remToUnit('1rem')
-      }px`;
-    }
+    applyWidthAsPadding(subjectRef, containerRef);
   });
 
   return (

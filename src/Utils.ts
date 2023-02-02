@@ -4,7 +4,7 @@
 import { decodeAddress, encodeAddress } from '@polkadot/keyring';
 import { hexToU8a, isHex, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
-import { MutableRefObject } from 'react';
+import { MutableRefObject, RefObject } from 'react';
 import { AnyJson, AnyMetaBatch } from 'types/index';
 
 export const clipAddress = (val: string) => {
@@ -199,3 +199,15 @@ export const sortWithNull =
     // if descending, highest sorts first
     return a < b ? 1 : -1;
   };
+
+// Applies width of subject to paddingRight of container
+export const applyWidthAsPadding = (
+  subjectRef: RefObject<HTMLDivElement>,
+  containerRef: RefObject<HTMLDivElement>
+) => {
+  if (containerRef.current && subjectRef.current) {
+    containerRef.current.style.paddingRight = `${
+      subjectRef.current.offsetWidth + remToUnit('1rem')
+    }px`;
+  }
+};
