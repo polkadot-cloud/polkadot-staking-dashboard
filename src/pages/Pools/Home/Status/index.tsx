@@ -2,45 +2,77 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
+  faCog,
   faExclamationTriangle,
   faLock,
   faPlus,
   faShare,
+  faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit } from 'Utils';
+import { determinePoolDisplay, planckToUnit } from 'Utils';
 import { Separator } from 'Wrappers';
-import { Membership } from './Membership';
 import { useStatusButtons } from './useStatusButtons';
 
 export const Status = ({ height }: { height: number }) => {
   const { t } = useTranslation('pages');
-  const { network, isReady } = useApi();
+  const {
+    network: { units, unit },
+    isReady,
+  } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { units, unit } = network;
   const { poolsSyncing } = useUi();
-  const { selectedActivePool, poolNominations } = useActivePools();
+  const {
+    selectedActivePool,
+    poolNominations,
+    isOwner,
+    isStateToggler,
+    isMember,
+    isDepositor,
+  } = useActivePools();
+  const { bondedPools, meta } = useBondedPools();
   const { openModalWith } = useModal();
   const poolStash = selectedActivePool?.addresses?.stash || '';
   const { getNominationStatus } = useNominationStatus();
+  const { getTransferOptions } = useTransferOptions();
   const { earningRewards, activeNominees } = getNominationStatus(
     poolStash,
     'pool'
   );
+  const { label, buttons } = useStatusButtons();
+  const { active } = getTransferOptions(activeAccount).pool;
 
   // determine pool state
   const poolState = selectedActivePool?.bondedPool?.state ?? null;
+  const poolNominating = !!poolNominations?.targets?.length;
 
-  const isNominating = !!poolNominations?.targets?.length;
+  // determine membership display.
+  let membershipDisplay = t('pools.notInPool');
+  if (selectedActivePool) {
+    const pool = bondedPools.find((p: any) => {
+      return p.addresses.stash === selectedActivePool.addresses.stash;
+    });
+
+    if (pool) {
+      const metadata = meta.bonded_pools?.metadata ?? [];
+      const batchIndex = bondedPools.indexOf(pool);
+      membershipDisplay = determinePoolDisplay(
+        selectedActivePool.addresses.stash,
+        metadata[batchIndex]
+      );
+    }
+  }
 
   // Set the minimum unclaimed planck value to prevent e numbers
   const minUnclaimedDisplay = new BigNumber(1_000_000);
@@ -53,6 +85,29 @@ export const Status = ({ height }: { height: number }) => {
     ? `${planckToUnit(unclaimedRewards, units)} ${unit}`
     : `0 ${unit}`;
 
+  // Membership buttons
+  const membershipButtons = [];
+  if (poolState !== 'Destroying' && (isOwner() || isStateToggler())) {
+    membershipButtons.push({
+      title: t('pools.manage'),
+      icon: faCog,
+      disabled: !isReady || isReadOnlyAccount(activeAccount),
+      small: true,
+      onClick: () => openModalWith('ManagePool', {}, 'small'),
+    });
+  }
+
+  if (isMember() && !isDepositor() && active?.isGreaterThan(0)) {
+    membershipButtons.push({
+      title: t('pools.leave'),
+      icon: faSignOutAlt,
+      disabled: !isReady || isReadOnlyAccount(activeAccount),
+      small: true,
+      onClick: () => openModalWith('LeavePool', { bondFor: 'pool' }, 'small'),
+    });
+  }
+
+  // Reward buttons
   const buttonsRewards = unclaimedRewards.isGreaterThan(minUnclaimedDisplay)
     ? [
         {
@@ -100,7 +155,7 @@ export const Status = ({ height }: { height: number }) => {
   // determine pool status - right side
   const poolStatusRight = poolsSyncing
     ? t('pools.inactivePoolNotNominating')
-    : !isNominating
+    : !poolNominating
     ? t('pools.inactivePoolNotNominating')
     : activeNominees.length
     ? `${t('pools.nominatingAnd')} ${
@@ -110,17 +165,25 @@ export const Status = ({ height }: { height: number }) => {
       }`
     : t('pools.waitingForActiveNominations');
 
-  const { label, buttons } = useStatusButtons();
-
   return (
     <CardWrapper height={height}>
       {selectedActivePool ? (
-        <Membership label={label} />
+        <>
+          <Stat
+            label={label}
+            helpKey="Pool Membership"
+            stat={{
+              address: selectedActivePool?.addresses?.stash ?? '',
+              display: membershipDisplay,
+            }}
+            buttons={membershipButtons}
+          />
+        </>
       ) : (
         <Stat
           label={t('pools.poolMembership')}
           helpKey="Pool Membership"
-          stat={t('pools.notInPool')}
+          stat={t('pools.notInPool') || ''}
           buttons={poolsSyncing ? [] : buttons}
         />
       )}

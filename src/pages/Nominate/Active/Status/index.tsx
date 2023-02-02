@@ -23,8 +23,8 @@ import { PayeeItem, usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
+import { clipAddress } from 'Utils';
 import { Separator } from 'Wrappers';
-import { Controller } from './Controller';
 
 export const Status = ({ height }: { height: number }) => {
   const { t } = useTranslation();
@@ -33,9 +33,10 @@ export const Status = ({ height }: { height: number }) => {
   const { isReady } = useApi();
   const { getBondedAccount } = useBalances();
   const { metrics } = useNetworkMetrics();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { activeAccount, isReadOnlyAccount, getAccount } = useConnect();
   const { setOnNominatorSetup, getNominatorSetupPercent }: any = useSetup();
-  const { getNominationsStatus, staking, inSetup } = useStaking();
+  const { getNominationsStatus, staking, inSetup, hasController } =
+    useStaking();
   const { checking, isExposed } = useFastUnstake();
   const { getFastUnstakeText, isUnstaking, isFastUnstaking } = useUnstaking();
   const controller = getBondedAccount(activeAccount);
@@ -154,7 +155,47 @@ export const Status = ({ height }: { height: number }) => {
         }
       />
       <Separator />
-      <Controller label={t('nominate.controllerAccount', { ns: 'pages' })} />
+      <Stat
+        label={t('nominate.controllerAccount', { ns: 'pages' })}
+        helpKey="Stash and Controller Accounts"
+        stat={
+          controller
+            ? {
+                address: controller,
+                display:
+                  getAccount(controller)?.name || clipAddress(controller),
+              }
+            : `${t('nominate.none', { ns: 'pages' })}`
+        }
+        buttons={
+          !inSetup()
+            ? [
+                {
+                  title: t('nominate.change', { ns: 'pages' }),
+                  icon: faGear,
+                  small: true,
+                  disabled:
+                    !isReady ||
+                    !hasController() ||
+                    isReadOnlyAccount(activeAccount) ||
+                    isFastUnstaking,
+                  onClick: () => openModalWith('UpdateController', {}, 'large'),
+                },
+              ]
+            : []
+        }
+        copy={
+          !controller
+            ? undefined
+            : {
+                content: controller,
+                notification: {
+                  title: t('nominate.addressCopied', { ns: 'pages' }),
+                  subtitle: controller,
+                },
+              }
+        }
+      />
     </CardWrapper>
   );
 };
