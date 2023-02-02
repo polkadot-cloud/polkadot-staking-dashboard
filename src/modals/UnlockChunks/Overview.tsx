@@ -159,7 +159,7 @@ export const Overview = forwardRef(
         })}
         <NotesWrapper>
           <p>
-            {t('unlockTake', { durationFormatted })}.
+            {t('unlockTake', { durationFormatted })}
             {isStaking ? `${t('rebondUnlock')}` : null}
           </p>
           {!isStaking ? <p>{t('unlockChunk')}</p> : null}
