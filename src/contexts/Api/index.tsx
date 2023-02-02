@@ -77,7 +77,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       await api.disconnect();
     }
     setApi(null);
-    setConnectionStatus('connecting');
+    setApiStatus('connecting');
     connect(name, lightClient);
   };
 
@@ -105,8 +105,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   const [consts, setConsts] = useState<APIConstants>(defaults.consts);
 
   // Store API connection status.
-  const [connectionStatus, setConnectionStatus] =
-    useState<ConnectionStatus>('disconnected');
+  const [apiStatus, setApiStatus] = useState<ConnectionStatus>('disconnected');
 
   // Handle the initial connection
   useEffect(() => {
@@ -119,10 +118,10 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (provider) {
       provider.on('connected', () => {
-        setConnectionStatus('connected');
+        setApiStatus('connected');
       });
       provider.on('error', () => {
-        setConnectionStatus('disconnected');
+        setApiStatus('disconnected');
       });
       connectedCallback(provider);
     }
@@ -132,7 +131,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   const connectedCallback = async (_provider: WsProvider | ScProvider) => {
     // initiate new api and set connected.
     const newApi = await ApiPromise.create({ provider: _provider });
-    setConnectionStatus('connected');
+    setApiStatus('connected');
 
     // store active network in localStorage.
     localStorage.setItem('network', String(network.name));
@@ -239,9 +238,9 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
         switchNetwork,
         api,
         consts,
-        isReady: connectionStatus === 'connected' && api !== null,
+        isReady: apiStatus === 'connected' && api !== null,
         network: network.meta,
-        status: connectionStatus,
+        apiStatus,
         isLightClient,
       }}
     >

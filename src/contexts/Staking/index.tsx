@@ -40,7 +40,7 @@ export const StakingProvider = ({
     accounts: connectAccounts,
     getActiveAccount,
   } = useConnect();
-  const { isReady, api, consts, status, network } = useApi();
+  const { isReady, api, consts, apiStatus, network } = useApi();
   const { activeEra } = useNetworkMetrics();
   const {
     accounts,
@@ -77,11 +77,11 @@ export const StakingProvider = ({
   );
 
   useEffect(() => {
-    if (status === 'connecting') {
+    if (apiStatus === 'connecting') {
       setStateWithRef(defaults.eraStakers, setEraStakers, eraStakersRef);
       setStakingMetrics(defaults.stakingMetrics);
     }
-  }, [status]);
+  }, [apiStatus]);
 
   // handle staking metrics subscription
   useEffect(() => {

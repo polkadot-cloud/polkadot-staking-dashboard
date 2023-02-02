@@ -33,6 +33,6 @@ export interface APIContextInterface {
   consts: APIConstants;
   isReady: boolean;
   isLightClient: boolean;
-  status: ConnectionStatus;
+  apiStatus: ConnectionStatus;
   network: Network;
 }

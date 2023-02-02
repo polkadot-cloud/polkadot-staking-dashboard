@@ -21,16 +21,15 @@ import { ChunkWrapper, ContentWrapper } from './Wrappers';
 
 export const Overview = forwardRef(
   ({ unlocking, bondFor, setSection, setUnlock, setTask }: any, ref: any) => {
-    const { network, consts, status: connectionStatus } = useApi();
+    const { t } = useTranslation('modals');
+    const { network, consts, apiStatus } = useApi();
     const { activeEra } = useNetworkMetrics();
     const { bondDuration } = consts;
     const { units } = network;
     const { isFastUnstaking } = useUnstaking();
-    const { t } = useTranslation('modals');
 
-    const { getTimeLeftFromEras, getDynamicTimeLeftFromEras } =
-      useErasToTimeLeft();
-    const durationSeconds = getTimeLeftFromEras(bondDuration);
+    const { erasToSeconds, erasToTimeLeft } = useErasToTimeLeft();
+    const durationSeconds = erasToSeconds(bondDuration);
     const durationFormatted = timeleftAsString(
       t,
       fromNow(durationSeconds),
@@ -118,8 +117,8 @@ export const Overview = forwardRef(
           const { timeleft, setFromNow } = useTimeLeft();
 
           useEffect(() => {
-            setFromNow(fromNow(getDynamicTimeLeftFromEras(left)));
-          }, [connectionStatus, activeEra]);
+            setFromNow(fromNow(erasToTimeLeft(left)));
+          }, [apiStatus, activeEra]);
           const unlockingTimeLeft = timeleft.formatted;
 
           return (

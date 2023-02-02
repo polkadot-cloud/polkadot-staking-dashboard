@@ -11,7 +11,7 @@ export const useErasToTimeLeft = () => {
   const { activeEra } = useNetworkMetrics();
 
   // converts a number of eras to timeleft in seconds.
-  const getTimeLeftFromEras = (eras: number) => {
+  const erasToSeconds = (eras: number) => {
     if (!eras) {
       return 0;
     }
@@ -23,19 +23,15 @@ export const useErasToTimeLeft = () => {
     return eras * eraDuration;
   };
 
-  const getDynamicTimeLeftFromEras = (eras: number) => {
-    // get timestamp of era start and convert to seconds.
-    let { start } = activeEra;
-    start *= 0.001;
-
-    const end = start + getTimeLeftFromEras(eras);
+  const erasToTimeLeft = (eras: number) => {
+    const end = activeEra.start * 0.001 + erasToSeconds(eras);
     const timeleft = Math.max(0, end - getUnixTime(new Date()));
 
     return timeleft;
   };
 
   return {
-    getTimeLeftFromEras,
-    getDynamicTimeLeftFromEras,
+    erasToSeconds,
+    erasToTimeLeft,
   };
 };
