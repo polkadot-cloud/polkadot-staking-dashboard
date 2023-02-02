@@ -129,7 +129,7 @@ export const UnbondFeedback = ({
     }
 
     if (_decimals > units) {
-      _errors.push(`Bond amount can only have at most ${units} decimals.`);
+      _errors.push(`${t('bondAmountDecimals', { unit })}`);
     }
 
     if (bondBn.isGreaterThan(unbondToMin)) {
