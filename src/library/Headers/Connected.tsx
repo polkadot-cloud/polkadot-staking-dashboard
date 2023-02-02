@@ -63,7 +63,7 @@ export const Connected = () => {
                   getControllerNotImported(controller)
                     ? controller
                       ? clipAddress(controller)
-                      : t('notImported') || ''
+                      : `${t('notImported')}`
                     : undefined
                 }
                 format="name"
@@ -80,7 +80,7 @@ export const Connected = () => {
               <PoolAccount
                 value={poolAddress}
                 pool={selectedActivePool}
-                label={t('pool') || ''}
+                label={`${t('pool')}`}
                 canClick={false}
                 onClick={() => {}}
                 filled

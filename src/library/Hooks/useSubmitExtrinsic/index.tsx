@@ -75,7 +75,7 @@ export const useSubmitExtrinsic = ({
       (e: ExtensionInjected) => e.id === source
     );
     if (extension === undefined) {
-      throw new Error(t('walletNotFound') || '');
+      throw new Error(`${t('walletNotFound')}`);
     } else {
       // summons extension popup if not already connected.
       extension.enable(DappName);

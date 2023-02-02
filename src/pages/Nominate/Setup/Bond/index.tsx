@@ -62,7 +62,7 @@ export const Bond = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={progress.bond !== '0' && progress.bond !== ''}
-        title={t('nominate.bond') || ''}
+        title={`${t('nominate.bond')}`}
         helpKey="Bonding"
         bondFor="nominator"
       />

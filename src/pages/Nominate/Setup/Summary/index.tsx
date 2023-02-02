@@ -85,7 +85,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title={t('nominate.summary') || ''}
+        title={`${t('nominate.summary')}`}
         bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>

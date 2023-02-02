@@ -407,7 +407,7 @@ export const RowSecondaryWrapper = styled.div<InterfaceLayoutProps>`
 export const Separator = styled.div`
   border-bottom: 1px solid ${borderPrimary};
   width: 100%;
-  margin: 0.75rem 0;
+  margin: 0.67rem 0;
 `;
 
 /* TopBarWrapper
