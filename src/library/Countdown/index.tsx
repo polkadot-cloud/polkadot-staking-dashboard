@@ -4,7 +4,13 @@
 import { TimeLeftFormatted } from 'library/Hooks/useTimeLeft/types';
 import { useTranslation } from 'react-i18next';
 
-export const Countdown = ({ timeleft }: { timeleft: TimeLeftFormatted }) => {
+export const Countdown = ({
+  timeleft,
+  plainText = false,
+}: {
+  timeleft: TimeLeftFormatted;
+  plainText?: boolean;
+}) => {
   const { t } = useTranslation('base');
   const { days, hours, minutes, seconds } = timeleft;
 
@@ -13,6 +19,32 @@ export const Countdown = ({ timeleft }: { timeleft: TimeLeftFormatted }) => {
     ? seconds[1]
     : t('second', { count: secondsNumber });
 
+  if (plainText) {
+    return (
+      <>
+        {hours[0] > 0 ? (
+          <>
+            {hours[0]} {hours[1]}
+          </>
+        ) : null}
+        {minutes[0] > 0 ? (
+          <>
+            {minutes[0]} {minutes[1]}
+          </>
+        ) : null}
+        {days[0] === 0 && hours[0] === 0 && minutes[0] > 0 ? (
+          <>:&nbsp; </>
+        ) : null}
+
+        {days[0] === 0 && hours[0] === 0 && (
+          <>
+            {secondsNumber}
+            {minutes[0] === 0 ? { secondsLabel } : null}
+          </>
+        )}
+      </>
+    );
+  }
   return (
     <>
       {hours[0] > 0 ? (

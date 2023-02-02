@@ -132,7 +132,7 @@ export const Overview = forwardRef(
                     ) : (
                       <>
                         {t('unlocksIn')}{' '}
-                        <Countdown timeleft={unlockingTimeLeft} />
+                        <Countdown timeleft={unlockingTimeLeft} plainText />
                       </>
                     )}
                   </h4>
