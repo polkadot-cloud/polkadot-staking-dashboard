@@ -1,5 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
 import {
@@ -9,7 +11,7 @@ import {
   textSecondary,
 } from 'theme';
 
-export const BalanceChartWrapper = styled.div`
+export const BarChartWrapper = styled.div`
   width: 100%;
   padding: 0 1.75rem;
   margin-top: 1rem;

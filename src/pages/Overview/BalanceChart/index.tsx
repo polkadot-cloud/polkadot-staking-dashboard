@@ -8,13 +8,13 @@ import { Lock } from 'contexts/Balances/types';
 import { useConnect } from 'contexts/Connect';
 import { usePlugins } from 'contexts/Plugins';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero, planckToUnit } from 'Utils';
-import { BarSegment } from './BarSegment';
-import { LegendItem } from './LegendItem';
-import { BalanceChartWrapper, Bar, Legend } from './Wrappers';
+import { BarSegment } from '../../../library/BarChart/BarSegment';
+import { LegendItem } from '../../../library/BarChart/LegendItem';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
@@ -133,7 +133,7 @@ export const BalanceChart = () => {
         </h2>
       </div>
 
-      <BalanceChartWrapper>
+      <BarChartWrapper>
         <Legend>
           {isNominating ? (
             <LegendItem dataClass="d1" label={t('overview.nominating')} />
@@ -238,7 +238,7 @@ export const BalanceChart = () => {
             </div>
           ) : null}
         </section>
-      </BalanceChartWrapper>
+      </BarChartWrapper>
     </>
   );
 };
