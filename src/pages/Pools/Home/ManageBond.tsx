@@ -9,7 +9,7 @@ import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
-import { Bonded as BondedGraph } from 'library/Graphs/Bonded';
+import { BondedChart } from 'library/BarChart/BondedChart';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
@@ -76,7 +76,7 @@ export const ManageBond = () => {
           />
         </ButtonRowWrapper>
       </CardHeaderWrapper>
-      <BondedGraph
+      <BondedChart
         active={planckToUnit(active, units)}
         unlocking={planckToUnit(totalUnlocking, units)}
         unlocked={planckToUnit(totalUnlocked, units)}

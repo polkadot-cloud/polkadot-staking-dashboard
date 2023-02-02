@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
     flex-flow: row wrap;
     align-items: center;
     justify-content: flex-start;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.2rem 0;
 
     .help-icon {
       margin-left: 0.55rem;
@@ -39,20 +39,21 @@ export const Wrapper = styled.div`
     flex-flow: column nowrap;
     align-items: center;
     justify-content: flex-start;
-    height: 2.5rem;
+    height: 2.4rem;
     position: relative;
     width: auto;
     max-width: 100%;
     overflow: hidden;
 
     .text {
+      padding-top: 0.1rem;
       color: ${textSecondary};
       position: absolute;
       left: 0;
       top: 0;
       margin: 0;
-      height: 2.5rem;
-      font-size: 1.45rem;
+      height: 2.4rem;
+      font-size: 1.4rem;
       font-variation-settings: 'wght' 625;
       width: auto;
       max-width: 100%;

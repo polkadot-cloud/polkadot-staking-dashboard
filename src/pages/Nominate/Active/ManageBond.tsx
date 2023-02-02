@@ -11,13 +11,13 @@ import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
-import { Bonded as BondedGraph } from 'library/Graphs/Bonded';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
 import { ButtonRowWrapper } from 'Wrappers';
+import { BondedChart } from '../../../library/BarChart/BondedChart';
 
 export const ManageBond = () => {
   const { network } = useApi();
@@ -87,7 +87,7 @@ export const ManageBond = () => {
           />
         </ButtonRowWrapper>
       </CardHeaderWrapper>
-      <BondedGraph
+      <BondedChart
         active={planckToUnit(active, units)}
         unlocking={planckToUnit(totalUnlocking, units)}
         unlocked={planckToUnit(totalUnlocked, units)}

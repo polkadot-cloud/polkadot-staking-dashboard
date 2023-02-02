@@ -11,6 +11,7 @@ interface WrapperProps {
 export const Wrapper = styled.div<WrapperProps>`
   display: flex;
   flex-flow: row wrap;
+  margin-top: 0.3rem;
 
   > .hide-with-padding {
     padding-left: ${(props) => (props.paddingLeft ? '3rem' : '0')};

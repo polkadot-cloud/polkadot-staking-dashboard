@@ -11,6 +11,7 @@ interface WrapperProps {
 export const ControllerWrapper = styled.div<WrapperProps>`
   display: flex;
   flex-flow: row wrap;
+  margin-top: 0.3rem;
 
   > .hide-with-padding {
     padding-left: ${(props) => (props.paddingLeft ? '3rem' : '0')};
@@ -37,7 +38,7 @@ export const ControllerWrapper = styled.div<WrapperProps>`
       position: absolute;
       right: 0;
       top: 0;
-      padding: 0.1rem;
+      padding: 0.1rem 0;
       display: flex;
       flex-flow: row wrap;
       align-items: center;

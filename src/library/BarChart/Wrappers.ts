@@ -1,7 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
 import {
@@ -11,9 +9,9 @@ import {
   textSecondary,
 } from 'theme';
 
-export const BarChartWrapper = styled.div`
+export const BarChartWrapper = styled.div<{ lessPadding?: boolean }>`
   width: 100%;
-  padding: 0 1.75rem;
+  padding: ${(props) => (props.lessPadding ? '0 0.5rem' : '0 1.75rem')};
   margin-top: 1rem;
 
   .available {
@@ -62,6 +60,7 @@ export const Legend = styled.div`
     padding: 0.5rem 1rem;
     font-variation-settings: 'wght' 600;
     font-size: 1.1rem;
+    margin-bottom: 0;
 
     &:first-child {
       padding-left: 0;
@@ -70,6 +69,7 @@ export const Legend = styled.div`
       width: 1rem;
       height: 1rem;
       margin-right: 0.5rem;
+      border-radius: 0.25rem;
     }
   }
 `;
@@ -78,8 +78,8 @@ export const Bar = styled.div`
   background: ${buttonSecondaryBackground};
   display: flex;
   width: 100%;
-  height: 3.25rem;
-  border-radius: 0.5rem;
+  height: 3.3rem;
+  border-radius: 0.55rem;
   overflow: hidden;
 
   > div {
@@ -87,7 +87,6 @@ export const Bar = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
-    font-size: 1rem;
     transition: width 1.5s cubic-bezier(0, 1, 0, 1);
 
     > span {
@@ -96,9 +95,10 @@ export const Bar = styled.div`
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-      font-variation-settings: 'wght' 550;
-      padding: 0 0.75rem;
+      font-variation-settings: 'wght' 600;
+      padding: 0 0.8rem;
       width: 100%;
+      font-size: 1rem;
     }
   }
 `;
