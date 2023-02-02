@@ -131,7 +131,7 @@ export const Status = ({ height }: { height: number }) => {
       />
       <Separator />
       <Stat
-        label="Payout Destination"
+        label={t('nominate.payoutDestination', { ns: 'pages' })}
         helpKey="Payout Destination"
         icon={payeeIcon}
         stat={getPayeeStatus()}
