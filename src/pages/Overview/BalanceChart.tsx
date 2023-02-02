@@ -13,8 +13,8 @@ import { usePrices } from 'library/Hooks/usePrices';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero, planckToUnit } from 'Utils';
-import { BarSegment } from '../../../library/BarChart/BarSegment';
-import { LegendItem } from '../../../library/BarChart/LegendItem';
+import { BarSegment } from '../../library/BarChart/BarSegment';
+import { LegendItem } from '../../library/BarChart/LegendItem';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
