@@ -86,7 +86,7 @@ export const Announcements = () => {
     >
       {announcements.map((item, index) =>
         item === null ? (
-          <AnnouncementLoader />
+          <AnnouncementLoader key={`announcement_${index}`} />
         ) : (
           <Item key={`announcement_${index}`} variants={listItem}>
             <h4 className={item.class}>
