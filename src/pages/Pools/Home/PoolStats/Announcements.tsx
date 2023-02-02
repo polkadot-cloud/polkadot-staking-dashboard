@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
 import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
 import { useTranslation } from 'react-i18next';
@@ -14,7 +13,6 @@ import { greaterThanZero, planckToUnit, rmCommas } from 'Utils';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
-  const { poolsSyncing } = useUi();
   const { network, consts } = useApi();
   const { selectedActivePool } = useActivePools();
   const { units, unit } = network;
@@ -75,6 +73,8 @@ export const Announcements = () => {
       )}`,
       subtitle: `${t('pools.availableToClaim', { unit })}`,
     });
+  } else {
+    announcements.push(null);
   }
 
   return (
@@ -84,10 +84,10 @@ export const Announcements = () => {
       animate="show"
       style={{ width: '100%' }}
     >
-      {poolsSyncing ? (
-        <AnnouncementLoader />
-      ) : (
-        announcements.map((item, index) => (
+      {announcements.map((item, index) =>
+        item === null ? (
+          <AnnouncementLoader />
+        ) : (
           <Item key={`announcement_${index}`} variants={listItem}>
             <h4 className={item.class}>
               <FontAwesomeIcon
@@ -98,7 +98,7 @@ export const Announcements = () => {
             </h4>
             <p>{item.subtitle}</p>
           </Item>
-        ))
+        )
       )}
     </motion.div>
   );

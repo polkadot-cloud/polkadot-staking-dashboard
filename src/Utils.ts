@@ -5,7 +5,7 @@ import { decodeAddress, encodeAddress } from '@polkadot/keyring';
 import { hexToU8a, isHex, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 import { MutableRefObject } from 'react';
-import { AnyMetaBatch } from 'types/index';
+import { AnyJson, AnyMetaBatch } from 'types/index';
 
 export const clipAddress = (val: string) => {
   if (typeof val !== 'string') {
@@ -177,3 +177,25 @@ export const removeVarFromUrlHash = (key: string) => {
   const paramsAsStr = searchParams.toString();
   window.location.hash = `${page}${paramsAsStr ? `?${paramsAsStr}` : ``}`;
 };
+
+// Sorts an array with nulls last.
+export const sortWithNull =
+  (ascending: boolean) => (a: AnyJson, b: AnyJson) => {
+    // equal items sort equally
+    if (a === b) {
+      return 0;
+    }
+    // nulls sort after anything else
+    if (a === null) {
+      return 1;
+    }
+    if (b === null) {
+      return -1;
+    }
+    // otherwise, if we're ascending, lowest sorts first
+    if (ascending) {
+      return a < b ? -1 : 1;
+    }
+    // if descending, highest sorts first
+    return a < b ? 1 : -1;
+  };
