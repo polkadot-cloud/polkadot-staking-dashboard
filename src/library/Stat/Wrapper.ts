@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { buttonHelpBackground, networkColor } from 'theme';
+import { buttonHelpBackground, networkColor, textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
-  padding: 0.15rem 0.25rem;
   width: 100%;
+  padding: 0.15rem 0.25rem;
   h4 {
     display: flex;
     flex-flow: row wrap;
@@ -17,7 +17,6 @@ export const Wrapper = styled.div`
     .help-icon {
       margin-left: 0.55rem;
     }
-
     > .btn {
       display: flex;
       flex-flow: row wrap;
@@ -29,20 +28,43 @@ export const Wrapper = styled.div`
       height: 1.5rem;
       margin-left: 0.65rem;
       transition: color 0.15s;
-
       &:hover {
         color: ${networkColor};
       }
     }
   }
-  h2 {
-    &.stat {
-      display: flex;
-      flex-flow: row wrap;
-      align-items: center;
+
+  .content {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    height: 2.5rem;
+    position: relative;
+    width: auto;
+    max-width: 100%;
+    overflow: hidden;
+
+    .text {
+      color: ${textSecondary};
+      position: absolute;
+      left: 0;
+      top: 0;
       margin: 0;
+      height: 2.5rem;
+      font-size: 1.45rem;
+      font-variation-settings: 'wght' 625;
+      width: auto;
+      max-width: 100%;
+      text-align: left;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+
       > span {
-        flex-grow: 1;
+        position: absolute;
+        right: 0.2rem;
+        top: 0rem;
       }
     }
   }

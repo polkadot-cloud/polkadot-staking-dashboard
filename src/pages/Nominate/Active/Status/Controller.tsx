@@ -17,8 +17,9 @@ import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Identicon } from 'library/Identicon';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { Wrapper as StatWrapper } from 'library/Stat/Wrapper';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { clipAddress } from 'Utils';
+import { applyWidthAsPadding, clipAddress } from 'Utils';
 import { ControllerWrapper } from './Wrappers';
 
 export const Controller = ({ label }: { label: string }) => {
@@ -48,6 +49,24 @@ export const Controller = ({ label }: { label: string }) => {
     };
   }
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const subjectRef = useRef<HTMLDivElement>(null);
+
+  const handleAdjustLayout = () => {
+    applyWidthAsPadding(subjectRef, containerRef);
+  };
+
+  useLayoutEffect(() => {
+    handleAdjustLayout();
+  });
+
+  useEffect(() => {
+    window.addEventListener('resize', handleAdjustLayout);
+    return () => {
+      window.removeEventListener('resize', handleAdjustLayout);
+    };
+  }, []);
+
   return (
     <StatWrapper>
       <h4>
@@ -68,12 +87,12 @@ export const Controller = ({ label }: { label: string }) => {
         ) : null}
       </h4>
       <ControllerWrapper paddingLeft={hasController()} paddingRight>
-        <h2 className="hide-with-padding">
+        <h2 className="hide-with-padding" ref={containerRef}>
           <div className="icon">
             <Identicon value={controller || ''} size={26} />
           </div>
-          {displayName || display}&nbsp;
-          <div className="btn">
+          {displayName || display}
+          <div className="btn" ref={subjectRef}>
             <ButtonPrimary
               text={t('nominate.change')}
               iconLeft={faGear}
@@ -84,7 +103,6 @@ export const Controller = ({ label }: { label: string }) => {
                 isFastUnstaking
               }
               onClick={() => openModalWith('UpdateController', {}, 'large')}
-              style={{ minWidth: '7rem' }}
             />
           </div>
         </h2>
