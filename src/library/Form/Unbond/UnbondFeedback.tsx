@@ -21,7 +21,7 @@ export const UnbondFeedback = ({
   bondFor,
   inSetup = false,
   setters = [],
-  listenIsValid = () => { },
+  listenIsValid = () => {},
   defaultBond,
   setLocalResize,
   parentErrors = [],
