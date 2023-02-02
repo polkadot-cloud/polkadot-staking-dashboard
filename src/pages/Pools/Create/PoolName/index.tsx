@@ -56,7 +56,7 @@ export const PoolName = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={progress.metadata !== ''}
-        title={t('pools.poolName') || ''}
+        title={`${t('pools.poolName')}`}
         // helpKey="Bonding"
         bondFor="pool"
       />

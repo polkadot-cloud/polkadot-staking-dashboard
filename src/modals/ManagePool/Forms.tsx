@@ -192,7 +192,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
                 <input
                   className="textbox"
                   style={{ width: '100%' }}
-                  placeholder={t('poolName') || ''}
+                  placeholder={`${t('poolName')}`}
                   type="text"
                   onChange={(e: React.FormEvent<HTMLInputElement>) =>
                     handleMetadataChange(e)
