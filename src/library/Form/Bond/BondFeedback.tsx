@@ -19,7 +19,7 @@ import { BondInput } from './BondInput';
 export const BondFeedback = ({
   bondFor,
   inSetup = false,
-  warnings = [],
+  parentErrors = [],
   setters = [],
   listenIsValid = () => {},
   disableTxFeeUpdate = false,
@@ -115,7 +115,7 @@ export const BondFeedback = ({
   // handle error updates
   const handleErrors = () => {
     let disabled = false;
-    const newErrors = warnings;
+    const newErrors = parentErrors;
     const decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
 
     // bond errors
