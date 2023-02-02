@@ -17,7 +17,7 @@ import { usePoolsTabs } from '../context';
 export const useStatusButtons = () => {
   const { t } = useTranslation('pages');
   const { isReady, network } = useApi();
-  const { setOnPoolSetup, getPoolSetupProgressPercent } = useSetup();
+  const { setOnPoolSetup, getPoolSetupPercent } = useSetup();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { stats } = usePoolsConfig();
   const { membership } = usePoolMemberships();
@@ -27,7 +27,7 @@ export const useStatusButtons = () => {
   const { getTransferOptions } = useTransferOptions();
 
   const { active } = getTransferOptions(activeAccount).pool;
-  const poolSetupPercent = getPoolSetupProgressPercent(activeAccount);
+  const poolSetupPercent = getPoolSetupPercent(activeAccount);
 
   let _label;
   let _buttons;
