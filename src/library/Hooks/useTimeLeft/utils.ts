@@ -3,6 +3,7 @@
 
 import { getUnixTime, intervalToDuration } from 'date-fns';
 import { TFunction } from 'i18next';
+import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { defaultDuration } from './defaults';
 import { TimeleftDuration } from './types';
 
@@ -73,4 +74,10 @@ export const timeleftAsString = (
     str += ` ${seconds}`;
   }
   return str;
+};
+
+export const eraDurationFormatted = (bondDuration: number, t: TFunction) => {
+  const { erasToSeconds } = useErasToTimeLeft();
+  const durationSeconds = erasToSeconds(bondDuration);
+  return timeleftAsString(t, fromNow(durationSeconds), true);
 };

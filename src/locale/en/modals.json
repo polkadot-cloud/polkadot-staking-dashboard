@@ -110,7 +110,7 @@
     "notePoolDepositorMinBond_depositor": "As the pool depositor you must maintain a bond of at least {{bond}} {{unit}}.",
     "notePoolDepositorMinBond_member": "As a pool member you must maintain a bond of at least {{bond}} {{unit}}.",
     "onceSubmitted": "Once submitted, you will start nominating your chosen validators.",
-    "onceUnbonding": "Once unbonding, your funds to become available after {{bondDuration}} Eras.",
+    "onceUnbonding": "Once unbonding, your funds to become available in {{durationFormatted}}.",
     "openFeedback": "Open Feedback on Canny.io",
     "payoutDestination": "Payout Destination",
     "pool": "Pool",

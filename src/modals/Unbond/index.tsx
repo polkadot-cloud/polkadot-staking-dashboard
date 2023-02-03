@@ -17,6 +17,7 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { eraDurationFormatted } from 'library/Hooks/useTimeLeft/utils';
 import { Title } from 'library/Modal/Title';
 import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
@@ -42,6 +43,8 @@ export const Unbond = () => {
   const { minNominatorBond: minNominatorBondBn } = staking;
   const { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn } = stats;
   const { bondDuration } = consts;
+
+  const durationFormatted = eraDurationFormatted(bondDuration, t);
 
   let { unclaimedRewards } = selectedActivePool || {};
   unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
@@ -204,7 +207,7 @@ export const Unbond = () => {
               )}
             </>
           ) : null}
-          <p>{t('onceUnbonding', { bondDuration })}</p>
+          <p>{t('onceUnbonding', { durationFormatted })}</p>
           <EstimatedTxFee />
         </NotesWrapper>
         <FooterWrapper>
