@@ -44,18 +44,19 @@ export const BondedChart = ({
         style={{ marginTop: '2rem', marginBottom: '2rem' }}
       >
         <Legend>
-          {inactive && totalUnlocking.isZero() ? (
+          {totalUnlocking.plus(active).isZero() ? (
             <LegendItem dataClass="d4" label={t('available')} />
-          ) : (
-            <>
-              <LegendItem dataClass="d1" label={t('bonded')} />
+          ) : greaterThanZero(active) ? (
+            <LegendItem dataClass="d1" label={t('bonded')} />
+          ) : null}
 
-              {greaterThanZero(totalUnlocking) ? (
-                <LegendItem dataClass="d3" label={t('unlocking')} />
-              ) : null}
-              <LegendItem dataClass="d4" label={t('free')} />
-            </>
-          )}
+          {greaterThanZero(totalUnlocking) ? (
+            <LegendItem dataClass="d3" label={t('unlocking')} />
+          ) : null}
+
+          {greaterThanZero(totalUnlocking.plus(active)) ? (
+            <LegendItem dataClass="d4" label={t('free')} />
+          ) : null}
         </Legend>
         <Bar>
           <BarSegment
