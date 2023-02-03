@@ -7,8 +7,7 @@ import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
-import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
-import { fromNow, timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
+import { eraDurationFormatted } from 'library/Hooks/useTimeLeft/utils';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
 import { forwardRef } from 'react';
@@ -26,13 +25,7 @@ export const Overview = forwardRef(
     const { units } = network;
     const { isFastUnstaking } = useUnstaking();
 
-    const { erasToSeconds } = useErasToTimeLeft();
-    const durationSeconds = erasToSeconds(bondDuration);
-    const durationFormatted = timeleftAsString(
-      t,
-      fromNow(durationSeconds),
-      true
-    );
+    const durationFormatted = eraDurationFormatted(bondDuration, t);
 
     const isStaking = bondFor === 'nominator';
 
