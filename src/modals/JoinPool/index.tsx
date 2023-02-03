@@ -82,9 +82,9 @@ export const JoinPool = () => {
     },
   });
 
-  const warnings = [];
+  const errors = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push(t('readOnly'));
+    errors.push(t('readOnly'));
   }
   return (
     <>
@@ -103,7 +103,7 @@ export const JoinPool = () => {
                   current: bond,
                 },
               ]}
-              warnings={warnings}
+              parentErrors={errors}
               txFees={largestTxFee}
             />
             <NotesWrapper>

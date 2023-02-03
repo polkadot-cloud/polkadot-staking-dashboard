@@ -29,7 +29,7 @@ import { Secondary } from './Secondary';
 import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
 
 export const SideMenu = () => {
-  const { network, status } = useApi();
+  const { network, apiStatus } = useApi();
   const { mode, toggleTheme } = useTheme();
   const { openModalWith } = useModal();
   const {
@@ -66,17 +66,17 @@ export const SideMenu = () => {
 
   // handle connection symbol
   const symbolColor =
-    status === 'connecting'
+    apiStatus === 'connecting'
       ? defaultThemes.status.warning.solid[mode]
-      : status === 'connected'
+      : apiStatus === 'connected'
       ? defaultThemes.status.success.solid[mode]
       : defaultThemes.status.danger.solid[mode];
 
   // handle transparent border color
   const borderColor =
-    status === 'connecting'
+    apiStatus === 'connecting'
       ? defaultThemes.status.warning.transparent[mode]
-      : status === 'connected'
+      : apiStatus === 'connected'
       ? defaultThemes.status.success.transparent[mode]
       : defaultThemes.status.danger.transparent[mode];
 

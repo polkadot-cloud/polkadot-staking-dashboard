@@ -2,13 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
+import { useNetworkMetrics } from 'contexts/Network';
+import { getUnixTime } from 'date-fns';
 
 export const useErasToTimeLeft = () => {
   const { consts } = useApi();
   const { epochDuration, expectedBlockTime, sessionsPerEra } = consts;
+  const { activeEra } = useNetworkMetrics();
 
   // converts a number of eras to timeleft in seconds.
-  const getTimeLeftFromEras = (eras: number) => {
+  const erasToSeconds = (eras: number) => {
     if (!eras) {
       return 0;
     }
@@ -20,7 +23,14 @@ export const useErasToTimeLeft = () => {
     return eras * eraDuration;
   };
 
+  const erasToTimeLeft = (eras: number) => {
+    const end = activeEra.start * 0.001 + erasToSeconds(eras);
+    const timeleft = Math.max(0, end - getUnixTime(new Date()));
+    return timeleft;
+  };
+
   return {
-    getTimeLeftFromEras,
+    erasToSeconds,
+    erasToTimeLeft,
   };
 };
