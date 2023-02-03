@@ -19,8 +19,8 @@ export const useTimeLeft = () => {
 
   // check whether timeleft is within a minute of finishing.
   const inLastHour = () => {
-    const { days, hours } = getDuration(toRef.current);
-    return !days && !hours;
+    const { months, days, hours } = getDuration(toRef.current);
+    return !months && !days && !hours;
   };
 
   // get the amount of seconds left if timeleft is in the last minute.
@@ -34,14 +34,17 @@ export const useTimeLeft = () => {
 
   // calculate resulting timeleft object from latest duration.
   const getTimeleft = (c?: TimeleftDuration): TimeLeftAll => {
-    const { days, hours, minutes, seconds } = c || getDuration(toRef.current);
+    const { months, days, hours, minutes, seconds } =
+      c || getDuration(toRef.current);
 
     const raw: TimeLeftRaw = {
+      months,
       days,
       hours,
       minutes,
     };
     const formatted: TimeLeftFormatted = {
+      months: [months, t('time.month', { count: months, ns: 'base' })],
       days: [days, t('time.day', { count: days, ns: 'base' })],
       hours: [hours, t('time.hr', { count: hours, ns: 'base' })],
       minutes: [minutes, t('time.min', { count: minutes, ns: 'base' })],

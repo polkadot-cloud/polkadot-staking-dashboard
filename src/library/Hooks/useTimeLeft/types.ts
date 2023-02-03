@@ -10,6 +10,7 @@ export interface TimeleftDuration {
 }
 
 export interface TimeLeftRaw {
+  months: number;
   days: number;
   hours: number;
   minutes: number;
@@ -17,6 +18,7 @@ export interface TimeLeftRaw {
 }
 
 export interface TimeLeftFormatted {
+  months: [number, string];
   days: [number, string];
   hours: [number, string];
   minutes: [number, string];
