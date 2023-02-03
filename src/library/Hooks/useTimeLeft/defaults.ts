@@ -4,6 +4,7 @@
 import { TimeleftDuration } from './types';
 
 export const defaultDuration: TimeleftDuration = {
+  months: 0,
   days: 0,
   hours: 0,
   minutes: 0,
