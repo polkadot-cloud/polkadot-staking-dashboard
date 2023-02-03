@@ -26,7 +26,6 @@ export const useErasToTimeLeft = () => {
   const erasToTimeLeft = (eras: number) => {
     const end = activeEra.start * 0.001 + erasToSeconds(eras);
     const timeleft = Math.max(0, end - getUnixTime(new Date()));
-
     return timeleft;
   };
 

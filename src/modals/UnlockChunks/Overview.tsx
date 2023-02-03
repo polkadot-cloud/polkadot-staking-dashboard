@@ -7,13 +7,11 @@ import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
-import { Countdown } from 'library/Countdown';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
-import { useTimeLeft } from 'library/Hooks/useTimeLeft';
 import { fromNow, timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
-import { forwardRef, useEffect } from 'react';
+import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
 import { NotesWrapper, Separator } from '../Wrappers';
@@ -22,13 +20,13 @@ import { ChunkWrapper, ContentWrapper } from './Wrappers';
 export const Overview = forwardRef(
   ({ unlocking, bondFor, setSection, setUnlock, setTask }: any, ref: any) => {
     const { t } = useTranslation('modals');
-    const { network, consts, apiStatus } = useApi();
+    const { network, consts } = useApi();
     const { activeEra } = useNetworkMetrics();
     const { bondDuration } = consts;
     const { units } = network;
     const { isFastUnstaking } = useUnstaking();
 
-    const { erasToSeconds, erasToTimeLeft } = useErasToTimeLeft();
+    const { erasToSeconds } = useErasToTimeLeft();
     const durationSeconds = erasToSeconds(bondDuration);
     const durationFormatted = timeleftAsString(
       t,
@@ -114,12 +112,6 @@ export const Overview = forwardRef(
         {unlocking.map((chunk: any, i: number) => {
           const { era, value } = chunk;
           const left = era - activeEra.index;
-          const { timeleft, setFromNow } = useTimeLeft();
-
-          useEffect(() => {
-            setFromNow(fromNow(erasToTimeLeft(left)));
-          }, [apiStatus, activeEra]);
-          const unlockingTimeLeft = timeleft.formatted;
 
           return (
             <ChunkWrapper key={`unlock_chunk_${i}`}>
@@ -127,14 +119,9 @@ export const Overview = forwardRef(
                 <section>
                   <h2>{`${planckToUnit(value, units)} ${network.unit}`}</h2>
                   <h4>
-                    {left <= 0 ? (
-                      t('unlocked')
-                    ) : (
-                      <>
-                        {t('unlocksIn')}{' '}
-                        <Countdown timeleft={unlockingTimeLeft} plainText />
-                      </>
-                    )}
+                    {left <= 0
+                      ? t('unlocked')
+                      : `${t('unlocksAfterEra')} ${era}`}
                   </h4>
                 </section>
                 {isStaking && (
