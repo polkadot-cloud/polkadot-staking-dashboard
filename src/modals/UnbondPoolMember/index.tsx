@@ -11,6 +11,7 @@ import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { eraDurationFormatted } from 'library/Hooks/useTimeLeft/utils';
 import { Title } from 'library/Modal/Title';
 import {
   FooterWrapper,
@@ -30,6 +31,7 @@ export const UnbondPoolMember = () => {
   const { txFeesValid } = useTxFees();
   const { units } = network;
   const { bondDuration } = consts;
+  const durationFormatted = eraDurationFormatted(bondDuration, t);
   const { member, who } = config;
   const { points } = member;
   const freeToUnbond = planckToUnit(new BigNumber(rmCommas(points)), units);
@@ -91,7 +93,7 @@ export const UnbondPoolMember = () => {
         </h2>
         <Separator />
         <NotesWrapper>
-          <p>{t('onceUnbonding', { bondDuration })}</p>
+          <p>{t('onceUnbonding', { durationFormatted })}</p>
           {bondValid && <EstimatedTxFee />}
         </NotesWrapper>
         <FooterWrapper>

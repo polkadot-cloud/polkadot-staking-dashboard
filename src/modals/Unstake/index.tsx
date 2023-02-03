@@ -16,6 +16,7 @@ import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { eraDurationFormatted } from 'library/Hooks/useTimeLeft/utils';
 import { Title } from 'library/Modal/Title';
 import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
@@ -38,6 +39,7 @@ export const Unstake = () => {
   const nominations = getAccountNominations(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
   const { bondDuration } = consts;
+  const durationFormatted = eraDurationFormatted(bondDuration, t);
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active } = allTransferOptions.nominate;
 
@@ -127,7 +129,7 @@ export const Unstake = () => {
           </>
         )}
         <NotesWrapper noPadding>
-          <p>{t('onceUnbonding', { bondDuration })}</p>
+          <p>{t('onceUnbonding', { durationFormatted })}</p>
           {bondValid && <EstimatedTxFee />}
         </NotesWrapper>
         <FooterWrapper>

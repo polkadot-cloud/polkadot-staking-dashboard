@@ -16,6 +16,7 @@ import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { eraDurationFormatted } from 'library/Hooks/useTimeLeft/utils';
 import { Title } from 'library/Modal/Title';
 import {
   FooterWrapper,
@@ -41,6 +42,8 @@ export const LeavePool = () => {
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active: activeBn } = allTransferOptions.pool;
   const { bondDuration } = consts;
+
+  const durationFormatted = eraDurationFormatted(bondDuration, t);
 
   let { unclaimedRewards } = selectedActivePool || {};
   unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
@@ -115,7 +118,7 @@ export const LeavePool = () => {
         </h2>
         <Separator />
         <NotesWrapper>
-          <p>{t('onceUnbonding', { bondDuration })}</p>
+          <p>{t('onceUnbonding', { durationFormatted })}</p>
           {bondValid && <EstimatedTxFee />}
         </NotesWrapper>
         <FooterWrapper>
