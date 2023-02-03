@@ -78,7 +78,10 @@ export const ManageBond = () => {
         </ButtonRowWrapper>
       </CardHeaderWrapper>
       <BondedChart
-        active={planckToUnit(active, units)}
+        active={planckToUnit(
+          active.minus(totalUnlocking).minus(totalUnlocked),
+          units
+        )}
         unlocking={planckToUnit(totalUnlocking, units)}
         unlocked={planckToUnit(totalUnlocked, units)}
         free={planckToUnit(freeBalance, units)}
