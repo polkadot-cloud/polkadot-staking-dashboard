@@ -6,7 +6,7 @@ import { U8aLike } from '@polkadot/util/types';
 import BigNumber from 'bignumber.js';
 import { Network, NetworkName } from '../../types';
 
-export type ConnectionStatus = 'connecting' | 'connected' | 'disconnected';
+export type ApiStatus = 'connecting' | 'connected' | 'disconnected';
 
 export interface NetworkState {
   name: NetworkName;
@@ -33,6 +33,6 @@ export interface APIContextInterface {
   consts: APIConstants;
   isReady: boolean;
   isLightClient: boolean;
-  apiStatus: ConnectionStatus;
+  apiStatus: ApiStatus;
   network: Network;
 }

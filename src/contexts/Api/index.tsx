@@ -19,7 +19,7 @@ import {
 import {
   APIConstants,
   APIContextInterface,
-  ConnectionStatus,
+  ApiStatus,
   NetworkState,
 } from 'contexts/Api/types';
 import React, { useEffect, useState } from 'react';
@@ -105,7 +105,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   const [consts, setConsts] = useState<APIConstants>(defaults.consts);
 
   // Store API connection status.
-  const [apiStatus, setApiStatus] = useState<ConnectionStatus>('disconnected');
+  const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
 
   // Handle the initial connection
   useEffect(() => {
