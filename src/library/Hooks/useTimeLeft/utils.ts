@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { getUnixTime, intervalToDuration } from 'date-fns';
+import { differenceInDays, getUnixTime, intervalToDuration } from 'date-fns';
 import { TFunction } from 'i18next';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { defaultDuration } from './defaults';
@@ -29,15 +29,19 @@ export const getDuration = (toDate: Date | null): TimeleftDuration => {
   });
 
   const months = d?.months || 0;
-  const days = d?.days || 0;
+  let days = d?.days || 0;
   const hours = d?.hours || 0;
   const minutes = d?.minutes || 0;
   const seconds = d?.seconds || 0;
   const lastHour = months === 0 && days === 0 && hours === 0;
   const lastMinute = lastHour && minutes === 0;
 
+  if (months > 0) {
+    const _days = differenceInDays(toDate, Date.now());
+    days += _days;
+  }
+
   return {
-    months,
     days,
     hours,
     minutes,
@@ -52,15 +56,15 @@ export const timeleftAsString = (
   toDate?: Date,
   full?: boolean
 ) => {
-  const { months, days, hours, minutes, seconds } = getDuration(toDate || null);
+  const { days, hours, minutes, seconds } = getDuration(toDate || null);
 
   const tHour = `time.${full ? `hour` : `hr`}`;
   const tMinute = `time.${full ? `minute` : `min`}`;
 
   let str = '';
-  if (months > 0) {
-    str += `${months} ${t('time.month', { count: months, ns: 'base' })}`;
-  }
+  // if (months > 0) {
+  //   str += `${months} ${t('time.month', { count: months, ns: 'base' })}`;
+  // }
   if (days > 0) {
     str += `${days} ${t('time.day', { count: days, ns: 'base' })}`;
   }
@@ -70,7 +74,7 @@ export const timeleftAsString = (
   if (minutes > 0) {
     str += ` ${minutes} ${t(tMinute, { count: minutes, ns: 'base' })}`;
   }
-  if (!months && !days && !hours) {
+  if (!days && !hours) {
     str += ` ${seconds}`;
   }
   return str;
