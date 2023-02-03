@@ -19,15 +19,15 @@ import { ChunkWrapper, ContentWrapper } from './Wrappers';
 
 export const Overview = forwardRef(
   ({ unlocking, bondFor, setSection, setUnlock, setTask }: any, ref: any) => {
+    const { t } = useTranslation('modals');
     const { network, consts } = useApi();
     const { activeEra } = useNetworkMetrics();
     const { bondDuration } = consts;
     const { units } = network;
     const { isFastUnstaking } = useUnstaking();
-    const { t } = useTranslation('modals');
 
-    const { getTimeLeftFromEras } = useErasToTimeLeft();
-    const durationSeconds = getTimeLeftFromEras(bondDuration);
+    const { erasToSeconds } = useErasToTimeLeft();
+    const durationSeconds = erasToSeconds(bondDuration);
     const durationFormatted = timeleftAsString(
       t,
       fromNow(durationSeconds),
