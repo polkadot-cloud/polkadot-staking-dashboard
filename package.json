@@ -12,7 +12,7 @@
     "@polkadot/api": "^9.12.1",
     "@polkadot/keyring": "^10.2.6",
     "@polkadot/react-identicon": "^2.10.1",
-    "@polkadot/rpc-provider": "^9.12.1",
+    "@polkadot/rpc-provider": "^9.13.5",
     "@polkadot/types": "^9.12.1",
     "@polkadot/types-codec": "^9.13.5",
     "@polkadot/util": "^10.2.6",
