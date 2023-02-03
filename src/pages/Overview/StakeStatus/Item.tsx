@@ -5,9 +5,9 @@ import { faChevronRight, faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { useTheme } from 'contexts/Themes';
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { defaultThemes } from 'theme/default';
-import { remToUnit } from 'Utils';
+import { applyWidthAsPadding } from 'Utils';
 import { ItemProps } from './types';
 import { StatusRowWrapper } from './Wrappers';
 
@@ -16,13 +16,20 @@ export const Item = ({ text, ctaText, onClick, leftIcon }: ItemProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const subjectRef = useRef<HTMLDivElement>(null);
 
+  const handleAdjustLayout = () => {
+    applyWidthAsPadding(subjectRef, containerRef);
+  };
+
   useLayoutEffect(() => {
-    if (containerRef.current && subjectRef.current) {
-      containerRef.current.style.paddingRight = `${
-        subjectRef.current.offsetWidth + remToUnit('1rem')
-      }px`;
-    }
+    handleAdjustLayout();
   });
+
+  useEffect(() => {
+    window.addEventListener('resize', handleAdjustLayout);
+    return () => {
+      window.removeEventListener('resize', handleAdjustLayout);
+    };
+  }, []);
 
   return (
     <StatusRowWrapper leftIcon={leftIcon?.show}>

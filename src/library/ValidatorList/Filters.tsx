@@ -71,12 +71,12 @@ export const Filters = () => {
           <Item
             label={
               order === 'default'
-                ? t('unordered') || ''
-                : `${t('order') || ''}: ${ordersToLabels[order]}`
+                ? `${t('unordered')}`
+                : `${t('order')}: ${ordersToLabels[order]}`
             }
             disabled
           />
-          {!hasFilters && <Item label={t('noFilters') || ''} disabled />}
+          {!hasFilters && <Item label={`${t('noFilters')}`} disabled />}
           {includes?.map((e: string, i: number) => (
             <Item
               key={`validator_include_${i}`}

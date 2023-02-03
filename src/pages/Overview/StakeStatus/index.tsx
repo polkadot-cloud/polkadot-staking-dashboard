@@ -121,7 +121,7 @@ export const StakeStatus = () => {
             {!activeAccount ? (
               <Item
                 text={t('overview.noAccountConnected')}
-                ctaText={t('overview.connect') || ''}
+                ctaText={`${t('overview.connect')}`}
                 onClick={() => openModalWith('ConnectAccounts', {}, 'large')}
               />
             ) : (
@@ -139,7 +139,7 @@ export const StakeStatus = () => {
                       <Item
                         leftIcon={{ show: true, status: 'off' }}
                         text={t('overview.notStaking')}
-                        ctaText={t('overview.start') || ''}
+                        ctaText={`${t('overview.start')}`}
                         onClick={() =>
                           openModalWith('StartStaking', {}, 'small')
                         }
@@ -158,7 +158,7 @@ export const StakeStatus = () => {
                               getNominationStatus(activeAccount, 'nominator')
                                 .message
                             }
-                            ctaText={t('overview.manage') || ''}
+                            ctaText={`${t('overview.manage')}`}
                             onClick={() => navigate('/nominate')}
                           />
                         ) : null}
@@ -175,7 +175,7 @@ export const StakeStatus = () => {
                                 ? `${t('overview.pool')} ${membership.poolId}`
                                 : poolDisplay()
                             }`}
-                            ctaText={t('overview.manage') || ''}
+                            ctaText={`${t('overview.manage')}`}
                             onClick={() => navigate('/pools')}
                           />
                         ) : null}

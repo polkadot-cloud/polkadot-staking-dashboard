@@ -34,7 +34,7 @@ export const Nominate = ({ batchKey, bondFor, section }: NominationsProps) => {
       <Header
         thisSection={section}
         complete={progress.nominations.length > 0}
-        title={t('nominate') || ''}
+        title={`${t('nominate')}`}
         helpKey="Nominating"
         bondFor={bondFor}
       />

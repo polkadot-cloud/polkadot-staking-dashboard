@@ -73,7 +73,7 @@ export const Payee = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={isComplete()}
-        title={t('nominate.payoutDestination') || ''}
+        title={`${t('nominate.payoutDestination')}`}
         helpKey="Payout Destination"
         bondFor="nominator"
       />
