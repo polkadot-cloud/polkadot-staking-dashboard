@@ -37,8 +37,7 @@ export const getDuration = (toDate: Date | null): TimeleftDuration => {
   const lastMinute = lastHour && minutes === 0;
 
   if (months > 0) {
-    const _days = differenceInDays(toDate, Date.now());
-    days += _days;
+    days = differenceInDays(toDate, Date.now());
   }
 
   return {
@@ -62,9 +61,6 @@ export const timeleftAsString = (
   const tMinute = `time.${full ? `minute` : `min`}`;
 
   let str = '';
-  // if (months > 0) {
-  //   str += `${months} ${t('time.month', { count: months, ns: 'base' })}`;
-  // }
   if (days > 0) {
     str += `${days} ${t('time.day', { count: days, ns: 'base' })}`;
   }
