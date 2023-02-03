@@ -44,7 +44,7 @@ export const BondedChart = ({
         style={{ marginTop: '2rem', marginBottom: '2rem' }}
       >
         <Legend>
-          {inactive ? (
+          {inactive && totalUnlocking.isZero() ? (
             <LegendItem dataClass="d4" label={t('available')} />
           ) : (
             <>
@@ -75,7 +75,7 @@ export const BondedChart = ({
             widthPercent={Number(graphFree.toFixed(2))}
             flexGrow={0}
             label={`${free.decimalPlaces(3).toFormat()} ${unit}`}
-            forceShow={inactive}
+            forceShow={inactive && totalUnlocking.isZero()}
           />
         </Bar>
       </BarChartWrapper>
