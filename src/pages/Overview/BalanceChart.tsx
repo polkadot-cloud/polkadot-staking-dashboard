@@ -113,7 +113,11 @@ export const BalanceChart = () => {
   });
 
   const isNominating = greaterThanZero(nominating);
-  const isInPool = greaterThanZero(poolBondOpions.active);
+  const isInPool = greaterThanZero(
+    poolBondOpions.active
+      .plus(poolBondOpions.totalUnlocked)
+      .plus(poolBondOpions.totalUnlocking)
+  );
 
   return (
     <>
