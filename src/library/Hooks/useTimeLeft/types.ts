@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 
 export interface TimeleftDuration {
+  months: number;
   days: number;
   hours: number;
   minutes: number;
