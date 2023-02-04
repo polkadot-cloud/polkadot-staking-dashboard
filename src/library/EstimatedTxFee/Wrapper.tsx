@@ -6,10 +6,13 @@ import { textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   p {
+    padding: 0;
+    font-size: 1rem;
     color: ${textSecondary};
     margin: 0.5rem 0;
+
     > span {
-      margin-left: 0.6rem;
+      margin: 0 0.5rem 0 0;
     }
   }
 `;

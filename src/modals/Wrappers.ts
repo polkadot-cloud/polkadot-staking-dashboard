@@ -175,7 +175,7 @@ export const HeadingWrapper = styled.h3<{ noPadding?: boolean }>`
 export const FooterWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
 
@@ -183,6 +183,8 @@ export const FooterWrapper = styled.div`
     color: ${textSecondary};
     opacity: 0.5;
     margin: 0;
+    position: relative;
+    top: 1.25rem;
     &.active {
       opacity: 1;
       color: ${networkColor};
@@ -228,7 +230,7 @@ export const NotesWrapper = styled.div<{
   noPadding?: boolean;
 }>`
   width: 100%;
-  padding: ${(props) => (props.noPadding ? '0' : '1rem 0')};
+  padding: ${(props) => (props.noPadding ? '0' : '0.25rem 0')};
   > p {
     color: ${textSecondary};
   }

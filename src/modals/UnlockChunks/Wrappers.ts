@@ -32,7 +32,10 @@ export const ContentWrapper = styled.div`
   flex-flow: column nowrap;
   flex-basis: 50%;
   flex: 1;
-  padding: 0 1.25rem;
+
+  .padding {
+    padding: 0 1.25rem;
+  }
 
   > div:last-child {
     margin-bottom: 0;

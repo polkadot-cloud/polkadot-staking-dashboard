@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 import {
-  backgroundDropdown,
+  backgroundPrimary,
   borderPrimary,
   borderSecondary,
   textPrimary,
@@ -76,7 +76,7 @@ export const StyledController = styled.button<any>`
 
 /* dropdown box for vertical scroll */
 export const StyledDropdown = styled.div<any>`
-  background: ${backgroundDropdown};
+  background: ${backgroundPrimary};
   position: relative;
   margin: 0.5rem 0 0;
   border-bottom: none;
