@@ -63,11 +63,19 @@ export const Modal = () => {
   };
 
   useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
+
+  useEffect(() => {
     // modal has been opened - fade in
     if (status === 1) {
       onFadeIn();
-    } else {
-      // an external component triggered modal closure - fade out
+    }
+    // an external component triggered modal closure - fade out
+    if (status === 2) {
       onFadeOut();
     }
   }, [status]);
