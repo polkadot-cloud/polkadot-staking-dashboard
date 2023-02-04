@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundToggle, borderPrimary, textSecondary } from 'theme';
+import { backgroundSubmission, borderPrimary, textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -22,7 +22,7 @@ export const Wrapper = styled.div`
   }
 
   > .inner {
-    background: ${backgroundToggle};
+    background: ${backgroundSubmission};
     border-top: 1px solid ${borderPrimary};
     width: 100%;
     padding: 1rem;

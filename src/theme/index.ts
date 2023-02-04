@@ -119,6 +119,11 @@ export const backgroundToggle: theme.ThemeSet = theme(
   defaultThemes.buttons.toggle.background
 );
 
+export const backgroundSubmission: theme.ThemeSet = theme(
+  v,
+  defaultThemes.background.submission
+);
+
 export const buttonHelpBackground: theme.ThemeSet = theme(
   v,
   defaultThemes.buttons.help.background

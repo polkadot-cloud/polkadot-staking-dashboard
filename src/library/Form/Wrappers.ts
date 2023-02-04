@@ -72,7 +72,7 @@ export const InputWrapper = styled.div`
               display: none;
             }
             color: ${textSecondary};
-            padding: 0 0.5rem;
+            padding-left: 0.5rem;
             justify-content: flex-end;
             opacity: 0.5;
             position: relative;
