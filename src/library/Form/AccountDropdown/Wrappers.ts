@@ -3,7 +3,6 @@
 
 import styled from 'styled-components';
 import {
-  backgroundPrimary,
   borderPrimary,
   borderSecondary,
   textPrimary,
@@ -39,7 +38,7 @@ export const StyledDownshift = styled.div`
     flex-flow: row wrap;
     align-items: center;
     padding: 0.25rem 0 0 0;
-    margin: 0.25rem 0.7rem 0 0.7rem;
+    margin: 0.25rem 0rem 0 0rem;
     flex: 1;
 
     &.selected {
@@ -76,10 +75,9 @@ export const StyledController = styled.button<any>`
 
 /* dropdown box for vertical scroll */
 export const StyledDropdown = styled.div<any>`
-  background: ${backgroundPrimary};
+  border: 1px solid ${borderPrimary};
   position: relative;
   margin: 0.5rem 0 0;
-  border-bottom: none;
   border-radius: 0.75rem;
   z-index: 1;
 

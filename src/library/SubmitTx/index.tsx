@@ -35,8 +35,7 @@ export const SubmitTx = ({
         <p className="sign">
           {fromController ? (
             <>
-              <FontAwesomeIcon icon={faPenToSquare} transform="shrink-1" />{' '}
-              Signed by Controller
+              <FontAwesomeIcon icon={faPenToSquare} /> Signed by Controller
             </>
           ) : null}
           {notEnoughFunds ? (
