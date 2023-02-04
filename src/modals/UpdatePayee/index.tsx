@@ -155,6 +155,7 @@ export const UpdatePayee = () => {
         fromController
         buttons={[
           <ButtonSubmit
+            key="button_submit"
             text={`${submitting ? t('submitting') : t('submit')}`}
             iconLeft={faArrowAltCircleUp}
             iconTransform="grow-2"

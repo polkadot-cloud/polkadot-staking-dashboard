@@ -206,6 +206,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
           <SubmitTx
             buttons={[
               <ButtonInvert
+                key="button_back"
                 text={t('back')}
                 iconLeft={faChevronLeft}
                 iconTransform="shrink-1"
@@ -213,6 +214,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
                 disabled={submitting}
               />,
               <ButtonSubmit
+                key="button_submit"
                 text={`${submitting ? t('submitting') : t('submit')}`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"

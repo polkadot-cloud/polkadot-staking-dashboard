@@ -182,6 +182,7 @@ export const ManageFastUnstake = () => {
           fromController
           buttons={[
             <ButtonSubmit
+              key="button_submit"
               text={`${
                 submitting
                   ? t('submitting')

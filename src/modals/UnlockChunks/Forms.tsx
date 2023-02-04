@@ -134,12 +134,14 @@ export const Forms = forwardRef(
             fromController={isStaking}
             buttons={[
               <ButtonInvert
+                key="button_back"
                 text={t('back')}
                 iconLeft={faChevronLeft}
                 iconTransform="shrink-1"
                 onClick={() => setSection(0)}
               />,
               <ButtonSubmit
+                key="button_submit"
                 text={`${submitting ? t('submitting') : t('submit')}`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
