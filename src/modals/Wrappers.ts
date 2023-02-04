@@ -151,11 +151,7 @@ export const PaddingWrapper = styled.div<{
   justify-content: flex-start;
   width: 100%;
   padding: ${(props) =>
-    props.verticalOnly
-      ? '1.25rem 0'
-      : props.horizontalOnly
-      ? '0 1rem'
-      : '1.25rem 1.25rem'};
+    props.verticalOnly ? '1rem 0' : props.horizontalOnly ? '0 1rem' : '1rem'};
 `;
 
 // modal header, used for extrinsics forms
