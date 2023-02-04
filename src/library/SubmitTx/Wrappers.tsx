@@ -2,28 +2,30 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundToggle, textSecondary } from 'theme';
+import { backgroundToggle, borderPrimary, textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   margin-top: 1rem;
-  margin-bottom: 0.75rem;
-  padding: 0 0.6rem;
 
   .sign {
     opacity: 0.75;
     font-size: 0.9rem;
-    margin-bottom: 0.4rem;
+    margin: 0;
     padding-left: 0.5rem;
+
+    > .icon {
+      margin-right: 0.3rem;
+    }
   }
 
   > .inner {
     background: ${backgroundToggle};
+    border-top: 1px solid ${borderPrimary};
     width: 100%;
-    padding: 0.6rem;
-    border-radius: 0.75rem 0.75rem 1rem 1rem;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
 

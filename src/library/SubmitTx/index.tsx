@@ -1,8 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
-import { faWarning } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
@@ -31,30 +30,30 @@ export const SubmitTx = ({
 
   return (
     <Wrapper>
-      {displayNote ? (
-        <p className="sign">
-          {fromController ? (
-            <>
-              <FontAwesomeIcon icon={faPenToSquare} /> Signed by Controller
-            </>
-          ) : null}
-          {notEnoughFunds ? (
-            <>
-              {fromController ? ' / ' : null}
-              <FontAwesomeIcon
-                icon={faWarning}
-                transform="shrink-1"
-                color={defaultThemes.text.danger[mode]}
-              />{' '}
-              <span style={{ color: defaultThemes.text.danger[mode] }}>
-                Not Enough {unit}
-              </span>
-            </>
-          ) : null}
-        </p>
-      ) : null}
-
       <div className="inner">
+        {displayNote ? (
+          <p className="sign">
+            {fromController ? (
+              <>
+                <FontAwesomeIcon icon={faPenToSquare} className="icon" /> Signed
+                by Controller
+              </>
+            ) : null}
+            {notEnoughFunds ? (
+              <>
+                {fromController ? ' / ' : null}
+                <FontAwesomeIcon
+                  icon={faWarning}
+                  transform="shrink-1"
+                  color={defaultThemes.text.danger[mode]}
+                />{' '}
+                <span style={{ color: defaultThemes.text.danger[mode] }}>
+                  Not Enough {unit}
+                </span>
+              </>
+            ) : null}
+          </p>
+        ) : null}
         <section className="foot">
           <div>
             <EstimatedTxFee />
