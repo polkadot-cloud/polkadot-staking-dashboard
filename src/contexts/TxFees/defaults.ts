@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import { EstimatedFeeContext } from '.';
+import { EstimatedFeeContext } from './types';
 
 export const defaultTxFees: EstimatedFeeContext = {
   txFees: new BigNumber(0),
@@ -13,4 +13,7 @@ export const defaultTxFees: EstimatedFeeContext = {
   // eslint-disable-next-line
   setSender: (s) => {},
   txFeesValid: false,
+  fetchingPaymentInfo: false,
+  // eslint-disable-next-line
+  setFetchingPaymentInfo: (v) => {},
 };

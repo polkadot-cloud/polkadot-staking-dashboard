@@ -4,18 +4,11 @@
 import BigNumber from 'bignumber.js';
 import { useConnect } from 'contexts/Connect';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MaybeAccount } from 'types';
+import { setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
-
-export interface EstimatedFeeContext {
-  txFees: BigNumber;
-  notEnoughFunds: boolean;
-  setTxFees: (f: BigNumber) => void;
-  resetTxFees: () => void;
-  setSender: (s: MaybeAccount) => void;
-  txFeesValid: boolean;
-}
+import { EstimatedFeeContext } from './types';
 
 export const TxFeesContext = React.createContext<EstimatedFeeContext>(
   defaults.defaultTxFees
@@ -28,7 +21,15 @@ export const TxFeesProvider = ({ children }: { children: React.ReactNode }) => {
   const { getTransferOptions } = useTransferOptions();
 
   // store the transaction fees for the transaction.
-  const [txFees, _setTxFees] = useState(new BigNumber(0));
+  const [txFees, setTxFees] = useState(new BigNumber(0));
+
+  // store whether payment info is currently being fetched.
+  const [fetchingPaymentInfo, setFetchingPaymentInfoState] = useState(false);
+  const fetchingPaymentInfoRef = useRef(fetchingPaymentInfo);
+
+  const setFetchingPaymentInfo = (v: boolean) => {
+    setStateWithRef(v, setFetchingPaymentInfoState, fetchingPaymentInfoRef);
+  };
 
   // store the sender of the transaction
   const [sender, setSender] = useState<MaybeAccount>(activeAccount);
@@ -41,13 +42,9 @@ export const TxFeesProvider = ({ children }: { children: React.ReactNode }) => {
     setNotEnoughFunds(freeBalance.minus(txFees).isLessThan(new BigNumber(0)));
   }, [txFees, sender]);
 
-  const setTxFees = (fees: BigNumber) => {
-    _setTxFees(fees);
-  };
-
   const resetTxFees = () => {
     setSender(null);
-    _setTxFees(new BigNumber(0));
+    setTxFees(new BigNumber(0));
   };
 
   const txFeesValid = (() => {
@@ -66,6 +63,8 @@ export const TxFeesProvider = ({ children }: { children: React.ReactNode }) => {
         resetTxFees,
         setSender,
         txFeesValid,
+        fetchingPaymentInfo: fetchingPaymentInfoRef.current,
+        setFetchingPaymentInfo,
       }}
     >
       {children}
