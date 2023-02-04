@@ -11,6 +11,4 @@ export interface EstimatedFeeContext {
   resetTxFees: () => void;
   setSender: (s: MaybeAccount) => void;
   txFeesValid: boolean;
-  fetchingPaymentInfo: boolean;
-  setFetchingPaymentInfo: (v: boolean) => void;
 }

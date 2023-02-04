@@ -13,7 +13,4 @@ export const defaultTxFees: EstimatedFeeContext = {
   // eslint-disable-next-line
   setSender: (s) => {},
   txFeesValid: false,
-  fetchingPaymentInfo: false,
-  // eslint-disable-next-line
-  setFetchingPaymentInfo: (v) => {},
 };
