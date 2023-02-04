@@ -17,12 +17,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
-import {
-  NotesWrapper,
-  PaddingWrapper,
-  Separator,
-  WarningsWrapper,
-} from '../Wrappers';
+import { PaddingWrapper, Separator, WarningsWrapper } from '../Wrappers';
 
 export const Nominate = () => {
   const { t } = useTranslation('modals');
@@ -106,9 +101,7 @@ export const Nominate = () => {
           {t('haveNomination', { count: nominations.length })}
         </h2>
         <Separator />
-        <NotesWrapper>
-          <p>{t('onceSubmitted')}</p>
-        </NotesWrapper>
+        <p>{t('onceSubmitted')}</p>
       </PaddingWrapper>
       <SubmitTx
         fromController

@@ -112,7 +112,7 @@ export const Forms = forwardRef(
               <Warning text={t('readOnly')} />
             )}
 
-            <div style={{ marginTop: '2rem' }}>
+            <div style={{ marginTop: '1rem' }}>
               {task === 'rebond' && (
                 <h2 className="title">
                   {`${t('rebond')} ${planckToUnit(value, units)} ${

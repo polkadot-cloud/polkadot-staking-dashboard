@@ -21,12 +21,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
-import {
-  NotesWrapper,
-  PaddingWrapper,
-  Separator,
-  WarningsWrapper,
-} from '../Wrappers';
+import { PaddingWrapper, Separator, WarningsWrapper } from '../Wrappers';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
@@ -147,10 +142,8 @@ export const ManageFastUnstake = () => {
               {t('fastUnstakeExposedAgo', { count: lastExposedAgo })}
             </h2>
             <Separator />
-            <NotesWrapper>
-              <p>{t('fastUnstakeNote1', { bondDuration })}</p>
-              <p>{t('fastUnstakeNote2', { count: erasRemaining })}</p>
-            </NotesWrapper>
+            <p>{t('fastUnstakeNote1', { bondDuration })}</p>
+            <p>{t('fastUnstakeNote2', { count: erasRemaining })}</p>
           </>
         ) : (
           <>
@@ -160,32 +153,25 @@ export const ManageFastUnstake = () => {
                   {t('fastUnstake', { context: 'register' })}
                 </h2>
                 <Separator />
-                <NotesWrapper>
-                  <p>
-                    <>
-                      {t('registerFastUnstake')}{' '}
-                      {planckToUnit(
-                        fastUnstakeDeposit,
-                        network.units
-                      ).toString()}{' '}
-                      {network.unit}. {t('fastUnstakeOnceRegistered')}
-                    </>
-                  </p>
-                  <p>
-                    {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
-                  </p>
-                </NotesWrapper>
+                <p>
+                  <>
+                    {t('registerFastUnstake')}{' '}
+                    {planckToUnit(fastUnstakeDeposit, network.units).toString()}{' '}
+                    {network.unit}. {t('fastUnstakeOnceRegistered')}
+                  </>
+                </p>
+                <p>
+                  {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
+                </p>
               </>
             ) : (
               <>
                 <h2 className="title">{t('fastUnstakeRegistered')}</h2>
                 <Separator />
-                <NotesWrapper>
-                  <p>
-                    {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
-                  </p>
-                  <p>{t('fastUnstakeUnorderedNote')}</p>
-                </NotesWrapper>
+                <p>
+                  {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
+                </p>
+                <p>{t('fastUnstakeUnorderedNote')}</p>
               </>
             )}
           </>

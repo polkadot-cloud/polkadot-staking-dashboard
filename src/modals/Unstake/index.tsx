@@ -17,7 +17,7 @@ import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { SubmitTx } from 'library/SubmitTx';
-import { NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
+import { PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero, planckToUnit, unitToPlanck } from 'Utils';
@@ -127,9 +127,7 @@ export const Unstake = () => {
             <Separator />
           </>
         )}
-        <NotesWrapper noPadding>
-          <p>{t('onceUnbonding', { bondDuration })}</p>
-        </NotesWrapper>
+        <p>{t('onceUnbonding', { bondDuration })}</p>
       </PaddingWrapper>
       <SubmitTx
         fromController

@@ -16,7 +16,7 @@ import { Title } from 'library/Modal/Title';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NotesWrapper, PaddingWrapper, Separator } from '../Wrappers';
+import { PaddingWrapper, Separator } from '../Wrappers';
 
 export const ChangeNominations = () => {
   const { t } = useTranslation('modals');
@@ -142,9 +142,7 @@ export const ChangeNominations = () => {
               : `${t('nomination', { count: removing })}`}
           </h2>
           <Separator />
-          <NotesWrapper>
-            <p>{t('changeNomination')}</p>
-          </NotesWrapper>
+          <p>{t('changeNomination')}</p>
         </div>
       </PaddingWrapper>
       <SubmitTx

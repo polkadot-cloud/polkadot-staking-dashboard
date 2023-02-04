@@ -15,7 +15,7 @@ import { Title } from 'library/Modal/Title';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NotesWrapper, PaddingWrapper, Separator } from '../Wrappers';
+import { PaddingWrapper, Separator } from '../Wrappers';
 
 export const NominatePool = () => {
   const { api } = useApi();
@@ -84,9 +84,7 @@ export const NominatePool = () => {
             {t('haveNomination', { count: nominations.length })}
           </h2>
           <Separator />
-          <NotesWrapper>
-            <p>{t('onceSubmitted')}</p>
-          </NotesWrapper>
+          <p>{t('onceSubmitted')}</p>
         </div>
       </PaddingWrapper>
       <SubmitTx

@@ -93,13 +93,12 @@ export const ClaimReward = () => {
             {`${planckToUnit(unclaimedRewards, units)} ${unit}`}
           </h2>
           <Separator />
-          <div className="notes">
-            {claimType === 'bond' ? (
-              <p>{t('claimReward1')}</p>
-            ) : (
-              <p>{t('claimReward2')}</p>
-            )}
-          </div>
+
+          {claimType === 'bond' ? (
+            <p>{t('claimReward1')}</p>
+          ) : (
+            <p>{t('claimReward2')}</p>
+          )}
         </div>
       </PaddingWrapper>
       <SubmitTx

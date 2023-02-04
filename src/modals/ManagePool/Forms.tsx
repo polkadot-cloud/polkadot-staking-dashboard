@@ -18,7 +18,6 @@ import { SubmitTx } from 'library/SubmitTx';
 import React, { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Separator } from 'Wrappers';
-import { NotesWrapper } from '../Wrappers';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef((props: any, ref: any) => {
@@ -201,7 +200,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
                 </>
               )}
 
-              <NotesWrapper>{content.message}</NotesWrapper>
+              <p>{content.message}</p>
             </div>
           </>
           <SubmitTx
