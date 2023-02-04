@@ -1,12 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonInvert, ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -14,13 +12,13 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { BondedPool } from 'contexts/Pools/types';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { SubmitTx } from 'library/SubmitTx';
 import React, { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Separator } from 'Wrappers';
-import { FooterWrapper, NotesWrapper } from '../Wrappers';
+import { NotesWrapper } from '../Wrappers';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef((props: any, ref: any) => {
@@ -172,73 +170,65 @@ export const Forms = forwardRef((props: any, ref: any) => {
   };
 
   return (
-    <ContentWrapper>
-      <div className="items" ref={ref}>
-        {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
-        <div>
+    <>
+      <ContentWrapper>
+        <div className="items" ref={ref}>
+          {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
           <>
-            {/* include task title if present */}
-            {content.title !== undefined && (
-              <>
-                {content.title}
-                <Separator />
-              </>
-            )}
+            <div className="padding">
+              {/* include task title if present */}
+              {content.title !== undefined && (
+                <>
+                  {content.title}
+                  <Separator />
+                </>
+              )}
 
-            {/* include form element if task is to set metadata */}
-            {task === 'set_pool_metadata' && (
-              <>
-                <h2>{t('updatePoolName')}</h2>
-                <input
-                  className="textbox"
-                  style={{ width: '100%' }}
-                  placeholder={`${t('poolName')}`}
-                  type="text"
-                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                    handleMetadataChange(e)
-                  }
-                  value={metadata ?? ''}
-                />
-              </>
-            )}
+              {/* include form element if task is to set metadata */}
+              {task === 'set_pool_metadata' && (
+                <>
+                  <h2>{t('updatePoolName')}</h2>
+                  <input
+                    className="textbox"
+                    style={{ width: '100%' }}
+                    placeholder={`${t('poolName')}`}
+                    type="text"
+                    onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                      handleMetadataChange(e)
+                    }
+                    value={metadata ?? ''}
+                  />
+                </>
+              )}
 
-            <NotesWrapper>
-              {content.message}
-              <EstimatedTxFee />
-            </NotesWrapper>
+              <NotesWrapper>{content.message}</NotesWrapper>
+            </div>
           </>
+          <SubmitTx
+            buttons={[
+              <ButtonInvert
+                text={t('back')}
+                iconLeft={faChevronLeft}
+                iconTransform="shrink-1"
+                onClick={() => setSection(0)}
+                disabled={submitting}
+              />,
+              <ButtonSubmit
+                text={`${submitting ? t('submitting') : t('submit')}`}
+                iconLeft={faArrowAltCircleUp}
+                iconTransform="grow-2"
+                onClick={() => submitTx()}
+                disabled={
+                  submitting ||
+                  !accountHasSigner(activeAccount) ||
+                  !valid ||
+                  !txFeesValid
+                }
+              />,
+            ]}
+          />
         </div>
-        <FooterWrapper>
-          <div>
-            <button
-              type="button"
-              className="submit secondary"
-              onClick={() => setSection(0)}
-              disabled={submitting}
-            >
-              <FontAwesomeIcon
-                transform="grow-2"
-                icon={faChevronLeft as IconProp}
-              />
-              {t('back')}
-            </button>
-          </div>
-          <div>
-            <ButtonSubmit
-              text={`${submitting ? t('submitting') : t('submit')}`}
-              iconLeft={faArrowAltCircleUp}
-              iconTransform="grow-2"
-              onClick={() => submitTx()}
-              disabled={
-                submitting ||
-                !accountHasSigner(activeAccount) ||
-                !valid ||
-                !txFeesValid
-              }
-            />
-          </div>
-        </FooterWrapper>
-      </div>
-    </ContentWrapper>
+      </ContentWrapper>
+    </>
   );
 });

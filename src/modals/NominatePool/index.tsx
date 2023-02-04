@@ -9,18 +9,13 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
+import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  FooterWrapper,
-  NotesWrapper,
-  PaddingWrapper,
-  Separator,
-} from '../Wrappers';
+import { NotesWrapper, PaddingWrapper, Separator } from '../Wrappers';
 
 export const NominatePool = () => {
   const { api } = useApi();
@@ -91,27 +86,26 @@ export const NominatePool = () => {
           <Separator />
           <NotesWrapper>
             <p>{t('onceSubmitted')}</p>
-            <EstimatedTxFee />
           </NotesWrapper>
-          <FooterWrapper>
-            <div>
-              <ButtonSubmit
-                text={`${submitting ? t('submitting') : t('submit')}`}
-                iconLeft={faArrowAltCircleUp}
-                iconTransform="grow-2"
-                onClick={() => submitTx()}
-                disabled={
-                  !valid ||
-                  submitting ||
-                  warnings.length > 0 ||
-                  !accountHasSigner(activeAccount) ||
-                  !txFeesValid
-                }
-              />
-            </div>
-          </FooterWrapper>
         </div>
       </PaddingWrapper>
+      <SubmitTx
+        buttons={[
+          <ButtonSubmit
+            text={`${submitting ? t('submitting') : t('submit')}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => submitTx()}
+            disabled={
+              !valid ||
+              submitting ||
+              warnings.length > 0 ||
+              !accountHasSigner(activeAccount) ||
+              !txFeesValid
+            }
+          />,
+        ]}
+      />
     </>
   );
 };

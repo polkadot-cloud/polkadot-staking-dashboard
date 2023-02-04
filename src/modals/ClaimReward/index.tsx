@@ -10,16 +10,18 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
+import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
-import { FooterWrapper, PaddingWrapper, Separator } from '../Wrappers';
+import { PaddingWrapper, Separator } from '../Wrappers';
 
 export const ClaimReward = () => {
+  const { t } = useTranslation('modals');
+
   const { api, network } = useApi();
   const { setStatus: setModalStatus, config } = useModal();
   const { selectedActivePool } = useActivePools();
@@ -29,7 +31,6 @@ export const ClaimReward = () => {
   let { unclaimedRewards } = selectedActivePool || {};
   unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
   const { claimType } = config;
-  const { t } = useTranslation('modals');
 
   // ensure selected payout is valid
   useEffect(() => {
@@ -98,26 +99,25 @@ export const ClaimReward = () => {
             ) : (
               <p>{t('claimReward2')}</p>
             )}
-            <EstimatedTxFee />
           </div>
-          <FooterWrapper>
-            <div>
-              <ButtonSubmit
-                text={`${submitting ? t('submitting') : t('submit')}`}
-                iconLeft={faArrowAltCircleUp}
-                iconTransform="grow-2"
-                onClick={() => submitTx()}
-                disabled={
-                  !valid ||
-                  submitting ||
-                  !accountHasSigner(activeAccount) ||
-                  !txFeesValid
-                }
-              />
-            </div>
-          </FooterWrapper>
         </div>
       </PaddingWrapper>
+      <SubmitTx
+        buttons={[
+          <ButtonSubmit
+            text={`${submitting ? t('submitting') : t('submit')}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => submitTx()}
+            disabled={
+              !valid ||
+              submitting ||
+              !accountHasSigner(activeAccount) ||
+              !txFeesValid
+            }
+          />,
+        ]}
+      />
     </>
   );
 };

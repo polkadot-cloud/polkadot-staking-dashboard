@@ -13,12 +13,12 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
-import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
+import { SubmitTx } from 'library/SubmitTx';
+import { NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit, unitToPlanck } from 'Utils';
@@ -205,23 +205,23 @@ export const Unbond = () => {
             </>
           ) : null}
           <p>{t('onceUnbonding', { bondDuration })}</p>
-          <EstimatedTxFee />
         </NotesWrapper>
-        <FooterWrapper>
-          <div>
-            <ButtonSubmit
-              text={`${submitting ? t('submitting') : t('submit')}`}
-              iconLeft={faArrowAltCircleUp}
-              iconTransform="grow-2"
-              onClick={() => submitTx()}
-              disabled={
-                submitting ||
-                !(bondValid && accountHasSigner(signingAccount) && txFeesValid)
-              }
-            />
-          </div>
-        </FooterWrapper>
       </PaddingWrapper>
+      <SubmitTx
+        fromController={isStaking}
+        buttons={[
+          <ButtonSubmit
+            text={`${submitting ? t('submitting') : t('submit')}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => submitTx()}
+            disabled={
+              submitting ||
+              !(bondValid && accountHasSigner(signingAccount) && txFeesValid)
+            }
+          />,
+        ]}
+      />
     </>
   );
 };

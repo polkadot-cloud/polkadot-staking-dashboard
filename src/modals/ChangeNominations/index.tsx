@@ -10,20 +10,17 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
+import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  FooterWrapper,
-  NotesWrapper,
-  PaddingWrapper,
-  Separator,
-} from '../Wrappers';
+import { NotesWrapper, PaddingWrapper, Separator } from '../Wrappers';
 
 export const ChangeNominations = () => {
+  const { t } = useTranslation('modals');
+
   const { api } = useApi();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getBondedAccount, getAccountNominations } = useBalances();
@@ -31,7 +28,6 @@ export const ChangeNominations = () => {
   const { poolNominations, isNominator, isOwner, selectedActivePool } =
     useActivePools();
   const { txFeesValid } = useTxFees();
-  const { t } = useTranslation('modals');
 
   const { nominations: newNominations, provider, bondFor } = config;
 
@@ -148,26 +144,26 @@ export const ChangeNominations = () => {
           <Separator />
           <NotesWrapper>
             <p>{t('changeNomination')}</p>
-            <EstimatedTxFee />
           </NotesWrapper>
-          <FooterWrapper>
-            <div>
-              <ButtonSubmit
-                text={`${submitting ? t('submitting') : t('submit')}`}
-                iconLeft={faArrowAltCircleUp}
-                iconTransform="grow-2"
-                onClick={() => submitTx()}
-                disabled={
-                  !valid ||
-                  submitting ||
-                  !accountHasSigner(signingAccount) ||
-                  !txFeesValid
-                }
-              />
-            </div>
-          </FooterWrapper>
         </div>
       </PaddingWrapper>
+      <SubmitTx
+        fromController={isStaking}
+        buttons={[
+          <ButtonSubmit
+            text={`${submitting ? t('submitting') : t('submit')}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => submitTx()}
+            disabled={
+              !valid ||
+              submitting ||
+              !accountHasSigner(signingAccount) ||
+              !txFeesValid
+            }
+          />,
+        ]}
+      />
     </>
   );
 };

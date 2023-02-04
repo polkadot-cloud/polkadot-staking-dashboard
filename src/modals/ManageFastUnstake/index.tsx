@@ -13,16 +13,15 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Title } from 'library/Modal/Title';
+import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
 import {
-  FooterWrapper,
   NotesWrapper,
   PaddingWrapper,
   Separator,
@@ -175,7 +174,6 @@ export const ManageFastUnstake = () => {
                   <p>
                     {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
                   </p>
-                  <EstimatedTxFee />
                 </NotesWrapper>
               </>
             ) : (
@@ -187,32 +185,32 @@ export const ManageFastUnstake = () => {
                     {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
                   </p>
                   <p>{t('fastUnstakeUnorderedNote')}</p>
-                  <EstimatedTxFee />
                 </NotesWrapper>
               </>
             )}
           </>
         )}
-        {!isExposed && (
-          <FooterWrapper>
-            <div>
-              <ButtonSubmit
-                text={`${
-                  submitting
-                    ? t('submitting')
-                    : t('fastUnstakeSubmit', {
-                        context: isFastUnstaking ? 'cancel' : 'register',
-                      })
-                }`}
-                iconLeft={faArrowAltCircleUp}
-                iconTransform="grow-2"
-                onClick={() => submitTx()}
-                disabled={!valid || submitting || !txFeesValid}
-              />
-            </div>
-          </FooterWrapper>
-        )}
       </PaddingWrapper>
+      {!isExposed ? (
+        <SubmitTx
+          fromController
+          buttons={[
+            <ButtonSubmit
+              text={`${
+                submitting
+                  ? t('submitting')
+                  : t('fastUnstakeSubmit', {
+                      context: isFastUnstaking ? 'cancel' : 'register',
+                    })
+              }`}
+              iconLeft={faArrowAltCircleUp}
+              iconTransform="grow-2"
+              onClick={() => submitTx()}
+              disabled={!valid || submitting || !txFeesValid}
+            />,
+          ]}
+        />
+      ) : null}
     </>
   );
 };

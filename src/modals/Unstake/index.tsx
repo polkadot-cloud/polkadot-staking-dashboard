@@ -13,11 +13,11 @@ import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
-import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
+import { SubmitTx } from 'library/SubmitTx';
+import { NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero, planckToUnit, unitToPlanck } from 'Utils';
@@ -25,6 +25,7 @@ import { Separator } from '../../Wrappers';
 
 export const Unstake = () => {
   const { t } = useTranslation('modals');
+
   const { api, network, consts } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
@@ -128,23 +129,23 @@ export const Unstake = () => {
         )}
         <NotesWrapper noPadding>
           <p>{t('onceUnbonding', { bondDuration })}</p>
-          {bondValid && <EstimatedTxFee />}
         </NotesWrapper>
-        <FooterWrapper>
-          <div>
-            <ButtonSubmit
-              text={`${submitting ? t('submitting') : t('submit')}`}
-              iconLeft={faArrowAltCircleUp}
-              iconTransform="grow-2"
-              onClick={() => submitTx()}
-              disabled={
-                submitting ||
-                !(bondValid && accountHasSigner(controller) && txFeesValid)
-              }
-            />
-          </div>
-        </FooterWrapper>
       </PaddingWrapper>
+      <SubmitTx
+        fromController
+        buttons={[
+          <ButtonSubmit
+            text={`${submitting ? t('submitting') : t('submit')}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => submitTx()}
+            disabled={
+              submitting ||
+              !(bondValid && accountHasSigner(controller) && txFeesValid)
+            }
+          />,
+        ]}
+      />
     </>
   );
 };

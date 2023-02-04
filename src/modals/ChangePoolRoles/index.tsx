@@ -9,15 +9,16 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
+import { SubmitTx } from 'library/SubmitTx';
 import { useTranslation } from 'react-i18next';
-import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import { RoleChange } from './RoleChange';
 import { Wrapper } from './Wrapper';
 
 export const ChangePoolRoles = () => {
+  const { t } = useTranslation('modals');
+
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { replacePoolRoles } = useBondedPools();
@@ -25,7 +26,6 @@ export const ChangePoolRoles = () => {
   const { config } = useModal();
   const { txFeesValid } = useTxFees();
   const { id: poolId, roleEdits } = config;
-  const { t } = useTranslation('modals');
 
   // tx to submit
   const getTx = () => {
@@ -88,24 +88,21 @@ export const ChangePoolRoles = () => {
             oldAddress={roleEdits?.stateToggler?.oldAddress}
             newAddress={roleEdits?.stateToggler?.newAddress}
           />
-          <NotesWrapper>
-            <EstimatedTxFee />
-          </NotesWrapper>
-          <FooterWrapper>
-            <div>
-              <ButtonSubmit
-                text={`${submitting ? t('submitting') : t('submit')}`}
-                iconLeft={faArrowAltCircleUp}
-                iconTransform="grow-2"
-                onClick={() => submitTx()}
-                disabled={
-                  submitting || !accountHasSigner(activeAccount) || !txFeesValid
-                }
-              />
-            </div>
-          </FooterWrapper>
         </div>
       </Wrapper>
+      <SubmitTx
+        buttons={[
+          <ButtonSubmit
+            text={`${submitting ? t('submitting') : t('submit')}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => submitTx()}
+            disabled={
+              submitting || !accountHasSigner(activeAccount) || !txFeesValid
+            }
+          />,
+        ]}
+      />
     </>
   );
 };

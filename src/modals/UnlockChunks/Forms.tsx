@@ -3,8 +3,7 @@
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonInvert, ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -16,17 +15,19 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { SubmitTx } from 'library/SubmitTx';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit, rmCommas } from 'Utils';
-import { FooterWrapper, NotesWrapper, Separator } from '../Wrappers';
+import { Separator } from '../Wrappers';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(
   ({ setSection, unlock, task }: any, ref: any) => {
+    const { t } = useTranslation('modals');
+
     const { api, network, consts } = useApi();
     const { activeAccount, accountHasSigner } = useConnect();
     const { removeFavorite: removeFavoritePool } = usePoolsConfig();
@@ -37,7 +38,6 @@ export const Forms = forwardRef(
     const { setStatus: setModalStatus, config } = useModal();
     const { getBondedAccount } = useBalances();
     const { txFeesValid } = useTxFees();
-    const { t } = useTranslation('modals');
 
     const { bondFor, poolClosure } = config || {};
     const { historyDepth } = consts;
@@ -106,8 +106,8 @@ export const Forms = forwardRef(
 
     return (
       <ContentWrapper>
-        <div ref={ref} style={{ paddingBottom: '1rem' }}>
-          <div>
+        <div ref={ref}>
+          <div className="padding">
             {!accountHasSigner(signingAccount) && (
               <Warning text={t('readOnly')} />
             )}
@@ -129,22 +129,16 @@ export const Forms = forwardRef(
               )}
             </div>
             <Separator />
-            <NotesWrapper>
-              <EstimatedTxFee />
-            </NotesWrapper>
           </div>
-          <FooterWrapper>
-            <div>
-              <button
-                type="button"
-                className="submit secondary"
+          <SubmitTx
+            fromController={isStaking}
+            buttons={[
+              <ButtonInvert
+                text={t('back')}
+                iconLeft={faChevronLeft}
+                iconTransform="shrink-1"
                 onClick={() => setSection(0)}
-              >
-                <FontAwesomeIcon transform="shrink-2" icon={faChevronLeft} />
-                {t('back')}
-              </button>
-            </div>
-            <div>
+              />,
               <ButtonSubmit
                 text={`${submitting ? t('submitting') : t('submit')}`}
                 iconLeft={faArrowAltCircleUp}
@@ -156,9 +150,9 @@ export const Forms = forwardRef(
                   !accountHasSigner(signingAccount) ||
                   !txFeesValid
                 }
-              />
-            </div>
-          </FooterWrapper>
+              />,
+            ]}
+          />
         </div>
       </ContentWrapper>
     );

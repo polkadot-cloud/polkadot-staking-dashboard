@@ -10,25 +10,25 @@ import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { useModal } from 'contexts/Modal';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { AccountDropdown } from 'library/Form/AccountDropdown';
 import { InputItem } from 'library/Form/types';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
+import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FooterWrapper, NotesWrapper } from '../Wrappers';
 import { Wrapper } from './Wrapper';
 
 export const UpdateController = () => {
+  const { t } = useTranslation('modals');
+
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, getAccount, accountHasSigner } = useConnect();
   const { getBondedAccount } = useBalances();
   const { txFeesValid } = useTxFees();
-  const { t } = useTranslation('modals');
 
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
@@ -95,27 +95,24 @@ export const UpdateController = () => {
             value={selected}
             height="17rem"
           />
-          <NotesWrapper>
-            <EstimatedTxFee />
-          </NotesWrapper>
-          <FooterWrapper>
-            <div>
-              <ButtonSubmit
-                text={`${submitting ? t('submitting') : t('submit')}`}
-                iconLeft={faArrowAltCircleUp}
-                iconTransform="grow-2"
-                onClick={() => submitTx()}
-                disabled={
-                  selected === null ||
-                  submitting ||
-                  !accountHasSigner(activeAccount) ||
-                  !txFeesValid
-                }
-              />
-            </div>
-          </FooterWrapper>
         </div>
       </Wrapper>
+      <SubmitTx
+        buttons={[
+          <ButtonSubmit
+            text={`${submitting ? t('submitting') : t('submit')}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => submitTx()}
+            disabled={
+              selected === null ||
+              submitting ||
+              !accountHasSigner(activeAccount) ||
+              !txFeesValid
+            }
+          />,
+        ]}
+      />
     </>
   );
 };

@@ -11,7 +11,6 @@ import { useModal } from 'contexts/Modal';
 import { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { PayeeItem, usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -19,14 +18,15 @@ import { Title } from 'library/Modal/Title';
 import { PayeeInput } from 'library/PayeeInput';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
-import { UpdateHeader } from 'library/UpdateHeader';
+import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MaybeAccount } from 'types';
-import { FooterWrapper, PaddingWrapper, WarningsWrapper } from '../Wrappers';
+import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals');
+
   const { api } = useApi();
   const { activeAccount } = useConnect();
   const { getBondedAccount } = useBalances();
@@ -117,11 +117,10 @@ export const UpdatePayee = () => {
         icon={faWallet}
         helpKey="Payout Destination"
       />
-      <PaddingWrapper verticalOnly>
+      <PaddingWrapper verticalOnly style={{ paddingBottom: 0 }}>
         <div
           style={{
-            padding: '0 1.25rem',
-            marginTop: '1rem',
+            padding: '0 1rem',
             width: '100%',
           }}
         >
@@ -130,10 +129,14 @@ export const UpdatePayee = () => {
               <Warning text={t('mustHaveControllerUpdate')} />
             </WarningsWrapper>
           )}
-          <UpdateHeader
-            current={payee?.destination}
-            selected={selected?.destination}
-          />
+          <div style={{ width: '100%', padding: '0 0.5rem' }}>
+            <PayeeInput
+              payee={selected}
+              account={account}
+              setAccount={setAccount}
+              handleChange={handleChangeAccount}
+            />
+          </div>
           <SelectItems>
             {getPayeeItems(true).map((item: PayeeItem) => (
               <SelectItem
@@ -146,33 +149,25 @@ export const UpdatePayee = () => {
               />
             ))}
           </SelectItems>
-          <PayeeInput
-            payee={selected}
-            account={account}
-            setAccount={setAccount}
-            handleChange={handleChangeAccount}
-          />
-          <div style={{ marginTop: '1rem' }}>
-            <EstimatedTxFee />
-          </div>
-          <FooterWrapper>
-            <div>
-              <ButtonSubmit
-                text={`${submitting ? t('submitting') : t('submit')}`}
-                iconLeft={faArrowAltCircleUp}
-                iconTransform="grow-2"
-                onClick={() => submitTx()}
-                disabled={
-                  !isComplete() ||
-                  submitting ||
-                  getControllerNotImported(controller) ||
-                  !txFeesValid
-                }
-              />
-            </div>
-          </FooterWrapper>
         </div>
       </PaddingWrapper>
+      <SubmitTx
+        fromController
+        buttons={[
+          <ButtonSubmit
+            text={`${submitting ? t('submitting') : t('submit')}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => submitTx()}
+            disabled={
+              !isComplete() ||
+              submitting ||
+              getControllerNotImported(controller) ||
+              !txFeesValid
+            }
+          />,
+        ]}
+      />
     </>
   );
 };

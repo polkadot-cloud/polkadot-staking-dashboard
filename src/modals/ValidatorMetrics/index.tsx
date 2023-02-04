@@ -24,6 +24,7 @@ import { clipAddress, planckToUnit, rmCommas } from 'Utils';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');
+
   const {
     network: { units, unit },
   } = useApi();
