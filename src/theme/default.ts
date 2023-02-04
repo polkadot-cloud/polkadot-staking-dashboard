@@ -44,7 +44,7 @@ export const defaultThemes: { [key: string]: AnyJson } = {
       'linear-gradient(180deg, rgba(20,20,20,0.93) 0%, rgba(14,14,14,0.93) 100%)'
     ),
     warning: v('#fdf9eb', '#33332a'),
-    submission: v('rgba(249,247,246,1)', '#141414'),
+    submission: v('rgba(248,247,247,1)', '#141414'),
   },
   highlight: {
     primary: v(
