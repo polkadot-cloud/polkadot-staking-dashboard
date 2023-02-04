@@ -39,7 +39,7 @@ export const Wrapper = styled.div`
         font-size: 1rem;
         opacity: 0.75;
         margin: 0;
-        padding-left: 0.4rem;
+        padding-left: 0.5rem;
         font-variation-settings: 'wght' 575;
       }
 

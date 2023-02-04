@@ -8,7 +8,6 @@ import {
   borderPrimary,
   buttonPrimaryBackground,
   cardBorder,
-  cardShadow,
   modalBackground,
   modalOverlayBackground,
   networkColor,
@@ -48,7 +47,7 @@ export const ModalWrapper = styled(motion.div)`
 
 export const HeightWrapper = styled.div<{ size: string }>`
   border: ${cardBorder} ${borderPrimary};
-  box-shadow: ${cardShadow} ${shadowColor};
+  box-shadow: 0px 2px 8px 1px ${shadowColor};
   transition: height 0.5s cubic-bezier(0.1, 1, 0.2, 1);
   width: 100%;
   max-width: ${(props) =>
