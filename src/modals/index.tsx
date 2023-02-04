@@ -66,22 +66,13 @@ export const Modal = () => {
     // modal has been opened - fade in
     if (status === 1) {
       onFadeIn();
-    }
-    // an external component triggered modal closure - fade out
-    if (status === 2) {
+    } else {
+      // an external component triggered modal closure - fade out
       onFadeOut();
     }
   }, [status]);
 
   const modalRef = useRef<HTMLDivElement>(null);
-
-  // resize event listener
-  useEffect(() => {
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   // resize modal on status or resize change
   useEffect(() => {
