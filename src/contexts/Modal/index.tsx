@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useTxFees } from 'contexts/TxFees';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { setStateWithRef } from 'Utils';
 import { defaultModalContext } from './defaults';
 import { ModalConfig, ModalContextInterface, ModalOptions } from './types';
 
@@ -26,18 +27,19 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const [height, setHeight] = useState<number>(0);
 
   // Store the modal status.
-  const [status, setModalStatus] = useState<number>(0);
+  const [status, setStatusState] = useState<number>(0);
+  const statusRef = useRef(status);
 
   // Store the modal's resize counter.
   const [resize, setModalResize] = useState<number>(0);
 
   useEffect(() => {
     setResize();
-  }, [status, notEnoughFunds]);
+  }, [statusRef.current, notEnoughFunds]);
 
   const setStatus = (newStatus: number) => {
     setHeight(newStatus === 0 ? 0 : height);
-    setModalStatus(newStatus);
+    setStateWithRef(newStatus, setStatusState, statusRef);
     setResize();
   };
 
@@ -46,7 +48,7 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     config: ModalConfig = {},
     size = 'large'
   ) => {
-    setStatus(1);
+    setStateWithRef(1, setStatusState, statusRef);
     setResize();
     setOptions({
       modal,
@@ -56,7 +58,7 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const setModalHeight = (h: number) => {
-    if (status === 0) return;
+    if (statusRef.current === 0) return;
     // set maximum height to 80% of window height
     const maxHeight = window.innerHeight * 0.8;
     h = h > maxHeight ? maxHeight : h;
@@ -71,7 +73,7 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <ModalContext.Provider
       value={{
-        status,
+        status: statusRef.current,
         setStatus,
         openModalWith,
         setModalHeight,
