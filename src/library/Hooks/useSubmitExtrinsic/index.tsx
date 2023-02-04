@@ -22,13 +22,14 @@ export const useSubmitExtrinsic = ({
   callbackInBlock,
   from,
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
+  const { t } = useTranslation('library');
+
   const { api } = useApi();
   const { setTxFees, setSender, txFees } = useTxFees();
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
   const { extensions } = useExtensions();
   const { getAccount } = useConnect();
-  const { t } = useTranslation('library');
 
   // if null account is provided, fallback to empty string
   const submitAddress: string = from ?? '';
