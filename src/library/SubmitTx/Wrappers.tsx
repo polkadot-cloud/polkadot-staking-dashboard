@@ -49,11 +49,6 @@ export const Wrapper = styled.div`
           flex-grow: 1;
         }
         &:last-child {
-          display: flex;
-          align-items: center;
-          flex: 1;
-          justify-content: flex-end;
-
           button {
             margin-left: 0.75rem;
           }
