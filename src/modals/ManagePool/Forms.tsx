@@ -14,10 +14,10 @@ import { BondedPool } from 'contexts/Pools/types';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Action } from 'library/Modal/Action';
 import { SubmitTx } from 'library/SubmitTx';
 import React, { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Separator } from 'Wrappers';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef((props: any, ref: any) => {
@@ -76,7 +76,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
         message = <p>{t('storedOnChain')}</p>;
         break;
       case 'destroy_pool':
-        title = <h2 className="title">Set Pool Destroying</h2>;
+        title = <Action text="Set Pool Destroying" />;
         message = (
           <p>
             Setting a pool to destroying cannot be reversed. Only set this state
@@ -85,7 +85,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
         );
         break;
       case 'unlock_pool':
-        title = <h2 className="title">Unlock Pool</h2>;
+        title = <Action text="Unlock Pool" />;
         message = (
           <p>
             Any account will be able to join as a member once a pool is
@@ -94,7 +94,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
         );
         break;
       case 'lock_pool':
-        title = <h2 className="title">Lock Pool</h2>;
+        title = <Action text="Lock Pool" />;
         message = <p>{t('lockPoolResult')}</p>;
         break;
       default:
@@ -182,21 +182,15 @@ export const Forms = forwardRef((props: any, ref: any) => {
     <>
       <ContentWrapper>
         <div className="items" ref={ref}>
-          {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
           <>
             <div className="padding">
               {/* include task title if present */}
-              {content.title !== undefined && (
-                <>
-                  {content.title}
-                  <Separator />
-                </>
-              )}
+              {content.title !== undefined ? content.title : null}
 
               {/* include form element if task is to set metadata */}
               {task === 'set_pool_metadata' && (
                 <>
-                  <h2 className="title">{t('updatePoolName')}</h2>
+                  <h2>{t('updatePoolName')}</h2>
                   <input
                     className="textbox"
                     style={{ width: '100%' }}
@@ -211,6 +205,9 @@ export const Forms = forwardRef((props: any, ref: any) => {
               )}
 
               <p>{content.message}</p>
+              {!accountHasSigner(activeAccount) && (
+                <Warning text={t('readOnly')} />
+              )}
             </div>
           </>
           <SubmitTx

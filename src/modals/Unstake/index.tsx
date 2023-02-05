@@ -12,13 +12,13 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero, planckToUnit, unitToPlanck } from 'Utils';
-import { Separator } from '../../Wrappers';
 
 export const Unstake = () => {
   const { t } = useTranslation('modals');
@@ -102,30 +102,26 @@ export const Unstake = () => {
       <Close />
       <PaddingWrapper>
         <h2 className="title unbounded">{t('unstake')} </h2>
+        {greaterThanZero(freeToUnbond) ? (
+          <Action
+            text={t('unstakeUnbond', {
+              bond: freeToUnbond.toFormat(),
+              unit: network.unit,
+            })}
+          />
+        ) : null}
+        {nominations.length > 0 && (
+          <Action
+            text={t('unstakeStopNominating', { count: nominations.length })}
+          />
+        )}
+        <p>{t('onceUnbonding', { bondDuration })}</p>
         {!accountHasSigner(controller) && <Warning text={t('readOnly')} />}
         {controllerNotImported ? (
           <Warning text={t('controllerImported')} />
         ) : (
           <></>
         )}
-        {greaterThanZero(freeToUnbond) ? (
-          <h2 className="title">
-            {t('unstakeUnbond', {
-              bond: freeToUnbond.toFormat(),
-              unit: network.unit,
-            })}
-          </h2>
-        ) : null}
-        <Separator />
-        {nominations.length > 0 && (
-          <>
-            <h2 className="title">
-              {t('unstakeStopNominating', { count: nominations.length })}
-            </h2>
-            <Separator />
-          </>
-        )}
-        <p>{t('onceUnbonding', { bondDuration })}</p>
       </PaddingWrapper>
       <SubmitTx
         fromController

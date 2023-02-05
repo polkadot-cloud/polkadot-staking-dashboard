@@ -11,12 +11,13 @@ import { useStaking } from 'contexts/Staking';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
-import { PaddingWrapper, Separator, WarningsWrapper } from '../Wrappers';
+import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const Nominate = () => {
   const { t } = useTranslation('modals');
@@ -90,10 +91,7 @@ export const Nominate = () => {
       <Close />
       <PaddingWrapper>
         <h2 className="title unbounded">{t('nominate')}</h2>
-        <h2 className="title">
-          {t('haveNomination', { count: nominations.length })}
-        </h2>
-        <Separator />
+        <Action text={t('haveNomination', { count: nominations.length })} />
         <p>{t('onceSubmitted')}</p>
         {warnings.length > 0 ? (
           <WarningsWrapper>

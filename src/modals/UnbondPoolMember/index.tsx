@@ -10,9 +10,10 @@ import { useModal } from 'contexts/Modal';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { PaddingWrapper, Separator } from 'modals/Wrappers';
+import { PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero, planckToUnit, rmCommas, unitToPlanck } from 'Utils';
@@ -82,10 +83,7 @@ export const UnbondPoolMember = () => {
       <PaddingWrapper>
         <h2 className="title unbounded">{t('unbondMemberFunds')}</h2>
         {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
-        <h2 className="title">
-          {`${t('unbond')} ${freeToUnbond} ${network.unit}`}
-        </h2>
-        <Separator />
+        <Action text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
         <p>{t('onceUnbonding', { bondDuration })}</p>
       </PaddingWrapper>
       <SubmitTx

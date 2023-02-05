@@ -123,13 +123,6 @@ export const Bond = () => {
     <>
       <Close />
       <PaddingWrapper>
-        {unclaimedRewards > 0 && bondFor === 'pool' && (
-          <Warning
-            text={`${t('bondingWithdraw')} ${unclaimedRewards} ${
-              network.unit
-            }.`}
-          />
-        )}
         <h2 className="title unbounded">{t('addToBond')}</h2>
         <BondFeedback
           syncing={largestTxFee.isEqualTo(new BigNumber(0))}
@@ -149,6 +142,13 @@ export const Bond = () => {
           Newly boned funds will back active nominations from the start of the
           next era.
         </p>
+        {unclaimedRewards > 0 && bondFor === 'pool' && (
+          <Warning
+            text={`${t('bondingWithdraw')} ${unclaimedRewards} ${
+              network.unit
+            }.`}
+          />
+        )}
       </PaddingWrapper>
       <SubmitTx
         buttons={[

@@ -12,9 +12,10 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { PaddingWrapper, Separator } from 'modals/Wrappers';
+import { PaddingWrapper } from 'modals/Wrappers';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit, rmCommas } from 'Utils';
@@ -83,10 +84,7 @@ export const WithdrawPoolMember = () => {
       <Close />
       <PaddingWrapper>
         <h2 className="title">{t('withdrawMemberFunds')}</h2>
-        <h2 className="title">
-          {`${t('withdraw')} ${totalWithdraw} ${network.unit}`}
-        </h2>
-        <Separator />
+        <Action text={`${t('withdraw')} ${totalWithdraw} ${network.unit}`} />
         {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
       </PaddingWrapper>
       <SubmitTx

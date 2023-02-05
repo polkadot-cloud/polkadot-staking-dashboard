@@ -15,17 +15,13 @@ import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
-import {
-  NotesWrapper,
-  PaddingWrapper,
-  Separator,
-  WarningsWrapper,
-} from '../Wrappers';
+import { NotesWrapper, PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
@@ -145,10 +141,9 @@ export const ManageFastUnstake = () => {
 
         {isExposed ? (
           <>
-            <h2 className="title">
-              {t('fastUnstakeExposedAgo', { count: lastExposedAgo })}
-            </h2>
-            <Separator />
+            <Action
+              text={t('fastUnstakeExposedAgo', { count: lastExposedAgo })}
+            />
             <NotesWrapper noPadding>
               <p>{t('fastUnstakeNote1', { bondDuration })}</p>
               <p>{t('fastUnstakeNote2', { count: erasRemaining })}</p>
@@ -158,10 +153,7 @@ export const ManageFastUnstake = () => {
           <>
             {!isFastUnstaking ? (
               <>
-                <h2 className="title">
-                  {t('fastUnstake', { context: 'register' })}
-                </h2>
-                <Separator />
+                <Action text={t('fastUnstake', { context: 'register' })} />
                 <NotesWrapper noPadding>
                   <p>
                     <>
@@ -180,8 +172,7 @@ export const ManageFastUnstake = () => {
               </>
             ) : (
               <>
-                <h2 className="title">{t('fastUnstakeRegistered')}</h2>
-                <Separator />
+                <Action text={t('fastUnstakeRegistered')} />
                 <NotesWrapper noPadding>
                   <p>
                     {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>

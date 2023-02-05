@@ -169,9 +169,6 @@ export const Unbond = () => {
       <Close />
       <PaddingWrapper>
         <h2 className="title unbounded">{`${t('removeBond')}`}</h2>
-        {warnings.map((err: string, i: number) => (
-          <Warning key={`unbond_error_${i}`} text={err} />
-        ))}
         <UnbondFeedback
           bondFor={bondFor}
           listenIsValid={setBondValid}
@@ -207,6 +204,9 @@ export const Unbond = () => {
           ) : null}
           <p>{t('onceUnbonding', { bondDuration })}</p>
         </NotesWrapper>
+        {warnings.map((err: string, i: number) => (
+          <Warning key={`unbond_error_${i}`} text={err} />
+        ))}
       </PaddingWrapper>
       <SubmitTx
         fromController={isStaking}

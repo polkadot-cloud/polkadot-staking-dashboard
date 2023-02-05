@@ -11,12 +11,13 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
-import { PaddingWrapper, Separator } from '../Wrappers';
+import { PaddingWrapper } from '../Wrappers';
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals');
@@ -75,10 +76,9 @@ export const ClaimReward = () => {
         <h2 className="title unbounded">
           {claimType === 'bond' ? t('bond') : t('withdraw')} {t('rewards')}
         </h2>
-        <h2 className="title">
-          Claim {`${planckToUnit(unclaimedRewards, units)} ${unit}`}
-        </h2>
-        <Separator />
+        <Action
+          text={`Claim ${`${planckToUnit(unclaimedRewards, units)} ${unit}`}`}
+        />
         {claimType === 'bond' ? (
           <p>{t('claimReward1')}</p>
         ) : (

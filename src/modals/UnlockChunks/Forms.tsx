@@ -17,11 +17,11 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Action } from 'library/Modal/Action';
 import { SubmitTx } from 'library/SubmitTx';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit, rmCommas } from 'Utils';
-import { Separator } from '../Wrappers';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(
@@ -108,19 +108,14 @@ export const Forms = forwardRef(
       <ContentWrapper>
         <div ref={ref}>
           <div className="padding">
-            {!accountHasSigner(signingAccount) && (
-              <Warning text={t('readOnly')} />
-            )}
-
-            <div style={{ margin: '1rem 0 2rem 0' }}>
+            <div style={{ margin: '0 0 2rem 0' }}>
               {task === 'rebond' && (
                 <>
-                  <h2 className="title">
-                    {`${t('rebond')} ${planckToUnit(value, units)} ${
+                  <Action
+                    text={`${t('rebond')} ${planckToUnit(value, units)} ${
                       network.unit
                     }`}
-                  </h2>
-                  <Separator />
+                  />
                   <p>
                     Rebonded funds will back active nominations from the start
                     of the next era.
@@ -129,17 +124,19 @@ export const Forms = forwardRef(
               )}
               {task === 'withdraw' && (
                 <>
-                  <h2 className="title">
-                    {`${t('withdraw')} ${planckToUnit(value, units)} ${
+                  <Action
+                    text={`${t('withdraw')} ${planckToUnit(value, units)} ${
                       network.unit
                     }`}
-                  </h2>
-                  <Separator />
+                  />
                   <p>
                     Funds will be immediately available as free balance after
                     withdrawing.
                   </p>
                 </>
+              )}
+              {!accountHasSigner(signingAccount) && (
+                <Warning text={t('readOnly')} />
               )}
             </div>
           </div>
