@@ -30,13 +30,6 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 1,
-    key: 'Sellers',
-    uri: `${UriPrefix}/`,
-    hash: '/sellers',
-    Entry: Dashboard,
-  },
-  {
-    category: 1,
     key: 'Tenant Registry',
     uri: `${UriPrefix}/`,
     hash: '/tenants',

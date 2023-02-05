@@ -12,6 +12,7 @@ import { ConnectAccounts } from './ConnectAccounts';
 import { DepositFund } from './Deposit';
 import { GoToFeedback } from './GoToFeedback';
 import { Networks } from './Networks';
+import { OnboardAsset } from './OnboardAsset';
 import { SelectRole } from './SelectRole';
 import { Settings } from './Settings';
 import { WithdrawFund } from './Withdraw';
@@ -100,6 +101,7 @@ export const Modal = () => {
               {modal === 'SelectRole' && <SelectRole />}
               {modal === 'DepositFund' && <DepositFund />}
               {modal === 'WithdrawFund' && <WithdrawFund />}
+              {modal === 'OnboardAsset' && <OnboardAsset />}
             </ErrorBoundary>
           </ContentWrapper>
         </HeightWrapper>
