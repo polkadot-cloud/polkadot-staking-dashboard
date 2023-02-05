@@ -139,7 +139,7 @@ export const Bond = () => {
           txFees={largestTxFee}
         />
         <p>
-          Newly boned funds will back active nominations from the start of the
+          Newly bonded funds will back active nominations from the start of the
           next era.
         </p>
         {unclaimedRewards > 0 && bondFor === 'pool' && (
