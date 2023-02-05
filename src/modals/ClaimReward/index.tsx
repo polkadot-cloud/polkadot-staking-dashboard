@@ -84,7 +84,7 @@ export const ClaimReward = () => {
         ) : (
           <p>{t('claimReward2')}</p>
         )}
-        {accountHasSigner(activeAccount) ? (
+        {!accountHasSigner(activeAccount) ? (
           <Warning text={t('readOnly')} />
         ) : null}
         {!unclaimedRewards?.isGreaterThan(0) ? (
