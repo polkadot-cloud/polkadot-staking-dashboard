@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -12,7 +11,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
+import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -115,35 +114,26 @@ export const ChangeNominations = () => {
 
   return (
     <>
-      <Title title={t('stopNominating')} icon={faStopCircle} />
-      <PaddingWrapper verticalOnly>
-        <div
-          style={{
-            padding: '0 1.25rem',
-            width: '100%',
-          }}
-        >
-          {!nominations.length ? (
-            <Warning text={t('noNominationsSet')} />
-          ) : null}
-          {!accountHasSigner(signingAccount) && (
-            <Warning
-              text={`${
-                bondFor === 'nominator'
-                  ? t('youMust', { context: 'controller' })
-                  : t('youMust', { context: 'account' })
-              }`}
-            />
-          )}
-          <h2 className="title">
-            {t('stop')}{' '}
-            {!remaining
-              ? t('allNominations')
-              : `${t('nomination', { count: removing })}`}
-          </h2>
-          <Separator />
-          <p>{t('changeNomination')}</p>
-        </div>
+      <Close />
+      <PaddingWrapper>
+        {!nominations.length ? <Warning text={t('noNominationsSet')} /> : null}
+        {!accountHasSigner(signingAccount) && (
+          <Warning
+            text={`${
+              bondFor === 'nominator'
+                ? t('youMust', { context: 'controller' })
+                : t('youMust', { context: 'account' })
+            }`}
+          />
+        )}
+        <h2 className="title unbounded">
+          {t('stop')}{' '}
+          {!remaining
+            ? t('allNominations')
+            : `${t('nomination', { count: removing })}`}
+        </h2>
+        <Separator />
+        <p>{t('changeNomination')}</p>
       </PaddingWrapper>
       <SubmitTx
         fromController={isStaking}

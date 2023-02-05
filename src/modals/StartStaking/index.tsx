@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faChevronRight, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
@@ -15,7 +15,7 @@ export const StartStaking = () => {
   const { t } = useTranslation('modals');
   return (
     <>
-      <Title title={t('startStaking')} icon={faCog} />
+      <Title title={t('startStaking')} />
       <PaddingWrapper>
         <button
           type="button"

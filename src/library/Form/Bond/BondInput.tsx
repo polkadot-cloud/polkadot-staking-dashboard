@@ -68,9 +68,6 @@ export const BondInput = ({
 
   return (
     <InputWrapper>
-      <h3>
-        {t('bond')} {network.unit}:
-      </h3>
       <div className="inner">
         <section style={{ opacity: disabled ? 0.5 : 1 }}>
           <div className="input">

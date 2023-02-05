@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -10,8 +9,9 @@ import { useModal } from 'contexts/Modal';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTxFees } from 'contexts/TxFees';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
+import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { PaddingWrapper } from 'modals/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { RoleChange } from './RoleChange';
 import { Wrapper } from './Wrapper';
@@ -65,14 +65,10 @@ export const ChangePoolRoles = () => {
 
   return (
     <>
-      <Title title={t('changePoolRoles')} icon={faExchangeAlt} />
-      <Wrapper>
-        <div
-          style={{
-            padding: '0 1.25rem',
-            width: '100%',
-          }}
-        >
+      <Close />
+      <PaddingWrapper>
+        <h2 className="title unbounded">{t('changePoolRoles')}</h2>
+        <Wrapper>
           <RoleChange
             roleName={t('root')}
             oldAddress={roleEdits?.root?.oldAddress}
@@ -88,8 +84,8 @@ export const ChangePoolRoles = () => {
             oldAddress={roleEdits?.stateToggler?.oldAddress}
             newAddress={roleEdits?.stateToggler?.newAddress}
           />
-        </div>
-      </Wrapper>
+        </Wrapper>
+      </PaddingWrapper>
       <SubmitTx
         buttons={[
           <ButtonSubmit

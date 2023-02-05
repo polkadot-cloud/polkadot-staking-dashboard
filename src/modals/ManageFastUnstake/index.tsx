@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { faBolt } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -16,12 +15,17 @@ import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { Title } from 'library/Modal/Title';
+import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
-import { PaddingWrapper, Separator, WarningsWrapper } from '../Wrappers';
+import {
+  NotesWrapper,
+  PaddingWrapper,
+  Separator,
+  WarningsWrapper,
+} from '../Wrappers';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
@@ -126,8 +130,11 @@ export const ManageFastUnstake = () => {
 
   return (
     <>
-      <Title title={t('fastUnstake', { context: 'title' })} icon={faBolt} />
+      <Close />
       <PaddingWrapper>
+        <h2 className="title unbounded">
+          {t('fastUnstake', { context: 'title' })}
+        </h2>
         {warnings.length > 0 ? (
           <WarningsWrapper>
             {warnings.map((text: any, index: number) => (
@@ -142,8 +149,10 @@ export const ManageFastUnstake = () => {
               {t('fastUnstakeExposedAgo', { count: lastExposedAgo })}
             </h2>
             <Separator />
-            <p>{t('fastUnstakeNote1', { bondDuration })}</p>
-            <p>{t('fastUnstakeNote2', { count: erasRemaining })}</p>
+            <NotesWrapper noPadding>
+              <p>{t('fastUnstakeNote1', { bondDuration })}</p>
+              <p>{t('fastUnstakeNote2', { count: erasRemaining })}</p>
+            </NotesWrapper>
           </>
         ) : (
           <>
@@ -153,25 +162,32 @@ export const ManageFastUnstake = () => {
                   {t('fastUnstake', { context: 'register' })}
                 </h2>
                 <Separator />
-                <p>
-                  <>
-                    {t('registerFastUnstake')}{' '}
-                    {planckToUnit(fastUnstakeDeposit, network.units).toString()}{' '}
-                    {network.unit}. {t('fastUnstakeOnceRegistered')}
-                  </>
-                </p>
-                <p>
-                  {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
-                </p>
+                <NotesWrapper noPadding>
+                  <p>
+                    <>
+                      {t('registerFastUnstake')}{' '}
+                      {planckToUnit(
+                        fastUnstakeDeposit,
+                        network.units
+                      ).toString()}{' '}
+                      {network.unit}. {t('fastUnstakeOnceRegistered')}
+                    </>
+                  </p>
+                  <p>
+                    {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
+                  </p>
+                </NotesWrapper>
               </>
             ) : (
               <>
                 <h2 className="title">{t('fastUnstakeRegistered')}</h2>
                 <Separator />
-                <p>
-                  {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
-                </p>
-                <p>{t('fastUnstakeUnorderedNote')}</p>
+                <NotesWrapper noPadding>
+                  <p>
+                    {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
+                  </p>
+                  <p>{t('fastUnstakeUnorderedNote')}</p>
+                </NotesWrapper>
               </>
             )}
           </>

@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -10,9 +10,9 @@ import { useModal } from 'contexts/Modal';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
+import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { NotesWrapper, PaddingWrapper, Separator } from 'modals/Wrappers';
+import { PaddingWrapper, Separator } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero, planckToUnit, rmCommas, unitToPlanck } from 'Utils';
@@ -78,16 +78,15 @@ export const UnbondPoolMember = () => {
 
   return (
     <>
-      <Title title={t('unbondMemberFunds')} icon={faMinus} />
+      <Close />
       <PaddingWrapper>
+        <h2 className="title unbounded">{t('unbondMemberFunds')}</h2>
         {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
         <h2 className="title">
           {`${t('unbond')} ${freeToUnbond} ${network.unit}`}
         </h2>
         <Separator />
-        <NotesWrapper>
-          <p>{t('onceUnbonding', { bondDuration })}</p>
-        </NotesWrapper>
+        <p>{t('onceUnbonding', { bondDuration })}</p>
       </PaddingWrapper>
       <SubmitTx
         buttons={[

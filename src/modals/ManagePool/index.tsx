@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
@@ -38,7 +37,7 @@ export const ManagePool = () => {
   return (
     <Wrapper>
       <FixedContentWrapper ref={headerRef}>
-        <Title title={t('managePool')} icon={faCog} fixed />
+        <Title title={t('managePool')} fixed />
       </FixedContentWrapper>
       <CardsWrapper
         animate={section === 0 ? 'home' : 'next'}

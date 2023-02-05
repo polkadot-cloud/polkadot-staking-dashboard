@@ -71,8 +71,12 @@ export const ContentWrapper = styled.div`
   position: relative;
 
   h2 {
+    &.unbounded {
+      font-family: 'Unbounded';
+    }
     &.title {
-      margin: 0.75rem 0 0.25rem 0;
+      font-size: 1.35rem;
+      margin: 1.25rem 0 0 0;
     }
   }
 
@@ -150,7 +154,11 @@ export const PaddingWrapper = styled.div<{
   justify-content: flex-start;
   width: 100%;
   padding: ${(props) =>
-    props.verticalOnly ? '1rem 0' : props.horizontalOnly ? '0 1rem' : '1rem'};
+    props.verticalOnly
+      ? '1rem 0 0.25rem 0'
+      : props.horizontalOnly
+      ? '0 1rem'
+      : '1rem'};
 `;
 
 // modal header, used for extrinsics forms
@@ -222,14 +230,14 @@ export const Separator = styled.div`
   border-top: 1px solid ${textSecondary};
   width: 100%;
   opacity: 0.1;
-  margin: 0.75rem 0rem;
+  margin: 0.8rem 0rem 0.8rem 0;
 `;
 
 export const NotesWrapper = styled.div<{
   noPadding?: boolean;
 }>`
   width: 100%;
-  padding: ${(props) => (props.noPadding ? '0' : '0.25rem 0')};
+  padding: ${(props) => (props.noPadding ? '0' : '0.75rem 0')};
   > p {
     color: ${textSecondary};
   }
@@ -237,5 +245,4 @@ export const NotesWrapper = styled.div<{
 
 export const WarningsWrapper = styled.div`
   width: 100%;
-  margin-bottom: 1rem;
 `;

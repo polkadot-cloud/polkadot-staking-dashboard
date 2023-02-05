@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { faPlus, faShare } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -12,7 +11,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
+import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -71,35 +70,26 @@ export const ClaimReward = () => {
 
   return (
     <>
-      <Title
-        title={`${claimType === 'bond' ? t('bond') : t('withdraw')} ${t(
-          'rewards'
-        )}`}
-        icon={claimType === 'bond' ? faPlus : faShare}
-      />
+      <Close />
       <PaddingWrapper>
-        <div
-          style={{
-            width: '100%',
-          }}
-        >
-          {!accountHasSigner(activeAccount) ? (
-            <Warning text={t('readOnly')} />
-          ) : null}
-          {!unclaimedRewards?.isGreaterThan(0) ? (
-            <Warning text={t('noRewards')} />
-          ) : null}
-          <h2 className="title">
-            {`${planckToUnit(unclaimedRewards, units)} ${unit}`}
-          </h2>
-          <Separator />
-
-          {claimType === 'bond' ? (
-            <p>{t('claimReward1')}</p>
-          ) : (
-            <p>{t('claimReward2')}</p>
-          )}
-        </div>
+        <h2 className="title unbounded">
+          {claimType === 'bond' ? t('bond') : t('withdraw')} {t('rewards')}
+        </h2>
+        <h2 className="title">
+          Claim {`${planckToUnit(unclaimedRewards, units)} ${unit}`}
+        </h2>
+        <Separator />
+        {claimType === 'bond' ? (
+          <p>{t('claimReward1')}</p>
+        ) : (
+          <p>{t('claimReward2')}</p>
+        )}
+        {!accountHasSigner(activeAccount) ? (
+          <Warning text={t('readOnly')} />
+        ) : null}
+        {!unclaimedRewards?.isGreaterThan(0) ? (
+          <Warning text={t('noRewards')} />
+        ) : null}
       </PaddingWrapper>
       <SubmitTx
         buttons={[

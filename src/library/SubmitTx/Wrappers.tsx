@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundSubmission, borderPrimary, textSecondary } from 'theme';
+import { backgroundSubmission, textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -15,6 +15,7 @@ export const Wrapper = styled.div`
     font-size: 0.9rem;
     margin: 0;
     padding-left: 0.5rem;
+    padding-bottom: 0;
 
     > .icon {
       margin-right: 0.3rem;
@@ -23,7 +24,6 @@ export const Wrapper = styled.div`
 
   > .inner {
     background: ${backgroundSubmission};
-    border-top: 1px solid ${borderPrimary};
     width: 100%;
     padding: 1rem;
     display: flex;

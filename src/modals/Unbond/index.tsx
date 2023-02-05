@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -16,7 +16,7 @@ import { useTxFees } from 'contexts/TxFees';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
+import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
@@ -166,8 +166,9 @@ export const Unbond = () => {
 
   return (
     <>
-      <Title title={`${t('removeBond')}`} icon={faMinus} />
+      <Close />
       <PaddingWrapper>
+        <h2 className="title unbounded">{`${t('removeBond')}`}</h2>
         {warnings.map((err: string, i: number) => (
           <Warning key={`unbond_error_${i}`} text={err} />
         ))}

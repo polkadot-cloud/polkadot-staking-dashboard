@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -12,7 +11,7 @@ import { useStaking } from 'contexts/Staking';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
+import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -88,20 +87,21 @@ export const Nominate = () => {
 
   return (
     <>
-      <Title title={t('nominate')} icon={faPlayCircle} />
+      <Close />
       <PaddingWrapper>
-        {warnings.length > 0 && (
-          <WarningsWrapper>
-            {warnings.map((text: any, index: number) => (
-              <Warning key={index} text={text} />
-            ))}
-          </WarningsWrapper>
-        )}
+        <h2 className="title unbounded">{t('nominate')}</h2>
         <h2 className="title">
           {t('haveNomination', { count: nominations.length })}
         </h2>
         <Separator />
         <p>{t('onceSubmitted')}</p>
+        {warnings.length > 0 ? (
+          <WarningsWrapper>
+            {warnings.map((text: any, index: number) => (
+              <Warning key={index} text={text} />
+            ))}
+          </WarningsWrapper>
+        ) : null}
       </PaddingWrapper>
       <SubmitTx
         fromController

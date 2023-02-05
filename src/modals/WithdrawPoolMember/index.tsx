@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -12,7 +12,7 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
+import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { PaddingWrapper, Separator } from 'modals/Wrappers';
 import { useState } from 'react';
@@ -80,13 +80,14 @@ export const WithdrawPoolMember = () => {
 
   return (
     <>
-      <Title title={t('withdrawMemberFunds')} icon={faMinus} />
+      <Close />
       <PaddingWrapper>
-        {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
+        <h2 className="title">{t('withdrawMemberFunds')}</h2>
         <h2 className="title">
           {`${t('withdraw')} ${totalWithdraw} ${network.unit}`}
         </h2>
         <Separator />
+        {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
       </PaddingWrapper>
       <SubmitTx
         buttons={[

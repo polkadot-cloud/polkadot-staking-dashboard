@@ -66,9 +66,6 @@ export const UnbondInput = ({
 
   return (
     <InputWrapper>
-      <h3>
-        {t('unbond')} {network.unit}:
-      </h3>
       <div className="inner">
         <section style={{ opacity: disabled ? 0.5 : 1 }}>
           <div className="input">

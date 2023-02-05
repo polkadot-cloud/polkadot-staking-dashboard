@@ -34,7 +34,7 @@ export const ContentWrapper = styled.div`
   flex: 1;
 
   .padding {
-    padding: 0 1.25rem;
+    padding: 0 1rem;
   }
 
   > div:last-child {
@@ -49,12 +49,12 @@ export const ChunkWrapper = styled.div<any>`
   margin-top: 1.25rem;
 
   > div {
+    background: ${buttonPrimaryBackground};
     display: flex;
     flex-flow: row wrap;
     width: 100%;
-    padding: 0.5rem 1.25rem;
+    padding: 0.5rem 1rem;
     border-radius: 1rem;
-    background: ${buttonPrimaryBackground};
 
     > section {
       display: flex;

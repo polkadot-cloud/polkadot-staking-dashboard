@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -14,7 +14,7 @@ import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
+import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
@@ -121,7 +121,7 @@ export const Bond = () => {
 
   return (
     <>
-      <Title title={`${t('addToBond')}`} icon={faPlus} />
+      <Close />
       <PaddingWrapper>
         {unclaimedRewards > 0 && bondFor === 'pool' && (
           <Warning
@@ -130,6 +130,7 @@ export const Bond = () => {
             }.`}
           />
         )}
+        <h2 className="title unbounded">{t('addToBond')}</h2>
         <BondFeedback
           syncing={largestTxFee.isEqualTo(new BigNumber(0))}
           bondFor={bondFor}
@@ -144,6 +145,10 @@ export const Bond = () => {
           parentErrors={errors}
           txFees={largestTxFee}
         />
+        <p>
+          Newly boned funds will back active nominations from the start of the
+          next era.
+        </p>
       </PaddingWrapper>
       <SubmitTx
         buttons={[

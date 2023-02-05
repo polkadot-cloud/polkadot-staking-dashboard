@@ -1,10 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  faArrowAltCircleUp,
-  faSignOutAlt,
-} from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -15,7 +12,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
+import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
@@ -94,9 +91,15 @@ export const LeavePool = () => {
 
   return (
     <>
-      <Title title={t('leavePool')} icon={faSignOutAlt} />
+      <Close />
       <PaddingWrapper>
+        <h2 className="title unbounded">{t('leavePool')}</h2>
         {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
+        <h2 className="title">
+          {`${t('unbond')} ${freeToUnbond} ${network.unit}`}
+        </h2>
+        <Separator />
+        <p>{t('onceUnbonding', { bondDuration })}</p>
         {unclaimedRewards > 0 && (
           <WarningsWrapper>
             <Warning
@@ -106,11 +109,6 @@ export const LeavePool = () => {
             />
           </WarningsWrapper>
         )}
-        <h2 className="title">
-          {`${t('unbond')} ${freeToUnbond} ${network.unit}`}
-        </h2>
-        <Separator />
-        <p>{t('onceUnbonding', { bondDuration })}</p>
       </PaddingWrapper>
       <SubmitTx
         buttons={[

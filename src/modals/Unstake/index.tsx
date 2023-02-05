@@ -1,10 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  faArrowAltCircleUp,
-  faSignOutAlt,
-} from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -15,7 +12,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
+import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
@@ -102,8 +99,9 @@ export const Unstake = () => {
 
   return (
     <>
-      <Title title={t('unstake')} icon={faSignOutAlt} />
+      <Close />
       <PaddingWrapper>
+        <h2 className="title unbounded">{t('unstake')} </h2>
         {!accountHasSigner(controller) && <Warning text={t('readOnly')} />}
         {controllerNotImported ? (
           <Warning text={t('controllerImported')} />

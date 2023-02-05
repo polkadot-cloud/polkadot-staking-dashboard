@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { faWallet } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -114,42 +113,34 @@ export const UpdatePayee = () => {
     <>
       <Title
         title={t('updatePayoutDestination')}
-        icon={faWallet}
         helpKey="Payout Destination"
       />
-      <PaddingWrapper verticalOnly style={{ paddingBottom: 0 }}>
-        <div
-          style={{
-            padding: '0 1rem',
-            width: '100%',
-          }}
-        >
-          {getControllerNotImported(controller) && (
-            <WarningsWrapper>
-              <Warning text={t('mustHaveControllerUpdate')} />
-            </WarningsWrapper>
-          )}
-          <div style={{ width: '100%', padding: '0 0.5rem' }}>
-            <PayeeInput
-              payee={selected}
+      <PaddingWrapper style={{ paddingBottom: 0 }}>
+        {getControllerNotImported(controller) && (
+          <WarningsWrapper>
+            <Warning text={t('mustHaveControllerUpdate')} />
+          </WarningsWrapper>
+        )}
+        <div style={{ width: '100%', padding: '0 0.5rem' }}>
+          <PayeeInput
+            payee={selected}
+            account={account}
+            setAccount={setAccount}
+            handleChange={handleChangeAccount}
+          />
+        </div>
+        <SelectItems>
+          {getPayeeItems(true).map((item: PayeeItem) => (
+            <SelectItem
+              key={`payee_option_${item.value}`}
               account={account}
               setAccount={setAccount}
-              handleChange={handleChangeAccount}
+              selected={selected.destination === item.value}
+              onClick={() => handleChangeDestination(item.value)}
+              {...item}
             />
-          </div>
-          <SelectItems>
-            {getPayeeItems(true).map((item: PayeeItem) => (
-              <SelectItem
-                key={`payee_option_${item.value}`}
-                account={account}
-                setAccount={setAccount}
-                selected={selected.destination === item.value}
-                onClick={() => handleChangeDestination(item.value)}
-                {...item}
-              />
-            ))}
-          </SelectItems>
-        </div>
+          ))}
+        </SelectItems>
       </PaddingWrapper>
       <SubmitTx
         fromController

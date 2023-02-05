@@ -8,7 +8,8 @@ export const Wrapper = styled.div`
   flex-flow: column wrap;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 1rem 0.25rem;
+  padding: 0rem 0.25rem;
+  width: 100%;
 
   .form {
     width: 100%;

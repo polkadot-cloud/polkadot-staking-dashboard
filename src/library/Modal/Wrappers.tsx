@@ -48,6 +48,9 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
 
     &:last-child {
       button {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
         opacity: 0.25;
         &:hover {
           opacity: 1;
@@ -104,6 +107,21 @@ export const StatWrapper = styled.div`
     h3,
     h4 {
       color: ${textSecondary};
+    }
+  }
+`;
+
+export const CloseWrapper = styled.div`
+  position: absolute;
+  right: 1.5rem;
+  top: 1.5rem;
+
+  > button {
+    opacity: 0.4;
+    transition: opacity 0.15ws ease-in-out;
+
+    &:hover {
+      opacity: 1;
     }
   }
 `;

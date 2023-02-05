@@ -76,15 +76,25 @@ export const Forms = forwardRef((props: any, ref: any) => {
         message = <p>{t('storedOnChain')}</p>;
         break;
       case 'destroy_pool':
-        title = <h2 className="title">{t('destroyIrreversible')}</h2>;
-        message = <p>{t('destroyPool')}</p>;
+        title = <h2 className="title">Set Pool Destroying</h2>;
+        message = (
+          <p>
+            Setting a pool to destroying cannot be reversed. Only set this state
+            if you intend to close the pool.
+          </p>
+        );
         break;
       case 'unlock_pool':
-        title = <h2 className="title">{t('submitUnlock')}</h2>;
-        message = <p>{t('unlockPoolResult')}</p>;
+        title = <h2 className="title">Unlock Pool</h2>;
+        message = (
+          <p>
+            Any account will be able to join as a member once a pool is
+            unlocked.
+          </p>
+        );
         break;
       case 'lock_pool':
-        title = <h2 className="title">{t('submitLock')}</h2>;
+        title = <h2 className="title">Lock Pool</h2>;
         message = <p>{t('lockPoolResult')}</p>;
         break;
       default:
@@ -186,7 +196,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
               {/* include form element if task is to set metadata */}
               {task === 'set_pool_metadata' && (
                 <>
-                  <h2>{t('updatePoolName')}</h2>
+                  <h2 className="title">{t('updatePoolName')}</h2>
                   <input
                     className="textbox"
                     style={{ width: '100%' }}

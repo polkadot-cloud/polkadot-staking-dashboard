@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -15,8 +14,9 @@ import { InputItem } from 'library/Form/types';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
+import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Wrapper } from './Wrapper';
@@ -75,28 +75,27 @@ export const UpdateController = () => {
 
   return (
     <>
-      <Title
-        title={t('changeControllerAccount')}
-        icon={faExchangeAlt}
-        helpKey="Controller Account Eligibility"
-      />
-      <Wrapper>
-        <div style={{ padding: '0 1rem', width: '100%' }}>
-          <div style={{ marginBottom: '1.5rem' }}>
-            {!accountHasSigner(activeAccount) && (
-              <Warning text={t('readOnly')} />
-            )}
+      <Close />
+      <PaddingWrapper>
+        <h2 className="title unbounded">{t('changeControllerAccount')}</h2>
+        <Wrapper>
+          <div style={{ width: '100%' }}>
+            <div style={{ marginBottom: '1.5rem' }}>
+              {!accountHasSigner(activeAccount) && (
+                <Warning text={t('readOnly')} />
+              )}
+            </div>
+            <AccountDropdown
+              items={items}
+              onChange={handleOnChange}
+              placeholder={t('searchAccount')}
+              current={account}
+              value={selected}
+              height="17rem"
+            />
           </div>
-          <AccountDropdown
-            items={items}
-            onChange={handleOnChange}
-            placeholder={t('searchAccount')}
-            current={account}
-            value={selected}
-            height="17rem"
-          />
-        </div>
-      </Wrapper>
+        </Wrapper>
+      </PaddingWrapper>
       <SubmitTx
         buttons={[
           <ButtonSubmit

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -16,13 +15,12 @@ import { useTxFees } from 'contexts/TxFees';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
+import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit, unitToPlanck } from 'Utils';
 import { PaddingWrapper } from '../Wrappers';
-import { ContentWrapper } from './Wrapper';
 
 export const JoinPool = () => {
   const { t } = useTranslation('modals');
@@ -89,26 +87,23 @@ export const JoinPool = () => {
   }
   return (
     <>
-      <Title title={t('joinPool')} icon={faUserPlus} />
+      <Close />
       <PaddingWrapper>
-        <ContentWrapper>
-          <div>
-            <BondFeedback
-              syncing={largestTxFee.isEqualTo(new BigNumber(0))}
-              bondFor="pool"
-              listenIsValid={setBondValid}
-              defaultBond={null}
-              setters={[
-                {
-                  set: setBond,
-                  current: bond,
-                },
-              ]}
-              parentErrors={errors}
-              txFees={largestTxFee}
-            />
-          </div>
-        </ContentWrapper>
+        <h2 className="title unbounded">{t('joinPool')}</h2>
+        <BondFeedback
+          syncing={largestTxFee.isEqualTo(new BigNumber(0))}
+          bondFor="pool"
+          listenIsValid={setBondValid}
+          defaultBond={null}
+          setters={[
+            {
+              set: setBond,
+              current: bond,
+            },
+          ]}
+          parentErrors={errors}
+          txFees={largestTxFee}
+        />
       </PaddingWrapper>
       <SubmitTx
         buttons={[

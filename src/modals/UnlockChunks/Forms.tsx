@@ -112,23 +112,36 @@ export const Forms = forwardRef(
               <Warning text={t('readOnly')} />
             )}
 
-            <div style={{ marginTop: '1rem' }}>
+            <div style={{ margin: '1rem 0 2rem 0' }}>
               {task === 'rebond' && (
-                <h2 className="title">
-                  {`${t('rebond')} ${planckToUnit(value, units)} ${
-                    network.unit
-                  }`}
-                </h2>
+                <>
+                  <h2 className="title">
+                    {`${t('rebond')} ${planckToUnit(value, units)} ${
+                      network.unit
+                    }`}
+                  </h2>
+                  <Separator />
+                  <p>
+                    Rebonded funds will back active nominations from the start
+                    of the next era.
+                  </p>
+                </>
               )}
               {task === 'withdraw' && (
-                <h2 className="title">
-                  {`${t('withdraw')} ${planckToUnit(value, units)} ${
-                    network.unit
-                  }`}
-                </h2>
+                <>
+                  <h2 className="title">
+                    {`${t('withdraw')} ${planckToUnit(value, units)} ${
+                      network.unit
+                    }`}
+                  </h2>
+                  <Separator />
+                  <p>
+                    Funds will be immediately available as free balance after
+                    withdrawing.
+                  </p>
+                </>
               )}
             </div>
-            <Separator />
           </div>
           <SubmitTx
             fromController={isStaking}

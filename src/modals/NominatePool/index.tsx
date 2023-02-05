@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { faPlayCircle } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -11,7 +10,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
+import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -74,18 +73,17 @@ export const NominatePool = () => {
 
   return (
     <>
-      <Title title={t('nominate')} icon={faPlayCircle} />
-      <PaddingWrapper verticalOnly>
-        <div style={{ padding: '0 1rem', width: '100%' }}>
-          {warnings.map((text: string, index: number) => (
-            <Warning key={`warning_${index}`} text={text} />
-          ))}
-          <h2 className="title">
-            {t('haveNomination', { count: nominations.length })}
-          </h2>
-          <Separator />
-          <p>{t('onceSubmitted')}</p>
-        </div>
+      <Close />
+      <PaddingWrapper>
+        <h2 className="title unbounded">{t('nominate')}</h2>
+        {warnings.map((text: string, index: number) => (
+          <Warning key={`warning_${index}`} text={text} />
+        ))}
+        <h2 className="title">
+          {t('haveNomination', { count: nominations.length })}
+        </h2>
+        <Separator />
+        <p>{t('onceSubmitted')}</p>
       </PaddingWrapper>
       <SubmitTx
         buttons={[

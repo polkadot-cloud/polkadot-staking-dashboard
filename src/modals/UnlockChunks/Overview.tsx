@@ -14,12 +14,13 @@ import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
-import { NotesWrapper, Separator } from '../Wrappers';
+import { NotesWrapper } from '../Wrappers';
 import { ChunkWrapper, ContentWrapper } from './Wrappers';
 
 export const Overview = forwardRef(
   ({ unlocking, bondFor, setSection, setUnlock, setTask }: any, ref: any) => {
     const { t } = useTranslation('modals');
+
     const { network, consts } = useApi();
     const { activeEra } = useNetworkMetrics();
     const { bondDuration } = consts;
@@ -141,7 +142,6 @@ export const Overview = forwardRef(
                     </section>
                   )}
                 </div>
-                {i === unlocking.length - 1 ? null : <Separator />}
               </ChunkWrapper>
             );
           })}
