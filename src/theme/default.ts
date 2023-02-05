@@ -77,7 +77,7 @@ export const defaultThemes: { [key: string]: AnyJson } = {
   border: {
     primary: v('#e6e6e6', '#282828'),
     secondary: v('#ccc', '#444'),
-    warning: v('#ebc161', '#7b6a41'),
+    warning: v('#f8ebb2', '#48482a'),
   },
   modal: {
     overlay: v('rgba(230,228,228,0.6)', 'rgba(16,16,16,0.6)'),

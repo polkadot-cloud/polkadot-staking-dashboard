@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   background: ${backgroundWarning};
   border: 1px solid ${borderWarning};
   margin: 0.5rem 0;
-  padding: 0.6rem 0.75rem;
+  padding: 0.75rem 0.75rem;
   border-radius: 0.75rem;
   display: flex;
   flex-flow: row wrap;
