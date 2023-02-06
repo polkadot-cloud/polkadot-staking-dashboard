@@ -32,6 +32,7 @@
     "changePoolRoles": "Change Pool Roles",
     "changeToDestroy": "Change pool to destroying state.",
     "chooseLanguage": "Choose Language",
+    "claim": "Claim",
     "claimReward1": "Once submitted, your rewards will be bonded back into the pool. You own these additional bonded funds and will be able to withdraw them at any time.",
     "claimReward2": "Withdrawing rewards will immediately transfer them to your account as free balance.",
     "confirm": "Confirm",
@@ -122,6 +123,7 @@
     "readOnlyAccount_other": "{{count}} Read Only Accounts",
     "readOnlyAccounts": "Read Only Accounts",
     "rebond": "Rebond",
+    "rebondSubtitle": "Rebonded funds will back active nominations from the start of the next era.",
     "rebondUnlock": "You can rebond unlocks at any time in this period, or withdraw them to your free balance thereafter.",
     "recentEraPoints": "Recent Era Points",
     "registerFastUnstake": "Registering for fast unstake requires a deposit of",
@@ -134,6 +136,8 @@
     "selectNetwork": "Select Network",
     "selected": "Selected",
     "selfStake": "Self Stake",
+    "setToDestroying": "Set To Destroying",
+    "setToDestroyingSubtitle": "Setting a pool to destroying cannot be reversed. Only set this state if you intend to close the pool.",
     "settings": "Settings",
     "startStaking": "Start Staking",
     "stateToggler": "State Toggler",
@@ -164,6 +168,7 @@
     "undergoingMaintenance": "Undergoing Maintenance",
     "unlockChunk": "Unlock chunks cannot currently be rebonded in a pool. If you wish to rebond, withdraw the unlock chunk first and re-bond the funds.",
     "unlockPool": "Unlock Pool",
+    "unlockPoolSubtitle": "Once a pool is unlocked, any account will be able to join as a pool member.",
     "unlockTake": "Unlocks can be withdrawn after {{bondDurationFormatted}}.",
     "unlocked": "Unlocked",
     "unlocks": "Unlocks",
@@ -180,15 +185,9 @@
     "willSurpass": "Adding this many favorites will surpass {{maxNominations}} nominations.",
     "withdraw": "Withdraw",
     "withdrawMemberFunds": "Withdraw Member Funds",
+    "withdrawSubtitle": "Funds will be immediately available as free balance after withdrawing.",
     "withdrawUnlocked": "Withdraw Unlocked",
     "youMust_account": "You must have your account imported to stop nominating.",
-    "youMust_controller": "You must have your controller account imported to stop nominating.",
-
-    "claim": "Claim",
-    "setToDestroying": "Set To Destroying",
-    "setToDestroyingSubtitle": "Setting a pool to destroying cannot be reversed. Only set this state if you intend to close the pool.",
-    "unlockPoolSubtitle": "Once a pool is unlocked, any account will be able to join as a pool member.",
-    "rebondSubtitle": "Rebonded funds will back active nominations from the start of the next era.",
-    "withdrawSubtitle": "Funds will be immediately available as free balance after withdrawing."
+    "youMust_controller": "You must have your controller account imported to stop nominating."
   }
 }
