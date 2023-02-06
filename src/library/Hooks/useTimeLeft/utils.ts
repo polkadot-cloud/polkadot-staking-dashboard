@@ -3,7 +3,6 @@
 
 import { differenceInDays, getUnixTime, intervalToDuration } from 'date-fns';
 import { TFunction } from 'i18next';
-import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { defaultDuration } from './defaults';
 import { TimeleftDuration } from './types';
 
@@ -44,13 +43,15 @@ export const getDuration = (toDate: Date | null): TimeleftDuration => {
   };
 };
 
-// format the duration as a string.
+// format the duration (from seconds) as a string.
 export const timeleftAsString = (
   t: TFunction,
-  toDate?: Date,
+  duration: number,
   full?: boolean
 ) => {
-  const { days, hours, minutes, seconds } = getDuration(toDate || null);
+  const { days, hours, minutes, seconds } = getDuration(
+    fromNow(duration) || null
+  );
 
   const tHour = `time.${full ? `hour` : `hr`}`;
   const tMinute = `time.${full ? `minute` : `min`}`;
@@ -72,10 +73,4 @@ export const timeleftAsString = (
     str += ` ${seconds}`;
   }
   return str;
-};
-
-export const eraDurationFormatted = (bondDuration: number, t: TFunction) => {
-  const { erasToSeconds } = useErasToTimeLeft();
-  const durationSeconds = erasToSeconds(bondDuration);
-  return timeleftAsString(t, fromNow(durationSeconds), true);
 };

@@ -15,8 +15,9 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
+import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { eraDurationFormatted } from 'library/Hooks/useTimeLeft/utils';
+import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Title } from 'library/Modal/Title';
 import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
@@ -34,14 +35,20 @@ export const Unstake = () => {
   const { getBondedAccount, getAccountNominations } = useBalances();
   const { getTransferOptions } = useTransferOptions();
   const { txFeesValid } = useTxFees();
+  const { erasToSeconds } = useErasToTimeLeft();
 
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
   const { bondDuration } = consts;
-  const durationFormatted = eraDurationFormatted(bondDuration, t);
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active } = allTransferOptions.nominate;
+
+  const bondDurationFormatted = timeleftAsString(
+    t,
+    erasToSeconds(bondDuration),
+    true
+  );
 
   // convert BigNumber values to number
   const freeToUnbond = planckToUnit(active, units);
@@ -129,7 +136,7 @@ export const Unstake = () => {
           </>
         )}
         <NotesWrapper noPadding>
-          <p>{t('onceUnbonding', { durationFormatted })}</p>
+          <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
           {bondValid && <EstimatedTxFee />}
         </NotesWrapper>
         <FooterWrapper>

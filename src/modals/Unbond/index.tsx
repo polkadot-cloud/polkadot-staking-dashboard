@@ -16,8 +16,9 @@ import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
+import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { eraDurationFormatted } from 'library/Hooks/useTimeLeft/utils';
+import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Title } from 'library/Modal/Title';
 import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
@@ -37,6 +38,7 @@ export const Unbond = () => {
   const { isDepositor, selectedActivePool } = useActivePools();
   const { txFees, txFeesValid } = useTxFees();
   const { getTransferOptions } = useTransferOptions();
+  const { erasToSeconds } = useErasToTimeLeft();
 
   const controller = getBondedAccount(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
@@ -44,7 +46,11 @@ export const Unbond = () => {
   const { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn } = stats;
   const { bondDuration } = consts;
 
-  const durationFormatted = eraDurationFormatted(bondDuration, t);
+  const bondDurationFormatted = timeleftAsString(
+    t,
+    erasToSeconds(bondDuration),
+    true
+  );
 
   let { unclaimedRewards } = selectedActivePool || {};
   unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
@@ -207,7 +213,7 @@ export const Unbond = () => {
               )}
             </>
           ) : null}
-          <p>{t('onceUnbonding', { durationFormatted })}</p>
+          <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
           <EstimatedTxFee />
         </NotesWrapper>
         <FooterWrapper>
