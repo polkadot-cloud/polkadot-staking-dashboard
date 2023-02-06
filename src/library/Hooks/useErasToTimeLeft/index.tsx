@@ -1,14 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
-import { useNetworkMetrics } from 'contexts/Network';
-import { getUnixTime } from 'date-fns';
 
 export const useErasToTimeLeft = () => {
   const { consts } = useApi();
   const { epochDuration, expectedBlockTime, sessionsPerEra } = consts;
-  const { activeEra } = useNetworkMetrics();
 
   // converts a number of eras to timeleft in seconds.
   const erasToSeconds = (eras: number) => {
@@ -16,21 +14,21 @@ export const useErasToTimeLeft = () => {
       return 0;
     }
     // store the duration of an era in number of blocks.
-    const eraDurationBlocks = epochDuration * sessionsPerEra;
+    // TODO: https://github.com/paritytech/polkadot-staking-dashboard/issues/637
+    const eraDurationBlocks = new BigNumber(epochDuration).multipliedBy(
+      sessionsPerEra
+    );
     // estimate the duration of the era in seconds.
-    const eraDuration = eraDurationBlocks * expectedBlockTime * 0.001;
-    // multiply by number of eras.
-    return eras * eraDuration;
-  };
+    const eraDuration = eraDurationBlocks
+      .multipliedBy(expectedBlockTime)
+      .multipliedBy(new BigNumber(0.001))
+      .integerValue();
 
-  const erasToTimeLeft = (eras: number) => {
-    const end = activeEra.start * 0.001 + erasToSeconds(eras);
-    const timeleft = Math.max(0, end - getUnixTime(new Date()));
-    return timeleft;
+    // multiply by number of eras.
+    return new BigNumber(eras).multipliedBy(eraDuration).toNumber();
   };
 
   return {
     erasToSeconds,
-    erasToTimeLeft,
   };
 };

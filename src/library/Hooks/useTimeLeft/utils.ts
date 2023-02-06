@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { getUnixTime, intervalToDuration } from 'date-fns';
+import { differenceInDays, getUnixTime, intervalToDuration } from 'date-fns';
 import { TFunction } from 'i18next';
 import { defaultDuration } from './defaults';
 import { TimeleftDuration } from './types';
@@ -27,16 +27,14 @@ export const getDuration = (toDate: Date | null): TimeleftDuration => {
     end: toDate,
   });
 
-  const months = d?.months || 0;
-  const days = d?.days || 0;
+  const days = differenceInDays(toDate, Date.now());
   const hours = d?.hours || 0;
   const minutes = d?.minutes || 0;
   const seconds = d?.seconds || 0;
-  const lastHour = months === 0 && days === 0 && hours === 0;
+  const lastHour = days === 0 && hours === 0;
   const lastMinute = lastHour && minutes === 0;
 
   return {
-    months,
     days,
     hours,
     minutes,
@@ -45,31 +43,33 @@ export const getDuration = (toDate: Date | null): TimeleftDuration => {
   };
 };
 
-// format the duration as a string.
+// format the duration (from seconds) as a string.
 export const timeleftAsString = (
   t: TFunction,
-  toDate?: Date,
+  duration: number,
   full?: boolean
 ) => {
-  const { months, days, hours, minutes, seconds } = getDuration(toDate || null);
+  const { days, hours, minutes, seconds } = getDuration(
+    fromNow(duration) || null
+  );
 
   const tHour = `time.${full ? `hour` : `hr`}`;
   const tMinute = `time.${full ? `minute` : `min`}`;
 
   let str = '';
-  if (months > 0) {
-    str += `${months} ${t('time.month', { count: months, ns: 'base' })}`;
-  }
   if (days > 0) {
     str += `${days} ${t('time.day', { count: days, ns: 'base' })}`;
   }
   if (hours > 0) {
+    if (str) str += ', ';
     str += ` ${hours} ${t(tHour, { count: hours, ns: 'base' })}`;
   }
   if (minutes > 0) {
+    if (str) str += ', ';
     str += ` ${minutes} ${t(tMinute, { count: minutes, ns: 'base' })}`;
   }
-  if (!months && !days && !hours) {
+  if (!days && !hours) {
+    if (str) str += ', ';
     str += ` ${seconds}`;
   }
   return str;

@@ -10,7 +10,9 @@ import { useModal } from 'contexts/Modal';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
+import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Title } from 'library/Modal/Title';
 import {
   FooterWrapper,
@@ -28,11 +30,19 @@ export const UnbondPoolMember = () => {
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { txFeesValid } = useTxFees();
+  const { erasToSeconds } = useErasToTimeLeft();
+
   const { units } = network;
   const { bondDuration } = consts;
   const { member, who } = config;
   const { points } = member;
   const freeToUnbond = planckToUnit(new BigNumber(rmCommas(points)), units);
+
+  const bondDurationFormatted = timeleftAsString(
+    t,
+    erasToSeconds(bondDuration),
+    true
+  );
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({
@@ -91,7 +101,7 @@ export const UnbondPoolMember = () => {
         </h2>
         <Separator />
         <NotesWrapper>
-          <p>{t('onceUnbonding', { bondDuration })}</p>
+          <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
           {bondValid && <EstimatedTxFee />}
         </NotesWrapper>
         <FooterWrapper>
