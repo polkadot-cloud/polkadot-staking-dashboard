@@ -14,7 +14,7 @@ export const useErasToTimeLeft = () => {
       return 0;
     }
     // store the duration of an era in number of blocks.
-    // TODO ISSUE: convert network consts from number to BigNumber.
+    // TODO: https://github.com/paritytech/polkadot-staking-dashboard/issues/637
     const eraDurationBlocks = new BigNumber(epochDuration).multipliedBy(
       sessionsPerEra
     );
