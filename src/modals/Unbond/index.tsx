@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -13,14 +13,14 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
-import { Title } from 'library/Modal/Title';
-import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
+import { Close } from 'library/Modal/Close';
+import { SubmitTx } from 'library/SubmitTx';
+import { NotesWrapper, PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit, unitToPlanck } from 'Utils';
@@ -175,11 +175,16 @@ export const Unbond = () => {
 
   return (
     <>
-      <Title title={`${t('removeBond')}`} icon={faMinus} />
+      <Close />
       <PaddingWrapper>
-        {warnings.map((err: string, i: number) => (
-          <Warning key={`unbond_error_${i}`} text={err} />
-        ))}
+        <h2 className="title unbounded">{`${t('removeBond')}`}</h2>
+        {warnings.length > 0 ? (
+          <WarningsWrapper>
+            {warnings.map((err: string, i: number) => (
+              <Warning key={`unbond_error_${i}`} text={err} />
+            ))}
+          </WarningsWrapper>
+        ) : null}
         <UnbondFeedback
           bondFor={bondFor}
           listenIsValid={setBondValid}
@@ -214,23 +219,24 @@ export const Unbond = () => {
             </>
           ) : null}
           <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
-          <EstimatedTxFee />
         </NotesWrapper>
-        <FooterWrapper>
-          <div>
-            <ButtonSubmit
-              text={`${submitting ? t('submitting') : t('submit')}`}
-              iconLeft={faArrowAltCircleUp}
-              iconTransform="grow-2"
-              onClick={() => submitTx()}
-              disabled={
-                submitting ||
-                !(bondValid && accountHasSigner(signingAccount) && txFeesValid)
-              }
-            />
-          </div>
-        </FooterWrapper>
       </PaddingWrapper>
+      <SubmitTx
+        fromController={isStaking}
+        buttons={[
+          <ButtonSubmit
+            key="button_submit"
+            text={`${submitting ? t('submitting') : t('submit')}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => submitTx()}
+            disabled={
+              submitting ||
+              !(bondValid && accountHasSigner(signingAccount) && txFeesValid)
+            }
+          />,
+        ]}
+      />
     </>
   );
 };

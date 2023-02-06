@@ -21,6 +21,7 @@ export const getDuration = (toDate: Date | null): TimeleftDuration => {
   if (getUnixTime(toDate) <= getUnixTime(new Date())) {
     return defaultDuration;
   }
+
   toDate.setSeconds(toDate.getSeconds());
   const d = intervalToDuration({
     start: Date.now(),

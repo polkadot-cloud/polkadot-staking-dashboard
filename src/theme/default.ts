@@ -44,6 +44,7 @@ export const defaultThemes: { [key: string]: AnyJson } = {
       'linear-gradient(180deg, rgba(20,20,20,0.93) 0%, rgba(14,14,14,0.93) 100%)'
     ),
     warning: v('#fdf9eb', '#33332a'),
+    submission: v('rgba(245,244,244,1)', '#141414'),
   },
   highlight: {
     primary: v(
@@ -63,9 +64,9 @@ export const defaultThemes: { [key: string]: AnyJson } = {
     grid: v('#e8e8e8', '#222'),
   },
   buttons: {
-    primary: { background: v('rgba(248, 248, 248, 0.9)', '#0f0f0f') },
+    primary: { background: v('rgba(244, 243, 243, 0.9)', '#1a1a1a') },
     secondary: { background: v('#eeecec', '#333') },
-    toggle: { background: v('rgba(244,243,242,1)', '#1a1a1a') },
+    toggle: { background: v('rgba(242,241,240,1)', '#1d1d1d') },
     help: { background: v('#ececec', '#242424') },
     hover: { background: v('#e8e6e6', '#080808') },
     disabled: {
@@ -76,11 +77,11 @@ export const defaultThemes: { [key: string]: AnyJson } = {
   border: {
     primary: v('#e6e6e6', '#282828'),
     secondary: v('#ccc', '#444'),
-    warning: v('#ebc161', '#7b6a41'),
+    warning: v('#f8ebb2', '#48482a'),
   },
   modal: {
-    overlay: v('rgba(242,240,240,0.6)', 'rgba(16,16,16,0.6)'),
-    background: v('#fff', '#0b0b0b'),
+    overlay: v('rgba(230,228,228,0.6)', 'rgba(16,16,16,0.6)'),
+    background: v('rgba(252,251,251,1)', '#101010'),
   },
   overlay: {
     background: v('rgba(200,200,200,0.45)', 'rgba(30,30,30,0.6)'),

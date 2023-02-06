@@ -12,7 +12,7 @@ export const defaultModalContext: ModalContextInterface = {
   // eslint-disable-next-line
   setModalHeight: (v) => {},
   setResize: () => {},
-  modal: 'ConnectAccounts',
+  modal: '',
   config: {},
   size: 'large',
   height: 0,

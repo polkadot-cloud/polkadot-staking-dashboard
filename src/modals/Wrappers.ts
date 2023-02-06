@@ -8,7 +8,6 @@ import {
   borderPrimary,
   buttonPrimaryBackground,
   cardBorder,
-  cardShadow,
   modalBackground,
   modalOverlayBackground,
   networkColor,
@@ -48,7 +47,7 @@ export const ModalWrapper = styled(motion.div)`
 
 export const HeightWrapper = styled.div<{ size: string }>`
   border: ${cardBorder} ${borderPrimary};
-  box-shadow: ${cardShadow} ${shadowColor};
+  box-shadow: 0px 2px 8px 1px ${shadowColor};
   transition: height 0.5s cubic-bezier(0.1, 1, 0.2, 1);
   width: 100%;
   max-width: ${(props) =>
@@ -72,8 +71,12 @@ export const ContentWrapper = styled.div`
   position: relative;
 
   h2 {
+    &.unbounded {
+      font-family: 'Unbounded';
+    }
     &.title {
-      margin: 0.75rem 0 0.25rem 0;
+      font-size: 1.35rem;
+      margin: 1.25rem 0 0 0;
     }
   }
 
@@ -152,10 +155,10 @@ export const PaddingWrapper = styled.div<{
   width: 100%;
   padding: ${(props) =>
     props.verticalOnly
-      ? '1.25rem 0'
+      ? '1rem 0 0.25rem 0'
       : props.horizontalOnly
       ? '0 1rem'
-      : '1.25rem 1.25rem'};
+      : '1rem'};
 `;
 
 // modal header, used for extrinsics forms
@@ -179,7 +182,7 @@ export const HeadingWrapper = styled.h3<{ noPadding?: boolean }>`
 export const FooterWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-end;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
 
@@ -187,6 +190,8 @@ export const FooterWrapper = styled.div`
     color: ${textSecondary};
     opacity: 0.5;
     margin: 0;
+    position: relative;
+    top: 1.25rem;
     &.active {
       opacity: 1;
       color: ${networkColor};
@@ -225,20 +230,20 @@ export const Separator = styled.div`
   border-top: 1px solid ${textSecondary};
   width: 100%;
   opacity: 0.1;
-  margin: 0.75rem 0rem;
+  margin: 0.8rem 0rem 0.8rem 0;
 `;
 
 export const NotesWrapper = styled.div<{
   noPadding?: boolean;
 }>`
   width: 100%;
-  padding: ${(props) => (props.noPadding ? '0' : '1rem 0')};
+  padding: ${(props) => (props.noPadding ? '0' : '0.75rem 0')};
   > p {
     color: ${textSecondary};
   }
 `;
 
-export const WarningsWrapper = styled.div`
+export const WarningsWrapper = styled.div<{ noMargin?: boolean }>`
+  margin-top: ${(props) => (props.noMargin ? '0' : '0.75rem')};
   width: 100%;
-  margin-bottom: 1rem;
 `;

@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -10,19 +10,20 @@ import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
-import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
+import { Close } from 'library/Modal/Close';
+import { SubmitTx } from 'library/SubmitTx';
+import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit, unitToPlanck } from 'Utils';
 
 export const Bond = () => {
   const { t } = useTranslation('modals');
+
   const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, config, setResize } = useModal();
@@ -121,15 +122,18 @@ export const Bond = () => {
 
   return (
     <>
-      <Title title={`${t('addToBond')}`} icon={faPlus} />
+      <Close />
       <PaddingWrapper>
-        {unclaimedRewards > 0 && bondFor === 'pool' && (
-          <Warning
-            text={`${t('bondingWithdraw')} ${unclaimedRewards} ${
-              network.unit
-            }.`}
-          />
-        )}
+        <h2 className="title unbounded">{t('addToBond')}</h2>
+        {unclaimedRewards > 0 && bondFor === 'pool' ? (
+          <WarningsWrapper>
+            <Warning
+              text={`${t('bondingWithdraw')} ${unclaimedRewards} ${
+                network.unit
+              }.`}
+            />
+          </WarningsWrapper>
+        ) : null}
         <BondFeedback
           syncing={largestTxFee.isEqualTo(new BigNumber(0))}
           bondFor={bondFor}
@@ -144,24 +148,26 @@ export const Bond = () => {
           parentErrors={errors}
           txFees={largestTxFee}
         />
-        <NotesWrapper>
-          <EstimatedTxFee />
-        </NotesWrapper>
-        <FooterWrapper>
-          <div>
-            <ButtonSubmit
-              text={`${submitting ? t('submitting') : t('submit')}`}
-              iconLeft={faArrowAltCircleUp}
-              iconTransform="grow-2"
-              onClick={() => submitTx()}
-              disabled={
-                submitting ||
-                !(bondValid && accountHasSigner(activeAccount) && txFeesValid)
-              }
-            />
-          </div>
-        </FooterWrapper>
+        <p>
+          Newly bonded funds will back active nominations from the start of the
+          next era.
+        </p>
       </PaddingWrapper>
+      <SubmitTx
+        buttons={[
+          <ButtonSubmit
+            key="button_submit"
+            text={`${submitting ? t('submitting') : t('submit')}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => submitTx()}
+            disabled={
+              submitting ||
+              !(bondValid && accountHasSigner(activeAccount) && txFeesValid)
+            }
+          />,
+        ]}
+      />
     </>
   );
 };

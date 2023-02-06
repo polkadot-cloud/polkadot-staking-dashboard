@@ -137,7 +137,7 @@ export const PayeeInput = ({
                   </>
                 )}
               </>
-            ) : (
+            ) : payee.destination === 'None' ? null : (
               <>
                 <FontAwesomeIcon icon={faCheck} />
                 {accountMeta?.name || ''}

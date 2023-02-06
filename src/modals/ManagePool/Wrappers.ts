@@ -31,12 +31,23 @@ export const ContentWrapper = styled.div`
   flex-basis: 50%;
   min-width: 50%;
   height: auto;
-  padding: 0 1rem 1rem 1rem;
   flex-grow: 1;
+
+  .padding {
+    padding: 0 1rem 1rem 1rem;
+
+    h2 {
+      margin-top: 0;
+    }
+
+    input {
+      margin-top: 0.5rem;
+    }
+  }
 
   .items {
     position: relative;
-    padding: 0.5rem 0 1.5rem 0;
+    padding: 0.5rem 0 0rem 0;
     border-bottom: none;
     width: auto;
     border-radius: 0.75rem;

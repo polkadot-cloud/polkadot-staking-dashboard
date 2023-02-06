@@ -16,12 +16,12 @@ import { PaddingWrapper } from '../Wrappers';
 import { ContentWrapper, StyledButton } from './Wrappers';
 
 export const AccountPoolRoles = () => {
+  const { t } = useTranslation('modals');
+
   const { config } = useModal();
   const { getAccountPools } = useBondedPools();
   const { membership } = usePoolMemberships();
   const { who } = config;
-  const { t } = useTranslation('modals');
-
   const accountPools = getAccountPools(who);
   const totalAccountPools = Object.entries(accountPools).length;
   const { label } = useStatusButtons();
@@ -56,11 +56,11 @@ export const AccountPoolRoles = () => {
 };
 
 const Button = ({ item, poolId }: { item: Array<string>; poolId: string }) => {
+  const { t } = useTranslation('modals');
+
   const { setStatus } = useModal();
   const { bondedPools } = useBondedPools();
   const { setSelectedPoolId } = useActivePools();
-  const { t } = useTranslation('modals');
-
   const pool = bondedPools.find((b: BondedPool) => String(b.id) === poolId);
   const stash = pool?.addresses?.stash || '';
 
