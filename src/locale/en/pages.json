@@ -242,6 +242,16 @@
       "withdrawFunds": "Withdraw Funds",
       "withdrawUnlock": "Withdraw your unlock chunk to proceed with pool closure."
     },
+    "sellers": {
+      "metadata": "Metadata",
+      "onboardAsset": "Onboard an asset",
+      "onboardingFailed": "Failed to onboard an asset",
+      "onboardingSuccess": "Onboarding Success",
+      "phAssetPrice": "Input price of the asset",
+      "phMetadata": "Write description of the asset",
+      "price": "Price",
+      "submit": "Submit"
+    },
     "validators": {
       "activeValidators": "Active Validators",
       "averageCommission": "Average Commission",

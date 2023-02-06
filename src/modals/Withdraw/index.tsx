@@ -21,14 +21,14 @@ import { humanNumberBn, planckBnToUnit, unitToPlanckBn } from 'Utils';
 
 export const WithdrawFund = () => {
   const { t } = useTranslation('pages');
+  const { address } = useAccount();
+  const { availableBalance } = useInvest();
   const { api } = useApi();
   const { setStatus } = useModal();
   const { metrics } = useNetworkMetrics();
   const { notifyError, notifySuccess } = useNotifications();
-  const { availableBalance } = useInvest();
 
   const [amount, setAmount] = useState(0);
-  const { address } = useAccount();
   const [pending, setPending] = useState(false);
 
   const getTx = () => {
@@ -76,7 +76,7 @@ export const WithdrawFund = () => {
                   <input
                     type="text"
                     placeholder="0 FST"
-                    value={amount}
+                    value={amount || ''}
                     onChange={(e) => setAmount(Number(e.target.value))}
                   />
                 </div>
