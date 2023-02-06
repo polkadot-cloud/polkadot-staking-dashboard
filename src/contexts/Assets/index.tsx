@@ -27,11 +27,9 @@ export const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
   const subscribeToNfts = async () => {
     if (!isReady || !api) return;
 
-    const _unsub = await api.query.nftModule.itemsCount(
-      (itemsCount: AnyApi) => {
-        setCollectionSize(itemsCount.toHuman());
-      }
-    );
+    const _unsub = api.query.nftModule.itemsCount((itemsCount: AnyApi) => {
+      setCollectionSize(itemsCount.toHuman());
+    });
 
     setUnsub(_unsub);
   };
@@ -67,9 +65,7 @@ export const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     subscribeToNfts();
     return () => {
-      if (unsub) {
-        unsub();
-      }
+      if (unsub) unsub.then();
     };
   }, [isReady]);
 

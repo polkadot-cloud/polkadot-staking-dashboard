@@ -28,7 +28,7 @@ export const InvestProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
     if (!api || !isReady) return;
-    const _unsub = await api.query.housingFundModule.contributions(
+    const _unsub = api.query.housingFundModule.contributions(
       account,
       (res: AnyJson) => {
         const {
@@ -65,9 +65,7 @@ export const InvestProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     subscribe(address);
     return () => {
-      if (unsub) {
-        unsub();
-      }
+      if (unsub) unsub.then();
     };
   }, [address, isReady, role]);
 

@@ -21,7 +21,7 @@ import UserBalance from './Stats/UserBalance';
 export const Dashboard = () => {
   const { t } = useTranslation('pages');
   const { assets } = useAssets();
-  const { role, address } = useAccount();
+  const { role } = useAccount();
   const { openModalWith } = useModal();
 
   useEffect(() => {
