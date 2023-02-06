@@ -20,7 +20,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
+import { NotesWrapper, PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit, unitToPlanck } from 'Utils';
@@ -178,6 +178,13 @@ export const Unbond = () => {
       <Close />
       <PaddingWrapper>
         <h2 className="title unbounded">{`${t('removeBond')}`}</h2>
+        {warnings.length > 0 ? (
+          <WarningsWrapper>
+            {warnings.map((err: string, i: number) => (
+              <Warning key={`unbond_error_${i}`} text={err} />
+            ))}
+          </WarningsWrapper>
+        ) : null}
         <UnbondFeedback
           bondFor={bondFor}
           listenIsValid={setBondValid}
@@ -213,9 +220,6 @@ export const Unbond = () => {
           ) : null}
           <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
         </NotesWrapper>
-        {warnings.map((err: string, i: number) => (
-          <Warning key={`unbond_error_${i}`} text={err} />
-        ))}
       </PaddingWrapper>
       <SubmitTx
         fromController={isStaking}

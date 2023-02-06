@@ -117,7 +117,7 @@ export const UpdatePayee = () => {
       />
       <PaddingWrapper style={{ paddingBottom: 0 }}>
         {getControllerNotImported(controller) && (
-          <WarningsWrapper>
+          <WarningsWrapper noMargin>
             <Warning text={t('mustHaveControllerUpdate')} />
           </WarningsWrapper>
         )}

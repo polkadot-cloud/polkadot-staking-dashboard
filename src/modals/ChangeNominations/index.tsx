@@ -13,9 +13,9 @@ import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper, Separator } from '../Wrappers';
+import { PaddingWrapper, Separator, WarningsWrapper } from '../Wrappers';
 
 export const ChangeNominations = () => {
   const { t } = useTranslation('modals');
@@ -112,20 +112,26 @@ export const ChangeNominations = () => {
     callbackInBlock: () => {},
   });
 
+  const warnings = [];
+  if (!nominations.length) {
+    warnings.push(<Warning text={t('noNominationsSet')} />);
+  }
+  if (!accountHasSigner(signingAccount)) {
+    warnings.push(
+      <Warning
+        text={`${
+          bondFor === 'nominator'
+            ? t('youMust', { context: 'controller' })
+            : t('youMust', { context: 'account' })
+        }`}
+      />
+    );
+  }
+
   return (
     <>
       <Close />
       <PaddingWrapper>
-        {!nominations.length ? <Warning text={t('noNominationsSet')} /> : null}
-        {!accountHasSigner(signingAccount) && (
-          <Warning
-            text={`${
-              bondFor === 'nominator'
-                ? t('youMust', { context: 'controller' })
-                : t('youMust', { context: 'account' })
-            }`}
-          />
-        )}
         <h2 className="title unbounded">
           {t('stop')}{' '}
           {!remaining
@@ -133,6 +139,15 @@ export const ChangeNominations = () => {
             : `${t('nomination', { count: removing })}`}
         </h2>
         <Separator />
+        {warnings.length ? (
+          <WarningsWrapper noMargin>
+            {warnings.map((warning: React.ReactNode, index: number) => (
+              <React.Fragment key={`warning_${index}`}>
+                {warning}
+              </React.Fragment>
+            ))}
+          </WarningsWrapper>
+        ) : null}
         <p>{t('changeNomination')}</p>
       </PaddingWrapper>
       <SubmitTx

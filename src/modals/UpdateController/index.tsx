@@ -16,7 +16,7 @@ import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { PaddingWrapper } from 'modals/Wrappers';
+import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Wrapper } from './Wrapper';
@@ -81,9 +81,11 @@ export const UpdateController = () => {
         <Wrapper>
           <div style={{ width: '100%' }}>
             <div style={{ marginBottom: '1.5rem' }}>
-              {!accountHasSigner(activeAccount) && (
-                <Warning text={t('readOnly')} />
-              )}
+              {!accountHasSigner(activeAccount) ? (
+                <WarningsWrapper>
+                  <Warning text={t('readOnly')} />
+                </WarningsWrapper>
+              ) : null}
             </div>
             <AccountDropdown
               items={items}

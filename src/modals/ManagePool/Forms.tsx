@@ -16,6 +16,7 @@ import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Action } from 'library/Modal/Action';
 import { SubmitTx } from 'library/SubmitTx';
+import { WarningsWrapper } from 'modals/Wrappers';
 import React, { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ContentWrapper } from './Wrappers';
@@ -76,7 +77,7 @@ export const Forms = forwardRef((props: any, ref: any) => {
         message = <p>{t('storedOnChain')}</p>;
         break;
       case 'destroy_pool':
-        title = <Action text="Set Pool Destroying" />;
+        title = <Action text="Set To Destroying" />;
         message = (
           <p>
             Setting a pool to destroying cannot be reversed. Only set this state
@@ -184,13 +185,18 @@ export const Forms = forwardRef((props: any, ref: any) => {
         <div className="items" ref={ref}>
           <>
             <div className="padding">
+              {!accountHasSigner(activeAccount) && (
+                <WarningsWrapper>
+                  <Warning text={t('readOnly')} />
+                </WarningsWrapper>
+              )}
+
               {/* include task title if present */}
               {content.title !== undefined ? content.title : null}
 
               {/* include form element if task is to set metadata */}
               {task === 'set_pool_metadata' && (
                 <>
-                  <h2>{t('updatePoolName')}</h2>
                   <input
                     className="textbox"
                     style={{ width: '100%' }}
@@ -205,9 +211,6 @@ export const Forms = forwardRef((props: any, ref: any) => {
               )}
 
               <p>{content.message}</p>
-              {!accountHasSigner(activeAccount) && (
-                <Warning text={t('readOnly')} />
-              )}
             </div>
           </>
           <SubmitTx

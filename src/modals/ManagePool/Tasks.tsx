@@ -21,7 +21,11 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
       <div className="padding">
         {poolDestroying && <Warning text={t('beingDestroyed')} />}
 
-        <div className="items" ref={ref} style={{ paddingBottom: '1.5rem' }}>
+        <div
+          className="items"
+          ref={ref}
+          style={{ paddingBottom: '1.5rem', paddingTop: '1.5rem' }}
+        >
           {isOwner() && (
             <button
               type="button"

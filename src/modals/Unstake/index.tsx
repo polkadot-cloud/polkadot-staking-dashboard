@@ -17,8 +17,8 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { PaddingWrapper } from 'modals/Wrappers';
-import { useEffect, useState } from 'react';
+import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero, planckToUnit, unitToPlanck } from 'Utils';
 
@@ -106,11 +106,28 @@ export const Unstake = () => {
     callbackInBlock: () => {},
   });
 
+  const warnings = [];
+  if (!accountHasSigner(controller)) {
+    warnings.push(<Warning text={t('readOnly')} />);
+  }
+  if (controllerNotImported) {
+    warnings.push(<Warning text={t('controllerImported')} />);
+  }
+
   return (
     <>
       <Close />
       <PaddingWrapper>
         <h2 className="title unbounded">{t('unstake')} </h2>
+        {warnings.length ? (
+          <WarningsWrapper>
+            {warnings.map((warning: React.ReactNode, index: number) => (
+              <React.Fragment key={`warning_${index}`}>
+                {warning}
+              </React.Fragment>
+            ))}
+          </WarningsWrapper>
+        ) : null}
         {greaterThanZero(freeToUnbond) ? (
           <Action
             text={t('unstakeUnbond', {
@@ -125,12 +142,6 @@ export const Unstake = () => {
           />
         )}
         <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
-        {!accountHasSigner(controller) && <Warning text={t('readOnly')} />}
-        {controllerNotImported ? (
-          <Warning text={t('controllerImported')} />
-        ) : (
-          <></>
-        )}
       </PaddingWrapper>
       <SubmitTx
         fromController

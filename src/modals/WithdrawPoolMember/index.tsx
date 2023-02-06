@@ -15,7 +15,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { PaddingWrapper } from 'modals/Wrappers';
+import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit, rmCommas } from 'Utils';
@@ -85,7 +85,11 @@ export const WithdrawPoolMember = () => {
       <PaddingWrapper>
         <h2 className="title">{t('withdrawMemberFunds')}</h2>
         <Action text={`${t('withdraw')} ${totalWithdraw} ${network.unit}`} />
-        {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
+        {!accountHasSigner(activeAccount) ? (
+          <WarningsWrapper>
+            <Warning text={t('readOnly')} />
+          </WarningsWrapper>
+        ) : null}
       </PaddingWrapper>
       <SubmitTx
         buttons={[

@@ -15,7 +15,7 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper } from '../Wrappers';
+import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const NominatePool = () => {
   const { api } = useApi();
@@ -77,9 +77,13 @@ export const NominatePool = () => {
       <Close />
       <PaddingWrapper>
         <h2 className="title unbounded">{t('nominate')}</h2>
-        {warnings.map((text: string, index: number) => (
-          <Warning key={`warning_${index}`} text={text} />
-        ))}
+        {warnings.length ? (
+          <WarningsWrapper>
+            {warnings.map((text: string, index: number) => (
+              <Warning key={`warning_${index}`} text={text} />
+            ))}
+          </WarningsWrapper>
+        ) : null}
         <Action text={t('haveNomination', { count: nominations.length })} />
         <p>{t('onceSubmitted')}</p>
       </PaddingWrapper>

@@ -18,7 +18,7 @@ import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero, planckToUnit, unitToPlanck } from 'Utils';
 
@@ -98,23 +98,36 @@ export const LeavePool = () => {
     callbackInBlock: () => {},
   });
 
+  const warnings = [];
+  if (!accountHasSigner(activeAccount)) {
+    warnings.push(<Warning text={t('readOnly')} />);
+  }
+  if (greaterThanZero(unclaimedRewards)) {
+    warnings.push(
+      <Warning
+        text={`${t('unbondingWithdraw')} ${unclaimedRewards.toString()} ${
+          network.unit
+        }.`}
+      />
+    );
+  }
+
   return (
     <>
       <Close />
       <PaddingWrapper>
         <h2 className="title unbounded">{t('leavePool')}</h2>
-        {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
+        {warnings.length ? (
+          <WarningsWrapper>
+            {warnings.map((warning: React.ReactNode, index: number) => (
+              <React.Fragment key={`warning_${index}`}>
+                {warning}
+              </React.Fragment>
+            ))}
+          </WarningsWrapper>
+        ) : null}
         <Action text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
         <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
-        {unclaimedRewards > 0 && (
-          <WarningsWrapper>
-            <Warning
-              text={`${t('unbondingWithdraw')} ${unclaimedRewards} ${
-                network.unit
-              }.`}
-            />
-          </WarningsWrapper>
-        )}
       </PaddingWrapper>
       <SubmitTx
         buttons={[

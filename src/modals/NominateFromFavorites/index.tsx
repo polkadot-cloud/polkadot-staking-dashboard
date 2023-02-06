@@ -18,7 +18,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { ValidatorList } from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FooterWrapper, PaddingWrapper } from '../Wrappers';
+import { FooterWrapper, PaddingWrapper, WarningsWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {
@@ -131,16 +131,18 @@ export const NominateFromFavorites = () => {
     <>
       <Title title={t('nominateFavorites')} />
       <PaddingWrapper>
-        <div style={{ marginBottom: '1rem' }}>
-          {!accountHasSigner(signingAccount) && (
-            <Warning
-              text={`${
-                bondFor === 'nominator'
-                  ? t('youMust', { context: 'controller' })
-                  : t('youMust', { context: 'account' })
-              }`}
-            />
-          )}
+        <div style={{ marginBottom: '1rem', width: '100%' }}>
+          {!accountHasSigner(signingAccount) ? (
+            <WarningsWrapper>
+              <Warning
+                text={`${
+                  bondFor === 'nominator'
+                    ? t('youMust', { context: 'controller' })
+                    : t('youMust', { context: 'account' })
+                }`}
+              />
+            </WarningsWrapper>
+          ) : null}
         </div>
         <ListWrapper>
           {availableFavorites.length > 0 ? (

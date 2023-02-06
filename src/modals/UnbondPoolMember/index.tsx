@@ -15,7 +15,7 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { PaddingWrapper } from 'modals/Wrappers';
+import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero, planckToUnit, rmCommas, unitToPlanck } from 'Utils';
@@ -92,7 +92,11 @@ export const UnbondPoolMember = () => {
       <Close />
       <PaddingWrapper>
         <h2 className="title unbounded">{t('unbondMemberFunds')}</h2>
-        {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
+        {!accountHasSigner(activeAccount) ? (
+          <WarningsWrapper>
+            <Warning text={t('readOnly')} />
+          </WarningsWrapper>
+        ) : null}
         <Action text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
         <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
       </PaddingWrapper>

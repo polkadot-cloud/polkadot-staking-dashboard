@@ -91,8 +91,6 @@ export const Nominate = () => {
       <Close />
       <PaddingWrapper>
         <h2 className="title unbounded">{t('nominate')}</h2>
-        <Action text={t('haveNomination', { count: nominations.length })} />
-        <p>{t('onceSubmitted')}</p>
         {warnings.length > 0 ? (
           <WarningsWrapper>
             {warnings.map((text: any, index: number) => (
@@ -100,6 +98,8 @@ export const Nominate = () => {
             ))}
           </WarningsWrapper>
         ) : null}
+        <Action text={t('haveNomination', { count: nominations.length })} />
+        <p>{t('onceSubmitted')}</p>
       </PaddingWrapper>
       <SubmitTx
         fromController

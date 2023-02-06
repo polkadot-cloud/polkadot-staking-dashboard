@@ -19,6 +19,7 @@ import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Action } from 'library/Modal/Action';
 import { SubmitTx } from 'library/SubmitTx';
+import { WarningsWrapper } from 'modals/Wrappers';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit, rmCommas } from 'Utils';
@@ -108,6 +109,12 @@ export const Forms = forwardRef(
       <ContentWrapper>
         <div ref={ref}>
           <div className="padding">
+            {!accountHasSigner(signingAccount) ? (
+              <WarningsWrapper>
+                <Warning text={t('readOnly')} />
+              </WarningsWrapper>
+            ) : null}
+
             <div style={{ margin: '0 0 2rem 0' }}>
               {task === 'rebond' && (
                 <>
@@ -134,9 +141,6 @@ export const Forms = forwardRef(
                     withdrawing.
                   </p>
                 </>
-              )}
-              {!accountHasSigner(signingAccount) && (
-                <Warning text={t('readOnly')} />
               )}
             </div>
           </div>

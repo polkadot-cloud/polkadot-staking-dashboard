@@ -133,7 +133,7 @@ export const ManageFastUnstake = () => {
         </h2>
         {warnings.length > 0 ? (
           <WarningsWrapper>
-            {warnings.map((text: any, index: number) => (
+            {warnings.map((text: string, index: number) => (
               <Warning key={index} text={text} />
             ))}
           </WarningsWrapper>

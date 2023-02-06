@@ -6,7 +6,7 @@ import { borderPrimary, textPrimary, textSecondary } from 'theme';
 
 export const TitleWrapper = styled.div<{ fixed: boolean }>`
   padding: ${(props) =>
-    props.fixed ? '0.6rem 1rem 1.5rem 1rem' : '2rem 1rem 0 1rem'};
+    props.fixed ? '0.6rem 1rem 0rem 1rem' : '2rem 1rem 0 1rem'};
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
@@ -64,6 +64,7 @@ export const StatsWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: row wrap;
+  margin-top: 1rem;
 `;
 export const StatWrapper = styled.div`
   display: flex;

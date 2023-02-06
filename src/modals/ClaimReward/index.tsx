@@ -14,10 +14,10 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit } from 'Utils';
-import { PaddingWrapper } from '../Wrappers';
+import { greaterThanZero, planckToUnit } from 'Utils';
+import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals');
@@ -69,6 +69,14 @@ export const ClaimReward = () => {
     callbackInBlock: () => {},
   });
 
+  const warnings = [];
+  if (!accountHasSigner(activeAccount)) {
+    warnings.push(<Warning text={t('readOnly')} />);
+  }
+  if (!greaterThanZero(unclaimedRewards)) {
+    warnings.push(<Warning text={t('noRewards')} />);
+  }
+
   return (
     <>
       <Close />
@@ -76,6 +84,15 @@ export const ClaimReward = () => {
         <h2 className="title unbounded">
           {claimType === 'bond' ? t('bond') : t('withdraw')} {t('rewards')}
         </h2>
+        {warnings.length ? (
+          <WarningsWrapper>
+            {warnings.map((warning: React.ReactNode, index: number) => (
+              <React.Fragment key={`warning_${index}`}>
+                {warning}
+              </React.Fragment>
+            ))}
+          </WarningsWrapper>
+        ) : null}
         <Action
           text={`Claim ${`${planckToUnit(unclaimedRewards, units)} ${unit}`}`}
         />
@@ -84,12 +101,6 @@ export const ClaimReward = () => {
         ) : (
           <p>{t('claimReward2')}</p>
         )}
-        {!accountHasSigner(activeAccount) ? (
-          <Warning text={t('readOnly')} />
-        ) : null}
-        {!unclaimedRewards?.isGreaterThan(0) ? (
-          <Warning text={t('noRewards')} />
-        ) : null}
       </PaddingWrapper>
       <SubmitTx
         buttons={[

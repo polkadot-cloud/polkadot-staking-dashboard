@@ -16,7 +16,7 @@ import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { PaddingWrapper } from 'modals/Wrappers';
+import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit, unitToPlanck } from 'Utils';
@@ -125,6 +125,15 @@ export const Bond = () => {
       <Close />
       <PaddingWrapper>
         <h2 className="title unbounded">{t('addToBond')}</h2>
+        {unclaimedRewards > 0 && bondFor === 'pool' ? (
+          <WarningsWrapper>
+            <Warning
+              text={`${t('bondingWithdraw')} ${unclaimedRewards} ${
+                network.unit
+              }.`}
+            />
+          </WarningsWrapper>
+        ) : null}
         <BondFeedback
           syncing={largestTxFee.isEqualTo(new BigNumber(0))}
           bondFor={bondFor}
@@ -143,13 +152,6 @@ export const Bond = () => {
           Newly bonded funds will back active nominations from the start of the
           next era.
         </p>
-        {unclaimedRewards > 0 && bondFor === 'pool' && (
-          <Warning
-            text={`${t('bondingWithdraw')} ${unclaimedRewards} ${
-              network.unit
-            }.`}
-          />
-        )}
       </PaddingWrapper>
       <SubmitTx
         buttons={[
