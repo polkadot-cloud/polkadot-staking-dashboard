@@ -11,7 +11,6 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    justify-content: flex-start;
     margin: 0 0 0.2rem 0;
 
     .help-icon {

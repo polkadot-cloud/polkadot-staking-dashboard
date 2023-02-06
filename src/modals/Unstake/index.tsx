@@ -11,7 +11,9 @@ import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
+import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
@@ -31,6 +33,7 @@ export const Unstake = () => {
   const { getBondedAccount, getAccountNominations } = useBalances();
   const { getTransferOptions } = useTransferOptions();
   const { txFeesValid } = useTxFees();
+  const { erasToSeconds } = useErasToTimeLeft();
 
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
@@ -38,6 +41,12 @@ export const Unstake = () => {
   const { bondDuration } = consts;
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active } = allTransferOptions.nominate;
+
+  const bondDurationFormatted = timeleftAsString(
+    t,
+    erasToSeconds(bondDuration),
+    true
+  );
 
   // convert BigNumber values to number
   const freeToUnbond = planckToUnit(active, units);
@@ -115,7 +124,7 @@ export const Unstake = () => {
             text={t('unstakeStopNominating', { count: nominations.length })}
           />
         )}
-        <p>{t('onceUnbonding', { bondDuration })}</p>
+        <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
         {!accountHasSigner(controller) && <Warning text={t('readOnly')} />}
         {controllerNotImported ? (
           <Warning text={t('controllerImported')} />

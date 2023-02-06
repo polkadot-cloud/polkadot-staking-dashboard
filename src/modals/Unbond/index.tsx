@@ -15,7 +15,9 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
+import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
@@ -36,12 +38,19 @@ export const Unbond = () => {
   const { isDepositor, selectedActivePool } = useActivePools();
   const { txFees, txFeesValid } = useTxFees();
   const { getTransferOptions } = useTransferOptions();
+  const { erasToSeconds } = useErasToTimeLeft();
 
   const controller = getBondedAccount(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
   const { minNominatorBond: minNominatorBondBn } = staking;
   const { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn } = stats;
   const { bondDuration } = consts;
+
+  const bondDurationFormatted = timeleftAsString(
+    t,
+    erasToSeconds(bondDuration),
+    true
+  );
 
   let { unclaimedRewards } = selectedActivePool || {};
   unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
@@ -202,7 +211,7 @@ export const Unbond = () => {
               )}
             </>
           ) : null}
-          <p>{t('onceUnbonding', { bondDuration })}</p>
+          <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
         </NotesWrapper>
         {warnings.map((err: string, i: number) => (
           <Warning key={`unbond_error_${i}`} text={err} />

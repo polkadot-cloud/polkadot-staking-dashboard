@@ -11,7 +11,9 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
+import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
@@ -30,10 +32,17 @@ export const LeavePool = () => {
   const { getTransferOptions } = useTransferOptions();
   const { txFeesValid } = useTxFees();
   const { selectedActivePool } = useActivePools();
+  const { erasToSeconds } = useErasToTimeLeft();
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active: activeBn } = allTransferOptions.pool;
   const { bondDuration } = consts;
+
+  const bondDurationFormatted = timeleftAsString(
+    t,
+    erasToSeconds(bondDuration),
+    true
+  );
 
   let { unclaimedRewards } = selectedActivePool || {};
   unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
@@ -96,7 +105,7 @@ export const LeavePool = () => {
         <h2 className="title unbounded">{t('leavePool')}</h2>
         {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
         <Action text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
-        <p>{t('onceUnbonding', { bondDuration })}</p>
+        <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
         {unclaimedRewards > 0 && (
           <WarningsWrapper>
             <Warning
