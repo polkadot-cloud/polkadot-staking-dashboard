@@ -199,7 +199,7 @@ export const Forms = forwardRef(
                   </>
                 )}
 
-                <p>{content.message}</p>
+                {content.message}
               </div>
             </>
             <SubmitTx
