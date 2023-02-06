@@ -82,7 +82,7 @@
     "leavePool": "Leave Pool",
     "lightClient": "Light Client",
     "lockPool": "Lock Pool",
-    "lockPoolResult": "Once you lock the pool no one else can join the pool.",
+    "lockPoolSubtitle": "Once you lock the pool no one else can join the pool.",
     "managePool": "Manage Pool",
     "mustHaveController": "You must have your controller account imported to start nominating",
     "mustHaveControllerUpdate": "You must have your controller account imported to update your reward destination",
@@ -122,7 +122,7 @@
     "readOnlyAccount_other": "{{count}} Read Only Accounts",
     "readOnlyAccounts": "Read Only Accounts",
     "rebond": "Rebond",
-    "rebondUnlock": " You can rebond unlocks at any time in this period, or withdraw them to your free balance thereafter.",
+    "rebondUnlock": "You can rebond unlocks at any time in this period, or withdraw them to your free balance thereafter.",
     "recentEraPoints": "Recent Era Points",
     "registerFastUnstake": "Registering for fast unstake requires a deposit of",
     "remove": "Remove",
@@ -182,6 +182,13 @@
     "withdrawMemberFunds": "Withdraw Member Funds",
     "withdrawUnlocked": "Withdraw Unlocked",
     "youMust_account": "You must have your account imported to stop nominating.",
-    "youMust_controller": "You must have your controller account imported to stop nominating."
+    "youMust_controller": "You must have your controller account imported to stop nominating.",
+
+    "claim": "Claim",
+    "setToDestroying": "Set To Destroying",
+    "setToDestroyingSubtitle": "Setting a pool to destroying cannot be reversed. Only set this state if you intend to close the pool.",
+    "unlockPoolSubtitle": "Once a pool is unlocked, any account will be able to join as a pool member.",
+    "rebondSubtitle": "Rebonded funds will back active nominations from the start of the next era.",
+    "withdrawSubtitle": "Funds will be immediately available as free balance after withdrawing."
   }
 }

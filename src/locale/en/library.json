@@ -151,6 +151,8 @@
     "viewPoolNominations": "View Pool Nominations",
     "waiting": "Waiting",
     "walletNotFound": "wallet not found",
-    "whenActivelyNominating": "when actively nominating."
+    "whenActivelyNominating": "when actively nominating.",
+    
+    "signedByController": "Signed by Controller"
   }
 }

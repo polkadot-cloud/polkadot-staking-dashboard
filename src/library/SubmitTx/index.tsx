@@ -9,6 +9,7 @@ import { useTheme } from 'contexts/Themes';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { defaultThemes } from 'theme/default';
 import { SubmitTxProps } from './types';
 import { Wrapper } from './Wrappers';
@@ -17,6 +18,7 @@ export const SubmitTx = ({
   buttons,
   fromController = false,
 }: SubmitTxProps) => {
+  const { t } = useTranslation('library');
   const { unit } = useApi().network;
   const { mode } = useTheme();
   const { notEnoughFunds } = useTxFees();
@@ -35,8 +37,8 @@ export const SubmitTx = ({
           <p className="sign">
             {fromController ? (
               <>
-                <FontAwesomeIcon icon={faPenToSquare} className="icon" /> Signed
-                by Controller
+                <FontAwesomeIcon icon={faPenToSquare} className="icon" />
+                {t('signedByController')}
               </>
             ) : null}
             {notEnoughFunds ? (
@@ -48,7 +50,7 @@ export const SubmitTx = ({
                   color={defaultThemes.text.danger[mode]}
                 />{' '}
                 <span style={{ color: defaultThemes.text.danger[mode] }}>
-                  Not Enough {unit}
+                  {t('notEnough')} {unit}
                 </span>
               </>
             ) : null}

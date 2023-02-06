@@ -21,225 +21,215 @@ import React, { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ContentWrapper } from './Wrappers';
 
-export const Forms = forwardRef((props: any, ref: any) => {
-  const { setSection, task, section } = props;
-  const { t } = useTranslation('modals');
+export const Forms = forwardRef(
+  ({ setSection, task, section }: any, ref: any) => {
+    const { t } = useTranslation('modals');
+    const { api } = useApi();
+    const { setStatus: setModalStatus } = useModal();
+    const { activeAccount, accountHasSigner } = useConnect();
+    const { isOwner, isStateToggler, selectedActivePool } = useActivePools();
+    const { bondedPools, meta, updateBondedPools, getBondedPool } =
+      useBondedPools();
+    const { txFeesValid } = useTxFees();
+    const poolId = selectedActivePool?.id;
 
-  const { api } = useApi();
-  const { setStatus: setModalStatus } = useModal();
-  const { activeAccount, accountHasSigner } = useConnect();
-  const { isOwner, isStateToggler, selectedActivePool } = useActivePools();
-  const { bondedPools, meta, updateBondedPools, getBondedPool } =
-    useBondedPools();
-  const { txFeesValid } = useTxFees();
-  const poolId = selectedActivePool?.id;
+    // valid to submit transaction
+    const [valid, setValid] = useState<boolean>(false);
 
-  // valid to submit transaction
-  const [valid, setValid] = useState<boolean>(false);
+    // updated metadata value
+    const [metadata, setMetadata] = useState<string>('');
 
-  // updated metadata value
-  const [metadata, setMetadata] = useState<string>('');
+    // ensure account has relevant roles for task
+    const canToggle =
+      (isOwner() || isStateToggler()) &&
+      ['destroy_pool', 'unlock_pool', 'lock_pool'].includes(task);
+    const canRename = isOwner() && task === 'set_pool_metadata';
+    const isValid = canToggle || canRename;
 
-  // ensure account has relevant roles for task
-  const canToggle =
-    (isOwner() || isStateToggler()) &&
-    ['destroy_pool', 'unlock_pool', 'lock_pool'].includes(task);
-  const canRename = isOwner() && task === 'set_pool_metadata';
-  const isValid = canToggle || canRename;
-
-  // determine current pool metadata and set in state
-  useEffect(() => {
-    if (task === 'set_pool_metadata') {
-      let _metadata = '';
-      const pool = bondedPools.find((p: any) => {
-        return p.addresses.stash === selectedActivePool?.addresses.stash;
-      });
-
-      if (pool) {
-        const metadataBatch = meta.bonded_pools?.metadata ?? [];
-        const batchIndex = bondedPools.indexOf(pool);
-        _metadata = metadataBatch[batchIndex];
-        setMetadata(u8aToString(u8aUnwrapBytes(_metadata)));
-      }
-    }
-  }, [section]);
-
-  useEffect(() => {
-    setValid(isValid);
-  }, [isValid]);
-
-  const content = (() => {
-    let title;
-    let message;
-    switch (task) {
-      case 'set_pool_metadata':
-        title = undefined;
-        message = <p>{t('storedOnChain')}</p>;
-        break;
-      case 'destroy_pool':
-        title = <Action text="Set To Destroying" />;
-        message = (
-          <p>
-            Setting a pool to destroying cannot be reversed. Only set this state
-            if you intend to close the pool.
-          </p>
-        );
-        break;
-      case 'unlock_pool':
-        title = <Action text="Unlock Pool" />;
-        message = (
-          <p>
-            Any account will be able to join as a member once a pool is
-            unlocked.
-          </p>
-        );
-        break;
-      case 'lock_pool':
-        title = <Action text="Lock Pool" />;
-        message = <p>{t('lockPoolResult')}</p>;
-        break;
-      default:
-        title = null;
-        message = null;
-    }
-    return { title, message };
-  })();
-
-  const poolStateFromTask = (s: string) => {
-    switch (s) {
-      case 'destroy_pool':
-        return 'Destroying';
-      case 'lock_pool':
-        return 'Blocked';
-      default:
-        return 'Open';
-    }
-  };
-
-  // tx to submit
-  const getTx = () => {
-    let tx = null;
-
-    if (!valid || !api) {
-      return tx;
-    }
-
-    // remove decimal errors
-    switch (task) {
-      case 'set_pool_metadata':
-        tx = api.tx.nominationPools.setMetadata(poolId, metadata);
-        break;
-      case 'destroy_pool':
-        tx = api.tx.nominationPools.setState(poolId, 'Destroying');
-        break;
-      case 'unlock_pool':
-        tx = api.tx.nominationPools.setState(poolId, 'Open');
-        break;
-      case 'lock_pool':
-        tx = api.tx.nominationPools.setState(poolId, 'Blocked');
-        break;
-      default:
-        tx = null;
-    }
-
-    return tx;
-  };
-
-  const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: getTx(),
-    from: activeAccount,
-    shouldSubmit: true,
-    callbackSubmit: () => {
-      setModalStatus(2);
-    },
-    callbackInBlock: () => {
-      // reflect updated state in bondedPools list
-      if (
-        ['destroy_pool', 'unlock_pool', 'lock_pool'].includes(task) &&
-        poolId
-      ) {
-        const pool: BondedPool | null = getBondedPool(poolId);
+    // determine current pool metadata and set in state
+    useEffect(() => {
+      if (task === 'set_pool_metadata') {
+        let _metadata = '';
+        const pool = bondedPools.find((p: any) => {
+          return p.addresses.stash === selectedActivePool?.addresses.stash;
+        });
 
         if (pool) {
-          updateBondedPools([
-            {
-              ...pool,
-              state: poolStateFromTask(task),
-            },
-          ]);
+          const metadataBatch = meta.bonded_pools?.metadata ?? [];
+          const batchIndex = bondedPools.indexOf(pool);
+          _metadata = metadataBatch[batchIndex];
+          setMetadata(u8aToString(u8aUnwrapBytes(_metadata)));
         }
       }
-    },
-  });
+    }, [section]);
 
-  const handleMetadataChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const newValue = e.currentTarget.value;
-    setMetadata(newValue);
-    // any string is valid metadata
-    setValid(true);
-  };
+    useEffect(() => {
+      setValid(isValid);
+    }, [isValid]);
 
-  return (
-    <>
-      <ContentWrapper>
-        <div className="items" ref={ref}>
-          <>
-            <div className="padding">
-              {!accountHasSigner(activeAccount) && (
-                <WarningsWrapper>
-                  <Warning text={t('readOnly')} />
-                </WarningsWrapper>
-              )}
+    const content = (() => {
+      let title;
+      let message;
+      switch (task) {
+        case 'set_pool_metadata':
+          title = undefined;
+          message = <p>{t('storedOnChain')}</p>;
+          break;
+        case 'destroy_pool':
+          title = <Action text={t('setToDestroying')} />;
+          message = <p>{t('setToDestroyingSubtitle')}</p>;
+          break;
+        case 'unlock_pool':
+          title = <Action text={t('unlockPool')} />;
+          message = <p>{t('unlockPoolSubtitle')}</p>;
+          break;
+        case 'lock_pool':
+          title = <Action text={t('lockPool')} />;
+          message = <p>{t('lockPoolSubtitle')}</p>;
+          break;
+        default:
+          title = null;
+          message = null;
+      }
+      return { title, message };
+    })();
 
-              {/* include task title if present */}
-              {content.title !== undefined ? content.title : null}
+    const poolStateFromTask = (s: string) => {
+      switch (s) {
+        case 'destroy_pool':
+          return 'Destroying';
+        case 'lock_pool':
+          return 'Blocked';
+        default:
+          return 'Open';
+      }
+    };
 
-              {/* include form element if task is to set metadata */}
-              {task === 'set_pool_metadata' && (
-                <>
-                  <input
-                    className="textbox"
-                    style={{ width: '100%' }}
-                    placeholder={`${t('poolName')}`}
-                    type="text"
-                    onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                      handleMetadataChange(e)
-                    }
-                    value={metadata ?? ''}
-                  />
-                </>
-              )}
+    // tx to submit
+    const getTx = () => {
+      let tx = null;
 
-              <p>{content.message}</p>
-            </div>
-          </>
-          <SubmitTx
-            buttons={[
-              <ButtonInvert
-                key="button_back"
-                text={t('back')}
-                iconLeft={faChevronLeft}
-                iconTransform="shrink-1"
-                onClick={() => setSection(0)}
-                disabled={submitting}
-              />,
-              <ButtonSubmit
-                key="button_submit"
-                text={`${submitting ? t('submitting') : t('submit')}`}
-                iconLeft={faArrowAltCircleUp}
-                iconTransform="grow-2"
-                onClick={() => submitTx()}
-                disabled={
-                  submitting ||
-                  !accountHasSigner(activeAccount) ||
-                  !valid ||
-                  !txFeesValid
-                }
-              />,
-            ]}
-          />
-        </div>
-      </ContentWrapper>
-    </>
-  );
-});
+      if (!valid || !api) {
+        return tx;
+      }
+
+      // remove decimal errors
+      switch (task) {
+        case 'set_pool_metadata':
+          tx = api.tx.nominationPools.setMetadata(poolId, metadata);
+          break;
+        case 'destroy_pool':
+          tx = api.tx.nominationPools.setState(poolId, 'Destroying');
+          break;
+        case 'unlock_pool':
+          tx = api.tx.nominationPools.setState(poolId, 'Open');
+          break;
+        case 'lock_pool':
+          tx = api.tx.nominationPools.setState(poolId, 'Blocked');
+          break;
+        default:
+          tx = null;
+      }
+
+      return tx;
+    };
+
+    const { submitTx, submitting } = useSubmitExtrinsic({
+      tx: getTx(),
+      from: activeAccount,
+      shouldSubmit: true,
+      callbackSubmit: () => {
+        setModalStatus(2);
+      },
+      callbackInBlock: () => {
+        // reflect updated state in bondedPools list
+        if (
+          ['destroy_pool', 'unlock_pool', 'lock_pool'].includes(task) &&
+          poolId
+        ) {
+          const pool: BondedPool | null = getBondedPool(poolId);
+
+          if (pool) {
+            updateBondedPools([
+              {
+                ...pool,
+                state: poolStateFromTask(task),
+              },
+            ]);
+          }
+        }
+      },
+    });
+
+    const handleMetadataChange = (e: React.FormEvent<HTMLInputElement>) => {
+      const newValue = e.currentTarget.value;
+      setMetadata(newValue);
+      // any string is valid metadata
+      setValid(true);
+    };
+
+    return (
+      <>
+        <ContentWrapper>
+          <div className="items" ref={ref}>
+            <>
+              <div className="padding">
+                {!accountHasSigner(activeAccount) && (
+                  <WarningsWrapper>
+                    <Warning text={t('readOnly')} />
+                  </WarningsWrapper>
+                )}
+
+                {/* include task title if present */}
+                {content.title !== undefined ? content.title : null}
+
+                {/* include form element if task is to set metadata */}
+                {task === 'set_pool_metadata' && (
+                  <>
+                    <input
+                      className="textbox"
+                      style={{ width: '100%' }}
+                      placeholder={`${t('poolName')}`}
+                      type="text"
+                      onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                        handleMetadataChange(e)
+                      }
+                      value={metadata ?? ''}
+                    />
+                  </>
+                )}
+
+                <p>{content.message}</p>
+              </div>
+            </>
+            <SubmitTx
+              buttons={[
+                <ButtonInvert
+                  key="button_back"
+                  text={t('back')}
+                  iconLeft={faChevronLeft}
+                  iconTransform="shrink-1"
+                  onClick={() => setSection(0)}
+                  disabled={submitting}
+                />,
+                <ButtonSubmit
+                  key="button_submit"
+                  text={`${submitting ? t('submitting') : t('submit')}`}
+                  iconLeft={faArrowAltCircleUp}
+                  iconTransform="grow-2"
+                  onClick={() => submitTx()}
+                  disabled={
+                    submitting ||
+                    !accountHasSigner(activeAccount) ||
+                    !valid ||
+                    !txFeesValid
+                  }
+                />,
+              ]}
+            />
+          </div>
+        </ContentWrapper>
+      </>
+    );
+  }
+);

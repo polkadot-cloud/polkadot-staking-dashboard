@@ -94,7 +94,10 @@ export const ClaimReward = () => {
           </WarningsWrapper>
         ) : null}
         <Action
-          text={`Claim ${`${planckToUnit(unclaimedRewards, units)} ${unit}`}`}
+          text={`${t('claim')} ${`${planckToUnit(
+            unclaimedRewards,
+            units
+          )} ${unit}`}`}
         />
         {claimType === 'bond' ? (
           <p>{t('claimReward1')}</p>

@@ -75,7 +75,7 @@
     "leavePool": "离开池",
     "lightClient": "轻客户端",
     "lockPool": "锁定",
-    "lockPoolResult": "一旦锁定提名池，其他人就无法加入提名池",
+    "lockPoolSubtitle": "一旦锁定提名池，其他人就无法加入提名池",
     "managePool": "管理池",
     "mustHaveController": "必须导入Controller帐户才能开始提名",
     "mustHaveControllerUpdate": "必须导入Controller帐户才能更新奖励地址",
@@ -172,6 +172,13 @@
     "withdrawMemberFunds": "取出会员资金",
     "withdrawUnlocked": "取出己解锁",
     "youMust_account": "您必须导入帐户才能停止提名",
-    "youMust_controller": "您必须导入Controller帐户才能停止提名"
+    "youMust_controller": "您必须导入Controller帐户才能停止提名",
+
+    "claim": "Claim",
+    "setToDestroying": "Set To Destroying",
+    "setToDestroyingSubtitle": "Setting a pool to destroying cannot be reversed. Only set this state if you intend to close the pool.",
+    "unlockPoolSubtitle": "Once a pool is unlocked, any account will be able to join as a pool member.",
+    "rebondSubtitle": "Rebonded funds will back active nominations from the start of the next era.",
+    "withdrawSubtitle": "Funds will be immediately available as free balance after withdrawing."
   }
 }

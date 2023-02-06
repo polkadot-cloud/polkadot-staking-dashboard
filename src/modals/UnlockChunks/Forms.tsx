@@ -28,7 +28,6 @@ import { ContentWrapper } from './Wrappers';
 export const Forms = forwardRef(
   ({ setSection, unlock, task }: any, ref: any) => {
     const { t } = useTranslation('modals');
-
     const { api, network, consts } = useApi();
     const { activeAccount, accountHasSigner } = useConnect();
     const { removeFavorite: removeFavoritePool } = usePoolsConfig();
@@ -115,7 +114,7 @@ export const Forms = forwardRef(
               </WarningsWrapper>
             ) : null}
 
-            <div style={{ margin: '0 0 2rem 0' }}>
+            <div style={{ marginBottom: '2rem' }}>
               {task === 'rebond' && (
                 <>
                   <Action
@@ -123,10 +122,7 @@ export const Forms = forwardRef(
                       network.unit
                     }`}
                   />
-                  <p>
-                    Rebonded funds will back active nominations from the start
-                    of the next era.
-                  </p>
+                  <p>{t('rebondSubtitle')}</p>
                 </>
               )}
               {task === 'withdraw' && (
@@ -136,10 +132,7 @@ export const Forms = forwardRef(
                       network.unit
                     }`}
                   />
-                  <p>
-                    Funds will be immediately available as free balance after
-                    withdrawing.
-                  </p>
+                  <p>{t('withdrawSubtitle')}</p>
                 </>
               )}
             </div>
