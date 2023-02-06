@@ -28,17 +28,12 @@ export const getDuration = (toDate: Date | null): TimeleftDuration => {
     end: toDate,
   });
 
-  const months = d?.months || 0;
-  let days = d?.days || 0;
+  const days = differenceInDays(toDate, Date.now());
   const hours = d?.hours || 0;
   const minutes = d?.minutes || 0;
   const seconds = d?.seconds || 0;
-  const lastHour = months === 0 && days === 0 && hours === 0;
+  const lastHour = days === 0 && hours === 0;
   const lastMinute = lastHour && minutes === 0;
-
-  if (months > 0) {
-    days = differenceInDays(toDate, Date.now());
-  }
 
   return {
     days,
@@ -65,12 +60,15 @@ export const timeleftAsString = (
     str += `${days} ${t('time.day', { count: days, ns: 'base' })}`;
   }
   if (hours > 0) {
+    if (str) str += ', ';
     str += ` ${hours} ${t(tHour, { count: hours, ns: 'base' })}`;
   }
   if (minutes > 0) {
+    if (str) str += ', ';
     str += ` ${minutes} ${t(tMinute, { count: minutes, ns: 'base' })}`;
   }
   if (!days && !hours) {
+    if (str) str += ', ';
     str += ` ${seconds}`;
   }
   return str;
