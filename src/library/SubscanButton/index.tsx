@@ -7,7 +7,7 @@ import { useApi } from 'contexts/Api';
 import { usePlugins } from 'contexts/Plugins';
 import { useTheme } from 'contexts/Themes';
 import styled from 'styled-components';
-import { defaultThemes, networkColors } from 'theme/default';
+import { defaultThemes } from 'theme/default';
 import { WrapperProps } from './types';
 
 const Wrapper = styled.div<WrapperProps>`
@@ -23,7 +23,7 @@ const Wrapper = styled.div<WrapperProps>`
 `;
 
 export const SubscanButton = () => {
-  const { network } = useApi();
+  const { colors } = useApi().network;
   const { mode } = useTheme();
   const { plugins } = usePlugins();
 
@@ -31,7 +31,7 @@ export const SubscanButton = () => {
     <Wrapper
       color={
         plugins.includes('subscan')
-          ? networkColors[`${network.name}-${mode}`]
+          ? colors.primary[mode]
           : defaultThemes.text.secondary[mode]
       }
       opacity={plugins.includes('subscan') ? 1 : 0.5}

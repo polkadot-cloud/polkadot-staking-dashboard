@@ -15,7 +15,7 @@ import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import { defaultThemes, networkColors } from 'theme/default';
+import { defaultThemes } from 'theme/default';
 import { EraPointsProps } from './types';
 
 ChartJS.register(
@@ -29,9 +29,9 @@ ChartJS.register(
 );
 
 export const EraPoints = ({ items = [], height }: EraPointsProps) => {
-  const { mode } = useTheme();
-  const { name } = useApi().network;
   const { t } = useTranslation('library');
+  const { mode } = useTheme();
+  const { colors } = useApi().network;
 
   const options = {
     responsive: true,
@@ -106,8 +106,8 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
       {
         label: t('points'),
         data: items.map((item: any) => item.reward_point),
-        borderColor: networkColors[`${name}-${mode}`],
-        backgroundColor: networkColors[`${name}-${mode}`],
+        borderColor: colors.primary[mode],
+        backgroundColor: colors.primary[mode],
         pointStyle: undefined,
         pointRadius: 0,
         borderWidth: 2,

@@ -7,12 +7,7 @@ import {
   SideMenuStickyThreshold,
 } from 'consts';
 import styled from 'styled-components';
-import {
-  backgroundOverlay,
-  borderPrimary,
-  networkColor,
-  textSecondary,
-} from 'theme';
+import { backgroundOverlay, borderPrimary, textSecondary } from 'theme';
 import { MinimisedProps } from './types';
 
 export const Wrapper = styled.div<MinimisedProps>`
@@ -84,7 +79,7 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   position: relative;
 
   ellipse {
-    fill: ${networkColor};
+    fill: var(--network-color-primary);
   }
 `;
 

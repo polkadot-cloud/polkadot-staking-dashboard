@@ -23,12 +23,7 @@ import { format, fromUnixTime } from 'date-fns';
 import { locales } from 'locale';
 import { Bar } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import {
-  defaultThemes,
-  networkColors,
-  networkColorsSecondary,
-  networkColorsTransparent,
-} from 'theme/default';
+import { defaultThemes } from 'theme/default';
 import { AnySubscan } from 'types';
 import { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
@@ -47,7 +42,7 @@ ChartJS.register(
 export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const { i18n, t } = useTranslation('library');
   const { mode } = useTheme();
-  const { name, unit, units } = useApi().network;
+  const { unit, units, colors } = useApi().network;
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
@@ -68,13 +63,13 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
 
   // determine color for payouts
   const colorPayouts = notStaking
-    ? networkColorsTransparent[`${name}-${mode}`]
-    : networkColors[`${name}-${mode}`];
+    ? colors.transparent[mode]
+    : colors.primary[mode];
 
   // determine color for poolClaims
   const colorPoolClaims = notStaking
-    ? networkColorsTransparent[`${name}-${mode}`]
-    : networkColorsSecondary[`${name}-${mode}`];
+    ? colors.transparent[mode]
+    : colors.secondary[mode];
 
   const data = {
     labels: payoutsByDay.map((item: AnySubscan) => {

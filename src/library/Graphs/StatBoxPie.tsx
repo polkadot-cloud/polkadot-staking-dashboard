@@ -5,13 +5,13 @@ import { ArcElement, Chart as ChartJS, Tooltip } from 'chart.js';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { Pie } from 'react-chartjs-2';
-import { defaultThemes, networkColors } from 'theme/default';
+import { defaultThemes } from 'theme/default';
 import { StatPieProps } from './types';
 
 ChartJS.register(ArcElement, Tooltip);
 
 export const StatPie = ({ value, value2 }: StatPieProps) => {
-  const { name } = useApi().network;
+  const { colors } = useApi().network;
   const { mode } = useTheme();
 
   const isZero = !value && !value;
@@ -21,11 +21,11 @@ export const StatPie = ({ value, value2 }: StatPieProps) => {
   }
   const borderColor = isZero
     ? defaultThemes.buttons.toggle.background[mode]
-    : [networkColors[`${name}-${mode}`], defaultThemes.border.secondary[mode]];
+    : [colors.primary[mode], defaultThemes.border.secondary[mode]];
 
   const backgroundColor = isZero
     ? defaultThemes.buttons.toggle.background[mode]
-    : networkColors[`${name}-${mode}`];
+    : colors.primary[mode];
 
   const options = {
     borderColor,

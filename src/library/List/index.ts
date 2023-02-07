@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary, networkColor, textPrimary, textSecondary } from 'theme';
+import { borderPrimary, textPrimary, textSecondary } from 'theme';
 import { ListProps, PaginationWrapperProps } from './types';
 
 export const Wrapper = styled.div`
@@ -75,12 +75,14 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
       padding: 0 0.25rem;
       margin-left: 0.5rem;
       &.next {
-        color: ${(props) => (props.next ? networkColor : textSecondary)};
+        color: ${(props) =>
+          props.next ? 'var(--network-color-primary)' : textSecondary};
         cursor: ${(props) => (props.next ? 'pointer' : 'default')};
         opacity: ${(props) => (props.next ? 1 : 0.4)};
       }
       &.prev {
-        color: ${(props) => (props.prev ? networkColor : textSecondary)};
+        color: ${(props) =>
+          props.prev ? 'var(--network-color-primary)' : textSecondary};
         cursor: ${(props) => (props.prev ? 'pointer' : 'default')};
         opacity: ${(props) => (props.prev ? 1 : 0.4)};
       }

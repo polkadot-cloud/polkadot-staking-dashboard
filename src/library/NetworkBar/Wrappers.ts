@@ -4,7 +4,7 @@
 import { SideMenuStickyThreshold } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { backgroundNetworkBar, networkColor, textSecondary } from 'theme';
+import { backgroundNetworkBar, textSecondary } from 'theme';
 
 export const Wrapper = styled(motion.div)`
   width: 100%;
@@ -100,7 +100,7 @@ export const Summary = styled.div`
 
 export const NetworkInfo = styled(motion.div)`
   width: 100%;
-  background: ${networkColor};
+  background: var(--network-color-primary);
   flex: 1;
   display: flex;
   flex-flow: column nowrap;

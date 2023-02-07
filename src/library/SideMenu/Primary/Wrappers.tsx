@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import {
   highlightPrimary,
   highlightSecondary,
-  networkColor,
   success,
   textPrimary,
   warning,
@@ -57,8 +56,8 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
 
     > span {
       &.success {
-        color: ${networkColor};
-        border: 1px solid ${networkColor};
+        color: var(--network-color-primary);
+        border: 1px solid var(--network-color-primary);
       }
       &.warning {
         color: ${warning};
@@ -101,7 +100,7 @@ export const MinimisedWrapper = styled(motion.div)`
   border: 1px solid rgba(255, 255, 255, 0);
 
   &.action-success {
-    border: 1px solid ${networkColor};
+    border: 1px solid var(--network-color-primary);
   }
   &.action-warning {
     border: 1px solid ${warningTransparent};

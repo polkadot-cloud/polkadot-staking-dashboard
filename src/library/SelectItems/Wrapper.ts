@@ -2,15 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  backgroundLabel,
-  borderPrimary,
-  networkColor,
-  textSecondary,
-} from 'theme';
+import { backgroundLabel, borderPrimary, textSecondary } from 'theme';
 
 export const TwoThreshold = 800;
+
+const TwoThresholdMin = TwoThreshold + 1;
 const ThreeRowThreshold = 1300;
+const ThreeRowThresholdMin = ThreeRowThreshold + 1;
 
 // The outer container of select items.
 // Removes the outer padding for 2 and 3 row layouts.
@@ -21,8 +19,7 @@ export const SelectItemsWrapper = styled.div`
 
   &.flex {
     /* Remove outer padding for 2-per-row layout */
-    @media (min-width: ${TwoThreshold +
-      1}px) and (max-width: ${ThreeRowThreshold}px) {
+    @media (min-width: ${TwoThresholdMin}px) and (max-width: ${ThreeRowThreshold}px) {
       > div:nth-child(2n) {
         padding-right: 0;
       }
@@ -32,7 +29,7 @@ export const SelectItemsWrapper = styled.div`
     }
 
     /* Remove outer padding for 3-per-row layout */
-    @media (min-width: ${ThreeRowThreshold + 1}px) {
+    @media (min-width: ${ThreeRowThresholdMin}px) {
       > div:nth-child(3n) {
         padding-right: 0;
       }
@@ -57,8 +54,7 @@ export const Wrapper = styled.div<{
     flex-grow: ${(props) => (props.grow ? 1 : 0)};
 
     /* flex basis for 2-per-row layout */
-    @media (min-width: ${TwoThreshold +
-      1}px) and (max-width: ${ThreeRowThreshold}px) {
+    @media (min-width: ${TwoThreshold}px) and (max-width: ${ThreeRowThreshold}px) {
       width: 50%;
     }
 
@@ -70,7 +66,8 @@ export const Wrapper = styled.div<{
 
   > .inner {
     border: 1.75px solid
-      ${(props) => (props.selected ? networkColor : borderPrimary)};
+      ${(props) =>
+        props.selected ? 'var(--network-color-primary)' : borderPrimary};
     border-radius: 1rem;
     width: 100%;
     position: relative;
@@ -80,9 +77,9 @@ export const Wrapper = styled.div<{
     &:hover {
       border-color: ${(props) =>
         props.hoverBorder
-          ? networkColor
+          ? 'var(--network-color-primary)'
           : props.selected
-          ? networkColor
+          ? 'var(--network-color-primary)'
           : borderPrimary};
     }
 
@@ -102,7 +99,7 @@ export const Wrapper = styled.div<{
 
       > .icon {
         background: ${backgroundLabel};
-        color: ${networkColor};
+        color: var(--network-color-primary);
         width: 6rem;
         display: flex;
         align-items: center;
@@ -126,7 +123,8 @@ export const Wrapper = styled.div<{
       }
 
       > .toggle {
-        color: ${(props) => (props.selected ? networkColor : textSecondary)};
+        color: ${(props) =>
+          props.selected ? 'var(--network-color-primary)' : textSecondary};
         opacity: ${(props) => (props.selected ? 1 : 0.5)};
         width: 4rem;
         display: flex;
