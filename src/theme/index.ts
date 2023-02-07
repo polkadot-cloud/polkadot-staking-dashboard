@@ -10,7 +10,6 @@ import { defaultThemes } from './default';
 const v = 'mode';
 
 // background colors
-
 export const backgroundPrimary: theme.ThemeSet = theme(
   v,
   defaultThemes.background.primary
