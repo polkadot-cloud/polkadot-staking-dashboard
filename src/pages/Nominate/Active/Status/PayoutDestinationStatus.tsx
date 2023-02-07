@@ -13,7 +13,6 @@ import { useTranslation } from 'react-i18next';
 
 export const PayoutDestinationStatus = () => {
   const { t } = useTranslation('pages');
-
   const { isSyncing } = useUi();
   const { openModalWith } = useModal();
   const { staking, inSetup } = useStaking();

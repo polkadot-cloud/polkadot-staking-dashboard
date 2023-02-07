@@ -29,7 +29,6 @@ export const Roles = ({
   listenIsValid = () => {},
 }: RolesProps) => {
   const { t } = useTranslation('pages');
-
   const { isReady, network } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { fetchAccountMetaBatch } = useAccount();

@@ -22,11 +22,11 @@ import { FilterValidators } from './FilterValidators';
 import { OrderValidators } from './OrderValidators';
 
 export const Filters = () => {
+  const { t } = useTranslation('library');
   const { openOverlayWith } = useOverlay();
   const { resetFilters, getFilters, getOrder, toggleFilter } = useFilters();
   const { includesToLabels, excludesToLabels, ordersToLabels } =
     useValidatorFilters();
-  const { t } = useTranslation('library');
 
   const includes = getFilters('include', 'validators');
   const excludes = getFilters('exclude', 'validators');

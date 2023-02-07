@@ -16,7 +16,6 @@ import { useTranslation } from 'react-i18next';
 
 export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
-
   const { activeAccount } = useConnect();
   const { txFees } = useTxFees();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();

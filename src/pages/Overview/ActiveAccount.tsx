@@ -13,10 +13,10 @@ import { clipAddress, remToUnit } from 'Utils';
 import { ActiveAccounWrapper } from './Wrappers';
 
 export const ActiveAccount = () => {
+  const { t } = useTranslation('pages');
   const { addNotification } = useNotifications();
   const { activeAccount, getAccount } = useConnect();
   const accountData = getAccount(activeAccount);
-  const { t } = useTranslation('pages');
 
   // click to copy notification
   let notification: NotificationText | null = null;

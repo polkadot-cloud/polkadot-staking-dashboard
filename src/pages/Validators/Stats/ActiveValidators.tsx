@@ -8,10 +8,11 @@ import { useTranslation } from 'react-i18next';
 import { greaterThanZero } from 'Utils';
 
 export const ActiveValidatorsStat = () => {
+  const { t } = useTranslation('pages');
   const { staking, eraStakers } = useStaking();
+
   const { validatorCount } = staking;
   const { activeValidators } = eraStakers;
-  const { t } = useTranslation('pages');
 
   // active validators as percent. Avoiding dividing by zero.
   let activeValidatorsAsPercent = new BigNumber(0);

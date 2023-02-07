@@ -23,7 +23,6 @@ import { planckToUnit, unitToPlanck } from 'Utils';
 
 export const Bond = () => {
   const { t } = useTranslation('modals');
-
   const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, config, setResize } = useModal();

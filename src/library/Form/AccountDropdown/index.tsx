@@ -113,7 +113,6 @@ export const AccountDropdown = ({
 
 const DropdownItem = ({ c, item, index }: any) => {
   const { t } = useTranslation('library');
-
   const { colors, unit } = useApi().network;
   const { mode } = useTheme();
 

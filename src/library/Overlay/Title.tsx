@@ -19,8 +19,8 @@ interface TitleProps {
 }
 
 export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
-  const { closeOverlay } = useOverlay();
   const { t } = useTranslation('library');
+  const { closeOverlay } = useOverlay();
 
   const graphic = Svg ? (
     <Svg style={{ width: '1.5rem', height: '1.5rem' }} />

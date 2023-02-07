@@ -13,11 +13,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const Payouts = () => {
+  const { t } = useTranslation('pages');
   const { isSyncing } = useUi();
   const { plugins } = usePlugins();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
-  const { t } = useTranslation('pages');
 
   const ref = React.useRef<HTMLDivElement>(null);
 

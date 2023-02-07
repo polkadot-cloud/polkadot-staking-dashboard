@@ -24,10 +24,10 @@ export const Account = ({
   title,
   onClick,
 }: AccountProps) => {
+  const { t } = useTranslation('library');
   const { mode } = useTheme();
   const { getAccount } = useConnect();
   const [displayValue, setDisplayValue] = useState<string | undefined>();
-  const { t } = useTranslation('library');
 
   const unassigned = value === null || value === undefined || !value.length;
 

@@ -10,9 +10,10 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 export const StartStaking = () => {
+  const { t } = useTranslation('modals');
   const navigate = useNavigate();
   const { setStatus } = useModal();
-  const { t } = useTranslation('modals');
+
   return (
     <>
       <Title title={t('startStaking')} />

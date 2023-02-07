@@ -9,8 +9,7 @@ import { greaterThanZero, planckToUnit, rmCommas } from 'Utils';
 
 export const PoolMemberBonded = ({ meta, batchKey, batchIndex }: any) => {
   const { t } = useTranslation('library');
-  const { network } = useApi();
-  const { units, unit } = network;
+  const { units, unit } = useApi().network;
 
   const poolMembers = meta[batchKey]?.poolMembers ?? [];
   const poolMember = poolMembers[batchIndex] ?? null;
@@ -31,10 +30,7 @@ export const PoolMemberBonded = ({ meta, batchKey, batchIndex }: any) => {
       const amountBn = new BigNumber(rmCommas(amount));
       totalUnbondingUnit = totalUnbondingUnit.plus(amountBn);
     });
-    totalUnbonding = planckToUnit(
-      new BigNumber(totalUnbondingUnit),
-      network.units
-    );
+    totalUnbonding = planckToUnit(new BigNumber(totalUnbondingUnit), units);
   }
 
   return (

@@ -6,8 +6,8 @@ import { Number } from 'library/StatBoxList/Number';
 import { useTranslation } from 'react-i18next';
 
 export const ActivePoolsStat = () => {
-  const { stats } = usePoolsConfig();
   const { t } = useTranslation('pages');
+  const { stats } = usePoolsConfig();
 
   const params = {
     label: t('pools.activePools'),

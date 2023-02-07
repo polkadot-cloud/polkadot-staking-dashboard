@@ -21,7 +21,6 @@ import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals');
-
   const { api, network } = useApi();
   const { setStatus: setModalStatus, config } = useModal();
   const { selectedActivePool } = useActivePools();

@@ -10,9 +10,9 @@ import { useTranslation } from 'react-i18next';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 
 export const FilterValidators = () => {
+  const { t } = useTranslation('library');
   const { getFilters, toggleFilter } = useFilters();
   const { excludesToLabels, includesToLabels } = useValidatorFilters();
-  const { t } = useTranslation('library');
 
   const includes = getFilters('include', 'validators');
   const excludes = getFilters('exclude', 'validators');

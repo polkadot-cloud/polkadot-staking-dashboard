@@ -10,10 +10,10 @@ import { List } from './List';
 import { Wrapper } from './Wrappers';
 
 export const CommunityInner = ({ page }: PageProps) => {
-  const { key } = page;
-
-  const { activeSection } = useCommunitySections();
   const { t } = useTranslation('base');
+  const { activeSection } = useCommunitySections();
+
+  const { key } = page;
 
   return (
     <Wrapper>

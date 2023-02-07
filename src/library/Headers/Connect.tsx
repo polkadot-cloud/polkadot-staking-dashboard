@@ -9,9 +9,9 @@ import { useTranslation } from 'react-i18next';
 import { HeadingWrapper, Item } from './Wrappers';
 
 export const Connect = () => {
+  const { t } = useTranslation('library');
   const { openModalWith } = useModal();
   const { activeAccount, accounts } = useConnect();
-  const { t } = useTranslation('library');
   return (
     <HeadingWrapper>
       <Item

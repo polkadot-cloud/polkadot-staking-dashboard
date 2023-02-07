@@ -14,6 +14,7 @@ import { defaultThemes } from 'theme/default';
 import { PageRowWrapper } from 'Wrappers';
 
 export const ControllerNotImported = () => {
+  const { t } = useTranslation('pages');
   const { openModalWith } = useModal();
   const { isSyncing } = useUi();
   const { mode } = useTheme();
@@ -21,7 +22,6 @@ export const ControllerNotImported = () => {
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { getBondedAccount } = useBalances();
   const controller = getBondedAccount(activeAccount);
-  const { t } = useTranslation('pages');
 
   return (
     <>

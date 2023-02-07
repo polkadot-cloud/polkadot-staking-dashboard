@@ -13,13 +13,13 @@ import { greaterThanZero, planckToUnit, rmCommas } from 'Utils';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
+  const { t } = useTranslation('pages');
   const { network, consts } = useApi();
   const { selectedActivePool } = useActivePools();
   const { units, unit } = network;
   const { rewardAccountBalance } = selectedActivePool || {};
   const { totalRewardsClaimed } = selectedActivePool?.rewardPool || {};
   const { existentialDeposit } = consts;
-  const { t } = useTranslation('pages');
 
   // calculate the latest reward account balance
   const rewardPoolBalance = BigNumber.max(
