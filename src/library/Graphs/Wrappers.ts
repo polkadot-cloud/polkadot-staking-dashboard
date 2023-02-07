@@ -5,11 +5,7 @@ import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import styled from 'styled-components';
 import {
   backgroundSecondary,
-  borderPrimary,
-  cardBorder,
-  cardShadow,
   networkColor,
-  shadowColor,
   textPrimary,
   textSecondary,
 } from 'theme';
@@ -67,8 +63,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
  * Used to separate the main modules throughout the app.
  */
 export const CardWrapper = styled.div<CardWrapperProps>`
-  border: ${cardBorder} ${borderPrimary};
-  box-shadow: ${cardShadow} ${shadowColor};
+  box-shadow: var(--card-shadow) var(--card-shadow-color);
   padding: ${(props) =>
     props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1.2rem'};
   border-radius: 1.1rem;
@@ -138,8 +133,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
  */
 
 export const GraphWrapper = styled.div<GraphWrapperProps>`
-  border: ${cardBorder} ${borderPrimary};
-  box-shadow: ${cardShadow} ${shadowColor};
+  box-shadow: var(--card-shadow) var(--card-shadow-color);
   border-radius: 1rem;
   background: ${backgroundSecondary};
   display: flex;

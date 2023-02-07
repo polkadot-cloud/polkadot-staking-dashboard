@@ -3,7 +3,6 @@
 
 import theme from 'styled-theming';
 import {
-  cardThemes,
   defaultThemes,
   networkColors,
   networkColorsSecondary,
@@ -234,27 +233,6 @@ export const successTransparent: theme.ThemeSet = theme(
   v,
   defaultThemes.status.success.transparent
 );
-
-// shadow
-
-export const shadowColor: theme.ThemeSet = theme(
-  v,
-  defaultThemes.shadow.primary
-);
-
-export const shadowColorSecondary: theme.ThemeSet = theme(
-  v,
-  defaultThemes.shadow.secondary
-);
-
-/* Aggregates all card configurations and serves the currently
- * active card style via the theming context.
- */
-const c = 'card';
-
-export const cardBorder: theme.ThemeSet = theme(c, cardThemes.card.border);
-
-export const cardShadow: theme.ThemeSet = theme(c, cardThemes.card.shadow);
 
 /* Serves the currently active network color via the theming context.
  */

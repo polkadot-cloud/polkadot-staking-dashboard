@@ -1,0 +1,16 @@
+/* Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+ * SPDX-License-Identifier: Apache-2.0 */
+
+:root {
+  --card-shadow: -2px 2px 10px;
+
+  .theme-light {
+   --card-shadow-color: #dedede;
+   --card-shadow-color-secondary: #eaeaea;
+  }
+
+  .theme-dark {
+    --card-shadow-color: #1f1f1f;
+    --card-shadow-color-secondary: #222;
+  }
+}

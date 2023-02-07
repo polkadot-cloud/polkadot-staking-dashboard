@@ -26,39 +26,33 @@ export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
     localStorage.setItem('theme', localTheme);
   }
 
-  // the theme state
-  const [state, setState] = React.useState<{ mode: string; card: string }>({
-    mode: localTheme,
-    card: 'shadow',
-  });
-  const stateRef = useRef(state);
+  // the theme mode
+  const [theme, setTheme] = React.useState<string>(localTheme);
+  const themeRef = useRef(theme);
 
   // auto change theme on system change
   window
     .matchMedia('(prefers-color-scheme: dark)')
     .addEventListener('change', (event) => {
-      const _theme = event.matches ? 'dark' : 'light';
-      localStorage.setItem('theme', _theme);
-      setStateWithRef(
-        { ...stateRef.current, mode: _theme },
-        setState,
-        stateRef
-      );
+      const newhTheme = event.matches ? 'dark' : 'light';
+      localStorage.setItem('theme', newhTheme);
+      setStateWithRef(newhTheme, setTheme, themeRef);
     });
 
-  const toggleTheme = (_theme: string | null = null): void => {
-    if (_theme === null) {
-      _theme = state.mode === 'dark' ? 'light' : 'dark';
+  const toggleTheme = (newTheme: string | null = null): void => {
+    if (newTheme === null) {
+      newTheme = theme === 'dark' ? 'light' : 'dark';
     }
-    localStorage.setItem('theme', _theme);
-    setStateWithRef({ ...stateRef.current, mode: _theme }, setState, stateRef);
+
+    localStorage.setItem('theme', newTheme);
+    setStateWithRef(newTheme, setTheme, themeRef);
   };
 
   return (
     <ThemeContext.Provider
       value={{
         toggleTheme,
-        mode: stateRef.current.mode,
+        mode: themeRef.current,
       }}
     >
       {children}

@@ -10,7 +10,6 @@ import {
   borderPrimary,
   modalBackground,
   networkColor,
-  shadowColorSecondary,
   textSecondary,
 } from 'theme';
 
@@ -25,7 +24,7 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
   > .inner {
     background: ${(props) =>
       props.inModal ? backgroundModalItem : backgroundDropdown};
-    box-shadow: 0px 1.75px 0px 1.25px ${shadowColorSecondary};
+    box-shadow: 0px 1.75px 0px 1.25px var(--card-shadow-color-secondary);
 
     ${(props) =>
       props.inModal &&

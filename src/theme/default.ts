@@ -115,20 +115,6 @@ export const defaultThemes: { [key: string]: AnyJson } = {
   },
 };
 
-// configure card style
-const c = (flat: string, border: string, shadow: string) => ({
-  flat,
-  border,
-  shadow,
-});
-
-export const cardThemes = {
-  card: {
-    border: c('none', '1px solid', 'none'),
-    shadow: c('none', 'none', '-2px 2px 10px'),
-  },
-};
-
 // configure network colors
 export const networkColors: { [key: string]: string } = {};
 export const networkColorsSecondary: { [key: string]: string } = {};

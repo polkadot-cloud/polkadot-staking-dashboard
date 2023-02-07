@@ -8,7 +8,6 @@ import {
   borderPrimary,
   networkColor,
   networkColorSecondary,
-  shadowColorSecondary,
   textSecondary,
 } from 'theme';
 
@@ -20,7 +19,7 @@ export const ItemWrapper = styled(motion.div)`
     padding: 0 0.75rem;
     flex: 1;
     background: ${backgroundDropdown};
-    box-shadow: 0px 1.75px 0px 1.25px ${shadowColorSecondary};
+    box-shadow: 0px 1.75px 0px 1.25px var(--card-shadow-color-secondary);
     border-radius: 1rem;
     display: flex;
     flex-flow: column wrap;

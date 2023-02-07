@@ -5,13 +5,10 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import {
   backgroundToggle,
-  borderPrimary,
   buttonPrimaryBackground,
-  cardBorder,
   modalBackground,
   modalOverlayBackground,
   networkColor,
-  shadowColor,
   textPrimary,
   textSecondary,
 } from 'theme';
@@ -46,8 +43,7 @@ export const ModalWrapper = styled(motion.div)`
 `;
 
 export const HeightWrapper = styled.div<{ size: string }>`
-  border: ${cardBorder} ${borderPrimary};
-  box-shadow: 0px 2px 8px 1px ${shadowColor};
+  box-shadow: 0px 2px 8px 1px var(--card-shadow-color);
   transition: height 0.5s cubic-bezier(0.1, 1, 0.2, 1);
   width: 100%;
   max-width: ${(props) =>
