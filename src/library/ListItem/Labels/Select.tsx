@@ -1,19 +1,16 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTheme } from 'contexts/Themes';
 import { SelectWrapper } from 'library/ListItem/Wrappers';
-import { useTheme } from 'styled-components';
 import { defaultThemes } from 'theme/default';
 import { useList } from '../../List/context';
 import { SelectProps } from '../types';
 
-export const Select = (props: SelectProps) => {
-  const { item } = props;
-
-  const { mode }: any = useTheme();
+export const Select = ({ item }: SelectProps) => {
+  const { mode } = useTheme();
   const { addToSelected, removeFromSelected, selected } = useList();
 
   const isSelected = selected.includes(item);
@@ -30,7 +27,7 @@ export const Select = (props: SelectProps) => {
     >
       {isSelected && (
         <FontAwesomeIcon
-          icon={faCheck as IconProp}
+          icon={faCheck}
           transform="shrink-2"
           color={defaultThemes.text.primary[mode]}
         />

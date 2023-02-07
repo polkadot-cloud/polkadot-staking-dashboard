@@ -14,14 +14,19 @@ import { clipAddress, remToUnit } from '../../Utils';
 import { PoolAccountProps } from './types';
 import { Wrapper } from './Wrapper';
 
-export const PoolAccount = (props: PoolAccountProps) => {
+export const PoolAccount = ({
+  label,
+  pool,
+  onClick,
+  canClick,
+  filled = false,
+  fontSize = '1.05rem',
+}: PoolAccountProps) => {
+  const { t } = useTranslation('library');
   const { mode } = useTheme();
   const { isReady } = useApi();
   const { activeAccount } = useConnect();
   const { fetchPoolsMetaBatch, meta } = useBondedPools();
-  const { t } = useTranslation('library');
-
-  const { label } = props;
 
   // is this the initial fetch
   const [fetched, setFetched] = useState(false);
@@ -31,7 +36,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
   // refetch when pool or active account changes
   useEffect(() => {
     setFetched(false);
-  }, [activeAccount, props.pool]);
+  }, [activeAccount, pool]);
 
   // configure pool list when network is ready to fetch
   useEffect(() => {
@@ -46,20 +51,16 @@ export const PoolAccount = (props: PoolAccountProps) => {
 
   // handle pool list bootstrapping
   const getPoolMeta = () => {
-    const pools: any = [{ id: props.pool.id }];
+    const pools: any = [{ id: pool.id }];
     fetchPoolsMetaBatch(batchKey, pools, true);
   };
-
-  const filled = props.filled ?? false;
-  const fontSize = props.fontSize ?? '1.05rem';
-  const { canClick }: { canClick: boolean } = props;
 
   const metaBatch = meta[batchKey];
   const metaData = metaBatch?.metadata?.[0];
   const syncing = metaData === undefined;
 
   // display value
-  const defaultDisplay = clipAddress(props.pool.addresses.stash);
+  const defaultDisplay = clipAddress(pool.addresses.stash);
   let display = syncing ? t('syncing') : metaData ?? defaultDisplay;
 
   // check if super identity has been byte encoded
@@ -75,7 +76,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
   return (
     <Wrapper
       whileHover={{ scale: 1.01 }}
-      onClick={props.onClick}
+      onClick={onClick}
       cursor={canClick ? 'pointer' : 'default'}
       fill={filled ? defaultThemes.buttons.secondary.background[mode] : 'none'}
       fontSize={fontSize}
@@ -84,7 +85,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
 
       <span className="identicon">
         <Identicon
-          value={props.pool.addresses.stash}
+          value={pool.addresses.stash}
           size={remToUnit(fontSize) * 1.45}
         />
       </span>

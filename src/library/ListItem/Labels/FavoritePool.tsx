@@ -13,13 +13,12 @@ import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { FavoriteProps } from '../types';
 
-export const FavoritePool = (props: FavoriteProps) => {
+export const FavoritePool = ({ address }: FavoriteProps) => {
+  const { t } = useTranslation('library');
   const { addNotification } = useNotifications();
   const { favorites, addFavorite, removeFavorite } = usePoolsConfig();
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
-  const { t } = useTranslation('library');
 
-  const { address } = props;
   const isFavorite = favorites.includes(address);
 
   const notificationFavorite = !isFavorite

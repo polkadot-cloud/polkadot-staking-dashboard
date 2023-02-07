@@ -7,11 +7,10 @@ import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero, planckToUnit, rmCommas } from 'Utils';
 
-export const PoolMemberBonded = (props: any) => {
-  const { meta, batchKey, batchIndex } = props;
+export const PoolMemberBonded = ({ meta, batchKey, batchIndex }: any) => {
+  const { t } = useTranslation('library');
   const { network } = useApi();
   const { units, unit } = network;
-  const { t } = useTranslation('library');
 
   const poolMembers = meta[batchKey]?.poolMembers ?? [];
   const poolMember = poolMembers[batchIndex] ?? null;

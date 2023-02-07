@@ -22,12 +22,13 @@ import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
 import { RoleEditEntry, RolesProps } from './types';
 
-export const Roles = (props: RolesProps) => {
-  const { batchKey, defaultRoles } = props;
+export const Roles = ({
+  batchKey,
+  defaultRoles,
+  setters = [],
+  listenIsValid = () => {},
+}: RolesProps) => {
   const { t } = useTranslation('pages');
-
-  const listenIsValid = props.listenIsValid ?? (() => {});
-  const setters = props.setters ?? [];
 
   const { isReady, network } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
