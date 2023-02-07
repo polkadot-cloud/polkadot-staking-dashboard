@@ -64,6 +64,24 @@
       "fetchingFavoriteValidators": "正在获取收藏夹的验证人",
       "noFavorites": "无收藏夹"
     },
+    "investors": {
+      "balanceDistribution": "Balance Distribution",
+      "contributed": "Contributed",
+      "contributedBalance": "Contributed Balance",
+      "deposit": "Deposit",
+      "depositFailed": "Failed to deposit",
+      "depositSuccess": "Deposit success",
+      "depositWarning": "Once you deposit your money into the housing fund, the governance systems will allocate the funding in assets.",
+      "noFundToDeposit": "You have no funds to deposit.",
+      "noFundToWithdraw": "You have withdrawable balance in the housing fund",
+      "overview": "Overview",
+      "reserved": "Reserved",
+      "reservedBalance": "Reserved Balance",
+      "title": "Investors",
+      "totalDeposit": "Total Deposit",
+      "withdraw": "Withdraw",
+      "withdrawable": "Withdrawable"
+    },
     "nominate": {
       "activeNominations": "活跃提名人",
       "addFromFavorites": "从收藏夹添加",
@@ -222,6 +240,16 @@
       "withdraw": "提取",
       "withdrawFunds": "取款",
       "withdrawUnlock": "请取出己解锁金额以继续关闭池"
+    },
+    "sellers": {
+      "metadata": "Metadata",
+      "onboardAsset": "Onboard an asset",
+      "onboardingFailed": "Failed to onboard an asset",
+      "onboardingSuccess": "Onboarding Success",
+      "phAssetPrice": "Input price of the asset",
+      "phMetadata": "Write description of the asset",
+      "price": "Price",
+      "submit": "Submit"
     },
     "validators": {
       "activeValidators": "活跃验证人",

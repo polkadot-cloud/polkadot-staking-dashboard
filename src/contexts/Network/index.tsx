@@ -38,7 +38,7 @@ export const NetworkMetricsProvider = ({
     subscribeToNetworkMetrics();
     return () => {
       if (unsub) {
-        unsub();
+        unsub.then();
       }
     };
   }, [isReady]);
@@ -48,7 +48,7 @@ export const NetworkMetricsProvider = ({
     if (!api) return;
 
     if (isReady) {
-      const _unsub = await api.queryMulti(
+      const _unsub = api.queryMulti(
         [
           api.query.housingFundModule.fundBalance,
           api.query.roleModule.totalMembers,

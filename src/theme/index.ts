@@ -255,7 +255,6 @@ export const cardShadow: theme.ThemeSet = theme(c, cardThemes.card.shadow);
  */
 
 const n = 'network';
-
 export const networkColor: theme.ThemeSet = theme(n, networkColors);
 
 export const networkColorSecondary: theme.ThemeSet = theme(

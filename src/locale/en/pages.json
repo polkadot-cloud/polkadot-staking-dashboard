@@ -64,6 +64,24 @@
       "fetchingFavoriteValidators": "Fetching favorite validators",
       "noFavorites": "No Favorites."
     },
+    "investors": {
+      "balanceDistribution": "Balance Distribution",
+      "contributed": "Contributed",
+      "contributedBalance": "Contributed Balance",
+      "deposit": "Deposit",
+      "depositFailed": "Failed to deposit",
+      "depositSuccess": "Deposit success",
+      "depositWarning": "Once you deposit your money into the housing fund, the governance systems will allocate the funding in assets.",
+      "noFundToDeposit": "You have no funds to deposit.",
+      "noFundToWithdraw": "You have withdrawable balance in the housing fund",
+      "overview": "Overview",
+      "reserved": "Reserved",
+      "reservedBalance": "Reserved Balance",
+      "title": "Investors",
+      "totalDeposit": "Total Deposit",
+      "withdraw": "Withdraw",
+      "withdrawable": "Withdrawable"
+    },
     "nominate": {
       "activeNominations": "Active Nominations",
       "addFromFavorites": "Add From Favorites",
@@ -223,6 +241,16 @@
       "withdraw": "Withdraw",
       "withdrawFunds": "Withdraw Funds",
       "withdrawUnlock": "Withdraw your unlock chunk to proceed with pool closure."
+    },
+    "sellers": {
+      "metadata": "Metadata",
+      "onboardAsset": "Onboard an asset",
+      "onboardingFailed": "Failed to onboard an asset",
+      "onboardingSuccess": "Onboarding Success",
+      "phAssetPrice": "Input price of the asset",
+      "phMetadata": "Write description of the asset",
+      "price": "Price",
+      "submit": "Submit"
     },
     "validators": {
       "activeValidators": "Active Validators",

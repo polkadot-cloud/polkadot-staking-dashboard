@@ -1,10 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
-import { BN } from 'bn.js';
 import { useApi } from 'contexts/Api';
 import React, { useEffect, useState } from 'react';
 import { AnyApi } from 'types';
-import { rmCommas } from 'Utils';
+import { parseHumanBN } from 'Utils';
 import * as defaults from './defaults';
 import { Asset, AssetsContextInterface } from './types';
 
@@ -28,11 +27,9 @@ export const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
   const subscribeToNfts = async () => {
     if (!isReady || !api) return;
 
-    const _unsub = await api.query.nftModule.itemsCount(
-      (itemsCount: AnyApi) => {
-        setCollectionSize(itemsCount.toHuman());
-      }
-    );
+    const _unsub = api.query.nftModule.itemsCount((itemsCount: AnyApi) => {
+      setCollectionSize(itemsCount.toHuman());
+    });
 
     setUnsub(_unsub);
   };
@@ -57,7 +54,7 @@ export const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
           status: nft?.status,
           created: nft?.created,
           metadata: nft?.infos.metadata,
-          price: new BN(rmCommas(nft?.price)),
+          price: parseHumanBN(nft?.price),
           tenants: nft?.tenants,
         }));
       setAssets(_assets);
@@ -68,9 +65,7 @@ export const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     subscribeToNfts();
     return () => {
-      if (unsub) {
-        unsub();
-      }
+      if (unsub) unsub.then();
     };
   }, [isReady]);
 

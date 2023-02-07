@@ -57,6 +57,7 @@ export const InputWrapper = styled.div`
         max-width: 100%;
         border: 1px solid ${borderPrimary};
         padding: 1rem;
+        margin-top: 1rem;
         border-radius: 0.75rem;
         display: flex;
         flex-flow: row wrap;

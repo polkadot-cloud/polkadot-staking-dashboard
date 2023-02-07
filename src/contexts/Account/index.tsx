@@ -40,7 +40,7 @@ export const AccountProvider = ({
     if (!api) return;
     setAddress(_account);
     if (isReady) {
-      const _unsub = await api.queryMulti(
+      const _unsub = api.queryMulti(
         [
           [api.query.roleModule.accountsRolesLog, _account],
           [api.query.system.account, _account],
@@ -59,7 +59,7 @@ export const AccountProvider = ({
     subscribe(activeAccount);
     return () => {
       if (unsub) {
-        unsub();
+        unsub.then();
       }
     };
   }, [isReady, activeAccount]);
