@@ -3,12 +3,7 @@
 
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import styled from 'styled-components';
-import {
-  backgroundSecondary,
-  networkColor,
-  textPrimary,
-  textSecondary,
-} from 'theme';
+import { backgroundSecondary, textPrimary, textSecondary } from 'theme';
 import {
   CardHeaderWrapperProps,
   CardWrapperProps,
@@ -169,7 +164,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     right: 10px;
     top: 10px;
     font-size: 0.8rem;
-    background: ${networkColor};
+    background: var(--network-color);
     border-radius: 0.3rem;
     padding: 0.2rem 0.4rem;
     color: #fff;

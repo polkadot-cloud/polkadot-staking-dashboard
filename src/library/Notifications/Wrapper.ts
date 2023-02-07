@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundPrimary, networkColor, textSecondary } from 'theme';
+import { backgroundPrimary, textSecondary } from 'theme';
 
 export const Wrapper = styled.ul`
   position: fixed;
@@ -28,7 +28,7 @@ export const Wrapper = styled.ul`
     overflow: hidden;
 
     h3 {
-      color: ${networkColor};
+      color: var(--network-color);
       margin: 0 0 0.5rem;
       flex: 1;
     }

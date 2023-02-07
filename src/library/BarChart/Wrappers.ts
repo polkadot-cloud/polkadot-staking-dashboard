@@ -2,12 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  buttonSecondaryBackground,
-  networkColor,
-  networkColorSecondary,
-  textSecondary,
-} from 'theme';
+import { buttonSecondaryBackground, textSecondary } from 'theme';
 
 export const BarChartWrapper = styled.div<{ lessPadding?: boolean }>`
   width: 100%;
@@ -32,11 +27,11 @@ export const BarChartWrapper = styled.div<{ lessPadding?: boolean }>`
   }
   .d1 {
     color: white;
-    background: ${networkColor};
+    background: var(--network-color);
   }
   .d2 {
     color: white;
-    background: ${networkColorSecondary};
+    background: var(--network-color-secondary);
   }
   .d3 {
     color: white;

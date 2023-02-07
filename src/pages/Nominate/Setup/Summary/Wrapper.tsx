@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary, networkColor, textSecondary } from 'theme';
+import { borderPrimary, textSecondary } from 'theme';
 
 export const SummaryWrapper = styled.div`
   display: flex;
@@ -30,7 +30,7 @@ export const SummaryWrapper = styled.div`
       align-items: center;
 
       svg {
-        color: ${networkColor};
+        color: var(--network-color);
       }
     }
 

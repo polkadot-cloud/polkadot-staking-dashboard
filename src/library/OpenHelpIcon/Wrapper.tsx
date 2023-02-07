@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import {
   buttonHelpBackground,
   buttonPrimaryBackground,
-  networkColor,
   textSecondary,
 } from 'theme';
 
@@ -24,6 +23,6 @@ export const Wrapper = styled.button<{ light?: boolean }>`
   font-size: 1.15rem;
 
   &:hover {
-    fill: ${networkColor};
+    fill: var(--network-color);
   }
 `;

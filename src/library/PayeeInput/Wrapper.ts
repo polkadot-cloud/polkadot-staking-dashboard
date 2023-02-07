@@ -2,12 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  backgroundLabel,
-  borderPrimary,
-  networkColor,
-  textSecondary,
-} from 'theme';
+import { backgroundLabel, borderPrimary, textSecondary } from 'theme';
 
 export const Wrapper = styled.div<{ activeInput?: boolean }>`
   > .inner {
@@ -15,7 +10,7 @@ export const Wrapper = styled.div<{ activeInput?: boolean }>`
     display: flex;
     flex-flow: column nowrap;
     border-bottom: 1.5px solid
-      ${(props) => (props.activeInput ? networkColor : borderPrimary)};
+      ${(props) => (props.activeInput ? 'var(--network-color)' : borderPrimary)};
     padding: 0rem 0 0.4rem 0;
     transition: border 0.15s;
 

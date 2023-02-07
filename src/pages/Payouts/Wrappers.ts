@@ -3,13 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  backgroundDropdown,
-  borderPrimary,
-  networkColor,
-  networkColorSecondary,
-  textSecondary,
-} from 'theme';
+import { backgroundDropdown, borderPrimary, textSecondary } from 'theme';
 
 export const ItemWrapper = styled(motion.div)`
   padding: 0.5rem;
@@ -60,10 +54,10 @@ export const ItemWrapper = styled(motion.div)`
           color: ${textSecondary};
           font-variation-settings: 'wght' 575;
           &.claim {
-            color: ${networkColorSecondary};
+            color: var(--network-color-secondary);
           }
           &.reward {
-            color: ${networkColor};
+            color: var(--network-color);
           }
         }
 
@@ -71,14 +65,14 @@ export const ItemWrapper = styled(motion.div)`
           margin: 0;
           color: ${textSecondary};
           &.claim {
-            color: ${networkColorSecondary};
-            border: 1px solid ${networkColorSecondary};
+            color: var(--network-color-secondary);
+            border: 1px solid var(--network-color-secondary);
             border-radius: 0.75rem;
             padding: 0.2rem 0.5rem;
           }
           &.reward {
-            color: ${networkColor};
-            border: 1px solid ${networkColor};
+            color: var(--network-color);
+            border: 1px solid var(--network-color);
             border-radius: 0.75rem;
             padding: 0.2rem 0.5rem;
           }

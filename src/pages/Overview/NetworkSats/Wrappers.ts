@@ -4,12 +4,7 @@
 import { SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  borderPrimary,
-  networkColor,
-  networkColorSecondary,
-  textSecondary,
-} from 'theme';
+import { borderPrimary, textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -38,7 +33,7 @@ export const Item = styled(motion.div)`
     padding-bottom: 0.2rem;
 
     &.neutral {
-      color: ${networkColor};
+      color: var(--network-color);
     }
     &.danger {
       color: #d2545d;
@@ -47,7 +42,7 @@ export const Item = styled(motion.div)`
       color: #b5a200;
     }
     &.pools {
-      color: ${networkColorSecondary};
+      color: var(--network-color-secondary);
     }
   }
 
@@ -119,7 +114,7 @@ export const InflationWrapper = styled.div`
           }
 
           h2 {
-            color: ${networkColor};
+            color: var(--network-color);
             margin-top: 0rem;
             margin-bottom: 0;
           }

@@ -10,7 +10,6 @@ import styled from 'styled-components';
 import {
   borderPrimary,
   buttonSecondaryBackground,
-  networkColor,
   textPrimary,
   textSecondary,
 } from 'theme';
@@ -68,8 +67,8 @@ export const Item = styled(motion.button)`
   font-size: 1.05rem;
 
   .label {
-    color: ${networkColor};
-    border: 0.125rem solid ${networkColor};
+    color: var(--network-color);
+    border: 0.125rem solid var(--network-color);
     border-radius: 0.8rem;
     font-size: 0.85rem;
     margin-right: 0.6rem;
@@ -82,7 +81,7 @@ export const Item = styled(motion.button)`
   }
 
   &.connect {
-    background: ${networkColor};
+    background: var(--network-color);
     > span {
       color: 'white';
     }

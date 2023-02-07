@@ -9,7 +9,6 @@ import {
   backgroundModalItem,
   borderPrimary,
   modalBackground,
-  networkColor,
   textSecondary,
 } from 'theme';
 
@@ -82,7 +81,7 @@ export const Labels = styled.div`
       opacity: 0.75;
     }
     &.active {
-      color: ${networkColor};
+      color: var(--network-color);
     }
     &:disabled {
       opacity: 0.35;
@@ -108,7 +107,7 @@ export const Labels = styled.div`
       margin-right: 0;
 
       button {
-        color: ${networkColor};
+        color: var(--network-color);
         font-size: 0.95rem;
         display: flex;
         flex-flow: row wrap;

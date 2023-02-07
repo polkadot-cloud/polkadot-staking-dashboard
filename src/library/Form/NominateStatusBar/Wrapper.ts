@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundLabel, networkColor, textSecondary } from 'theme';
+import { backgroundLabel, textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -70,14 +70,14 @@ export const Wrapper = styled.div`
 
       &.invert {
         h4 {
-          color: ${networkColor};
+          color: var(--network-color);
         }
         h5 {
           opacity: 1;
           color: white;
         }
         .bar {
-          background: ${networkColor};
+          background: var(--network-color);
         }
       }
     }

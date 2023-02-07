@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import {
   helpButton,
   modalOverlayBackground,
-  networkColor,
   textPrimary,
   textSecondary,
 } from 'theme';
@@ -73,8 +72,8 @@ export const ContentWrapper = styled.div`
       > svg {
         margin-right: 0.5rem;
       }
-      color: ${networkColor};
-      border: 1px solid ${networkColor};
+      color: var(--network-color);
+      border: 1px solid var(--network-color);
       border-radius: 1.5rem;
       padding: 0.4rem 0.8rem;
       margin-right: 1.25rem;
@@ -207,7 +206,7 @@ export const ItemWrapper = styled(motion.div)<any>`
       text-align: left;
 
       &.icon {
-        color: ${networkColor};
+        color: var(--network-color);
         margin-bottom: 0;
       }
     }

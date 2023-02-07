@@ -4,7 +4,7 @@
 import { SideMenuStickyThreshold, SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { borderPrimary, networkColor, textSecondary } from 'theme';
+import { borderPrimary, textSecondary } from 'theme';
 
 export const TipsWrapper = styled.div`
   width: 100%;
@@ -45,10 +45,10 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
       align-items: center;
       padding-top: 0.1rem;
       .lpf {
-        fill: ${networkColor};
+        fill: var(--network-color);
       }
       .lps {
-        stroke: ${networkColor};
+        stroke: var(--network-color);
       }
     }
 
@@ -71,9 +71,9 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
 
         &.active {
           h4:hover {
-            color: ${networkColor};
+            color: var(--network-color);
             .more {
-              color: ${networkColor};
+              color: var(--network-color);
               opacity: 1;
             }
           }
@@ -136,7 +136,7 @@ export const PageToggleWrapper = styled.div`
     }
     &:hover {
       opacity: 1;
-      color: ${networkColor};
+      color: var(--network-color);
     }
     &:disabled {
       color: ${textSecondary};

@@ -8,7 +8,6 @@ import {
   buttonPrimaryBackground,
   modalBackground,
   modalOverlayBackground,
-  networkColor,
   textPrimary,
   textSecondary,
 } from 'theme';
@@ -77,7 +76,7 @@ export const ContentWrapper = styled.div`
   }
 
   a {
-    color: ${networkColor};
+    color: var(--network-color);
   }
   .header {
     width: 100%;
@@ -190,7 +189,7 @@ export const FooterWrapper = styled.div`
     top: 1.25rem;
     &.active {
       opacity: 1;
-      color: ${networkColor};
+      color: var(--network-color);
     }
   }
 
@@ -205,12 +204,12 @@ export const FooterWrapper = styled.div`
     align-items: center;
     &.primary {
       color: white;
-      background: ${networkColor};
-      border: 1px solid ${networkColor};
+      background: var(--network-color);
+      border: 1px solid var(--network-color);
     }
     &.secondary {
-      color: ${networkColor};
-      border: 1px solid ${networkColor};
+      color: var(--network-color);
+      border: 1px solid var(--network-color);
     }
 
     &:disabled {
