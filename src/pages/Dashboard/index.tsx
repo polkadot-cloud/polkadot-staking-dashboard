@@ -23,7 +23,7 @@ export const Dashboard = () => {
   const { openModalWith } = useModal();
 
   useEffect(() => {
-    if (!role) openModalWith('SelectRole', {});
+    if (address && !role) openModalWith('SelectRole', {});
   }, [role]);
 
   return (

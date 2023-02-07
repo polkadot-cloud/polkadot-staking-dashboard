@@ -180,6 +180,7 @@
     "updateRewardDestination": "Update Reward Destination",
     "valid": "Valid Address",
     "validatorMetrics": "Validator Metrics",
+    "warningSelectRole": "You need a role to interact with the Fair Squares blockchain.",
     "welcomeToReport": "Bug reports, feature requests and improvements are all welcome.",
     "willSurpass": "Adding this many favorites will surpass {{maxNominations}} nominations.",
     "withdraw": "Withdraw",
