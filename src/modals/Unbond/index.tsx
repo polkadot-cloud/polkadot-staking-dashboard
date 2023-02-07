@@ -211,7 +211,7 @@ export const Unbond = () => {
                 <p>
                   {t('notePoolDepositorMinBond', {
                     context: 'member',
-                    bond: minCreateBond,
+                    bond: minJoinBond,
                     unit: network.unit,
                   })}
                 </p>
