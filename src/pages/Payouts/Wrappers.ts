@@ -57,7 +57,7 @@ export const ItemWrapper = styled(motion.div)`
             color: var(--network-color-secondary);
           }
           &.reward {
-            color: var(--network-color);
+            color: var(--network-color-primary);
           }
         }
 
@@ -71,8 +71,8 @@ export const ItemWrapper = styled(motion.div)`
             padding: 0.2rem 0.5rem;
           }
           &.reward {
-            color: var(--network-color);
-            border: 1px solid var(--network-color);
+            color: var(--network-color-primary);
+            border: 1px solid var(--network-color-primary);
             border-radius: 0.75rem;
             padding: 0.2rem 0.5rem;
           }

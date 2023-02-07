@@ -72,8 +72,8 @@ export const ContentWrapper = styled.div`
       > svg {
         margin-right: 0.5rem;
       }
-      color: var(--network-color);
-      border: 1px solid var(--network-color);
+      color: var(--network-color-primary);
+      border: 1px solid var(--network-color-primary);
       border-radius: 1.5rem;
       padding: 0.4rem 0.8rem;
       margin-right: 1.25rem;
@@ -206,7 +206,7 @@ export const ItemWrapper = styled(motion.div)<any>`
       text-align: left;
 
       &.icon {
-        color: var(--network-color);
+        color: var(--network-color-primary);
         margin-bottom: 0;
       }
     }

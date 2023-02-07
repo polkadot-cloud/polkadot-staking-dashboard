@@ -56,8 +56,8 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
 
     > span {
       &.success {
-        color: var(--network-color);
-        border: 1px solid var(--network-color);
+        color: var(--network-color-primary);
+        border: 1px solid var(--network-color-primary);
       }
       &.warning {
         color: ${warning};
@@ -100,7 +100,7 @@ export const MinimisedWrapper = styled(motion.div)`
   border: 1px solid rgba(255, 255, 255, 0);
 
   &.action-success {
-    border: 1px solid var(--network-color);
+    border: 1px solid var(--network-color-primary);
   }
   &.action-warning {
     border: 1px solid ${warningTransparent};

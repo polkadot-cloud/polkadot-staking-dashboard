@@ -76,13 +76,13 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
       margin-left: 0.5rem;
       &.next {
         color: ${(props) =>
-          props.next ? 'var(--network-color)' : textSecondary};
+          props.next ? 'var(--network-color-primary)' : textSecondary};
         cursor: ${(props) => (props.next ? 'pointer' : 'default')};
         opacity: ${(props) => (props.next ? 1 : 0.4)};
       }
       &.prev {
         color: ${(props) =>
-          props.prev ? 'var(--network-color)' : textSecondary};
+          props.prev ? 'var(--network-color-primary)' : textSecondary};
         cursor: ${(props) => (props.prev ? 'pointer' : 'default')};
         opacity: ${(props) => (props.prev ? 1 : 0.4)};
       }

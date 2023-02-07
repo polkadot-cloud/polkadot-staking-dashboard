@@ -2,8 +2,8 @@
  * SPDX-License-Identifier: Apache-2.0 */
 
  .theme-polkadot {
-  --network-color-light: rgb(211, 48, 121);
-  --network-color-dark: rgb(211, 48, 121);
+  --network-color-primary-light: rgb(211, 48, 121);
+  --network-color-primary-dark: rgb(211, 48, 121);
   --network-color-secondary-light: #552bbf;
   --network-color-secondary-dark: #6d39ee;
   --network-color-stroke-light: rgb(211, 48, 121);
@@ -13,8 +13,8 @@
 }
 
 .theme-kusama {
-  --network-color-light: rgb(31, 41, 55);
-  --network-color-dark: rgb(126, 131, 141);
+  --network-color-primary-light: rgb(31, 41, 55);
+  --network-color-primary-dark: rgb(126, 131, 141);
   --network-color-secondary-light: rgb(31, 41, 55);
   --network-color-secondary-dark: rgb(141, 144, 150);
   --network-color-stroke-light: #4c4b63;
@@ -24,8 +24,8 @@
 }
 
 .theme-westend {
-  --network-color-light: #da4e71;
-  --network-color-dark: #da4e71;
+  --network-color-primary-light: #da4e71;
+  --network-color-primary-dark: #da4e71;
   --network-color-secondary-light: #de6a50;
   --network-color-secondary-dark: #d7674e;
   --network-color-stroke-light: #da4e71;

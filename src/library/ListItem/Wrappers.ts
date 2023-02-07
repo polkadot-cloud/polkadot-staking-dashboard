@@ -81,7 +81,7 @@ export const Labels = styled.div`
       opacity: 0.75;
     }
     &.active {
-      color: var(--network-color);
+      color: var(--network-color-primary);
     }
     &:disabled {
       opacity: 0.35;
@@ -107,7 +107,7 @@ export const Labels = styled.div`
       margin-right: 0;
 
       button {
-        color: var(--network-color);
+        color: var(--network-color-primary);
         font-size: 0.95rem;
         display: flex;
         flex-flow: row wrap;

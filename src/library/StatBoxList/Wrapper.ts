@@ -164,7 +164,7 @@ export const StatBoxWrapper = styled(motion.div)`
 
 export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
   color: ${(props) =>
-    props.primary === true ? 'var(--network-color)' : textPrimary};
+    props.primary === true ? 'var(--network-color-primary)' : textPrimary};
   font-variation-settings: 'wght' 580;
   display: flex;
   flex-flow: row wrap;
@@ -192,7 +192,7 @@ export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
 
 export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
   color: ${(props) =>
-    props.primary === true ? 'var(--network-color)' : textPrimary};
+    props.primary === true ? 'var(--network-color-primary)' : textPrimary};
   font-variation-settings: 'wght' 550;
   display: flex;
   flex-flow: row wrap;

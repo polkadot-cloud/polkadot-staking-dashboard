@@ -79,7 +79,7 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   position: relative;
 
   ellipse {
-    fill: var(--network-color);
+    fill: var(--network-color-primary);
   }
 `;
 

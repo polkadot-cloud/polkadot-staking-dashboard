@@ -57,7 +57,7 @@ export const ContentWrapper = styled.div`
   position: relative;
 
   a {
-    color: var(--network-color);
+    color: var(--network-color-primary);
   }
   .header {
     width: 100%;

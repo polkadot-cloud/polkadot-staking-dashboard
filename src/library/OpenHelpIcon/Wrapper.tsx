@@ -23,6 +23,6 @@ export const Wrapper = styled.button<{ light?: boolean }>`
   font-size: 1.15rem;
 
   &:hover {
-    fill: var(--network-color);
+    fill: var(--network-color-primary);
   }
 `;

@@ -98,7 +98,7 @@ export const LargeItemWrapper = styled.div`
       }
     }
     svg {
-      color: var(--network-color);
+      color: var(--network-color-primary);
       margin-right: 0.75rem;
     }
     p {
@@ -128,8 +128,10 @@ export const TabsWrapper = styled.div`
 
 export const TabWrapper = styled.button<{ active?: boolean }>`
   border: 1px solid
-    ${(props) => (props.active ? 'var(--network-color)' : borderPrimary)};
-  color: ${(props) => (props.active ? 'var(--network-color)' : textSecondary)};
+    ${(props) =>
+      props.active ? 'var(--network-color-primary)' : borderPrimary};
+  color: ${(props) =>
+    props.active ? 'var(--network-color-primary)' : textSecondary};
   font-size: 0.9rem;
   padding: 0.5rem 1.25rem;
 `;

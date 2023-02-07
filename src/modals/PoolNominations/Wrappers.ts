@@ -29,7 +29,7 @@ export const FooterWrapper = styled.div`
 
   button {
     font-size: 1.2rem;
-    color: var(--network-color);
+    color: var(--network-color-primary);
 
     &:disabled {
       opacity: 0.5;

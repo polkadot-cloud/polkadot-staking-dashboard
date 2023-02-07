@@ -30,7 +30,7 @@ export const SummaryWrapper = styled.div`
       align-items: center;
 
       svg {
-        color: var(--network-color);
+        color: var(--network-color-primary);
       }
     }
 

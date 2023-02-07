@@ -76,7 +76,7 @@ export const ContentWrapper = styled.div`
   }
 
   a {
-    color: var(--network-color);
+    color: var(--network-color-primary);
   }
   .header {
     width: 100%;
@@ -189,7 +189,7 @@ export const FooterWrapper = styled.div`
     top: 1.25rem;
     &.active {
       opacity: 1;
-      color: var(--network-color);
+      color: var(--network-color-primary);
     }
   }
 
@@ -204,12 +204,12 @@ export const FooterWrapper = styled.div`
     align-items: center;
     &.primary {
       color: white;
-      background: var(--network-color);
-      border: 1px solid var(--network-color);
+      background: var(--network-color-primary);
+      border: 1px solid var(--network-color-primary);
     }
     &.secondary {
-      color: var(--network-color);
-      border: 1px solid var(--network-color);
+      color: var(--network-color-primary);
+      border: 1px solid var(--network-color-primary);
     }
 
     &:disabled {

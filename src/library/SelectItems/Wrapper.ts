@@ -66,7 +66,8 @@ export const Wrapper = styled.div<{
 
   > .inner {
     border: 1.75px solid
-      ${(props) => (props.selected ? 'var(--network-color)' : borderPrimary)};
+      ${(props) =>
+        props.selected ? 'var(--network-color-primary)' : borderPrimary};
     border-radius: 1rem;
     width: 100%;
     position: relative;
@@ -76,9 +77,9 @@ export const Wrapper = styled.div<{
     &:hover {
       border-color: ${(props) =>
         props.hoverBorder
-          ? 'var(--network-color)'
+          ? 'var(--network-color-primary)'
           : props.selected
-          ? 'var(--network-color)'
+          ? 'var(--network-color-primary)'
           : borderPrimary};
     }
 
@@ -98,7 +99,7 @@ export const Wrapper = styled.div<{
 
       > .icon {
         background: ${backgroundLabel};
-        color: var(--network-color);
+        color: var(--network-color-primary);
         width: 6rem;
         display: flex;
         align-items: center;
@@ -123,7 +124,7 @@ export const Wrapper = styled.div<{
 
       > .toggle {
         color: ${(props) =>
-          props.selected ? 'var(--network-color)' : textSecondary};
+          props.selected ? 'var(--network-color-primary)' : textSecondary};
         opacity: ${(props) => (props.selected ? 1 : 0.5)};
         width: 4rem;
         display: flex;

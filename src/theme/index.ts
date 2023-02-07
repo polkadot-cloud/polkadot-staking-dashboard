@@ -2,13 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import theme from 'styled-theming';
-import {
-  defaultThemes,
-  networkColors,
-  networkColorsSecondary,
-  networkColorsStroke,
-  networkColorsTransparent,
-} from './default';
+import { defaultThemes } from './default';
 
 /* Aggregates all theme configurations and serves the currently
  * active mode via the theming context.
@@ -232,23 +226,4 @@ export const success: theme.ThemeSet = theme(
 export const successTransparent: theme.ThemeSet = theme(
   v,
   defaultThemes.status.success.transparent
-);
-
-/* Serves the currently active network color via the theming context.
- */
-
-const n = 'network';
-
-export const networkColor: theme.ThemeSet = theme(n, networkColors);
-
-export const networkColorSecondary: theme.ThemeSet = theme(
-  n,
-  networkColorsSecondary
-);
-
-export const networkColorStroke: theme.ThemeSet = theme(n, networkColorsStroke);
-
-export const networkColorTransparent: theme.ThemeSet = theme(
-  n,
-  networkColorsTransparent
 );

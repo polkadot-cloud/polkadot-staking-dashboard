@@ -100,7 +100,7 @@ export const Summary = styled.div`
 
 export const NetworkInfo = styled(motion.div)`
   width: 100%;
-  background: var(--network-color);
+  background: var(--network-color-primary);
   flex: 1;
   display: flex;
   flex-flow: column nowrap;

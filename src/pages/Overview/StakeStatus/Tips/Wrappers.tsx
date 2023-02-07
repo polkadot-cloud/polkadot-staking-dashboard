@@ -45,10 +45,10 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
       align-items: center;
       padding-top: 0.1rem;
       .lpf {
-        fill: var(--network-color);
+        fill: var(--network-color-primary);
       }
       .lps {
-        stroke: var(--network-color);
+        stroke: var(--network-color-primary);
       }
     }
 
@@ -71,9 +71,9 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
 
         &.active {
           h4:hover {
-            color: var(--network-color);
+            color: var(--network-color-primary);
             .more {
-              color: var(--network-color);
+              color: var(--network-color-primary);
               opacity: 1;
             }
           }
@@ -136,7 +136,7 @@ export const PageToggleWrapper = styled.div`
     }
     &:hover {
       opacity: 1;
-      color: var(--network-color);
+      color: var(--network-color-primary);
     }
     &:disabled {
       color: ${textSecondary};

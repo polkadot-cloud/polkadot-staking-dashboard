@@ -34,7 +34,7 @@ export const Item = styled(motion.div)`
     padding-bottom: 0.2rem;
 
     &.neutral {
-      color: var(--network-color);
+      color: var(--network-color-primary);
     }
     &.danger {
       color: #d2545d;
@@ -115,7 +115,7 @@ export const HeaderWrapper = styled.div`
           }
 
           h2 {
-            color: var(--network-color);
+            color: var(--network-color-primary);
             margin-top: 0rem;
             margin-bottom: 0;
           }

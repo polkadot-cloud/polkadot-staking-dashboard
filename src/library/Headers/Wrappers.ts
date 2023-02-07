@@ -67,8 +67,8 @@ export const Item = styled(motion.button)`
   font-size: 1.05rem;
 
   .label {
-    color: var(--network-color);
-    border: 0.125rem solid var(--network-color);
+    color: var(--network-color-primary);
+    border: 0.125rem solid var(--network-color-primary);
     border-radius: 0.8rem;
     font-size: 0.85rem;
     margin-right: 0.6rem;
@@ -81,7 +81,7 @@ export const Item = styled(motion.button)`
   }
 
   &.connect {
-    background: var(--network-color);
+    background: var(--network-color-primary);
     > span {
       color: 'white';
     }

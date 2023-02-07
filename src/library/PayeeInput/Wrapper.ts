@@ -10,7 +10,8 @@ export const Wrapper = styled.div<{ activeInput?: boolean }>`
     display: flex;
     flex-flow: column nowrap;
     border-bottom: 1.5px solid
-      ${(props) => (props.activeInput ? 'var(--network-color)' : borderPrimary)};
+      ${(props) =>
+        props.activeInput ? 'var(--network-color-primary)' : borderPrimary};
     padding: 0rem 0 0.4rem 0;
     transition: border 0.15s;
 
