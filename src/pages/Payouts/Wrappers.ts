@@ -3,7 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { backgroundDropdown, borderPrimary, textSecondary } from 'theme';
+import { backgroundDropdown, borderPrimary } from 'theme';
 
 export const ItemWrapper = styled(motion.div)`
   padding: 0.5rem;
@@ -51,7 +51,7 @@ export const ItemWrapper = styled(motion.div)`
 
         h4 {
           margin: 0;
-          color: ${textSecondary};
+          color: var(--text-color-secondary);
           font-variation-settings: 'wght' 575;
           &.claim {
             color: var(--network-color-secondary);
@@ -62,8 +62,8 @@ export const ItemWrapper = styled(motion.div)`
         }
 
         h5 {
+          color: var(--text-color-secondary);
           margin: 0;
-          color: ${textSecondary};
           &.claim {
             color: var(--network-color-secondary);
             border: 1px solid var(--network-color-secondary);
@@ -92,7 +92,7 @@ export const ItemWrapper = styled(motion.div)`
           justify-content: flex-end;
 
           > h4 {
-            color: ${textSecondary};
+            color: var(--text-color-secondary);
             opacity: 0.8;
           }
         }

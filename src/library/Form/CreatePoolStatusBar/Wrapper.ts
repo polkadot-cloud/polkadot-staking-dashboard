@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundLabel, textSecondary } from 'theme';
+import { backgroundLabel } from 'theme';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -31,7 +31,7 @@ export const Wrapper = styled.div`
       }
       h4,
       h5 {
-        color: ${textSecondary};
+        color: var(--text-color-secondary);
       }
 
       h4 {

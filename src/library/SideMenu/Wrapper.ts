@@ -7,7 +7,7 @@ import {
   SideMenuStickyThreshold,
 } from 'consts';
 import styled from 'styled-components';
-import { backgroundOverlay, borderPrimary, textSecondary } from 'theme';
+import { backgroundOverlay, borderPrimary } from 'theme';
 import { MinimisedProps } from './types';
 
 export const Wrapper = styled.div<MinimisedProps>`
@@ -49,8 +49,8 @@ export const Wrapper = styled.div<MinimisedProps>`
       padding-top: 0.5rem;
 
       button {
+        color: var(--text-color-secondary);
         position: relative;
-        color: ${textSecondary};
         transition: color 0.2s;
         margin-top: ${(props) => (props.minimised ? '1.25rem' : 0)};
         margin-right: ${(props) => (props.minimised ? 0 : '1rem')};
@@ -58,7 +58,7 @@ export const Wrapper = styled.div<MinimisedProps>`
         padding: 0.1rem;
 
         path {
-          fill: ${textSecondary};
+          fill: var(--text-color-secondary);
         }
         &:hover {
           opacity: 1;

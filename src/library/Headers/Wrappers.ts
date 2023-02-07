@@ -7,12 +7,7 @@ import {
 } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  borderPrimary,
-  buttonSecondaryBackground,
-  textPrimary,
-  textSecondary,
-} from 'theme';
+import { borderPrimary, buttonSecondaryBackground } from 'theme';
 
 export const Wrapper = styled.div`
   position: fixed;
@@ -36,7 +31,7 @@ export const Wrapper = styled.div`
   .menu {
     display: none;
     @media (max-width: ${SideMenuStickyThreshold}px) {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       display: flex;
       flex-flow: row wrap;
       justify-content: flex-start;
@@ -106,7 +101,7 @@ export const ItemInactive = styled(motion.div)`
   font-size: 1rem;
 
   > span {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
     line-height: 2.2rem;
   }
 `;

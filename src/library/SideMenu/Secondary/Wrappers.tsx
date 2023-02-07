@@ -3,13 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  borderPrimary,
-  highlightPrimary,
-  highlightSecondary,
-  textPrimary,
-  textSecondary,
-} from 'theme';
+import { borderPrimary, highlightPrimary, highlightSecondary } from 'theme';
 import { MinimisedProps } from '../types';
 
 export const Wrapper = styled(motion.button)<MinimisedProps>`
@@ -26,15 +20,15 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
   height: 3.2rem;
 
   .name {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     font-size: 1.1rem;
   }
   .light {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     margin-left: 0.2rem;
   }
   .action {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     flex: 1;
     display: flex;
     flex-flow: row wrap;
@@ -86,15 +80,15 @@ export const IconWrapper = styled.div<{ minimised: number }>`
   margin-right: ${(props) => (props.minimised ? 0 : '0.65rem')};
 
   .lpf {
-    fill: ${textPrimary};
+    fill: var(--text-color-primary);
   }
   .lps {
-    stroke: ${textPrimary};
+    stroke: var(--text-color-primary);
   }
 
   svg {
     .primary {
-      fill: ${textSecondary};
+      fill: var(--text-color-secondary);
     }
   }
 `;

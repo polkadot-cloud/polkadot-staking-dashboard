@@ -6,8 +6,6 @@ import {
   buttonPrimaryBackground,
   modalBackground,
   overlayBackground,
-  textPrimary,
-  textSecondary,
 } from 'theme';
 
 export const OverlayWrapper = styled.div`
@@ -93,7 +91,7 @@ export const TitleWrapper = styled.div`
     }
 
     path {
-      fill: ${textPrimary};
+      fill: var(--text-color-primary);
     }
 
     &:first-child {
@@ -143,7 +141,9 @@ export const FilterListButton = styled.button<{ active: boolean }>`
 
   h4 {
     color: ${(props) =>
-      props.active ? 'var(--network-color-stroke)' : textSecondary};
+      props.active
+        ? 'var(--network-color-stroke)'
+        : 'var(--text-color-secondary)'};
     font-variation-settings: 'wght' 560;
     transition: color 0.1s;
     margin: 0;
@@ -151,7 +151,9 @@ export const FilterListButton = styled.button<{ active: boolean }>`
 
   svg {
     color: ${(props) =>
-      props.active ? 'var(--network-color-stroke)' : textSecondary};
+      props.active
+        ? 'var(--network-color-stroke)'
+        : 'var(--text-color-secondary)'};
     opacity: ${(props) => (props.active ? 1 : 0.7)};
     transition: color 0.1s;
     margin-left: 0.2rem;

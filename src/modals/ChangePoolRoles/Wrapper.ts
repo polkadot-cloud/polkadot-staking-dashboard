@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary, textSecondary } from 'theme';
+import { borderPrimary } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ export const RoleChangeWrapper = styled.div`
   overflow: hidden;
 
   .label {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     margin: 0.25rem 0 0.75rem 0;
   }
   .role-change {
@@ -30,8 +30,8 @@ export const RoleChangeWrapper = styled.div`
     margin-bottom: 1rem;
 
     > span {
+      color: var(--text-color-secondary);
       margin: 0 0.75rem;
-      color: ${textSecondary};
       opacity: 0.5;
     }
   }

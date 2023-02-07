@@ -3,7 +3,7 @@
 
 import { SideMenuStickyThreshold } from 'consts';
 import styled from 'styled-components';
-import { borderPrimary, textSecondary } from 'theme';
+import { borderPrimary } from 'theme';
 
 export const StatusWrapper = styled.div<{ includeBorder: boolean }>`
   width: 100%;
@@ -61,7 +61,7 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
     width: 100%;
 
     .text {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       font-size: 1.25rem;
       line-height: 1.55rem;
       position: absolute;

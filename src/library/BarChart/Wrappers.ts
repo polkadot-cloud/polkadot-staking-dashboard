@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { buttonSecondaryBackground, textSecondary } from 'theme';
+import { buttonSecondaryBackground } from 'theme';
 
 export const BarChartWrapper = styled.div<{ lessPadding?: boolean }>`
   width: 100%;
@@ -26,20 +26,20 @@ export const BarChartWrapper = styled.div<{ lessPadding?: boolean }>`
     }
   }
   .d1 {
-    color: white;
     background: var(--network-color-primary);
+    color: white;
   }
   .d2 {
-    color: white;
     background: var(--network-color-secondary);
+    color: white;
   }
   .d3 {
+    background: var(--text-color-secondary);
     color: white;
-    background: ${textSecondary};
   }
   .d4 {
-    color: ${textSecondary};
     background: ${buttonSecondaryBackground};
+    color: var(--text-color-secondary);
   }
 `;
 

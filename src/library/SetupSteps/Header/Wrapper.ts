@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -11,7 +10,7 @@ export const Wrapper = styled.div`
   align-items: center;
 
   > section {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -22,7 +21,7 @@ export const Wrapper = styled.div`
     justify-content: flex-end;
 
     .progress {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       opacity: 0.5;
     }
 

@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { buttonPrimaryBackground, textPrimary, textSecondary } from 'theme';
+import { buttonPrimaryBackground } from 'theme';
 
 export const Wrapper = styled.button`
+  color: var(--text-color-primary);
   width: 100%;
   flex: 1;
   padding: 1rem 0.75rem;
@@ -16,10 +17,9 @@ export const Wrapper = styled.button`
   align-items: center;
   background: ${buttonPrimaryBackground};
   transition: all 0.15s;
-  color: ${textPrimary};
 
   > section:last-child {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     padding-left: 0.25rem;
     display: flex;
     flex-flow: row wrap;
@@ -29,7 +29,7 @@ export const Wrapper = styled.button`
 
   &:hover {
     > section {
-      color: ${textPrimary};
+      color: var(--text-color-primary);
     }
   }
 `;

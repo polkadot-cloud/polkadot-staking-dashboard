@@ -3,7 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { buttonPrimaryBackground, textSecondary } from 'theme';
+import { buttonPrimaryBackground } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -76,7 +76,7 @@ export const ChunkWrapper = styled.div<any>`
     margin: 0;
   }
   h4 {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     margin: 0.75rem 0 0 0;
   }
 `;

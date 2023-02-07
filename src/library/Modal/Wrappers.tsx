@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary, textPrimary, textSecondary } from 'theme';
+import { borderPrimary } from 'theme';
 
 export const TitleWrapper = styled.div<{ fixed: boolean }>`
   padding: ${(props) =>
@@ -24,7 +24,7 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
     }
 
     path {
-      fill: ${textPrimary};
+      fill: var(--text-color-primary);
     }
 
     &:first-child {
@@ -107,7 +107,7 @@ export const StatWrapper = styled.div`
     h2,
     h3,
     h4 {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
     }
   }
 `;
@@ -128,9 +128,9 @@ export const CloseWrapper = styled.div`
 `;
 
 export const ActionWrapper = styled.h3`
-  margin: 1.25rem 0 0 0;
   border-bottom: 1px solid ${borderPrimary};
-  color: ${textPrimary};
+  color: var(--text-color-primary);
+  margin: 1.25rem 0 0 0;
   width: 100%;
   padding-bottom: 0.75rem;
   display: flex;

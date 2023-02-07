@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary } from 'theme';
 
 export const ListWrapper = styled.div`
   display: flex;
@@ -32,8 +31,8 @@ export const FooterWrapper = styled.div`
     color: var(--network-color-primary);
 
     &:disabled {
+      color: var(--text-color-secondary);
       opacity: 0.5;
-      color: ${textSecondary};
     }
   }
 `;

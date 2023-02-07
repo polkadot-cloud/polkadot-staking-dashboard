@@ -4,7 +4,7 @@
 import { SideMenuStickyThreshold } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { backgroundNetworkBar, textSecondary } from 'theme';
+import { backgroundNetworkBar } from 'theme';
 
 export const Wrapper = styled(motion.div)`
   width: 100%;
@@ -58,8 +58,8 @@ export const Summary = styled.div`
 
   /* left and right sections for each row*/
   > section {
+    color: var(--text-color-secondary);
     padding: 0.5rem 0.5rem;
-    color: ${textSecondary};
 
     /* left section */
     &:nth-child(1) {
@@ -81,9 +81,9 @@ export const Summary = styled.div`
       align-items: center;
       flex-flow: row-reverse wrap;
       button {
+        color: var(--text-color-secondary);
         border-radius: 0.4rem;
         padding: 0.25rem 0.5rem;
-        color: ${textSecondary};
         font-size: 0.85rem;
       }
       span {
@@ -157,7 +157,7 @@ export const NetworkInfo = styled(motion.div)`
 `;
 
 export const Separator = styled.div`
-  border-left: 1px solid ${textSecondary};
+  border-left: 1px solid var(--text-color-secondary);
   opacity: 0.2;
   margin: 0 0.3rem;
   width: 1px;

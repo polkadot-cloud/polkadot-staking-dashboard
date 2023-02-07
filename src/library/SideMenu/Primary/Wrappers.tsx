@@ -7,7 +7,6 @@ import {
   highlightPrimary,
   highlightSecondary,
   success,
-  textPrimary,
   warning,
   warningTransparent,
 } from 'theme';
@@ -33,10 +32,10 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
     }
 
     .lpf {
-      fill: ${textPrimary};
+      fill: var(--text-color-primary);
     }
     .lps {
-      stroke: ${textPrimary};
+      stroke: var(--text-color-primary);
     }
   }
   .name {
@@ -115,10 +114,10 @@ export const MinimisedWrapper = styled(motion.div)`
     margin: 0;
 
     .lpf {
-      fill: ${textPrimary};
+      fill: var(--text-color-primary);
     }
     .lps {
-      stroke: ${textPrimary};
+      stroke: var(--text-color-primary);
     }
   }
   .action {

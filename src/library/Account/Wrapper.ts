@@ -3,7 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { borderPrimary, borderSecondary, textSecondary } from 'theme';
+import { borderPrimary, borderSecondary } from 'theme';
 
 export const Wrapper = styled(motion.button)<any>`
   border: 1px solid ${borderPrimary};
@@ -26,7 +26,7 @@ export const Wrapper = styled(motion.button)<any>`
 
   .account-label {
     border-right: 1px solid ${borderSecondary};
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     font-size: 0.8em;
     display: flex;
     align-items: center;
@@ -39,12 +39,12 @@ export const Wrapper = styled(motion.button)<any>`
     flex-shrink: 1;
 
     > svg {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
     }
   }
 
   .title {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     margin-left: 0.25rem;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -53,7 +53,7 @@ export const Wrapper = styled(motion.button)<any>`
     flex: 1;
 
     &.unassigned {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       opacity: 0.45;
     }
   }
@@ -65,7 +65,7 @@ export const Wrapper = styled(motion.button)<any>`
     opacity: 0.8;
 
     path {
-      fill: ${textSecondary};
+      fill: var(--text-color-secondary);
     }
   }
 `;

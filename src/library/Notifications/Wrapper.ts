@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundPrimary, textSecondary } from 'theme';
+import { backgroundPrimary } from 'theme';
 
 export const Wrapper = styled.ul`
   position: fixed;
@@ -33,7 +33,7 @@ export const Wrapper = styled.ul`
       flex: 1;
     }
     h5 {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       margin: 0;
       text-overflow: ellipsis;
       white-space: nowrap;

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary, textSecondary } from 'theme';
+import { borderPrimary } from 'theme';
 
 export const Wrapper = styled.div`
   flex: 1;
@@ -11,8 +11,8 @@ export const Wrapper = styled.div`
   margin-bottom: 1rem;
 
   > span {
+    color: var(--text-color-secondary);
     margin: 0 0.75rem;
-    color: ${textSecondary};
     opacity: 0.5;
   }
 

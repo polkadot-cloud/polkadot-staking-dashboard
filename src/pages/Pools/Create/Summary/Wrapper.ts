@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary, textSecondary } from 'theme';
+import { borderPrimary } from 'theme';
 
 export const SummaryWrapper = styled.div`
   display: flex;
@@ -23,7 +23,7 @@ export const SummaryWrapper = styled.div`
     padding: 0.5rem 0 0.75rem 0;
 
     > div:first-child {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       width: 200px;
       display: flex;
       flex-flow: row wrap;
@@ -35,7 +35,7 @@ export const SummaryWrapper = styled.div`
     }
 
     > div:last-child {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       flex-grow: 1;
       display: flex;
       flex-flow: row wrap;

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundSubmission, textSecondary } from 'theme';
+import { backgroundSubmission } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -35,7 +35,7 @@ export const Wrapper = styled.div`
       align-items: center;
 
       p {
-        color: ${textSecondary};
+        color: var(--text-color-secondary);
         font-size: 1rem;
         opacity: 0.75;
         margin: 0;

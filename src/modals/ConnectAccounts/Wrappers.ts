@@ -8,11 +8,6 @@ import {
   borderPrimary,
   buttonPrimaryBackground,
   modalBackground,
-  textDanger,
-  textInvert,
-  textPrimary,
-  textSecondary,
-  textSuccess,
 } from 'theme';
 
 export const CardsWrapper = styled(motion.div)`
@@ -41,14 +36,14 @@ export const Wrapper = styled.div`
   overflow: hidden;
 
   h1 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
     font-size: 1.4rem;
     font-family: 'Unbounded', 'sans-serif', sans-serif;
     padding: 0.5rem 0.5rem 0 0.5rem;
   }
 
   h3 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
 
     &.heading {
       border-bottom: 1px solid ${borderPrimary};
@@ -151,12 +146,12 @@ export const AccountWrapper = styled.div`
 
   > div,
   button {
+    color: var(--text-color-primary);
     width: 100%;
     border-radius: 0.75rem;
     font-size: 1rem;
     background: ${buttonPrimaryBackground};
     transition: background 0.15s;
-    color: ${textPrimary};
     display: flex;
     align-items: center;
     min-height: 3.5rem;
@@ -187,13 +182,13 @@ export const AccountWrapper = styled.div`
 
       &.neutral {
         h5 {
-          color: ${textSecondary};
+          color: var(--text-color-secondary);
           opacity: 0.75;
         }
       }
       &.danger {
         h5 {
-          color: ${textDanger};
+          color: var(--text-color-danger);
         }
       }
       .icon {
@@ -205,10 +200,10 @@ export const AccountWrapper = styled.div`
       /* svg theming */
       svg {
         .light {
-          fill: ${textInvert};
+          fill: var(--text-color-invert);
         }
         .dark {
-          fill: ${textSecondary};
+          fill: var(--text-color-secondary);
         }
       }
     }
@@ -220,14 +215,14 @@ export const ExtensionWrapper = styled.div<{ noSpacing?: boolean }>`
 
   > button,
   > div {
-    width: 100%;
     margin: ${(props) => (props.noSpacing ? 0 : '1rem 0')};
     padding: ${(props) => (props.noSpacing ? 0 : '1rem 0.25rem')};
+    color: var(--text-color-primary);
+    width: 100%;
     font-size: 1rem;
     background: ${buttonPrimaryBackground};
     border-radius: 0.75rem;
     transition: background 0.15s;
-    color: ${textPrimary};
     display: flex;
     align-items: center;
     min-height: 3.5rem;
@@ -266,21 +261,21 @@ export const ExtensionWrapper = styled.div<{ noSpacing?: boolean }>`
       }
     }
     .neutral {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
     }
     .danger {
-      color: ${textDanger};
+      color: var(--text-color-danger);
     }
     .success {
-      color: ${textSuccess};
+      color: var(--text-color-success);
     }
     /* svg theming */
     svg {
       .light {
-        fill: ${textInvert};
+        fill: var(--text-color-invert);
       }
       .dark {
-        fill: ${textSecondary};
+        fill: var(--text-color-secondary);
       }
     }
   }
@@ -301,7 +296,7 @@ export const ExtensionWrapper = styled.div<{ noSpacing?: boolean }>`
 `;
 
 export const Separator = styled.div`
-  border-top: 1px solid ${textSecondary};
+  border-top: 1px solid var(--text-color-secondary);
   width: 100%;
   opacity: 0.1;
   margin: 1.5rem 0rem;

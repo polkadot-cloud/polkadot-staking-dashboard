@@ -3,13 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  backgroundSecondary,
-  textInvert,
-  textPrimary,
-  textSecondary,
-  tooltipBackground,
-} from 'theme';
+import { backgroundSecondary, tooltipBackground } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -116,8 +110,8 @@ export const StatBoxWrapper = styled(motion.div)`
         transition: opacity 0.1s;
 
         h3 {
+          color: var(--text-color-invert);
           text-align: center;
-          color: ${textInvert};
           margin: 0;
           font-size: 0.9rem;
         }
@@ -151,7 +145,7 @@ export const StatBoxWrapper = styled(motion.div)`
         }
 
         span.total {
-          color: ${textSecondary};
+          color: var(--text-color-secondary);
           font-size: 0.95rem;
           margin-left: 0.4rem;
           position: relative;
@@ -164,7 +158,9 @@ export const StatBoxWrapper = styled(motion.div)`
 
 export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
   color: ${(props) =>
-    props.primary === true ? 'var(--network-color-primary)' : textPrimary};
+    props.primary === true
+      ? 'var(--network-color-primary)'
+      : 'var(--text-color-primary)'};
   font-variation-settings: 'wght' 580;
   display: flex;
   flex-flow: row wrap;
@@ -182,7 +178,7 @@ export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
   }
 
   span {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     font-size: 0.95rem;
     margin-left: 0.55rem;
     margin-top: 0.1rem;
@@ -192,7 +188,9 @@ export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
 
 export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
   color: ${(props) =>
-    props.primary === true ? 'var(--network-color-primary)' : textPrimary};
+    props.primary === true
+      ? 'var(--network-color-primary)'
+      : 'var(--text-color-primary)'};
   font-variation-settings: 'wght' 550;
   display: flex;
   flex-flow: row wrap;
@@ -209,7 +207,7 @@ export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
   }
 
   span {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     font-variation-settings: 'wght' 500;
     font-size: 0.95rem;
     margin-left: 0.3rem;

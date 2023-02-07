@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundLabel, borderPrimary, textSecondary } from 'theme';
+import { backgroundLabel, borderPrimary } from 'theme';
 
 export const Wrapper = styled.div<{ activeInput?: boolean }>`
   > .inner {
@@ -16,7 +16,7 @@ export const Wrapper = styled.div<{ activeInput?: boolean }>`
     transition: border 0.15s;
 
     > h4 {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       margin-bottom: 0.5rem;
     }
 
@@ -35,7 +35,7 @@ export const Wrapper = styled.div<{ activeInput?: boolean }>`
       }
 
       > .input {
-        color: ${textSecondary};
+        color: var(--text-color-secondary);
         display: flex;
         flex-flow: column nowrap;
         margin-left: 0.75rem;
@@ -43,7 +43,7 @@ export const Wrapper = styled.div<{ activeInput?: boolean }>`
         max-width: 100%;
 
         > input {
-          color: ${textSecondary};
+          color: var(--text-color-secondary);
           font-size: 1.25rem;
           z-index: 1;
           font-variation-settings: 'wght' 550;
@@ -73,10 +73,10 @@ export const Wrapper = styled.div<{ activeInput?: boolean }>`
     margin-top: 0.65rem;
 
     h5 {
+      color: var(--text-color-secondary);
       position: absolute;
       top: 0;
       left: 0;
-      color: ${textSecondary};
       max-width: 100%;
       margin: 0;
       text-overflow: ellipsis;

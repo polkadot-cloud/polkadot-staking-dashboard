@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textPrimary } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -12,9 +11,9 @@ export const Wrapper = styled.div`
   padding: 0.5rem;
 
   h2 {
+    color: var(--text-color-primary);
     margin-top: 0.5rem;
     margin-bottom: 0;
-    color: ${textPrimary};
   }
 
   h3 {

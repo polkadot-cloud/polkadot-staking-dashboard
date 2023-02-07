@@ -4,13 +4,9 @@
 @use 'fonts';
 @use 'theme';
 
-/* global font size */
 html {
   font-size: 10px;
-}
-
-@media (min-width: 600px) {
-  html {
+  @media (min-width: 600px) {
     font-size: 11.2px;
   }
 }

@@ -6,7 +6,6 @@ import {
   backgroundToggle,
   buttonPrimaryBackground,
   successTransparent,
-  textSuccess,
 } from 'theme';
 
 export const ContentWrapper = styled.div`
@@ -48,7 +47,7 @@ export const LocaleButton = styled.button<any>`
   h4 {
     margin: 0;
     &.selected {
-      color: ${textSuccess};
+      color: var(--text-color-success);
       margin-left: 0.75rem;
     }
   }

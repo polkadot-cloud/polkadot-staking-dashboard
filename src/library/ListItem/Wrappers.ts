@@ -9,7 +9,6 @@ import {
   backgroundModalItem,
   borderPrimary,
   modalBackground,
-  textSecondary,
 } from 'theme';
 
 export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
@@ -75,8 +74,7 @@ export const Labels = styled.div`
     @media (min-width: ${SmallFontSizeMaxWidth}px) {
       padding: 0 0.2rem;
     }
-
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     &:hover {
       opacity: 0.75;
     }
@@ -89,10 +87,10 @@ export const Labels = styled.div`
   }
 
   .label {
+    color: var(--text-color-secondary);
     position: relative;
     display: flex;
     align-items: center;
-    color: ${textSecondary};
     margin: 0 0.2rem;
     @media (min-width: ${SmallFontSizeMaxWidth}px) {
       margin: 0 0.2rem;
@@ -161,7 +159,7 @@ export const IdentityWrapper = styled(motion.div)`
     padding: 0 0 0 0.2rem;
   }
   h4 {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     position: absolute;
     top: 0;
     width: 100%;
@@ -176,7 +174,7 @@ export const IdentityWrapper = styled(motion.div)`
     font-size: 1rem;
 
     > span {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       opacity: 0.75;
       font-size: 0.88rem;
       margin-left: 0.35rem;
@@ -191,7 +189,8 @@ export const ValidatorStatusWrapper = styled.div<{ status: string }>`
   padding: 0 0.5rem;
 
   h5 {
-    color: ${(props) => (props.status === 'active' ? 'green' : textSecondary)};
+    color: ${(props) =>
+      props.status === 'active' ? 'green' : 'var(--text-color-secondary)'};
     opacity: ${(props) => (props.status === 'active' ? 0.8 : 0.5)};
     margin: 0;
     display: flex;

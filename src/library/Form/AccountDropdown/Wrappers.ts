@@ -2,12 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  borderPrimary,
-  borderSecondary,
-  textPrimary,
-  textSecondary,
-} from 'theme';
+import { borderPrimary, borderSecondary } from 'theme';
 
 export const StyledDownshift = styled.div`
   position: relative;
@@ -25,8 +20,8 @@ export const StyledDownshift = styled.div`
     margin-bottom: 1rem;
 
     > span {
+      color: var(--text-color-secondary);
       margin: 0 0.75rem;
-      color: ${textSecondary};
       opacity: 0.5;
     }
   }
@@ -59,7 +54,7 @@ export const StyledDownshift = styled.div`
 `;
 
 export const StyledController = styled.button<any>`
-  color: ${textPrimary};
+  color: var(--text-color-primary);
   border: none;
   position: absolute;
   right: 0.5rem;
@@ -100,7 +95,7 @@ export const StyledDropdown = styled.div<any>`
         margin-right: 0.5rem;
       }
       span {
-        color: ${textSecondary};
+        color: var(--text-color-secondary);
         border: 1px solid ${borderSecondary};
         border-radius: 0.5rem;
         padding: 0.2rem 0.5rem;
@@ -108,8 +103,8 @@ export const StyledDropdown = styled.div<any>`
         margin-right: 0.5rem;
       }
       p {
+        color: var(--text-color-primary);
         font-size: 1rem;
-        color: ${textPrimary};
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;

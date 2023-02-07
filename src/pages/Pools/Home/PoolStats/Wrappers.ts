@@ -4,7 +4,7 @@
 import { SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { borderPrimary, textSecondary } from 'theme';
+import { borderPrimary } from 'theme';
 
 export const Wrapper = styled.div`
   flex: 1;
@@ -48,8 +48,8 @@ export const Item = styled(motion.div)`
   }
 
   p {
+    color: var(--text-color-secondary);
     margin: 0;
-    color: ${textSecondary};
     line-height: 1.2rem;
   }
 `;
@@ -120,9 +120,9 @@ export const HeaderWrapper = styled.div`
             margin-bottom: 0;
           }
           h4 {
+            color: var(--text-color-secondary);
             display: flex;
             flex-flow: row wrap;
-            color: ${textSecondary};
             margin-top: 0.45rem;
             margin-bottom: 0;
           }

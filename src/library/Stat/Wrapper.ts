@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { buttonHelpBackground, textSecondary } from 'theme';
+import { buttonHelpBackground } from 'theme';
 
 export const Wrapper = styled.div<{ isAddress?: boolean }>`
   width: 100%;
@@ -46,8 +46,8 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
 
     .text {
       padding-left: ${(props) => (props.isAddress ? '3rem' : 0)};
+      color: var(--text-color-secondary);
       padding-top: 0.1rem;
-      color: ${textSecondary};
       position: absolute;
       left: 0;
       top: 0;

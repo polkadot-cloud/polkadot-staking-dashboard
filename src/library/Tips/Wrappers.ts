@@ -3,7 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { helpButton, textPrimary, textSecondary } from 'theme';
+import { helpButton } from 'theme';
 
 export const TipWrapper = styled(motion.div)`
   background: ${helpButton};
@@ -24,7 +24,7 @@ export const TipWrapper = styled(motion.div)`
     flex-flow: row wrap;
     align-items: center;
     > span {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       margin-left: 0.75rem;
       opacity: 0.75;
       font-size: 1.1rem;
@@ -36,7 +36,7 @@ export const TipWrapper = styled(motion.div)`
   }
 
   p {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
     margin: 0.5rem 0 0 0;
     text-align: left;
   }

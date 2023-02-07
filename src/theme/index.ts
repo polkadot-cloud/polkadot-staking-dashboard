@@ -9,23 +9,6 @@ import { defaultThemes } from './default';
  */
 const v = 'mode';
 
-// text colors
-
-export const textPrimary: theme.ThemeSet = theme(v, defaultThemes.text.primary);
-
-export const textSecondary: theme.ThemeSet = theme(
-  v,
-  defaultThemes.text.secondary
-);
-
-export const textInvert: theme.ThemeSet = theme(v, defaultThemes.text.invert);
-
-export const textWarning: theme.ThemeSet = theme(v, defaultThemes.text.warning);
-
-export const textDanger: theme.ThemeSet = theme(v, defaultThemes.text.danger);
-
-export const textSuccess: theme.ThemeSet = theme(v, defaultThemes.text.success);
-
 // background colors
 
 export const backgroundPrimary: theme.ThemeSet = theme(

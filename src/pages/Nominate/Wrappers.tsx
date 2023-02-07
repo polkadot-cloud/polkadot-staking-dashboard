@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -19,7 +18,7 @@ export const StakingAccount = styled.div<{ last: boolean }>`
   display: flex;
   flex-flow: row wrap;
   h4 {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
   }
 `;
 

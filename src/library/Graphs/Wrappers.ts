@@ -3,7 +3,7 @@
 
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import styled from 'styled-components';
-import { backgroundSecondary, textPrimary, textSecondary } from 'theme';
+import { backgroundSecondary } from 'theme';
 import {
   CardHeaderWrapperProps,
   CardWrapperProps,
@@ -24,7 +24,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
 
   h2,
   h3 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -193,7 +193,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     justify-content: flex-start;
 
     .fiat {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       font-size: 1.1rem;
       margin-top: 0.2rem;
       margin-left: 0.3rem;
@@ -219,7 +219,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
 
   h5 {
     &.secondary {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       opacity: 0.7;
       margin-bottom: 0;
       margin-top: 1.5rem;
