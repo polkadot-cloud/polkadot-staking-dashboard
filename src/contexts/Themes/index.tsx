@@ -4,7 +4,7 @@
 import React, { useRef } from 'react';
 import { setStateWithRef } from 'Utils';
 import { defaultThemeContext } from './defaults';
-import { ThemeContextInterface } from './types';
+import { Theme, ThemeContextInterface } from './types';
 
 export const ThemeContext =
   React.createContext<ThemeContextInterface>(defaultThemeContext);
@@ -12,37 +12,42 @@ export const ThemeContext =
 export const useTheme = () => React.useContext(ThemeContext);
 
 export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
-  // get the current theme
-  let localTheme = localStorage.getItem('theme') || '';
+  let initialTheme: Theme = 'light';
 
-  // provide default theme if not set
-  if (!['light', 'dark'].includes(localTheme)) {
-    // check system theme
-    localTheme =
+  // get the current theme
+  const localThemeRaw = localStorage.getItem('theme') || '';
+
+  // Provide system theme if raw theme is not valid.
+  if (!['light', 'dark'].includes(localThemeRaw)) {
+    const systemTheme =
       window.matchMedia &&
       window.matchMedia('(prefers-color-scheme: dark)').matches
         ? 'dark'
         : 'light';
-    localStorage.setItem('theme', localTheme);
+
+    initialTheme = systemTheme;
+    localStorage.setItem('theme', systemTheme);
+  } else {
+    // `localThemeRaw` is a valid theme.
+    initialTheme = localThemeRaw as Theme;
   }
 
   // the theme mode
-  const [theme, setTheme] = React.useState<string>(localTheme);
+  const [theme, setTheme] = React.useState<Theme>(initialTheme);
   const themeRef = useRef(theme);
 
-  // auto change theme on system change
+  // Automatically change theme on system change.
   window
     .matchMedia('(prefers-color-scheme: dark)')
     .addEventListener('change', (event) => {
-      const newhTheme = event.matches ? 'dark' : 'light';
-      localStorage.setItem('theme', newhTheme);
-      setStateWithRef(newhTheme, setTheme, themeRef);
+      const newTheme = event.matches ? 'dark' : 'light';
+      localStorage.setItem('theme', newTheme);
+      setStateWithRef(newTheme, setTheme, themeRef);
     });
 
-  const toggleTheme = (newTheme: string | null = null): void => {
-    if (newTheme === null) {
-      newTheme = theme === 'dark' ? 'light' : 'dark';
-    }
+  const toggleTheme = (maybeTheme: Theme | null = null): void => {
+    const newTheme =
+      maybeTheme || (themeRef.current === 'dark' ? 'light' : 'dark');
 
     localStorage.setItem('theme', newTheme);
     setStateWithRef(newTheme, setTheme, themeRef);
