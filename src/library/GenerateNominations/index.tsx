@@ -196,10 +196,13 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
   };
 
   const disabledMaxNominations = () => {
-    return nominations.length >= maxNominations;
+    return maxNominations.isLessThanOrEqualTo(nominations.length);
   };
   const disabledAddFavorites = () => {
-    return !favoritesList?.length || nominations.length >= maxNominations;
+    return (
+      !favoritesList?.length ||
+      maxNominations.isLessThanOrEqualTo(nominations.length)
+    );
   };
 
   // accumulate generation methods

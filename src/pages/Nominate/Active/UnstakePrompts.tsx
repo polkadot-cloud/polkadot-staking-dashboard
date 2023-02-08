@@ -64,7 +64,7 @@ export const UnstakePrompts = () => {
                   <ButtonPrimary
                     marginRight
                     iconLeft={faBolt}
-                    text={getFastUnstakeText()}
+                    text={getFastUnstakeText() as string}
                     onClick={() =>
                       openModalWith('ManageFastUnstake', {}, 'small')
                     }

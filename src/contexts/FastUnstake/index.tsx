@@ -68,7 +68,7 @@ export const FastUnstakeProvider = ({
   };
 
   // check until bond duration eras surpasssed.
-  const checkToEra = activeEra.index - bondDuration;
+  const checkToEra = activeEra.index.minus(bondDuration);
 
   // initiate fast unstake check for accounts that are
   // nominating but not active.
@@ -76,7 +76,7 @@ export const FastUnstakeProvider = ({
     if (
       isReady &&
       activeAccount &&
-      activeEra.index !== 0 &&
+      !activeEra.index.isZero() &&
       fastUnstakeErasToCheckPerBlock > 0
     ) {
       // cancel fast unstake check on network change or
@@ -103,7 +103,7 @@ export const FastUnstakeProvider = ({
       // value until current era + bondDuration is checked.
       let initialIsExposed = null;
       if (localMeta) {
-        if (localMeta.checked.length === 1 + bondDuration) {
+        if (bondDuration.plus(1).isEqualTo(localMeta.checked.length)) {
           initialIsExposed = localMeta.isExposed;
         } else if (localMeta.isExposed === true) {
           initialIsExposed = true;
@@ -208,7 +208,7 @@ export const FastUnstakeProvider = ({
         // cancel checking and update exposed state.
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(true, setIsExposed, isExposedRef);
-      } else if (checked.length === 1 + bondDuration) {
+      } else if (bondDuration.plus(1).isEqualTo(checked.length)) {
         // successfully checked current era - bondDuration eras.
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(false, setIsExposed, isExposedRef);
@@ -219,16 +219,19 @@ export const FastUnstakeProvider = ({
         subscribeToFastUnstakeQueue();
       } else {
         // continue checking the next era.
-        checkEra(currentEra - 1);
+        checkEra(new BigNumber(currentEra - 1));
       }
     }
   };
 
   // initiate fast unstake eligibility check.
-  const processEligibility = async (a: MaybeAccount, era: number) => {
+  const processEligibility = async (
+    a: MaybeAccount,
+    era: BigNumber | number
+  ) => {
     // ensure current era has synced
     if (
-      era <= 0 ||
+      era <= new BigNumber(0) ||
       !bondDuration ||
       !api ||
       !a ||
@@ -238,15 +241,17 @@ export const FastUnstakeProvider = ({
       return;
 
     setStateWithRef(true, setChecking, checkingRef);
-    checkEra(era);
+    checkEra(new BigNumber(era));
   };
 
   // calls service worker to check exppsures for given era.
-  const checkEra = async (era: number) => {
+  const checkEra = async (era: BigNumber) => {
     if (!api) return;
     // checkpoint: checking era: era
 
-    const exposuresRaw = await api.query.staking.erasStakers.entries(era);
+    const exposuresRaw = await api.query.staking.erasStakers.entries(
+      era.toString()
+    );
     const exposures = exposuresRaw.map(([keys, val]: AnyApi) => {
       return {
         keys: keys.toHuman(),
@@ -346,7 +351,7 @@ export const FastUnstakeProvider = ({
 
     // remove any expired eras and sort highest first
     localChecked = localChecked
-      .filter((e: number) => e >= checkToEra)
+      .filter((e: number) => checkToEra.isLessThanOrEqualTo(e))
       .sort((a: number, b: number) => b - a);
 
     // if no remaining eras, invalid

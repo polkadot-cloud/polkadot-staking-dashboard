@@ -30,8 +30,8 @@ export interface PayoutLineProps {
 }
 
 export interface StatPieProps {
-  value: number;
-  value2: number;
+  value: number | BigNumber;
+  value2: number | BigNumber;
 }
 
 export interface CardHeaderWrapperProps {

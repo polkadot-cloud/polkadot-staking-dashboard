@@ -151,7 +151,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     // era has synced from Network
-    if (activeEra.index === 0) {
+    if (activeEra.index.isEqualTo(0)) {
       _syncing = true;
       _networkSyncing = true;
       _poolsSyncing = true;

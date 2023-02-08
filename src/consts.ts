@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { stringToU8a } from '@polkadot/util';
+import BigNumber from 'bignumber.js';
 
 /*
  * Global Constants
@@ -39,13 +40,13 @@ export const PluginsList = ['subscan', 'binance_spot', 'tips'];
 /*
  * Fallback config values
  */
-export const FallbackMaxNominations = 16;
-export const FallbackBondingDuration = 28;
-export const FallbackSessionsPerEra = 6;
-export const FallbackNominatorRewardedPerValidator = 256;
-export const FallbackMaxElectingVoters = 22500;
-export const FallbackExpectedBlockTime = 6000;
-export const FallbackEpochDuration = 2400;
+export const FallbackMaxNominations = new BigNumber(16);
+export const FallbackBondingDuration = new BigNumber(28);
+export const FallbackSessionsPerEra = new BigNumber(6);
+export const FallbackNominatorRewardedPerValidator = new BigNumber(256);
+export const FallbackMaxElectingVoters = new BigNumber(22500);
+export const FallbackExpectedBlockTime = new BigNumber(6000);
+export const FallbackEpochDuration = new BigNumber(2400);
 
 /*
  * Misc values

@@ -80,7 +80,7 @@ export const MembersListInner = (props: any) => {
 
   // configure list when network is ready to fetch
   useEffect(() => {
-    if (isReady && activeEra.index !== 0 && fetched === 'unsynced') {
+    if (isReady && !activeEra.index.isZero() && fetched === 'unsynced') {
       setupMembersList();
     }
   }, [isReady, fetched, activeEra.index]);

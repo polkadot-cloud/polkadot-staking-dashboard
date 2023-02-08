@@ -167,7 +167,7 @@ export const ValidatorListInner = (props: any) => {
 
   // configure validator list when network is ready to fetch
   useEffect(() => {
-    if (isReady && activeEra.index !== 0 && !fetched) {
+    if (isReady && !activeEra.index.isZero() && !fetched) {
       setupValidatorList();
     }
   }, [isReady, activeEra.index, fetched]);

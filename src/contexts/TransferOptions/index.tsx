@@ -56,7 +56,7 @@ export const TransferOptionsProvider = ({
     let totalUnlocked = new BigNumber(0);
     for (const u of unlocking) {
       const { value, era } = u;
-      if (activeEra.index > era) {
+      if (activeEra.index.isGreaterThan(era)) {
         totalUnlocked = totalUnlocked.plus(value);
       } else {
         totalUnlocking = totalUnlocking.plus(value);
@@ -98,7 +98,7 @@ export const TransferOptionsProvider = ({
       let totalUnlockedPool = new BigNumber(0);
       for (const u of unlockingPool) {
         const { value, era } = u;
-        if (activeEra.index > era) {
+        if (activeEra.index.isGreaterThan(era)) {
           totalUnlockedPool = totalUnlockedPool.plus(value);
         } else {
           totalUnlockingPool = totalUnlockingPool.plus(value);

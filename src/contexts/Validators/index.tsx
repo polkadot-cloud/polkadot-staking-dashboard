@@ -493,7 +493,7 @@ export const ValidatorsProvider = ({
     const args: AnyApi = [];
 
     for (let i = 0; i < v.length; i++) {
-      args.push([activeEra.index, v[i].address]);
+      args.push([activeEra.index.toString(), v[i].address]);
     }
 
     const unsub3 = await api.query.staking.erasStakers.multi<AnyApi>(
@@ -505,30 +505,33 @@ export const ValidatorsProvider = ({
           _validator = _validator.toHuman();
           let others = _validator.others ?? [];
 
-          // account for yourself being an additional nominator
+          // account for yourself being an additional nominator.
           const totalNominations = others.length + 1;
 
+          // reformat others.value properties from string to BigNumber.
+          others = others.map((other: AnyApi) => ({
+            ...other,
+            value: new BigNumber(rmCommas(other.value)),
+          }));
+
           // sort others lowest first.
-          others = others.sort((a: AnyApi, b: AnyApi) => {
-            const x = new BigNumber(rmCommas(a.value));
-            const y = new BigNumber(rmCommas(b.value));
-            return x.minus(y);
-          });
+          others = others.sort((a: AnyApi, b: AnyApi) =>
+            a.value.minus(b.value)
+          );
 
           // get the lowest reward stake of the validator, which is
           // the largest index - `maxNominatorRewardedPerValidator`,
           // or the first index if does not exist.
-          const lowestRewardIndex = Math.max(
-            others.length - maxNominatorRewardedPerValidator,
-            0
+          const lowestRewardIndex = BigNumber.max(
+            new BigNumber(others.length).minus(
+              maxNominatorRewardedPerValidator
+            ),
+            new BigNumber(0)
           );
 
           const lowestReward =
             others.length > 0
-              ? planckToUnit(
-                  new BigNumber(rmCommas(others[lowestRewardIndex]?.value)),
-                  units
-                )
+              ? planckToUnit(others[lowestRewardIndex.toNumber()]?.value, units)
               : 0;
 
           stake.push({

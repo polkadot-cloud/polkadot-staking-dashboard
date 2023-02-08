@@ -163,8 +163,8 @@ export const StakingProvider = ({
   };
 
   const subscribeToStakingkMetrics = async () => {
-    if (api !== null && isReady && activeEra.index !== 0) {
-      const previousEra = activeEra.index - 1;
+    if (api !== null && isReady && !activeEra.index.isZero()) {
+      const previousEra = activeEra.index.minus(1);
 
       const u = await api.queryMulti<AnyApi>(
         [
@@ -172,8 +172,8 @@ export const StakingProvider = ({
           api.query.staking.counterForValidators,
           api.query.staking.maxValidatorsCount,
           api.query.staking.validatorCount,
-          [api.query.staking.erasValidatorReward, previousEra],
-          [api.query.staking.erasTotalStake, previousEra],
+          [api.query.staking.erasValidatorReward, previousEra.toString()],
+          [api.query.staking.erasTotalStake, previousEra.toString()],
           api.query.staking.minNominatorBond,
           [api.query.staking.payee, activeAccount],
         ],
@@ -226,11 +226,11 @@ export const StakingProvider = ({
    * the minimum nominator bond is calculated by summing a particular bond of a nominator.
    */
   const fetchEraStakers = async () => {
-    if (!isReady || activeEra.index === 0 || !api) {
+    if (!isReady || activeEra.index.isEqualTo(0) || !api) {
       return;
     }
     const exposuresRaw = await api.query.staking.erasStakers.entries(
-      activeEra.index
+      activeEra.index.toString()
     );
 
     // flag eraStakers is recyncing

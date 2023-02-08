@@ -9,15 +9,12 @@ export const useErasToTimeLeft = () => {
   const { epochDuration, expectedBlockTime, sessionsPerEra } = consts;
 
   // converts a number of eras to timeleft in seconds.
-  const erasToSeconds = (eras: number) => {
+  const erasToSeconds = (eras: BigNumber) => {
     if (!eras) {
       return 0;
     }
     // store the duration of an era in number of blocks.
-    // TODO: https://github.com/paritytech/polkadot-staking-dashboard/issues/637
-    const eraDurationBlocks = new BigNumber(epochDuration).multipliedBy(
-      sessionsPerEra
-    );
+    const eraDurationBlocks = epochDuration.multipliedBy(sessionsPerEra);
     // estimate the duration of the era in seconds.
     const eraDuration = eraDurationBlocks
       .multipliedBy(expectedBlockTime)
@@ -25,7 +22,7 @@ export const useErasToTimeLeft = () => {
       .integerValue();
 
     // multiply by number of eras.
-    return new BigNumber(eras).multipliedBy(eraDuration).toNumber();
+    return eras.multipliedBy(eraDuration).toNumber();
   };
 
   return {

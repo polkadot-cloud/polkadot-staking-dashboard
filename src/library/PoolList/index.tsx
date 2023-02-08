@@ -89,7 +89,7 @@ export const PoolListInner = ({
 
   // configure pool list when network is ready to fetch
   useEffect(() => {
-    if (isReady && activeEra.index !== 0 && !fetched) {
+    if (isReady && !activeEra.index.isZero() && !fetched) {
       setupPoolList();
     }
   }, [isReady, fetched, activeEra.index]);

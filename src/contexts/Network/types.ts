@@ -16,6 +16,6 @@ export interface NetworkMetrics {
 }
 
 export interface ActiveEra {
-  index: number;
-  start: number;
+  index: BigNumber;
+  start: BigNumber;
 }

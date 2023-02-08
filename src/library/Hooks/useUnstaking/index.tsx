@@ -46,9 +46,9 @@ export const useUnstaking = () => {
       })}...`;
     }
     if (isExposed) {
-      const lastExposed = activeEra.index - (checked[0] || 0);
+      const lastExposed = activeEra.index.minus(checked[0] || 0);
       return t('fastUnstakeExposed', {
-        count: lastExposed,
+        count: lastExposed.toNumber(),
       });
     }
     if (registered) {
