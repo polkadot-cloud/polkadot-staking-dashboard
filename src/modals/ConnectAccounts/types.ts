@@ -28,7 +28,7 @@ export interface ExtensionMetaProps {
 export interface AccountElementProps {
   meta: ExtensionAccount | null;
   address?: MaybeAccount;
-  label?: string[];
+  label?: Array<string>;
   disconnect?: boolean;
   asElement?: boolean;
 }

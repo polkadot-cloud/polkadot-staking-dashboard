@@ -6,8 +6,8 @@ import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 
 export const Status = () => {
-  const { apiStatus } = useApi();
   const { t } = useTranslation('library');
+  const { apiStatus } = useApi();
 
   return (
     <>

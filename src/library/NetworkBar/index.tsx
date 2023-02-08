@@ -12,10 +12,10 @@ import { Status } from './Status';
 import { NetworkInfo, Separator, Summary, Wrapper } from './Wrappers';
 
 export const NetworkBar = () => {
+  const { t } = useTranslation('library');
   const { plugins } = usePlugins();
   const { network, isLightClient } = useApi();
   const prices = usePrices();
-  const { t } = useTranslation('library');
 
   // currently not in use
   const [open, setOpen] = useState(false);

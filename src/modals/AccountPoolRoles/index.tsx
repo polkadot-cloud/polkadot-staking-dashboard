@@ -17,7 +17,6 @@ import { ContentWrapper, StyledButton } from './Wrappers';
 
 export const AccountPoolRoles = () => {
   const { t } = useTranslation('modals');
-
   const { config } = useModal();
   const { getAccountPools } = useBondedPools();
   const { membership } = usePoolMemberships();
@@ -57,7 +56,6 @@ export const AccountPoolRoles = () => {
 
 const Button = ({ item, poolId }: { item: Array<string>; poolId: string }) => {
   const { t } = useTranslation('modals');
-
   const { setStatus } = useModal();
   const { bondedPools } = useBondedPools();
   const { setSelectedPoolId } = useActivePools();

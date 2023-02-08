@@ -9,14 +9,13 @@ import {
   borderPrimary,
   buttonHoverBackground,
   buttonSecondaryBackground,
-  textSecondary,
 } from 'theme';
 
 const VERTICAL_THRESHOLD = 800;
 
 export const Wrapper = styled.div`
   h2 {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     margin-top: 2rem;
   }
 `;
@@ -38,7 +37,7 @@ export const ItemWrapper = styled(motion.div)`
   }
 
   > .inner {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     background: ${backgroundSecondary};
     box-shadow: var(--card-shadow) var(--card-shadow-color);
     border-radius: 0.75rem;
@@ -68,7 +67,7 @@ export const ItemWrapper = styled(motion.div)`
         > button {
           font-size: 1.1rem;
           &.active {
-            color: ${textSecondary};
+            color: var(--text-color-secondary);
             background: ${backgroundDropdown};
             &:hover {
               background: ${backgroundDropdown};
@@ -87,7 +86,7 @@ export const ItemWrapper = styled(motion.div)`
         padding: 0.3rem 1rem;
 
         svg {
-          color: ${textSecondary};
+          color: var(--text-color-secondary);
         }
 
         margin: 0.5rem 1rem 0.5rem 0;
@@ -134,7 +133,6 @@ export const ItemWrapper = styled(motion.div)`
       &:first-child {
         flex-flow: row wrap;
         align-items: center;
-        justify-content: flex-start;
         width: 100%;
         padding: 1rem;
         svg {
@@ -145,7 +143,6 @@ export const ItemWrapper = styled(motion.div)`
       &:last-child {
         border-left: none;
         flex-flow: column wrap;
-        align-items: flex-start;
         justify-content: center;
         border-top: 1px solid ${borderPrimary};
         height: 100%;

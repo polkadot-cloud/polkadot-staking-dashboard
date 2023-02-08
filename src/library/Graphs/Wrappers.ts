@@ -3,7 +3,7 @@
 
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import styled from 'styled-components';
-import { backgroundSecondary, textPrimary, textSecondary } from 'theme';
+import { backgroundSecondary } from 'theme';
 import {
   CardHeaderWrapperProps,
   CardWrapperProps,
@@ -24,7 +24,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
 
   h2,
   h3 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -39,7 +39,6 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    justify-content: flex-start;
     flex-grow: ${(props) => (props.withAction ? 1 : 0)};
 
     .help-icon {
@@ -65,8 +64,6 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   background: ${(props) => (props.transparent ? 'none' : backgroundSecondary)};
   display: flex;
   flex-flow: column nowrap;
-  align-content: flex-start;
-  align-items: flex-start;
   flex: 1;
   width: 100%;
   margin-top: ${(props) => (props.transparent ? '0rem' : '1.4rem')};
@@ -78,6 +75,9 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     box-shadow: none;
     background: none;
   `}
+
+  ${(props) =>
+    props.warning ? 'border: 1px solid var(--status-warning-color);' : ''}
 
   @media (max-width: ${SideMenuStickyThreshold}px) {
     padding: ${(props) =>
@@ -94,7 +94,6 @@ export const CardWrapper = styled.div<CardWrapperProps>`
 
   .content {
     padding: 0 0.5rem;
-
     h3 {
       margin-bottom: 0.75rem;
     }
@@ -108,8 +107,6 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     padding: 1rem;
     display: flex;
     flex-flow: column nowrap;
-    align-content: flex-start;
-    align-items: flex-start;
     width: 100%;
     position: relative;
   }
@@ -133,8 +130,6 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   background: ${backgroundSecondary};
   display: flex;
   flex-flow: column nowrap;
-  align-content: flex-start;
-  align-items: flex-start;
   flex: 1;
   position: relative;
   overflow: hidden;
@@ -190,10 +185,9 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     flex-flow: row wrap;
     align-content: flex-end;
     align-items: flex-end;
-    justify-content: flex-start;
 
     .fiat {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       font-size: 1.1rem;
       margin-top: 0.2rem;
       margin-left: 0.3rem;
@@ -202,7 +196,6 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   h2 {
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
     align-items: center;
   }
   p {
@@ -219,7 +212,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
 
   h5 {
     &.secondary {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       opacity: 0.7;
       margin-bottom: 0;
       margin-top: 1.5rem;

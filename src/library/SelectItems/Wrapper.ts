@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundLabel, borderPrimary, textSecondary } from 'theme';
+import { backgroundLabel, borderPrimary } from 'theme';
 
 export const TwoThreshold = 800;
 
@@ -124,7 +124,9 @@ export const Wrapper = styled.div<{
 
       > .toggle {
         color: ${(props) =>
-          props.selected ? 'var(--network-color-primary)' : textSecondary};
+          props.selected
+            ? 'var(--network-color-primary)'
+            : 'var(--text-color-secondary)'};
         opacity: ${(props) => (props.selected ? 1 : 0.5)};
         width: 4rem;
         display: flex;

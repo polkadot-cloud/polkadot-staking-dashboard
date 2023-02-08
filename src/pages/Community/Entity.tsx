@@ -15,11 +15,11 @@ import { Item } from './Item';
 import { ItemsWrapper } from './Wrappers';
 
 export const Entity = () => {
+  const { t } = useTranslation('pages');
   const { isReady, network } = useApi();
   const { validators: allValidators, removeValidatorMetaBatch } =
     useValidators();
   const { setActiveSection, activeItem } = useCommunitySections();
-  const { t } = useTranslation('pages');
 
   const { name, validators: entityAllValidators } = activeItem;
   const validators = entityAllValidators[network.name] ?? [];

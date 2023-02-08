@@ -10,9 +10,9 @@ import { useTranslation } from 'react-i18next';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 
 export const OrderValidators = () => {
+  const { t } = useTranslation('library');
   const { getOrder, setOrder } = useFilters();
   const { ordersToLabels } = useValidatorFilters();
-  const { t } = useTranslation('library');
 
   const order = getOrder('validators');
 

@@ -10,10 +10,11 @@ import { Tasks } from './Tasks';
 import { CardsWrapper, FixedContentWrapper, Wrapper } from './Wrappers';
 
 export const ManagePool = () => {
+  const { t } = useTranslation('modals');
   const { setModalHeight } = useModal();
+
   // modal task
   const [task, setTask] = useState(null);
-  const { t } = useTranslation('modals');
 
   // active modal section
   const [section, setSection] = useState(0);

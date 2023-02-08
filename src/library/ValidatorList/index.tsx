@@ -26,7 +26,29 @@ import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
 import { Filters } from './Filters';
 
-export const ValidatorListInner = (props: any) => {
+export const ValidatorListInner = ({
+  nominator: initialNominator,
+  validators: initialValidators,
+  batchKey,
+  allowMoreCols,
+  allowFilters,
+  toggleFavorites,
+  pagination,
+  title,
+  format,
+  selectable,
+  bondFor,
+  onSelected,
+  actions = [],
+  showMenu = true,
+  inModal = false,
+  allowSearch = false,
+  allowListFormat = true,
+  alwaysRefetchValidators = false,
+  defaultFilters = undefined,
+  disableThrottle = false,
+  refetchOnListUpdate = false,
+}: any) => {
   const { t } = useTranslation('library');
   const { mode } = useTheme();
   const {
@@ -43,7 +65,7 @@ export const ValidatorListInner = (props: any) => {
   // determine the nominator of the validator list.
   // By default this will be the activeAccount. But for pools,
   // the pool stash address should be the nominator.
-  const nominator = props.nominator ?? activeAccount;
+  const nominator = initialNominator ?? activeAccount;
 
   const { selected, listFormat, setListFormat } = provider;
 
@@ -63,34 +85,10 @@ export const ValidatorListInner = (props: any) => {
   const order = getOrder('validators');
   const searchTerm = getSearchTerm('validators');
 
-  const {
-    batchKey,
-    allowMoreCols,
-    allowFilters,
-    toggleFavorites,
-    pagination,
-    title,
-    format,
-    selectable,
-    bondFor,
-  }: any = props;
-
-  const actions = props.actions ?? [];
-  const showMenu = props.showMenu ?? true;
-  const inModal = props.inModal ?? false;
-  const allowSearch = props.allowSearch ?? false;
-  const allowListFormat = props.allowListFormat ?? true;
-  const alwaysRefetchValidators = props.alwaysRefetchValidators ?? false;
-  const defaultFilters = props.defaultFilters ?? undefined;
-
   const actionsAll = [...actions].filter((action) => !action.onSelected);
   const actionsSelected = [...actions].filter(
     (action: any) => action.onSelected
   );
-
-  const disableThrottle = props.disableThrottle ?? false;
-  const refetchOnListUpdate =
-    props.refetchOnListUpdate !== undefined ? props.refetchOnListUpdate : false;
 
   // current page
   const [page, setPage] = useState<number>(1);
@@ -99,10 +97,10 @@ export const ValidatorListInner = (props: any) => {
   const [renderIteration, _setRenderIteration] = useState<number>(1);
 
   // default list of validators
-  const [validatorsDefault, setValidatorsDefault] = useState(props.validators);
+  const [validatorsDefault, setValidatorsDefault] = useState(initialValidators);
 
   // manipulated list (ordering, filtering) of validators
-  const [validators, setValidators]: any = useState(props.validators);
+  const [validators, setValidators]: any = useState(initialValidators);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState(false);
@@ -129,14 +127,14 @@ export const ValidatorListInner = (props: any) => {
   useEffect(() => {
     if (alwaysRefetchValidators) {
       if (
-        JSON.stringify(props.validators) !== JSON.stringify(validatorsDefault)
+        JSON.stringify(initialValidators) !== JSON.stringify(validatorsDefault)
       ) {
         setFetched(false);
       }
     } else {
       setFetched(false);
     }
-  }, [props.validators, nominator]);
+  }, [initialValidators, nominator]);
 
   // set default filters
   useEffect(() => {
@@ -185,8 +183,8 @@ export const ValidatorListInner = (props: any) => {
 
   // trigger onSelected when selection changes
   useEffect(() => {
-    if (props.onSelected) {
-      props.onSelected(provider);
+    if (onSelected) {
+      onSelected(provider);
     }
   }, [selected]);
 
@@ -204,10 +202,10 @@ export const ValidatorListInner = (props: any) => {
 
   // handle validator list bootstrapping
   const setupValidatorList = () => {
-    setValidatorsDefault(props.validators);
-    setValidators(props.validators);
+    setValidatorsDefault(initialValidators);
+    setValidators(initialValidators);
     setFetched(true);
-    fetchValidatorMetaBatch(batchKey, props.validators, refetchOnListUpdate);
+    fetchValidatorMetaBatch(batchKey, initialValidators, refetchOnListUpdate);
   };
 
   // handle filter / order update
@@ -326,13 +324,13 @@ export const ValidatorListInner = (props: any) => {
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
 
-        {selectable && (
+        {selectable ? (
           <Selectable
             canSelect={listValidators.length > 0}
             actionsAll={actionsAll}
             actionsSelected={actionsSelected}
           />
-        )}
+        ) : null}
 
         <MotionContainer>
           {listValidators.length ? (

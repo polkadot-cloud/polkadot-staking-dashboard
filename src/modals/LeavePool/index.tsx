@@ -24,7 +24,6 @@ import { greaterThanZero, planckToUnit, unitToPlanck } from 'Utils';
 
 export const LeavePool = () => {
   const { t } = useTranslation('modals');
-
   const { api, network, consts } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();

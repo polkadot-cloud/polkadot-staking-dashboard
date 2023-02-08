@@ -23,7 +23,6 @@ import { Wrapper } from './Wrapper';
 
 export const UpdateController = () => {
   const { t } = useTranslation('modals');
-
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, getAccount, accountHasSigner } = useConnect();

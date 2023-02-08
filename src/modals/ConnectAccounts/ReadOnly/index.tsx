@@ -11,11 +11,9 @@ import { ReadOnlyProps } from '../types';
 import { ExtensionWrapper } from '../Wrappers';
 import { Wrapper } from './Wrapper';
 
-export const ReadOnly = (props: ReadOnlyProps) => {
-  const { setReadOnlyOpen, readOnlyOpen } = props;
-
-  const { accounts, forgetAccounts } = useConnect();
+export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
   const { t } = useTranslation('modals');
+  const { accounts, forgetAccounts } = useConnect();
 
   // get all external accounts
   const externalAccountsOnly = accounts.filter((a: ImportedAccount) => {

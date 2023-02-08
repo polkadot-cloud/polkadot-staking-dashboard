@@ -7,12 +7,7 @@ import {
 } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  borderPrimary,
-  buttonSecondaryBackground,
-  textPrimary,
-  textSecondary,
-} from 'theme';
+import { borderPrimary, buttonSecondaryBackground } from 'theme';
 
 export const Wrapper = styled.div`
   position: fixed;
@@ -36,10 +31,9 @@ export const Wrapper = styled.div`
   .menu {
     display: none;
     @media (max-width: ${SideMenuStickyThreshold}px) {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       display: flex;
       flex-flow: row wrap;
-      justify-content: flex-start;
       align-items: center;
       flex-grow: 1;
     }
@@ -53,7 +47,7 @@ export const HeadingWrapper = styled.div`
   margin-left: 0.9rem;
 `;
 
-export const Item = styled(motion.button)`
+export const Item = styled.button`
   background: ${buttonSecondaryBackground};
   border: 1px solid ${borderPrimary};
   flex-grow: 1;
@@ -65,6 +59,11 @@ export const Item = styled(motion.button)`
   align-items: center;
   cursor: pointer;
   font-size: 1.05rem;
+  transition: transform 0.15s ease-out;
+
+  &:hover {
+    transform: scale(1.03);
+  }
 
   .label {
     color: var(--network-color-primary);
@@ -78,6 +77,10 @@ export const Item = styled(motion.button)`
   > span {
     color: white;
     line-height: 2.2rem;
+    .icon {
+      color: var(--text-color-secondary);
+      cursor: pointer;
+    }
   }
 
   &.connect {
@@ -106,7 +109,7 @@ export const ItemInactive = styled(motion.div)`
   font-size: 1rem;
 
   > span {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
     line-height: 2.2rem;
   }
 `;

@@ -3,13 +3,10 @@
 
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
-import { defaultThemes } from 'theme/default';
 import { Item } from './Wrappers';
 
 export const SideMenuToggle = () => {
-  const { mode } = useTheme();
   const { setSideMenu, sideMenuOpen } = useUi();
 
   return (
@@ -20,14 +17,8 @@ export const SideMenuToggle = () => {
           setSideMenu(sideMenuOpen ? 0 : 1);
         }}
       >
-        <span className="toggle">
-          <FontAwesomeIcon
-            icon={faBars}
-            style={{
-              cursor: 'pointer',
-              color: defaultThemes.text.secondary[mode],
-            }}
-          />
+        <span>
+          <FontAwesomeIcon className="icon" icon={faBars} />
         </span>
       </Item>
     </div>

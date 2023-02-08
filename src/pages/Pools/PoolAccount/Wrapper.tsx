@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textPrimary, textSecondary } from 'theme';
 
 export const Wrapper = styled.div<{ last?: boolean }>`
   width: 100%;
@@ -19,7 +18,7 @@ export const Wrapper = styled.div<{ last?: boolean }>`
     padding: 0;
 
     button {
-      color: ${textPrimary};
+      color: var(--text-color-primary);
     }
 
     .icon {
@@ -42,7 +41,7 @@ export const Wrapper = styled.div<{ last?: boolean }>`
       margin-left: 0.5rem;
 
       > .copy {
-        color: ${textSecondary};
+        color: var(--text-color-secondary);
         opacity: 0.5;
         cursor: pointer;
         transition: opacity 0.1s;

@@ -19,7 +19,6 @@ import { PaddingWrapper, Separator, WarningsWrapper } from '../Wrappers';
 
 export const ChangeNominations = () => {
   const { t } = useTranslation('modals');
-
   const { api } = useApi();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getBondedAccount, getAccountNominations } = useBalances();

@@ -42,7 +42,7 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
           display: false,
         },
         grid: {
-          color: defaultThemes.transparent[mode],
+          color: 'rgba(0,0,0,0)',
         },
         ticks: {
           display: true,

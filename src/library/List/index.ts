@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary, textPrimary, textSecondary } from 'theme';
+import { borderPrimary } from 'theme';
 import { ListProps, PaginationWrapperProps } from './types';
 
 export const Wrapper = styled.div`
@@ -20,7 +20,7 @@ export const Header = styled.div`
   flex: 1;
 
   h4 {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     margin: 0;
   }
 
@@ -29,16 +29,12 @@ export const Header = styled.div`
     align-items: center;
   }
 
-  > div:first-child {
-    justify-content: flex-start;
-  }
-
   > div:last-child {
     justify-content: flex-end;
     flex: 1;
 
     button {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       font-size: 1.1rem;
       margin: 0 0.5rem 0 0.75rem;
       opacity: 0.6;
@@ -63,7 +59,6 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
 
   > div:first-child {
     display: flex;
-    justify-content: flex-start;
     flex: 1;
   }
   > div:last-child {
@@ -76,13 +71,17 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
       margin-left: 0.5rem;
       &.next {
         color: ${(props) =>
-          props.next ? 'var(--network-color-primary)' : textSecondary};
+          props.next
+            ? 'var(--network-color-primary)'
+            : 'var(--text-color-secondary)'};
         cursor: ${(props) => (props.next ? 'pointer' : 'default')};
         opacity: ${(props) => (props.next ? 1 : 0.4)};
       }
       &.prev {
         color: ${(props) =>
-          props.prev ? 'var(--network-color-primary)' : textSecondary};
+          props.prev
+            ? 'var(--network-color-primary)'
+            : 'var(--text-color-secondary)'};
         cursor: ${(props) => (props.prev ? 'pointer' : 'default')};
         opacity: ${(props) => (props.prev ? 1 : 0.4)};
       }
@@ -98,7 +97,7 @@ export const SelectableWrapper = styled.div`
   > button {
     border: 1px solid ${borderPrimary};
     font-size: 1rem;
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     border-radius: 1.5rem;
     padding: 0.45rem 1rem;
     margin-right: 0.5rem;
@@ -113,7 +112,7 @@ export const SelectableWrapper = styled.div`
     }
 
     &:hover {
-      color: ${textPrimary};
+      color: var(--text-color-primary);
     }
   }
 `;
@@ -143,8 +142,6 @@ export const List = styled.div<ListProps>`
   > div {
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
 
     > .item {
       display: flex;

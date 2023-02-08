@@ -23,7 +23,6 @@ export const useSubmitExtrinsic = ({
   from,
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
-
   const { api } = useApi();
   const { setTxFees, setSender, txFees } = useTxFees();
   const { addNotification } = useNotifications();

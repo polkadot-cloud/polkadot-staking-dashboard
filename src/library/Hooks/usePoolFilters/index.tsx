@@ -7,10 +7,10 @@ import { useTranslation } from 'react-i18next';
 import { AnyFunction, AnyJson } from 'types';
 
 export const usePoolFilters = () => {
+  const { t } = useTranslation('library');
   const { meta } = useBondedPools();
   const { getNominationsStatusFromTargets } = useStaking();
   const { getPoolNominationStatusCode } = useBondedPools();
-  const { t } = useTranslation('library');
 
   /*
    * include active pools.

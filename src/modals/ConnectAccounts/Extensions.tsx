@@ -20,10 +20,10 @@ import {
 } from './Wrappers';
 
 export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
+  const { t } = useTranslation('modals');
   const { setSection } = props;
   const { accounts } = useConnect();
   const { extensions } = useExtensions();
-  const { t } = useTranslation('modals');
 
   const installed = EXTENSIONS.filter((a: ExtensionConfig) =>
     extensions.find((b: ExtensionConfig) => b.id === a.id)

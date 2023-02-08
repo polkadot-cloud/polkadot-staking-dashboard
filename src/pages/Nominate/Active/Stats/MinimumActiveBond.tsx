@@ -7,10 +7,10 @@ import { Number } from 'library/StatBoxList/Number';
 import { useTranslation } from 'react-i18next';
 
 export const MinimumActiveBondStat = () => {
+  const { t } = useTranslation('pages');
   const { network } = useApi();
   const { eraStakers } = useStaking();
   const { minActiveBond } = eraStakers;
-  const { t } = useTranslation('pages');
 
   const params = {
     label: t('nominate.minimumActiveBond'),

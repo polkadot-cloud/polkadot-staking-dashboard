@@ -7,7 +7,6 @@ import {
   borderPrimary,
   borderSecondary,
   buttonSecondaryBackground,
-  textSecondary,
 } from 'theme';
 
 export const ActiveAccounWrapper = styled.div`
@@ -85,7 +84,7 @@ export const ActiveAccounWrapper = styled.div`
       flex-flow: row-reverse wrap;
 
       .copy {
-        color: ${textSecondary};
+        color: var(--text-color-secondary);
         opacity: 0.7;
         cursor: pointer;
         transition: opacity 0.1s;
@@ -109,7 +108,7 @@ export const SectionWrapper = styled.div<{ noPadding?: boolean }>`
     align-items: center;
 
     button {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       margin-left: 0.5rem;
       opacity: 0.7;
     }
@@ -150,7 +149,7 @@ export const SectionWrapper = styled.div<{ noPadding?: boolean }>`
       flex-flow: row-reverse wrap;
 
       > .copy {
-        color: ${textSecondary};
+        color: var(--text-color-secondary);
         opacity: 0.5;
         cursor: pointer;
         transition: opacity 0.1s;

@@ -11,8 +11,8 @@ import { ContentWrapper } from './Wrappers';
 
 export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
   const { t } = useTranslation('modals');
-
   const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
+
   const poolLocked = selectedActivePool?.bondedPool?.state === 'Blocked';
   const poolDestroying = selectedActivePool?.bondedPool?.state === 'Destroying';
 

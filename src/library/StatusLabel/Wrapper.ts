@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundLabel, textSecondary } from 'theme';
+import { backgroundLabel } from 'theme';
 import { WrapperProps } from './types';
 
 export const Wrapper = styled.div<WrapperProps>`
@@ -26,7 +26,7 @@ export const Wrapper = styled.div<WrapperProps>`
     justify-content: center;
 
     > svg {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
     }
     h2 {
       padding: 0;

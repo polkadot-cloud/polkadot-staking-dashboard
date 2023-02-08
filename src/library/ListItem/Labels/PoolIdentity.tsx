@@ -7,10 +7,12 @@ import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import { clipAddress, determinePoolDisplay } from 'Utils';
 import { PoolIdentityProps } from '../types';
 
-export const PoolIdentity = (props: PoolIdentityProps) => {
+export const PoolIdentity = ({
+  pool,
+  batchKey,
+  batchIndex,
+}: PoolIdentityProps) => {
   const { meta } = useBondedPools();
-
-  const { pool, batchKey, batchIndex } = props;
   const { addresses } = pool;
 
   // get metadata from pools metabatch

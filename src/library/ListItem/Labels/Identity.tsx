@@ -7,8 +7,12 @@ import { clipAddress } from 'Utils';
 import { getIdentityDisplay } from '../../ValidatorList/Validator/Utils';
 import { IdentityProps } from '../types';
 
-export const Identity = (props: IdentityProps) => {
-  const { address, batchKey, batchIndex, meta } = props;
+export const Identity = ({
+  address,
+  batchKey,
+  batchIndex,
+  meta,
+}: IdentityProps) => {
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
   const stake = meta[batchKey]?.stake ?? [];

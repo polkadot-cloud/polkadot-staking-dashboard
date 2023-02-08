@@ -7,16 +7,13 @@ import {
   backgroundToggle,
   borderPrimary,
   buttonPrimaryBackground,
-  textPrimary,
-  textSecondary,
-  textSuccess,
 } from 'theme';
 
 export const ContentWrapper = styled.div`
   width: 100%;
 
   > h4 {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     margin: 0.75rem 0;
     padding-bottom: 0.5rem;
     width: 100%;
@@ -51,7 +48,6 @@ export const StyledButton = styled.button`
   border-radius: 1rem;
   display: inline-flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   width: 100%;
 
@@ -66,7 +62,7 @@ export const StyledButton = styled.button`
   h4 {
     margin: 0;
     &.selected {
-      color: ${textSuccess};
+      color: var(--text-color-success);
       margin-left: 0.75rem;
     }
   }
@@ -100,11 +96,11 @@ export const StyledButton = styled.button`
   }
 
   svg {
-    color: ${textSecondary};
-    fill: ${textSecondary};
+    color: var(--text-color-secondary);
+    fill: var(--text-color-secondary);
   }
   p {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
     font-size: 1rem;
   }
 `;

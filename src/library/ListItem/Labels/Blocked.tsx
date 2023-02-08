@@ -9,11 +9,10 @@ import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BlockedProps } from '../types';
 
-export const Blocked = (props: BlockedProps) => {
-  const { prefs } = props;
+export const Blocked = ({ prefs }: BlockedProps) => {
+  const { t } = useTranslation('library');
   const blocked = prefs?.blocked ?? null;
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
-  const { t } = useTranslation('library');
 
   const posRef = useRef(null);
 

@@ -6,12 +6,12 @@ import { ReactComponent as IconSVG } from 'img/info-outline.svg';
 import { OpenHelpIconProps } from './types';
 import { Wrapper } from './Wrapper';
 
-export const OpenHelpIcon = (props: OpenHelpIconProps) => {
+export const OpenHelpIcon = ({
+  helpKey,
+  size = '1.3rem',
+  light = false,
+}: OpenHelpIconProps) => {
   const { openHelpWith } = useHelp();
-
-  const { helpKey } = props;
-
-  const size = props.size ?? '1.3em';
 
   return (
     <Wrapper
@@ -20,7 +20,7 @@ export const OpenHelpIcon = (props: OpenHelpIconProps) => {
       }}
       className="help-icon"
       style={{ width: size, height: size }}
-      light={props.light ?? false}
+      light={light ?? false}
     >
       <IconSVG />
     </Wrapper>

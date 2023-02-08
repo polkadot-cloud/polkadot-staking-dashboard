@@ -23,7 +23,6 @@ import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {
   const { t } = useTranslation('modals');
-
   const { consts, api } = useApi();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getBondedAccount } = useBalances();

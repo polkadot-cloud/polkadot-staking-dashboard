@@ -7,9 +7,9 @@ import { Text } from 'library/StatBoxList/Text';
 import { useTranslation } from 'react-i18next';
 
 export const PoolMembershipStat = () => {
+  const { t } = useTranslation('pages');
   const { membership } = usePoolMemberships();
   const { isOwner } = useActivePools();
-  const { t } = useTranslation('pages');
 
   const params = {
     label: t('pools.poolMembership'),
