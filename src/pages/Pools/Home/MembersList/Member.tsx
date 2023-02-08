@@ -26,7 +26,7 @@ import {
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const Member = (props: any) => {
+export const Member = ({ who, batchKey, batchIndex }: any) => {
   const { t } = useTranslation('pages');
   const { meta } = usePoolMembers();
   const { openModalWith } = useModal();
@@ -36,8 +36,6 @@ export const Member = (props: any) => {
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { state, roles } = selectedActivePool?.bondedPool || {};
   const { stateToggler, root, depositor } = roles || {};
-
-  const { who, batchKey, batchIndex } = props;
 
   const canUnbondBlocked =
     state === 'Blocked' &&

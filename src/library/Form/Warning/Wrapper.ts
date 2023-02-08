@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundWarning, borderWarning, textWarning } from 'theme';
+import { backgroundWarning, borderWarning } from 'theme';
 
 export const Wrapper = styled.div`
   background: ${backgroundWarning};
@@ -16,11 +16,11 @@ export const Wrapper = styled.div`
   width: 100%;
 
   > h4 {
-    color: ${textWarning};
+    color: var(--text-color-warning);
     margin: 0;
 
     .icon {
-      color: ${textWarning};
+      color: var(--text-color-warning);
       margin-right: 0.6rem;
     }
   }

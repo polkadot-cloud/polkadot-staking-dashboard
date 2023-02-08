@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next';
 import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const NominatePool = () => {
+  const { t } = useTranslation('modals');
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
@@ -25,7 +26,6 @@ export const NominatePool = () => {
     useActivePools();
   const { txFeesValid } = useTxFees();
   const { nominations } = targets;
-  const { t } = useTranslation('modals');
 
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);

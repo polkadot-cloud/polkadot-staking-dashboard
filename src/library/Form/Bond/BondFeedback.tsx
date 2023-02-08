@@ -28,6 +28,7 @@ export const BondFeedback = ({
   maxWidth,
   syncing = false,
 }: BondFeedbackProps) => {
+  const { t } = useTranslation('library');
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { staking } = useStaking();
@@ -37,7 +38,6 @@ export const BondFeedback = ({
   const { minJoinBond, minCreateBond } = stats;
   const { units, unit } = network;
   const { minNominatorBond } = staking;
-  const { t } = useTranslation('library');
   const allTransferOptions = getTransferOptions(activeAccount);
 
   const defaultBondStr = defaultBond ? String(defaultBond) : '';

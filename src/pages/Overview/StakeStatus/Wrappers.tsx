@@ -3,7 +3,7 @@
 
 import { SideMenuStickyThreshold } from 'consts';
 import styled from 'styled-components';
-import { borderPrimary, textSecondary } from 'theme';
+import { borderPrimary } from 'theme';
 
 export const StatusWrapper = styled.div<{ includeBorder: boolean }>`
   width: 100%;
@@ -52,7 +52,6 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    justify-content: flex-start;
     overflow: hidden;
     width: auto;
     height: 2rem;
@@ -61,7 +60,7 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
     width: 100%;
 
     .text {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       font-size: 1.25rem;
       line-height: 1.55rem;
       position: absolute;
@@ -82,6 +81,16 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
       left: 0rem;
       top: 0.32rem;
       margin-right: 0.75rem;
+
+      &.off {
+        opacity: 0.1;
+      }
+      &.active {
+        color: var(--text-color-success);
+      }
+      &.inactive {
+        color: var(--text-color-warning);
+      }
     }
     .cta {
       position: absolute;

@@ -24,7 +24,6 @@ import { PaddingWrapper } from '../Wrappers';
 
 export const JoinPool = () => {
   const { t } = useTranslation('modals');
-
   const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, config, setResize } = useModal();

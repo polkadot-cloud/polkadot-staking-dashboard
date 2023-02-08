@@ -21,7 +21,6 @@ import { BondedChart } from '../../../library/BarChart/BondedChart';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
-
   const { network } = useApi();
   const { units } = network;
   const { openModalWith } = useModal();

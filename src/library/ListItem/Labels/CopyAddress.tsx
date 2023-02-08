@@ -9,10 +9,9 @@ import { NotificationText } from 'contexts/Notifications/types';
 import { useTranslation } from 'react-i18next';
 import { CopyAddressProps } from '../types';
 
-export const CopyAddress = (props: CopyAddressProps) => {
-  const { addNotification } = useNotifications();
-  const { address } = props;
+export const CopyAddress = ({ address }: CopyAddressProps) => {
   const { t } = useTranslation('library');
+  const { addNotification } = useNotifications();
 
   // copy address notification
   const notificationCopyAddress: NotificationText | null =

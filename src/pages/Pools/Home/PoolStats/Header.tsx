@@ -10,10 +10,10 @@ import { planckToUnit, rmCommas } from 'Utils';
 import { HeaderWrapper } from './Wrappers';
 
 export const Header = () => {
+  const { t } = useTranslation('pages');
   const { network } = useApi();
   const { selectedActivePool } = useActivePools();
   const { getMembersOfPool } = usePoolMembers();
-  const { t } = useTranslation('pages');
 
   const { state, points } = selectedActivePool?.bondedPool || {};
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);

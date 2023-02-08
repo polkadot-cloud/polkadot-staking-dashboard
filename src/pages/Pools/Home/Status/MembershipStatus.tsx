@@ -16,7 +16,6 @@ import { useStatusButtons } from './useStatusButtons';
 
 export const MembershipStatus = () => {
   const { t } = useTranslation('pages');
-
   const { isReady } = useApi();
   const { poolsSyncing } = useUi();
   const { openModalWith } = useModal();

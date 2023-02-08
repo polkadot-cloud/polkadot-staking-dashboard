@@ -5,12 +5,10 @@ import { faPenToSquare, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
-import { useTheme } from 'contexts/Themes';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { defaultThemes } from 'theme/default';
 import { SubmitTxProps } from './types';
 import { Wrapper } from './Wrappers';
 
@@ -20,7 +18,6 @@ export const SubmitTx = ({
 }: SubmitTxProps) => {
   const { t } = useTranslation('library');
   const { unit } = useApi().network;
-  const { mode } = useTheme();
   const { notEnoughFunds } = useTxFees();
   const { setResize } = useModal();
 
@@ -46,10 +43,10 @@ export const SubmitTx = ({
                 {fromController ? ' / ' : null}
                 <FontAwesomeIcon
                   icon={faWarning}
+                  className="danger"
                   transform="shrink-1"
-                  color={defaultThemes.text.danger[mode]}
                 />{' '}
-                <span style={{ color: defaultThemes.text.danger[mode] }}>
+                <span className="danger">
                   {t('notEnough')} {unit}
                 </span>
               </>

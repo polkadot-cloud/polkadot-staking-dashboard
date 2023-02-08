@@ -4,7 +4,7 @@
 import { SideMenuStickyThreshold, SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { borderPrimary, textSecondary } from 'theme';
+import { borderPrimary } from 'theme';
 
 export const TipsWrapper = styled.div`
   width: 100%;
@@ -80,7 +80,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
         }
 
         h4 {
-          color: ${textSecondary};
+          color: var(--text-color-secondary);
           position: absolute;
           top: 0;
           left: 0;
@@ -97,12 +97,12 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           transition: color 0.15s;
         }
         .more {
+          color: var(--text-color-secondary);
           position: absolute;
           right: 0.2rem;
           top: 0.43rem;
           display: flex;
           align-items: center;
-          color: ${textSecondary};
           transition: all 0.15s;
           font-size: 1rem;
           opacity: 0.5;
@@ -116,7 +116,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
 `;
 
 export const PageToggleWrapper = styled.div`
-  color: ${textSecondary};
+  color: var(--text-color-secondary);
   padding: 0.1rem 0.1rem;
   border-radius: 1.5rem;
   border: 1px solid ${borderPrimary};
@@ -132,14 +132,14 @@ export const PageToggleWrapper = styled.div`
     font-size: 1.1rem;
     transition: color 0.2s;
     > svg {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
     }
     &:hover {
       opacity: 1;
       color: var(--network-color-primary);
     }
     &:disabled {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       opacity: 0.1;
     }
   }

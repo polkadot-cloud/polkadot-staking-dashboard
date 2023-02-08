@@ -2,16 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  borderPrimary,
-  borderSecondary,
-  buttonPrimaryBackground,
-  textPrimary,
-  textSecondary,
-} from 'theme';
+import { borderPrimary, borderSecondary, buttonPrimaryBackground } from 'theme';
 
 export const Wrapper = styled.div`
-  color: ${textPrimary};
+  color: var(--text-color-primary);
   border-radius: 0.75rem;
   width: 100%;
   margin: 1rem 0;
@@ -20,7 +14,6 @@ export const Wrapper = styled.div`
   transition: background 0.15s;
   display: flex;
   flex-flow: column nowrap;
-  align-items: flex-start;
   min-height: 3.5rem;
 
   > .content {
@@ -44,7 +37,7 @@ export const Wrapper = styled.div`
     transition: border 0.1s;
 
     > div {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       transition: opacity 0.2s;
 
       &:first-child {

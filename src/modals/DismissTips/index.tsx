@@ -9,9 +9,9 @@ import { PaddingWrapper } from 'modals/Wrappers';
 import { useTranslation } from 'react-i18next';
 
 export const DismissTips = () => {
+  const { t } = useTranslation('tips');
   const { togglePlugin } = usePlugins();
   const { setStatus } = useModal();
-  const { t } = useTranslation('tips');
 
   return (
     <>

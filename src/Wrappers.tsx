@@ -15,8 +15,6 @@ import {
   backgroundPrimary,
   borderPrimary,
   buttonSecondaryBackground,
-  textPrimary,
-  textSecondary,
 } from 'theme';
 import {
   InterfaceLayoutProps,
@@ -41,36 +39,36 @@ export const EntryWrapper = styled.div`
   flex-grow: 1;
 
   h1 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
   }
   h2 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
   }
   h3 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
   }
   h4 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
   }
   h5 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
   }
   p {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
   }
   a {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
   }
   input {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
   }
 
   path.primary {
-    fill: ${textPrimary};
+    fill: var(--text-color-primary);
   }
 
   ellipse.primary {
-    fill: ${textPrimary};
+    fill: var(--text-color-primary);
   }
 
   input:focus,
@@ -230,7 +228,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
     }
 
     button {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       border: 1px solid ${borderPrimary};
       padding: 0.5rem 0.75rem;
       margin: 0;
@@ -283,12 +281,13 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
 
     .inner {
       display: flex;
+
       > button {
+        color: var(--text-color-secondary);
         padding: 0.65rem 1rem;
         margin-bottom: 0.5rem;
         margin-right: 0.75rem;
         font-size: ${(props) => (props.sticky ? '1.05rem' : '1.15rem')};
-        color: ${textSecondary};
         transition: opacity 0.1s, font-size 0.1s;
         border-radius: 0.5rem;
 
@@ -429,7 +428,7 @@ export const TopBarWrapper = styled.div`
   }
 
   h3 {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     font-size: 1.15rem;
     margin: 0.25rem 0;
     min-height: 2rem;
@@ -454,6 +453,5 @@ export const TopBarWrapper = styled.div`
 export const ButtonRowWrapper = styled.div<{ verticalSpacing?: boolean }>`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   margin-top: ${(props) => (props.verticalSpacing ? '1rem' : 0)};
 `;

@@ -22,7 +22,6 @@ import { useTranslation } from 'react-i18next';
 
 export const NominationStatus = () => {
   const { t } = useTranslation('pages');
-
   const { isReady } = useApi();
   const { inSetup } = useStaking();
   const { networkSyncing } = useUi();

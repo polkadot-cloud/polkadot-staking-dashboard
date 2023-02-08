@@ -8,8 +8,6 @@ import {
   buttonPrimaryBackground,
   modalBackground,
   modalOverlayBackground,
-  textPrimary,
-  textSecondary,
 } from 'theme';
 
 // Blurred background modal wrapper
@@ -91,7 +89,7 @@ export const ContentWrapper = styled.div`
   .notes {
     padding: 1rem 0;
     > p {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
     }
   }
   .action-button {
@@ -102,7 +100,6 @@ export const ContentWrapper = styled.div`
     border-radius: 0.75rem;
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
     align-items: center;
     transition: all 0.15s;
     width: 100%;
@@ -132,7 +129,7 @@ export const ContentWrapper = styled.div`
       margin-right: 0.5rem;
     }
     p {
-      color: ${textPrimary};
+      color: var(--text-color-primary);
       font-size: 1rem;
     }
   }
@@ -145,8 +142,6 @@ export const PaddingWrapper = styled.div<{
 }>`
   display: flex;
   flex-flow: column wrap;
-  align-items: flex-start;
-  justify-content: flex-start;
   width: 100%;
   padding: ${(props) =>
     props.verticalOnly
@@ -158,14 +153,13 @@ export const PaddingWrapper = styled.div<{
 
 // modal header, used for extrinsics forms
 export const HeadingWrapper = styled.h3<{ noPadding?: boolean }>`
+  color: var(--text-color-secondary);
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   width: 100%;
   margin-top: 0.25rem;
   padding: ${(props) => (props.noPadding ? '0' : '0 1rem')};
-  color: ${textSecondary};
   flex: 1;
 
   > svg {
@@ -177,12 +171,11 @@ export const HeadingWrapper = styled.h3<{ noPadding?: boolean }>`
 export const FooterWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   width: 100%;
 
   h3 {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     opacity: 0.5;
     margin: 0;
     position: relative;
@@ -222,7 +215,7 @@ export const FooterWrapper = styled.div`
 `;
 
 export const Separator = styled.div`
-  border-top: 1px solid ${textSecondary};
+  border-top: 1px solid var(--text-color-secondary);
   width: 100%;
   opacity: 0.1;
   margin: 0.8rem 0rem 0.8rem 0;
@@ -234,7 +227,7 @@ export const NotesWrapper = styled.div<{
   width: 100%;
   padding: ${(props) => (props.noPadding ? '0' : '0.75rem 0')};
   > p {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
   }
 `;
 

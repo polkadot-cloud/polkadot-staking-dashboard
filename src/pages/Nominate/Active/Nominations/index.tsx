@@ -25,6 +25,7 @@ export const Nominations = ({
   bondFor: 'pool' | 'nominator';
   nominator: MaybeAccount;
 }) => {
+  const { t } = useTranslation('pages');
   const { openModalWith } = useModal();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
@@ -32,7 +33,6 @@ export const Nominations = ({
   const { getAccountNominations } = useBalances();
   const { isFastUnstaking } = useUnstaking();
   const { nominated: stakeNominated, poolNominated } = useValidators();
-  const { t } = useTranslation('pages');
   let { favoritesList } = useValidators();
   if (favoritesList === null) {
     favoritesList = [];

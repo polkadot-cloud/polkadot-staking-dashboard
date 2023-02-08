@@ -29,6 +29,7 @@ import { Secondary } from './Secondary';
 import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
 
 export const SideMenu = () => {
+  const { t } = useTranslation('base');
   const { network, apiStatus } = useApi();
   const { mode, toggleTheme } = useTheme();
   const { openModalWith } = useModal();
@@ -39,7 +40,6 @@ export const SideMenu = () => {
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi();
   const { openHelpWith } = useHelp();
-  const { t } = useTranslation('base');
 
   // listen to window resize to hide SideMenu
   useEffect(() => {

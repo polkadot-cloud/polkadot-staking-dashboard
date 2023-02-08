@@ -18,13 +18,14 @@ import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { OversubscribedProps } from '../types';
 
-export const Oversubscribed = (props: OversubscribedProps) => {
+export const Oversubscribed = ({
+  batchIndex,
+  batchKey,
+}: OversubscribedProps) => {
+  const { t } = useTranslation('library');
   const { consts, network } = useApi();
   const { meta } = useValidators();
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
-  const { t } = useTranslation('library');
-
-  const { batchIndex, batchKey } = props;
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];

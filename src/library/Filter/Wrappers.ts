@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundDropdown, borderPrimary, textSecondary } from 'theme';
+import { backgroundDropdown, borderPrimary } from 'theme';
 
 export const Wrapper = styled.div`
   padding: 0 0.5rem;
@@ -52,7 +52,7 @@ export const ItemWrapper = styled.div`
     margin-right: 0;
   }
   .icon {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     display: flex;
     flex-flow: column wrap;
     justify-content: center;
@@ -60,7 +60,7 @@ export const ItemWrapper = styled.div`
     margin-right: 0.55rem;
   }
   p {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     font-size: 0.9rem;
     margin: 0;
     text-align: left;
@@ -102,7 +102,7 @@ export const LargeItemWrapper = styled.div`
       margin-right: 0.75rem;
     }
     p {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       margin: 0;
       text-align: left;
       padding: 0.5rem 0 0 0;
@@ -131,7 +131,9 @@ export const TabWrapper = styled.button<{ active?: boolean }>`
     ${(props) =>
       props.active ? 'var(--network-color-primary)' : borderPrimary};
   color: ${(props) =>
-    props.active ? 'var(--network-color-primary)' : textSecondary};
+    props.active
+      ? 'var(--network-color-primary)'
+      : 'var(--text-color-secondary)'};
   font-size: 0.9rem;
   padding: 0.5rem 1.25rem;
 `;

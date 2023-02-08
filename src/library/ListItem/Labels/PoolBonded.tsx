@@ -20,13 +20,12 @@ export const PoolBonded = ({
   batchKey: string;
   batchIndex: number;
 }) => {
-  const { addresses, points } = pool;
-
+  const { t } = useTranslation('library');
   const { network } = useApi();
   const { eraStakers, getNominationsStatusFromTargets } = useStaking();
   const { meta, getPoolNominationStatusCode } = useBondedPools();
+  const { addresses, points } = pool;
   const { units, unit } = network;
-  const { t } = useTranslation('library');
 
   // get pool targets from nominations meta batch
   const nominations = meta[batchKey]?.nominations ?? [];

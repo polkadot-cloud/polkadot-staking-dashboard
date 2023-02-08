@@ -7,9 +7,6 @@ import {
   borderPrimary,
   buttonPrimaryBackground,
   successTransparent,
-  textPrimary,
-  textSecondary,
-  textSuccess,
 } from 'theme';
 import { NetworkButtonProps } from './types';
 
@@ -17,12 +14,11 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   align-items: center;
-  justify-content: flex-start;
   padding: 1rem;
 
   h2 {
+    color: var(--text-color-primary);
     margin-top: 0.5rem;
-    color: ${textPrimary};
   }
 `;
 
@@ -30,7 +26,7 @@ export const ContentWrapper = styled.div`
   width: 100%;
 
   > h4 {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     margin: 0.75rem 0;
     padding-bottom: 0.5rem;
     width: 100%;
@@ -65,7 +61,6 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
   border-radius: 0.75rem;
   display: inline-flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   width: 100%;
   border: 1px solid ${successTransparent};
@@ -86,7 +81,7 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
   h4 {
     margin: 0;
     &.selected {
-      color: ${textSuccess};
+      color: var(--text-color-success);
       margin-left: 0.75rem;
     }
   }
@@ -105,11 +100,11 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
   }
 
   svg {
-    color: ${textSecondary};
-    fill: ${textSecondary};
+    color: var(--text-color-secondary);
+    fill: var(--text-color-secondary);
   }
   p {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
     font-size: 1rem;
   }
 
@@ -128,14 +123,14 @@ export const BraveWarning = styled.div`
   padding: 1rem;
 
   .brave-text {
+    color: var(--text-color-primary);
     width: 90%;
     padding-left: 1rem;
-    color: ${textPrimary};
     font-size: 1.2rem;
     align-self: center;
 
     .learn-more {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       font-weight: bold;
       text-decoration: underline ${borderPrimary};
     }
@@ -165,7 +160,6 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
   `}
   display: inline-flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
 
   &:hover {
@@ -178,7 +172,7 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
   h4 {
     margin: 0;
     &.selected {
-      color: ${textSuccess};
+      color: var(--text-color-success);
       margin: 0 0.75rem 0 0;
     }
   }

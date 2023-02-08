@@ -30,12 +30,12 @@ import {
 } from '../SetupSteps/types';
 import { useFetchMehods } from './useFetchMethods';
 
-export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
-  // functional props
-  const setters = props.setters ?? [];
-  const defaultNominations = props.nominations;
-  const { batchKey } = props;
-
+export const GenerateNominations = ({
+  setters = [],
+  nominations: defaultNominations,
+  batchKey,
+}: GenerateNominationsInnerProps) => {
+  const { t } = useTranslation('library');
   const { openModalWith } = useModal();
   const { isReady, consts } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -47,7 +47,6 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     available: availableToNominate,
   } = useFetchMehods();
   const { maxNominations } = consts;
-  const { t } = useTranslation('library');
 
   let { favoritesList } = useValidators();
   if (favoritesList === null) {
@@ -115,21 +114,21 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
   // fetch nominations based on method
   const fetchNominationsForMethod = () => {
     if (method) {
-      const _nominations = fetchFromMethod(method);
+      const newNominations = fetchFromMethod(method);
       // update component state
-      setNominations([..._nominations]);
+      setNominations([...newNominations]);
       setFetching(false);
-      updateSetters(_nominations);
+      updateSetters(newNominations);
     }
   };
 
   // add nominations based on method
   const addNominationByType = (type: string) => {
     if (method) {
-      const _nominations = addNomination(nominations, type);
+      const newNominations = addNomination(nominations, type);
       removeValidatorMetaBatch(batchKey);
-      setNominations([..._nominations]);
-      updateSetters([..._nominations]);
+      setNominations([...newNominations]);
+      updateSetters([...newNominations]);
     }
   };
 
@@ -137,15 +136,15 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     for (const s of setters) {
       const { current, set } = s;
       const callable = current?.callable ?? false;
-      let _current;
+      let currentValue;
 
       if (!callable) {
-        _current = current;
+        currentValue = current;
       } else {
-        _current = current.fn();
+        currentValue = current.fn();
       }
       const _set = {
-        ..._current,
+        ...currentValue,
         nominations: _nominations,
       };
       set(_set);

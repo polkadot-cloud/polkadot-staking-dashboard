@@ -8,8 +8,13 @@ import { StatBox } from './Item';
 import { TimeleftProps } from './types';
 import { TimeLeftWrapper } from './Wrapper';
 
-export const Timeleft = (props: TimeleftProps) => {
-  const { label, timeleft, graph, tooltip, helpKey } = props;
+export const Timeleft = ({
+  label,
+  timeleft,
+  graph,
+  tooltip,
+  helpKey,
+}: TimeleftProps) => {
   const help = helpKey !== undefined;
 
   return (

@@ -9,12 +9,11 @@ import { Entity } from './Entity';
 import { List } from './List';
 import { Wrapper } from './Wrappers';
 
-export const CommunityInner = (props: PageProps) => {
-  const { page } = props;
-  const { key } = page;
-
-  const { activeSection } = useCommunitySections();
+export const CommunityInner = ({ page }: PageProps) => {
   const { t } = useTranslation('base');
+  const { activeSection } = useCommunitySections();
+
+  const { key } = page;
 
   return (
     <Wrapper>

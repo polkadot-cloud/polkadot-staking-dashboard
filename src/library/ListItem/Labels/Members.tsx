@@ -8,11 +8,10 @@ import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const Members = (props: { members: string }) => {
-  const { members } = props;
+export const Members = ({ members }: { members: string }) => {
   const { t } = useTranslation('library');
-
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
+
   const posRef = useRef<HTMLDivElement>(null);
   const tooltipText = t('poolMembers');
 

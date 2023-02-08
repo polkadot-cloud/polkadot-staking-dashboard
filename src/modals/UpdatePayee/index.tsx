@@ -25,7 +25,6 @@ import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals');
-
   const { api } = useApi();
   const { activeAccount } = useConnect();
   const { getBondedAccount } = useBalances();

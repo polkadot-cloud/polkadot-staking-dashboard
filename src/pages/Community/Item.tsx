@@ -17,12 +17,11 @@ import { useCommunitySections } from './context';
 import { ItemProps } from './types';
 import { ItemWrapper } from './Wrappers';
 
-export const Item = (props: ItemProps) => {
+export const Item = ({ item, actionable }: ItemProps) => {
+  const { t } = useTranslation('pages');
   const { openModalWith } = useModal();
   const { network } = useApi();
-  const { t } = useTranslation('pages');
 
-  const { item, actionable } = props;
   const {
     bio,
     name,

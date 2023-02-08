@@ -31,22 +31,20 @@ import { Select } from '../../ListItem/Labels/Select';
 import { DefaultProps } from './types';
 import { getIdentityDisplay } from './Utils';
 
-export const Default = (props: DefaultProps) => {
-  const {
-    validator,
-    toggleFavorites,
-    batchIndex,
-    batchKey,
-    showMenu,
-    inModal,
-  } = props;
-
+export const Default = ({
+  validator,
+  toggleFavorites,
+  batchIndex,
+  batchKey,
+  showMenu,
+  inModal,
+}: DefaultProps) => {
+  const { t } = useTranslation('library');
   const { openModalWith } = useModal();
   const { addNotification } = useNotifications();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { meta } = useValidators();
   const { selectActive } = useList();
-  const { t } = useTranslation('library');
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];

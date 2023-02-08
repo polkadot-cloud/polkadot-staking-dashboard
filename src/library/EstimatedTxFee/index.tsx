@@ -12,7 +12,6 @@ import { Wrapper } from './Wrapper';
 
 export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
   const { t } = useTranslation('library');
-
   const { unit, units } = useApi().network;
   const { txFees, resetTxFees } = useTxFees();
 

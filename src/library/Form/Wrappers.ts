@@ -3,7 +3,7 @@
 
 import { SmallFontSizeMaxWidth } from 'consts';
 import styled from 'styled-components';
-import { borderPrimary, textSecondary } from 'theme';
+import { borderPrimary } from 'theme';
 
 export const Spacer = styled.div`
   width: 100%;
@@ -33,7 +33,7 @@ export const InputWrapper = styled.div`
   flex-flow: column wrap;
 
   h3 {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     margin: 0;
     padding: 0 0.25rem;
   }
@@ -71,7 +71,7 @@ export const InputWrapper = styled.div`
             @media (max-width: ${SmallFontSizeMaxWidth}px) {
               display: none;
             }
-            color: ${textSecondary};
+            color: var(--text-color-secondary);
             padding-left: 0.5rem;
             justify-content: flex-end;
             opacity: 0.5;
@@ -105,7 +105,7 @@ export const InputWrapper = styled.div`
     @media (min-width: ${SmallFontSizeMaxWidth + 1}px) {
       display: none;
     }
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     opacity: 0.5;
     padding: 0 0.5rem;
   }

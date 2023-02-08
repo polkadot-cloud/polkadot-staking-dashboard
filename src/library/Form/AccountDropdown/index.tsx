@@ -4,12 +4,10 @@
 import { faAnglesRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
-import { useTheme } from 'contexts/Themes';
 import { useCombobox, UseComboboxStateChange } from 'downshift';
 import { Identicon } from 'library/Identicon';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { defaultThemes } from 'theme/default';
 import { remToUnit } from 'Utils';
 import { AccountDropdownProps, InputItem } from '../types';
 import { StyledController, StyledDownshift, StyledDropdown } from './Wrappers';
@@ -113,33 +111,13 @@ export const AccountDropdown = ({
 
 const DropdownItem = ({ c, item, index }: any) => {
   const { t } = useTranslation('library');
-
-  const { colors, unit } = useApi().network;
-  const { mode } = useTheme();
-
-  let color;
-  let border;
-
-  if (c.selectedItem === item) {
-    color = colors.primary[mode];
-    border = `2px solid ${colors.primary[mode]}`;
-  } else {
-    color = defaultThemes.text.primary[mode];
-    border = `2px solid ${defaultThemes.transparent[mode]}`;
-  }
-
-  // disable item in list if account doesn't satisfy controller budget.
-  const itemProps = item.active
-    ? c.getItemProps({ key: item.name, index, item })
-    : {};
-  const opacity = item.active ? 1 : 0.5;
-  const cursor = item.active ? 'pointer' : 'default';
-
+  const { unit } = useApi().network;
   return (
     <div
-      className="item"
-      {...itemProps}
-      style={{ color, border, opacity, cursor }}
+      className={`item${c.selectedItem === item ? ' selected' : ''}${
+        item.active ? '' : ' inactive'
+      }`}
+      {...(item.active ? c.getItemProps({ key: item.name, index, item }) : {})}
     >
       <div className="icon">
         <Identicon value={item.address} size={26} />
