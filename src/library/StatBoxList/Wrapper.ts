@@ -3,15 +3,8 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-
 import {
   backgroundSecondary,
-  borderPrimary,
-  cardBorder,
-  cardShadow,
-  networkColor,
-  shadowColor,
-  shadowColorSecondary,
   textInvert,
   textPrimary,
   textSecondary,
@@ -66,10 +59,9 @@ export const StatBoxWrapper = styled(motion.div)`
 
   .content {
     background: ${backgroundSecondary};
-    border: ${cardBorder} ${borderPrimary};
-    box-shadow: ${cardShadow} ${shadowColorSecondary};
+    box-shadow: var(--card-shadow) var(--card-shadow-color-secondary);
     @media (max-width: 799px) {
-      box-shadow: ${cardShadow} ${shadowColor};
+      box-shadow: var(--card-shadow) var(--card-shadow-color);
     }
     display: flex;
     border-radius: 0.95rem;
@@ -171,7 +163,8 @@ export const StatBoxWrapper = styled(motion.div)`
 `;
 
 export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
-  color: ${(props) => (props.primary === true ? networkColor : textPrimary)};
+  color: ${(props) =>
+    props.primary === true ? 'var(--network-color-primary)' : textPrimary};
   font-variation-settings: 'wght' 580;
   display: flex;
   flex-flow: row wrap;
@@ -198,7 +191,8 @@ export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
 `;
 
 export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
-  color: ${(props) => (props.primary === true ? networkColor : textPrimary)};
+  color: ${(props) =>
+    props.primary === true ? 'var(--network-color-primary)' : textPrimary};
   font-variation-settings: 'wght' 550;
   display: flex;
   flex-flow: row wrap;

@@ -23,7 +23,6 @@ import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
 import { locales } from 'locale';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { networkColors } from 'theme/default';
 import { AnySubscan } from 'types';
 import { clipAddress, planckToUnit } from 'Utils';
 import { PayoutListProps } from '../types';
@@ -34,8 +33,10 @@ export const PayoutListInner = (props: PayoutListProps) => {
   const { allowMoreCols, pagination } = props;
 
   const { mode } = useTheme();
-  const { isReady, network } = useApi();
-  const { units } = network;
+  const {
+    isReady,
+    network: { units, unit, colors },
+  } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { listFormat, setListFormat } = usePayoutList();
   const { validators, meta } = useValidators();
@@ -120,21 +121,13 @@ export const PayoutListInner = (props: PayoutListProps) => {
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
               icon={faBars}
-              color={
-                listFormat === 'row'
-                  ? networkColors[`${network.name}-${mode}`]
-                  : 'inherit'
-              }
+              color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
             />
           </button>
           <button type="button" onClick={() => setListFormat('col')}>
             <FontAwesomeIcon
               icon={faGripVertical}
-              color={
-                listFormat === 'col'
-                  ? networkColors[`${network.name}-${mode}`]
-                  : 'inherit'
-              }
+              color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
             />
           </button>
         </div>
@@ -202,7 +195,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
                                 new BigNumber(p.amount),
                                 units
                               ).toString()}{' '}
-                              {network.unit}
+                              {unit}
                             </>
                           </h4>
                         </div>

@@ -1,8 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { NetworkList } from 'config/networks';
-import { AnyJson, Network } from 'types';
+import { AnyJson } from 'types';
 
 const v = (light: string, dark: string) => ({
   light,
@@ -114,40 +113,3 @@ export const defaultThemes: { [key: string]: AnyJson } = {
     },
   },
 };
-
-// configure card style
-const c = (flat: string, border: string, shadow: string) => ({
-  flat,
-  border,
-  shadow,
-});
-
-export const cardThemes = {
-  card: {
-    border: c('none', '1px solid', 'none'),
-    shadow: c('none', 'none', '-2px 2px 10px'),
-  },
-};
-
-// configure network colors
-export const networkColors: { [key: string]: string } = {};
-export const networkColorsSecondary: { [key: string]: string } = {};
-export const networkColorsStroke: { [key: string]: string } = {};
-export const networkColorsTransparent: { [key: string]: string } = {};
-
-Object.values(NetworkList).forEach((node: Network) => {
-  const { name, colors } = node;
-  const { primary, secondary, stroke, transparent } = colors;
-
-  networkColors[`${name}-light`] = primary.light;
-  networkColors[`${name}-dark`] = primary.dark;
-
-  networkColorsSecondary[`${name}-light`] = secondary.light;
-  networkColorsSecondary[`${name}-dark`] = secondary.dark;
-
-  networkColorsStroke[`${name}-light`] = stroke.light;
-  networkColorsStroke[`${name}-dark`] = stroke.dark;
-
-  networkColorsTransparent[`${name}-light`] = transparent.light;
-  networkColorsTransparent[`${name}-dark`] = transparent.dark;
-});

@@ -5,13 +5,9 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import {
   backgroundToggle,
-  borderPrimary,
   buttonPrimaryBackground,
-  cardBorder,
   modalBackground,
   modalOverlayBackground,
-  networkColor,
-  shadowColor,
   textPrimary,
   textSecondary,
 } from 'theme';
@@ -46,8 +42,7 @@ export const ModalWrapper = styled(motion.div)`
 `;
 
 export const HeightWrapper = styled.div<{ size: string }>`
-  border: ${cardBorder} ${borderPrimary};
-  box-shadow: 0px 2px 8px 1px ${shadowColor};
+  box-shadow: 0px 2px 8px 1px var(--card-shadow-color);
   transition: height 0.5s cubic-bezier(0.1, 1, 0.2, 1);
   width: 100%;
   max-width: ${(props) =>
@@ -81,7 +76,7 @@ export const ContentWrapper = styled.div`
   }
 
   a {
-    color: ${networkColor};
+    color: var(--network-color-primary);
   }
   .header {
     width: 100%;
@@ -194,7 +189,7 @@ export const FooterWrapper = styled.div`
     top: 1.25rem;
     &.active {
       opacity: 1;
-      color: ${networkColor};
+      color: var(--network-color-primary);
     }
   }
 
@@ -209,12 +204,12 @@ export const FooterWrapper = styled.div`
     align-items: center;
     &.primary {
       color: white;
-      background: ${networkColor};
-      border: 1px solid ${networkColor};
+      background: var(--network-color-primary);
+      border: 1px solid var(--network-color-primary);
     }
     &.secondary {
-      color: ${networkColor};
-      border: 1px solid ${networkColor};
+      color: var(--network-color-primary);
+      border: 1px solid var(--network-color-primary);
     }
 
     &:disabled {

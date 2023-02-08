@@ -9,7 +9,7 @@ import { useCombobox, UseComboboxStateChange } from 'downshift';
 import { Identicon } from 'library/Identicon';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { defaultThemes, networkColors } from 'theme/default';
+import { defaultThemes } from 'theme/default';
 import { remToUnit } from 'Utils';
 import { AccountDropdownProps, InputItem } from '../types';
 import { StyledController, StyledDownshift, StyledDropdown } from './Wrappers';
@@ -22,9 +22,10 @@ export const AccountDropdown = ({
   current,
   height,
 }: AccountDropdownProps) => {
+  const { t } = useTranslation('library');
+
   // store input items
   const [inputItems, setInputItems] = useState<Array<InputItem>>(items);
-  const { t } = useTranslation('library');
 
   useEffect(() => {
     setInputItems(items);
@@ -111,16 +112,17 @@ export const AccountDropdown = ({
 };
 
 const DropdownItem = ({ c, item, index }: any) => {
-  const { network } = useApi();
-  const { mode } = useTheme();
   const { t } = useTranslation('library');
+
+  const { colors, unit } = useApi().network;
+  const { mode } = useTheme();
 
   let color;
   let border;
 
   if (c.selectedItem === item) {
-    color = networkColors[`${network.name}-${mode}`];
-    border = `2px solid ${networkColors[`${network.name}-${mode}`]}`;
+    color = colors.primary[mode];
+    border = `2px solid ${colors.primary[mode]}`;
   } else {
     color = defaultThemes.text.primary[mode];
     border = `2px solid ${defaultThemes.transparent[mode]}`;
@@ -144,7 +146,7 @@ const DropdownItem = ({ c, item, index }: any) => {
       </div>
       {!item.active && (
         <span>
-          {t('notEnough')} {network.unit}
+          {t('notEnough')} {unit}
         </span>
       )}
       <p>{item.name}</p>

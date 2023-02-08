@@ -22,21 +22,23 @@ import { Selectable } from 'library/List/Selectable';
 import { Validator } from 'library/ValidatorList/Validator';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { networkColors } from 'theme/default';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
 import { Filters } from './Filters';
 
 export const ValidatorListInner = (props: any) => {
+  const { t } = useTranslation('library');
   const { mode } = useTheme();
-  const { isReady, network } = useApi();
+  const {
+    isReady,
+    network: { colors },
+  } = useApi();
   const { activeAccount } = useConnect();
   const { activeEra } = useNetworkMetrics();
   const { fetchValidatorMetaBatch } = useValidators();
   const provider = useList();
   const modal = useModal();
   const { isSyncing } = useUi();
-  const { t } = useTranslation('library');
 
   // determine the nominator of the validator list.
   // By default this will be the activeAccount. But for pools,
@@ -294,9 +296,7 @@ export const ValidatorListInner = (props: any) => {
                 <FontAwesomeIcon
                   icon={faBars}
                   color={
-                    listFormat === 'row'
-                      ? networkColors[`${network.name}-${mode}`]
-                      : 'inherit'
+                    listFormat === 'row' ? colors.primary[mode] : 'inherit'
                   }
                 />
               </button>
@@ -304,9 +304,7 @@ export const ValidatorListInner = (props: any) => {
                 <FontAwesomeIcon
                   icon={faGripVertical}
                   color={
-                    listFormat === 'col'
-                      ? networkColors[`${network.name}-${mode}`]
-                      : 'inherit'
+                    listFormat === 'col' ? colors.primary[mode] : 'inherit'
                   }
                 />
               </button>

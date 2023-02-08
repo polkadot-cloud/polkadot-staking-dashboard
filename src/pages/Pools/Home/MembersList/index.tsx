@@ -15,7 +15,6 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { Selectable } from 'library/List/Selectable';
 import { useEffect, useRef, useState } from 'react';
-import { networkColors } from 'theme/default';
 import { AnyApi, Sync } from 'types';
 import { Member } from './Member';
 
@@ -26,7 +25,10 @@ export const MembersListInner = (props: any) => {
 
   const { mode } = useTheme();
   const provider = useList();
-  const { isReady, network } = useApi();
+  const {
+    isReady,
+    network: { colors },
+  } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { fetchPoolMembersMetaBatch } = usePoolMembers();
 
@@ -133,21 +135,13 @@ export const MembersListInner = (props: any) => {
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
               icon={faBars}
-              color={
-                listFormat === 'row'
-                  ? networkColors[`${network.name}-${mode}`]
-                  : 'inherit'
-              }
+              color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
             />
           </button>
           <button type="button" onClick={() => setListFormat('col')}>
             <FontAwesomeIcon
               icon={faGripVertical}
-              color={
-                listFormat === 'col'
-                  ? networkColors[`${network.name}-${mode}`]
-                  : 'inherit'
-              }
+              color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
             />
           </button>
         </div>

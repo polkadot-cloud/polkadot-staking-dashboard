@@ -20,11 +20,7 @@ import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import {
-  defaultThemes,
-  networkColors,
-  networkColorsSecondary,
-} from 'theme/default';
+import { defaultThemes } from 'theme/default';
 import { AnySubscan } from 'types';
 import { PayoutLineProps } from './types';
 import {
@@ -51,7 +47,7 @@ export const PayoutLine = ({
 }: PayoutLineProps) => {
   const { t } = useTranslation('library');
   const { mode } = useTheme();
-  const { name, unit, units } = useApi().network;
+  const { unit, units, colors } = useApi().network;
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership: poolMembership } = usePoolMemberships();
@@ -79,10 +75,10 @@ export const PayoutLine = ({
 
   // determine color for payouts
   const color = notStaking
-    ? networkColors[`${name}-${mode}`]
+    ? colors.primary[mode]
     : !poolingOnly
-    ? networkColors[`${name}-${mode}`]
-    : networkColorsSecondary[`${name}-${mode}`];
+    ? colors.primary[mode]
+    : colors.secondary[mode];
 
   // configure graph options
   const options = {

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { networkColor, textSecondary } from 'theme';
+import { textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -28,7 +28,7 @@ export const Wrapper = styled.div`
 
     .complete {
       margin: 0;
-      color: ${networkColor};
+      color: var(--network-color-primary);
     }
 
     span {

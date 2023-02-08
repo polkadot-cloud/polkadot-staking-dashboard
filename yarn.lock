@@ -1785,7 +1785,7 @@
     eventemitter3 "^5.0.0"
     rxjs "^7.8.0"
 
-"@polkadot/keyring@^10.2.6", "@polkadot/keyring@^10.3.1":
+"@polkadot/keyring@^10.3.1":
   version "10.3.1"
   resolved "https://registry.yarnpkg.com/@polkadot/keyring/-/keyring-10.3.1.tgz#f13fed33686ff81b1e486721e52299eba9e6c4a6"
   integrity sha512-xBkUtyQ766NVS1ccSYbQssWpxAhSf0uwkw9Amj8TFhu++pnZcVm+EmM2VczWqgOkmWepO7MGRjEXeOIw1YUGiw==
@@ -1803,9 +1803,9 @@
     "@polkadot/util" "10.3.1"
     "@substrate/ss58-registry" "^1.38.0"
 
-"@polkadot/react-identicon@^2.10.1":
+"@polkadot/react-identicon@^2.11.1":
   version "2.11.1"
-  resolved "https://registry.yarnpkg.com/@polkadot/react-identicon/-/react-identicon-2.11.1.tgz#8f81f142f7c7763fe2d499580b85b3879f4eb081"
+  resolved "https://registry.npmjs.org/@polkadot/react-identicon/-/react-identicon-2.11.1.tgz#8f81f142f7c7763fe2d499580b85b3879f4eb081"
   integrity sha512-pqEsiXuKOXDrXNnsFB1JyBbFqedbiDwtP0yewIQ9vtwJwm01o7oE0yGfYS88hnPN1mLDc++MMcqvrHBsxYr2Lw==
   dependencies:
     "@babel/runtime" "^7.20.13"
@@ -1961,9 +1961,22 @@
     ed2curve "^0.3.0"
     tweetnacl "^1.0.3"
 
-"@polkadot/util@10.3.1", "@polkadot/util@^10.2.6", "@polkadot/util@^10.3.1":
+"@polkadot/util@10.3.1":
   version "10.3.1"
   resolved "https://registry.yarnpkg.com/@polkadot/util/-/util-10.3.1.tgz#43b4047c688b4043b815bf0152d408053256defc"
+  integrity sha512-8j+O7gj7upj1ZwlGxmAaf3+V0xc0VZvqPeBvTFV30Oi1xoMDNH0q2vKst08wARQUUm1Gi0zIlipDMo0n4Sr7tw==
+  dependencies:
+    "@babel/runtime" "^7.20.13"
+    "@polkadot/x-bigint" "10.3.1"
+    "@polkadot/x-global" "10.3.1"
+    "@polkadot/x-textdecoder" "10.3.1"
+    "@polkadot/x-textencoder" "10.3.1"
+    "@types/bn.js" "^5.1.1"
+    bn.js "^5.2.1"
+
+"@polkadot/util@^10.3.1":
+  version "10.3.1"
+  resolved "https://registry.npmjs.org/@polkadot/util/-/util-10.3.1.tgz#43b4047c688b4043b815bf0152d408053256defc"
   integrity sha512-8j+O7gj7upj1ZwlGxmAaf3+V0xc0VZvqPeBvTFV30Oi1xoMDNH0q2vKst08wARQUUm1Gi0zIlipDMo0n4Sr7tw==
   dependencies:
     "@babel/runtime" "^7.20.13"
@@ -3031,6 +3044,11 @@ acorn@^8.2.4, acorn@^8.5.0, acorn@^8.7.1, acorn@^8.8.0:
   version "8.8.2"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-8.8.2.tgz#1b2f25db02af965399b9776b0c2c391276d37c4a"
   integrity sha512-xjIYgE8HBrkpd/sJqOGNspf8uHG+NOHGOw6a/Urj8taM2EXfdNAH2oFcPeIFfsv3+kz/mJrS5VuMqbNLjCa2vw==
+
+add@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.npmjs.org/add/-/add-2.0.6.tgz#248f0a9f6e5a528ef2295dbeec30532130ae2235"
+  integrity sha512-j5QzrmsokwWWp6kUcJQySpbG+xfOBqqKnup3OIk1pz+kB/80SLorZ9V8zHFLO92Lcd+hbvq8bT+zOGoPkmBV0Q==
 
 address@^1.0.1, address@^1.1.2:
   version "1.2.2"
@@ -10729,7 +10747,7 @@ yargs@^16.2.0:
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
 
-yarn@^1.22.18:
+yarn@^1.22.19:
   version "1.22.19"
   resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.22.19.tgz#4ba7fc5c6e704fce2066ecbfb0b0d8976fe62447"
   integrity sha512-/0V5q0WbslqnwP91tirOvldvYISzaqhClxzyUKXYxs07yUILIs5jx/k6CFe8bvKSkds5w+eiOqta39Wk3WxdcQ==

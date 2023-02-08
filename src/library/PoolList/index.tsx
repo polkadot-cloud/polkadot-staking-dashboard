@@ -21,7 +21,6 @@ import { SearchInput } from 'library/List/SearchInput';
 import { Pool } from 'library/Pool';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { networkColors } from 'theme/default';
 import { PoolListProvider, usePoolList } from './context';
 import { PoolListProps } from './types';
 
@@ -37,7 +36,10 @@ export const PoolListInner = ({
 }: PoolListProps) => {
   const { t } = useTranslation('library');
   const { mode } = useTheme();
-  const { isReady, network } = useApi();
+  const {
+    isReady,
+    network: { colors },
+  } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { fetchPoolsMetaBatch, poolSearchFilter, meta } = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
@@ -203,21 +205,13 @@ export const PoolListInner = ({
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
               icon={faBars}
-              color={
-                listFormat === 'row'
-                  ? networkColors[`${network.name}-${mode}`]
-                  : 'inherit'
-              }
+              color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
             />
           </button>
           <button type="button" onClick={() => setListFormat('col')}>
             <FontAwesomeIcon
               icon={faGripVertical}
-              color={
-                listFormat === 'col'
-                  ? networkColors[`${network.name}-${mode}`]
-                  : 'inherit'
-              }
+              color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
             />
           </button>
         </div>

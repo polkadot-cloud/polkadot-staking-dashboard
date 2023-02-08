@@ -3,14 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  backgroundDropdown,
-  borderPrimary,
-  networkColor,
-  networkColorSecondary,
-  shadowColorSecondary,
-  textSecondary,
-} from 'theme';
+import { backgroundDropdown, borderPrimary, textSecondary } from 'theme';
 
 export const ItemWrapper = styled(motion.div)`
   padding: 0.5rem;
@@ -20,7 +13,7 @@ export const ItemWrapper = styled(motion.div)`
     padding: 0 0.75rem;
     flex: 1;
     background: ${backgroundDropdown};
-    box-shadow: 0px 1.75px 0px 1.25px ${shadowColorSecondary};
+    box-shadow: 0px 1.75px 0px 1.25px var(--card-shadow-color-secondary);
     border-radius: 1rem;
     display: flex;
     flex-flow: column wrap;
@@ -61,10 +54,10 @@ export const ItemWrapper = styled(motion.div)`
           color: ${textSecondary};
           font-variation-settings: 'wght' 575;
           &.claim {
-            color: ${networkColorSecondary};
+            color: var(--network-color-secondary);
           }
           &.reward {
-            color: ${networkColor};
+            color: var(--network-color-primary);
           }
         }
 
@@ -72,14 +65,14 @@ export const ItemWrapper = styled(motion.div)`
           margin: 0;
           color: ${textSecondary};
           &.claim {
-            color: ${networkColorSecondary};
-            border: 1px solid ${networkColorSecondary};
+            color: var(--network-color-secondary);
+            border: 1px solid var(--network-color-secondary);
             border-radius: 0.75rem;
             padding: 0.2rem 0.5rem;
           }
           &.reward {
-            color: ${networkColor};
-            border: 1px solid ${networkColor};
+            color: var(--network-color-primary);
+            border: 1px solid var(--network-color-primary);
             border-radius: 0.75rem;
             padding: 0.2rem 0.5rem;
           }

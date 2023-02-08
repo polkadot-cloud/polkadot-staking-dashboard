@@ -9,9 +9,6 @@ import {
   borderPrimary,
   buttonHoverBackground,
   buttonSecondaryBackground,
-  cardBorder,
-  cardShadow,
-  shadowColor,
   textSecondary,
 } from 'theme';
 
@@ -43,8 +40,7 @@ export const ItemWrapper = styled(motion.div)`
   > .inner {
     color: ${textSecondary};
     background: ${backgroundSecondary};
-    border: ${cardBorder} ${borderPrimary};
-    box-shadow: ${cardShadow} ${shadowColor};
+    box-shadow: var(--card-shadow) var(--card-shadow-color);
     border-radius: 0.75rem;
     width: 100%;
     height: 100%;
