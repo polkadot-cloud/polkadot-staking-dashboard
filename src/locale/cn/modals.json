@@ -170,6 +170,7 @@
     "updateRewardDestination": "更新奖励地址",
     "valid": "可用地址",
     "validatorMetrics": "验证人指标",
+    "warningSelectRole": "You need a role to interact with the Fair Squares blockchain.",
     "welcomeToReport": "欢迎Bug报告、功能请求和改进.",
     "willSurpass": "添加过多收藏夹将超{{maxNominations}}提名数",
     "withdraw": "提取",

@@ -5,6 +5,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useNotifications } from 'contexts/Notifications';
+import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { PaddingWrapper } from 'modals/Wrappers';
@@ -43,6 +44,7 @@ export const SelectRole = () => {
     },
     callbackError: () => {
       notifyError(t('setRoleFailed'));
+
       setPending(false);
     },
   });
@@ -52,6 +54,7 @@ export const SelectRole = () => {
       <Title title={t('selectRole')} loading={pending} />
       <PaddingWrapper>
         <ContentWrapper>
+          <Warning text={t('warningSelectRole')} />
           {ROLES.map((_role, index) => (
             <h3 key={index}>
               <RoleButton

@@ -21,11 +21,11 @@ import UserBalance from './Stats/UserBalance';
 export const Dashboard = () => {
   const { t } = useTranslation('pages');
   const { assets } = useAssets();
-  const { role } = useAccount();
+  const { role, address } = useAccount();
   const { openModalWith } = useModal();
 
   useEffect(() => {
-    if (!role) openModalWith('SelectRole', {});
+    if (address && !role) openModalWith('SelectRole', {});
   }, [role]);
 
   return (
