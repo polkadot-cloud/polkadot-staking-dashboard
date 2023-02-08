@@ -7,8 +7,3 @@ export interface StatusLabelProps {
   title: string;
   topOffset?: string;
 }
-
-export interface WrapperProps {
-  color: string;
-  opacity: number;
-}

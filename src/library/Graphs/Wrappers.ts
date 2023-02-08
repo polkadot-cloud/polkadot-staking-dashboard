@@ -76,6 +76,9 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     background: none;
   `}
 
+  ${(props) =>
+    props.warning ? 'border: 1px solid var(--status-warning-color);' : ''}
+
   @media (max-width: ${SideMenuStickyThreshold}px) {
     padding: ${(props) =>
       props.noPadding

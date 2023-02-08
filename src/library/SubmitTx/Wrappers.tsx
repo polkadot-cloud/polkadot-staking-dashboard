@@ -17,6 +17,9 @@ export const Wrapper = styled.div`
     padding-left: 0.5rem;
     padding-bottom: 0;
 
+    .danger {
+      color: var(--text-color-danger);
+    }
     > .icon {
       margin-right: 0.3rem;
     }

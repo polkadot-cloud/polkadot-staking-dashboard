@@ -20,6 +20,7 @@
     --text-color-danger: #ae2324;
     --text-color-warning: #8e6c1a;
     --text-color-invert: #fafafa;
+    --status-warning-color: rgba(219, 161, 0, 1);
   }
 
   .theme-dark {
@@ -35,5 +36,6 @@
     --text-color-danger: #d14445;
     --text-color-warning: #cb9f37;
     --text-color-invert: #0e0e0e;
+    --status-warning-color: rgba(219, 161, 0,1);
   }
 }
