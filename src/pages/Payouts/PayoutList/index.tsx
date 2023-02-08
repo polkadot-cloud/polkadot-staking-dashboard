@@ -36,6 +36,7 @@ export const PayoutListInner = ({
   payouts: initialPayouts,
   disableThrottle = false,
 }: PayoutListProps) => {
+  const { i18n, t } = useTranslation('pages');
   const { mode } = useTheme();
   const {
     isReady,
@@ -45,7 +46,6 @@ export const PayoutListInner = ({
   const { listFormat, setListFormat } = usePayoutList();
   const { validators, meta } = useValidators();
   const { bondedPools } = useBondedPools();
-  const { i18n, t } = useTranslation('pages');
 
   // current page
   const [page, setPage] = useState<number>(1);
