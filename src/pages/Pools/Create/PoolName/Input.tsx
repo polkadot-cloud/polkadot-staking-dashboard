@@ -19,7 +19,7 @@ export const Input = ({
 
   // handle change for bonding
   const handleChange = (e: any) => {
-    const { val } = e.target;
+    const val = e.target.value;
     listenIsValid(val !== '');
     setMetadata(val);
 

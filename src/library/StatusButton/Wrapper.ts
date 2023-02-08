@@ -23,7 +23,6 @@ export const Wrapper = styled.button`
     padding-left: 0.25rem;
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
     flex: 1;
   }
 

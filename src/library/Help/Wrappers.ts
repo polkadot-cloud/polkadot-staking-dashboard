@@ -90,7 +90,6 @@ export const ListWrapper = styled(motion.div)`
   display: flex;
   flex-flow: row wrap;
   flex-grow: 1;
-  align-content: flex-start;
   overflow: auto;
   padding: 0.75rem 0.5rem;
 
@@ -169,7 +168,6 @@ export const ItemWrapper = styled(motion.div)<any>`
   height: ${(props) => (props.height === undefined ? '160px' : props.height)};
   overflow: hidden;
   flex-flow: row wrap;
-  justify-content: flex-start;
 
   > * {
     background: ${helpButton};
@@ -178,8 +176,6 @@ export const ItemWrapper = styled(motion.div)<any>`
     padding: 1.5rem;
     display: flex;
     flex-flow: column nowrap;
-    align-items: flex-start;
-    justify-content: flex-start;
     margin-bottom: 1.5rem;
     position: relative;
 

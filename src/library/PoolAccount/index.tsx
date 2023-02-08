@@ -5,11 +5,9 @@ import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useTheme } from 'contexts/Themes';
 import { Identicon } from 'library/Identicon';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { defaultThemes } from 'theme/default';
 import { clipAddress, remToUnit } from '../../Utils';
 import { PoolAccountProps } from './types';
 import { Wrapper } from './Wrapper';
@@ -23,7 +21,6 @@ export const PoolAccount = ({
   fontSize = '1.05rem',
 }: PoolAccountProps) => {
   const { t } = useTranslation('library');
-  const { mode } = useTheme();
   const { isReady } = useApi();
   const { activeAccount } = useConnect();
   const { fetchPoolsMetaBatch, meta } = useBondedPools();
@@ -75,10 +72,9 @@ export const PoolAccount = ({
 
   return (
     <Wrapper
-      whileHover={{ scale: 1.01 }}
       onClick={onClick}
-      cursor={canClick ? 'pointer' : 'default'}
-      fill={filled ? defaultThemes.buttons.secondary.background[mode] : 'none'}
+      canClick={canClick}
+      filled={filled}
       fontSize={fontSize}
     >
       {label !== undefined && <div className="account-label">{label}</div>}

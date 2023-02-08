@@ -8,8 +8,6 @@ import { buttonPrimaryBackground } from 'theme';
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
-  align-items: flex-start;
-  justify-content: flex-start;
 `;
 
 export const FixedContentWrapper = styled.div`
@@ -60,7 +58,6 @@ export const ChunkWrapper = styled.div<any>`
       display: flex;
       flex-flow: column wrap;
       justify-content: flex-end;
-      align-items: flex-start;
       padding: 0.75rem 0;
 
       &:first-child {

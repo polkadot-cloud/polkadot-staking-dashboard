@@ -29,10 +29,6 @@ export const Header = styled.div`
     align-items: center;
   }
 
-  > div:first-child {
-    justify-content: flex-start;
-  }
-
   > div:last-child {
     justify-content: flex-end;
     flex: 1;
@@ -63,7 +59,6 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
 
   > div:first-child {
     display: flex;
-    justify-content: flex-start;
     flex: 1;
   }
   > div:last-child {
@@ -147,8 +142,6 @@ export const List = styled.div<ListProps>`
   > div {
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
 
     > .item {
       display: flex;

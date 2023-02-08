@@ -8,7 +8,6 @@ export const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: flex-end;
   margin-top: 1rem;
 
@@ -16,7 +15,6 @@ export const Wrapper = styled.div`
     width: 100%;
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
     align-items: flex-end;
     margin-top: 1rem;
 

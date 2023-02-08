@@ -40,7 +40,6 @@ export const Wrapper = styled.div`
     padding: 0.3rem 0;
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
     align-items: center;
 
     .help-icon {

@@ -13,7 +13,6 @@ export const TipWrapper = styled(motion.div)`
   margin-bottom: 1.25rem;
   padding: 2rem 2rem 1rem 2rem;
   flex-flow: column wrap;
-  align-items: flex-start;
   position: relative;
   overflow: hidden;
   flex: 1;

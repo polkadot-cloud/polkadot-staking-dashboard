@@ -4,10 +4,8 @@
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
-import { useTheme } from 'contexts/Themes';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { defaultThemes } from 'theme/default';
 import { clipAddress, remToUnit } from 'Utils';
 import { Identicon } from '../Identicon';
 import { AccountProps } from './types';
@@ -25,8 +23,8 @@ export const Account = ({
   onClick,
 }: AccountProps) => {
   const { t } = useTranslation('library');
-  const { mode } = useTheme();
   const { getAccount } = useConnect();
+
   const [displayValue, setDisplayValue] = useState<string | undefined>();
 
   const unassigned = value === null || value === undefined || !value.length;
@@ -52,10 +50,9 @@ export const Account = ({
 
   return (
     <Wrapper
-      whileHover={{ scale: 1.01 }}
       onClick={onClick}
-      cursor={canClick ? 'pointer' : 'default'}
-      fill={filled ? defaultThemes.buttons.secondary.background[mode] : 'none'}
+      canClick={canClick}
+      filled={filled}
       fontSize={fontSize}
     >
       {label !== undefined && (

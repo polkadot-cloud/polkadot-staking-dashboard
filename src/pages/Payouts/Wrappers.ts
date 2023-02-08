@@ -17,7 +17,6 @@ export const ItemWrapper = styled(motion.div)`
     border-radius: 1rem;
     display: flex;
     flex-flow: column wrap;
-    justify-content: flex-start;
     align-items: center;
     flex: 1;
     max-width: 100%;
@@ -44,7 +43,6 @@ export const ItemWrapper = styled(motion.div)`
       > div {
         display: flex;
         flex-flow: row wrap;
-        justify-content: flex-start;
         align-items: center;
         flex: 1;
         max-width: 100%;
@@ -82,7 +80,6 @@ export const ItemWrapper = styled(motion.div)`
           flex-grow: 1;
           display: flex;
           flex-flow: row wrap;
-          justify-content: flex-start;
           align-items: center;
         }
 

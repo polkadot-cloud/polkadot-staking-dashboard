@@ -7,8 +7,6 @@ import { borderPrimary } from 'theme';
 export const SummaryWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
   width: 100%;
   margin-bottom: 1rem;
 
@@ -16,8 +14,6 @@ export const SummaryWrapper = styled.div`
     flex-basis: 100%;
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
     border-bottom: 1px solid ${borderPrimary};
     margin-top: 1rem;
     padding: 0.5rem 0 0.75rem 0;
@@ -39,7 +35,6 @@ export const SummaryWrapper = styled.div`
       flex-grow: 1;
       display: flex;
       flex-flow: column nowrap;
-      align-items: flex-start;
 
       p {
         margin: 0.25rem 0;

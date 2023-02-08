@@ -30,7 +30,6 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   align-items: center;
-  justify-content: flex-start;
   padding: 0;
   width: 100%;
   overflow: hidden;
@@ -160,7 +159,6 @@ export const AccountWrapper = styled.div`
 
     > div {
       display: flex;
-      justify-content: flex-start;
       align-items: center;
       padding: 0 0.25rem;
 

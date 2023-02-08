@@ -6,8 +6,6 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
-  align-items: flex-start;
-  justify-content: flex-start;
   padding: 0rem 0.25rem;
   width: 100%;
 

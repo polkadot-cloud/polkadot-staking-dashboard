@@ -10,7 +10,6 @@ export const Wrapper = styled(motion.div)`
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: flex-start;
   align-items: center;
   font-size: 0.85rem;
   color: #444;
@@ -104,7 +103,6 @@ export const NetworkInfo = styled(motion.div)`
   flex: 1;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: flex-start;
   align-content: flex-end;
   padding: 0.25rem 1rem 1rem 1rem;
   overflow: auto;

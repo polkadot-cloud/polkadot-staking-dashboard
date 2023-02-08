@@ -9,7 +9,6 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
     props.fixed ? '0.6rem 1rem 0rem 1rem' : '2rem 1rem 0 1rem'};
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   width: 100%;
 

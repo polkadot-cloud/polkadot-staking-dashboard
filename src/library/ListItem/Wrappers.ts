@@ -33,7 +33,6 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
     border-radius: 1rem;
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
     align-items: center;
     flex: 1;
     overflow: hidden;
@@ -152,7 +151,6 @@ export const IdentityWrapper = styled(motion.div)`
   .inner {
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
     align-items: center;
     width: 100%;
     height: 3.25rem;
@@ -223,6 +221,7 @@ export const SelectWrapper = styled.button`
     justify-content: center;
   }
   svg {
+    color: var(--text-color-primary);
     width: 1rem;
     height: 1rem;
   }

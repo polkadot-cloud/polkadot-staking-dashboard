@@ -3,14 +3,11 @@
 
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useTheme } from 'contexts/Themes';
 import { SelectWrapper } from 'library/ListItem/Wrappers';
-import { defaultThemes } from 'theme/default';
 import { useList } from '../../List/context';
 import { SelectProps } from '../types';
 
 export const Select = ({ item }: SelectProps) => {
-  const { mode } = useTheme();
   const { addToSelected, removeFromSelected, selected } = useList();
 
   const isSelected = selected.includes(item);
@@ -25,13 +22,7 @@ export const Select = ({ item }: SelectProps) => {
         }
       }}
     >
-      {isSelected && (
-        <FontAwesomeIcon
-          icon={faCheck}
-          transform="shrink-2"
-          color={defaultThemes.text.primary[mode]}
-        />
-      )}
+      {isSelected && <FontAwesomeIcon icon={faCheck} transform="shrink-2" />}
     </SelectWrapper>
   );
 };

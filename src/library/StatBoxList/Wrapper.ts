@@ -8,7 +8,6 @@ import { backgroundSecondary, tooltipBackground } from 'theme';
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  justify-content: flex-start;
 `;
 
 export const ListWrapper = styled.div`
@@ -136,8 +135,6 @@ export const StatBoxWrapper = styled(motion.div)`
       h3 {
         display: flex;
         flex-flow: row wrap;
-        justify-content: flex-start;
-        align-items: flex-start;
         margin-bottom: 0.3rem;
 
         &.text {
@@ -164,8 +161,6 @@ export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
   font-variation-settings: 'wght' 580;
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
   margin-bottom: 0.15rem;
   font-size: 1.2rem;
   @media (min-width: 950px) {
@@ -194,8 +189,6 @@ export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
   font-variation-settings: 'wght' 550;
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
-  align-items: flex-start;
   font-size: 1.2rem;
   @media (min-width: 950px) {
     max-width: 300px;

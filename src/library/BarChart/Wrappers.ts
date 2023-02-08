@@ -47,7 +47,6 @@ export const Legend = styled.div`
   width: 100%;
   margin-bottom: 0.4rem;
   display: flex;
-  justify-content: flex-start;
 
   > h4 {
     display: flex;

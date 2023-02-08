@@ -14,7 +14,6 @@ export const Wrapper = styled.div`
   transition: background 0.15s;
   display: flex;
   flex-flow: column nowrap;
-  align-items: flex-start;
   min-height: 3.5rem;
 
   > .content {

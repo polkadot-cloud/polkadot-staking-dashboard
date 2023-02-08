@@ -324,13 +324,13 @@ export const ValidatorListInner = ({
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
 
-        {selectable && (
+        {selectable ? (
           <Selectable
             canSelect={listValidators.length > 0}
             actionsAll={actionsAll}
             actionsSelected={actionsSelected}
           />
-        )}
+        ) : null}
 
         <MotionContainer>
           {listValidators.length ? (

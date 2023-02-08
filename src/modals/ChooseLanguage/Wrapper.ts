@@ -35,7 +35,6 @@ export const LocaleButton = styled.button<any>`
   border-radius: 0.75rem;
   display: inline-flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   width: 100%;
   border: 1px solid ${successTransparent};

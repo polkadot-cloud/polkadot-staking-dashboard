@@ -100,7 +100,6 @@ export const ContentWrapper = styled.div`
     border-radius: 0.75rem;
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
     align-items: center;
     transition: all 0.15s;
     width: 100%;
@@ -143,8 +142,6 @@ export const PaddingWrapper = styled.div<{
 }>`
   display: flex;
   flex-flow: column wrap;
-  align-items: flex-start;
-  justify-content: flex-start;
   width: 100%;
   padding: ${(props) =>
     props.verticalOnly
@@ -159,7 +156,6 @@ export const HeadingWrapper = styled.h3<{ noPadding?: boolean }>`
   color: var(--text-color-secondary);
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   width: 100%;
   margin-top: 0.25rem;
@@ -175,7 +171,6 @@ export const HeadingWrapper = styled.h3<{ noPadding?: boolean }>`
 export const FooterWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   width: 100%;
 

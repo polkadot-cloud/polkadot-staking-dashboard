@@ -7,8 +7,6 @@ import { borderPrimary } from 'theme';
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
-  align-items: flex-start;
-  justify-content: flex-start;
   margin-top: 1rem;
   width: 100%;
 `;

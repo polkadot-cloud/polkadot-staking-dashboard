@@ -1,24 +1,27 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { borderSecondary } from 'theme';
+import { borderSecondary, buttonSecondaryBackground } from 'theme';
 import { WrapperProps } from './types';
 
-export const Wrapper = styled(motion.button)<WrapperProps>`
+export const Wrapper = styled.button<WrapperProps>`
+  cursor: ${(props) => (props.canClick ? 'pointer' : 'default')};
+  background: ${(props) => (props.filled ? buttonSecondaryBackground : 'none')};
+  font-size: ${(props) => props.fontSize};
   border-radius: 1rem;
   box-shadow: none;
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
-  cursor: ${(props) => props.cursor};
-  background: ${(props) => props.fill};
-  font-size: ${(props) => props.fontSize};
   padding: 0 1rem;
   max-width: 250px;
   flex: 1;
+  transition: transform 0.15s ease-out;
+
+  &:hover {
+    transform: scale(1.03);
+  }
 
   .identicon {
     margin: 0.15rem 0.25rem 0 0;

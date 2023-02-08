@@ -12,7 +12,6 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
   border-radius: 0.7rem;
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   padding: 0.75rem 0rem 0.75rem 0.5rem;
   margin: 0.8rem 0.2rem 0.8rem 0;

@@ -7,7 +7,6 @@ export const ListWrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   align-items: center;
-  justify-content: flex-start;
   position: relative;
   width: 100%;
 

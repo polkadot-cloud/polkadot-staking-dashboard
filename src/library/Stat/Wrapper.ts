@@ -37,7 +37,6 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    justify-content: flex-start;
     height: 2.4rem;
     position: relative;
     width: auto;

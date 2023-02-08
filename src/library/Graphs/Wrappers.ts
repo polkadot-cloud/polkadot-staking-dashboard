@@ -39,7 +39,6 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    justify-content: flex-start;
     flex-grow: ${(props) => (props.withAction ? 1 : 0)};
 
     .help-icon {
@@ -65,8 +64,6 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   background: ${(props) => (props.transparent ? 'none' : backgroundSecondary)};
   display: flex;
   flex-flow: column nowrap;
-  align-content: flex-start;
-  align-items: flex-start;
   flex: 1;
   width: 100%;
   margin-top: ${(props) => (props.transparent ? '0rem' : '1.4rem')};
@@ -94,7 +91,6 @@ export const CardWrapper = styled.div<CardWrapperProps>`
 
   .content {
     padding: 0 0.5rem;
-
     h3 {
       margin-bottom: 0.75rem;
     }
@@ -108,8 +104,6 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     padding: 1rem;
     display: flex;
     flex-flow: column nowrap;
-    align-content: flex-start;
-    align-items: flex-start;
     width: 100%;
     position: relative;
   }
@@ -133,8 +127,6 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   background: ${backgroundSecondary};
   display: flex;
   flex-flow: column nowrap;
-  align-content: flex-start;
-  align-items: flex-start;
   flex: 1;
   position: relative;
   overflow: hidden;
@@ -190,7 +182,6 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     flex-flow: row wrap;
     align-content: flex-end;
     align-items: flex-end;
-    justify-content: flex-start;
 
     .fiat {
       color: var(--text-color-secondary);
@@ -202,7 +193,6 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   h2 {
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
     align-items: center;
   }
   p {

@@ -14,7 +14,6 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   align-items: center;
-  justify-content: flex-start;
   padding: 1rem;
 
   h2 {
@@ -62,7 +61,6 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
   border-radius: 0.75rem;
   display: inline-flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   width: 100%;
   border: 1px solid ${successTransparent};
@@ -162,7 +160,6 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
   `}
   display: inline-flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
 
   &:hover {

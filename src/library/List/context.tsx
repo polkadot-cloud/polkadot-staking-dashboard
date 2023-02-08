@@ -11,7 +11,7 @@ export const ListContext: React.Context<any> = React.createContext(
 export const useList = () => React.useContext(ListContext);
 
 export const ListProvider = ({
-  selectToggleable = false,
+  selectToggleable = true,
   selectActive: initialSelctActive = false,
   children,
 }: any) => {

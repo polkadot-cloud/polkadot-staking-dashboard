@@ -23,7 +23,6 @@ export const Connect = () => {
             'large'
           );
         }}
-        whileHover={{ scale: 1.02 }}
       >
         <FontAwesomeIcon
           icon={faWallet}

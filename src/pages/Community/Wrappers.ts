@@ -133,7 +133,6 @@ export const ItemWrapper = styled(motion.div)`
       &:first-child {
         flex-flow: row wrap;
         align-items: center;
-        justify-content: flex-start;
         width: 100%;
         padding: 1rem;
         svg {
@@ -144,7 +143,6 @@ export const ItemWrapper = styled(motion.div)`
       &:last-child {
         border-left: none;
         flex-flow: column wrap;
-        align-items: flex-start;
         justify-content: center;
         border-top: 1px solid ${borderPrimary};
         height: 100%;

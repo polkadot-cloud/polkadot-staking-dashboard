@@ -48,7 +48,6 @@ export const StyledButton = styled.button`
   border-radius: 1rem;
   display: inline-flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   width: 100%;
 
