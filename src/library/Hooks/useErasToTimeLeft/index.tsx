@@ -3,6 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
+import { greaterThanZero } from 'Utils';
 
 export const useErasToTimeLeft = () => {
   const { consts } = useApi();
@@ -10,7 +11,7 @@ export const useErasToTimeLeft = () => {
 
   // converts a number of eras to timeleft in seconds.
   const erasToSeconds = (eras: BigNumber) => {
-    if (!eras) {
+    if (!greaterThanZero(eras)) {
       return 0;
     }
     // store the duration of an era in number of blocks.

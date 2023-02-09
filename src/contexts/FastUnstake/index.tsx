@@ -9,7 +9,7 @@ import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyJson, MaybeAccount } from 'types';
 // eslint-disable-next-line import/no-unresolved
-import { rmCommas, setStateWithRef } from 'Utils';
+import { greaterThanZero, rmCommas, setStateWithRef } from 'Utils';
 import Worker from 'worker-loader!../../workers/stakers';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
 import { FastUnstakeContextInterface, LocalMeta, MetaInterface } from './types';
@@ -103,7 +103,11 @@ export const FastUnstakeProvider = ({
       // value until current era + bondDuration is checked.
       let initialIsExposed = null;
       if (localMeta) {
-        if (bondDuration.plus(1).isEqualTo(localMeta.checked.length)) {
+        if (
+          bondDuration
+            .plus(new BigNumber(1))
+            .isEqualTo(new BigNumber(localMeta.checked.length))
+        ) {
           initialIsExposed = localMeta.isExposed;
         } else if (localMeta.isExposed === true) {
           initialIsExposed = true;
@@ -132,7 +136,7 @@ export const FastUnstakeProvider = ({
         // if localMeta existed, start checking from the next era.
         const eraTocheck = localMeta
           ? localMeta.checked[localMeta.checked.length - 1] - 1
-          : activeEra.index;
+          : activeEra.index.toNumber();
 
         // checkpoint: check from era eraTocheck
 
@@ -208,7 +212,9 @@ export const FastUnstakeProvider = ({
         // cancel checking and update exposed state.
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(true, setIsExposed, isExposedRef);
-      } else if (bondDuration.plus(1).isEqualTo(checked.length)) {
+      } else if (
+        bondDuration.plus(new BigNumber(1)).isEqualTo(checked.length)
+      ) {
         // successfully checked current era - bondDuration eras.
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(false, setIsExposed, isExposedRef);
@@ -225,14 +231,11 @@ export const FastUnstakeProvider = ({
   };
 
   // initiate fast unstake eligibility check.
-  const processEligibility = async (
-    a: MaybeAccount,
-    era: BigNumber | number
-  ) => {
+  const processEligibility = async (a: MaybeAccount, era: number) => {
     // ensure current era has synced
     if (
-      era <= new BigNumber(0) ||
-      !bondDuration ||
+      era <= 0 ||
+      !greaterThanZero(bondDuration) ||
       !api ||
       !a ||
       checkingRef.current ||

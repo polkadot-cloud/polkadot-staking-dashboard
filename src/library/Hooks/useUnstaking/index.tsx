@@ -42,7 +42,7 @@ export const useUnstaking = () => {
     if (checking) {
       return `${t('fastUnstakeCheckingEras', {
         checked: checked.length,
-        total: bondDuration,
+        total: bondDuration.toNumber(),
       })}...`;
     }
     if (isExposed) {

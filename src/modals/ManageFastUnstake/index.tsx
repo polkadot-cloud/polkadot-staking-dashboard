@@ -123,7 +123,10 @@ export const ManageFastUnstake = () => {
   if (isExposed) {
     lastExposedAgo = activeEra.index.minus(checked[0] || 0);
   }
-  const erasRemaining = BigNumber.max(1, bondDuration.minus(lastExposedAgo));
+  const erasRemaining = BigNumber.max(
+    new BigNumber(1),
+    bondDuration.minus(lastExposedAgo)
+  );
 
   return (
     <>
@@ -148,7 +151,11 @@ export const ManageFastUnstake = () => {
               })}
             />
             <NotesWrapper noPadding>
-              <p>{t('fastUnstakeNote1', { bondDuration })}</p>
+              <p>
+                {t('fastUnstakeNote1', {
+                  bondDuration: bondDuration.toNumber(),
+                })}
+              </p>
               <p>
                 {t('fastUnstakeNote2', { count: erasRemaining.toNumber() })}
               </p>
