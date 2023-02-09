@@ -16,7 +16,7 @@
 }
 
 :root {
-  --card-shadow: -2px 2px 10px;
+  --card-shadow: 0px 2px 16px;
   --transparent-color: rgba(0, 0, 0, 0);
 
   .theme-light {
@@ -38,7 +38,7 @@
     --button-tertiary-background: #ececec;
     --button-hover-background: #e8e6e6;
     --button-toggle-background: #f2f1f0;
-    --card-shadow-color: rgba(138, 138, 138, 0.25);
+    --card-shadow-color: rgba(158, 158, 158, 0.18);
     --card-shadow-color-secondary: #eaeaea;
     --network-color-primary: var(--network-color-primary-light);
     --network-color-secondary: var(--network-color-secondary-light);
