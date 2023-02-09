@@ -19,6 +19,11 @@ export const backgroundModalItem: theme.ThemeSet = theme(
   defaultThemes.background.modalitem
 );
 
+export const backgroundSubmission: theme.ThemeSet = theme(
+  v,
+  defaultThemes.background.submission
+);
+
 // highlights
 
 export const highlightPrimary: theme.ThemeSet = theme(
@@ -46,11 +51,6 @@ export const buttonSecondaryBackground: theme.ThemeSet = theme(
 export const backgroundToggle: theme.ThemeSet = theme(
   v,
   defaultThemes.buttons.toggle.background
-);
-
-export const backgroundSubmission: theme.ThemeSet = theme(
-  v,
-  defaultThemes.background.submission
 );
 
 export const buttonHelpBackground: theme.ThemeSet = theme(

@@ -15,12 +15,6 @@ export const defaultThemes: { [key: string]: AnyJson } = {
   background: {
     dropdown: v('rgba(237,237,237,0.6)', 'rgba(33,33,33,0.6)'),
     modalitem: v('rgba(244,244,244,0.6)', 'rgba(22,22,22,0.4)'),
-    tag: v('rgba(220,220,220,0.75)', 'rgba(36,36,36,0.75)'),
-    identicon: v('#eee', '#333'),
-    overlay: v(
-      'linear-gradient(180deg, rgba(244,242,242,0.93) 0%, rgba(228,225,225,0.93) 100%)',
-      'linear-gradient(180deg, rgba(20,20,20,0.93) 0%, rgba(14,14,14,0.93) 100%)'
-    ),
     submission: v('rgba(245,244,244,1)', '#141414'),
   },
   highlight: {
