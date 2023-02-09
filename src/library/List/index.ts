@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary } from 'theme';
 import { ListProps, PaginationWrapperProps } from './types';
 
 export const Wrapper = styled.div`
@@ -12,7 +11,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Header = styled.div`
-  border-bottom: 1px solid ${borderPrimary};
+  border-bottom: 1px solid var(--border-primary-color);
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-end;
@@ -95,7 +94,7 @@ export const SelectableWrapper = styled.div`
   align-items: center;
 
   > button {
-    border: 1px solid ${borderPrimary};
+    border: 1px solid var(--border-primary-color);
     font-size: 1rem;
     color: var(--text-color-secondary);
     border-radius: 1.5rem;
@@ -128,7 +127,7 @@ export const List = styled.div<ListProps>`
     flex-flow: row wrap;
 
     > input {
-      border: 1.75px solid ${borderPrimary};
+      border: 1.75px solid var(--border-primary-color);
       border-radius: 1.75rem;
       padding: 0.75rem 1.25rem;
       font-size: 1.15rem;

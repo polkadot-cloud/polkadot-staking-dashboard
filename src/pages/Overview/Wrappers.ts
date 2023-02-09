@@ -3,11 +3,6 @@
 
 import { SectionFullWidthThreshold } from 'consts';
 import styled from 'styled-components';
-import {
-  borderPrimary,
-  borderSecondary,
-  buttonSecondaryBackground,
-} from 'theme';
 
 export const ActiveAccounWrapper = styled.div`
   width: 100%;
@@ -50,7 +45,7 @@ export const ActiveAccounWrapper = styled.div`
     }
 
     button {
-      background: ${buttonSecondaryBackground};
+      background: var(--button-secondary-background);
       width: 2rem;
       height: 2rem;
       border-radius: 50%;
@@ -66,7 +61,7 @@ export const ActiveAccounWrapper = styled.div`
       flex: 1;
 
       > .sep {
-        border-right: 1px solid ${borderSecondary};
+        border-right: 1px solid var(--border-secondary-color);
         margin: 0 0.8rem;
         width: 1px;
         height: 1.25rem;
@@ -130,7 +125,7 @@ export const SectionWrapper = styled.div<{ noPadding?: boolean }>`
       flex: 1;
 
       > .sep {
-        border-right: 1px solid ${borderSecondary};
+        border-right: 1px solid var(--border-secondary-color);
         margin: 0 0.8rem;
         width: 1px;
         height: 1.25rem;
@@ -162,7 +157,7 @@ export const SectionWrapper = styled.div<{ noPadding?: boolean }>`
 `;
 
 export const Separator = styled.div`
-  border-bottom: 1px solid ${borderPrimary};
+  border-bottom: 1px solid var(--border-primary-color);
   margin-top: 0.8rem;
   width: 100%;
   height: 1px;

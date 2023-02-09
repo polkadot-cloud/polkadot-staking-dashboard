@@ -2,14 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary } from 'theme';
 
 export const Wrapper = styled.div`
   width: 100%;
   margin-top: 0.5rem;
 
   .input {
-    border: 1px solid ${borderPrimary};
+    border: 1px solid var(--border-primary-color);
     border-radius: 1rem;
     display: flex;
     flex-flow: row wrap;
@@ -38,10 +37,10 @@ export const Wrapper = styled.div`
       opacity: 0.8;
     }
     &.danger {
-      color: var(--text-color-danger);
+      color: var(--status-danger-color);
     }
     &.success {
-      color: var(--text-color-success);
+      color: var(--status-success-color);
     }
   }
 `;

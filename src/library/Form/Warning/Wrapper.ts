@@ -2,11 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundWarning, borderWarning } from 'theme';
 
 export const Wrapper = styled.div`
-  background: ${backgroundWarning};
-  border: 1px solid ${borderWarning};
+  background: var(--background-warning);
+  border: 1px solid var(--status-warning-color-transparent);
   margin: 0.5rem 0;
   padding: 0.75rem 0.75rem;
   border-radius: 0.75rem;
@@ -16,11 +15,11 @@ export const Wrapper = styled.div`
   width: 100%;
 
   > h4 {
-    color: var(--text-color-warning);
+    color: var(--status-warning-color);
     margin: 0;
 
     .icon {
-      color: var(--text-color-warning);
+      color: var(--status-warning-color);
       margin-right: 0.6rem;
     }
   }

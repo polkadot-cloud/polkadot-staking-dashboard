@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary } from 'theme';
 
 export const SummaryWrapper = styled.div`
   display: flex;
@@ -11,11 +10,11 @@ export const SummaryWrapper = styled.div`
   margin-bottom: 1rem;
 
   > section {
+    border-bottom: 1px solid var(--border-primary-color);
     flex-basis: 100%;
     display: flex;
     flex-flow: row wrap;
     align-items: flex-end;
-    border-bottom: 1px solid ${borderPrimary};
     margin-top: 1rem;
     padding: 0.5rem 0 0.75rem 0;
 

@@ -3,12 +3,11 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { borderPrimary, highlightPrimary, highlightSecondary } from 'theme';
 import { MinimisedProps } from '../types';
 
 export const Wrapper = styled(motion.button)<MinimisedProps>`
   width: 100%;
-  border: 1px solid ${borderPrimary};
+  border: 1px solid var(--border-primary-color);
   border-radius: 0.7rem;
   display: flex;
   flex-flow: row wrap;
@@ -17,7 +16,6 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
   margin: 0.8rem 0.2rem 0.8rem 0;
   position: relative;
   height: 3.2rem;
-
   .name {
     color: var(--text-color-secondary);
     font-size: 1.1rem;
@@ -35,16 +33,25 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
   }
 
   &.active {
-    background: ${highlightPrimary};
+    background: var(--gradient-highlight-primary);
   }
   &.inactive:hover {
-    background: ${highlightSecondary};
+    background: var(--gradient-highlight-secondary);
+  }
+  &.success {
+    border: 1px solid var(--status-success-color-transparent);
+  }
+  &.warning {
+    border: 1px solid var(--status-warning-color-transparent);
+  }
+  &.danger {
+    border: 1px solid var(--status-danger-color-transparent);
   }
 `;
 
 export const MinimisedWrapper = styled(motion.button)`
+  border: 1px solid var(--border-primary-color);
   width: 100%;
-  border: 1px solid ${borderPrimary};
   border-radius: 0.5rem;
   display: flex;
   flex-flow: row wrap;
@@ -56,10 +63,10 @@ export const MinimisedWrapper = styled(motion.button)`
   min-height: 2.8rem;
 
   &.active {
-    background: ${highlightPrimary};
+    background: var(--gradient-highlight-primary);
   }
   &.inactive:hover {
-    background: ${highlightSecondary};
+    background: var(--gradient-highlight-secondary);
   }
   .icon {
     margin: 0;
@@ -71,6 +78,15 @@ export const MinimisedWrapper = styled(motion.button)`
       top: -2px;
       right: -13px;
     }
+  }
+  &.success {
+    border: 1px solid var(--status-success-color-transparent);
+  }
+  &.warning {
+    border: 1px solid var(--status-warning-color-transparent);
+  }
+  &.danger {
+    border: 1px solid var(--status-danger-color-transparent);
   }
 `;
 

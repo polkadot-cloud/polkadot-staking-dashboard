@@ -7,7 +7,6 @@ import {
   SideMenuStickyThreshold,
 } from 'consts';
 import styled from 'styled-components';
-import { backgroundOverlay, borderPrimary } from 'theme';
 import { MinimisedProps } from './types';
 
 export const Wrapper = styled.div<MinimisedProps>`
@@ -26,7 +25,7 @@ export const Wrapper = styled.div<MinimisedProps>`
       : `${SideMenuMaximisedWidth}px`};
 
   @media (max-width: ${SideMenuStickyThreshold}px) {
-    background: ${backgroundOverlay};
+    background: var(--gradient-side-menu);
     transition: all 0.2s;
     border-radius: 0.75rem;
 
@@ -84,15 +83,28 @@ export const LogoWrapper = styled.button<MinimisedProps>`
 `;
 
 export const Separator = styled.div`
-  border-bottom: 1px solid ${borderPrimary};
+  border-bottom: 1px solid var(--border-primary-color);
   width: 100%;
   margin: 1rem 1rem 0.5rem 0;
 `;
 
-export const ConnectionSymbol = styled.div<{ color: any }>`
+export const ConnectionSymbol = styled.div`
   width: 0.6rem;
   height: 0.6rem;
   background: ${(props) => props.color};
   border-radius: 50%;
   margin: 0 0.7rem;
+
+  &.success {
+    border: 1px solid var(--status-success-color);
+    color: var(--status-success-color);
+  }
+  &.warning {
+    border: 1px solid var(--status-warning-color);
+    color: var(--status-warning-color);
+  }
+  &.danger {
+    border: 1px solid var(--status-danger-color);
+    color: var(--status-danger-color);
+  }
 `;

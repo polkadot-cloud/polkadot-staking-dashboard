@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -35,7 +34,7 @@ export const RoleChangeWrapper = styled.div`
   }
 
   .input-wrap {
-    border-bottom: 1px solid ${borderPrimary};
+    border-bottom: 1px solid var(--border-primary-color);
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -44,7 +43,7 @@ export const RoleChangeWrapper = styled.div`
     flex: 1;
 
     &.selected {
-      border: 1px solid ${borderPrimary};
+      border: 1px solid var(--border-primary-color);
       border-radius: 1rem;
       margin: 0;
       padding: 0.1rem 0.75rem;

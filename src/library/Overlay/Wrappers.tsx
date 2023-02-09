@@ -2,14 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  buttonPrimaryBackground,
-  modalBackground,
-  overlayBackground,
-} from 'theme';
 
 export const OverlayWrapper = styled.div`
-  background: ${overlayBackground};
+  background: var(--overlay-tip-color);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -48,7 +43,7 @@ export const HeightWrapper = styled.div<{ size: string }>`
 `;
 
 export const ContentWrapper = styled.div`
-  background: ${modalBackground};
+  background: var(--background-modal);
   width: 100%;
   height: auto;
   overflow: hidden;
@@ -127,8 +122,10 @@ export const FilterListWrapper = styled.div`
 export const FilterListButton = styled.button<{ active: boolean }>`
   border: 1px solid
     ${(props) =>
-      props.active ? 'var(--network-color-stroke)' : buttonPrimaryBackground};
-  background: ${buttonPrimaryBackground};
+      props.active
+        ? 'var(--network-color-stroke)'
+        : 'var(--button-primary-background'};
+  background: var(--button-primary-background);
   width: 100%;
   display: flex;
   flex-flow: row wrap;

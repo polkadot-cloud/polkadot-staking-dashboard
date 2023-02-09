@@ -4,9 +4,9 @@
 import { SideMenuStickyThreshold } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { backgroundNetworkBar } from 'theme';
 
 export const Wrapper = styled(motion.div)`
+  background: var(--background-app-footer);
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
@@ -16,7 +16,6 @@ export const Wrapper = styled(motion.div)`
   bottom: 0px;
   left: 0px;
   overflow: hidden;
-  background: ${backgroundNetworkBar};
   z-index: 6;
   backdrop-filter: blur(4px);
   position: relative;

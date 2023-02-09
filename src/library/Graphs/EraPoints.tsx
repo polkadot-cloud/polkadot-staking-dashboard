@@ -15,7 +15,7 @@ import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import { defaultThemes } from 'theme/default';
+import { graphColors } from 'styles/graphs';
 import { EraPointsProps } from './types';
 
 ChartJS.register(
@@ -62,7 +62,7 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
           display: false,
         },
         grid: {
-          color: defaultThemes.graphs.grid[mode],
+          color: graphColors.grid[mode],
         },
         ticks: {
           display: true,
@@ -80,9 +80,9 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
       },
       tooltip: {
         displayColors: false,
-        backgroundColor: defaultThemes.graphs.tooltip[mode],
-        titleColor: defaultThemes.text.invert[mode],
-        bodyColor: defaultThemes.text.invert[mode],
+        backgroundColor: graphColors.tooltip[mode],
+        titleColor: graphColors.label[mode],
+        bodyColor: graphColors.label[mode],
         bodyFont: {
           weight: '600',
         },

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundDropdown, borderPrimary } from 'theme';
 
 export const Wrapper = styled.div`
   padding: 0 0.5rem;
@@ -39,7 +38,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ItemWrapper = styled.div`
-  border: 1px solid ${borderPrimary};
+  border: 1px solid var(--border-primary-color);
   border-radius: 1.5rem;
   display: flex;
   position: relative;
@@ -74,8 +73,8 @@ export const LargeItemWrapper = styled.div`
   justify-content: center;
   padding: 0.5rem;
   > .inner {
-    border: 1.5px solid ${borderPrimary};
-    background: ${backgroundDropdown};
+    border: 1.5px solid var(--border-primary-color);
+    background: var(--background-list-item);
     border-radius: 1.25rem;
     display: flex;
     flex-flow: column nowrap;
@@ -129,7 +128,9 @@ export const TabsWrapper = styled.div`
 export const TabWrapper = styled.button<{ active?: boolean }>`
   border: 1px solid
     ${(props) =>
-      props.active ? 'var(--network-color-primary)' : borderPrimary};
+      props.active
+        ? 'var(--network-color-primary)'
+        : 'var(--border-primary-color)'};
   color: ${(props) =>
     props.active
       ? 'var(--network-color-primary)'

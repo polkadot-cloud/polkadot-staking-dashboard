@@ -3,10 +3,8 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { helpButton } from 'theme';
 
 export const TipWrapper = styled(motion.div)`
-  background: ${helpButton};
   width: 100%;
   display: flex;
   border-radius: 1.5rem;

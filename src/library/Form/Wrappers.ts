@@ -3,7 +3,6 @@
 
 import { SmallFontSizeMaxWidth } from 'consts';
 import styled from 'styled-components';
-import { borderPrimary } from 'theme';
 
 export const Spacer = styled.div`
   width: 100%;
@@ -56,7 +55,7 @@ export const InputWrapper = styled.div`
       .input {
         width: 100%;
         max-width: 100%;
-        border: 1px solid ${borderPrimary};
+        border: 1px solid var(--border-primary-color);
         padding: 1rem;
         border-radius: 0.75rem;
         display: flex;
