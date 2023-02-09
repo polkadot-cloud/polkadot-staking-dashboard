@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 
 export const ManagePool = () => {
+  const { t } = useTranslation('pages');
   const { isSyncing } = useUi();
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
@@ -26,7 +27,6 @@ export const ManagePool = () => {
     poolNominations,
     selectedActivePool,
   } = useActivePools();
-  const { t } = useTranslation('pages');
 
   const isNominating = !!poolNominations?.targets?.length;
   const nominator = selectedActivePool?.addresses?.stash ?? null;

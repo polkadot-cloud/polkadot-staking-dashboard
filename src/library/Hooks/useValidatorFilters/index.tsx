@@ -8,10 +8,10 @@ import { useTranslation } from 'react-i18next';
 import { AnyFunction, AnyJson } from 'types';
 
 export const useValidatorFilters = () => {
+  const { t } = useTranslation('library');
   const { consts } = useApi();
   const { meta, session, sessionParachain } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
-  const { t } = useTranslation('library');
 
   /*
    * filterMissingIdentity

@@ -6,11 +6,14 @@ import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatBox } from './Item';
 import { NumberProps } from './types';
 
-export const Number = (props: NumberProps) => {
-  const { label, value, unit, helpKey } = props;
+export const Number = ({
+  label,
+  value,
+  unit,
+  helpKey,
+  currency = '',
+}: NumberProps) => {
   const help = helpKey !== undefined;
-
-  const currency = props.currency ?? '';
 
   return (
     <StatBox>

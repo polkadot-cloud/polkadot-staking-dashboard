@@ -19,7 +19,7 @@
         "title": "To Controller Account"
       },
       "none": {
-        "subtitle": "Have no payout destination set.'",
+        "subtitle": "Have no payout destination set.",
         "title_active": "Not Assigned",
         "title_default": "None"
       },

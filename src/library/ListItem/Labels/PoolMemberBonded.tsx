@@ -7,11 +7,9 @@ import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero, planckToUnit, rmCommas } from 'Utils';
 
-export const PoolMemberBonded = (props: any) => {
-  const { meta, batchKey, batchIndex } = props;
-  const { network } = useApi();
-  const { units, unit } = network;
+export const PoolMemberBonded = ({ meta, batchKey, batchIndex }: any) => {
   const { t } = useTranslation('library');
+  const { units, unit } = useApi().network;
 
   const poolMembers = meta[batchKey]?.poolMembers ?? [];
   const poolMember = poolMembers[batchIndex] ?? null;
@@ -32,10 +30,7 @@ export const PoolMemberBonded = (props: any) => {
       const amountBn = new BigNumber(rmCommas(amount));
       totalUnbondingUnit = totalUnbondingUnit.plus(amountBn);
     });
-    totalUnbonding = planckToUnit(
-      new BigNumber(totalUnbondingUnit),
-      network.units
-    );
+    totalUnbonding = planckToUnit(new BigNumber(totalUnbondingUnit), units);
   }
 
   return (

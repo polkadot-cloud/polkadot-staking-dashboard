@@ -2,20 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  buttonPrimaryBackground,
-  cardShadow,
-  modalBackground,
-  networkColor,
-  networkColorStroke,
-  overlayBackground,
-  shadowColor,
-  textPrimary,
-  textSecondary,
-} from 'theme';
 
 export const OverlayWrapper = styled.div`
-  background: ${overlayBackground};
+  background: var(--overlay-tip-color);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -42,7 +31,7 @@ export const OverlayWrapper = styled.div`
 `;
 
 export const HeightWrapper = styled.div<{ size: string }>`
-  box-shadow: ${cardShadow} ${shadowColor};
+  box-shadow: var(--card-shadow) var(--card-shadow-color);
   transition: height 0.5s cubic-bezier(0.1, 1, 0.2, 1);
   width: 100%;
   max-width: ${(props) => (props.size === 'small' ? '500px' : '700px')};
@@ -54,14 +43,14 @@ export const HeightWrapper = styled.div<{ size: string }>`
 `;
 
 export const ContentWrapper = styled.div`
-  background: ${modalBackground};
+  background: var(--background-modal);
   width: 100%;
   height: auto;
   overflow: hidden;
   position: relative;
 
   a {
-    color: ${networkColor};
+    color: var(--network-color-primary);
   }
   .header {
     width: 100%;
@@ -82,7 +71,6 @@ export const TitleWrapper = styled.div`
   padding: 1.5rem 1rem 0 1rem;
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   width: 100%;
 
@@ -97,7 +85,7 @@ export const TitleWrapper = styled.div`
     }
 
     path {
-      fill: ${textPrimary};
+      fill: var(--text-color-primary);
     }
 
     &:first-child {
@@ -133,8 +121,11 @@ export const FilterListWrapper = styled.div`
 
 export const FilterListButton = styled.button<{ active: boolean }>`
   border: 1px solid
-    ${(props) => (props.active ? networkColorStroke : buttonPrimaryBackground)};
-  background: ${buttonPrimaryBackground};
+    ${(props) =>
+      props.active
+        ? 'var(--network-color-stroke)'
+        : 'var(--button-primary-background'};
+  background: var(--button-primary-background);
   width: 100%;
   display: flex;
   flex-flow: row wrap;
@@ -145,14 +136,20 @@ export const FilterListButton = styled.button<{ active: boolean }>`
   transition: border 0.1s;
 
   h4 {
-    color: ${(props) => (props.active ? networkColorStroke : textSecondary)};
+    color: ${(props) =>
+      props.active
+        ? 'var(--network-color-stroke)'
+        : 'var(--text-color-secondary)'};
     font-variation-settings: 'wght' 560;
     transition: color 0.1s;
     margin: 0;
   }
 
   svg {
-    color: ${(props) => (props.active ? networkColorStroke : textSecondary)};
+    color: ${(props) =>
+      props.active
+        ? 'var(--network-color-stroke)'
+        : 'var(--text-color-secondary)'};
     opacity: ${(props) => (props.active ? 1 : 0.7)};
     transition: color 0.1s;
     margin-left: 0.2rem;

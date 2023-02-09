@@ -22,11 +22,11 @@ import { FilterValidators } from './FilterValidators';
 import { OrderValidators } from './OrderValidators';
 
 export const Filters = () => {
+  const { t } = useTranslation('library');
   const { openOverlayWith } = useOverlay();
   const { resetFilters, getFilters, getOrder, toggleFilter } = useFilters();
   const { includesToLabels, excludesToLabels, ordersToLabels } =
     useValidatorFilters();
-  const { t } = useTranslation('library');
 
   const includes = getFilters('include', 'validators');
   const excludes = getFilters('exclude', 'validators');
@@ -71,12 +71,12 @@ export const Filters = () => {
           <Item
             label={
               order === 'default'
-                ? t('unordered') || ''
-                : `${t('order') || ''}: ${ordersToLabels[order]}`
+                ? `${t('unordered')}`
+                : `${t('order')}: ${ordersToLabels[order]}`
             }
             disabled
           />
-          {!hasFilters && <Item label={t('noFilters') || ''} disabled />}
+          {!hasFilters && <Item label={`${t('noFilters')}`} disabled />}
           {includes?.map((e: string, i: number) => (
             <Item
               key={`validator_include_${i}`}

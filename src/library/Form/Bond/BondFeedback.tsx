@@ -19,7 +19,7 @@ import { BondInput } from './BondInput';
 export const BondFeedback = ({
   bondFor,
   inSetup = false,
-  warnings = [],
+  parentErrors = [],
   setters = [],
   listenIsValid = () => {},
   disableTxFeeUpdate = false,
@@ -28,6 +28,7 @@ export const BondFeedback = ({
   maxWidth,
   syncing = false,
 }: BondFeedbackProps) => {
+  const { t } = useTranslation('library');
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { staking } = useStaking();
@@ -37,7 +38,6 @@ export const BondFeedback = ({
   const { minJoinBond, minCreateBond } = stats;
   const { units, unit } = network;
   const { minNominatorBond } = staking;
-  const { t } = useTranslation('library');
   const allTransferOptions = getTransferOptions(activeAccount);
 
   const defaultBondStr = defaultBond ? String(defaultBond) : '';
@@ -115,7 +115,7 @@ export const BondFeedback = ({
   // handle error updates
   const handleErrors = () => {
     let disabled = false;
-    const newErrors = warnings;
+    const newErrors = parentErrors;
     const decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
 
     // bond errors

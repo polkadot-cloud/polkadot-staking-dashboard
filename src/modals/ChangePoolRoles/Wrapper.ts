@@ -2,14 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary, textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
-  align-items: flex-start;
-  justify-content: flex-start;
-  padding: 1.25rem 0;
+  margin-top: 1rem;
+  width: 100%;
 `;
 
 export const RoleChangeWrapper = styled.div`
@@ -19,7 +17,7 @@ export const RoleChangeWrapper = styled.div`
   overflow: hidden;
 
   .label {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     margin: 0.25rem 0 0.75rem 0;
   }
   .role-change {
@@ -29,14 +27,14 @@ export const RoleChangeWrapper = styled.div`
     margin-bottom: 1rem;
 
     > span {
+      color: var(--text-color-secondary);
       margin: 0 0.75rem;
-      color: ${textSecondary};
       opacity: 0.5;
     }
   }
 
   .input-wrap {
-    border-bottom: 1px solid ${borderPrimary};
+    border-bottom: 1px solid var(--border-primary-color);
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -45,7 +43,7 @@ export const RoleChangeWrapper = styled.div`
     flex: 1;
 
     &.selected {
-      border: 1px solid ${borderPrimary};
+      border: 1px solid var(--border-primary-color);
       border-radius: 1rem;
       margin: 0;
       padding: 0.1rem 0.75rem;

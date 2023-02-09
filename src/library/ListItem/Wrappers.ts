@@ -4,15 +4,6 @@
 import { SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  backgroundDropdown,
-  backgroundModalItem,
-  borderPrimary,
-  modalBackground,
-  networkColor,
-  shadowColorSecondary,
-  textSecondary,
-} from 'theme';
 
 export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
   display: flex;
@@ -23,9 +14,11 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
   margin: 0.5rem;
 
   > .inner {
+    box-shadow: 0px 1.75px 0px 1.25px var(--card-shadow-color-secondary);
     background: ${(props) =>
-      props.inModal ? backgroundModalItem : backgroundDropdown};
-    box-shadow: 0px 1.75px 0px 1.25px ${shadowColorSecondary};
+      props.inModal
+        ? '--background-modal-item'
+        : 'var(--background-list-item)'};
 
     ${(props) =>
       props.inModal &&
@@ -36,7 +29,6 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
     border-radius: 1rem;
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
     align-items: center;
     flex: 1;
     overflow: hidden;
@@ -77,13 +69,12 @@ export const Labels = styled.div`
     @media (min-width: ${SmallFontSizeMaxWidth}px) {
       padding: 0 0.2rem;
     }
-
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     &:hover {
       opacity: 0.75;
     }
     &.active {
-      color: ${networkColor};
+      color: var(--network-color-primary);
     }
     &:disabled {
       opacity: 0.35;
@@ -91,10 +82,10 @@ export const Labels = styled.div`
   }
 
   .label {
+    color: var(--text-color-secondary);
     position: relative;
     display: flex;
     align-items: center;
-    color: ${textSecondary};
     margin: 0 0.2rem;
     @media (min-width: ${SmallFontSizeMaxWidth}px) {
       margin: 0 0.2rem;
@@ -109,7 +100,7 @@ export const Labels = styled.div`
       margin-right: 0;
 
       button {
-        color: ${networkColor};
+        color: var(--network-color-primary);
         font-size: 0.95rem;
         display: flex;
         flex-flow: row wrap;
@@ -156,14 +147,13 @@ export const IdentityWrapper = styled(motion.div)`
   .inner {
     display: flex;
     flex-flow: row wrap;
-    justify-content: flex-start;
     align-items: center;
     width: 100%;
     height: 3.25rem;
     padding: 0 0 0 0.2rem;
   }
   h4 {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     position: absolute;
     top: 0;
     width: 100%;
@@ -178,7 +168,7 @@ export const IdentityWrapper = styled(motion.div)`
     font-size: 1rem;
 
     > span {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       opacity: 0.75;
       font-size: 0.88rem;
       margin-left: 0.35rem;
@@ -193,7 +183,8 @@ export const ValidatorStatusWrapper = styled.div<{ status: string }>`
   padding: 0 0.5rem;
 
   h5 {
-    color: ${(props) => (props.status === 'active' ? 'green' : textSecondary)};
+    color: ${(props) =>
+      props.status === 'active' ? 'green' : 'var(--text-color-secondary)'};
     opacity: ${(props) => (props.status === 'active' ? 0.8 : 0.5)};
     margin: 0;
     display: flex;
@@ -204,7 +195,7 @@ export const ValidatorStatusWrapper = styled.div<{ status: string }>`
 `;
 
 export const SelectWrapper = styled.button`
-  background: ${modalBackground};
+  background: var(--background-modal);
   margin: 0 0.75rem 0 0.25rem;
   overflow: hidden;
   display: flex;
@@ -226,6 +217,7 @@ export const SelectWrapper = styled.button`
     justify-content: center;
   }
   svg {
+    color: var(--text-color-primary);
     width: 1rem;
     height: 1rem;
   }
@@ -238,9 +230,9 @@ export const SelectWrapper = styled.button`
 `;
 
 export const Separator = styled.div`
+  border-bottom: 1px solid var(--border-primary-color);
   width: 100%;
   height: 1px;
-  border-bottom: 1px solid ${borderPrimary};
   opacity: 0.7;
 `;
 

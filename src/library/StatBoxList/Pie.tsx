@@ -7,10 +7,8 @@ import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatBox } from './Item';
 import { PieProps } from './types';
 
-export const Pie = (props: PieProps) => {
-  const { label, stat, graph, tooltip, helpKey } = props;
+export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
   const help = helpKey !== undefined;
-
   const showValue = stat?.value !== 0 || stat?.total === 0;
   const showTotal = !!stat?.total;
 

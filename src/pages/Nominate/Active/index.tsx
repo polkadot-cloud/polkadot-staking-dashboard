@@ -40,7 +40,7 @@ export const Active = () => {
   const { isFastUnstaking } = useUnstaking();
   const nominations = getAccountNominations(activeAccount);
 
-  const ROW_HEIGHT = 275;
+  const ROW_HEIGHT = 220;
 
   return (
     <>

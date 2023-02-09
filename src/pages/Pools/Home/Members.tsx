@@ -13,19 +13,17 @@ import { PageRowWrapper } from 'Wrappers';
 import { MembersList } from './MembersList';
 
 export const Members = () => {
-  const { network } = useApi();
+  const { t } = useTranslation('pages');
+  const { colors } = useApi().network;
   const { mode } = useTheme();
   const { getMembersOfPool } = usePoolMembers();
   const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
-  const { t } = useTranslation('pages');
 
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
   const poolMembersTitle = `${t('pools.poolMember', {
     count: poolMembers.length,
   })}`;
-
-  const networkColorsSecondary: any = network.colors.secondary;
-  const annuncementBorderColor = networkColorsSecondary[mode];
+  const annuncementBorderColor = colors.secondary[mode];
 
   const showBlockedPrompt =
     selectedActivePool?.bondedPool?.state === 'Blocked' &&

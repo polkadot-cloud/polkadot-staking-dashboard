@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { SmallFontSizeMaxWidth } from 'consts';
 import styled from 'styled-components';
-import { borderPrimary, textSecondary } from 'theme';
 
 export const Spacer = styled.div`
   width: 100%;
@@ -32,7 +32,7 @@ export const InputWrapper = styled.div`
   flex-flow: column wrap;
 
   h3 {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     margin: 0;
     padding: 0 0.25rem;
   }
@@ -47,7 +47,7 @@ export const InputWrapper = styled.div`
 
     > section {
       &:first-child {
-        flex-grow: 1;
+        flex: 1;
       }
       &:last-child {
         padding: 0 0.25rem 0 1.25rem;
@@ -55,7 +55,7 @@ export const InputWrapper = styled.div`
       .input {
         width: 100%;
         max-width: 100%;
-        border: 1px solid ${borderPrimary};
+        border: 1px solid var(--border-primary-color);
         padding: 1rem;
         border-radius: 0.75rem;
         display: flex;
@@ -67,7 +67,11 @@ export const InputWrapper = styled.div`
             flex-grow: 1;
           }
           &:last-child {
-            color: ${textSecondary};
+            @media (max-width: ${SmallFontSizeMaxWidth}px) {
+              display: none;
+            }
+            color: var(--text-color-secondary);
+            padding-left: 0.5rem;
             justify-content: flex-end;
             opacity: 0.5;
             position: relative;
@@ -94,5 +98,14 @@ export const InputWrapper = styled.div`
         }
       }
     }
+  }
+
+  .availableOuter {
+    @media (min-width: ${SmallFontSizeMaxWidth + 1}px) {
+      display: none;
+    }
+    color: var(--text-color-secondary);
+    opacity: 0.5;
+    padding: 0 0.5rem;
   }
 `;

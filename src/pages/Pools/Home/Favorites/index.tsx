@@ -12,11 +12,11 @@ import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 
 export const Favorites = () => {
+  const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { favorites, removeFavorite } = usePoolsConfig();
   const { bondedPools } = useBondedPools();
   const { poolsSyncing } = useUi();
-  const { t } = useTranslation('pages');
 
   // store local favorite list and update when favorites list is mutated
   const [favoritesList, setFavoritesList] = useState<Array<any>>([]);

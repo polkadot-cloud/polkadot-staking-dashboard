@@ -15,12 +15,15 @@ import { clipAddress, remToUnit } from 'Utils';
 import { PoolAccountProps } from '../types';
 import { Wrapper } from './Wrapper';
 
-export const PoolAccount = (props: PoolAccountProps) => {
-  const { address, last, batchKey, batchIndex } = props;
-
+export const PoolAccount = ({
+  address,
+  last,
+  batchKey,
+  batchIndex,
+}: PoolAccountProps) => {
+  const { t } = useTranslation('pages');
   const { addNotification } = useNotifications();
   const { meta } = useAccount();
-  const { t } = useTranslation('pages');
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];

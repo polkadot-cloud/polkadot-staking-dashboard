@@ -31,10 +31,9 @@ import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
 import { PoolProps } from './types';
 
-export const Pool = (props: PoolProps) => {
-  const { pool, batchKey, batchIndex } = props;
-  const { memberCounter, addresses, id, state } = pool;
+export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const { t } = useTranslation('library');
+  const { memberCounter, addresses, id, state } = pool;
 
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();

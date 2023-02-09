@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -13,16 +12,15 @@ import { useSetup } from 'contexts/Setup';
 import { defaultPoolProgress } from 'contexts/Setup/defaults';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
+import { Close } from 'library/Modal/Close';
+import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit, unitToPlanck } from 'Utils';
-import { FooterWrapper, NotesWrapper, PaddingWrapper } from '../Wrappers';
-import { ContentWrapper } from './Wrapper';
+import { PaddingWrapper } from '../Wrappers';
 
 export const JoinPool = () => {
   const { t } = useTranslation('modals');
@@ -82,52 +80,47 @@ export const JoinPool = () => {
     },
   });
 
-  const warnings = [];
+  const errors = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push(t('readOnly'));
+    errors.push(t('readOnly'));
   }
   return (
     <>
-      <Title title={t('joinPool')} icon={faUserPlus} />
+      <Close />
       <PaddingWrapper>
-        <ContentWrapper>
-          <div>
-            <BondFeedback
-              syncing={largestTxFee.isEqualTo(new BigNumber(0))}
-              bondFor="pool"
-              listenIsValid={setBondValid}
-              defaultBond={null}
-              setters={[
-                {
-                  set: setBond,
-                  current: bond,
-                },
-              ]}
-              warnings={warnings}
-              txFees={largestTxFee}
-            />
-            <NotesWrapper>
-              <EstimatedTxFee />
-            </NotesWrapper>
-          </div>
-          <FooterWrapper>
-            <div>
-              <ButtonSubmit
-                text={`${submitting ? t('submitting') : t('submit')}`}
-                iconLeft={faArrowAltCircleUp}
-                iconTransform="grow-2"
-                onClick={() => submitTx()}
-                disabled={
-                  submitting ||
-                  !bondValid ||
-                  !accountHasSigner(activeAccount) ||
-                  !txFeesValid
-                }
-              />
-            </div>
-          </FooterWrapper>
-        </ContentWrapper>
+        <h2 className="title unbounded">{t('joinPool')}</h2>
+        <BondFeedback
+          syncing={largestTxFee.isEqualTo(new BigNumber(0))}
+          bondFor="pool"
+          listenIsValid={setBondValid}
+          defaultBond={null}
+          setters={[
+            {
+              set: setBond,
+              current: bond,
+            },
+          ]}
+          parentErrors={errors}
+          txFees={largestTxFee}
+        />
       </PaddingWrapper>
+      <SubmitTx
+        buttons={[
+          <ButtonSubmit
+            key="button_submit"
+            text={`${submitting ? t('submitting') : t('submit')}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => submitTx()}
+            disabled={
+              submitting ||
+              !bondValid ||
+              !accountHasSigner(activeAccount) ||
+              !txFeesValid
+            }
+          />,
+        ]}
+      />
     </>
   );
 };

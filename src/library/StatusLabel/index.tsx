@@ -11,9 +11,14 @@ import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatusLabelProps } from './types';
 import { Wrapper } from './Wrapper';
 
-export const StatusLabel = (props: StatusLabelProps) => {
-  const status = props.status ?? 'sync_or_setup';
-
+export const StatusLabel = ({
+  title,
+  helpKey,
+  hideIcon,
+  statusFor = '',
+  topOffset = '40%',
+  status = 'sync_or_setup',
+}: StatusLabelProps) => {
   const { isSyncing } = useUi();
   const { plugins } = usePlugins();
   const { inSetup } = useStaking();
@@ -27,26 +32,21 @@ export const StatusLabel = (props: StatusLabelProps) => {
   }
 
   if (status === 'active_service') {
-    if (plugins.includes(props.statusFor || '')) {
+    if (plugins.includes(statusFor || '')) {
       return <></>;
     }
   }
 
-  const { title } = props;
-  const topOffset = props.topOffset ?? '40%';
-
   return (
     <Wrapper topOffset={topOffset}>
       <div>
-        {props.hideIcon !== true && (
-          <FontAwesomeIcon icon={faExclamationTriangle} />
-        )}
+        {hideIcon !== true && <FontAwesomeIcon icon={faExclamationTriangle} />}
         <h2>
           &nbsp;&nbsp;
           {title}
-          {props.helpKey && (
+          {helpKey && (
             <span>
-              <OpenHelpIcon helpKey={props.helpKey} light />
+              <OpenHelpIcon helpKey={helpKey} light />
             </span>
           )}
         </h2>

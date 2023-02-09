@@ -57,11 +57,15 @@ export const UnbondInput = ({
   // unbond to min as unit.
   const unbondToMinUnit = planckToUnit(unbondToMin, network.units);
 
+  // available funds as jsx.
+  const maxBondedJsx = (
+    <p>
+      {activeUnit.toFormat()} {network.unit} {t('bonded')}
+    </p>
+  );
+
   return (
     <InputWrapper>
-      <h3>
-        {t('unbond')} {network.unit}:
-      </h3>
       <div className="inner">
         <section style={{ opacity: disabled ? 0.5 : 1 }}>
           <div className="input">
@@ -76,9 +80,7 @@ export const UnbondInput = ({
                 disabled={disabled}
               />
             </div>
-            <div>
-              {activeUnit.toFormat()} {network.unit} {t('bonded')}
-            </div>
+            <div>{maxBondedJsx}</div>
           </div>
         </section>
         <section>
@@ -92,6 +94,7 @@ export const UnbondInput = ({
           />
         </section>
       </div>
+      <div className="availableOuter">{maxBondedJsx}</div>
     </InputWrapper>
   );
 };

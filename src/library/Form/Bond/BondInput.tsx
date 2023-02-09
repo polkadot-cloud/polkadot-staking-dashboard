@@ -57,11 +57,17 @@ export const BondInput = ({
     }
   };
 
+  // available funds as jsx.
+  const availableFundsJsx = (
+    <p>
+      {syncing
+        ? '...'
+        : `${freeBalance.toFormat()} ${network.unit} ${t('available')}`}
+    </p>
+  );
+
   return (
     <InputWrapper>
-      <h3>
-        {t('bond')} {network.unit}:
-      </h3>
       <div className="inner">
         <section style={{ opacity: disabled ? 0.5 : 1 }}>
           <div className="input">
@@ -76,15 +82,7 @@ export const BondInput = ({
                 disabled={disabled}
               />
             </div>
-            <div>
-              <p>
-                {syncing
-                  ? '...'
-                  : `${freeBalance.toFormat()} ${network.unit} ${t(
-                      'available'
-                    )}`}
-              </p>
-            </div>
+            <div>{availableFundsJsx}</div>
           </div>
         </section>
         <section>
@@ -100,6 +98,7 @@ export const BondInput = ({
           />
         </section>
       </div>
+      <div className="availableOuter">{availableFundsJsx}</div>
     </InputWrapper>
   );
 };

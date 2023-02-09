@@ -44,6 +44,8 @@ export interface CardWrapperProps {
   transparent?: boolean;
   height?: string | number;
   flex?: boolean;
+  border?: string;
+  warning?: boolean;
 }
 
 export interface GraphWrapperProps {

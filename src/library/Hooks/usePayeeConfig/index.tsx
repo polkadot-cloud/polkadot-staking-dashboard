@@ -42,7 +42,7 @@ export const usePayeeConfig = () => {
         value: 'Account',
         title: t('payee.account.title', { context: 'default' }),
         activeTitle: t('payee.account.title'),
-        subtitle: t('payee.account.title'),
+        subtitle: t('payee.account.subtitle'),
         icon: faArrowRightFromBracket,
       },
     ];

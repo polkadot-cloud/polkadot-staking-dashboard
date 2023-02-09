@@ -2,13 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  backgroundDropdown,
-  borderPrimary,
-  borderSecondary,
-  textPrimary,
-  textSecondary,
-} from 'theme';
 
 export const StyledDownshift = styled.div`
   position: relative;
@@ -26,20 +19,20 @@ export const StyledDownshift = styled.div`
     margin-bottom: 1rem;
 
     > span {
+      color: var(--text-color-secondary);
       margin: 0 0.75rem;
-      color: ${textSecondary};
       opacity: 0.5;
     }
   }
 
   /* input element of dropdown */
   .input-wrap {
-    border-bottom: 1px solid ${borderPrimary};
+    border-bottom: 1px solid var(--border-primary-color);
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     padding: 0.25rem 0 0 0;
-    margin: 0.25rem 0.7rem 0 0.7rem;
+    margin: 0.25rem 0rem 0 0rem;
     flex: 1;
 
     &.selected {
@@ -60,7 +53,7 @@ export const StyledDownshift = styled.div`
 `;
 
 export const StyledController = styled.button<any>`
-  color: ${textPrimary};
+  color: var(--text-color-primary);
   border: none;
   position: absolute;
   right: 0.5rem;
@@ -76,10 +69,9 @@ export const StyledController = styled.button<any>`
 
 /* dropdown box for vertical scroll */
 export const StyledDropdown = styled.div<any>`
-  background: ${backgroundDropdown};
+  border: 1px solid var(--border-primary-color);
   position: relative;
   margin: 0.5rem 0 0;
-  border-bottom: none;
   border-radius: 0.75rem;
   z-index: 1;
 
@@ -89,29 +81,41 @@ export const StyledDropdown = styled.div<any>`
     overflow: auto;
 
     .item {
-      padding: 0.5rem;
       cursor: pointer;
+      opacity: 1;
+      padding: 0.5rem;
       margin: 0.25rem;
       border-radius: 0.75rem;
       display: flex;
       flex-flow: row wrap;
-      justify-content: flex-start;
       align-items: center;
+      border: 2px solid;
+      border-color: var(--transparent-color);
+
+      &.inactive {
+        opacity: 0.5;
+        cursor: default;
+      }
+
+      &.selected {
+        border-color: var(--network-color-primary);
+      }
 
       .icon {
         margin-right: 0.5rem;
       }
+
       span {
-        color: ${textSecondary};
-        border: 1px solid ${borderSecondary};
+        color: var(--text-color-secondary);
+        border: 1px solid var(--border-secondary-color);
         border-radius: 0.5rem;
         padding: 0.2rem 0.5rem;
         font-size: 0.9rem;
         margin-right: 0.5rem;
       }
       p {
+        color: var(--text-color-primary);
         font-size: 1rem;
-        color: ${textPrimary};
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;

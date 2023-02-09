@@ -13,7 +13,7 @@ Reach out to ross@parity.io for clarification of any content within this documen
 - Framer Motion. [[docs](https://www.framer.com/docs/animation/)]
 - [Font Awesome](https://fontawesome.com/v5/search) for the majority of icons. [Ionicons](https://ionic.io/ionicons) for side menu footer icons
 - Downshift for dropdowns [[docs](https://www.npmjs.com/package/downshift)]
-- Styled Components [[docs](https://styled-components.com/docs)] alongside Styled Theming [[docs](https://www.npmjs.com/package/styled-theming)] for theme configuration.
+- SCSS for theme configuration and Styled Components [[docs](https://styled-components.com/docs)] for component styling.
 
 ## Environment Variables
 Optionally apply the following envrionment variables in an environment file such as `.env` or with `yarn build` to customise the build of staking dashboard:
@@ -63,7 +63,7 @@ Documenting some of the development patterns used:
 
 - We use the **"Wrapper" terminology for styled components** that wrap a functional component.
 - **Styles are defined on a per-component basis**, being defined in the same folder as the component markup itself. Where unavoidable (such as global styles, interface layout), styled components should reside in [`src/Wrappers.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/Wrappers.tsx).
-- **Theme values** can be either directly imported into styled components, from [`theme/index.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/theme/index.ts), or as raw values within component files using [`theme/default.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/theme/default.ts).
+- **Theme values** are configured in [`styles/theme.scss`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/styles/theme.scss), and can be included in any styled component as custom properties. Graph colors are configurable from [`styles/graphs.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/styles/graphs.ts).
 - **Constants or default values** (such as those waiting for Polkadot API) are defined in [`src/constants.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/constants.ts).
 - Packages with **missing TypeScript definitions** can be declared in [`src/react-app-env.d.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/react-app-env.d.ts).
 

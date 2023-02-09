@@ -6,10 +6,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
 import { useTranslation } from 'react-i18next';
 
-export const JoinPool = (props: { id: number; setActiveTab: any }) => {
-  const { id, setActiveTab } = props;
-  const { openModalWith } = useModal();
+export const JoinPool = ({
+  id,
+  setActiveTab,
+}: {
+  id: number;
+  setActiveTab: any;
+}) => {
   const { t } = useTranslation('library');
+  const { openModalWith } = useModal();
 
   return (
     <div className="label button-with-text">

@@ -4,25 +4,29 @@
 import { faChevronRight, faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
-import { useTheme } from 'contexts/Themes';
-import { useLayoutEffect, useRef } from 'react';
-import { defaultThemes } from 'theme/default';
-import { remToUnit } from 'Utils';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import { applyWidthAsPadding } from 'Utils';
 import { ItemProps } from './types';
 import { StatusRowWrapper } from './Wrappers';
 
 export const Item = ({ text, ctaText, onClick, leftIcon }: ItemProps) => {
-  const { mode } = useTheme();
   const containerRef = useRef<HTMLDivElement>(null);
   const subjectRef = useRef<HTMLDivElement>(null);
 
+  const handleAdjustLayout = () => {
+    applyWidthAsPadding(subjectRef, containerRef);
+  };
+
   useLayoutEffect(() => {
-    if (containerRef.current && subjectRef.current) {
-      containerRef.current.style.paddingRight = `${
-        subjectRef.current.offsetWidth + remToUnit('1rem')
-      }px`;
-    }
+    handleAdjustLayout();
   });
+
+  useEffect(() => {
+    window.addEventListener('resize', handleAdjustLayout);
+    return () => {
+      window.removeEventListener('resize', handleAdjustLayout);
+    };
+  }, []);
 
   return (
     <StatusRowWrapper leftIcon={leftIcon?.show}>
@@ -34,16 +38,7 @@ export const Item = ({ text, ctaText, onClick, leftIcon }: ItemProps) => {
                 <FontAwesomeIcon
                   icon={faCircle}
                   transform="shrink-6"
-                  className="bull"
-                  style={{
-                    opacity: leftIcon.status === 'off' ? 0.1 : 1,
-                    color:
-                      leftIcon.status === 'active'
-                        ? defaultThemes.text.success[mode]
-                        : leftIcon.status === 'inactive'
-                        ? defaultThemes.text.warning[mode]
-                        : 'inherit',
-                  }}
+                  className={`bull ${leftIcon.status}`}
                 />
               ) : null
             ) : null}

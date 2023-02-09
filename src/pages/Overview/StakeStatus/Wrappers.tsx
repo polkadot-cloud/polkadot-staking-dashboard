@@ -3,7 +3,6 @@
 
 import { SideMenuStickyThreshold } from 'consts';
 import styled from 'styled-components';
-import { borderPrimary, textSecondary } from 'theme';
 
 export const StatusWrapper = styled.div<{ includeBorder: boolean }>`
   width: 100%;
@@ -30,10 +29,10 @@ export const StatusWrapper = styled.div<{ includeBorder: boolean }>`
 `;
 
 export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
+  border-bottom: 1px solid var(--border-primary-color);
   width: 100%;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid ${borderPrimary};
   padding-bottom: 0.75rem;
   margin-bottom: 0.75rem;
 
@@ -52,7 +51,6 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    justify-content: flex-start;
     overflow: hidden;
     width: auto;
     height: 2rem;
@@ -61,7 +59,7 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
     width: 100%;
 
     .text {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       font-size: 1.25rem;
       line-height: 1.55rem;
       position: absolute;
@@ -82,6 +80,16 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
       left: 0rem;
       top: 0.32rem;
       margin-right: 0.75rem;
+
+      &.off {
+        opacity: 0.1;
+      }
+      &.active {
+        color: var(--status-success-color);
+      }
+      &.inactive {
+        color: var(--status-warning-color);
+      }
     }
     .cta {
       position: absolute;

@@ -3,38 +3,29 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  borderPrimary,
-  highlightPrimary,
-  highlightSecondary,
-  textPrimary,
-  textSecondary,
-} from 'theme';
 import { MinimisedProps } from '../types';
 
 export const Wrapper = styled(motion.button)<MinimisedProps>`
   width: 100%;
-  border: 1px solid ${borderPrimary};
+  border: 1px solid var(--border-primary-color);
   border-radius: 0.7rem;
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   padding: 0.75rem 0rem 0.75rem 0.5rem;
   margin: 0.8rem 0.2rem 0.8rem 0;
   position: relative;
   height: 3.2rem;
-
   .name {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     font-size: 1.1rem;
   }
   .light {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     margin-left: 0.2rem;
   }
   .action {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     flex: 1;
     display: flex;
     flex-flow: row wrap;
@@ -42,16 +33,25 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
   }
 
   &.active {
-    background: ${highlightPrimary};
+    background: var(--gradient-highlight-primary);
   }
   &.inactive:hover {
-    background: ${highlightSecondary};
+    background: var(--gradient-highlight-secondary);
+  }
+  &.success {
+    border: 1px solid var(--status-success-color-transparent);
+  }
+  &.warning {
+    border: 1px solid var(--status-warning-color-transparent);
+  }
+  &.danger {
+    border: 1px solid var(--status-danger-color-transparent);
   }
 `;
 
 export const MinimisedWrapper = styled(motion.button)`
+  border: 1px solid var(--border-primary-color);
   width: 100%;
-  border: 1px solid ${borderPrimary};
   border-radius: 0.5rem;
   display: flex;
   flex-flow: row wrap;
@@ -63,10 +63,10 @@ export const MinimisedWrapper = styled(motion.button)`
   min-height: 2.8rem;
 
   &.active {
-    background: ${highlightPrimary};
+    background: var(--gradient-highlight-primary);
   }
   &.inactive:hover {
-    background: ${highlightSecondary};
+    background: var(--gradient-highlight-secondary);
   }
   .icon {
     margin: 0;
@@ -79,6 +79,15 @@ export const MinimisedWrapper = styled(motion.button)`
       right: -13px;
     }
   }
+  &.success {
+    border: 1px solid var(--status-success-color-transparent);
+  }
+  &.warning {
+    border: 1px solid var(--status-warning-color-transparent);
+  }
+  &.danger {
+    border: 1px solid var(--status-danger-color-transparent);
+  }
 `;
 
 export const IconWrapper = styled.div<{ minimised: number }>`
@@ -86,15 +95,15 @@ export const IconWrapper = styled.div<{ minimised: number }>`
   margin-right: ${(props) => (props.minimised ? 0 : '0.65rem')};
 
   .lpf {
-    fill: ${textPrimary};
+    fill: var(--text-color-primary);
   }
   .lps {
-    stroke: ${textPrimary};
+    stroke: var(--text-color-primary);
   }
 
   svg {
     .primary {
-      fill: ${textSecondary};
+      fill: var(--text-color-secondary);
     }
   }
 `;

@@ -247,7 +247,7 @@ export const BalancesProvider = ({
   const subscribeToLedger = async (address: string) => {
     if (!api) return;
 
-    const unsub: () => void = await api.queryMulti<[AnyApi]>(
+    const unsub: () => void = await api.queryMulti<AnyApi>(
       [[api.query.staking.ledger, address]],
       async ([l]): Promise<void> => {
         let ledger: BalanceLedger;

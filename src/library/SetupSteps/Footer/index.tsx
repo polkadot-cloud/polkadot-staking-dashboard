@@ -8,9 +8,8 @@ import { useTranslation } from 'react-i18next';
 import { FooterProps } from '../types';
 import { Wrapper } from './Wrapper';
 
-export const Footer = (props: FooterProps) => {
+export const Footer = ({ complete, bondFor }: FooterProps) => {
   const { t } = useTranslation('library');
-  const { complete, bondFor } = props;
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetupSection } = useSetup();
   const setup = getSetupProgress(bondFor, activeAccount);

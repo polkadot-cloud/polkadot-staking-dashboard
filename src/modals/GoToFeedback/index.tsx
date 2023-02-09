@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReactComponent as ForumSVG } from 'img/forum.svg';
 import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
-import { NotesWrapper, PaddingWrapper } from '../Wrappers';
+import { PaddingWrapper } from '../Wrappers';
 
 export const GoToFeedback = () => {
   const { t } = useTranslation('modals');
@@ -20,15 +20,13 @@ export const GoToFeedback = () => {
             width: '100%',
           }}
         >
-          <NotesWrapper style={{ paddingTop: 0 }}>
-            <p>
-              {t('feedbackPage')}{' '}
-              <a href="https://canny.io/" target="_blank" rel="noreferrer">
-                Canny.io
-              </a>
-              . {t('welcomeToReport')}
-            </p>
-          </NotesWrapper>
+          <p style={{ paddingBottom: '0.5rem' }}>
+            {t('feedbackPage')}{' '}
+            <a href="https://canny.io/" target="_blank" rel="noreferrer">
+              Canny.io
+            </a>
+            . {t('welcomeToReport')}
+          </p>
           <h2 style={{ marginTop: 0 }}>
             <a
               href="https://polkadot-staking-dashboard.canny.io/feedback"

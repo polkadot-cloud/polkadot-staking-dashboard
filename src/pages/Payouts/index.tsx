@@ -31,19 +31,18 @@ import { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
 import { LastEraPayoutStat } from './Stats/LastEraPayout';
 
-export const Payouts = (props: PageProps) => {
+export const Payouts = ({ page }: PageProps) => {
+  const { i18n, t } = useTranslation();
   const { payouts, poolClaims } = useSubscan();
   const { isSyncing } = useUi();
   const { plugins } = usePlugins();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
-  const { i18n, t } = useTranslation();
 
   const [payoutsList, setPayoutLists] = useState<AnySubscan>();
   const [fromDate, setFromDate] = useState<string | undefined>();
   const [toDate, setToDate] = useState<string | undefined>();
 
-  const { page } = props;
   const { key } = page;
 
   const ref = useRef<HTMLDivElement>(null);

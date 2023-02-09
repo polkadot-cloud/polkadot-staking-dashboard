@@ -2,18 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  buttonHelpBackground,
-  buttonPrimaryBackground,
-  networkColor,
-  textSecondary,
-} from 'theme';
 
 export const Wrapper = styled.button<{ light?: boolean }>`
   background: ${(props) =>
-    props.light ? buttonPrimaryBackground : buttonHelpBackground};
-  color: ${textSecondary};
-  fill: ${textSecondary};
+    props.light
+      ? 'var(--button-primary-background)'
+      : 'var(--button-tertiary-background)'};
+  color: var(--text-color-secondary);
+  fill: var(--text-color-secondary);
   display: flex;
   flex-flow: row wrap;
   align-items: center;
@@ -24,6 +20,6 @@ export const Wrapper = styled.button<{ light?: boolean }>`
   font-size: 1.15rem;
 
   &:hover {
-    fill: ${networkColor};
+    fill: var(--network-color-primary);
   }
 `;

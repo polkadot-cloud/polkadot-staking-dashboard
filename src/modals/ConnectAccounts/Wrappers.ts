@@ -3,17 +3,6 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  backgroundToggle,
-  borderPrimary,
-  buttonPrimaryBackground,
-  modalBackground,
-  textDanger,
-  textInvert,
-  textPrimary,
-  textSecondary,
-  textSuccess,
-} from 'theme';
 
 export const CardsWrapper = styled(motion.div)`
   width: 200%;
@@ -35,23 +24,22 @@ export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   align-items: center;
-  justify-content: flex-start;
   padding: 0;
   width: 100%;
   overflow: hidden;
 
   h1 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
     font-size: 1.4rem;
     font-family: 'Unbounded', 'sans-serif', sans-serif;
     padding: 0.5rem 0.5rem 0 0.5rem;
   }
 
   h3 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
 
     &.heading {
-      border-bottom: 1px solid ${borderPrimary};
+      border-bottom: 1px solid var(--border-primary-color);
       padding-bottom: 0.75rem;
       margin: 2rem 0 1rem 0;
     }
@@ -83,12 +71,12 @@ export const PaddingWrapper = styled.div`
 `;
 
 export const AccountGroupWrapper = styled(motion.button)`
+  background: var(--button-primary-background);
   border-radius: 1rem;
   width: 100%;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  background: ${buttonPrimaryBackground};
   margin-bottom: 1rem;
   transition: background 0.15s;
 
@@ -117,19 +105,19 @@ export const AccountGroupWrapper = styled(motion.button)`
       margin: 0.4rem 0;
       > button,
       > div {
+        border: 1px solid var(--background-modal);
         border-radius: 0.75rem;
-        border: 1px solid ${modalBackground};
         margin: 0;
       }
     }
   }
 
   &:hover {
-    background: ${backgroundToggle};
+    background: var(--button-toggle-background);
     > section > div {
       > button,
       > div {
-        background: ${backgroundToggle};
+        background: var(--button-toggle-background);
       }
     }
   }
@@ -141,7 +129,7 @@ export const AccountWrapper = styled.div`
 
   > button {
     &:hover {
-      background: ${backgroundToggle};
+      background: var(--button-toggle-background);
     }
     &:disabled {
       cursor: default;
@@ -151,12 +139,12 @@ export const AccountWrapper = styled.div`
 
   > div,
   button {
+    background: var(--button-primary-background);
+    color: var(--text-color-primary);
     width: 100%;
     border-radius: 0.75rem;
     font-size: 1rem;
-    background: ${buttonPrimaryBackground};
     transition: background 0.15s;
-    color: ${textPrimary};
     display: flex;
     align-items: center;
     min-height: 3.5rem;
@@ -165,7 +153,6 @@ export const AccountWrapper = styled.div`
 
     > div {
       display: flex;
-      justify-content: flex-start;
       align-items: center;
       padding: 0 0.25rem;
 
@@ -187,13 +174,13 @@ export const AccountWrapper = styled.div`
 
       &.neutral {
         h5 {
-          color: ${textSecondary};
+          color: var(--text-color-secondary);
           opacity: 0.75;
         }
       }
       &.danger {
         h5 {
-          color: ${textDanger};
+          color: var(--status-danger-color);
         }
       }
       .icon {
@@ -205,10 +192,10 @@ export const AccountWrapper = styled.div`
       /* svg theming */
       svg {
         .light {
-          fill: ${textInvert};
+          fill: var(--text-color-invert);
         }
         .dark {
-          fill: ${textSecondary};
+          fill: var(--text-color-secondary);
         }
       }
     }
@@ -220,14 +207,14 @@ export const ExtensionWrapper = styled.div<{ noSpacing?: boolean }>`
 
   > button,
   > div {
-    width: 100%;
+    background: var(--button-primary-background);
     margin: ${(props) => (props.noSpacing ? 0 : '1rem 0')};
     padding: ${(props) => (props.noSpacing ? 0 : '1rem 0.25rem')};
+    color: var(--text-color-primary);
+    width: 100%;
     font-size: 1rem;
-    background: ${buttonPrimaryBackground};
     border-radius: 0.75rem;
     transition: background 0.15s;
-    color: ${textPrimary};
     display: flex;
     align-items: center;
     min-height: 3.5rem;
@@ -266,42 +253,42 @@ export const ExtensionWrapper = styled.div<{ noSpacing?: boolean }>`
       }
     }
     .neutral {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
     }
     .danger {
-      color: ${textDanger};
+      color: var(--status-danger-color);
     }
     .success {
-      color: ${textSuccess};
+      color: var(--status-success-color);
     }
     /* svg theming */
     svg {
       .light {
-        fill: ${textInvert};
+        fill: var(--text-color-invert);
       }
       .dark {
-        fill: ${textSecondary};
+        fill: var(--text-color-secondary);
       }
     }
   }
   > button {
     padding: 0 0.2rem;
     &:hover {
-      background: ${backgroundToggle};
+      background: var(--button-toggle-background);
     }
 
     &:disabled {
       cursor: default;
       opacity: 1;
       &:hover {
-        background: ${buttonPrimaryBackground};
+        background: var(--button-primary-background);
       }
     }
   }
 `;
 
 export const Separator = styled.div`
-  border-top: 1px solid ${textSecondary};
+  border-top: 1px solid var(--text-color-secondary);
   width: 100%;
   opacity: 0.1;
   margin: 1.5rem 0rem;

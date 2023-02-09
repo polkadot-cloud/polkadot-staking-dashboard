@@ -14,12 +14,12 @@ import { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 
 export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
+  const { t } = useTranslation('library');
   const { staking, eraStakers } = useStaking();
   const { isSyncing } = useUi();
   const { unit, units } = useApi().network;
   const { minNominatorBond } = staking;
   const { minActiveBond } = eraStakers;
-  const { t } = useTranslation('library');
 
   const minNominatorBondUnit = planckToUnit(minNominatorBond, units);
   const gtMinNominatorBond = value.isGreaterThanOrEqualTo(minNominatorBondUnit);

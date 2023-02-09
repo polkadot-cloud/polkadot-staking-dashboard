@@ -11,14 +11,19 @@ import { BondedPool } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
-import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
+import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
 import { useTranslation } from 'react-i18next';
-import { capitalizeFirstLetter, planckToUnit, rmCommas } from 'Utils';
+import {
+  capitalizeFirstLetter,
+  planckToUnit,
+  rmCommas,
+  sortWithNull,
+} from 'Utils';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');
-  const { networkSyncing, poolsSyncing, isSyncing } = useUi();
+  const { poolsSyncing, isSyncing } = useUi();
   const { network } = useApi();
   const { eraStakers } = useStaking();
   const { units } = network;
@@ -68,6 +73,8 @@ export const Announcements = () => {
         unit: network.unit,
       }),
     });
+  } else {
+    announcements.push(null);
   }
 
   // total locked in pools
@@ -79,18 +86,24 @@ export const Announcements = () => {
       } ${t('overview.inPools')}`,
       subtitle: `${t('overview.bondedInPools', { networkUnit })}`,
     });
-
-    if (poolMembers.length > 0 && !poolsSyncing) {
-      // total locked in pols
-      announcements.push({
-        class: 'neutral',
-        title: `${new BigNumber(poolMembers.length).toFormat()} ${t(
-          'overview.poolMembersBonding'
-        )}`,
-        subtitle: `${t('overview.totalNumAccounts')}`,
-      });
-    }
+  } else {
+    announcements.push(null);
   }
+
+  if (bondedPools.length && poolMembers.length > 0 && !poolsSyncing) {
+    // total locked in pols
+    announcements.push({
+      class: 'neutral',
+      title: `${new BigNumber(poolMembers.length).toFormat()} ${t(
+        'overview.poolMembersBonding'
+      )}`,
+      subtitle: `${t('overview.totalNumAccounts')}`,
+    });
+  } else {
+    announcements.push(null);
+  }
+
+  announcements.sort(sortWithNull(true));
 
   return (
     <motion.div
@@ -99,10 +112,10 @@ export const Announcements = () => {
       animate="show"
       style={{ width: '100%' }}
     >
-      {networkSyncing ? (
-        <AnnouncementLoader />
-      ) : (
-        announcements.map((item, index) => (
+      {announcements.map((item, index) =>
+        item === null ? (
+          <AnnouncementLoader key={`announcement_${index}`} />
+        ) : (
           <Item key={`announcement_${index}`} variants={listItem}>
             <h4 className={item.class}>
               <FontAwesomeIcon
@@ -113,7 +126,7 @@ export const Announcements = () => {
             </h4>
             <p>{item.subtitle}</p>
           </Item>
-        ))
+        )
       )}
     </motion.div>
   );

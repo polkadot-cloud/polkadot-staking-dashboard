@@ -21,7 +21,6 @@ import { useOutsideAlerter } from 'library/Hooks';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { defaultThemes } from 'theme/default';
 import { capitalizeFirstLetter } from 'Utils';
 import { Heading } from './Heading/Heading';
 import { Main } from './Main';
@@ -29,7 +28,8 @@ import { Secondary } from './Secondary';
 import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
 
 export const SideMenu = () => {
-  const { network, status } = useApi();
+  const { t } = useTranslation('base');
+  const { network, apiStatus } = useApi();
   const { mode, toggleTheme } = useTheme();
   const { openModalWith } = useModal();
   const {
@@ -39,7 +39,6 @@ export const SideMenu = () => {
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi();
   const { openHelpWith } = useHelp();
-  const { t } = useTranslation('base');
 
   // listen to window resize to hide SideMenu
   useEffect(() => {
@@ -64,21 +63,12 @@ export const SideMenu = () => {
     setSideMenu(0);
   });
 
-  // handle connection symbol
-  const symbolColor =
-    status === 'connecting'
-      ? defaultThemes.status.warning.solid[mode]
-      : status === 'connected'
-      ? defaultThemes.status.success.solid[mode]
-      : defaultThemes.status.danger.solid[mode];
-
-  // handle transparent border color
-  const borderColor =
-    status === 'connecting'
-      ? defaultThemes.status.warning.transparent[mode]
-      : status === 'connected'
-      ? defaultThemes.status.success.transparent[mode]
-      : defaultThemes.status.danger.transparent[mode];
+  const apiStatusClass =
+    apiStatus === 'connecting'
+      ? 'warning'
+      : apiStatus === 'connected'
+      ? 'success'
+      : 'danger';
 
   return (
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
@@ -108,8 +98,8 @@ export const SideMenu = () => {
         <Separator />
         <Heading title={t('network')} minimised={sideMenuMinimised} />
         <Secondary
+          classes={[apiStatusClass]}
           name={capitalizeFirstLetter(network.name)}
-          borderColor={borderColor}
           onClick={() => openModalWith('Networks')}
           icon={{
             Svg: network.brand.inline.svg,
@@ -117,7 +107,10 @@ export const SideMenu = () => {
           }}
           minimised={sideMenuMinimised}
           action={
-            <ConnectionSymbol color={[symbolColor]} style={{ opacity: 0.7 }} />
+            <ConnectionSymbol
+              className={apiStatusClass}
+              style={{ opacity: 0.7 }}
+            />
           }
         />
       </section>

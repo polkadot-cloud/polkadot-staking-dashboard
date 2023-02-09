@@ -3,22 +3,12 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  highlightPrimary,
-  highlightSecondary,
-  networkColor,
-  success,
-  textPrimary,
-  warning,
-  warningTransparent,
-} from 'theme';
 import { MinimisedProps } from '../types';
 
 export const Wrapper = styled(motion.div)<MinimisedProps>`
   border-radius: 0.7rem;
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   padding: 0rem 0.5rem;
   margin: 0.4rem 0.2rem 0.3rem 0;
@@ -34,10 +24,10 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
     }
 
     .lpf {
-      fill: ${textPrimary};
+      fill: var(--text-color-primary);
     }
     .lps {
-      stroke: ${textPrimary};
+      stroke: var(--text-color-primary);
     }
   }
   .name {
@@ -46,7 +36,7 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
     line-height: 1.35rem;
   }
   .action {
-    color: ${success};
+    color: var(--status-success-color);
     flex: 1;
     display: flex;
     flex-flow: row wrap;
@@ -57,12 +47,12 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
 
     > span {
       &.success {
-        color: ${networkColor};
-        border: 1px solid ${networkColor};
+        color: var(--network-color-primary);
+        border: 1px solid var(--network-color-primary);
       }
       &.warning {
-        color: ${warning};
-        border: 1px solid ${warningTransparent};
+        color: var(--status-warning-color);
+        border: 1px solid var(--status-warning-color-transparent);
       }
       border-radius: 0.5rem;
       padding: 0.15rem 0.5rem;
@@ -70,21 +60,21 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
 
     &.success {
       svg {
-        color: ${success};
+        color: var(--status-success-color);
       }
     }
     &.warning {
       svg {
-        color: ${warning};
+        color: var(--status-warning-color);
       }
     }
   }
 
   &.active {
-    background: ${highlightPrimary};
+    background: var(--gradient-highlight-primary);
   }
   &.inactive:hover {
-    background: ${highlightSecondary};
+    background: var(--gradient-highlight-secondary);
   }
 `;
 
@@ -101,25 +91,25 @@ export const MinimisedWrapper = styled(motion.div)`
   border: 1px solid rgba(255, 255, 255, 0);
 
   &.action-success {
-    border: 1px solid ${networkColor};
+    border: 1px solid var(--network-color-primary);
   }
   &.action-warning {
-    border: 1px solid ${warningTransparent};
+    border: 1px solid var(--status);
   }
   &.active {
-    background: ${highlightPrimary};
+    background: var(--gradient-highlight-primary);
   }
   &.inactive:hover {
-    background: ${highlightSecondary};
+    background: var(--gradient-highlight-secondary);
   }
   .icon {
     margin: 0;
 
     .lpf {
-      fill: ${textPrimary};
+      fill: var(--text-color-primary);
     }
     .lps {
-      stroke: ${textPrimary};
+      stroke: var(--text-color-primary);
     }
   }
   .action {

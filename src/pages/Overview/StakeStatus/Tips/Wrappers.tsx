@@ -4,7 +4,6 @@
 import { SideMenuStickyThreshold, SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { borderPrimary, networkColor, textSecondary } from 'theme';
 
 export const TipsWrapper = styled.div`
   width: 100%;
@@ -45,10 +44,10 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
       align-items: center;
       padding-top: 0.1rem;
       .lpf {
-        fill: ${networkColor};
+        fill: var(--network-color-primary);
       }
       .lps {
-        stroke: ${networkColor};
+        stroke: var(--network-color-primary);
       }
     }
 
@@ -71,16 +70,16 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
 
         &.active {
           h4:hover {
-            color: ${networkColor};
+            color: var(--network-color-primary);
             .more {
-              color: ${networkColor};
+              color: var(--network-color-primary);
               opacity: 1;
             }
           }
         }
 
         h4 {
-          color: ${textSecondary};
+          color: var(--text-color-secondary);
           position: absolute;
           top: 0;
           left: 0;
@@ -97,12 +96,12 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           transition: color 0.15s;
         }
         .more {
+          color: var(--text-color-secondary);
           position: absolute;
           right: 0.2rem;
           top: 0.43rem;
           display: flex;
           align-items: center;
-          color: ${textSecondary};
           transition: all 0.15s;
           font-size: 1rem;
           opacity: 0.5;
@@ -116,10 +115,10 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
 `;
 
 export const PageToggleWrapper = styled.div`
-  color: ${textSecondary};
+  border: 1px solid var(--border-primary-color);
+  color: var(--text-color-secondary);
   padding: 0.1rem 0.1rem;
   border-radius: 1.5rem;
-  border: 1px solid ${borderPrimary};
   position: relative;
   top: 0.1rem;
   display: flex;
@@ -132,14 +131,14 @@ export const PageToggleWrapper = styled.div`
     font-size: 1.1rem;
     transition: color 0.2s;
     > svg {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
     }
     &:hover {
       opacity: 1;
-      color: ${networkColor};
+      color: var(--network-color-primary);
     }
     &:disabled {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       opacity: 0.1;
     }
   }

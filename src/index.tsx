@@ -3,8 +3,8 @@
 
 import '@rossbulat/polkadot-dashboard-ui/index.css';
 import { App } from 'App';
-import 'index.css';
 import { createRoot } from 'react-dom/client';
+import 'styles/index.scss';
 import reportWebVitals from './reportWebVitals';
 
 const rootElement = document.getElementById('root');

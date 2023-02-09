@@ -20,7 +20,9 @@ export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
 
   const minCreateBondUnit = planckToUnit(minCreateBond, units);
   const sectionClassName =
-    value >= minCreateBondUnit && !isSyncing ? 'invert' : '';
+    value.isGreaterThanOrEqualTo(minCreateBondUnit) && !isSyncing
+      ? 'invert'
+      : '';
 
   return (
     <Wrapper>

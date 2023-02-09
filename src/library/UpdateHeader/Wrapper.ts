@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary, textSecondary } from 'theme';
 
 export const Wrapper = styled.div`
   flex: 1;
@@ -11,14 +10,14 @@ export const Wrapper = styled.div`
   margin-bottom: 1rem;
 
   > span {
+    color: var(--text-color-secondary);
     margin: 0 0.75rem;
-    color: ${textSecondary};
     opacity: 0.5;
   }
 
   /* input element of dropdown */
   > div {
-    border-bottom: 1px solid ${borderPrimary};
+    border-bottom: 1px solid var(--border-primary-color);
     display: flex;
     justify-content: center;
     flex: 1;

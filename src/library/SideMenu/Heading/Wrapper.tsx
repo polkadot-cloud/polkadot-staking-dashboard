@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { textSecondary } from 'theme';
 
 export const Wrapper = styled.div<{ minimised: number }>`
   display: flex;
@@ -12,7 +11,7 @@ export const Wrapper = styled.div<{ minimised: number }>`
   align-items: center;
 
   h5 {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     margin: 1.1rem 0 0.3rem 0;
     padding: 0 0.5rem;
     opacity: 0.7;

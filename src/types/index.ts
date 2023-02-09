@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { Theme } from 'contexts/Themes/types';
 import { PageProps } from 'pages/types';
 import React, { FunctionComponent, SVGProps } from 'react';
 
@@ -11,30 +12,14 @@ export interface Networks {
   [key: string]: Network;
 }
 
+type NetworkColor = 'primary' | 'secondary' | 'stroke' | 'transparent';
 export interface Network {
   name: string;
   endpoints: {
     rpc: string;
     lightClient: AnyApi;
   };
-  colors: {
-    primary: {
-      light: string;
-      dark: string;
-    };
-    secondary: {
-      light: string;
-      dark: string;
-    };
-    stroke: {
-      light: string;
-      dark: string;
-    };
-    transparent: {
-      light: string;
-      dark: string;
-    };
-  };
+  colors: Record<NetworkColor, { [key in Theme]: string }>;
   subscanEndpoint: string;
   unit: string;
   units: number;

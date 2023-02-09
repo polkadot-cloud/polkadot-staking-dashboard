@@ -9,7 +9,7 @@ import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
-import { Bonded as BondedGraph } from 'library/Graphs/Bonded';
+import { BondedChart } from 'library/BarChart/BondedChart';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
@@ -17,6 +17,8 @@ import { planckToUnit } from 'Utils';
 import { ButtonRowWrapper } from 'Wrappers';
 
 export const ManageBond = () => {
+  const { t } = useTranslation('pages');
+
   const { network } = useApi();
   const { units } = network;
   const { openModalWith } = useModal();
@@ -24,7 +26,6 @@ export const ManageBond = () => {
   const { poolsSyncing } = useUi();
   const { isBonding, isMember, selectedActivePool } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
-  const { t } = useTranslation('pages');
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { freeBalance } = allTransferOptions;
@@ -76,12 +77,12 @@ export const ManageBond = () => {
           />
         </ButtonRowWrapper>
       </CardHeaderWrapper>
-      <BondedGraph
+      <BondedChart
         active={planckToUnit(active, units)}
         unlocking={planckToUnit(totalUnlocking, units)}
         unlocked={planckToUnit(totalUnlocked, units)}
         free={planckToUnit(freeBalance, units)}
-        inactive={!isMember()}
+        inactive={active.isZero()}
       />
     </>
   );

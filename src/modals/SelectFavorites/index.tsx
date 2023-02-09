@@ -13,12 +13,12 @@ import { PaddingWrapper } from '../Wrappers';
 import { FooterWrapper, ListWrapper } from './Wrappers';
 
 export const SelectFavorites = () => {
+  const { t } = useTranslation('modals');
   const { consts } = useApi();
   const { config, setStatus, setResize } = useModal();
   const { favoritesList } = useValidators();
   const { maxNominations } = consts;
   const { nominations, callback: generateNominationsCallback } = config;
-  const { t } = useTranslation('modals');
 
   // store filtered favorites
   const [availableFavorites, setAvailableFavorites] = useState<
