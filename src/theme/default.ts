@@ -9,14 +9,8 @@ const v = (light: string, dark: string) => ({
 });
 
 export const defaultThemes: { [key: string]: AnyJson } = {
-  transparent: v('rgba(255,255,255,0)', 'rgba(0,0,0,0)'),
   text: {
-    primary: v('#333', '#ccc'),
-    secondary: v('#444', '#aaa'),
     invert: v('#fafafa', '#0e0e0e'),
-    warning: v('#8e6c1a', '#cb9f37'),
-    danger: v('#ae2324', '#d14445'),
-    success: v('green', 'green'),
   },
   background: {
     primary: v('rgba(245,244,244,1)', 'rgba(39,39,39,1)'),
@@ -74,22 +68,9 @@ export const defaultThemes: { [key: string]: AnyJson } = {
     },
   },
   border: {
-    primary: v('#e6e6e6', '#282828'),
     secondary: v('#ccc', '#444'),
-    warning: v('#f8ebb2', '#48482a'),
   },
-  modal: {
-    overlay: v('rgba(230,228,228,0.6)', 'rgba(16,16,16,0.6)'),
-    background: v('rgba(252,251,251,1)', '#101010'),
-  },
-  overlay: {
-    background: v('rgba(200,200,200,0.45)', 'rgba(30,30,30,0.6)'),
-  },
-  help: {
-    button: {
-      background: v('rgba(255,255,255,0.90)', 'rgba(0,0,0,0.85)'),
-    },
-  },
+
   loader: {
     foreground: v('#e1e1e1', '#151515'),
     background: v('#dadada', '#101010'),
@@ -97,19 +78,5 @@ export const defaultThemes: { [key: string]: AnyJson } = {
   shadow: {
     primary: v('#dedede', '#1f1f1f'),
     secondary: v('#eaeaea', '#222'),
-  },
-  status: {
-    danger: {
-      solid: v('red', 'red'),
-      transparent: v('rgba(255,0,0,0.25)', 'rgba(255,0,0,0.25)'),
-    },
-    warning: {
-      solid: v('rgba(219, 161, 0, 1)', 'rgba(219, 161, 0,1)'),
-      transparent: v('rgba(255,165,0,0.5)', 'rgba(255,165,0,0.5)'),
-    },
-    success: {
-      solid: v('green', 'green'),
-      transparent: v('rgba(0,128,0,0.25)', 'rgba(0,128,0,0.25)'),
-    },
   },
 };

@@ -60,11 +60,6 @@ export const backgroundOverlay: theme.ThemeSet = theme(
   defaultThemes.background.overlay
 );
 
-export const backgroundWarning: theme.ThemeSet = theme(
-  v,
-  defaultThemes.background.warning
-);
-
 // highlights
 
 export const highlightPrimary: theme.ThemeSet = theme(
@@ -109,28 +104,9 @@ export const buttonHoverBackground: theme.ThemeSet = theme(
   defaultThemes.buttons.hover.background
 );
 
-export const buttonDisabledBackground: theme.ThemeSet = theme(
-  v,
-  defaultThemes.buttons.disabled.background
-);
-
-export const buttonDisabledText: theme.ThemeSet = theme(
-  v,
-  defaultThemes.buttons.disabled.text
-);
-
-// labels
-
-export const tagBackground: theme.ThemeSet = theme(
-  v,
-  defaultThemes.background.tag
-);
-
 // graphs
 
 export const tooltipBackground: theme.ThemeSet = theme(
   v,
   defaultThemes.graphs.tooltip
 );
-
-export const gridColor: theme.ThemeSet = theme(v, defaultThemes.graphs.grid);
