@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
+import { buttonSecondaryBackground } from 'theme';
 import { WrapperProps } from './types';
 
 export const Wrapper = styled.button<WrapperProps>`
   cursor: ${(props) => (props.canClick ? 'pointer' : 'default')};
-  background: ${(props) =>
-    props.filled ? 'var(--button-secondary-background)' : 'none'};
+  background: ${(props) => (props.filled ? buttonSecondaryBackground : 'none')};
   font-size: ${(props) => props.fontSize};
   border-radius: 1rem;
   box-shadow: none;

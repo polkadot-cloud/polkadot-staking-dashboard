@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
+import { buttonHelpBackground } from 'theme';
 
 export const Wrapper = styled.div<{ isAddress?: boolean }>`
   width: 100%;
@@ -16,11 +17,11 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
       margin-left: 0.55rem;
     }
     > .btn {
-      background: var(--button-tertiary-background);
       display: flex;
       flex-flow: row wrap;
       justify-content: center;
       align-items: center;
+      background: ${buttonHelpBackground};
       border-radius: 2rem;
       width: 1.5rem;
       height: 1.5rem;

@@ -3,6 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import { backgroundToggle, buttonPrimaryBackground } from 'theme';
 
 // Blurred background modal wrapper
 export const ModalWrapper = styled(motion.div)`
@@ -87,7 +88,7 @@ export const ContentWrapper = styled.div`
     }
   }
   .action-button {
-    background: var(--button-primary-background);
+    background: ${buttonPrimaryBackground};
     padding: 1rem;
     cursor: pointer;
     margin-bottom: 1rem;
@@ -117,7 +118,7 @@ export const ContentWrapper = styled.div`
       justify-content: flex-end;
     }
     &:hover {
-      background: var(--button-toggle-background);
+      background: ${backgroundToggle};
     }
     .icon {
       margin-right: 0.5rem;

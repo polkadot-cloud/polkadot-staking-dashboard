@@ -3,6 +3,7 @@
 
 import { SectionFullWidthThreshold } from 'consts';
 import styled from 'styled-components';
+import { buttonSecondaryBackground } from 'theme';
 
 export const ActiveAccounWrapper = styled.div`
   width: 100%;
@@ -45,7 +46,7 @@ export const ActiveAccounWrapper = styled.div`
     }
 
     button {
-      background: var(--button-secondary-background);
+      background: ${buttonSecondaryBackground};
       width: 2rem;
       height: 2rem;
       border-radius: 50%;

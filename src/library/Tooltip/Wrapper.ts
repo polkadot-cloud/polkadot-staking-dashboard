@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
+import { tooltipBackground } from 'theme';
 
 export const Wrapper = styled.div`
-  background: var(--background-invert);
+  background: ${tooltipBackground};
   display: flex;
   flex-flow: column wrap;
   transition: opacity 0.1s;

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
+import { backgroundToggle, buttonPrimaryBackground } from 'theme';
 
 export const ContentWrapper = styled.div`
   width: 100%;
@@ -35,7 +36,7 @@ export const ContentWrapper = styled.div`
 `;
 
 export const StyledButton = styled.button`
-  background: var(--button-primary-background);
+  background: ${buttonPrimaryBackground};
   padding: 1rem 1.2rem;
   cursor: pointer;
   margin-bottom: 1rem;
@@ -68,7 +69,7 @@ export const StyledButton = styled.button`
     justify-content: flex-end;
   }
   &:hover {
-    background: var(--button-toggle-background);
+    background: ${backgroundToggle};
   }
   .icon {
     margin-right: 0.75rem;

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
+import { buttonPrimaryBackground } from 'theme';
 
 export const Wrapper = styled.button`
   color: var(--text-color-primary);
@@ -14,7 +15,7 @@ export const Wrapper = styled.button`
   display: flex;
   flex-flow: row-reverse wrap;
   align-items: center;
-  background: var(--button-primary-background);
+  background: ${buttonPrimaryBackground};
   transition: all 0.15s;
 
   > section:last-child {

@@ -3,6 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import { backgroundToggle, buttonPrimaryBackground } from 'theme';
 
 export const CardsWrapper = styled(motion.div)`
   width: 200%;
@@ -76,7 +77,7 @@ export const AccountGroupWrapper = styled(motion.button)`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  background: var(--button-primary-background);
+  background: ${buttonPrimaryBackground};
   margin-bottom: 1rem;
   transition: background 0.15s;
 
@@ -113,11 +114,11 @@ export const AccountGroupWrapper = styled(motion.button)`
   }
 
   &:hover {
-    background: var(--button-toggle-background);
+    background: ${backgroundToggle};
     > section > div {
       > button,
       > div {
-        background: var(--button-toggle-background);
+        background: ${backgroundToggle};
       }
     }
   }
@@ -129,7 +130,7 @@ export const AccountWrapper = styled.div`
 
   > button {
     &:hover {
-      background: var(--button-toggle-background);
+      background: ${backgroundToggle};
     }
     &:disabled {
       cursor: default;
@@ -143,7 +144,7 @@ export const AccountWrapper = styled.div`
     width: 100%;
     border-radius: 0.75rem;
     font-size: 1rem;
-    background: var(--button-primary-background);
+    background: ${buttonPrimaryBackground};
     transition: background 0.15s;
     display: flex;
     align-items: center;
@@ -212,7 +213,7 @@ export const ExtensionWrapper = styled.div<{ noSpacing?: boolean }>`
     color: var(--text-color-primary);
     width: 100%;
     font-size: 1rem;
-    background: var(--button-primary-background);
+    background: ${buttonPrimaryBackground};
     border-radius: 0.75rem;
     transition: background 0.15s;
     display: flex;
@@ -274,14 +275,14 @@ export const ExtensionWrapper = styled.div<{ noSpacing?: boolean }>`
   > button {
     padding: 0 0.2rem;
     &:hover {
-      background: var(--button-toggle-background);
+      background: ${backgroundToggle};
     }
 
     &:disabled {
       cursor: default;
       opacity: 1;
       &:hover {
-        background: var(--button-primary-background);
+        background: ${buttonPrimaryBackground};
       }
     }
   }

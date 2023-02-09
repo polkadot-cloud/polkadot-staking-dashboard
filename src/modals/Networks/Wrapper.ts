@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
+import { backgroundToggle, buttonPrimaryBackground } from 'theme';
 import { NetworkButtonProps } from './types';
 
 export const Wrapper = styled.div`
@@ -48,7 +49,7 @@ export const ContentWrapper = styled.div`
 `;
 
 export const NetworkButton = styled.button<NetworkButtonProps>`
-  background: var(--button-primary-background);
+  background: ${buttonPrimaryBackground};
   border: 1px solid var(--status-success-color-transparent);
   padding: 1rem;
   cursor: pointer;
@@ -87,7 +88,7 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
     justify-content: flex-end;
   }
   &:hover {
-    background: var(--button-toggle-background);
+    background: ${backgroundToggle};
   }
   .icon {
     margin-right: 0.5rem;
@@ -105,7 +106,7 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
   &:disabled {
     cursor: default;
     &:hover {
-      background: var(--button-primary-background);
+      background: ${buttonPrimaryBackground};
     }
   }
 `;
@@ -140,7 +141,7 @@ export const ConnectionsWrapper = styled.div`
 `;
 
 export const ConnectionButton = styled.button<NetworkButtonProps>`
-  background: var(--button-primary-background);
+  background: ${buttonPrimaryBackground};
   border: 1px solid var(--status-success-color-transparent);
   position: relative;
   padding: 0.75rem 0.75rem;
@@ -157,7 +158,7 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
   align-items: center;
 
   &:hover {
-    background: var(--button-toggle-background);
+    background: ${backgroundToggle};
   }
 
   > h3 {
@@ -174,7 +175,7 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
   &:disabled {
     cursor: default;
     &:hover {
-      background: var(--button-primary-background);
+      background: ${buttonPrimaryBackground};
     }
     &.off {
       h3 {
