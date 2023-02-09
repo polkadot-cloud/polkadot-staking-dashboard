@@ -52,7 +52,7 @@ export const HeightWrapper = styled.div<{ size: string }>`
 
 // Modal content wrapper
 export const ContentWrapper = styled.div`
-  background: var(--background-modal-color);
+  background: var(--background-modal);
   width: 100%;
   height: auto;
   overflow: hidden;

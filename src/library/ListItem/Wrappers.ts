@@ -4,7 +4,6 @@
 import { SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { backgroundDropdown, backgroundModalItem } from 'theme';
 
 export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
   display: flex;
@@ -15,9 +14,11 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
   margin: 0.5rem;
 
   > .inner {
-    background: ${(props) =>
-      props.inModal ? backgroundModalItem : backgroundDropdown};
     box-shadow: 0px 1.75px 0px 1.25px var(--card-shadow-color-secondary);
+    background: ${(props) =>
+      props.inModal
+        ? '--background-modal-item'
+        : 'var(--background-list-item)'};
 
     ${(props) =>
       props.inModal &&
@@ -194,7 +195,7 @@ export const ValidatorStatusWrapper = styled.div<{ status: string }>`
 `;
 
 export const SelectWrapper = styled.button`
-  background: var(--background-modal-color);
+  background: var(--background-modal);
   margin: 0 0.75rem 0 0.25rem;
   overflow: hidden;
   display: flex;

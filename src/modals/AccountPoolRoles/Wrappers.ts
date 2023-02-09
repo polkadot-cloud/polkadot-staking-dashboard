@@ -81,7 +81,7 @@ export const StyledButton = styled.button`
     > h4 {
       margin-left: 1rem;
       span {
-        background: var(--background-primary-color);
+        background: var(--background-primary);
         border: 1px solid var(--border-primary-color);
         margin-right: 0.5rem;
         padding: 0.25rem 0.75rem;

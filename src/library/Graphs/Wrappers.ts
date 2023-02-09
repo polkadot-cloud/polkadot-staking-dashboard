@@ -57,9 +57,9 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
  */
 export const CardWrapper = styled.div<CardWrapperProps>`
   box-shadow: var(--card-shadow) var(--card-shadow-color);
+  background: var(--background-primary);
   padding: ${(props) =>
     props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1.2rem'};
-  background: var(--background-primary-color);
   border-radius: 1.1rem;
   display: flex;
   flex-flow: column nowrap;
@@ -125,7 +125,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
 
 export const GraphWrapper = styled.div<GraphWrapperProps>`
   box-shadow: var(--card-shadow) var(--card-shadow-color);
-  background: var(--background-primary-color);
+  background: var(--background-primary);
   border-radius: 1rem;
   display: flex;
   flex-flow: column nowrap;

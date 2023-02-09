@@ -8,13 +8,16 @@
   --transparent-color: rgba(0, 0, 0, 0);
 
   .theme-light {
-    --background-default-color: rgba(245,244,244,1);
-    --background-primary-color: rgba(248,247,247,1);
-    --background-secondary-color: rgba(255,255,255,0.58);
-    --background-floating-card-color: rgba(255,255,255,0.90);
+    --background-default: rgba(245,244,244,1);
+    --background-primary: rgba(248,247,247,1);
+    --background-secondary: rgba(255,255,255,0.58);
+    --background-list-item: rgba(237,237,237,0.6);
+    --background-modal-item: rgba(244,244,244,0.6);
+    --background-floating-card: rgba(255,255,255,0.90);
     --background-app-footer: rgba(244,225,225,0.75);
-    --background-modal-color: #fcfbfb;
-    --background-warning-color: #fdf9eb;
+    --background-modal: #fcfbfb;
+    --background-warning: #fdf9eb;
+    --background-modal-footer:rgba(245,244,244,1);
     --border-primary-color: #e6e6e6;
     --border-secondary-color: #ccc;
     --card-shadow-color: #dedede;
@@ -36,16 +39,21 @@
     --text-color-invert: #fafafa;
     --gradient-background: linear-gradient(180deg, rgba(245,244,244,1) 0%, rgba(245,244,244,1) 100px, rgba(230,230,230, 1) 80%, rgba(253,239,234,1) 100%);
     --gradient-side-menu: linear-gradient(180deg, rgba(244,242,242,0.93) 0%, rgba(228,225,225,0.93) 100%);
+    --gradient-highlight-primary: linear-gradient(90deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.03) 100%);
+    --gradient-highlight-secondary: linear-gradient(90deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.01) 100%);
   }
 
   .theme-dark {
-    --background-default-color: rgba(39,39,39,1);
-    --background-primary-color: rgba(27,27,27,1);
-    --background-secondary-color: rgba(0,0,0,0.25);
-    --background-floating-card-color: rgba(0,0,0,0.85);
+    --background-default: rgba(39,39,39,1);
+    --background-primary: rgba(27,27,27,1);
+    --background-secondary: rgba(0,0,0,0.25);
+    --background-list-item: rgba(33,33,33,0.6);
+    --background-modal-item: rgba(22,22,22,0.4);
+    --background-floating-card: rgba(0,0,0,0.85);
     --background-app-footer: rgba(39,39,39,0.75);
-    --background-modal-color: #101010;
-    --background-warning-color: #33332a;
+    --background-modal: #101010;
+    --background-warning: #33332a;
+    --background-modal-footer: #141414;
     --border-primary-color: #282828;
     --border-secondary-color: #444;
     --card-shadow-color: #1f1f1f;
@@ -66,6 +74,8 @@
     --text-color-secondary: #aaa;
     --text-color-invert: #0e0e0e;
     --gradient-background: linear-gradient(180deg, rgba(39,39,39,1) 0%, rgba(39,39,39,1) 100px, rgba(30,30,30,1) 100%);
-    --gradient-side-menugradient: linear-gradient(180deg, rgba(20,20,20,0.93) 0%, rgba(14,14,14,0.93) 100%);
+    --gradient-side-menu: linear-gradient(180deg, rgba(20,20,20,0.93) 0%, rgba(14,14,14,0.93) 100%);
+    --gradient-highlight-primary: linear-gradient(90deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.04) 100%);
+    --gradient-highlight-secondary: linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
   }
 }

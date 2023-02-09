@@ -44,7 +44,7 @@ export const HeightWrapper = styled.div<{ size: string }>`
 `;
 
 export const ContentWrapper = styled.div`
-  background: var(--background-modal-color);
+  background: var(--background-modal);
   width: 100%;
   height: auto;
   overflow: hidden;

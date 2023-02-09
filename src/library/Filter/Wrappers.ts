@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundDropdown } from 'theme';
 
 export const Wrapper = styled.div`
   padding: 0 0.5rem;
@@ -75,7 +74,7 @@ export const LargeItemWrapper = styled.div`
   padding: 0.5rem;
   > .inner {
     border: 1.5px solid var(--border-primary-color);
-    background: ${backgroundDropdown};
+    background: var(--background-list-item);
     border-radius: 1.25rem;
     display: flex;
     flex-flow: column nowrap;

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundDropdown } from 'theme';
 
 export const Wrapper = styled.div<{ activeInput?: boolean }>`
   > .inner {
@@ -30,10 +29,10 @@ export const Wrapper = styled.div<{ activeInput?: boolean }>`
       margin-top: 0.2rem;
 
       > .emptyIcon {
+        background: var(--background-list-item);
         width: 2.5rem;
         height: 2.5rem;
         border-radius: 50%;
-        background: ${backgroundDropdown};
       }
 
       > .input {

@@ -106,7 +106,7 @@ export const AccountGroupWrapper = styled(motion.button)`
       margin: 0.4rem 0;
       > button,
       > div {
-        border: 1px solid var(--background-modal-color);
+        border: 1px solid var(--background-modal);
         border-radius: 0.75rem;
         margin: 0;
       }

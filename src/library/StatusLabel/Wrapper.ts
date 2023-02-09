@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundDropdown } from 'theme';
 import { WrapperProps } from './types';
 
 export const Wrapper = styled.div<WrapperProps>`
@@ -16,7 +15,7 @@ export const Wrapper = styled.div<WrapperProps>`
   z-index: 2;
 
   > div {
-    background: ${backgroundDropdown};
+    background: var(--background-list-item);
     min-width: 125px;
     opacity: 0.75;
     padding: 1rem 1.25rem;

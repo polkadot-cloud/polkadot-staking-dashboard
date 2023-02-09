@@ -37,7 +37,7 @@ const StyledSpinner = styled.div`
     content: '';
   }
   &:after {
-    background: var(--background-primary-color);
+    background: var(--background-primary);
     width: 75%;
     height: 75%;
     border-radius: 50%;

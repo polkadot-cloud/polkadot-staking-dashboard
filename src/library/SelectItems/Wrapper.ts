@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundDropdown } from 'theme';
 
 export const TwoThreshold = 800;
 
@@ -100,7 +99,7 @@ export const Wrapper = styled.div<{
       }
 
       > .icon {
-        background: ${backgroundDropdown};
+        background: var(--background-list-item);
         color: var(--network-color-primary);
         width: 6rem;
         display: flex;

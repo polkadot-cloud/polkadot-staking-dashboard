@@ -3,7 +3,6 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { highlightPrimary, highlightSecondary } from 'theme';
 import { MinimisedProps } from '../types';
 
 export const Wrapper = styled(motion.div)<MinimisedProps>`
@@ -72,10 +71,10 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
   }
 
   &.active {
-    background: ${highlightPrimary};
+    background: var(--gradient-highlight-primary);
   }
   &.inactive:hover {
-    background: ${highlightSecondary};
+    background: var(--gradient-highlight-secondary);
   }
 `;
 
@@ -98,10 +97,10 @@ export const MinimisedWrapper = styled(motion.div)`
     border: 1px solid var(--status);
   }
   &.active {
-    background: ${highlightPrimary};
+    background: var(--gradient-highlight-primary);
   }
   &.inactive:hover {
-    background: ${highlightSecondary};
+    background: var(--gradient-highlight-secondary);
   }
   .icon {
     margin: 0;

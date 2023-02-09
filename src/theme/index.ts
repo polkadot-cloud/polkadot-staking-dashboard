@@ -9,33 +9,6 @@ import { defaultThemes } from './default';
  */
 const v = 'mode';
 
-export const backgroundDropdown: theme.ThemeSet = theme(
-  v,
-  defaultThemes.background.dropdown
-);
-
-export const backgroundModalItem: theme.ThemeSet = theme(
-  v,
-  defaultThemes.background.modalitem
-);
-
-export const backgroundSubmission: theme.ThemeSet = theme(
-  v,
-  defaultThemes.background.submission
-);
-
-// highlights
-
-export const highlightPrimary: theme.ThemeSet = theme(
-  v,
-  defaultThemes.highlight.primary
-);
-
-export const highlightSecondary: theme.ThemeSet = theme(
-  v,
-  defaultThemes.highlight.secondary
-);
-
 // buttons
 
 export const buttonPrimaryBackground: theme.ThemeSet = theme(

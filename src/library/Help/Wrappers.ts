@@ -117,7 +117,7 @@ export const ListWrapper = styled(motion.div)`
 `;
 
 export const DefinitionWrapper = styled(motion.div)`
-  background: var(--background-floating-card-color);
+  background: var(--background-floating-card);
   width: 100%;
   display: flex;
   border-radius: 1.5rem;
@@ -169,7 +169,7 @@ export const ItemWrapper = styled(motion.div)<any>`
   flex-flow: row wrap;
 
   > * {
-    background: var(--background-floating-card-color);
+    background: var(--background-floating-card);
     border-radius: 1.5rem;
     flex: 1;
     padding: 1.5rem;

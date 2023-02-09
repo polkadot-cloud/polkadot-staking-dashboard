@@ -188,7 +188,7 @@ export const PageWrapper = styled(motion.div)`
  * is stuck.
  */
 export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
-  background: var(--background-default-color);
+  background: var(--background-default);
   position: sticky;
   top: 0px;
   padding-top: ${(props) => (props.sticky ? '1.5rem' : '0.5rem')};
@@ -307,7 +307,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
  * Purely cosmetic. Applied in Pagetitle.
  */
 export const MenuPaddingWrapper = styled.div`
-  background: var(--background-default-color);
+  background: var(--background-default);
   position: fixed;
   top: 0px;
   width: 100%;

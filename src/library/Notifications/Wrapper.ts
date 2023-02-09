@@ -14,7 +14,7 @@ export const Wrapper = styled.ul`
   z-index: 10;
 
   li {
-    background: var(--background-primary-color);
+    background: var(--background-primary);
     width: 360px;
     margin: 0.4rem 1.2rem;
     position: relative;

@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  background: var(--background-warning-color);
+  background: var(--background-warning);
   border: 1px solid var(--status-warning-color-transparent);
   margin: 0.5rem 0;
   padding: 0.75rem 0.75rem;

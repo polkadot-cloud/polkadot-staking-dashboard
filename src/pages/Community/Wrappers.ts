@@ -3,11 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  backgroundDropdown,
-  buttonHoverBackground,
-  buttonSecondaryBackground,
-} from 'theme';
+import { buttonHoverBackground, buttonSecondaryBackground } from 'theme';
 
 const VERTICAL_THRESHOLD = 800;
 
@@ -36,7 +32,7 @@ export const ItemWrapper = styled(motion.div)`
 
   > .inner {
     color: var(--text-color-secondary);
-    background: var(--background-primary-color);
+    background: var(--background-primary);
     box-shadow: var(--card-shadow) var(--card-shadow-color);
     border-radius: 0.75rem;
     width: 100%;
@@ -66,9 +62,9 @@ export const ItemWrapper = styled(motion.div)`
           font-size: 1.1rem;
           &.active {
             color: var(--text-color-secondary);
-            background: ${backgroundDropdown};
+            background: var(--background-list-item);
             &:hover {
-              background: ${backgroundDropdown};
+              background: var(--background-list-item);
             }
           }
           padding: 0.35rem 0.75rem;

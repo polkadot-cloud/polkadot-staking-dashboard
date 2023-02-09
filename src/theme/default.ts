@@ -12,21 +12,6 @@ export const defaultThemes: { [key: string]: AnyJson } = {
   text: {
     invert: v('#fafafa', '#0e0e0e'),
   },
-  background: {
-    dropdown: v('rgba(237,237,237,0.6)', 'rgba(33,33,33,0.6)'),
-    modalitem: v('rgba(244,244,244,0.6)', 'rgba(22,22,22,0.4)'),
-    submission: v('rgba(245,244,244,1)', '#141414'),
-  },
-  highlight: {
-    primary: v(
-      'linear-gradient(90deg, rgba(0,0,0,0.06) 0%, rgba(0,0,0,0.03) 100%)',
-      'linear-gradient(90deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.04) 100%)'
-    ),
-    secondary: v(
-      'linear-gradient(90deg, rgba(0,0,0,0.04) 0%, rgba(0,0,0,0.01) 100%)',
-      'linear-gradient(90deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%)'
-    ),
-  },
   graphs: {
     colors: [v('#ccc', '#555'), v('#eee', '#222')],
     inactive: v('#cfcfcf', '#1a1a1a'),
