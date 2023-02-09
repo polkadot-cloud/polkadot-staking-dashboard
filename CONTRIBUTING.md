@@ -63,7 +63,7 @@ Documenting some of the development patterns used:
 
 - We use the **"Wrapper" terminology for styled components** that wrap a functional component.
 - **Styles are defined on a per-component basis**, being defined in the same folder as the component markup itself. Where unavoidable (such as global styles, interface layout), styled components should reside in [`src/Wrappers.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/Wrappers.tsx).
-- **Theme values** can be either directly imported into styled components, from [`theme/index.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/theme/index.ts), or as raw values within component files using [`theme/default.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/theme/default.ts).
+- **Theme values** are configured in [`styles/theme.scss`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/styles/theme.scss), and can be included in any styled component as custom properties. Graph colors are configurable from [`styles/graphs.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/styles/graphs.ts).
 - **Constants or default values** (such as those waiting for Polkadot API) are defined in [`src/constants.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/constants.ts).
 - Packages with **missing TypeScript definitions** can be declared in [`src/react-app-env.d.ts`](https://github.com/paritytech/polkadot-staking-dashboard/blob/master/src/react-app-env.d.ts).
 

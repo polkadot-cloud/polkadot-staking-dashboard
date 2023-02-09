@@ -1,7 +1,19 @@
-/* Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
- * SPDX-License-Identifier: Apache-2.0 */
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: Apache-2.0
 
 @use 'networks';
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  src: url('../../public/fonts/Inter.ttf');
+}
+
+@font-face {
+  font-family: 'Unbounded';
+  font-style: normal;
+  src: url('../../public/fonts/Unbounded.ttf');
+}
 
 :root {
   --card-shadow: -2px 2px 10px;
@@ -34,6 +46,8 @@
     --network-color-transparent: var(--network-color-transparent-light);
     --overlay-tip-color: rgba(200,200,200,0.45);
     --overlay-modal-color: rgba(230,228,228,0.6);
+    --shimmer-foreground: #e0e0e0;
+    --shimmer-background: #ccc;
     --status-success-color: green;
     --status-success-color-transparent: rgba(0,128,0,0.25);
     --status-warning-color: #a78a3a;
@@ -90,6 +104,8 @@
     --network-color-transparent: var(--network-color-transparent-dark);
     --overlay-tip-color: rgba(30,30,30,0.6);
     --overlay-modal-color: rgba(16,16,16,0.6);
+    --shimmer-background: #2a2a2a;
+    --shimmer-foreground: #202020;
     --status-success-color: green;
     --status-success-color-transparent: rgba(0,128,0,0.25);
     --status-warning-color: rgba(219, 161, 0,1);

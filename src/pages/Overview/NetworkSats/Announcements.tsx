@@ -11,7 +11,7 @@ import { BondedPool } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
-import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
+import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
 import { useTranslation } from 'react-i18next';
 import {
   capitalizeFirstLetter,
