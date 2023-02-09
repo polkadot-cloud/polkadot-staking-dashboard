@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundSubmission } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -18,7 +17,7 @@ export const Wrapper = styled.div`
     padding-bottom: 0;
 
     .danger {
-      color: var(--text-color-danger);
+      color: var(--status-danger-color);
     }
     > .icon {
       margin-right: 0.3rem;
@@ -26,7 +25,7 @@ export const Wrapper = styled.div`
   }
 
   > .inner {
-    background: ${backgroundSubmission};
+    background: var(--background-modal-footer);
     width: 100%;
     padding: 1rem;
     display: flex;

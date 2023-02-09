@@ -22,7 +22,7 @@ import { External } from './Items/External';
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
 
 export const Help = () => {
-  const { i18n, t } = useTranslation('help');
+  const { t, i18n } = useTranslation('help');
   const { setStatus, status, definition, closeHelp, setDefinition } = useHelp();
   const controls = useAnimation();
   const { fillVariables } = useFillVariables();

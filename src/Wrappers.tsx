@@ -11,12 +11,6 @@ import {
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import {
-  backgroundGradient,
-  backgroundPrimary,
-  borderPrimary,
-  buttonSecondaryBackground,
-} from 'theme';
-import {
   InterfaceLayoutProps,
   PageRowWrapperProps,
   PageTitleWrapperProps,
@@ -30,7 +24,7 @@ import {
  * classes used throughout the app and possibly the library.
  */
 export const EntryWrapper = styled.div`
-  background: ${backgroundGradient};
+  background: var(--gradient-background);
   width: 100%;
   background-attachment: fixed;
   display: flex;
@@ -193,7 +187,7 @@ export const PageWrapper = styled(motion.div)`
  * is stuck.
  */
 export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
-  background: ${backgroundPrimary};
+  background: var(--background-default);
   position: sticky;
   top: 0px;
   padding-top: ${(props) => (props.sticky ? '1.5rem' : '0.5rem')};
@@ -229,14 +223,14 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
 
     button {
       color: var(--text-color-secondary);
-      border: 1px solid ${borderPrimary};
+      border: 1px solid var(--border-primary-color);
       padding: 0.5rem 0.75rem;
       margin: 0;
       border-radius: 0.75rem;
       font-size: 1.1rem;
 
       &:hover {
-        background: ${buttonSecondaryBackground};
+        background: var(--button-secondary-background);
       }
 
       .icon {
@@ -261,11 +255,11 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   }
 
   .tabs {
+    border-bottom: ${(props) => (props.sticky ? '0px' : '1px solid')};
+    border-bottom-color: var(--border-primary-color);
     overflow: hidden;
     max-width: ${InterfaceMaximumWidth}px;
     height: 3.6rem;
-    border-bottom: ${(props) => (props.sticky ? '0px' : '1px solid')};
-    border-bottom-color: ${borderPrimary};
 
     margin-top: ${(props) => (props.sticky ? '0.5rem' : '0.9rem')};
     @media (max-width: ${SideMenuStickyThreshold}px) {
@@ -292,7 +286,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
         border-radius: 0.5rem;
 
         &.active {
-          background: ${buttonSecondaryBackground};
+          background: var(--button-secondary-background);
         }
         &:last-child {
           margin-right: 0;
@@ -312,7 +306,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
  * Purely cosmetic. Applied in Pagetitle.
  */
 export const MenuPaddingWrapper = styled.div`
-  background: ${backgroundPrimary};
+  background: var(--background-default);
   position: fixed;
   top: 0px;
   width: 100%;
@@ -404,7 +398,7 @@ export const RowSecondaryWrapper = styled.div<InterfaceLayoutProps>`
  * General spacer for separating content by row.
  */
 export const Separator = styled.div`
-  border-bottom: 1px solid ${borderPrimary};
+  border-bottom: 1px solid var(--border-primary-color);
   width: 100%;
   margin: 0.67rem 0;
 `;
@@ -414,10 +408,10 @@ export const Separator = styled.div`
  * Positioned under titles for a Go Back button and other page header info.
  */
 export const TopBarWrapper = styled.div`
+  border-bottom: 1px solid var(--border-primary-color);
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  border-bottom: 1px solid ${borderPrimary};
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   width: 100%;

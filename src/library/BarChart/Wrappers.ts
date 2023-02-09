@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { buttonSecondaryBackground } from 'theme';
 
 export const BarChartWrapper = styled.div<{ lessPadding?: boolean }>`
   width: 100%;
@@ -38,7 +37,7 @@ export const BarChartWrapper = styled.div<{ lessPadding?: boolean }>`
     color: white;
   }
   .d4 {
-    background: ${buttonSecondaryBackground};
+    background: var(--button-secondary-background);
     color: var(--text-color-secondary);
   }
 `;
@@ -69,7 +68,7 @@ export const Legend = styled.div`
 `;
 
 export const Bar = styled.div`
-  background: ${buttonSecondaryBackground};
+  background: var(--button-secondary-background);
   display: flex;
   width: 100%;
   height: 3.3rem;

@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary } from 'theme';
 
 export const TitleWrapper = styled.div<{ fixed: boolean }>`
   padding: ${(props) =>
@@ -82,8 +81,8 @@ export const StatWrapper = styled.div`
   }
 
   > .inner {
+    border-bottom: 1px solid var(--border-primary-color);
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid ${borderPrimary};
 
     > h2,
     h3,
@@ -127,7 +126,7 @@ export const CloseWrapper = styled.div`
 `;
 
 export const ActionWrapper = styled.h3`
-  border-bottom: 1px solid ${borderPrimary};
+  border-bottom: 1px solid var(--border-primary-color);
   color: var(--text-color-primary);
   margin: 1.25rem 0 0 0;
   width: 100%;

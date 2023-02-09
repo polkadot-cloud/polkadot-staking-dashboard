@@ -22,7 +22,7 @@ import { Primary } from './Primary';
 import { LogoWrapper } from './Wrapper';
 
 export const Main = () => {
-  const { i18n, t } = useTranslation('base');
+  const { t, i18n } = useTranslation('base');
   const { network } = useApi();
   const { activeAccount, accounts } = useConnect();
   const { pathname } = useLocation();

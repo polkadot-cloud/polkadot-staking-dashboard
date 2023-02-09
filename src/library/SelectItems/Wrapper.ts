@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundLabel, borderPrimary } from 'theme';
 
 export const TwoThreshold = 800;
 
@@ -67,7 +66,9 @@ export const Wrapper = styled.div<{
   > .inner {
     border: 1.75px solid
       ${(props) =>
-        props.selected ? 'var(--network-color-primary)' : borderPrimary};
+        props.selected
+          ? 'var(--network-color-primary)'
+          : 'var(--border-primary-color)'};
     border-radius: 1rem;
     width: 100%;
     position: relative;
@@ -80,7 +81,7 @@ export const Wrapper = styled.div<{
           ? 'var(--network-color-primary)'
           : props.selected
           ? 'var(--network-color-primary)'
-          : borderPrimary};
+          : 'var(--border-primary-color)'};
     }
 
     > button {
@@ -98,7 +99,7 @@ export const Wrapper = styled.div<{
       }
 
       > .icon {
-        background: ${backgroundLabel};
+        background: var(--background-list-item);
         color: var(--network-color-primary);
         width: 6rem;
         display: flex;

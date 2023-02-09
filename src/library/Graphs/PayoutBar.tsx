@@ -23,7 +23,7 @@ import { format, fromUnixTime } from 'date-fns';
 import { locales } from 'locale';
 import { Bar } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import { defaultThemes } from 'theme/default';
+import { graphColors } from 'styles/graphs';
 import { AnySubscan } from 'types';
 import { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
@@ -127,7 +127,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
           display: false,
         },
         grid: {
-          color: defaultThemes.graphs.grid[mode],
+          color: graphColors.grid[mode],
         },
       },
     },
@@ -140,9 +140,9 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
       },
       tooltip: {
         displayColors: false,
-        backgroundColor: defaultThemes.graphs.tooltip[mode],
-        titleColor: defaultThemes.text.invert[mode],
-        bodyColor: defaultThemes.text.invert[mode],
+        backgroundColor: graphColors.tooltip[mode],
+        titleColor: graphColors.label[mode],
+        bodyColor: graphColors.label[mode],
         bodyFont: {
           weight: '600',
         },

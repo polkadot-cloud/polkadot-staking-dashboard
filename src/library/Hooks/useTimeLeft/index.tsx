@@ -14,7 +14,7 @@ import {
 import { getDuration } from './utils';
 
 export const useTimeLeft = () => {
-  const { i18n, t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { network } = useApi();
 
   // check whether timeleft is within a minute of finishing.

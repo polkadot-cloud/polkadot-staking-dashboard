@@ -3,13 +3,6 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  backgroundDropdown,
-  backgroundSecondary,
-  borderPrimary,
-  buttonHoverBackground,
-  buttonSecondaryBackground,
-} from 'theme';
 
 const VERTICAL_THRESHOLD = 800;
 
@@ -38,7 +31,7 @@ export const ItemWrapper = styled(motion.div)`
 
   > .inner {
     color: var(--text-color-secondary);
-    background: ${backgroundSecondary};
+    background: var(--background-primary);
     box-shadow: var(--card-shadow) var(--card-shadow-color);
     border-radius: 0.75rem;
     width: 100%;
@@ -68,9 +61,9 @@ export const ItemWrapper = styled(motion.div)`
           font-size: 1.1rem;
           &.active {
             color: var(--text-color-secondary);
-            background: ${backgroundDropdown};
+            background: var(--background-list-item);
             &:hover {
-              background: ${backgroundDropdown};
+              background: var(--background-list-item);
             }
           }
           padding: 0.35rem 0.75rem;
@@ -100,10 +93,10 @@ export const ItemWrapper = styled(motion.div)`
           cursor: default;
         }
         &.active {
-          background: ${buttonSecondaryBackground};
+          background: var(--button-secondary-background);
           transition: background 0.1s;
           &:hover {
-            background: ${buttonHoverBackground};
+            background: var(--button-hover-background);
           }
         }
         &:last-child {
@@ -141,10 +134,10 @@ export const ItemWrapper = styled(motion.div)`
         }
       }
       &:last-child {
+        border-top: 1px solid var(--border-primary-color);
         border-left: none;
         flex-flow: column wrap;
         justify-content: center;
-        border-top: 1px solid ${borderPrimary};
         height: 100%;
         height: 50%;
         width: 100%;

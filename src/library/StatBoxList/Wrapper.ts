@@ -3,7 +3,6 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { backgroundSecondary, tooltipBackground } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -51,7 +50,7 @@ export const StatBoxWrapper = styled(motion.div)`
   }
 
   .content {
-    background: ${backgroundSecondary};
+    background: var(--background-primary);
     box-shadow: var(--card-shadow) var(--card-shadow-color-secondary);
     @media (max-width: 799px) {
       box-shadow: var(--card-shadow) var(--card-shadow-color);
@@ -96,7 +95,7 @@ export const StatBoxWrapper = styled(motion.div)`
       }
 
       .tooltip {
-        background: ${tooltipBackground};
+        background: var(--background-invert);
         opacity: 0;
         position: absolute;
         top: -20px;

@@ -2,22 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  backgroundSecondary,
-  backgroundToggle,
-  borderPrimary,
-  buttonPrimaryBackground,
-} from 'theme';
 
 export const ContentWrapper = styled.div`
   width: 100%;
 
   > h4 {
     color: var(--text-color-secondary);
+    border-bottom: 1px solid var(--border-primary-color);
     margin: 0.75rem 0;
     padding-bottom: 0.5rem;
     width: 100%;
-    border-bottom: 1px solid ${borderPrimary};
   }
 
   .items {
@@ -41,7 +35,7 @@ export const ContentWrapper = styled.div`
 `;
 
 export const StyledButton = styled.button`
-  background: ${buttonPrimaryBackground};
+  background: var(--button-primary-background);
   padding: 1rem 1.2rem;
   cursor: pointer;
   margin-bottom: 1rem;
@@ -62,7 +56,7 @@ export const StyledButton = styled.button`
   h4 {
     margin: 0;
     &.selected {
-      color: var(--text-color-success);
+      color: var(--status-success-color);
       margin-left: 0.75rem;
     }
   }
@@ -74,7 +68,7 @@ export const StyledButton = styled.button`
     justify-content: flex-end;
   }
   &:hover {
-    background: ${backgroundToggle};
+    background: var(--button-toggle-background);
   }
   .icon {
     margin-right: 0.75rem;
@@ -86,9 +80,9 @@ export const StyledButton = styled.button`
     > h4 {
       margin-left: 1rem;
       span {
+        background: var(--background-primary);
+        border: 1px solid var(--border-primary-color);
         margin-right: 0.5rem;
-        border: 1px solid ${borderPrimary};
-        background: ${backgroundSecondary};
         padding: 0.25rem 0.75rem;
         border-radius: 1rem;
       }

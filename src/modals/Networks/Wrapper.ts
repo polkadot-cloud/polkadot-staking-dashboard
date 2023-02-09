@@ -2,12 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  backgroundToggle,
-  borderPrimary,
-  buttonPrimaryBackground,
-  successTransparent,
-} from 'theme';
 import { NetworkButtonProps } from './types';
 
 export const Wrapper = styled.div`
@@ -26,11 +20,11 @@ export const ContentWrapper = styled.div`
   width: 100%;
 
   > h4 {
+    border-bottom: 1px solid var(--border-primary-color);
     color: var(--text-color-secondary);
     margin: 0.75rem 0;
     padding-bottom: 0.5rem;
     width: 100%;
-    border-bottom: 1px solid ${borderPrimary};
   }
 
   .items {
@@ -54,7 +48,8 @@ export const ContentWrapper = styled.div`
 `;
 
 export const NetworkButton = styled.button<NetworkButtonProps>`
-  background: ${buttonPrimaryBackground};
+  background: var(--button-primary-background);
+  border: 1px solid var(--status-success-color-transparent);
   padding: 1rem;
   cursor: pointer;
   margin-bottom: 1rem;
@@ -63,7 +58,6 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
   flex-flow: row wrap;
   align-items: center;
   width: 100%;
-  border: 1px solid ${successTransparent};
   ${(props) =>
     props.connected !== true &&
     `
@@ -81,7 +75,7 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
   h4 {
     margin: 0;
     &.selected {
-      color: var(--text-color-success);
+      color: var(--status-success-color);
       margin-left: 0.75rem;
     }
   }
@@ -93,7 +87,7 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
     justify-content: flex-end;
   }
   &:hover {
-    background: ${backgroundToggle};
+    background: var(--button-toggle-background);
   }
   .icon {
     margin-right: 0.5rem;
@@ -111,14 +105,14 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
   &:disabled {
     cursor: default;
     &:hover {
-      background: ${buttonPrimaryBackground};
+      background: var(--button-primary-background);
     }
   }
 `;
 
 export const BraveWarning = styled.div`
+  border: 1px solid var(--border-primary-color);
   display: flex;
-  border: 1px solid ${borderPrimary};
   border-radius: 0.75rem;
   padding: 1rem;
 
@@ -131,8 +125,8 @@ export const BraveWarning = styled.div`
 
     .learn-more {
       color: var(--text-color-secondary);
+      text-decoration: underline var(--border-primary-color);
       font-weight: bold;
-      text-decoration: underline ${borderPrimary};
     }
   }
 `;
@@ -146,13 +140,13 @@ export const ConnectionsWrapper = styled.div`
 `;
 
 export const ConnectionButton = styled.button<NetworkButtonProps>`
-  background: ${buttonPrimaryBackground};
+  background: var(--button-primary-background);
+  border: 1px solid var(--status-success-color-transparent);
   position: relative;
   padding: 0.75rem 0.75rem;
   margin-bottom: 1rem;
   margin-right: 0.5rem;
   border-radius: 0.5rem;
-  border: 1px solid ${successTransparent};
   ${(props) =>
     props.connected !== true &&
     `
@@ -163,7 +157,7 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
   align-items: center;
 
   &:hover {
-    background: ${backgroundToggle};
+    background: var(--button-toggle-background);
   }
 
   > h3 {
@@ -172,7 +166,7 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
   h4 {
     margin: 0;
     &.selected {
-      color: var(--text-color-success);
+      color: var(--status-success-color);
       margin: 0 0.75rem 0 0;
     }
   }
@@ -180,7 +174,7 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
   &:disabled {
     cursor: default;
     &:hover {
-      background: ${buttonPrimaryBackground};
+      background: var(--button-primary-background);
     }
     &.off {
       h3 {

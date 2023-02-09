@@ -4,7 +4,6 @@
 import { SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { borderPrimary } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -13,12 +12,12 @@ export const Wrapper = styled.div`
 `;
 
 export const Item = styled(motion.div)`
+  border-bottom: 1px solid var(--border-primary-color);
   list-style: none;
   flex: 1;
   margin-bottom: 1rem;
   padding: 0.75rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid ${borderPrimary};
 
   &:last-child {
     border-bottom: 0;
@@ -91,12 +90,12 @@ export const InflationWrapper = styled.div`
         }
 
         @media (min-width: ${SmallFontSizeMaxWidth + 225}px) {
+          border-right: 1px solid var(--border-primary-color);
           flex-basis: 25%;
           max-width: 275px;
           padding-left: 1rem;
           padding-right: 1rem;
           margin-bottom: 0;
-          border-right: 1px solid ${borderPrimary};
 
           &:last-child {
             max-width: none;
@@ -104,10 +103,10 @@ export const InflationWrapper = styled.div`
         }
 
         > .inner {
+          border-bottom: 1px solid var(--border-primary-color);
           width: 100%;
           padding: 0.5rem 0.5rem 1rem 0.5rem;
           display: flex;
-          border-bottom: 1px solid ${borderPrimary};
 
           @media (min-width: ${SmallFontSizeMaxWidth + 225}px) {
             margin-bottom: 0;

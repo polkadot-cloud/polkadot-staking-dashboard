@@ -3,7 +3,6 @@
 
 import { SectionFullWidthThreshold } from 'consts';
 import styled from 'styled-components';
-import { borderPrimary } from 'theme';
 
 export const RolesWrapper = styled.div`
   display: flex;
@@ -14,12 +13,12 @@ export const RolesWrapper = styled.div`
   > section {
     flex: 1 1 25%;
     padding: 0 0.5rem;
-    border-right: 1px solid ${borderPrimary};
+    border-right: 1px solid var(--border-primary-color);
 
     @media (max-width: ${SectionFullWidthThreshold}px) {
+      border-bottom: 1px solid var(--border-primary-color);
       flex-basis: 100%;
       border-right: none;
-      border-bottom: 1px solid ${borderPrimary};
       margin: 0.75rem 0;
 
       &:first-child {

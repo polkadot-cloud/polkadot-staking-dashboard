@@ -3,7 +3,6 @@
 
 import { SideMenuStickyThreshold } from 'consts';
 import styled from 'styled-components';
-import { borderPrimary } from 'theme';
 
 export const StatusWrapper = styled.div<{ includeBorder: boolean }>`
   width: 100%;
@@ -30,10 +29,10 @@ export const StatusWrapper = styled.div<{ includeBorder: boolean }>`
 `;
 
 export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
+  border-bottom: 1px solid var(--border-primary-color);
   width: 100%;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid ${borderPrimary};
   padding-bottom: 0.75rem;
   margin-bottom: 0.75rem;
 
@@ -86,10 +85,10 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
         opacity: 0.1;
       }
       &.active {
-        color: var(--text-color-success);
+        color: var(--status-success-color);
       }
       &.inactive {
-        color: var(--text-color-warning);
+        color: var(--status-warning-color);
       }
     }
     .cta {

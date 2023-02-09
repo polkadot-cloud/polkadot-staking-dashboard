@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundPrimary } from 'theme';
 
 export const Wrapper = styled.ul`
   position: fixed;
@@ -15,7 +14,7 @@ export const Wrapper = styled.ul`
   z-index: 10;
 
   li {
-    background: ${backgroundPrimary};
+    background: var(--background-primary);
     width: 360px;
     margin: 0.4rem 1.2rem;
     position: relative;

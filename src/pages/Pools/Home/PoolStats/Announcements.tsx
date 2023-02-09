@@ -7,7 +7,7 @@ import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { motion } from 'framer-motion';
-import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
+import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero, planckToUnit, rmCommas } from 'Utils';
 import { Item } from './Wrappers';
