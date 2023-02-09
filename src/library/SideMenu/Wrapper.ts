@@ -51,8 +51,8 @@ export const Wrapper = styled.div<MinimisedProps>`
         color: var(--text-color-secondary);
         position: relative;
         transition: color 0.2s;
-        margin-top: ${(props) => (props.minimised ? '1.25rem' : 0)};
-        margin-right: ${(props) => (props.minimised ? 0 : '1rem')};
+        margin-top: ${(props) => (props.minimised ? '1rem' : 0)};
+        margin-right: ${(props) => (props.minimised ? 0 : '0.9rem')};
         opacity: 0.75;
         padding: 0.1rem;
 
@@ -96,15 +96,15 @@ export const ConnectionSymbol = styled.div`
   margin: 0 0.7rem;
 
   &.success {
-    border: 1px solid var(--status-success-color);
+    background: var(--status-success-color);
     color: var(--status-success-color);
   }
   &.warning {
-    border: 1px solid var(--status-warning-color);
+    background: var(--status-warning-color);
     color: var(--status-warning-color);
   }
   &.danger {
-    border: 1px solid var(--status-danger-color);
+    background: var(--status-danger-color);
     color: var(--status-danger-color);
   }
 `;
