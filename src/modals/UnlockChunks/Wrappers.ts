@@ -3,7 +3,6 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { buttonPrimaryBackground } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -47,7 +46,7 @@ export const ChunkWrapper = styled.div<any>`
   margin-top: 1.25rem;
 
   > div {
-    background: ${buttonPrimaryBackground};
+    background: var(--button-primary-background);
     display: flex;
     flex-flow: row wrap;
     width: 100%;

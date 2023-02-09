@@ -3,7 +3,6 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { buttonHoverBackground, buttonSecondaryBackground } from 'theme';
 
 const VERTICAL_THRESHOLD = 800;
 
@@ -94,10 +93,10 @@ export const ItemWrapper = styled(motion.div)`
           cursor: default;
         }
         &.active {
-          background: ${buttonSecondaryBackground};
+          background: var(--button-secondary-background);
           transition: background 0.1s;
           &:hover {
-            background: ${buttonHoverBackground};
+            background: var(--button-hover-background);
           }
         }
         &:last-child {

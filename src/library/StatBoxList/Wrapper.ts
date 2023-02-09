@@ -3,7 +3,6 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { tooltipBackground } from 'theme';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -96,7 +95,7 @@ export const StatBoxWrapper = styled(motion.div)`
       }
 
       .tooltip {
-        background: ${tooltipBackground};
+        background: var(--background-invert);
         opacity: 0;
         position: absolute;
         top: -20px;

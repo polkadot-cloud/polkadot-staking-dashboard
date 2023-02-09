@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { buttonPrimaryBackground } from 'theme';
 
 export const OverlayWrapper = styled.div`
   background: var(--overlay-tip-color);
@@ -123,8 +122,10 @@ export const FilterListWrapper = styled.div`
 export const FilterListButton = styled.button<{ active: boolean }>`
   border: 1px solid
     ${(props) =>
-      props.active ? 'var(--network-color-stroke)' : buttonPrimaryBackground};
-  background: ${buttonPrimaryBackground};
+      props.active
+        ? 'var(--network-color-stroke)'
+        : 'var(--button-primary-background)'};
+  background: var(--button-primary-background);
   width: 100%;
   display: flex;
   flex-flow: row wrap;
