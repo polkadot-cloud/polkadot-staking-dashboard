@@ -6,7 +6,6 @@ import {
   backgroundToggle,
   borderPrimary,
   buttonPrimaryBackground,
-  successTransparent,
 } from 'theme';
 import { NetworkButtonProps } from './types';
 
@@ -55,6 +54,7 @@ export const ContentWrapper = styled.div`
 
 export const NetworkButton = styled.button<NetworkButtonProps>`
   background: ${buttonPrimaryBackground};
+  border: 1px solid var(--status-success-color-transparent);
   padding: 1rem;
   cursor: pointer;
   margin-bottom: 1rem;
@@ -63,7 +63,6 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
   flex-flow: row wrap;
   align-items: center;
   width: 100%;
-  border: 1px solid ${successTransparent};
   ${(props) =>
     props.connected !== true &&
     `
@@ -147,12 +146,12 @@ export const ConnectionsWrapper = styled.div`
 
 export const ConnectionButton = styled.button<NetworkButtonProps>`
   background: ${buttonPrimaryBackground};
+  border: 1px solid var(--status-success-color-transparent);
   position: relative;
   padding: 0.75rem 0.75rem;
   margin-bottom: 1rem;
   margin-right: 0.5rem;
   border-radius: 0.5rem;
-  border: 1px solid ${successTransparent};
   ${(props) =>
     props.connected !== true &&
     `

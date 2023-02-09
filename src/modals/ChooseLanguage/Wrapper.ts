@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  backgroundToggle,
-  buttonPrimaryBackground,
-  successTransparent,
-} from 'theme';
+import { backgroundToggle, buttonPrimaryBackground } from 'theme';
 
 export const ContentWrapper = styled.div`
   box-sizing: border-box;
@@ -37,7 +33,7 @@ export const LocaleButton = styled.button<any>`
   flex-flow: row wrap;
   align-items: center;
   width: 100%;
-  border: 1px solid ${successTransparent};
+  border: 1px solid var(--status-success-color-transparent);
   ${(props) =>
     props.connected !== true &&
     `

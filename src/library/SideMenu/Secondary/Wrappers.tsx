@@ -17,7 +17,6 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
   margin: 0.8rem 0.2rem 0.8rem 0;
   position: relative;
   height: 3.2rem;
-
   .name {
     color: var(--text-color-secondary);
     font-size: 1.1rem;
@@ -39,6 +38,15 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
   }
   &.inactive:hover {
     background: ${highlightSecondary};
+  }
+  &.success {
+    border: 1px solid var(--status-success-color-transparent);
+  }
+  &.warning {
+    border: 1px solid var(--status-warning-color-transparent);
+  }
+  &.danger {
+    border: 1px solid var(--status-danger-color-transparent);
   }
 `;
 
@@ -71,6 +79,15 @@ export const MinimisedWrapper = styled(motion.button)`
       top: -2px;
       right: -13px;
     }
+  }
+  &.success {
+    border: 1px solid var(--status-success-color-transparent);
+  }
+  &.warning {
+    border: 1px solid var(--status-warning-color-transparent);
+  }
+  &.danger {
+    border: 1px solid var(--status-danger-color-transparent);
   }
 `;
 

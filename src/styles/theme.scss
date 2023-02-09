@@ -20,7 +20,12 @@
     --text-color-danger: #ae2324;
     --text-color-warning: #8e6c1a;
     --text-color-invert: #fafafa;
+    --status-success-color: green;
+    --status-success-color-transparent: rgba(0,128,0,0.25);
     --status-warning-color: rgba(219, 161, 0, 1);
+    --status-warning-color-transparent: rgba(255,165,0,0.5);
+    --status-danger-color: red;
+    --status-danger-color-transparent: rgba(255,0,0,0.25);
   }
 
   .theme-dark {
@@ -36,6 +41,11 @@
     --text-color-danger: #d14445;
     --text-color-warning: #cb9f37;
     --text-color-invert: #0e0e0e;
+    --status-success-color: green;
+    --status-success-color-transparent: rgba(0,128,0,0.25);
     --status-warning-color: rgba(219, 161, 0,1);
+    --status-warning-color-transparent: rgba(255,165,0,0.5);
+    --status-danger-color: red;
+    --status-danger-color-transparent: rgba(255,0,0,0.25);
   }
 }

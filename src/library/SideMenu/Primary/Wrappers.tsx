@@ -3,13 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  highlightPrimary,
-  highlightSecondary,
-  success,
-  warning,
-  warningTransparent,
-} from 'theme';
+import { highlightPrimary, highlightSecondary } from 'theme';
 import { MinimisedProps } from '../types';
 
 export const Wrapper = styled(motion.div)<MinimisedProps>`
@@ -43,7 +37,7 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
     line-height: 1.35rem;
   }
   .action {
-    color: ${success};
+    color: var(--status-success-color);
     flex: 1;
     display: flex;
     flex-flow: row wrap;
@@ -58,8 +52,8 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
         border: 1px solid var(--network-color-primary);
       }
       &.warning {
-        color: ${warning};
-        border: 1px solid ${warningTransparent};
+        color: var(--status-warning-color);
+        border: 1px solid var(--status-warning-color-transparent);
       }
       border-radius: 0.5rem;
       padding: 0.15rem 0.5rem;
@@ -67,12 +61,12 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
 
     &.success {
       svg {
-        color: ${success};
+        color: var(--status-success-color);
       }
     }
     &.warning {
       svg {
-        color: ${warning};
+        color: var(--status-warning-color);
       }
     }
   }
@@ -101,7 +95,7 @@ export const MinimisedWrapper = styled(motion.div)`
     border: 1px solid var(--network-color-primary);
   }
   &.action-warning {
-    border: 1px solid ${warningTransparent};
+    border: 1px solid var(--status);
   }
   &.active {
     background: ${highlightPrimary};

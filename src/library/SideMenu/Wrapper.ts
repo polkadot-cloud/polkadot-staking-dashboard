@@ -89,10 +89,23 @@ export const Separator = styled.div`
   margin: 1rem 1rem 0.5rem 0;
 `;
 
-export const ConnectionSymbol = styled.div<{ color: any }>`
+export const ConnectionSymbol = styled.div`
   width: 0.6rem;
   height: 0.6rem;
   background: ${(props) => props.color};
   border-radius: 50%;
   margin: 0 0.7rem;
+
+  &.success {
+    border: 1px solid var(--status-success-color);
+    color: var(--status-success-color);
+  }
+  &.warning {
+    border: 1px solid var(--status-warning-color);
+    color: var(--status-warning-color);
+  }
+  &.danger {
+    border: 1px solid var(--status-danger-color);
+    color: var(--status-danger-color);
+  }
 `;
