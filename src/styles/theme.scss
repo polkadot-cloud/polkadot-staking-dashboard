@@ -25,15 +25,15 @@
     --network-color-transparent: var(--network-color-transparent-light);
     --overlay-tip-color: rgba(200,200,200,0.45);
     --overlay-modal-color: rgba(230,228,228,0.6);
-    --text-color-primary: #333;
-    --text-color-secondary: #444;
-    --text-color-invert: #fafafa;
     --status-success-color: green;
     --status-success-color-transparent: rgba(0,128,0,0.25);
     --status-warning-color: #a78a3a;
     --status-warning-color-transparent: rgba(236,211,125,0.5);
     --status-danger-color: #ae2324;
     --status-danger-color-transparent: rgba(255,0,0,0.25);
+    --text-color-primary: #333;
+    --text-color-secondary: #444;
+    --text-color-invert: #fafafa;
     --gradient-background: linear-gradient(180deg, rgba(245,244,244,1) 0%, rgba(245,244,244,1) 100px, rgba(230,230,230, 1) 80%, rgba(253,239,234,1) 100%);
     --gradient-side-menu: linear-gradient(180deg, rgba(244,242,242,0.93) 0%, rgba(228,225,225,0.93) 100%);
   }
@@ -56,15 +56,15 @@
     --network-color-transparent: var(--network-color-transparent-dark);
     --overlay-tip-color: rgba(30,30,30,0.6);
     --overlay-modal-color: rgba(16,16,16,0.6);
-    --text-color-primary: #ccc;
-    --text-color-secondary: #aaa;
-    --text-color-invert: #0e0e0e;
     --status-success-color: green;
     --status-success-color-transparent: rgba(0,128,0,0.25);
     --status-warning-color: rgba(219, 161, 0,1);
     --status-warning-color-transparent: rgba(255,165,0,0.5);
     --status-danger-color: #d14445;
     --status-danger-color-transparent: rgba(255,0,0,0.25);
+    --text-color-primary: #ccc;
+    --text-color-secondary: #aaa;
+    --text-color-invert: #0e0e0e;
     --gradient-background: linear-gradient(180deg, rgba(39,39,39,1) 0%, rgba(39,39,39,1) 100px, rgba(30,30,30,1) 100%);
     --gradient-side-menugradient: linear-gradient(180deg, rgba(20,20,20,0.93) 0%, rgba(14,14,14,0.93) 100%);
   }
