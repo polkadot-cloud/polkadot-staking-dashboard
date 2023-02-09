@@ -13,30 +13,14 @@ export const defaultThemes: { [key: string]: AnyJson } = {
     invert: v('#fafafa', '#0e0e0e'),
   },
   background: {
-    primary: v('rgba(245,244,244,1)', 'rgba(39,39,39,1)'),
-    gradient: v(
-      'linear-gradient(180deg, rgba(245,244,244,1) 0%, rgba(245,244,244,1) 100px, rgba(230,230,230, 1) 80%, rgba(253,239,234,1) 100%)',
-      'linear-gradient(180deg, rgba(39,39,39,1) 0%, rgba(39,39,39,1) 100px, rgba(21,21,21,1) 100%)'
-    ),
-    secondary: v('rgba(255,255,255,0.58)', 'rgba(0,0,0,0.25)'),
-    network: v('rgba(244,225,225,0.75)', 'rgba(39,39,39,0.75)'),
     dropdown: v('rgba(237,237,237,0.6)', 'rgba(33,33,33,0.6)'),
     modalitem: v('rgba(244,244,244,0.6)', 'rgba(22,22,22,0.4)'),
-    validator: v(
-      'linear-gradient(90deg, rgba(240,240,239,0.95) 0%, rgba(240,240,239,0.7) 100%)',
-      'linear-gradient(90deg, rgba(30,30,30,0.8) 0%, rgba(30,30,30,0.5) 100%)'
-    ),
-    label: v(
-      'linear-gradient(90deg, rgba(243,240,239,1) 0%, rgba(243,240,239,0.95) 100%)',
-      'linear-gradient(90deg, rgba(40,40,40,0.85) 0%, rgba(40,40,40,0.95) 100%)'
-    ),
     tag: v('rgba(220,220,220,0.75)', 'rgba(36,36,36,0.75)'),
     identicon: v('#eee', '#333'),
     overlay: v(
       'linear-gradient(180deg, rgba(244,242,242,0.93) 0%, rgba(228,225,225,0.93) 100%)',
       'linear-gradient(180deg, rgba(20,20,20,0.93) 0%, rgba(14,14,14,0.93) 100%)'
     ),
-    warning: v('#fdf9eb', '#33332a'),
     submission: v('rgba(245,244,244,1)', '#141414'),
   },
   highlight: {

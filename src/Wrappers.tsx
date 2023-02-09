@@ -10,7 +10,7 @@ import {
 } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { backgroundGradient, buttonSecondaryBackground } from 'theme';
+import { buttonSecondaryBackground } from 'theme';
 import {
   InterfaceLayoutProps,
   PageRowWrapperProps,
@@ -25,7 +25,7 @@ import {
  * classes used throughout the app and possibly the library.
  */
 export const EntryWrapper = styled.div`
-  background: ${backgroundGradient};
+  background: var(--gradient-background);
   width: 100%;
   background-attachment: fixed;
   display: flex;
@@ -188,7 +188,7 @@ export const PageWrapper = styled(motion.div)`
  * is stuck.
  */
 export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
-  background: var(--background-primary-color);
+  background: var(--background-default-color);
   position: sticky;
   top: 0px;
   padding-top: ${(props) => (props.sticky ? '1.5rem' : '0.5rem')};
@@ -307,7 +307,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
  * Purely cosmetic. Applied in Pagetitle.
  */
 export const MenuPaddingWrapper = styled.div`
-  background: var(--background-primary-color);
+  background: var(--background-default-color);
   position: fixed;
   top: 0px;
   width: 100%;

@@ -7,7 +7,6 @@ import {
   SideMenuStickyThreshold,
 } from 'consts';
 import styled from 'styled-components';
-import { backgroundOverlay } from 'theme';
 import { MinimisedProps } from './types';
 
 export const Wrapper = styled.div<MinimisedProps>`
@@ -26,7 +25,7 @@ export const Wrapper = styled.div<MinimisedProps>`
       : `${SideMenuMaximisedWidth}px`};
 
   @media (max-width: ${SideMenuStickyThreshold}px) {
-    background: ${backgroundOverlay};
+    background: var(--gradient-side-menu);
     transition: all 0.2s;
     border-radius: 0.75rem;
 

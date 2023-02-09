@@ -8,7 +8,8 @@
   --transparent-color: rgba(0, 0, 0, 0);
 
   .theme-light {
-    --background-primary-color: rgba(245,244,244,1);
+    --background-default-color: rgba(245,244,244,1);
+    --background-primary-color: rgba(248,247,247,1);
     --background-secondary-color: rgba(255,255,255,0.58);
     --background-floating-card-color: rgba(255,255,255,0.90);
     --background-app-footer: rgba(244,225,225,0.75);
@@ -33,10 +34,13 @@
     --status-warning-color-transparent: rgba(236,211,125,0.5);
     --status-danger-color: #ae2324;
     --status-danger-color-transparent: rgba(255,0,0,0.25);
+    --gradient-background: linear-gradient(180deg, rgba(245,244,244,1) 0%, rgba(245,244,244,1) 100px, rgba(230,230,230, 1) 80%, rgba(253,239,234,1) 100%);
+    --gradient-side-menu: linear-gradient(180deg, rgba(244,242,242,0.93) 0%, rgba(228,225,225,0.93) 100%);
   }
 
   .theme-dark {
-    --background-primary-color: rgba(39,39,39,1);
+    --background-default-color: rgba(39,39,39,1);
+    --background-primary-color: rgba(27,27,27,1);
     --background-secondary-color: rgba(0,0,0,0.25);
     --background-floating-card-color: rgba(0,0,0,0.85);
     --background-app-footer: rgba(39,39,39,0.75);
@@ -61,5 +65,7 @@
     --status-warning-color-transparent: rgba(255,165,0,0.5);
     --status-danger-color: #d14445;
     --status-danger-color-transparent: rgba(255,0,0,0.25);
+    --gradient-background: linear-gradient(180deg, rgba(39,39,39,1) 0%, rgba(39,39,39,1) 100px, rgba(30,30,30,1) 100%);
+    --gradient-side-menugradient: linear-gradient(180deg, rgba(20,20,20,0.93) 0%, rgba(14,14,14,0.93) 100%);
   }
 }

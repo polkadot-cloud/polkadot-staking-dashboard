@@ -9,11 +9,6 @@ import { defaultThemes } from './default';
  */
 const v = 'mode';
 
-export const backgroundGradient: theme.ThemeSet = theme(
-  v,
-  defaultThemes.background.gradient
-);
-
 export const backgroundDropdown: theme.ThemeSet = theme(
   v,
   defaultThemes.background.dropdown
@@ -22,26 +17,6 @@ export const backgroundDropdown: theme.ThemeSet = theme(
 export const backgroundModalItem: theme.ThemeSet = theme(
   v,
   defaultThemes.background.modalitem
-);
-
-export const backgroundValidator: theme.ThemeSet = theme(
-  v,
-  defaultThemes.background.validator
-);
-
-export const backgroundLabel: theme.ThemeSet = theme(
-  v,
-  defaultThemes.background.label
-);
-
-export const backgroundIdenticon: theme.ThemeSet = theme(
-  v,
-  defaultThemes.background.identicon
-);
-
-export const backgroundOverlay: theme.ThemeSet = theme(
-  v,
-  defaultThemes.background.overlay
 );
 
 // highlights
