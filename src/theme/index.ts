@@ -151,29 +151,3 @@ export const borderWarning: theme.ThemeSet = theme(
   v,
   defaultThemes.border.warning
 );
-
-// modal
-
-export const modalOverlayBackground: theme.ThemeSet = theme(
-  v,
-  defaultThemes.modal.overlay
-);
-
-export const modalBackground: theme.ThemeSet = theme(
-  v,
-  defaultThemes.modal.background
-);
-
-// overlay
-
-export const overlayBackground: theme.ThemeSet = theme(
-  v,
-  defaultThemes.overlay.background
-);
-
-// help
-
-export const helpButton: theme.ThemeSet = theme(
-  v,
-  defaultThemes.help.button.background
-);

@@ -7,7 +7,6 @@ import {
   backgroundToggle,
   borderPrimary,
   buttonPrimaryBackground,
-  modalBackground,
 } from 'theme';
 
 export const CardsWrapper = styled(motion.div)`
@@ -111,8 +110,8 @@ export const AccountGroupWrapper = styled(motion.button)`
       margin: 0.4rem 0;
       > button,
       > div {
+        border: 1px solid var(--background-modal-color);
         border-radius: 0.75rem;
-        border: 1px solid ${modalBackground};
         margin: 0;
       }
     }

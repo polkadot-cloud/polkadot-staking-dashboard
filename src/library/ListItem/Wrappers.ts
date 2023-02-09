@@ -4,12 +4,7 @@
 import { SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  backgroundDropdown,
-  backgroundModalItem,
-  borderPrimary,
-  modalBackground,
-} from 'theme';
+import { backgroundDropdown, backgroundModalItem, borderPrimary } from 'theme';
 
 export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
   display: flex;
@@ -199,7 +194,7 @@ export const ValidatorStatusWrapper = styled.div<{ status: string }>`
 `;
 
 export const SelectWrapper = styled.button`
-  background: ${modalBackground};
+  background: var(--background-modal-color);
   margin: 0 0.75rem 0 0.25rem;
   overflow: hidden;
   display: flex;

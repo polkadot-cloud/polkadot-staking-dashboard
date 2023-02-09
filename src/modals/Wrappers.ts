@@ -3,16 +3,11 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  backgroundToggle,
-  buttonPrimaryBackground,
-  modalBackground,
-  modalOverlayBackground,
-} from 'theme';
+import { backgroundToggle, buttonPrimaryBackground } from 'theme';
 
 // Blurred background modal wrapper
 export const ModalWrapper = styled(motion.div)`
-  background: ${modalOverlayBackground};
+  background: var(--overlay-modal-color);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -57,7 +52,7 @@ export const HeightWrapper = styled.div<{ size: string }>`
 
 // Modal content wrapper
 export const ContentWrapper = styled.div`
-  background: ${modalBackground};
+  background: var(--background-modal-color);
   width: 100%;
   height: auto;
   overflow: hidden;

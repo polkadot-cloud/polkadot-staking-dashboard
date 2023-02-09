@@ -2,14 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  buttonPrimaryBackground,
-  modalBackground,
-  overlayBackground,
-} from 'theme';
+import { buttonPrimaryBackground } from 'theme';
 
 export const OverlayWrapper = styled.div`
-  background: ${overlayBackground};
+  background: var(--overlay-tip-color);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -48,7 +44,7 @@ export const HeightWrapper = styled.div<{ size: string }>`
 `;
 
 export const ContentWrapper = styled.div`
-  background: ${modalBackground};
+  background: var(--background-modal-color);
   width: 100%;
   height: auto;
   overflow: hidden;

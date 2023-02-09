@@ -3,10 +3,10 @@
 
 import { FloatingMenuWidth } from 'consts';
 import styled from 'styled-components';
-import { borderPrimary, modalBackground } from 'theme';
+import { borderPrimary } from 'theme';
 
 export const Wrapper = styled.div`
-  background: ${modalBackground};
+  background: var(--background-modal-color);
   width: ${FloatingMenuWidth}px;
   padding: 0.25rem 0.75rem;
   display: flex;

@@ -3,11 +3,10 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { helpButton, modalOverlayBackground } from 'theme';
 
 // Blurred background modal wrapper
 export const Wrapper = styled(motion.div)`
-  background: ${modalOverlayBackground};
+  background: var(--overlay-tip-color);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -118,9 +117,9 @@ export const ListWrapper = styled(motion.div)`
 `;
 
 export const DefinitionWrapper = styled(motion.div)`
+  background: var(--background-floating-card-color);
   width: 100%;
   display: flex;
-  background: ${helpButton};
   border-radius: 1.5rem;
   margin-bottom: 1.25rem;
   padding: 1.5rem 1.5rem 0 1.5rem;
@@ -170,7 +169,7 @@ export const ItemWrapper = styled(motion.div)<any>`
   flex-flow: row wrap;
 
   > * {
-    background: ${helpButton};
+    background: var(--background-floating-card-color);
     border-radius: 1.5rem;
     flex: 1;
     padding: 1.5rem;

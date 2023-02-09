@@ -8,12 +8,16 @@
   --transparent-color: rgba(0, 0, 0, 0);
 
   .theme-light {
+    --background-floating-card-color: rgba(255,255,255,0.90);
+    --background-modal-color: rgba(252,251,251,1);
+    --card-shadow-color: #dedede;
+    --card-shadow-color-secondary: #eaeaea;
     --network-color-primary: var(--network-color-primary-light);
     --network-color-secondary: var(--network-color-secondary-light);
     --network-color-stroke: var(--network-color-stroke-light);
     --network-color-transparent: var(--network-color-transparent-light);
-    --card-shadow-color: #dedede;
-    --card-shadow-color-secondary: #eaeaea;
+    --overlay-tip-color: rgba(200,200,200,0.45);
+    --overlay-modal-color: rgba(230,228,228,0.6);
     --text-color-primary: #333;
     --text-color-secondary: #444;
     --text-color-success: green;
@@ -29,12 +33,16 @@
   }
 
   .theme-dark {
+    --background-floating-card-color: rgba(0,0,0,0.85);
+    --background-modal-color: #101010;
+    --card-shadow-color: #1f1f1f;
+    --card-shadow-color-secondary: #222;
     --network-color-primary: var(--network-color-primary-dark);
     --network-color-secondary: var(--network-color-secondary-dark);
     --network-color-stroke: var(--network-color-stroke-dark);
     --network-color-transparent: var(--network-color-transparent-dark);
-    --card-shadow-color: #1f1f1f;
-    --card-shadow-color-secondary: #222;
+    --overlay-tip-color: rgba(30,30,30,0.6);
+    --overlay-modal-color: rgba(16,16,16,0.6);
     --text-color-primary: #ccc;
     --text-color-secondary: #aaa;
     --text-color-success: green;
