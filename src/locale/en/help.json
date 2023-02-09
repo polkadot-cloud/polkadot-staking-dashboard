@@ -86,7 +86,7 @@
       "epoch": [
         "Epoch",
         [
-          "An epoch is another name for a session in {NETWORK_NAME}. A different set of validators are selected to validate blocks at the beginning of every epoch.",
+          "An epoch is another name for a session in {NETWORK_NAME}. Each era is divided into 6 epochs during which validators are assigned as block producers to specific time frames or slots.",
           "1 epoch is currently 4 hours in Polkadot."
         ]
       ],
