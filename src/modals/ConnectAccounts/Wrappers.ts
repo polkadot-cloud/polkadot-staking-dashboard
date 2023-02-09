@@ -185,7 +185,7 @@ export const AccountWrapper = styled.div`
       }
       &.danger {
         h5 {
-          color: var(--text-color-danger);
+          color: var(--status-danger-color);
         }
       }
       .icon {
@@ -261,10 +261,10 @@ export const ExtensionWrapper = styled.div<{ noSpacing?: boolean }>`
       color: var(--text-color-secondary);
     }
     .danger {
-      color: var(--text-color-danger);
+      color: var(--status-danger-color);
     }
     .success {
-      color: var(--text-color-success);
+      color: var(--status-success-color);
     }
     /* svg theming */
     svg {

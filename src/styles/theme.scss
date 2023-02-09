@@ -20,15 +20,12 @@
     --overlay-modal-color: rgba(230,228,228,0.6);
     --text-color-primary: #333;
     --text-color-secondary: #444;
-    --text-color-success: green;
-    --text-color-danger: #ae2324;
-    --text-color-warning: #8e6c1a;
     --text-color-invert: #fafafa;
     --status-success-color: green;
     --status-success-color-transparent: rgba(0,128,0,0.25);
-    --status-warning-color: rgba(219, 161, 0, 1);
-    --status-warning-color-transparent: rgba(255,165,0,0.5);
-    --status-danger-color: red;
+    --status-warning-color: #a78a3a;
+    --status-warning-color-transparent: rgba(236,211,125,0.5);
+    --status-danger-color: #ae2324;
     --status-danger-color-transparent: rgba(255,0,0,0.25);
   }
 
@@ -45,15 +42,12 @@
     --overlay-modal-color: rgba(16,16,16,0.6);
     --text-color-primary: #ccc;
     --text-color-secondary: #aaa;
-    --text-color-success: green;
-    --text-color-danger: #d14445;
-    --text-color-warning: #cb9f37;
     --text-color-invert: #0e0e0e;
     --status-success-color: green;
     --status-success-color-transparent: rgba(0,128,0,0.25);
     --status-warning-color: rgba(219, 161, 0,1);
     --status-warning-color-transparent: rgba(255,165,0,0.5);
-    --status-danger-color: red;
+    --status-danger-color: #d14445;
     --status-danger-color-transparent: rgba(255,0,0,0.25);
   }
 }

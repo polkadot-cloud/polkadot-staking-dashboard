@@ -146,8 +146,3 @@ export const borderSecondary: theme.ThemeSet = theme(
   v,
   defaultThemes.border.secondary
 );
-
-export const borderWarning: theme.ThemeSet = theme(
-  v,
-  defaultThemes.border.warning
-);

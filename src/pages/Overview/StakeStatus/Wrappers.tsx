@@ -86,10 +86,10 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
         opacity: 0.1;
       }
       &.active {
-        color: var(--text-color-success);
+        color: var(--status-success-color);
       }
       &.inactive {
-        color: var(--text-color-warning);
+        color: var(--status-warning-color);
       }
     }
     .cta {

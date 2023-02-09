@@ -80,7 +80,7 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
   h4 {
     margin: 0;
     &.selected {
-      color: var(--text-color-success);
+      color: var(--status-success-color);
       margin-left: 0.75rem;
     }
   }
@@ -171,7 +171,7 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
   h4 {
     margin: 0;
     &.selected {
-      color: var(--text-color-success);
+      color: var(--status-success-color);
       margin: 0 0.75rem 0 0;
     }
   }

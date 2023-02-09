@@ -38,10 +38,10 @@ export const Wrapper = styled.div`
       opacity: 0.8;
     }
     &.danger {
-      color: var(--text-color-danger);
+      color: var(--status-danger-color);
     }
     &.success {
-      color: var(--text-color-success);
+      color: var(--status-success-color);
     }
   }
 `;
