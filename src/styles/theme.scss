@@ -8,7 +8,10 @@
   --transparent-color: rgba(0, 0, 0, 0);
 
   .theme-light {
+    --background-primary-color: rgba(245,244,244,1);
+    --background-secondary-color: rgba(255,255,255,0.58);
     --background-floating-card-color: rgba(255,255,255,0.90);
+    --background-app-footer: rgba(244,225,225,0.75);
     --background-modal-color: #fcfbfb;
     --background-warning-color: #fdf9eb;
     --border-primary-color: #e6e6e6;
@@ -33,7 +36,10 @@
   }
 
   .theme-dark {
+    --background-primary-color: rgba(39,39,39,1);
+    --background-secondary-color: rgba(0,0,0,0.25);
     --background-floating-card-color: rgba(0,0,0,0.85);
+    --background-app-footer: rgba(39,39,39,0.75);
     --background-modal-color: #101010;
     --background-warning-color: #33332a;
     --border-primary-color: #282828;

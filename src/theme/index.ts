@@ -9,25 +9,9 @@ import { defaultThemes } from './default';
  */
 const v = 'mode';
 
-// background colors
-export const backgroundPrimary: theme.ThemeSet = theme(
-  v,
-  defaultThemes.background.primary
-);
-
-export const backgroundSecondary: theme.ThemeSet = theme(
-  v,
-  defaultThemes.background.secondary
-);
-
 export const backgroundGradient: theme.ThemeSet = theme(
   v,
   defaultThemes.background.gradient
-);
-
-export const backgroundNetworkBar: theme.ThemeSet = theme(
-  v,
-  defaultThemes.background.network
 );
 
 export const backgroundDropdown: theme.ThemeSet = theme(

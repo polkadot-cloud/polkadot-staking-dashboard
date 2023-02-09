@@ -70,7 +70,6 @@ export const defaultThemes: { [key: string]: AnyJson } = {
   border: {
     secondary: v('#ccc', '#444'),
   },
-
   loader: {
     foreground: v('#e1e1e1', '#151515'),
     background: v('#dadada', '#101010'),

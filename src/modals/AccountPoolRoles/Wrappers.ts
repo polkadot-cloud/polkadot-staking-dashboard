@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  backgroundSecondary,
-  backgroundToggle,
-  buttonPrimaryBackground,
-} from 'theme';
+import { backgroundToggle, buttonPrimaryBackground } from 'theme';
 
 export const ContentWrapper = styled.div`
   width: 100%;
@@ -85,9 +81,9 @@ export const StyledButton = styled.button`
     > h4 {
       margin-left: 1rem;
       span {
+        background: var(--background-primary-color);
         border: 1px solid var(--border-primary-color);
         margin-right: 0.5rem;
-        background: ${backgroundSecondary};
         padding: 0.25rem 0.75rem;
         border-radius: 1rem;
       }

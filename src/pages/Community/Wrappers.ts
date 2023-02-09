@@ -5,7 +5,6 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import {
   backgroundDropdown,
-  backgroundSecondary,
   buttonHoverBackground,
   buttonSecondaryBackground,
 } from 'theme';
@@ -37,7 +36,7 @@ export const ItemWrapper = styled(motion.div)`
 
   > .inner {
     color: var(--text-color-secondary);
-    background: ${backgroundSecondary};
+    background: var(--background-primary-color);
     box-shadow: var(--card-shadow) var(--card-shadow-color);
     border-radius: 0.75rem;
     width: 100%;
