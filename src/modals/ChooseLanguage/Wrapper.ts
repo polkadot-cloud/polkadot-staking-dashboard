@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { backgroundToggle, buttonPrimaryBackground } from 'theme';
 
 export const ContentWrapper = styled.div`
   box-sizing: border-box;
@@ -24,7 +23,7 @@ export const ContentWrapper = styled.div`
 `;
 
 export const LocaleButton = styled.button<any>`
-  background: ${buttonPrimaryBackground};
+  background: var(--button-primary-background);
   box-sizing: border-box;
   padding: 1rem;
   cursor: pointer;
@@ -47,6 +46,6 @@ export const LocaleButton = styled.button<any>`
     }
   }
   &:hover {
-    background: ${backgroundToggle};
+    background: var(--button-toggle-background);
   }
 `;

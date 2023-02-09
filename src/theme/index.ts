@@ -9,33 +9,6 @@ import { defaultThemes } from './default';
  */
 const v = 'mode';
 
-// buttons
-
-export const buttonPrimaryBackground: theme.ThemeSet = theme(
-  v,
-  defaultThemes.buttons.primary.background
-);
-
-export const buttonSecondaryBackground: theme.ThemeSet = theme(
-  v,
-  defaultThemes.buttons.secondary.background
-);
-
-export const backgroundToggle: theme.ThemeSet = theme(
-  v,
-  defaultThemes.buttons.toggle.background
-);
-
-export const buttonHelpBackground: theme.ThemeSet = theme(
-  v,
-  defaultThemes.buttons.help.background
-);
-
-export const buttonHoverBackground: theme.ThemeSet = theme(
-  v,
-  defaultThemes.buttons.hover.background
-);
-
 // graphs
 
 export const tooltipBackground: theme.ThemeSet = theme(

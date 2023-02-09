@@ -20,8 +20,6 @@ export const defaultThemes: { [key: string]: AnyJson } = {
     grid: v('#e8e8e8', '#222'),
   },
   buttons: {
-    primary: { background: v('rgba(244, 243, 243, 0.9)', '#1a1a1a') },
-    secondary: { background: v('#eeecec', '#333') },
     toggle: { background: v('rgba(242,241,240,1)', '#1d1d1d') },
     help: { background: v('#ececec', '#242424') },
     hover: { background: v('#e8e6e6', '#080808') },

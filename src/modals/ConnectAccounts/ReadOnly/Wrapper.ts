@@ -2,15 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { buttonPrimaryBackground } from 'theme';
 
 export const Wrapper = styled.div`
+  background: var(--button-primary-background);
   color: var(--text-color-primary);
   border-radius: 0.75rem;
   width: 100%;
   margin: 1rem 0;
   border-radius: 0.5rem;
-  background: ${buttonPrimaryBackground};
   transition: background 0.15s;
   display: flex;
   flex-flow: column nowrap;

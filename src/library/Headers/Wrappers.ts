@@ -7,7 +7,6 @@ import {
 } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { buttonSecondaryBackground } from 'theme';
 
 export const Wrapper = styled.div`
   position: fixed;
@@ -48,7 +47,7 @@ export const HeadingWrapper = styled.div`
 `;
 
 export const Item = styled.button`
-  background: ${buttonSecondaryBackground};
+  background: var(--button-secondary-background);
   border: 1px solid var(--border-primary-color);
   flex-grow: 1;
   padding: 0.05rem 1rem;
@@ -98,10 +97,10 @@ export const Item = styled.button`
 `;
 
 export const ItemInactive = styled(motion.div)`
+  background: var(--button-secondary-background);
   flex-grow: 1;
   padding: 0 1rem;
   border-radius: 1rem;
-  background: ${buttonSecondaryBackground};
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;

@@ -10,7 +10,6 @@ import {
 } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { buttonSecondaryBackground } from 'theme';
 import {
   InterfaceLayoutProps,
   PageRowWrapperProps,
@@ -231,7 +230,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
       font-size: 1.1rem;
 
       &:hover {
-        background: ${buttonSecondaryBackground};
+        background: var(--button-secondary-background);
       }
 
       .icon {
@@ -287,7 +286,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
         border-radius: 0.5rem;
 
         &.active {
-          background: ${buttonSecondaryBackground};
+          background: var(--button-secondary-background);
         }
         &:last-child {
           margin-right: 0;
