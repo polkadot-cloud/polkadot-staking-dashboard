@@ -13,7 +13,6 @@ import styled from 'styled-components';
 import {
   backgroundGradient,
   backgroundPrimary,
-  borderPrimary,
   buttonSecondaryBackground,
 } from 'theme';
 import {
@@ -229,7 +228,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
 
     button {
       color: var(--text-color-secondary);
-      border: 1px solid ${borderPrimary};
+      border: 1px solid var(--border-primary-color);
       padding: 0.5rem 0.75rem;
       margin: 0;
       border-radius: 0.75rem;
@@ -261,11 +260,11 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   }
 
   .tabs {
+    border-bottom: ${(props) => (props.sticky ? '0px' : '1px solid')};
+    border-bottom-color: var(--border-primary-color);
     overflow: hidden;
     max-width: ${InterfaceMaximumWidth}px;
     height: 3.6rem;
-    border-bottom: ${(props) => (props.sticky ? '0px' : '1px solid')};
-    border-bottom-color: ${borderPrimary};
 
     margin-top: ${(props) => (props.sticky ? '0.5rem' : '0.9rem')};
     @media (max-width: ${SideMenuStickyThreshold}px) {
@@ -404,7 +403,7 @@ export const RowSecondaryWrapper = styled.div<InterfaceLayoutProps>`
  * General spacer for separating content by row.
  */
 export const Separator = styled.div`
-  border-bottom: 1px solid ${borderPrimary};
+  border-bottom: 1px solid var(--border-primary-color);
   width: 100%;
   margin: 0.67rem 0;
 `;
@@ -414,10 +413,10 @@ export const Separator = styled.div`
  * Positioned under titles for a Go Back button and other page header info.
  */
 export const TopBarWrapper = styled.div`
+  border-bottom: 1px solid var(--border-primary-color);
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  border-bottom: 1px solid ${borderPrimary};
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   width: 100%;

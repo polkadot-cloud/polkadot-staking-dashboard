@@ -9,7 +9,9 @@
 
   .theme-light {
     --background-floating-card-color: rgba(255,255,255,0.90);
-    --background-modal-color: rgba(252,251,251,1);
+    --background-modal-color: #fcfbfb;
+    --border-primary-color: #e6e6e6;
+    --border-secondary-color: #ccc;
     --card-shadow-color: #dedede;
     --card-shadow-color-secondary: #eaeaea;
     --network-color-primary: var(--network-color-primary-light);
@@ -32,6 +34,8 @@
   .theme-dark {
     --background-floating-card-color: rgba(0,0,0,0.85);
     --background-modal-color: #101010;
+    --border-primary-color: #282828;
+    --border-secondary-color: #444;
     --card-shadow-color: #1f1f1f;
     --card-shadow-color-secondary: #222;
     --network-color-primary: var(--network-color-primary-dark);

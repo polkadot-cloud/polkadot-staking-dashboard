@@ -3,11 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  backgroundToggle,
-  borderPrimary,
-  buttonPrimaryBackground,
-} from 'theme';
+import { backgroundToggle, buttonPrimaryBackground } from 'theme';
 
 export const CardsWrapper = styled(motion.div)`
   width: 200%;
@@ -44,7 +40,7 @@ export const Wrapper = styled.div`
     color: var(--text-color-primary);
 
     &.heading {
-      border-bottom: 1px solid ${borderPrimary};
+      border-bottom: 1px solid var(--border-primary-color);
       padding-bottom: 0.75rem;
       margin: 2rem 0 1rem 0;
     }

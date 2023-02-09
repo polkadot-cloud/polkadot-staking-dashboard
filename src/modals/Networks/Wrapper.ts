@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  backgroundToggle,
-  borderPrimary,
-  buttonPrimaryBackground,
-} from 'theme';
+import { backgroundToggle, buttonPrimaryBackground } from 'theme';
 import { NetworkButtonProps } from './types';
 
 export const Wrapper = styled.div`
@@ -25,11 +21,11 @@ export const ContentWrapper = styled.div`
   width: 100%;
 
   > h4 {
+    border-bottom: 1px solid var(--border-primary-color);
     color: var(--text-color-secondary);
     margin: 0.75rem 0;
     padding-bottom: 0.5rem;
     width: 100%;
-    border-bottom: 1px solid ${borderPrimary};
   }
 
   .items {
@@ -116,8 +112,8 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
 `;
 
 export const BraveWarning = styled.div`
+  border: 1px solid var(--border-primary-color);
   display: flex;
-  border: 1px solid ${borderPrimary};
   border-radius: 0.75rem;
   padding: 1rem;
 
@@ -130,8 +126,8 @@ export const BraveWarning = styled.div`
 
     .learn-more {
       color: var(--text-color-secondary);
+      text-decoration: underline var(--border-primary-color);
       font-weight: bold;
-      text-decoration: underline ${borderPrimary};
     }
   }
 `;

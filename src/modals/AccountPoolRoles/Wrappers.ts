@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import {
   backgroundSecondary,
   backgroundToggle,
-  borderPrimary,
   buttonPrimaryBackground,
 } from 'theme';
 
@@ -14,10 +13,10 @@ export const ContentWrapper = styled.div`
 
   > h4 {
     color: var(--text-color-secondary);
+    border-bottom: 1px solid var(--border-primary-color);
     margin: 0.75rem 0;
     padding-bottom: 0.5rem;
     width: 100%;
-    border-bottom: 1px solid ${borderPrimary};
   }
 
   .items {
@@ -86,8 +85,8 @@ export const StyledButton = styled.button`
     > h4 {
       margin-left: 1rem;
       span {
+        border: 1px solid var(--border-primary-color);
         margin-right: 0.5rem;
-        border: 1px solid ${borderPrimary};
         background: ${backgroundSecondary};
         padding: 0.25rem 0.75rem;
         border-radius: 1rem;

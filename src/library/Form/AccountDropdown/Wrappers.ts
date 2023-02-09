@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary, borderSecondary } from 'theme';
 
 export const StyledDownshift = styled.div`
   position: relative;
@@ -28,7 +27,7 @@ export const StyledDownshift = styled.div`
 
   /* input element of dropdown */
   .input-wrap {
-    border-bottom: 1px solid ${borderPrimary};
+    border-bottom: 1px solid var(--border-primary-color);
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -70,7 +69,7 @@ export const StyledController = styled.button<any>`
 
 /* dropdown box for vertical scroll */
 export const StyledDropdown = styled.div<any>`
-  border: 1px solid ${borderPrimary};
+  border: 1px solid var(--border-primary-color);
   position: relative;
   margin: 0.5rem 0 0;
   border-radius: 0.75rem;
@@ -108,7 +107,7 @@ export const StyledDropdown = styled.div<any>`
 
       span {
         color: var(--text-color-secondary);
-        border: 1px solid ${borderSecondary};
+        border: 1px solid var(--border-secondary-color);
         border-radius: 0.5rem;
         padding: 0.2rem 0.5rem;
         font-size: 0.9rem;

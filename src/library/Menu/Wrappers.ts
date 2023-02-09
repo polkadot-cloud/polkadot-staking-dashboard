@@ -3,7 +3,6 @@
 
 import { FloatingMenuWidth } from 'consts';
 import styled from 'styled-components';
-import { borderPrimary } from 'theme';
 
 export const Wrapper = styled.div`
   background: var(--background-modal-color);
@@ -20,7 +19,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ItemWrapper = styled.button`
-  border-bottom: 1px solid ${borderPrimary};
+  border-bottom: 1px solid var(--border-primary-color);
   color: var(--text-color-secondary);
   display: flex;
   width: 100%;

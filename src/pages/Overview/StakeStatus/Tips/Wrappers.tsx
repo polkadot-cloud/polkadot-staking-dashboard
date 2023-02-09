@@ -4,7 +4,6 @@
 import { SideMenuStickyThreshold, SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { borderPrimary } from 'theme';
 
 export const TipsWrapper = styled.div`
   width: 100%;
@@ -116,10 +115,10 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
 `;
 
 export const PageToggleWrapper = styled.div`
+  border: 1px solid var(--border-primary-color);
   color: var(--text-color-secondary);
   padding: 0.1rem 0.1rem;
   border-radius: 1.5rem;
-  border: 1px solid ${borderPrimary};
   position: relative;
   top: 0.1rem;
   display: flex;

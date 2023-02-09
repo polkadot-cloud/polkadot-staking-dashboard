@@ -2,15 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  borderPrimary,
-  borderSecondary,
-  buttonSecondaryBackground,
-} from 'theme';
+import { buttonSecondaryBackground } from 'theme';
 import { WrapperProps } from './types';
 
 export const Wrapper = styled.button<WrapperProps>`
-  border: 1px solid ${borderPrimary};
+  border: 1px solid var(--border-primary-color);
   cursor: ${(props) => (props.canClick ? 'pointer' : 'default')};
   background: ${(props) => (props.filled ? buttonSecondaryBackground : 'none')};
   font-size: ${(props) => props.fontSize};
@@ -30,7 +26,7 @@ export const Wrapper = styled.button<WrapperProps>`
     margin: 0.15rem 0.25rem 0 0;
   }
   .account-label {
-    border-right: 1px solid ${borderSecondary};
+    border-right: 1px solid var(--border-secondary-color);
     color: var(--text-color-secondary);
     font-size: 0.8em;
     display: flex;

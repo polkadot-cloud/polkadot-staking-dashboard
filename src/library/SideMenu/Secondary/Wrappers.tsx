@@ -3,12 +3,12 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { borderPrimary, highlightPrimary, highlightSecondary } from 'theme';
+import { highlightPrimary, highlightSecondary } from 'theme';
 import { MinimisedProps } from '../types';
 
 export const Wrapper = styled(motion.button)<MinimisedProps>`
   width: 100%;
-  border: 1px solid ${borderPrimary};
+  border: 1px solid var(--border-primary-color);
   border-radius: 0.7rem;
   display: flex;
   flex-flow: row wrap;
@@ -51,8 +51,8 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
 `;
 
 export const MinimisedWrapper = styled(motion.button)`
+  border: 1px solid var(--border-primary-color);
   width: 100%;
-  border: 1px solid ${borderPrimary};
   border-radius: 0.5rem;
   display: flex;
   flex-flow: row wrap;

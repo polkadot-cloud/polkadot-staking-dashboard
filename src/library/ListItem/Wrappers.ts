@@ -4,7 +4,7 @@
 import { SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { backgroundDropdown, backgroundModalItem, borderPrimary } from 'theme';
+import { backgroundDropdown, backgroundModalItem } from 'theme';
 
 export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
   display: flex;
@@ -229,9 +229,9 @@ export const SelectWrapper = styled.button`
 `;
 
 export const Separator = styled.div`
+  border-bottom: 1px solid var(--border-primary-color);
   width: 100%;
   height: 1px;
-  border-bottom: 1px solid ${borderPrimary};
   opacity: 0.7;
 `;
 

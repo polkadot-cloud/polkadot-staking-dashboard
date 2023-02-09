@@ -134,15 +134,3 @@ export const tooltipBackground: theme.ThemeSet = theme(
 );
 
 export const gridColor: theme.ThemeSet = theme(v, defaultThemes.graphs.grid);
-
-// borders
-
-export const borderPrimary: theme.ThemeSet = theme(
-  v,
-  defaultThemes.border.primary
-);
-
-export const borderSecondary: theme.ThemeSet = theme(
-  v,
-  defaultThemes.border.secondary
-);

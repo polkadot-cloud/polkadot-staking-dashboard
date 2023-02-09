@@ -3,7 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { backgroundDropdown, borderPrimary } from 'theme';
+import { backgroundDropdown } from 'theme';
 
 export const ItemWrapper = styled(motion.div)`
   padding: 0.5rem;
@@ -32,8 +32,8 @@ export const ItemWrapper = styled(motion.div)`
       }
 
       &:last-child {
+        border-top: 1px solid var(--border-primary-color);
         padding-top: 0rem;
-        border-top: 1px solid ${borderPrimary};
 
         > div {
           min-height: 3.2rem;

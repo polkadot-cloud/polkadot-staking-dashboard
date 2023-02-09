@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import {
   backgroundDropdown,
   backgroundSecondary,
-  borderPrimary,
   buttonHoverBackground,
   buttonSecondaryBackground,
 } from 'theme';
@@ -141,10 +140,10 @@ export const ItemWrapper = styled(motion.div)`
         }
       }
       &:last-child {
+        border-top: 1px solid var(--border-primary-color);
         border-left: none;
         flex-flow: column wrap;
         justify-content: center;
-        border-top: 1px solid ${borderPrimary};
         height: 100%;
         height: 50%;
         width: 100%;

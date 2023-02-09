@@ -7,7 +7,7 @@ import {
   SideMenuStickyThreshold,
 } from 'consts';
 import styled from 'styled-components';
-import { backgroundOverlay, borderPrimary } from 'theme';
+import { backgroundOverlay } from 'theme';
 import { MinimisedProps } from './types';
 
 export const Wrapper = styled.div<MinimisedProps>`
@@ -84,7 +84,7 @@ export const LogoWrapper = styled.button<MinimisedProps>`
 `;
 
 export const Separator = styled.div`
-  border-bottom: 1px solid ${borderPrimary};
+  border-bottom: 1px solid var(--border-primary-color);
   width: 100%;
   margin: 1rem 1rem 0.5rem 0;
 `;
