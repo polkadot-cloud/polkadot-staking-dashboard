@@ -13,7 +13,7 @@ Reach out to ross@parity.io for clarification of any content within this documen
 - Framer Motion. [[docs](https://www.framer.com/docs/animation/)]
 - [Font Awesome](https://fontawesome.com/v5/search) for the majority of icons. [Ionicons](https://ionic.io/ionicons) for side menu footer icons
 - Downshift for dropdowns [[docs](https://www.npmjs.com/package/downshift)]
-- Styled Components [[docs](https://styled-components.com/docs)] alongside Styled Theming [[docs](https://www.npmjs.com/package/styled-theming)] for theme configuration.
+- SCSS for theme configuration and Styled Components [[docs](https://styled-components.com/docs)] for component styling.
 
 ## Environment Variables
 Optionally apply the following envrionment variables in an environment file such as `.env` or with `yarn build` to customise the build of staking dashboard:

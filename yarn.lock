@@ -2688,21 +2688,13 @@
   resolved "https://registry.npmjs.org/@types/stack-utils/-/stack-utils-2.0.1.tgz#20f18294f797f2209b5f65c8e3b5c8e8261d127c"
   integrity sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==
 
-"@types/styled-components@*", "@types/styled-components@^5.1.21":
+"@types/styled-components@^5.1.21":
   version "5.1.26"
   resolved "https://registry.npmjs.org/@types/styled-components/-/styled-components-5.1.26.tgz#5627e6812ee96d755028a98dae61d28e57c233af"
   integrity sha512-KuKJ9Z6xb93uJiIyxo/+ksS7yLjS1KzG6iv5i78dhVg/X3u5t1H7juRWqVmodIdz6wGVaIApo1u01kmFRdJHVw==
   dependencies:
     "@types/hoist-non-react-statics" "*"
     "@types/react" "*"
-    csstype "^3.0.2"
-
-"@types/styled-theming@^2.2.5":
-  version "2.2.5"
-  resolved "https://registry.npmjs.org/@types/styled-theming/-/styled-theming-2.2.5.tgz#3942caf3fc03550a8501b56bc1e326137172c136"
-  integrity sha512-7Rxu3Oj2nFG40+barPjt/5hzexlZTjWKDHfngrprxO2+y9RhxtzJ2wSiZrY9+kwtC0mmlI0poVW4PxTiobv1qQ==
-  dependencies:
-    "@types/styled-components" "*"
     csstype "^3.0.2"
 
 "@types/testing-library__jest-dom@^5.9.1":
@@ -9718,11 +9710,6 @@ styled-components@^5.3.3, styled-components@^5.3.6:
     hoist-non-react-statics "^3.0.0"
     shallowequal "^1.1.0"
     supports-color "^5.5.0"
-
-styled-theming@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.npmjs.org/styled-theming/-/styled-theming-2.2.0.tgz#3084e43d40eaab4bc11ebafd3de04e3622fee37e"
-  integrity sha512-5nqUoCR/BJ6ziJ39xN/K5nmrzMn37BgPc693vgeQlO0hMaat/hJvJ0/u0vtm1ZQxU82sdltEbynqjkoYYMVwaA==
 
 stylehacks@^5.1.1:
   version "5.1.1"
