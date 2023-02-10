@@ -95,7 +95,7 @@ export const Wrapper = styled.div<{
       align-items: center;
 
       &:disabled {
-        opacity: 0.3;
+        opacity: var(--opacity-disabled);
       }
 
       > .icon {

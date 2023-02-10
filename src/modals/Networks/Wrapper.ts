@@ -178,7 +178,7 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
     }
     &.off {
       h3 {
-        opacity: 0.33;
+        opacity: var(--opacity-disabled);
       }
     }
   }
