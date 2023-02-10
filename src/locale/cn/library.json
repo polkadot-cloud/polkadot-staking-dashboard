@@ -40,6 +40,7 @@
     "destroying": "销毁中",
     "destroyingPools": "正在销毁提名池",
     "disclaimer": "免责声明",
+    "dashboardDisclaimer": "该应用免责声明",
     "disconnected": "已断开",
     "displayingValidators": "正在显示 {{count}} 个验证人",
     "done": "完成",

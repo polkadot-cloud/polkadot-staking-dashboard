@@ -41,7 +41,10 @@ export const Summary = styled.div`
     }
   }
 
-  a {
+  a,
+  button {
+    color: var(--text-color-secondary);
+    font-size: 0.85rem;
     opacity: 0.75;
   }
   p {

@@ -2,12 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
+import { useOverlay } from 'contexts/Overlay';
 import { usePlugins } from 'contexts/Plugins';
 import { useOutsideAlerter } from 'library/Hooks';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { capitalizeFirstLetter } from 'Utils';
+import { Disclaimer } from './Disclaimer';
 import { Status } from './Status';
 import { NetworkInfo, Separator, Summary, Wrapper } from './Wrappers';
 
@@ -16,6 +18,7 @@ export const NetworkBar = () => {
   const { plugins } = usePlugins();
   const { network, isLightClient } = useApi();
   const prices = usePrices();
+  const { openOverlayWith } = useOverlay();
 
   // currently not in use
   const [open, setOpen] = useState(false);
@@ -91,6 +94,17 @@ export const NetworkBar = () => {
               </p>
             </>
           )}
+          <Separator />
+          <p>
+            <button
+              type="button"
+              onClick={() => {
+                openOverlayWith(<Disclaimer />);
+              }}
+            >
+              {t('dashboardDisclaimer')}
+            </button>
+          </p>
         </section>
         <section>
           <div className="hide-small">
