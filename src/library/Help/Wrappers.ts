@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 // Blurred background modal wrapper
 export const Wrapper = styled(motion.div)`
-  background: var(--overlay-tip-color);
+  background: var(--overlay-modal-color);
   position: fixed;
   width: 100%;
   height: 100%;

@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -62,9 +61,7 @@ export const FavoritePool = ({ address }: FavoriteProps) => {
       <TooltipPosition ref={posRef} />
       <button type="button" className={isFavorite ? 'active' : undefined}>
         <FontAwesomeIcon
-          icon={
-            !isFavorite ? (faHeartRegular as IconProp) : (faHeart as IconProp)
-          }
+          icon={!isFavorite ? faHeartRegular : faHeart}
           transform="shrink-2"
         />
       </button>

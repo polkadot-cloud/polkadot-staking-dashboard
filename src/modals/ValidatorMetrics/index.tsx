@@ -117,6 +117,7 @@ export const ValidatorMetrics = () => {
             boxShadow: 'none',
           }}
           flex
+          transparent
         >
           <h4>
             {t('recentEraPoints')} <OpenHelpIcon helpKey="Era Points" />

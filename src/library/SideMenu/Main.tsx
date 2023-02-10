@@ -22,6 +22,7 @@ import { Primary } from './Primary';
 import { LogoWrapper } from './Wrapper';
 
 export const Main = () => {
+  const { t, i18n } = useTranslation('base');
   const { network } = useApi();
   const { activeAccount, accounts } = useConnect();
   const { pathname } = useLocation();
@@ -37,7 +38,6 @@ export const Main = () => {
   }: SetupContextInterface = useSetup();
   const { isSyncing, sideMenuMinimised }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
-  const { t, i18n } = useTranslation('base');
 
   const [pageConfig, setPageConfig] = useState({
     categories: Object.assign(PAGE_CATEGORIES),

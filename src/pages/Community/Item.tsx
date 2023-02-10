@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import {
   faEnvelope,
@@ -136,10 +135,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
                   window.open(`https://twitter.com/${twitter}`, '_blank');
                 }}
               >
-                <FontAwesomeIcon
-                  icon={faTwitter as IconProp}
-                  className="icon-left"
-                />
+                <FontAwesomeIcon icon={faTwitter} className="icon-left" />
                 <h4>{twitter}</h4>
                 <FontAwesomeIcon
                   icon={faExternalLink}

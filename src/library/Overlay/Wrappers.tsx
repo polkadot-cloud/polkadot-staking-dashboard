@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 
 export const OverlayWrapper = styled.div`
-  background: var(--overlay-tip-color);
+  background: var(--overlay-modal-color);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -124,7 +124,7 @@ export const FilterListButton = styled.button<{ active: boolean }>`
     ${(props) =>
       props.active
         ? 'var(--network-color-stroke)'
-        : 'var(--button-primary-background'};
+        : 'var(--button-primary-background)'};
   background: var(--button-primary-background);
   width: 100%;
   display: flex;

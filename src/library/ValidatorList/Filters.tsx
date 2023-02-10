@@ -82,7 +82,6 @@ export const Filters = () => {
               key={`validator_include_${i}`}
               label={includesToLabels[e]}
               icon={faCheck}
-              transform="grow-2"
               onClick={() => {
                 toggleFilter('include', 'validators', e);
               }}
@@ -93,7 +92,7 @@ export const Filters = () => {
               key={`validator_exclude_${i}`}
               label={excludesToLabels[e]}
               icon={faBan}
-              transform="grow-0"
+              transform="shrink-2"
               onClick={() => {
                 toggleFilter('exclude', 'validators', e);
               }}
