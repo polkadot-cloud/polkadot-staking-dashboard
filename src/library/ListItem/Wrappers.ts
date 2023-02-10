@@ -17,7 +17,7 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
     box-shadow: 0px 1.75px 0px 1.25px var(--card-shadow-color-secondary);
     background: ${(props) =>
       props.inModal
-        ? '--background-modal-item'
+        ? 'var(--background-modal-item)'
         : 'var(--background-list-item)'};
 
     ${(props) =>

@@ -33,7 +33,7 @@ export const CopyAddress = ({ address }: CopyAddressProps) => {
           navigator.clipboard.writeText(address || '');
         }}
       >
-        <FontAwesomeIcon icon={faCopy as IconProp} />
+        <FontAwesomeIcon icon={faCopy as IconProp} transform="shrink-1" />
       </button>
     </div>
   );
