@@ -10,7 +10,7 @@ export const Disclaimer = () => {
       <PaddingWrapper>
         <p>
           This Polkadot Staking Dashboard (“Dashboard”) is made available free
-          of charge by web 3.0 Technologies Foundation, Parity Technologies
+          of charge by Web 3.0 Technologies Foundation, Parity Technologies
           Limited and their affiliates (&quot;Web3 entities&quot;) as open
           source software under the Apache 2.0 licence found{' '}
           <a
@@ -53,7 +53,7 @@ export const Disclaimer = () => {
           REGARDING your USE of the dashboard and content.
         </p>
         <p>
-          To the maximum extent permitted by applicable law, the web3 entities,
+          To the maximum extent permitted by applicable law, the Web3 entities,
           their OFFICERS, EMPLOYEES AND PERSONNEL: (i) make no warranty,
           condition or representation in relation to the dashboard or Content,
           whether in regards to its accuracy, outcomes, fitness for purpose,
@@ -69,7 +69,7 @@ export const Disclaimer = () => {
           third party acts or your use of the dashboard or Content.
         </p>
         <p>
-          as between you and the web3 entities, your sole and exclusive remedy
+          as between you and the Web3 entities, your sole and exclusive remedy
           if you are not satisfied with the dashboard or content or have
           suffered loss or damage as a result of the dashboard, content or third
           party acts is to cease using the dashboard.
