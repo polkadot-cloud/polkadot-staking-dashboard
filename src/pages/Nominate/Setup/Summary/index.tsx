@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
@@ -95,11 +94,8 @@ export const Summary = ({ section }: SetupStepProps) => {
         <SummaryWrapper>
           <section>
             <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle 
-                transform="grow-1"
-              />{' '}
-              &nbsp; {t('nominate.payoutDestination')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
+              {t('nominate.payoutDestination')}:
             </div>
             <div>
               {payee.destination === 'Account'
@@ -109,21 +105,15 @@ export const Summary = ({ section }: SetupStepProps) => {
           </section>
           <section>
             <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle 
-                transform="grow-1"
-              />{' '}
-              &nbsp; {t('nominate.nominating')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
+              {t('nominate.nominating')}:
             </div>
             <div>{t('nominate.validator', { count: nominations.length })}</div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle 
-                transform="grow-1"
-              />{' '}
-              &nbsp; {t('nominate.bondAmount')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
+              {t('nominate.bondAmount')}:
             </div>
             <div>
               {new BigNumber(bond).toFormat()} {network.unit}
