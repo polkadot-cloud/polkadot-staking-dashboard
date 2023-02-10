@@ -12,15 +12,38 @@ export const Disclaimer = () => {
           This Polkadot Staking Dashboard (“Dashboard”) is made available free
           of charge by web 3.0 Technologies Foundation, Parity Technologies
           Limited and their affiliates (&quot;Web3 entities&quot;) as open
-          source software under the Apache 2.0 licence found here (a copy of the
-          dashboard code is here).
+          source software under the Apache 2.0 licence found{' '}
+          <a
+            href="https://www.apache.org/licenses/LICENSE-2.0"
+            target="_blank"
+            rel="noreferrer"
+          >
+            here
+          </a>{' '}
+          (a copy of the dashboard code is{' '}
+          <a
+            href="https://github.com/paritytech/polkadot-staking-dashboard"
+            target="_blank"
+            rel="noreferrer"
+          >
+            here
+          </a>
+          ).
         </p>
         <p>
           THE DASHBOARD ALLOWS USERS TO JOIN NOMINATION POOLS BUT IS NOT ITSELF
           A STAKING SERVICE. BY USING THE DASHBOARD YOU ARE DEEMED TO HAVE: (I)
           READ, UNDERSTOOD AND AGREED TO THE DISCLAIMER BELOW and THE DASHBOARD
-          DOCUMENTATION found HERE; AND (II) ACKNOWLEDGED THE RISKS ASSOCIATED
-          WITH USING THE DASHBOARD AND BLOCKCHAIN TECHNOLOGY.
+          DOCUMENTATION found{' '}
+          <a
+            href="https://wiki.polkadot.network/docs/learn-nomination-pools"
+            target="_blank"
+            rel="noreferrer"
+          >
+            HERE
+          </a>
+          ; AND (II) ACKNOWLEDGED THE RISKS ASSOCIATED WITH USING THE DASHBOARD
+          AND BLOCKCHAIN TECHNOLOGY.
         </p>
         <p>
           Without prejudice to the Apache 2.0 licence, the dashboard and any
