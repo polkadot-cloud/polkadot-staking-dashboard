@@ -4,8 +4,9 @@
 import { decodeAddress, encodeAddress } from '@polkadot/keyring';
 import { hexToU8a, isHex, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
-import { MutableRefObject } from 'react';
-import { AnyApi, AnyMetaBatch } from 'types/index';
+import { getUnixTime } from 'date-fns';
+import { MutableRefObject, RefObject } from 'react';
+import { AnyApi, AnyJson, AnyMetaBatch } from 'types/index';
 
 export const clipAddress = (val: string) => {
   if (typeof val !== 'string') {
@@ -143,12 +144,6 @@ export const camelize = (str: string) =>
     )
     .replace(/\s+/g, '');
 
-export const registerSaEvent = (e: string, a: AnyApi = {}) => {
-  if ((window as AnyApi).sa_event) {
-    (window as AnyApi).sa_event(e, a);
-  }
-};
-
 // Puts a variable into the URL hash as a param.
 //
 // Since url variables are added to the hash and are not treated as URL params, the params are split
@@ -182,4 +177,55 @@ export const removeVarFromUrlHash = (key: string) => {
   searchParams.delete(key);
   const paramsAsStr = searchParams.toString();
   window.location.hash = `${page}${paramsAsStr ? `?${paramsAsStr}` : ``}`;
+};
+
+// Sorts an array with nulls last.
+export const sortWithNull =
+  (ascending: boolean) => (a: AnyJson, b: AnyJson) => {
+    // equal items sort equally
+    if (a === b) {
+      return 0;
+    }
+    // nulls sort after anything else
+    if (a === null) {
+      return 1;
+    }
+    if (b === null) {
+      return -1;
+    }
+    // otherwise, if we're ascending, lowest sorts first
+    if (ascending) {
+      return a < b ? -1 : 1;
+    }
+    // if descending, highest sorts first
+    return a < b ? 1 : -1;
+  };
+
+// Applies width of subject to paddingRight of container
+export const applyWidthAsPadding = (
+  subjectRef: RefObject<HTMLDivElement>,
+  containerRef: RefObject<HTMLDivElement>
+) => {
+  if (containerRef.current && subjectRef.current) {
+    containerRef.current.style.paddingRight = `${
+      subjectRef.current.offsetWidth + remToUnit('1rem')
+    }px`;
+  }
+};
+
+export const registerLastVisited = (utmSource: string | null) => {
+  const attributes = utmSource ? { utmSource } : {};
+
+  if (!localStorage.getItem('last_visited')) {
+    registerSaEvent('new_user', attributes);
+  } else {
+    registerSaEvent('returning_user', attributes);
+  }
+  localStorage.setItem('last_visited', String(getUnixTime(Date.now())));
+};
+
+export const registerSaEvent = (e: string, a: AnyApi = {}) => {
+  if ((window as AnyApi).sa_event) {
+    (window as AnyApi).sa_event(e, a);
+  }
 };

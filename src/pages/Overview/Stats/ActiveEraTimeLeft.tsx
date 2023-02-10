@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 
 export const ActiveEraStat = () => {
   const { t } = useTranslation('pages');
-  const { status: connectionStatus } = useApi();
+  const { apiStatus } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { get: getEraTimeleft } = useEraTimeLeft();
 
@@ -22,7 +22,7 @@ export const ActiveEraStat = () => {
   // re-set timer on era change (also covers network change).
   useEffect(() => {
     setFromNow(fromNow(getEraTimeleft().timeleft));
-  }, [connectionStatus, activeEra]);
+  }, [apiStatus, activeEra]);
 
   // NOTE: this maybe should be called in an interval. Needs more testing.
   const { percentSurpassed, percentRemaining } = getEraTimeleft();

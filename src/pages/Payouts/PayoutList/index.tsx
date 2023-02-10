@@ -23,26 +23,29 @@ import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
 import { locales } from 'locale';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { networkColors } from 'theme/default';
 import { AnySubscan } from 'types';
 import { clipAddress, planckToUnit } from 'Utils';
 import { PayoutListProps } from '../types';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProvider, usePayoutList } from './context';
 
-export const PayoutListInner = (props: PayoutListProps) => {
-  const { allowMoreCols, pagination } = props;
-
+export const PayoutListInner = ({
+  allowMoreCols,
+  pagination,
+  title,
+  payouts: initialPayouts,
+  disableThrottle = false,
+}: PayoutListProps) => {
+  const { i18n, t } = useTranslation('pages');
   const { mode } = useTheme();
-  const { isReady, network } = useApi();
-  const { units } = network;
+  const {
+    isReady,
+    network: { units, unit, colors },
+  } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { listFormat, setListFormat } = usePayoutList();
   const { validators, meta } = useValidators();
   const { bondedPools } = useBondedPools();
-  const { i18n, t } = useTranslation('pages');
-
-  const disableThrottle = props.disableThrottle ?? false;
 
   // current page
   const [page, setPage] = useState<number>(1);
@@ -51,7 +54,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
   const [renderIteration, _setRenderIteration] = useState<number>(1);
 
   // manipulated list (ordering, filtering) of payouts
-  const [payouts, setPayouts] = useState(props.payouts);
+  const [payouts, setPayouts] = useState(initialPayouts);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState<boolean>(false);
@@ -74,12 +77,12 @@ export const PayoutListInner = (props: PayoutListProps) => {
   // refetch list when list changes
   useEffect(() => {
     setFetched(false);
-  }, [props.payouts]);
+  }, [initialPayouts]);
 
   // configure list when network is ready to fetch
   useEffect(() => {
     if (isReady && activeEra.index !== 0 && !fetched) {
-      setPayouts(props.payouts);
+      setPayouts(initialPayouts);
       setFetched(true);
     }
   }, [isReady, fetched, activeEra.index]);
@@ -114,27 +117,19 @@ export const PayoutListInner = (props: PayoutListProps) => {
     <ListWrapper>
       <Header>
         <div>
-          <h4>{props.title}</h4>
+          <h4>{title}</h4>
         </div>
         <div>
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
               icon={faBars}
-              color={
-                listFormat === 'row'
-                  ? networkColors[`${network.name}-${mode}`]
-                  : 'inherit'
-              }
+              color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
             />
           </button>
           <button type="button" onClick={() => setListFormat('col')}>
             <FontAwesomeIcon
               icon={faGripVertical}
-              color={
-                listFormat === 'col'
-                  ? networkColors[`${network.name}-${mode}`]
-                  : 'inherit'
-              }
+              color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
             />
           </button>
         </div>
@@ -202,7 +197,7 @@ export const PayoutListInner = (props: PayoutListProps) => {
                                 new BigNumber(p.amount),
                                 units
                               ).toString()}{' '}
-                              {network.unit}
+                              {unit}
                             </>
                           </h4>
                         </div>

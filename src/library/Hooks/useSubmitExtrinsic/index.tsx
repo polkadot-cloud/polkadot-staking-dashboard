@@ -23,6 +23,7 @@ export const useSubmitExtrinsic = ({
   callbackInBlock,
   from,
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
+  const { t } = useTranslation('library');
   const { api, network } = useApi();
   const { setTxFees, setSender, txFees } = useTxFees();
   const { addNotification } = useNotifications();
@@ -30,7 +31,6 @@ export const useSubmitExtrinsic = ({
   const { extensions } = useExtensions();
   const { getAccount } = useConnect();
   const networkLower = network.name.toLowerCase();
-  const { t } = useTranslation('library');
 
   // if null account is provided, fallback to empty string
   const submitAddress: string = from ?? '';
@@ -77,7 +77,7 @@ export const useSubmitExtrinsic = ({
       (e: ExtensionInjected) => e.id === source
     );
     if (extension === undefined) {
-      throw new Error(t('walletNotFound') || '');
+      throw new Error(`${t('walletNotFound')}`);
     } else {
       // summons extension popup if not already connected.
       extension.enable(DappName);

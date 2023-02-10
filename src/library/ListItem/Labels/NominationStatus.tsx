@@ -10,7 +10,11 @@ import { useTranslation } from 'react-i18next';
 import { greaterThanZero, planckToUnit, rmCommas } from 'Utils';
 import { NominationStatusProps } from '../types';
 
-export const NominationStatus = (props: NominationStatusProps) => {
+export const NominationStatus = ({
+  address,
+  nominator,
+  bondFor,
+}: NominationStatusProps) => {
   const { t } = useTranslation('library');
   const { getNominationsStatus, eraStakers, erasStakersSyncing } = useStaking();
   const { getPoolNominationStatus } = useBondedPools();
@@ -19,7 +23,6 @@ export const NominationStatus = (props: NominationStatusProps) => {
   } = useApi();
 
   const { activeAccountOwnStake, stakers } = eraStakers;
-  const { address, nominator, bondFor } = props;
 
   let nominationStatus;
   if (bondFor === 'pool') {

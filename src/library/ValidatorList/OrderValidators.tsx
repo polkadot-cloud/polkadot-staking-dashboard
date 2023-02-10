@@ -6,9 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useFilters } from 'contexts/Filters';
 import { Title } from 'library/Overlay/Title';
 import { FilterListButton, FilterListWrapper } from 'library/Overlay/Wrappers';
+import { useTranslation } from 'react-i18next';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 
 export const OrderValidators = () => {
+  const { t } = useTranslation('library');
   const { getOrder, setOrder } = useFilters();
   const { ordersToLabels } = useValidatorFilters();
 
@@ -16,7 +18,7 @@ export const OrderValidators = () => {
 
   return (
     <FilterListWrapper>
-      <Title title="Order Validators" />
+      <Title title={t('orderValidators')} />
       <div className="body">
         {Object.entries(ordersToLabels).map(([o, l]: any, i: number) => (
           <FilterListButton

@@ -63,6 +63,13 @@ export const Modal = () => {
   };
 
   useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
+
+  useEffect(() => {
     // modal has been opened - fade in
     if (status === 1) {
       onFadeIn();
@@ -81,9 +88,10 @@ export const Modal = () => {
   }, [resize]);
 
   const handleResize = () => {
-    let _height = modalRef.current?.clientHeight ?? 0;
-    _height = _height > maxHeight ? maxHeight : _height;
-    setModalHeight(_height);
+    if (status !== 1) return;
+    let h = modalRef.current?.clientHeight ?? 0;
+    h = h > maxHeight ? maxHeight : h;
+    setModalHeight(h);
   };
 
   if (status === 0) {

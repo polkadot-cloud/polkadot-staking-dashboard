@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
@@ -14,12 +13,12 @@ import { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 
 export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
+  const { t } = useTranslation('library');
   const { staking, eraStakers } = useStaking();
   const { isSyncing } = useUi();
   const { unit, units } = useApi().network;
   const { minNominatorBond } = staking;
   const { minActiveBond } = eraStakers;
-  const { t } = useTranslation('library');
 
   const minNominatorBondUnit = planckToUnit(minNominatorBond, units);
   const gtMinNominatorBond = value.isGreaterThanOrEqualTo(minNominatorBondUnit);
@@ -36,7 +35,7 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
         </section>
         <section className={gtMinNominatorBond && !isSyncing ? 'invert' : ''}>
           <h4>
-            <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
+            <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
             &nbsp; {t('nominate')} &nbsp;
             <OpenHelpIcon helpKey="Nominating" />
           </h4>
@@ -48,7 +47,7 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
         </section>
         <section className={gtMinActiveBond && !isSyncing ? 'invert' : ''}>
           <h4>
-            <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
+            <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
             &nbsp;{t('nominateActive')} &nbsp;
             <OpenHelpIcon helpKey="Active Bond Threshold" />
           </h4>

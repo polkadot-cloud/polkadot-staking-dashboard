@@ -13,6 +13,7 @@ export const SelectItem = ({
   icon,
   selected,
   onClick,
+  flex = false,
   hoverBorder = false,
   grow = true,
   disabled = false,
@@ -21,11 +22,16 @@ export const SelectItem = ({
   containerRef,
 }: SelectItemProps) => {
   return (
-    <Wrapper selected={selected} grow={grow} hoverBorder={hoverBorder}>
+    <Wrapper
+      selected={selected}
+      grow={grow}
+      hoverBorder={hoverBorder}
+      className={flex ? 'flex' : undefined}
+    >
       <div className="inner" ref={containerRef}>
         <button type="button" onClick={() => onClick()} disabled={disabled}>
           <div className="icon">
-            <FontAwesomeIcon icon={icon} transform="grow-8" />
+            <FontAwesomeIcon icon={icon} transform="grow-4" />
           </div>
           <div className="body" ref={bodyRef}>
             <h3>{title}</h3>
@@ -35,7 +41,7 @@ export const SelectItem = ({
             <div className="toggle">
               <FontAwesomeIcon
                 icon={selected ? faCircleCheck : faCircle}
-                transform="grow-10"
+                transform="grow-6"
               />
             </div>
           ) : null}

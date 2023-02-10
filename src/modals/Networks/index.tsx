@@ -24,12 +24,13 @@ import {
 } from './Wrapper';
 
 export const Networks = () => {
-  const [braveBrowser, setBraveBrowser] = useState<boolean>(false);
+  const { t } = useTranslation('modals');
   const { switchNetwork, network, isLightClient } = useApi();
   const { setStatus } = useModal();
   const networkKey: string = network.name;
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
-  const { t } = useTranslation('modals');
+
+  const [braveBrowser, setBraveBrowser] = useState<boolean>(false);
 
   useEffect(() => {
     // @ts-ignore
@@ -135,7 +136,7 @@ export const Networks = () => {
               <BraveIconSVG />
               <div className="brave-text">
                 <Trans
-                  defaults={t('braveText') || ''}
+                  defaults={`${t('braveText')}`}
                   components={{ b: <b />, i: <i /> }}
                 />{' '}
                 <a

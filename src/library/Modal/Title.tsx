@@ -37,7 +37,7 @@ export const Title = ({ helpKey, title, icon, fixed, Svg }: TitleProps) => {
       </div>
       <div>
         <button type="button" onClick={() => setStatus(2)}>
-          <CrossSVG style={{ width: '1.4rem', height: '1.4rem' }} />
+          <CrossSVG style={{ width: '1.25rem', height: '1.25rem' }} />
         </button>
       </div>
     </TitleWrapper>

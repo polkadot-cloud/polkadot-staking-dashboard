@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
@@ -20,7 +19,9 @@ export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
 
   const minCreateBondUnit = planckToUnit(minCreateBond, units);
   const sectionClassName =
-    value >= minCreateBondUnit && !isSyncing ? 'invert' : '';
+    value.isGreaterThanOrEqualTo(minCreateBondUnit) && !isSyncing
+      ? 'invert'
+      : '';
 
   return (
     <Wrapper>
@@ -33,7 +34,7 @@ export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
         </section>
         <section className={sectionClassName}>
           <h4>
-            <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
+            <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
             &nbsp;{t('createPool')}
           </h4>
           <div className="bar">

@@ -4,20 +4,18 @@
 import { SideMenuStickyThreshold } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { backgroundNetworkBar, networkColor, textSecondary } from 'theme';
 
 export const Wrapper = styled(motion.div)`
+  background: var(--background-app-footer);
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: flex-start;
   align-items: center;
   font-size: 0.85rem;
   color: #444;
   bottom: 0px;
   left: 0px;
   overflow: hidden;
-  background: ${backgroundNetworkBar};
   z-index: 6;
   backdrop-filter: blur(4px);
   position: relative;
@@ -43,7 +41,10 @@ export const Summary = styled.div`
     }
   }
 
-  a {
+  a,
+  button {
+    color: var(--text-color-secondary);
+    font-size: 0.85rem;
     opacity: 0.75;
   }
   p {
@@ -58,8 +59,8 @@ export const Summary = styled.div`
 
   /* left and right sections for each row*/
   > section {
+    color: var(--text-color-secondary);
     padding: 0.5rem 0.5rem;
-    color: ${textSecondary};
 
     /* left section */
     &:nth-child(1) {
@@ -81,9 +82,9 @@ export const Summary = styled.div`
       align-items: center;
       flex-flow: row-reverse wrap;
       button {
+        color: var(--text-color-secondary);
         border-radius: 0.4rem;
         padding: 0.25rem 0.5rem;
-        color: ${textSecondary};
         font-size: 0.85rem;
       }
       span {
@@ -100,11 +101,10 @@ export const Summary = styled.div`
 
 export const NetworkInfo = styled(motion.div)`
   width: 100%;
-  background: ${networkColor};
+  background: var(--network-color-primary);
   flex: 1;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: flex-start;
   align-content: flex-end;
   padding: 0.25rem 1rem 1rem 1rem;
   overflow: auto;
@@ -157,7 +157,7 @@ export const NetworkInfo = styled(motion.div)`
 `;
 
 export const Separator = styled.div`
-  border-left: 1px solid ${textSecondary};
+  border-left: 1px solid var(--text-color-secondary);
   opacity: 0.2;
   margin: 0 0.3rem;
   width: 1px;

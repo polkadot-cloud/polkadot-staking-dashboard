@@ -16,7 +16,7 @@ import { ButtonRowWrapper, PageRowWrapper } from 'Wrappers';
 
 export const UnstakePrompts = () => {
   const { t } = useTranslation('pages');
-  const { network } = useApi();
+  const { unit, colors } = useApi().network;
   const { activeAccount } = useConnect();
   const { mode } = useTheme();
   const { openModalWith } = useModal();
@@ -25,9 +25,7 @@ export const UnstakePrompts = () => {
   const { getTransferOptions } = useTransferOptions();
   const { active, totalUnlockChuncks, totalUnlocked, totalUnlocking } =
     getTransferOptions(activeAccount).nominate;
-
-  const networkColorsSecondary: any = network.colors.secondary;
-  const annuncementBorderColor = networkColorsSecondary[mode];
+  const annuncementBorderColor = colors.secondary[mode];
 
   // unstaking can withdraw
   const canWithdrawUnlocks =
@@ -56,7 +54,7 @@ export const UnstakePrompts = () => {
                   ? t('nominate.unstakePromptWaitingForUnlocks')
                   : `${t('nominate.unstakePromptReadyToWithdraw')} ${t(
                       'nominate.unstakePromptRevert',
-                      { unit: network.unit }
+                      { unit }
                     )}`}
               </h4>
               <ButtonRowWrapper verticalSpacing>

@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
@@ -12,7 +11,6 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useSetup } from 'contexts/Setup';
-import { defaultPoolSetup } from 'contexts/Setup/defaults';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
@@ -29,7 +27,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { api, network } = useApi();
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getSetupProgress, setActiveAccountSetup } = useSetup();
+  const { getSetupProgress, removeSetupProgress } = useSetup();
   const { stats } = usePoolsConfig();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
@@ -38,8 +36,9 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { txFeesValid } = useTxFees();
 
   const setup = getSetupProgress('pool', activeAccount);
+  const { progress } = setup;
 
-  const { metadata, bond, roles, nominations } = setup;
+  const { metadata, bond, roles, nominations } = progress;
 
   const getTxs = () => {
     if (
@@ -86,7 +85,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       addToPoolMembers(member);
 
       // reset localStorage setup progress
-      setActiveAccountSetup('pool', defaultPoolSetup);
+      removeSetupProgress('pool', activeAccount);
     },
   });
 
@@ -95,8 +94,8 @@ export const Summary = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title={t('pools.summary') || ''}
-        setupType="pool"
+        title={`${t('pools.summary')}`}
+        bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
@@ -105,21 +104,15 @@ export const Summary = ({ section }: SetupStepProps) => {
         <SummaryWrapper>
           <section>
             <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
-                transform="grow-1"
-              />{' '}
-              &nbsp; {t('pools.poolName')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
+              {t('pools.poolName')}:
             </div>
             <div>{metadata ?? `${t('pools.notSet')}`}</div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
-                transform="grow-1"
-              />{' '}
-              &nbsp; {t('pools.bondAmount')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
+              {t('pools.bondAmount')}:
             </div>
             <div>
               {new BigNumber(bond).toFormat()} {network.unit}
@@ -127,21 +120,18 @@ export const Summary = ({ section }: SetupStepProps) => {
           </section>
           <section>
             <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
-                transform="grow-1"
-              />{' '}
-              &nbsp; {t('pools.nominations')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;
+              Nominating:
             </div>
-            <div>{nominations.length}</div>
+            <div>
+              {nominations.length} Validator
+              {nominations.length === 1 ? '' : 's'}
+            </div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
-                transform="grow-1"
-              />{' '}
-              &nbsp; {t('pools.roles')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
+              {t('pools.roles')}:
             </div>
             <div>{t('pools.assigned')}</div>
           </section>

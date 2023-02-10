@@ -3,6 +3,7 @@
 
 import { PAGES_CONFIG } from 'config/pages';
 import { useApi } from 'contexts/Api';
+import { useOverlay } from 'contexts/Overlay';
 import { useUi } from 'contexts/UI';
 import { AnimatePresence } from 'framer-motion';
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
@@ -10,6 +11,7 @@ import { Headers } from 'library/Headers';
 import { Help } from 'library/Help';
 import { Menu } from 'library/Menu';
 import { NetworkBar } from 'library/NetworkBar';
+import { Disclaimer } from 'library/NetworkBar/Disclaimer';
 import { Notifications } from 'library/Notifications';
 import { Overlay } from 'library/Overlay';
 import { SideMenu } from 'library/SideMenu';
@@ -26,7 +28,7 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
-import { extractUrlValue, registerSaEvent } from 'Utils';
+import { extractUrlValue, registerLastVisited, registerSaEvent } from 'Utils';
 import {
   BodyInterfaceWrapper,
   MainInterfaceWrapper,
@@ -39,6 +41,7 @@ export const RouterInner = () => {
   const { pathname, search } = useLocation();
   const { network } = useApi();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
+  const { openOverlayWith } = useOverlay();
 
   // register landing source from URL
   useEffect(() => {
@@ -46,6 +49,13 @@ export const RouterInner = () => {
     if (utmSource) {
       registerSaEvent(`conversion_${utmSource}`);
     }
+
+    if (!localStorage.getItem('last_visited')) {
+      setTimeout(() => {
+        openOverlayWith(<Disclaimer />);
+      }, 5000);
+    }
+    registerLastVisited(utmSource);
   }, []);
 
   // scroll to top of the window on every page change or network change

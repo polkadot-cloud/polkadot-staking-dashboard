@@ -4,12 +4,10 @@
 import { faAnglesRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
-import { useTheme } from 'contexts/Themes';
 import { useCombobox, UseComboboxStateChange } from 'downshift';
 import { Identicon } from 'library/Identicon';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { defaultThemes, networkColors } from 'theme/default';
 import { remToUnit } from 'Utils';
 import { AccountDropdownProps, InputItem } from '../types';
 import { StyledController, StyledDownshift, StyledDropdown } from './Wrappers';
@@ -22,9 +20,10 @@ export const AccountDropdown = ({
   current,
   height,
 }: AccountDropdownProps) => {
+  const { t } = useTranslation('library');
+
   // store input items
   const [inputItems, setInputItems] = useState<Array<InputItem>>(items);
-  const { t } = useTranslation('library');
 
   useEffect(() => {
     setInputItems(items);
@@ -54,9 +53,6 @@ export const AccountDropdown = ({
   return (
     <StyledDownshift>
       <div>
-        <div className="label" {...c.getLabelProps()}>
-          {t('currentlySelected')}:
-        </div>
         <div>
           <div className="current">
             <div className="input-wrap selected">
@@ -114,40 +110,21 @@ export const AccountDropdown = ({
 };
 
 const DropdownItem = ({ c, item, index }: any) => {
-  const { network } = useApi();
-  const { mode } = useTheme();
   const { t } = useTranslation('library');
-
-  let color;
-  let border;
-
-  if (c.selectedItem === item) {
-    color = networkColors[`${network.name}-${mode}`];
-    border = `2px solid ${networkColors[`${network.name}-${mode}`]}`;
-  } else {
-    color = defaultThemes.text.primary[mode];
-    border = `2px solid ${defaultThemes.transparent[mode]}`;
-  }
-
-  // disable item in list if account doesn't satisfy controller budget.
-  const itemProps = item.active
-    ? c.getItemProps({ key: item.name, index, item })
-    : {};
-  const opacity = item.active ? 1 : 0.5;
-  const cursor = item.active ? 'pointer' : 'default';
-
+  const { unit } = useApi().network;
   return (
     <div
-      className="item"
-      {...itemProps}
-      style={{ color, border, opacity, cursor }}
+      className={`item${c.selectedItem === item ? ' selected' : ''}${
+        item.active ? '' : ' inactive'
+      }`}
+      {...(item.active ? c.getItemProps({ key: item.name, index, item }) : {})}
     >
       <div className="icon">
         <Identicon value={item.address} size={26} />
       </div>
       {!item.active && (
         <span>
-          {t('notEnough')} {network.unit}
+          {t('notEnough')} {unit}
         </span>
       )}
       <p>{item.name}</p>

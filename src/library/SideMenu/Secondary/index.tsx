@@ -6,14 +6,20 @@ import Lottie from 'react-lottie';
 import { SecondaryProps } from '../types';
 import { IconWrapper, MinimisedWrapper, Wrapper } from './Wrappers';
 
-export const Secondary = (props: SecondaryProps) => {
-  const { action, name, icon, minimised, onClick, borderColor } = props;
+export const Secondary = ({
+  action,
+  classes,
+  name,
+  icon,
+  minimised,
+  onClick,
+  animate,
+}: SecondaryProps) => {
   const { Svg, size } = icon || {};
 
   const StyledWrapper = minimised ? MinimisedWrapper : Wrapper;
 
   // animate icon config
-  const { animate } = props;
   const [isStopped, setIsStopped] = useState(true);
 
   const animateOptions = {
@@ -27,6 +33,7 @@ export const Secondary = (props: SecondaryProps) => {
 
   return (
     <StyledWrapper
+      className={classes ? classes.join(' ') : undefined}
       onClick={() => {
         onClick();
         setIsStopped(false);
@@ -35,9 +42,6 @@ export const Secondary = (props: SecondaryProps) => {
       whileTap={{ scale: 0.98 }}
       transition={{
         duration: 0.1,
-      }}
-      style={{
-        borderColor: minimised ? borderColor || undefined : undefined,
       }}
     >
       {animate === undefined ? (

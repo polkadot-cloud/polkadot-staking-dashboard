@@ -11,14 +11,6 @@ import {
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import {
-  backgroundGradient,
-  backgroundPrimary,
-  borderPrimary,
-  buttonSecondaryBackground,
-  textPrimary,
-  textSecondary,
-} from 'theme';
-import {
   InterfaceLayoutProps,
   PageRowWrapperProps,
   PageTitleWrapperProps,
@@ -32,7 +24,7 @@ import {
  * classes used throughout the app and possibly the library.
  */
 export const EntryWrapper = styled.div`
-  background: ${backgroundGradient};
+  background: var(--gradient-background);
   width: 100%;
   background-attachment: fixed;
   display: flex;
@@ -41,36 +33,36 @@ export const EntryWrapper = styled.div`
   flex-grow: 1;
 
   h1 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
   }
   h2 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
   }
   h3 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
   }
   h4 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
   }
   h5 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
   }
   p {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
   }
   a {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
   }
   input {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
   }
 
   path.primary {
-    fill: ${textPrimary};
+    fill: var(--text-color-primary);
   }
 
   ellipse.primary {
-    fill: ${textPrimary};
+    fill: var(--text-color-primary);
   }
 
   input:focus,
@@ -115,6 +107,12 @@ export const EntryWrapper = styled.div`
     @media (min-width: 1500px) {
       padding: 0 5rem 0 2.5rem;
     }
+  }
+  .label {
+    font-size: 0.85rem;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-end;
   }
 `;
 
@@ -195,7 +193,7 @@ export const PageWrapper = styled(motion.div)`
  * is stuck.
  */
 export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
-  background: ${backgroundPrimary};
+  background: var(--background-default);
   position: sticky;
   top: 0px;
   padding-top: ${(props) => (props.sticky ? '1.5rem' : '0.5rem')};
@@ -230,15 +228,15 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
     }
 
     button {
-      color: ${textSecondary};
-      border: 1px solid ${borderPrimary};
+      color: var(--text-color-secondary);
+      border: 1px solid var(--border-primary-color);
       padding: 0.5rem 0.75rem;
       margin: 0;
       border-radius: 0.75rem;
       font-size: 1.1rem;
 
       &:hover {
-        background: ${buttonSecondaryBackground};
+        background: var(--button-secondary-background);
       }
 
       .icon {
@@ -263,11 +261,11 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
   }
 
   .tabs {
+    border-bottom: ${(props) => (props.sticky ? '0px' : '1px solid')};
+    border-bottom-color: var(--border-primary-color);
     overflow: hidden;
     max-width: ${InterfaceMaximumWidth}px;
     height: 3.6rem;
-    border-bottom: ${(props) => (props.sticky ? '0px' : '1px solid')};
-    border-bottom-color: ${borderPrimary};
 
     margin-top: ${(props) => (props.sticky ? '0.5rem' : '0.9rem')};
     @media (max-width: ${SideMenuStickyThreshold}px) {
@@ -283,17 +281,18 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
 
     .inner {
       display: flex;
+
       > button {
+        color: var(--text-color-secondary);
         padding: 0.65rem 1rem;
         margin-bottom: 0.5rem;
         margin-right: 0.75rem;
         font-size: ${(props) => (props.sticky ? '1.05rem' : '1.15rem')};
-        color: ${textSecondary};
         transition: opacity 0.1s, font-size 0.1s;
         border-radius: 0.5rem;
 
         &.active {
-          background: ${buttonSecondaryBackground};
+          background: var(--button-secondary-background);
         }
         &:last-child {
           margin-right: 0;
@@ -313,7 +312,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
  * Purely cosmetic. Applied in Pagetitle.
  */
 export const MenuPaddingWrapper = styled.div`
-  background: ${backgroundPrimary};
+  background: var(--background-default);
   position: fixed;
   top: 0px;
   width: 100%;
@@ -405,9 +404,9 @@ export const RowSecondaryWrapper = styled.div<InterfaceLayoutProps>`
  * General spacer for separating content by row.
  */
 export const Separator = styled.div`
-  border-bottom: 1px solid ${borderPrimary};
+  border-bottom: 1px solid var(--border-primary-color);
   width: 100%;
-  margin: 0.75rem 0;
+  margin: 0.67rem 0;
 `;
 
 /* TopBarWrapper
@@ -415,10 +414,10 @@ export const Separator = styled.div`
  * Positioned under titles for a Go Back button and other page header info.
  */
 export const TopBarWrapper = styled.div`
+  border-bottom: 1px solid var(--border-primary-color);
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  border-bottom: 1px solid ${borderPrimary};
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   width: 100%;
@@ -429,7 +428,7 @@ export const TopBarWrapper = styled.div`
   }
 
   h3 {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     font-size: 1.15rem;
     margin: 0.25rem 0;
     min-height: 2rem;
@@ -454,6 +453,5 @@ export const TopBarWrapper = styled.div`
 export const ButtonRowWrapper = styled.div<{ verticalSpacing?: boolean }>`
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   margin-top: ${(props) => (props.verticalSpacing ? '1rem' : 0)};
 `;

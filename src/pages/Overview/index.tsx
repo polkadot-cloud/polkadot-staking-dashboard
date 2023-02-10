@@ -31,11 +31,11 @@ import { HistoricalRewardsRateStat } from './Stats/HistoricalRewardsRate';
 import { SupplyStakedStat } from './Stats/SupplyStaked';
 
 export const Overview = () => {
+  const { i18n, t } = useTranslation('pages');
   const { network } = useApi();
   const { units } = network;
   const { payouts, poolClaims } = useSubscan();
   const { lastReward } = formatRewardsForGraphs(14, units, payouts, poolClaims);
-  const { i18n, t } = useTranslation('pages');
 
   const PAYOUTS_HEIGHT = 390;
 

@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
@@ -13,10 +12,10 @@ import { clipAddress, remToUnit } from 'Utils';
 import { ActiveAccounWrapper } from './Wrappers';
 
 export const ActiveAccount = () => {
+  const { t } = useTranslation('pages');
   const { addNotification } = useNotifications();
   const { activeAccount, getAccount } = useConnect();
   const accountData = getAccount(activeAccount);
-  const { t } = useTranslation('pages');
 
   // click to copy notification
   let notification: NotificationText | null = null;
@@ -52,8 +51,8 @@ export const ActiveAccount = () => {
                 >
                   <FontAwesomeIcon
                     className="copy"
-                    icon={faCopy as IconProp}
-                    transform="shrink-1"
+                    icon={faCopy}
+                    transform="shrink-2"
                   />
                 </button>
                 {accountData.name !== clipAddress(accountData.address) && (

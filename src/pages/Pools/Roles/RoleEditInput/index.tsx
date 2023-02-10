@@ -8,8 +8,8 @@ import { isValidAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 
 export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
-  const { formatAccountSs58 } = useConnect();
   const { t } = useTranslation('pages');
+  const { formatAccountSs58 } = useConnect();
 
   const processRoleEdit = (newAddress: string) => {
     let edit = {
@@ -54,7 +54,7 @@ export const RoleEditInput = ({ setRoleEdit, roleKey, roleEdit }: any) => {
       <div className="input">
         <section>
           <input
-            placeholder={t('pools.address') || ''}
+            placeholder={`${t('pools.address')}`}
             type="text"
             onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
             value={roleEdit?.newAddress ?? ''}

@@ -3,12 +3,6 @@
 
 import { SectionFullWidthThreshold } from 'consts';
 import styled from 'styled-components';
-import {
-  borderPrimary,
-  borderSecondary,
-  buttonSecondaryBackground,
-  textSecondary,
-} from 'theme';
 
 export const ActiveAccounWrapper = styled.div`
   width: 100%;
@@ -51,7 +45,6 @@ export const ActiveAccounWrapper = styled.div`
     }
 
     button {
-      background: ${buttonSecondaryBackground};
       width: 2rem;
       height: 2rem;
       border-radius: 50%;
@@ -67,7 +60,7 @@ export const ActiveAccounWrapper = styled.div`
       flex: 1;
 
       > .sep {
-        border-right: 1px solid ${borderSecondary};
+        border-right: 1px solid var(--border-secondary-color);
         margin: 0 0.8rem;
         width: 1px;
         height: 1.25rem;
@@ -85,12 +78,12 @@ export const ActiveAccounWrapper = styled.div`
       flex-flow: row-reverse wrap;
 
       .copy {
-        color: ${textSecondary};
-        opacity: 0.7;
+        color: var(--text-color-secondary);
+        opacity: 0.9;
         cursor: pointer;
         transition: opacity 0.1s;
         &:hover {
-          opacity: 0.8;
+          opacity: 1;
         }
       }
     }
@@ -109,7 +102,7 @@ export const SectionWrapper = styled.div<{ noPadding?: boolean }>`
     align-items: center;
 
     button {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       margin-left: 0.5rem;
       opacity: 0.7;
     }
@@ -131,7 +124,7 @@ export const SectionWrapper = styled.div<{ noPadding?: boolean }>`
       flex: 1;
 
       > .sep {
-        border-right: 1px solid ${borderSecondary};
+        border-right: 1px solid var(--border-secondary-color);
         margin: 0 0.8rem;
         width: 1px;
         height: 1.25rem;
@@ -150,7 +143,7 @@ export const SectionWrapper = styled.div<{ noPadding?: boolean }>`
       flex-flow: row-reverse wrap;
 
       > .copy {
-        color: ${textSecondary};
+        color: var(--text-color-secondary);
         opacity: 0.5;
         cursor: pointer;
         transition: opacity 0.1s;
@@ -163,7 +156,7 @@ export const SectionWrapper = styled.div<{ noPadding?: boolean }>`
 `;
 
 export const Separator = styled.div`
-  border-bottom: 1px solid ${borderPrimary};
+  border-bottom: 1px solid var(--border-primary-color);
   margin-top: 0.8rem;
   width: 100%;
   height: 1px;

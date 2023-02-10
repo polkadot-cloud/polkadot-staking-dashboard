@@ -17,7 +17,7 @@ import { ButtonRowWrapper, PageRowWrapper } from 'Wrappers';
 
 export const ClosurePrompts = () => {
   const { t } = useTranslation('pages');
-  const { network } = useApi();
+  const { colors } = useApi().network;
   const { activeAccount } = useConnect();
   const { mode } = useTheme();
   const { openModalWith } = useModal();
@@ -30,9 +30,7 @@ export const ClosurePrompts = () => {
   const { state, memberCounter } = selectedActivePool?.bondedPool || {};
   const { active, totalUnlockChuncks } = getTransferOptions(activeAccount).pool;
   const targets = poolNominations?.targets ?? [];
-
-  const networkColorsSecondary: any = network.colors.secondary;
-  const annuncementBorderColor = networkColorsSecondary[mode];
+  const annuncementBorderColor = colors.secondary[mode];
 
   // is the pool in a state for the depositor to close
   const depositorCanClose =

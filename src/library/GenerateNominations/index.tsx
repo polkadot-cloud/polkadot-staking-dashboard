@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faChartPie,
   faCoins,
@@ -30,12 +29,12 @@ import {
 } from '../SetupSteps/types';
 import { useFetchMehods } from './useFetchMethods';
 
-export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
-  // functional props
-  const setters = props.setters ?? [];
-  const defaultNominations = props.nominations;
-  const { batchKey } = props;
-
+export const GenerateNominations = ({
+  setters = [],
+  nominations: defaultNominations,
+  batchKey,
+}: GenerateNominationsInnerProps) => {
+  const { t } = useTranslation('library');
   const { openModalWith } = useModal();
   const { isReady, consts } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -47,7 +46,6 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     available: availableToNominate,
   } = useFetchMehods();
   const { maxNominations } = consts;
-  const { t } = useTranslation('library');
 
   let { favoritesList } = useValidators();
   if (favoritesList === null) {
@@ -115,21 +113,21 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
   // fetch nominations based on method
   const fetchNominationsForMethod = () => {
     if (method) {
-      const _nominations = fetchFromMethod(method);
+      const newNominations = fetchFromMethod(method);
       // update component state
-      setNominations([..._nominations]);
+      setNominations([...newNominations]);
       setFetching(false);
-      updateSetters(_nominations);
+      updateSetters(newNominations);
     }
   };
 
   // add nominations based on method
   const addNominationByType = (type: string) => {
     if (method) {
-      const _nominations = addNomination(nominations, type);
+      const newNominations = addNomination(nominations, type);
       removeValidatorMetaBatch(batchKey);
-      setNominations([..._nominations]);
-      updateSetters([..._nominations]);
+      setNominations([...newNominations]);
+      updateSetters([...newNominations]);
     }
   };
 
@@ -137,15 +135,15 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     for (const s of setters) {
       const { current, set } = s;
       const callable = current?.callable ?? false;
-      let _current;
+      let currentValue;
 
       if (!callable) {
-        _current = current;
+        currentValue = current;
       } else {
-        _current = current.fn();
+        currentValue = current.fn();
       }
       const _set = {
-        ..._current,
+        ...currentValue,
         nominations: _nominations,
       };
       set(_set);
@@ -207,7 +205,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     {
       title: t('optimalSelection'),
       subtitle: t('optimalSelectionSubtitle'),
-      icon: faChartPie as IconProp,
+      icon: faChartPie,
       onClick: () => {
         setMethod('Optimal Selection');
         removeValidatorMetaBatch(batchKey);
@@ -218,7 +216,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     {
       title: t('activeLowCommission'),
       subtitle: t('activeLowCommissionSubtitle'),
-      icon: faCoins as IconProp,
+      icon: faCoins,
       onClick: () => {
         setMethod('Active Low Commission');
         removeValidatorMetaBatch(batchKey);
@@ -229,7 +227,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     {
       title: t('fromFavorites'),
       subtitle: t('fromFavoritesSubtitle'),
-      icon: faHeart as IconProp,
+      icon: faHeart,
       onClick: () => {
         setMethod('From Favorites');
         removeValidatorMetaBatch(batchKey);
@@ -240,7 +238,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
     {
       title: t('manual_selection'),
       subtitle: t('manualSelectionSubtitle'),
-      icon: faUserEdit as IconProp,
+      icon: faUserEdit,
       onClick: () => {
         setMethod('Manual');
         removeValidatorMetaBatch(batchKey);
@@ -297,7 +295,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
       {method && (
         <SelectableWrapper>
           <button type="button" onClick={() => clearNominations()}>
-            <FontAwesomeIcon icon={faTimes as IconProp} />
+            <FontAwesomeIcon icon={faTimes} />
             {t(`${camelize(method)}`)}
           </button>
 
@@ -328,7 +326,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
         <div>
           {!isReadOnlyAccount(activeAccount) && !method && (
             <>
-              <SelectItems>
+              <SelectItems flex>
                 {methods.map((m: any, n: number) => (
                   <SelectItem
                     key={`gen_method_${n}`}
@@ -341,6 +339,7 @@ export const GenerateNominations = (props: GenerateNominationsInnerProps) => {
                     includeToggle={false}
                     grow={false}
                     hoverBorder
+                    flex
                   />
                 ))}
               </SelectItems>

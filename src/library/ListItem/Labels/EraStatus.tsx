@@ -7,18 +7,17 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
+import { MaybeAccount } from 'types';
 import { capitalizeFirstLetter, planckToUnit, rmCommas } from 'Utils';
 
-export const EraStatus = (props: any) => {
-  const { address } = props;
-
+export const EraStatus = ({ address }: { address: MaybeAccount }) => {
+  const { t } = useTranslation('library');
   const {
     network: { unit, units },
   } = useApi();
   const { isSyncing } = useUi();
   const { eraStakers, erasStakersSyncing } = useStaking();
   const { stakers } = eraStakers;
-  const { t } = useTranslation('library');
 
   // is the validator in the active era
   const validatorInEra =

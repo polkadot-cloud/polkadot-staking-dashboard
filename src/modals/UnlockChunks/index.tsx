@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -14,12 +13,12 @@ import { Overview } from './Overview';
 import { CardsWrapper, FixedContentWrapper, Wrapper } from './Wrappers';
 
 export const UnlockChunks = () => {
+  const { t } = useTranslation('modals');
   const { activeAccount } = useConnect();
   const { config, setModalHeight } = useModal();
   const { bondFor } = config || {};
   const { getLedgerForStash } = useBalances();
   const { getPoolUnlocking } = useActivePools();
-  const { t } = useTranslation('modals');
 
   // get the unlocking per bondFor
   const _getUnlocking = () => {
@@ -82,7 +81,7 @@ export const UnlockChunks = () => {
   return (
     <Wrapper>
       <FixedContentWrapper ref={headerRef}>
-        <Title title={t('unlocks')} icon={faLockOpen} fixed />
+        <Title title={t('unlocks')} fixed />
       </FixedContentWrapper>
       <CardsWrapper
         animate={section === 0 ? 'home' : 'next'}

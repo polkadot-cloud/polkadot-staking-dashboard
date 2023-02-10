@@ -2,14 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { borderPrimary, textPrimary, textSecondary } from 'theme';
 
 export const TitleWrapper = styled.div<{ fixed: boolean }>`
   padding: ${(props) =>
-    props.fixed ? '0.6rem 1rem 1.5rem 1rem' : '2rem 1rem 0 1rem'};
+    props.fixed ? '0.6rem 1rem 0rem 1rem' : '2rem 1rem 0 1rem'};
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   width: 100%;
 
@@ -24,7 +22,7 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
     }
 
     path {
-      fill: ${textPrimary};
+      fill: var(--text-color-primary);
     }
 
     &:first-child {
@@ -48,6 +46,9 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
 
     &:last-child {
       button {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
         opacity: 0.25;
         &:hover {
           opacity: 1;
@@ -61,6 +62,7 @@ export const StatsWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: row wrap;
+  margin-top: 1rem;
 `;
 export const StatWrapper = styled.div`
   display: flex;
@@ -79,8 +81,8 @@ export const StatWrapper = styled.div`
   }
 
   > .inner {
+    border-bottom: 1px solid var(--border-primary-color);
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid ${borderPrimary};
 
     > h2,
     h3,
@@ -103,7 +105,37 @@ export const StatWrapper = styled.div`
     h2,
     h3,
     h4 {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
     }
+  }
+`;
+
+export const CloseWrapper = styled.div`
+  position: absolute;
+  right: 1.5rem;
+  top: 1.5rem;
+
+  > button {
+    opacity: 0.4;
+    transition: opacity 0.15ws ease-in-out;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+`;
+
+export const ActionWrapper = styled.h3`
+  border-bottom: 1px solid var(--border-primary-color);
+  color: var(--text-color-primary);
+  margin: 1.25rem 0 0 0;
+  width: 100%;
+  padding-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  font-variation-settings: 'wght' 650;
+
+  > svg {
+    margin-right: 0.5rem;
   }
 `;

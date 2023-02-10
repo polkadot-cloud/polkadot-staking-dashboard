@@ -7,13 +7,6 @@ import {
 } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  borderPrimary,
-  buttonSecondaryBackground,
-  networkColor,
-  textPrimary,
-  textSecondary,
-} from 'theme';
 
 export const Wrapper = styled.div`
   position: fixed;
@@ -37,10 +30,9 @@ export const Wrapper = styled.div`
   .menu {
     display: none;
     @media (max-width: ${SideMenuStickyThreshold}px) {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       display: flex;
       flex-flow: row wrap;
-      justify-content: flex-start;
       align-items: center;
       flex-grow: 1;
     }
@@ -54,9 +46,9 @@ export const HeadingWrapper = styled.div`
   margin-left: 0.9rem;
 `;
 
-export const Item = styled(motion.button)`
-  background: ${buttonSecondaryBackground};
-  border: 1px solid ${borderPrimary};
+export const Item = styled.button`
+  background: var(--button-secondary-background);
+  border: 1px solid var(--border-primary-color);
   flex-grow: 1;
   padding: 0.05rem 1rem;
   border-radius: 1.5rem;
@@ -66,10 +58,15 @@ export const Item = styled(motion.button)`
   align-items: center;
   cursor: pointer;
   font-size: 1.05rem;
+  transition: transform 0.15s ease-out;
+
+  &:hover {
+    transform: scale(1.03);
+  }
 
   .label {
-    color: ${networkColor};
-    border: 0.125rem solid ${networkColor};
+    color: var(--network-color-primary);
+    border: 0.125rem solid var(--network-color-primary);
     border-radius: 0.8rem;
     font-size: 0.85rem;
     margin-right: 0.6rem;
@@ -79,10 +76,14 @@ export const Item = styled(motion.button)`
   > span {
     color: white;
     line-height: 2.2rem;
+    .icon {
+      color: var(--text-color-secondary);
+      cursor: pointer;
+    }
   }
 
   &.connect {
-    background: ${networkColor};
+    background: var(--network-color-primary);
     > span {
       color: 'white';
     }
@@ -96,10 +97,10 @@ export const Item = styled(motion.button)`
 `;
 
 export const ItemInactive = styled(motion.div)`
+  background: var(--button-secondary-background);
   flex-grow: 1;
   padding: 0 1rem;
   border-radius: 1rem;
-  background: ${buttonSecondaryBackground};
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -107,7 +108,7 @@ export const ItemInactive = styled(motion.div)`
   font-size: 1rem;
 
   > span {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
     line-height: 2.2rem;
   }
 `;

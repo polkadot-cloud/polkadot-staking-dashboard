@@ -47,11 +47,11 @@ export const NetworkList: Networks = {
       icon: PolkadotIconSVG,
       logo: {
         svg: PolkadotLogoSVG,
-        width: '8.5em',
+        width: '7.2em',
       },
       inline: {
         svg: PolkadotInlineSVG,
-        size: '1.2em',
+        size: '1.05em',
       },
     },
     api: {
@@ -95,11 +95,11 @@ export const NetworkList: Networks = {
       icon: KusamaIconSVG,
       logo: {
         svg: KusamaLogoSVG,
-        width: '8.5em',
+        width: '7.2em',
       },
       inline: {
         svg: KusamaInlineSVG,
-        size: '1.55em',
+        size: '1.35em',
       },
     },
     api: {
@@ -145,11 +145,11 @@ export const NetworkList: Networks = {
       icon: WestendIconSVG,
       logo: {
         svg: WestendLogoSVG,
-        width: '8.5em',
+        width: '7.1em',
       },
       inline: {
         svg: WestendInlineSVG,
-        size: '1.15em',
+        size: '0.96em',
       },
     },
     api: {

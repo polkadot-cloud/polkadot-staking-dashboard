@@ -20,15 +20,14 @@ import { UnbondInput } from './UnbondInput';
 export const UnbondFeedback = ({
   bondFor,
   inSetup = false,
-  warnings = [],
   setters = [],
   listenIsValid = () => {},
   defaultBond,
   setLocalResize,
+  parentErrors = [],
   txFees,
 }: UnbondFeedbackProps) => {
-  const defaultValue = defaultBond ? String(defaultBond) : '';
-
+  const { t } = useTranslation('library');
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
@@ -41,7 +40,8 @@ export const UnbondFeedback = ({
   const controller = getBondedAccount(activeAccount);
   const { minNominatorBond } = staking;
   const allTransferOptions = getTransferOptions(activeAccount);
-  const { t } = useTranslation('library');
+
+  const defaultValue = defaultBond ? String(defaultBond) : '';
 
   // get bond options for either nominating or pooling.
   const transferOptions =
@@ -110,26 +110,26 @@ export const UnbondFeedback = ({
 
   // handle error updates
   const handleErrors = () => {
-    const _errors = [...warnings];
+    const newErrors = parentErrors;
     const _bond = bond.bond;
     const _decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
 
     // unbond errors
     if (bondBn.isGreaterThan(active)) {
-      _errors.push(t('unbondAmount'));
+      newErrors.push(t('unbondAmount'));
     }
 
     // unbond errors for staking only
     if (bondFor === 'nominator')
       if (getControllerNotImported(controller))
-        _errors.push(t('importedToUnbond'));
+        newErrors.push(t('importedToUnbond'));
 
     if (bond.bond !== '' && bondBn.isLessThan(new BigNumber(1))) {
-      _errors.push(t('valueTooSmall'));
+      newErrors.push(t('valueTooSmall'));
     }
 
     if (_decimals > units) {
-      _errors.push(`Bond amount can only have at most ${units} decimals.`);
+      newErrors.push(`${t('bondAmountDecimals', { unit })}`);
     }
 
     if (bondBn.isGreaterThan(unbondToMin)) {
@@ -143,10 +143,11 @@ export const UnbondFeedback = ({
       } else {
         err += t('asAPoolMember');
       }
-      _errors.push(err);
+      newErrors.push(err);
     }
-    listenIsValid(!_errors.length && _bond !== '');
-    setErrors(_errors);
+
+    listenIsValid(!newErrors.length && _bond !== '');
+    setErrors(newErrors);
   };
 
   return (

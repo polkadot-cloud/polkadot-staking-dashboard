@@ -2,15 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  backgroundLabel,
-  borderPrimary,
-  networkColor,
-  textSecondary,
-} from 'theme';
 
 export const TwoThreshold = 800;
+
+const TwoThresholdMin = TwoThreshold + 1;
 const ThreeRowThreshold = 1300;
+const ThreeRowThresholdMin = ThreeRowThreshold + 1;
 
 // The outer container of select items.
 // Removes the outer padding for 2 and 3 row layouts.
@@ -19,24 +16,25 @@ export const SelectItemsWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
 
-  /* Remove outer padding for 2-per-row layout */
-  @media (min-width: ${TwoThreshold +
-    1}px) and (max-width: ${ThreeRowThreshold}px) {
-    > div:nth-child(2n) {
-      padding-right: 0;
+  &.flex {
+    /* Remove outer padding for 2-per-row layout */
+    @media (min-width: ${TwoThresholdMin}px) and (max-width: ${ThreeRowThreshold}px) {
+      > div:nth-child(2n) {
+        padding-right: 0;
+      }
+      > div:nth-child(2n + 1) {
+        padding-left: 0;
+      }
     }
-    > div:nth-child(2n + 1) {
-      padding-left: 0;
-    }
-  }
 
-  /* Remove outer padding for 3-per-row layout */
-  @media (min-width: ${ThreeRowThreshold + 1}px) {
-    > div:nth-child(3n) {
-      padding-right: 0;
-    }
-    > div:nth-child(3n + 1) {
-      padding-left: 0;
+    /* Remove outer padding for 3-per-row layout */
+    @media (min-width: ${ThreeRowThresholdMin}px) {
+      > div:nth-child(3n) {
+        padding-right: 0;
+      }
+      > div:nth-child(3n + 1) {
+        padding-left: 0;
+      }
     }
   }
 `;
@@ -48,23 +46,29 @@ export const Wrapper = styled.div<{
   hoverBorder: boolean;
 }>`
   padding: 0.6rem;
-  width: 33.33%;
-  flex-grow: ${(props) => (props.grow ? 1 : 0)};
+  width: 100%;
 
-  /* flex basis for 2-per-row layout */
-  @media (min-width: ${TwoThreshold +
-    1}px) and (max-width: ${ThreeRowThreshold}px) {
-    width: 50%;
-  }
+  &.flex {
+    width: 33.33%;
+    flex-grow: ${(props) => (props.grow ? 1 : 0)};
 
-  /* flex basis for 3-per-row layout */
-  @media (max-width: ${TwoThreshold}px) {
-    width: 100%;
+    /* flex basis for 2-per-row layout */
+    @media (min-width: ${TwoThreshold}px) and (max-width: ${ThreeRowThreshold}px) {
+      width: 50%;
+    }
+
+    /* flex basis for 3-per-row layout */
+    @media (max-width: ${TwoThreshold}px) {
+      width: 100%;
+    }
   }
 
   > .inner {
     border: 1.75px solid
-      ${(props) => (props.selected ? networkColor : borderPrimary)};
+      ${(props) =>
+        props.selected
+          ? 'var(--network-color-primary)'
+          : 'var(--border-primary-color)'};
     border-radius: 1rem;
     width: 100%;
     position: relative;
@@ -74,10 +78,10 @@ export const Wrapper = styled.div<{
     &:hover {
       border-color: ${(props) =>
         props.hoverBorder
-          ? networkColor
+          ? 'var(--network-color-primary)'
           : props.selected
-          ? networkColor
-          : borderPrimary};
+          ? 'var(--network-color-primary)'
+          : 'var(--border-primary-color)'};
     }
 
     > button {
@@ -95,8 +99,8 @@ export const Wrapper = styled.div<{
       }
 
       > .icon {
-        background: ${backgroundLabel};
-        color: ${networkColor};
+        background: var(--background-list-item);
+        color: var(--network-color-primary);
         width: 6rem;
         display: flex;
         align-items: center;
@@ -120,7 +124,10 @@ export const Wrapper = styled.div<{
       }
 
       > .toggle {
-        color: ${(props) => (props.selected ? networkColor : textSecondary)};
+        color: ${(props) =>
+          props.selected
+            ? 'var(--network-color-primary)'
+            : 'var(--text-color-secondary)'};
         opacity: ${(props) => (props.selected ? 1 : 0.5)};
         width: 4rem;
         display: flex;

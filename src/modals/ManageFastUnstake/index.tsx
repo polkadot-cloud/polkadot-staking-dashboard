@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { faBolt } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -13,21 +12,16 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { Title } from 'library/Modal/Title';
+import { Action } from 'library/Modal/Action';
+import { Close } from 'library/Modal/Close';
+import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
-import {
-  FooterWrapper,
-  NotesWrapper,
-  PaddingWrapper,
-  Separator,
-  WarningsWrapper,
-} from '../Wrappers';
+import { NotesWrapper, PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
@@ -132,11 +126,14 @@ export const ManageFastUnstake = () => {
 
   return (
     <>
-      <Title title={t('fastUnstake', { context: 'title' })} icon={faBolt} />
+      <Close />
       <PaddingWrapper>
+        <h2 className="title unbounded">
+          {t('fastUnstake', { context: 'title' })}
+        </h2>
         {warnings.length > 0 ? (
           <WarningsWrapper>
-            {warnings.map((text: any, index: number) => (
+            {warnings.map((text: string, index: number) => (
               <Warning key={index} text={text} />
             ))}
           </WarningsWrapper>
@@ -144,11 +141,10 @@ export const ManageFastUnstake = () => {
 
         {isExposed ? (
           <>
-            <h2 className="title">
-              {t('fastUnstakeExposedAgo', { count: lastExposedAgo })}
-            </h2>
-            <Separator />
-            <NotesWrapper>
+            <Action
+              text={t('fastUnstakeExposedAgo', { count: lastExposedAgo })}
+            />
+            <NotesWrapper noPadding>
               <p>{t('fastUnstakeNote1', { bondDuration })}</p>
               <p>{t('fastUnstakeNote2', { count: erasRemaining })}</p>
             </NotesWrapper>
@@ -157,11 +153,8 @@ export const ManageFastUnstake = () => {
           <>
             {!isFastUnstaking ? (
               <>
-                <h2 className="title">
-                  {t('fastUnstake', { context: 'register' })}
-                </h2>
-                <Separator />
-                <NotesWrapper>
+                <Action text={t('fastUnstake', { context: 'register' })} />
+                <NotesWrapper noPadding>
                   <p>
                     <>
                       {t('registerFastUnstake')}{' '}
@@ -175,44 +168,43 @@ export const ManageFastUnstake = () => {
                   <p>
                     {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
                   </p>
-                  <EstimatedTxFee />
                 </NotesWrapper>
               </>
             ) : (
               <>
-                <h2 className="title">{t('fastUnstakeRegistered')}</h2>
-                <Separator />
-                <NotesWrapper>
+                <Action text={t('fastUnstakeRegistered')} />
+                <NotesWrapper noPadding>
                   <p>
                     {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
                   </p>
                   <p>{t('fastUnstakeUnorderedNote')}</p>
-                  <EstimatedTxFee />
                 </NotesWrapper>
               </>
             )}
           </>
         )}
-        {!isExposed && (
-          <FooterWrapper>
-            <div>
-              <ButtonSubmit
-                text={`${
-                  submitting
-                    ? t('submitting')
-                    : t('fastUnstakeSubmit', {
-                        context: isFastUnstaking ? 'cancel' : 'register',
-                      })
-                }`}
-                iconLeft={faArrowAltCircleUp}
-                iconTransform="grow-2"
-                onClick={() => submitTx()}
-                disabled={!valid || submitting || !txFeesValid}
-              />
-            </div>
-          </FooterWrapper>
-        )}
       </PaddingWrapper>
+      {!isExposed ? (
+        <SubmitTx
+          fromController
+          buttons={[
+            <ButtonSubmit
+              key="button_submit"
+              text={`${
+                submitting
+                  ? t('submitting')
+                  : t('fastUnstakeSubmit', {
+                      context: isFastUnstaking ? 'cancel' : 'register',
+                    })
+              }`}
+              iconLeft={faArrowAltCircleUp}
+              iconTransform="grow-2"
+              onClick={() => submitTx()}
+              disabled={!valid || submitting || !txFeesValid}
+            />,
+          ]}
+        />
+      ) : null}
     </>
   );
 };

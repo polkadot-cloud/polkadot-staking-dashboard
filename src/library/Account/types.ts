@@ -12,3 +12,9 @@ export interface AccountProps {
   title?: string;
   readOnly?: boolean;
 }
+
+export interface WrapperProps {
+  canClick: boolean;
+  filled: boolean;
+  fontSize: string;
+}

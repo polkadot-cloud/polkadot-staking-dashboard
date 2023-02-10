@@ -31,9 +31,8 @@ import {
   PaddingWrapper,
 } from './Wrappers';
 
-export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
-  const { setSection } = props;
-
+export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
+  const { t } = useTranslation('modals');
   const { isReady } = useApi();
   const { getAccount, activeAccount } = useConnect();
   const {
@@ -47,7 +46,6 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
   const { setStatus } = useModal();
   const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
-  const { t } = useTranslation('modals');
 
   const _controllers: Array<ControllerAccount> = [];
   const _stashes: Array<StashAcount> = [];

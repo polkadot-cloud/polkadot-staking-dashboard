@@ -28,7 +28,7 @@ export const Tip = ({ title, description }: any) => {
             <h4>{t('module.dismissResult', { ns: 'tips' })}</h4>
             <h4>{t('module.reEnable', { ns: 'tips' })}</h4>
 
-            <div style={{ marginTop: '1.5rem' }}>
+            <div style={{ display: 'flex', marginTop: '1.5rem' }}>
               <ButtonPrimary
                 marginRight
                 text={t('module.disableTips', { ns: 'tips' })}
@@ -38,7 +38,7 @@ export const Tip = ({ title, description }: any) => {
                 }}
               />
               <ButtonInvertRounded
-                text="Cancel"
+                text={t('module.cancel', { ns: 'tips' })}
                 onClick={() => setDisabling(false)}
                 style={{ marginLeft: '0.5rem' }}
               />

@@ -15,22 +15,30 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { Selectable } from 'library/List/Selectable';
 import { useEffect, useRef, useState } from 'react';
-import { networkColors } from 'theme/default';
 import { AnyApi, Sync } from 'types';
 import { Member } from './Member';
 
-export const MembersListInner = (props: any) => {
-  const { allowMoreCols, pagination, selectable, batchKey } = props;
-
-  const actions = props.actions ?? [];
-
+export const MembersListInner = ({
+  allowMoreCols,
+  pagination,
+  selectable,
+  batchKey,
+  onSelected,
+  title,
+  members: initialMembers,
+  disableThrottle = false,
+  actions = [],
+}: any) => {
   const { mode } = useTheme();
   const provider = useList();
-  const { isReady, network } = useApi();
+  const {
+    isReady,
+    network: { colors },
+  } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { fetchPoolMembersMetaBatch } = usePoolMembers();
 
-  // get list provider props
+  // get list provider properties.
   const { selected, listFormat, setListFormat } = provider;
 
   // get actions
@@ -39,8 +47,6 @@ export const MembersListInner = (props: any) => {
     (action: any) => action.onSelected
   );
 
-  const disableThrottle = props.disableThrottle ?? false;
-
   // current page
   const [page, setPage] = useState<number>(1);
 
@@ -48,10 +54,10 @@ export const MembersListInner = (props: any) => {
   const [renderIteration, _setRenderIteration] = useState<number>(1);
 
   // default list of validators
-  const [membersDefault, setMembersDefault] = useState(props.members);
+  const [membersDefault, setMembersDefault] = useState(initialMembers);
 
   // manipulated list (ordering, filtering) of payouts
-  const [members, setMembers] = useState(props.members);
+  const [members, setMembers] = useState(initialMembers);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState<Sync>('unsynced');
@@ -73,10 +79,10 @@ export const MembersListInner = (props: any) => {
 
   // refetch list when list changes
   useEffect(() => {
-    if (props.members !== membersDefault) {
+    if (initialMembers !== membersDefault) {
       setFetched('unsynced');
     }
-  }, [props.members]);
+  }, [initialMembers]);
 
   // configure list when network is ready to fetch
   useEffect(() => {
@@ -96,16 +102,16 @@ export const MembersListInner = (props: any) => {
 
   // trigger onSelected when selection changes
   useEffect(() => {
-    if (props.onSelected) {
-      props.onSelected(provider);
+    if (onSelected) {
+      onSelected(provider);
     }
   }, [selected]);
 
   // handle validator list bootstrapping
   const setupMembersList = () => {
-    setMembersDefault(props.members);
-    setMembers(props.members);
-    fetchPoolMembersMetaBatch(batchKey, props.members, false);
+    setMembersDefault(initialMembers);
+    setMembers(initialMembers);
+    fetchPoolMembersMetaBatch(batchKey, initialMembers, false);
     setFetched('synced');
   };
 
@@ -127,27 +133,19 @@ export const MembersListInner = (props: any) => {
     <ListWrapper>
       <Header>
         <div>
-          <h4>{props.title}</h4>
+          <h4>{title}</h4>
         </div>
         <div>
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
               icon={faBars}
-              color={
-                listFormat === 'row'
-                  ? networkColors[`${network.name}-${mode}`]
-                  : 'inherit'
-              }
+              color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
             />
           </button>
           <button type="button" onClick={() => setListFormat('col')}>
             <FontAwesomeIcon
               icon={faGripVertical}
-              color={
-                listFormat === 'col'
-                  ? networkColors[`${network.name}-${mode}`]
-                  : 'inherit'
-              }
+              color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
             />
           </button>
         </div>

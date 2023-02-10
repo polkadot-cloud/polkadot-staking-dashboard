@@ -8,11 +8,11 @@ import { Pie } from 'library/StatBoxList/Pie';
 import { useTranslation } from 'react-i18next';
 
 export const ActiveNominatorsStat = () => {
+  const { t } = useTranslation('pages');
   const { consts } = useApi();
   const { maxElectingVoters } = consts;
   const { eraStakers } = useStaking();
   const { totalActiveNominators } = eraStakers;
-  const { t } = useTranslation('pages');
 
   // active nominators as percent
   let totalNominatorsAsPercent = 0;

@@ -1,32 +1,33 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { borderPrimary, borderSecondary, textSecondary } from 'theme';
+import { WrapperProps } from './types';
 
-export const Wrapper = styled(motion.button)<any>`
-  border: 1px solid ${borderPrimary};
-  cursor: ${(props) => props.cursor};
-  background: ${(props) => props.fill};
+export const Wrapper = styled.button<WrapperProps>`
+  border: 1px solid var(--border-primary-color);
+  cursor: ${(props) => (props.canClick ? 'pointer' : 'default')};
+  background: ${(props) =>
+    props.filled ? 'var(--button-secondary-background)' : 'none'};
   font-size: ${(props) => props.fontSize};
   border-radius: 1.25rem;
   box-shadow: none;
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   padding: 0 1rem;
   max-width: 225px;
   flex: 1;
-
+  transition: transform 0.15s ease-out;
+  &:hover {
+    transform: scale(1.03);
+  }
   .identicon {
     margin: 0.15rem 0.25rem 0 0;
   }
-
   .account-label {
-    border-right: 1px solid ${borderSecondary};
-    color: ${textSecondary};
+    border-right: 1px solid var(--border-secondary-color);
+    color: var(--text-color-secondary);
     font-size: 0.8em;
     display: flex;
     align-items: center;
@@ -39,12 +40,12 @@ export const Wrapper = styled(motion.button)<any>`
     flex-shrink: 1;
 
     > svg {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
     }
   }
 
   .title {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     margin-left: 0.25rem;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -53,7 +54,7 @@ export const Wrapper = styled(motion.button)<any>`
     flex: 1;
 
     &.unassigned {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       opacity: 0.45;
     }
   }
@@ -65,7 +66,7 @@ export const Wrapper = styled(motion.button)<any>`
     opacity: 0.8;
 
     path {
-      fill: ${textSecondary};
+      fill: var(--text-color-secondary);
     }
   }
 `;

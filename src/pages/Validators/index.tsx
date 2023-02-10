@@ -14,13 +14,11 @@ import { ActiveValidatorsStat } from './Stats/ActiveValidators';
 import { AverageCommissionStat } from './Stats/AverageCommission';
 import { TotalValidatorsStat } from './Stats/TotalValidators';
 
-export const Validators = (props: PageProps) => {
-  const { page } = props;
-  const { key } = page;
-
+export const Validators = ({ page }: PageProps) => {
+  const { t } = useTranslation();
   const { isReady } = useApi();
   const { validators } = useValidators();
-  const { t } = useTranslation();
+  const { key } = page;
   const defaultFilters = {
     includes: ['active'],
     excludes: ['all_commission', 'blocked_nominations', 'missing_identity'],

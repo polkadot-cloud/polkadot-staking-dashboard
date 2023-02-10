@@ -3,12 +3,11 @@
 
 import { Identicon as IdenticonDefault } from '@polkadot/react-identicon';
 import styled from 'styled-components';
-import { backgroundIdenticon } from 'theme';
 import { IdenticonProps } from './types';
 
 const Wrapper = styled.div`
   svg > circle:first-child {
-    fill: ${backgroundIdenticon};
+    fill: var(--border-primary-color);
   }
 `;
 export const Identicon = ({ value, size }: IdenticonProps) => (

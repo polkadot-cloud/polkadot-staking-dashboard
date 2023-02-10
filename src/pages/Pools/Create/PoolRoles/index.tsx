@@ -11,16 +11,16 @@ import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Roles } from '../../Roles';
 
-export const PoolRoles = (props: SetupStepProps) => {
-  const { section } = props;
+export const PoolRoles = ({ section }: SetupStepProps) => {
+  const { t } = useTranslation('pages');
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress('pool', activeAccount);
-  const { t } = useTranslation('pages');
+  const { progress } = setup;
 
   // if no roles in setup already, inject `activeAccount` to be
   // root and depositor roles.
-  const initialValue = setup.roles ?? {
+  const initialValue = progress.roles ?? {
     root: activeAccount,
     depositor: activeAccount,
     nominator: activeAccount,
@@ -52,7 +52,7 @@ export const PoolRoles = (props: SetupStepProps) => {
     // only update if this section is currently active
     if (setup.section === section) {
       setActiveAccountSetup('pool', {
-        ...setup,
+        ...progress,
         roles: initialValue,
       });
     }
@@ -62,21 +62,21 @@ export const PoolRoles = (props: SetupStepProps) => {
     <>
       <Header
         thisSection={section}
-        complete={setup.roles !== null}
-        title={t('pools.roles') || ''}
+        complete={progress.roles !== null}
+        title={`${t('pools.roles')}`}
         helpKey="Pool Roles"
-        setupType="pool"
+        bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <h4 style={{ margin: '0.5rem 0' }}>
           <Trans
-            defaults={t('pools.poolCreator') || ''}
+            defaults={`${t('pools.poolCreator')}`}
             components={{ b: <b /> }}
           />
         </h4>
         <h4 style={{ marginTop: 0 }}>
           <Trans
-            defaults={t('pools.assignedToAnyAccount') || ''}
+            defaults={`${t('pools.assignedToAnyAccount')}`}
             components={{ b: <b /> }}
           />
         </h4>
@@ -87,7 +87,7 @@ export const PoolRoles = (props: SetupStepProps) => {
           setters={[
             {
               set: handleSetupUpdate,
-              current: setup,
+              current: progress,
             },
             {
               set: setRoles,
@@ -95,7 +95,7 @@ export const PoolRoles = (props: SetupStepProps) => {
             },
           ]}
         />
-        <Footer complete={rolesValid} setupType="pool" />
+        <Footer complete={rolesValid} bondFor="pool" />
       </MotionContainer>
     </>
   );

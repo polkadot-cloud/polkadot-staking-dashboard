@@ -8,10 +8,10 @@ import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
 
 export const MinCreateBondStat = () => {
+  const { t } = useTranslation('pages');
   const { network } = useApi();
   const { units } = network;
   const { stats } = usePoolsConfig();
-  const { t } = useTranslation('pages');
 
   const params = {
     label: t('pools.minimumToCreatePool'),
