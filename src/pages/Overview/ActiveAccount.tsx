@@ -52,7 +52,7 @@ export const ActiveAccount = () => {
                 >
                   <FontAwesomeIcon
                     className="copy"
-                    icon={faCopy as IconProp}
+                    icon={faCopy 
                     transform="shrink-1"
                   />
                 </button>

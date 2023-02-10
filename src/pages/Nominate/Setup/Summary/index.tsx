@@ -96,7 +96,7 @@ export const Summary = ({ section }: SetupStepProps) => {
           <section>
             <div>
               <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
+                icon={faCheckCircle 
                 transform="grow-1"
               />{' '}
               &nbsp; {t('nominate.payoutDestination')}:
@@ -110,7 +110,7 @@ export const Summary = ({ section }: SetupStepProps) => {
           <section>
             <div>
               <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
+                icon={faCheckCircle 
                 transform="grow-1"
               />{' '}
               &nbsp; {t('nominate.nominating')}:
@@ -120,7 +120,7 @@ export const Summary = ({ section }: SetupStepProps) => {
           <section>
             <div>
               <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
+                icon={faCheckCircle 
                 transform="grow-1"
               />{' '}
               &nbsp; {t('nominate.bondAmount')}:

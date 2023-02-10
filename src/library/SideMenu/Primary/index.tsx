@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useUi } from 'contexts/UI';
@@ -37,7 +36,7 @@ export const Primary = ({
     case 'bullet':
       Action = (
         <div className={`action ${actionStatus}`}>
-          <FontAwesomeIcon icon={faCircle as IconProp} transform="shrink-4" />
+          <FontAwesomeIcon icon={faCircle} transform="shrink-4" />
         </div>
       );
       break;

@@ -87,7 +87,7 @@ export const PoolAccount = ({
                 }}
               >
                 <FontAwesomeIcon
-                  icon={faCopy as IconProp}
+                  icon={faCopy 
                   transform="shrink-2"
                 />
               </button>

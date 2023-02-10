@@ -106,7 +106,7 @@ export const Summary = ({ section }: SetupStepProps) => {
           <section>
             <div>
               <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
+                icon={faCheckCircle 
                 transform="grow-1"
               />{' '}
               &nbsp; {t('pools.poolName')}:
@@ -116,7 +116,7 @@ export const Summary = ({ section }: SetupStepProps) => {
           <section>
             <div>
               <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
+                icon={faCheckCircle 
                 transform="grow-1"
               />{' '}
               &nbsp; {t('pools.bondAmount')}:
@@ -128,7 +128,7 @@ export const Summary = ({ section }: SetupStepProps) => {
           <section>
             <div>
               <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
+                icon={faCheckCircle 
                 transform="grow-1"
               />{' '}
               &nbsp; Nominating:
@@ -141,7 +141,7 @@ export const Summary = ({ section }: SetupStepProps) => {
           <section>
             <div>
               <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
+                icon={faCheckCircle 
                 transform="grow-1"
               />{' '}
               &nbsp; {t('pools.roles')}:

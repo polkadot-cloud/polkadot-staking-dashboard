@@ -137,7 +137,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
                 }}
               >
                 <FontAwesomeIcon
-                  icon={faTwitter as IconProp}
+                  icon={faTwitter 
                   className="icon-left"
                 />
                 <h4>{twitter}</h4>

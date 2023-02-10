@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faBars, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -75,7 +74,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
 
   // add view pool nominations button to menu
   menuItems.push({
-    icon: <FontAwesomeIcon icon={faProjectDiagram as IconProp} />,
+    icon: <FontAwesomeIcon icon={faProjectDiagram} />,
     wrap: null,
     title: `${t('viewPoolNominations')}`,
     cb: () => {
@@ -92,7 +91,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
 
   // add copy pool address button to menu
   menuItems.push({
-    icon: <FontAwesomeIcon icon={faCopy as IconProp} />,
+    icon: <FontAwesomeIcon icon={faCopy} />,
     wrap: null,
     title: t('copyPoolAddress'),
     cb: () => {

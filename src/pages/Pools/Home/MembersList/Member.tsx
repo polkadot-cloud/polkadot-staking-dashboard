@@ -54,7 +54,7 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
 
     if (points !== '0') {
       menuItems.push({
-        icon: <FontAwesomeIcon icon={faUnlockAlt as IconProp} />,
+        icon: <FontAwesomeIcon icon={faUnlockAlt  />,
         wrap: null,
         title: `${t('pools.unbondFunds')}`,
         cb: () => {
@@ -80,7 +80,7 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
 
       if (canWithdraw) {
         menuItems.push({
-          icon: <FontAwesomeIcon icon={faShare as IconProp} />,
+          icon: <FontAwesomeIcon icon={faShare  />,
           wrap: null,
           title: `${t('pools.withdrawFunds')}`,
           cb: () => {
