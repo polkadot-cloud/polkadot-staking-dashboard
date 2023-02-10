@@ -55,6 +55,7 @@
     "destroyingPools": "Destroying Pools",
     "deviceVerified": "Device verified",
     "disclaimer": "Disclaimer",
+    "dashboardDisclaimer": "Dashboard Disclaimer",
     "disconnected": "Disconnected",
     "displayingValidators_one": "Displaying {{count}} Validator",
     "displayingValidators_other": "Displaying {{count}} Validators",

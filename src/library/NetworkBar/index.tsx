@@ -1,65 +1,80 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: Apache-2.0
 
-import { capitalizeFirstLetter } from '@polkadot-cloud/utils';
-import { useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { usePrompt } from 'contexts/Prompt';
+import { useOverlay } from 'contexts/Overlay';
 import { usePlugins } from 'contexts/Plugins';
+import { useOutsideAlerter } from 'library/Hooks';
 import { usePrices } from 'library/Hooks/usePrices';
-import { useNetwork } from 'contexts/Network';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { capitalizeFirstLetter } from 'Utils';
 import { Disclaimer } from './Disclaimer';
 import { Status } from './Status';
-import { Summary, Wrapper } from './Wrappers';
-import { isCustomEvent } from 'static/utils';
-import { useEventListener } from 'usehooks-ts';
-import { Odometer, useEffectIgnoreInitial } from '@polkadot-cloud/react';
-import BigNumber from 'bignumber.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHive } from '@fortawesome/free-brands-svg-icons';
+import { NetworkInfo, Separator, Summary, Wrapper } from './Wrappers';
 
 export const NetworkBar = () => {
   const { t } = useTranslation('library');
-  const prices = usePrices();
   const { plugins } = usePlugins();
-  const { isLightClient } = useApi();
-  const { openPromptWith } = usePrompt();
-  const { networkData, network } = useNetwork();
-  const PRIVACY_URL = import.meta.env.VITE_PRIVACY_URL;
-  const DISCLAIMER_URL = import.meta.env.VITE_DISCLAIMER_URL;
-  const ORGANISATION = import.meta.env.VITE_ORGANISATION;
-  const LEGAL_DISCLOSURES_URL = import.meta.env.VITE_LEGAL_DISCLOSURES_URL;
+  const { network, isLightClient } = useApi();
+  const prices = usePrices();
+  const { openOverlayWith } = useOverlay();
 
-  // Store incoming block number.
-  const [blockNumber, setBlockNumber] = useState<string>();
+  // currently not in use
+  const [open, setOpen] = useState(false);
 
-  const newBlockCallback = (e: Event) => {
-    if (isCustomEvent(e)) {
-      setBlockNumber(e.detail.blockNumber);
-    }
+  // handle expand transitions
+  const variants = {
+    minimised: {
+      height: '2.5rem',
+    },
+    maximised: {
+      height: '155px',
+    },
   };
 
-  const ref = useRef<Document>(document);
-  useEventListener('new-block-number', newBlockCallback, ref);
+  const animate = open ? 'maximised' : 'minimised';
+  const ref = useRef(null);
 
-  // Reset block number on network change.
-  useEffectIgnoreInitial(() => {
-    setBlockNumber('0');
-  }, [network]);
+  const PRIVACY_URL = process.env.REACT_APP_PRIVACY_URL;
+  const DISCLAIMER_URL = process.env.REACT_APP_DISCLAIMER_URL;
+  const ORGANISATION = process.env.REACT_APP_ORGANISATION;
+
+  const [networkName, setNetworkName] = useState<string>(
+    capitalizeFirstLetter(network.name)
+  );
+
+  useOutsideAlerter(
+    ref,
+    () => {
+      setOpen(false);
+    },
+    ['igignore-network-info-toggle']
+  );
+
+  useEffect(() => {
+    setNetworkName(
+      `${capitalizeFirstLetter(network.name)}${isLightClient ? ` Light` : ``}`
+    );
+  }, [network.name, isLightClient]);
 
   return (
-    <Wrapper>
-      <networkData.brand.icon className="network_icon" />
+    <Wrapper
+      ref={ref}
+      initial={false}
+      animate={animate}
+      transition={{
+        duration: 0.4,
+        type: 'spring',
+        bounce: 0.25,
+      }}
+      variants={variants}
+    >
       <Summary>
         <section>
-          <p>
-            {ORGANISATION === undefined
-              ? `${capitalizeFirstLetter(network)}${
-                  isLightClient ? ` Light` : ``
-                }`
-              : ORGANISATION}
-          </p>
+          <network.brand.icon className="network_icon" />
+          <p>{ORGANISATION === undefined ? networkName : ORGANISATION}</p>
+          <Separator />
           {PRIVACY_URL !== undefined ? (
             <p>
               <a href={PRIVACY_URL} target="_blank" rel="noreferrer">
@@ -70,24 +85,21 @@ export const NetworkBar = () => {
             <Status />
           )}
           {DISCLAIMER_URL !== undefined && (
-            <p>
-              <a href={DISCLAIMER_URL} target="_blank" rel="noreferrer">
-                {t('disclaimer')}
-              </a>
-            </p>
+            <>
+              <Separator />
+              <p>
+                <a href={DISCLAIMER_URL} target="_blank" rel="noreferrer">
+                  {t('disclaimer')}
+                </a>
+              </p>
+            </>
           )}
-          {LEGAL_DISCLOSURES_URL !== undefined && (
-            <p>
-              <a href={LEGAL_DISCLOSURES_URL} target="_blank" rel="noreferrer">
-                {t('legalDisclosures')}
-              </a>
-            </p>
-          )}
+          <Separator />
           <p>
             <button
               type="button"
               onClick={() => {
-                openPromptWith(<Disclaimer />);
+                openOverlayWith(<Disclaimer />);
               }}
             >
               {t('dashboardDisclaimer')}
@@ -104,8 +116,8 @@ export const NetworkBar = () => {
                       prices.change < 0
                         ? ' neg'
                         : prices.change > 0
-                          ? ' pos'
-                          : ''
+                        ? ' pos'
+                        : ''
                     }`}
                   >
                     {prices.change < 0 ? '' : prices.change > 0 ? '+' : ''}
@@ -113,22 +125,15 @@ export const NetworkBar = () => {
                   </span>
                 </div>
                 <div className="stat">
-                  1 {networkData.api.unit} / {prices.lastPrice} USD
+                  1 {network.api.unit} / {prices.lastPrice} USD
                 </div>
               </>
             )}
-
-            <div className="stat last">
-              <FontAwesomeIcon icon={faHive} />
-              <Odometer
-                wholeColor="var(--text-color-secondary)"
-                value={new BigNumber(blockNumber || '0').toFormat()}
-                spaceBefore={'0.35rem'}
-              />
-            </div>
           </div>
         </section>
       </Summary>
+
+      <NetworkInfo />
     </Wrapper>
   );
 };
