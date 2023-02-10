@@ -84,7 +84,7 @@
       "epoch": [
         "Epoch",
         [
-          "Epoch是{NETWORK_NAME} Session的另一个名称. 在每个Epoch开始时选择一组不同的验证人验证区块.",
+          "Epoch是{NETWORK_NAME} Session的另一个名称. 每个Era分为6个Epoch, 在此期间, 验证人被指定为特定时段或Slots的区块生产者.",
           "1个Epoch在波卡为4小时."
         ]
       ],
