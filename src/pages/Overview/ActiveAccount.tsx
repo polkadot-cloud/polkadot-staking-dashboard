@@ -52,7 +52,7 @@ export const ActiveAccount = () => {
                   <FontAwesomeIcon
                     className="copy"
                     icon={faCopy}
-                    transform="shrink-1"
+                    transform="shrink-2"
                   />
                 </button>
                 {accountData.name !== clipAddress(accountData.address) && (
