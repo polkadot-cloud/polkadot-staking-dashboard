@@ -1,11 +1,12 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { decodeAddress, encodeAddress } from '@polkadot/keyring';
 import { hexToU8a, isHex, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import BN from 'bn.js';
-import { MutableRefObject } from 'react';
-import { AnyApi, AnyMetaBatch, PagesConfig } from 'types/index';
+import BigNumber from 'bignumber.js';
+import { getUnixTime } from 'date-fns';
+import { MutableRefObject, RefObject } from 'react';
+import { AnyApi, AnyJson, AnyMetaBatch } from 'types/index';
 
 export const clipAddress = (val: string) => {
   if (typeof val !== 'string') {
@@ -17,104 +18,35 @@ export const clipAddress = (val: string) => {
   )}`;
 };
 
-export const convertRemToPixels = (rem: string) => {
-  const remAsNumber = Number(rem.slice(0, rem.length - 3));
-  return (
-    remAsNumber *
-    parseFloat(getComputedStyle(document.documentElement).fontSize)
+export const remToUnit = (rem: string) =>
+  Number(rem.slice(0, rem.length - 3)) *
+  parseFloat(getComputedStyle(document.documentElement).fontSize);
+
+/**
+ * Converts an on chain balance value in BigNumber planck to a decimal value in token unit. (1 token
+ * token = 10^units planck).
+ */
+export const planckToUnit = (val: BigNumber, units: number) => {
+  return new BigNumber(
+    val
+      .dividedBy(new BigNumber(10).exponentiatedBy(new BigNumber(units)))
+      .toFixed(units)
   );
 };
 
-export const toFixedIfNecessary = (value: number, dp: number) => {
-  return +parseFloat(String(value)).toFixed(dp);
-};
-
-export const planckToUnit = (val: number, units: number): number => {
-  const value = val / 10 ** units;
-  return value;
-};
-
 /**
- * Converts an on chain balance value in BN planck to a decimal value in token unit (1 token token = 10^units planck)
- * @param val A BN that includes the balance in planck as it is stored on chain. It can be a very large number.
- * @param units the chain decimal points, that is used to calculate the balance denominator for the chain (e.g. 10 for polkadot, 12 for Kusama)
- * @returns A number that contains the equivalent value of the balance val in chain token unit. (e.g. DOT for polkadot, KSM for Kusama)
+ * Converts a balance in token unit to an equivalent value in planck by applying the chain decimals
+ * point. (1 token = 10^units planck).
  */
-export const planckBnToUnit = (val: BN, units: number): number => {
-  // BN only supports integers.
-  // We need to calculate the whole section and the decimal section separately and calculate the final representation by concatenating the two sections as string.
-  const Bn10 = new BN(10);
-  const BnUnits = new BN(units);
-  const div = val.div(Bn10.pow(BnUnits));
-  const mod = val.mod(Bn10.pow(BnUnits));
+export const unitToPlanck = (val: string, units: number): BigNumber =>
+  new BigNumber(!val.length || !val ? '0' : val)
+    .multipliedBy(new BigNumber(10).exponentiatedBy(new BigNumber(units)))
+    .integerValue();
 
-  // The whole portion in string
-  const whole = div.toString();
+export const rmCommas = (val: string): string => val.replace(/,/g, '');
 
-  // The decimal fraction portion in string.
-  // it is padded by '0's to achieve `units` number of decimal points.
-  const decimal = mod.toString().padStart(units, '0');
-  // the final number in string
-  const result = `${whole}.${decimal || '0'}`;
-
-  return Number(result);
-};
-
-/**
- * Converts a balance in token unit to an equivalent value in planck by applying the chain decimals point. (1 token = 10^units planck)
- * Since the result can be a very large number all calculations should happen in BN.
- * @param val the value in chain unit
- * @param units the chain decimal points (e.x. 10 for polkadot and 12 for Kusama)
- * @returns A big number that contains the equivalent value of the balance val in plancks
- */
-export const unitToPlanckBn = (val: number, units: number): BN => {
-  // convert to number in case the number arguments are passed as numeric strings
-  val = Number(val);
-  units = Number(units);
-
-  // since the result can be a very large number we need to calculate the value in BN.
-  const Bn10 = new BN(10);
-  const BnUnits = new BN(units);
-
-  // BN does not support decimal numbers.
-  // 1. Convert the number to a fixed point decimal with the number of decimal points equal to the specified value for the chain (units)
-  // 2. Split the number to separate whole portion and decimal fraction and store them as different BN values.
-  const [w, d] = val.toFixed(units).split('.');
-  const wholeBn = new BN(Number(w));
-  const decimalBn = new BN(Number(d));
-
-  // calculate the final result in planck by applying the decimal denominator(BnUnits)
-  const resultBn = wholeBn.mul(Bn10.pow(BnUnits)).add(decimalBn);
-  return resultBn;
-};
-
-export const humanNumberBn = (valBn: BN, units: number): string => {
-  const val = planckBnToUnit(valBn, units);
-  return humanNumber(val);
-};
-
-export const usdFormatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
-
-export const humanNumber = (val: number): string => {
-  const str = val.toString().split('.');
-  str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  return str.join('.');
-};
-
-export const rmCommas = (val: string): string => {
-  return val.replace(/,/g, '');
-};
-
-export const sleep = (milliseconds: number) => {
-  return new Promise((resolve) => setTimeout(resolve, milliseconds));
-};
-
-export const removePercentage = (v: string) => {
-  return Number(v.slice(0, -1));
-};
+export const greaterThanZero = (val: BigNumber) =>
+  val.isGreaterThan(new BigNumber(0));
 
 export const shuffle = <T>(array: Array<T>) => {
   let currentIndex = array.length;
@@ -136,28 +68,8 @@ export const pageFromUri = (pathname: string) => {
   return page;
 };
 
-export const pageTitleFromUri = (pathname: string, pages: PagesConfig) => {
-  for (const page of pages) {
-    if (page.uri === pathname) return page.title;
-  }
-  return '';
-};
-
-export const isNumeric = (str: string | number) => {
-  str = typeof str === 'string' ? str.trim() : String(str);
-  return str !== '' && !Number.isNaN(Number(str));
-};
-
-export const defaultIfNaN = <T>(val: T, _default: T) => {
-  if (Number.isNaN(val)) {
-    return _default;
-  }
-  return val;
-};
-
-export const capitalizeFirstLetter = (string: string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
+export const capitalizeFirstLetter = (string: string) =>
+  string.charAt(0).toUpperCase() + string.slice(1);
 
 export const setStateWithRef = <T>(
   value: T,
@@ -189,18 +101,9 @@ export const isValidAddress = (address: string) => {
   try {
     encodeAddress(isHex(address) ? hexToU8a(address) : decodeAddress(address));
     return true;
-  } catch (error) {
+  } catch (e) {
     return false;
   }
-};
-
-export const escapeRegExp = (string: string) => {
-  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& === the whole matched string
-};
-
-// replace all to work with legacy browsers
-export const replaceAll = (str: string, find: string, replace: string) => {
-  return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
 };
 
 export const determinePoolDisplay = (
@@ -227,10 +130,98 @@ export const determinePoolDisplay = (
 };
 
 // extracts a URL value from a URL string
-export const extractUrlValue = (key: string, url: string) => {
+export const extractUrlValue = (key: string, url?: string) => {
   if (typeof url === 'undefined') url = window.location.href;
   const match = url.match(`[?&]${key}=([^&]+)`);
   return match ? match[1] : null;
+};
+
+// converts a string of text to camelCase
+export const camelize = (str: string) =>
+  str
+    .replace(/(?:^\w|[A-Z]|\b\w)/g, (word, index) =>
+      index === 0 ? word.toLowerCase() : word.toUpperCase()
+    )
+    .replace(/\s+/g, '');
+
+// Puts a variable into the URL hash as a param.
+//
+// Since url variables are added to the hash and are not treated as URL params, the params are split
+// and parsed into a `URLSearchParams`.
+export const varToUrlHash = (
+  key: string,
+  val: string,
+  addIfMissing: boolean
+) => {
+  const hash = window.location.hash;
+  const [page, params] = hash.split('?');
+  const searchParams = new URLSearchParams(params);
+
+  if (searchParams.get(key) === null && !addIfMissing) {
+    return;
+  }
+  searchParams.set(key, val);
+  window.location.hash = `${page}?${searchParams.toString()}`;
+};
+
+// Removes a variable `key` from the URL hash if it exists.
+//
+// Removes dangling `?` if no URL variables exist.
+export const removeVarFromUrlHash = (key: string) => {
+  const hash = window.location.hash;
+  const [page, params] = hash.split('?');
+  const searchParams = new URLSearchParams(params);
+  if (searchParams.get(key) === null) {
+    return;
+  }
+  searchParams.delete(key);
+  const paramsAsStr = searchParams.toString();
+  window.location.hash = `${page}${paramsAsStr ? `?${paramsAsStr}` : ``}`;
+};
+
+// Sorts an array with nulls last.
+export const sortWithNull =
+  (ascending: boolean) => (a: AnyJson, b: AnyJson) => {
+    // equal items sort equally
+    if (a === b) {
+      return 0;
+    }
+    // nulls sort after anything else
+    if (a === null) {
+      return 1;
+    }
+    if (b === null) {
+      return -1;
+    }
+    // otherwise, if we're ascending, lowest sorts first
+    if (ascending) {
+      return a < b ? -1 : 1;
+    }
+    // if descending, highest sorts first
+    return a < b ? 1 : -1;
+  };
+
+// Applies width of subject to paddingRight of container
+export const applyWidthAsPadding = (
+  subjectRef: RefObject<HTMLDivElement>,
+  containerRef: RefObject<HTMLDivElement>
+) => {
+  if (containerRef.current && subjectRef.current) {
+    containerRef.current.style.paddingRight = `${
+      subjectRef.current.offsetWidth + remToUnit('1rem')
+    }px`;
+  }
+};
+
+export const registerLastVisited = (utmSource: string | null) => {
+  const attributes = utmSource ? { utmSource } : {};
+
+  if (!localStorage.getItem('last_visited')) {
+    registerSaEvent('new_user', attributes);
+  } else {
+    registerSaEvent('returning_user', attributes);
+  }
+  localStorage.setItem('last_visited', String(getUnixTime(Date.now())));
 };
 
 export const registerSaEvent = (e: string, a: AnyApi = {}) => {

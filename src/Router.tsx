@@ -25,7 +25,7 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
-import { extractUrlValue, registerSaEvent } from 'Utils';
+import { extractUrlValue, registerLastVisited, registerSaEvent } from 'Utils';
 import {
   BodyInterfaceWrapper,
   MainInterfaceWrapper,
@@ -44,6 +44,7 @@ export const RouterInner = () => {
     if (utmSource) {
       registerSaEvent(`conversion_${utmSource}`);
     }
+    registerLastVisited(utmSource);
   }, []);
 
   // scroll to top of the window on every page change or network change
