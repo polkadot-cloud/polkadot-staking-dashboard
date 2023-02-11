@@ -249,7 +249,9 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     let _provider: WsProvider | ScProvider;
     if (_isLightClient) {
       _provider = new ScProvider(Sc, endpoints.lightClient);
-      await _provider.connect();
+      // the `forceEmbeddedNode` option is a temporary workaround while
+      // we fix the issues with the extension
+      await _provider.connect({ forceEmbeddedNode: true });
     } else {
       _provider = new WsProvider(endpoints.rpc);
     }
