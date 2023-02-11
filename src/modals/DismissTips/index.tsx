@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
@@ -9,9 +9,9 @@ import { PaddingWrapper } from 'modals/Wrappers';
 import { useTranslation } from 'react-i18next';
 
 export const DismissTips = () => {
+  const { t } = useTranslation('tips');
   const { togglePlugin } = usePlugins();
   const { setStatus } = useModal();
-  const { t } = useTranslation('tips');
 
   return (
     <>

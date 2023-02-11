@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { Countdown } from 'library/Countdown';
@@ -8,8 +8,13 @@ import { StatBox } from './Item';
 import { TimeleftProps } from './types';
 import { TimeLeftWrapper } from './Wrapper';
 
-export const Timeleft = (props: TimeleftProps) => {
-  const { label, timeleft, graph, tooltip, helpKey } = props;
+export const Timeleft = ({
+  label,
+  timeleft,
+  graph,
+  tooltip,
+  helpKey,
+}: TimeleftProps) => {
   const help = helpKey !== undefined;
 
   return (

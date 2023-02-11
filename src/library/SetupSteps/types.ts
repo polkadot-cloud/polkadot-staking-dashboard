@@ -1,17 +1,17 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { SetupType } from 'contexts/Setup/types';
+import { BondFor } from 'types';
 
 export interface NominationsProps {
   batchKey: string;
-  setupType: SetupType;
+  bondFor: BondFor;
   section: number;
 }
 
 export interface FooterProps {
   complete: boolean;
-  setupType: SetupType;
+  bondFor: BondFor;
 }
 
 export interface GenerateNominationsInnerProps {
@@ -25,7 +25,7 @@ export interface HeaderProps {
   helpKey?: string;
   complete?: boolean | null;
   thisSection: number;
-  setupType: SetupType;
+  bondFor: BondFor;
 }
 
 export type Nominations = string[];

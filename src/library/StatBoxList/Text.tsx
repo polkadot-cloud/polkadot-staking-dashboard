@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
@@ -6,9 +6,13 @@ import { StatBox } from './Item';
 import { TextProps } from './types';
 import { TextTitleWrapper } from './Wrapper';
 
-export const Text = (props: TextProps) => {
-  const { label, value, secondaryValue, helpKey, primary } = props;
-
+export const Text = ({
+  label,
+  value,
+  secondaryValue,
+  helpKey,
+  primary,
+}: TextProps) => {
   const help = helpKey !== undefined;
 
   return (

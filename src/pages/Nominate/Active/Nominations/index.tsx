@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +11,7 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import useUnstaking from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +25,7 @@ export const Nominations = ({
   bondFor: 'pool' | 'nominator';
   nominator: MaybeAccount;
 }) => {
+  const { t } = useTranslation('pages');
   const { openModalWith } = useModal();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
@@ -32,7 +33,6 @@ export const Nominations = ({
   const { getAccountNominations } = useBalances();
   const { isFastUnstaking } = useUnstaking();
   const { nominated: stakeNominated, poolNominated } = useValidators();
-  const { t } = useTranslation('pages');
   let { favoritesList } = useValidators();
   if (favoritesList === null) {
     favoritesList = [];
@@ -87,7 +87,7 @@ export const Nominations = ({
   // determine whether buttons are disabled
   const poolDestroying =
     isPool &&
-    selectedActivePool?.bondedPool?.state === 'destroying' &&
+    selectedActivePool?.bondedPool?.state === 'Destroying' &&
     !nominating;
 
   const stopBtnDisabled =
@@ -192,5 +192,3 @@ export const Nominations = ({
     </Wrapper>
   );
 };
-
-export default Nominations;

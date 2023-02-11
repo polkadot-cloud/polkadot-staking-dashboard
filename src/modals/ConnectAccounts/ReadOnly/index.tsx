@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faCog, faGlasses } from '@fortawesome/free-solid-svg-icons';
@@ -11,11 +11,9 @@ import { ReadOnlyProps } from '../types';
 import { ExtensionWrapper } from '../Wrappers';
 import { Wrapper } from './Wrapper';
 
-export const ReadOnly = (props: ReadOnlyProps) => {
-  const { setReadOnlyOpen, readOnlyOpen } = props;
-
-  const { accounts, forgetAccounts } = useConnect();
+export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
   const { t } = useTranslation('modals');
+  const { accounts, forgetAccounts } = useConnect();
 
   // get all external accounts
   const externalAccountsOnly = accounts.filter((a: ImportedAccount) => {

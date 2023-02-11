@@ -1,9 +1,9 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -13,14 +13,17 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
+import { Warning } from 'library/Form/Warning';
+import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
-import { FooterWrapper, NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
+import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
+import { Close } from 'library/Modal/Close';
+import { SubmitTx } from 'library/SubmitTx';
+import { NotesWrapper, PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
+import { planckToUnit, unitToPlanck } from 'Utils';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');
@@ -35,6 +38,7 @@ export const Unbond = () => {
   const { isDepositor, selectedActivePool } = useActivePools();
   const { txFees, txFeesValid } = useTxFees();
   const { getTransferOptions } = useTransferOptions();
+  const { erasToSeconds } = useErasToTimeLeft();
 
   const controller = getBondedAccount(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
@@ -42,9 +46,15 @@ export const Unbond = () => {
   const { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn } = stats;
   const { bondDuration } = consts;
 
+  const bondDurationFormatted = timeleftAsString(
+    t,
+    erasToSeconds(bondDuration),
+    true
+  );
+
   let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BN(0);
-  unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
+  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
+  unclaimedRewards = planckToUnit(unclaimedRewards, network.units);
 
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
@@ -54,14 +64,16 @@ export const Unbond = () => {
     ? allTransferOptions.pool
     : allTransferOptions.nominate;
 
-  // convert BN values to number
-  const freeToUnbond = planckBnToUnit(activeBn, units);
-  const minJoinBond = planckBnToUnit(minJoinBondBn, units);
-  const minCreateBond = planckBnToUnit(minCreateBondBn, units);
-  const minNominatorBond = planckBnToUnit(minNominatorBondBn, units);
+  // convert BigNumber values to number
+  const freeToUnbond = planckToUnit(activeBn, units);
+  const minJoinBond = planckToUnit(minJoinBondBn, units);
+  const minCreateBond = planckToUnit(minCreateBondBn, units);
+  const minNominatorBond = planckToUnit(minNominatorBondBn, units);
 
   // local bond value
-  const [bond, setBond] = useState({ bond: freeToUnbond });
+  const [bond, setBond] = useState<{ bond: string }>({
+    bond: freeToUnbond.toString(),
+  });
 
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(false);
@@ -69,20 +81,18 @@ export const Unbond = () => {
   // get the max amount available to unbond
   const unbondToMin = isPooling
     ? isDepositor()
-      ? Math.max(freeToUnbond - minCreateBond, 0)
-      : Math.max(freeToUnbond - minJoinBond, 0)
-    : Math.max(freeToUnbond - minNominatorBond, 0);
+      ? BigNumber.max(freeToUnbond.minus(minCreateBond), new BigNumber(0))
+      : BigNumber.max(freeToUnbond.minus(minJoinBond), new BigNumber(0))
+    : BigNumber.max(freeToUnbond.minus(minNominatorBond), new BigNumber(0));
 
   // unbond some validation
   const isValid = isPooling ? true : !controllerNotImported;
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = unbondToMin;
-    setBond({ bond: _bond });
-
+    setBond({ bond: unbondToMin.toString() });
     setBondValid(isValid);
-  }, [unbondToMin, isValid]);
+  }, [freeToUnbond.toString(), isValid]);
 
   // modal resize on form update
   useEffect(() => {
@@ -99,14 +109,15 @@ export const Unbond = () => {
     if (isStaking && controllerNotImported) {
       return tx;
     }
-    // remove decimal errors
-    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
+
+    const bondToSubmit = unitToPlanck(bond.bond, units);
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
     // determine tx
     if (isPooling) {
-      tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
+      tx = api.tx.nominationPools.unbond(activeAccount, bondAsString);
     } else if (isStaking) {
-      tx = api.tx.staking.unbond(bondToSubmit);
+      tx = api.tx.staking.unbond(bondAsString);
     }
     return tx;
   };
@@ -126,10 +137,11 @@ export const Unbond = () => {
   const nominatorActiveBelowMin =
     bondFor === 'nominator' &&
     !activeBn.isZero() &&
-    activeBn.lt(minNominatorBondBn);
+    activeBn.isLessThan(minNominatorBondBn);
 
   const poolToMinBn = isDepositor() ? minCreateBondBn : minJoinBondBn;
-  const poolActiveBelowMin = bondFor === 'pool' && activeBn.lt(poolToMinBn);
+  const poolActiveBelowMin =
+    bondFor === 'pool' && activeBn.isLessThan(poolToMinBn);
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
@@ -152,7 +164,7 @@ export const Unbond = () => {
   if (poolActiveBelowMin) {
     warnings.push(
       t('unbondErrorBelowMinimum', {
-        bond: planckBnToUnit(poolToMinBn, units),
+        bond: planckToUnit(poolToMinBn, units),
         unit: network.unit,
       })
     );
@@ -163,8 +175,16 @@ export const Unbond = () => {
 
   return (
     <>
-      <Title title={`${t('removeBond')}`} icon={faMinus} />
+      <Close />
       <PaddingWrapper>
+        <h2 className="title unbounded">{`${t('removeBond')}`}</h2>
+        {warnings.length > 0 ? (
+          <WarningsWrapper>
+            {warnings.map((err: string, i: number) => (
+              <Warning key={`unbond_error_${i}`} text={err} />
+            ))}
+          </WarningsWrapper>
+        ) : null}
         <UnbondFeedback
           bondFor={bondFor}
           listenIsValid={setBondValid}
@@ -174,7 +194,6 @@ export const Unbond = () => {
               current: bond,
             },
           ]}
-          warnings={warnings}
           txFees={txFees}
         />
         <NotesWrapper>
@@ -192,31 +211,32 @@ export const Unbond = () => {
                 <p>
                   {t('notePoolDepositorMinBond', {
                     context: 'member',
-                    bond: minCreateBond,
+                    bond: minJoinBond,
                     unit: network.unit,
                   })}
                 </p>
               )}
             </>
           ) : null}
-          <p>{t('onceUnbonding', { bondDuration })}</p>
-          <EstimatedTxFee />
+          <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
         </NotesWrapper>
-        <FooterWrapper>
-          <div>
-            <ButtonSubmit
-              text={`${submitting ? t('submitting') : t('submit')}`}
-              iconLeft={faArrowAltCircleUp}
-              iconTransform="grow-2"
-              onClick={() => submitTx()}
-              disabled={
-                submitting ||
-                !(bondValid && accountHasSigner(signingAccount) && txFeesValid)
-              }
-            />
-          </div>
-        </FooterWrapper>
       </PaddingWrapper>
+      <SubmitTx
+        fromController={isStaking}
+        buttons={[
+          <ButtonSubmit
+            key="button_submit"
+            text={`${submitting ? t('submitting') : t('submit')}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => submitTx()}
+            disabled={
+              submitting ||
+              !(bondValid && accountHasSigner(signingAccount) && txFeesValid)
+            }
+          />,
+        ]}
+      />
     </>
   );
 };

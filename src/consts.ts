@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { stringToU8a } from '@polkadot/util';
@@ -6,7 +6,7 @@ import { stringToU8a } from '@polkadot/util';
 /*
  * Global Constants
  */
-export const AppVersion = '1.0.3';
+export const AppVersion = '1.0.4';
 export const UriPrefix = '/';
 export const DappName = 'Polkadot Staking Dashboard';
 export const PolkadotUrl = 'https://polkadot.network/staking/';
@@ -18,8 +18,6 @@ export const DefaultNetwork = 'polkadot';
 export const EmptyH256 = new Uint8Array(32);
 export const ModPrefix = stringToU8a('modl');
 export const U32Opts = { bitLength: 32, isLe: true };
-
-export const PayeeStatus: Array<string> = ['Staked', 'Stash', 'Controller'];
 
 export const InterfaceMaximumWidth = 1550;
 export const SideMenuMaximisedWidth = 185;

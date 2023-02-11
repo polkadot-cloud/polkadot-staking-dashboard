@@ -1,21 +1,20 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
-import useEraTimeLeft from 'library/Hooks/useEraTimeLeft';
+import { useEraTimeLeft } from 'library/Hooks/useEraTimeLeft';
 import { useTimeLeft } from 'library/Hooks/useTimeLeft';
 import { fromNow } from 'library/Hooks/useTimeLeft/utils';
 import { Timeleft } from 'library/StatBoxList/Timeleft';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { humanNumber } from 'Utils';
 
-const ActiveEraStatBox = () => {
+export const ActiveEraStat = () => {
   const { t } = useTranslation('pages');
-  const { status: connectionStatus } = useApi();
-  const { metrics } = useNetworkMetrics();
-  const { activeEra } = metrics;
+  const { apiStatus } = useApi();
+  const { activeEra } = useNetworkMetrics();
   const { get: getEraTimeleft } = useEraTimeLeft();
 
   const { timeleft, setFromNow } = useTimeLeft();
@@ -23,7 +22,7 @@ const ActiveEraStatBox = () => {
   // re-set timer on era change (also covers network change).
   useEffect(() => {
     setFromNow(fromNow(getEraTimeleft().timeleft));
-  }, [connectionStatus, activeEra]);
+  }, [apiStatus, activeEra]);
 
   // NOTE: this maybe should be called in an interval. Needs more testing.
   const { percentSurpassed, percentRemaining } = getEraTimeleft();
@@ -35,10 +34,8 @@ const ActiveEraStatBox = () => {
       value1: activeEra.index === 0 ? 0 : percentSurpassed,
       value2: activeEra.index === 0 ? 100 : percentRemaining,
     },
-    tooltip: `Era ${humanNumber(activeEra.index)}` ?? undefined,
+    tooltip: `Era ${new BigNumber(activeEra.index).toFormat()}` ?? undefined,
     helpKey: 'Era',
   };
   return <Timeleft {...params} />;
 };
-
-export default ActiveEraStatBox;

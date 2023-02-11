@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
@@ -20,10 +20,10 @@ import {
 } from './Wrappers';
 
 export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
+  const { t } = useTranslation('modals');
   const { setSection } = props;
   const { accounts } = useConnect();
   const { extensions } = useExtensions();
-  const { t } = useTranslation('modals');
 
   const installed = EXTENSIONS.filter((a: ExtensionConfig) =>
     extensions.find((b: ExtensionConfig) => b.id === a.id)

@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 export interface StatusLabelProps {
@@ -6,9 +6,4 @@ export interface StatusLabelProps {
   statusFor?: string;
   title: string;
   topOffset?: string;
-}
-
-export interface WrapperProps {
-  color: string;
-  opacity: number;
 }

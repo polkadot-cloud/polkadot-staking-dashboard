@@ -1,7 +1,8 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { bnToU8a, u8aConcat } from '@polkadot/util';
+import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
 import { EmptyH256, ModPrefix, U32Opts } from 'consts';
 import { PoolConfigState, PoolsConfigContextState } from 'contexts/Pools/types';
@@ -32,14 +33,16 @@ export const PoolsConfigProvider = ({
   });
   const poolsConfigRef = useRef(poolsConfig);
 
-  // get favorite pools from local storage
-  const getFavorites = () => {
-    const _favorites = localStorage.getItem(`${network.name}_favorite_pools`);
-    return _favorites !== null ? JSON.parse(_favorites) : [];
+  // get favorite pools from local storage.
+  const getLocalFavorites = () => {
+    const localFavorites = localStorage.getItem(
+      `${network.name}_favorite_pools`
+    );
+    return localFavorites !== null ? JSON.parse(localFavorites) : [];
   };
 
   // stores the user's favorite pools
-  const [favorites, setFavorites] = useState<string[]>(getFavorites());
+  const [favorites, setFavorites] = useState<string[]>(getLocalFavorites());
 
   useEffect(() => {
     if (isReady) {
@@ -83,33 +86,41 @@ export const PoolsConfigProvider = ({
         _minCreateBond,
         _minJoinBond,
       ]) => {
-        // format optional configs to BN or null
+        // format optional configs to BigNumber or null
         _maxPoolMembers = _maxPoolMembers.toHuman();
         if (_maxPoolMembers !== null) {
-          _maxPoolMembers = new BN(rmCommas(_maxPoolMembers));
+          _maxPoolMembers = new BigNumber(rmCommas(_maxPoolMembers));
         }
         _maxPoolMembersPerPool = _maxPoolMembersPerPool.toHuman();
         if (_maxPoolMembersPerPool !== null) {
-          _maxPoolMembersPerPool = new BN(rmCommas(_maxPoolMembersPerPool));
+          _maxPoolMembersPerPool = new BigNumber(
+            rmCommas(_maxPoolMembersPerPool)
+          );
         }
         _maxPools = _maxPools.toHuman();
         if (_maxPools !== null) {
-          _maxPools = new BN(rmCommas(_maxPools));
+          _maxPools = new BigNumber(rmCommas(_maxPools));
         }
 
         setStateWithRef(
           {
             ...poolsConfigRef.current,
             stats: {
-              counterForPoolMembers: _counterForPoolMembers.toBn(),
-              counterForBondedPools: _counterForBondedPools.toBn(),
-              counterForRewardPools: _counterForRewardPools.toBn(),
-              lastPoolId: _lastPoolId.toBn(),
+              counterForPoolMembers: new BigNumber(
+                _counterForPoolMembers.toString()
+              ),
+              counterForBondedPools: new BigNumber(
+                _counterForBondedPools.toString()
+              ),
+              counterForRewardPools: new BigNumber(
+                _counterForRewardPools.toString()
+              ),
+              lastPoolId: new BigNumber(_lastPoolId.toString()),
               maxPoolMembers: _maxPoolMembers,
               maxPoolMembersPerPool: _maxPoolMembersPerPool,
               maxPools: _maxPools,
-              minCreateBond: _minCreateBond.toBn(),
-              minJoinBond: _minJoinBond.toBn(),
+              minCreateBond: new BigNumber(_minCreateBond.toString()),
+              minJoinBond: new BigNumber(_minJoinBond.toString()),
             },
           },
           setPoolsConfig,
@@ -132,43 +143,43 @@ export const PoolsConfigProvider = ({
    * Adds a favorite validator.
    */
   const addFavorite = (address: string) => {
-    const _favorites: any = Object.assign(favorites);
-    if (!_favorites.includes(address)) {
-      _favorites.push(address);
+    const newFavorites: any = Object.assign(favorites);
+    if (!newFavorites.includes(address)) {
+      newFavorites.push(address);
     }
 
     localStorage.setItem(
       `${network.name}_favorite_pools`,
-      JSON.stringify(_favorites)
+      JSON.stringify(newFavorites)
     );
-    setFavorites([..._favorites]);
+    setFavorites([...newFavorites]);
   };
 
   /*
    * Removes a favorite validator if they exist.
    */
   const removeFavorite = (address: string) => {
-    let _favorites = Object.assign(favorites);
-    _favorites = _favorites.filter(
+    let newFavorites = Object.assign(favorites);
+    newFavorites = newFavorites.filter(
       (validator: string) => validator !== address
     );
     localStorage.setItem(
       `${network.name}_favorite_pools`,
-      JSON.stringify(_favorites)
+      JSON.stringify(newFavorites)
     );
-    setFavorites([..._favorites]);
+    setFavorites([...newFavorites]);
   };
 
   // Helper: generates pool stash and reward accounts. assumes poolsPalletId is synced.
   const createAccounts = (poolId: number) => {
-    const poolIdBN = new BN(poolId);
+    const poolIdBigNumber = new BigNumber(poolId);
     return {
-      stash: createAccount(poolIdBN, 0),
-      reward: createAccount(poolIdBN, 1),
+      stash: createAccount(poolIdBigNumber, 0),
+      reward: createAccount(poolIdBigNumber, 1),
     };
   };
 
-  const createAccount = (poolId: BN, index: number): string => {
+  const createAccount = (poolId: BigNumber, index: number): string => {
     if (!api) return '';
     return api.registry
       .createType(
@@ -177,7 +188,7 @@ export const PoolsConfigProvider = ({
           ModPrefix,
           poolsPalletId,
           new Uint8Array([index]),
-          bnToU8a(poolId, U32Opts),
+          bnToU8a(new BN(poolId.toString()), U32Opts),
           EmptyH256
         )
       )

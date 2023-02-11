@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faBars, faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +8,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { BondedPool } from 'contexts/Pools/types';
-import Identicon from 'library/Identicon';
+import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
 import { useTranslation } from 'react-i18next';
@@ -16,12 +16,11 @@ import { PaddingWrapper } from '../Wrappers';
 import { ContentWrapper, StyledButton } from './Wrappers';
 
 export const AccountPoolRoles = () => {
+  const { t } = useTranslation('modals');
   const { config } = useModal();
   const { getAccountPools } = useBondedPools();
   const { membership } = usePoolMemberships();
   const { who } = config;
-  const { t } = useTranslation('modals');
-
   const accountPools = getAccountPools(who);
   const totalAccountPools = Object.entries(accountPools).length;
   const { label } = useStatusButtons();
@@ -56,11 +55,10 @@ export const AccountPoolRoles = () => {
 };
 
 const Button = ({ item, poolId }: { item: Array<string>; poolId: string }) => {
+  const { t } = useTranslation('modals');
   const { setStatus } = useModal();
   const { bondedPools } = useBondedPools();
   const { setSelectedPoolId } = useActivePools();
-  const { t } = useTranslation('modals');
-
   const pool = bondedPools.find((b: BondedPool) => String(b.id) === poolId);
   const stash = pool?.addresses?.stash || '';
 
@@ -96,5 +94,3 @@ const Button = ({ item, poolId }: { item: Array<string>; poolId: string }) => {
     </StyledButton>
   );
 };
-
-export default AccountPoolRoles;

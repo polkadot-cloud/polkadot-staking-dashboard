@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -10,7 +10,7 @@ import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { useTranslation } from 'react-i18next';
 import { MaybeAccount } from 'types';
-import { planckBnToUnit, rmCommas } from 'Utils';
+import { planckToUnit, rmCommas } from 'Utils';
 
 export const useNominationStatus = () => {
   const { t } = useTranslation();
@@ -58,11 +58,11 @@ export const useNominationStatus = () => {
             const stakedValue =
               others?.find((o: any) => o.who === who)?.value ?? false;
             if (stakedValue) {
-              const stakedValueBase = planckBnToUnit(
-                new BN(rmCommas(stakedValue)),
+              const stakedValueUnit = planckToUnit(
+                new BigNumber(rmCommas(stakedValue)),
                 network.units
               );
-              if (stakedValueBase >= lowestReward) {
+              if (stakedValueUnit.isGreaterThanOrEqualTo(lowestReward)) {
                 earningRewards = true;
                 break;
               }
@@ -75,8 +75,7 @@ export const useNominationStatus = () => {
     let str;
     if (inSetup() || isSyncing) {
       str = t('nominate.notNominating', { ns: 'pages' });
-    }
-    if (!nominations.length) {
+    } else if (!nominations.length) {
       str = t('nominate.noNominationsSet', { ns: 'pages' });
     } else if (activeNominees.length) {
       str = t('nominate.nominatingAnd', { ns: 'pages' });

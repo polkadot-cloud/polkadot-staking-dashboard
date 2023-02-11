@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
@@ -19,8 +19,8 @@ interface TitleProps {
 }
 
 export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
-  const { closeOverlay } = useOverlay();
   const { t } = useTranslation('library');
+  const { closeOverlay } = useOverlay();
 
   const graphic = Svg ? (
     <Svg style={{ width: '1.5rem', height: '1.5rem' }} />

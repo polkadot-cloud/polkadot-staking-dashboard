@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faWallet } from '@fortawesome/free-solid-svg-icons';
@@ -9,9 +9,9 @@ import { useTranslation } from 'react-i18next';
 import { HeadingWrapper, Item } from './Wrappers';
 
 export const Connect = () => {
+  const { t } = useTranslation('library');
   const { openModalWith } = useModal();
   const { activeAccount, accounts } = useConnect();
-  const { t } = useTranslation('library');
   return (
     <HeadingWrapper>
       <Item
@@ -23,7 +23,6 @@ export const Connect = () => {
             'large'
           );
         }}
-        whileHover={{ scale: 1.02 }}
       >
         <FontAwesomeIcon
           icon={faWallet}

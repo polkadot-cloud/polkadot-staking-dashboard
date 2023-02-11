@@ -1,7 +1,6 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAccount } from 'contexts/Account';
@@ -15,12 +14,15 @@ import { clipAddress, remToUnit } from 'Utils';
 import { PoolAccountProps } from '../types';
 import { Wrapper } from './Wrapper';
 
-export const PoolAccount = (props: PoolAccountProps) => {
-  const { address, last, batchKey, batchIndex } = props;
-
+export const PoolAccount = ({
+  address,
+  last,
+  batchKey,
+  batchIndex,
+}: PoolAccountProps) => {
+  const { t } = useTranslation('pages');
   const { addNotification } = useNotifications();
   const { meta } = useAccount();
-  const { t } = useTranslation('pages');
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
@@ -83,7 +85,7 @@ export const PoolAccount = (props: PoolAccountProps) => {
                   }
                 }}
               >
-                <FontAwesomeIcon icon={faCopy as IconProp} transform="grow-1" />
+                <FontAwesomeIcon icon={faCopy} transform="shrink-2" />
               </button>
             )}
           </motion.div>
@@ -92,5 +94,3 @@ export const PoolAccount = (props: PoolAccountProps) => {
     </Wrapper>
   );
 };
-
-export default PoolAccount;

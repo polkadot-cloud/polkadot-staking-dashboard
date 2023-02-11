@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { BondedPool } from 'contexts/Pools/types';
@@ -7,10 +7,10 @@ import { useTranslation } from 'react-i18next';
 import { AnyFunction, AnyJson } from 'types';
 
 export const usePoolFilters = () => {
+  const { t } = useTranslation('library');
   const { meta } = useBondedPools();
   const { getNominationsStatusFromTargets } = useStaking();
   const { getPoolNominationStatusCode } = useBondedPools();
-  const { t } = useTranslation('library');
 
   /*
    * include active pools.
@@ -68,7 +68,7 @@ export const usePoolFilters = () => {
    * Returns the updated filtered list.
    */
   const includeLocked = (list: any) => {
-    return list.filter((p: BondedPool) => p.state.toLowerCase() === 'blocked');
+    return list.filter((p: BondedPool) => p.state.toLowerCase() === 'Blocked');
   };
 
   /*
@@ -77,9 +77,7 @@ export const usePoolFilters = () => {
    * Returns the updated filtered list.
    */
   const includeDestroying = (list: any) => {
-    return list.filter(
-      (p: BondedPool) => p.state.toLowerCase() === 'destroying'
-    );
+    return list.filter((p: BondedPool) => p.state === 'Destroying');
   };
 
   /*
@@ -88,7 +86,7 @@ export const usePoolFilters = () => {
    * Returns the updated filtered list.
    */
   const excludeLocked = (list: any) => {
-    return list.filter((p: BondedPool) => p.state.toLowerCase() !== 'blocked');
+    return list.filter((p: BondedPool) => p.state !== 'Blocked');
   };
 
   /*
@@ -97,9 +95,7 @@ export const usePoolFilters = () => {
    * Returns the updated filtered list.
    */
   const excludeDestroying = (list: any) => {
-    return list.filter(
-      (p: BondedPool) => p.state.toLowerCase() !== 'destroying'
-    );
+    return list.filter((p: BondedPool) => p.state !== 'Destroying');
   };
 
   // includes to be listed in filter overlay.

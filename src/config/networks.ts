@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import * as Sc from '@substrate/connect';
@@ -14,10 +14,7 @@ import { ReactComponent as WestendInlineSVG } from 'img/westend_inline.svg';
 import { ReactComponent as WestendLogoSVG } from 'img/westend_logo.svg';
 import { Networks } from 'types';
 
-/*
- * Network Configuration
- */
-export const NETWORKS: Networks = {
+export const NetworkList: Networks = {
   polkadot: {
     name: 'polkadot',
     endpoints: {
@@ -50,11 +47,11 @@ export const NETWORKS: Networks = {
       icon: PolkadotIconSVG,
       logo: {
         svg: PolkadotLogoSVG,
-        width: '8.5em',
+        width: '7.2em',
       },
       inline: {
         svg: PolkadotInlineSVG,
-        size: '1.2em',
+        size: '1.05em',
       },
     },
     api: {
@@ -74,12 +71,12 @@ export const NETWORKS: Networks = {
     },
     colors: {
       primary: {
-        light: '#201f37',
-        dark: '#6c6b80',
+        light: 'rgb(31, 41, 55)',
+        dark: 'rgb(126, 131, 141)',
       },
       secondary: {
-        light: '#999',
-        dark: '#AAA',
+        light: 'rgb(31, 41, 55)',
+        dark: 'rgb(141, 144, 150)',
       },
       stroke: {
         light: '#4c4b63',
@@ -98,11 +95,11 @@ export const NETWORKS: Networks = {
       icon: KusamaIconSVG,
       logo: {
         svg: KusamaLogoSVG,
-        width: '8.5em',
+        width: '7.2em',
       },
       inline: {
         svg: KusamaInlineSVG,
-        size: '1.55em',
+        size: '1.35em',
       },
     },
     api: {
@@ -148,11 +145,11 @@ export const NETWORKS: Networks = {
       icon: WestendIconSVG,
       logo: {
         svg: WestendLogoSVG,
-        width: '8.5em',
+        width: '7.1em',
       },
       inline: {
         svg: WestendInlineSVG,
-        size: '1.15em',
+        size: '0.96em',
       },
     },
     api: {

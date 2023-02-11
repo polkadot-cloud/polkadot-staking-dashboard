@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
@@ -12,10 +12,10 @@ import { Status } from './Status';
 import { NetworkInfo, Separator, Summary, Wrapper } from './Wrappers';
 
 export const NetworkBar = () => {
+  const { t } = useTranslation('library');
   const { plugins } = usePlugins();
   const { network, isLightClient } = useApi();
   const prices = usePrices();
-  const { t } = useTranslation('library');
 
   // currently not in use
   const [open, setOpen] = useState(false);
@@ -123,5 +123,3 @@ export const NetworkBar = () => {
     </Wrapper>
   );
 };
-
-export default NetworkBar;

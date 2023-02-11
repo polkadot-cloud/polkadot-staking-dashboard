@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,11 +17,12 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { PageCategory, PageItem, PagesConfig } from 'types';
-import Heading from './Heading/Heading';
+import { Heading } from './Heading/Heading';
 import { Primary } from './Primary';
 import { LogoWrapper } from './Wrapper';
 
 export const Main = () => {
+  const { t, i18n } = useTranslation('base');
   const { network } = useApi();
   const { activeAccount, accounts } = useConnect();
   const { pathname } = useLocation();
@@ -30,12 +31,13 @@ export const Main = () => {
   const { membership } = usePoolMemberships();
   const controller = getBondedAccount(activeAccount);
   const {
-    getPoolSetupProgressPercent,
-    getStakeSetupProgressPercent,
+    onNominatorSetup,
+    onPoolSetup,
+    getPoolSetupPercent,
+    getNominatorSetupPercent,
   }: SetupContextInterface = useSetup();
   const { isSyncing, sideMenuMinimised }: UIContextInterface = useUi();
   const controllerNotImported = getControllerNotImported(controller);
-  const { t, i18n } = useTranslation('base');
 
   const [pageConfig, setPageConfig] = useState({
     categories: Object.assign(PAGE_CATEGORIES),
@@ -57,7 +59,7 @@ export const Main = () => {
         // configure Stake action
         const warning = !isSyncing && controllerNotImported;
         const staking = !inNominatorSetup();
-        const setupPercent = getStakeSetupProgressPercent(activeAccount);
+        const setupPercent = getNominatorSetupPercent(activeAccount);
 
         if (staking) {
           _pages[i].action = {
@@ -65,12 +67,14 @@ export const Main = () => {
             status: 'success',
             text: t('active'),
           };
-        } else if (warning) {
+        }
+        if (warning) {
           _pages[i].action = {
             type: 'bullet',
             status: 'warning',
           };
-        } else if (setupPercent > 0 && !staking) {
+        }
+        if (!staking && (onNominatorSetup || setupPercent > 0)) {
           _pages[i].action = {
             type: 'text',
             status: 'warning',
@@ -82,7 +86,7 @@ export const Main = () => {
       if (uri === `${UriPrefix}/pools`) {
         // configure Pools action
         const inPool = membership;
-        const setupPercent = getPoolSetupProgressPercent(activeAccount);
+        const setupPercent = getPoolSetupPercent(activeAccount);
 
         if (inPool) {
           _pages[i].action = {
@@ -90,7 +94,8 @@ export const Main = () => {
             status: 'success',
             text: t('active'),
           };
-        } else if (setupPercent > 0 && !inPool) {
+        }
+        if (!inPool && (setupPercent > 0 || onPoolSetup)) {
           _pages[i].action = {
             type: 'text',
             status: 'warning',
@@ -111,9 +116,11 @@ export const Main = () => {
     isSyncing,
     membership,
     inNominatorSetup(),
-    getStakeSetupProgressPercent(activeAccount),
-    getPoolSetupProgressPercent(activeAccount),
+    getNominatorSetupPercent(activeAccount),
+    getPoolSetupPercent(activeAccount),
     i18n.resolvedLanguage,
+    onNominatorSetup,
+    onPoolSetup,
   ]);
 
   // remove pages that network does not support

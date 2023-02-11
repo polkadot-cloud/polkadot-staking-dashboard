@@ -1,7 +1,6 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faBars,
   faShare,
@@ -26,26 +25,23 @@ import {
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const Member = (props: any) => {
+export const Member = ({ who, batchKey, batchIndex }: any) => {
+  const { t } = useTranslation('pages');
   const { meta } = usePoolMembers();
   const { openModalWith } = useModal();
   const { selectActive } = useList();
-  const { metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
-  const { activeEra } = metrics;
   const { state, roles } = selectedActivePool?.bondedPool || {};
   const { stateToggler, root, depositor } = roles || {};
-  const { t } = useTranslation('pages');
-
-  const { who, batchKey, batchIndex } = props;
 
   const canUnbondBlocked =
-    state === 'blocked' &&
+    state === 'Blocked' &&
     (isOwner() || isStateToggler()) &&
     ![root, stateToggler].includes(who);
 
-  const canUnbondDestroying = state === 'destroying' && who !== depositor;
+  const canUnbondDestroying = state === 'Destroying' && who !== depositor;
 
   const poolMembers = meta[batchKey]?.poolMembers ?? [];
   const member = poolMembers[batchIndex] ?? null;
@@ -57,7 +53,7 @@ export const Member = (props: any) => {
 
     if (points !== '0') {
       menuItems.push({
-        icon: <FontAwesomeIcon icon={faUnlockAlt as IconProp} />,
+        icon: <FontAwesomeIcon icon={faUnlockAlt} />,
         wrap: null,
         title: `${t('pools.unbondFunds')}`,
         cb: () => {
@@ -76,14 +72,14 @@ export const Member = (props: any) => {
     if (Object.values(unbondingEras).length) {
       let canWithdraw = false;
       for (const k of Object.keys(unbondingEras)) {
-        if (Number(activeEra.index) > Number(k)) {
+        if (activeEra.index > Number(k)) {
           canWithdraw = true;
         }
       }
 
       if (canWithdraw) {
         menuItems.push({
-          icon: <FontAwesomeIcon icon={faShare as IconProp} />,
+          icon: <FontAwesomeIcon icon={faShare} />,
           wrap: null,
           title: `${t('pools.withdrawFunds')}`,
           cb: () => {

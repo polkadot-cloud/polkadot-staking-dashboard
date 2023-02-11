@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faCheckCircle, faCircle } from '@fortawesome/free-regular-svg-icons';
@@ -10,9 +10,9 @@ import { useTranslation } from 'react-i18next';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 
 export const FilterValidators = () => {
+  const { t } = useTranslation('library');
   const { getFilters, toggleFilter } = useFilters();
   const { excludesToLabels, includesToLabels } = useValidatorFilters();
-  const { t } = useTranslation('library');
 
   const includes = getFilters('include', 'validators');
   const excludes = getFilters('exclude', 'validators');

@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import NumberEasing from 'che-react-number-easing';
@@ -7,10 +7,8 @@ import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatBox } from './Item';
 import { PieProps } from './types';
 
-export const Pie = (props: PieProps) => {
-  const { label, stat, graph, tooltip, helpKey } = props;
+export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
   const help = helpKey !== undefined;
-
   const showValue = stat?.value !== 0 || stat?.total === 0;
   const showTotal = !!stat?.total;
 
@@ -35,7 +33,7 @@ export const Pie = (props: PieProps) => {
                   precision={2}
                   speed={250}
                   trail={false}
-                  value={stat?.value}
+                  value={Number(stat?.value ?? 0)}
                   useLocaleString
                 />
                 {stat?.unit && <>{stat?.unit}</>}
@@ -48,7 +46,7 @@ export const Pie = (props: PieProps) => {
                       precision={2}
                       speed={250}
                       trail={false}
-                      value={stat?.total}
+                      value={Number(stat?.total ?? 0)}
                       useLocaleString
                     />
                     {stat?.unit && (

@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { AccountProvider } from 'contexts/Account';
@@ -11,6 +11,7 @@ import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
 import { HelpProvider } from 'contexts/Help';
 import { MenuProvider } from 'contexts/Menu';
+import { MigrateProvider } from 'contexts/Migrate';
 import { ModalProvider } from 'contexts/Modal';
 import { NetworkMetricsProvider } from 'contexts/Network';
 import { NotificationsProvider } from 'contexts/Notifications';
@@ -31,7 +32,7 @@ import { TxFeesProvider } from 'contexts/TxFees';
 import { UIProvider } from 'contexts/UI';
 import { ValidatorsProvider } from 'contexts/Validators';
 import { withProviders } from 'library/Hooks';
-import Router from 'Router';
+import { Router } from 'Router';
 import { ThemeProvider } from 'styled-components';
 import { EntryWrapper as Wrapper } from 'Wrappers';
 
@@ -53,9 +54,7 @@ export const ThemedRouter = () => {
   const { network } = useApi();
 
   return (
-    <ThemeProvider
-      theme={{ mode, card: 'shadow', network: `${network.name}-${mode}` }}
-    >
+    <ThemeProvider theme={{ mode, network: `${network.name}-${mode}` }}>
       <WrappedRouter />
     </ThemeProvider>
   );
@@ -89,7 +88,6 @@ export const Providers = withProviders(
   TxFeesProvider,
   ExtrinsicsProvider,
   ModalProvider,
-  OverlayProvider
+  OverlayProvider,
+  MigrateProvider
 )(ThemedRouter);
-
-export default Providers;

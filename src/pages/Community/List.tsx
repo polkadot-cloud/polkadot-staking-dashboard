@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
@@ -51,5 +51,3 @@ export const List = () => {
     </PageRowWrapper>
   );
 };
-
-export default List;

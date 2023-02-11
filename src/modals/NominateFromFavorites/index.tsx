@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
@@ -11,17 +11,18 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTxFees } from 'contexts/TxFees';
 import { useValidators } from 'contexts/Validators';
 import { Validator } from 'contexts/Validators/types';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
+import { SubmitTx } from 'library/SubmitTx';
 import { ValidatorList } from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FooterWrapper, NotesWrapper, PaddingWrapper } from '../Wrappers';
+import { FooterWrapper, PaddingWrapper, WarningsWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {
+  const { t } = useTranslation('modals');
   const { consts, api } = useApi();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getBondedAccount } = useBalances();
@@ -30,7 +31,6 @@ export const NominateFromFavorites = () => {
   const { selectedActivePool, isNominator, isOwner } = useActivePools();
   const controller = getBondedAccount(activeAccount);
   const { txFeesValid } = useTxFees();
-  const { t } = useTranslation('modals');
 
   const { maxNominations } = consts;
   const { bondFor, nominations } = config;
@@ -130,16 +130,18 @@ export const NominateFromFavorites = () => {
     <>
       <Title title={t('nominateFavorites')} />
       <PaddingWrapper>
-        <div style={{ marginBottom: '1rem' }}>
-          {!accountHasSigner(signingAccount) && (
-            <Warning
-              text={`${
-                bondFor === 'nominator'
-                  ? t('youMust', { context: 'controller' })
-                  : t('youMust', { context: 'account' })
-              }`}
-            />
-          )}
+        <div style={{ marginBottom: '1rem', width: '100%' }}>
+          {!accountHasSigner(signingAccount) ? (
+            <WarningsWrapper>
+              <Warning
+                text={`${
+                  bondFor === 'nominator'
+                    ? t('youMust', { context: 'controller' })
+                    : t('youMust', { context: 'account' })
+                }`}
+              />
+            </WarningsWrapper>
+          ) : null}
         </div>
         <ListWrapper>
           {availableFavorites.length > 0 ? (
@@ -161,9 +163,6 @@ export const NominateFromFavorites = () => {
             <h3>{t('noFavoritesAvailable')}</h3>
           )}
         </ListWrapper>
-        <NotesWrapper style={{ paddingBottom: 0 }}>
-          <EstimatedTxFee />
-        </NotesWrapper>
         <FooterWrapper>
           <h3
             className={
@@ -181,25 +180,27 @@ export const NominateFromFavorites = () => {
                   })}`
               : `${t('noFavoritesSelected')}`}
           </h3>
-          <div>
-            <ButtonSubmit
-              text={`${submitting ? t('submitting') : t('submit')}`}
-              iconLeft={faArrowAltCircleUp}
-              iconTransform="grow-2"
-              onClick={() => submitTx()}
-              disabled={
-                !valid ||
-                submitting ||
-                (bondFor === 'pool' && !isNominator() && !isOwner()) ||
-                !accountHasSigner(signingAccount) ||
-                !txFeesValid
-              }
-            />
-          </div>
         </FooterWrapper>
       </PaddingWrapper>
+      <SubmitTx
+        fromController={bondFor === 'nominator'}
+        buttons={[
+          <ButtonSubmit
+            key="button_submit"
+            text={`${submitting ? t('submitting') : t('submit')}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => submitTx()}
+            disabled={
+              !valid ||
+              submitting ||
+              (bondFor === 'pool' && !isNominator() && !isOwner()) ||
+              !accountHasSigner(signingAccount) ||
+              !txFeesValid
+            }
+          />,
+        ]}
+      />
     </>
   );
 };
-
-export default NominateFromFavorites;

@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -22,13 +22,13 @@ export const useSubmitExtrinsic = ({
   callbackInBlock,
   from,
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
+  const { t } = useTranslation('library');
   const { api } = useApi();
   const { setTxFees, setSender, txFees } = useTxFees();
   const { addNotification } = useNotifications();
   const { addPending, removePending } = useExtrinsics();
   const { extensions } = useExtensions();
   const { getAccount } = useConnect();
-  const { t } = useTranslation('library');
 
   // if null account is provided, fallback to empty string
   const submitAddress: string = from ?? '';
@@ -48,7 +48,7 @@ export const useSubmitExtrinsic = ({
     }
     // get payment info
     const { partialFee } = await tx.paymentInfo(submitAddress);
-    const partialFeeBn = new BN(partialFee.toString());
+    const partialFeeBn = new BigNumber(partialFee.toString());
 
     // give tx fees to global useTxFees context
     if (partialFeeBn.toString() !== txFees.toString()) {
@@ -75,7 +75,7 @@ export const useSubmitExtrinsic = ({
       (e: ExtensionInjected) => e.id === source
     );
     if (extension === undefined) {
-      throw new Error(t('walletNotFound') || '');
+      throw new Error(`${t('walletNotFound')}`);
     } else {
       // summons extension popup if not already connected.
       extension.enable(DappName);

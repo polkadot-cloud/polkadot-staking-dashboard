@@ -1,6 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BigNumber from 'bignumber.js';
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -19,13 +20,8 @@ import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import {
-  defaultThemes,
-  networkColors,
-  networkColorsSecondary,
-} from 'theme/default';
+import { graphColors } from 'styles/graphs';
 import { AnySubscan } from 'types';
-import { humanNumber } from 'Utils';
 import { PayoutLineProps } from './types';
 import {
   calculatePayoutAverages,
@@ -51,7 +47,7 @@ export const PayoutLine = ({
 }: PayoutLineProps) => {
   const { t } = useTranslation('library');
   const { mode } = useTheme();
-  const { name, unit, units } = useApi().network;
+  const { unit, units, colors } = useApi().network;
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership: poolMembership } = usePoolMemberships();
@@ -79,10 +75,10 @@ export const PayoutLine = ({
 
   // determine color for payouts
   const color = notStaking
-    ? networkColors[`${name}-${mode}`]
+    ? colors.primary[mode]
     : !poolingOnly
-    ? networkColors[`${name}-${mode}`]
-    : networkColorsSecondary[`${name}-${mode}`];
+    ? colors.primary[mode]
+    : colors.secondary[mode];
 
   // configure graph options
   const options = {
@@ -108,7 +104,7 @@ export const PayoutLine = ({
           display: false,
         },
         grid: {
-          color: defaultThemes.graphs.grid[mode],
+          color: graphColors.grid[mode],
         },
       },
     },
@@ -118,15 +114,16 @@ export const PayoutLine = ({
       },
       tooltip: {
         displayColors: false,
-        backgroundColor: defaultThemes.graphs.tooltip[mode],
-        titleColor: defaultThemes.text.invert[mode],
-        bodyColor: defaultThemes.text.invert[mode],
+        backgroundColor: graphColors.tooltip[mode],
+        titleColor: graphColors.label[mode],
+        bodyColor: graphColors.label[mode],
         bodyFont: {
           weight: '600',
         },
         callbacks: {
           title: () => [],
-          label: (context: any) => ` ${humanNumber(context.parsed.y)} ${unit}`,
+          label: (context: any) =>
+            ` ${new BigNumber(context.parsed.y).toFormat()} ${unit}`,
         },
         intersect: false,
         interaction: {
@@ -168,5 +165,3 @@ export const PayoutLine = ({
     </>
   );
 };
-
-export default PayoutLine;

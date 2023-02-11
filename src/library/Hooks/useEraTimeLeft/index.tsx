@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
@@ -8,8 +8,7 @@ import { getUnixTime } from 'date-fns';
 export const useEraTimeLeft = () => {
   const { consts } = useApi();
   const { epochDuration, expectedBlockTime, sessionsPerEra } = consts;
-  const { metrics } = useNetworkMetrics();
-  const { activeEra } = metrics;
+  const { activeEra } = useNetworkMetrics();
 
   // important to fetch the actual timeleft from when other components ask for it.
   const get = () => {
@@ -39,5 +38,3 @@ export const useEraTimeLeft = () => {
 
   return { get };
 };
-
-export default useEraTimeLeft;

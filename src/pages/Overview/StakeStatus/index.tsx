@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
@@ -121,7 +121,7 @@ export const StakeStatus = () => {
             {!activeAccount ? (
               <Item
                 text={t('overview.noAccountConnected')}
-                ctaText={t('overview.connect') || ''}
+                ctaText={`${t('overview.connect')}`}
                 onClick={() => openModalWith('ConnectAccounts', {}, 'large')}
               />
             ) : (
@@ -139,6 +139,10 @@ export const StakeStatus = () => {
                       <Item
                         leftIcon={{ show: true, status: 'off' }}
                         text={t('overview.notStaking')}
+                        ctaText={`${t('overview.start')}`}
+                        onClick={() =>
+                          openModalWith('StartStaking', {}, 'small')
+                        }
                       />
                     ) : (
                       <>
@@ -154,7 +158,7 @@ export const StakeStatus = () => {
                               getNominationStatus(activeAccount, 'nominator')
                                 .message
                             }
-                            ctaText={t('overview.manage') || ''}
+                            ctaText={`${t('overview.manage')}`}
                             onClick={() => navigate('/nominate')}
                           />
                         ) : null}
@@ -171,7 +175,7 @@ export const StakeStatus = () => {
                                 ? `${t('overview.pool')} ${membership.poolId}`
                                 : poolDisplay()
                             }`}
-                            ctaText={t('overview.manage') || ''}
+                            ctaText={`${t('overview.manage')}`}
                             onClick={() => navigate('/pools')}
                           />
                         ) : null}

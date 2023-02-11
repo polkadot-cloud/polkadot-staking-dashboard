@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
@@ -8,11 +8,10 @@ import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const Members = (props: { members: string }) => {
-  const { members } = props;
+export const Members = ({ members }: { members: string }) => {
   const { t } = useTranslation('library');
-
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
+
   const posRef = useRef<HTMLDivElement>(null);
   const tooltipText = t('poolMembers');
 

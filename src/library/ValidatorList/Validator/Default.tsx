@@ -1,7 +1,6 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faBars, faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,7 +8,7 @@ import { useMenu } from 'contexts/Menu';
 import { useModal } from 'contexts/Modal';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
-import CopyAddress from 'library/ListItem/Labels/CopyAddress';
+import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
 import {
   Labels,
@@ -31,22 +30,20 @@ import { Select } from '../../ListItem/Labels/Select';
 import { DefaultProps } from './types';
 import { getIdentityDisplay } from './Utils';
 
-export const Default = (props: DefaultProps) => {
-  const {
-    validator,
-    toggleFavorites,
-    batchIndex,
-    batchKey,
-    showMenu,
-    inModal,
-  } = props;
-
+export const Default = ({
+  validator,
+  toggleFavorites,
+  batchIndex,
+  batchKey,
+  showMenu,
+  inModal,
+}: DefaultProps) => {
+  const { t } = useTranslation('library');
   const { openModalWith } = useModal();
   const { addNotification } = useNotifications();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { meta } = useValidators();
   const { selectActive } = useList();
-  const { t } = useTranslation('library');
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
@@ -72,7 +69,7 @@ export const Default = (props: DefaultProps) => {
   const posRef = useRef(null);
   const menuItems = [
     {
-      icon: <FontAwesomeIcon icon={faChartLine as IconProp} />,
+      icon: <FontAwesomeIcon icon={faChartLine} />,
       wrap: null,
       title: `${t('viewMetrics')}`,
       cb: () => {
@@ -87,7 +84,7 @@ export const Default = (props: DefaultProps) => {
       },
     },
     {
-      icon: <FontAwesomeIcon icon={faCopy as IconProp} />,
+      icon: <FontAwesomeIcon icon={faCopy} />,
       wrap: null,
       title: `${t('copyAddress')}`,
       cb: () => {
@@ -153,5 +150,3 @@ export const Default = (props: DefaultProps) => {
     </Wrapper>
   );
 };
-
-export default Default;

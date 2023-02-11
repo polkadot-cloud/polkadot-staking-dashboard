@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageTitle } from 'library/PageTitle';
@@ -9,12 +9,11 @@ import { Entity } from './Entity';
 import { List } from './List';
 import { Wrapper } from './Wrappers';
 
-export const CommunityInner = (props: PageProps) => {
-  const { page } = props;
-  const { key } = page;
-
-  const { activeSection } = useCommunitySections();
+export const CommunityInner = ({ page }: PageProps) => {
   const { t } = useTranslation('base');
+  const { activeSection } = useCommunitySections();
+
+  const { key } = page;
 
   return (
     <Wrapper>
@@ -32,5 +31,3 @@ export const Community = (props: PageProps) => {
     </CommunitySectionsProvider>
   );
 };
-
-export default Community;

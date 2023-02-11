@@ -1,12 +1,12 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { ApiPromise } from '@polkadot/api';
 import { U8aLike } from '@polkadot/util/types';
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { Network, NetworkName } from '../../types';
 
-export type ConnectionStatus = 'connecting' | 'connected' | 'disconnected';
+export type ApiStatus = 'connecting' | 'connected' | 'disconnected';
 
 export interface NetworkState {
   name: NetworkName;
@@ -17,22 +17,22 @@ export interface APIConstants {
   maxNominations: number;
   sessionsPerEra: number;
   maxNominatorRewardedPerValidator: number;
-  historyDepth: BN;
+  historyDepth: BigNumber;
   maxElectingVoters: number;
   expectedBlockTime: number;
   epochDuration: number;
-  existentialDeposit: BN;
+  existentialDeposit: BigNumber;
+  fastUnstakeDeposit: BigNumber;
   poolsPalletId: U8aLike;
 }
 
 export interface APIContextInterface {
   connect: (n: NetworkName) => Promise<void>;
-  fetchDotPrice: () => void;
   switchNetwork: (n: NetworkName, l: boolean) => Promise<void>;
   api: ApiPromise | null;
   consts: APIConstants;
   isReady: boolean;
   isLightClient: boolean;
-  status: ConnectionStatus;
+  apiStatus: ApiStatus;
   network: Network;
 }

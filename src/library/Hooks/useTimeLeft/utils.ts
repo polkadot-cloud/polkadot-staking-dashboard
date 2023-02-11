@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { getUnixTime, intervalToDuration } from 'date-fns';
+import { differenceInDays, getUnixTime, intervalToDuration } from 'date-fns';
 import { TFunction } from 'i18next';
 import { defaultDuration } from './defaults';
 import { TimeleftDuration } from './types';
@@ -21,13 +21,14 @@ export const getDuration = (toDate: Date | null): TimeleftDuration => {
   if (getUnixTime(toDate) <= getUnixTime(new Date())) {
     return defaultDuration;
   }
+
   toDate.setSeconds(toDate.getSeconds());
   const d = intervalToDuration({
     start: Date.now(),
     end: toDate,
   });
 
-  const days = d?.days || 0;
+  const days = differenceInDays(toDate, Date.now());
   const hours = d?.hours || 0;
   const minutes = d?.minutes || 0;
   const seconds = d?.seconds || 0;
@@ -43,13 +44,15 @@ export const getDuration = (toDate: Date | null): TimeleftDuration => {
   };
 };
 
-// format the duration as a string.
+// format the duration (from seconds) as a string.
 export const timeleftAsString = (
   t: TFunction,
-  toDate?: Date,
+  duration: number,
   full?: boolean
 ) => {
-  const { days, hours, minutes, seconds } = getDuration(toDate || null);
+  const { days, hours, minutes, seconds } = getDuration(
+    fromNow(duration) || null
+  );
 
   const tHour = `time.${full ? `hour` : `hr`}`;
   const tMinute = `time.${full ? `minute` : `min`}`;
@@ -59,12 +62,15 @@ export const timeleftAsString = (
     str += `${days} ${t('time.day', { count: days, ns: 'base' })}`;
   }
   if (hours > 0) {
+    if (str) str += ', ';
     str += ` ${hours} ${t(tHour, { count: hours, ns: 'base' })}`;
   }
   if (minutes > 0) {
+    if (str) str += ', ';
     str += ` ${minutes} ${t(tMinute, { count: minutes, ns: 'base' })}`;
   }
   if (!days && !hours) {
+    if (str) str += ', ';
     str += ` ${seconds}`;
   }
   return str;

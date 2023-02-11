@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import Keyring from '@polkadot/keyring';
@@ -236,9 +236,6 @@ export const ConnectProvider = ({
    * no guarantee it still exists - must explicitly find it.
    */
   const connectActiveExtensions = async () => {
-    const keyring = new Keyring();
-    keyring.setSS58Format(network.ss58);
-
     // iterate extensions and add accounts to state
     const total = extensions?.length ?? 0;
     let activeWalletAccount: ImportedAccount | null = null;
@@ -323,9 +320,6 @@ export const ConnectProvider = ({
    * If activeAccount is not found here, it is simply ignored.
    */
   const connectExtensionAccounts = async (e: ExtensionInjected) => {
-    const keyring = new Keyring();
-    keyring.setSS58Format(network.ss58);
-
     // ensure the extension carries an `id` property
     const id = e?.id ?? undefined;
 
@@ -373,7 +367,6 @@ export const ConnectProvider = ({
               updateInitialisedExtensions(id);
             }
           });
-
           addToUnsubscribe(id, unsub);
         }
       } catch (err) {

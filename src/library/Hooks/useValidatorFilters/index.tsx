@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
@@ -8,10 +8,10 @@ import { useTranslation } from 'react-i18next';
 import { AnyFunction, AnyJson } from 'types';
 
 export const useValidatorFilters = () => {
+  const { t } = useTranslation('library');
   const { consts } = useApi();
   const { meta, session, sessionParachain } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
-  const { t } = useTranslation('library');
 
   /*
    * filterMissingIdentity

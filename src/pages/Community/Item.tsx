@@ -1,7 +1,6 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faTwitter } from '@fortawesome/free-brands-svg-icons';
 import {
   faEnvelope,
@@ -17,12 +16,11 @@ import { useCommunitySections } from './context';
 import { ItemProps } from './types';
 import { ItemWrapper } from './Wrappers';
 
-export const Item = (props: ItemProps) => {
+export const Item = ({ item, actionable }: ItemProps) => {
+  const { t } = useTranslation('pages');
   const { openModalWith } = useModal();
   const { network } = useApi();
-  const { t } = useTranslation('pages');
 
-  const { item, actionable } = props;
   const {
     bio,
     name,
@@ -137,10 +135,7 @@ export const Item = (props: ItemProps) => {
                   window.open(`https://twitter.com/${twitter}`, '_blank');
                 }}
               >
-                <FontAwesomeIcon
-                  icon={faTwitter as IconProp}
-                  className="icon-left"
-                />
+                <FontAwesomeIcon icon={faTwitter} className="icon-left" />
                 <h4>{twitter}</h4>
                 <FontAwesomeIcon
                   icon={faExternalLink}
@@ -171,5 +166,3 @@ export const Item = (props: ItemProps) => {
     </ItemWrapper>
   );
 };
-
-export default Item;

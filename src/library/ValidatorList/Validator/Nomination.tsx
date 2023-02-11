@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useValidators } from 'contexts/Validators';
@@ -17,20 +17,17 @@ import { Select } from '../../ListItem/Labels/Select';
 import { NominationProps } from './types';
 import { getIdentityDisplay } from './Utils';
 
-export const Nomination = (props: NominationProps) => {
+export const Nomination = ({
+  validator,
+  nominator,
+  toggleFavorites,
+  batchIndex,
+  batchKey,
+  bondFor,
+  inModal,
+}: NominationProps) => {
   const { meta } = useValidators();
   const { selectActive } = useList();
-
-  const {
-    validator,
-    nominator,
-    toggleFavorites,
-    batchIndex,
-    batchKey,
-    bondFor,
-    inModal,
-  } = props;
-
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
 
@@ -84,5 +81,3 @@ export const Nomination = (props: NominationProps) => {
     </Wrapper>
   );
 };
-
-export default Nomination;

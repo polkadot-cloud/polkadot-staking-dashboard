@@ -1,6 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BigNumber from 'bignumber.js';
 import {
   BarElement,
   CategoryScale,
@@ -22,14 +23,8 @@ import { format, fromUnixTime } from 'date-fns';
 import { locales } from 'locale';
 import { Bar } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
-import {
-  defaultThemes,
-  networkColors,
-  networkColorsSecondary,
-  networkColorsTransparent,
-} from 'theme/default';
+import { graphColors } from 'styles/graphs';
 import { AnySubscan } from 'types';
-import { humanNumber } from 'Utils';
 import { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
 
@@ -47,7 +42,7 @@ ChartJS.register(
 export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const { i18n, t } = useTranslation('library');
   const { mode } = useTheme();
-  const { name, unit, units } = useApi().network;
+  const { unit, units, colors } = useApi().network;
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
@@ -68,13 +63,13 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
 
   // determine color for payouts
   const colorPayouts = notStaking
-    ? networkColorsTransparent[`${name}-${mode}`]
-    : networkColors[`${name}-${mode}`];
+    ? colors.transparent[mode]
+    : colors.primary[mode];
 
   // determine color for poolClaims
   const colorPoolClaims = notStaking
-    ? networkColorsTransparent[`${name}-${mode}`]
-    : networkColorsSecondary[`${name}-${mode}`];
+    ? colors.transparent[mode]
+    : colors.secondary[mode];
 
   const data = {
     labels: payoutsByDay.map((item: AnySubscan) => {
@@ -132,7 +127,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
           display: false,
         },
         grid: {
-          color: defaultThemes.graphs.grid[mode],
+          color: graphColors.grid[mode],
         },
       },
     },
@@ -145,15 +140,16 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
       },
       tooltip: {
         displayColors: false,
-        backgroundColor: defaultThemes.graphs.tooltip[mode],
-        titleColor: defaultThemes.text.invert[mode],
-        bodyColor: defaultThemes.text.invert[mode],
+        backgroundColor: graphColors.tooltip[mode],
+        titleColor: graphColors.label[mode],
+        bodyColor: graphColors.label[mode],
         bodyFont: {
           weight: '600',
         },
         callbacks: {
           title: () => [],
-          label: (context: any) => `${humanNumber(context.parsed.y)} ${unit}`,
+          label: (context: any) =>
+            `${new BigNumber(context.parsed.y).toFormat()} ${unit}`,
         },
       },
     },
@@ -169,5 +165,3 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
     </div>
   );
 };
-
-export default PayoutBar;

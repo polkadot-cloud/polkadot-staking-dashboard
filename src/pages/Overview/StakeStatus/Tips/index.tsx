@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { TIPS_CONFIG } from 'config/tips';
@@ -10,13 +10,13 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
-import useFillVariables from 'library/Hooks/useFillVariables';
+import { useFillVariables } from 'library/Hooks/useFillVariables';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnyJson } from 'types';
 import { setStateWithRef } from 'Utils';
-import Items from './Items';
+import { Items } from './Items';
 import { PageToggle } from './PageToggle';
 import { Syncing } from './Syncing';
 import { TipsWrapper } from './Wrappers';
@@ -111,7 +111,7 @@ export const Tips = () => {
   if (!activeAccount) {
     segments.push(1);
   } else if (!isNominating() && !membership) {
-    if (transferOptions.freeBalance.gt(minNominatorBond)) {
+    if (transferOptions.freeBalance.isGreaterThan(minNominatorBond)) {
       segments.push(2);
     } else {
       segments.push(3);

@@ -1,8 +1,10 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BigNumber from 'bignumber.js';
+import { MinBondPrecision } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useTooltip } from 'contexts/Tooltip';
 import { useValidators } from 'contexts/Validators';
@@ -16,13 +18,14 @@ import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { OversubscribedProps } from '../types';
 
-export const Oversubscribed = (props: OversubscribedProps) => {
+export const Oversubscribed = ({
+  batchIndex,
+  batchKey,
+}: OversubscribedProps) => {
+  const { t } = useTranslation('library');
   const { consts, network } = useApi();
   const { meta } = useValidators();
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
-  const { t } = useTranslation('library');
-
-  const { batchIndex, batchKey } = props;
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
@@ -47,9 +50,13 @@ export const Oversubscribed = (props: OversubscribedProps) => {
 
   const posRef = useRef(null);
 
-  const tooltipText = `${t('overSubscribedMinReward')} ${lowestReward} ${
-    network.unit
-  }`;
+  const lowestRewardFormatted = new BigNumber(lowestReward)
+    .decimalPlaces(MinBondPrecision)
+    .toFormat();
+
+  const tooltipText = `${t(
+    'overSubscribedMinReward'
+  )} ${lowestRewardFormatted} ${network.unit}`;
 
   const toggleTooltip = () => {
     if (!open) {
@@ -81,7 +88,7 @@ export const Oversubscribed = (props: OversubscribedProps) => {
                   className="warning"
                 />
               </span>
-              {lowestReward} {network.unit}
+              {lowestRewardFormatted} {network.unit}
             </OverSubscribedWrapper>
           </div>
         </motion.div>
@@ -89,5 +96,3 @@ export const Oversubscribed = (props: OversubscribedProps) => {
     </>
   );
 };
-
-export default Oversubscribed;

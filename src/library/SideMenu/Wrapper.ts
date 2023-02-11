@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import {
@@ -7,12 +7,6 @@ import {
   SideMenuStickyThreshold,
 } from 'consts';
 import styled from 'styled-components';
-import {
-  backgroundOverlay,
-  borderPrimary,
-  networkColor,
-  textSecondary,
-} from 'theme';
 import { MinimisedProps } from './types';
 
 export const Wrapper = styled.div<MinimisedProps>`
@@ -31,7 +25,7 @@ export const Wrapper = styled.div<MinimisedProps>`
       : `${SideMenuMaximisedWidth}px`};
 
   @media (max-width: ${SideMenuStickyThreshold}px) {
-    background: ${backgroundOverlay};
+    background: var(--gradient-side-menu);
     transition: all 0.2s;
     border-radius: 0.75rem;
 
@@ -54,16 +48,16 @@ export const Wrapper = styled.div<MinimisedProps>`
       padding-top: 0.5rem;
 
       button {
+        color: var(--text-color-secondary);
         position: relative;
-        color: ${textSecondary};
         transition: color 0.2s;
-        margin-top: ${(props) => (props.minimised ? '1.25rem' : 0)};
-        margin-right: ${(props) => (props.minimised ? 0 : '1rem')};
+        margin-top: ${(props) => (props.minimised ? '1rem' : 0)};
+        margin-right: ${(props) => (props.minimised ? 0 : '0.9rem')};
         opacity: 0.75;
         padding: 0.1rem;
 
         path {
-          fill: ${textSecondary};
+          fill: var(--text-color-secondary);
         }
         &:hover {
           opacity: 1;
@@ -84,20 +78,33 @@ export const LogoWrapper = styled.button<MinimisedProps>`
   position: relative;
 
   ellipse {
-    fill: ${networkColor};
+    fill: var(--network-color-primary);
   }
 `;
 
 export const Separator = styled.div`
-  border-bottom: 1px solid ${borderPrimary};
+  border-bottom: 1px solid var(--border-primary-color);
   width: 100%;
   margin: 1rem 1rem 0.5rem 0;
 `;
 
-export const ConnectionSymbol = styled.div<{ color: any }>`
+export const ConnectionSymbol = styled.div`
   width: 0.6rem;
   height: 0.6rem;
   background: ${(props) => props.color};
   border-radius: 50%;
   margin: 0 0.7rem;
+
+  &.success {
+    background: var(--status-success-color);
+    color: var(--status-success-color);
+  }
+  &.warning {
+    background: var(--status-warning-color);
+    color: var(--status-warning-color);
+  }
+  &.danger {
+    background: var(--status-danger-color);
+    color: var(--status-danger-color);
+  }
 `;

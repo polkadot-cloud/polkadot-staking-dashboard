@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
@@ -6,7 +6,7 @@ import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
-import ValidatorList from 'library/ValidatorList';
+import { ValidatorList } from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
@@ -15,11 +15,11 @@ import { Item } from './Item';
 import { ItemsWrapper } from './Wrappers';
 
 export const Entity = () => {
+  const { t } = useTranslation('pages');
   const { isReady, network } = useApi();
   const { validators: allValidators, removeValidatorMetaBatch } =
     useValidators();
   const { setActiveSection, activeItem } = useCommunitySections();
-  const { t } = useTranslation('pages');
 
   const { name, validators: entityAllValidators } = activeItem;
   const validators = entityAllValidators[network.name] ?? [];
@@ -104,5 +104,3 @@ export const Entity = () => {
     </PageRowWrapper>
   );
 };
-
-export default Entity;

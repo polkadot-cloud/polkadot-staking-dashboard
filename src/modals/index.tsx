@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useModal } from 'contexts/Modal';
@@ -26,6 +26,7 @@ import { NominatePool } from './NominatePool';
 import { PoolNominations } from './PoolNominations';
 import { SelectFavorites } from './SelectFavorites';
 import { Settings } from './Settings';
+import { StartStaking } from './StartStaking';
 import { Unbond } from './Unbond';
 import { UnbondPoolMember } from './UnbondPoolMember';
 import { UnlockChunks } from './UnlockChunks';
@@ -62,6 +63,13 @@ export const Modal = () => {
   };
 
   useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
+
+  useEffect(() => {
     // modal has been opened - fade in
     if (status === 1) {
       onFadeIn();
@@ -80,9 +88,10 @@ export const Modal = () => {
   }, [resize]);
 
   const handleResize = () => {
-    let _height = modalRef.current?.clientHeight ?? 0;
-    _height = _height > maxHeight ? maxHeight : _height;
-    setModalHeight(_height);
+    if (status !== 1) return;
+    let h = modalRef.current?.clientHeight ?? 0;
+    h = h > maxHeight ? maxHeight : h;
+    setModalHeight(h);
   };
 
   if (status === 0) {
@@ -130,6 +139,7 @@ export const Modal = () => {
               {modal === 'PoolNominations' && <PoolNominations />}
               {modal === 'SelectFavorites' && <SelectFavorites />}
               {modal === 'Settings' && <Settings />}
+              {modal === 'StartStaking' && <StartStaking />}
               {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
               {modal === 'UnbondPoolMember' && <UnbondPoolMember />}
               {modal === 'UnlockChunks' && <UnlockChunks />}
@@ -154,5 +164,3 @@ export const Modal = () => {
     </ModalWrapper>
   );
 };
-
-export default Modal;

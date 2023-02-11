@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useModal } from 'contexts/Modal';
@@ -39,5 +39,3 @@ export const PoolNominations = () => {
     </>
   );
 };
-
-export default PoolNominations;

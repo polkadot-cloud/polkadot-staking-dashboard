@@ -1,44 +1,36 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTranslation } from 'react-i18next';
-import {
-  humanNumber,
-  planckBnToUnit,
-  rmCommas,
-  toFixedIfNecessary,
-} from 'Utils';
+import { planckToUnit, rmCommas } from 'Utils';
 import { HeaderWrapper } from './Wrappers';
 
 export const Header = () => {
+  const { t } = useTranslation('pages');
   const { network } = useApi();
   const { selectedActivePool } = useActivePools();
   const { getMembersOfPool } = usePoolMembers();
-  const { t } = useTranslation('pages');
 
   const { state, points } = selectedActivePool?.bondedPool || {};
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
 
-  const bonded = humanNumber(
-    toFixedIfNecessary(
-      planckBnToUnit(
-        points ? new BN(rmCommas(points)) : new BN(0),
-        network.units
-      ),
-      3
-    )
-  );
+  const bonded = planckToUnit(
+    new BigNumber(points ? rmCommas(points) : 0),
+    network.units
+  )
+    .decimalPlaces(3)
+    .toFormat();
 
   let stateDisplay;
   switch (state) {
-    case 'blocked':
+    case 'Blocked':
       stateDisplay = t('pools.locked');
       break;
-    case 'destroying':
+    case 'Destroying':
       stateDisplay = t('pools.destroying');
       break;
     default:

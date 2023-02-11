@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 export interface AccountProps {
@@ -11,4 +11,10 @@ export interface AccountProps {
   fontSize?: string;
   title?: string;
   readOnly?: boolean;
+}
+
+export interface WrapperProps {
+  canClick: boolean;
+  filled: boolean;
+  fontSize: string;
 }

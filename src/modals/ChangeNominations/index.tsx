@@ -1,8 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -10,20 +9,16 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
-import { useEffect, useState } from 'react';
+import { Close } from 'library/Modal/Close';
+import { SubmitTx } from 'library/SubmitTx';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  FooterWrapper,
-  NotesWrapper,
-  PaddingWrapper,
-  Separator,
-} from '../Wrappers';
+import { PaddingWrapper, Separator, WarningsWrapper } from '../Wrappers';
 
 export const ChangeNominations = () => {
+  const { t } = useTranslation('modals');
   const { api } = useApi();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getBondedAccount, getAccountNominations } = useBalances();
@@ -31,7 +26,6 @@ export const ChangeNominations = () => {
   const { poolNominations, isNominator, isOwner, selectedActivePool } =
     useActivePools();
   const { txFeesValid } = useTxFees();
-  const { t } = useTranslation('modals');
 
   const { nominations: newNominations, provider, bondFor } = config;
 
@@ -117,59 +111,62 @@ export const ChangeNominations = () => {
     callbackInBlock: () => {},
   });
 
+  const warnings = [];
+  if (!nominations.length) {
+    warnings.push(<Warning text={t('noNominationsSet')} />);
+  }
+  if (!accountHasSigner(signingAccount)) {
+    warnings.push(
+      <Warning
+        text={`${
+          bondFor === 'nominator'
+            ? t('youMust', { context: 'controller' })
+            : t('youMust', { context: 'account' })
+        }`}
+      />
+    );
+  }
+
   return (
     <>
-      <Title title={t('stopNominating')} icon={faStopCircle} />
-      <PaddingWrapper verticalOnly>
-        <div
-          style={{
-            padding: '0 1.25rem',
-            width: '100%',
-          }}
-        >
-          {!nominations.length ? (
-            <Warning text={t('noNominationsSet')} />
-          ) : null}
-          {!accountHasSigner(signingAccount) && (
-            <Warning
-              text={`${
-                bondFor === 'nominator'
-                  ? t('youMust', { context: 'controller' })
-                  : t('youMust', { context: 'account' })
-              }`}
-            />
-          )}
-          <h2 className="title">
-            {t('stop')}{' '}
-            {!remaining
-              ? t('allNominations')
-              : `${t('nomination', { count: removing })}`}
-          </h2>
-          <Separator />
-          <NotesWrapper>
-            <p>{t('changeNomination')}</p>
-            <EstimatedTxFee />
-          </NotesWrapper>
-          <FooterWrapper>
-            <div>
-              <ButtonSubmit
-                text={`${submitting ? t('submitting') : t('submit')}`}
-                iconLeft={faArrowAltCircleUp}
-                iconTransform="grow-2"
-                onClick={() => submitTx()}
-                disabled={
-                  !valid ||
-                  submitting ||
-                  !accountHasSigner(signingAccount) ||
-                  !txFeesValid
-                }
-              />
-            </div>
-          </FooterWrapper>
-        </div>
+      <Close />
+      <PaddingWrapper>
+        <h2 className="title unbounded">
+          {t('stop')}{' '}
+          {!remaining
+            ? t('allNominations')
+            : `${t('nomination', { count: removing })}`}
+        </h2>
+        <Separator />
+        {warnings.length ? (
+          <WarningsWrapper noMargin>
+            {warnings.map((warning: React.ReactNode, index: number) => (
+              <React.Fragment key={`warning_${index}`}>
+                {warning}
+              </React.Fragment>
+            ))}
+          </WarningsWrapper>
+        ) : null}
+        <p>{t('changeNomination')}</p>
       </PaddingWrapper>
+      <SubmitTx
+        fromController={isStaking}
+        buttons={[
+          <ButtonSubmit
+            key="button_submit"
+            text={`${submitting ? t('submitting') : t('submit')}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => submitTx()}
+            disabled={
+              !valid ||
+              submitting ||
+              !accountHasSigner(signingAccount) ||
+              !txFeesValid
+            }
+          />,
+        ]}
+      />
     </>
   );
 };
-
-export default ChangeNominations;

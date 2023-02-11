@@ -1,16 +1,18 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import Identicon from 'library/Identicon';
+import { Identicon } from 'library/Identicon';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import { clipAddress, determinePoolDisplay } from 'Utils';
 import { PoolIdentityProps } from '../types';
 
-export const PoolIdentity = (props: PoolIdentityProps) => {
+export const PoolIdentity = ({
+  pool,
+  batchKey,
+  batchIndex,
+}: PoolIdentityProps) => {
   const { meta } = useBondedPools();
-
-  const { pool, batchKey, batchIndex } = props;
   const { addresses } = pool;
 
   // get metadata from pools metabatch

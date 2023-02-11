@@ -1,26 +1,27 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useUi } from 'contexts/UI';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, toFixedIfNecessary } from 'Utils';
+import { planckToUnit } from 'Utils';
 import { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 
 export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
-  const { minCreateBond } = usePoolsConfig().stats;
+  const { t } = useTranslation('library');
   const { isSyncing } = useUi();
   const { unit, units } = useApi().network;
-  const { t } = useTranslation('library');
+  const { minCreateBond } = usePoolsConfig().stats;
 
-  const minCreateBondBase = planckBnToUnit(minCreateBond, units);
+  const minCreateBondUnit = planckToUnit(minCreateBond, units);
   const sectionClassName =
-    value >= minCreateBondBase && !isSyncing ? 'invert' : '';
+    value.isGreaterThanOrEqualTo(minCreateBondUnit) && !isSyncing
+      ? 'invert'
+      : '';
 
   return (
     <Wrapper>
@@ -33,14 +34,14 @@ export const CreatePoolStatusBar = ({ value }: NominateStatusBarProps) => {
         </section>
         <section className={sectionClassName}>
           <h4>
-            <FontAwesomeIcon icon={faFlag as IconProp} transform="shrink-4" />
+            <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
             &nbsp;{t('createPool')}
           </h4>
           <div className="bar">
             <h5>
               {isSyncing
                 ? '...'
-                : `${toFixedIfNecessary(minCreateBondBase, 3)} ${unit}`}
+                : `${minCreateBondUnit.decimalPlaces(3).toFormat()} ${unit}`}
             </h5>
           </div>
         </section>

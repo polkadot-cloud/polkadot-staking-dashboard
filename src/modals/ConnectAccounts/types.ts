@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { BalanceLedger } from 'contexts/Balances/types';
@@ -28,7 +28,7 @@ export interface ExtensionMetaProps {
 export interface AccountElementProps {
   meta: ExtensionAccount | null;
   address?: MaybeAccount;
-  label?: string[];
+  label?: Array<string>;
   disconnect?: boolean;
   asElement?: boolean;
 }

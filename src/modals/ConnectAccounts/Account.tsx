@@ -1,14 +1,13 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import { ExtensionInjected } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
-import Identicon from 'library/Identicon';
+import { Identicon } from 'library/Identicon';
 import { clipAddress } from 'Utils';
 import { AccountElementProps } from './types';
 import { AccountWrapper } from './Wrappers';
@@ -52,17 +51,18 @@ export const AccountButton = (props: AccountElementProps) => {
   );
 };
 
-export const AccountInner = (props: AccountElementProps) => {
-  const { address, meta } = props;
-
+export const AccountInner = ({
+  address,
+  meta,
+  label = undefined,
+}: AccountElementProps) => {
   const { extensions } = useExtensions();
   const extension = extensions.find(
     (e: ExtensionInjected) => e.id === meta?.source
   );
-  const Icon = extension?.icon ?? null;
-  const label = props.label ?? null;
-  const source = meta?.source ?? null;
-  const imported = meta !== null && source !== 'external';
+  const Icon = extension?.icon ?? undefined;
+  const source = meta?.source ?? undefined;
+  const imported = meta !== undefined && source !== 'external';
 
   return (
     <>
@@ -81,13 +81,13 @@ export const AccountInner = (props: AccountElementProps) => {
         </div>
       )}
 
-      <div className={label === null ? `` : label[0]}>
-        {label !== null && <h5>{label[1]}</h5>}
-        {Icon !== null && <Icon className="icon" />}
+      <div className={label === undefined ? `` : label[0]}>
+        {label !== undefined ? <h5>{label[1]}</h5> : null}
+        {Icon !== undefined ? <Icon className="icon" /> : null}
 
         {!imported && (
           <FontAwesomeIcon
-            icon={faGlasses as IconProp}
+            icon={faGlasses}
             className="icon"
             style={{ opacity: 0.7 }}
           />

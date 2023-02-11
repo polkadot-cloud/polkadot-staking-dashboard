@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import NumberEasing from 'che-react-number-easing';
@@ -6,11 +6,14 @@ import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatBox } from './Item';
 import { NumberProps } from './types';
 
-export const Number = (props: NumberProps) => {
-  const { label, value, unit, helpKey } = props;
+export const Number = ({
+  label,
+  value,
+  unit,
+  helpKey,
+  currency = '',
+}: NumberProps) => {
   const help = helpKey !== undefined;
-
-  const currency = props.currency ?? '';
 
   return (
     <StatBox>

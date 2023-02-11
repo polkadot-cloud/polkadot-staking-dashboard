@@ -1,11 +1,11 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { TimeLeftFormatted } from 'library/Hooks/useTimeLeft/types';
 
 export interface NumberProps {
   label: string;
-  value: string | number;
+  value: number;
   unit: string;
   helpKey: string;
   currency?: string;
@@ -16,7 +16,7 @@ export interface PieProps {
   stat: {
     value: string | number;
     unit: string | number;
-    total?: number;
+    total?: string | number;
   };
   graph: {
     value1: number;

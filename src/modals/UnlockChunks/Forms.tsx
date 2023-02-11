@@ -1,11 +1,10 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
-import BN from 'bn.js';
+import { ButtonInvert, ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -16,17 +15,19 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
+import { Action } from 'library/Modal/Action';
+import { SubmitTx } from 'library/SubmitTx';
+import { WarningsWrapper } from 'modals/Wrappers';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, rmCommas } from 'Utils';
-import { FooterWrapper, NotesWrapper, Separator } from '../Wrappers';
+import { planckToUnit, rmCommas } from 'Utils';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(
   ({ setSection, unlock, task }: any, ref: any) => {
+    const { t } = useTranslation('modals');
     const { api, network, consts } = useApi();
     const { activeAccount, accountHasSigner } = useConnect();
     const { removeFavorite: removeFavoritePool } = usePoolsConfig();
@@ -37,7 +38,6 @@ export const Forms = forwardRef(
     const { setStatus: setModalStatus, config } = useModal();
     const { getBondedAccount } = useBalances();
     const { txFeesValid } = useTxFees();
-    const { t } = useTranslation('modals');
 
     const { bondFor, poolClosure } = config || {};
     const { historyDepth } = consts;
@@ -67,11 +67,11 @@ export const Forms = forwardRef(
       if (task === 'rebond' && isStaking) {
         tx = api.tx.staking.rebond(unlock.value.toNumber());
       } else if (task === 'withdraw' && isStaking) {
-        tx = api.tx.staking.withdrawUnbonded(historyDepth);
+        tx = api.tx.staking.withdrawUnbonded(historyDepth.toString());
       } else if (task === 'withdraw' && isPooling && selectedActivePool) {
         tx = api.tx.nominationPools.withdrawUnbonded(
           activeAccount,
-          historyDepth
+          historyDepth.toString()
         );
       }
       return tx;
@@ -94,54 +94,61 @@ export const Forms = forwardRef(
         // if no more bonded funds from pool, remove from poolMembers list
         if (bondFor === 'pool') {
           const points = membership?.points ? rmCommas(membership.points) : 0;
-          const bonded = planckBnToUnit(new BN(points), network.units);
-          if (bonded === 0) {
+          const bonded = planckToUnit(new BigNumber(points), network.units);
+          if (bonded.isZero()) {
             removePoolMember(activeAccount);
           }
         }
       },
     });
 
-    const value = unlock?.value ?? new BN(0);
+    const value = unlock?.value ?? new BigNumber(0);
 
     return (
       <ContentWrapper>
-        <div ref={ref} style={{ paddingBottom: '1rem' }}>
-          <div>
-            {!accountHasSigner(signingAccount) && (
-              <Warning text={t('readOnly')} />
-            )}
+        <div ref={ref}>
+          <div className="padding">
+            {!accountHasSigner(signingAccount) ? (
+              <WarningsWrapper>
+                <Warning text={t('readOnly')} />
+              </WarningsWrapper>
+            ) : null}
 
-            <div style={{ marginTop: '2rem' }}>
+            <div style={{ marginBottom: '2rem' }}>
               {task === 'rebond' && (
-                <h2 className="title">
-                  {t('rebond')} {planckBnToUnit(value, units)} {network.unit}
-                </h2>
+                <>
+                  <Action
+                    text={`${t('rebond')} ${planckToUnit(value, units)} ${
+                      network.unit
+                    }`}
+                  />
+                  <p>{t('rebondSubtitle')}</p>
+                </>
               )}
               {task === 'withdraw' && (
-                <h2 className="title">
-                  {t('withdraw')} {planckBnToUnit(value, units)} {network.unit}
-                </h2>
+                <>
+                  <Action
+                    text={`${t('withdraw')} ${planckToUnit(value, units)} ${
+                      network.unit
+                    }`}
+                  />
+                  <p>{t('withdrawSubtitle')}</p>
+                </>
               )}
             </div>
-            <Separator />
-            <NotesWrapper>
-              <EstimatedTxFee />
-            </NotesWrapper>
           </div>
-          <FooterWrapper>
-            <div>
-              <button
-                type="button"
-                className="submit secondary"
+          <SubmitTx
+            fromController={isStaking}
+            buttons={[
+              <ButtonInvert
+                key="button_back"
+                text={t('back')}
+                iconLeft={faChevronLeft}
+                iconTransform="shrink-1"
                 onClick={() => setSection(0)}
-              >
-                <FontAwesomeIcon transform="shrink-2" icon={faChevronLeft} />
-                {t('back')}
-              </button>
-            </div>
-            <div>
+              />,
               <ButtonSubmit
+                key="button_submit"
                 text={`${submitting ? t('submitting') : t('submit')}`}
                 iconLeft={faArrowAltCircleUp}
                 iconTransform="grow-2"
@@ -152,9 +159,9 @@ export const Forms = forwardRef(
                   !accountHasSigner(signingAccount) ||
                   !txFeesValid
                 }
-              />
-            </div>
-          </FooterWrapper>
+              />,
+            ]}
+          />
         </div>
       </ContentWrapper>
     );

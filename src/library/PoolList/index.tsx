@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
@@ -21,7 +21,6 @@ import { SearchInput } from 'library/List/SearchInput';
 import { Pool } from 'library/Pool';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { networkColors } from 'theme/default';
 import { PoolListProvider, usePoolList } from './context';
 import { PoolListProps } from './types';
 
@@ -37,8 +36,11 @@ export const PoolListInner = ({
 }: PoolListProps) => {
   const { t } = useTranslation('library');
   const { mode } = useTheme();
-  const { isReady, network } = useApi();
-  const { metrics } = useNetworkMetrics();
+  const {
+    isReady,
+    network: { colors },
+  } = useApi();
+  const { activeEra } = useNetworkMetrics();
   const { fetchPoolsMetaBatch, poolSearchFilter, meta } = useBondedPools();
   const { listFormat, setListFormat } = usePoolList();
   const { isSyncing } = useUi();
@@ -89,10 +91,10 @@ export const PoolListInner = ({
 
   // configure pool list when network is ready to fetch
   useEffect(() => {
-    if (isReady && metrics.activeEra.index !== 0 && !fetched) {
+    if (isReady && activeEra.index !== 0 && !fetched) {
       setupPoolList();
     }
-  }, [isReady, fetched, metrics.activeEra.index]);
+  }, [isReady, fetched, activeEra.index]);
 
   // handle pool list bootstrapping
   const setupPoolList = () => {
@@ -203,21 +205,13 @@ export const PoolListInner = ({
           <button type="button" onClick={() => setListFormat('row')}>
             <FontAwesomeIcon
               icon={faBars}
-              color={
-                listFormat === 'row'
-                  ? networkColors[`${network.name}-${mode}`]
-                  : 'inherit'
-              }
+              color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
             />
           </button>
           <button type="button" onClick={() => setListFormat('col')}>
             <FontAwesomeIcon
               icon={faGripVertical}
-              color={
-                listFormat === 'col'
-                  ? networkColors[`${network.name}-${mode}`]
-                  : 'inherit'
-              }
+              color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
             />
           </button>
         </div>
@@ -294,5 +288,3 @@ export class PoolListShouldUpdate extends React.Component<any, any> {
     return <PoolListInner {...this.props} />;
   }
 }
-
-export default PoolList;

@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
@@ -10,17 +10,15 @@ import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
 import { PageProps } from '../types';
-import ActiveValidatorsStatBox from './Stats/ActiveValidators';
-import AverageCommissionStatBox from './Stats/AverageCommission';
-import TotalValidatorsStatBox from './Stats/TotalValidators';
+import { ActiveValidatorsStat } from './Stats/ActiveValidators';
+import { AverageCommissionStat } from './Stats/AverageCommission';
+import { TotalValidatorsStat } from './Stats/TotalValidators';
 
-export const Validators = (props: PageProps) => {
-  const { page } = props;
-  const { key } = page;
-
+export const Validators = ({ page }: PageProps) => {
+  const { t } = useTranslation();
   const { isReady } = useApi();
   const { validators } = useValidators();
-  const { t } = useTranslation();
+  const { key } = page;
   const defaultFilters = {
     includes: ['active'],
     excludes: ['all_commission', 'blocked_nominations', 'missing_identity'],
@@ -30,9 +28,9 @@ export const Validators = (props: PageProps) => {
     <>
       <PageTitle title={t(key, { ns: 'base' })} />
       <StatBoxList>
-        <ActiveValidatorsStatBox />
-        <TotalValidatorsStatBox />
-        <AverageCommissionStatBox />
+        <ActiveValidatorsStat />
+        <TotalValidatorsStat />
+        <AverageCommissionStat />
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
@@ -72,5 +70,3 @@ export const Validators = (props: PageProps) => {
     </>
   );
 };
-
-export default Validators;

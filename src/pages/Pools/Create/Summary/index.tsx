@@ -1,18 +1,16 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useSetup } from 'contexts/Setup';
-import { defaultPoolSetup } from 'contexts/Setup/defaults';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
@@ -21,26 +19,26 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { SetupStepProps } from 'library/SetupSteps/types';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, unitToPlanckBn } from 'Utils';
+import { unitToPlanck } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
 
-export const Summary = (props: SetupStepProps) => {
-  const { section } = props;
+export const Summary = ({ section }: SetupStepProps) => {
+  const { t } = useTranslation('pages');
   const { api, network } = useApi();
   const { units } = network;
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getSetupProgress, setActiveAccountSetup } = useSetup();
+  const { getSetupProgress, removeSetupProgress } = useSetup();
   const { stats } = usePoolsConfig();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
   const { lastPoolId } = stats;
-  const poolId = lastPoolId.add(new BN(1));
+  const poolId = lastPoolId.plus(new BigNumber(1));
   const { txFeesValid } = useTxFees();
-  const { t } = useTranslation('pages');
 
   const setup = getSetupProgress('pool', activeAccount);
+  const { progress } = setup;
 
-  const { metadata, bond, roles, nominations } = setup;
+  const { metadata, bond, roles, nominations } = progress;
 
   const getTxs = () => {
     if (
@@ -54,13 +52,14 @@ export const Summary = (props: SetupStepProps) => {
       return null;
     }
 
-    const bondToSubmit = unitToPlanckBn(bond, units).toString();
     const targetsToSubmit = nominations.map((item: any) => item.address);
 
-    // construct a batch of transactions
+    const bondToSubmit = unitToPlanck(bond, units);
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+
     const txs = [
       api.tx.nominationPools.create(
-        bondToSubmit,
+        bondAsString,
         roles.root,
         roles.nominator,
         roles.stateToggler
@@ -86,7 +85,7 @@ export const Summary = (props: SetupStepProps) => {
       addToPoolMembers(member);
 
       // reset localStorage setup progress
-      setActiveAccountSetup('pool', defaultPoolSetup);
+      removeSetupProgress('pool', activeAccount);
     },
   });
 
@@ -95,8 +94,8 @@ export const Summary = (props: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title={t('pools.summary') || ''}
-        setupType="pool"
+        title={`${t('pools.summary')}`}
+        bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         {!accountHasSigner(activeAccount) && (
@@ -105,43 +104,34 @@ export const Summary = (props: SetupStepProps) => {
         <SummaryWrapper>
           <section>
             <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
-                transform="grow-1"
-              />{' '}
-              &nbsp; {t('pools.poolName')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
+              {t('pools.poolName')}:
             </div>
             <div>{metadata ?? `${t('pools.notSet')}`}</div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
-                transform="grow-1"
-              />{' '}
-              &nbsp; {t('pools.bondAmount')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
+              {t('pools.bondAmount')}:
             </div>
             <div>
-              {humanNumber(bond)} {network.unit}
+              {new BigNumber(bond).toFormat()} {network.unit}
             </div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
-                transform="grow-1"
-              />{' '}
-              &nbsp; {t('pools.nominations')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;
+              Nominating:
             </div>
-            <div>{nominations.length}</div>
+            <div>
+              {nominations.length} Validator
+              {nominations.length === 1 ? '' : 's'}
+            </div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
-                transform="grow-1"
-              />{' '}
-              &nbsp; {t('pools.roles')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
+              {t('pools.roles')}:
             </div>
             <div>{t('pools.assigned')}</div>
           </section>
@@ -171,5 +161,3 @@ export const Summary = (props: SetupStepProps) => {
     </>
   );
 };
-
-export default Summary;

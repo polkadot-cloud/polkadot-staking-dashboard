@@ -1,13 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  backgroundToggle,
-  buttonPrimaryBackground,
-  successTransparent,
-  textSuccess,
-} from 'theme';
 
 export const ContentWrapper = styled.div`
   box-sizing: border-box;
@@ -29,17 +23,16 @@ export const ContentWrapper = styled.div`
 `;
 
 export const LocaleButton = styled.button<any>`
-  background: ${buttonPrimaryBackground};
+  background: var(--button-primary-background);
   box-sizing: border-box;
   padding: 1rem;
   cursor: pointer;
   border-radius: 0.75rem;
   display: inline-flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   width: 100%;
-  border: 1px solid ${successTransparent};
+  border: 1px solid var(--status-success-color-transparent);
   ${(props) =>
     props.connected !== true &&
     `
@@ -48,11 +41,11 @@ export const LocaleButton = styled.button<any>`
   h4 {
     margin: 0;
     &.selected {
-      color: ${textSuccess};
+      color: var(--status-success-color);
       margin-left: 0.75rem;
     }
   }
   &:hover {
-    background: ${backgroundToggle};
+    background: var(--button-toggle-background);
   }
 `;

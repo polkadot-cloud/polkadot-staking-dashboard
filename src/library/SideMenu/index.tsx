@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
@@ -21,15 +21,15 @@ import { useOutsideAlerter } from 'library/Hooks';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { defaultThemes } from 'theme/default';
 import { capitalizeFirstLetter } from 'Utils';
-import Heading from './Heading/Heading';
+import { Heading } from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
 import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
 
 export const SideMenu = () => {
-  const { network, status } = useApi();
+  const { t } = useTranslation('base');
+  const { network, apiStatus } = useApi();
   const { mode, toggleTheme } = useTheme();
   const { openModalWith } = useModal();
   const {
@@ -39,7 +39,6 @@ export const SideMenu = () => {
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi();
   const { openHelpWith } = useHelp();
-  const { t } = useTranslation('base');
 
   // listen to window resize to hide SideMenu
   useEffect(() => {
@@ -64,21 +63,12 @@ export const SideMenu = () => {
     setSideMenu(0);
   });
 
-  // handle connection symbol
-  const symbolColor =
-    status === 'connecting'
-      ? defaultThemes.status.warning.solid[mode]
-      : status === 'connected'
-      ? defaultThemes.status.success.solid[mode]
-      : defaultThemes.status.danger.solid[mode];
-
-  // handle transparent border color
-  const borderColor =
-    status === 'connecting'
-      ? defaultThemes.status.warning.transparent[mode]
-      : status === 'connected'
-      ? defaultThemes.status.success.transparent[mode]
-      : defaultThemes.status.danger.transparent[mode];
+  const apiStatusClass =
+    apiStatus === 'connecting'
+      ? 'warning'
+      : apiStatus === 'connected'
+      ? 'success'
+      : 'danger';
 
   return (
     <Wrapper ref={ref} minimised={sideMenuMinimised}>
@@ -93,7 +83,7 @@ export const SideMenu = () => {
           minimised={sideMenuMinimised}
           icon={{
             Svg: InfoSVG,
-            size: sideMenuMinimised ? '1.6em' : '1.4em',
+            size: sideMenuMinimised ? '1.4em' : '1.2em',
           }}
         />
         <Secondary
@@ -102,14 +92,14 @@ export const SideMenu = () => {
           minimised={sideMenuMinimised}
           icon={{
             Svg: ForumSVG,
-            size: sideMenuMinimised ? '1.6em' : '1.4em',
+            size: sideMenuMinimised ? '1.4em' : '1.2em',
           }}
         />
         <Separator />
         <Heading title={t('network')} minimised={sideMenuMinimised} />
         <Secondary
+          classes={[apiStatusClass]}
           name={capitalizeFirstLetter(network.name)}
-          borderColor={borderColor}
           onClick={() => openModalWith('Networks')}
           icon={{
             Svg: network.brand.inline.svg,
@@ -117,7 +107,10 @@ export const SideMenu = () => {
           }}
           minimised={sideMenuMinimised}
           action={
-            <ConnectionSymbol color={[symbolColor]} style={{ opacity: 0.7 }} />
+            <ConnectionSymbol
+              className={apiStatusClass}
+              style={{ opacity: 0.7 }}
+            />
           }
         />
       </section>
@@ -131,7 +124,6 @@ export const SideMenu = () => {
         >
           <FontAwesomeIcon
             icon={userSideMenuMinimised ? faExpandAlt : faCompressAlt}
-            transform="grow-3"
           />
         </button>
         <button
@@ -143,32 +135,30 @@ export const SideMenu = () => {
             )
           }
         >
-          <LogoGithubSVG width="1.4em" height="1.4em" />
+          <LogoGithubSVG width="1.2em" height="1.2em" />
         </button>
         <button
           type="button"
           onClick={() => openModalWith('Settings', {}, 'large')}
         >
-          <CogOutlineSVG width="1.6em" height="1.6em" />
+          <CogOutlineSVG width="1.3em" height="1.3em" />
         </button>
         <button
           type="button"
           onClick={() => openModalWith('ChooseLanguage', {}, 'small')}
         >
-          <LanguageSVG width="1.55em" height="1.55em" />
+          <LanguageSVG width="1.25em" height="1.25em" />
         </button>
         {mode === 'light' ? (
           <button type="button" onClick={() => toggleTheme()}>
-            <SunnyOutlineSVG width="1.55em" height="1.55em" />
+            <SunnyOutlineSVG width="1.25em" height="1.25em" />
           </button>
         ) : (
           <button type="button" onClick={() => toggleTheme()}>
-            <MoonOutlineSVG width="1.4em" height="1.4em" />
+            <MoonOutlineSVG width="1.1em" height="1.1em" />
           </button>
         )}
       </section>
     </Wrapper>
   );
 };
-
-export default SideMenu;

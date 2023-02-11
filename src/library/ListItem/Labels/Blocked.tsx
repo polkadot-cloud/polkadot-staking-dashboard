@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faUserSlash } from '@fortawesome/free-solid-svg-icons';
@@ -9,11 +9,10 @@ import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BlockedProps } from '../types';
 
-export const Blocked = (props: BlockedProps) => {
-  const { prefs } = props;
+export const Blocked = ({ prefs }: BlockedProps) => {
+  const { t } = useTranslation('library');
   const blocked = prefs?.blocked ?? null;
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
-  const { t } = useTranslation('library');
 
   const posRef = useRef(null);
 
@@ -48,5 +47,3 @@ export const Blocked = (props: BlockedProps) => {
     </>
   );
 };
-
-export default Blocked;

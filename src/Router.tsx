@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { PAGES_CONFIG } from 'config/pages';
@@ -10,9 +10,9 @@ import { Headers } from 'library/Headers';
 import { Help } from 'library/Help';
 import { Menu } from 'library/Menu';
 import { NetworkBar } from 'library/NetworkBar';
-import Notifications from 'library/Notifications';
+import { Notifications } from 'library/Notifications';
 import { Overlay } from 'library/Overlay';
-import SideMenu from 'library/SideMenu';
+import { SideMenu } from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
 import { Modal } from 'modals';
 import { useEffect, useRef } from 'react';
@@ -137,4 +137,3 @@ export const Router = () => {
     </HashRouter>
   );
 };
-export default Router;

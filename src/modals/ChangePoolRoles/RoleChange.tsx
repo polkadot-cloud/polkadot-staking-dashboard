@@ -1,9 +1,9 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Identicon from 'library/Identicon';
+import { Identicon } from 'library/Identicon';
 import { clipAddress, remToUnit } from 'Utils';
 import { RoleChangeWrapper } from './Wrapper';
 

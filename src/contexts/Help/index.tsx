@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useEffect, useState } from 'react';
@@ -17,7 +17,7 @@ export const HelpContext = React.createContext<HelpContextInterface>(
 
 export const useHelp = () => React.useContext(HelpContext);
 
-export const HelpProvider = (props: HelpContextProps) => {
+export const HelpProvider = ({ children }: HelpContextProps) => {
   // help module state
   const [state, setState] = useState<HelpContextState>({
     status: 0,
@@ -78,7 +78,7 @@ export const HelpProvider = (props: HelpContextProps) => {
         definition: state.definition,
       }}
     >
-      {props.children}
+      {children}
     </HelpContext.Provider>
   );
 };

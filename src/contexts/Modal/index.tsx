@@ -1,13 +1,11 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useTxFees } from 'contexts/TxFees';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { setStateWithRef } from 'Utils';
 import { defaultModalContext } from './defaults';
-import { ModalConfig, ModalContextInterface, ModalContextState } from './types';
-
-// default modal content
-const DEFAULT_MODAL_COMPONENT = 'ConnectAccounts';
+import { ModalConfig, ModalContextInterface, ModalOptions } from './types';
 
 export const ModalContext =
   React.createContext<ModalContextInterface>(defaultModalContext);
@@ -18,76 +16,73 @@ export const useModal = () => React.useContext(ModalContext);
 export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const { notEnoughFunds } = useTxFees();
 
-  const [state, setState] = useState<ModalContextState>({
-    status: 0,
-    modal: DEFAULT_MODAL_COMPONENT,
+  // Store the modal configuration options.
+  const [options, setOptions] = useState<ModalOptions>({
+    modal: '',
     config: {},
     size: 'large',
-    height: 0,
-    resize: 0,
   });
+
+  // Store the modal's current height.
+  const [height, setHeight] = useState<number>(0);
+
+  // Store the modal status.
+  const [status, setStatusState] = useState<number>(0);
+  const statusRef = useRef(status);
+
+  // Store the modal's resize counter.
+  const [resize, setModalResize] = useState<number>(0);
 
   useEffect(() => {
     setResize();
-  }, [state.status, notEnoughFunds]);
+  }, [statusRef.current, notEnoughFunds]);
 
   const setStatus = (newStatus: number) => {
-    const _state = {
-      ...state,
-      status: newStatus,
-      resize: state.resize + 1,
-      height: newStatus === 0 ? 0 : state.height,
-    };
-    setState(_state);
+    setHeight(newStatus === 0 ? 0 : height);
+    setStateWithRef(newStatus, setStatusState, statusRef);
+    setResize();
   };
 
   const openModalWith = (
     modal: string,
-    _config: ModalConfig = {},
+    config: ModalConfig = {},
     size = 'large'
   ) => {
-    setState({
-      ...state,
+    setStateWithRef(1, setStatusState, statusRef);
+    setResize();
+    setOptions({
       modal,
-      status: 1,
-      config: _config,
+      config,
       size,
-      resize: state.resize + 1,
     });
   };
 
   const setModalHeight = (h: number) => {
-    if (state.status === 0) return;
+    if (statusRef.current === 0) return;
     // set maximum height to 80% of window height
     const maxHeight = window.innerHeight * 0.8;
     h = h > maxHeight ? maxHeight : h;
-    setState({
-      ...state,
-      height: h,
-    });
+    setHeight(h);
   };
 
+  // increments resize to trigger a height transition.
   const setResize = () => {
-    // increments resize to trigger a height transition
-    setState({
-      ...state,
-      resize: state.resize + 1,
-    });
+    setModalResize(resize + 1);
   };
 
   return (
     <ModalContext.Provider
       value={{
-        status: state.status,
+        status: statusRef.current,
         setStatus,
         openModalWith,
         setModalHeight,
         setResize,
-        modal: state.modal,
-        config: state.config,
-        size: state.size,
-        height: state.height,
-        resize: state.resize,
+        height,
+        resize,
+        modal: options.modal,
+        config: options.config,
+        size: options.size,
       }}
     >
       {children}

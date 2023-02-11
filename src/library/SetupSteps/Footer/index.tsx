@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
@@ -8,13 +8,11 @@ import { useTranslation } from 'react-i18next';
 import { FooterProps } from '../types';
 import { Wrapper } from './Wrapper';
 
-export const Footer = (props: FooterProps) => {
-  const { complete, setupType } = props;
+export const Footer = ({ complete, bondFor }: FooterProps) => {
   const { t } = useTranslation('library');
-
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetupSection } = useSetup();
-  const setup = getSetupProgress(setupType, activeAccount);
+  const setup = getSetupProgress(bondFor, activeAccount);
 
   return (
     <Wrapper>
@@ -24,7 +22,7 @@ export const Footer = (props: FooterProps) => {
             lg
             text={t('continue')}
             onClick={() =>
-              setActiveAccountSetupSection(setupType, setup.section + 1)
+              setActiveAccountSetupSection(bondFor, setup.section + 1)
             }
           />
         ) : (
@@ -36,5 +34,3 @@ export const Footer = (props: FooterProps) => {
     </Wrapper>
   );
 };
-
-export default Footer;

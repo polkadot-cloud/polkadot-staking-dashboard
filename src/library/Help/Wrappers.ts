@@ -1,19 +1,12 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  helpButton,
-  modalOverlayBackground,
-  networkColor,
-  textPrimary,
-  textSecondary,
-} from 'theme';
 
 // Blurred background modal wrapper
 export const Wrapper = styled(motion.div)`
-  background: ${modalOverlayBackground};
+  background: var(--overlay-modal-color);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -73,8 +66,8 @@ export const ContentWrapper = styled.div`
       > svg {
         margin-right: 0.5rem;
       }
-      color: ${networkColor};
-      border: 1px solid ${networkColor};
+      color: var(--network-color-primary);
+      border: 1px solid var(--network-color-primary);
       border-radius: 1.5rem;
       padding: 0.4rem 0.8rem;
       margin-right: 1.25rem;
@@ -96,28 +89,27 @@ export const ListWrapper = styled(motion.div)`
   display: flex;
   flex-flow: row wrap;
   flex-grow: 1;
-  align-content: flex-start;
   overflow: auto;
   padding: 0.75rem 0.5rem;
 
   > button {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
     padding: 0.25rem;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
   }
   h2 {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
     padding: 0 0.75rem;
     margin: 0.5rem 0;
     width: 100%;
   }
   p {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
   }
   .definition {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
     padding: 0.75rem;
     line-height: 1.4rem;
     margin: 0;
@@ -125,9 +117,9 @@ export const ListWrapper = styled(motion.div)`
 `;
 
 export const DefinitionWrapper = styled(motion.div)`
+  background: var(--background-floating-card);
   width: 100%;
   display: flex;
-  background: ${helpButton};
   border-radius: 1.5rem;
   margin-bottom: 1.25rem;
   padding: 1.5rem 1.5rem 0 1.5rem;
@@ -147,7 +139,7 @@ export const DefinitionWrapper = styled(motion.div)`
     flex-flow: row wrap;
     align-items: center;
     > span {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
       margin-left: 0.75rem;
       opacity: 0.75;
       font-size: 1.1rem;
@@ -159,7 +151,7 @@ export const DefinitionWrapper = styled(motion.div)`
   }
 
   p {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
     margin: 0.5rem 0 0 0;
     text-align: left;
   }
@@ -175,39 +167,36 @@ export const ItemWrapper = styled(motion.div)<any>`
   height: ${(props) => (props.height === undefined ? '160px' : props.height)};
   overflow: hidden;
   flex-flow: row wrap;
-  justify-content: flex-start;
 
   > * {
-    background: ${helpButton};
+    background: var(--background-floating-card);
     border-radius: 1.5rem;
     flex: 1;
     padding: 1.5rem;
     display: flex;
     flex-flow: column nowrap;
-    align-items: flex-start;
-    justify-content: flex-start;
     margin-bottom: 1.5rem;
     position: relative;
 
     > h4 {
-      color: ${textPrimary};
+      color: var(--text-color-primary);
       font-weight: normal;
       margin: 0.65rem 0;
       text-transform: uppercase;
       font-size: 0.7rem;
     }
     > h2 {
-      color: ${textPrimary};
+      color: var(--text-color-primary);
       margin: 0;
       text-align: left;
     }
 
     > p {
-      color: ${textPrimary};
+      color: var(--text-color-primary);
       text-align: left;
 
       &.icon {
-        color: ${networkColor};
+        color: var(--network-color-primary);
         margin-bottom: 0;
       }
     }

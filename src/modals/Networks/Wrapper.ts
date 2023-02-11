@@ -1,28 +1,18 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import {
-  backgroundToggle,
-  borderPrimary,
-  buttonPrimaryBackground,
-  successTransparent,
-  textPrimary,
-  textSecondary,
-  textSuccess,
-} from 'theme';
 import { NetworkButtonProps } from './types';
 
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   align-items: center;
-  justify-content: flex-start;
   padding: 1rem;
 
   h2 {
+    color: var(--text-color-primary);
     margin-top: 0.5rem;
-    color: ${textPrimary};
   }
 `;
 
@@ -30,11 +20,11 @@ export const ContentWrapper = styled.div`
   width: 100%;
 
   > h4 {
-    color: ${textSecondary};
+    border-bottom: 1px solid var(--border-primary-color);
+    color: var(--text-color-secondary);
     margin: 0.75rem 0;
     padding-bottom: 0.5rem;
     width: 100%;
-    border-bottom: 1px solid ${borderPrimary};
   }
 
   .items {
@@ -58,17 +48,16 @@ export const ContentWrapper = styled.div`
 `;
 
 export const NetworkButton = styled.button<NetworkButtonProps>`
-  background: ${buttonPrimaryBackground};
+  background: var(--button-primary-background);
+  border: 1px solid var(--status-success-color-transparent);
   padding: 1rem;
   cursor: pointer;
   margin-bottom: 1rem;
   border-radius: 0.75rem;
   display: inline-flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
   width: 100%;
-  border: 1px solid ${successTransparent};
   ${(props) =>
     props.connected !== true &&
     `
@@ -86,7 +75,7 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
   h4 {
     margin: 0;
     &.selected {
-      color: ${textSuccess};
+      color: var(--status-success-color);
       margin-left: 0.75rem;
     }
   }
@@ -98,46 +87,46 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
     justify-content: flex-end;
   }
   &:hover {
-    background: ${backgroundToggle};
+    background: var(--button-toggle-background);
   }
   .icon {
     margin-right: 0.5rem;
   }
 
   svg {
-    color: ${textSecondary};
-    fill: ${textSecondary};
+    color: var(--text-color-secondary);
+    fill: var(--text-color-secondary);
   }
   p {
-    color: ${textPrimary};
+    color: var(--text-color-primary);
     font-size: 1rem;
   }
 
   &:disabled {
     cursor: default;
     &:hover {
-      background: ${buttonPrimaryBackground};
+      background: var(--button-primary-background);
     }
   }
 `;
 
 export const BraveWarning = styled.div`
+  border: 1px solid var(--border-primary-color);
   display: flex;
-  border: 1px solid ${borderPrimary};
   border-radius: 0.75rem;
   padding: 1rem;
 
   .brave-text {
+    color: var(--text-color-primary);
     width: 90%;
     padding-left: 1rem;
-    color: ${textPrimary};
     font-size: 1.2rem;
     align-self: center;
 
     .learn-more {
-      color: ${textSecondary};
+      color: var(--text-color-secondary);
+      text-decoration: underline var(--border-primary-color);
       font-weight: bold;
-      text-decoration: underline ${borderPrimary};
     }
   }
 `;
@@ -151,13 +140,13 @@ export const ConnectionsWrapper = styled.div`
 `;
 
 export const ConnectionButton = styled.button<NetworkButtonProps>`
-  background: ${buttonPrimaryBackground};
+  background: var(--button-primary-background);
+  border: 1px solid var(--status-success-color-transparent);
   position: relative;
   padding: 0.75rem 0.75rem;
   margin-bottom: 1rem;
   margin-right: 0.5rem;
   border-radius: 0.5rem;
-  border: 1px solid ${successTransparent};
   ${(props) =>
     props.connected !== true &&
     `
@@ -165,11 +154,10 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
   `}
   display: inline-flex;
   flex-flow: row wrap;
-  justify-content: flex-start;
   align-items: center;
 
   &:hover {
-    background: ${backgroundToggle};
+    background: var(--button-toggle-background);
   }
 
   > h3 {
@@ -178,7 +166,7 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
   h4 {
     margin: 0;
     &.selected {
-      color: ${textSuccess};
+      color: var(--status-success-color);
       margin: 0 0.75rem 0 0;
     }
   }
@@ -186,11 +174,11 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
   &:disabled {
     cursor: default;
     &:hover {
-      background: ${buttonPrimaryBackground};
+      background: var(--button-primary-background);
     }
     &.off {
       h3 {
-        opacity: 0.33;
+        opacity: var(--opacity-disabled);
       }
     }
   }

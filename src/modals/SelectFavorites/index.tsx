@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
@@ -13,12 +13,12 @@ import { PaddingWrapper } from '../Wrappers';
 import { FooterWrapper, ListWrapper } from './Wrappers';
 
 export const SelectFavorites = () => {
+  const { t } = useTranslation('modals');
   const { consts } = useApi();
   const { config, setStatus, setResize } = useModal();
   const { favoritesList } = useValidators();
   const { maxNominations } = consts;
   const { nominations, callback: generateNominationsCallback } = config;
-  const { t } = useTranslation('modals');
 
   // store filtered favorites
   const [availableFavorites, setAvailableFavorites] = useState<
@@ -105,5 +105,3 @@ export const SelectFavorites = () => {
     </>
   );
 };
-
-export default SelectFavorites;

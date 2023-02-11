@@ -1,7 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useSubscan } from 'contexts/Subscan';
@@ -13,7 +13,7 @@ import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, planckBnToUnit } from 'Utils';
+import { planckToUnit } from 'Utils';
 import {
   PageRowWrapper,
   RowPrimaryWrapper,
@@ -22,19 +22,20 @@ import {
 } from 'Wrappers';
 import { ActiveAccount } from './ActiveAccount';
 import { BalanceChart } from './BalanceChart';
+import { BalanceLinks } from './BalanceLinks';
 import { NetworkStats } from './NetworkSats';
-import Payouts from './Payouts';
+import { Payouts } from './Payouts';
 import { StakeStatus } from './StakeStatus';
-import EraTimeLeftStat from './Stats/ActiveEraTimeLeft';
-import HistoricalRewardsRateStat from './Stats/HistoricalRewardsRate';
-import SupplyStakedStat from './Stats/SupplyStaked';
+import { ActiveEraStat } from './Stats/ActiveEraTimeLeft';
+import { HistoricalRewardsRateStat } from './Stats/HistoricalRewardsRate';
+import { SupplyStakedStat } from './Stats/SupplyStaked';
 
 export const Overview = () => {
+  const { i18n, t } = useTranslation('pages');
   const { network } = useApi();
   const { units } = network;
   const { payouts, poolClaims } = useSubscan();
   const { lastReward } = formatRewardsForGraphs(14, units, payouts, poolClaims);
-  const { i18n, t } = useTranslation('pages');
 
   const PAYOUTS_HEIGHT = 390;
 
@@ -63,7 +64,7 @@ export const Overview = () => {
       <StatBoxList>
         <HistoricalRewardsRateStat />
         <SupplyStakedStat />
-        <EraTimeLeftStat />
+        <ActiveEraStat />
       </StatBoxList>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <StakeStatus />
@@ -77,6 +78,7 @@ export const Overview = () => {
         >
           <GraphWrapper minHeight={PAYOUTS_HEIGHT} flex>
             <BalanceChart />
+            <BalanceLinks />
           </GraphWrapper>
         </RowSecondaryWrapper>
         <RowPrimaryWrapper
@@ -92,9 +94,10 @@ export const Overview = () => {
               <h2>
                 {lastReward === null
                   ? 0
-                  : humanNumber(
-                      planckBnToUnit(new BN(lastReward.amount), units)
-                    )}
+                  : planckToUnit(
+                      new BigNumber(lastReward.amount),
+                      units
+                    ).toFormat()}
                 &nbsp;{network.unit}
                 &nbsp;
                 <span className="fiat">
@@ -114,5 +117,3 @@ export const Overview = () => {
     </>
   );
 };
-
-export default Overview;

@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import {
@@ -31,9 +31,8 @@ import {
   PaddingWrapper,
 } from './Wrappers';
 
-export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
-  const { setSection } = props;
-
+export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
+  const { t } = useTranslation('modals');
   const { isReady } = useApi();
   const { getAccount, activeAccount } = useConnect();
   const {
@@ -47,7 +46,6 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
   const { setStatus } = useModal();
   const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
-  const { t } = useTranslation('modals');
 
   const _controllers: Array<ControllerAccount> = [];
   const _stashes: Array<StashAcount> = [];
@@ -295,5 +293,3 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
     </ContentWrapper>
   );
 });
-
-export default Accounts;

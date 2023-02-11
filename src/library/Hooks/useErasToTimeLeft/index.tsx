@@ -1,6 +1,7 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 
 export const useErasToTimeLeft = () => {
@@ -8,19 +9,26 @@ export const useErasToTimeLeft = () => {
   const { epochDuration, expectedBlockTime, sessionsPerEra } = consts;
 
   // converts a number of eras to timeleft in seconds.
-  const getTimeLeftFromEras = (eras: number) => {
+  const erasToSeconds = (eras: number) => {
     if (!eras) {
       return 0;
     }
     // store the duration of an era in number of blocks.
-    const eraDurationBlocks = epochDuration * sessionsPerEra;
+    // TODO: https://github.com/paritytech/polkadot-staking-dashboard/issues/637
+    const eraDurationBlocks = new BigNumber(epochDuration).multipliedBy(
+      sessionsPerEra
+    );
     // estimate the duration of the era in seconds.
-    const eraDuration = eraDurationBlocks * expectedBlockTime * 0.001;
+    const eraDuration = eraDurationBlocks
+      .multipliedBy(expectedBlockTime)
+      .multipliedBy(new BigNumber(0.001))
+      .integerValue();
+
     // multiply by number of eras.
-    return eras * eraDuration;
+    return new BigNumber(eras).multipliedBy(eraDuration).toNumber();
   };
 
   return {
-    getTimeLeftFromEras,
+    erasToSeconds,
   };
 };

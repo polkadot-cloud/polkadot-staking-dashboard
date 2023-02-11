@@ -1,25 +1,14 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
-  backgroundDropdown,
-  backgroundSecondary,
-  borderPrimary,
-  buttonHoverBackground,
-  buttonSecondaryBackground,
-  cardBorder,
-  cardShadow,
-  shadowColor,
-  textSecondary,
-} from 'theme';
 
 const VERTICAL_THRESHOLD = 800;
 
 export const Wrapper = styled.div`
   h2 {
-    color: ${textSecondary};
+    color: var(--text-color-secondary);
     margin-top: 2rem;
   }
 `;
@@ -41,10 +30,9 @@ export const ItemWrapper = styled(motion.div)`
   }
 
   > .inner {
-    color: ${textSecondary};
-    background: ${backgroundSecondary};
-    border: ${cardBorder} ${borderPrimary};
-    box-shadow: ${cardShadow} ${shadowColor};
+    color: var(--text-color-secondary);
+    background: var(--background-primary);
+    box-shadow: var(--card-shadow) var(--card-shadow-color);
     border-radius: 0.75rem;
     width: 100%;
     height: 100%;
@@ -72,10 +60,10 @@ export const ItemWrapper = styled(motion.div)`
         > button {
           font-size: 1.1rem;
           &.active {
-            color: ${textSecondary};
-            background: ${backgroundDropdown};
+            color: var(--text-color-secondary);
+            background: var(--background-list-item);
             &:hover {
-              background: ${backgroundDropdown};
+              background: var(--background-list-item);
             }
           }
           padding: 0.35rem 0.75rem;
@@ -91,7 +79,7 @@ export const ItemWrapper = styled(motion.div)`
         padding: 0.3rem 1rem;
 
         svg {
-          color: ${textSecondary};
+          color: var(--text-color-secondary);
         }
 
         margin: 0.5rem 1rem 0.5rem 0;
@@ -105,10 +93,10 @@ export const ItemWrapper = styled(motion.div)`
           cursor: default;
         }
         &.active {
-          background: ${buttonSecondaryBackground};
+          background: var(--button-secondary-background);
           transition: background 0.1s;
           &:hover {
-            background: ${buttonHoverBackground};
+            background: var(--button-hover-background);
           }
         }
         &:last-child {
@@ -138,7 +126,6 @@ export const ItemWrapper = styled(motion.div)`
       &:first-child {
         flex-flow: row wrap;
         align-items: center;
-        justify-content: flex-start;
         width: 100%;
         padding: 1rem;
         svg {
@@ -147,11 +134,10 @@ export const ItemWrapper = styled(motion.div)`
         }
       }
       &:last-child {
+        border-top: 1px solid var(--border-primary-color);
         border-left: none;
         flex-flow: column wrap;
-        align-items: flex-start;
         justify-content: center;
-        border-top: 1px solid ${borderPrimary};
         height: 100%;
         height: 50%;
         width: 100%;

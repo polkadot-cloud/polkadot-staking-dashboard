@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import {
@@ -22,11 +22,11 @@ import { FilterValidators } from './FilterValidators';
 import { OrderValidators } from './OrderValidators';
 
 export const Filters = () => {
+  const { t } = useTranslation('library');
   const { openOverlayWith } = useOverlay();
   const { resetFilters, getFilters, getOrder, toggleFilter } = useFilters();
   const { includesToLabels, excludesToLabels, ordersToLabels } =
     useValidatorFilters();
-  const { t } = useTranslation('library');
 
   const includes = getFilters('include', 'validators');
   const excludes = getFilters('exclude', 'validators');
@@ -71,18 +71,17 @@ export const Filters = () => {
           <Item
             label={
               order === 'default'
-                ? t('unordered') || ''
-                : `${t('order') || ''}: ${ordersToLabels[order]}`
+                ? `${t('unordered')}`
+                : `${t('order')}: ${ordersToLabels[order]}`
             }
             disabled
           />
-          {!hasFilters && <Item label={t('noFilters') || ''} disabled />}
+          {!hasFilters && <Item label={`${t('noFilters')}`} disabled />}
           {includes?.map((e: string, i: number) => (
             <Item
               key={`validator_include_${i}`}
               label={includesToLabels[e]}
               icon={faCheck}
-              transform="grow-2"
               onClick={() => {
                 toggleFilter('include', 'validators', e);
               }}
@@ -93,7 +92,7 @@ export const Filters = () => {
               key={`validator_exclude_${i}`}
               label={excludesToLabels[e]}
               icon={faBan}
-              transform="grow-0"
+              transform="shrink-2"
               onClick={() => {
                 toggleFilter('exclude', 'validators', e);
               }}

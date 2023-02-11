@@ -1,13 +1,13 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BigNumber from 'bignumber.js';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
-import useInflation from 'library/Hooks/useInflation';
+import { useInflation } from 'library/Hooks/useInflation';
 import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
-import { humanNumber, toFixedIfNecessary } from 'Utils';
 import { InflationWrapper } from './Wrappers';
 
 export const Header = () => {
@@ -25,7 +25,7 @@ export const Header = () => {
         <div className="items">
           <div>
             <div className="inner">
-              <h2>{humanNumber(totalValidators.toNumber())}</h2>
+              <h2>{totalValidators.toFormat(0)}</h2>
               <h4>
                 {t('overview.totalValidators')}
                 <OpenHelpIcon helpKey="Validator" />
@@ -34,7 +34,7 @@ export const Header = () => {
           </div>
           <div>
             <div className="inner">
-              <h2>{humanNumber(totalNominators.toNumber())}</h2>
+              <h2>{totalNominators.toFormat(0)}</h2>
               <h4>
                 {t('overview.totalNominators')}{' '}
                 <OpenHelpIcon helpKey="Total Nominators" />
@@ -43,7 +43,7 @@ export const Header = () => {
           </div>
           <div>
             <div className="inner">
-              <h2>{humanNumber(bondedPools.length)}</h2>
+              <h2>{new BigNumber(bondedPools.length).toFormat()}</h2>
               <h4>
                 {t('overview.activePools')}
                 <OpenHelpIcon helpKey="Active Pools" />
@@ -55,7 +55,7 @@ export const Header = () => {
               <h2>
                 {totalIssuance.toString() === '0'
                   ? '0'
-                  : toFixedIfNecessary(inflation, 2)}
+                  : new BigNumber(inflation).decimalPlaces(2).toFormat()}
                 %
               </h2>
               <h4>

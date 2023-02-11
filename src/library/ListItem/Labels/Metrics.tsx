@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
@@ -6,10 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
 import { MetricsProps } from '../types';
 
-export const Metrics = (props: MetricsProps) => {
+export const Metrics = ({ display, address }: MetricsProps) => {
   const { openModalWith } = useModal();
-
-  const { display, address } = props;
 
   return (
     <div className="label">
@@ -31,5 +29,3 @@ export const Metrics = (props: MetricsProps) => {
     </div>
   );
 };
-
-export default Metrics;

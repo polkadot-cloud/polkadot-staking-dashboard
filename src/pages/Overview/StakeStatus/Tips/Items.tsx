@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
@@ -133,5 +133,3 @@ export class Items extends React.Component<any, any> {
     return <ItemsInner {...this.props} />;
   }
 }
-
-export default Items;

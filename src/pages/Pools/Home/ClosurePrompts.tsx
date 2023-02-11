@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
@@ -17,7 +17,7 @@ import { ButtonRowWrapper, PageRowWrapper } from 'Wrappers';
 
 export const ClosurePrompts = () => {
   const { t } = useTranslation('pages');
-  const { network } = useApi();
+  const { colors } = useApi().network;
   const { activeAccount } = useConnect();
   const { mode } = useTheme();
   const { openModalWith } = useModal();
@@ -30,15 +30,13 @@ export const ClosurePrompts = () => {
   const { state, memberCounter } = selectedActivePool?.bondedPool || {};
   const { active, totalUnlockChuncks } = getTransferOptions(activeAccount).pool;
   const targets = poolNominations?.targets ?? [];
-
-  const networkColorsSecondary: any = network.colors.secondary;
-  const annuncementBorderColor = networkColorsSecondary[mode];
+  const annuncementBorderColor = colors.secondary[mode];
 
   // is the pool in a state for the depositor to close
   const depositorCanClose =
     !poolsSyncing &&
     isDepositor() &&
-    state === 'destroying' &&
+    state === 'Destroying' &&
     memberCounter === '1';
 
   // depositor needs to unbond funds

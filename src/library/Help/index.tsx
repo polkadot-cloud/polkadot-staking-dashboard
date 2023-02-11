@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -13,19 +13,19 @@ import {
   HelpItem,
 } from 'contexts/Help/types';
 import { useAnimation } from 'framer-motion';
-import useFillVariables from 'library/Hooks/useFillVariables';
+import { useFillVariables } from 'library/Hooks/useFillVariables';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { camelize } from 'Utils';
-import Definition from './Items/Definition';
-import External from './Items/External';
+import { Definition } from './Items/Definition';
+import { External } from './Items/External';
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
 
 export const Help = () => {
+  const { t, i18n } = useTranslation('help');
   const { setStatus, status, definition, closeHelp, setDefinition } = useHelp();
   const controls = useAnimation();
   const { fillVariables } = useFillVariables();
-  const { t, i18n } = useTranslation('help');
 
   const onFadeIn = useCallback(async () => {
     await controls.start('visible');

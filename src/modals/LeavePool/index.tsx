@@ -1,32 +1,26 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  faArrowAltCircleUp,
-  faSignOutAlt,
-} from '@fortawesome/free-solid-svg-icons';
+import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
-import { BN } from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
+import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Title } from 'library/Modal/Title';
-import {
-  FooterWrapper,
-  NotesWrapper,
-  PaddingWrapper,
-  WarningsWrapper,
-} from 'modals/Wrappers';
-import { useEffect, useState } from 'react';
+import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
+import { Action } from 'library/Modal/Action';
+import { Close } from 'library/Modal/Close';
+import { SubmitTx } from 'library/SubmitTx';
+import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckBnToUnit, unitToPlanckBn } from 'Utils';
-import { Separator } from '../../Wrappers';
+import { greaterThanZero, planckToUnit, unitToPlanck } from 'Utils';
 
 export const LeavePool = () => {
   const { t } = useTranslation('modals');
@@ -37,21 +31,28 @@ export const LeavePool = () => {
   const { getTransferOptions } = useTransferOptions();
   const { txFeesValid } = useTxFees();
   const { selectedActivePool } = useActivePools();
+  const { erasToSeconds } = useErasToTimeLeft();
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active: activeBn } = allTransferOptions.pool;
   const { bondDuration } = consts;
 
-  let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BN(0);
-  unclaimedRewards = planckBnToUnit(unclaimedRewards, network.units);
+  const bondDurationFormatted = timeleftAsString(
+    t,
+    erasToSeconds(bondDuration),
+    true
+  );
 
-  // convert BN values to number
-  const freeToUnbond = planckBnToUnit(activeBn, units);
+  let { unclaimedRewards } = selectedActivePool || {};
+  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
+  unclaimedRewards = planckToUnit(unclaimedRewards, network.units);
+
+  // convert BigNumber values to number
+  const freeToUnbond = planckToUnit(activeBn, units);
 
   // local bond value
-  const [bond, setBond] = useState({
-    bond: freeToUnbond,
+  const [bond, setBond] = useState<{ bond: string }>({
+    bond: freeToUnbond.toString(),
   });
 
   // bond valid
@@ -59,15 +60,14 @@ export const LeavePool = () => {
 
   // unbond all validation
   const isValid = (() => {
-    return freeToUnbond > 0;
+    return greaterThanZero(freeToUnbond);
   })();
 
   // update bond value on task change
   useEffect(() => {
-    const _bond = freeToUnbond;
-    setBond({ bond: _bond });
+    setBond({ bond: freeToUnbond.toString() });
     setBondValid(isValid);
-  }, [freeToUnbond, isValid]);
+  }, [freeToUnbond.toString(), isValid]);
 
   // modal resize on form update
   useEffect(() => {
@@ -81,8 +81,9 @@ export const LeavePool = () => {
       return tx;
     }
 
-    const bondToSubmit = unitToPlanckBn(String(bond.bond), units);
-    tx = api.tx.nominationPools.unbond(activeAccount, bondToSubmit);
+    const bondToSubmit = unitToPlanck(bond.bond, units);
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+    tx = api.tx.nominationPools.unbond(activeAccount, bondAsString);
     return tx;
   };
 
@@ -96,43 +97,52 @@ export const LeavePool = () => {
     callbackInBlock: () => {},
   });
 
+  const warnings = [];
+  if (!accountHasSigner(activeAccount)) {
+    warnings.push(<Warning text={t('readOnly')} />);
+  }
+  if (greaterThanZero(unclaimedRewards)) {
+    warnings.push(
+      <Warning
+        text={`${t('unbondingWithdraw')} ${unclaimedRewards.toString()} ${
+          network.unit
+        }.`}
+      />
+    );
+  }
+
   return (
     <>
-      <Title title={t('leavePool')} icon={faSignOutAlt} />
+      <Close />
       <PaddingWrapper>
-        {!accountHasSigner(activeAccount) && <Warning text={t('readOnly')} />}
-        {unclaimedRewards > 0 && (
+        <h2 className="title unbounded">{t('leavePool')}</h2>
+        {warnings.length ? (
           <WarningsWrapper>
-            <Warning
-              text={`${t('unbondingWithdraw')} ${unclaimedRewards} ${
-                network.unit
-              }.`}
-            />
+            {warnings.map((warning: React.ReactNode, index: number) => (
+              <React.Fragment key={`warning_${index}`}>
+                {warning}
+              </React.Fragment>
+            ))}
           </WarningsWrapper>
-        )}
-        <h2 className="title">
-          {t('unbond')} {freeToUnbond} {network.unit}
-        </h2>
-        <Separator />
-        <NotesWrapper>
-          <p>{t('onceUnbonding', { bondDuration })}</p>
-          {bondValid && <EstimatedTxFee />}
-        </NotesWrapper>
-        <FooterWrapper>
-          <div>
-            <ButtonSubmit
-              text={`${submitting ? t('submitting') : t('submit')}`}
-              iconLeft={faArrowAltCircleUp}
-              iconTransform="grow-2"
-              onClick={() => submitTx()}
-              disabled={
-                submitting ||
-                !(bondValid && accountHasSigner(activeAccount) && txFeesValid)
-              }
-            />
-          </div>
-        </FooterWrapper>
+        ) : null}
+        <Action text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
+        <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
       </PaddingWrapper>
+      <SubmitTx
+        buttons={[
+          <ButtonSubmit
+            key="button_submit"
+            text={`${submitting ? t('submitting') : t('submit')}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => submitTx()}
+            disabled={
+              submitting ||
+              !(bondValid && accountHasSigner(activeAccount) && txFeesValid)
+            }
+          />,
+        ]}
+      />
     </>
   );
 };

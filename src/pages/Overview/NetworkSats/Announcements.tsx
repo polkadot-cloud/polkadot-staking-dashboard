@@ -1,9 +1,9 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import BN from 'bn.js';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -11,19 +11,19 @@ import { BondedPool } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
-import { Announcement as AnnouncementLoader } from 'library/Loaders/Announcement';
+import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
 import { useTranslation } from 'react-i18next';
 import {
-  humanNumber,
-  planckBnToUnit,
+  capitalizeFirstLetter,
+  planckToUnit,
   rmCommas,
-  toFixedIfNecessary,
+  sortWithNull,
 } from 'Utils';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');
-  const { networkSyncing, poolsSyncing, isSyncing } = useUi();
+  const { poolsSyncing, isSyncing } = useUi();
   const { network } = useApi();
   const { eraStakers } = useStaking();
   const { units } = network;
@@ -31,13 +31,11 @@ export const Announcements = () => {
   const { bondedPools } = useBondedPools();
   const { totalStaked } = eraStakers;
 
-  let totalPoolPoints = new BN(0);
+  let totalPoolPoints = new BigNumber(0);
   bondedPools.forEach((b: BondedPool) => {
-    totalPoolPoints = totalPoolPoints.add(new BN(rmCommas(b.points)));
+    totalPoolPoints = totalPoolPoints.plus(new BigNumber(rmCommas(b.points)));
   });
-  const totalPoolPointsBase = humanNumber(
-    toFixedIfNecessary(planckBnToUnit(totalPoolPoints, units), 0)
-  );
+  const totalPoolPointsUnit = planckToUnit(totalPoolPoints, units);
 
   const container = {
     hidden: { opacity: 0 },
@@ -67,37 +65,45 @@ export const Announcements = () => {
     announcements.push({
       class: 'neutral',
       title: t('overview.networkCurrentlyStaked', {
-        total: humanNumber(
-          toFixedIfNecessary(planckBnToUnit(totalStaked, units), 0)
-        ),
+        total: planckToUnit(totalStaked, units).integerValue().toFormat(),
         unit: network.unit,
-        network: network.name,
+        network: capitalizeFirstLetter(network.name),
       }),
       subtitle: t('overview.networkCurrentlyStakedSubtitle', {
         unit: network.unit,
       }),
     });
+  } else {
+    announcements.push(null);
   }
 
   // total locked in pools
   if (bondedPools.length) {
     announcements.push({
       class: 'neutral',
-      title: `${totalPoolPointsBase} ${network.unit} ${t('overview.inPools')}`,
+      title: `${totalPoolPointsUnit.integerValue().toFormat()} ${
+        network.unit
+      } ${t('overview.inPools')}`,
       subtitle: `${t('overview.bondedInPools', { networkUnit })}`,
     });
-
-    if (poolMembers.length > 0 && !poolsSyncing) {
-      // total locked in pols
-      announcements.push({
-        class: 'neutral',
-        title: `${humanNumber(poolMembers.length)} ${t(
-          'overview.poolMembersBonding'
-        )}`,
-        subtitle: `${t('overview.totalNumAccounts')}`,
-      });
-    }
+  } else {
+    announcements.push(null);
   }
+
+  if (bondedPools.length && poolMembers.length > 0 && !poolsSyncing) {
+    // total locked in pols
+    announcements.push({
+      class: 'neutral',
+      title: `${new BigNumber(poolMembers.length).toFormat()} ${t(
+        'overview.poolMembersBonding'
+      )}`,
+      subtitle: `${t('overview.totalNumAccounts')}`,
+    });
+  } else {
+    announcements.push(null);
+  }
+
+  announcements.sort(sortWithNull(true));
 
   return (
     <motion.div
@@ -106,10 +112,10 @@ export const Announcements = () => {
       animate="show"
       style={{ width: '100%' }}
     >
-      {networkSyncing ? (
-        <AnnouncementLoader />
-      ) : (
-        announcements.map((item, index) => (
+      {announcements.map((item, index) =>
+        item === null ? (
+          <AnnouncementLoader key={`announcement_${index}`} />
+        ) : (
           <Item key={`announcement_${index}`} variants={listItem}>
             <h4 className={item.class}>
               <FontAwesomeIcon
@@ -120,7 +126,7 @@ export const Announcements = () => {
             </h4>
             <p>{item.subtitle}</p>
           </Item>
-        ))
+        )
       )}
     </motion.div>
   );

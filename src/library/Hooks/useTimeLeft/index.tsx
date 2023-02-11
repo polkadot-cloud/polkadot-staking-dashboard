@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
@@ -14,8 +14,8 @@ import {
 import { getDuration } from './utils';
 
 export const useTimeLeft = () => {
-  const { network } = useApi();
   const { t, i18n } = useTranslation();
+  const { network } = useApi();
 
   // check whether timeleft is within a minute of finishing.
   const inLastHour = () => {

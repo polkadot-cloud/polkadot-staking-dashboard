@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faCubes } from '@fortawesome/free-solid-svg-icons';
@@ -11,9 +11,9 @@ import { useTranslation } from 'react-i18next';
 import { ParaValidatorProps } from '../types';
 
 export const ParaValidator = ({ address }: ParaValidatorProps) => {
+  const { t } = useTranslation('library');
   const { sessionParachain } = useValidators();
   const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
-  const { t } = useTranslation('library');
 
   const posRef = useRef(null);
 

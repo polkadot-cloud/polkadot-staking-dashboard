@@ -1,7 +1,6 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faBars, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -31,10 +30,9 @@ import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
 import { PoolProps } from './types';
 
-export const Pool = (props: PoolProps) => {
-  const { pool, batchKey, batchIndex } = props;
-  const { memberCounter, addresses, id, state } = pool;
+export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const { t } = useTranslation('library');
+  const { memberCounter, addresses, id, state } = pool;
 
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -76,7 +74,7 @@ export const Pool = (props: PoolProps) => {
 
   // add view pool nominations button to menu
   menuItems.push({
-    icon: <FontAwesomeIcon icon={faProjectDiagram as IconProp} />,
+    icon: <FontAwesomeIcon icon={faProjectDiagram} />,
     wrap: null,
     title: `${t('viewPoolNominations')}`,
     cb: () => {
@@ -93,7 +91,7 @@ export const Pool = (props: PoolProps) => {
 
   // add copy pool address button to menu
   menuItems.push({
-    icon: <FontAwesomeIcon icon={faCopy as IconProp} />,
+    icon: <FontAwesomeIcon icon={faCopy} />,
     wrap: null,
     title: t('copyPoolAddress'),
     cb: () => {
@@ -141,7 +139,7 @@ export const Pool = (props: PoolProps) => {
         <div className="row status">
           <PoolBonded pool={pool} batchIndex={batchIndex} batchKey={batchKey} />
           {!poolsSyncing &&
-            state === 'open' &&
+            state === 'Open' &&
             !membership &&
             !isReadOnlyAccount(activeAccount) &&
             activeAccount && (
@@ -154,5 +152,3 @@ export const Pool = (props: PoolProps) => {
     </Wrapper>
   );
 };
-
-export default Pool;

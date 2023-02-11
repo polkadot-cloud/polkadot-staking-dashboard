@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { usePlugins } from 'contexts/Plugins';
@@ -13,11 +13,11 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const Payouts = () => {
+  const { t } = useTranslation('pages');
   const { isSyncing } = useUi();
   const { plugins } = usePlugins();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
-  const { t } = useTranslation('pages');
 
   const ref = React.useRef<HTMLDivElement>(null);
 
@@ -60,5 +60,3 @@ export const Payouts = () => {
     </div>
   );
 };
-
-export default Payouts;

@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons';
@@ -10,13 +10,13 @@ import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Graphs/Wrappers';
-import useUnstaking from 'library/Hooks/useUnstaking';
+import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { useTranslation } from 'react-i18next';
 import { ButtonRowWrapper, PageRowWrapper } from 'Wrappers';
 
 export const UnstakePrompts = () => {
   const { t } = useTranslation('pages');
-  const { network } = useApi();
+  const { unit, colors } = useApi().network;
   const { activeAccount } = useConnect();
   const { mode } = useTheme();
   const { openModalWith } = useModal();
@@ -25,9 +25,7 @@ export const UnstakePrompts = () => {
   const { getTransferOptions } = useTransferOptions();
   const { active, totalUnlockChuncks, totalUnlocked, totalUnlocking } =
     getTransferOptions(activeAccount).nominate;
-
-  const networkColorsSecondary: any = network.colors.secondary;
-  const annuncementBorderColor = networkColorsSecondary[mode];
+  const annuncementBorderColor = colors.secondary[mode];
 
   // unstaking can withdraw
   const canWithdrawUnlocks =
@@ -56,7 +54,7 @@ export const UnstakePrompts = () => {
                   ? t('nominate.unstakePromptWaitingForUnlocks')
                   : `${t('nominate.unstakePromptReadyToWithdraw')} ${t(
                       'nominate.unstakePromptRevert',
-                      { unit: network.unit }
+                      { unit }
                     )}`}
               </h4>
               <ButtonRowWrapper verticalSpacing>

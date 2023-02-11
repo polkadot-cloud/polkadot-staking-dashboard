@@ -1,4 +1,4 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -12,10 +12,10 @@ import { ExtensionProps } from './types';
 import { ExtensionWrapper } from './Wrappers';
 
 export const Extension = (props: ExtensionProps) => {
+  const { t } = useTranslation('modals');
   const { extensions, extensionsStatus } = useExtensions();
   const { meta } = props;
   const { id } = meta;
-  const { t } = useTranslation('modals');
 
   const installed = extensions.find((e: ExtensionInjected) => e.id === id);
   const status = !installed ? 'not_found' : extensionsStatus[id];
@@ -101,8 +101,14 @@ export const ExtensionElement = (props: any) => {
   );
 };
 
-export const ExtensionInner = (props: any) => {
-  const { size, message, flag, meta, status, installed } = props;
+export const ExtensionInner = ({
+  size,
+  message,
+  flag,
+  meta,
+  status,
+  installed,
+}: any) => {
   const { title, icon: Icon } = meta;
 
   return (

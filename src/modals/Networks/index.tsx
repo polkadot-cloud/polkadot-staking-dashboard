@@ -1,9 +1,9 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { NETWORKS } from 'config/networks';
+import { NetworkList } from 'config/networks';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
@@ -22,11 +22,12 @@ import {
 } from './Wrapper';
 
 export const Networks = () => {
-  const [braveBrowser, setBraveBrowser] = useState<boolean>(false);
+  const { t } = useTranslation('modals');
   const { switchNetwork, network, isLightClient } = useApi();
   const { setStatus } = useModal();
   const networkKey: string = network.name;
-  const { t } = useTranslation('modals');
+
+  const [braveBrowser, setBraveBrowser] = useState<boolean>(false);
 
   useEffect(() => {
     // @ts-ignore
@@ -42,42 +43,44 @@ export const Networks = () => {
         <ContentWrapper>
           <h4>{t('selectNetwork')}</h4>
           <div className="items">
-            {Object.entries(NETWORKS).map(([key, item]: any, index: number) => {
-              const Svg = item.brand.inline.svg;
-              const rpcDisabled = networkKey === key;
+            {Object.entries(NetworkList).map(
+              ([key, item]: any, index: number) => {
+                const Svg = item.brand.inline.svg;
+                const rpcDisabled = networkKey === key;
 
-              return (
-                <NetworkButton
-                  connected={networkKey === key}
-                  disabled={rpcDisabled}
-                  key={`network_switch_${index}`}
-                  type="button"
-                  onClick={() => {
-                    if (networkKey !== key) {
-                      switchNetwork(key, isLightClient);
-                      setStatus(0);
-                    }
-                  }}
-                >
-                  <div style={{ width: '1.75rem' }}>
-                    <Svg
-                      width={item.brand.inline.size}
-                      height={item.brand.inline.size}
-                    />
-                  </div>
-                  <h3>{capitalizeFirstLetter(item.name)}</h3>
-                  {networkKey === key && (
-                    <h4 className="selected">{t('selected')}</h4>
-                  )}
-                  <div>
-                    <FontAwesomeIcon
-                      transform="shrink-2"
-                      icon={faChevronRight}
-                    />
-                  </div>
-                </NetworkButton>
-              );
-            })}
+                return (
+                  <NetworkButton
+                    connected={networkKey === key}
+                    disabled={rpcDisabled}
+                    key={`network_switch_${index}`}
+                    type="button"
+                    onClick={() => {
+                      if (networkKey !== key) {
+                        switchNetwork(key, isLightClient);
+                        setStatus(0);
+                      }
+                    }}
+                  >
+                    <div style={{ width: '1.75rem' }}>
+                      <Svg
+                        width={item.brand.inline.size}
+                        height={item.brand.inline.size}
+                      />
+                    </div>
+                    <h3>{capitalizeFirstLetter(item.name)}</h3>
+                    {networkKey === key && (
+                      <h4 className="selected">{t('selected')}</h4>
+                    )}
+                    <div>
+                      <FontAwesomeIcon
+                        transform="shrink-2"
+                        icon={faChevronRight}
+                      />
+                    </div>
+                  </NetworkButton>
+                );
+              }
+            )}
           </div>
           <h4>{t('connectionType')}</h4>
           <ConnectionsWrapper>
@@ -113,7 +116,7 @@ export const Networks = () => {
               <BraveIconSVG />
               <div className="brave-text">
                 <Trans
-                  defaults={t('braveText') || ''}
+                  defaults={`${t('braveText')}`}
                   components={{ b: <b />, i: <i /> }}
                 />{' '}
                 <a
@@ -132,5 +135,3 @@ export const Networks = () => {
     </>
   );
 };
-
-export default Networks;
