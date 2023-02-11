@@ -62,15 +62,16 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
 
       .identicon {
         position: absolute;
+        display: flex;
         left: 0;
         top: 0;
-        display: flex;
         flex-flow: row wrap;
         align-items: center;
       }
 
       > span {
         position: absolute;
+        display: flex;
         right: 0.2rem;
         top: 0rem;
       }
