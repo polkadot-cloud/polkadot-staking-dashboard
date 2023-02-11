@@ -42,7 +42,6 @@ export const Wrapper = styled.div<{ last?: boolean }>`
 
       > .copy {
         color: var(--text-color-secondary);
-        opacity: 0.5;
         cursor: pointer;
         transition: opacity 0.1s;
         margin-left: 0.5rem;

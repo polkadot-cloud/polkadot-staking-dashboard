@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
@@ -105,21 +104,15 @@ export const Summary = ({ section }: SetupStepProps) => {
         <SummaryWrapper>
           <section>
             <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
-                transform="grow-1"
-              />{' '}
-              &nbsp; {t('pools.poolName')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
+              {t('pools.poolName')}:
             </div>
             <div>{metadata ?? `${t('pools.notSet')}`}</div>
           </section>
           <section>
             <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
-                transform="grow-1"
-              />{' '}
-              &nbsp; {t('pools.bondAmount')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
+              {t('pools.bondAmount')}:
             </div>
             <div>
               {new BigNumber(bond).toFormat()} {network.unit}
@@ -127,11 +120,8 @@ export const Summary = ({ section }: SetupStepProps) => {
           </section>
           <section>
             <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
-                transform="grow-1"
-              />{' '}
-              &nbsp; Nominating:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;
+              Nominating:
             </div>
             <div>
               {nominations.length} Validator
@@ -140,11 +130,8 @@ export const Summary = ({ section }: SetupStepProps) => {
           </section>
           <section>
             <div>
-              <FontAwesomeIcon
-                icon={faCheckCircle as IconProp}
-                transform="grow-1"
-              />{' '}
-              &nbsp; {t('pools.roles')}:
+              <FontAwesomeIcon icon={faCheckCircle} transform="grow-1" /> &nbsp;{' '}
+              {t('pools.roles')}:
             </div>
             <div>{t('pools.assigned')}</div>
           </section>

@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
@@ -52,8 +51,8 @@ export const ActiveAccount = () => {
                 >
                   <FontAwesomeIcon
                     className="copy"
-                    icon={faCopy as IconProp}
-                    transform="shrink-1"
+                    icon={faCopy}
+                    transform="shrink-2"
                   />
                 </button>
                 {accountData.name !== clipAddress(accountData.address) && (

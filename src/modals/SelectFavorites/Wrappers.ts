@@ -30,7 +30,7 @@ export const FooterWrapper = styled.div`
 
     &:disabled {
       color: var(--text-color-secondary);
-      opacity: 0.5;
+      opacity: var(--opacity-disabled);
     }
   }
 `;

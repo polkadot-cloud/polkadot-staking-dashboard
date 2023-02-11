@@ -45,7 +45,6 @@ export const ActiveAccounWrapper = styled.div`
     }
 
     button {
-      background: var(--button-secondary-background);
       width: 2rem;
       height: 2rem;
       border-radius: 50%;
@@ -80,11 +79,11 @@ export const ActiveAccounWrapper = styled.div`
 
       .copy {
         color: var(--text-color-secondary);
-        opacity: 0.7;
+        opacity: 0.9;
         cursor: pointer;
         transition: opacity 0.1s;
         &:hover {
-          opacity: 0.8;
+          opacity: 1;
         }
       }
     }

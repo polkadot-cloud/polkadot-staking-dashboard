@@ -108,6 +108,12 @@ export const EntryWrapper = styled.div`
       padding: 0 5rem 0 2.5rem;
     }
   }
+  .label {
+    font-size: 0.85rem;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-end;
+  }
 `;
 
 /* BodyInterfaceWrapper

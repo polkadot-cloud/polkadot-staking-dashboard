@@ -124,7 +124,7 @@ export const FilterListButton = styled.button<{ active: boolean }>`
     ${(props) =>
       props.active
         ? 'var(--network-color-stroke)'
-        : 'var(--button-primary-background'};
+        : 'var(--button-primary-background)'};
   background: var(--button-primary-background);
   width: 100%;
   display: flex;

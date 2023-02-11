@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faChartPie,
   faCoins,
@@ -209,7 +208,7 @@ export const GenerateNominations = ({
     {
       title: t('optimalSelection'),
       subtitle: t('optimalSelectionSubtitle'),
-      icon: faChartPie as IconProp,
+      icon: faChartPie,
       onClick: () => {
         setMethod('Optimal Selection');
         removeValidatorMetaBatch(batchKey);
@@ -220,7 +219,7 @@ export const GenerateNominations = ({
     {
       title: t('activeLowCommission'),
       subtitle: t('activeLowCommissionSubtitle'),
-      icon: faCoins as IconProp,
+      icon: faCoins,
       onClick: () => {
         setMethod('Active Low Commission');
         removeValidatorMetaBatch(batchKey);
@@ -231,7 +230,7 @@ export const GenerateNominations = ({
     {
       title: t('fromFavorites'),
       subtitle: t('fromFavoritesSubtitle'),
-      icon: faHeart as IconProp,
+      icon: faHeart,
       onClick: () => {
         setMethod('From Favorites');
         removeValidatorMetaBatch(batchKey);
@@ -242,7 +241,7 @@ export const GenerateNominations = ({
     {
       title: t('manual_selection'),
       subtitle: t('manualSelectionSubtitle'),
-      icon: faUserEdit as IconProp,
+      icon: faUserEdit,
       onClick: () => {
         setMethod('Manual');
         removeValidatorMetaBatch(batchKey);
@@ -299,7 +298,7 @@ export const GenerateNominations = ({
       {method && (
         <SelectableWrapper>
           <button type="button" onClick={() => clearNominations()}>
-            <FontAwesomeIcon icon={faTimes as IconProp} />
+            <FontAwesomeIcon icon={faTimes} />
             {t(`${camelize(method)}`)}
           </button>
 
