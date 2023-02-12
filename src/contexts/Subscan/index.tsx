@@ -31,10 +31,14 @@ export const SubscanProvider = ({
   // store fetched pool claims from Subscan
   const [poolClaims, setPoolClaims] = useState<AnySubscan>([]);
 
+  // store fetched unclaimed payouts from Subscan
+  const [unclaimedPayouts, setUnclaimedPayouts] = useState<AnyApi>([]);
+
   // reset payouts on network switch
   useEffect(() => {
     setPayouts([]);
     setPoolClaims([]);
+    setUnclaimedPayouts([]);
   }, [network]);
 
   // fetch payouts as soon as network is ready
@@ -67,23 +71,22 @@ export const SubscanProvider = ({
     // fetch 2 pages of results if subscan is enabled
     if (getPlugins().includes('subscan')) {
       let _payouts: Array<AnySubscan> = [];
+      let _unclaimedPayouts: Array<AnySubscan> = [];
 
       // fetch 3 pages of results
-      const results = await Promise.all([
+      const claimedResults = await Promise.all([
         handleFetch(activeAccount, 0, ApiEndpoints.subscanRewardSlash, {
           is_stash: true,
-          claimed_filter: 'claimed',
         }),
         handleFetch(activeAccount, 1, ApiEndpoints.subscanRewardSlash, {
           is_stash: true,
-          claimed_filter: 'claimed',
         }),
       ]);
 
       // user may have turned off service while results were fetching.
       // test again whether subscan service is still active.
       if (getPlugins().includes('subscan')) {
-        for (const result of results) {
+        for (const result of claimedResults) {
           if (!result?.data?.list) {
             break;
           }
@@ -92,8 +95,14 @@ export const SubscanProvider = ({
             (l: AnyApi) => l.block_timestamp !== 0
           );
           _payouts = _payouts.concat(list);
+
+          const unclaimedList = result.data.list.filter(
+            (l: AnyApi) => l.block_timestamp === 0
+          );
+          _unclaimedPayouts = _unclaimedPayouts.concat(unclaimedList);
         }
         setPayouts(_payouts);
+        setUnclaimedPayouts(_unclaimedPayouts);
       }
     }
   };
@@ -212,6 +221,7 @@ export const SubscanProvider = ({
         fetchEraPoints,
         payouts,
         poolClaims,
+        unclaimedPayouts,
       }}
     >
       {children}
