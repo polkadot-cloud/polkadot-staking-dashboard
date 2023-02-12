@@ -6,10 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NetworkList } from 'config/networks';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
-import { useTooltip } from 'contexts/Tooltip';
-import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { Title } from 'library/Modal/Title';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { NetworkName } from 'types';
 import { capitalizeFirstLetter } from 'Utils';
@@ -28,7 +26,6 @@ export const Networks = () => {
   const { switchNetwork, network, isLightClient } = useApi();
   const { setStatus } = useModal();
   const networkKey: string = network.name;
-  const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
 
   const [braveBrowser, setBraveBrowser] = useState<boolean>(false);
 
@@ -38,17 +35,6 @@ export const Networks = () => {
       setBraveBrowser(isBrave);
     });
   });
-
-  const posRef = useRef(null);
-
-  const tooltipText = t('undergoingMaintenance');
-
-  const toggleTooltip = () => {
-    if (!open) {
-      setTooltipMeta(tooltipText);
-      setTooltipPosition(posRef);
-    }
-  };
 
   return (
     <>
@@ -113,19 +99,12 @@ export const Networks = () => {
             <ConnectionButton
               connected={isLightClient}
               className="off"
-              disabled
               type="button"
               onClick={() => {
                 switchNetwork(networkKey as NetworkName, true);
                 setStatus(0);
               }}
             >
-              <TooltipTrigger
-                className="tooltip-trigger-element"
-                data-tooltip-text={tooltipText}
-                onMouseMove={() => toggleTooltip()}
-              />
-              <TooltipPosition ref={posRef} style={{ left: '10px' }} />
               <h3>{t('lightClient')}</h3>
               {isLightClient && <h4 className="selected">{t('selected')}</h4>}
             </ConnectionButton>
@@ -138,15 +117,7 @@ export const Networks = () => {
                 <Trans
                   defaults={`${t('braveText')}`}
                   components={{ b: <b />, i: <i /> }}
-                />{' '}
-                <a
-                  href="https://paritytech.github.io/substrate-connect/#troubleshooting"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="learn-more"
-                >
-                  {t('learnMoreHere')}
-                </a>
+                />
               </div>
             </BraveWarning>
           ) : null}
