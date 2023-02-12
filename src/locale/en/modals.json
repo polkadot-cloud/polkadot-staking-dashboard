@@ -171,7 +171,7 @@
     "unlockTake": "Unlocks can be withdrawn after {{bondDurationFormatted}}.",
     "unlocked": "Unlocked",
     "unlocks": "Unlocks",
-    "unlocksAfterEra": "Unlocks after Era",
+    "unlocksAfter": "Unlocks after",
     "unstake": "Unstake",
     "unstakeStopNominating_one": "Stop Nominating {{count}} Validator",
     "unstakeStopNominating_other": "Stop Nominating {{count}} Validators",

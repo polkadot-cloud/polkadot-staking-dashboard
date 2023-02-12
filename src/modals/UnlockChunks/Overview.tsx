@@ -121,7 +121,7 @@ export const Overview = forwardRef(
                     <h4>
                       {left.isLessThanOrEqualTo(0)
                         ? t('unlocked')
-                        : `${t('unlocksAfterEra')} ${era}`}
+                        : `${t('unlocksAfter')} ${era}`}
                     </h4>
                   </section>
                   {isStaking && (
