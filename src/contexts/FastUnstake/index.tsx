@@ -131,8 +131,8 @@ export const FastUnstakeProvider = ({
       ) {
         // if localMeta existed, start checking from the next era.
         const eraTocheck = localMeta
-          ? localMeta.checked[localMeta.checked.length - 1] - 1
-          : activeEra.index.toNumber();
+          ? new BigNumber(localMeta.checked[localMeta.checked.length - 1] - 1)
+          : activeEra.index;
 
         // checkpoint: check from era eraTocheck
 
@@ -225,10 +225,10 @@ export const FastUnstakeProvider = ({
   };
 
   // initiate fast unstake eligibility check.
-  const processEligibility = async (a: MaybeAccount, era: number) => {
+  const processEligibility = async (a: MaybeAccount, era: BigNumber) => {
     // ensure current era has synced
     if (
-      era <= 0 ||
+      era.isLessThanOrEqualTo(0) ||
       !greaterThanZero(bondDuration) ||
       !api ||
       !a ||
@@ -238,7 +238,7 @@ export const FastUnstakeProvider = ({
       return;
 
     setStateWithRef(true, setChecking, checkingRef);
-    checkEra(new BigNumber(era));
+    checkEra(era);
   };
 
   // calls service worker to check exppsures for given era.

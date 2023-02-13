@@ -522,16 +522,14 @@ export const ValidatorsProvider = ({
           // get the lowest reward stake of the validator, which is
           // the largest index - `maxNominatorRewardedPerValidator`,
           // or the first index if does not exist.
-          const lowestRewardIndex = BigNumber.max(
-            new BigNumber(others.length).minus(
-              maxNominatorRewardedPerValidator
-            ),
+          const lowestRewardIndex = Math.max(
+            others.length - maxNominatorRewardedPerValidator.toNumber(),
             0
           );
 
           const lowestReward =
             others.length > 0
-              ? planckToUnit(others[lowestRewardIndex.toNumber()]?.value, units)
+              ? planckToUnit(others[lowestRewardIndex]?.value, units)
               : 0;
 
           stake.push({

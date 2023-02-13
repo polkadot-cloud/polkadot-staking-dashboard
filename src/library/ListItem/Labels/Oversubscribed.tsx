@@ -46,10 +46,7 @@ export const Oversubscribed = ({
   const lowestReward = eraStakers?.lowestReward ?? 0;
 
   const displayOversubscribed =
-    synced.stake &&
-    consts.maxNominatorRewardedPerValidator.isLessThanOrEqualTo(
-      totalNominations
-    );
+    synced.stake && totalNominations >= consts.maxNominatorRewardedPerValidator;
 
   const posRef = useRef(null);
 
