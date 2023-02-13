@@ -556,7 +556,7 @@ export const ActivePoolsProvider = ({
 
     // calculate the latest reward account balance minus the existential deposit
     const rewardPoolBalance = BigNumber.max(
-      new BigNumber(0),
+      0,
       new BigNumber(rewardAccountBalance).minus(consts.existentialDeposit)
     );
 
