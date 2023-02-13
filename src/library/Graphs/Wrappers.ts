@@ -125,7 +125,8 @@ export const CardWrapper = styled.div<CardWrapperProps>`
 
 export const GraphWrapper = styled.div<GraphWrapperProps>`
   box-shadow: var(--card-shadow) var(--card-shadow-color);
-  background: var(--background-primary);
+  background: ${(props) =>
+    props.transparent ? 'none' : 'var(--background-primary)'};
   border-radius: 1rem;
   display: flex;
   flex-flow: column nowrap;

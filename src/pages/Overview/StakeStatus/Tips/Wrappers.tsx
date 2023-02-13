@@ -139,7 +139,7 @@ export const PageToggleWrapper = styled.div`
     }
     &:disabled {
       color: var(--text-color-secondary);
-      opacity: 0.1;
+      opacity: var(--opacity-disabled);
     }
   }
 
@@ -152,7 +152,7 @@ export const PageToggleWrapper = styled.div`
       margin: 0 0.5rem;
     }
     &.disabled {
-      opacity: 0.25;
+      opacity: var(--opacity-disabled);
     }
   }
 `;

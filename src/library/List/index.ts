@@ -107,7 +107,7 @@ export const SelectableWrapper = styled.div`
     }
 
     &:disabled {
-      opacity: 0.5;
+      opacity: var(--opacity-disabled);
     }
 
     &:hover {

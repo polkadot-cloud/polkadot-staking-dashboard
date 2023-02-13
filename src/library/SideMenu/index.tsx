@@ -83,7 +83,7 @@ export const SideMenu = () => {
           minimised={sideMenuMinimised}
           icon={{
             Svg: InfoSVG,
-            size: sideMenuMinimised ? '1.6em' : '1.4em',
+            size: sideMenuMinimised ? '1.4em' : '1.2em',
           }}
         />
         <Secondary
@@ -92,7 +92,7 @@ export const SideMenu = () => {
           minimised={sideMenuMinimised}
           icon={{
             Svg: ForumSVG,
-            size: sideMenuMinimised ? '1.6em' : '1.4em',
+            size: sideMenuMinimised ? '1.4em' : '1.2em',
           }}
         />
         <Separator />
@@ -124,7 +124,6 @@ export const SideMenu = () => {
         >
           <FontAwesomeIcon
             icon={userSideMenuMinimised ? faExpandAlt : faCompressAlt}
-            transform="grow-3"
           />
         </button>
         <button
@@ -136,27 +135,27 @@ export const SideMenu = () => {
             )
           }
         >
-          <LogoGithubSVG width="1.4em" height="1.4em" />
+          <LogoGithubSVG width="1.2em" height="1.2em" />
         </button>
         <button
           type="button"
           onClick={() => openModalWith('Settings', {}, 'large')}
         >
-          <CogOutlineSVG width="1.6em" height="1.6em" />
+          <CogOutlineSVG width="1.3em" height="1.3em" />
         </button>
         <button
           type="button"
           onClick={() => openModalWith('ChooseLanguage', {}, 'small')}
         >
-          <LanguageSVG width="1.55em" height="1.55em" />
+          <LanguageSVG width="1.25em" height="1.25em" />
         </button>
         {mode === 'light' ? (
           <button type="button" onClick={() => toggleTheme()}>
-            <SunnyOutlineSVG width="1.55em" height="1.55em" />
+            <SunnyOutlineSVG width="1.25em" height="1.25em" />
           </button>
         ) : (
           <button type="button" onClick={() => toggleTheme()}>
-            <MoonOutlineSVG width="1.4em" height="1.4em" />
+            <MoonOutlineSVG width="1.1em" height="1.1em" />
           </button>
         )}
       </section>

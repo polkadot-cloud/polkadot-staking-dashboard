@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faBars,
   faShare,
@@ -54,7 +53,7 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
 
     if (points !== '0') {
       menuItems.push({
-        icon: <FontAwesomeIcon icon={faUnlockAlt as IconProp} />,
+        icon: <FontAwesomeIcon icon={faUnlockAlt} />,
         wrap: null,
         title: `${t('pools.unbondFunds')}`,
         cb: () => {
@@ -80,7 +79,7 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
 
       if (canWithdraw) {
         menuItems.push({
-          icon: <FontAwesomeIcon icon={faShare as IconProp} />,
+          icon: <FontAwesomeIcon icon={faShare} />,
           wrap: null,
           title: `${t('pools.withdrawFunds')}`,
           cb: () => {
