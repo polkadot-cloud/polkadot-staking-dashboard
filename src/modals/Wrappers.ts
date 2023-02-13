@@ -200,7 +200,7 @@ export const FooterWrapper = styled.div`
     }
 
     &:disabled {
-      opacity: 0.25;
+      opacity: var(--opacity-disabled);
     }
     svg {
       margin-right: 0.5rem;

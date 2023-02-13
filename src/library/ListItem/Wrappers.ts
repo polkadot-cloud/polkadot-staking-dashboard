@@ -77,7 +77,7 @@ export const Labels = styled.div`
       color: var(--network-color-primary);
     }
     &:disabled {
-      opacity: 0.35;
+      opacity: var(--opacity-disabled);
     }
   }
 
