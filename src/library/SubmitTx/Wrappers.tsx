@@ -46,8 +46,8 @@ export const Wrapper = styled.div`
       }
 
       > div {
+        display: flex;
         &:first-child {
-          display: flex;
           flex-direction: column;
           justify-content: center;
           flex-grow: 1;

@@ -86,7 +86,6 @@ export const NominationStatus = () => {
                 title: startTitle,
                 icon: faChevronCircleRight,
                 transform: 'grow-1',
-                large: true,
                 disabled:
                   !isReady ||
                   isReadOnlyAccount(activeAccount) ||

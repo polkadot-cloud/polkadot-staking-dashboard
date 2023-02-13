@@ -41,14 +41,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { metadata, bond, roles, nominations } = progress;
 
   const getTxs = () => {
-    if (
-      !activeAccount ||
-      !api ||
-      !metadata ||
-      bond === 0 ||
-      !roles ||
-      !nominations.length
-    ) {
+    if (!activeAccount || !api) {
       return null;
     }
 
@@ -60,9 +53,9 @@ export const Summary = ({ section }: SetupStepProps) => {
     const txs = [
       api.tx.nominationPools.create(
         bondAsString,
-        roles.root,
-        roles.nominator,
-        roles.stateToggler
+        roles?.root || activeAccount,
+        roles?.nominator || activeAccount,
+        roles?.stateToggler || activeAccount
       ),
       api.tx.nominationPools.nominate(poolId.toString(), targetsToSubmit),
       api.tx.nominationPools.setMetadata(poolId.toString(), metadata),
