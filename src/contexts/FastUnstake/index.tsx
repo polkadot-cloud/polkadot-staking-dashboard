@@ -208,9 +208,7 @@ export const FastUnstakeProvider = ({
         // cancel checking and update exposed state.
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(true, setIsExposed, isExposedRef);
-      } else if (
-        bondDuration.plus(new BigNumber(1)).isEqualTo(checked.length)
-      ) {
+      } else if (bondDuration.plus(1).isEqualTo(checked.length)) {
         // successfully checked current era - bondDuration eras.
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(false, setIsExposed, isExposedRef);
