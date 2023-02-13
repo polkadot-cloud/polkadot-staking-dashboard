@@ -47,6 +47,8 @@ export const rmCommas = (val: string): string => val.replace(/,/g, '');
 export const greaterThanZero = (val: BigNumber) =>
   val.isGreaterThan(new BigNumber(0));
 
+export const isNotZero = (val: BigNumber) => !val.isZero();
+
 export const shuffle = <T>(array: Array<T>) => {
   let currentIndex = array.length;
   let randomIndex;

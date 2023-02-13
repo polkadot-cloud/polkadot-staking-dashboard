@@ -16,6 +16,7 @@ import { Pagination } from 'library/List/Pagination';
 import { Selectable } from 'library/List/Selectable';
 import { useEffect, useRef, useState } from 'react';
 import { AnyApi, Sync } from 'types';
+import { isNotZero } from 'Utils';
 import { Member } from './Member';
 
 export const MembersListInner = ({
@@ -86,7 +87,7 @@ export const MembersListInner = ({
 
   // configure list when network is ready to fetch
   useEffect(() => {
-    if (isReady && !activeEra.index.isZero() && fetched === 'unsynced') {
+    if (isReady && isNotZero(activeEra.index) && fetched === 'unsynced') {
       setupMembersList();
     }
   }, [isReady, fetched, activeEra.index]);

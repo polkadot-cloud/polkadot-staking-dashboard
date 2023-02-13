@@ -11,7 +11,7 @@ import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit, unitToPlanck } from 'Utils';
+import { isNotZero, planckToUnit, unitToPlanck } from 'Utils';
 import { UnbondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
@@ -102,7 +102,7 @@ export const UnbondFeedback = ({
   // check if bonded is below the minimum required
   const nominatorActiveBelowMin =
     bondFor === 'nominator' &&
-    !active.isZero() &&
+    isNotZero(active) &&
     active.isLessThan(minNominatorBond);
   const poolToMinBn = isDepositor() ? minCreateBond : minJoinBond;
   const poolActiveBelowMin =

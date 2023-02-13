@@ -13,7 +13,12 @@ import {
 } from 'contexts/Staking/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
-import { greaterThanZero, localStorageOrDefault, setStateWithRef } from 'Utils';
+import {
+  greaterThanZero,
+  isNotZero,
+  localStorageOrDefault,
+  setStateWithRef,
+} from 'Utils';
 // eslint-disable-next-line import/no-unresolved
 import Worker from 'worker-loader!../../workers/stakers';
 import { useApi } from '../Api';
@@ -163,7 +168,7 @@ export const StakingProvider = ({
   };
 
   const subscribeToStakingkMetrics = async () => {
-    if (api !== null && isReady && !activeEra.index.isZero()) {
+    if (api !== null && isReady && isNotZero(activeEra.index)) {
       const previousEra = activeEra.index.minus(1);
 
       const u = await api.queryMulti<AnyApi>(

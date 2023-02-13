@@ -23,7 +23,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { NotesWrapper, PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit, unitToPlanck } from 'Utils';
+import { isNotZero, planckToUnit, unitToPlanck } from 'Utils';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');
@@ -136,7 +136,7 @@ export const Unbond = () => {
 
   const nominatorActiveBelowMin =
     bondFor === 'nominator' &&
-    !activeBn.isZero() &&
+    isNotZero(activeBn) &&
     activeBn.isLessThan(minNominatorBondBn);
 
   const poolToMinBn = isDepositor() ? minCreateBondBn : minJoinBondBn;

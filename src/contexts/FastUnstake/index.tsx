@@ -9,7 +9,7 @@ import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyJson, MaybeAccount } from 'types';
 // eslint-disable-next-line import/no-unresolved
-import { greaterThanZero, rmCommas, setStateWithRef } from 'Utils';
+import { greaterThanZero, isNotZero, rmCommas, setStateWithRef } from 'Utils';
 import Worker from 'worker-loader!../../workers/stakers';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
 import { FastUnstakeContextInterface, LocalMeta, MetaInterface } from './types';
@@ -76,7 +76,7 @@ export const FastUnstakeProvider = ({
     if (
       isReady &&
       activeAccount &&
-      !activeEra.index.isZero() &&
+      isNotZero(activeEra.index) &&
       fastUnstakeErasToCheckPerBlock > 0
     ) {
       // cancel fast unstake check on network change or
