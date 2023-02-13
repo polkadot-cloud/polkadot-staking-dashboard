@@ -75,7 +75,7 @@ export const NominateFromFavorites = () => {
   useEffect(() => {
     setValid(
       nominationsToSubmit.length > 0 &&
-        nominationsToSubmit.length <= maxNominations &&
+        maxNominations.isGreaterThanOrEqualTo(nominationsToSubmit.length) &&
         selectedFavorites.length > 0
     );
   }, [selectedFavorites]);
@@ -88,7 +88,7 @@ export const NominateFromFavorites = () => {
   };
 
   const totalAfterSelection = nominations.length + selectedFavorites.length;
-  const overMaxNominations = totalAfterSelection > maxNominations;
+  const overMaxNominations = maxNominations.isLessThan(totalAfterSelection);
 
   // tx to submit
   const getTx = () => {
@@ -167,7 +167,7 @@ export const NominateFromFavorites = () => {
           <h3
             className={
               selectedFavorites.length === 0 ||
-              nominationsToSubmit.length > maxNominations
+              maxNominations.isLessThan(nominationsToSubmit.length)
                 ? ''
                 : 'active'
             }
