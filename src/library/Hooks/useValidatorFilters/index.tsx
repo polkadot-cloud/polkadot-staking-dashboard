@@ -78,7 +78,7 @@ export const useValidatorFilters = () => {
         continue;
       }
       const totalNominations = stake[addressBatchIndex].total_nominations ?? 0;
-      if (totalNominations < maxNominatorRewardedPerValidator) {
+      if (maxNominatorRewardedPerValidator.isGreaterThan(totalNominations)) {
         filteredList.push(validator);
         continue;
       }

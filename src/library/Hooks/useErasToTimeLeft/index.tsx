@@ -19,7 +19,7 @@ export const useErasToTimeLeft = () => {
     // estimate the duration of the era in seconds.
     const eraDuration = eraDurationBlocks
       .multipliedBy(expectedBlockTime)
-      .multipliedBy(new BigNumber(0.001))
+      .multipliedBy(0.001)
       .integerValue();
 
     // multiply by number of eras.

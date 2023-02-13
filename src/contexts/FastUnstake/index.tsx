@@ -103,11 +103,7 @@ export const FastUnstakeProvider = ({
       // value until current era + bondDuration is checked.
       let initialIsExposed = null;
       if (localMeta) {
-        if (
-          bondDuration
-            .plus(new BigNumber(1))
-            .isEqualTo(new BigNumber(localMeta.checked.length))
-        ) {
+        if (bondDuration.plus(1).isEqualTo(localMeta.checked.length)) {
           initialIsExposed = localMeta.isExposed;
         } else if (localMeta.isExposed === true) {
           initialIsExposed = true;
