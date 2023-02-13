@@ -70,8 +70,8 @@ export const SubscanProvider = ({
 
     // fetch 2 pages of results if subscan is enabled
     if (getPlugins().includes('subscan')) {
-      let _payouts: Array<AnySubscan> = [];
-      let _unclaimedPayouts: Array<AnySubscan> = [];
+      let newClaimedPayouts: Array<AnySubscan> = [];
+      let newUnclaimedPayouts: Array<AnySubscan> = [];
 
       // fetch 3 pages of results
       const claimedResults = await Promise.all([
@@ -94,15 +94,15 @@ export const SubscanProvider = ({
           const list = result.data.list.filter(
             (l: AnyApi) => l.block_timestamp !== 0
           );
-          _payouts = _payouts.concat(list);
+          newClaimedPayouts = newClaimedPayouts.concat(list);
 
           const unclaimedList = result.data.list.filter(
             (l: AnyApi) => l.block_timestamp === 0
           );
-          _unclaimedPayouts = _unclaimedPayouts.concat(unclaimedList);
+          newUnclaimedPayouts = newUnclaimedPayouts.concat(unclaimedList);
         }
-        setPayouts(_payouts);
-        setUnclaimedPayouts(_unclaimedPayouts);
+        setPayouts(newClaimedPayouts);
+        setUnclaimedPayouts(newUnclaimedPayouts);
       }
     }
   };
