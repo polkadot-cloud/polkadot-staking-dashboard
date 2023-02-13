@@ -18,8 +18,7 @@ export const ActiveNominatorsStat = () => {
   let totalNominatorsAsPercent = 0;
   if (maxElectingVoters.isGreaterThan(0)) {
     totalNominatorsAsPercent =
-      totalActiveNominators /
-      maxElectingVoters.dividedBy(new BigNumber(100)).toNumber();
+      totalActiveNominators / maxElectingVoters.dividedBy(100).toNumber();
   }
 
   const params = {
