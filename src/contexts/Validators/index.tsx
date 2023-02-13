@@ -526,7 +526,7 @@ export const ValidatorsProvider = ({
             new BigNumber(others.length).minus(
               maxNominatorRewardedPerValidator
             ),
-            new BigNumber(0)
+            0
           );
 
           const lowestReward =
