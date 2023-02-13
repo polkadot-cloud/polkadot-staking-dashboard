@@ -57,9 +57,7 @@ export const SubmitTx = ({
           <div>
             <EstimatedTxFee />
           </div>
-          <div>
-            <div>{buttons}</div>
-          </div>
+          <div>{buttons}</div>
         </section>
       </div>
     </Wrapper>
