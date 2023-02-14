@@ -28,6 +28,7 @@
       "assets": "Assets",
       "available": "Available",
       "balance": "Balance",
+      "blockNumber": "Current Block",
       "bondedInPools": "The total {{networkUnit}}  currently bonded in nomination pools.",
       "connect": "Connect",
       "dashboard": "Dashboard",

@@ -27,6 +27,7 @@
       "assets": "Assets",
       "available": "可用",
       "balance": "余额",
+      "blockNumber": "Current Block",
       "bondedInPools": "提名池中当前质押的{{networkUnit}}总数",
       "connect": "连接",
       "dashboard": "Dashboard",

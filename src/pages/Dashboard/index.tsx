@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { ActiveAccount } from './ActiveAccount';
+import CurrentBlock from './Stats/CurrentBlock';
 import TotalHousingFund from './Stats/TotalHousingFund';
 import TotalUsers from './Stats/TotalUsers';
 import UserBalance from './Stats/UserBalance';
@@ -37,8 +38,9 @@ export const Dashboard = () => {
         </TopBarWrapper>
       </PageRowWrapper>
       <StatBoxList>
-        <TotalHousingFund />
+        <CurrentBlock />
         <TotalUsers />
+        <TotalHousingFund />
         <UserBalance />
       </StatBoxList>
 
