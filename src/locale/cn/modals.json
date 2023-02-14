@@ -81,6 +81,7 @@
     "mustHaveControllerUpdate": "必须导入Controller帐户才能更新奖励地址",
     "networks": "网络",
     "newTotalBond": "新质押总额:",
+    "newlyBondedFunds": "新质押金将从下一个Era开始归回到活跃的提名中",
     "noAccountConnected": "未连接帐户",
     "noAccounts": "无帐户",
     "noEnough": "您没有足够的可使用余额做快速解除抵押。快速解除抵押需要余额",
