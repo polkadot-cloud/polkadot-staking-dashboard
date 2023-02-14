@@ -13,24 +13,24 @@ export const InvestStats = () => {
     totalDeposit,
     contributedBalance,
   } = useInvest();
-  const { metrics } = useNetworkMetrics();
+  const { decimals } = useNetworkMetrics();
   return (
     <StatBoxList>
       <Text
         label={t('investors.totalDeposit')}
-        value={`$ ${humanNumberBn(totalDeposit, metrics.decimals)}`}
+        value={`$ ${humanNumberBn(totalDeposit, decimals)}`}
       />
       <Text
         label={t('investors.withdrawable')}
-        value={`$ ${humanNumberBn(availableBalance, metrics.decimals)}`}
+        value={`$ ${humanNumberBn(availableBalance, decimals)}`}
       />
       <Text
         label={t('investors.contributedBalance')}
-        value={`$ ${humanNumberBn(contributedBalance, metrics.decimals)}`}
+        value={`$ ${humanNumberBn(contributedBalance, decimals)}`}
       />
       <Text
         label={t('investors.reservedBalance')}
-        value={`$ ${humanNumberBn(reservedBalance, metrics.decimals)}`}
+        value={`$ ${humanNumberBn(reservedBalance, decimals)}`}
       />
     </StatBoxList>
   );

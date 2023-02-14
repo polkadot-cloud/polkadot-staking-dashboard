@@ -23,7 +23,7 @@ export const ItemsWrapper = styled(motion.div)`
 export const ItemWrapper = styled(motion.div)`
   flex-shrink: 0;
   flex-grow: 1;
-  flex-basis: 100%;
+  flex-basis: 50%;
   margin: 1rem 1rem 0 0;
 
   height: auto;

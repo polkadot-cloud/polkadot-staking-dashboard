@@ -56,6 +56,7 @@ export const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
           metadata: nft?.infos.metadata,
           price: parseHumanBN(nft?.price),
           tenants: nft?.tenants,
+          proposalHash: nft?.proposalHash,
         }));
       setAssets(_assets);
     };

@@ -8,11 +8,11 @@ import { humanNumberBn } from 'Utils';
 
 const TotalHousingFund = () => {
   const { t } = useTranslation('pages');
-  const { metrics } = useNetworkMetrics();
+  const { totalHousingFund, decimals } = useNetworkMetrics();
 
   const params = {
     label: t('dashboard.housingFund'),
-    value: `$ ${humanNumberBn(metrics.totalHousingFund, metrics.decimals)}`,
+    value: `$ ${humanNumberBn(totalHousingFund, decimals)}`,
   };
   return <Text {...params} />;
 };

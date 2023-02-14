@@ -11,6 +11,12 @@
       "validators": "的验证人",
       "website": "个人网站"
     },
+    "council": {
+      "activeProposals": "Active proposals",
+      "members": "Council members",
+      "membersCount": "Housing councilors",
+      "totalProposals": "Total proposals"
+    },
     "dashboard": {
       "activeEra": "活跃 Era",
       "activeNominators": "活跃提名人",
@@ -64,6 +70,11 @@
       "fetchingFavoriteValidators": "正在获取收藏夹的验证人",
       "noFavorites": "无收藏夹"
     },
+    "governance": {
+      "housingCouncil": "Housing Council",
+      "investorsVote": "Investors Vote",
+      "tenantsSession": "Tenants Session"
+    },
     "investors": {
       "balanceDistribution": "Balance Distribution",
       "contributed": "Contributed",
@@ -81,6 +92,13 @@
       "totalDeposit": "Total Deposit",
       "withdraw": "Withdraw",
       "withdrawable": "Withdrawable"
+    },
+    "menu": {
+      "dashboard": "Dashboard",
+      "governance": "Governance",
+      "investors": "Investors",
+      "tenants": "Tenant Registry",
+      "toolbox": "Toolbox"
     },
     "nominate": {
       "activeNominations": "活跃提名人",

@@ -8,6 +8,7 @@ export type Asset = {
   metadata: string;
   price: BN;
   tenants: Array<string>;
+  proposalHash: string;
 };
 export interface AssetsContextInterface {
   assets: Array<Asset>;

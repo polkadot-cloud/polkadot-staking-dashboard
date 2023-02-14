@@ -3,6 +3,7 @@
 
 import { UriPrefix } from 'consts';
 import Dashboard from 'pages/Dashboard';
+import { Governance } from 'pages/Governance';
 import { InvestorsView } from 'pages/Investors';
 import { PageCategories, PagesConfig } from 'types';
 
@@ -41,6 +42,13 @@ export const PAGES_CONFIG: PagesConfig = [
     uri: `${UriPrefix}/`,
     hash: '/toolbox',
     Entry: Dashboard,
+  },
+  {
+    category: 1,
+    key: 'Governance',
+    uri: `${UriPrefix}/`,
+    hash: '/governance',
+    Entry: Governance,
   },
 ];
 

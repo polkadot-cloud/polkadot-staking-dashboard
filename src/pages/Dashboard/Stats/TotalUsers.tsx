@@ -8,11 +8,11 @@ import { humanNumber } from 'Utils';
 
 const TotalUsers = () => {
   const { t } = useTranslation('pages');
-  const { metrics } = useNetworkMetrics();
+  const { totalUsers } = useNetworkMetrics();
 
   const params = {
     label: t('dashboard.totalUsers'),
-    value: `${humanNumber(metrics.totalUsers)}`,
+    value: `${humanNumber(totalUsers)}`,
   };
   return <Text {...params} />;
 };

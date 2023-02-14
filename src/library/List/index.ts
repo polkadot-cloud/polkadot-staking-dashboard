@@ -15,7 +15,6 @@ export const Header = styled.div`
   border-bottom: 1px solid ${borderPrimary};
   display: flex;
   flex-flow: row wrap;
-  justify-content: flex-end;
   padding: 0 0.25rem 0.5rem 0.25rem;
   flex: 1;
 

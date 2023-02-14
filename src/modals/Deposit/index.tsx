@@ -22,7 +22,7 @@ export const DepositFund = () => {
   const { t } = useTranslation('pages');
   const { api } = useApi();
   const { setStatus } = useModal();
-  const { metrics } = useNetworkMetrics();
+  const { decimals } = useNetworkMetrics();
   const { notifyError, notifySuccess } = useNotifications();
 
   const [amount, setAmount] = useState(0);
@@ -32,7 +32,7 @@ export const DepositFund = () => {
   const getTx = () => {
     if (!api) return null;
     return api.tx.housingFundModule.contributeToFund(
-      unitToPlanckBn(amount.toString(), metrics.decimals)
+      unitToPlanckBn(amount.toString(), decimals)
     );
   };
 
@@ -54,7 +54,7 @@ export const DepositFund = () => {
   });
 
   const onMaxBalance = () => {
-    setAmount(planckBnToUnit(balance, metrics.decimals));
+    setAmount(planckBnToUnit(balance, decimals));
   };
 
   return (
@@ -78,10 +78,7 @@ export const DepositFund = () => {
                   />
                 </div>
                 <div>
-                  <p>{`${humanNumberBn(
-                    balance,
-                    metrics.decimals
-                  )} available`}</p>
+                  <p>{`${humanNumberBn(balance, decimals)} available`}</p>
                 </div>
               </div>
             </section>

@@ -6,6 +6,7 @@ import { APIProvider } from 'contexts/Api';
 import { AssetsProvider } from 'contexts/Assets';
 import { BalancesProvider } from 'contexts/Balances';
 import { ConnectProvider } from 'contexts/Connect';
+import { CouncilProvider } from 'contexts/Council';
 import { ExtensionsProvider } from 'contexts/Extensions';
 import { ExtrinsicsProvider } from 'contexts/Extrinsics';
 import { FiltersProvider } from 'contexts/Filters';
@@ -73,7 +74,8 @@ export const Providers = withProviders(
   OverlayProvider,
   TxFeesProvider,
   AssetsProvider,
-  InvestProvider
+  InvestProvider,
+  CouncilProvider
 )(ThemedRouter);
 
 export default Providers;

@@ -3,9 +3,10 @@
 
 import React, { useEffect, useState } from 'react';
 import { AnyApi } from 'types';
+import { ZERO } from 'Utils';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
-import { NetworkMetrics, NetworkMetricsContextInterface } from './types';
+import { NetworkMetricsContextInterface } from './types';
 
 export const NetworkMetricsContext =
   React.createContext<NetworkMetricsContextInterface>(
@@ -19,16 +20,13 @@ export const NetworkMetricsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isReady, api, status } = useApi();
-
-  useEffect(() => {
-    if (status === 'connecting') {
-      setMetrics(defaults.metrics);
-    }
-  }, [status]);
+  const { isReady, api } = useApi();
 
   // store network metrics in state
-  const [metrics, setMetrics] = useState<NetworkMetrics>(defaults.metrics);
+  const [totalHousingFund, setTotalFund] = useState(ZERO);
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [decimals, setDecimals] = useState(0);
+  const [blockNumber, setBlockNumber] = useState(0);
 
   // store network metrics unsubscribe
   const [unsub, setUnsub] = useState<AnyApi>(undefined);
@@ -52,15 +50,13 @@ export const NetworkMetricsProvider = ({
         [
           api.query.housingFundModule.fundBalance,
           api.query.roleModule.totalMembers,
+          api.query.system.number,
         ],
-        ([fund, totalUsers]: AnyApi) => {
-          const decimals = Number(api.registry.chainDecimals[0]);
-          const _metrics = {
-            totalUsers,
-            totalHousingFund: fund.total,
-            decimals,
-          };
-          setMetrics(_metrics);
+        ([_fund, _totalUsers, _blockNumber]: AnyApi) => {
+          setTotalFund(_fund.total);
+          setDecimals(api.registry.chainDecimals[0]);
+          setBlockNumber(_blockNumber);
+          setTotalUsers(_totalUsers);
         }
       );
       setUnsub(_unsub);
@@ -70,7 +66,10 @@ export const NetworkMetricsProvider = ({
   return (
     <NetworkMetricsContext.Provider
       value={{
-        metrics,
+        totalUsers,
+        totalHousingFund,
+        blockNumber,
+        decimals,
       }}
     >
       {children}

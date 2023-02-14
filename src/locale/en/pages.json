@@ -12,6 +12,12 @@
       "validators": "'s Validators",
       "website": "Website"
     },
+    "council": {
+      "activeProposals": "Active proposals",
+      "members": "Council members",
+      "membersCount": "Housing councilors",
+      "totalProposals": "Total proposals"
+    },
     "dashboard": {
       "activeEra": "Active Era",
       "activeNominators": "Active Nominators",
@@ -64,6 +70,11 @@
       "fetchingFavoriteValidators": "Fetching favorite validators",
       "noFavorites": "No Favorites."
     },
+    "governance": {
+      "housingCouncil": "Housing Council",
+      "investorsVote": "Investors Vote",
+      "tenantsSession": "Tenants Session"
+    },
     "investors": {
       "balanceDistribution": "Balance Distribution",
       "contributed": "Contributed",
@@ -81,6 +92,13 @@
       "totalDeposit": "Total Deposit",
       "withdraw": "Withdraw",
       "withdrawable": "Withdrawable"
+    },
+    "menu": {
+      "dashboard": "Dashboard",
+      "governance": "Governance",
+      "investors": "Investors",
+      "tenants": "Tenant Registry",
+      "toolbox": "Toolbox"
     },
     "nominate": {
       "activeNominations": "Active Nominations",
