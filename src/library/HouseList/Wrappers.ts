@@ -24,7 +24,8 @@ export const ItemWrapper = styled(motion.div)`
   flex-shrink: 0;
   flex-grow: 1;
   flex-basis: 50%;
-  margin: 1rem 1rem 0 0;
+  padding: 1rem 1rem 0 0;
+  max-width: 50%;
 
   height: auto;
   @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {

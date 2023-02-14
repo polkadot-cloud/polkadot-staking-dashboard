@@ -1,3 +1,5 @@
+import { faClockFour, faDollar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Asset } from 'contexts/Assets/types';
 import { useNetworkMetrics } from 'contexts/Network';
 import { clipAddress, humanNumberBn } from 'Utils';
@@ -50,15 +52,21 @@ export const AssetItem = ({ house }: AssetProps) => {
           </h3>
           <div className="details">
             <button className="active" type="button">
-              <h4>Onboarded in block:&nbsp;</h4>
+              <h4>
+                <FontAwesomeIcon icon={faClockFour} />
+                &nbsp;&nbsp;&nbsp;
+              </h4>
               <span>
                 <b>{house.created}</b>
               </span>
             </button>
             <button type="button" className="active">
-              <h4>Price:&nbsp;</h4>
               <h4>
-                <b>{`$ ${humanNumberBn(house.price, decimals)}`}</b>
+                <FontAwesomeIcon icon={faDollar} />
+                &nbsp;
+              </h4>
+              <h4>
+                <b>{humanNumberBn(house.price, decimals)}</b>
               </h4>
             </button>
             {house.tenants.length === 0 ? (
