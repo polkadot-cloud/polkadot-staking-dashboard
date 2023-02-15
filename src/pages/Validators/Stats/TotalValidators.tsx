@@ -16,7 +16,7 @@ export const TotalValidatorsStat = () => {
   let totalValidatorsAsPercent = 0;
   if (greaterThanZero(maxValidatorsCount)) {
     totalValidatorsAsPercent = totalValidators
-      .div(maxValidatorsCount.dividedBy(new BigNumber(100)))
+      .div(maxValidatorsCount.dividedBy(100))
       .toNumber();
   }
 

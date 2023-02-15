@@ -81,9 +81,9 @@ export const Unbond = () => {
   // get the max amount available to unbond
   const unbondToMin = isPooling
     ? isDepositor()
-      ? BigNumber.max(freeToUnbond.minus(minCreateBond), new BigNumber(0))
-      : BigNumber.max(freeToUnbond.minus(minJoinBond), new BigNumber(0))
-    : BigNumber.max(freeToUnbond.minus(minNominatorBond), new BigNumber(0));
+      ? BigNumber.max(freeToUnbond.minus(minCreateBond), 0)
+      : BigNumber.max(freeToUnbond.minus(minJoinBond), 0)
+    : BigNumber.max(freeToUnbond.minus(minNominatorBond), 0);
 
   // unbond some validation
   const isValid = isPooling ? true : !controllerNotImported;

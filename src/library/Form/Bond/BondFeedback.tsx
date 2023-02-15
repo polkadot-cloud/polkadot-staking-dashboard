@@ -119,7 +119,7 @@ export const BondFeedback = ({
     const decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
 
     // bond errors
-    if (freeBondAmount.isEqualTo(new BigNumber(0))) {
+    if (freeBondAmount.isZero()) {
       disabled = true;
       newErrors.push(`${t('noFree', { unit })}`);
     }
@@ -130,12 +130,12 @@ export const BondFeedback = ({
     }
 
     // bond amount must not be smaller than 1 planck
-    if (bond.bond !== '' && bondBn.isLessThan(new BigNumber(1))) {
+    if (bond.bond !== '' && bondBn.isLessThan(1)) {
       newErrors.push(t('tooSmall'));
     }
 
     // check bond after transaction fees is still valid
-    if (bond.bond !== '' && bondAfterTxFees.isLessThan(new BigNumber(0))) {
+    if (bond.bond !== '' && bondAfterTxFees.isLessThan(0)) {
       newErrors.push(`${t('notEnoughAfter', { unit })}`);
     }
 

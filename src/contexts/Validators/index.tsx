@@ -249,7 +249,7 @@ export const ValidatorsProvider = ({
 
       const commission = new BigNumber(prefs.commission.slice(0, -1));
 
-      if (!commission.isEqualTo(new BigNumber(100))) {
+      if (!commission.isEqualTo(100)) {
         totalNonAllCommission = totalNonAllCommission.plus(commission);
       }
 

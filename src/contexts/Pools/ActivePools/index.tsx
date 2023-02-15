@@ -534,9 +534,7 @@ export const ActivePoolsProvider = ({
       return new BigNumber(0);
     }
 
-    const rewardCounterUnit = new BigNumber(10).exponentiatedBy(
-      new BigNumber(18)
-    );
+    const rewardCounterUnit = new BigNumber(10).exponentiatedBy(18);
 
     // convert needed values into BigNumbers
     const totalRewardsClaimed = new BigNumber(
@@ -566,7 +564,7 @@ export const ActivePoolsProvider = ({
       .minus(lastRecordedTotalPayouts);
 
     const currentRewardCounter = (
-      bondedPoolPoints.isEqualTo(new BigNumber(0))
+      bondedPoolPoints.isZero()
         ? new BigNumber(0)
         : payoutsSinceLastRecord
             .multipliedBy(rewardCounterUnit)

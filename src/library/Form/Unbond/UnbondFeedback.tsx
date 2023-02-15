@@ -95,9 +95,9 @@ export const UnbondFeedback = ({
   const unbondToMin =
     bondFor === 'pool'
       ? inSetup || isDepositor()
-        ? BigNumber.max(active.minus(minCreateBond), new BigNumber(0))
-        : BigNumber.max(active.minus(minJoinBond), new BigNumber(0))
-      : BigNumber.max(active.minus(minNominatorBond), new BigNumber(0));
+        ? BigNumber.max(active.minus(minCreateBond), 0)
+        : BigNumber.max(active.minus(minJoinBond), 0)
+      : BigNumber.max(active.minus(minNominatorBond), 0);
 
   // check if bonded is below the minimum required
   const nominatorActiveBelowMin =
@@ -124,7 +124,7 @@ export const UnbondFeedback = ({
       if (getControllerNotImported(controller))
         newErrors.push(t('importedToUnbond'));
 
-    if (bond.bond !== '' && bondBn.isLessThan(new BigNumber(1))) {
+    if (bond.bond !== '' && bondBn.isLessThan(1)) {
       newErrors.push(t('valueTooSmall'));
     }
 

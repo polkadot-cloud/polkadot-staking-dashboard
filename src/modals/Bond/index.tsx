@@ -52,7 +52,7 @@ export const Bond = () => {
 
   // bond minus tx fees.
   const enoughToCoverTxFees: boolean = freeBalance
-    .minus(new BigNumber(bond.bond))
+    .minus(bond.bond)
     .isGreaterThan(planckToUnit(largestTxFee, units));
 
   // bond value after max tx fees have been deducated.
@@ -134,7 +134,7 @@ export const Bond = () => {
           </WarningsWrapper>
         ) : null}
         <BondFeedback
-          syncing={largestTxFee.isEqualTo(new BigNumber(0))}
+          syncing={largestTxFee.isZero()}
           bondFor={bondFor}
           listenIsValid={setBondValid}
           defaultBond={null}

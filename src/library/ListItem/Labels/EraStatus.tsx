@@ -34,12 +34,10 @@ export const EraStatus = ({ address }: { address: MaybeAccount }) => {
   if (validatorInEra) {
     const { others, own } = validatorInEra;
     others.forEach((o: any) => {
-      totalStakePlanck = totalStakePlanck.plus(
-        new BigNumber(rmCommas(o.value))
-      );
+      totalStakePlanck = totalStakePlanck.plus(rmCommas(o.value));
     });
     if (own) {
-      totalStakePlanck = totalStakePlanck.plus(new BigNumber(rmCommas(own)));
+      totalStakePlanck = totalStakePlanck.plus(rmCommas(own));
     }
   }
 
