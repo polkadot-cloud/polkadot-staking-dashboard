@@ -228,7 +228,7 @@ export const FastUnstakeProvider = ({
   const processEligibility = async (a: MaybeAccount, era: BigNumber) => {
     // ensure current era has synced
     if (
-      era.isLessThanOrEqualTo(0) ||
+      era.isLessThan(0) ||
       !greaterThanZero(bondDuration) ||
       !api ||
       !a ||
@@ -348,7 +348,7 @@ export const FastUnstakeProvider = ({
 
     // remove any expired eras and sort highest first
     localChecked = localChecked
-      .filter((e: number) => checkToEra.isLessThanOrEqualTo(e))
+      .filter((e: number) => checkToEra.isLessThan(e))
       .sort((a: number, b: number) => b - a);
 
     // if no remaining eras, invalid

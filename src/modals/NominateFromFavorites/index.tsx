@@ -168,7 +168,7 @@ export const NominateFromFavorites = () => {
           <h3
             className={
               selectedFavorites.length === 0 ||
-              maxNominations.isLessThan(nominationsToSubmit.length)
+              maxNominations.isLessThanOrEqualTo(nominationsToSubmit.length)
                 ? ''
                 : 'active'
             }
