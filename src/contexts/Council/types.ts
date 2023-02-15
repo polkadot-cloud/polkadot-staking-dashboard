@@ -6,18 +6,12 @@ export interface CouncilVotes {
   end: number;
 }
 
-export const defaultCouncilVotes: CouncilVotes = {
-  index: 0,
-  threshold: 0,
-  ayes: [],
-  nays: [],
-  end: 0,
-};
+export type CouncilVoteResult = CouncilVotes | null;
 
 export interface CouncilContextInterface {
   members: Array<string>;
   totalProposals: number;
   proposals: Array<string>;
-  fetchCouncilVotes: (hash: string) => Promise<CouncilVotes>;
+  fetchCouncilVotes: (hash: string) => Promise<CouncilVoteResult>;
   isCouncilMember: (address: string) => boolean;
 }

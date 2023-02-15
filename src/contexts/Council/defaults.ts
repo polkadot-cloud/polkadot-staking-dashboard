@@ -1,9 +1,9 @@
-import { CouncilContextInterface, defaultCouncilVotes } from './types';
+import { CouncilContextInterface } from './types';
 
 export const defaultCouncilContext: CouncilContextInterface = {
   members: [],
   totalProposals: 0,
   proposals: [],
-  fetchCouncilVotes: async () => defaultCouncilVotes,
+  fetchCouncilVotes: async () => null,
   isCouncilMember: () => false,
 };

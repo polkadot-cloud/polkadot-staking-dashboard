@@ -4,8 +4,8 @@ import { AnyApi, AnyJson } from 'types';
 import { defaultCouncilContext } from './defaults';
 import {
   CouncilContextInterface,
+  CouncilVoteResult,
   CouncilVotes,
-  defaultCouncilVotes,
 } from './types';
 
 // context definition
@@ -48,10 +48,12 @@ export const CouncilProvider = ({
     setUnsub(_unsub);
   };
 
-  const fetchCouncilVotes = async (hash: string): Promise<CouncilVotes> => {
-    if (!api) return defaultCouncilVotes;
+  const fetchCouncilVotes = async (
+    hash: string
+  ): Promise<CouncilVoteResult> => {
+    if (!api) return null;
     const res = await api.query.council.voting(hash);
-    if (res.isEmpty) return defaultCouncilVotes;
+    if (res.isEmpty) return null;
     return res.toJSON() as AnyJson as CouncilVotes;
   };
 

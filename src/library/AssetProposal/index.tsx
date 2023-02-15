@@ -1,5 +1,9 @@
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
-import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import {
+  faThumbsDown,
+  faThumbsUp,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Asset } from 'contexts/Assets/types';
 import { useNotifications } from 'contexts/Notifications';
@@ -25,7 +29,9 @@ interface AssetProposalProps {
   nays: number;
   vote: boolean | undefined;
   canVote: boolean;
+  canClose?: boolean;
   onVote: (vote: boolean) => void;
+  onClose?: () => void;
 }
 export const AssetProposal = ({
   asset,
@@ -34,6 +40,8 @@ export const AssetProposal = ({
   nays,
   vote,
   canVote,
+  canClose = false,
+  onClose,
   onVote,
 }: AssetProposalProps) => {
   const { addNotification } = useNotifications();
@@ -97,6 +105,12 @@ export const AssetProposal = ({
                 </VoteButton>
                 <p className="no">{nays}</p>
               </VoteStats>
+              <VoteButton
+                onClick={() => onClose && onClose()}
+                disabled={!canClose}
+              >
+                <FontAwesomeIcon icon={faXmark} color="black" />
+              </VoteButton>
             </VoteStatsWrapper>
           </ProposalSummaryWrapper>
         </ProposalDetailsWrapper>
