@@ -147,10 +147,7 @@ export const Bond = () => {
           parentErrors={errors}
           txFees={largestTxFee}
         />
-        <p>
-          Newly bonded funds will back active nominations from the start of the
-          next era.
-        </p>
+        <p>{t('newlyBondedFunds')}</p>
       </PaddingWrapper>
       <SubmitTx
         buttons={[
