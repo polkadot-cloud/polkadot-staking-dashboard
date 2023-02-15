@@ -25,12 +25,12 @@ export const ActiveNominatorsStat = () => {
     label: t('overview.activeNominators'),
     stat: {
       value: totalActiveNominators,
-      total: maxElectingVoters,
+      total: maxElectingVoters.toNumber(),
       unit: '',
     },
     graph: {
       value1: totalActiveNominators,
-      value2: maxElectingVoters.minus(totalActiveNominators),
+      value2: maxElectingVoters.minus(totalActiveNominators).toNumber(),
     },
     tooltip: `${new BigNumber(totalNominatorsAsPercent)
       .decimalPlaces(2)
