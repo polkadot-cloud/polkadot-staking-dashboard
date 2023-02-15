@@ -257,7 +257,7 @@ export const FastUnstakeProvider = ({
     });
     worker.postMessage({
       task: 'process_fast_unstake_era',
-      currentEra: era,
+      currentEra: era.toString(),
       who: activeAccount,
       where: network.name,
       exposures,
