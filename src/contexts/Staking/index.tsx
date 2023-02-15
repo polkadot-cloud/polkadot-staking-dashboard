@@ -45,7 +45,7 @@ export const StakingProvider = ({
     accounts: connectAccounts,
     getActiveAccount,
   } = useConnect();
-  const { isReady, api, consts, apiStatus, network } = useApi();
+  const { isReady, api, apiStatus, network } = useApi();
   const { activeEra } = useNetworkMetrics();
   const {
     accounts,
@@ -53,7 +53,6 @@ export const StakingProvider = ({
     getLedgerForStash,
     getAccountNominations,
   } = useBalances();
-  const { maxNominatorRewardedPerValidator } = consts;
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
@@ -255,7 +254,6 @@ export const StakingProvider = ({
       activeAccount,
       units: network.units,
       exposures,
-      maxNominatorRewardedPerValidator,
     });
   };
 
