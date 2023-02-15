@@ -180,7 +180,7 @@ export const FastUnstakeProvider = ({
 
       // ensure checked eras are in order highest first.
       const checked = metaRef.current.checked
-        .concat(currentEra)
+        .concat(new BigNumber(currentEra).toNumber())
         .sort((a: number, b: number) => b - a);
 
       if (!metaRef.current.checked.includes(currentEra)) {
@@ -219,7 +219,7 @@ export const FastUnstakeProvider = ({
         subscribeToFastUnstakeQueue();
       } else {
         // continue checking the next era.
-        checkEra(new BigNumber(currentEra - 1));
+        checkEra(new BigNumber(currentEra).minus(1));
       }
     }
   };
