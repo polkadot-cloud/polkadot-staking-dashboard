@@ -22,6 +22,7 @@ import { useTheme } from 'contexts/Themes';
 import { TooltipProvider } from 'contexts/Tooltip';
 import { TxFeesProvider } from 'contexts/TxFees';
 import { UIProvider } from 'contexts/UI';
+import { VotingProvider } from 'contexts/Voting';
 import { withProviders } from 'library/Hooks';
 import Router from 'Router';
 import { ThemeProvider } from 'styled-components';
@@ -75,7 +76,8 @@ export const Providers = withProviders(
   TxFeesProvider,
   AssetsProvider,
   InvestProvider,
-  CouncilProvider
+  CouncilProvider,
+  VotingProvider
 )(ThemedRouter);
 
 export default Providers;

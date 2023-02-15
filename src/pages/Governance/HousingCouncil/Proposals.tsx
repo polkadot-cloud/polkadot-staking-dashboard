@@ -1,7 +1,7 @@
 import { useAssets } from 'contexts/Assets';
 import { Header } from 'library/List';
 import { CouncilProposal } from './CouncilProposal';
-import { ListWrapper } from './Wrappers';
+import { ListWrapper, ProposalList } from './Wrappers';
 
 export const Proposals = () => {
   const { assets } = useAssets();
@@ -11,13 +11,13 @@ export const Proposals = () => {
         <Header>
           <h4>Proposals</h4>
         </Header>
-        <div>
+        <ProposalList>
           {assets
             .filter((asset) => asset.status === 'REVIEWING')
             .map((asset, index) => (
               <CouncilProposal asset={asset} key={index} />
             ))}
-        </div>
+        </ProposalList>
       </ListWrapper>
     </>
   );

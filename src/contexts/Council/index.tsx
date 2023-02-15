@@ -1,8 +1,12 @@
 import { useApi } from 'contexts/Api';
 import React, { useEffect, useState } from 'react';
-import { AnyApi } from 'types';
+import { AnyApi, AnyJson } from 'types';
 import { defaultCouncilContext } from './defaults';
-import { CouncilContextInterface } from './types';
+import {
+  CouncilContextInterface,
+  CouncilVotes,
+  defaultCouncilVotes,
+} from './types';
 
 // context definition
 export const CouncilContext = React.createContext<CouncilContextInterface>(
@@ -44,6 +48,15 @@ export const CouncilProvider = ({
     setUnsub(_unsub);
   };
 
+  const fetchCouncilVotes = async (hash: string): Promise<CouncilVotes> => {
+    if (!api) return defaultCouncilVotes;
+    const res = await api.query.council.voting(hash);
+    if (res.isEmpty) return defaultCouncilVotes;
+    return res.toJSON() as AnyJson as CouncilVotes;
+  };
+
+  const isCouncilMember = (address: string) => members.indexOf(address) !== -1;
+
   useEffect(() => {
     subscribe();
     return () => {
@@ -51,7 +64,15 @@ export const CouncilProvider = ({
     };
   }, [isReady, api]);
   return (
-    <CouncilContext.Provider value={{ members, totalProposals, proposals }}>
+    <CouncilContext.Provider
+      value={{
+        members,
+        totalProposals,
+        proposals,
+        fetchCouncilVotes,
+        isCouncilMember,
+      }}
+    >
       {children}
     </CouncilContext.Provider>
   );

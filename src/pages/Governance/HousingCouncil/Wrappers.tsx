@@ -56,3 +56,10 @@ export const RowWrapper = styled.div`
   gap: 0.5rem;
   align-items: center;
 `;
+
+export const ProposalList = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  margin-top: 1rem;
+`;

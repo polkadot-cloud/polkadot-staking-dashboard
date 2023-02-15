@@ -16,7 +16,10 @@
       "activeProposals": "Active proposals",
       "members": "Council members",
       "membersCount": "Housing councilors",
-      "totalProposals": "Total proposals"
+      "proposalHashCopied": "Proposal hash copied to clipboard",
+      "totalProposals": "Total proposals",
+      "voteFailed": "Council vote failure",
+      "voteSuccess": "Council vote success"
     },
     "dashboard": {
       "activeEra": "Active Era",
