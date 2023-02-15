@@ -2,6 +2,8 @@ import { useAccount } from 'contexts/Account';
 import { useApi } from 'contexts/Api';
 import { Asset } from 'contexts/Assets/types';
 import { useCouncil } from 'contexts/Council';
+import { CouncilVoteResult } from 'contexts/Council/types';
+import { useNetworkMetrics } from 'contexts/Network';
 import { useNotifications } from 'contexts/Notifications';
 import { useVoting } from 'contexts/Voting';
 import { AssetProposal } from 'library/AssetProposal';
@@ -21,18 +23,16 @@ export const CouncilProposal = ({ asset }: CouncilProposalProps) => {
   const { fetchCouncilVotes, isCouncilMember } = useCouncil();
   const { notifyError, notifySuccess } = useNotifications();
   const { fetchProposals } = useVoting();
+  const { blockNumber } = useNetworkMetrics();
+  const [councilVote, setCouncilVoteResult] = useState<CouncilVoteResult>(null);
 
   const { proposalHash: hash } = asset;
-  const [ayeCount, setAyes] = useState(0);
-  const [nayCount, setNays] = useState(0);
   const [userVote, setUserVote] = useState<boolean | undefined>();
   const [pending, setPending] = useState(false);
   const [tx, setTx] = useState<AnyApi>(null);
   const [isOver, setOver] = useState(false);
 
   const initStates = () => {
-    setAyes(0);
-    setNays(0);
     setUserVote(undefined);
     setPending(false);
     setTx(null);
@@ -50,8 +50,7 @@ export const CouncilProposal = ({ asset }: CouncilProposalProps) => {
         return;
       }
       const { ayes, nays } = votes;
-      setAyes(ayes.length);
-      setNays(nays.length);
+      setCouncilVoteResult(votes);
       setUserVote(undefined);
       if (address !== undefined) {
         if (ayes.indexOf(address) !== -1) setUserVote(true);
@@ -99,10 +98,11 @@ export const CouncilProposal = ({ asset }: CouncilProposalProps) => {
     <AssetProposal
       asset={asset}
       hash={hash}
-      ayes={ayeCount}
-      nays={nayCount}
+      ayes={councilVote?.ayes.length || 0}
+      nays={councilVote?.nays.length || 0}
       vote={userVote}
       onVote={onVote}
+      threshold={councilVote?.threshold}
       canVote={
         !pending &&
         address !== undefined &&

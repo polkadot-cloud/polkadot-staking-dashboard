@@ -1,7 +1,9 @@
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import {
+  faClock,
   faThumbsDown,
   faThumbsUp,
+  faUser,
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -27,6 +29,8 @@ interface AssetProposalProps {
   hash: string;
   ayes: number;
   nays: number;
+  threshold?: number;
+  remaining?: number;
   vote: boolean | undefined;
   canVote: boolean;
   canClose?: boolean;
@@ -39,6 +43,8 @@ export const AssetProposal = ({
   ayes,
   nays,
   vote,
+  threshold,
+  remaining,
   canVote,
   canClose = false,
   onClose,
@@ -85,6 +91,12 @@ export const AssetProposal = ({
               </button>
             </ProposalHashWrapper>
             <VoteStatsWrapper>
+              {threshold !== undefined && (
+                <VoteStats>
+                  <FontAwesomeIcon icon={faUser} />
+                  <p>{threshold}</p>
+                </VoteStats>
+              )}
               <VoteStats>
                 <VoteButton
                   voted={vote === true}
@@ -111,6 +123,12 @@ export const AssetProposal = ({
               >
                 <FontAwesomeIcon icon={faXmark} color="black" />
               </VoteButton>
+              {remaining !== undefined && (
+                <VoteStats>
+                  <FontAwesomeIcon icon={faClock} />
+                  <p>{remaining}</p>
+                </VoteStats>
+              )}
             </VoteStatsWrapper>
           </ProposalSummaryWrapper>
         </ProposalDetailsWrapper>
