@@ -5,6 +5,7 @@ export const AssetProposalWrapper = styled.div`
   display: flex;
   padding: 0.5rem 1rem;
   flex: 1 0 50%;
+  max-width: 50%;
   .inner {
     display: flex;
     flex-direction: row;
