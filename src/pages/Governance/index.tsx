@@ -2,6 +2,7 @@ import PageTitle from 'library/PageTitle';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { HousingCouncil } from './HousingCouncil';
+import { InvestorsVote } from './InvestorsVote';
 
 export const Governance = () => {
   const { t } = useTranslation('pages');
@@ -41,6 +42,7 @@ export const Governance = () => {
     <>
       <PageTitle title="Governance" tabs={tabs} />
       {activeTab === 0 && <HousingCouncil />}
+      {activeTab === 1 && <InvestorsVote />}
     </>
   );
 };
