@@ -30,6 +30,9 @@ export const AccountProvider = ({
   const [balance, setBalance] = useState<BN>(ZERO);
   const [unsub, setUnsub] = useState<AnyApi>(undefined);
 
+  const isSeller = () => role === 'SELLER';
+  const isInvestor = () => role === 'INVESTOR';
+
   const subscribe = async (_account: string | null) => {
     if (!_account) {
       setAddress(undefined);
@@ -65,7 +68,9 @@ export const AccountProvider = ({
   }, [isReady, activeAccount]);
 
   return (
-    <AccountContext.Provider value={{ address, role, balance }}>
+    <AccountContext.Provider
+      value={{ address, role, balance, isSeller, isInvestor }}
+    >
       {children}
     </AccountContext.Provider>
   );
