@@ -1,11 +1,11 @@
 export interface AssetProposals {
   collective: string;
-  democracy: string;
+  democracyIndex: number;
 }
 
 export const defaultAssetProposal: AssetProposals = {
   collective: '',
-  democracy: '',
+  democracyIndex: -1,
 };
 
 export interface VotingContextInterface {

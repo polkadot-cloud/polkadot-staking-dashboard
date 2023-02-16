@@ -1,5 +1,5 @@
-import { VotingContextInterface } from './types';
+import { defaultAssetProposal, VotingContextInterface } from './types';
 
 export const defaultVotingContext: VotingContextInterface = {
-  fetchProposals: async (hash: string) => ({ collective: '', democracy: '' }),
+  fetchProposals: async (hash: string) => defaultAssetProposal,
 };

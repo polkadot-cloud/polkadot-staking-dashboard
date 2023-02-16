@@ -19,9 +19,11 @@ export const VotingProvider = ({ children }: { children: React.ReactNode }) => {
     if (!api || !isReady) return defaultAssetProposal;
     const res = await api.query.votingModule.votingProposals(hash);
     if (res.isEmpty) return defaultAssetProposal;
-    const { collectiveHash: collective, democracyHash: democracy }: AnyJson =
-      res.toJSON();
-    return { collective, democracy };
+    const {
+      collectiveHash: collective,
+      democracyReferendumIndex: democracyIndex,
+    }: AnyJson = res.toJSON();
+    return { collective, democracyIndex };
   };
   return (
     <VotingContext.Provider value={{ fetchProposals }}>
