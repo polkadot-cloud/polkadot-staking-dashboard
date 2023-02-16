@@ -22,7 +22,7 @@ import UserBalance from './Stats/UserBalance';
 export const Dashboard = () => {
   const { t } = useTranslation('pages');
   const { assets } = useAssets();
-  const { role, address } = useAccount();
+  const { role, address, isSeller } = useAccount();
   const { openModalWith } = useModal();
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export const Dashboard = () => {
 
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
-          {role === 'SELLER' && (
+          {isSeller() && (
             <ButtonPrimary
               text={t('sellers.onboardAsset')}
               iconLeft={faPlus}
