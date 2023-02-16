@@ -130,13 +130,13 @@ export const FastUnstakeProvider = ({
         initialIsExposed === null
       ) {
         // if localMeta existed, start checking from the next era.
-        const eraTocheck = localMeta
+        const maybeNextEra = localMeta
           ? new BigNumber(localMeta.checked[localMeta.checked.length - 1] - 1)
           : activeEra.index;
 
-        // checkpoint: check from era eraTocheck
+        // checkpoint: check from era maybeNextEra
 
-        processEligibility(activeAccount, eraTocheck);
+        processEligibility(activeAccount, maybeNextEra);
       }
 
       // subscribe to fast unstake queue immediately if synced in localStorage and still up to date.
