@@ -16,7 +16,7 @@ export const useInvest = () => React.useContext(InvestContext);
 
 // wrapper component to provide components with context
 export const InvestProvider = ({ children }: { children: React.ReactNode }) => {
-  const { address, role } = useAccount();
+  const { address, role, isInvestor } = useAccount();
   const { api, isReady } = useApi();
   const [investContext, setInvestContext] =
     useState<InvestContextInterface>(defaultInvestContext);
@@ -27,7 +27,7 @@ export const InvestProvider = ({ children }: { children: React.ReactNode }) => {
       setInvestContext(defaultInvestContext);
       return;
     }
-    if (!api || !isReady) return;
+    if (!api || !isReady || !isInvestor()) return;
     const _unsub = api.query.housingFundModule.contributions(
       account,
       (res: AnyJson) => {
