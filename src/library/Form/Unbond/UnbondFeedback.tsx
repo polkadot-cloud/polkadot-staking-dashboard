@@ -134,7 +134,10 @@ export const UnbondFeedback = ({
 
     if (bondBn.isGreaterThan(unbondToMin)) {
       // start the error message stating a min bond is required.
-      let err = `${t('minimumBond', { minBondUnit, unit })} `;
+      let err = `${t('minimumBond', {
+        minBondUnit: minBondUnit.toString(),
+        unit,
+      })} `;
       // append the subject to the error message.
       if (bondFor === 'nominator') {
         err += t('whenActivelyNominating');

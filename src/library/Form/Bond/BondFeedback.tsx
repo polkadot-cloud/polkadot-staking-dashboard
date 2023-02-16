@@ -47,7 +47,7 @@ export const BondFeedback = ({
 
   // if we are bonding, subtract tx fees from bond amount
   const freeBondAmount = !disableTxFeeUpdate
-    ? BigNumber.max(freeBalanceBn.minus(txFees), new BigNumber(0))
+    ? BigNumber.max(freeBalanceBn.minus(txFees), 0)
     : freeBalanceBn;
 
   // the default bond balance
@@ -74,7 +74,7 @@ export const BondFeedback = ({
 
   const bondAfterTxFees = enoughToCoverTxFees
     ? bondBn
-    : BigNumber.max(bondBn.minus(txFees), new BigNumber(0));
+    : BigNumber.max(bondBn.minus(txFees), 0);
 
   // update bond on account change
   useEffect(() => {

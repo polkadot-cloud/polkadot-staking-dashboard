@@ -63,7 +63,7 @@ export const Bond = () => {
   } else {
     bondAfterTxFees = BigNumber.max(
       unitToPlanck(String(bond.bond), units).minus(largestTxFee),
-      new BigNumber(0)
+      0
     );
   }
 
