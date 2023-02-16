@@ -3,7 +3,6 @@ import { useApi } from 'contexts/Api';
 import { Asset } from 'contexts/Assets/types';
 import { useCouncil } from 'contexts/Council';
 import { CouncilVoteResult } from 'contexts/Council/types';
-import { useNetworkMetrics } from 'contexts/Network';
 import { useNotifications } from 'contexts/Notifications';
 import { useVoting } from 'contexts/Voting';
 import { AssetProposal } from 'library/AssetProposal';
@@ -23,7 +22,6 @@ export const CouncilProposal = ({ asset }: CouncilProposalProps) => {
   const { fetchCouncilVotes, isCouncilMember } = useCouncil();
   const { notifyError, notifySuccess } = useNotifications();
   const { fetchProposals } = useVoting();
-  const { blockNumber } = useNetworkMetrics();
   const [councilVote, setCouncilVoteResult] = useState<CouncilVoteResult>(null);
 
   const { proposalHash: hash } = asset;
@@ -80,15 +78,18 @@ export const CouncilProposal = ({ asset }: CouncilProposalProps) => {
     if (!api) return;
     setPending(true);
     setTx(api.tx.votingModule.councilVote(hash, _vote));
-    submitTx();
   };
 
   const onCloseVote = () => {
     if (!api) return;
-    setPending(true);
     setTx(api.tx.votingModule.councilCloseVote(hash));
-    submitTx();
   };
+
+  useEffect(() => {
+    if (!tx) return;
+    setPending(true);
+    submitTx();
+  }, [tx]);
 
   useEffect(() => {
     if (api && address) fetchInfo();

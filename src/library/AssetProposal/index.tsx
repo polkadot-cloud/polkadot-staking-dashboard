@@ -117,12 +117,12 @@ export const AssetProposal = ({
                 </VoteButton>
                 <p className="no">{nays}</p>
               </VoteStats>
-              <VoteButton
-                onClick={() => onClose && onClose()}
-                disabled={!canClose}
-              >
-                <FontAwesomeIcon icon={faXmark} color="black" />
-              </VoteButton>
+              {canClose && (
+                <VoteButton onClick={() => onClose && onClose()}>
+                  <FontAwesomeIcon icon={faXmark} color="black" />
+                </VoteButton>
+              )}
+
               {remaining !== undefined && (
                 <VoteStats>
                   <FontAwesomeIcon icon={faClock} />
