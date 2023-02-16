@@ -180,10 +180,10 @@ export const FastUnstakeProvider = ({
 
       // ensure checked eras are in order highest first.
       const checked = metaRef.current.checked
-        .concat(new BigNumber(currentEra).toNumber())
+        .concat(Number(currentEra))
         .sort((a: number, b: number) => b - a);
 
-      if (!metaRef.current.checked.includes(currentEra)) {
+      if (!metaRef.current.checked.includes(Number(currentEra))) {
         // update localStorage with updated changes.
         localStorage.setItem(
           getLocalkey(who),

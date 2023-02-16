@@ -150,7 +150,7 @@ export const ManageFastUnstake = () => {
             <NotesWrapper noPadding>
               <p>
                 {t('fastUnstakeNote1', {
-                  bondDuration,
+                  bondDuration: bondDuration.toString(),
                 })}
               </p>
               <p>
