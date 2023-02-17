@@ -70,8 +70,7 @@ export const FastUnstakeProvider = ({
   // check until bond duration eras surpasssed.
   const checkToEra = activeEra.index.minus(bondDuration);
 
-  // initiate fast unstake check for accounts that are
-  // nominating but not active.
+  // initiate fast unstake check for accounts that are nominating but not active.
   useEffect(() => {
     if (
       isReady &&
@@ -79,8 +78,7 @@ export const FastUnstakeProvider = ({
       isNotZero(activeEra.index) &&
       fastUnstakeErasToCheckPerBlock > 0
     ) {
-      // cancel fast unstake check on network change or
-      // account change.
+      // cancel fast unstake check on network change or account change.
       if (unsubRef.current.length) {
         for (const u of unsubRef.current) {
           u();
@@ -99,8 +97,8 @@ export const FastUnstakeProvider = ({
         ? { checked: localMeta.checked }
         : defaultMeta;
 
-      // even if localMeta.isExposed is false, we don't assume a final
-      // value until current era + bondDuration is checked.
+      // even if localMeta.isExposed is false, we don't assume a final value until current era +
+      // bondDuration is checked.
       let initialIsExposed = null;
       if (localMeta) {
         if (bondDuration.plus(1).isEqualTo(localMeta.checked.length)) {
@@ -122,7 +120,8 @@ export const FastUnstakeProvider = ({
         .map(([k, v]: any) => (v === 'active' ? k : false))
         .filter((v) => v !== false);
 
-      // start process if account is inactively nominating & local fast unstake data is not complete.
+      // start process if account is inactively nominating & local fast unstake data is not
+      // complete.
       if (
         activeAccount &&
         !inSetup() &&
@@ -130,8 +129,9 @@ export const FastUnstakeProvider = ({
         initialIsExposed === null
       ) {
         // if localMeta existed, start checking from the next era.
+        const nextEra = localMeta?.checked.at(-1) || 0;
         const maybeNextEra = localMeta
-          ? new BigNumber(localMeta.checked[localMeta.checked.length - 1] - 1)
+          ? new BigNumber(nextEra - 1)
           : activeEra.index;
 
         // checkpoint: check from the possible next era `maybeNextEra`.
@@ -205,6 +205,7 @@ export const FastUnstakeProvider = ({
 
       if (exposed) {
         // checkpoint: 'exposed! Stop checking.
+
         // cancel checking and update exposed state.
         setStateWithRef(false, setChecking, checkingRef);
         setStateWithRef(true, setIsExposed, isExposedRef);
@@ -244,6 +245,7 @@ export const FastUnstakeProvider = ({
   // calls service worker to check exppsures for given era.
   const checkEra = async (era: BigNumber) => {
     if (!api) return;
+
     // checkpoint: checking era: era
 
     const exposuresRaw = await api.query.staking.erasStakers.entries(
@@ -295,6 +297,7 @@ export const FastUnstakeProvider = ({
     };
 
     // checkpoint: subscribing to queue + head.
+
     // initiate subscription, add to unsubs.
     await Promise.all([
       subscribeQueue(activeAccount),
