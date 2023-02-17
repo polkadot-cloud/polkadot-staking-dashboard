@@ -327,7 +327,9 @@ export const prefillMissingDays = (payoutsByDay: any, maxDays: number) => {
   const payoutStartDay = subDays(startOfDay(new Date()), maxDays);
   const payoutEndDay = !payoutsByDay.length
     ? startOfDay(new Date())
-    : startOfDay(fromUnixTime(payoutsByDay.at(-1).block_timestamp));
+    : startOfDay(
+        fromUnixTime(payoutsByDay[payoutsByDay.length - 1].block_timestamp)
+      );
 
   const daysToPreFill = daysPassed(payoutStartDay, payoutEndDay);
 
