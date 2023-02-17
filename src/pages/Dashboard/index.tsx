@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { ActiveAccount } from './ActiveAccount';
+import CurrentBlock from './Stats/CurrentBlock';
 import TotalHousingFund from './Stats/TotalHousingFund';
 import TotalUsers from './Stats/TotalUsers';
 import UserBalance from './Stats/UserBalance';
@@ -21,7 +22,7 @@ import UserBalance from './Stats/UserBalance';
 export const Dashboard = () => {
   const { t } = useTranslation('pages');
   const { assets } = useAssets();
-  const { role, address } = useAccount();
+  const { role, address, isSeller } = useAccount();
   const { openModalWith } = useModal();
 
   useEffect(() => {
@@ -37,14 +38,15 @@ export const Dashboard = () => {
         </TopBarWrapper>
       </PageRowWrapper>
       <StatBoxList>
-        <TotalHousingFund />
+        <CurrentBlock />
         <TotalUsers />
+        <TotalHousingFund />
         <UserBalance />
       </StatBoxList>
 
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
-          {role === 'SELLER' && (
+          {isSeller() && (
             <ButtonPrimary
               text={t('sellers.onboardAsset')}
               iconLeft={faPlus}

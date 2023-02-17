@@ -6,6 +6,8 @@ import { APIProvider } from 'contexts/Api';
 import { AssetsProvider } from 'contexts/Assets';
 import { BalancesProvider } from 'contexts/Balances';
 import { ConnectProvider } from 'contexts/Connect';
+import { CouncilProvider } from 'contexts/Council';
+import { DemocracyProvider } from 'contexts/Democracy';
 import { ExtensionsProvider } from 'contexts/Extensions';
 import { ExtrinsicsProvider } from 'contexts/Extrinsics';
 import { FiltersProvider } from 'contexts/Filters';
@@ -21,6 +23,7 @@ import { useTheme } from 'contexts/Themes';
 import { TooltipProvider } from 'contexts/Tooltip';
 import { TxFeesProvider } from 'contexts/TxFees';
 import { UIProvider } from 'contexts/UI';
+import { VotingProvider } from 'contexts/Voting';
 import { withProviders } from 'library/Hooks';
 import Router from 'Router';
 import { ThemeProvider } from 'styled-components';
@@ -73,7 +76,10 @@ export const Providers = withProviders(
   OverlayProvider,
   TxFeesProvider,
   AssetsProvider,
-  InvestProvider
+  InvestProvider,
+  CouncilProvider,
+  VotingProvider,
+  DemocracyProvider
 )(ThemedRouter);
 
 export default Providers;

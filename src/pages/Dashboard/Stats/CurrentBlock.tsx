@@ -4,17 +4,17 @@
 import { useNetworkMetrics } from 'contexts/Network';
 import { Text } from 'library/StatBoxList/Text';
 import { useTranslation } from 'react-i18next';
-import { humanNumberBn } from 'Utils';
+import { humanNumber } from 'Utils';
 
-const TotalHousingFund = () => {
+const CurrentBlock = () => {
   const { t } = useTranslation('pages');
-  const { totalHousingFund, decimals } = useNetworkMetrics();
+  const { blockNumber } = useNetworkMetrics();
 
   const params = {
-    label: t('dashboard.housingFund'),
-    value: `$ ${humanNumberBn(totalHousingFund, decimals)}`,
+    label: t('dashboard.blockNumber'),
+    value: `${humanNumber(blockNumber)}`,
   };
   return <Text {...params} />;
 };
 
-export default TotalHousingFund;
+export default CurrentBlock;

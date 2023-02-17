@@ -25,7 +25,7 @@ export const WithdrawFund = () => {
   const { availableBalance } = useInvest();
   const { api } = useApi();
   const { setStatus } = useModal();
-  const { metrics } = useNetworkMetrics();
+  const { decimals } = useNetworkMetrics();
   const { notifyError, notifySuccess } = useNotifications();
 
   const [amount, setAmount] = useState(0);
@@ -34,7 +34,7 @@ export const WithdrawFund = () => {
   const getTx = () => {
     if (!api) return null;
     return api.tx.housingFundModule.withdrawFund(
-      unitToPlanckBn(amount.toString(), metrics.decimals)
+      unitToPlanckBn(amount.toString(), decimals)
     );
   };
 
@@ -56,7 +56,7 @@ export const WithdrawFund = () => {
   });
 
   const onMaxBalance = () => {
-    setAmount(planckBnToUnit(availableBalance, metrics.decimals));
+    setAmount(planckBnToUnit(availableBalance, decimals));
   };
 
   return (
@@ -83,7 +83,7 @@ export const WithdrawFund = () => {
                 <div>
                   <p>{`${humanNumberBn(
                     availableBalance,
-                    metrics.decimals
+                    decimals
                   )} available`}</p>
                 </div>
               </div>

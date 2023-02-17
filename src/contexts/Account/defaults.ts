@@ -8,4 +8,6 @@ export const defaultAccountContext: AccountContextInterface = {
   address: undefined,
   role: undefined,
   balance: ZERO,
+  isSeller: () => false,
+  isInvestor: () => false,
 };

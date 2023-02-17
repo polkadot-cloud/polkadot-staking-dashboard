@@ -4,11 +4,8 @@
 import BN from 'bn.js';
 
 export interface NetworkMetricsContextInterface {
-  metrics: NetworkMetrics;
-}
-
-export interface NetworkMetrics {
   totalHousingFund: BN;
   totalUsers: number;
   decimals: number;
+  blockNumber: number;
 }

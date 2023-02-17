@@ -2,14 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BN from 'bn.js';
-import { NetworkMetrics, NetworkMetricsContextInterface } from './types';
+import { NetworkMetricsContextInterface } from './types';
 
-export const metrics: NetworkMetrics = {
+export const defaultNetworkContext: NetworkMetricsContextInterface = {
   totalHousingFund: new BN(0),
   totalUsers: 0,
   decimals: 12,
-};
-
-export const defaultNetworkContext: NetworkMetricsContextInterface = {
-  metrics,
+  blockNumber: 0,
 };

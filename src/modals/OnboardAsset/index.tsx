@@ -18,7 +18,7 @@ export const OnboardAsset = () => {
   const { api } = useApi();
   const { address } = useAccount();
   const { setStatus } = useModal();
-  const { metrics } = useNetworkMetrics();
+  const { decimals } = useNetworkMetrics();
   const { notifyError, notifySuccess } = useNotifications();
 
   const [price, setPrice] = useState(0);
@@ -29,7 +29,7 @@ export const OnboardAsset = () => {
     if (!api) return null;
     return api.tx.onboardingModule.createAndSubmitProposal(
       'HOUSES',
-      unitToPlanckBn(price.toString(), metrics.decimals),
+      unitToPlanckBn(price.toString(), decimals),
       metadata,
       true
     );

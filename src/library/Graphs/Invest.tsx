@@ -16,7 +16,7 @@ export const InvestGraph = () => {
 
   const { network } = useApi();
   const { mode } = useTheme();
-  const { metrics } = useNetworkMetrics();
+  const { decimals } = useNetworkMetrics();
   const { contributedBalance, availableBalance, reservedBalance } = useInvest();
 
   const options = {
@@ -74,9 +74,9 @@ export const InvestGraph = () => {
       {
         label: 'FST',
         data: [
-          planckBnToUnit(contributedBalance, metrics.decimals),
-          planckBnToUnit(reservedBalance, metrics.decimals),
-          planckBnToUnit(availableBalance, metrics.decimals),
+          planckBnToUnit(contributedBalance, decimals),
+          planckBnToUnit(reservedBalance, decimals),
+          planckBnToUnit(availableBalance, decimals),
         ],
         backgroundColor: _colors,
         borderWidth: 1,
