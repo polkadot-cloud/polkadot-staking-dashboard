@@ -2170,7 +2170,7 @@
   resolved "https://registry.yarnpkg.com/@substrate/connect-extension-protocol/-/connect-extension-protocol-1.0.1.tgz#fa5738039586c648013caa6a0c95c43265dbe77d"
   integrity sha512-161JhCC1csjH3GE5mPLEd7HbWtwNSPJBg3p1Ksz9SFlTzj/bgEwudiRN2y5i0MoLGCIJRYKyKGMxVnd29PzNjg==
 
-"@substrate/connect@0.7.19", "@substrate/connect@^0.7.19":
+"@substrate/connect@0.7.19":
   version "0.7.19"
   resolved "https://registry.yarnpkg.com/@substrate/connect/-/connect-0.7.19.tgz#7c879cb275bc7ac2fe9edbf797572d4ff8d8b86a"
   integrity sha512-+DDRadc466gCmDU71sHrYOt1HcI2Cbhm7zdCFjZfFVHXhC/E8tOdrVSglAH2HDEHR0x2SiHRxtxOGC7ak2Zjog==
@@ -2178,6 +2178,15 @@
     "@substrate/connect-extension-protocol" "^1.0.1"
     "@substrate/smoldot-light" "0.7.9"
     eventemitter3 "^4.0.7"
+
+"@substrate/connect@^0.7.20":
+  version "0.7.20"
+  resolved "https://registry.yarnpkg.com/@substrate/connect/-/connect-0.7.20.tgz#ce5647368be21199d608715bbd77bcb7c25a4227"
+  integrity sha512-f/sMgGUikJxDaNMkQXCU/1WaMy0MLJB+KS+P+CpsIhWyxj2dOcph5YXjAJiIlgrZqHImV28RJnraxXBD3AlmLQ==
+  dependencies:
+    "@substrate/connect-extension-protocol" "^1.0.1"
+    eventemitter3 "^4.0.7"
+    smoldot "0.7.11"
 
 "@substrate/smoldot-light@0.7.9":
   version "0.7.9"
@@ -9393,6 +9402,14 @@ slash@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-4.0.0.tgz#2422372176c4c6c5addb5e2ada885af984b396a7"
   integrity sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==
+
+smoldot@0.7.11:
+  version "0.7.11"
+  resolved "https://registry.yarnpkg.com/smoldot/-/smoldot-0.7.11.tgz#8e39464f2cf7736eacff5f2a87819dd9f688b352"
+  integrity sha512-aE1led154FJ2/jrXKv2HLKdNIyvYJG6H2ZmKYFS++kW1OAcTQ6idDy3fzAI1VdydLDYK0YbKUsj7SJDmrjsS3g==
+  dependencies:
+    pako "^2.0.4"
+    ws "^8.8.1"
 
 sockjs@^0.3.24:
   version "0.3.24"
