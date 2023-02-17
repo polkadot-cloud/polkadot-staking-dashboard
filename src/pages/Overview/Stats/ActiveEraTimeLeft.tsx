@@ -21,7 +21,7 @@ export const ActiveEraStat = () => {
 
   // re-set timer on era change (also covers network change).
   useEffect(() => {
-    setFromNow(fromNow(getEraTimeleft().timeleft));
+    setFromNow(fromNow(getEraTimeleft().timeleft.toNumber()));
   }, [apiStatus, activeEra]);
 
   // NOTE: this maybe should be called in an interval. Needs more testing.
@@ -31,8 +31,8 @@ export const ActiveEraStat = () => {
     label: t('overview.timeRemainingThisEra'),
     timeleft: timeleft.formatted,
     graph: {
-      value1: activeEra.index === 0 ? 0 : percentSurpassed,
-      value2: activeEra.index === 0 ? 100 : percentRemaining,
+      value1: activeEra.index.isZero() ? 0 : percentSurpassed.toNumber(),
+      value2: activeEra.index.isZero() ? 100 : percentRemaining.toNumber(),
     },
     tooltip: `Era ${new BigNumber(activeEra.index).toFormat()}` ?? undefined,
     helpKey: 'Era',

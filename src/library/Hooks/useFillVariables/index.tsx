@@ -30,9 +30,9 @@ export const useFillVariables = () => {
           ['{NETWORK_NAME}', capitalizeFirstLetter(network.name)],
           [
             '{MAX_NOMINATOR_REWARDED_PER_VALIDATOR}',
-            String(maxNominatorRewardedPerValidator),
+            maxNominatorRewardedPerValidator.toString(),
           ],
-          ['{MAX_NOMINATIONS}', String(maxNominations)],
+          ['{MAX_NOMINATIONS}', maxNominations.toString()],
           ['{MIN_ACTIVE_BOND}', minActiveBond.decimalPlaces(3).toFormat()],
           [
             '{MIN_POOL_JOIN_BOND}',

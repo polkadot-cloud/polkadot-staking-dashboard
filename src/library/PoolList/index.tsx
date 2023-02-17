@@ -21,6 +21,7 @@ import { SearchInput } from 'library/List/SearchInput';
 import { Pool } from 'library/Pool';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { isNotZero } from 'Utils';
 import { PoolListProvider, usePoolList } from './context';
 import { PoolListProps } from './types';
 
@@ -91,7 +92,7 @@ export const PoolListInner = ({
 
   // configure pool list when network is ready to fetch
   useEffect(() => {
-    if (isReady && activeEra.index !== 0 && !fetched) {
+    if (isReady && isNotZero(activeEra.index) && !fetched) {
       setupPoolList();
     }
   }, [isReady, fetched, activeEra.index]);

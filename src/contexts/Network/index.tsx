@@ -87,7 +87,14 @@ export const NetworkMetricsProvider = ({
             .toString();
 
           newActiveEra = JSON.parse(newActiveEra);
-          setStateWithRef(newActiveEra, setActiveEra, activeEraRef);
+          setStateWithRef(
+            {
+              index: new BigNumber(newActiveEra.index),
+              start: new BigNumber(newActiveEra.start),
+            },
+            setActiveEra,
+            activeEraRef
+          );
         });
         return unsub;
       };

@@ -3,6 +3,7 @@
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -118,11 +119,11 @@ export const ManageFastUnstake = () => {
   }
 
   // manage last exposed
-  let lastExposedAgo = 0;
-  if (isExposed) {
-    lastExposedAgo = activeEra.index - (checked[0] || 0);
-  }
-  const erasRemaining = Math.max(1, bondDuration - lastExposedAgo);
+  const lastExposedAgo = !isExposed
+    ? new BigNumber(0)
+    : activeEra.index.minus(checked[0] || 0);
+
+  const erasRemaining = BigNumber.max(1, bondDuration.minus(lastExposedAgo));
 
   return (
     <>
@@ -142,11 +143,19 @@ export const ManageFastUnstake = () => {
         {isExposed ? (
           <>
             <Action
-              text={t('fastUnstakeExposedAgo', { count: lastExposedAgo })}
+              text={t('fastUnstakeExposedAgo', {
+                count: lastExposedAgo.toNumber(),
+              })}
             />
             <NotesWrapper noPadding>
-              <p>{t('fastUnstakeNote1', { bondDuration })}</p>
-              <p>{t('fastUnstakeNote2', { count: erasRemaining })}</p>
+              <p>
+                {t('fastUnstakeNote1', {
+                  bondDuration: bondDuration.toString(),
+                })}
+              </p>
+              <p>
+                {t('fastUnstakeNote2', { count: erasRemaining.toNumber() })}
+              </p>
             </NotesWrapper>
           </>
         ) : (

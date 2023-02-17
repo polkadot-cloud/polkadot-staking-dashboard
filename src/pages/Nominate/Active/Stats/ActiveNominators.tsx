@@ -16,22 +16,21 @@ export const ActiveNominatorsStat = () => {
 
   // active nominators as percent
   let totalNominatorsAsPercent = 0;
-  if (maxElectingVoters > 0) {
+  if (maxElectingVoters.isGreaterThan(0)) {
     totalNominatorsAsPercent =
-      totalActiveNominators /
-      new BigNumber(maxElectingVoters).dividedBy(new BigNumber(100)).toNumber();
+      totalActiveNominators / maxElectingVoters.dividedBy(100).toNumber();
   }
 
   const params = {
     label: t('overview.activeNominators'),
     stat: {
       value: totalActiveNominators,
-      total: maxElectingVoters,
+      total: maxElectingVoters.toNumber(),
       unit: '',
     },
     graph: {
       value1: totalActiveNominators,
-      value2: maxElectingVoters - totalActiveNominators,
+      value2: maxElectingVoters.minus(totalActiveNominators).toNumber(),
     },
     tooltip: `${new BigNumber(totalNominatorsAsPercent)
       .decimalPlaces(2)

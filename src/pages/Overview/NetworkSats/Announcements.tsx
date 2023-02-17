@@ -33,7 +33,7 @@ export const Announcements = () => {
 
   let totalPoolPoints = new BigNumber(0);
   bondedPools.forEach((b: BondedPool) => {
-    totalPoolPoints = totalPoolPoints.plus(new BigNumber(rmCommas(b.points)));
+    totalPoolPoints = totalPoolPoints.plus(rmCommas(b.points));
   });
   const totalPoolPointsUnit = planckToUnit(totalPoolPoints, units);
 

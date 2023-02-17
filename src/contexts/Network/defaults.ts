@@ -9,8 +9,8 @@ import {
 } from './types';
 
 export const activeEra: ActiveEra = {
-  index: 0,
-  start: 0,
+  index: new BigNumber(0),
+  start: new BigNumber(0),
 };
 export const metrics: NetworkMetrics = {
   totalIssuance: new BigNumber(0),

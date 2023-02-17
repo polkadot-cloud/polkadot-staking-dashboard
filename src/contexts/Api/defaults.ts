@@ -7,14 +7,14 @@ import { NetworkList } from 'config/networks';
 import { APIConstants, APIContextInterface } from 'contexts/Api/types';
 
 export const consts: APIConstants = {
-  bondDuration: 0,
-  maxNominations: 0,
-  sessionsPerEra: 0,
-  maxNominatorRewardedPerValidator: 0,
+  bondDuration: new BigNumber(0),
+  maxNominations: new BigNumber(0),
+  sessionsPerEra: new BigNumber(0),
+  maxNominatorRewardedPerValidator: new BigNumber(0),
   historyDepth: new BigNumber(0),
-  maxElectingVoters: 0,
-  expectedBlockTime: 0,
-  epochDuration: 0,
+  maxElectingVoters: new BigNumber(0),
+  expectedBlockTime: new BigNumber(0),
+  epochDuration: new BigNumber(0),
   existentialDeposit: new BigNumber(0),
   fastUnstakeDeposit: new BigNumber(0),
   poolsPalletId: stringToU8a('0'),

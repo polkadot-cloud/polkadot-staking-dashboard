@@ -194,10 +194,12 @@ export const GenerateNominations = ({
   };
 
   const disabledMaxNominations = () => {
-    return nominations.length >= maxNominations;
+    return maxNominations.isLessThan(nominations.length);
   };
   const disabledAddFavorites = () => {
-    return !favoritesList?.length || nominations.length >= maxNominations;
+    return (
+      !favoritesList?.length || maxNominations.isLessThan(nominations.length)
+    );
   };
 
   // accumulate generation methods

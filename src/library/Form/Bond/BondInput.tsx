@@ -88,9 +88,7 @@ export const BondInput = ({
         <section>
           <ButtonInvert
             text={t('max')}
-            disabled={
-              disabled || syncing || freeBalance.isEqualTo(new BigNumber(0))
-            }
+            disabled={disabled || syncing || freeBalance.isZero()}
             onClick={() => {
               setLocalBond(freeBalance.toString());
               updateParentState(freeBalance.toString());
