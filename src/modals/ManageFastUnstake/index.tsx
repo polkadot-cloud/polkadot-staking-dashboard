@@ -119,10 +119,10 @@ export const ManageFastUnstake = () => {
   }
 
   // manage last exposed
-  let lastExposedAgo = new BigNumber(0);
-  if (isExposed) {
-    lastExposedAgo = activeEra.index.minus(checked[0] || 0);
-  }
+  const lastExposedAgo = !isExposed
+    ? new BigNumber(0)
+    : activeEra.index.minus(checked[0] || 0);
+
   const erasRemaining = BigNumber.max(1, bondDuration.minus(lastExposedAgo));
 
   return (
