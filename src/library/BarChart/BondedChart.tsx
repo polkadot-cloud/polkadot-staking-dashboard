@@ -26,11 +26,11 @@ export const BondedChart = ({
   // graph percentages
   const graphTotal = active.plus(totalUnlocking).plus(free);
   const graphActive = greaterThanZero(active)
-    ? active.dividedBy(graphTotal.multipliedBy(new BigNumber(0.01)))
+    ? active.dividedBy(graphTotal.multipliedBy(0.01))
     : new BigNumber(0);
 
   const graphUnlocking = greaterThanZero(totalUnlocking)
-    ? totalUnlocking.dividedBy(graphTotal.multipliedBy(new BigNumber(0.01)))
+    ? totalUnlocking.dividedBy(graphTotal.multipliedBy(0.01))
     : new BigNumber(0);
 
   const graphFree = greaterThanZero(graphTotal)

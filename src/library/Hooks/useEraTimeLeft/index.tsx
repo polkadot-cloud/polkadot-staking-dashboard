@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { getUnixTime } from 'date-fns';
@@ -13,25 +14,26 @@ export const useEraTimeLeft = () => {
   // important to fetch the actual timeleft from when other components ask for it.
   const get = () => {
     // get timestamp of era start and convert to seconds.
-    let { start } = activeEra;
-    start *= 0.001;
+    const start = activeEra.start.multipliedBy(0.001);
 
     // store the duration of an era in block numbers.
-    const eraDurationBlocks = epochDuration * sessionsPerEra;
+    const eraDurationBlocks = epochDuration.multipliedBy(sessionsPerEra);
 
     // estimate the duration of the era in seconds
-    const eraDuration = eraDurationBlocks * expectedBlockTime * 0.001;
+    const eraDuration = eraDurationBlocks
+      .multipliedBy(expectedBlockTime)
+      .multipliedBy(0.001);
 
     // estimate the end time of the era
-    const end = start + eraDuration;
+    const end = start.plus(eraDuration);
 
     // estimate remaining time of era.
-    const timeleft = Math.max(0, end - getUnixTime(new Date()));
+    const timeleft = BigNumber.max(0, end.minus(getUnixTime(new Date())));
 
     // percentage of eraDuration
-    const percentage = eraDuration * 0.01;
-    const percentRemaining = timeleft / percentage;
-    const percentSurpassed = 100 - percentRemaining;
+    const percentage = eraDuration.multipliedBy(0.01);
+    const percentRemaining = timeleft.dividedBy(percentage);
+    const percentSurpassed = new BigNumber(100).minus(percentRemaining);
 
     return { timeleft, percentSurpassed, percentRemaining };
   };

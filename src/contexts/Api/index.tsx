@@ -153,31 +153,31 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
     // format constants.
     const bondDuration = result[0]
-      ? Number(result[0].toString())
+      ? new BigNumber(rmCommas(result[0].toString()))
       : FallbackBondingDuration;
 
     const maxNominations = result[1]
-      ? Number(result[1].toString())
+      ? new BigNumber(rmCommas(result[1].toString()))
       : FallbackMaxNominations;
 
     const sessionsPerEra = result[2]
-      ? Number(result[2].toString())
+      ? new BigNumber(rmCommas(result[2].toString()))
       : FallbackSessionsPerEra;
 
     const maxNominatorRewardedPerValidator = result[3]
-      ? Number(result[3].toString())
+      ? new BigNumber(rmCommas(result[3].toString()))
       : FallbackNominatorRewardedPerValidator;
 
     const maxElectingVoters = result[4]
-      ? Number(result[4].toString())
+      ? new BigNumber(rmCommas(result[4].toString()))
       : FallbackMaxElectingVoters;
 
     const expectedBlockTime = result[5]
-      ? Number(result[5].toString())
+      ? new BigNumber(rmCommas(result[5].toString()))
       : FallbackExpectedBlockTime;
 
     const epochDuration = result[6]
-      ? Number(result[6].toString())
+      ? new BigNumber(rmCommas(result[6].toString()))
       : FallbackEpochDuration;
 
     const existentialDeposit = result[7]

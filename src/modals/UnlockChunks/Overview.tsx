@@ -39,10 +39,10 @@ export const Overview = forwardRef(
     let totalUnbonding = new BigNumber(0);
     for (const _chunk of unlocking) {
       const { era, value } = _chunk;
-      const left = era - activeEra.index;
+      const left = new BigNumber(era).minus(activeEra.index);
 
       totalUnbonding = totalUnbonding.plus(value);
-      if (left <= 0) {
+      if (left.isLessThanOrEqualTo(0)) {
         withdrawAvailable = withdrawAvailable.plus(value);
       }
     }
@@ -111,7 +111,7 @@ export const Overview = forwardRef(
 
           {unlocking.map((chunk: any, i: number) => {
             const { era, value } = chunk;
-            const left = era - activeEra.index;
+            const left = new BigNumber(era).minus(activeEra.index);
 
             return (
               <ChunkWrapper key={`unlock_chunk_${i}`}>
@@ -119,7 +119,7 @@ export const Overview = forwardRef(
                   <section>
                     <h2>{`${planckToUnit(value, units)} ${network.unit}`}</h2>
                     <h4>
-                      {left <= 0
+                      {left.isLessThanOrEqualTo(0)
                         ? t('unlocked')
                         : `${t('unlocksAfterEra')} ${era}`}
                     </h4>

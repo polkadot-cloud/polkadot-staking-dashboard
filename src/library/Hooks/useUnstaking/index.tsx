@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
@@ -32,7 +31,7 @@ export const useUnstaking = () => {
   // determine if user is fast unstaking.
   const inHead =
     head?.stashes.find((s: AnyJson) => s[0] === activeAccount) ?? undefined;
-  const inQueue = queueDeposit?.isGreaterThan(new BigNumber(0)) ?? false;
+  const inQueue = queueDeposit?.isGreaterThan(0) ?? false;
 
   const registered = inHead || inQueue;
 
@@ -42,13 +41,13 @@ export const useUnstaking = () => {
     if (checking) {
       return `${t('fastUnstakeCheckingEras', {
         checked: checked.length,
-        total: bondDuration,
+        total: bondDuration.toString(),
       })}...`;
     }
     if (isExposed) {
-      const lastExposed = activeEra.index - (checked[0] || 0);
+      const lastExposed = activeEra.index.minus(checked[0] || 0);
       return t('fastUnstakeExposed', {
-        count: lastExposed,
+        count: lastExposed.toNumber(),
       });
     }
     if (registered) {

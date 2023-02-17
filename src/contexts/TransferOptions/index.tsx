@@ -56,7 +56,7 @@ export const TransferOptionsProvider = ({
     let totalUnlocked = new BigNumber(0);
     for (const u of unlocking) {
       const { value, era } = u;
-      if (activeEra.index > era) {
+      if (activeEra.index.isGreaterThan(era)) {
         totalUnlocked = totalUnlocked.plus(value);
       } else {
         totalUnlocking = totalUnlocking.plus(value);
@@ -64,16 +64,13 @@ export const TransferOptionsProvider = ({
     }
 
     // free balance after reserve. Does not consider locks other than staking.
-    const freeBalance = BigNumber.max(
-      freeAfterReserve.minus(total),
-      new BigNumber(0)
-    );
+    const freeBalance = BigNumber.max(freeAfterReserve.minus(total), 0);
 
     const nominateOptions = () => {
       // total possible balance that can be bonded
       const totalPossibleBond = BigNumber.max(
         freeAfterReserve.minus(totalUnlocking).minus(totalUnlocked),
-        new BigNumber(0)
+        0
       );
 
       return {
@@ -98,7 +95,7 @@ export const TransferOptionsProvider = ({
       let totalUnlockedPool = new BigNumber(0);
       for (const u of unlockingPool) {
         const { value, era } = u;
-        if (activeEra.index > era) {
+        if (activeEra.index.isGreaterThan(era)) {
           totalUnlockedPool = totalUnlockedPool.plus(value);
         } else {
           totalUnlockingPool = totalUnlockingPool.plus(value);
