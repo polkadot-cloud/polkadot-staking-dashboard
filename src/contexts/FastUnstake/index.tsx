@@ -134,7 +134,7 @@ export const FastUnstakeProvider = ({
           ? new BigNumber(localMeta.checked[localMeta.checked.length - 1] - 1)
           : activeEra.index;
 
-        // checkpoint: check from era maybeNextEra
+        // checkpoint: check from the possible next era `maybeNextEra`.
 
         processEligibility(activeAccount, maybeNextEra);
       }
