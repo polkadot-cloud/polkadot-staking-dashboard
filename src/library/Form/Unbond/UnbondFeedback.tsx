@@ -11,7 +11,7 @@ import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit, unitToPlanck } from 'Utils';
+import { isNotZero, planckToUnit, unitToPlanck } from 'Utils';
 import { UnbondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
@@ -95,14 +95,14 @@ export const UnbondFeedback = ({
   const unbondToMin =
     bondFor === 'pool'
       ? inSetup || isDepositor()
-        ? BigNumber.max(active.minus(minCreateBond), new BigNumber(0))
-        : BigNumber.max(active.minus(minJoinBond), new BigNumber(0))
-      : BigNumber.max(active.minus(minNominatorBond), new BigNumber(0));
+        ? BigNumber.max(active.minus(minCreateBond), 0)
+        : BigNumber.max(active.minus(minJoinBond), 0)
+      : BigNumber.max(active.minus(minNominatorBond), 0);
 
   // check if bonded is below the minimum required
   const nominatorActiveBelowMin =
     bondFor === 'nominator' &&
-    !active.isZero() &&
+    isNotZero(active) &&
     active.isLessThan(minNominatorBond);
   const poolToMinBn = isDepositor() ? minCreateBond : minJoinBond;
   const poolActiveBelowMin =
@@ -124,7 +124,7 @@ export const UnbondFeedback = ({
       if (getControllerNotImported(controller))
         newErrors.push(t('importedToUnbond'));
 
-    if (bond.bond !== '' && bondBn.isLessThan(new BigNumber(1))) {
+    if (bond.bond !== '' && bondBn.isLessThan(1)) {
       newErrors.push(t('valueTooSmall'));
     }
 
@@ -134,7 +134,10 @@ export const UnbondFeedback = ({
 
     if (bondBn.isGreaterThan(unbondToMin)) {
       // start the error message stating a min bond is required.
-      let err = `${t('minimumBond', { minBondUnit, unit })} `;
+      let err = `${t('minimumBond', {
+        minBondUnit: minBondUnit.toString(),
+        unit,
+      })} `;
       // append the subject to the error message.
       if (bondFor === 'nominator') {
         err += t('whenActivelyNominating');

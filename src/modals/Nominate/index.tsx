@@ -83,7 +83,12 @@ export const Nominate = () => {
   }
 
   if (!activeUnit.isGreaterThan(minNominatorBondUnit)) {
-    warnings.push(`${t('notMeetMinimum', { minNominatorBondUnit, unit })}`);
+    warnings.push(
+      `${t('notMeetMinimum', {
+        minNominatorBondUnit: minNominatorBondUnit.toString(),
+        unit,
+      })}`
+    );
   }
 
   return (

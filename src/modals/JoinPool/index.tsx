@@ -3,7 +3,6 @@
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
-import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -90,7 +89,7 @@ export const JoinPool = () => {
       <PaddingWrapper>
         <h2 className="title unbounded">{t('joinPool')}</h2>
         <BondFeedback
-          syncing={largestTxFee.isEqualTo(new BigNumber(0))}
+          syncing={largestTxFee.isZero()}
           bondFor="pool"
           listenIsValid={setBondValid}
           defaultBond={null}

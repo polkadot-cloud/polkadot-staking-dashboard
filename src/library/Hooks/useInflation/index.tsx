@@ -23,7 +23,7 @@ export const useInflation = () => {
     stakeTarget,
   } = params;
 
-  const BIGNUMBER_MILLION = new BigNumber('1000000');
+  const BIGNUMBER_MILLION = new BigNumber(1_000_000);
 
   const calculateInflation = (
     totalStaked: BigNumber,
