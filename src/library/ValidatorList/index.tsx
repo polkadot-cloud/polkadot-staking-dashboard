@@ -22,6 +22,7 @@ import { Selectable } from 'library/List/Selectable';
 import { Validator } from 'library/ValidatorList/Validator';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { isNotZero } from 'Utils';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
 import { Filters } from './Filters';
@@ -167,7 +168,7 @@ export const ValidatorListInner = ({
 
   // configure validator list when network is ready to fetch
   useEffect(() => {
-    if (isReady && !activeEra.index.isZero() && !fetched) {
+    if (isReady && isNotZero(activeEra.index) && !fetched) {
       setupValidatorList();
     }
   }, [isReady, activeEra.index, fetched]);

@@ -22,7 +22,7 @@ export const useEraTimeLeft = () => {
     // estimate the duration of the era in seconds
     const eraDuration = eraDurationBlocks
       .multipliedBy(expectedBlockTime)
-      .multipliedBy(new BigNumber(0.001));
+      .multipliedBy(0.001);
 
     // estimate the end time of the era
     const end = start.plus(eraDuration);

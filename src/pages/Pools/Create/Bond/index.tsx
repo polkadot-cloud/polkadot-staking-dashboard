@@ -67,7 +67,7 @@ export const Bond = ({ section }: SetupStepProps) => {
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
         <BondFeedback
-          syncing={txFees.isEqualTo(new BigNumber(0))}
+          syncing={txFees.isZero()}
           bondFor="pool"
           inSetup
           listenIsValid={setBondValid}

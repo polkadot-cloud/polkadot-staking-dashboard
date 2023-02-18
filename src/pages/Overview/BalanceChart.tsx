@@ -74,11 +74,11 @@ export const BalanceChart = () => {
   // graph percentages
   const graphTotal = nominating.plus(inPool).plus(graphAvailable);
   const graphNominating = greaterThanZero(nominating)
-    ? nominating.dividedBy(graphTotal.multipliedBy(new BigNumber(0.01)))
+    ? nominating.dividedBy(graphTotal.multipliedBy(0.01))
     : new BigNumber(0);
 
   const graphInPool = greaterThanZero(inPool)
-    ? inPool.dividedBy(graphTotal.multipliedBy(new BigNumber(0.01)))
+    ? inPool.dividedBy(graphTotal.multipliedBy(0.01))
     : new BigNumber(0);
 
   const graphNotStaking = greaterThanZero(graphTotal)

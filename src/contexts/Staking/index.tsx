@@ -13,7 +13,12 @@ import {
 } from 'contexts/Staking/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
-import { greaterThanZero, localStorageOrDefault, setStateWithRef } from 'Utils';
+import {
+  greaterThanZero,
+  isNotZero,
+  localStorageOrDefault,
+  setStateWithRef,
+} from 'Utils';
 // eslint-disable-next-line import/no-unresolved
 import Worker from 'worker-loader!../../workers/stakers';
 import { useApi } from '../Api';
@@ -40,7 +45,7 @@ export const StakingProvider = ({
     accounts: connectAccounts,
     getActiveAccount,
   } = useConnect();
-  const { isReady, api, consts, apiStatus, network } = useApi();
+  const { isReady, api, apiStatus, network } = useApi();
   const { activeEra } = useNetworkMetrics();
   const {
     accounts,
@@ -48,7 +53,6 @@ export const StakingProvider = ({
     getLedgerForStash,
     getAccountNominations,
   } = useBalances();
-  const { maxNominatorRewardedPerValidator } = consts;
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
@@ -163,7 +167,7 @@ export const StakingProvider = ({
   };
 
   const subscribeToStakingkMetrics = async () => {
-    if (api !== null && isReady && !activeEra.index.isZero()) {
+    if (api !== null && isReady && isNotZero(activeEra.index)) {
       const previousEra = activeEra.index.minus(1);
 
       const u = await api.queryMulti<AnyApi>(
@@ -226,7 +230,7 @@ export const StakingProvider = ({
    * the minimum nominator bond is calculated by summing a particular bond of a nominator.
    */
   const fetchEraStakers = async () => {
-    if (!isReady || activeEra.index.isEqualTo(0) || !api) {
+    if (!isReady || activeEra.index.isZero() || !api) {
       return;
     }
     const exposuresRaw = await api.query.staking.erasStakers.entries(
@@ -250,7 +254,6 @@ export const StakingProvider = ({
       activeAccount,
       units: network.units,
       exposures,
-      maxNominatorRewardedPerValidator,
     });
   };
 

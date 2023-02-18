@@ -194,12 +194,11 @@ export const GenerateNominations = ({
   };
 
   const disabledMaxNominations = () => {
-    return maxNominations.isLessThanOrEqualTo(nominations.length);
+    return maxNominations.isLessThan(nominations.length);
   };
   const disabledAddFavorites = () => {
     return (
-      !favoritesList?.length ||
-      maxNominations.isLessThanOrEqualTo(nominations.length)
+      !favoritesList?.length || maxNominations.isLessThan(nominations.length)
     );
   };
 
