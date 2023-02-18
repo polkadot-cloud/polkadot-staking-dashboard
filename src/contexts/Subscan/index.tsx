@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ApiEndpoints, ApiSubscanKey } from 'consts';
+import { useNetworkMetrics } from 'contexts/Network';
+import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import React, { useEffect, useState } from 'react';
 import { AnyApi, AnySubscan } from 'types';
 import { useApi } from '../Api';
@@ -24,6 +26,8 @@ export const SubscanProvider = ({
   const { network, isReady } = useApi();
   const { plugins, getPlugins } = usePlugins();
   const { activeAccount } = useConnect();
+  const { activeEra } = useNetworkMetrics();
+  const { erasToSeconds } = useErasToTimeLeft();
 
   // store fetched payouts from Subscan
   const [payouts, setPayouts] = useState<AnySubscan>([]);
@@ -99,6 +103,14 @@ export const SubscanProvider = ({
           const unclaimedList = result.data.list.filter(
             (l: AnyApi) => l.block_timestamp === 0
           );
+          unclaimedList.forEach((p: AnyApi) => {
+            const eraPassed = activeEra.index.minus(p.era);
+            const secondspassed = erasToSeconds(eraPassed);
+            const eraToUnixTime = activeEra.start
+              .multipliedBy(0.001)
+              .minus(secondspassed);
+            p.block_timestamp = eraToUnixTime.toNumber();
+          });
           newUnclaimedPayouts = newUnclaimedPayouts.concat(unclaimedList);
         }
         setPayouts(newClaimedPayouts);
