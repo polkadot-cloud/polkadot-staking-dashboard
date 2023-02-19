@@ -138,7 +138,6 @@ export const StakingProvider = ({
         totalStaked,
         totalActiveNominators,
         activeValidators,
-        minActiveBond,
         activeAccountOwnStake,
         who,
       } = data;
@@ -153,7 +152,6 @@ export const StakingProvider = ({
             ...eraStakersRef.current,
             stakers,
             totalStaked: new BigNumber(totalStaked),
-            minActiveBond: new BigNumber(minActiveBond),
             // nominators,
             totalActiveNominators,
             activeValidators,

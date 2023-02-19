@@ -19,7 +19,6 @@ export interface StakingMetrics {
 export interface EraStakers {
   stakers: Array<any>;
   totalStaked: BigNumber;
-  minActiveBond: BigNumber;
   nominators: Array<any> | undefined;
   totalActiveNominators: number;
   activeValidators: number;

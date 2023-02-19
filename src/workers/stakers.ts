@@ -128,20 +128,9 @@ const processExposures = (data: AnyJson) => {
     }
   });
 
-  // order nominators by bond size, smallest first
-  const getMinBonds = nominators.sort((a: any, b: any) => {
-    return new BigNumber(a.value).minus(b.value).toString();
-  });
-
-  // get the smallest actve nominator bond
-  const minActiveBond = getMinBonds[0]?.value
-    ? new BigNumber(getMinBonds[0]?.value)
-    : new BigNumber(0);
-
   return {
     stakers,
     totalStaked: totalStaked.toString(),
-    minActiveBond: planckToUnit(minActiveBond, units).toString(),
     totalActiveNominators: nominators.length,
     activeAccountOwnStake,
     activeValidators,
