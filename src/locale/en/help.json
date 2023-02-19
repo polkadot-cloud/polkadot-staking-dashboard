@@ -1,8 +1,8 @@
 {
   "help": {
     "definitions": {
-      "activeBondThreshold": [
-        "Active Bond Threshold",
+      "activeStakeThreshold": [
+        "Active Stake Threshold",
         [
           "The amount of {NETWORK_UNIT} needed to be actively nominating in an era. ",
           "This value applies to nominators and for pools. In the pool's case, it is important to join a pool with a total bond amount of at least this value.",
@@ -20,7 +20,9 @@
       ],
       "activePools": [
         "Active Pools",
-        ["The current amount of active nomination pools on {NETWORK_NAME}."]
+        [
+          "The current amount of active nomination pools on {NETWORK_NAME}."
+        ]
       ],
       "activeValidator": [
         "Active Validator",
@@ -62,7 +64,7 @@
         [
           "Bonding funds is the process of 'locking' (or staking) {NETWORK_UNIT}. Bonded {NETWORK_UNIT} will then be automatically allocated to one or more of your nominated validators.",
           "As a nominator, you allocate nominations yourself. In a pool, the pool owner or pool nominator will allocate nominations on your behalf, and your bonded funds will back those nominations.",
-          "The minimum active bond statistic is the minimum {NETWORK_UNIT} being bonded by a nominator for the current era.This value is also the minimum amount required to receive rewards."
+          "The minimum active stake statistic is the minimum {NETWORK_UNIT} being bonded by a nominator for the current era.This value is also the minimum amount required to receive rewards."
         ]
       ],
       "commission": [
@@ -112,7 +114,9 @@
       ],
       "idealStaked": [
         "Ideal Staked",
-        ["The percentage of staked total supply in ideal network conditions."]
+        [
+          "The percentage of staked total supply in ideal network conditions."
+        ]
       ],
       "inactiveNominations": [
         "Inactive Nominations",

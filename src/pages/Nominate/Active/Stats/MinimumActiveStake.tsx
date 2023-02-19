@@ -6,7 +6,7 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { Number } from 'library/StatBoxList/Number';
 import { useTranslation } from 'react-i18next';
 
-export const MinimumActiveBondStat = () => {
+export const MinimumActiveStakeStat = () => {
   const { t } = useTranslation('pages');
   const { network } = useApi();
   const { metrics } = useNetworkMetrics();

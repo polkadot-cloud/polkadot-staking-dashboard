@@ -24,7 +24,7 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
 
   const minNominatorBondUnit = planckToUnit(minNominatorBond, units);
   const gtMinNominatorBond = value.isGreaterThanOrEqualTo(minNominatorBondUnit);
-  const gtMinActiveBond = value.isGreaterThanOrEqualTo(minimumActiveStake);
+  const gtMinActiveStake = value.isGreaterThanOrEqualTo(minimumActiveStake);
 
   return (
     <Wrapper>
@@ -47,11 +47,11 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
             </h5>
           </div>
         </section>
-        <section className={gtMinActiveBond && !isSyncing ? 'invert' : ''}>
+        <section className={gtMinActiveStake && !isSyncing ? 'invert' : ''}>
           <h4>
             <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
             &nbsp;{t('nominateActive')} &nbsp;
-            <OpenHelpIcon helpKey="Active Bond Threshold" />
+            <OpenHelpIcon helpKey="Active Stake Threshold" />
           </h4>
           <div className="bar">
             <h5>

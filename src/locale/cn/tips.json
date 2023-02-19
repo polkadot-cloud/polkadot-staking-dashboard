@@ -16,7 +16,7 @@
       [
         "有多种方式抵押 {NETWORK_NAME}.",
         "要么成为提名人，要么成为提名池成员.",
-        "直接提名要求您质押{NETWORK_UNIT}并选择要提名的验证人，并提名最多{MAX_NOMINATIONS} 个验证人。要作为提名人获得奖励，你目前至少需要有{MIN_ACTIVE_BOND} {NETWORK_UNIT}.",
+        "直接提名要求您质押{NETWORK_UNIT}并选择要提名的验证人，并提名最多{MAX_NOMINATIONS} 个验证人。要作为提名人获得奖励，你目前至少需要有{MIN_ACTIVE_STAKE} {NETWORK_UNIT}.",
         "加入提名池要便宜得多，需要最低存款 {MIN_POOL_JOIN_BOND} {NETWORK_UNIT}. 提名验证人是代表您完成的，您只需从提名池中领取奖励.",
         "创建提名池至少需要{MIN_POOL_CREATE_BOND} {NETWORK_UNIT}."
       ]

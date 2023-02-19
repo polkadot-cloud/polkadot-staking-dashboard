@@ -60,8 +60,7 @@ const processFastUnstakeEra = (data: AnyJson) => {
 
 // process exposures.
 //
-// abstracts active nominators and minimum active
-// bond from erasStakers.
+// abstracts active nominators erasStakers.
 const processExposures = (data: AnyJson) => {
   const { units, exposures, activeAccount } = data;
 
@@ -92,9 +91,9 @@ const processExposures = (data: AnyJson) => {
       return y.minus(x);
     });
 
-    // accumulate active nominators and min active bond threshold.
+    // accumulate active nominators and min active stake threshold.
     if (others.length) {
-      // accumulate active bond for all nominators
+      // accumulate active stake for all nominators
       for (const o of others) {
         const value = new BigNumber(rmCommas(o.value));
 

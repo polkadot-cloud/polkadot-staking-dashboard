@@ -33,7 +33,10 @@ export const useFillVariables = () => {
             maxNominatorRewardedPerValidator.toString(),
           ],
           ['{MAX_NOMINATIONS}', maxNominations.toString()],
-          ['{MIN_ACTIVE_BOND}', minimumActiveStake.decimalPlaces(3).toFormat()],
+          [
+            '{MIN_ACTIVE_STAKE}',
+            minimumActiveStake.decimalPlaces(3).toFormat(),
+          ],
           [
             '{MIN_POOL_JOIN_BOND}',
             planckToUnit(minJoinBond, network.units)
