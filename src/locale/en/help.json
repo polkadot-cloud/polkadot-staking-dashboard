@@ -1,16 +1,6 @@
 {
   "help": {
     "definitions": {
-      "activeStakeThreshold": [
-        "Active Stake Threshold",
-        [
-          "The amount of {NETWORK_UNIT} needed to be actively nominating in an era. ",
-          "This value applies to nominators and for pools. In the pool's case, it is important to join a pool with a total bond amount of at least this value.",
-          "Being above this metric simply guarantees that you will be present in the active nominator set for the era. This amount still does not guarantee rewards, as your active nominations may still be over-subscribed.",
-          "Only the top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators are rewarded per validator in {NETWORK_NAME}. Ensuring your active bond is above this threshold will increase your chances of rewards.",
-          "You can keep track of these metrics from the dashboard and amend your staking position if necessary, whether increasing your bonded {NETWORK_UNIT}, changing your nominations, or joining another pool."
-        ]
-      ],
       "activeNominators": [
         "Active Nominators",
         [
@@ -20,8 +10,16 @@
       ],
       "activePools": [
         "Active Pools",
+        ["The current amount of active nomination pools on {NETWORK_NAME}."]
+      ],
+      "activeStakeThreshold": [
+        "Active Stake Threshold",
         [
-          "The current amount of active nomination pools on {NETWORK_NAME}."
+          "The amount of {NETWORK_UNIT} needed to be actively nominating in an era. ",
+          "This value applies to nominators and for pools. In the pool's case, it is important to join a pool with a total bond amount of at least this value.",
+          "Being above this metric simply guarantees that you will be present in the active nominator set for the era. This amount still does not guarantee rewards, as your active nominations may still be over-subscribed.",
+          "Only the top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators are rewarded per validator in {NETWORK_NAME}. Ensuring your active bond is above this threshold will increase your chances of rewards.",
+          "You can keep track of these metrics from the dashboard and amend your staking position if necessary, whether increasing your bonded {NETWORK_UNIT}, changing your nominations, or joining another pool."
         ]
       ],
       "activeValidator": [
@@ -114,9 +112,7 @@
       ],
       "idealStaked": [
         "Ideal Staked",
-        [
-          "The percentage of staked total supply in ideal network conditions."
-        ]
+        ["The percentage of staked total supply in ideal network conditions."]
       ],
       "inactiveNominations": [
         "Inactive Nominations",
