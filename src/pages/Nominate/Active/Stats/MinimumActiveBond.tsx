@@ -13,7 +13,7 @@ export const MinimumActiveBondStat = () => {
   const { minimumActiveStake } = metrics;
 
   const params = {
-    label: t('nominate.minimumActiveBond'),
+    label: t('nominate.minimumActiveStake'),
     value: minimumActiveStake.toNumber(),
     unit: `${network.unit}`,
     helpKey: 'Bonding',
