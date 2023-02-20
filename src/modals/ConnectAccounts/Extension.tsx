@@ -1,6 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import SignClient from '@walletconnect/sign-client';
+import { Web3Modal } from '@web3modal/standalone';
+
 import { faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
@@ -58,7 +61,7 @@ export const Extension = (props: ExtensionProps) => {
 
 export const ExtensionButton = (props: any) => {
   const { meta, setSection, installed } = props;
-  const { status } = meta;
+  const { status, id } = meta;
 
   const { connectExtensionAccounts } = useConnect();
 
@@ -67,8 +70,34 @@ export const ExtensionButton = (props: any) => {
 
   // click to connect to extension
   const handleClick = async () => {
+    console.log('id', id);
     if (status === 'connected') {
       setSection(1);
+    } else if (id === 'wallet-connect') {
+      console.log('this is wallet connect handler');
+      const projectId = 'f75434b01141677e4ee7ddf70fee56b4';
+      //  'polkadot:91b171bb158e2d3848fa23a9f1c25182'
+      const web3Modal = new Web3Modal({
+        walletConnectVersion: 1, // or 2
+        projectId,
+        standaloneChains: ['eip155:43114'],
+      });
+      const signClient = await SignClient.init({ projectId });
+
+      const { uri, approval } = await signClient.connect({
+        requiredNamespaces: {
+          eip155: {
+            methods: ['eth_sign'],
+            chains: ['eip155:43114'],
+            events: ['accountsChanged'],
+          },
+        },
+      });
+      if (uri) {
+        web3Modal.openModal({ uri, standaloneChains: ['eip155:43114'] });
+        await approval();
+        web3Modal.closeModal();
+      }
     } else {
       (() => {
         connectExtensionAccounts(installed);
