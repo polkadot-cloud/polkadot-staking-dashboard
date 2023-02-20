@@ -39,7 +39,7 @@ export const Payouts = ({ page }: PageProps) => {
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
 
-  const [payoutsList, setPayoutLists] = useState<AnySubscan>();
+  const [payoutsList, setPayoutLists] = useState<AnySubscan>([]);
   const [fromDate, setFromDate] = useState<string | undefined>();
   const [toDate, setToDate] = useState<string | undefined>();
 
@@ -62,11 +62,11 @@ export const Payouts = ({ page }: PageProps) => {
       return y.minus(x);
     });
     setPayoutLists(pList);
-  }, [payouts]);
+  }, [payouts, poolClaims]);
 
   useEffect(() => {
     // calculate the earliest and latest payout dates if they exist.
-    if (payoutsList?.length) {
+    if (payoutsList.length) {
       setFromDate(
         format(
           fromUnixTime(
@@ -87,7 +87,7 @@ export const Payouts = ({ page }: PageProps) => {
         })
       );
     }
-  }, [payoutsList?.length]);
+  }, [payoutsList.length]);
 
   return (
     <>
@@ -104,7 +104,7 @@ export const Payouts = ({ page }: PageProps) => {
               <OpenHelpIcon helpKey="Payout History" />
             </h4>
             <h2>
-              {payouts.length ? (
+              {payoutsList.length ? (
                 <>
                   {fromDate}
                   {toDate !== fromDate && <>&nbsp;-&nbsp;{toDate}</>}

@@ -23,7 +23,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { NotesWrapper, PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit, unitToPlanck } from 'Utils';
+import { isNotZero, planckToUnit, unitToPlanck } from 'Utils';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');
@@ -81,9 +81,9 @@ export const Unbond = () => {
   // get the max amount available to unbond
   const unbondToMin = isPooling
     ? isDepositor()
-      ? BigNumber.max(freeToUnbond.minus(minCreateBond), new BigNumber(0))
-      : BigNumber.max(freeToUnbond.minus(minJoinBond), new BigNumber(0))
-    : BigNumber.max(freeToUnbond.minus(minNominatorBond), new BigNumber(0));
+      ? BigNumber.max(freeToUnbond.minus(minCreateBond), 0)
+      : BigNumber.max(freeToUnbond.minus(minJoinBond), 0)
+    : BigNumber.max(freeToUnbond.minus(minNominatorBond), 0);
 
   // unbond some validation
   const isValid = isPooling ? true : !controllerNotImported;
@@ -136,7 +136,7 @@ export const Unbond = () => {
 
   const nominatorActiveBelowMin =
     bondFor === 'nominator' &&
-    !activeBn.isZero() &&
+    isNotZero(activeBn) &&
     activeBn.isLessThan(minNominatorBondBn);
 
   const poolToMinBn = isDepositor() ? minCreateBondBn : minJoinBondBn;

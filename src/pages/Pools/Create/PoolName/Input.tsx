@@ -27,7 +27,7 @@ export const Input = ({
     for (const s of setters) {
       s.set({
         ...s.current,
-        metadata: value,
+        metadata: val,
       });
     }
   };
