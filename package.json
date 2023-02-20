@@ -14,7 +14,7 @@
     "@polkadot/react-identicon": "^2.11.2",
     "@polkadot/rpc-provider": "^9.12.1",
     "@polkadot/types": "^9.12.1",
-    "@polkadot/types-codec": "^9.13.5",
+    "@polkadot/types-codec": "^9.14.2",
     "@polkadot/util": "^10.2.6",
     "@rossbulat/polkadot-dashboard-ui": "0.1.0-alpha.43",
     "@substrate/connect": "^0.7.20",
