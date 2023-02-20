@@ -64,14 +64,13 @@ export const PayoutLine = ({
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
 
-  const { payoutsByDay, poolClaimsByDay, unclaimPayoutsByDay } =
-    formatRewardsForGraphs(
-      days,
-      units,
-      payoutsNoSlash,
-      poolClaims,
-      unclaimedPayoutsNoSlash
-    );
+  const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
+    days,
+    units,
+    payoutsNoSlash,
+    poolClaims,
+    unclaimedPayoutsNoSlash
+  );
 
   // combine payouts and pool claims into one dataset and calculate averages.
   const combined = combineRewardsByDay(payoutsByDay, poolClaimsByDay);
