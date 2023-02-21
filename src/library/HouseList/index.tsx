@@ -1,110 +1,48 @@
-import { faClockFour, faDollar } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Asset } from 'contexts/Assets/types';
-import { useNetworkMetrics } from 'contexts/Network';
-import { clipAddress, humanNumberBn } from 'Utils';
-import { ReactComponent as HouseIcon } from '../../img/fs_icon.svg';
-import { HouseProps } from './types';
-import { ItemsWrapper, ItemWrapper } from './Wrappers';
+import { motion } from 'framer-motion';
+import { AssetItem } from 'library/AssetItem';
+import { Header, List, Wrapper as ListWrapper } from 'library/List';
+import { MotionContainer } from 'library/List/MotionContainer';
 
-interface AssetProps {
-  house: Asset;
+interface HouseProps {
+  assets: Array<Asset>;
+  title: string;
 }
 
-export const AssetItem = ({ house }: AssetProps) => {
-  const { decimals } = useNetworkMetrics();
-
-  const listItem = {
-    hidden: {
-      opacity: 0,
-      y: 25,
-      transition: {
-        duration: 0.4,
-      },
-    },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.4,
-        type: 'spring',
-        bounce: 0.2,
-      },
-    },
-  };
-
+export const HouseList = ({ assets, title }: HouseProps) => {
   return (
-    <ItemWrapper
-      whileHover={{ scale: 1.005 }}
-      transition={{ duration: 0.15 }}
-      variants={listItem}
-    >
-      <div className="inner">
-        <section>
-          <HouseIcon />
-        </section>
-        <section>
-          <h3>
-            {house.metadata}
-            <button className="active" type="button">
-              <h4>{house.status}</h4>
-            </button>
-          </h3>
-          <div className="details">
-            <button className="active" type="button">
-              <h4>
-                <FontAwesomeIcon icon={faClockFour} />
-                &nbsp;&nbsp;&nbsp;
-              </h4>
-              <span>
-                <b>{house.created}</b>
-              </span>
-            </button>
-            <button type="button" className="active">
-              <h4>
-                <FontAwesomeIcon icon={faDollar} />
-                &nbsp;
-              </h4>
-              <h4>
-                <b>{humanNumberBn(house.price, decimals)}</b>
-              </h4>
-            </button>
-            {house.tenants.length === 0 ? (
-              <h3>No tenants</h3>
-            ) : (
-              <>
-                <h3>Tenants:&nbsp;</h3>
-                {house.tenants.map((tenant, tenantIndex) => (
-                  <button type="button" className="active" key={tenantIndex}>
-                    <h4>{clipAddress(tenant)}</h4>
-                  </button>
-                ))}
-              </>
-            )}
+    <ListWrapper>
+      {title && (
+        <Header>
+          <div>
+            <h3>{title}</h3>
           </div>
-        </section>
-      </div>
-    </ItemWrapper>
-  );
-};
+          <div />
+        </Header>
+      )}
 
-export const HouseList = ({ assets }: HouseProps) => {
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        staggerChildren: 0.025,
-      },
-    },
-  };
-
-  return (
-    <ItemsWrapper variants={container} initial="hidden" animate="show">
-      {assets.map((house, index) => (
-        <AssetItem house={house} key={index} />
-      ))}
-    </ItemsWrapper>
+      <List flexBasisLarge="33%">
+        <MotionContainer>
+          {assets.map((house, index) => (
+            <motion.div
+              className="item col"
+              key={index}
+              variants={{
+                hidden: {
+                  y: 15,
+                  opacity: 0,
+                },
+                show: {
+                  y: 0,
+                  opacity: 1,
+                },
+              }}
+            >
+              <AssetItem asset={house} menuItems={[]} key={index} />
+            </motion.div>
+          ))}
+        </MotionContainer>
+      </List>
+    </ListWrapper>
   );
 };

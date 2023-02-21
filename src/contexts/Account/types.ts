@@ -17,4 +17,5 @@ export interface AccountContextInterface {
   balance: BN;
   isSeller: () => boolean;
   isInvestor: () => boolean;
+  isNotary: () => boolean;
 }
