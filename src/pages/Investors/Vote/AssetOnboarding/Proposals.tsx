@@ -1,6 +1,5 @@
 import { useAssets } from 'contexts/Assets';
-import { Header } from 'library/List';
-import { ListWrapper } from '../HousingCouncil/Wrappers';
+import { Header, Wrapper as ListWrapper } from 'library/List';
 import { DemocracyProposal } from './DemocracyProposal';
 import { ProposalList } from './Wrappers';
 

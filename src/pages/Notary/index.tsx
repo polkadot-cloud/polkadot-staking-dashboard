@@ -11,7 +11,7 @@ import PageTitle from 'library/PageTitle';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnyApi } from 'types';
-import { PageRowWrapper } from 'Wrappers';
+import { PageRowWrapper, Separator } from 'Wrappers';
 
 export const NotaryView = () => {
   const { address } = useAccount();
@@ -78,6 +78,7 @@ export const NotaryView = () => {
   return (
     <>
       <PageTitle title={t('notary.pageTitle')} />
+      <Separator />
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
           <HouseList

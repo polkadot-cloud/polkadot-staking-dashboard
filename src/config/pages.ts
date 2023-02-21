@@ -3,7 +3,7 @@
 
 import { UriPrefix } from 'consts';
 import Dashboard from 'pages/Dashboard';
-import { Governance } from 'pages/Governance';
+import { HousingCouncil } from 'pages/HousingCouncil';
 import { InvestorsView } from 'pages/Investors';
 import { NotaryView } from 'pages/Notary';
 import { PageCategories, PagesConfig } from 'types';
@@ -22,6 +22,13 @@ export const PAGES_CONFIG: PagesConfig = [
     uri: `${UriPrefix}/`,
     hash: '/dashboard',
     Entry: Dashboard,
+  },
+  {
+    category: 1,
+    key: 'Housing Council',
+    uri: `${UriPrefix}/`,
+    hash: '/council',
+    Entry: HousingCouncil,
   },
   {
     category: 1,
@@ -50,13 +57,6 @@ export const PAGES_CONFIG: PagesConfig = [
     uri: `${UriPrefix}/`,
     hash: '/toolbox',
     Entry: Dashboard,
-  },
-  {
-    category: 1,
-    key: 'Governance',
-    uri: `${UriPrefix}/`,
-    hash: '/governance',
-    Entry: Governance,
   },
 ];
 
