@@ -140,6 +140,7 @@
       "bond": "质押",
       "bondAmount": "质押金额",
       "bondedFunds": "己质押金额",
+      "bouncer": "守护人",
       "cancel": "取消",
       "closePool": "可提取己解锁金额并关闭池",
       "create": "创建",
@@ -169,6 +170,7 @@
       "minimumToJoinPool": "最低入提名池质押金",
       "noFavorites": "无收藏夹",
       "nominate": "提名",
+      "nominating": "提名中",
       "nominatingAnd": "提名中和",
       "nominator": "提名人",
       "notEarningRewards": "非挣取收益状态",
@@ -196,7 +198,6 @@
       "roles": "角色",
       "root": "主理人",
       "save": "保存",
-      "bouncer": "守护人",
       "stopNominating": "如需继续销毁池，请先停止提名",
       "summary": "总结",
       "totalBonded": "总绑定金额",
@@ -205,12 +206,11 @@
       "unbondYourFunds": "可解锁资金质押",
       "unclaimedRewards": "待申领奖励",
       "unlocked": "已解锁",
+      "validator": "{{count}} 位验证人",
       "waitingForActiveNominations": "等待有效提名",
       "withdraw": "提取",
       "withdrawFunds": "取款",
-      "withdrawUnlock": "请取出己解锁金额以继续关闭池",
-      "nominating": "提名中",
-      "validator": "{{count}} 位验证人"
+      "withdrawUnlock": "请取出己解锁金额以继续关闭池"
     },
     "validators": {
       "activeValidators": "活跃验证人",
