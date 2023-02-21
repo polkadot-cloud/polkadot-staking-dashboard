@@ -13,6 +13,7 @@ export interface NetworkMetrics {
   auctionCounter: BigNumber;
   earliestStoredSession: BigNumber;
   fastUnstakeErasToCheckPerBlock: number;
+  minimumActiveStake: BigNumber;
 }
 
 export interface ActiveEra {

@@ -25,7 +25,7 @@ import { ControllerNotImported } from './ControllerNotImported';
 import { ManageBond } from './ManageBond';
 import { Nominations } from './Nominations';
 import { ActiveNominatorsStat } from './Stats/ActiveNominators';
-import { MinimumActiveBondStat } from './Stats/MinimumActiveBond';
+import { MinimumActiveStakeStat } from './Stats/MinimumActiveStake';
 import { MinimumNominatorBondStat } from './Stats/MinimumNominatorBond';
 import { Status } from './Status';
 import { UnstakePrompts } from './UnstakePrompts';
@@ -48,7 +48,7 @@ export const Active = () => {
       <StatBoxList>
         <ActiveNominatorsStat />
         <MinimumNominatorBondStat />
-        <MinimumActiveBondStat />
+        <MinimumActiveStakeStat />
       </StatBoxList>
       <ControllerNotImported />
       <UnstakePrompts />
