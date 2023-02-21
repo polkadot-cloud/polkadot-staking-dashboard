@@ -51,12 +51,14 @@ export const NetworkMetricsProvider = ({
             api.query.auctions.auctionCounter,
             api.query.paraSessionInfo.earliestStoredSession,
             api.query.fastUnstake.erasToCheckPerBlock,
+            api.query.staking.minimumActiveStake,
           ],
           ([
             totalIssuance,
             auctionCounter,
             earliestStoredSession,
             erasToCheckPerBlock,
+            minimumActiveStake,
           ]: AnyApi) => {
             setStateWithRef(
               {
@@ -66,6 +68,9 @@ export const NetworkMetricsProvider = ({
                   earliestStoredSession.toString()
                 ),
                 fastUnstakeErasToCheckPerBlock: erasToCheckPerBlock.toNumber(),
+                minimumActiveStake: new BigNumber(
+                  minimumActiveStake.toString()
+                ),
               },
               setMetrics,
               metricsRef

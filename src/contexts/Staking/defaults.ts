@@ -22,12 +22,11 @@ export const stakingMetrics: StakingMetrics = {
     destination: null,
     account: null,
   },
+  totalStaked: new BigNumber(0),
 };
 
 export const eraStakers: EraStakers = {
   stakers: [],
-  totalStaked: new BigNumber(0),
-  minActiveBond: new BigNumber(0),
   nominators: undefined,
   totalActiveNominators: 0,
   activeValidators: 0,

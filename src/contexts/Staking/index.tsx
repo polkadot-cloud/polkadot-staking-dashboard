@@ -135,10 +135,8 @@ export const StakingProvider = ({
       }
       const {
         stakers,
-        totalStaked,
         totalActiveNominators,
         activeValidators,
-        minActiveBond,
         activeAccountOwnStake,
         who,
       } = data;
@@ -152,9 +150,6 @@ export const StakingProvider = ({
           {
             ...eraStakersRef.current,
             stakers,
-            totalStaked: new BigNumber(totalStaked),
-            minActiveBond: new BigNumber(minActiveBond),
-            // nominators,
             totalActiveNominators,
             activeValidators,
             activeAccountOwnStake,
@@ -180,6 +175,7 @@ export const StakingProvider = ({
           [api.query.staking.erasTotalStake, previousEra.toString()],
           api.query.staking.minNominatorBond,
           [api.query.staking.payee, activeAccount],
+          [api.query.staking.erasTotalStake, activeEra.index.toString()],
         ],
         (q: AnyApi) => {
           setStakingMetrics({
@@ -191,6 +187,7 @@ export const StakingProvider = ({
             lastTotalStake: new BigNumber(q[5].toString()),
             minNominatorBond: new BigNumber(q[6].toString()),
             payee: processPayee(q[7]),
+            totalStaked: new BigNumber(q[8].toString()),
           });
         }
       );
