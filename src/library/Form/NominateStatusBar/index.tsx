@@ -23,8 +23,9 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { minimumActiveStake } = metrics;
 
   const minNominatorBondUnit = planckToUnit(minNominatorBond, units);
+  const minimumActiveStakeUnit = planckToUnit(minimumActiveStake, units);
   const gtMinNominatorBond = value.isGreaterThanOrEqualTo(minNominatorBondUnit);
-  const gtMinActiveStake = value.isGreaterThanOrEqualTo(minimumActiveStake);
+  const gtMinActiveStake = value.isGreaterThanOrEqualTo(minimumActiveStakeUnit);
 
   return (
     <Wrapper>
@@ -57,9 +58,9 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
             <h5>
               {isSyncing
                 ? '...'
-                : `${(minimumActiveStake.isLessThan(minNominatorBondUnit)
+                : `${(minimumActiveStakeUnit.isLessThan(minNominatorBondUnit)
                     ? minNominatorBondUnit
-                    : minimumActiveStake
+                    : minimumActiveStakeUnit
                   )
                     .decimalPlaces(3)
                     .toFormat()} ${unit}`}

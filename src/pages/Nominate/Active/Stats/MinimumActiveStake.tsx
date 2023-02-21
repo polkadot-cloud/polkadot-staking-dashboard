@@ -5,6 +5,7 @@ import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { Number } from 'library/StatBoxList/Number';
 import { useTranslation } from 'react-i18next';
+import { planckToUnit } from 'Utils';
 
 export const MinimumActiveStakeStat = () => {
   const { t } = useTranslation('pages');
@@ -14,7 +15,7 @@ export const MinimumActiveStakeStat = () => {
 
   const params = {
     label: t('nominate.minimumActiveStake'),
-    value: minimumActiveStake.toNumber(),
+    value: planckToUnit(minimumActiveStake, network.units).toNumber(),
     unit: `${network.unit}`,
     helpKey: 'Bonding',
   };

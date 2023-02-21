@@ -35,7 +35,9 @@ export const useFillVariables = () => {
           ['{MAX_NOMINATIONS}', maxNominations.toString()],
           [
             '{MIN_ACTIVE_STAKE}',
-            minimumActiveStake.decimalPlaces(3).toFormat(),
+            planckToUnit(minimumActiveStake, network.units)
+              .decimalPlaces(3)
+              .toFormat(),
           ],
           [
             '{MIN_POOL_JOIN_BOND}',

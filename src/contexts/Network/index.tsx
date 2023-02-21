@@ -4,7 +4,7 @@
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyJson } from 'types';
-import { planckToUnit, setStateWithRef } from 'Utils';
+import { setStateWithRef } from 'Utils';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 import {
@@ -69,10 +69,7 @@ export const NetworkMetricsProvider = ({
                 ),
                 fastUnstakeErasToCheckPerBlock: erasToCheckPerBlock.toNumber(),
                 minimumActiveStake: new BigNumber(
-                  planckToUnit(
-                    new BigNumber(minimumActiveStake),
-                    network.units
-                  ).toString()
+                  minimumActiveStake.toString()
                 ),
               },
               setMetrics,
