@@ -140,7 +140,7 @@
     "setToDestroyingSubtitle": "Setting a pool to destroying cannot be reversed. Only set this state if you intend to close the pool.",
     "settings": "Settings",
     "startStaking": "Start Staking",
-    "stateToggler": "State Toggler",
+    "bouncer": "Bouncer",
     "stop": "Stop",
     "stopJoiningPool": "Stop new members from joining the pool.",
     "stopNominating": "Stop Nominating",

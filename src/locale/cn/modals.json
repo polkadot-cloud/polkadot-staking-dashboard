@@ -131,7 +131,7 @@
     "setToDestroyingSubtitle": "将提名池设置为销毁后将无法撤回, 请确定计划关闭提名池时才设置此状态",
     "settings": "设置",
     "startStaking": "开始抵押",
-    "stateToggler": " 状态切换人",
+    "bouncer": " 守护人",
     "stop": "停止",
     "stopJoiningPool": "阻止新成员加入",
     "stopNominating": "停止提名",

@@ -79,7 +79,7 @@ export const ChangePoolRoles = () => {
             newAddress={roleEdits?.nominator?.newAddress}
           />
           <RoleChange
-            roleName={t('stateToggler')}
+            roleName={t('bouncer')}
             oldAddress={roleEdits?.stateToggler?.oldAddress}
             newAddress={roleEdits?.stateToggler?.newAddress}
           />

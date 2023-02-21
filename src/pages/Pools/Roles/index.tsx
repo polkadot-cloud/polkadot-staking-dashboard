@@ -222,7 +222,7 @@ export const Roles = ({
         </section>
         <section>
           <div className="inner">
-            <h4>{t('pools.stateToggler')}</h4>
+            <h4>{t('pools.bouncer')}</h4>
             {isEditing ? (
               <RoleEditInput
                 roleKey="stateToggler"

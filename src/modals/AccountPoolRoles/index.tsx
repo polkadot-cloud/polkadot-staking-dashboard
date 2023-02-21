@@ -83,9 +83,7 @@ const Button = ({ item, poolId }: { item: Array<string>; poolId: string }) => {
         <h4>
           {item.includes('root') ? <span>{t('root')}</span> : null}
           {item.includes('nominator') ? <span>{t('nominator')}</span> : null}
-          {item.includes('stateToggler') ? (
-            <span>{t('stateToggler')}</span>
-          ) : null}
+          {item.includes('stateToggler') ? <span>{t('bouncer')}</span> : null}
         </h4>
       </div>
       <div>
