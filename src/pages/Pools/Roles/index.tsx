@@ -225,14 +225,14 @@ export const Roles = ({
             <h4>{t('pools.bouncer')}</h4>
             {isEditing ? (
               <RoleEditInput
-                roleKey="stateToggler"
-                roleEdit={roleEdits?.stateToggler}
+                roleKey="bouncer"
+                roleEdit={roleEdits?.bouncer}
                 setRoleEdit={setRoleEditHandler}
               />
             ) : (
               <PoolAccount
-                address={roles.stateToggler ?? null}
-                batchIndex={accounts.indexOf(roles.stateToggler ?? '-1')}
+                address={roles.bouncer ?? null}
+                batchIndex={accounts.indexOf(roles.bouncer ?? '-1')}
                 batchKey={batchKey}
                 last
               />

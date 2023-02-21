@@ -11,7 +11,7 @@ import { ContentWrapper } from './Wrappers';
 
 export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
   const { t } = useTranslation('modals');
-  const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
+  const { selectedActivePool, isOwner, isBouncer } = useActivePools();
 
   const poolLocked = selectedActivePool?.bondedPool?.state === 'Blocked';
   const poolDestroying = selectedActivePool?.bondedPool?.state === 'Destroying';
@@ -45,7 +45,7 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
               </div>
             </button>
           )}
-          {(isOwner() || isStateToggler()) && (
+          {(isOwner() || isBouncer()) && (
             <>
               {poolLocked ? (
                 <button

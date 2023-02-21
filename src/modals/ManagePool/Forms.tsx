@@ -27,7 +27,7 @@ export const Forms = forwardRef(
     const { api } = useApi();
     const { setStatus: setModalStatus } = useModal();
     const { activeAccount, accountHasSigner } = useConnect();
-    const { isOwner, isStateToggler, selectedActivePool } = useActivePools();
+    const { isOwner, isBouncer, selectedActivePool } = useActivePools();
     const { bondedPools, meta, updateBondedPools, getBondedPool } =
       useBondedPools();
     const { txFeesValid } = useTxFees();
@@ -41,7 +41,7 @@ export const Forms = forwardRef(
 
     // ensure account has relevant roles for task
     const canToggle =
-      (isOwner() || isStateToggler()) &&
+      (isOwner() || isBouncer()) &&
       ['destroy_pool', 'unlock_pool', 'lock_pool'].includes(task);
     const canRename = isOwner() && task === 'set_pool_metadata';
     const isValid = canToggle || canRename;

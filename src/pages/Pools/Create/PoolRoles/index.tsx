@@ -24,7 +24,7 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
     root: activeAccount,
     depositor: activeAccount,
     nominator: activeAccount,
-    stateToggler: activeAccount,
+    bouncer: activeAccount,
   };
 
   // store local pool name for form control

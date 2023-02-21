@@ -84,7 +84,7 @@ export interface BondedPool {
     depositor: string;
     nominator: string;
     root: string;
-    stateToggler: string;
+    bouncer: string;
   };
   state: PoolState;
 }
@@ -97,7 +97,7 @@ export interface ActivePoolsContextState {
   isOwner: () => boolean;
   isMember: () => boolean;
   isDepositor: () => boolean;
-  isStateToggler: () => boolean;
+  isBouncer: () => boolean;
   getPoolBondedAccount: () => MaybeAccount;
   getPoolUnlocking: () => any;
   getPoolRoles: () => PoolRoles;
@@ -127,7 +127,7 @@ export interface PoolRoles {
   depositor: string;
   nominator: string;
   root: string;
-  stateToggler: string;
+  bouncer: string;
 }
 
 export interface PoolAddresses {

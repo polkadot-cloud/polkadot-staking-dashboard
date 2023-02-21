@@ -55,7 +55,7 @@ export const Summary = ({ section }: SetupStepProps) => {
         bondAsString,
         roles?.root || activeAccount,
         roles?.nominator || activeAccount,
-        roles?.stateToggler || activeAccount
+        roles?.bouncer || activeAccount
       ),
       api.tx.nominationPools.nominate(poolId.toString(), targetsToSubmit),
       api.tx.nominationPools.setMetadata(poolId.toString(), metadata),

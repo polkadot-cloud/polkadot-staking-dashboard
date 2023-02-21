@@ -10,7 +10,7 @@ export const poolRoles = {
   depositor: '',
   nominator: '',
   root: '',
-  stateToggler: '',
+  bouncer: '',
 };
 
 export const bondedPool = {
@@ -53,7 +53,7 @@ export const defaultActivePoolContext: ActivePoolsContextState = {
   isOwner: () => false,
   isMember: () => false,
   isDepositor: () => false,
-  isStateToggler: () => false,
+  isBouncer: () => false,
   getPoolBondedAccount: () => null,
   getPoolUnlocking: () => [],
   getPoolRoles: () => poolRoles,
