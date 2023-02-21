@@ -1,15 +1,16 @@
 import { Asset } from 'contexts/Assets/types';
 import { motion } from 'framer-motion';
-import { AssetItem } from 'library/AssetItem';
+import { AssetItem, AssetMenuItem } from 'library/AssetItem';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 
 interface HouseProps {
   assets: Array<Asset>;
   title: string;
+  menuItems?: Array<AssetMenuItem>;
 }
 
-export const HouseList = ({ assets, title }: HouseProps) => {
+export const HouseList = ({ assets, title, menuItems = [] }: HouseProps) => {
   return (
     <ListWrapper>
       {title && (
@@ -38,7 +39,14 @@ export const HouseList = ({ assets, title }: HouseProps) => {
                 },
               }}
             >
-              <AssetItem asset={house} menuItems={[]} key={index} />
+              <AssetItem
+                asset={house}
+                menuItems={menuItems.map((item) => ({
+                  ...item,
+                  cb: () => item.cb(house.collId, house.itemId),
+                }))}
+                key={index}
+              />
             </motion.div>
           ))}
         </MotionContainer>

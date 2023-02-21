@@ -19,15 +19,15 @@ import {
   StatusWrapper,
 } from './styles';
 
-interface MenuItem {
+export interface AssetMenuItem {
   icon?: React.ReactNode;
   title: string;
-  cb: () => void;
+  cb: (collId: number, itemId: number) => void;
 }
 
 interface AssetProps {
   asset: Asset;
-  menuItems: Array<MenuItem>;
+  menuItems: Array<AssetMenuItem>;
 }
 export const AssetItem = ({ asset, menuItems }: AssetProps) => {
   const { decimals } = useNetworkMetrics();

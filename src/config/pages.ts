@@ -5,6 +5,7 @@ import { UriPrefix } from 'consts';
 import Dashboard from 'pages/Dashboard';
 import { Governance } from 'pages/Governance';
 import { InvestorsView } from 'pages/Investors';
+import { NotaryView } from 'pages/Notary';
 import { PageCategories, PagesConfig } from 'types';
 
 export const PAGE_CATEGORIES: PageCategories = [
@@ -28,6 +29,13 @@ export const PAGES_CONFIG: PagesConfig = [
     uri: `${UriPrefix}/`,
     hash: '/investors',
     Entry: InvestorsView,
+  },
+  {
+    category: 1,
+    key: 'Notary',
+    uri: `${UriPrefix}/`,
+    hash: '/notary',
+    Entry: NotaryView,
   },
   {
     category: 1,

@@ -33,33 +33,33 @@ export const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
 
     setUnsub(_unsub);
   };
+  const fetchAssets = async () => {
+    if (!api) return;
+    const len = collectionSize.length;
+    const nftItems: NftItem[] = [];
+    for (let collId = 0; collId < len; ++collId) {
+      for (let itemId = 0; itemId < collectionSize[collId]; ++itemId)
+        nftItems.push({ collId, itemId });
+    }
+    const res = await api.query.onboardingModule.houses.multi(
+      nftItems.map(({ collId, itemId }) => [collId, itemId])
+    );
+    const _assets = res
+      .map((item) => item.toHuman())
+      .map((nft: any, index) => ({
+        collId: nftItems[index].collId,
+        itemId: nftItems[index].itemId,
+        status: nft?.status,
+        created: nft?.created,
+        metadata: nft?.infos.metadata,
+        price: parseHumanBN(nft?.price),
+        tenants: nft?.tenants,
+        proposalHash: nft?.proposalHash,
+      }));
+    setAssets(_assets);
+  };
 
   useEffect(() => {
-    const fetchAssets = async () => {
-      if (!api) return;
-      const len = collectionSize.length;
-      const nftItems: NftItem[] = [];
-      for (let collId = 0; collId < len; ++collId) {
-        for (let itemId = 0; itemId < collectionSize[collId]; ++itemId)
-          nftItems.push({ collId, itemId });
-      }
-      const res = await api.query.onboardingModule.houses.multi(
-        nftItems.map(({ collId, itemId }) => [collId, itemId])
-      );
-      const _assets = res
-        .map((item) => item.toHuman())
-        .map((nft: any, index) => ({
-          collId: nftItems[index].collId,
-          itemId: nftItems[index].itemId,
-          status: nft?.status,
-          created: nft?.created,
-          metadata: nft?.infos.metadata,
-          price: parseHumanBN(nft?.price),
-          tenants: nft?.tenants,
-          proposalHash: nft?.proposalHash,
-        }));
-      setAssets(_assets);
-    };
     fetchAssets();
   }, [collectionSize]);
 
@@ -74,6 +74,7 @@ export const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
     <AssetsContext.Provider
       value={{
         assets,
+        fetchAssets,
       }}
     >
       {children}
