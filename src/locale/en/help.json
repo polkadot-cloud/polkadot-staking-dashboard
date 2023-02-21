@@ -15,7 +15,7 @@
       "activeStakeThreshold": [
         "Active Stake Threshold",
         [
-          "The amount of {NETWORK_UNIT} needed to be actively nominating in an era. ",
+          "The amount of {NETWORK_UNIT} needed to be actively nominating in an era.",
           "This value applies to nominators and for pools. In the pool's case, it is important to join a pool with a total bond amount of at least this value.",
           "Being above this metric simply guarantees that you will be present in the active nominator set for the era. This amount still does not guarantee rewards, as your active nominations may still be over-subscribed.",
           "Only the top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators are rewarded per validator in {NETWORK_NAME}. Ensuring your active bond is above this threshold will increase your chances of rewards.",
@@ -62,7 +62,7 @@
         [
           "Bonding funds is the process of 'locking' (or staking) {NETWORK_UNIT}. Bonded {NETWORK_UNIT} will then be automatically allocated to one or more of your nominated validators.",
           "As a nominator, you allocate nominations yourself. In a pool, the pool owner or pool nominator will allocate nominations on your behalf, and your bonded funds will back those nominations.",
-          "The minimum active stake statistic is the minimum {NETWORK_UNIT} being bonded by a nominator for the current era.This value is also the minimum amount required to receive rewards."
+          "The minimum active stake statistic is the minimum {NETWORK_UNIT} being bonded by a nominator for the current era. This value is also the minimum amount required to receive rewards."
         ]
       ],
       "commission": [
