@@ -14,11 +14,11 @@ export interface StakingMetrics {
   maxValidatorsCount: BigNumber;
   minNominatorBond: BigNumber;
   payee: PayeeConfig;
+  totalStaked: BigNumber;
 }
 
 export interface EraStakers {
   stakers: Array<any>;
-  totalStaked: BigNumber;
   nominators: Array<any> | undefined;
   totalActiveNominators: number;
   activeValidators: number;
