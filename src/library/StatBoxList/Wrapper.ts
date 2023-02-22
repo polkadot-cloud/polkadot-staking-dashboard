@@ -193,10 +193,7 @@ export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
     max-width: 300px;
     font-size: 1.25rem;
   }
-
-  &.text {
-    margin-top: 0.15rem;
-  }
+  margin-bottom: 0.15rem;
 
   span {
     color: var(--text-color-secondary);
