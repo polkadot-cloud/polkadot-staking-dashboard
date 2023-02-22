@@ -141,6 +141,7 @@
     "unbond": "Unbond",
     "unbondAmount": "Unbond amount is more than your bonded balance.",
     "unbonding": "Unbonding",
+    "unclaimedPayouts": "Unclaimed Payouts",
     "unlocking": "Unlocking",
     "unordered": "Unordered",
     "update": "Update",
@@ -152,7 +153,6 @@
     "viewPoolNominations": "View Pool Nominations",
     "waiting": "Waiting",
     "walletNotFound": "wallet not found",
-    "whenActivelyNominating": "when actively nominating.",
-    "unclaimedPayouts": "Unclaimed Payouts"
+    "whenActivelyNominating": "when actively nominating."
   }
 }
