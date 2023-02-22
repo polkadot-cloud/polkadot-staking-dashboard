@@ -48,7 +48,10 @@ export const Chunk = ({ chunk, bondFor, onRebond }: any) => {
             {left.isLessThanOrEqualTo(0) ? (
               t('unlocked')
             ) : (
-              <Countdown timeleft={timeleft.formatted} markup={false} />
+              <>
+                {t('unlocksInEra')} {era} /&nbsp;
+                <Countdown timeleft={timeleft.formatted} markup={false} />
+              </>
             )}
           </h4>
         </section>

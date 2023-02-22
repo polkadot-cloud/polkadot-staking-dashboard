@@ -173,6 +173,7 @@
     "unlocked": "Unlocked",
     "unlocks": "Unlocks",
     "unlocksAfter": "Unlocks after",
+    "unlocksInEra": "Unlocks in Era",
     "unstake": "Unstake",
     "unstakeStopNominating_one": "Stop Nominating {{count}} Validator",
     "unstakeStopNominating_other": "Stop Nominating {{count}} Validators",

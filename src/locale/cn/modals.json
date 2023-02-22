@@ -164,6 +164,7 @@
     "unlocked": "已解锁",
     "unlocks": "解锁",
     "unlocksAfter": "解锁于",
+    "unlocksInEra": "解锁于Era",
     "unstake": "解除抵押",
     "unstakeStopNominating": "停止提名 {{count}} 个验证人",
     "unstakeUnbond": "解除质押 {{bond}} {{unit}}",
