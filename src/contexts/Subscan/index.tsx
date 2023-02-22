@@ -6,6 +6,7 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import React, { useEffect, useState } from 'react';
 import { AnyApi, AnySubscan } from 'types';
+import { isNotZero } from 'Utils';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { usePlugins } from '../Plugins';
@@ -47,17 +48,19 @@ export const SubscanProvider = ({
 
   // fetch payouts as soon as network is ready
   useEffect(() => {
-    if (isReady) {
+    if (isReady && isNotZero(activeEra.index)) {
       fetchPayouts();
       fetchPoolClaims();
     }
-  }, [isReady, network, activeAccount]);
+  }, [isReady, network, activeAccount, activeEra]);
 
   // fetch payouts on plugins toggle
   useEffect(() => {
-    fetchPayouts();
-    fetchPoolClaims();
-  }, [plugins]);
+    if (isNotZero(activeEra.index)) {
+      fetchPayouts();
+      fetchPoolClaims();
+    }
+  }, [plugins, activeEra]);
 
   /* fetchPayouts
    * fetches payout history from Subscan.
@@ -103,13 +106,12 @@ export const SubscanProvider = ({
           const unclaimedList = result.data.list.filter(
             (l: AnyApi) => l.block_timestamp === 0
           );
+
           unclaimedList.forEach((p: AnyApi) => {
-            const eraPassed = activeEra.index.minus(p.era);
-            const secondspassed = erasToSeconds(eraPassed);
-            const eraToUnixTime = activeEra.start
+            p.block_timestamp = activeEra.start
               .multipliedBy(0.001)
-              .minus(secondspassed);
-            p.block_timestamp = eraToUnixTime.toNumber();
+              .minus(erasToSeconds(activeEra.index.minus(p.era)))
+              .toNumber();
           });
           newUnclaimedPayouts = newUnclaimedPayouts.concat(unclaimedList);
         }
