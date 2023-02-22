@@ -166,7 +166,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         callbacks: {
           title: () => [],
           label: (context: any) =>
-            `${context.dataset.order === 3 ? 'Unclaimed: ' : ''}${new BigNumber(
+            `${context.dataset.order === 3 ? 'Pending: ' : ''}${new BigNumber(
               context.parsed.y
             )
               .decimalPlaces(units)
