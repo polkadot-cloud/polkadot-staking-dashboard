@@ -41,6 +41,17 @@ export const VALIDATOR_COMMUNITY = [
     },
   },
   {
+    name: 'bLd Nodes | ChadStakeKing',
+    thumbnail: 'bLdNodes',
+    bio: 'Independant validator, professionnal Web3 Devops engineer, bLd Nodes is focusing on providing small scale validators and collators with low commission. Proud co-founder of the DOT Validator Alliance',
+    email: 'gm@bldnodes.org',
+    website: 'https://bldnodes.org',
+    validators: {
+      polkadot: ['12bLdVAgWiKHgFHtAaQstasMUWVq35oG9iwHCwsKoFFNoNrk'],
+      kusama: ['Hf8C626KBAjitMV7w8AhQWDCiPgUU47htEwbomq5mDMKeyL'],
+    },
+  },
+  {
     name: 'Coinbase Cloud',
     thumbnail: 'CoinbaseCloud',
     bio: 'Our staking infrastructure powers the leading crypto products and exchanges. We offer the same infrastructure in our public validators and make it available to you.',

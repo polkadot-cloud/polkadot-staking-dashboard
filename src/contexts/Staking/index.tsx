@@ -13,7 +13,12 @@ import {
 } from 'contexts/Staking/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
-import { greaterThanZero, localStorageOrDefault, setStateWithRef } from 'Utils';
+import {
+  greaterThanZero,
+  isNotZero,
+  localStorageOrDefault,
+  setStateWithRef,
+} from 'Utils';
 // eslint-disable-next-line import/no-unresolved
 import Worker from 'worker-loader!../../workers/stakers';
 import { useApi } from '../Api';
@@ -40,7 +45,7 @@ export const StakingProvider = ({
     accounts: connectAccounts,
     getActiveAccount,
   } = useConnect();
-  const { isReady, api, consts, apiStatus, network } = useApi();
+  const { isReady, api, apiStatus, network } = useApi();
   const { activeEra } = useNetworkMetrics();
   const {
     accounts,
@@ -48,7 +53,6 @@ export const StakingProvider = ({
     getLedgerForStash,
     getAccountNominations,
   } = useBalances();
-  const { maxNominatorRewardedPerValidator } = consts;
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
@@ -131,10 +135,8 @@ export const StakingProvider = ({
       }
       const {
         stakers,
-        totalStaked,
         totalActiveNominators,
         activeValidators,
-        minActiveBond,
         activeAccountOwnStake,
         who,
       } = data;
@@ -148,9 +150,6 @@ export const StakingProvider = ({
           {
             ...eraStakersRef.current,
             stakers,
-            totalStaked: new BigNumber(totalStaked),
-            minActiveBond: new BigNumber(minActiveBond),
-            // nominators,
             totalActiveNominators,
             activeValidators,
             activeAccountOwnStake,
@@ -163,7 +162,7 @@ export const StakingProvider = ({
   };
 
   const subscribeToStakingkMetrics = async () => {
-    if (api !== null && isReady && !activeEra.index.isZero()) {
+    if (api !== null && isReady && isNotZero(activeEra.index)) {
       const previousEra = activeEra.index.minus(1);
 
       const u = await api.queryMulti<AnyApi>(
@@ -176,6 +175,7 @@ export const StakingProvider = ({
           [api.query.staking.erasTotalStake, previousEra.toString()],
           api.query.staking.minNominatorBond,
           [api.query.staking.payee, activeAccount],
+          [api.query.staking.erasTotalStake, activeEra.index.toString()],
         ],
         (q: AnyApi) => {
           setStakingMetrics({
@@ -187,6 +187,7 @@ export const StakingProvider = ({
             lastTotalStake: new BigNumber(q[5].toString()),
             minNominatorBond: new BigNumber(q[6].toString()),
             payee: processPayee(q[7]),
+            totalStaked: new BigNumber(q[8].toString()),
           });
         }
       );
@@ -226,7 +227,7 @@ export const StakingProvider = ({
    * the minimum nominator bond is calculated by summing a particular bond of a nominator.
    */
   const fetchEraStakers = async () => {
-    if (!isReady || activeEra.index.isEqualTo(0) || !api) {
+    if (!isReady || activeEra.index.isZero() || !api) {
       return;
     }
     const exposuresRaw = await api.query.staking.erasStakers.entries(
@@ -250,7 +251,6 @@ export const StakingProvider = ({
       activeAccount,
       units: network.units,
       exposures,
-      maxNominatorRewardedPerValidator,
     });
   };
 

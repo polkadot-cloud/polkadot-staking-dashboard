@@ -60,7 +60,8 @@ export const SelectFavorites = () => {
   };
 
   const totalAfterSelection = nominations.length + selectedFavorites.length;
-  const overMaxNominations = totalAfterSelection > maxNominations;
+  const overMaxNominations =
+    maxNominations.isLessThanOrEqualTo(totalAfterSelection);
 
   return (
     <>
@@ -94,7 +95,9 @@ export const SelectFavorites = () => {
           >
             {selectedFavorites.length > 0
               ? overMaxNominations
-                ? `${t('willSurpass', { maxNominations })}`
+                ? `${t('willSurpass', {
+                    maxNominations: maxNominations.toString(),
+                  })}`
                 : `${t('addingFavorite', {
                     count: selectedFavorites.length,
                   })}`

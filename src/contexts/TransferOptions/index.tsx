@@ -64,16 +64,13 @@ export const TransferOptionsProvider = ({
     }
 
     // free balance after reserve. Does not consider locks other than staking.
-    const freeBalance = BigNumber.max(
-      freeAfterReserve.minus(total),
-      new BigNumber(0)
-    );
+    const freeBalance = BigNumber.max(freeAfterReserve.minus(total), 0);
 
     const nominateOptions = () => {
       // total possible balance that can be bonded
       const totalPossibleBond = BigNumber.max(
         freeAfterReserve.minus(totalUnlocking).minus(totalUnlocked),
-        new BigNumber(0)
+        0
       );
 
       return {

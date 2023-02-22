@@ -32,7 +32,7 @@
       "controllerNotImported": "You have not imported your controller account. If you have lost access to your controller account, set a new one now. Otherwise, import the controller into one of your active extensions.",
       "earningRewards": "Earning Rewards",
       "inactiveNominations": "Inactive Nominations",
-      "minimumActiveBond": "Minimum Active Bond",
+      "minimumActiveStake": "Minimum Active Stake",
       "minimumNominateBond": "Minimum Nominate Bond",
       "noNominationsSet": "Inactive: No Nominations Set",
       "nominate": "Nominate",

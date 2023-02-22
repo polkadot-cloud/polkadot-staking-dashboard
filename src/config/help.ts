@@ -44,7 +44,7 @@ export const HELP_CONFIG: HelpItems = [
       'Stash and Controller Accounts',
       'Controller Account Eligibility',
       'Bonding',
-      'Active Bond Threshold',
+      'Active Stake Threshold',
       'Payout Destination',
       'Nominating',
       'Nominations',

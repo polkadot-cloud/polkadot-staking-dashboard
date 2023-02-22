@@ -21,11 +21,9 @@ export const SupplyStakedStat = () => {
   // total supply as percent.
   const totalIssuanceUnit = planckToUnit(totalIssuance, units);
   const lastTotalStakeUnit = planckToUnit(lastTotalStake, units);
-  const supplyAsPercent = lastTotalStakeUnit.isEqualTo(new BigNumber(0))
+  const supplyAsPercent = lastTotalStakeUnit.isZero()
     ? new BigNumber(0)
-    : lastTotalStakeUnit.dividedBy(
-        totalIssuanceUnit.multipliedBy(new BigNumber(0.01))
-      );
+    : lastTotalStakeUnit.dividedBy(totalIssuanceUnit.multipliedBy(0.01));
 
   const params = {
     label: t('overview.unitSupplyStaked', { unit }),

@@ -27,9 +27,7 @@ export const remToUnit = (rem: string) =>
  */
 export const planckToUnit = (val: BigNumber, units: number) => {
   return new BigNumber(
-    val
-      .dividedBy(new BigNumber(10).exponentiatedBy(new BigNumber(units)))
-      .toFixed(units)
+    val.dividedBy(new BigNumber(10).exponentiatedBy(units)).toFixed(units)
   );
 };
 
@@ -39,13 +37,14 @@ export const planckToUnit = (val: BigNumber, units: number) => {
  */
 export const unitToPlanck = (val: string, units: number): BigNumber =>
   new BigNumber(!val.length || !val ? '0' : val)
-    .multipliedBy(new BigNumber(10).exponentiatedBy(new BigNumber(units)))
+    .multipliedBy(new BigNumber(10).exponentiatedBy(units))
     .integerValue();
 
 export const rmCommas = (val: string): string => val.replace(/,/g, '');
 
-export const greaterThanZero = (val: BigNumber) =>
-  val.isGreaterThan(new BigNumber(0));
+export const greaterThanZero = (val: BigNumber) => val.isGreaterThan(0);
+
+export const isNotZero = (val: BigNumber) => !val.isZero();
 
 export const shuffle = <T>(array: Array<T>) => {
   let currentIndex = array.length;
