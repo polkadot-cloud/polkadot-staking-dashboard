@@ -46,20 +46,27 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
-  const { payouts, poolClaims } = useSubscan();
+  const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts.filter(
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
 
-  const notStaking = !isSyncing && inSetup() && !membership;
-  const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
-    days,
-    units,
-    payoutsNoSlash,
-    poolClaims
+  const unclaimedPayoutsNoSlash = unclaimedPayouts.filter(
+    (p: AnySubscan) => p.event_id !== 'Slashed'
   );
+  // console.log(unclaimedPayoutsNoSlash);
+
+  const notStaking = !isSyncing && inSetup() && !membership;
+  const { payoutsByDay, poolClaimsByDay, unclaimPayoutsByDay } =
+    formatRewardsForGraphs(
+      days,
+      units,
+      payoutsNoSlash,
+      poolClaims,
+      unclaimedPayoutsNoSlash
+    );
 
   // determine color for payouts
   const colorPayouts = notStaking
@@ -70,6 +77,8 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const colorPoolClaims = notStaking
     ? colors.transparent[mode]
     : colors.secondary[mode];
+
+  const colorUnclaimsClaims = colors.transparent[mode];
 
   const data = {
     labels: payoutsByDay.map((item: AnySubscan) => {
@@ -92,6 +101,14 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         data: poolClaimsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPoolClaims,
         backgroundColor: colorPoolClaims,
+        pointRadius: 0,
+        borderRadius: 3,
+      },
+      {
+        label: 'Unclaimed Payouts',
+        data: unclaimPayoutsByDay.map((item: AnySubscan) => item.amount),
+        borderColor: colorPayouts,
+        backgroundColor: colorUnclaimsClaims,
         pointRadius: 0,
         borderRadius: 3,
       },
