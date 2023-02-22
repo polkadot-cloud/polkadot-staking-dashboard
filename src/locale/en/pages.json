@@ -92,6 +92,7 @@
       "noFundToDeposit": "You have no funds to deposit.",
       "noFundToWithdraw": "You have withdrawable balance in the housing fund",
       "overview": "Overview",
+      "ownedAssets": "Owned Assets",
       "reserved": "Reserved",
       "reservedBalance": "Reserved Balance",
       "title": "Investors",
