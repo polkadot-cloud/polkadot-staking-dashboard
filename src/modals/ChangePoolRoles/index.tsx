@@ -35,16 +35,11 @@ export const ChangePoolRoles = () => {
     const nominator = roleEdits?.nominator?.newAddress
       ? { Set: roleEdits?.nominator?.newAddress }
       : 'Remove';
-    const stateToggler = roleEdits?.bouncer?.newAddress
+    const bouncer = roleEdits?.bouncer?.newAddress
       ? { Set: roleEdits?.bouncer?.newAddress }
       : 'Remove';
 
-    tx = api?.tx.nominationPools?.updateRoles(
-      poolId,
-      root,
-      nominator,
-      stateToggler
-    );
+    tx = api?.tx.nominationPools?.updateRoles(poolId, root, nominator, bouncer);
     return tx;
   };
 
