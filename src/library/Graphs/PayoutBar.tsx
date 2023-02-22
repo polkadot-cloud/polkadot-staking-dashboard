@@ -105,7 +105,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
       },
       {
         order: 3,
-        label: 'Unclaimed Payouts',
+        label: t('unclaimedPayouts'),
         data: unclaimPayoutsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPayouts,
         backgroundColor: colors.transparent[mode],
@@ -166,9 +166,9 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         callbacks: {
           title: () => [],
           label: (context: any) =>
-            `${context.dataset.order === 3 ? 'Pending: ' : ''}${new BigNumber(
-              context.parsed.y
-            )
+            `${
+              context.dataset.order === 3 ? `${t('pending')}:` : ''
+            }${new BigNumber(context.parsed.y)
               .decimalPlaces(units)
               .toFormat()} ${unit}`,
         },
