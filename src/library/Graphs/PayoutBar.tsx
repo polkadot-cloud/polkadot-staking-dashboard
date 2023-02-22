@@ -56,7 +56,6 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const unclaimedPayoutsNoSlash = unclaimedPayouts.filter(
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
-  // console.log(unclaimedPayoutsNoSlash);
 
   const notStaking = !isSyncing && inSetup() && !membership;
   const { payoutsByDay, poolClaimsByDay, unclaimPayoutsByDay } =
@@ -78,8 +77,6 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
     ? colors.transparent[mode]
     : colors.secondary[mode];
 
-  const colorUnclaimsClaims = colors.transparent[mode];
-
   const data = {
     labels: payoutsByDay.map((item: AnySubscan) => {
       const dateObj = format(fromUnixTime(item.block_timestamp), 'do MMM', {
@@ -89,6 +86,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
     }),
     datasets: [
       {
+        order: 1,
         label: t('payout'),
         data: payoutsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPayouts,
@@ -97,6 +95,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         borderRadius: 3,
       },
       {
+        order: 2,
         label: t('poolClaim'),
         data: poolClaimsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPoolClaims,
@@ -105,10 +104,11 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         borderRadius: 3,
       },
       {
+        order: 3,
         label: 'Unclaimed Payouts',
         data: unclaimPayoutsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPayouts,
-        backgroundColor: colorUnclaimsClaims,
+        backgroundColor: colors.transparent[mode],
         pointRadius: 0,
         borderRadius: 3,
       },
@@ -166,7 +166,11 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         callbacks: {
           title: () => [],
           label: (context: any) =>
-            `${new BigNumber(context.parsed.y).toFormat()} ${unit}`,
+            `${context.dataset.order === 3 ? 'Unclaimed: ' : ''}${new BigNumber(
+              context.parsed.y
+            )
+              .decimalPlaces(units)
+              .toFormat()} ${unit}`,
         },
       },
     },
