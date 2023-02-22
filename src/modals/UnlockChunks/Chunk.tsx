@@ -34,7 +34,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: any) => {
   const erasDuration = erasToSeconds(left);
   const endDate = fromUnixTime(start.plus(erasDuration).toNumber());
 
-  // re-set timer on era change (also covers network change).
+  // reset timer on account or network change.
   useEffect(() => {
     setFromNow(endDate);
   }, [activeAccount, network]);
@@ -48,13 +48,11 @@ export const Chunk = ({ chunk, bondFor, onRebond }: any) => {
             {left.isLessThanOrEqualTo(0) ? (
               t('unlocked')
             ) : (
-              <>
-                <Countdown timeleft={timeleft.formatted} markup={false} />
-              </>
+              <Countdown timeleft={timeleft.formatted} markup={false} />
             )}
           </h4>
         </section>
-        {isStaking && (
+        {isStaking ? (
           <section>
             <div>
               <ButtonSubmit
@@ -64,7 +62,7 @@ export const Chunk = ({ chunk, bondFor, onRebond }: any) => {
               />
             </div>
           </section>
-        )}
+        ) : null}
       </div>
     </ChunkWrapper>
   );
