@@ -65,7 +65,7 @@ export const UnlockChunks = () => {
   // resize modal on state change
   useEffect(() => {
     setModalHeight(getModalHeight());
-  }, [task, section]);
+  }, [task, section, unlocking]);
 
   // resize this modal on window resize
   useEffect(() => {

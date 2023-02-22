@@ -7,30 +7,27 @@ import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
-import { getUnixTime } from 'date-fns';
-import { Countdown } from 'library/Countdown';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
-import { useTimeLeft } from 'library/Hooks/useTimeLeft';
-import { fromNow, timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
+import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
-import { forwardRef, useEffect } from 'react';
+import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AnyJson } from 'types';
 import { planckToUnit } from 'Utils';
 import { NotesWrapper } from '../Wrappers';
-import { ChunkWrapper, ContentWrapper } from './Wrappers';
+import { Chunk } from './Chunk';
+import { ContentWrapper } from './Wrappers';
 
 export const Overview = forwardRef(
   ({ unlocking, bondFor, setSection, setUnlock, setTask }: any, ref: any) => {
     const { t } = useTranslation('modals');
-    const { network, consts, apiStatus } = useApi();
+    const { network, consts } = useApi();
     const { activeEra } = useNetworkMetrics();
     const { bondDuration } = consts;
     const { units } = network;
     const { isFastUnstaking } = useUnstaking();
     const { erasToSeconds } = useErasToTimeLeft();
-
-    const { timeleft, setFromNow } = useTimeLeft();
 
     const bondDurationFormatted = timeleftAsString(
       t,
@@ -51,6 +48,12 @@ export const Overview = forwardRef(
         withdrawAvailable = withdrawAvailable.plus(value);
       }
     }
+
+    const onRebondHandler = (chunk: AnyJson) => {
+      setTask('rebond');
+      setUnlock(chunk);
+      setSection(1);
+    };
 
     return (
       <ContentWrapper ref={ref}>
@@ -115,51 +118,13 @@ export const Overview = forwardRef(
           )}
 
           {unlocking.map((chunk: any, i: number) => {
-            const { era, value } = chunk;
-            const left = new BigNumber(era).minus(activeEra.index);
-
-            const start = activeEra.start.multipliedBy(0.001);
-            const erasDuration = erasToSeconds(left);
-            const end = start.plus(erasDuration);
-            const timeleftt = BigNumber.max(
-              0,
-              end.minus(getUnixTime(new Date()))
-            );
-            // need to be moved to outside of this
-            useEffect(() => {
-              setFromNow(fromNow(timeleftt.toNumber()));
-            }, [apiStatus, activeEra]);
-
             return (
-              <ChunkWrapper key={`unlock_chunk_${i}`}>
-                <div>
-                  <section>
-                    <h2>{`${planckToUnit(value, units)} ${network.unit}`}</h2>
-                    <h4>
-                      {left.isLessThanOrEqualTo(0) ? (
-                        t('unlocked')
-                      ) : (
-                        <Countdown timeleft={timeleft.formatted} />
-                      )}
-                    </h4>
-                  </section>
-                  {isStaking && (
-                    <section>
-                      <div>
-                        <ButtonSubmit
-                          text={t('rebond')}
-                          disabled={isFastUnstaking}
-                          onClick={() => {
-                            setTask('rebond');
-                            setUnlock(chunk);
-                            setSection(1);
-                          }}
-                        />
-                      </div>
-                    </section>
-                  )}
-                </div>
-              </ChunkWrapper>
+              <Chunk
+                key={`unlock_chunk_${i}`}
+                chunk={chunk}
+                bondFor={bondFor}
+                onRebond={onRebondHandler}
+              />
             );
           })}
           <NotesWrapper>
