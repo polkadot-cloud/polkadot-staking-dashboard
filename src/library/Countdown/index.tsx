@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { TimeLeftFormatted } from 'library/Hooks/useTimeLeft/types';
 import { useTranslation } from 'react-i18next';
+import { CountdownProps } from './types';
 
-export const Countdown = ({ timeleft }: { timeleft: TimeLeftFormatted }) => {
+export const Countdown = ({ timeleft, markup = false }: CountdownProps) => {
   const { t } = useTranslation('base');
   const { days, hours, minutes, seconds } = timeleft;
 
@@ -13,26 +13,46 @@ export const Countdown = ({ timeleft }: { timeleft: TimeLeftFormatted }) => {
     ? seconds[1]
     : t('second', { count: secondsNumber });
 
+  if (markup) {
+    return (
+      <>
+        {days[0] > 0 ? (
+          <>
+            {days[0]} <span>{days[1]}</span>
+          </>
+        ) : null}
+        {hours[0] > 0 ? (
+          <>
+            {hours[0]} <span>{hours[1]}</span>
+          </>
+        ) : null}
+        {minutes[0] > 0 ? (
+          <>
+            {minutes[0]} <span>{minutes[1]}</span>
+          </>
+        ) : null}
+        {days[0] === 0 && hours[0] === 0 && minutes[0] > 0 ? (
+          <>:&nbsp; </>
+        ) : null}
+
+        {days[0] === 0 && hours[0] === 0 && (
+          <>
+            {secondsNumber}
+            {minutes[0] === 0 ? <span>{secondsLabel}</span> : null}
+          </>
+        )}
+      </>
+    );
+  }
+
   return (
     <>
-      {hours[0] > 0 ? (
-        <>
-          {hours[0]} <span>{hours[1]}</span>
-        </>
-      ) : null}
-      {minutes[0] > 0 ? (
-        <>
-          {minutes[0]} <span>{minutes[1]}</span>
-        </>
-      ) : null}
-      {days[0] === 0 && hours[0] === 0 && minutes[0] > 0 ? <>:&nbsp; </> : null}
-
-      {days[0] === 0 && hours[0] === 0 && (
-        <>
-          {secondsNumber}
-          {minutes[0] === 0 ? <span>{secondsLabel}</span> : null}
-        </>
-      )}
+      {days[0] > 0 ? `${days[0]} ${days[1]} ` : null}
+      {hours[0] > 0 ? `${hours[0]} ${hours[1]} ` : null}
+      {minutes[0] > 0 ? `${minutes[0]} ${minutes[1]} ` : null}
+      {days[0] === 0 && hours[0] === 0
+        ? `${secondsNumber} ${minutes[0] === 0 ? secondsLabel : null}`
+        : null}
     </>
   );
 };
