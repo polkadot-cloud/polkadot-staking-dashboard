@@ -4,7 +4,7 @@
 import { useTranslation } from 'react-i18next';
 import { CountdownProps } from './types';
 
-export const Countdown = ({ timeleft, markup = false }: CountdownProps) => {
+export const Countdown = ({ timeleft, markup = true }: CountdownProps) => {
   const { t } = useTranslation('base');
   const { days, hours, minutes, seconds } = timeleft;
 
@@ -51,7 +51,7 @@ export const Countdown = ({ timeleft, markup = false }: CountdownProps) => {
       {hours[0] > 0 ? `${hours[0]} ${hours[1]} ` : null}
       {minutes[0] > 0 ? `${minutes[0]} ${minutes[1]} ` : null}
       {days[0] === 0 && hours[0] === 0
-        ? `${secondsNumber} ${minutes[0] === 0 ? secondsLabel : null}`
+        ? `${secondsNumber} ${minutes[0] === 0 ? secondsLabel : ''}`
         : null}
     </>
   );

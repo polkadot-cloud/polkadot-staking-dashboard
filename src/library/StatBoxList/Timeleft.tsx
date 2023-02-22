@@ -22,11 +22,11 @@ export const Timeleft = ({
       <div className="content chart">
         <div className="chart">
           <StatPie value={graph?.value1} value2={graph?.value2} />
-          {tooltip && (
+          {tooltip ? (
             <div className="tooltip">
               <h3>{tooltip}</h3>
             </div>
-          )}
+          ) : null}
         </div>
 
         <div className="labels">
@@ -34,7 +34,7 @@ export const Timeleft = ({
             <Countdown timeleft={timeleft} />
           </TimeLeftWrapper>
           <h4>
-            {label} {help && <OpenHelpIcon helpKey={helpKey} />}
+            {label} {help ? <OpenHelpIcon helpKey={helpKey} /> : null}
           </h4>
         </div>
       </div>
