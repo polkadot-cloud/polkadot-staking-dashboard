@@ -4,12 +4,11 @@ import { useApi } from 'contexts/Api';
 import React, { useEffect, useState } from 'react';
 import { AnyApi } from 'types';
 import { parseHumanBN } from 'Utils';
-import * as defaults from './defaults';
+import { defaultAssetsContext } from './defaults';
 import { Asset, AssetsContextInterface } from './types';
 
-export const AssetsContext = React.createContext<AssetsContextInterface>(
-  defaults.defaultAssetsContext
-);
+export const AssetsContext =
+  React.createContext<AssetsContextInterface>(defaultAssetsContext);
 
 type NftItem = {
   collId: number;

@@ -1,6 +1,6 @@
 import BN from 'bn.js';
 
-export type Asset = {
+export interface Asset {
   collId: number;
   itemId: number;
   status: string;
@@ -9,7 +9,7 @@ export type Asset = {
   price: BN;
   tenants: Array<string>;
   proposalHash: string;
-};
+}
 export interface AssetsContextInterface {
   assets: Array<Asset>;
   fetchAssets: () => Promise<void>;

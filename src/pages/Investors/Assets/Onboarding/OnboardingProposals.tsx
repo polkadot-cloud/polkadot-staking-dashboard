@@ -1,16 +1,18 @@
 import { useAssets } from 'contexts/Assets';
 import { Header, Wrapper as ListWrapper } from 'library/List';
+import { useTranslation } from 'react-i18next';
 import { DemocracyProposal } from './DemocracyProposal';
 import { ProposalList } from './Wrappers';
 
-export const Proposals = () => {
+export const OnboardingProposals = () => {
   const { assets } = useAssets();
+  const { t } = useTranslation('pages');
 
   return (
     <>
       <ListWrapper>
         <Header>
-          <h4>Proposals</h4>
+          <h3>{t('investors.assetOnboarding')}</h3>
         </Header>
         <ProposalList>
           {assets

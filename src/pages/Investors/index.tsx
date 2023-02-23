@@ -1,18 +1,12 @@
-import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
-import { useAccount } from 'contexts/Account';
-import { Warning } from 'library/Form/Warning';
-import { CardWrapper } from 'library/Graphs/Wrappers';
 import PageTitle from 'library/PageTitle';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PageRowWrapper, RowSecondaryWrapper } from 'Wrappers';
-import { ManageFund } from './MangeFund';
-import { InvestStats } from './Stats';
-import { AssetOnboardingVote } from './Vote/AssetOnboarding';
+import { ManageAssets } from './Assets';
+import { AssetOnboarding } from './Assets/Onboarding';
+import { ManageFund } from './Fund';
 
 export const InvestorsView = () => {
   const { t } = useTranslation('pages');
-  const { isInvestor } = useAccount();
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = [
@@ -22,7 +16,7 @@ export const InvestorsView = () => {
       onClick: () => setActiveTab(0),
     },
     {
-      title: t('investors.vote.assetOnboarding'),
+      title: t('investors.manageAsset'),
       active: activeTab === 1,
       onClick: () => setActiveTab(1),
     },
@@ -31,31 +25,13 @@ export const InvestorsView = () => {
   return (
     <>
       <PageTitle title={t('investors.title')} tabs={tabs} />
-      {activeTab === 0 && (
+      {activeTab === 0 && <ManageFund />}
+      {activeTab === 1 && (
         <>
-          {!isInvestor() && (
-            <PageRowWrapper className="page-padding" noVerticalSpacer>
-              <Warning text="You need the INVESTOR role to withdraw/deposit funds" />
-            </PageRowWrapper>
-          )}
-
-          <InvestStats />
-          <PageRowWrapper className="page-padding" noVerticalSpacer>
-            <RowSecondaryWrapper
-              hOrder={0}
-              vOrder={0}
-              thresholdStickyMenu={SideMenuStickyThreshold}
-              thresholdFullWidth={SectionFullWidthThreshold}
-            >
-              <CardWrapper>
-                <ManageFund />
-              </CardWrapper>
-            </RowSecondaryWrapper>
-          </PageRowWrapper>
+          <AssetOnboarding />
+          <ManageAssets />
         </>
       )}
-
-      {activeTab === 1 && <AssetOnboardingVote />}
     </>
   );
 };
