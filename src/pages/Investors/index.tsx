@@ -1,9 +1,9 @@
 import PageTitle from 'library/PageTitle';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ManageAssets } from './Management/Assets';
-import { ManageFund } from './Management/Fund';
-import { AssetOnboardingVote } from './Vote/AssetOnboarding';
+import { ManageAssets } from './Assets';
+import { AssetOnboarding } from './Assets/Onboarding';
+import { ManageFund } from './Fund';
 
 export const InvestorsView = () => {
   const { t } = useTranslation('pages');
@@ -16,14 +16,9 @@ export const InvestorsView = () => {
       onClick: () => setActiveTab(0),
     },
     {
-      title: t('investors.vote.assetOnboarding'),
+      title: t('investors.manageAsset'),
       active: activeTab === 1,
       onClick: () => setActiveTab(1),
-    },
-    {
-      title: t('investors.ownedAssets'),
-      active: activeTab === 2,
-      onClick: () => setActiveTab(2),
     },
   ];
 
@@ -31,8 +26,12 @@ export const InvestorsView = () => {
     <>
       <PageTitle title={t('investors.title')} tabs={tabs} />
       {activeTab === 0 && <ManageFund />}
-      {activeTab === 1 && <AssetOnboardingVote />}
-      {activeTab === 2 && <ManageAssets />}
+      {activeTab === 1 && (
+        <>
+          <AssetOnboarding />
+          <ManageAssets />
+        </>
+      )}
     </>
   );
 };

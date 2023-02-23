@@ -81,6 +81,7 @@
       "tenantsSession": "Tenants Session"
     },
     "investors": {
+      "assetOnboarding": "Asset Onboarding",
       "balanceDistribution": "Balance Distribution",
       "contributed": "Contributed",
       "contributedBalance": "Contributed Balance",
@@ -88,6 +89,7 @@
       "depositFailed": "Failed to deposit",
       "depositSuccess": "Deposit success",
       "depositWarning": "Once you deposit your money into the housing fund, the governance systems will allocate the funding in assets.",
+      "manageAsset": "Asset Management",
       "manageFund": "Fund Management",
       "noFundToDeposit": "You have no funds to deposit.",
       "noFundToWithdraw": "You have withdrawable balance in the housing fund",
@@ -97,9 +99,6 @@
       "reservedBalance": "Reserved Balance",
       "title": "Investors",
       "totalDeposit": "Total Deposit",
-      "vote": {
-        "assetOnboarding": "Asset Onboarding"
-      },
       "withdraw": "Withdraw",
       "withdrawable": "Withdrawable"
     },
