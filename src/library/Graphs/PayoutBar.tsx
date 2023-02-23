@@ -167,7 +167,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
           title: () => [],
           label: (context: any) =>
             `${
-              context.dataset.order === 3 ? `${t('pending')}:` : ''
+              context.dataset.order === 3 ? `${t('pending')}: ` : ''
             }${new BigNumber(context.parsed.y)
               .decimalPlaces(units)
               .toFormat()} ${unit}`,
