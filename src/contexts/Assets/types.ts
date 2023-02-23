@@ -12,4 +12,5 @@ export type Asset = {
 };
 export interface AssetsContextInterface {
   assets: Array<Asset>;
+  fetchAssets: () => Promise<void>;
 }

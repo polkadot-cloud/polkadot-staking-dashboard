@@ -10,4 +10,5 @@ export const defaultAccountContext: AccountContextInterface = {
   balance: ZERO,
   isSeller: () => false,
   isInvestor: () => false,
+  isNotary: () => false,
 };

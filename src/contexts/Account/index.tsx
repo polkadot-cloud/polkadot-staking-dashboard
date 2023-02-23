@@ -32,6 +32,7 @@ export const AccountProvider = ({
 
   const isSeller = () => role === 'SELLER';
   const isInvestor = () => role === 'INVESTOR';
+  const isNotary = () => role === 'NOTARY';
 
   const subscribe = async (_account: string | null) => {
     if (!_account) {
@@ -69,7 +70,7 @@ export const AccountProvider = ({
 
   return (
     <AccountContext.Provider
-      value={{ address, role, balance, isSeller, isInvestor }}
+      value={{ address, role, balance, isSeller, isInvestor, isNotary }}
     >
       {children}
     </AccountContext.Provider>

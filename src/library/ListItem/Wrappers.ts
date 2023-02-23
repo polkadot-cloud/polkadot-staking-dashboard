@@ -68,7 +68,6 @@ export const Labels = styled.div`
   justify-content: flex-end;
   align-items: center;
   overflow: hidden;
-  flex: 1 1 100%;
   padding: 0 0 0 0.25rem;
   height: 2.75rem;
 

@@ -54,7 +54,7 @@ export const Dashboard = () => {
               onClick={() => openModalWith('OnboardAsset')}
             />
           )}
-          <HouseList assets={assets} />
+          <HouseList assets={assets} title={t('dashboard.houseList')} />
         </CardWrapper>
       </PageRowWrapper>
     </>
