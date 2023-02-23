@@ -7,6 +7,7 @@ import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
+import { getUnixTime } from 'date-fns';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
@@ -32,6 +33,7 @@ export const Overview = forwardRef(
 
     const bondDurationFormatted = timeleftAsString(
       t,
+      getUnixTime(new Date()) + 1,
       erasToSeconds(bondDuration),
       true
     );

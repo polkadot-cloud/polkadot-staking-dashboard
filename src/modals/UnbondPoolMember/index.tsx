@@ -8,6 +8,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useTxFees } from 'contexts/TxFees';
+import { getUnixTime } from 'date-fns';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -37,6 +38,7 @@ export const UnbondPoolMember = () => {
 
   const bondDurationFormatted = timeleftAsString(
     t,
+    getUnixTime(new Date()) + 1,
     erasToSeconds(bondDuration),
     true
   );
