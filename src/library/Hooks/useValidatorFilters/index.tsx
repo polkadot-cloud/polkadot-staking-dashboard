@@ -252,7 +252,9 @@ export const useValidatorFilters = () => {
    * Returns the updated filtered list.
    */
   const applySearch = (list: any, batchKey: string, searchTerm: string) => {
-    if (meta[batchKey] === undefined) return list;
+    if (meta[batchKey] === undefined || !searchTerm) {
+      return list;
+    }
     const filteredList: any = [];
     for (const validator of list) {
       const batchIndex =

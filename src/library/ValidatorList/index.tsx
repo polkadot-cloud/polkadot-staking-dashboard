@@ -256,6 +256,9 @@ export const ValidatorListInner = ({
     const newValue = e.currentTarget.value;
 
     let filteredValidators = Object.assign(validatorsDefault);
+    if (order !== 'default') {
+      filteredValidators = applyOrder(order, filteredValidators);
+    }
     filteredValidators = applyFilter(
       includes,
       excludes,
@@ -270,7 +273,7 @@ export const ValidatorListInner = ({
         index === self.findIndex((i: any) => i.address === value.address)
     );
 
-    handleValidatorsFilterUpdate(filteredValidators);
+    setValidators(filteredValidators);
     setPage(1);
     setIsSearching(e.currentTarget.value !== '');
     setRenderIteration(1);
