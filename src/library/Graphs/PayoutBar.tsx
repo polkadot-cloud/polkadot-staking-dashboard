@@ -108,7 +108,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         label: t('unclaimedPayouts'),
         data: unclaimPayoutsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPayouts,
-        backgroundColor: colors.transparent[mode],
+        backgroundColor: colors.pending[mode],
         pointRadius: 0,
         borderRadius: 3,
       },
