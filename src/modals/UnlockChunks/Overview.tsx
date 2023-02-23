@@ -11,6 +11,7 @@ import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
+import { StaticNote } from 'modals/Utils/StaticNote';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnyJson } from 'types';
@@ -128,10 +129,13 @@ export const Overview = forwardRef(
             );
           })}
           <NotesWrapper>
-            <p>
-              {t('unlockTake', { bondDurationFormatted })}
-              {isStaking ? ` ${t('rebondUnlock')}` : null}
-            </p>
+            <StaticNote
+              value={bondDurationFormatted}
+              tKey="unlockTake"
+              valueKey="bondDurationFormatted"
+              deps={[bondDuration]}
+            />
+            <p> {isStaking ? ` ${t('rebondUnlock')}` : null}</p>
             {!isStaking ? <p>{t('unlockChunk')}</p> : null}
           </NotesWrapper>
         </div>
