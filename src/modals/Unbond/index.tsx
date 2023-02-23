@@ -20,6 +20,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { StaticNote } from 'modals/Utils/StaticNote';
 import { NotesWrapper, PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -218,7 +219,12 @@ export const Unbond = () => {
               )}
             </>
           ) : null}
-          <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
+          <StaticNote
+            value={bondDurationFormatted}
+            tKey="onceUnbonding"
+            valueKey="bondDurationFormatted"
+            deps={[bondDuration]}
+          />
         </NotesWrapper>
       </PaddingWrapper>
       <SubmitTx

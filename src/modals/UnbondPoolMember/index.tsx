@@ -15,6 +15,7 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { StaticNote } from 'modals/Utils/StaticNote';
 import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -98,7 +99,12 @@ export const UnbondPoolMember = () => {
           </WarningsWrapper>
         ) : null}
         <Action text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
-        <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
+        <StaticNote
+          value={bondDurationFormatted}
+          tKey="onceUnbonding"
+          valueKey="bondDurationFormatted"
+          deps={[bondDuration]}
+        />
       </PaddingWrapper>
       <SubmitTx
         buttons={[
