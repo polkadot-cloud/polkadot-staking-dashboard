@@ -380,8 +380,15 @@ export const ValidatorsProvider = ({
       }
     } else {
       // tidy up if existing batch exists
-      delete validatorMetaBatches[key];
-      delete validatorMetaBatchesRef.current[key];
+      const updatedValidatorMetaBatches: AnyMetaBatch = {
+        ...validatorMetaBatchesRef.current,
+      };
+      delete updatedValidatorMetaBatches[key];
+      setStateWithRef(
+        updatedValidatorMetaBatches,
+        setValidatorMetaBatch,
+        validatorMetaBatchesRef
+      );
 
       if (validatorSubsRef.current[key] !== undefined) {
         for (const unsub of validatorSubsRef.current[key]) {
@@ -562,12 +569,12 @@ export const ValidatorsProvider = ({
    * Helper function to add mataBatch unsubs by key.
    */
   const addMetaBatchUnsubs = (key: string, unsubs: Array<Fn>) => {
-    const _unsubs = validatorSubsRef.current;
-    const _keyUnsubs = _unsubs[key] ?? [];
+    const newUnsubs = validatorSubsRef.current;
+    const keyUnsubs = newUnsubs[key] ?? [];
 
-    _keyUnsubs.push(...unsubs);
-    _unsubs[key] = _keyUnsubs;
-    setStateWithRef(_unsubs, setValidatorSubs, validatorSubsRef);
+    keyUnsubs.push(...unsubs);
+    newUnsubs[key] = keyUnsubs;
+    setStateWithRef(newUnsubs, setValidatorSubs, validatorSubsRef);
   };
 
   const removeValidatorMetaBatch = (key: string) => {
@@ -577,8 +584,15 @@ export const ValidatorsProvider = ({
         unsub();
       }
       // wipe data
-      delete validatorMetaBatches[key];
-      delete validatorMetaBatchesRef.current[key];
+      const updatedValidatorMetaBatches: AnyMetaBatch = {
+        ...validatorMetaBatchesRef.current,
+      };
+      delete updatedValidatorMetaBatches[key];
+      setStateWithRef(
+        updatedValidatorMetaBatches,
+        setValidatorMetaBatch,
+        validatorMetaBatchesRef
+      );
     }
   };
 

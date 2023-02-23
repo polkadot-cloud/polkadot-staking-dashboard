@@ -151,8 +151,15 @@ export const PoolMembersProvider = ({
       }
     } else {
       // tidy up if existing batch exists
-      delete poolMembersMetaBatches[key];
-      delete poolMembersMetaBatchesRef.current[key];
+      const updatedPoolMembersMetaBatches: AnyMetaBatch = {
+        ...poolMembersMetaBatchesRef.current,
+      };
+      delete updatedPoolMembersMetaBatches[key];
+      setStateWithRef(
+        updatedPoolMembersMetaBatches,
+        setPoolMembersMetaBatch,
+        poolMembersMetaBatchesRef
+      );
 
       if (poolMembersSubsRef.current[key] !== undefined) {
         for (const unsub of poolMembersSubsRef.current[key]) {
