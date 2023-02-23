@@ -105,7 +105,7 @@ export const AssetProposal = ({
                 >
                   <FontAwesomeIcon icon={faThumbsUp} color="green" />
                 </VoteButton>
-                <p className="ok">{ayes}</p>
+                <p className="yes">{ayes}</p>
               </VoteStats>
               <VoteStats>
                 <VoteButton
