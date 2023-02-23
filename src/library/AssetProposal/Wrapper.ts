@@ -80,13 +80,13 @@ export const VoteStats = styled.div`
     color: ${textWarning};
   }
 
-  .yes,
-  .no {
+  .yes:enabled,
+  .no:enabled {
     cursor: pointer;
   }
 
-  .yes:hover,
-  .no:hover {
+  .yes:enabled:hover,
+  .no:enabled:hover {
     transform: scale(1.2);
   }
 `;

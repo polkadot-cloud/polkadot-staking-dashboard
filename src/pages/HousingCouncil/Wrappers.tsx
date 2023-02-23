@@ -63,3 +63,11 @@ export const ProposalList = styled.div`
   width: 100%;
   margin-top: 1rem;
 `;
+
+export const CouncilVoteItemWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+`;
