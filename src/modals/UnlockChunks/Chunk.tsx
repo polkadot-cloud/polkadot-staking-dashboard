@@ -32,11 +32,13 @@ export const Chunk = ({ chunk, bondFor, onRebond }: any) => {
   const left = new BigNumber(era).minus(activeEra.index);
   const start = activeEra.start.multipliedBy(0.001);
   const erasDuration = erasToSeconds(left);
-  const endDate = fromUnixTime(start.plus(erasDuration).toNumber());
+
+  const dateFrom = fromUnixTime(start.toNumber());
+  const dateTo = fromUnixTime(start.plus(erasDuration).toNumber());
 
   // reset timer on account or network change.
   useEffect(() => {
-    setFromNow(endDate);
+    setFromNow(dateFrom, dateTo);
   }, [activeAccount, network]);
 
   return (

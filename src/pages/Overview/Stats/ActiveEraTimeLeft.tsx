@@ -4,6 +4,7 @@
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
+import { fromUnixTime } from 'date-fns';
 import { useEraTimeLeft } from 'library/Hooks/useEraTimeLeft';
 import { useTimeLeft } from 'library/Hooks/useTimeLeft';
 import { fromNow } from 'library/Hooks/useTimeLeft/utils';
@@ -16,12 +17,14 @@ export const ActiveEraStat = () => {
   const { apiStatus } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { get: getEraTimeleft } = useEraTimeLeft();
-
   const { timeleft, setFromNow } = useTimeLeft();
+
+  const dateFrom = fromUnixTime(Date.now());
+  const dateTo = fromNow(getEraTimeleft().timeleft.toNumber());
 
   // re-set timer on era change (also covers network change).
   useEffect(() => {
-    setFromNow(fromNow(getEraTimeleft().timeleft.toNumber()));
+    setFromNow(dateFrom, dateTo);
   }, [apiStatus, activeEra]);
 
   // NOTE: this maybe should be called in an interval. Needs more testing.
