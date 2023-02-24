@@ -81,7 +81,7 @@ export const SubscanProvider = ({
       let newUnclaimedPayouts: Array<AnySubscan> = [];
 
       // fetch 3 pages of results
-      const claimedResults = await Promise.all([
+      const results = await Promise.all([
         handleFetch(activeAccount, 0, ApiEndpoints.subscanRewardSlash, {
           is_stash: true,
         }),
@@ -93,7 +93,7 @@ export const SubscanProvider = ({
       // user may have turned off service while results were fetching.
       // test again whether subscan service is still active.
       if (getPlugins().includes('subscan')) {
-        for (const result of claimedResults) {
+        for (const result of results) {
           if (!result?.data?.list) {
             break;
           }
@@ -107,6 +107,9 @@ export const SubscanProvider = ({
             (l: AnyApi) => l.block_timestamp === 0
           );
 
+          // Inject block_timestamp for unclaimed payouts. We take the timestamp of the start of the
+          // following payout era - this is the time payouts become available to claim by
+          // validators.
           unclaimedList.forEach((p: AnyApi) => {
             p.block_timestamp = activeEra.start
               .multipliedBy(0.001)
