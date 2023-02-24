@@ -34,8 +34,14 @@ export const Overview = () => {
   const { i18n, t } = useTranslation('pages');
   const { network } = useApi();
   const { units } = network;
-  const { payouts, poolClaims } = useSubscan();
-  const { lastReward } = formatRewardsForGraphs(14, units, payouts, poolClaims);
+  const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
+  const { lastReward } = formatRewardsForGraphs(
+    14,
+    units,
+    payouts,
+    poolClaims,
+    unclaimedPayouts
+  );
 
   const PAYOUTS_HEIGHT = 390;
 

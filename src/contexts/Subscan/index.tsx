@@ -2,8 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ApiEndpoints, ApiSubscanKey } from 'consts';
+import { useNetworkMetrics } from 'contexts/Network';
+import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import React, { useEffect, useState } from 'react';
 import { AnyApi, AnySubscan } from 'types';
+import { isNotZero } from 'Utils';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { usePlugins } from '../Plugins';
@@ -24,6 +27,8 @@ export const SubscanProvider = ({
   const { network, isReady } = useApi();
   const { plugins, getPlugins } = usePlugins();
   const { activeAccount } = useConnect();
+  const { activeEra } = useNetworkMetrics();
+  const { erasToSeconds } = useErasToTimeLeft();
 
   // store fetched payouts from Subscan
   const [payouts, setPayouts] = useState<AnySubscan>([]);
@@ -31,25 +36,31 @@ export const SubscanProvider = ({
   // store fetched pool claims from Subscan
   const [poolClaims, setPoolClaims] = useState<AnySubscan>([]);
 
+  // store fetched unclaimed payouts from Subscan
+  const [unclaimedPayouts, setUnclaimedPayouts] = useState<AnyApi>([]);
+
   // reset payouts on network switch
   useEffect(() => {
     setPayouts([]);
     setPoolClaims([]);
+    setUnclaimedPayouts([]);
   }, [network]);
 
   // fetch payouts as soon as network is ready
   useEffect(() => {
-    if (isReady) {
+    if (isReady && isNotZero(activeEra.index)) {
       fetchPayouts();
       fetchPoolClaims();
     }
-  }, [isReady, network, activeAccount]);
+  }, [isReady, network, activeAccount, activeEra]);
 
   // fetch payouts on plugins toggle
   useEffect(() => {
-    fetchPayouts();
-    fetchPoolClaims();
-  }, [plugins]);
+    if (isNotZero(activeEra.index)) {
+      fetchPayouts();
+      fetchPoolClaims();
+    }
+  }, [plugins, activeEra]);
 
   /* fetchPayouts
    * fetches payout history from Subscan.
@@ -66,17 +77,16 @@ export const SubscanProvider = ({
 
     // fetch 2 pages of results if subscan is enabled
     if (getPlugins().includes('subscan')) {
-      let _payouts: Array<AnySubscan> = [];
+      let newClaimedPayouts: Array<AnySubscan> = [];
+      let newUnclaimedPayouts: Array<AnySubscan> = [];
 
       // fetch 3 pages of results
       const results = await Promise.all([
         handleFetch(activeAccount, 0, ApiEndpoints.subscanRewardSlash, {
           is_stash: true,
-          claimed_filter: 'claimed',
         }),
         handleFetch(activeAccount, 1, ApiEndpoints.subscanRewardSlash, {
           is_stash: true,
-          claimed_filter: 'claimed',
         }),
       ]);
 
@@ -91,9 +101,25 @@ export const SubscanProvider = ({
           const list = result.data.list.filter(
             (l: AnyApi) => l.block_timestamp !== 0
           );
-          _payouts = _payouts.concat(list);
+          newClaimedPayouts = newClaimedPayouts.concat(list);
+
+          const unclaimedList = result.data.list.filter(
+            (l: AnyApi) => l.block_timestamp === 0
+          );
+
+          // Inject block_timestamp for unclaimed payouts. We take the timestamp of the start of the
+          // following payout era - this is the time payouts become available to claim by
+          // validators.
+          unclaimedList.forEach((p: AnyApi) => {
+            p.block_timestamp = activeEra.start
+              .multipliedBy(0.001)
+              .minus(erasToSeconds(activeEra.index.minus(p.era).plus(1)))
+              .toNumber();
+          });
+          newUnclaimedPayouts = newUnclaimedPayouts.concat(unclaimedList);
         }
-        setPayouts(_payouts);
+        setPayouts(newClaimedPayouts);
+        setUnclaimedPayouts(newUnclaimedPayouts);
       }
     }
   };
@@ -212,6 +238,7 @@ export const SubscanProvider = ({
         fetchEraPoints,
         payouts,
         poolClaims,
+        unclaimedPayouts,
       }}
     >
       {children}

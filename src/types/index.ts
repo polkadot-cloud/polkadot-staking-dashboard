@@ -12,7 +12,12 @@ export interface Networks {
   [key: string]: Network;
 }
 
-type NetworkColor = 'primary' | 'secondary' | 'stroke' | 'transparent';
+type NetworkColor =
+  | 'primary'
+  | 'secondary'
+  | 'stroke'
+  | 'transparent'
+  | 'pending';
 export interface Network {
   name: string;
   endpoints: {
