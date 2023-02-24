@@ -11,12 +11,12 @@ export const OpenHelpIcon = ({
   size = '1.3rem',
   light = false,
 }: OpenHelpIconProps) => {
-  const { openHelpWith } = useHelp();
+  const { openHelp } = useHelp();
 
   return (
     <Wrapper
       onClick={() => {
-        openHelpWith(helpKey, {});
+        openHelp(helpKey);
       }}
       className="help-icon"
       style={{ width: size, height: size }}
