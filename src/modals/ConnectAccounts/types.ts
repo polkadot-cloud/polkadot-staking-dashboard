@@ -49,14 +49,7 @@ export interface ControllerAccount {
   ledger: BalanceLedger;
 }
 
-export interface StashAcount {
-  address: string;
-  controller: MaybeAccount;
-}
-
-export interface ActivelyStakingAccount {
+export interface AccountNominating {
   stash: MaybeAccount;
-  controller: MaybeAccount;
   stashImported: boolean;
-  controllerImported: boolean;
 }

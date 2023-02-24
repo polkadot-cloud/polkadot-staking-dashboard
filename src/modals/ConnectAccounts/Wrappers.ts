@@ -85,17 +85,6 @@ export const AccountGroupWrapper = styled(motion.button)`
     flex-flow: row wrap;
     flex-basis: 100%;
 
-    @media (min-width: 800px) {
-      flex-basis: 50%;
-
-      &:first-child {
-        padding-right: 0.25rem;
-      }
-      &:last-child {
-        padding-left: 0.25rem;
-      }
-    }
-
     > h5 {
       margin: 0 0 0.25rem 0;
       opacity: 0.75;
