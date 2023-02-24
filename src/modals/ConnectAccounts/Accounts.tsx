@@ -11,64 +11,42 @@ import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { ImportedAccount } from 'contexts/Connect/types';
-import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { PoolMembership } from 'contexts/Pools/types';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnyJson } from 'types';
-import { AccountButton, AccountElement } from './Account';
-import {
-  ActivelyStakingAccount,
-  ControllerAccount,
-  StashAcount,
-} from './types';
-import {
-  AccountGroupWrapper,
-  AccountWrapper,
-  ContentWrapper,
-  PaddingWrapper,
-} from './Wrappers';
+import { AccountButton } from './Account';
+import { AccountNominating } from './types';
+import { AccountWrapper, ContentWrapper, PaddingWrapper } from './Wrappers';
 
 export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
   const { t } = useTranslation('modals');
   const { isReady } = useApi();
   const { getAccount, activeAccount } = useConnect();
-  const {
-    getLedgerForController,
-    getAccountLocks,
-    getBondedAccount,
-    accounts: balanceAccounts,
-    ledgers,
-  } = useBalances();
-  const { connectToAccount } = useConnect();
-  const { setStatus } = useModal();
+  const { getAccountLocks, accounts: balanceAccounts, ledgers } = useBalances();
   const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
 
-  const _controllers: Array<ControllerAccount> = [];
-  const _stashes: Array<StashAcount> = [];
+  const stashes: Array<string> = [];
 
   // store local copy of accounts
   const [localAccounts, setLocalAccounts] = useState(accounts);
 
-  // store staking statuses
-  const [activeStaking, setActiveStaking] = useState<
-    Array<ActivelyStakingAccount>
-  >([]);
-  const [activePooling, setActivePooling] = useState<Array<PoolMembership>>([]);
-  const [inactive, setInactive] = useState<string[]>([]);
+  // store accounts that are actively newNominating.
+  const [nominating, setNominating] = useState<Array<AccountNominating>>([]);
+  const [inPool, setInPool] = useState<Array<PoolMembership>>([]);
+  const [notStaking, setNotStaking] = useState<string[]>([]);
 
   useEffect(() => {
     setLocalAccounts(accounts);
   }, [isReady, accounts]);
 
   useEffect(() => {
-    getStakingStatuses();
+    getAccountsStatus();
   }, [localAccounts, balanceAccounts, ledgers, accounts, memberships]);
 
-  const getStakingStatuses = () => {
+  const getAccountsStatus = () => {
     // accumulate imported stash accounts
     for (const account of localAccounts) {
       const locks = getAccountLocks(account.address);
@@ -79,100 +57,54 @@ export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
         return id.trim() === 'staking';
       });
       if (activeLocks !== undefined) {
-        _stashes.push({
-          address: account.address,
-          controller: getBondedAccount(account.address),
-        });
-      }
-    }
-
-    // accumulate imported controller accounts
-    for (const account of localAccounts) {
-      const ledger = getLedgerForController(account.address);
-      if (ledger) {
-        _controllers.push({
-          address: account.address,
-          ledger,
-        });
+        stashes.push(account.address);
       }
     }
 
     // construct account groupings
-    const _activeStaking: Array<ActivelyStakingAccount> = [];
-    const _activePooling: Array<PoolMembership> = [];
-    const _inactive: string[] = [];
+    const newNominating: Array<AccountNominating> = [];
+    const newInPool: Array<PoolMembership> = [];
+    const newNotStaking: string[] = [];
 
     for (const account of localAccounts) {
-      const stash =
-        _stashes.find((s: StashAcount) => s.address === account.address) ??
-        null;
-      const controller =
-        _controllers.find(
-          (c: ControllerAccount) => c.address === account.address
-        ) ?? null;
+      const stash = stashes[stashes.indexOf(account.address)] ?? null;
+
       const poolMember =
         memberships.find(
           (m: PoolMembership) => m.address === account.address
         ) ?? null;
 
-      // if stash, get controller
       if (stash) {
         const applied =
-          _activeStaking.find(
-            (a: ActivelyStakingAccount) => a.stash === account.address
+          newNominating.find(
+            (a: AccountNominating) => a.stash === account.address
           ) !== undefined;
 
         if (!applied) {
-          const _record = {
+          newNominating.push({
             stash: account.address,
-            controller: stash.controller,
             stashImported: true,
-            controllerImported:
-              localAccounts.find(
-                (a: ImportedAccount) => a.address === stash.controller
-              ) !== undefined,
-          };
-          _activeStaking.push(_record);
-        }
-      }
-
-      // if controller, get stash
-      if (controller) {
-        const applied =
-          _activeStaking.find((a) => a.controller === account.address) !==
-          undefined;
-
-        if (!applied) {
-          const _record = {
-            stash: controller.ledger.stash,
-            controller: controller.address,
-            stashImported:
-              localAccounts.find(
-                (a: ImportedAccount) => a.address === controller.ledger.stash
-              ) !== undefined,
-            controllerImported: true,
-          };
-          _activeStaking.push(_record);
+          });
         }
       }
 
       // if pooling, add to active pooling
       if (poolMember) {
-        if (!_activePooling.includes(poolMember)) {
-          _activePooling.push(poolMember);
+        if (!newInPool.includes(poolMember)) {
+          newInPool.push(poolMember);
         }
       }
 
-      // if not doing anything, add to inactive
-      if (!stash && !controller && !poolMember) {
-        if (!_inactive.includes(account.address)) {
-          _inactive.push(account.address);
+      // if not doing anything, add to notStaking
+      if (!stash && !poolMember) {
+        if (!newNotStaking.includes(account.address)) {
+          newNotStaking.push(account.address);
         }
       }
     }
-    setActiveStaking(_activeStaking);
-    setActivePooling(_activePooling);
-    setInactive(_inactive);
+    setNominating(newNominating);
+    setInPool(newInPool);
+    setNotStaking(newNotStaking);
   };
 
   return (
@@ -208,87 +140,65 @@ export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
             </div>
           </AccountWrapper>
         )}
-        {activeStaking.length > 0 && (
+        {nominating.length ? (
           <>
             <h3 className="heading">
               <FontAwesomeIcon icon={faProjectDiagram} transform="shrink-4" />{' '}
               {t('nominating')}
             </h3>
-            {activeStaking.map((item: ActivelyStakingAccount, i: number) => {
-              const { stash, controller } = item;
+            {nominating.map((item: AccountNominating, i: number) => {
+              const { stash } = item;
               const stashAccount = getAccount(stash);
-              const controllerAccount = getAccount(controller);
 
               return (
-                <AccountGroupWrapper
-                  key={`active_staking_${i}`}
-                  onClick={() => {
-                    if (stashAccount) {
-                      connectToAccount(stashAccount);
-                      setStatus(2);
-                    }
-                  }}
-                >
-                  <section>
-                    <AccountElement
-                      address={stash}
-                      meta={stashAccount}
-                      label={['neutral', 'Stash']}
-                      asElement
-                    />
-                  </section>
-                  <section>
-                    <AccountElement
-                      address={controller}
-                      meta={controllerAccount}
-                      label={['neutral', 'Controller']}
-                      asElement
-                    />
-                  </section>
-                </AccountGroupWrapper>
+                <AccountButton
+                  key={`acc_nominating_${i}`}
+                  address={stash}
+                  meta={stashAccount}
+                />
               );
             })}
           </>
-        )}
+        ) : null}
 
-        {activePooling.length > 0 && (
+        {inPool.length ? (
           <>
             <h3 className="heading">
               <FontAwesomeIcon icon={faUsers} transform="shrink-4" />{' '}
               {t('inPool')}
             </h3>
-            {activePooling.map((item: PoolMembership, i: number) => {
+            {inPool.map((item: PoolMembership, i: number) => {
               const { address } = item;
               const account = getAccount(address);
 
               return (
                 <AccountButton
+                  key={`acc_in_pool_${i}`}
                   address={address}
                   meta={account}
-                  key={`active_pool_${i}`}
                 />
               );
             })}
           </>
-        )}
+        ) : null}
 
-        {inactive.length > 0 && (
+        {notStaking.length ? (
           <>
             <h3 className="heading">{t('notStaking')}</h3>
-            {inactive.map((item: string, i: number) => {
+            {notStaking.map((item: string, i: number) => {
               const account = getAccount(item);
               const address = account?.address ?? '';
 
               return (
                 <AccountButton
+                  key={`acc_not_staking_${i}`}
                   address={address}
                   meta={account}
-                  key={`not_staking_${i}`}
                 />
               );
             })}
           </>
-        )}
+        ) : null}
       </PaddingWrapper>
     </ContentWrapper>
   );
