@@ -11,28 +11,20 @@ import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { PoolMembership } from 'contexts/Pools/types';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnyJson } from 'types';
-import { AccountButton, AccountElement } from './Account';
+import { AccountButton } from './Account';
 import { AccountNominating } from './types';
-import {
-  AccountGroupWrapper,
-  AccountWrapper,
-  ContentWrapper,
-  PaddingWrapper,
-} from './Wrappers';
+import { AccountWrapper, ContentWrapper, PaddingWrapper } from './Wrappers';
 
 export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
   const { t } = useTranslation('modals');
   const { isReady } = useApi();
   const { getAccount, activeAccount } = useConnect();
   const { getAccountLocks, accounts: balanceAccounts, ledgers } = useBalances();
-  const { connectToAccount } = useConnect();
-  const { setStatus } = useModal();
   const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
 
@@ -159,22 +151,11 @@ export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
               const stashAccount = getAccount(stash);
 
               return (
-                <AccountGroupWrapper
-                  key={`active_staking_${i}`}
-                  onClick={() => {
-                    if (stashAccount) {
-                      connectToAccount(stashAccount);
-                      setStatus(2);
-                    }
-                  }}
-                >
-                  <AccountElement
-                    address={stash}
-                    meta={stashAccount}
-                    label={['neutral', 'Stash']}
-                    asElement
-                  />
-                </AccountGroupWrapper>
+                <AccountButton
+                  key={`acc_nominating_${i}`}
+                  address={stash}
+                  meta={stashAccount}
+                />
               );
             })}
           </>
@@ -192,9 +173,9 @@ export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
 
               return (
                 <AccountButton
+                  key={`acc_in_pool_${i}`}
                   address={address}
                   meta={account}
-                  key={`active_pool_${i}`}
                 />
               );
             })}
@@ -210,9 +191,9 @@ export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
 
               return (
                 <AccountButton
+                  key={`acc_not_staking_${i}`}
                   address={address}
                   meta={account}
-                  key={`not_staking_${i}`}
                 />
               );
             })}
