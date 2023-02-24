@@ -168,14 +168,12 @@ export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
                     }
                   }}
                 >
-                  <section>
-                    <AccountElement
-                      address={stash}
-                      meta={stashAccount}
-                      label={['neutral', 'Stash']}
-                      asElement
-                    />
-                  </section>
+                  <AccountElement
+                    address={stash}
+                    meta={stashAccount}
+                    label={['neutral', 'Stash']}
+                    asElement
+                  />
                 </AccountGroupWrapper>
               );
             })}
