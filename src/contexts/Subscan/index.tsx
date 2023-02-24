@@ -110,7 +110,7 @@ export const SubscanProvider = ({
           unclaimedList.forEach((p: AnyApi) => {
             p.block_timestamp = activeEra.start
               .multipliedBy(0.001)
-              .minus(erasToSeconds(activeEra.index.minus(p.era)))
+              .minus(erasToSeconds(activeEra.index.minus(p.era).plus(1)))
               .toNumber();
           });
           newUnclaimedPayouts = newUnclaimedPayouts.concat(unclaimedList);
