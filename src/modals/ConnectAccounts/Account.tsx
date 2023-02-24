@@ -9,20 +9,10 @@ import { ExtensionInjected } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
 import { Identicon } from 'library/Identicon';
 import { clipAddress } from 'Utils';
-import { AccountElementProps } from './types';
+import { AccountItemProps } from './types';
 import { AccountWrapper } from './Wrappers';
 
-export const AccountElement = (props: AccountElementProps) => {
-  return (
-    <AccountWrapper>
-      <div>
-        <AccountInner {...props} />
-      </div>
-    </AccountWrapper>
-  );
-};
-
-export const AccountButton = (props: AccountElementProps) => {
+export const AccountButton = (props: AccountItemProps) => {
   const { meta } = props;
   const disconnect = props.disconnect ?? false;
   const { connectToAccount, disconnectFromAccount } = useConnect();
@@ -55,7 +45,7 @@ export const AccountInner = ({
   address,
   meta,
   label = undefined,
-}: AccountElementProps) => {
+}: AccountItemProps) => {
   const { extensions } = useExtensions();
   const extension = extensions.find(
     (e: ExtensionInjected) => e.id === meta?.source
