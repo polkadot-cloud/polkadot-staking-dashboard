@@ -19,7 +19,7 @@ export const ActiveEraStat = () => {
   const { get: getEraTimeleft } = useEraTimeLeft();
   const { timeleft, setFromNow } = useTimeLeft();
 
-  const dateFrom = fromUnixTime(Date.now());
+  const dateFrom = fromUnixTime(Date.now() / 1000);
   const dateTo = fromNow(getEraTimeleft().timeleft.toNumber());
 
   // re-set timer on era change (also covers network change).
