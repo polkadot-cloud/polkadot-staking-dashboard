@@ -80,12 +80,9 @@ export const SubscanProvider = ({
       let newClaimedPayouts: Array<AnySubscan> = [];
       let newUnclaimedPayouts: Array<AnySubscan> = [];
 
-      // fetch 3 pages of results
+      // fetch 1 page of results
       const results = await Promise.all([
         handleFetch(activeAccount, 0, ApiEndpoints.subscanRewardSlash, {
-          is_stash: true,
-        }),
-        handleFetch(activeAccount, 1, ApiEndpoints.subscanRewardSlash, {
           is_stash: true,
         }),
       ]);
@@ -137,14 +134,13 @@ export const SubscanProvider = ({
       return;
     }
 
-    // fetch 2 pages of results if subscan is enabled
+    // fetch results if subscan is enabled
     if (getPlugins().includes('subscan')) {
       let _poolClaims: Array<AnySubscan> = [];
 
-      // fetch 3 pages of results
+      // fetch 1 page of results
       const results = await Promise.all([
         handleFetch(activeAccount, 0, ApiEndpoints.subscanPoolRewards),
-        handleFetch(activeAccount, 1, ApiEndpoints.subscanPoolRewards),
       ]);
 
       // user may have turned off service while results were fetching.
