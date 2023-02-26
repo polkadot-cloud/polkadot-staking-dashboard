@@ -39,28 +39,47 @@ export const SubscanProvider = ({
   // store fetched unclaimed payouts from Subscan
   const [unclaimedPayouts, setUnclaimedPayouts] = useState<AnyApi>([]);
 
+  // handle fetching the various types of payout and set state in one render.
+  const handleFetchPayouts = async () => {
+    if (activeAccount === null || !plugins.includes('subscan')) {
+      resetPayouts();
+      return;
+    }
+    const results = await Promise.all([fetchPayouts(), fetchPoolClaims()]);
+
+    const { newClaimedPayouts, newUnclaimedPayouts } = results[0];
+    const newPoolClaims = results[1];
+
+    setPayouts(newClaimedPayouts);
+    setUnclaimedPayouts(newUnclaimedPayouts);
+    setPoolClaims(newPoolClaims);
+  };
+
+  // reset all payout state
+  const resetPayouts = () => {
+    setPayouts([]);
+    setUnclaimedPayouts([]);
+    setPoolClaims([]);
+  };
+
+  // fetch payouts on plugins toggle
+  useEffect(() => {
+    if (isNotZero(activeEra.index)) {
+      handleFetchPayouts();
+    }
+  }, [plugins, activeEra]);
+
   // reset payouts on network switch
   useEffect(() => {
-    setPayouts([]);
-    setPoolClaims([]);
-    setUnclaimedPayouts([]);
+    resetPayouts();
   }, [network]);
 
   // fetch payouts as soon as network is ready
   useEffect(() => {
     if (isReady && isNotZero(activeEra.index)) {
-      fetchPayouts();
-      fetchPoolClaims();
+      handleFetchPayouts();
     }
   }, [isReady, network, activeAccount, activeEra]);
-
-  // fetch payouts on plugins toggle
-  useEffect(() => {
-    if (isNotZero(activeEra.index)) {
-      fetchPayouts();
-      fetchPoolClaims();
-    }
-  }, [plugins, activeEra]);
 
   /* fetchPayouts
    * fetches payout history from Subscan.
@@ -70,16 +89,11 @@ export const SubscanProvider = ({
    * Stores resulting payouts in context state.
    */
   const fetchPayouts = async () => {
-    if (activeAccount === null || !plugins.includes('subscan')) {
-      setPayouts([]);
-      return;
-    }
+    let newClaimedPayouts: Array<AnySubscan> = [];
+    let newUnclaimedPayouts: Array<AnySubscan> = [];
 
-    // fetch 2 pages of results if subscan is enabled
-    if (getPlugins().includes('subscan')) {
-      let newClaimedPayouts: Array<AnySubscan> = [];
-      let newUnclaimedPayouts: Array<AnySubscan> = [];
-
+    // fetch results if subscan is enabled
+    if (activeAccount && getPlugins().includes('subscan')) {
       // fetch 1 page of results
       const results = await Promise.all([
         handleFetch(activeAccount, 0, ApiEndpoints.subscanRewardSlash, {
@@ -115,10 +129,12 @@ export const SubscanProvider = ({
           });
           newUnclaimedPayouts = newUnclaimedPayouts.concat(unclaimedList);
         }
-        setPayouts(newClaimedPayouts);
-        setUnclaimedPayouts(newUnclaimedPayouts);
       }
     }
+    return {
+      newClaimedPayouts,
+      newUnclaimedPayouts,
+    };
   };
 
   /* fetchPoolClaims
@@ -129,15 +145,10 @@ export const SubscanProvider = ({
    * Stores resulting claims in context state.
    */
   const fetchPoolClaims = async () => {
-    if (activeAccount === null || !plugins.includes('subscan')) {
-      setPoolClaims([]);
-      return;
-    }
+    let newPoolClaims: Array<AnySubscan> = [];
 
     // fetch results if subscan is enabled
-    if (getPlugins().includes('subscan')) {
-      let _poolClaims: Array<AnySubscan> = [];
-
+    if (activeAccount && getPlugins().includes('subscan')) {
       // fetch 1 page of results
       const results = await Promise.all([
         handleFetch(activeAccount, 0, ApiEndpoints.subscanPoolRewards),
@@ -159,11 +170,11 @@ export const SubscanProvider = ({
           const list = result.data.list.filter(
             (l: AnyApi) => l.block_timestamp !== 0
           );
-          _poolClaims = _poolClaims.concat(list);
+          newPoolClaims = newPoolClaims.concat(list);
         }
-        setPoolClaims(_poolClaims);
       }
     }
+    return newPoolClaims;
   };
 
   /* fetchEraPoints
