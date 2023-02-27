@@ -7,6 +7,7 @@ export interface Asset {
   created: number;
   metadata: string;
   price: BN;
+  representative: string;
   tenants: Array<string>;
   proposalHash: string;
 }

@@ -72,6 +72,10 @@ export const AssetItem = ({ asset, menuItems }: AssetProps) => {
             <FontAwesomeIcon icon={faDollar} />
             <b>{humanNumberBn(asset.price, decimals)}</b>
           </InfoItem>
+          <InfoItem>
+            <b>Representative:</b>
+            <b className="no-rep">{asset.representative ?? 'None'}</b>
+          </InfoItem>
         </div>
       </div>
     </AssetItemWrapper>
