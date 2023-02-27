@@ -31,32 +31,36 @@ export const InvestProvider = ({ children }: { children: React.ReactNode }) => {
     const _unsub = api.query.housingFundModule.contributions(
       account,
       (res: AnyJson) => {
-        const {
-          availableBalance,
-          reservedBalance,
-          contributedBalance,
-          contributions,
-          hasWithdrawn,
-        } = res.toHuman();
-        const totalDeposit = contributions.reduce(
-          (prev: BN, { amount }: { amount: string }) =>
-            prev.add(parseHumanBN(amount)),
-          ZERO
-        );
-        const deposits = contributions.map(
-          ({ amount, block }: { amount: string; block: number }) => ({
-            block,
-            amount: parseHumanBN(amount),
-          })
-        );
-        setInvestContext({
-          availableBalance: parseHumanBN(availableBalance),
-          reservedBalance: parseHumanBN(reservedBalance),
-          contributedBalance: parseHumanBN(contributedBalance),
-          deposits,
-          hasWithdrawn,
-          totalDeposit,
-        });
+        if (res.isEmpty) {
+          setInvestContext(defaultInvestContext);
+        } else {
+          const {
+            availableBalance,
+            reservedBalance,
+            contributedBalance,
+            contributions,
+            hasWithdrawn,
+          } = res.toHuman();
+          const totalDeposit = contributions.reduce(
+            (prev: BN, { amount }: { amount: string }) =>
+              prev.add(parseHumanBN(amount)),
+            ZERO
+          );
+          const deposits = contributions.map(
+            ({ amount, block }: { amount: string; block: number }) => ({
+              block,
+              amount: parseHumanBN(amount),
+            })
+          );
+          setInvestContext({
+            availableBalance: parseHumanBN(availableBalance),
+            reservedBalance: parseHumanBN(reservedBalance),
+            contributedBalance: parseHumanBN(contributedBalance),
+            deposits,
+            hasWithdrawn,
+            totalDeposit,
+          });
+        }
       }
     );
     setUnsub(_unsub);
