@@ -46,7 +46,7 @@ export const StatusLabel = ({
           {title}
           {helpKey && (
             <span>
-              <OpenHelpIcon helpKey={helpKey} light />
+              <OpenHelpIcon helpKey={helpKey} backgroundSecondary />
             </span>
           )}
         </h2>
