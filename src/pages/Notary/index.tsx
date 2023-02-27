@@ -26,35 +26,41 @@ export const NotaryView = () => {
 
   const [tx, setTx] = useState<AnyApi>(null);
 
-  const menuItems = isNotary()
-    ? [
-        {
-          icon: <FontAwesomeIcon icon={faThumbsUp} color="green" />,
-          title: 'Approve',
-          cb: (collId: number, itemId: number) => {
-            setTx(
-              api && isReady
-                ? api.tx.finalizerModule.validateTransactionAsset(
-                    collId,
-                    itemId
-                  )
-                : null
-            );
+  const menu = (collId: number, itemId: number) => {
+    const menuItems = isNotary()
+      ? [
+          {
+            icon: <FontAwesomeIcon icon={faThumbsUp} color="green" />,
+            title: 'Approve',
+            cb: () => {
+              setTx(
+                api && isReady
+                  ? api.tx.finalizerModule.validateTransactionAsset(
+                      collId,
+                      itemId
+                    )
+                  : null
+              );
+            },
           },
-        },
-        {
-          icon: <FontAwesomeIcon icon={faThumbsDown} color="red" />,
-          title: 'Reject',
-          cb: (collId: number, itemId: number) => {
-            setTx(
-              api && isReady
-                ? api.tx.finalizerModule.rejectTransactionAsset(collId, itemId)
-                : null
-            );
+          {
+            icon: <FontAwesomeIcon icon={faThumbsDown} color="red" />,
+            title: 'Reject',
+            cb: () => {
+              setTx(
+                api && isReady
+                  ? api.tx.finalizerModule.rejectTransactionAsset(
+                      collId,
+                      itemId
+                    )
+                  : null
+              );
+            },
           },
-        },
-      ]
-    : [];
+        ]
+      : [];
+    return menuItems;
+  };
 
   const { submitTx } = useSubmitExtrinsic({
     tx,
@@ -84,7 +90,7 @@ export const NotaryView = () => {
           <HouseList
             assets={assetsFinalising}
             title={`${assetsFinalising.length} assets available`}
-            menuItems={menuItems}
+            menu={menu}
           />
         </CardWrapper>
       </PageRowWrapper>
