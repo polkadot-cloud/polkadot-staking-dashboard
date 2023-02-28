@@ -55,9 +55,9 @@ export const Stat = ({
     <Wrapper isAddress={isAddress}>
       <h4>
         {label}
-        {helpKey !== undefined && (
+        {helpKey !== undefined ? (
           <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
-        )}
+        ) : null}
         {copy !== undefined ? (
           <button
             type="button"
@@ -73,12 +73,12 @@ export const Stat = ({
       </h4>
       <div className="content">
         <div className="text" ref={containerRef}>
-          {icon && (
+          {icon ? (
             <>
               <FontAwesomeIcon icon={icon} transform="shrink-4" />
               &nbsp;
             </>
-          )}
+          ) : null}
           {isAddress ? (
             <div className="identicon">
               <Identicon
@@ -88,7 +88,7 @@ export const Stat = ({
             </div>
           ) : null}
           {display}
-          {buttons && (
+          {buttons ? (
             <span ref={subjectRef}>
               {buttons.map((btn: any, index: number) => (
                 <React.Fragment key={`stat_${index}`}>
@@ -105,7 +105,7 @@ export const Stat = ({
                 </React.Fragment>
               ))}
             </span>
-          )}
+          ) : null}
         </div>
       </div>
     </Wrapper>

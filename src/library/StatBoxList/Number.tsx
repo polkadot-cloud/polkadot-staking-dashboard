@@ -31,18 +31,18 @@ export const Number = ({
               useLocaleString
               currency={currency}
             />
-            {unit && (
+            {unit ? (
               <>
                 &nbsp;
                 {unit}
               </>
-            )}
+            ) : null}
           </h3>
           <h4>
             {label}
-            {help && (
+            {help ? (
               <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
-            )}
+            ) : null}
           </h4>
         </div>
       </div>

@@ -34,9 +34,9 @@ export const Title = ({ helpKey, title, icon, fixed, Svg }: TitleProps) => {
         {graphic}
         <h2>
           {title}
-          {helpKey && (
+          {helpKey ? (
             <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
-          )}
+          ) : null}
         </h2>
       </div>
       <div>

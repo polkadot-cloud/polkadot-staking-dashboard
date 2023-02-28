@@ -26,9 +26,9 @@ export const Text = ({
           </TextTitleWrapper>
           <h4>
             {label}
-            {help && (
+            {help ? (
               <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
-            )}
+            ) : null}
           </h4>
         </div>
       </div>

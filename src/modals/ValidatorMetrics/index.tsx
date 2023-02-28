@@ -98,7 +98,7 @@ export const ValidatorMetrics = () => {
                 <div className="inner">
                   <h4>
                     {s.label}{' '}
-                    <ButtonHelp marginRight onClick={() => openHelp(s.help)} />
+                    <ButtonHelp marginLeft onClick={() => openHelp(s.help)} />
                   </h4>
                   <h2>{s.value}</h2>
                 </div>

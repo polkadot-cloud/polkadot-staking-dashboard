@@ -41,8 +41,8 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
         <section className={gtMinNominatorBond && !isSyncing ? 'invert' : ''}>
           <h4>
             <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
-            &nbsp; {t('nominate')} &nbsp;
-            <ButtonHelp onClick={() => openHelp('Nominating')} />
+            &nbsp; {t('nominate')}
+            <ButtonHelp marginLeft onClick={() => openHelp('Nominating')} />
           </h4>
           <div className="bar">
             <h5>
@@ -53,8 +53,11 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
         <section className={gtMinActiveStake && !isSyncing ? 'invert' : ''}>
           <h4>
             <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
-            &nbsp;{t('nominateActive')} &nbsp;
-            <ButtonHelp onClick={() => openHelp('Active Stake Threshold')} />
+            &nbsp;{t('nominateActive')}
+            <ButtonHelp
+              marginLeft
+              onClick={() => openHelp('Active Stake Threshold')}
+            />
           </h4>
           <div className="bar">
             <h5>

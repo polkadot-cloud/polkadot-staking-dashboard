@@ -46,7 +46,7 @@ export const StatusLabel = ({
         <h2>
           &nbsp;&nbsp;
           {title}
-          {helpKey && (
+          {helpKey ? (
             <span>
               <ButtonHelp
                 marginLeft
@@ -54,7 +54,7 @@ export const StatusLabel = ({
                 backgroundSecondary
               />
             </span>
-          )}
+          ) : null}
         </h2>
       </div>
     </Wrapper>

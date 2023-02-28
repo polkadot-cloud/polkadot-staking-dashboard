@@ -37,7 +37,9 @@ export const Timeleft = ({
           </TimeLeftWrapper>
           <h4>
             {label}{' '}
-            {help ? <ButtonHelp onClick={() => openHelp(helpKey)} /> : null}
+            {help ? (
+              <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+            ) : null}
           </h4>
         </div>
       </div>

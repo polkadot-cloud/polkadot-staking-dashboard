@@ -19,11 +19,11 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
       <div className="content chart">
         <div className="chart">
           <StatPie value={graph?.value1} value2={graph?.value2} />
-          {tooltip && (
+          {tooltip ? (
             <div className="tooltip">
               <h3>{tooltip}</h3>
             </div>
-          )}
+          ) : null}
         </div>
 
         <div className="labels">
@@ -40,7 +40,7 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
                 />
                 {stat?.unit && <>{stat?.unit}</>}
 
-                {showTotal && (
+                {showTotal ? (
                   <span className="total">
                     /{' '}
                     <NumberEasing
@@ -51,14 +51,14 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
                       value={Number(stat?.total ?? 0)}
                       useLocaleString
                     />
-                    {stat?.unit && (
+                    {stat?.unit ? (
                       <>
                         &nbsp;
                         {stat?.unit}
                       </>
-                    )}
+                    ) : null}
                   </span>
-                )}
+                ) : null}
               </>
             ) : (
               <>0</>
@@ -66,9 +66,9 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
           </h3>
           <h4>
             {label}{' '}
-            {help && (
+            {help ? (
               <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
-            )}
+            ) : null}
           </h4>
         </div>
       </div>

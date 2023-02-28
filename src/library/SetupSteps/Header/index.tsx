@@ -27,9 +27,9 @@ export const Header = ({
       <section>
         <h2>
           {title}
-          {helpKey !== undefined && (
+          {helpKey !== undefined ? (
             <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
-          )}
+          ) : null}
         </h2>
       </section>
       <section>
