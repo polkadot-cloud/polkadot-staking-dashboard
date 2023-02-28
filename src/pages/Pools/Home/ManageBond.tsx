@@ -40,7 +40,7 @@ export const ManageBond = () => {
       <CardHeaderWrapper>
         <h4>
           {t('pools.bondedFunds')}
-          <ButtonHelp marginLeft onClick={() => openHelp('Bonded in Pool"')} />
+          <ButtonHelp marginLeft onClick={() => openHelp('Bonded in Pool')} />
         </h4>
         <h2>{`${planckToUnit(active, units).toFormat()} ${network.unit}`}</h2>
         <ButtonRowWrapper>
