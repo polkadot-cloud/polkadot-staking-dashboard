@@ -16,6 +16,7 @@ import { OnboardAsset } from './OnboardAsset';
 import { SelectRole } from './SelectRole';
 import { Settings } from './Settings';
 import { TableModal } from './TableModal';
+import { TenantsForm } from './TenantsForm';
 import { WithdrawFund } from './Withdraw';
 import { ContentWrapper, HeightWrapper, ModalWrapper } from './Wrappers';
 
@@ -104,6 +105,7 @@ export const Modal = () => {
               {modal === 'WithdrawFund' && <WithdrawFund />}
               {modal === 'OnboardAsset' && <OnboardAsset />}
               {modal === 'Tables' && <TableModal />}
+              {modal === 'TenantsForm' && <TenantsForm />}
             </ErrorBoundary>
           </ContentWrapper>
         </HeightWrapper>

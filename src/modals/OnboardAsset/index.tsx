@@ -9,8 +9,9 @@ import { InputWrapper } from 'library/Form/Wrappers';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { FooterWrapper, PaddingWrapper } from 'modals/Wrappers';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AnyApi } from 'types';
 import { unitToPlanckBn } from 'Utils';
 
 export const OnboardAsset = () => {
@@ -24,18 +25,10 @@ export const OnboardAsset = () => {
   const [price, setPrice] = useState(0);
   const [metadata, setMetadata] = useState<string>('');
   const [pending, setPending] = useState(false);
+  const [tx, setTx] = useState<AnyApi>(null);
 
-  const getTx = () => {
-    if (!api) return null;
-    return api.tx.onboardingModule.createAndSubmitProposal(
-      'HOUSES',
-      unitToPlanckBn(price.toString(), decimals),
-      metadata,
-      true
-    );
-  };
   const { submitTx } = useSubmitExtrinsic({
-    tx: getTx(),
+    tx,
     from: address as string,
     shouldSubmit: true,
     callbackInBlock: () => {},
@@ -50,6 +43,13 @@ export const OnboardAsset = () => {
       setPending(false);
     },
   });
+
+  useEffect(() => {
+    if (tx) {
+      setPending(true);
+      submitTx();
+    }
+  }, [tx]);
 
   return (
     <>
@@ -96,8 +96,16 @@ export const OnboardAsset = () => {
             iconLeft={pending ? faSpinner : faArrowUp}
             iconTransform="grow-2"
             onClick={() => {
-              setPending(true);
-              submitTx();
+              setTx(
+                api
+                  ? api.tx.onboardingModule.createAndSubmitProposal(
+                      'HOUSES',
+                      unitToPlanckBn(price.toString(), decimals),
+                      metadata,
+                      true
+                    )
+                  : null
+              );
             }}
           />
         </FooterWrapper>

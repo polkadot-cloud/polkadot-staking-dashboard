@@ -228,6 +228,15 @@
       "price": "Price",
       "submit": "Submit"
     },
+    "tenants": {
+      "applicationFailure": "Error while submitting application",
+      "applicationSuccess": "Successfully submitted application",
+      "formTitle": "Tenant Application Form",
+      "pageTitle": "Tenants",
+      "requestAsset": "Request asset",
+      "roleWarning": "Only TENANTs can use the functions on this page",
+      "submit": "Request asset"
+    },
     "validators": {
       "activeValidators": "活跃验证人",
       "averageCommission": "平均佣金",
