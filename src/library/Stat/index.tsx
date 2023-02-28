@@ -3,10 +3,10 @@
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp, ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
+import { useHelp } from 'contexts/Help';
 import { useNotifications } from 'contexts/Notifications';
 import { Identicon } from 'library/Identicon';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { applyWidthAsPadding } from 'Utils';
 import { StatAddress, StatProps } from './types';
@@ -21,6 +21,7 @@ export const Stat = ({
   copy,
 }: StatProps) => {
   const { addNotification } = useNotifications();
+  const { openHelp } = useHelp();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const subjectRef = useRef<HTMLDivElement>(null);
@@ -54,7 +55,9 @@ export const Stat = ({
     <Wrapper isAddress={isAddress}>
       <h4>
         {label}
-        {helpKey !== undefined && <OpenHelpIcon helpKey={helpKey} />}
+        {helpKey !== undefined && (
+          <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+        )}
         {copy !== undefined ? (
           <button
             type="button"

@@ -1,8 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ButtonHelp } from '@rossbulat/polkadot-dashboard-ui';
 import NumberEasing from 'che-react-number-easing';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { useHelp } from 'contexts/Help';
 import { StatBox } from './Item';
 import { NumberProps } from './types';
 
@@ -14,6 +15,7 @@ export const Number = ({
   currency = '',
 }: NumberProps) => {
   const help = helpKey !== undefined;
+  const { openHelp } = useHelp();
 
   return (
     <StatBox>
@@ -38,7 +40,9 @@ export const Number = ({
           </h3>
           <h4>
             {label}
-            {help && <OpenHelpIcon helpKey={helpKey} />}
+            {help && (
+              <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+            )}
           </h4>
         </div>
       </div>
