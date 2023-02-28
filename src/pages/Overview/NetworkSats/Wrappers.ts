@@ -59,12 +59,6 @@ export const InflationWrapper = styled.div`
   align-items: center;
   margin-bottom: 0.75rem;
 
-  h4 {
-    .help-icon {
-      margin-left: 0.6rem;
-    }
-  }
-
   > section {
     display: flex;
     flex-flow: column wrap;

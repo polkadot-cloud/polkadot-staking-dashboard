@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp, ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
+import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { useTranslation } from 'react-i18next';
@@ -39,6 +39,7 @@ export const Active = () => {
   const { getAccountNominations } = useBalances();
   const { isFastUnstaking } = useUnstaking();
   const nominations = getAccountNominations(activeAccount);
+  const { openHelp } = useHelp();
 
   const ROW_HEIGHT = 220;
 
@@ -81,7 +82,10 @@ export const Active = () => {
               <CardHeaderWrapper withAction>
                 <h3>
                   {t('nominate.nominate')}
-                  <OpenHelpIcon helpKey="Nominations" />
+                  <ButtonHelp
+                    marginLeft
+                    onClick={() => openHelp('Nominations')}
+                  />
                 </h3>
                 <div>
                   <ButtonPrimary

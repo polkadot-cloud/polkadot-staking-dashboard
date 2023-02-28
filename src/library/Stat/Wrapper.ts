@@ -12,9 +12,6 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
     align-items: center;
     margin: 0 0 0.2rem 0;
 
-    .help-icon {
-      margin-left: 0.55rem;
-    }
     > .btn {
       background: var(--button-tertiary-background);
       display: flex;
