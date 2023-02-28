@@ -215,6 +215,10 @@
       "withdrawFunds": "Withdraw Funds",
       "withdrawUnlock": "Withdraw your unlock chunk to proceed with pool closure."
     },
+    "representatives": {
+      "sessionLaunchFailure": "Failed to launch a representation session",
+      "sessionLaunchSuccess": "Successfully launched a representative session"
+    },
     "sellers": {
       "metadata": "Metadata",
       "onboardAsset": "Onboard an asset",

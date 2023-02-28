@@ -214,6 +214,10 @@
       "withdrawFunds": "取款",
       "withdrawUnlock": "请取出己解锁金额以继续关闭池"
     },
+    "representatives": {
+      "sessionLaunchFailure": "Failed to launch a representation session",
+      "sessionLaunchSuccess": "Successfully launched a representative session"
+    },
     "sellers": {
       "metadata": "Metadata",
       "onboardAsset": "Onboard an asset",

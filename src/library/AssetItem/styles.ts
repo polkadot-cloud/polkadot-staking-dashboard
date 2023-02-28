@@ -131,6 +131,8 @@ export const Labels = styled.div`
 `;
 
 export const AssetName = styled.div`
+  font-size: 1.2rem;
+  line-height: 1;
   padding-left: 1rem;
   flex-grow: 1;
 `;
@@ -141,6 +143,12 @@ export const InfoItem = styled.div`
   gap: 8px;
   align-items: center;
   padding: 8px;
+  .rep {
+    color: ${textSuccess};
+  }
+  .no-rep {
+    color: ${textDanger};
+  }
 `;
 
 export const Separator = styled.div`

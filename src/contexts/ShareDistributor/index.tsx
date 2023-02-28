@@ -6,6 +6,7 @@ import {
   SharedAsset,
   SharedAssetResult,
   ShareDistributorContextInterface,
+  TokenDistributionResult,
 } from './types';
 
 export const ShareDistributorContext =
@@ -22,6 +23,7 @@ export const ShareDistributorProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, isReady } = useApi();
+
   const fetchAssetShareInfo = async (
     collId: number,
     itemId: number
@@ -41,8 +43,27 @@ export const ShareDistributorProvider = ({
       rentNbr,
     } as SharedAsset;
   };
+
+  const getTokenShares = async (
+    _virtualAccount: string
+  ): Promise<TokenDistributionResult> => {
+    if (!api) return null;
+    const res = await api.query.shareDistributor.tokens(_virtualAccount);
+    if (res.isEmpty) return null;
+    const data = res.toJSON() as AnyJson;
+    return {
+      ...data,
+      owners: data.owners.map((item: any[]) => ({
+        owner: item[0],
+        count: item[1],
+      })),
+    };
+  };
+
   return (
-    <ShareDistributorContext.Provider value={{ fetchAssetShareInfo }}>
+    <ShareDistributorContext.Provider
+      value={{ fetchAssetShareInfo, getTokenShares }}
+    >
       {children}
     </ShareDistributorContext.Provider>
   );

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAccount } from 'contexts/Account';
 import { useApi } from 'contexts/Api';
 import { useAssets } from 'contexts/Assets';
+import { Asset } from 'contexts/Assets/types';
 import { useNotifications } from 'contexts/Notifications';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -26,7 +27,8 @@ export const NotaryView = () => {
 
   const [tx, setTx] = useState<AnyApi>(null);
 
-  const menu = (collId: number, itemId: number) => {
+  const menu = (asset: Asset) => {
+    const { collId, itemId } = asset;
     const menuItems = isNotary()
       ? [
           {
