@@ -94,10 +94,6 @@ export const StatWrapper = styled.div`
       display: flex;
       align-items: center;
 
-      > .help-icon {
-        margin-left: 0.5rem;
-      }
-
       .icon {
         margin-right: 0.425rem;
       }

@@ -1,9 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ButtonHelp } from '@rossbulat/polkadot-dashboard-ui';
 import NumberEasing from 'che-react-number-easing';
+import { useHelp } from 'contexts/Help';
 import { StatPie } from 'library/Graphs/StatBoxPie';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatBox } from './Item';
 import { PieProps } from './types';
 
@@ -11,6 +12,7 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
   const help = helpKey !== undefined;
   const showValue = stat?.value !== 0 || stat?.total === 0;
   const showTotal = !!stat?.total;
+  const { openHelp } = useHelp();
 
   return (
     <StatBox>
@@ -63,7 +65,10 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
             )}
           </h3>
           <h4>
-            {label} {help && <OpenHelpIcon helpKey={helpKey} />}
+            {label}{' '}
+            {help && (
+              <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+            )}
           </h4>
         </div>
       </div>
