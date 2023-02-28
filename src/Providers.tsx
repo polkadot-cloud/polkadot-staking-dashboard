@@ -19,6 +19,7 @@ import { NetworkMetricsProvider } from 'contexts/Network';
 import { NotificationsProvider } from 'contexts/Notifications';
 import { OverlayProvider } from 'contexts/Overlay';
 import { PluginsProvider } from 'contexts/Plugins';
+import { RoleProvider } from 'contexts/Roles';
 import { ShareDistributorProvider } from 'contexts/ShareDistributor';
 import { useTheme } from 'contexts/Themes';
 import { TooltipProvider } from 'contexts/Tooltip';
@@ -81,7 +82,8 @@ export const Providers = withProviders(
   CouncilProvider,
   VotingProvider,
   DemocracyProvider,
-  ShareDistributorProvider
+  ShareDistributorProvider,
+  RoleProvider
 )(ThemedRouter);
 
 export default Providers;
