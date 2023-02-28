@@ -3,11 +3,12 @@
 
 import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonHelp } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
+import { useHelp } from 'contexts/Help';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
 import { NominateStatusBarProps } from '../types';
@@ -21,6 +22,7 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
   const { minNominatorBond } = staking;
   const { metrics } = useNetworkMetrics();
   const { minimumActiveStake } = metrics;
+  const { openHelp } = useHelp();
 
   const minNominatorBondUnit = planckToUnit(minNominatorBond, units);
   const minimumActiveStakeUnit = planckToUnit(minimumActiveStake, units);
@@ -40,7 +42,7 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
           <h4>
             <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
             &nbsp; {t('nominate')} &nbsp;
-            <OpenHelpIcon helpKey="Nominating" />
+            <ButtonHelp onClick={() => openHelp('Nominating')} />
           </h4>
           <div className="bar">
             <h5>
@@ -52,7 +54,7 @@ export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {
           <h4>
             <FontAwesomeIcon icon={faFlag} transform="shrink-4" />
             &nbsp;{t('nominateActive')} &nbsp;
-            <OpenHelpIcon helpKey="Active Stake Threshold" />
+            <ButtonHelp onClick={() => openHelp('Active Stake Threshold')} />
           </h4>
           <div className="bar">
             <h5>
