@@ -47,7 +47,7 @@ export const BondFeedback = ({
 
   // if we are bonding, subtract tx fees from bond amount
   const freeBondAmount = !disableTxFeeUpdate
-    ? BigNumber.max(freeBalanceBn.minus(txFees), new BigNumber(0))
+    ? BigNumber.max(freeBalanceBn.minus(txFees), 0)
     : freeBalanceBn;
 
   // the default bond balance
@@ -74,7 +74,7 @@ export const BondFeedback = ({
 
   const bondAfterTxFees = enoughToCoverTxFees
     ? bondBn
-    : BigNumber.max(bondBn.minus(txFees), new BigNumber(0));
+    : BigNumber.max(bondBn.minus(txFees), 0);
 
   // update bond on account change
   useEffect(() => {
@@ -119,7 +119,7 @@ export const BondFeedback = ({
     const decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
 
     // bond errors
-    if (freeBondAmount.isEqualTo(new BigNumber(0))) {
+    if (freeBondAmount.isZero()) {
       disabled = true;
       newErrors.push(`${t('noFree', { unit })}`);
     }
@@ -130,12 +130,12 @@ export const BondFeedback = ({
     }
 
     // bond amount must not be smaller than 1 planck
-    if (bond.bond !== '' && bondBn.isLessThan(new BigNumber(1))) {
+    if (bond.bond !== '' && bondBn.isLessThan(1)) {
       newErrors.push(t('tooSmall'));
     }
 
     // check bond after transaction fees is still valid
-    if (bond.bond !== '' && bondAfterTxFees.isLessThan(new BigNumber(0))) {
+    if (bond.bond !== '' && bondAfterTxFees.isLessThan(0)) {
       newErrors.push(`${t('notEnoughAfter', { unit })}`);
     }
 

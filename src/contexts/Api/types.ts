@@ -13,14 +13,14 @@ export interface NetworkState {
   meta: Network;
 }
 export interface APIConstants {
-  bondDuration: number;
-  maxNominations: number;
-  sessionsPerEra: number;
-  maxNominatorRewardedPerValidator: number;
+  bondDuration: BigNumber;
+  maxNominations: BigNumber;
+  sessionsPerEra: BigNumber;
+  maxNominatorRewardedPerValidator: BigNumber;
   historyDepth: BigNumber;
-  maxElectingVoters: number;
-  expectedBlockTime: number;
-  epochDuration: number;
+  maxElectingVoters: BigNumber;
+  expectedBlockTime: BigNumber;
+  epochDuration: BigNumber;
   existentialDeposit: BigNumber;
   fastUnstakeDeposit: BigNumber;
   poolsPalletId: U8aLike;

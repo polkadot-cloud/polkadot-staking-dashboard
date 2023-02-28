@@ -85,13 +85,13 @@ export const calculatePayoutsByDay = (
       // reset current payout cursor for the new day.
       curPayout = {
         amount: new BigNumber(payout.amount),
-        event_id: new BigNumber(payout.amount).isLessThan(new BigNumber(0))
+        event_id: new BigNumber(payout.amount).isLessThan(0)
           ? 'Slash'
           : 'Reward',
       };
     } else {
       // in same day. Aadd payout amount to current payout cursor.
-      curPayout.amount = curPayout.amount.plus(new BigNumber(payout.amount));
+      curPayout.amount = curPayout.amount.plus(payout.amount);
     }
 
     // if only 1 payout exists, exit early here.
@@ -162,16 +162,24 @@ export const formatRewardsForGraphs = (
   days: number,
   units: number,
   payouts: AnySubscan,
-  poolClaims: AnySubscan
+  poolClaims: AnySubscan,
+  unclaimedPayouts: AnySubscan
 ) => {
   // process staking payouts.
   const payoutsByDay = processPayouts(payouts, days, units, 'staking');
   const poolClaimsByDay = processPayouts(poolClaims, days, units, 'pools');
+  const unclaimPayoutsByDay = processPayouts(
+    unclaimedPayouts,
+    days,
+    units,
+    'staking'
+  );
 
   return {
     // reverse rewards: most recent last
     payoutsByDay,
     poolClaimsByDay,
+    unclaimPayoutsByDay,
     lastReward: getLatestReward(payouts, poolClaims),
   };
 };
@@ -412,7 +420,7 @@ export const daysPassed = (from: Date, to: Date) =>
 
 // Utility: extract whether an event id should be a slash or reward, based on the net day amount.
 const getEventId = (c: PayoutDayCursor) =>
-  c.amount.isLessThan(new BigNumber(0)) ? 'Slash' : 'Reward';
+  c.amount.isLessThan(0) ? 'Slash' : 'Reward';
 
 // Utility: Formats a width and height pair.
 export const formatSize = (

@@ -21,7 +21,7 @@ export const UnlockChunks = () => {
   const { getPoolUnlocking } = useActivePools();
 
   // get the unlocking per bondFor
-  const _getUnlocking = () => {
+  const getUnlocking = () => {
     let unlocking = [];
     let ledger;
     switch (bondFor) {
@@ -35,7 +35,7 @@ export const UnlockChunks = () => {
     return unlocking;
   };
 
-  const unlocking = _getUnlocking();
+  const unlocking = getUnlocking();
 
   // active modal section
   const [section, setSection] = useState(0);
@@ -65,7 +65,7 @@ export const UnlockChunks = () => {
   // resize modal on state change
   useEffect(() => {
     setModalHeight(getModalHeight());
-  }, [task, section]);
+  }, [task, section, unlocking]);
 
   // resize this modal on window resize
   useEffect(() => {

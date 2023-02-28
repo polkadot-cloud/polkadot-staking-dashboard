@@ -4,6 +4,7 @@
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
+import { fromUnixTime } from 'date-fns';
 import { useEraTimeLeft } from 'library/Hooks/useEraTimeLeft';
 import { useTimeLeft } from 'library/Hooks/useTimeLeft';
 import { fromNow } from 'library/Hooks/useTimeLeft/utils';
@@ -16,12 +17,14 @@ export const ActiveEraStat = () => {
   const { apiStatus } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { get: getEraTimeleft } = useEraTimeLeft();
-
   const { timeleft, setFromNow } = useTimeLeft();
+
+  const dateFrom = fromUnixTime(Date.now() / 1000);
+  const dateTo = fromNow(getEraTimeleft().timeleft.toNumber());
 
   // re-set timer on era change (also covers network change).
   useEffect(() => {
-    setFromNow(fromNow(getEraTimeleft().timeleft));
+    setFromNow(dateFrom, dateTo);
   }, [apiStatus, activeEra]);
 
   // NOTE: this maybe should be called in an interval. Needs more testing.
@@ -31,8 +34,8 @@ export const ActiveEraStat = () => {
     label: t('overview.timeRemainingThisEra'),
     timeleft: timeleft.formatted,
     graph: {
-      value1: activeEra.index === 0 ? 0 : percentSurpassed,
-      value2: activeEra.index === 0 ? 100 : percentRemaining,
+      value1: activeEra.index.isZero() ? 0 : percentSurpassed.toNumber(),
+      value2: activeEra.index.isZero() ? 100 : percentRemaining.toNumber(),
     },
     tooltip: `Era ${new BigNumber(activeEra.index).toFormat()}` ?? undefined,
     helpKey: 'Era',

@@ -94,7 +94,7 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
     .cta {
       position: absolute;
       right: 0.2rem;
-      top: -0.1rem;
+      top: -0.15rem;
     }
   }
 `;

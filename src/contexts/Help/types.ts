@@ -27,7 +27,7 @@ export interface ExternalWithKeys {
 }
 
 export interface HelpContextInterface {
-  openHelpWith: (d: MaybeString, c: HelpConfig) => void;
+  openHelp: (d: MaybeString) => void;
   closeHelp: () => void;
   setStatus: (s: number) => void;
   setDefinition: (d: MaybeString) => void;
@@ -38,7 +38,6 @@ export interface HelpContextInterface {
 export interface HelpContextState {
   status: number;
   definition: MaybeString;
-  config: HelpConfig;
 }
 
 export interface HelpContextProps {

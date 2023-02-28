@@ -22,6 +22,7 @@ import { Selectable } from 'library/List/Selectable';
 import { Validator } from 'library/ValidatorList/Validator';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { isNotZero } from 'Utils';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
 import { Filters } from './Filters';
@@ -167,7 +168,7 @@ export const ValidatorListInner = ({
 
   // configure validator list when network is ready to fetch
   useEffect(() => {
-    if (isReady && activeEra.index !== 0 && !fetched) {
+    if (isReady && isNotZero(activeEra.index) && !fetched) {
       setupValidatorList();
     }
   }, [isReady, activeEra.index, fetched]);
@@ -255,6 +256,9 @@ export const ValidatorListInner = ({
     const newValue = e.currentTarget.value;
 
     let filteredValidators = Object.assign(validatorsDefault);
+    if (order !== 'default') {
+      filteredValidators = applyOrder(order, filteredValidators);
+    }
     filteredValidators = applyFilter(
       includes,
       excludes,
@@ -269,7 +273,7 @@ export const ValidatorListInner = ({
         index === self.findIndex((i: any) => i.address === value.address)
     );
 
-    handleValidatorsFilterUpdate(filteredValidators);
+    setValidators(filteredValidators);
     setPage(1);
     setIsSearching(e.currentTarget.value !== '');
     setRenderIteration(1);

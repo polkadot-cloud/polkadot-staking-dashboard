@@ -25,15 +25,15 @@ export const Announcements = () => {
   const { t } = useTranslation('pages');
   const { poolsSyncing, isSyncing } = useUi();
   const { network } = useApi();
-  const { eraStakers } = useStaking();
+  const { staking } = useStaking();
   const { units } = network;
   const { poolMembers } = usePoolMembers();
   const { bondedPools } = useBondedPools();
-  const { totalStaked } = eraStakers;
+  const { totalStaked } = staking;
 
   let totalPoolPoints = new BigNumber(0);
   bondedPools.forEach((b: BondedPool) => {
-    totalPoolPoints = totalPoolPoints.plus(new BigNumber(rmCommas(b.points)));
+    totalPoolPoints = totalPoolPoints.plus(rmCommas(b.points));
   });
   const totalPoolPointsUnit = planckToUnit(totalPoolPoints, units);
 

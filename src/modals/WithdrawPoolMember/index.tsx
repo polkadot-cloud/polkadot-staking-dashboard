@@ -18,7 +18,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit, rmCommas } from 'Utils';
+import { isNotZero, planckToUnit, rmCommas } from 'Utils';
 
 export const WithdrawPoolMember = () => {
   const { t } = useTranslation('modals');
@@ -53,7 +53,7 @@ export const WithdrawPoolMember = () => {
   );
 
   // valid to submit transaction
-  const [valid] = useState<boolean>(!totalWithdraw.isZero() ?? false);
+  const [valid] = useState<boolean>(isNotZero(totalWithdraw) ?? false);
 
   // tx to submit
   const getTx = () => {

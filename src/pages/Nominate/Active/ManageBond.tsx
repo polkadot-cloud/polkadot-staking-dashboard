@@ -2,18 +2,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp, ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
+import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
 import { ButtonRowWrapper } from 'Wrappers';
@@ -31,6 +31,7 @@ export const ManageBond = () => {
   const { isSyncing } = useUi();
   const ledger = getLedgerForStash(activeAccount);
   const { isFastUnstaking } = useUnstaking();
+  const { openHelp } = useHelp();
 
   const { active }: { active: BigNumber } = ledger;
   const allTransferOptions = getTransferOptions(activeAccount);
@@ -44,7 +45,7 @@ export const ManageBond = () => {
       <CardHeaderWrapper>
         <h4>
           {t('nominate.bondedFunds')}
-          <OpenHelpIcon helpKey="Bonding" />
+          <ButtonHelp marginLeft onClick={() => openHelp('Bonding')} />
         </h4>
         <h2>{`${planckToUnit(active, units).toFormat()} ${network.unit}`}</h2>
         <ButtonRowWrapper>
