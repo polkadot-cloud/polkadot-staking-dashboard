@@ -27,7 +27,6 @@
     "chartjs-plugin-datalabels": "^2.2.0",
     "che-react-number-easing": "^0.1.4",
     "date-fns": "^2.29.3",
-    "downshift": "^6.1.7",
     "framer-motion": "7.6.19",
     "i18next": "^22.4.10",
     "i18next-browser-languagedetector": "^7.0.1",
