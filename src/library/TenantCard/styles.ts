@@ -2,6 +2,7 @@ import { SmallFontSizeMaxWidth } from 'consts';
 import styled from 'styled-components';
 import {
   backgroundDropdown,
+  borderPrimary,
   networkColor,
   shadowColorSecondary,
   textSecondary,
@@ -14,6 +15,8 @@ export const TenantCardWrapper = styled.div`
   height: 6rem;
   position: relative;
   margin: 0.5rem;
+  flex: 1 0 33%;
+  max-width: 33%;
 
   > .inner {
     background: ${backgroundDropdown};
@@ -39,6 +42,7 @@ export const TenantCardWrapper = styled.div`
       align-items: center;
       padding: 0 0.5rem;
       height: 3.25rem;
+      gap: 0.5rem;
 
       &.status {
         height: 2.75rem;
@@ -46,6 +50,13 @@ export const TenantCardWrapper = styled.div`
       svg {
         margin: 0;
       }
+    }
+    .identity-item {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      align-items: center;
+      margin-right: 10px;
     }
   }
 `;
@@ -125,4 +136,11 @@ export const Labels = styled.div`
       padding-right: 0.35rem;
     }
   }
+`;
+
+export const Separator = styled.div`
+  width: 100%;
+  height: 1px;
+  border-bottom: 1px solid ${borderPrimary};
+  opacity: 0.7;
 `;

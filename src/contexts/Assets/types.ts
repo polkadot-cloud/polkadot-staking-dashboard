@@ -14,4 +14,8 @@ export interface Asset {
 export interface AssetsContextInterface {
   assets: Array<Asset>;
   fetchAssets: () => Promise<void>;
+  fetchAssetAccount: (
+    _collId: number,
+    _itemId: number
+  ) => Promise<string | null>;
 }

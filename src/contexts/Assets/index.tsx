@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { useApi } from 'contexts/Api';
 import React, { useEffect, useState } from 'react';
-import { AnyApi } from 'types';
+import { AnyApi, AnyJson } from 'types';
 import { parseHumanBN } from 'Utils';
 import { defaultAssetsContext } from './defaults';
 import { Asset, AssetsContextInterface } from './types';
@@ -32,6 +32,7 @@ export const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
 
     setUnsub(_unsub);
   };
+
   const fetchAssets = async () => {
     if (!api) return;
     const len = collectionSize.length;
@@ -59,6 +60,14 @@ export const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
     setAssets(_assets);
   };
 
+  const fetchAssetAccount = async (_collId: number, _itemId: number) => {
+    if (!api) return null;
+    const res = await api.query.uniques.asset(_collId, _itemId);
+    if (res.isEmpty) return null;
+    const data: AnyJson = res.toPrimitive();
+    return data.owner;
+  };
+
   useEffect(() => {
     fetchAssets();
   }, [collectionSize]);
@@ -75,6 +84,7 @@ export const AssetsProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         assets,
         fetchAssets,
+        fetchAssetAccount,
       }}
     >
       {children}

@@ -215,9 +215,11 @@
       "withdrawUnlock": "请取出己解锁金额以继续关闭池"
     },
     "representatives": {
+      "pageTitle": "Representatives",
       "sessionLaunchFailure": "Failed to launch a representation session",
       "sessionLaunchSuccess": "Successfully launched a representative session",
-      "pageTitle": "Representatives"
+      "tenantSessionFailure": "Failed to launched a tenant session",
+      "tenantSessionSuccess": "Successfully launched a tenant session"
     },
     "sellers": {
       "metadata": "Metadata",

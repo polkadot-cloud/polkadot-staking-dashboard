@@ -53,6 +53,13 @@ export const AssetItemWrapper = styled.div`
   }
 `;
 
+export const TenantAddrWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-grow: 1;
+`;
+
 export const MenuPosition = styled.div`
   position: absolute;
   top: -10px;

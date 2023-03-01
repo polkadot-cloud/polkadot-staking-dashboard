@@ -40,7 +40,9 @@ export const TenantContextProvider = ({
         const data: AnyJson = item[1].toPrimitive();
         const infos: AnyJson = data.infos;
         _tenants.push({
-          ...data,
+          accountId: data.accountId,
+          assetRequested: data.assetRequested,
+          registeredAtBlock: data.registeredAtBlock,
           identity: {
             ...emptyIdentity,
             display: infos.display.raw || '',
