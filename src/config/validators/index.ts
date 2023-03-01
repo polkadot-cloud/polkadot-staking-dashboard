@@ -525,4 +525,23 @@ export const VALIDATOR_COMMUNITY = [
       polkadot: ['13kz33kotYa3M75u5avMS367zJY3Fx2y5ZYASEPunqfEeCjD'],
     },
   },
+  {
+    name: '🐲 DragonStake 🐲',
+    thumbnail: 'DragonStake',
+    bio: 'Genesis block and Community focused Validator. We run industrial grade staking infrastructure on main proof of stake networks from their earliest testnets. We offer high yields, low commissions and high reliability',
+    email: 'hello@dragonstake.io',
+    twitter: '@DragonStake',
+    website: 'https://dragonstake.io',
+    validators: {
+      polkadot: [
+        '1dGsgLgFez7gt5WjX2FYzNCJtaCjGG6W9dA42d9cHngDYGg',
+        '12dGS1zjyiUqj7GuxDDwv9i72RMye1mT7tSWNaSx7QVeJ32H',
+      ],
+      kusama: [
+        'DSpbbk6HKKyS78c4KDLSxCetqbwnsemv2iocVXwNe2FAvWC',
+        'DSA55HQ9uGHE5MyMouE8Geasi2tsDcu3oHR4aFkJ3VBjZG5',
+        'J4XkgJjMP6c1pqneV5KogJvJLM1qReXP9SAMJt33prnDdwB',
+      ],
+    },
+  },
 ];
