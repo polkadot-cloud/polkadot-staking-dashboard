@@ -30,7 +30,7 @@ export interface AccountDropdownProps {
   items: Array<InputItem>;
   onChange: (o: any) => void;
   placeholder?: string;
-  value: InputItem;
+  selected: InputItem;
   current: InputItem;
   height: string | number | undefined;
 }

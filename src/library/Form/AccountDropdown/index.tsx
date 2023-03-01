@@ -9,12 +9,12 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { remToUnit } from 'Utils';
 import { AccountDropdownProps, InputItem } from '../types';
-import { StyledDownshift, StyledDropdown } from './Wrappers';
+import { StyledDropdown, StyledSelect } from './Wrappers';
 
 export const AccountDropdown = ({
   items,
   onChange,
-  value,
+  selected,
   current,
   height,
 }: AccountDropdownProps) => {
@@ -26,7 +26,7 @@ export const AccountDropdown = ({
   }, [items]);
 
   return (
-    <StyledDownshift>
+    <StyledSelect>
       <div>
         <div className="current">
           <div className="input-wrap selected">
@@ -42,13 +42,13 @@ export const AccountDropdown = ({
             <FontAwesomeIcon icon={faAnglesRight} />
           </span>
           <div className="input-wrap selected">
-            {value !== null && (
+            {selected !== null && (
               <Identicon
-                value={value?.address ?? ''}
+                value={selected?.address ?? ''}
                 size={remToUnit('2rem')}
               />
             )}
-            <input className="input" disabled value={value?.name ?? '...'} />
+            <input className="input" disabled value={selected?.name ?? '...'} />
           </div>
         </div>
         <StyledDropdown height={height}>
@@ -58,13 +58,13 @@ export const AccountDropdown = ({
                 key={`controller_acc_${index}`}
                 item={item}
                 onChange={onChange}
-                selected={item === value}
+                selected={item === selected}
               />
             ))}
           </div>
         </StyledDropdown>
       </div>
-    </StyledDownshift>
+    </StyledSelect>
   );
 };
 

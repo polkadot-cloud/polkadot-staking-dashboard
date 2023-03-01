@@ -89,7 +89,7 @@ export const UpdateController = () => {
               items={items}
               onChange={handleOnChange}
               current={account}
-              value={selected}
+              selected={selected}
               height="17rem"
             />
           </div>
