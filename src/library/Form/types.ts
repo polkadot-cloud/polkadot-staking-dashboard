@@ -29,7 +29,7 @@ export interface DropdownInput {
 export interface AccountDropdownProps {
   items: Array<InputItem>;
   onChange: (o: any) => void;
-  placeholder: string;
+  placeholder?: string;
   value: InputItem;
   current: InputItem;
   height: string | number | undefined;

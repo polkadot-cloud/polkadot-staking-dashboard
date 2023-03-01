@@ -76,15 +76,16 @@ export const StyledDropdown = styled.div<any>`
   z-index: 1;
 
   .items {
-    width: auto;
+    width: 100%;
     height: ${(props) => (props.height ? props.height : 'auto')};
     overflow: auto;
 
-    .item {
+    button {
+      width: 100%;
       cursor: pointer;
       opacity: 1;
       padding: 0.5rem;
-      margin: 0.25rem;
+      margin: 0.25rem 0;
       border-radius: 0.75rem;
       display: flex;
       flex-flow: row wrap;
@@ -120,6 +121,7 @@ export const StyledDropdown = styled.div<any>`
         white-space: nowrap;
         overflow: hidden;
         flex: 1;
+        text-align: left;
       }
     }
   }

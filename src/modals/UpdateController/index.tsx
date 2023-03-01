@@ -6,7 +6,6 @@ import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { ImportedAccount } from 'contexts/Connect/types';
 import { useModal } from 'contexts/Modal';
 import { useTxFees } from 'contexts/TxFees';
 import { AccountDropdown } from 'library/Form/AccountDropdown';
@@ -33,7 +32,7 @@ export const UpdateController = () => {
   const account = getAccount(controller);
 
   // the selected value in the form
-  const [selected, setSelected] = useState<ImportedAccount | null>(null);
+  const [selected, setSelected] = useState<InputItem>(null);
 
   // get eligible controller accounts
   const items = getEligibleControllers();
@@ -44,8 +43,8 @@ export const UpdateController = () => {
   }, [activeAccount, items]);
 
   // handle account selection change
-  const handleOnChange = ({ selectedItem }: { selectedItem: InputItem }) => {
-    setSelected(selectedItem);
+  const handleOnChange = (item: InputItem) => {
+    setSelected(item);
   };
 
   // tx to submit
@@ -89,7 +88,6 @@ export const UpdateController = () => {
             <AccountDropdown
               items={items}
               onChange={handleOnChange}
-              placeholder={t('searchAccount')}
               current={account}
               value={selected}
               height="17rem"
