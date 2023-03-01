@@ -22,7 +22,7 @@ import { Syncing } from './Syncing';
 import { TipsWrapper } from './Wrappers';
 
 export const Tips = () => {
-  const { t, i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { networkSyncing } = useUi();

@@ -24,7 +24,7 @@ import { locales } from 'locale';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnySubscan } from 'types';
-import { clipAddress, planckToUnit } from 'Utils';
+import { clipAddress, isNotZero, planckToUnit } from 'Utils';
 import { PayoutListProps } from '../types';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProvider, usePayoutList } from './context';
@@ -81,7 +81,7 @@ export const PayoutListInner = ({
 
   // configure list when network is ready to fetch
   useEffect(() => {
-    if (isReady && activeEra.index !== 0 && !fetched) {
+    if (isReady && isNotZero(activeEra.index) && !fetched) {
       setPayouts(initialPayouts);
       setFetched(true);
     }

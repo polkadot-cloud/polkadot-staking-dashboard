@@ -122,8 +122,8 @@ export const useTimeLeft = () => {
     };
   }, []);
 
-  const setFromNow = (dateTo: Date) => {
-    setTimeleft(getTimeleft(getDuration(new Date())));
+  const setFromNow = (dateFrom: Date, dateTo: Date) => {
+    setTimeleft(getTimeleft(getDuration(dateFrom)));
     setStateWithRef(dateTo, setTo, toRef);
   };
 

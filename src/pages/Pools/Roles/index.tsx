@@ -6,15 +6,15 @@ import {
   faEdit,
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp, ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useAccount } from 'contexts/Account';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
@@ -37,6 +37,7 @@ export const Roles = ({
   const { openModalWith } = useModal();
   const { id } = selectedActivePool || { id: 0 };
   const roles = defaultRoles;
+  const { openHelp } = useHelp();
 
   const initialiseEdits = (() => {
     const initState: Record<string, RoleEditEntry> = {};
@@ -139,7 +140,8 @@ export const Roles = ({
     <>
       <CardHeaderWrapper withAction>
         <h3>
-          {t('pools.roles')} <OpenHelpIcon helpKey="Pool Roles" />
+          {t('pools.roles')}{' '}
+          <ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />
         </h3>
         {!(isOwner() === true || setters.length) ? (
           <></>

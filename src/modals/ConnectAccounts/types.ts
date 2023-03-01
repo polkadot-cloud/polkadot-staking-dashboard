@@ -25,7 +25,7 @@ export interface ExtensionMetaProps {
   status?: string;
 }
 
-export interface AccountElementProps {
+export interface AccountItemProps {
   meta: ExtensionAccount | null;
   address?: MaybeAccount;
   label?: Array<string>;
@@ -49,14 +49,7 @@ export interface ControllerAccount {
   ledger: BalanceLedger;
 }
 
-export interface StashAcount {
-  address: string;
-  controller: MaybeAccount;
-}
-
-export interface ActivelyStakingAccount {
+export interface AccountNominating {
   stash: MaybeAccount;
-  controller: MaybeAccount;
   stashImported: boolean;
-  controllerImported: boolean;
 }

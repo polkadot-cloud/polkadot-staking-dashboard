@@ -38,7 +38,7 @@ export const SideMenu = () => {
     userSideMenuMinimised,
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi();
-  const { openHelpWith } = useHelp();
+  const { openHelp } = useHelp();
 
   // listen to window resize to hide SideMenu
   useEffect(() => {
@@ -77,7 +77,7 @@ export const SideMenu = () => {
         <Heading title={t('support')} minimised={sideMenuMinimised} />
         <Secondary
           onClick={() => {
-            openHelpWith(null, {});
+            openHelp(null);
           }}
           name={t('resources')}
           minimised={sideMenuMinimised}

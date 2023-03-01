@@ -32,7 +32,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
   const { lastPoolId } = stats;
-  const poolId = lastPoolId.plus(new BigNumber(1));
+  const poolId = lastPoolId.plus(1);
   const { txFeesValid } = useTxFees();
 
   const setup = getSetupProgress('pool', activeAccount);

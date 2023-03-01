@@ -178,7 +178,7 @@ export const BalancesProvider = ({
         const feeFrozen = new BigNumber(data.feeFrozen.toString());
         const freeAfterReserve = BigNumber.max(
           free.minus(existentialAmount),
-          new BigNumber(0)
+          0
         );
 
         // set account balances to context

@@ -1,18 +1,19 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ButtonHelp } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { Lock } from 'contexts/Balances/types';
 import { useConnect } from 'contexts/Connect';
+import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { BarSegment } from 'library/BarChart/BarSegment';
 import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero, planckToUnit } from 'Utils';
 
@@ -23,6 +24,7 @@ export const BalanceChart = () => {
   } = useApi();
   const prices = usePrices();
   const { plugins } = usePlugins();
+  const { openHelp } = useHelp();
   const { activeAccount } = useConnect();
   const { getAccountBalance, existentialAmount, getAccountLocks } =
     useBalances();
@@ -74,11 +76,11 @@ export const BalanceChart = () => {
   // graph percentages
   const graphTotal = nominating.plus(inPool).plus(graphAvailable);
   const graphNominating = greaterThanZero(nominating)
-    ? nominating.dividedBy(graphTotal.multipliedBy(new BigNumber(0.01)))
+    ? nominating.dividedBy(graphTotal.multipliedBy(0.01))
     : new BigNumber(0);
 
   const graphInPool = greaterThanZero(inPool)
-    ? inPool.dividedBy(graphTotal.multipliedBy(new BigNumber(0.01)))
+    ? inPool.dividedBy(graphTotal.multipliedBy(0.01))
     : new BigNumber(0);
 
   const graphNotStaking = greaterThanZero(graphTotal)
@@ -124,7 +126,7 @@ export const BalanceChart = () => {
       <div className="head">
         <h4>
           {t('overview.balance')}
-          <OpenHelpIcon helpKey="Your Balance" />
+          <ButtonHelp marginLeft onClick={() => openHelp('Your Balance')} />
         </h4>
         <h2>
           <span className="amount">{totalBalance.toFormat()}</span>&nbsp;

@@ -41,6 +41,17 @@ export const VALIDATOR_COMMUNITY = [
     },
   },
   {
+    name: 'bLd Nodes | ChadStakeKing',
+    thumbnail: 'bLdNodes',
+    bio: 'Independant validator, professionnal Web3 Devops engineer, bLd Nodes is focusing on providing small scale validators and collators with low commission. Proud co-founder of the DOT Validator Alliance',
+    email: 'gm@bldnodes.org',
+    website: 'https://bldnodes.org',
+    validators: {
+      polkadot: ['12bLdVAgWiKHgFHtAaQstasMUWVq35oG9iwHCwsKoFFNoNrk'],
+      kusama: ['Hf8C626KBAjitMV7w8AhQWDCiPgUU47htEwbomq5mDMKeyL'],
+    },
+  },
+  {
     name: 'Coinbase Cloud',
     thumbnail: 'CoinbaseCloud',
     bio: 'Our staking infrastructure powers the leading crypto products and exchanges. We offer the same infrastructure in our public validators and make it available to you.',
@@ -512,6 +523,25 @@ export const VALIDATOR_COMMUNITY = [
     twitter: '@wojdot',
     validators: {
       polkadot: ['13kz33kotYa3M75u5avMS367zJY3Fx2y5ZYASEPunqfEeCjD'],
+    },
+  },
+  {
+    name: '🐲 DragonStake 🐲',
+    thumbnail: 'DragonStake',
+    bio: 'Genesis block and Community focused Validator. We run industrial grade staking infrastructure on main proof of stake networks from their earliest testnets. We offer high yields, low commissions and high reliability',
+    email: 'hello@dragonstake.io',
+    twitter: '@DragonStake',
+    website: 'https://dragonstake.io',
+    validators: {
+      polkadot: [
+        '1dGsgLgFez7gt5WjX2FYzNCJtaCjGG6W9dA42d9cHngDYGg',
+        '12dGS1zjyiUqj7GuxDDwv9i72RMye1mT7tSWNaSx7QVeJ32H',
+      ],
+      kusama: [
+        'DSpbbk6HKKyS78c4KDLSxCetqbwnsemv2iocVXwNe2FAvWC',
+        'DSA55HQ9uGHE5MyMouE8Geasi2tsDcu3oHR4aFkJ3VBjZG5',
+        'J4XkgJjMP6c1pqneV5KogJvJLM1qReXP9SAMJt33prnDdwB',
+      ],
     },
   },
 ];

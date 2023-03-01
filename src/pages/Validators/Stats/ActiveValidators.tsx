@@ -18,7 +18,7 @@ export const ActiveValidatorsStat = () => {
   let activeValidatorsAsPercent = new BigNumber(0);
   if (greaterThanZero(validatorCount)) {
     activeValidatorsAsPercent = new BigNumber(activeValidators).dividedBy(
-      validatorCount.multipliedBy(new BigNumber(0.01))
+      validatorCount.multipliedBy(0.01)
     );
   }
 
@@ -31,7 +31,7 @@ export const ActiveValidatorsStat = () => {
     },
     graph: {
       value1: activeValidators,
-      value2: validatorCount.minus(new BigNumber(activeValidators)).toNumber(),
+      value2: validatorCount.minus(activeValidators).toNumber(),
     },
     tooltip: `${activeValidatorsAsPercent.decimalPlaces(2).toFormat()}%`,
     helpKey: 'Active Validator',

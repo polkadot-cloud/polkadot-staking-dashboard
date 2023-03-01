@@ -75,50 +75,21 @@ export const AccountGroupWrapper = styled(motion.button)`
   border-radius: 1rem;
   width: 100%;
   display: flex;
-  flex-flow: row wrap;
   align-items: center;
   margin-bottom: 1rem;
   transition: background 0.15s;
 
-  > section {
-    display: flex;
-    flex-flow: row wrap;
-    flex-basis: 100%;
-
-    @media (min-width: 800px) {
-      flex-basis: 50%;
-
-      &:first-child {
-        padding-right: 0.25rem;
-      }
-      &:last-child {
-        padding-left: 0.25rem;
-      }
-    }
-
-    > h5 {
-      margin: 0 0 0.25rem 0;
-      opacity: 0.75;
-    }
-
-    > div {
-      margin: 0.4rem 0;
-      > button,
-      > div {
-        border: 1px solid var(--background-modal);
-        border-radius: 0.75rem;
-        margin: 0;
-      }
-    }
+  > h5 {
+    margin: 0 0 0.25rem 0;
+    opacity: 0.75;
   }
-
-  &:hover {
-    background: var(--button-toggle-background);
-    > section > div {
-      > button,
-      > div {
-        background: var(--button-toggle-background);
-      }
+  > div {
+    margin: 0.4rem 0;
+    > button,
+    > div {
+      border: 1px solid var(--background-modal);
+      border-radius: 0.75rem;
+      margin: 0;
     }
   }
 `;
@@ -126,14 +97,12 @@ export const AccountGroupWrapper = styled(motion.button)`
 export const AccountWrapper = styled.div`
   width: 100%;
   margin: 0.5rem 0;
+  transition: transform 0.1s;
 
-  > button {
-    &:hover {
-      background: var(--button-toggle-background);
-    }
-    &:disabled {
-      cursor: default;
-      border: 2px solid rgba(242, 185, 27, 0.25);
+  &:hover {
+    transform: scale(1.006);
+    .name {
+      color: var(--network-color-primary);
     }
   }
 
@@ -144,7 +113,6 @@ export const AccountWrapper = styled.div`
     width: 100%;
     border-radius: 0.75rem;
     font-size: 1rem;
-    transition: background 0.15s;
     display: flex;
     align-items: center;
     min-height: 3.5rem;
@@ -164,6 +132,7 @@ export const AccountWrapper = styled.div`
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
+          transition: color 0.15s;
         }
       }
 

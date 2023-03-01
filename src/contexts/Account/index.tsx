@@ -77,9 +77,15 @@ export const AccountProvider = ({
       }
     } else {
       // tidy up if existing batch exists
-      delete accountMetaBatches[key];
-      delete accountMetaBatchesRef.current[key];
-
+      const updatedMetaBatches: AnyMetaBatch = {
+        ...accountMetaBatchesRef.current,
+      };
+      delete updatedMetaBatches[key];
+      setStateWithRef(
+        updatedMetaBatches,
+        setAccountMetaBatch,
+        accountMetaBatchesRef
+      );
       if (accountSubsRef.current[key] !== undefined) {
         for (const unsub of accountSubsRef.current[key]) {
           unsub();

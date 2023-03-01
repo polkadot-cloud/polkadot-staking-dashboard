@@ -8,4 +8,5 @@ export const defaultSubscanContext: SubscanContextInterface = {
   fetchEraPoints: (v, e) => {},
   payouts: [],
   poolClaims: [],
+  unclaimedPayouts: [],
 };

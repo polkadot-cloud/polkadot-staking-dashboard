@@ -12,6 +12,7 @@ import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { useTranslation } from 'react-i18next';
+import { isNotZero } from 'Utils';
 import { ButtonRowWrapper, PageRowWrapper } from 'Wrappers';
 
 export const UnstakePrompts = () => {
@@ -32,7 +33,7 @@ export const UnstakePrompts = () => {
     isUnstaking &&
     active.isZero() &&
     totalUnlocking.isZero() &&
-    !totalUnlocked.isZero();
+    isNotZero(totalUnlocked);
 
   return (
     <>
