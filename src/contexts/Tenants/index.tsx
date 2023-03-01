@@ -37,13 +37,10 @@ export const TenantContextProvider = ({
       if (res.isEmpty) return;
       const _tenants: RegisteredTenant[] = [];
       res.forEach((item: AnyJson) => {
-        console.log(item);
         const data: AnyJson = item[1].toPrimitive();
         const infos: AnyJson = data.infos;
         _tenants.push({
-          accountId: item[0].toString(),
-          assetRequested: data.assetRequested,
-          registeredAtBlock: data.registeredAtBlock,
+          ...data,
           identity: {
             ...emptyIdentity,
             display: infos.display.raw || '',
