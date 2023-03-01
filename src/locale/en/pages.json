@@ -216,6 +216,7 @@
       "withdrawUnlock": "Withdraw your unlock chunk to proceed with pool closure."
     },
     "representatives": {
+      "pageTitle": "Representatives",
       "sessionLaunchFailure": "Failed to launch a representation session",
       "sessionLaunchSuccess": "Successfully launched a representative session"
     },

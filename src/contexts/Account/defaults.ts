@@ -12,4 +12,5 @@ export const defaultAccountContext: AccountContextInterface = {
   isInvestor: () => false,
   isNotary: () => false,
   isTenant: () => false,
+  isRepresentative: () => false,
 };

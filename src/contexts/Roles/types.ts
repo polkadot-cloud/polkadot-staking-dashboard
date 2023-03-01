@@ -1,5 +1,15 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+export interface RepresentativeInfo {
+  activated: boolean;
+  registeredAt: number;
+  assetAccounts: Array<string>;
+  index: number;
+}
+
+type RepresentativeInfoResult = RepresentativeInfo | undefined;
 
 export interface RoleContextInterface {
   fetchAvailableReps: () => Promise<Array<string>>;
+  fetchRepresentativeDetails: (
+    _address: string
+  ) => Promise<RepresentativeInfoResult>;
 }

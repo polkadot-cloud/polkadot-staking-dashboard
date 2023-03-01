@@ -5,4 +5,5 @@ import { RoleContextInterface } from './types';
 
 export const defaultRoleContext: RoleContextInterface = {
   fetchAvailableReps: async () => [],
+  fetchRepresentativeDetails: async (_address: string) => undefined,
 };

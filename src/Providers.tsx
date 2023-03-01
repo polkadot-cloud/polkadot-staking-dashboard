@@ -21,6 +21,7 @@ import { OverlayProvider } from 'contexts/Overlay';
 import { PluginsProvider } from 'contexts/Plugins';
 import { RoleProvider } from 'contexts/Roles';
 import { ShareDistributorProvider } from 'contexts/ShareDistributor';
+import { TenantContextProvider } from 'contexts/Tenants';
 import { useTheme } from 'contexts/Themes';
 import { TooltipProvider } from 'contexts/Tooltip';
 import { TxFeesProvider } from 'contexts/TxFees';
@@ -83,7 +84,8 @@ export const Providers = withProviders(
   VotingProvider,
   DemocracyProvider,
   ShareDistributorProvider,
-  RoleProvider
+  RoleProvider,
+  TenantContextProvider
 )(ThemedRouter);
 
 export default Providers;

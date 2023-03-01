@@ -34,6 +34,7 @@ export const AccountProvider = ({
   const isNotary = () => role === 'NOTARY';
   const isSeller = () => role === 'SELLER';
   const isTenant = () => role === 'TENANT';
+  const isRepresentative = () => role === 'REPRESENTATIVE';
 
   const subscribe = async (_account: string | null) => {
     if (!_account) {
@@ -79,6 +80,7 @@ export const AccountProvider = ({
         isInvestor,
         isNotary,
         isTenant,
+        isRepresentative,
       }}
     >
       {children}

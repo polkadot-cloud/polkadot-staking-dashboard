@@ -30,8 +30,23 @@ export const RoleProvider = ({ children }: { children: React.ReactNode }) => {
     return reps;
   };
 
+  const fetchRepresentativeDetails = async (_address: string) => {
+    if (!isReady || !api) return undefined;
+    const res = await api.query.roleModule.representativeLog(_address);
+    if (res.isEmpty) return undefined;
+    const data: AnyJson = res.toPrimitive();
+    return {
+      activated: data.activated,
+      registeredAt: data.age,
+      assetAccounts: data.assetsAccounts,
+      index: data.index,
+    };
+  };
+
   return (
-    <RoleContext.Provider value={{ fetchAvailableReps }}>
+    <RoleContext.Provider
+      value={{ fetchAvailableReps, fetchRepresentativeDetails }}
+    >
       {children}
     </RoleContext.Provider>
   );

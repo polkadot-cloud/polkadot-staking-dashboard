@@ -216,7 +216,8 @@
     },
     "representatives": {
       "sessionLaunchFailure": "Failed to launch a representation session",
-      "sessionLaunchSuccess": "Successfully launched a representative session"
+      "sessionLaunchSuccess": "Successfully launched a representative session",
+      "pageTitle": "Representatives"
     },
     "sellers": {
       "metadata": "Metadata",
