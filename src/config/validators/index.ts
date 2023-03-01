@@ -527,7 +527,7 @@ export const VALIDATOR_COMMUNITY = [
   },
   {
     name: '🐲 DragonStake 🐲',
-    thumbnail: 'dragonstake',
+    thumbnail: 'DragonStake',
     bio: 'Genesis block and Community focused Validator. We run industrial grade staking infrastructure on main proof of stake networks from their earliest testnets. We offer high yields, low commissions and high reliability',
     email: 'hello@dragonstake.io',
     twitter: '@DragonStake',
