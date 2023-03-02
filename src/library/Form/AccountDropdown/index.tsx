@@ -48,7 +48,11 @@ export const AccountDropdown = ({
                 size={remToUnit('2rem')}
               />
             )}
-            <input className="input" disabled value={selected?.name ?? '...'} />
+            <input
+              className="input"
+              disabled
+              value={selected?.active ? selected?.name : '...'}
+            />
           </div>
         </div>
         <StyledDropdown height={height}>
@@ -74,7 +78,7 @@ const DropdownItem = ({ item, onChange, selected }: any) => {
   return (
     <button
       className={`${selected ? 'selected' : undefined} ${
-        item.active ? '' : ' inactive'
+        !item.active ? ' inactive' : ''
       }`}
       type="button"
       onClick={() => onChange(item)}
