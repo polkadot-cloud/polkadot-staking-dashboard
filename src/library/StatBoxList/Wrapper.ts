@@ -77,10 +77,6 @@ export const StatBoxWrapper = styled(motion.div)`
       display: flex;
       flex-flow: row wrap;
       align-items: center;
-
-      .help-icon {
-        margin-left: 0.6rem;
-      }
     }
 
     > .chart {

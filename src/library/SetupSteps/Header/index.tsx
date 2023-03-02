@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp, ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
+import { useHelp } from 'contexts/Help';
 import { useSetup } from 'contexts/Setup';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useTranslation } from 'react-i18next';
 import { HeaderProps } from '../types';
 import { Wrapper } from './Wrapper';
@@ -20,13 +20,16 @@ export const Header = ({
   const { activeAccount } = useConnect();
   const { getSetupProgress, setActiveAccountSetupSection } = useSetup();
   const setup = getSetupProgress(bondFor, activeAccount);
+  const { openHelp } = useHelp();
 
   return (
     <Wrapper>
       <section>
         <h2>
           {title}
-          {helpKey !== undefined && <OpenHelpIcon helpKey={helpKey} />}
+          {helpKey !== undefined ? (
+            <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+          ) : null}
         </h2>
       </section>
       <section>
