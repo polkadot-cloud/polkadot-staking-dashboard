@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faExternalLinkAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
@@ -9,7 +9,7 @@ import { ExtensionInjected } from 'contexts/Extensions/types';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ExtensionProps } from './types';
-import { ExtensionWrapper } from './Wrappers';
+import { ExtensionItem } from './Wrappers';
 
 export const Extension = (props: ExtensionProps) => {
   const { t } = useTranslation('modals');
@@ -21,6 +21,7 @@ export const Extension = (props: ExtensionProps) => {
   const status = !installed ? 'not_found' : extensionsStatus[id];
 
   // determine message to be displayed based on extension status.
+  // TODO: re-integrate if needed into extension item.
   let message;
   switch (status) {
     case 'connected':
@@ -34,33 +35,34 @@ export const Extension = (props: ExtensionProps) => {
   }
 
   return (
-    <ExtensionWrapper>
-      {status === 'connected' || !installed ? (
-        <ExtensionElement
-          {...props}
-          message={message}
-          status={status}
-          installed={installed}
-          size="1.5rem"
-        />
-      ) : (
+    <ExtensionItem className="flex">
+      <div className="inner">
         <ExtensionButton
           {...props}
-          message={message}
           status={status}
           size="1.5rem"
           installed={installed}
+          message={message}
+          disabled={status === 'connected' || !installed}
         />
-      )}
-    </ExtensionWrapper>
+      </div>
+    </ExtensionItem>
   );
 };
 
-export const ExtensionButton = (props: any) => {
-  const { meta, setSection, installed } = props;
-  const { status } = meta;
-
+export const ExtensionButton = ({
+  meta,
+  setSection,
+  installed,
+  disabled,
+  size,
+  status,
+  flag,
+  // eslint-disable-next-line
+  message,
+}: any) => {
   const { connectExtensionAccounts } = useConnect();
+  const { title, icon: Icon } = meta;
 
   // force re-render on click
   const [increment, setIncrement] = useState(0);
@@ -79,64 +81,51 @@ export const ExtensionButton = (props: any) => {
   };
 
   return (
-    <button
-      type="button"
-      disabled={status === 'connected'}
-      onClick={() => {
-        if (status !== 'connected') {
-          handleClick();
-        }
-      }}
-    >
-      <ExtensionInner {...props} />
-    </button>
-  );
-};
-
-export const ExtensionElement = (props: any) => {
-  return (
-    <div style={{ opacity: !props.installed ? 0.5 : 1 }}>
-      <ExtensionInner {...props} />
-    </div>
-  );
-};
-
-export const ExtensionInner = ({
-  size,
-  message,
-  flag,
-  meta,
-  status,
-  installed,
-}: any) => {
-  const { title, icon: Icon } = meta;
-
-  return (
-    <>
-      <div>
-        <Icon width={size} height={size} />
-        <h3>
-          <span className="name">&nbsp; {title}</span>
-        </h3>
-      </div>
-
-      <div className={status === 'connected' ? 'success' : 'neutral'}>
-        <h4>
-          <span
-            className={`message ${status === 'connected' ? 'success' : ''}`}
+    <div>
+      <div className="body">
+        {!(disabled || status === 'connected') ? (
+          <button
+            type="button"
+            className="button"
+            disabled={disabled}
+            onClick={() => {
+              if (status !== 'connected') {
+                handleClick();
+              }
+            }}
           >
-            {message}
-          </span>
-        </h4>
-        {flag && flag}
-        {installed || status === 'connected' ? (
-          <FontAwesomeIcon
-            icon={status === 'connected' ? faCheckCircle : faPlus}
-            transform="shrink-0"
-            className="icon"
-          />
+            &nbsp;
+          </button>
         ) : null}
+
+        <div className="row">
+          <Icon width={size} height={size} className="icon" />
+        </div>
+        <div className="status">
+          {flag && flag}
+          {installed ? (
+            status === 'connected' ? (
+              <p className="success">Connected</p>
+            ) : (
+              <p>
+                <FontAwesomeIcon icon={faPlus} className="plus" />
+                Connect
+              </p>
+            )
+          ) : (
+            <p>Not Installed</p>
+          )}
+        </div>
+        <div className="row">
+          <h3>{title}</h3>
+        </div>
       </div>
-    </>
+      <div className="foot">
+        <a href="/#" target="_blank" rel="noreferrer">
+          polkadot.network
+          <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
+        </a>
+      </div>
+    </div>
   );
 };

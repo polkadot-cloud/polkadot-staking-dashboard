@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
-  faCog,
+  faPlug,
   faProjectDiagram,
   faUsers,
 } from '@fortawesome/free-solid-svg-icons';
@@ -111,17 +111,15 @@ export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
     <ContentWrapper>
       <PaddingWrapper ref={ref}>
         <div className="head">
-          <div>
-            <h1>{t('accounts')}</h1>
-          </div>
-          <div>
+          <h1>
+            {t('accounts')}
             <ButtonSecondary
-              text={t('extensions')}
-              iconLeft={faCog}
+              text="Connect More Accounts"
+              iconLeft={faPlug}
               iconTransform="shrink-2"
               onClick={() => setSection(0)}
             />
-          </div>
+          </h1>
         </div>
         {activeAccount ? (
           <AccountButton
@@ -134,7 +132,7 @@ export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
           <AccountWrapper>
             <div>
               <div>
-                <h3>{t('noAccountConnected')}</h3>
+                <h3>No Active Account</h3>
               </div>
               <div />
             </div>

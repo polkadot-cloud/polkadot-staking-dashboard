@@ -66,7 +66,7 @@ export const ActiveAccount = () => {
               </>
             )}
 
-            {!accountData && t('overview.noAccountConnected')}
+            {!accountData ? 'No Active Account' : null}
           </h3>
         </div>
       </div>

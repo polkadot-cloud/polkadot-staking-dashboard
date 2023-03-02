@@ -91,7 +91,6 @@
       "networkCurrentlyStaked": "{{total}} {{unit}} 目前正在{{network}}进行抵押",
       "networkCurrentlyStakedSubtitle": "当前共有{{unit}} 在所有验证人和提名人之间做抵押",
       "networkStats": "网络信息",
-      "noAccountConnected": "未连接帐户",
       "nominating": "提名中",
       "notStaking": "无抵押",
       "overview": "概述",

@@ -4,9 +4,9 @@
 import styled from 'styled-components';
 
 export const TwoThreshold = 800;
+export const ThreeRowThreshold = 1300;
 
 const TwoThresholdMin = TwoThreshold + 1;
-const ThreeRowThreshold = 1300;
 const ThreeRowThresholdMin = ThreeRowThreshold + 1;
 
 // The outer container of select items.

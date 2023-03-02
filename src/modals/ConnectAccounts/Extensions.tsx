@@ -1,28 +1,20 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faAngleDoubleRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faRepeat } from '@fortawesome/free-solid-svg-icons';
+import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { EXTENSIONS } from 'config/extensions';
-import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import { ExtensionConfig } from 'contexts/Extensions/types';
+import { SelectItems } from 'library/SelectItems';
 import { forwardRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Extension } from './Extension';
 import { ReadOnly } from './ReadOnly';
 import { forwardRefProps } from './types';
-import {
-  ContentWrapper,
-  ExtensionWrapper,
-  PaddingWrapper,
-  Separator,
-} from './Wrappers';
+import { ContentWrapper, PaddingWrapper, Separator } from './Wrappers';
 
 export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
-  const { t } = useTranslation('modals');
   const { setSection } = props;
-  const { accounts } = useConnect();
   const { extensions } = useExtensions();
 
   const installed = EXTENSIONS.filter((a: ExtensionConfig) =>
@@ -38,39 +30,32 @@ export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
     <ContentWrapper>
       <PaddingWrapper ref={ref}>
         <div className="head">
-          <h1>{t('extensions')}</h1>
+          <h1>
+            Connect
+            <ButtonSecondary
+              text="Go To Accounts"
+              iconLeft={faRepeat}
+              iconTransform="shrink-2"
+              onClick={() => setSection(1)}
+            />
+          </h1>
         </div>
-        <ExtensionWrapper>
-          <button
-            type="button"
-            onClick={() => {
-              setSection(1);
-            }}
-          >
-            <div>
-              <h3>
-                <span className="name">
-                  {t('importedAccount', { count: accounts.length })}
-                </span>
-              </h3>
-            </div>
-            <div className="neutral">
-              <FontAwesomeIcon icon={faAngleDoubleRight} className="icon" />
-            </div>
-          </button>
-        </ExtensionWrapper>
         <Separator />
-        {installed
-          .concat(other)
-          .map((extension: ExtensionConfig, i: number) => {
-            return (
-              <Extension
-                key={`active_extension_${i}`}
-                meta={extension}
-                setSection={setSection}
-              />
-            );
-          })}
+        <h2>Extensions</h2>
+        <SelectItems flex>
+          {installed
+            .concat(other)
+            .map((extension: ExtensionConfig, i: number) => {
+              return (
+                <Extension
+                  key={`active_extension_${i}`}
+                  meta={extension}
+                  setSection={setSection}
+                />
+              );
+            })}
+        </SelectItems>
+        <Separator />
         <ReadOnly {...props} />
       </PaddingWrapper>
     </ContentWrapper>
