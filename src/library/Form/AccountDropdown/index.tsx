@@ -73,7 +73,9 @@ const DropdownItem = ({ item, onChange, selected }: any) => {
   const { unit } = useApi().network;
   return (
     <button
-      className={selected ? 'selected' : undefined}
+      className={`${selected ? 'selected' : undefined} ${
+        item.active ? '' : ' inactive'
+      }`}
       type="button"
       onClick={() => onChange(item)}
     >

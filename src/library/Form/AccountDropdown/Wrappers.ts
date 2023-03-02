@@ -96,6 +96,7 @@ export const StyledDropdown = styled.div<any>`
       &.inactive {
         opacity: 0.5;
         cursor: default;
+        border: none;
       }
 
       &.selected {

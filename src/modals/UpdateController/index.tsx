@@ -105,6 +105,7 @@ export const UpdateController = () => {
             onClick={() => submitTx()}
             disabled={
               selected === null ||
+              !selected.active ||
               submitting ||
               !accountHasSigner(activeAccount) ||
               !txFeesValid
