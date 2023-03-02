@@ -62,7 +62,7 @@ export const ExtensionButton = ({
   message,
 }: any) => {
   const { connectExtensionAccounts } = useConnect();
-  const { title, icon: Icon } = meta;
+  const { title, icon: Icon, url } = meta;
 
   // force re-render on click
   const [increment, setIncrement] = useState(0);
@@ -121,8 +121,8 @@ export const ExtensionButton = ({
         </div>
       </div>
       <div className="foot">
-        <a href="/#" target="_blank" rel="noreferrer">
-          polkadot.network
+        <a href={`https://${url}`} target="_blank" rel="noreferrer">
+          {url}
           <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
         </a>
       </div>

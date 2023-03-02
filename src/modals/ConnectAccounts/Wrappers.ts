@@ -257,7 +257,7 @@ export const ExtensionItem = styled.div`
           color: var(--network-color-primary);
         }
         > svg {
-          margin-left: 0.4rem;
+          margin-left: 0.3rem;
           margin-top: 0.1rem;
         }
       }

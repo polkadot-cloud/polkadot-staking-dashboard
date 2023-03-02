@@ -18,25 +18,32 @@ export const EXTENSIONS: ExtensionConfig[] = [
     icon: (window as any)?.walletExtension?.isNovaWallet
       ? NovaWalletSVG
       : PolkadotJSSVG,
+    url: (window as any)?.walletExtension?.isNovaWallet
+      ? 'novawallet.io'
+      : 'polkadot.js.org/extension',
   },
   {
     id: 'talisman',
     title: 'Talisman',
     icon: TalismanSVG,
+    url: 'talisman.xyz',
   },
   {
     id: 'enkrypt',
     title: 'Enkrypt',
     icon: EnkryptSVG,
+    url: 'enkrypt.com',
   },
   {
     id: 'subwallet-js',
     title: 'SubWallet',
     icon: SubwalletSVG,
+    url: 'subwallet.app',
   },
   {
     id: 'parity-signer-companion',
     title: 'Parity Signer Companion',
     icon: SignerSVG,
+    url: 'parity.io/technologies/signer',
   },
 ];
