@@ -57,10 +57,7 @@ export const Wrapper = styled.div`
       display: flex;
       align-items: center;
       > button {
-        background: none;
-        opacity: 0.85;
-        margin-left: 0.75rem;
-        font-size: 1.2rem;
+        margin-left: 1.25rem;
       }
     }
   }

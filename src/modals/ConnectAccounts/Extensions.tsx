@@ -1,8 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faRepeat } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { EXTENSIONS } from 'config/extensions';
 import { useExtensions } from 'contexts/Extensions';
 import { ExtensionConfig } from 'contexts/Extensions/types';
@@ -32,9 +31,8 @@ export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
         <div className="head">
           <h1>
             Connect
-            <ButtonSecondary
+            <ButtonInvertRounded
               text="Go To Accounts"
-              iconLeft={faRepeat}
               iconTransform="shrink-2"
               onClick={() => setSection(1)}
             />

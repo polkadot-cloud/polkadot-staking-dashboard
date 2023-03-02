@@ -1,13 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  faPlug,
-  faProjectDiagram,
-  faUsers,
-} from '@fortawesome/free-solid-svg-icons';
+import { faProjectDiagram, faUsers } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -113,9 +109,8 @@ export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
         <div className="head">
           <h1>
             {t('accounts')}
-            <ButtonSecondary
-              text="Connect More Accounts"
-              iconLeft={faPlug}
+            <ButtonInvertRounded
+              text="Go To Connect"
               iconTransform="shrink-2"
               onClick={() => setSection(0)}
             />
