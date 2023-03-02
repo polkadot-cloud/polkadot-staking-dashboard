@@ -1,15 +1,17 @@
 import {
   faBars,
   faClockFour,
+  faCopy,
   faDollar,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Asset } from 'contexts/Assets/types';
 import { useMenu } from 'contexts/Menu';
 import { useNetworkMetrics } from 'contexts/Network';
+import { useNotifications } from 'contexts/Notifications';
 import { MenuPosition } from 'library/ListItem/Wrappers';
 import React, { useRef } from 'react';
-import { humanNumberBn } from 'Utils';
+import { clipAddress, humanNumberBn } from 'Utils';
 import {
   AssetItemWrapper,
   AssetName,
@@ -30,8 +32,10 @@ interface AssetProps {
   menuItems: Array<AssetMenuItem>;
 }
 export const AssetItem = ({ asset, menuItems }: AssetProps) => {
-  const { decimals } = useNetworkMetrics();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
+  const { addNotification } = useNotifications();
+  const { decimals } = useNetworkMetrics();
+
   const posRef = useRef(null);
 
   const toggleMenu = () => {
@@ -71,6 +75,34 @@ export const AssetItem = ({ asset, menuItems }: AssetProps) => {
           <InfoItem>
             <FontAwesomeIcon icon={faDollar} />
             <b>{humanNumberBn(asset.price, decimals)}</b>
+          </InfoItem>
+          <InfoItem>
+            <b>Representative:</b>
+
+            {asset.representative ? (
+              <>
+                <b className="rep">{clipAddress(asset.representative)}</b>
+                <button
+                  type="button"
+                  className="copy-address"
+                  onClick={() => {
+                    navigator.clipboard.writeText(asset.representative);
+                    addNotification({
+                      title: 'Address copied',
+                      subtitle: asset.representative,
+                    });
+                  }}
+                >
+                  <FontAwesomeIcon
+                    className="copy"
+                    icon={faCopy}
+                    transform="shrink-1"
+                  />
+                </button>
+              </>
+            ) : (
+              <b className="no-rep">None</b>
+            )}
           </InfoItem>
         </div>
       </div>

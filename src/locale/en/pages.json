@@ -215,6 +215,13 @@
       "withdrawFunds": "Withdraw Funds",
       "withdrawUnlock": "Withdraw your unlock chunk to proceed with pool closure."
     },
+    "representatives": {
+      "pageTitle": "Representatives",
+      "sessionLaunchFailure": "Failed to launch a representation session",
+      "sessionLaunchSuccess": "Successfully launched a representative session",
+      "tenantSessionFailure": "Failed to launched a tenant session",
+      "tenantSessionSuccess": "Successfully launched a tenant session"
+    },
     "sellers": {
       "metadata": "Metadata",
       "onboardAsset": "Onboard an asset",
@@ -224,6 +231,15 @@
       "phMetadata": "Write description of the asset",
       "price": "Price",
       "submit": "Submit"
+    },
+    "tenants": {
+      "applicationFailure": "Error while submitting application",
+      "applicationSuccess": "Successfully submitted application",
+      "formTitle": "Tenant Application Form",
+      "pageTitle": "Tenants",
+      "requestAsset": "Request asset",
+      "roleWarning": "Only TENANTs can use the functions on this page",
+      "submit": "Request asset"
     },
     "validators": {
       "activeValidators": "Active Validators",

@@ -1,6 +1,5 @@
 import { ROLES } from 'config/accounts';
 import { useAccount } from 'contexts/Account';
-import { AccountRole, isRoleValid } from 'contexts/Account/types';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -9,8 +8,9 @@ import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { PaddingWrapper } from 'modals/Wrappers';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AnyApi } from 'types';
 import { ContentWrapper, RoleButton } from './Wrapper';
 
 export const SelectRole = () => {
@@ -22,17 +22,11 @@ export const SelectRole = () => {
   const { address } = useAccount();
   const { notifyError, notifySuccess } = useNotifications();
 
-  const [role, selectRole] = useState<AccountRole>('');
   const [pending, setPending] = useState(false);
+  const [tx, setTx] = useState<AnyApi>(null);
 
-  const getTx = () => {
-    if (!api) return null;
-    if (!isRoleValid(role)) return null;
-
-    return api.tx.roleModule.setRole(address, role);
-  };
   const { submitTx, submitting } = useSubmitExtrinsic({
-    tx: getTx(),
+    tx,
     from: activeAccount,
     shouldSubmit: true,
     callbackInBlock: () => {},
@@ -49,6 +43,12 @@ export const SelectRole = () => {
     },
   });
 
+  useEffect(() => {
+    if (!tx) return;
+    setPending(true);
+    submitTx();
+  }, [tx]);
+
   return (
     <>
       <Title title={t('selectRole')} loading={pending} />
@@ -61,8 +61,9 @@ export const SelectRole = () => {
                 disabled={pending || submitting}
                 onClick={() => {
                   setPending(true);
-                  selectRole(_role);
-                  submitTx();
+                  setTx(
+                    !api ? null : api.tx.roleModule.setRole(address, _role)
+                  );
                 }}
               >
                 {_role}

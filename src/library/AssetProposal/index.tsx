@@ -36,6 +36,8 @@ interface AssetProposalProps {
   canClose?: boolean;
   onVote: (vote: boolean) => void;
   onClose?: () => void;
+  onAyes?: () => void;
+  onNays?: () => void;
 }
 export const AssetProposal = ({
   asset,
@@ -49,6 +51,8 @@ export const AssetProposal = ({
   canClose = false,
   onClose,
   onVote,
+  onAyes,
+  onNays,
 }: AssetProposalProps) => {
   const { addNotification } = useNotifications();
   const { t } = useTranslation('pages');
@@ -105,7 +109,14 @@ export const AssetProposal = ({
                 >
                   <FontAwesomeIcon icon={faThumbsUp} color="green" />
                 </VoteButton>
-                <p className="ok">{ayes}</p>
+                <button
+                  className="yes"
+                  type="button"
+                  disabled={!ayes || onAyes === undefined}
+                  onClick={onAyes}
+                >
+                  {ayes}
+                </button>
               </VoteStats>
               <VoteStats>
                 <VoteButton
@@ -115,7 +126,14 @@ export const AssetProposal = ({
                 >
                   <FontAwesomeIcon icon={faThumbsDown} color="red" />
                 </VoteButton>
-                <p className="no">{nays}</p>
+                <button
+                  type="button"
+                  disabled={!nays || onNays === undefined}
+                  className="no"
+                  onClick={onNays}
+                >
+                  {nays}
+                </button>
               </VoteStats>
               {canClose && (
                 <VoteButton onClick={() => onClose && onClose()}>

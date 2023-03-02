@@ -7,10 +7,15 @@ export interface Asset {
   created: number;
   metadata: string;
   price: BN;
+  representative: string;
   tenants: Array<string>;
   proposalHash: string;
 }
 export interface AssetsContextInterface {
   assets: Array<Asset>;
   fetchAssets: () => Promise<void>;
+  fetchAssetAccount: (
+    _collId: number,
+    _itemId: number
+  ) => Promise<string | null>;
 }

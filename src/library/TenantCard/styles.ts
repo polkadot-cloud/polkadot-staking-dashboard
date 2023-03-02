@@ -5,18 +5,18 @@ import {
   borderPrimary,
   networkColor,
   shadowColorSecondary,
-  textDanger,
   textSecondary,
-  textSuccess,
 } from 'theme';
 
-export const AssetItemWrapper = styled.div`
+export const TenantCardWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
   height: 6rem;
   position: relative;
   margin: 0.5rem;
+  flex: 1 0 33%;
+  max-width: 33%;
 
   > .inner {
     background: ${backgroundDropdown};
@@ -42,6 +42,7 @@ export const AssetItemWrapper = styled.div`
       align-items: center;
       padding: 0 0.5rem;
       height: 3.25rem;
+      gap: 0.5rem;
 
       &.status {
         height: 2.75rem;
@@ -50,14 +51,14 @@ export const AssetItemWrapper = styled.div`
         margin: 0;
       }
     }
+    .identity-item {
+      display: flex;
+      flex-direction: row;
+      gap: 8px;
+      align-items: center;
+      margin-right: 10px;
+    }
   }
-`;
-
-export const TenantAddrWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-grow: 1;
 `;
 
 export const MenuPosition = styled.div`
@@ -137,43 +138,9 @@ export const Labels = styled.div`
   }
 `;
 
-export const AssetName = styled.div`
-  font-size: 1.2rem;
-  line-height: 1;
-  padding-left: 1rem;
-  flex-grow: 1;
-`;
-
-export const InfoItem = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  align-items: center;
-  padding: 8px;
-  .rep {
-    color: ${textSuccess};
-  }
-  .no-rep {
-    color: ${textDanger};
-  }
-`;
-
 export const Separator = styled.div`
   width: 100%;
   height: 1px;
   border-bottom: 1px solid ${borderPrimary};
   opacity: 0.7;
-`;
-
-export const StatusWrapper = styled.div<{ status: string }>`
-  color: ${({ status }) => {
-    switch (status) {
-      case 'SLASH':
-        return textDanger;
-      case 'REJECTED':
-        return textDanger;
-      default:
-        return textSuccess;
-    }
-  }};
 `;

@@ -7,10 +7,10 @@ import { MotionContainer } from 'library/List/MotionContainer';
 interface HouseProps {
   assets: Array<Asset>;
   title: string;
-  menuItems?: Array<AssetMenuItem>;
+  menu?: (asset: Asset) => Array<AssetMenuItem>;
 }
 
-export const HouseList = ({ assets, title, menuItems = [] }: HouseProps) => {
+export const HouseList = ({ assets, title, menu }: HouseProps) => {
   return (
     <ListWrapper>
       {title && (
@@ -41,10 +41,7 @@ export const HouseList = ({ assets, title, menuItems = [] }: HouseProps) => {
             >
               <AssetItem
                 asset={house}
-                menuItems={menuItems.map((item) => ({
-                  ...item,
-                  cb: () => item.cb(house.collId, house.itemId),
-                }))}
+                menuItems={!menu ? [] : menu(house)}
                 key={index}
               />
             </motion.div>

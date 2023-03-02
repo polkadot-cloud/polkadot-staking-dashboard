@@ -1,8 +1,11 @@
+import Identicon from '@polkadot/react-identicon';
 import { useAccount } from 'contexts/Account';
 import { useApi } from 'contexts/Api';
+import { useAssets } from 'contexts/Assets';
 import { Asset } from 'contexts/Assets/types';
 import { useCouncil } from 'contexts/Council';
 import { CouncilVoteResult } from 'contexts/Council/types';
+import { useModal } from 'contexts/Modal';
 import { useNotifications } from 'contexts/Notifications';
 import { useVoting } from 'contexts/Voting';
 import { AssetProposal } from 'library/AssetProposal';
@@ -10,19 +13,38 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnyApi } from 'types';
+import { CouncilVoteItemWrapper } from './Wrappers';
 
 interface CouncilProposalProps {
   asset: Asset;
 }
 
+interface CouncilVoteItemProps {
+  councilor: string;
+}
+
+const CouncilVoteItem = ({ councilor }: CouncilVoteItemProps) => {
+  return (
+    <CouncilVoteItemWrapper>
+      <Identicon value={councilor} size={24} />
+      {councilor}
+    </CouncilVoteItemWrapper>
+  );
+};
+
 export const CouncilProposal = ({ asset }: CouncilProposalProps) => {
   const { t } = useTranslation('pages');
   const { api } = useApi();
   const { address } = useAccount();
+  const { fetchAssets } = useAssets();
   const { fetchCouncilVotes, isCouncilMember } = useCouncil();
+  const { openModalWith } = useModal();
   const { notifyError, notifySuccess } = useNotifications();
   const { fetchProposals } = useVoting();
   const [councilVote, setCouncilVoteResult] = useState<CouncilVoteResult>(null);
+
+  const numAyes = councilVote?.ayes.length || 0;
+  const numNays = councilVote?.nays.length || 0;
 
   const { proposalHash: hash } = asset;
   const [userVote, setUserVote] = useState<boolean | undefined>();
@@ -67,6 +89,7 @@ export const CouncilProposal = ({ asset }: CouncilProposalProps) => {
       setPending(false);
       notifySuccess(t('council.voteSuccess'));
       fetchInfo();
+      fetchAssets();
     },
     callbackError: () => {
       notifyError(t('council.voteFailed'));
@@ -95,12 +118,29 @@ export const CouncilProposal = ({ asset }: CouncilProposalProps) => {
     if (api && address) fetchInfo();
   }, [api, address]);
 
+  const showAyes = () => {
+    if (!numAyes) return;
+    openModalWith('Tables', {
+      title: 'Councilors: 👍',
+      data: councilVote?.ayes || [],
+      render: (item: string) => <CouncilVoteItem councilor={item} />,
+    });
+  };
+  const showNays = () => {
+    if (!numNays) return;
+    openModalWith('Tables', {
+      title: 'Councilors: 👎',
+      data: councilVote?.nays || [],
+      render: (item: string) => <CouncilVoteItem councilor={item} />,
+    });
+  };
+
   return !isOver ? (
     <AssetProposal
       asset={asset}
       hash={hash}
-      ayes={councilVote?.ayes.length || 0}
-      nays={councilVote?.nays.length || 0}
+      ayes={numAyes}
+      nays={numNays}
       vote={userVote}
       onVote={onVote}
       threshold={councilVote?.threshold}
@@ -112,6 +152,8 @@ export const CouncilProposal = ({ asset }: CouncilProposalProps) => {
       }
       canClose={!pending && address !== undefined && isCouncilMember(address)}
       onClose={onCloseVote}
+      onAyes={showAyes}
+      onNays={showNays}
     />
   ) : (
     <></>

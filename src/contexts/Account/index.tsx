@@ -30,9 +30,11 @@ export const AccountProvider = ({
   const [balance, setBalance] = useState<BN>(ZERO);
   const [unsub, setUnsub] = useState<AnyApi>(undefined);
 
-  const isSeller = () => role === 'SELLER';
   const isInvestor = () => role === 'INVESTOR';
   const isNotary = () => role === 'NOTARY';
+  const isSeller = () => role === 'SELLER';
+  const isTenant = () => role === 'TENANT';
+  const isRepresentative = () => role === 'REPRESENTATIVE';
 
   const subscribe = async (_account: string | null) => {
     if (!_account) {
@@ -70,7 +72,16 @@ export const AccountProvider = ({
 
   return (
     <AccountContext.Provider
-      value={{ address, role, balance, isSeller, isInvestor, isNotary }}
+      value={{
+        address,
+        role,
+        balance,
+        isSeller,
+        isInvestor,
+        isNotary,
+        isTenant,
+        isRepresentative,
+      }}
     >
       {children}
     </AccountContext.Provider>

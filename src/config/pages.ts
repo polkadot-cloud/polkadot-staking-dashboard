@@ -6,6 +6,8 @@ import Dashboard from 'pages/Dashboard';
 import { HousingCouncil } from 'pages/HousingCouncil';
 import { InvestorsView } from 'pages/Investors';
 import { NotaryView } from 'pages/Notary';
+import { Representative } from 'pages/Representative';
+import { Tenants } from 'pages/Tenants';
 import { PageCategories, PagesConfig } from 'types';
 
 export const PAGE_CATEGORIES: PageCategories = [
@@ -49,14 +51,14 @@ export const PAGES_CONFIG: PagesConfig = [
     key: 'Tenant Registry',
     uri: `${UriPrefix}/`,
     hash: '/tenants',
-    Entry: Dashboard,
+    Entry: Tenants,
   },
   {
     category: 1,
-    key: 'Toolbox',
+    key: 'Representatives',
     uri: `${UriPrefix}/`,
-    hash: '/toolbox',
-    Entry: Dashboard,
+    hash: '/representatives',
+    Entry: Representative,
   },
 ];
 

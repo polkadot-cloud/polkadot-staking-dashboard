@@ -83,8 +83,8 @@ export const DemocracyProposal = ({ asset }: DemocracyProposalProps) => {
     <AssetProposal
       asset={asset}
       hash={hash}
-      ayes={vote.ongoing?.tally.ayes as number}
-      nays={vote.ongoing?.tally.nays as number}
+      ayes={vote.ongoing?.tally.ayes || 0}
+      nays={vote.ongoing?.tally.nays || 0}
       vote={undefined}
       onVote={onVote}
       canVote={!pending && isInvestor()}

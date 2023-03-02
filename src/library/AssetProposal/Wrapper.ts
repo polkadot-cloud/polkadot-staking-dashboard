@@ -72,15 +72,22 @@ export const VoteStats = styled.div`
     padding: 0;
     margin: 0;
   }
-  .ok {
+  .yes {
     color: ${textSuccess};
-    svg {
-      fill: ${textSuccess};
-    }
   }
 
   .no {
     color: ${textWarning};
+  }
+
+  .yes:enabled,
+  .no:enabled {
+    cursor: pointer;
+  }
+
+  .yes:enabled:hover,
+  .no:enabled:hover {
+    transform: scale(1.2);
   }
 `;
 

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAccount } from 'contexts/Account';
 import { useApi } from 'contexts/Api';
 import { useAssets } from 'contexts/Assets';
+import { Asset } from 'contexts/Assets/types';
 import { useNotifications } from 'contexts/Notifications';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -26,35 +27,42 @@ export const NotaryView = () => {
 
   const [tx, setTx] = useState<AnyApi>(null);
 
-  const menuItems = isNotary()
-    ? [
-        {
-          icon: <FontAwesomeIcon icon={faThumbsUp} color="green" />,
-          title: 'Approve',
-          cb: (collId: number, itemId: number) => {
-            setTx(
-              api && isReady
-                ? api.tx.finalizerModule.validateTransactionAsset(
-                    collId,
-                    itemId
-                  )
-                : null
-            );
+  const menu = (asset: Asset) => {
+    const { collId, itemId } = asset;
+    const menuItems = isNotary()
+      ? [
+          {
+            icon: <FontAwesomeIcon icon={faThumbsUp} color="green" />,
+            title: 'Approve',
+            cb: () => {
+              setTx(
+                api && isReady
+                  ? api.tx.finalizerModule.validateTransactionAsset(
+                      collId,
+                      itemId
+                    )
+                  : null
+              );
+            },
           },
-        },
-        {
-          icon: <FontAwesomeIcon icon={faThumbsDown} color="red" />,
-          title: 'Reject',
-          cb: (collId: number, itemId: number) => {
-            setTx(
-              api && isReady
-                ? api.tx.finalizerModule.rejectTransactionAsset(collId, itemId)
-                : null
-            );
+          {
+            icon: <FontAwesomeIcon icon={faThumbsDown} color="red" />,
+            title: 'Reject',
+            cb: () => {
+              setTx(
+                api && isReady
+                  ? api.tx.finalizerModule.rejectTransactionAsset(
+                      collId,
+                      itemId
+                    )
+                  : null
+              );
+            },
           },
-        },
-      ]
-    : [];
+        ]
+      : [];
+    return menuItems;
+  };
 
   const { submitTx } = useSubmitExtrinsic({
     tx,
@@ -84,7 +92,7 @@ export const NotaryView = () => {
           <HouseList
             assets={assetsFinalising}
             title={`${assetsFinalising.length} assets available`}
-            menuItems={menuItems}
+            menu={menu}
           />
         </CardWrapper>
       </PageRowWrapper>

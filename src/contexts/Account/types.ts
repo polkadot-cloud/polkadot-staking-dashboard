@@ -18,4 +18,6 @@ export interface AccountContextInterface {
   isSeller: () => boolean;
   isInvestor: () => boolean;
   isNotary: () => boolean;
+  isTenant: () => boolean;
+  isRepresentative: () => boolean;
 }
