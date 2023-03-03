@@ -1,20 +1,24 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faProjectDiagram, faUsers } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { PoolMembership } from 'contexts/Pools/types';
+import { Action } from 'library/Modal/Action';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnyJson } from 'types';
 import { AccountButton } from './Account';
 import { AccountNominating } from './types';
-import { AccountWrapper, ContentWrapper, PaddingWrapper } from './Wrappers';
+import {
+  AccountSeparator,
+  AccountWrapper,
+  ContentWrapper,
+  PaddingWrapper,
+} from './Wrappers';
 
 export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
   const { t } = useTranslation('modals');
@@ -117,12 +121,17 @@ export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
           </h1>
         </div>
         {activeAccount ? (
-          <AccountButton
-            address={activeAccount}
-            meta={getAccount(activeAccount)}
-            label={['danger', t('disconnect')]}
-            disconnect
-          />
+          <>
+            <h4 style={{ padding: '0 0.5rem', margin: 0, opacity: 0.9 }}>
+              Active Account
+            </h4>
+            <AccountButton
+              address={activeAccount}
+              meta={getAccount(activeAccount)}
+              label={['danger', t('disconnect')]}
+              disconnect
+            />
+          </>
         ) : (
           <AccountWrapper>
             <div>
@@ -135,10 +144,8 @@ export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
         )}
         {nominating.length ? (
           <>
-            <h3 className="heading">
-              <FontAwesomeIcon icon={faProjectDiagram} transform="shrink-4" />{' '}
-              {t('nominating')}
-            </h3>
+            <AccountSeparator />
+            <Action text={t('nominating')} />
             {nominating.map((item: AccountNominating, i: number) => {
               const { stash } = item;
               const stashAccount = getAccount(stash);
@@ -156,10 +163,8 @@ export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
 
         {inPool.length ? (
           <>
-            <h3 className="heading">
-              <FontAwesomeIcon icon={faUsers} transform="shrink-4" />{' '}
-              {t('inPool')}
-            </h3>
+            <AccountSeparator />
+            <Action text={t('inPool')} />
             {inPool.map((item: PoolMembership, i: number) => {
               const { address } = item;
               const account = getAccount(address);
@@ -177,7 +182,8 @@ export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
 
         {notStaking.length ? (
           <>
-            <h3 className="heading">{t('notStaking')}</h3>
+            <AccountSeparator />
+            <Action text={t('notStaking')} />
             {notStaking.map((item: string, i: number) => {
               const account = getAccount(item);
               const address = account?.address ?? '';

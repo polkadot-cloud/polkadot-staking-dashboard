@@ -31,16 +31,13 @@ export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
   return (
     <Wrapper>
       <h3>
-        {t('readOnlyAccounts')}
-        <span>
-          <ButtonMonoInvert
-            iconLeft={readOnlyOpen ? faMinus : faPlus}
-            text={!readOnlyOpen ? 'Add' : 'Hide'}
-            onClick={() => {
-              setReadOnlyOpen(!readOnlyOpen);
-            }}
-          />
-        </span>
+        <ButtonMonoInvert
+          iconLeft={readOnlyOpen ? faMinus : faPlus}
+          text={!readOnlyOpen ? 'Add' : 'Hide'}
+          onClick={() => {
+            setReadOnlyOpen(!readOnlyOpen);
+          }}
+        />
       </h3>
       <div className="content">
         {readOnlyOpen && (

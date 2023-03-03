@@ -5,16 +5,17 @@ import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { EXTENSIONS } from 'config/extensions';
 import { useExtensions } from 'contexts/Extensions';
 import { ExtensionConfig } from 'contexts/Extensions/types';
+import { Action } from 'library/Modal/Action';
 import { SelectItems } from 'library/SelectItems';
 import { forwardRef } from 'react';
 import { Extension } from './Extension';
 import { ReadOnly } from './ReadOnly';
 import { forwardRefProps } from './types';
 import {
+  AccountSeparator,
   ContentWrapper,
   ExtensionsWrapper,
   PaddingWrapper,
-  Separator,
 } from './Wrappers';
 
 export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
@@ -43,8 +44,7 @@ export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
             />
           </h1>
         </div>
-        <Separator />
-        <h2>Extensions</h2>
+        <Action text="Extensions" />
         <ExtensionsWrapper>
           <SelectItems layout="two-col">
             {installed
@@ -60,7 +60,8 @@ export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
               })}
           </SelectItems>
         </ExtensionsWrapper>
-        <Separator />
+        <AccountSeparator />
+        <Action text="Read Only Accounts" />
         <ReadOnly {...props} />
       </PaddingWrapper>
     </ContentWrapper>

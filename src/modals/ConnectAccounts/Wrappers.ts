@@ -68,30 +68,6 @@ export const PaddingWrapper = styled.div`
   height: auto;
 `;
 
-export const AccountGroupWrapper = styled(motion.button)`
-  background: var(--button-primary-background);
-  border-radius: 1rem;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-  transition: background 0.15s;
-
-  > h5 {
-    margin: 0 0 0.25rem 0;
-    opacity: 0.75;
-  }
-  > div {
-    margin: 0.4rem 0;
-    > button,
-    > div {
-      border: 1px solid var(--background-modal);
-      border-radius: 0.75rem;
-      margin: 0;
-    }
-  }
-`;
-
 export const AccountWrapper = styled.div`
   width: 100%;
   margin: 0.5rem 0;
@@ -280,9 +256,7 @@ export const ExtensionItem = styled.div`
   }
 `;
 
-export const Separator = styled.div`
-  border-top: 1px solid var(--text-color-secondary);
+export const AccountSeparator = styled.div`
   width: 100%;
-  opacity: 0.1;
-  margin: 1.5rem 0rem;
+  height: 0.25rem;
 `;
