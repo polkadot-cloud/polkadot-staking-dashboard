@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import { ExtensionInjected } from 'contexts/Extensions/types';
+import { useNotifications } from 'contexts/Notifications';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ExtensionProps } from './types';
@@ -16,7 +17,6 @@ export const Extension = (props: ExtensionProps) => {
   const { extensions, extensionsStatus } = useExtensions();
   const { meta } = props;
   const { id } = meta;
-
   const installed = extensions.find((e: ExtensionInjected) => e.id === id);
   const status = !installed ? 'not_found' : extensionsStatus[id];
 
@@ -35,7 +35,9 @@ export const Extension = (props: ExtensionProps) => {
   }
 
   return (
-    <ExtensionItem>
+    <ExtensionItem
+      className={status !== 'connected' && installed ? 'canConnect' : undefined}
+    >
       <div className="inner">
         <ExtensionButton
           {...props}
@@ -61,6 +63,7 @@ export const ExtensionButton = ({
   message,
 }: any) => {
   const { connectExtensionAccounts } = useConnect();
+  const { addNotification } = useNotifications();
   const { title, icon: Icon, url } = meta;
 
   // force re-render on click
@@ -69,10 +72,15 @@ export const ExtensionButton = ({
   // click to connect to extension
   const handleClick = async () => {
     if (status !== 'connected') {
-      (() => {
-        connectExtensionAccounts(installed);
+      (async () => {
+        await connectExtensionAccounts(installed);
         // force re-render to display error messages
         setIncrement(increment + 1);
+
+        addNotification({
+          title: 'Extension Connected',
+          subtitle: `The ${title} extension has been connected.`,
+        });
       })();
     }
   };
@@ -104,7 +112,7 @@ export const ExtensionButton = ({
             status === 'connected' ? (
               <p className="success">Connected</p>
             ) : (
-              <p>
+              <p className="active">
                 <FontAwesomeIcon icon={faPlus} className="plus" />
                 Connect
               </p>

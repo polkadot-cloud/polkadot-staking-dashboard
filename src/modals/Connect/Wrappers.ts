@@ -22,17 +22,22 @@ export const ExtensionItem = styled.div`
     width: 100%;
   }
 
+  &.canConnect {
+    > .inner {
+      transition: transform 0.15s;
+      &:hover {
+        transform: scale(1.015);
+      }
+    }
+  }
+
   > .inner {
     background: var(--button-primary-background);
     width: 100%;
     border-radius: 1rem;
     overflow: hidden;
     position: relative;
-    transition: transform 0.15s;
 
-    &:hover {
-      transform: scale(1.015);
-    }
     h3 {
       margin: 1rem 0 0 0;
       font-variation-settings: 'wght' 600;
@@ -99,6 +104,9 @@ export const ExtensionItem = styled.div`
       right: 0.9rem;
       .success {
         color: var(--status-success-color);
+      }
+      .active {
+        color: var(--network-color-primary);
       }
     }
     .icon {
