@@ -1,14 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BalanceLedger } from 'contexts/Balances/types';
-import { ExtensionAccount } from 'contexts/Extensions/types';
 import { FunctionComponent, SVGProps } from 'react';
-import { MaybeAccount } from 'types';
 
 export interface ExtensionProps {
   meta: ExtensionMetaProps;
-  setSection: (n: number) => void;
   installed?: any;
   size?: string;
   message?: string;
@@ -25,14 +21,6 @@ export interface ExtensionMetaProps {
   status?: string;
 }
 
-export interface AccountItemProps {
-  meta: ExtensionAccount | null;
-  address?: MaybeAccount;
-  label?: Array<string>;
-  disconnect?: boolean;
-  asElement?: boolean;
-}
-
 export interface ReadOnlyProps {
   setReadOnlyOpen: (k: boolean) => void;
   readOnlyOpen: boolean;
@@ -42,14 +30,4 @@ export interface forwardRefProps {
   setSection?: any;
   readOnlyOpen: boolean;
   setReadOnlyOpen: (e: boolean) => void;
-}
-
-export interface ControllerAccount {
-  address: string;
-  ledger: BalanceLedger;
-}
-
-export interface AccountNominating {
-  stash: MaybeAccount;
-  stashImported: boolean;
 }

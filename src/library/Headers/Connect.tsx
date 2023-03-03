@@ -18,7 +18,7 @@ export const Connect = () => {
         className="connect"
         onClick={() => {
           openModalWith(
-            'ConnectAccounts',
+            'Accounts',
             { section: accounts.length ? 1 : 0 },
             'large'
           );

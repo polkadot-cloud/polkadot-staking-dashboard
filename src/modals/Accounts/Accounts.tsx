@@ -9,19 +9,14 @@ import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { PoolMembership } from 'contexts/Pools/types';
 import { Action } from 'library/Modal/Action';
-import { forwardRef, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AnyJson } from 'types';
+import { CustomHeaderWrapper, PaddingWrapper } from '../Wrappers';
 import { AccountButton } from './Account';
 import { AccountNominating } from './types';
-import {
-  AccountSeparator,
-  AccountWrapper,
-  ContentWrapper,
-  PaddingWrapper,
-} from './Wrappers';
+import { AccountSeparator, AccountWrapper } from './Wrappers';
 
-export const Accounts = forwardRef((_, ref: AnyJson) => {
+export const Accounts = () => {
   const { t } = useTranslation('modals');
   const { isReady } = useApi();
   const { getAccount, activeAccount } = useConnect();
@@ -110,99 +105,101 @@ export const Accounts = forwardRef((_, ref: AnyJson) => {
   };
 
   return (
-    <ContentWrapper>
-      <PaddingWrapper ref={ref}>
-        <div className="head">
-          <h1>
-            {t('accounts')}
-            <ButtonInvertRounded
-              text="Go To Connect"
-              iconTransform="shrink-2"
-              onClick={() =>
-                replaceModalWith('ConnectAccounts', { section: 0 }, 'large')
-              }
-            />
-          </h1>
-        </div>
-        {activeAccount ? (
-          <>
-            <h4 style={{ padding: '0 0.5rem', margin: 0, opacity: 0.9 }}>
-              Active Account
-            </h4>
-            <AccountButton
-              address={activeAccount}
-              meta={getAccount(activeAccount)}
-              label={['danger', t('disconnect')]}
-              disconnect
-            />
-          </>
-        ) : (
-          <AccountWrapper>
+    <PaddingWrapper>
+      <CustomHeaderWrapper>
+        <h1>
+          {t('accounts')}
+          <ButtonInvertRounded
+            text="Go To Connect"
+            iconTransform="shrink-2"
+            onClick={() => replaceModalWith('Connect', {}, 'large')}
+          />
+        </h1>
+      </CustomHeaderWrapper>
+      {activeAccount ? (
+        <>
+          <h4
+            style={{
+              padding: '0.5rem 0.5rem 0 0.5rem',
+              margin: 0,
+              opacity: 0.9,
+            }}
+          >
+            Active Account
+          </h4>
+          <AccountButton
+            address={activeAccount}
+            meta={getAccount(activeAccount)}
+            label={['danger', t('disconnect')]}
+            disconnect
+          />
+        </>
+      ) : (
+        <AccountWrapper>
+          <div>
             <div>
-              <div>
-                <h3>No Active Account</h3>
-              </div>
-              <div />
+              <h3>No Active Account</h3>
             </div>
-          </AccountWrapper>
-        )}
-        {nominating.length ? (
-          <>
-            <AccountSeparator />
-            <Action text={t('nominating')} />
-            {nominating.map((item: AccountNominating, i: number) => {
-              const { stash } = item;
-              const stashAccount = getAccount(stash);
+            <div />
+          </div>
+        </AccountWrapper>
+      )}
+      {nominating.length ? (
+        <>
+          <AccountSeparator />
+          <Action text={t('nominating')} />
+          {nominating.map((item: AccountNominating, i: number) => {
+            const { stash } = item;
+            const stashAccount = getAccount(stash);
 
-              return (
-                <AccountButton
-                  key={`acc_nominating_${i}`}
-                  address={stash}
-                  meta={stashAccount}
-                />
-              );
-            })}
-          </>
-        ) : null}
+            return (
+              <AccountButton
+                key={`acc_nominating_${i}`}
+                address={stash}
+                meta={stashAccount}
+              />
+            );
+          })}
+        </>
+      ) : null}
 
-        {inPool.length ? (
-          <>
-            <AccountSeparator />
-            <Action text={t('inPool')} />
-            {inPool.map((item: PoolMembership, i: number) => {
-              const { address } = item;
-              const account = getAccount(address);
+      {inPool.length ? (
+        <>
+          <AccountSeparator />
+          <Action text={t('inPool')} />
+          {inPool.map((item: PoolMembership, i: number) => {
+            const { address } = item;
+            const account = getAccount(address);
 
-              return (
-                <AccountButton
-                  key={`acc_in_pool_${i}`}
-                  address={address}
-                  meta={account}
-                />
-              );
-            })}
-          </>
-        ) : null}
+            return (
+              <AccountButton
+                key={`acc_in_pool_${i}`}
+                address={address}
+                meta={account}
+              />
+            );
+          })}
+        </>
+      ) : null}
 
-        {notStaking.length ? (
-          <>
-            <AccountSeparator />
-            <Action text={t('notStaking')} />
-            {notStaking.map((item: string, i: number) => {
-              const account = getAccount(item);
-              const address = account?.address ?? '';
+      {notStaking.length ? (
+        <>
+          <AccountSeparator />
+          <Action text={t('notStaking')} />
+          {notStaking.map((item: string, i: number) => {
+            const account = getAccount(item);
+            const address = account?.address ?? '';
 
-              return (
-                <AccountButton
-                  key={`acc_not_staking_${i}`}
-                  address={address}
-                  meta={account}
-                />
-              );
-            })}
-          </>
-        ) : null}
-      </PaddingWrapper>
-    </ContentWrapper>
+            return (
+              <AccountButton
+                key={`acc_not_staking_${i}`}
+                address={address}
+                meta={account}
+              />
+            );
+          })}
+        </>
+      ) : null}
+    </PaddingWrapper>
   );
-});
+};

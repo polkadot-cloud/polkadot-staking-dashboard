@@ -7,13 +7,14 @@ import { ErrorFallbackModal } from 'library/ErrorBoundary';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { AccountPoolRoles } from './AccountPoolRoles';
+import { Accounts } from './Accounts';
 import { Bio } from './Bio';
 import { Bond } from './Bond';
 import { ChangeNominations } from './ChangeNominations';
 import { ChangePoolRoles } from './ChangePoolRoles';
 import { ChooseLanguage } from './ChooseLanguage';
 import { ClaimReward } from './ClaimReward';
-import { ConnectAccounts } from './ConnectAccounts';
+import { Connect } from './Connect';
 import { GoToFeedback } from './GoToFeedback';
 import { JoinPool } from './JoinPool';
 import { LeavePool } from './LeavePool';
@@ -126,7 +127,8 @@ export const Modal = () => {
               {modal === 'ChangePoolRoles' && <ChangePoolRoles />}
               {modal === 'ChooseLanguage' && <ChooseLanguage />}
               {modal === 'ClaimReward' && <ClaimReward />}
-              {modal === 'ConnectAccounts' && <ConnectAccounts />}
+              {modal === 'Connect' && <Connect />}
+              {modal === 'Accounts' && <Accounts />}
               {modal === 'GoToFeedback' && <GoToFeedback />}
               {modal === 'JoinPool' && <JoinPool />}
               {modal === 'LeavePool' && <LeavePool />}

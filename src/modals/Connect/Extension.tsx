@@ -52,7 +52,6 @@ export const Extension = (props: ExtensionProps) => {
 
 export const ExtensionButton = ({
   meta,
-  setSection,
   installed,
   disabled,
   size,
@@ -69,9 +68,7 @@ export const ExtensionButton = ({
 
   // click to connect to extension
   const handleClick = async () => {
-    if (status === 'connected') {
-      setSection(1);
-    } else {
+    if (status !== 'connected') {
       (() => {
         connectExtensionAccounts(installed);
         // force re-render to display error messages

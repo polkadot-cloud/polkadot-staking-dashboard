@@ -229,3 +229,23 @@ export const WarningsWrapper = styled.div<{ noMargin?: boolean }>`
   margin-top: ${(props) => (props.noMargin ? '0' : '0.75rem')};
   width: 100%;
 `;
+
+export const CustomHeaderWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  margin: 0.5rem 0;
+
+  h1 {
+    color: var(--text-color-primary);
+    font-size: 1.4rem;
+    font-family: 'Unbounded', 'sans-serif', sans-serif;
+    padding: 0.5rem 0.5rem 0 0.5rem;
+    display: flex;
+    align-items: center;
+    > button {
+      margin-left: 1.25rem;
+    }
+  }
+`;
