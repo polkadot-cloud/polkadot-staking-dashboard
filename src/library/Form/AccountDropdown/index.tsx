@@ -42,12 +42,12 @@ export const AccountDropdown = ({
             <FontAwesomeIcon icon={faAnglesRight} />
           </span>
           <div className="input-wrap selected">
-            {selected !== null && (
+            {selected?.active ? (
               <Identicon
                 value={selected?.address ?? ''}
                 size={remToUnit('2rem')}
               />
-            )}
+            ) : undefined}
             <input
               className="input"
               disabled
