@@ -19,6 +19,7 @@ export interface ExtensionMetaProps {
     SVGProps<SVGSVGElement> & { title?: string | undefined }
   >;
   status?: string;
+  url: string;
 }
 
 export interface ReadOnlyProps {
