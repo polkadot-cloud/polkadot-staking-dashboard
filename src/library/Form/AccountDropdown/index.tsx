@@ -82,6 +82,7 @@ const DropdownItem = ({ item, onChange, selected }: any) => {
       }`}
       type="button"
       onClick={() => onChange(item)}
+      disabled={!item.active}
     >
       <div className="icon">
         <Identicon value={item.address} size={26} />
