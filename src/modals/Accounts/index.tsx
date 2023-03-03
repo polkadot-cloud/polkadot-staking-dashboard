@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -117,7 +118,8 @@ export const Accounts = () => {
           {t('accounts')}
           <ButtonInvertRounded
             text="Go To Connect"
-            iconTransform="shrink-2"
+            iconLeft={faChevronLeft}
+            iconTransform="shrink-3"
             onClick={() => replaceModalWith('Connect', {}, 'large')}
           />
         </h1>
