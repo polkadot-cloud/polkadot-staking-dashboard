@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { motion } from 'framer-motion';
-import { ThreeRowThreshold, TwoThreshold } from 'library/SelectItems/Wrapper';
+import { TwoThreshold } from 'library/SelectItems/Wrapper';
 import styled from 'styled-components';
 
 export const CardsWrapper = styled(motion.div)`
@@ -171,28 +171,19 @@ export const AccountWrapper = styled.div`
 
 export const ExtensionsWrapper = styled.div`
   width: 100%;
-  display: flex;
-  flex-flow: row wrap;
+  padding: 0 0.5rem;
 
-  > div {
-    width: 33.33%;
+  @media (max-width: ${TwoThreshold}px) {
+    padding: 0;
   }
 `;
 export const ExtensionItem = styled.div`
-  padding: 0.6rem;
-  width: 100%;
+  padding: 0.75rem;
+  flex-grow: 0;
+  width: 50%;
 
-  &.flex {
-    width: 33.33%;
-    flex-grow: 0;
-    /* flex basis for 2-per-row layout */
-    @media (min-width: ${TwoThreshold}px) and (max-width: ${ThreeRowThreshold}px) {
-      width: 50%;
-    }
-    /* flex basis for 3-per-row layout */
-    @media (max-width: ${TwoThreshold}px) {
-      width: 100%;
-    }
+  @media (max-width: ${TwoThreshold}px) {
+    width: 100%;
   }
 
   > .inner {

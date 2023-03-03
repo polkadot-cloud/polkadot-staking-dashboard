@@ -10,7 +10,12 @@ import { forwardRef } from 'react';
 import { Extension } from './Extension';
 import { ReadOnly } from './ReadOnly';
 import { forwardRefProps } from './types';
-import { ContentWrapper, PaddingWrapper, Separator } from './Wrappers';
+import {
+  ContentWrapper,
+  ExtensionsWrapper,
+  PaddingWrapper,
+  Separator,
+} from './Wrappers';
 
 export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
   const { setSection } = props;
@@ -40,19 +45,21 @@ export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
         </div>
         <Separator />
         <h2>Extensions</h2>
-        <SelectItems flex>
-          {installed
-            .concat(other)
-            .map((extension: ExtensionConfig, i: number) => {
-              return (
-                <Extension
-                  key={`active_extension_${i}`}
-                  meta={extension}
-                  setSection={setSection}
-                />
-              );
-            })}
-        </SelectItems>
+        <ExtensionsWrapper>
+          <SelectItems layout="two-col">
+            {installed
+              .concat(other)
+              .map((extension: ExtensionConfig, i: number) => {
+                return (
+                  <Extension
+                    key={`active_extension_${i}`}
+                    meta={extension}
+                    setSection={setSection}
+                  />
+                );
+              })}
+          </SelectItems>
+        </ExtensionsWrapper>
         <Separator />
         <ReadOnly {...props} />
       </PaddingWrapper>

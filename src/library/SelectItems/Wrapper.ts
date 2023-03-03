@@ -16,7 +16,19 @@ export const SelectItemsWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
 
-  &.flex {
+  &.two-col {
+    /* Remove outer padding for 2-per-row layout */
+    @media (min-width: ${TwoThresholdMin}px) {
+      > div:nth-child(2n) {
+        padding-right: 0;
+      }
+      > div:nth-child(2n + 1) {
+        padding-left: 0;
+      }
+    }
+  }
+
+  &.three-col {
     /* Remove outer padding for 2-per-row layout */
     @media (min-width: ${TwoThresholdMin}px) and (max-width: ${ThreeRowThreshold}px) {
       > div:nth-child(2n) {
@@ -26,7 +38,6 @@ export const SelectItemsWrapper = styled.div`
         padding-left: 0;
       }
     }
-
     /* Remove outer padding for 3-per-row layout */
     @media (min-width: ${ThreeRowThresholdMin}px) {
       > div:nth-child(3n) {
@@ -39,7 +50,7 @@ export const SelectItemsWrapper = styled.div`
   }
 `;
 
-// Button and surrounding padded area.
+// Item and surrounding padded area.
 export const Wrapper = styled.div<{
   selected?: boolean;
   grow: boolean;
@@ -47,16 +58,22 @@ export const Wrapper = styled.div<{
 }>`
   padding: 0.6rem;
   width: 100%;
+  flex-grow: ${(props) => (props.grow ? 1 : 0)};
 
-  &.flex {
+  &.two-col {
+    width: 50%;
+    /* flex basis for 3-per-row layout */
+    @media (max-width: ${TwoThreshold}px) {
+      width: 100%;
+    }
+  }
+
+  &.three-col {
     width: 33.33%;
-    flex-grow: ${(props) => (props.grow ? 1 : 0)};
-
     /* flex basis for 2-per-row layout */
     @media (min-width: ${TwoThreshold}px) and (max-width: ${ThreeRowThreshold}px) {
       width: 50%;
     }
-
     /* flex basis for 3-per-row layout */
     @media (max-width: ${TwoThreshold}px) {
       width: 100%;

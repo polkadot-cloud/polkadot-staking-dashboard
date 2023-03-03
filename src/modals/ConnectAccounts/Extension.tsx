@@ -35,7 +35,7 @@ export const Extension = (props: ExtensionProps) => {
   }
 
   return (
-    <ExtensionItem className="flex">
+    <ExtensionItem>
       <div className="inner">
         <ExtensionButton
           {...props}
