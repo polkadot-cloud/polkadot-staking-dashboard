@@ -4,16 +4,24 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-// Blurred background modal wrapper
-export const ModalWrapper = styled(motion.div)`
+// blurred background wrapper
+export const ModalBlurWrapper = styled(motion.div)`
   background: var(--overlay-modal-color);
   position: fixed;
   width: 100%;
   height: 100%;
   z-index: 9;
   backdrop-filter: blur(4px);
+`;
 
-  /* modal content wrapper */
+/* modal content wrapper */
+export const ModalWrapper = styled(motion.div)`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  backdrop-filter: blur(4px);
+
   > div {
     height: 100%;
     display: flex;

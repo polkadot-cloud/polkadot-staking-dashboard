@@ -76,7 +76,8 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     config: ModalConfig = {},
     size = 'large'
   ) => {
-    setStatus(0);
+    setStatus(3);
+    setHeight(0);
     setTimeout(() => {
       openModalWith(modal, config, size);
     }, 10);
