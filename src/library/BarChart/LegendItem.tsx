@@ -11,7 +11,9 @@ export const LegendItem = ({ dataClass, label, helpKey }: LegendItemProps) => {
   return (
     <h4>
       {dataClass ? <span className={dataClass} /> : null} {label}
-      {helpKey ? <ButtonHelp onClick={() => openHelp(helpKey)} /> : null}
+      {helpKey ? (
+        <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+      ) : null}
     </h4>
   );
 };
