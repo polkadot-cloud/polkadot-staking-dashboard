@@ -5,6 +5,7 @@ import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { EXTENSIONS } from 'config/extensions';
 import { useExtensions } from 'contexts/Extensions';
 import { ExtensionConfig } from 'contexts/Extensions/types';
+import { useModal } from 'contexts/Modal';
 import { Action } from 'library/Modal/Action';
 import { SelectItems } from 'library/SelectItems';
 import { forwardRef } from 'react';
@@ -21,6 +22,7 @@ import {
 export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
   const { setSection } = props;
   const { extensions } = useExtensions();
+  const { replaceModalWith } = useModal();
 
   const installed = EXTENSIONS.filter((a: ExtensionConfig) =>
     extensions.find((b: ExtensionConfig) => b.id === a.id)
@@ -40,7 +42,9 @@ export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
             <ButtonInvertRounded
               text="Go To Accounts"
               iconTransform="shrink-2"
-              onClick={() => setSection(1)}
+              onClick={() =>
+                replaceModalWith('ConnectAccounts', { section: 1 }, 'large')
+              }
             />
           </h1>
         </div>

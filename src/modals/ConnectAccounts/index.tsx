@@ -81,7 +81,7 @@ export const ConnectAccounts = () => {
           setReadOnlyOpen={setReadOnlyOpen}
           ref={extensionsRef}
         />
-        <Accounts setSection={setSection} ref={accountsRef} />
+        <Accounts ref={accountsRef} />
       </CardsWrapper>
     </Wrapper>
   );

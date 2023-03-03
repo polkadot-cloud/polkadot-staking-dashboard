@@ -5,6 +5,7 @@ import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { PoolMembership } from 'contexts/Pools/types';
 import { Action } from 'library/Modal/Action';
@@ -20,13 +21,14 @@ import {
   PaddingWrapper,
 } from './Wrappers';
 
-export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
+export const Accounts = forwardRef((_, ref: AnyJson) => {
   const { t } = useTranslation('modals');
   const { isReady } = useApi();
   const { getAccount, activeAccount } = useConnect();
   const { getAccountLocks, accounts: balanceAccounts, ledgers } = useBalances();
   const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
+  const { replaceModalWith } = useModal();
 
   const stashes: Array<string> = [];
 
@@ -116,7 +118,9 @@ export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
             <ButtonInvertRounded
               text="Go To Connect"
               iconTransform="shrink-2"
-              onClick={() => setSection(0)}
+              onClick={() =>
+                replaceModalWith('ConnectAccounts', { section: 0 }, 'large')
+              }
             />
           </h1>
         </div>
