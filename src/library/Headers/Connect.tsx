@@ -17,11 +17,7 @@ export const Connect = () => {
       <Item
         className="connect"
         onClick={() => {
-          openModalWith(
-            'ConnectAccounts',
-            { section: accounts.length ? 1 : 0 },
-            'large'
-          );
+          openModalWith(accounts.length ? 'Accounts' : 'Connect', {}, 'large');
         }}
       >
         <FontAwesomeIcon

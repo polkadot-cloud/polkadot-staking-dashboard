@@ -328,7 +328,7 @@ export const GenerateNominations = ({
         <div>
           {!isReadOnlyAccount(activeAccount) && !method && (
             <>
-              <SelectItems flex>
+              <SelectItems layout="three-col">
                 {methods.map((m: any, n: number) => (
                   <SelectItem
                     key={`gen_method_${n}`}
@@ -341,7 +341,7 @@ export const GenerateNominations = ({
                     includeToggle={false}
                     grow={false}
                     hoverBorder
-                    flex
+                    layout="three-col"
                   />
                 ))}
               </SelectItems>

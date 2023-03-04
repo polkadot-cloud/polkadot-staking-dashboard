@@ -1,32 +1,32 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  faCog,
-  faProjectDiagram,
-  faUsers,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
+import { useExtensions } from 'contexts/Extensions';
+import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { PoolMembership } from 'contexts/Pools/types';
-import { forwardRef, useEffect, useState } from 'react';
+import { Action } from 'library/Modal/Action';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AnyJson } from 'types';
+import { CustomHeaderWrapper, PaddingWrapper } from '../Wrappers';
 import { AccountButton } from './Account';
 import { AccountNominating } from './types';
-import { AccountWrapper, ContentWrapper, PaddingWrapper } from './Wrappers';
+import { AccountSeparator, AccountWrapper } from './Wrappers';
 
-export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
+export const Accounts = () => {
   const { t } = useTranslation('modals');
   const { isReady } = useApi();
   const { getAccount, activeAccount } = useConnect();
   const { getAccountLocks, accounts: balanceAccounts, ledgers } = useBalances();
   const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
+  const { replaceModalWith, setResize } = useModal();
+  const { extensions } = useExtensions();
 
   const stashes: Array<string> = [];
 
@@ -45,6 +45,10 @@ export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
   useEffect(() => {
     getAccountsStatus();
   }, [localAccounts, balanceAccounts, ledgers, accounts, memberships]);
+
+  useEffect(() => {
+    setResize();
+  }, [activeAccount, accounts, balanceAccounts, ledgers, extensions]);
 
   const getAccountsStatus = () => {
     // accumulate imported stash accounts
@@ -108,98 +112,102 @@ export const Accounts = forwardRef(({ setSection }: AnyJson, ref: AnyJson) => {
   };
 
   return (
-    <ContentWrapper>
-      <PaddingWrapper ref={ref}>
-        <div className="head">
-          <div>
-            <h1>{t('accounts')}</h1>
-          </div>
-          <div>
-            <ButtonSecondary
-              text={t('extensions')}
-              iconLeft={faCog}
-              iconTransform="shrink-2"
-              onClick={() => setSection(0)}
-            />
-          </div>
-        </div>
-        {activeAccount ? (
+    <PaddingWrapper>
+      <CustomHeaderWrapper>
+        <h1>
+          {t('accounts')}
+          <ButtonInvertRounded
+            text={t('goToConnect')}
+            iconLeft={faChevronLeft}
+            iconTransform="shrink-3"
+            onClick={() => replaceModalWith('Connect', {}, 'large')}
+          />
+        </h1>
+      </CustomHeaderWrapper>
+      {activeAccount ? (
+        <>
+          <h4
+            style={{
+              padding: '0.5rem 0.5rem 0 0.5rem',
+              margin: 0,
+              opacity: 0.9,
+            }}
+          >
+            {t('activeAccount')}
+          </h4>
           <AccountButton
             address={activeAccount}
             meta={getAccount(activeAccount)}
             label={['danger', t('disconnect')]}
             disconnect
           />
-        ) : (
-          <AccountWrapper>
+        </>
+      ) : (
+        <AccountWrapper>
+          <div>
             <div>
-              <div>
-                <h3>{t('noAccountConnected')}</h3>
-              </div>
-              <div />
+              <h3>{t('noActiveAccount')}</h3>
             </div>
-          </AccountWrapper>
-        )}
-        {nominating.length ? (
-          <>
-            <h3 className="heading">
-              <FontAwesomeIcon icon={faProjectDiagram} transform="shrink-4" />{' '}
-              {t('nominating')}
-            </h3>
-            {nominating.map((item: AccountNominating, i: number) => {
-              const { stash } = item;
-              const stashAccount = getAccount(stash);
+            <div />
+          </div>
+        </AccountWrapper>
+      )}
+      {nominating.length ? (
+        <>
+          <AccountSeparator />
+          <Action text={t('nominating')} />
+          {nominating.map((item: AccountNominating, i: number) => {
+            const { stash } = item;
+            const stashAccount = getAccount(stash);
 
-              return (
-                <AccountButton
-                  key={`acc_nominating_${i}`}
-                  address={stash}
-                  meta={stashAccount}
-                />
-              );
-            })}
-          </>
-        ) : null}
+            return (
+              <AccountButton
+                key={`acc_nominating_${i}`}
+                address={stash}
+                meta={stashAccount}
+              />
+            );
+          })}
+        </>
+      ) : null}
 
-        {inPool.length ? (
-          <>
-            <h3 className="heading">
-              <FontAwesomeIcon icon={faUsers} transform="shrink-4" />{' '}
-              {t('inPool')}
-            </h3>
-            {inPool.map((item: PoolMembership, i: number) => {
-              const { address } = item;
-              const account = getAccount(address);
+      {inPool.length ? (
+        <>
+          <AccountSeparator />
+          <Action text={t('inPool')} />
+          {inPool.map((item: PoolMembership, i: number) => {
+            const { address } = item;
+            const account = getAccount(address);
 
-              return (
-                <AccountButton
-                  key={`acc_in_pool_${i}`}
-                  address={address}
-                  meta={account}
-                />
-              );
-            })}
-          </>
-        ) : null}
+            return (
+              <AccountButton
+                key={`acc_in_pool_${i}`}
+                address={address}
+                meta={account}
+              />
+            );
+          })}
+        </>
+      ) : null}
 
-        {notStaking.length ? (
-          <>
-            <h3 className="heading">{t('notStaking')}</h3>
-            {notStaking.map((item: string, i: number) => {
-              const account = getAccount(item);
-              const address = account?.address ?? '';
+      {notStaking.length ? (
+        <>
+          <AccountSeparator />
+          <Action text={t('notStaking')} />
+          {notStaking.map((item: string, i: number) => {
+            const account = getAccount(item);
+            const address = account?.address ?? '';
 
-              return (
-                <AccountButton
-                  key={`acc_not_staking_${i}`}
-                  address={address}
-                  meta={account}
-                />
-              );
-            })}
-          </>
-        ) : null}
-      </PaddingWrapper>
-    </ContentWrapper>
+            return (
+              <AccountButton
+                key={`acc_not_staking_${i}`}
+                address={address}
+                meta={account}
+              />
+            );
+          })}
+        </>
+      ) : null}
+    </PaddingWrapper>
   );
-});
+};

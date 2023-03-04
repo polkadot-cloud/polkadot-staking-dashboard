@@ -82,7 +82,7 @@ export const Payee = ({ section }: SetupStepProps) => {
           {t('nominate.payoutDestinationSubtitle')}
         </h4>
 
-        <SelectItems flex>
+        <SelectItems layout="three-col">
           {getPayeeItems().map((item: PayeeItem) => (
             <SelectItem
               key={`payee_option_${item.value}`}
@@ -90,7 +90,7 @@ export const Payee = ({ section }: SetupStepProps) => {
               setAccount={setAccount}
               selected={payee.destination === item.value}
               onClick={() => handleChangeDestination(item.value)}
-              flex
+              layout="three-col"
               {...item}
             />
           ))}

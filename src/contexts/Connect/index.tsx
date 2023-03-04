@@ -376,10 +376,8 @@ export const ConnectProvider = ({
   };
 
   const handleExtensionError = (id: string, err: string) => {
-    // general error (maybe enabled but no accounts trust app)
-    if (err.substring(0, 5) === 'Error') {
-      setExtensionStatus(id, 'no_accounts');
-    } else {
+    // if not general error (maybe enabled but no accounts trust app)
+    if (err.substring(0, 5) !== 'Error') {
       // remove extension from local `active_extensions`.
       removeFromLocalExtensions(id);
 
