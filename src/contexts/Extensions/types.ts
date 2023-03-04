@@ -39,6 +39,7 @@ export interface ExtensionConfig {
   icon: FunctionComponent<
     SVGProps<SVGSVGElement> & { title?: string | undefined }
   >;
+  url: string;
 }
 
 // dashboard specific: miscellaneous metadata added to an extension by the

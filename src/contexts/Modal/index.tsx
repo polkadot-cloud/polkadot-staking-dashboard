@@ -70,12 +70,26 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     setModalResize(resize + 1);
   };
 
+  // closes one modal and opens another.
+  const replaceModalWith = (
+    modal: string,
+    config: ModalConfig = {},
+    size = 'large'
+  ) => {
+    setStatus(3);
+    setHeight(0);
+    setTimeout(() => {
+      openModalWith(modal, config, size);
+    }, 10);
+  };
+
   return (
     <ModalContext.Provider
       value={{
         status: statusRef.current,
         setStatus,
         openModalWith,
+        replaceModalWith,
         setModalHeight,
         setResize,
         height,
