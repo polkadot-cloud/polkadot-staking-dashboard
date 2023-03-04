@@ -91,6 +91,7 @@
       "networkCurrentlyStaked": "{{total}} {{unit}} 目前正在{{network}}进行抵押",
       "networkCurrentlyStakedSubtitle": "当前共有{{unit}} 在所有验证人和提名人之间做抵押",
       "networkStats": "网络信息",
+      "noActiveAccount": "无活跃帐户",
       "nominating": "提名中",
       "notStaking": "无抵押",
       "overview": "概述",
@@ -108,8 +109,7 @@
       "totalNumAccounts": "已加入提名池的帐户总数",
       "totalValidators": "所有验证人",
       "unitSupplyStaked": "{{unit}} 抵押比例",
-      "unlocking": "正在解锁",
-      "noActiveAccount":"无活跃帐户"
+      "unlocking": "正在解锁"
     },
     "payouts": {
       "deductedFromBond": "从质押里扣除",

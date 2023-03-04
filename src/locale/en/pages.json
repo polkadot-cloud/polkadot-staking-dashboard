@@ -93,6 +93,7 @@
       "networkCurrentlyStaked": "{{total}} {{unit}} is currently being staked on {{network}}.",
       "networkCurrentlyStakedSubtitle": "The total {{unit}} currently being staked amongst all validators and nominators.",
       "networkStats": "Network Stats",
+      "noActiveAccount": "No Active Account",
       "nominating": "Nominating",
       "notStaking": "Not Staking",
       "overview": "Overview",
@@ -110,8 +111,7 @@
       "totalNumAccounts": "The total number of accounts that have joined a pool.",
       "totalValidators": "Total Validators",
       "unitSupplyStaked": "{{unit}} Supply Staked",
-      "unlocking": "Unlocking",
-      "noActiveAccount":"No Active Account"
+      "unlocking": "Unlocking"
     },
     "payouts": {
       "deductedFromBond": "Deducted from bond",
