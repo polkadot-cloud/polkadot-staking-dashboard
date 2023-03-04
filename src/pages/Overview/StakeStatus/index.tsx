@@ -120,7 +120,7 @@ export const StakeStatus = () => {
           <>
             {!activeAccount ? (
               <Item
-                text="No Active Account"
+                text={t('overview.noActiveAccount')}
                 ctaText={`${t('overview.connect')}`}
                 onClick={() => openModalWith('Accounts', {}, 'large')}
               />

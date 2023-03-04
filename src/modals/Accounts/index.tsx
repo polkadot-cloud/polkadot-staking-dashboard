@@ -117,7 +117,7 @@ export const Accounts = () => {
         <h1>
           {t('accounts')}
           <ButtonInvertRounded
-            text="Go To Connect"
+            text={t('goToConnect')}
             iconLeft={faChevronLeft}
             iconTransform="shrink-3"
             onClick={() => replaceModalWith('Connect', {}, 'large')}
@@ -133,7 +133,7 @@ export const Accounts = () => {
               opacity: 0.9,
             }}
           >
-            Active Account
+            {t('activeAccount')}
           </h4>
           <AccountButton
             address={activeAccount}
@@ -146,7 +146,7 @@ export const Accounts = () => {
         <AccountWrapper>
           <div>
             <div>
-              <h3>No Active Account</h3>
+              <h3>{t('noActiveAccount')}</h3>
             </div>
             <div />
           </div>

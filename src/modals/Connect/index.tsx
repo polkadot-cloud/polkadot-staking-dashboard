@@ -11,11 +11,13 @@ import { Action } from 'library/Modal/Action';
 import { SelectItems } from 'library/SelectItems';
 import { CustomHeaderWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Extension } from './Extension';
 import { ReadOnly } from './ReadOnly';
 import { ExtensionsWrapper, Separator } from './Wrappers';
 
 export const Connect = () => {
+  const { t } = useTranslation('modals');
   const { extensions } = useExtensions();
   const { replaceModalWith, setResize, height } = useModal();
 
@@ -39,9 +41,9 @@ export const Connect = () => {
     <PaddingWrapper>
       <CustomHeaderWrapper>
         <h1>
-          Connect
+          {t('connect')}
           <ButtonInvertRounded
-            text="Go To Accounts"
+            text={t('goToAccounts')}
             iconRight={faChevronRight}
             iconTransform="shrink-3"
             onClick={() => replaceModalWith('Accounts', {}, 'large')}
@@ -49,7 +51,7 @@ export const Connect = () => {
         </h1>
       </CustomHeaderWrapper>
 
-      <Action text="Extensions" />
+      <Action text={t('extensions')} />
       <ExtensionsWrapper>
         <SelectItems layout="two-col">
           {installed
@@ -62,7 +64,7 @@ export const Connect = () => {
         </SelectItems>
       </ExtensionsWrapper>
       <Separator />
-      <Action text="Read Only Accounts" />
+      <Action text={t('readOnlyAccounts')} />
       <ReadOnly setReadOnlyOpen={setReadOnlyOpen} readOnlyOpen={readOnlyOpen} />
     </PaddingWrapper>
   );

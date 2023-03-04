@@ -8,10 +8,12 @@ import { useExtensions } from 'contexts/Extensions';
 import { ExtensionInjected } from 'contexts/Extensions/types';
 import { useNotifications } from 'contexts/Notifications';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ExtensionProps } from './types';
 import { ExtensionItem } from './Wrappers';
 
 export const Extension = ({ meta, size, flag }: ExtensionProps) => {
+  const { t } = useTranslation('modals');
   const { extensions, extensionsStatus } = useExtensions();
   const { connectExtensionAccounts } = useConnect();
   const { addNotification } = useNotifications();
@@ -26,16 +28,16 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   let statusJsx;
   switch (status) {
     case 'connected':
-      statusJsx = <p className="success">Connected</p>;
+      statusJsx = <p className="success">{t('connected')}</p>;
       break;
     case 'not_authenticated':
-      statusJsx = <p>Not Authenticated</p>;
+      statusJsx = <p>{t('notAuthenticated')}</p>;
       break;
     default:
       statusJsx = (
         <p className="active">
           <FontAwesomeIcon icon={faPlus} className="plus" />
-          Connect
+          {t('connect')}
         </p>
       );
   }
@@ -52,8 +54,8 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
         setIncrement(increment + 1);
 
         addNotification({
-          title: 'Extension Connected',
-          subtitle: `The ${title} extension has been connected.`,
+          title: t('extensionConnected'),
+          subtitle: `${t('titleExtensionConnected', title)}`,
         });
       })();
     }
@@ -86,7 +88,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
             </div>
             <div className="status">
               {flag && flag}
-              {extension ? statusJsx : <p>Not Installed</p>}
+              {extension ? statusJsx : <p>{t('notInstalled')}</p>}
             </div>
             <div className="row">
               <h3>{title}</h3>

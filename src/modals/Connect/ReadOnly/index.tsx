@@ -33,7 +33,7 @@ export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
       <h3>
         <ButtonMonoInvert
           iconLeft={readOnlyOpen ? faMinus : faPlus}
-          text={!readOnlyOpen ? 'Add' : 'Hide'}
+          text={!readOnlyOpen ? t('add') : t('hide')}
           onClick={() => {
             setReadOnlyOpen(!readOnlyOpen);
           }}

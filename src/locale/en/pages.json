@@ -110,7 +110,8 @@
       "totalNumAccounts": "The total number of accounts that have joined a pool.",
       "totalValidators": "Total Validators",
       "unitSupplyStaked": "{{unit}} Supply Staked",
-      "unlocking": "Unlocking"
+      "unlocking": "Unlocking",
+      "noActiveAccount":"No Active Account"
     },
     "payouts": {
       "deductedFromBond": "Deducted from bond",
