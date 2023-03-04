@@ -7,15 +7,19 @@ import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
+import { getUnixTime } from 'date-fns';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
+import { StaticNote } from 'modals/Utils/StaticNote';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AnyJson } from 'types';
 import { planckToUnit } from 'Utils';
 import { NotesWrapper } from '../Wrappers';
-import { ChunkWrapper, ContentWrapper } from './Wrappers';
+import { Chunk } from './Chunk';
+import { ContentWrapper } from './Wrappers';
 
 export const Overview = forwardRef(
   ({ unlocking, bondFor, setSection, setUnlock, setTask }: any, ref: any) => {
@@ -29,6 +33,7 @@ export const Overview = forwardRef(
 
     const bondDurationFormatted = timeleftAsString(
       t,
+      getUnixTime(new Date()) + 1,
       erasToSeconds(bondDuration),
       true
     );
@@ -46,6 +51,12 @@ export const Overview = forwardRef(
         withdrawAvailable = withdrawAvailable.plus(value);
       }
     }
+
+    const onRebondHandler = (chunk: AnyJson) => {
+      setTask('rebond');
+      setUnlock(chunk);
+      setSection(1);
+    };
 
     return (
       <ContentWrapper ref={ref}>
@@ -110,44 +121,23 @@ export const Overview = forwardRef(
           )}
 
           {unlocking.map((chunk: any, i: number) => {
-            const { era, value } = chunk;
-            const left = new BigNumber(era).minus(activeEra.index);
-
             return (
-              <ChunkWrapper key={`unlock_chunk_${i}`}>
-                <div>
-                  <section>
-                    <h2>{`${planckToUnit(value, units)} ${network.unit}`}</h2>
-                    <h4>
-                      {left.isLessThanOrEqualTo(0)
-                        ? t('unlocked')
-                        : `${t('unlocksAfterEra')} ${era}`}
-                    </h4>
-                  </section>
-                  {isStaking && (
-                    <section>
-                      <div>
-                        <ButtonSubmit
-                          text={t('rebond')}
-                          disabled={isFastUnstaking}
-                          onClick={() => {
-                            setTask('rebond');
-                            setUnlock(chunk);
-                            setSection(1);
-                          }}
-                        />
-                      </div>
-                    </section>
-                  )}
-                </div>
-              </ChunkWrapper>
+              <Chunk
+                key={`unlock_chunk_${i}`}
+                chunk={chunk}
+                bondFor={bondFor}
+                onRebond={onRebondHandler}
+              />
             );
           })}
           <NotesWrapper>
-            <p>
-              {t('unlockTake', { bondDurationFormatted })}
-              {isStaking ? ` ${t('rebondUnlock')}` : null}
-            </p>
+            <StaticNote
+              value={bondDurationFormatted}
+              tKey="unlockTake"
+              valueKey="bondDurationFormatted"
+              deps={[bondDuration]}
+            />
+            <p> {isStaking ? ` ${t('rebondUnlock')}` : null}</p>
             {!isStaking ? <p>{t('unlockChunk')}</p> : null}
           </NotesWrapper>
         </div>

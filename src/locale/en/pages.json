@@ -93,7 +93,7 @@
       "networkCurrentlyStaked": "{{total}} {{unit}} is currently being staked on {{network}}.",
       "networkCurrentlyStakedSubtitle": "The total {{unit}} currently being staked amongst all validators and nominators.",
       "networkStats": "Network Stats",
-      "noAccountConnected": "No Account Connected",
+      "noActiveAccount": "No Active Account",
       "nominating": "Nominating",
       "notStaking": "Not Staking",
       "overview": "Overview",

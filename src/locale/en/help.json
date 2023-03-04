@@ -193,7 +193,7 @@
         [
           "Nominations are the validators a staker chooses to nominate. You can nominate up to {MAX_NOMINATIONS} validators on {NETWORK_NAME}.",
           "For nomination pools, the pool owner and pool nominator are in charge of nominating validators on behalf of all the pool members.",
-          "Once nominations have been submitted, bonded funds are automatically distributed to nominees that are active in the curernt era.",
+          "Once nominations have been submitted, bonded funds are automatically distributed to nominees that are active in the current era.",
           "As long as at least one of your nominations is actively validating in a session, your funds will be backing that validator."
         ]
       ],

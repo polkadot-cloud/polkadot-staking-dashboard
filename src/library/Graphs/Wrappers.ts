@@ -28,10 +28,6 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     flex-flow: row wrap;
     align-items: center;
     flex-grow: ${(props) => (props.withAction ? 1 : 0)};
-
-    .help-icon {
-      margin-left: 0.6rem;
-    }
   }
   h4 {
     margin: 0 0 0.6rem 0;
@@ -39,10 +35,6 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     flex-flow: row wrap;
     align-items: center;
     flex-grow: ${(props) => (props.withAction ? 1 : 0)};
-
-    .help-icon {
-      margin-left: 0.5rem;
-    }
   }
 
   > div {
@@ -204,10 +196,6 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   h4 {
     align-items: center;
     margin-top: 0.4rem;
-
-    .help-icon {
-      margin-left: 0.55rem;
-    }
   }
 
   h5 {

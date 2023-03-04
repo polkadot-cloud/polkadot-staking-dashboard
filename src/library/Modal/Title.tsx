@@ -3,9 +3,10 @@
 
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonHelp } from '@rossbulat/polkadot-dashboard-ui';
+import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { FunctionComponent } from 'react';
 import { TitleWrapper } from './Wrappers';
 
@@ -19,6 +20,7 @@ interface TitleProps {
 
 export const Title = ({ helpKey, title, icon, fixed, Svg }: TitleProps) => {
   const { setStatus } = useModal();
+  const { openHelp } = useHelp();
 
   const graphic = Svg ? (
     <Svg style={{ width: '1.5rem', height: '1.5rem' }} />
@@ -32,7 +34,9 @@ export const Title = ({ helpKey, title, icon, fixed, Svg }: TitleProps) => {
         {graphic}
         <h2>
           {title}
-          {helpKey && <OpenHelpIcon helpKey={helpKey} />}
+          {helpKey ? (
+            <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+          ) : null}
         </h2>
       </div>
       <div>

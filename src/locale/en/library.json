@@ -141,6 +141,7 @@
     "unbond": "Unbond",
     "unbondAmount": "Unbond amount is more than your bonded balance.",
     "unbonding": "Unbonding",
+    "unclaimedPayouts": "Unclaimed Payouts",
     "unlocking": "Unlocking",
     "unordered": "Unordered",
     "update": "Update",

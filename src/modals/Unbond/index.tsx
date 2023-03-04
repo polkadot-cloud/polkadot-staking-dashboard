@@ -13,6 +13,7 @@ import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxFees } from 'contexts/TxFees';
+import { getUnixTime } from 'date-fns';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
@@ -20,6 +21,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { StaticNote } from 'modals/Utils/StaticNote';
 import { NotesWrapper, PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -48,6 +50,7 @@ export const Unbond = () => {
 
   const bondDurationFormatted = timeleftAsString(
     t,
+    getUnixTime(new Date()) + 1,
     erasToSeconds(bondDuration),
     true
   );
@@ -218,7 +221,12 @@ export const Unbond = () => {
               )}
             </>
           ) : null}
-          <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
+          <StaticNote
+            value={bondDurationFormatted}
+            tKey="onceUnbonding"
+            valueKey="bondDurationFormatted"
+            deps={[bondDuration]}
+          />
         </NotesWrapper>
       </PaddingWrapper>
       <SubmitTx

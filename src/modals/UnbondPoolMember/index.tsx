@@ -8,6 +8,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useTxFees } from 'contexts/TxFees';
+import { getUnixTime } from 'date-fns';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -15,6 +16,7 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { StaticNote } from 'modals/Utils/StaticNote';
 import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -36,6 +38,7 @@ export const UnbondPoolMember = () => {
 
   const bondDurationFormatted = timeleftAsString(
     t,
+    getUnixTime(new Date()) + 1,
     erasToSeconds(bondDuration),
     true
   );
@@ -98,7 +101,12 @@ export const UnbondPoolMember = () => {
           </WarningsWrapper>
         ) : null}
         <Action text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
-        <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
+        <StaticNote
+          value={bondDurationFormatted}
+          tKey="onceUnbonding"
+          valueKey="bondDurationFormatted"
+          deps={[bondDuration]}
+        />
       </PaddingWrapper>
       <SubmitTx
         buttons={[

@@ -71,6 +71,7 @@ export const useSubmitExtrinsic = ({
 
     const { signer, source } = account;
 
+    // TODO: refactor to take into consideration source = ledger.
     const extension = extensions.find(
       (e: ExtensionInjected) => e.id === source
     );
@@ -84,6 +85,7 @@ export const useSubmitExtrinsic = ({
     // pre-submission state update
     setSubmitting(true);
 
+    // TODO: sign payload on ledger device and send.
     try {
       const unsub = await tx.signAndSend(
         from,

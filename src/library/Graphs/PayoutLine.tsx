@@ -65,7 +65,8 @@ export const PayoutLine = ({
     days,
     units,
     payoutsNoSlash,
-    poolClaims
+    poolClaims,
+    [] // Note: we are not using `unclaimedPayouts` here.
   );
 
   // combine payouts and pool claims into one dataset and calculate averages.
@@ -123,7 +124,9 @@ export const PayoutLine = ({
         callbacks: {
           title: () => [],
           label: (context: any) =>
-            ` ${new BigNumber(context.parsed.y).toFormat()} ${unit}`,
+            ` ${new BigNumber(context.parsed.y)
+              .decimalPlaces(units)
+              .toFormat()} ${unit}`,
         },
         intersect: false,
         interaction: {

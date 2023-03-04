@@ -3,11 +3,12 @@
 
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonHelp } from '@rossbulat/polkadot-dashboard-ui';
+import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatusLabelProps } from './types';
 import { Wrapper } from './Wrapper';
 
@@ -23,6 +24,7 @@ export const StatusLabel = ({
   const { plugins } = usePlugins();
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
+  const { openHelp } = useHelp();
 
   // syncing or not staking
   if (status === 'sync_or_setup') {
@@ -44,11 +46,15 @@ export const StatusLabel = ({
         <h2>
           &nbsp;&nbsp;
           {title}
-          {helpKey && (
+          {helpKey ? (
             <span>
-              <OpenHelpIcon helpKey={helpKey} light />
+              <ButtonHelp
+                marginLeft
+                onClick={() => openHelp(helpKey)}
+                backgroundSecondary
+              />
             </span>
-          )}
+          ) : null}
         </h2>
       </div>
     </Wrapper>

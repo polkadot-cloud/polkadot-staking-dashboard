@@ -94,10 +94,6 @@ export const StatWrapper = styled.div`
       display: flex;
       align-items: center;
 
-      > .help-icon {
-        margin-left: 0.5rem;
-      }
-
       .icon {
         margin-right: 0.425rem;
       }
@@ -117,7 +113,7 @@ export const CloseWrapper = styled.div`
 
   > button {
     opacity: 0.4;
-    transition: opacity 0.15ws ease-in-out;
+    transition: opacity 0.15s ease-in-out;
 
     &:hover {
       opacity: 1;

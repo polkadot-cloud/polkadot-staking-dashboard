@@ -7,6 +7,11 @@ export type ModalSize = 'small' | 'large' | 'xl';
 export interface ModalContextInterface {
   setStatus: (status: number) => void;
   openModalWith: (modal: string, options?: ModalConfig, size?: string) => void;
+  replaceModalWith: (
+    modal: string,
+    options?: ModalConfig,
+    size?: string
+  ) => void;
   setModalHeight: (v: number) => void;
   setResize: () => void;
   status: number;
