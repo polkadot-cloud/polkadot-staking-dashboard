@@ -11,12 +11,7 @@ import { useState } from 'react';
 import { ExtensionProps } from './types';
 import { ExtensionItem } from './Wrappers';
 
-export const Extension = ({
-  meta,
-  size,
-  flag,
-}: // eslint-disable-next-line
-ExtensionProps) => {
+export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { extensions, extensionsStatus } = useExtensions();
   const { connectExtensionAccounts } = useConnect();
   const { addNotification } = useNotifications();

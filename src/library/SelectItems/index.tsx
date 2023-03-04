@@ -78,7 +78,7 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
   }, []);
 
   return (
-    <SelectItemsWrapper className={layout ?? undefined}>
+    <SelectItemsWrapper className={layout}>
       {children.map((child: any, i: number) => (
         <React.Fragment key={i}>
           {React.cloneElement(child, {

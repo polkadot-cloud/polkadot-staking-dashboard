@@ -25,7 +25,7 @@ export const Accounts = () => {
   const { getAccountLocks, accounts: balanceAccounts, ledgers } = useBalances();
   const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
-  const { replaceModalWith, setResize, height } = useModal();
+  const { replaceModalWith, setResize } = useModal();
   const { extensions } = useExtensions();
 
   const stashes: Array<string> = [];
@@ -48,7 +48,7 @@ export const Accounts = () => {
 
   useEffect(() => {
     setResize();
-  }, [activeAccount, accounts, extensions, height]);
+  }, [activeAccount, accounts, balanceAccounts, ledgers, extensions]);
 
   const getAccountsStatus = () => {
     // accumulate imported stash accounts
