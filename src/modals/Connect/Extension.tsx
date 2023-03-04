@@ -28,18 +28,22 @@ ExtensionProps) => {
   const disabled = status === 'connected' || !extension;
 
   // determine message to be displayed based on extension status.
-  // TODO: re-integrate if needed into extension item.
-  // let message;
-  // switch (status) {
-  //   case 'connected':
-  //     message = `${t('connected')}`;
-  //     break;
-  //   case 'not_authenticated':
-  //     message = t('notAuthenticated');
-  //     break;
-  //   default:
-  //     message = status === 'no_accounts' ? t('noAccounts') : '';
-  // }
+  let statusJsx;
+  switch (status) {
+    case 'connected':
+      statusJsx = <p className="success">Connected</p>;
+      break;
+    case 'not_authenticated':
+      statusJsx = <p>Not Authenticated</p>;
+      break;
+    default:
+      statusJsx = (
+        <p className="active">
+          <FontAwesomeIcon icon={faPlus} className="plus" />
+          Connect
+        </p>
+      );
+  }
 
   // force re-render on click
   const [increment, setIncrement] = useState(0);
@@ -87,18 +91,7 @@ ExtensionProps) => {
             </div>
             <div className="status">
               {flag && flag}
-              {extension ? (
-                status === 'connected' ? (
-                  <p className="success">Connected</p>
-                ) : (
-                  <p className="active">
-                    <FontAwesomeIcon icon={faPlus} className="plus" />
-                    Connect
-                  </p>
-                )
-              ) : (
-                <p>Not Installed</p>
-              )}
+              {extension ? statusJsx : <p>Not Installed</p>}
             </div>
             <div className="row">
               <h3>{title}</h3>
