@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BalanceLedger } from 'contexts/Balances/types';
+import { BalanceLedger } from 'contexts/Accounts/Balances/types';
 import { ExtensionAccount } from 'contexts/Extensions/types';
 import { MaybeAccount } from 'types';
 

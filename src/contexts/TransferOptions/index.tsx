@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import { useBalances } from 'contexts/Balances';
-import { Lock } from 'contexts/Balances/types';
+import { useBalances } from 'contexts/Accounts/Balances';
+import { Lock } from 'contexts/Accounts/Balances/types';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React from 'react';

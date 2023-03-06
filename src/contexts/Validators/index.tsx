@@ -19,8 +19,8 @@ import {
   setStateWithRef,
   shuffle,
 } from 'Utils';
+import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
-import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useActivePools } from '../Pools/ActivePools';

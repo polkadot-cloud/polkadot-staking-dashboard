@@ -4,7 +4,7 @@
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
-import { useBalances } from 'contexts/Balances';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';

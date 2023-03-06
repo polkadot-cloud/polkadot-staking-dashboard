@@ -7,7 +7,7 @@ import {
   BalanceLedger,
   BalancesContextInterface,
   Nominations,
-} from 'contexts/Balances/types';
+} from 'contexts/Accounts/Balances/types';
 
 export const balance: Balance = {
   free: new BigNumber(0),

@@ -21,8 +21,8 @@ import {
 } from 'Utils';
 // eslint-disable-next-line import/no-unresolved
 import Worker from 'worker-loader!../../workers/stakers';
+import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
-import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import * as defaults from './defaults';
