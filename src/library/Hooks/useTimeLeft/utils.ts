@@ -1,7 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { differenceInDays, getUnixTime, intervalToDuration } from 'date-fns';
+import {
+  differenceInDays,
+  fromUnixTime,
+  getUnixTime,
+  intervalToDuration,
+} from 'date-fns';
 import { TFunction } from 'i18next';
 import { defaultDuration } from './defaults';
 import { TimeleftDuration } from './types';
@@ -47,11 +52,12 @@ export const getDuration = (toDate: Date | null): TimeleftDuration => {
 // format the duration (from seconds) as a string.
 export const timeleftAsString = (
   t: TFunction,
+  start: number,
   duration: number,
   full?: boolean
 ) => {
   const { days, hours, minutes, seconds } = getDuration(
-    fromNow(duration) || null
+    fromUnixTime(start + duration) || null
   );
 
   const tHour = `time.${full ? `hour` : `hr`}`;

@@ -46,10 +46,6 @@ export const RolesWrapper = styled.div`
         display: flex;
         align-items: center;
         margin-bottom: 0rem;
-
-        > .help-icon {
-          margin-left: 0.5rem;
-        }
       }
     }
   }

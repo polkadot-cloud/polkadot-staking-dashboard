@@ -5,7 +5,7 @@ import { HelpContextInterface } from './types';
 
 export const defaultHelpContext: HelpContextInterface = {
   // eslint-disable-next-line
-  openHelpWith: (d, c) => {},
+  openHelp: (k) => {},
   closeHelp: () => {},
   // eslint-disable-next-line
   setStatus: (s) => {},

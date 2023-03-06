@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import { MaybeString } from 'types';
 import * as defaults from './defaults';
 import {
-  HelpConfig,
   HelpContextInterface,
   HelpContextProps,
   HelpContextState,
@@ -22,7 +21,6 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
   const [state, setState] = useState<HelpContextState>({
     status: 0,
     definition: null,
-    config: {},
   });
 
   // when fade out completes, reset active definiton
@@ -51,12 +49,11 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
     setState(_state);
   };
 
-  const openHelpWith = (definition: MaybeString, _config: HelpConfig = {}) => {
+  const openHelp = (definition: MaybeString) => {
     setState({
       ...state,
       definition,
       status: 1,
-      config: _config,
     });
   };
 
@@ -70,7 +67,7 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
   return (
     <HelpContext.Provider
       value={{
-        openHelpWith,
+        openHelp,
         closeHelp,
         setStatus,
         setDefinition,

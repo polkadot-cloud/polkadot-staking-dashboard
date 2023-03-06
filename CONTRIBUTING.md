@@ -12,7 +12,6 @@ Reach out to ross@parity.io for clarification of any content within this documen
 - React Chart JS 2 for graphing. [[docs](https://www.chartjs.org/docs/latest/), [React docs](https://react-chartjs-2.js.org/)]
 - Framer Motion. [[docs](https://www.framer.com/docs/animation/)]
 - [Font Awesome](https://fontawesome.com/v5/search) for the majority of icons. [Ionicons](https://ionic.io/ionicons) for side menu footer icons
-- Downshift for dropdowns [[docs](https://www.npmjs.com/package/downshift)]
 - SCSS for theme configuration and Styled Components [[docs](https://styled-components.com/docs)] for component styling.
 
 ## Environment Variables

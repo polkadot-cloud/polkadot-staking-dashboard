@@ -38,6 +38,10 @@ export const NetworkList: Networks = {
         light: 'rgb(211, 48, 121, 0.05)',
         dark: 'rgb(211, 48, 121, 0.05)',
       },
+      pending: {
+        light: 'rgb(211, 48, 121, 0.33)',
+        dark: 'rgb(211, 48, 121, 0.33)',
+      },
     },
     subscanEndpoint: 'https://polkadot.api.subscan.io',
     unit: 'DOT',
@@ -85,6 +89,10 @@ export const NetworkList: Networks = {
       transparent: {
         light: 'rgb(51,51,51,0.05)',
         dark: 'rgb(102,102,102, 0.05)',
+      },
+      pending: {
+        light: 'rgb(51,51,51,0.33)',
+        dark: 'rgb(102,102,102, 0.33)',
       },
     },
     subscanEndpoint: 'https://kusama.api.subscan.io',
@@ -135,6 +143,10 @@ export const NetworkList: Networks = {
       transparent: {
         light: 'rgb(218, 78, 113, 0.05)',
         dark: 'rgb(218, 78, 113, 0.05)',
+      },
+      pending: {
+        light: 'rgb(218, 78, 113, 0.33)',
+        dark: 'rgb(218, 78, 113, 0.33)',
       },
     },
     subscanEndpoint: 'https://westend.api.subscan.io',

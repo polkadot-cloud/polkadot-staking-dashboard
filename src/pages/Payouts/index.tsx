@@ -1,8 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ButtonHelp } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { MaxPayoutDays } from 'consts';
+import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
@@ -17,7 +19,6 @@ import {
   GraphWrapper,
 } from 'library/Graphs/Wrappers';
 import { useSize } from 'library/Hooks/useSize';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { StatusLabel } from 'library/StatusLabel';
@@ -38,6 +39,7 @@ export const Payouts = ({ page }: PageProps) => {
   const { plugins } = usePlugins();
   const { inSetup } = useStaking();
   const notStaking = !isSyncing && inSetup();
+  const { openHelp } = useHelp();
 
   const [payoutsList, setPayoutLists] = useState<AnySubscan>([]);
   const [fromDate, setFromDate] = useState<string | undefined>();
@@ -101,7 +103,10 @@ export const Payouts = ({ page }: PageProps) => {
           <CardHeaderWrapper padded>
             <h4>
               {t('payouts.payoutHistory', { ns: 'pages' })}
-              <OpenHelpIcon helpKey="Payout History" />
+              <ButtonHelp
+                marginLeft
+                onClick={() => openHelp('Payout History')}
+              />
             </h4>
             <h2>
               {payoutsList.length ? (

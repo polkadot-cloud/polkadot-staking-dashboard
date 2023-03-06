@@ -8,9 +8,10 @@ import React, {
   useRef,
 } from 'react';
 import { AnyJson } from 'types';
+import { SelectItemsProps } from './types';
 import { SelectItemsWrapper, TwoThreshold } from './Wrapper';
 
-export const SelectItems = ({ flex, children }: any) => {
+export const SelectItems = ({ layout, children }: SelectItemsProps) => {
   // Initialise refs for container and body of items.
   const containerRefs: Array<MutableRefObject<AnyJson>> = [];
   const bodyRefs: Array<MutableRefObject<AnyJson>> = [];
@@ -77,7 +78,7 @@ export const SelectItems = ({ flex, children }: any) => {
   }, []);
 
   return (
-    <SelectItemsWrapper className={flex ? 'flex' : undefined}>
+    <SelectItemsWrapper className={layout}>
       {children.map((child: any, i: number) => (
         <React.Fragment key={i}>
           {React.cloneElement(child, {

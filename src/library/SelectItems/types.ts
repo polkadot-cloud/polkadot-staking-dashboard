@@ -2,7 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Dispatch, SetStateAction } from 'react';
-import { AnyJson, MaybeAccount } from 'types';
+import { AnyFunction, AnyJson, MaybeAccount } from 'types';
+
+export interface SelectItemsProps {
+  layout?: 'two-col' | 'three-col';
+  children?: AnyFunction;
+}
 
 export interface SelectItemProps {
   title: string;
@@ -10,7 +15,7 @@ export interface SelectItemProps {
   icon: AnyJson;
   selected: boolean;
   onClick: () => void;
-  flex?: boolean;
+  layout?: 'two-col' | 'three-col';
   hoverBorder?: boolean;
   grow?: boolean;
   disabled?: boolean;

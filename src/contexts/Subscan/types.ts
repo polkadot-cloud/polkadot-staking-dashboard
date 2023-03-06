@@ -7,4 +7,5 @@ export interface SubscanContextInterface {
   fetchEraPoints: (v: string, e: number) => void;
   payouts: AnySubscan;
   poolClaims: AnySubscan;
+  unclaimedPayouts: AnySubscan;
 }
