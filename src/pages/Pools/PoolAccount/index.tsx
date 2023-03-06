@@ -3,7 +3,7 @@
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAccount } from 'contexts/Account';
+import { useIdentities } from 'contexts/Identities';
 import { useNotifications } from 'contexts/Notifications';
 import { NotificationText } from 'contexts/Notifications/types';
 import { motion } from 'framer-motion';
@@ -22,7 +22,7 @@ export const PoolAccount = ({
 }: PoolAccountProps) => {
   const { t } = useTranslation('pages');
   const { addNotification } = useNotifications();
-  const { meta } = useAccount();
+  const { meta } = useIdentities();
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];

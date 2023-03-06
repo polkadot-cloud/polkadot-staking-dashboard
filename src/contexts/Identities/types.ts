@@ -3,7 +3,7 @@
 
 import { AnyMetaBatch } from 'types';
 
-export interface AccountContextInterface {
-  fetchAccountMetaBatch: (k: string, v: string[], r?: boolean) => void;
+export interface IdentitiesContextInterface {
+  fetchIdentitiesMetaBatch: (k: string, v: string[], r?: boolean) => void;
   meta: AnyMetaBatch;
 }

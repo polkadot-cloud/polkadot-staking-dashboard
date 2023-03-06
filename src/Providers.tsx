@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { AccountProvider } from 'contexts/Account';
 import { APIProvider, useApi } from 'contexts/Api';
 import { BalancesProvider } from 'contexts/Balances';
 import { ConnectProvider } from 'contexts/Connect';
@@ -10,6 +9,7 @@ import { ExtrinsicsProvider } from 'contexts/Extrinsics';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
 import { HelpProvider } from 'contexts/Help';
+import { IdentitiesProvider } from 'contexts/Identities';
 import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
 import { ModalProvider } from 'contexts/Modal';
@@ -67,7 +67,7 @@ export const Providers = withProviders(
   ConnectProvider,
   HelpProvider,
   NetworkMetricsProvider,
-  AccountProvider,
+  IdentitiesProvider,
   BalancesProvider,
   StakingProvider,
   PoolsConfigProvider,

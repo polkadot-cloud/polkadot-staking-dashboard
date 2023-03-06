@@ -7,10 +7,10 @@ import {
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
-import { useAccount } from 'contexts/Account';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
+import { useIdentities } from 'contexts/Identities';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
@@ -31,7 +31,7 @@ export const Roles = ({
   const { t } = useTranslation('pages');
   const { isReady, network } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { fetchAccountMetaBatch } = useAccount();
+  const { fetchIdentitiesMetaBatch } = useIdentities();
   const { isOwner, selectedActivePool } = useActivePools();
   const { poolsSyncing } = useUi();
   const { openModalWith } = useModal();
@@ -76,7 +76,7 @@ export const Roles = ({
   useEffect(() => {
     if (isReady && !fetched) {
       setFetched(true);
-      fetchAccountMetaBatch(batchKey, Object.values(roles), true);
+      fetchIdentitiesMetaBatch(batchKey, Object.values(roles), true);
     }
   }, [isReady, fetched]);
 
