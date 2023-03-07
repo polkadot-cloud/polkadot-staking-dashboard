@@ -13,7 +13,7 @@ export const ExtensionsWrapper = styled.div`
     padding: 0;
   }
 `;
-export const ExtensionItem = styled.div`
+export const ConnectItem = styled.div`
   padding: 0.5rem;
   flex-grow: 0;
   width: 50%;

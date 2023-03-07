@@ -51,7 +51,10 @@ export const Connect = () => {
         </h1>
       </CustomHeaderWrapper>
 
+      <Action text="Hardware" />
+
       <Action text={t('extensions')} />
+
       <ExtensionsWrapper>
         <SelectItems layout="two-col">
           {installed

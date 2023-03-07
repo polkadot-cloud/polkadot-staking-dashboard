@@ -10,7 +10,7 @@ import { useNotifications } from 'contexts/Notifications';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ExtensionProps } from './types';
-import { ExtensionItem } from './Wrappers';
+import { ConnectItem } from './Wrappers';
 
 export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { t } = useTranslation('modals');
@@ -62,7 +62,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   };
 
   return (
-    <ExtensionItem
+    <ConnectItem
       className={status !== 'connected' && extension ? 'canConnect' : undefined}
     >
       <div className="inner">
@@ -102,6 +102,6 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
           </div>
         </div>
       </div>
-    </ExtensionItem>
+    </ConnectItem>
   );
 };
