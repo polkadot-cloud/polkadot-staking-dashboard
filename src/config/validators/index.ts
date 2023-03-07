@@ -316,7 +316,7 @@ export const VALIDATOR_COMMUNITY = [
     validators: {
       polkadot: [
         '16A4n4UQqgxw5ndeehPjUAobDNmuX2bBoPXVKj4xTe16ktRN',
-        '12L5m9htNsUP58mBHFXcsABDSCohhX2J4nMuY9TrJHNLCssQ'
+        '12L5m9htNsUP58mBHFXcsABDSCohhX2J4nMuY9TrJHNLCssQ',
       ],
       kusama: ['FVAFUJhJy9tj1X4PaEXX3tDzjaBEVsVunABAdsDMD4ZYmWA'],
     },
