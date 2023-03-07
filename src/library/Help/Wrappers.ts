@@ -10,7 +10,7 @@ export const Wrapper = styled(motion.div)`
   position: fixed;
   width: 100%;
   height: 100%;
-  z-index: 9;
+  z-index: 10;
   backdrop-filter: blur(14px);
 
   > div {

@@ -18,6 +18,7 @@ export const HELP_CONFIG: HelpItems = [
       'Inflation',
       'Ideal Staked',
       'Supply Staked',
+      'Ledger Hardware Wallets',
     ],
     external: [
       [

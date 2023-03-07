@@ -311,6 +311,17 @@
           "Your balance represents the total {NETWORK_UNIT} you have available in addition to your total staked amount, that includes the amount you have bonded in a Pool.",
           "Unlike your staked balance, your bonded pool balance is held and locked in the pool itself."
         ]
+      ],
+      "ledgerHardwareWallets": [
+        "Ledger Hardware Wallets",
+        [
+          "Compatible Ledger devices are fully supported on staking dashboard. Use your Ledger to manage your staking activity on Polkadot.",
+          "Using a hardware wallet ensures a secure experience, whereby your keys stay on the hardware device at all times. This is also known as cold storage, as there is no active internet connection to your wallet.",
+          
+          "In order to import and sign transactions with your Ledger device, your device must have the Polkadot Ledger app installed. The Polkadot app can be installed via Ledger's very own Ledger Live application.",          
+          "Both USB and Bluetooth connections are supported in staking dashboard. So if your Ledger is bluetooth enabled, and your device allows bluetooth connections, you will be able to import accounts and sign transactions wirelessly through your Ledger device.",
+          "Find more information about Ledger at their official website, ledger.com."
+        ]
       ]
     },
     "externals": {

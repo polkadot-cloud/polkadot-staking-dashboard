@@ -59,16 +59,21 @@ export const HardwareInner = styled.div`
       &:first-child {
         margin-top: 0;
       }
-    }
-    .logo {
-      height: 3rem;
-      margin: 0.5rem;
+      .logo {
+        height: 3rem;
+        margin: 0.5rem;
 
-      &.ledger {
-        path {
-          fill: var(--text-color-secondary);
+        &.ledger {
+          path {
+            fill: var(--text-color-secondary);
+          }
         }
       }
+    }
+    .status {
+      position: absolute;
+      top: 0.9rem;
+      right: 0.9rem;
     }
   }
 `;
