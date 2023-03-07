@@ -3,4 +3,9 @@
 
 import { LedgerHardwareContextInterface } from './types';
 
-export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {};
+export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
+  transportError: null,
+  transportResponse: null,
+  ledgerDeviceInfo: null,
+  executeLedgerLoop: async () => new Promise((resolve) => resolve()),
+};
