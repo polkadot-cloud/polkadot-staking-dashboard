@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faPlug } from '@fortawesome/free-solid-svg-icons';
+import { faBluetoothB, faUsb } from '@fortawesome/free-brands-svg-icons';
 import { ButtonHelp, ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useHelp } from 'contexts/Help';
 import { ReactComponent as LedgerLogoSVG } from 'img/ledgerLogo.svg';
@@ -23,7 +23,25 @@ export const Ledger = (): React.ReactElement => {
             <LedgerLogoSVG className="logo ledger" />
           </div>
           <div className="row">
-            <ButtonSecondary text="USB" iconLeft={faPlug} lg />
+            <ButtonSecondary
+              text="USB"
+              onClick={() => {
+                /* TODO */
+              }}
+              iconLeft={faUsb}
+              iconTransform="shrink-1"
+              lg
+              marginRight
+            />
+            <ButtonSecondary
+              text="Bluetooth"
+              onClick={() => {
+                /* TODO */
+              }}
+              iconLeft={faBluetoothB}
+              iconTransform="grow-1"
+              lg
+            />
           </div>
         </div>
         <Foot url="ledger.com" />
