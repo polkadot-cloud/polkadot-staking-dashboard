@@ -48,12 +48,8 @@ export const StakingProvider = ({
   } = useConnect();
   const { isReady, api, apiStatus, network } = useApi();
   const { activeEra } = useNetworkMetrics();
-  const {
-    balancesAccounts,
-    getBondedAccount,
-
-    getAccountNominations,
-  } = useBalances();
+  const { balancesAccounts, getBondedAccount, getAccountNominations } =
+    useBalances();
   const { getLedgerForStash } = useLedgers();
 
   // Store staking metrics in state.
