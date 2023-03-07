@@ -22,7 +22,7 @@ export const Ledger = (): React.ReactElement => {
           <div className="row">
             <LedgerLogoSVG className="logo ledger" />
           </div>
-          <div className="row">
+          <div className="row margin">
             <ButtonSecondary
               text="USB"
               onClick={() => {

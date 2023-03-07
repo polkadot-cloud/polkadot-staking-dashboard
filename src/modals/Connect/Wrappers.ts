@@ -54,10 +54,9 @@ export const HardwareInner = styled.div`
       width: 100%;
       display: flex;
       justify-content: center;
-      margin-top: 0.5rem;
 
-      &:first-child {
-        margin-top: 0;
+      &.margin {
+        margin-top: 0.75rem;
       }
       .logo {
         height: 3rem;
