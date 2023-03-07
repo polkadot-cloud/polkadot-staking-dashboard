@@ -47,11 +47,22 @@ export const HardwareInner = styled.div`
     padding: 1.35rem 0.85rem 0.75rem 0.85rem;
     position: relative;
     display: flex;
+    flex-direction: column;
     justify-content: center;
 
+    .row {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-top: 0.5rem;
+
+      &:first-child {
+        margin-top: 0;
+      }
+    }
     .logo {
       height: 3rem;
-      margin: 0.75rem 0.5rem;
+      margin: 0.5rem;
 
       &.ledger {
         path {
