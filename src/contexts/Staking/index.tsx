@@ -20,6 +20,7 @@ import {
   setStateWithRef,
 } from 'Utils';
 // eslint-disable-next-line import/no-unresolved
+import { useLedgers } from 'contexts/Accounts/Ledgers';
 import Worker from 'worker-loader!../../workers/stakers';
 import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
@@ -48,11 +49,12 @@ export const StakingProvider = ({
   const { isReady, api, apiStatus, network } = useApi();
   const { activeEra } = useNetworkMetrics();
   const {
-    accounts,
+    balancesAccounts,
     getBondedAccount,
-    getLedgerForStash,
+
     getAccountNominations,
   } = useBalances();
+  const { getLedgerForStash } = useLedgers();
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
@@ -124,7 +126,12 @@ export const StakingProvider = ({
         ) as StakingTargets
       );
     }
-  }, [isReady, accounts, activeAccount, eraStakersRef.current?.stakers]);
+  }, [
+    isReady,
+    balancesAccounts,
+    activeAccount,
+    eraStakersRef.current?.stakers,
+  ]);
 
   worker.onmessage = (message: MessageEvent) => {
     if (message) {

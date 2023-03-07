@@ -4,6 +4,7 @@
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
+import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -24,7 +25,8 @@ export const Nominate = () => {
   const { api, network } = useApi();
   const { activeAccount } = useConnect();
   const { targets, staking, getControllerNotImported } = useStaking();
-  const { getBondedAccount, getLedgerForStash } = useBalances();
+  const { getBondedAccount } = useBalances();
+  const { getLedgerForStash } = useLedgers();
   const { setStatus: setModalStatus } = useModal();
   const { txFeesValid } = useTxFees();
   const { units, unit } = network;

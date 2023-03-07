@@ -20,14 +20,14 @@ export const getEligibleControllers = (): Array<InputItem> => {
     isController,
     existentialAmount,
     getAccountBalance,
-    accounts: balanceAccounts,
+    balancesAccounts,
   } = useBalances();
 
   const [accounts, setAccounts] = useState<Array<InputItem>>([]);
 
   useEffect(() => {
     setAccounts(filterAccounts());
-  }, [activeAccount, connectAccounts, balanceAccounts]);
+  }, [activeAccount, connectAccounts, balancesAccounts]);
 
   const filterAccounts = () => {
     // remove read only accounts

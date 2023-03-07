@@ -4,6 +4,7 @@
 import BigNumber from 'bignumber.js';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { Lock } from 'contexts/Accounts/Balances/types';
+import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React from 'react';
@@ -25,8 +26,8 @@ export const TransferOptionsProvider = ({
   children: React.ReactNode;
 }) => {
   const { activeEra } = useNetworkMetrics();
-  const { getAccount, getAccountBalance, getLedgerForStash, getAccountLocks } =
-    useBalances();
+  const { getAccount, getAccountBalance, getAccountLocks } = useBalances();
+  const { getLedgerForStash } = useLedgers();
   const { membership } = usePoolMemberships();
 
   // get the bond and unbond amounts available to the user
