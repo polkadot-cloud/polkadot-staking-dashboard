@@ -50,8 +50,8 @@ export const HardwareInner = styled.div`
     justify-content: center;
 
     .logo {
-      height: 3.25rem;
-      margin: 1rem 0.5rem;
+      height: 3rem;
+      margin: 0.75rem 0.5rem;
 
       &.ledger {
         path {
