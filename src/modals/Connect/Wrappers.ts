@@ -48,6 +48,17 @@ export const HardwareInner = styled.div`
     position: relative;
     display: flex;
     justify-content: center;
+
+    .logo {
+      height: 3.25rem;
+      margin: 1rem 0.5rem;
+
+      &.ledger {
+        path {
+          fill: var(--text-color-secondary);
+        }
+      }
+    }
   }
 `;
 
@@ -131,7 +142,7 @@ export const ConnectItemFoot = styled.div`
   padding: 0.85rem 0.85rem;
 
   a {
-    color: var(--text-secondary-color);
+    color: var(--text-color-secondary);
     transition: color 0.15s;
     display: flex;
     align-items: center;
