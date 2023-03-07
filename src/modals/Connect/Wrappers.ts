@@ -32,6 +32,22 @@ export const ConnectItem = styled.div`
   }
 `;
 
+export const HardwareInner = styled.div`
+  background: var(--button-primary-background);
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+  position: relative;
+
+  .body {
+    width: 100%;
+    padding: 1.35rem 0.85rem 0.75rem 0.85rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+`;
+
 export const ExtensionInner = styled.div`
   background: var(--button-primary-background);
   width: 100%;
@@ -75,26 +91,6 @@ export const ExtensionInner = styled.div`
       }
     }
   }
-  .foot {
-    border-top: 1px solid var(--border-primary-color);
-    width: 100%;
-    padding: 0.85rem 0.85rem;
-
-    a {
-      color: var(--text-secondary-color);
-      transition: color 0.15s;
-      display: flex;
-      align-items: center;
-      font-size: 0.92rem;
-      &:hover {
-        color: var(--network-color-primary);
-      }
-      > svg {
-        margin-left: 0.3rem;
-        margin-top: 0.1rem;
-      }
-    }
-  }
   .row {
     width: 100%;
     display: flex;
@@ -120,6 +116,27 @@ export const ExtensionInner = styled.div`
     }
     .dark {
       fill: var(--text-color-secondary);
+    }
+  }
+`;
+
+export const ConnectItemFoot = styled.div`
+  border-top: 1px solid var(--border-primary-color);
+  width: 100%;
+  padding: 0.85rem 0.85rem;
+
+  a {
+    color: var(--text-secondary-color);
+    transition: color 0.15s;
+    display: flex;
+    align-items: center;
+    font-size: 0.92rem;
+    &:hover {
+      color: var(--network-color-primary);
+    }
+    > svg {
+      margin-left: 0.3rem;
+      margin-top: 0.1rem;
     }
   }
 `;

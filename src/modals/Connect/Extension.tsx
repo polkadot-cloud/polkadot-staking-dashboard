@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faExternalLinkAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
@@ -9,6 +9,7 @@ import { ExtensionInjected } from 'contexts/Extensions/types';
 import { useNotifications } from 'contexts/Notifications';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Foot } from './Foot';
 import { ExtensionProps } from './types';
 import { ConnectItem, ExtensionInner } from './Wrappers';
 
@@ -94,12 +95,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
               <h3>{title}</h3>
             </div>
           </div>
-          <div className="foot">
-            <a href={`https://${url}`} target="_blank" rel="noreferrer">
-              {url}
-              <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
-            </a>
-          </div>
+          <Foot url={url} />
         </div>
       </ExtensionInner>
     </ConnectItem>
