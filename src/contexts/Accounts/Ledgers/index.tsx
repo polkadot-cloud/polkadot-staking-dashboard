@@ -44,8 +44,6 @@ export const LedgersProvider = ({
     if (isReady) {
       // local updated values
       let newAccounts = ledgersAccountsRef.current;
-
-      // local updated values
       let newLedgers = ledgersRef.current;
       const newUnsubsLedgers = unsubsLedgersRef.current;
 
@@ -72,19 +70,6 @@ export const LedgersProvider = ({
 
       // update accounts state and unsubscribe if accounts have been removed
       if (newAccounts.length < ledgersAccountsRef.current.length) {
-        // unsubscribe from removed balances
-        accountsRemoved.forEach((a: LedgersAccount) => {
-          const unsub = ledgersAccountsRef.current.find(
-            (u: AnyApi) => u.key === a.address
-          );
-          if (unsub) {
-            unsub.unsub();
-            // remove unsub from balances
-            newUnsubsLedgers.filter((u: AnyApi) => u.key !== a.address);
-          }
-        });
-        // commit state updates
-        setStateWithRef(newUnsubsLedgers, setUnsubsLedgers, ledgersAccountsRef);
         setStateWithRef(newAccounts, setLedgersAccounts, ledgersAccountsRef);
       }
 
