@@ -16,9 +16,11 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
   const containerRefs: Array<MutableRefObject<AnyJson>> = [];
   const bodyRefs: Array<MutableRefObject<AnyJson>> = [];
 
-  for (let i = 0; i < children.length; i++) {
-    bodyRefs.push(useRef(null));
-    containerRefs.push(useRef(null));
+  if (children) {
+    for (let i = 0; i < children.length; i++) {
+      bodyRefs.push(useRef(null));
+      containerRefs.push(useRef(null));
+    }
   }
 
   // Adjust all container heights to be uniform.
@@ -79,14 +81,16 @@ export const SelectItems = ({ layout, children }: SelectItemsProps) => {
 
   return (
     <SelectItemsWrapper className={layout}>
-      {children.map((child: any, i: number) => (
-        <React.Fragment key={i}>
-          {React.cloneElement(child, {
-            bodyRef: bodyRefs[i],
-            containerRef: containerRefs[i],
-          })}
-        </React.Fragment>
-      ))}
+      {children
+        ? children.map((child: any, i: number) => (
+            <React.Fragment key={i}>
+              {React.cloneElement(child, {
+                bodyRef: bodyRefs[i],
+                containerRef: containerRefs[i],
+              })}
+            </React.Fragment>
+          ))
+        : null}
     </SelectItemsWrapper>
   );
 };
