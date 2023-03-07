@@ -4,6 +4,8 @@
 import { TwoThreshold } from 'library/SelectItems/Wrapper';
 import styled from 'styled-components';
 
+// Wraps a list of extensions. `SelectItems` typically follows this wrapper, with the items embedded
+// within it.
 export const ExtensionsWrapper = styled.div`
   width: 100%;
   padding: 0 0.4rem;
@@ -32,6 +34,7 @@ export const ConnectItem = styled.div`
   }
 `;
 
+// Styling for a hardware item, which can reflect the status of the hardware connection.
 export const HardwareInner = styled.div`
   background: var(--button-primary-background);
   width: 100%;
@@ -48,6 +51,7 @@ export const HardwareInner = styled.div`
   }
 `;
 
+// Styling for an extension item, which can reflect the status of the extension connection.
 export const ExtensionInner = styled.div`
   background: var(--button-primary-background);
   width: 100%;
@@ -120,6 +124,7 @@ export const ExtensionInner = styled.div`
   }
 `;
 
+// Footer for a connect item, that holds a URL to the item's webpage.
 export const ConnectItemFoot = styled.div`
   border-top: 1px solid var(--border-primary-color);
   width: 100%;
@@ -141,6 +146,7 @@ export const ConnectItemFoot = styled.div`
   }
 `;
 
+// Styling for a separator between ExtensionItems.
 export const Separator = styled.div`
   width: 100%;
   height: 0.25rem;
