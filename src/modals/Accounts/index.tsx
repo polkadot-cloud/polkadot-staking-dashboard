@@ -23,7 +23,7 @@ export const Accounts = () => {
   const { t } = useTranslation('modals');
   const { isReady } = useApi();
   const { getAccount, activeAccount } = useConnect();
-  const { getAccountLocks, balancesAccounts } = useBalances();
+  const { getAccountLocks, balances } = useBalances();
   const { ledgers } = useLedgers();
   const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
@@ -46,11 +46,11 @@ export const Accounts = () => {
 
   useEffect(() => {
     getAccountsStatus();
-  }, [localAccounts, balancesAccounts, ledgers, accounts, memberships]);
+  }, [localAccounts, balances, ledgers, accounts, memberships]);
 
   useEffect(() => {
     setResize();
-  }, [activeAccount, accounts, balancesAccounts, ledgers, extensions]);
+  }, [activeAccount, accounts, balances, ledgers, extensions]);
 
   const getAccountsStatus = () => {
     // accumulate imported stash accounts

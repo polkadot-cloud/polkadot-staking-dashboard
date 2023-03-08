@@ -26,7 +26,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { accounts: connectAccounts } = useConnect();
   const { staking, eraStakers } = useStaking();
   const { activeEra, metrics } = useNetworkMetrics();
-  const { balancesAccounts } = useBalances();
+  const { balances } = useBalances();
   const { synced: activePoolsSynced } = useActivePools();
 
   // set whether the network has been synced.
@@ -161,7 +161,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     const extensionAccounts = connectAccounts.filter(
       (a: ImportedAccount) => a.source !== 'external'
     );
-    if (balancesAccounts.length < extensionAccounts.length) {
+    if (balances.length < extensionAccounts.length) {
       _syncing = true;
       _networkSyncing = true;
       _poolsSyncing = true;
@@ -183,14 +183,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     setIsSyncing(_syncing);
-  }, [
-    isReady,
-    staking,
-    metrics,
-    balancesAccounts,
-    eraStakers,
-    activePoolsSynced,
-  ]);
+  }, [isReady, staking, metrics, balances, eraStakers, activePoolsSynced]);
 
   const setSideMenu = (v: number) => {
     setSideMenuOpen(v);

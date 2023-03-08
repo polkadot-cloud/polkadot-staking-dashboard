@@ -48,8 +48,7 @@ export const StakingProvider = ({
   } = useConnect();
   const { isReady, api, apiStatus, network } = useApi();
   const { activeEra } = useNetworkMetrics();
-  const { balancesAccounts, getBondedAccount, getAccountNominations } =
-    useBalances();
+  const { balances, getBondedAccount, getAccountNominations } = useBalances();
   const { getLedgerForStash } = useLedgers();
 
   // Store staking metrics in state.
@@ -122,12 +121,7 @@ export const StakingProvider = ({
         ) as StakingTargets
       );
     }
-  }, [
-    isReady,
-    balancesAccounts,
-    activeAccount,
-    eraStakersRef.current?.stakers,
-  ]);
+  }, [isReady, balances, activeAccount, eraStakersRef.current?.stakers]);
 
   worker.onmessage = (message: MessageEvent) => {
     if (message) {

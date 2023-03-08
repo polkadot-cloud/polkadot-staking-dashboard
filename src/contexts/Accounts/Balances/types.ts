@@ -26,7 +26,6 @@ export interface BalancesAccount {
   address?: string;
   balance?: Balance;
   bonded?: string;
-  // ledger?: BalanceLedger;
   locks?: Array<Lock>;
   nominations?: Nominations;
 }
@@ -45,6 +44,6 @@ export interface BalancesContextInterface {
   getBondedAccount: (address: MaybeAccount) => string | null;
   getAccountNominations: (address: MaybeAccount) => Targets;
   isController: (address: MaybeAccount) => boolean;
-  balancesAccounts: Array<BalancesAccount>;
+  balances: Array<BalancesAccount>;
   existentialAmount: BigNumber;
 }

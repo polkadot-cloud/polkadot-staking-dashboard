@@ -16,18 +16,14 @@ export const getEligibleControllers = (): Array<InputItem> => {
   const { t } = useTranslation('library');
   const { network } = useApi();
   const { activeAccount, accounts: connectAccounts } = useConnect();
-  const {
-    isController,
-    existentialAmount,
-    getAccountBalance,
-    balancesAccounts,
-  } = useBalances();
+  const { isController, existentialAmount, getAccountBalance, balances } =
+    useBalances();
 
   const [accounts, setAccounts] = useState<Array<InputItem>>([]);
 
   useEffect(() => {
     setAccounts(filterAccounts());
-  }, [activeAccount, connectAccounts, balancesAccounts]);
+  }, [activeAccount, connectAccounts, balances]);
 
   const filterAccounts = () => {
     // remove read only accounts

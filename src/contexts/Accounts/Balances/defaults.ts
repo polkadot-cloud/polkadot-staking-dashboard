@@ -34,6 +34,6 @@ export const defaultBalancesContext: BalancesContextInterface = {
   getAccountNominations: (address) => [],
   // eslint-disable-next-line
   isController: (address) => false,
-  balancesAccounts: [],
+  balances: [],
   existentialAmount: new BigNumber(0),
 };

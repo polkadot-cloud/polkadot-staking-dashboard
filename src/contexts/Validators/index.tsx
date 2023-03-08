@@ -42,7 +42,7 @@ export const ValidatorsProvider = ({
   const { isReady, api, network, consts } = useApi();
   const { activeAccount } = useConnect();
   const { activeEra, metrics } = useNetworkMetrics();
-  const { balancesAccounts, getAccountNominations } = useBalances();
+  const { balances, getAccountNominations } = useBalances();
   const { poolNominations } = useActivePools();
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
@@ -150,7 +150,7 @@ export const ValidatorsProvider = ({
     if (isReady && activeAccount) {
       fetchNominatedList();
     }
-  }, [isReady, activeAccount, balancesAccounts]);
+  }, [isReady, activeAccount, balances]);
 
   const fetchNominatedList = async () => {
     if (!activeAccount) {

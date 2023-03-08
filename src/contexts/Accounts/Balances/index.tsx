@@ -35,7 +35,7 @@ export const BalancesProvider = ({
   const [balancesAccounts, setBalancesAccounts] = useState<
     Array<BalancesAccount>
   >([]);
-  const balancesAccountsRef = useRef(balancesAccounts);
+  const balancesRef = useRef(balancesAccounts);
 
   // balance subscriptions state
   const [unsubsBalances, setUnsubsBalances] = useState<AnyApi>([]);
@@ -45,28 +45,28 @@ export const BalancesProvider = ({
   useEffect(() => {
     if (isReady) {
       // local updated values
-      let newAccounts = balancesAccountsRef.current;
+      let newAccounts = balancesRef.current;
       const newUnsubsBalances = unsubsBalancesRef.current;
 
       // get accounts removed: use these to unsubscribe
-      const accountsRemoved = balancesAccountsRef.current.filter(
+      const accountsRemoved = balancesRef.current.filter(
         (a: BalancesAccount) =>
           !accounts.find((c: ImportedAccount) => c.address === a.address)
       );
       // get accounts added: use these to subscribe
       const accountsAdded = accounts.filter(
         (c: ImportedAccount) =>
-          !balancesAccountsRef.current.find(
+          !balancesRef.current.find(
             (a: BalancesAccount) => a.address === c.address
           )
       );
       // update accounts state for removal
-      newAccounts = balancesAccountsRef.current.filter((a: BalancesAccount) =>
+      newAccounts = balancesRef.current.filter((a: BalancesAccount) =>
         accounts.find((c: ImportedAccount) => c.address === a.address)
       );
 
       // update accounts state and unsubscribe if accounts have been removed
-      if (newAccounts.length < balancesAccountsRef.current.length) {
+      if (newAccounts.length < balancesRef.current.length) {
         // unsubscribe from removed balances
         accountsRemoved.forEach((a: BalancesAccount) => {
           const unsub = unsubsBalancesRef.current.find(
@@ -84,7 +84,7 @@ export const BalancesProvider = ({
           setUnsubsBalances,
           unsubsBalancesRef
         );
-        setStateWithRef(newAccounts, setBalancesAccounts, balancesAccountsRef);
+        setStateWithRef(newAccounts, setBalancesAccounts, balancesRef);
       }
 
       // if accounts have changed, update state with new unsubs / accounts
@@ -171,11 +171,11 @@ export const BalancesProvider = ({
               };
 
         // remove stale account if it's already in list.
-        const newAccounts = Object.values(balancesAccountsRef.current)
+        const newAccounts = Object.values(balancesRef.current)
           .filter((a: BalancesAccount) => a.address !== address)
           .concat(newAccount);
 
-        setStateWithRef(newAccounts, setBalancesAccounts, balancesAccountsRef);
+        setStateWithRef(newAccounts, setBalancesAccounts, balancesRef);
       }
     );
 
@@ -192,7 +192,7 @@ export const BalancesProvider = ({
 
   // get an account's balance metadata
   const getAccountBalance = (address: MaybeAccount) => {
-    const account = balancesAccountsRef.current.find(
+    const account = balancesRef.current.find(
       (a: BalancesAccount) => a.address === address
     );
     if (account === undefined) {
@@ -207,7 +207,7 @@ export const BalancesProvider = ({
 
   // get an account's locks metadata
   const getAccountLocks = (address: MaybeAccount) => {
-    const account = balancesAccountsRef.current.find(
+    const account = balancesRef.current.find(
       (a: BalancesAccount) => a.address === address
     );
     if (account === undefined) {
@@ -220,7 +220,7 @@ export const BalancesProvider = ({
 
   // get an account's bonded (controller) account)
   const getBondedAccount = (address: MaybeAccount) => {
-    const account = balancesAccountsRef.current.find(
+    const account = balancesRef.current.find(
       (a: BalancesAccount) => a.address === address
     );
     if (account === undefined) {
@@ -232,7 +232,7 @@ export const BalancesProvider = ({
 
   // get an account's nominations
   const getAccountNominations = (address: MaybeAccount) => {
-    const account = balancesAccountsRef.current.find(
+    const account = balancesRef.current.find(
       (a: BalancesAccount) => a.address === address
     );
     if (account === undefined) {
@@ -249,7 +249,7 @@ export const BalancesProvider = ({
 
   // get an account
   const getAccount = (address: MaybeAccount) => {
-    const account = balancesAccountsRef.current.find(
+    const account = balancesRef.current.find(
       (a: BalancesAccount) => a.address === address
     );
     if (account === undefined) {
@@ -260,7 +260,7 @@ export const BalancesProvider = ({
 
   // check if an account is a controller account
   const isController = (address: MaybeAccount) => {
-    const existsAsController = balancesAccountsRef.current.filter(
+    const existsAsController = balancesRef.current.filter(
       (a: BalancesAccount) => (a?.bonded || '') === address
     );
     return existsAsController.length > 0;
@@ -276,7 +276,7 @@ export const BalancesProvider = ({
         getAccountNominations,
         isController,
         existentialAmount,
-        balancesAccounts: balancesAccountsRef.current,
+        balances: balancesRef.current,
       }}
     >
       {children}
