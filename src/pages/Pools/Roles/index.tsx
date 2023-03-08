@@ -33,7 +33,7 @@ export const Roles = ({
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { fetchIdentitiesMetaBatch } = useIdentities();
   const { isOwner, selectedActivePool } = useActivePools();
-  const { poolsSyncing } = useUi();
+  const { isPoolSyncing } = useUi();
   const { openModalWith } = useModal();
   const { id } = selectedActivePool || { id: 0 };
   const roles = defaultRoles;
@@ -153,7 +153,7 @@ export const Roles = ({
                   iconLeft={faTimesCircle}
                   iconTransform="grow-1"
                   text={t('pools.cancel')}
-                  disabled={poolsSyncing || isReadOnlyAccount(activeAccount)}
+                  disabled={isPoolSyncing || isReadOnlyAccount(activeAccount)}
                   onClick={() => cancelHandler()}
                 />
               </div>
@@ -165,7 +165,7 @@ export const Roles = ({
                 iconTransform="grow-1"
                 text={isEditing ? t('pools.save') : t('pools.edit')}
                 disabled={
-                  poolsSyncing ||
+                  isPoolSyncing ||
                   isReadOnlyAccount(activeAccount) ||
                   !isRoleEditsValid()
                 }

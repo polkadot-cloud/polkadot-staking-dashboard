@@ -30,10 +30,10 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { synced: activePoolsSynced } = useActivePools();
 
   // set whether the network has been synced.
-  const [networkSyncing, setNetworkSyncing] = useState(false);
+  const [isNetworkSyncing, setIsNetworkSyncing] = useState(false);
 
   // set whether pools are being synced.
-  const [poolsSyncing, setPoolsSyncing] = useState(false);
+  const [isPoolSyncing, setIsPoolSyncing] = useState(false);
 
   // set whether app is syncing.ncludes workers (active nominations).
   const [isSyncing, setIsSyncing] = useState(false);
@@ -85,22 +85,17 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  // get side menu minimised state from local storage, default to not
-  const _userSideMenuMinimised = Number(
-    localStorageOrDefault('side_menu_minimised', 0)
-  );
-
   // side menu control
   const [sideMenuOpen, setSideMenuOpen] = useState(0);
 
-  // side menu minimised
-  const [userSideMenuMinimised, _setUserSideMenuMinimised] = useState(
-    _userSideMenuMinimised
+  // get side menu minimised state from local storage, default to 0.
+  const [userSideMenuMinimised, setUserSideMenuMinimisedState] = useState(
+    Number(localStorageOrDefault('side_menu_minimised', 0))
   );
   const userSideMenuMinimisedRef = useRef(userSideMenuMinimised);
   const setUserSideMenuMinimised = (v: number) => {
     localStorage.setItem('side_menu_minimised', String(v));
-    setStateWithRef(v, _setUserSideMenuMinimised, userSideMenuMinimisedRef);
+    setStateWithRef(v, setUserSideMenuMinimisedState, userSideMenuMinimisedRef);
   };
 
   // automatic side menu minimised
@@ -134,27 +129,27 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // app syncing updates
   useEffect(() => {
-    let _syncing = false;
-    let _networkSyncing = false;
-    let _poolsSyncing = false;
+    let syncing = false;
+    let networkSyncing = false;
+    let poolSyncing = false;
 
     if (!isReady) {
-      _syncing = true;
-      _networkSyncing = true;
-      _poolsSyncing = true;
+      syncing = true;
+      networkSyncing = true;
+      poolSyncing = true;
     }
     // staking metrics have synced
     if (staking.lastReward === new BigNumber(0)) {
-      _syncing = true;
-      _networkSyncing = true;
-      _poolsSyncing = true;
+      syncing = true;
+      networkSyncing = true;
+      poolSyncing = true;
     }
 
     // era has synced from Network
     if (activeEra.index.isZero()) {
-      _syncing = true;
-      _networkSyncing = true;
-      _poolsSyncing = true;
+      syncing = true;
+      networkSyncing = true;
+      poolSyncing = true;
     }
 
     // all extension accounts have been synced
@@ -162,27 +157,27 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       (a: ImportedAccount) => a.source !== 'external'
     );
     if (balances.length < extensionAccounts.length) {
-      _syncing = true;
-      _networkSyncing = true;
-      _poolsSyncing = true;
+      syncing = true;
+      networkSyncing = true;
+      poolSyncing = true;
     }
 
-    setNetworkSyncing(_networkSyncing);
+    setIsNetworkSyncing(networkSyncing);
 
     // active pools have been synced
     if (activePoolsSynced !== 'synced') {
-      _syncing = true;
-      _poolsSyncing = true;
+      syncing = true;
+      poolSyncing = true;
     }
 
-    setPoolsSyncing(_poolsSyncing);
+    setIsPoolSyncing(poolSyncing);
 
     // eraStakers total active nominators has synced
     if (!eraStakers.totalActiveNominators) {
-      _syncing = true;
+      syncing = true;
     }
 
-    setIsSyncing(_syncing);
+    setIsSyncing(syncing);
   }, [isReady, staking, metrics, balances, eraStakers, activePoolsSynced]);
 
   const setSideMenu = (v: number) => {
@@ -209,8 +204,8 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
         userSideMenuMinimised: userSideMenuMinimisedRef.current,
         sideMenuMinimised,
         isSyncing,
-        networkSyncing,
-        poolsSyncing,
+        isNetworkSyncing,
+        isPoolSyncing,
         containerRefs,
       }}
     >

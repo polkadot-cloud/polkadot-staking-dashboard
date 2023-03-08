@@ -25,6 +25,6 @@ export const defaultUIContext: UIContextInterface = {
   sideMenuMinimised: 0,
   containerRefs: {},
   isSyncing: false,
-  networkSyncing: false,
-  poolsSyncing: false,
+  isNetworkSyncing: false,
+  isPoolSyncing: false,
 };
