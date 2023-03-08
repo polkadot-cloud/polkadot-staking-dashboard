@@ -127,13 +127,13 @@
         ]
       ],
       "ledgerHardwareWallets": [
-        "Ledger Hardware Wallets",
+        "Ledger硬件钱包",
         [
-          "Compatible Ledger devices are fully supported on staking dashboard. Use your Ledger to manage your staking activity on Polkadot.",
-          "Using a hardware wallet ensures a secure experience, whereby your keys stay on the hardware device at all times. This is also known as cold storage, as there is no active internet connection to your wallet.",
-          "In order to import and sign transactions with your Ledger device, your device must have the Polkadot Ledger app installed. The Polkadot app can be installed via Ledger's very own Ledger Live application.",
-          "Both USB and Bluetooth connections are supported in staking dashboard. So if your Ledger is bluetooth enabled, and your device allows bluetooth connections, you will be able to import accounts and sign transactions wirelessly through your Ledger device.",
-          "Find more information about Ledger at their official website, ledger.com."
+          "Staking Dashboard己完全支持可兼容的Ledger设备.您可开始使用Ledger管理Polkadot上的抵押.",
+          "因为您的私钥一直在硬件设备上,所以硬件钱包也称为冷钱包.硬件钱包没有连接互联网，所以使用该类钱包可确保安全.",
+          "为了使用Ledger设备导入和签署交易, 您的设备必须安装Polkadot Ledger App. 该应用程序可以通过Ledger自己的应用程序Ledger Live安装.",
+          "支持USB和蓝牙连接. 如果您的Ledger有蓝牙功能, 并且您的设备允许蓝牙连接, 您将能够通过Ledger设备无线导入帐户并签署交易.",
+          "详情请在其官方网站上查找:ledger.com."
         ]
       ],
       "lockedBalance": [
