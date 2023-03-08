@@ -55,7 +55,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
 
         addNotification({
           title: t('extensionConnected'),
-          subtitle: `${t('titleExtensionConnected', title)}`,
+          subtitle: `${t('titleExtensionConnected', { title })}`,
         });
       })();
     }
