@@ -94,20 +94,20 @@ export const LedgersProvider = ({
 
     const unsub: () => void = await api.queryMulti<AnyApi>(
       [[api.query.staking.ledger, address]],
-      async ([l]): Promise<void> => {
+      async ([result]): Promise<void> => {
         let ledger: Ledger;
 
-        const _ledger = l.unwrapOr(null);
+        const newLedger = result.unwrapOr(null);
         // fallback to default ledger if not present
-        if (_ledger !== null) {
-          const { stash, total, active, unlocking } = _ledger;
+        if (newLedger !== null) {
+          const { stash, total, active, unlocking } = newLedger;
 
           // format unlocking chunks
-          const _unlocking = [];
+          const newUnlocking = [];
           for (const u of unlocking.toHuman()) {
             const { era, value } = u;
 
-            _unlocking.push({
+            newUnlocking.push({
               era: Number(rmCommas(era)),
               value: new BigNumber(rmCommas(value)),
             });
@@ -127,29 +127,32 @@ export const LedgersProvider = ({
             stash: stash.toHuman(),
             active: new BigNumber(rmCommas(active.toString())),
             total: new BigNumber(rmCommas(total.toString())),
-            unlocking: _unlocking,
+            unlocking: newUnlocking,
           };
 
           // remove stale account if it's already in list, and concat.
-          let _ledgers = Object.values(ledgersRef.current);
-          _ledgers = _ledgers
-            .filter((_l: Ledger) => _l.stash !== ledger.stash)
+          let newLedgers = Object.values(ledgersRef.current);
+          newLedgers = newLedgers
+            .filter((l: Ledger) => l.stash !== ledger.stash)
             .concat(ledger);
 
-          setStateWithRef(_ledgers, setLedgers, ledgersRef);
+          setStateWithRef(newLedgers, setLedgers, ledgersRef);
         } else {
           // no ledger: remove stale account if it's already in list.
-          let _ledgers = Object.values(ledgersRef.current);
-          _ledgers = _ledgers.filter((_l: Ledger) => _l.address !== address);
-          setStateWithRef(_ledgers, setLedgers, ledgersRef);
+          let newLedgers = Object.values(ledgersRef.current);
+          newLedgers = newLedgers.filter((l: Ledger) => l.address !== address);
+          setStateWithRef(newLedgers, setLedgers, ledgersRef);
         }
       }
     );
-    const _unsubs = unsubsRef.current.concat({
-      key: address,
-      unsub,
-    });
-    setStateWithRef(_unsubs, setUnsubs, unsubsRef);
+    setStateWithRef(
+      unsubsRef.current.concat({
+        key: address,
+        unsub,
+      }),
+      setUnsubs,
+      unsubsRef
+    );
     return unsub;
   };
 
