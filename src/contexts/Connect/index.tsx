@@ -57,7 +57,7 @@ export const ConnectProvider = ({
   const accountsRef = useRef(accounts);
 
   // store the currently active account
-  const [activeAccount, _setActiveAccount] = useState<string | null>(null);
+  const [activeAccount, setActiveAccountState] = useState<string | null>(null);
   const activeAccountRef = useRef<string | null>(activeAccount);
 
   // store the currently active account metadata
@@ -87,7 +87,7 @@ export const ConnectProvider = ({
     if (!checkingInjectedWeb3) {
       // unsubscribe from all accounts and reset state
       unsubscribeAll();
-      setStateWithRef(null, _setActiveAccount, activeAccountRef);
+      setStateWithRef(null, setActiveAccountState, activeAccountRef);
       setStateWithRef([], setAccounts, accountsRef);
       setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
       setStateWithRef([], setExtensionsInitialised, extensionsInitialisedRef);
@@ -400,7 +400,7 @@ export const ConnectProvider = ({
     } else {
       localStorage.setItem(`${network.name}_active_account`, address);
     }
-    setStateWithRef(address, _setActiveAccount, activeAccountRef);
+    setStateWithRef(address, setActiveAccountState, activeAccountRef);
   };
 
   const connectToAccount = (account: ImportedAccount | null) => {
