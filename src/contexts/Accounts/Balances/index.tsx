@@ -130,25 +130,25 @@ export const BalancesProvider = ({
         };
 
         // get account locks
-        const _locks = locks.toHuman();
-        for (let i = 0; i < _locks.length; i++) {
-          _locks[i].amount = new BigNumber(rmCommas(_locks[i].amount));
+        const newLocks = locks.toHuman();
+        for (let i = 0; i < newLocks.length; i++) {
+          newLocks[i].amount = new BigNumber(rmCommas(newLocks[i].amount));
         }
-        newAccount.locks = _locks;
+        newAccount.locks = newLocks;
 
         // set account bonded (controller) or null
-        let _bonded = bonded.unwrapOr(null);
-        _bonded =
-          _bonded === null ? null : (_bonded.toHuman() as string | null);
-        newAccount.bonded = _bonded;
+        let newBonded = bonded.unwrapOr(null);
+        newBonded =
+          newBonded === null ? null : (newBonded.toHuman() as string | null);
+        newAccount.bonded = newBonded;
 
         // add bonded (controller) account as external account if not presently imported
-        if (_bonded) {
+        if (newBonded) {
           if (
-            accounts.find((s: ImportedAccount) => s.address === _bonded) ===
+            accounts.find((s: ImportedAccount) => s.address === newBonded) ===
             undefined
           ) {
-            addExternalAccount(_bonded, 'system');
+            addExternalAccount(newBonded, 'system');
           }
         }
 
