@@ -89,35 +89,20 @@ export const BalancesProvider = ({
 
       // if accounts have changed, update state with new unsubs / accounts
       if (accountsAdded.length) {
-        // subscribe to account balances
-        handleSubscribe(accountsAdded);
+        // subscribe to added accounts balances
+        accountsAdded.map((a: ImportedAccount) =>
+          subscribeToBalances(a.address)
+        );
       }
     }
   }, [accounts, network, isReady]);
 
-  // unsubscribe from everything on unmount
+  // unsubscribe from balance subscriptions on unmount
   useEffect(() => {
-    return () => {
-      unsubscribeAll();
-    };
-  }, []);
-
-  // subscribe to added accounts
-  const handleSubscribe = async (accountsAdded: Array<ImportedAccount>) => {
-    // subscribe to balances
-    Promise.all(
-      accountsAdded.map((a: ImportedAccount) => subscribeToBalances(a.address))
-    );
-  };
-
-  /*
-   * Unsubscrbe balance subscriptions
-   */
-  const unsubscribeAll = () => {
     Object.values(unsubsBalancesRef.current).forEach(({ unsub }: AnyApi) => {
       unsub();
     });
-  };
+  }, []);
 
   // subscribe to account balances, bonded and nominators
   const subscribeToBalances = async (address: string) => {

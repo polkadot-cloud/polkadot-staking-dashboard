@@ -76,35 +76,18 @@ export const LedgersProvider = ({
 
       // if accounts have changed, update state with new unsubs / accounts
       if (accountsAdded.length) {
-        // subscribe to account balances and ledgers
-        handleSubscribe(accountsAdded);
+        // subscribe to added accounts
+        accountsAdded.map((a: ImportedAccount) => subscribeToLedger(a.address));
       }
     }
   }, [accounts, network, isReady]);
 
-  // unsubscribe from everything on unmount
+  // unsubscribe from ledger subscriptions on unmount
   useEffect(() => {
-    return () => {
-      unsubscribeAll();
-    };
-  }, []);
-
-  // subscribe to added accounts
-  const handleSubscribe = async (accountsAdded: Array<ImportedAccount>) => {
-    // subscribe to ledgers
-    Promise.all(
-      accountsAdded.map((a: ImportedAccount) => subscribeToLedger(a.address))
-    );
-  };
-
-  /*
-   * Unsubscrbe ledger subscriptions
-   */
-  const unsubscribeAll = () => {
     Object.values(unsubsLedgersRef.current).forEach(({ unsub }: AnyApi) => {
       unsub();
     });
-  };
+  }, []);
 
   const subscribeToLedger = async (address: string) => {
     if (!api) return;
