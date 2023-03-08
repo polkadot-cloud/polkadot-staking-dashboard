@@ -129,7 +129,7 @@
     "build": "node scripts/build.js",
     "predeploy": "yarn run build",
     "deploy": "gh-pages -d build",
-    "test": "echo 'no jest so far'",
+    "test": "jest --testPathPattern=tests/*",
     "lint": "eslint ./src --fix && npx prettier --write ./src",
     "lint:scripts": "npx prettier --write ./.scripts",
     "locale:order": "node ./.scripts/localeOrderKeys.js",
