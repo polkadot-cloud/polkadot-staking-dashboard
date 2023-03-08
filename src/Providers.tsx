@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { BalancesProvider } from 'contexts/Accounts/Balances';
+import { LedgersProvider } from 'contexts/Accounts/Ledgers';
 import { APIProvider, useApi } from 'contexts/Api';
 import { ConnectProvider } from 'contexts/Connect';
 import { ExtensionsProvider } from 'contexts/Extensions';
@@ -69,6 +70,7 @@ export const Providers = withProviders(
   NetworkMetricsProvider,
   IdentitiesProvider,
   BalancesProvider,
+  LedgersProvider,
   StakingProvider,
   PoolsConfigProvider,
   BondedPoolsProvider,
