@@ -9,7 +9,6 @@ import { ExtensionsProvider } from 'contexts/Extensions';
 import { ExtrinsicsProvider } from 'contexts/Extrinsics';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
-import { LedgerHardwareProvider } from 'contexts/Hardware/Ledger';
 import { HelpProvider } from 'contexts/Help';
 import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
@@ -63,7 +62,6 @@ export const ThemedRouter = () => {
 
 export const Providers = withProviders(
   FiltersProvider,
-  LedgerHardwareProvider,
   APIProvider,
   ExtensionsProvider,
   ConnectProvider,

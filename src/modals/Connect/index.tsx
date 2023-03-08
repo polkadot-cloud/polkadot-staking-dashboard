@@ -13,9 +13,7 @@ import { SelectItems } from 'library/SelectItems';
 import { CustomHeaderWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AnyFunction } from 'types';
 import { Extension } from './Extension';
-import { Ledger } from './Ledger';
 import { ReadOnly } from './ReadOnly';
 import { ExtensionsWrapper, Separator } from './Wrappers';
 
@@ -55,7 +53,8 @@ export const Connect = () => {
         </h1>
       </CustomHeaderWrapper>
 
-      {name === 'polkadot' ? (
+      {/* NOTE: pending CRA migration */}
+      {/* {name === 'polkadot' ? (
         <>
           <Action text="Hardware" />
           <ExtensionsWrapper>
@@ -66,7 +65,7 @@ export const Connect = () => {
             </SelectItems>
           </ExtensionsWrapper>
         </>
-      ) : null}
+      ) : null} */}
 
       <Action text={t('extensions')} />
       <ExtensionsWrapper>
