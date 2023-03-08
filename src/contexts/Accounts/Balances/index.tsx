@@ -36,15 +36,15 @@ export const BalancesProvider = ({
   const balancesRef = useRef(balances);
 
   // balance subscriptions state
-  const [unsubsBalances, setUnsubsBalances] = useState<AnyApi>([]);
-  const unsubsBalancesRef = useRef<AnyApi>(unsubsBalances);
+  const [unsubs, setUnsubs] = useState<AnyApi>([]);
+  const unsubsRef = useRef<AnyApi>(unsubs);
 
   // fetch account balances. Remove or add subscriptions
   useEffect(() => {
     if (isReady) {
       // local updated values
       let newBalances = balancesRef.current;
-      const newUnsubsBalances = unsubsBalancesRef.current;
+      const newUnsubsBalances = unsubsRef.current;
 
       // get accounts removed: use these to unsubscribe
       const accountsRemoved = balancesRef.current.filter(
@@ -65,7 +65,7 @@ export const BalancesProvider = ({
       if (newBalances.length < balancesRef.current.length) {
         // unsubscribe from removed balances
         accountsRemoved.forEach((a: Balances) => {
-          const unsub = unsubsBalancesRef.current.find(
+          const unsub = unsubsRef.current.find(
             (u: AnyApi) => u.key === a.address
           );
           if (unsub) {
@@ -75,11 +75,7 @@ export const BalancesProvider = ({
           }
         });
         // commit state updates
-        setStateWithRef(
-          newUnsubsBalances,
-          setUnsubsBalances,
-          unsubsBalancesRef
-        );
+        setStateWithRef(newUnsubsBalances, setUnsubs, unsubsRef);
         setStateWithRef(newBalances, setBalances, balancesRef);
       }
 
@@ -95,7 +91,7 @@ export const BalancesProvider = ({
 
   // unsubscribe from balance subscriptions on unmount
   useEffect(() => {
-    Object.values(unsubsBalancesRef.current).forEach(({ unsub }: AnyApi) => {
+    Object.values(unsubsRef.current).forEach(({ unsub }: AnyApi) => {
       unsub();
     });
   }, []);
@@ -176,12 +172,12 @@ export const BalancesProvider = ({
     );
 
     setStateWithRef(
-      unsubsBalancesRef.current.concat({
+      unsubsRef.current.concat({
         key: address,
         unsub,
       }),
-      setUnsubsBalances,
-      unsubsBalancesRef
+      setUnsubs,
+      unsubsRef
     );
     return unsub;
   };

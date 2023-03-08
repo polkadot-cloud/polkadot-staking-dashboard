@@ -30,15 +30,15 @@ export const LedgersProvider = ({
   const ledgersRef = useRef(ledgers);
 
   // ledger subscriptions state
-  const [unsubsLedgers, setUnsubsLedgers] = useState<AnyApi>([]);
-  const unsubsLedgersRef = useRef<AnyApi>(unsubsLedgers);
+  const [unsubs, setUnsubs] = useState<AnyApi>([]);
+  const unsubsRef = useRef<AnyApi>(unsubs);
 
   // fetch account balances & ledgers. Remove or add subscriptions
   useEffect(() => {
     if (isReady) {
       // local updated values
       let newLedgers = ledgersRef.current;
-      const newUnsubsLedgers = unsubsLedgersRef.current;
+      const newUnsubsLedgers = unsubsRef.current;
 
       // get accounts removed: use these to unsubscribe
       const accountsRemoved = ledgersRef.current.filter(
@@ -60,7 +60,7 @@ export const LedgersProvider = ({
       if (newLedgers.length < ledgersRef.current.length) {
         // unsubscribe from removed ledgers if it exists
         accountsRemoved.forEach((a: Ledger) => {
-          const unsub = unsubsLedgersRef.current.find(
+          const unsub = unsubsRef.current.find(
             (u: AnyApi) => u.key === a.address
           );
           if (unsub) {
@@ -70,7 +70,7 @@ export const LedgersProvider = ({
           }
         });
         // commit state updates
-        setStateWithRef(newUnsubsLedgers, setUnsubsLedgers, unsubsLedgersRef);
+        setStateWithRef(newUnsubsLedgers, setUnsubs, unsubsRef);
         setStateWithRef(newLedgers, setLedgers, ledgersRef);
       }
 
@@ -84,7 +84,7 @@ export const LedgersProvider = ({
 
   // unsubscribe from ledger subscriptions on unmount
   useEffect(() => {
-    Object.values(unsubsLedgersRef.current).forEach(({ unsub }: AnyApi) => {
+    Object.values(unsubsRef.current).forEach(({ unsub }: AnyApi) => {
       unsub();
     });
   }, []);
@@ -145,11 +145,11 @@ export const LedgersProvider = ({
         }
       }
     );
-    const _unsubs = unsubsLedgersRef.current.concat({
+    const _unsubs = unsubsRef.current.concat({
       key: address,
       unsub,
     });
-    setStateWithRef(_unsubs, setUnsubsLedgers, unsubsLedgersRef);
+    setStateWithRef(_unsubs, setUnsubs, unsubsRef);
     return unsub;
   };
 
