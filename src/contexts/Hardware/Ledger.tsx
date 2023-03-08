@@ -104,8 +104,8 @@ export const LedgerHardwareProvider = ({
   // Gets a Polkadot addresses on the device.
   const handleGetAddress = async (transport: AnyJson, accountIndex: number) => {
     // const polkadot = new Polkadot(transport);
-    // const { deviceModel } = transport;
-    // const { id, productName } = deviceModel;
+    const { deviceModel } = transport;
+    const { id, productName } = deviceModel;
 
     setTransportResponse({
       ack: 'success',
@@ -117,12 +117,12 @@ export const LedgerHardwareProvider = ({
     //   `'44'/354'/${accountIndex}'/0'/0'`,
     //   false
     // );
-    // return {
-    //   statusCode: 'ReceivedAddress',
-    //   device: { id, productName },
-    //   body: [address],
-    // };
-    return {};
+    return {
+      statusCode: 'ReceivedAddress',
+      device: { id, productName },
+      body: [],
+    };
+    // return {};
   };
   return (
     <LedgerHardwareContext.Provider
