@@ -9,7 +9,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
 import { rmCommas, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
-import { Ledger, LedgersAccount, LedgersContextInterface } from './types';
+import { Ledger, LedgersContextInterface } from './types';
 
 export const LedgersContext = React.createContext<LedgersContextInterface>(
   defaults.defaultLedgersContext
@@ -33,50 +33,33 @@ export const LedgersProvider = ({
   const [unsubsLedgers, setUnsubsLedgers] = useState<AnyApi>([]);
   const unsubsLedgersRef = useRef<AnyApi>(unsubsLedgers);
 
-  // ledger accounts state
-  const [ledgersAccounts, setLedgersAccounts] = useState<Array<LedgersAccount>>(
-    []
-  );
-  const ledgersAccountsRef = useRef(ledgersAccounts);
-
   // fetch account balances & ledgers. Remove or add subscriptions
   useEffect(() => {
     if (isReady) {
       // local updated values
-      let newAccounts = ledgersAccountsRef.current;
       let newLedgers = ledgersRef.current;
       const newUnsubsLedgers = unsubsLedgersRef.current;
 
       // get accounts removed: use these to unsubscribe
-      const accountsRemoved = ledgersAccountsRef.current.filter(
-        (a: LedgersAccount) =>
+      const accountsRemoved = ledgersRef.current.filter(
+        (a: Ledger) =>
           !accounts.find((c: ImportedAccount) => c.address === a.address)
       );
       // get accounts added: use these to subscribe
       const accountsAdded = accounts.filter(
         (c: ImportedAccount) =>
-          !ledgersAccountsRef.current.find(
-            (a: LedgersAccount) => a.address === c.address
-          )
+          !ledgersRef.current.find((a: Ledger) => a.address === c.address)
       );
-      // update accounts state for removal
-      newAccounts = ledgersAccountsRef.current.filter((a: LedgersAccount) =>
-        accounts.find((c: ImportedAccount) => c.address === a.address)
-      );
+
       // update ledgers state for removal
       newLedgers = ledgersRef.current.filter((l: Ledger) =>
         accounts.find((c: ImportedAccount) => c.address === l.address)
       );
 
-      // update accounts state and unsubscribe if accounts have been removed
-      if (newAccounts.length < ledgersAccountsRef.current.length) {
-        setStateWithRef(newAccounts, setLedgersAccounts, ledgersAccountsRef);
-      }
-
       // update ledgers state and unsubscribe if accounts have been removed
       if (newLedgers.length < ledgersRef.current.length) {
         // unsubscribe from removed ledgers if it exists
-        accountsRemoved.forEach((a: LedgersAccount) => {
+        accountsRemoved.forEach((a: Ledger) => {
           const unsub = unsubsLedgersRef.current.find(
             (u: AnyApi) => u.key === a.address
           );

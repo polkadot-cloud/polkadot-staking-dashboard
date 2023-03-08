@@ -17,11 +17,6 @@ export interface Ledger {
   unlocking: Array<UnlockChunk>;
 }
 
-export interface LedgersAccount {
-  address?: string;
-  ledger?: Ledger;
-}
-
 export interface LedgersContextInterface {
   getLedgerForStash: (address: MaybeAccount) => Ledger;
   getLedgerForController: (address: MaybeAccount) => Ledger | null;

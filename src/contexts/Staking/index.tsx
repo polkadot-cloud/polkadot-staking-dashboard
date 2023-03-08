@@ -164,6 +164,7 @@ export const StakingProvider = ({
     }
   };
 
+  // subscribe to account ledger
   const subscribeToStakingkMetrics = async () => {
     if (api !== null && isReady && isNotZero(activeEra.index)) {
       const previousEra = activeEra.index.minus(1);

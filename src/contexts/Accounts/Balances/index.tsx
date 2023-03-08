@@ -41,7 +41,7 @@ export const BalancesProvider = ({
   const [unsubsBalances, setUnsubsBalances] = useState<AnyApi>([]);
   const unsubsBalancesRef = useRef<AnyApi>(unsubsBalances);
 
-  // fetch account balances & ledgers. Remove or add subscriptions
+  // fetch account balances. Remove or add subscriptions
   useEffect(() => {
     if (isReady) {
       // local updated values
@@ -89,7 +89,7 @@ export const BalancesProvider = ({
 
       // if accounts have changed, update state with new unsubs / accounts
       if (accountsAdded.length) {
-        // subscribe to account balances and ledgers
+        // subscribe to account balances
         handleSubscribe(accountsAdded);
       }
     }
@@ -119,7 +119,7 @@ export const BalancesProvider = ({
     });
   };
 
-  // subscribe to account balances, ledger, bonded and nominators
+  // subscribe to account balances, bonded and nominators
   const subscribeToBalances = async (address: string) => {
     if (!api) return;
 
