@@ -12,7 +12,9 @@ import { SelectItems } from 'library/SelectItems';
 import { CustomHeaderWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { AnyFunction } from 'types';
 import { Extension } from './Extension';
+import { Ledger } from './Ledger';
 import { ReadOnly } from './ReadOnly';
 import { ExtensionsWrapper, Separator } from './Wrappers';
 
@@ -52,18 +54,15 @@ export const Connect = () => {
       </CustomHeaderWrapper>
 
       {/* NOTE: pending CRA migration */}
-      {/* {name === 'polkadot' ? (
-        <>
-          <Action text="Hardware" />
-          <ExtensionsWrapper>
-            <SelectItems layout="two-col">
-              {[Ledger].map((Item: AnyFunction, i: number) => {
-                return <Item key={`hardware_item_${i}`} />;
-              })}
-            </SelectItems>
-          </ExtensionsWrapper>
-        </>
-      ) : null} */}
+
+      <Action text="Hardware" />
+      <ExtensionsWrapper>
+        <SelectItems layout="two-col">
+          {[Ledger].map((Item: AnyFunction, i: number) => {
+            return <Item key={`hardware_item_${i}`} />;
+          })}
+        </SelectItems>
+      </ExtensionsWrapper>
 
       <Action text={t('extensions')} />
       <ExtensionsWrapper>
