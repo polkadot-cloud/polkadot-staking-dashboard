@@ -4,7 +4,6 @@
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { EXTENSIONS } from 'config/extensions';
-import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
 import { ExtensionConfig } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
@@ -19,7 +18,6 @@ import { ExtensionsWrapper, Separator } from './Wrappers';
 
 export const Connect = () => {
   const { t } = useTranslation('modals');
-  const { name } = useApi().network;
   const { extensions } = useExtensions();
   const { replaceModalWith, setResize, height } = useModal();
 
