@@ -51,15 +51,27 @@ export const Connect = () => {
         </h1>
       </CustomHeaderWrapper>
 
+      {/* NOTE: pending CRA migration */}
+      {/* {name === 'polkadot' ? (
+        <>
+          <Action text="Hardware" />
+          <ExtensionsWrapper>
+            <SelectItems layout="two-col">
+              {[Ledger].map((Item: AnyFunction, i: number) => {
+                return <Item key={`hardware_item_${i}`} />;
+              })}
+            </SelectItems>
+          </ExtensionsWrapper>
+        </>
+      ) : null} */}
+
       <Action text={t('extensions')} />
       <ExtensionsWrapper>
         <SelectItems layout="two-col">
           {installed
             .concat(other)
             .map((extension: ExtensionConfig, i: number) => {
-              return (
-                <Extension key={`active_extension_${i}`} meta={extension} />
-              );
+              return <Extension key={`extension_item_${i}`} meta={extension} />;
             })}
         </SelectItems>
       </ExtensionsWrapper>
