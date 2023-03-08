@@ -22,7 +22,7 @@ export interface Balance {
   freeAfterReserve: BigNumber;
 }
 
-export interface BalancesAccount {
+export interface Balances {
   address?: string;
   balance?: Balance;
   bonded?: string;
@@ -38,12 +38,12 @@ export interface Nominations {
 export type Targets = string[];
 
 export interface BalancesContextInterface {
-  getAccount: (address: MaybeAccount) => BalancesAccount | null;
+  getAccount: (address: MaybeAccount) => Balances | null;
   getAccountBalance: (address: MaybeAccount) => Balance;
   getAccountLocks: (address: MaybeAccount) => Array<Lock>;
   getBondedAccount: (address: MaybeAccount) => string | null;
   getAccountNominations: (address: MaybeAccount) => Targets;
   isController: (address: MaybeAccount) => boolean;
-  balances: Array<BalancesAccount>;
+  balances: Array<Balances>;
   existentialAmount: BigNumber;
 }

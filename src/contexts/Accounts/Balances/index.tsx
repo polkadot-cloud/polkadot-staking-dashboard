@@ -3,15 +3,15 @@
 
 import BigNumber from 'bignumber.js';
 import {
-  BalancesAccount,
+  Balances,
   BalancesContextInterface,
 } from 'contexts/Accounts/Balances/types';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, MaybeAccount } from 'types';
 import { rmCommas, setStateWithRef } from 'Utils';
-import { useApi } from '../../Api';
-import { useConnect } from '../../Connect';
 import * as defaults from './defaults';
 
 export const BalancesContext = React.createContext<BalancesContextInterface>(
@@ -32,10 +32,8 @@ export const BalancesProvider = ({
   const existentialAmount = consts.existentialDeposit;
 
   // balance accounts state
-  const [balancesAccounts, setBalancesAccounts] = useState<
-    Array<BalancesAccount>
-  >([]);
-  const balancesRef = useRef(balancesAccounts);
+  const [balances, setBalances] = useState<Array<Balances>>([]);
+  const balancesRef = useRef(balances);
 
   // balance subscriptions state
   const [unsubsBalances, setUnsubsBalances] = useState<AnyApi>([]);
@@ -45,30 +43,28 @@ export const BalancesProvider = ({
   useEffect(() => {
     if (isReady) {
       // local updated values
-      let newAccounts = balancesRef.current;
+      let newBalances = balancesRef.current;
       const newUnsubsBalances = unsubsBalancesRef.current;
 
       // get accounts removed: use these to unsubscribe
       const accountsRemoved = balancesRef.current.filter(
-        (a: BalancesAccount) =>
+        (a: Balances) =>
           !accounts.find((c: ImportedAccount) => c.address === a.address)
       );
       // get accounts added: use these to subscribe
       const accountsAdded = accounts.filter(
         (c: ImportedAccount) =>
-          !balancesRef.current.find(
-            (a: BalancesAccount) => a.address === c.address
-          )
+          !balancesRef.current.find((a: Balances) => a.address === c.address)
       );
       // update accounts state for removal
-      newAccounts = balancesRef.current.filter((a: BalancesAccount) =>
+      newBalances = balancesRef.current.filter((a: Balances) =>
         accounts.find((c: ImportedAccount) => c.address === a.address)
       );
 
       // update accounts state and unsubscribe if accounts have been removed
-      if (newAccounts.length < balancesRef.current.length) {
+      if (newBalances.length < balancesRef.current.length) {
         // unsubscribe from removed balances
-        accountsRemoved.forEach((a: BalancesAccount) => {
+        accountsRemoved.forEach((a: Balances) => {
           const unsub = unsubsBalancesRef.current.find(
             (u: AnyApi) => u.key === a.address
           );
@@ -84,7 +80,7 @@ export const BalancesProvider = ({
           setUnsubsBalances,
           unsubsBalancesRef
         );
-        setStateWithRef(newAccounts, setBalancesAccounts, balancesRef);
+        setStateWithRef(newBalances, setBalances, balancesRef);
       }
 
       // if accounts have changed, update state with new unsubs / accounts
@@ -116,7 +112,7 @@ export const BalancesProvider = ({
         [api.query.staking.nominators, address],
       ],
       async ([{ data }, locks, bonded, nominations]): Promise<void> => {
-        const newAccount: BalancesAccount = {
+        const newAccount: Balances = {
           address,
         };
         const free = new BigNumber(data.free.toString());
@@ -171,11 +167,11 @@ export const BalancesProvider = ({
               };
 
         // remove stale account if it's already in list.
-        const newAccounts = Object.values(balancesRef.current)
-          .filter((a: BalancesAccount) => a.address !== address)
+        const newBalances = Object.values(balancesRef.current)
+          .filter((a: Balances) => a.address !== address)
           .concat(newAccount);
 
-        setStateWithRef(newAccounts, setBalancesAccounts, balancesRef);
+        setStateWithRef(newBalances, setBalances, balancesRef);
       }
     );
 
@@ -193,7 +189,7 @@ export const BalancesProvider = ({
   // get an account's balance metadata
   const getAccountBalance = (address: MaybeAccount) => {
     const account = balancesRef.current.find(
-      (a: BalancesAccount) => a.address === address
+      (a: Balances) => a.address === address
     );
     if (account === undefined) {
       return defaults.balance;
@@ -208,7 +204,7 @@ export const BalancesProvider = ({
   // get an account's locks metadata
   const getAccountLocks = (address: MaybeAccount) => {
     const account = balancesRef.current.find(
-      (a: BalancesAccount) => a.address === address
+      (a: Balances) => a.address === address
     );
     if (account === undefined) {
       return [];
@@ -221,7 +217,7 @@ export const BalancesProvider = ({
   // get an account's bonded (controller) account)
   const getBondedAccount = (address: MaybeAccount) => {
     const account = balancesRef.current.find(
-      (a: BalancesAccount) => a.address === address
+      (a: Balances) => a.address === address
     );
     if (account === undefined) {
       return null;
@@ -233,7 +229,7 @@ export const BalancesProvider = ({
   // get an account's nominations
   const getAccountNominations = (address: MaybeAccount) => {
     const account = balancesRef.current.find(
-      (a: BalancesAccount) => a.address === address
+      (a: Balances) => a.address === address
     );
     if (account === undefined) {
       return [];
@@ -250,7 +246,7 @@ export const BalancesProvider = ({
   // get an account
   const getAccount = (address: MaybeAccount) => {
     const account = balancesRef.current.find(
-      (a: BalancesAccount) => a.address === address
+      (a: Balances) => a.address === address
     );
     if (account === undefined) {
       return null;
@@ -261,7 +257,7 @@ export const BalancesProvider = ({
   // check if an account is a controller account
   const isController = (address: MaybeAccount) => {
     const existsAsController = balancesRef.current.filter(
-      (a: BalancesAccount) => (a?.bonded || '') === address
+      (a: Balances) => (a?.bonded || '') === address
     );
     return existsAsController.length > 0;
   };
