@@ -34,19 +34,17 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
   }, [state.status]);
 
   const setDefinition = (definition: MaybeString) => {
-    const _state = {
+    setState({
       ...state,
       definition,
-    };
-    setState(_state);
+    });
   };
 
   const setStatus = (newStatus: number) => {
-    const _state = {
+    setState({
       ...state,
       status: newStatus,
-    };
-    setState(_state);
+    });
   };
 
   const openHelp = (definition: MaybeString) => {
