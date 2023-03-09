@@ -5,18 +5,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AnyApi, AnyMetaBatch } from 'types';
 import { setStateWithRef } from 'Utils';
 import { useApi } from '../Api';
-import { defaultAccountContext } from './defaults';
-import { AccountContextInterface } from './types';
+import { defaultIdentitiesContext } from './defaults';
+import { IdentitiesContextInterface } from './types';
 
 // context definition
-export const AccountContext = React.createContext<AccountContextInterface>(
-  defaultAccountContext
-);
+export const IdentitiesContext =
+  React.createContext<IdentitiesContextInterface>(defaultIdentitiesContext);
 
-export const useAccount = () => React.useContext(AccountContext);
+export const useIdentities = () => React.useContext(IdentitiesContext);
 
 // wrapper component to provide components with context
-export const AccountProvider = ({
+export const IdentitiesProvider = ({
   children,
 }: {
   children: React.ReactNode;
@@ -24,17 +23,18 @@ export const AccountProvider = ({
   const { isReady, api } = useApi();
 
   // stores the meta data batches for validator lists
-  const [accountMetaBatches, setAccountMetaBatch] = useState<AnyMetaBatch>({});
-  const accountMetaBatchesRef = useRef(accountMetaBatches);
+  const [identitiesMetaBatches, setIdentitiesMetaBatch] =
+    useState<AnyMetaBatch>({});
+  const identitiesMetaBatchesRef = useRef(identitiesMetaBatches);
 
   // stores the meta batch subscriptions for validator lists
-  const [accountSubs, setAccountSubs] = useState<AnyApi>({});
-  const accountSubsRef = useRef(accountSubs);
+  const [identitiesSubs, setIdentitiesSubs] = useState<AnyApi>({});
+  const identitiesSubsRef = useRef(identitiesSubs);
 
   // unsubscribe from any validator meta batches
   useEffect(() => {
     return () => {
-      Object.values(accountSubsRef.current).map((batch: AnyMetaBatch) => {
+      Object.values(identitiesSubsRef.current).map((batch: AnyMetaBatch) => {
         return Object.entries(batch).map(([, v]: AnyApi) => {
           return v();
         });
@@ -57,7 +57,7 @@ export const AccountProvider = ({
     },
   };
   */
-  const fetchAccountMetaBatch = async (
+  const fetchIdentitiesMetaBatch = async (
     key: string,
     addresses: string[],
     refetch = false
@@ -72,35 +72,35 @@ export const AccountProvider = ({
 
     if (!refetch) {
       // if already exists, do not re-fetch
-      if (accountMetaBatchesRef.current[key] !== undefined) {
+      if (identitiesMetaBatchesRef.current[key] !== undefined) {
         return;
       }
     } else {
       // tidy up if existing batch exists
       const updatedMetaBatches: AnyMetaBatch = {
-        ...accountMetaBatchesRef.current,
+        ...identitiesMetaBatchesRef.current,
       };
       delete updatedMetaBatches[key];
       setStateWithRef(
         updatedMetaBatches,
-        setAccountMetaBatch,
-        accountMetaBatchesRef
+        setIdentitiesMetaBatch,
+        identitiesMetaBatchesRef
       );
-      if (accountSubsRef.current[key] !== undefined) {
-        for (const unsub of accountSubsRef.current[key]) {
+      if (identitiesSubsRef.current[key] !== undefined) {
+        for (const unsub of identitiesSubsRef.current[key]) {
           unsub();
         }
       }
     }
 
     // store batch addresses
-    const batchesUpdated = Object.assign(accountMetaBatchesRef.current);
+    const batchesUpdated = Object.assign(identitiesMetaBatchesRef.current);
     batchesUpdated[key] = {};
     batchesUpdated[key].addresses = addresses;
     setStateWithRef(
       { ...batchesUpdated },
-      setAccountMetaBatch,
-      accountMetaBatchesRef
+      setIdentitiesMetaBatch,
+      identitiesMetaBatchesRef
     );
 
     const subscribeToIdentities = async (addr: string[]) => {
@@ -111,12 +111,14 @@ export const AccountProvider = ({
           for (let i = 0; i < _identities.length; i++) {
             identities.push(_identities[i].toHuman());
           }
-          const _batchesUpdated = Object.assign(accountMetaBatchesRef.current);
+          const _batchesUpdated = Object.assign(
+            identitiesMetaBatchesRef.current
+          );
           _batchesUpdated[key].identities = identities;
           setStateWithRef(
             { ..._batchesUpdated },
-            setAccountMetaBatch,
-            accountMetaBatchesRef
+            setIdentitiesMetaBatch,
+            identitiesMetaBatchesRef
           );
         }
       );
@@ -157,12 +159,14 @@ export const AccountProvider = ({
             )
           )();
 
-          const _batchesUpdated = Object.assign(accountMetaBatchesRef.current);
+          const _batchesUpdated = Object.assign(
+            identitiesMetaBatchesRef.current
+          );
           _batchesUpdated[key].supers = supers;
           setStateWithRef(
             { ..._batchesUpdated },
-            setAccountMetaBatch,
-            accountMetaBatchesRef
+            setIdentitiesMetaBatch,
+            identitiesMetaBatchesRef
           );
         }
       );
@@ -181,22 +185,22 @@ export const AccountProvider = ({
    * Helper function to add mataBatch unsubs by key.
    */
   const addMetaBatchUnsubs = (key: string, unsubs: AnyApi) => {
-    const _unsubs = accountSubsRef.current;
+    const _unsubs = identitiesSubsRef.current;
     const _keyUnsubs = _unsubs[key] ?? [];
 
     _keyUnsubs.push(...unsubs);
     _unsubs[key] = _keyUnsubs;
-    setStateWithRef(_unsubs, setAccountSubs, accountSubsRef);
+    setStateWithRef(_unsubs, setIdentitiesSubs, identitiesSubsRef);
   };
 
   return (
-    <AccountContext.Provider
+    <IdentitiesContext.Provider
       value={{
-        fetchAccountMetaBatch,
-        meta: accountMetaBatchesRef.current,
+        fetchIdentitiesMetaBatch,
+        meta: identitiesMetaBatchesRef.current,
       }}
     >
       {children}
-    </AccountContext.Provider>
+    </IdentitiesContext.Provider>
   );
 };

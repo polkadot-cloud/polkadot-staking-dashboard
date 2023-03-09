@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';

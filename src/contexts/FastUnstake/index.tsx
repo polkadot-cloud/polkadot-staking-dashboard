@@ -280,16 +280,16 @@ export const FastUnstakeProvider = ({
       return u;
     };
     const subscribeHead = async () => {
-      const u = await api.query.fastUnstake.head((_head: AnyApi) => {
-        const h = _head.unwrapOrDefault(null).toHuman();
+      const u = await api.query.fastUnstake.head((result: AnyApi) => {
+        const h = result.unwrapOrDefault(null).toHuman();
         setStateWithRef(h, setHead, headRef);
       });
       return u;
     };
     const subscribeCounterForQueue = async () => {
       const u = await api.query.fastUnstake.counterForQueue(
-        (_counterForQueue: AnyApi) => {
-          const c = _counterForQueue.toHuman();
+        (result: AnyApi) => {
+          const c = result.toHuman();
           setStateWithRef(c, setCounterForQueue, counterForQueueRef);
         }
       );

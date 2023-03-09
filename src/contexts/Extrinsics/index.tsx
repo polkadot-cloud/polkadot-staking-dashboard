@@ -20,14 +20,19 @@ export const ExtrinsicsProvider = ({
   const pendingRef = useRef(pending);
 
   const addPending = (nonce: string) => {
-    const _pending: string[] = [...pendingRef.current];
-    _pending.push(nonce);
-    setStateWithRef(_pending, setPending, pendingRef);
+    setStateWithRef(
+      [...pendingRef.current].concat(nonce),
+      setPending,
+      pendingRef
+    );
   };
 
   const removePending = (nonce: string) => {
-    const _pending = pendingRef.current.filter((n: string) => n !== nonce);
-    setStateWithRef(_pending, setPending, pendingRef);
+    setStateWithRef(
+      pendingRef.current.filter((n: string) => n !== nonce),
+      setPending,
+      pendingRef
+    );
   };
 
   return (

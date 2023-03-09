@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { ImportedAccount } from 'contexts/Connect/types';
 import { useEffect, useState } from 'react';
@@ -16,18 +16,14 @@ export const getEligibleControllers = (): Array<InputItem> => {
   const { t } = useTranslation('library');
   const { network } = useApi();
   const { activeAccount, accounts: connectAccounts } = useConnect();
-  const {
-    isController,
-    existentialAmount,
-    getAccountBalance,
-    accounts: balanceAccounts,
-  } = useBalances();
+  const { isController, existentialAmount, getAccountBalance, balances } =
+    useBalances();
 
   const [accounts, setAccounts] = useState<Array<InputItem>>([]);
 
   useEffect(() => {
     setAccounts(filterAccounts());
-  }, [activeAccount, connectAccounts, balanceAccounts]);
+  }, [activeAccount, connectAccounts, balances]);
 
   const filterAccounts = () => {
     // remove read only accounts

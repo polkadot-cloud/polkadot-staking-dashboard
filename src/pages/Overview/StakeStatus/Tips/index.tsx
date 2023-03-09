@@ -25,7 +25,7 @@ export const Tips = () => {
   const { i18n, t } = useTranslation();
   const { network } = useApi();
   const { activeAccount } = useConnect();
-  const { networkSyncing } = useUi();
+  const { isNetworkSyncing } = useUi();
   const { fillVariables } = useFillVariables();
   const { membership } = usePoolMemberships();
   const { isNominating, staking } = useStaking();
@@ -59,7 +59,7 @@ export const Tips = () => {
   // This function ensures totalPages is never surpassed, but does not guarantee
   // that the start item will maintain across resizes.
   const getPage = () => {
-    const totalItmes = networkSyncing ? 1 : items.length;
+    const totalItmes = isNetworkSyncing ? 1 : items.length;
     const itemsPerPage = getItemsPerPage();
     const totalPages = Math.ceil(totalItmes / itemsPerPage);
     if (pageRef.current > totalPages) {
@@ -149,10 +149,10 @@ export const Tips = () => {
   });
 
   // determine items to be displayed
-  const end = networkSyncing
+  const end = isNetworkSyncing
     ? 1
     : Math.min(_page * _itemsPerPage, items.length);
-  const start = networkSyncing
+  const start = isNetworkSyncing
     ? 1
     : _page * _itemsPerPage - (_itemsPerPage - 1);
 
@@ -164,7 +164,7 @@ export const Tips = () => {
   return (
     <TipsWrapper>
       <div style={{ flexGrow: 1 }}>
-        {networkSyncing ? (
+        {isNetworkSyncing ? (
           <Syncing />
         ) : (
           <Items

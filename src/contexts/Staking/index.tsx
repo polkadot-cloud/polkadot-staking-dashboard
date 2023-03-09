@@ -20,9 +20,10 @@ import {
   setStateWithRef,
 } from 'Utils';
 // eslint-disable-next-line import/no-unresolved
+import { useLedgers } from 'contexts/Accounts/Ledgers';
 import Worker from 'worker-loader!../../workers/stakers';
+import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
-import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import * as defaults from './defaults';
@@ -47,12 +48,8 @@ export const StakingProvider = ({
   } = useConnect();
   const { isReady, api, apiStatus, network } = useApi();
   const { activeEra } = useNetworkMetrics();
-  const {
-    accounts,
-    getBondedAccount,
-    getLedgerForStash,
-    getAccountNominations,
-  } = useBalances();
+  const { balances, getBondedAccount, getAccountNominations } = useBalances();
+  const { getLedgerForStash } = useLedgers();
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
@@ -124,7 +121,7 @@ export const StakingProvider = ({
         ) as StakingTargets
       );
     }
-  }, [isReady, accounts, activeAccount, eraStakersRef.current?.stakers]);
+  }, [isReady, balances, activeAccount, eraStakersRef.current?.stakers]);
 
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
@@ -161,6 +158,7 @@ export const StakingProvider = ({
     }
   };
 
+  // subscribe to account ledger
   const subscribeToStakingkMetrics = async () => {
     if (api !== null && isReady && isNotZero(activeEra.index)) {
       const previousEra = activeEra.index.minus(1);

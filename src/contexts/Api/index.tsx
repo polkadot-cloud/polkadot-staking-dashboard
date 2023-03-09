@@ -128,9 +128,9 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   }, [provider]);
 
   // connection callback.
-  const connectedCallback = async (_provider: WsProvider | ScProvider) => {
+  const connectedCallback = async (newProvider: WsProvider | ScProvider) => {
     // initiate new api and set connected.
-    const newApi = await ApiPromise.create({ provider: _provider });
+    const newApi = await ApiPromise.create({ provider: newProvider });
     setApiStatus('connected');
 
     // store active network in localStorage.

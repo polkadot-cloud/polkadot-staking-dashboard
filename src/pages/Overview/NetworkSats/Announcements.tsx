@@ -23,7 +23,7 @@ import { Item } from './Wrappers';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');
-  const { poolsSyncing, isSyncing } = useUi();
+  const { isPoolSyncing, isSyncing } = useUi();
   const { network } = useApi();
   const { staking } = useStaking();
   const { units } = network;
@@ -90,7 +90,7 @@ export const Announcements = () => {
     announcements.push(null);
   }
 
-  if (bondedPools.length && poolMembers.length > 0 && !poolsSyncing) {
+  if (bondedPools.length && poolMembers.length > 0 && !isPoolSyncing) {
     // total locked in pols
     announcements.push({
       class: 'neutral',

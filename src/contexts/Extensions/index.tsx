@@ -90,16 +90,16 @@ export const ExtensionsProvider = ({
 
   const getInstalledExtensions = () => {
     const { injectedWeb3 }: AnyApi = window;
-    const _exts: Array<ExtensionInjected> = [];
+    const installed: Array<ExtensionInjected> = [];
     EXTENSIONS.forEach((e: ExtensionConfig) => {
       if (injectedWeb3[e.id] !== undefined) {
-        _exts.push({
+        installed.push({
           ...e,
           ...injectedWeb3[e.id],
         });
       }
     });
-    return _exts;
+    return installed;
   };
 
   return (

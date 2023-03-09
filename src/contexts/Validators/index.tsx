@@ -19,8 +19,8 @@ import {
   setStateWithRef,
   shuffle,
 } from 'Utils';
+import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
-import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useActivePools } from '../Pools/ActivePools';
@@ -42,7 +42,7 @@ export const ValidatorsProvider = ({
   const { isReady, api, network, consts } = useApi();
   const { activeAccount } = useConnect();
   const { activeEra, metrics } = useNetworkMetrics();
-  const { accounts, getAccountNominations } = useBalances();
+  const { balances, getAccountNominations } = useBalances();
   const { poolNominations } = useActivePools();
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
@@ -150,7 +150,7 @@ export const ValidatorsProvider = ({
     if (isReady && activeAccount) {
       fetchNominatedList();
     }
-  }, [isReady, activeAccount, accounts]);
+  }, [isReady, activeAccount, balances]);
 
   const fetchNominatedList = async () => {
     if (!activeAccount) {

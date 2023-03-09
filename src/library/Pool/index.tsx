@@ -40,7 +40,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const { membership } = usePoolMemberships();
   const { addNotification } = useNotifications();
   const { validators } = useValidators();
-  const { poolsSyncing } = useUi();
+  const { isPoolSyncing } = useUi();
 
   // assumes component is under `PoolsTabsProvider` (Pools page)
   const { setActiveTab } = usePoolsTabs();
@@ -138,7 +138,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
         <Separator />
         <div className="row status">
           <PoolBonded pool={pool} batchIndex={batchIndex} batchKey={batchKey} />
-          {!poolsSyncing &&
+          {!isPoolSyncing &&
             state === 'Open' &&
             !membership &&
             !isReadOnlyAccount(activeAccount) &&

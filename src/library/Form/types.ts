@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import { Balance } from 'contexts/Balances/types';
+import { Balance } from 'contexts/Accounts/Balances/types';
 import { ExternalAccount } from 'contexts/Connect/types';
 import { ExtensionAccount } from 'contexts/Extensions/types';
 import { BondFor } from 'types';

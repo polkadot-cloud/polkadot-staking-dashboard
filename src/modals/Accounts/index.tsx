@@ -3,8 +3,9 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
+import { useBalances } from 'contexts/Accounts/Balances';
+import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
@@ -22,7 +23,8 @@ export const Accounts = () => {
   const { t } = useTranslation('modals');
   const { isReady } = useApi();
   const { getAccount, activeAccount } = useConnect();
-  const { getAccountLocks, accounts: balanceAccounts, ledgers } = useBalances();
+  const { getAccountLocks, balances } = useBalances();
+  const { ledgers } = useLedgers();
   const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
   const { replaceModalWith, setResize } = useModal();
@@ -44,11 +46,11 @@ export const Accounts = () => {
 
   useEffect(() => {
     getAccountsStatus();
-  }, [localAccounts, balanceAccounts, ledgers, accounts, memberships]);
+  }, [localAccounts, balances, ledgers, accounts, memberships]);
 
   useEffect(() => {
     setResize();
-  }, [activeAccount, accounts, balanceAccounts, ledgers, extensions]);
+  }, [activeAccount, accounts, balances, ledgers, extensions]);
 
   const getAccountsStatus = () => {
     // accumulate imported stash accounts

@@ -17,7 +17,7 @@ import { useStatusButtons } from './useStatusButtons';
 export const MembershipStatus = () => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
-  const { poolsSyncing } = useUi();
+  const { isPoolSyncing } = useUi();
   const { openModalWith } = useModal();
   const { label, buttons } = useStatusButtons();
   const { bondedPools, meta } = useBondedPools();
@@ -88,7 +88,7 @@ export const MembershipStatus = () => {
           label={t('pools.poolMembership')}
           helpKey="Pool Membership"
           stat={`${t('pools.notInPool')}`}
-          buttons={poolsSyncing ? [] : buttons}
+          buttons={isPoolSyncing ? [] : buttons}
         />
       )}
     </>

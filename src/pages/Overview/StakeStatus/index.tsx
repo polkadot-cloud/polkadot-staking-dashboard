@@ -26,7 +26,7 @@ export const StakeStatus = () => {
   const { network } = useApi();
   const navigate = useNavigate();
   const {
-    networkSyncing,
+    isNetworkSyncing,
     isSyncing,
     getSyncById,
     getSyncStart,
@@ -111,7 +111,7 @@ export const StakeStatus = () => {
   return (
     <CardWrapper>
       <StatusWrapper includeBorder={showTips}>
-        {networkSyncing || (activeAccount && !getSyncSynced(syncId)) ? (
+        {isNetworkSyncing || (activeAccount && !getSyncSynced(syncId)) ? (
           <Item
             leftIcon={{ show: true, status: 'off' }}
             text={`${t('overview.syncingStatus')}...`}
