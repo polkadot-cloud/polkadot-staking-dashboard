@@ -54,9 +54,11 @@ export const Item = ({ item, actionable }: ItemProps) => {
     },
   };
 
-  const Thumbnail = useMemo(() => {
-    return lazy(() => import(`config/validators/thumbnails/${thumbnail}`));
-  }, []);
+  const Thumbnail = useMemo(
+    () =>
+      lazy(() => import(`../../config/validators/thumbnails/${thumbnail}.tsx`)),
+    []
+  );
 
   return (
     <ItemWrapper

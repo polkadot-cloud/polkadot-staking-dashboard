@@ -115,12 +115,13 @@ export const useTimeLeft = () => {
   }, [i18n.resolvedLanguage]);
 
   // clear intervals on unmount
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       clearInterval(minInterval);
       clearInterval(secInterval);
-    };
-  }, []);
+    },
+    []
+  );
 
   const setFromNow = (dateFrom: Date, dateTo: Date) => {
     setTimeleft(getTimeleft(getDuration(dateFrom)));

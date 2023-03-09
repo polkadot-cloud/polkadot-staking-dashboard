@@ -56,11 +56,9 @@ export const Nominate = () => {
     if (!valid || !api) {
       return tx;
     }
-    const targetsToSubmit = nominations.map((item: any) => {
-      return {
-        Id: item.address,
-      };
-    });
+    const targetsToSubmit = nominations.map((item: any) => ({
+      Id: item.address,
+    }));
     tx = api.tx.staking.nominate(targetsToSubmit);
     return tx;
   };

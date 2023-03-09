@@ -50,9 +50,9 @@ export const Forms = forwardRef(
     useEffect(() => {
       if (task === 'set_pool_metadata') {
         let _metadata = '';
-        const pool = bondedPools.find((p: any) => {
-          return p.addresses.stash === selectedActivePool?.addresses.stash;
-        });
+        const pool = bondedPools.find(
+          (p: any) => p.addresses.stash === selectedActivePool?.addresses.stash
+        );
 
         if (pool) {
           const metadataBatch = meta.bonded_pools?.metadata ?? [];

@@ -87,9 +87,7 @@ export const EraPoints = ({ items = [], height }: EraPointsProps) => {
           weight: '600',
         },
         callbacks: {
-          title: () => {
-            return [];
-          },
+          title: () => [],
           label: (context: any) => `${context.parsed.y}`,
         },
         intersect: false,

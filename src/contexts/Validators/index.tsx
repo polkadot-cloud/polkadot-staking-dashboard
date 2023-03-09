@@ -123,11 +123,9 @@ export const ValidatorsProvider = ({
 
     return () => {
       // unsubscribe from any validator meta batches
-      Object.values(validatorSubsRef.current).map((batch: AnyMetaBatch) => {
-        return Object.entries(batch).map(([, v]: AnyApi) => {
-          return v();
-        });
-      });
+      Object.values(validatorSubsRef.current).map((batch: AnyMetaBatch) =>
+        Object.entries(batch).map(([, v]: AnyApi) => v())
+      );
     };
   }, [isReady, activeEra]);
 
@@ -160,9 +158,7 @@ export const ValidatorsProvider = ({
     const targets = getAccountNominations(activeAccount);
 
     // format to list format
-    const targetsFormatted = targets.map((item: any) => {
-      return { address: item };
-    });
+    const targetsFormatted = targets.map((item: any) => ({ address: item }));
     // fetch preferences
     const nominationsWithPrefs = await fetchValidatorPrefs(targetsFormatted);
     if (nominationsWithPrefs) {
@@ -185,9 +181,7 @@ export const ValidatorsProvider = ({
     // get raw nominations list
     let n = poolNominations.targets;
     // format to list format
-    n = n.map((item: string) => {
-      return { address: item };
-    });
+    n = n.map((item: string) => ({ address: item }));
     // fetch preferences
     const nominationsWithPrefs = await fetchValidatorPrefs(n);
     if (nominationsWithPrefs) {
@@ -211,9 +205,9 @@ export const ValidatorsProvider = ({
 
   const fetchFavoriteList = async () => {
     // format to list format
-    const _favorites = [...favorites].map((item: string) => {
-      return { address: item };
-    });
+    const _favorites = [...favorites].map((item: string) => ({
+      address: item,
+    }));
     // // fetch preferences
     const favoritesWithPrefs = await fetchValidatorPrefs(_favorites);
     if (favoritesWithPrefs) {

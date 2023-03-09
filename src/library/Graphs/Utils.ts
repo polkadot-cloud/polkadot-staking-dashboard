@@ -26,9 +26,10 @@ export const calculatePayoutsByDay = (
   let payoutsByDay: any = [];
 
   // remove days that are beyond end day limit
-  payouts = payouts.filter((p: AnySubscan) => {
-    return daysPassed(fromUnixTime(p.block_timestamp), new Date()) <= maxDays;
-  });
+  payouts = payouts.filter(
+    (p: AnySubscan) =>
+      daysPassed(fromUnixTime(p.block_timestamp), new Date()) <= maxDays
+  );
 
   // return now if no payouts.
   if (!payouts.length) return payouts;

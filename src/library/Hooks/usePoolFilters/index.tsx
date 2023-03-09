@@ -67,36 +67,32 @@ export const usePoolFilters = () => {
    * Iterates through the supplied list and checks whether state is locked.
    * Returns the updated filtered list.
    */
-  const includeLocked = (list: any) => {
-    return list.filter((p: BondedPool) => p.state.toLowerCase() === 'Blocked');
-  };
+  const includeLocked = (list: any) =>
+    list.filter((p: BondedPool) => p.state.toLowerCase() === 'Blocked');
 
   /*
    * include destroying pools.
    * Iterates through the supplied list and checks whether state is destroying.
    * Returns the updated filtered list.
    */
-  const includeDestroying = (list: any) => {
-    return list.filter((p: BondedPool) => p.state === 'Destroying');
-  };
+  const includeDestroying = (list: any) =>
+    list.filter((p: BondedPool) => p.state === 'Destroying');
 
   /*
    * exclude locked pools.
    * Iterates through the supplied list and checks whether state is locked.
    * Returns the updated filtered list.
    */
-  const excludeLocked = (list: any) => {
-    return list.filter((p: BondedPool) => p.state !== 'Blocked');
-  };
+  const excludeLocked = (list: any) =>
+    list.filter((p: BondedPool) => p.state !== 'Blocked');
 
   /*
    * exclude destroying pools.
    * Iterates through the supplied list and checks whether state is destroying.
    * Returns the updated filtered list.
    */
-  const excludeDestroying = (list: any) => {
-    return list.filter((p: BondedPool) => p.state !== 'Destroying');
-  };
+  const excludeDestroying = (list: any) =>
+    list.filter((p: BondedPool) => p.state !== 'Destroying');
 
   // includes to be listed in filter overlay.
   const includesToLabels: { [key: string]: string } = {

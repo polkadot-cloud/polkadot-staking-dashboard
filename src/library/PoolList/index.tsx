@@ -270,13 +270,11 @@ export const PoolListInner = ({
   );
 };
 
-export const PoolList = (props: any) => {
-  return (
-    <PoolListProvider>
-      <PoolListShouldUpdate {...props} />
-    </PoolListProvider>
-  );
-};
+export const PoolList = (props: any) => (
+  <PoolListProvider>
+    <PoolListShouldUpdate {...props} />
+  </PoolListProvider>
+);
 
 export class PoolListShouldUpdate extends React.Component<any, any> {
   static contextType = StakingContext;
