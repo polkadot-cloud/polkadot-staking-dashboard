@@ -62,8 +62,9 @@ export const Unstake = () => {
   const [bondValid, setBondValid] = useState(false);
 
   // unbond all validation
-  const isValid = (() =>
-    greaterThanZero(freeToUnbond) && !controllerNotImported)();
+  const isValid = (() => {
+    return greaterThanZero(freeToUnbond) && !controllerNotImported;
+  })();
 
   // update bond value on task change
   useEffect(() => {

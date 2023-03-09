@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import refreshChangeJson from 'img/json/refresh-change-outline.json';
+import * as refreshChangeJson from 'img/json/refresh-change-outline.json';
 import { useTranslation } from 'react-i18next';
 import Lottie from 'react-lottie';
 import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers';

@@ -421,7 +421,9 @@ export const ConnectProvider = ({
     return acc;
   };
 
-  const getActiveAccount = () => activeAccountRef.current;
+  const getActiveAccount = () => {
+    return activeAccountRef.current;
+  };
 
   // adds an external account (non-wallet) to accounts
   const addExternalAccount = (address: string, addedBy: string) => {

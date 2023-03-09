@@ -120,8 +120,9 @@ export const FiltersProvider = ({
   };
 
   // Get the current order of a list or null.
-  const getOrder = (g: string) =>
-    orders.find((o: FilterOrder) => o.key === g)?.order || 'default';
+  const getOrder = (g: string) => {
+    return orders.find((o: FilterOrder) => o.key === g)?.order || 'default';
+  };
 
   // Sets an order key for a group.
   const setOrder = (g: string, o: string) => {
@@ -139,8 +140,11 @@ export const FiltersProvider = ({
   };
 
   // Get the current search term of a list or null.
-  const getSearchTerm = (g: string) =>
-    searchTerms.find((o: FilterSearch) => o.key === g)?.searchTerm || null;
+  const getSearchTerm = (g: string) => {
+    return (
+      searchTerms.find((o: FilterSearch) => o.key === g)?.searchTerm || null
+    );
+  };
 
   // Sets an order key for a group.
   const setSearchTerm = (g: string, t: string) => {

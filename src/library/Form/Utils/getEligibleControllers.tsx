@@ -27,13 +27,13 @@ export const getEligibleControllers = (): Array<InputItem> => {
 
   const filterAccounts = () => {
     // remove read only accounts
-    let _accounts = connectAccounts.filter(
-      (acc: ImportedAccount) => acc?.source !== 'external'
-    );
+    let _accounts = connectAccounts.filter((acc: ImportedAccount) => {
+      return acc?.source !== 'external';
+    });
     // filter items that are already controller accounts
-    _accounts = _accounts.filter(
-      (acc: ImportedAccount) => !isController(acc?.address ?? null)
-    );
+    _accounts = _accounts.filter((acc: ImportedAccount) => {
+      return !isController(acc?.address ?? null);
+    });
 
     // remove active account from eligible accounts
     _accounts = _accounts.filter(

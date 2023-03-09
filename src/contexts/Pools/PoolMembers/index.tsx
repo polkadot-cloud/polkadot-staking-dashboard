@@ -64,9 +64,11 @@ export const PoolMembersProvider = ({
   };
 
   const unsubscribeAndResetMeta = () => {
-    Object.values(poolMembersSubsRef.current).map((batch: Array<Fn>) =>
-      Object.entries(batch).map(([, v]) => v())
-    );
+    Object.values(poolMembersSubsRef.current).map((batch: Array<Fn>) => {
+      return Object.entries(batch).map(([, v]) => {
+        return v();
+      });
+    });
     setStateWithRef({}, setPoolMembersMetaBatch, poolMembersMetaBatchesRef);
   };
 
@@ -89,11 +91,13 @@ export const PoolMembersProvider = ({
     setPoolMembers(exposures);
   };
 
-  const getMembersOfPool = (poolId: number) =>
-    poolMembers.filter((p: any) => p.poolId === String(poolId)) ?? null;
+  const getMembersOfPool = (poolId: number) => {
+    return poolMembers.filter((p: any) => p.poolId === String(poolId)) ?? null;
+  };
 
-  const getPoolMember = (who: MaybeAccount) =>
-    poolMembers.find((p: any) => p.who === who) ?? null;
+  const getPoolMember = (who: MaybeAccount) => {
+    return poolMembers.find((p: any) => p.who === who) ?? null;
+  };
 
   // queries a  pool member and formats to `poolMembers`.
   const queryPoolMember = async (who: MaybeAccount) => {

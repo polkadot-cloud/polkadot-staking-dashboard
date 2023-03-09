@@ -103,32 +103,42 @@ export const ActivePoolsProvider = ({
     }
   }, [network, isReady, syncedRef.current]);
 
-  const getActivePoolMembership = () =>
+  const getActivePoolMembership = () => {
     // get the activePool that the active account
-    activePoolsRef.current.find((a: ActivePool) => {
-      const p = membership?.poolId ? String(membership.poolId) : '0';
-      return String(a.id) === p;
-    }) || null;
-  const getSelectedActivePool = () =>
-    activePoolsRef.current.find(
-      (a: ActivePool) => a.id === Number(selectedPoolId)
-    ) || null;
+    return (
+      activePoolsRef.current.find((a: ActivePool) => {
+        const p = membership?.poolId ? String(membership.poolId) : '0';
+        return String(a.id) === p;
+      }) || null
+    );
+  };
 
-  const getSelectedPoolNominations = () =>
-    poolNominationsRef.current[Number(selectedPoolId) ?? -1] ||
-    defaults.poolNominations;
+  const getSelectedActivePool = () => {
+    return (
+      activePoolsRef.current.find(
+        (a: ActivePool) => a.id === Number(selectedPoolId)
+      ) || null
+    );
+  };
 
-  const getSelectedPoolTargets = () =>
-    targetsRef.current[Number(selectedPoolId) ?? -1] || defaults.targets;
+  const getSelectedPoolNominations = () => {
+    return (
+      poolNominationsRef.current[Number(selectedPoolId) ?? -1] ||
+      defaults.poolNominations
+    );
+  };
+
+  const getSelectedPoolTargets = () => {
+    return targetsRef.current[Number(selectedPoolId) ?? -1] || defaults.targets;
+  };
 
   // unsubscribe all on component unmount
-  useEffect(
-    () => () => {
+  useEffect(() => {
+    return () => {
       unsubscribeActivePools();
       unsubscribePoolNominations();
-    },
-    [network]
-  );
+    };
+  }, [network]);
 
   // re-calculate unclaimed payout when membership changes
   useEffect(() => {
@@ -379,7 +389,9 @@ export const ActivePoolsProvider = ({
    * isBonding
    * Returns whether active pool exists
    */
-  const isBonding = () => !!getSelectedActivePool();
+  const isBonding = () => {
+    return !!getSelectedActivePool();
+  };
 
   /*
    * isNominator
@@ -453,8 +465,9 @@ export const ActivePoolsProvider = ({
    * get the stash address of the bonded pool
    * that the member is participating in.
    */
-  const getPoolBondedAccount = () =>
-    getSelectedActivePool()?.addresses?.stash || null;
+  const getPoolBondedAccount = () => {
+    return getSelectedActivePool()?.addresses?.stash || null;
+  };
 
   /*
    * Get the status of nominations.

@@ -130,8 +130,10 @@ export const RouterInner = () => {
   );
 };
 
-export const Router = () => (
-  <HashRouter basename="/">
-    <RouterInner />
-  </HashRouter>
-);
+export const Router = () => {
+  return (
+    <HashRouter basename="/">
+      <RouterInner />
+    </HashRouter>
+  );
+};
