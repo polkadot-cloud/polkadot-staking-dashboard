@@ -17,6 +17,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-brands-svg-icons": "^6.3.0",
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
@@ -35,6 +36,7 @@
     "@types/lodash.throttle": "^4.1.7",
     "bignumber.js": "^9.1.1",
     "bn.js": "^5.2.1",
+    "buffer": "^6.0.3",
     "chart.js": "^4.2.1",
     "che-react-number-easing": "^0.1.4",
     "date-fns": "^2.29.3",

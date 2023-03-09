@@ -4,6 +4,7 @@
 import Polkadot from '@ledgerhq/hw-app-polkadot';
 import React, { useState } from 'react';
 import type { AnyJson } from 'types';
+import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 import { defaultLedgerHardwareContext } from './defaults';
 import type {
   LedgerHardwareContextInterface,
@@ -61,7 +62,7 @@ export const LedgerHardwareProvider = ({
     // Attempt to store the device model.
     if (tasks.includes('get_device_info')) {
       try {
-        // transport = await TransportWebUSB.create();
+        transport = await TransportWebUSB.create();
         // const { deviceModel } = transport;
         const deviceModel = null;
         if (deviceModel) {
@@ -71,7 +72,7 @@ export const LedgerHardwareProvider = ({
             productName,
           });
         }
-        // transport.close();
+        transport.close();
       } catch (err) {
         transport = null;
         noDevice = true;
@@ -82,7 +83,7 @@ export const LedgerHardwareProvider = ({
     // Attempt to carry out desired tasks.
     if (!noDevice) {
       try {
-        // transport = await TransportWebUSB.create();
+        transport = await TransportWebUSB.create();
         let result = null;
         if (tasks.includes('get_address')) {
           result = await handleGetAddress(transport, options.accountIndex ?? 0);
@@ -94,7 +95,7 @@ export const LedgerHardwareProvider = ({
             });
           }
         }
-        // transport.close();
+        transport.close();
       } catch (err) {
         transport = null;
         handleErrors(err);
