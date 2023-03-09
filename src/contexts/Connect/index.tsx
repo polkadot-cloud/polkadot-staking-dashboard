@@ -16,7 +16,12 @@ import type {
 } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
-import { clipAddress, localStorageOrDefault, registerSaEvent, setStateWithRef } from 'Utils';
+import {
+  clipAddress,
+  localStorageOrDefault,
+  registerSaEvent,
+  setStateWithRef,
+} from 'Utils';
 import { defaultConnectContext } from './defaults';
 import { useImportExtension } from './Hooks/useImportExtension';
 import {
