@@ -4,7 +4,10 @@
 import '@rossbulat/polkadot-dashboard-ui/index.css';
 import { App } from 'App';
 import { createRoot } from 'react-dom/client';
+import { Buffer } from "buffer";
 import 'styles/index.scss';
+
+window.Buffer = Buffer;
 
 const rootElement = document.getElementById('root');
 if (!rootElement) throw new Error('Failed to find the root element');
