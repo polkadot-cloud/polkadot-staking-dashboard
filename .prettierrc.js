@@ -1,6 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-/// <reference types="vite-plugin-svgr/client" />
-
-declare module 'che-react-number-easing';
+module.exports = {
+  arrowParens: "always",
+  trailingComma: "es5",
+  tabWidth: 2,
+  semi: true,
+  singleQuote: true,
+};

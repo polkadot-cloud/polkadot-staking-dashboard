@@ -33,9 +33,9 @@ export const NetworkBar = () => {
   const animate = open ? 'maximised' : 'minimised';
   const ref = useRef(null);
 
-  const PRIVACY_URL = import.meta.env.VITE_PRIVACY_URL;
-  const DISCLAIMER_URL = import.meta.env.VITE_DISCLAIMER_URL;
-  const ORGANISATION = import.meta.env.VITE_ORGANISATION;
+  const PRIVACY_URL = process.env.REACT_APP_PRIVACY_URL;
+  const DISCLAIMER_URL = process.env.REACT_APP_DISCLAIMER_URL;
+  const ORGANISATION = process.env.REACT_APP_ORGANISATION;
 
   const [networkName, setNetworkName] = useState<string>(
     capitalizeFirstLetter(network.name)

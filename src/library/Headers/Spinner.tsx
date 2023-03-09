@@ -71,4 +71,6 @@ const StyledSpinner = styled.div`
   }
 `;
 
-export const Spinner = () => <StyledSpinner />;
+export const Spinner = () => {
+  return <StyledSpinner />;
+};

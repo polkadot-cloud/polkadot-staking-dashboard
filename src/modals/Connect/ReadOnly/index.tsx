@@ -15,9 +15,9 @@ export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
   const { accounts, forgetAccounts } = useConnect();
 
   // get all external accounts
-  const externalAccountsOnly = accounts.filter(
-    (a: ImportedAccount) => a.source === 'external'
-  ) as Array<ExternalAccount>;
+  const externalAccountsOnly = accounts.filter((a: ImportedAccount) => {
+    return a.source === 'external';
+  }) as Array<ExternalAccount>;
 
   // get external accounts added by user
   const externalAccountsByUser = externalAccountsOnly.filter(

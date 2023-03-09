@@ -13,4 +13,4 @@
 *.webmanifest
 LICENSE
 build
-vite.config.ts
+webpack.config.js

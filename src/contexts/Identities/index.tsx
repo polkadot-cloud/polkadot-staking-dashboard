@@ -32,14 +32,15 @@ export const IdentitiesProvider = ({
   const identitiesSubsRef = useRef(identitiesSubs);
 
   // unsubscribe from any validator meta batches
-  useEffect(
-    () => () => {
-      Object.values(identitiesSubsRef.current).map((batch: AnyMetaBatch) =>
-        Object.entries(batch).map(([, v]: AnyApi) => v())
-      );
-    },
-    []
-  );
+  useEffect(() => {
+    return () => {
+      Object.values(identitiesSubsRef.current).map((batch: AnyMetaBatch) => {
+        return Object.entries(batch).map(([, v]: AnyApi) => {
+          return v();
+        });
+      });
+    };
+  }, []);
 
   /*
     Fetches a new batch of subscribed accounts metadata. Stores the returning

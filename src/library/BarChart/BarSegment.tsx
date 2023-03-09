@@ -10,17 +10,19 @@ export const BarSegment = ({
   flexGrow,
   label,
   forceShow,
-}: BarSegmentProps) => (
-  <div
-    className={dataClass}
-    style={{
-      width: `${flexGrow || forceShow ? 100 : widthPercent}%`,
-      flexGrow,
-    }}
-  >
-    {widthPercent >= BarSegmentShowLabelThreshold ||
-    (widthPercent < BarSegmentShowLabelThreshold && forceShow) ? (
-      <span>{label}</span>
-    ) : null}
-  </div>
-);
+}: BarSegmentProps) => {
+  return (
+    <div
+      className={dataClass}
+      style={{
+        width: `${flexGrow || forceShow ? 100 : widthPercent}%`,
+        flexGrow,
+      }}
+    >
+      {widthPercent >= BarSegmentShowLabelThreshold ||
+      (widthPercent < BarSegmentShowLabelThreshold && forceShow) ? (
+        <span>{label}</span>
+      ) : null}
+    </div>
+  );
+};

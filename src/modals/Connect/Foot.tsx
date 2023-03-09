@@ -5,11 +5,13 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ConnectItemFoot } from './Wrappers';
 
-export const Foot = ({ url }: any) => (
-  <ConnectItemFoot>
-    <a href={`https://${url}`} target="_blank" rel="noreferrer">
-      {url}
-      <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
-    </a>
-  </ConnectItemFoot>
-);
+export const Foot = ({ url }: any) => {
+  return (
+    <ConnectItemFoot>
+      <a href={`https://${url}`} target="_blank" rel="noreferrer">
+        {url}
+        <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
+      </a>
+    </ConnectItemFoot>
+  );
+};

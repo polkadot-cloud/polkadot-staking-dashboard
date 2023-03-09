@@ -4,8 +4,10 @@
 import React from 'react';
 import { ListWrapper, Wrapper } from './Wrapper';
 
-export const StatBoxList = ({ children }: { children: React.ReactNode }) => (
-  <Wrapper className="page-padding">
-    <ListWrapper>{children}</ListWrapper>
-  </Wrapper>
-);
+export const StatBoxList = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <Wrapper className="page-padding">
+      <ListWrapper>{children}</ListWrapper>
+    </Wrapper>
+  );
+};

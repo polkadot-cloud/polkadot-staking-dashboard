@@ -3,6 +3,6 @@
 
 import { LoaderWrapper } from './Wrapper';
 
-export const Announcement = () => (
-  <LoaderWrapper style={{ width: '100%', height: 60 }} />
-);
+export const Announcement = () => {
+  return <LoaderWrapper style={{ width: '100%', height: 60 }} />;
+};

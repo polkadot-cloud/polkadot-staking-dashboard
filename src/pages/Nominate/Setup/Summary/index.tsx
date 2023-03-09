@@ -39,9 +39,11 @@ export const Summary = ({ section }: SetupStepProps) => {
       return null;
     }
 
-    const targetsToSubmit = nominations.map((item: any) => ({
-      Id: item.address,
-    }));
+    const targetsToSubmit = nominations.map((item: any) => {
+      return {
+        Id: item.address,
+      };
+    });
 
     const controllerToSubmit = {
       Id: activeAccount,

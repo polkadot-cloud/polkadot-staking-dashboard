@@ -66,9 +66,9 @@ export const Connect = () => {
         <SelectItems layout="two-col">
           {installed
             .concat(other)
-            .map((extension: ExtensionConfig, i: number) => (
-              <Extension key={`extension_item_${i}`} meta={extension} />
-            ))}
+            .map((extension: ExtensionConfig, i: number) => {
+              return <Extension key={`extension_item_${i}`} meta={extension} />;
+            })}
         </SelectItems>
       </ExtensionsWrapper>
       <Separator />

@@ -52,7 +52,9 @@ export const UnbondPoolMember = () => {
   const [bondValid, setBondValid] = useState(false);
 
   // unbond all validation
-  const isValid = (() => greaterThanZero(freeToUnbond))();
+  const isValid = (() => {
+    return greaterThanZero(freeToUnbond);
+  })();
 
   // update bond value on task change
   useEffect(() => {

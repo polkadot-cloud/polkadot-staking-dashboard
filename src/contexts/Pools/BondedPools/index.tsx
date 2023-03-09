@@ -70,9 +70,11 @@ export const BondedPoolsProvider = ({
   }, [bondedPools]);
 
   const unsubscribe = () => {
-    Object.values(poolSubsRef.current).map((batch: Array<Fn>) =>
-      Object.entries(batch).map(([, v]) => v())
-    );
+    Object.values(poolSubsRef.current).map((batch: Array<Fn>) => {
+      return Object.entries(batch).map(([, v]) => {
+        return v();
+      });
+    });
     setBondedPools([]);
   };
 
@@ -290,11 +292,13 @@ export const BondedPoolsProvider = ({
   /*
    *  Helper: to add addresses to pool record.
    */
-  const getPoolWithAddresses = (id: number, pool: BondedPool) => ({
-    ...pool,
-    id,
-    addresses: createAccounts(id),
-  });
+  const getPoolWithAddresses = (id: number, pool: BondedPool) => {
+    return {
+      ...pool,
+      id,
+      addresses: createAccounts(id),
+    };
+  };
 
   const getBondedPool = (poolId: MaybePool) => {
     const pool = bondedPools.find((p: BondedPool) => p.id === poolId) ?? null;

@@ -184,19 +184,23 @@ export const GenerateNominations = ({
     setSelectActive,
   }: any) => {
     removeValidatorMetaBatch(batchKey);
-    const _nominations = [...nominations].filter(
-      (n: any) => !selected.map((_s: any) => _s.address).includes(n.address)
-    );
+    const _nominations = [...nominations].filter((n: any) => {
+      return !selected.map((_s: any) => _s.address).includes(n.address);
+    });
     setNominations([..._nominations]);
     updateSetters([..._nominations]);
     setSelectActive(false);
     resetSelected();
   };
 
-  const disabledMaxNominations = () =>
-    maxNominations.isLessThan(nominations.length);
-  const disabledAddFavorites = () =>
-    !favoritesList?.length || maxNominations.isLessThan(nominations.length);
+  const disabledMaxNominations = () => {
+    return maxNominations.isLessThan(nominations.length);
+  };
+  const disabledAddFavorites = () => {
+    return (
+      !favoritesList?.length || maxNominations.isLessThan(nominations.length)
+    );
+  };
 
   // accumulate generation methods
   const methods = [
