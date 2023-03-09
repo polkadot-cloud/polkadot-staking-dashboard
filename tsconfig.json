@@ -22,10 +22,11 @@
     "jsx": "react-jsx",
     "types": [
       "react",
-      "react-dom"
+      "react-dom",
+      "jest",
     ],
   },
   "include": [
-    "src", "tests",
+    "src", "tests", "scripts"
   ]
 }
