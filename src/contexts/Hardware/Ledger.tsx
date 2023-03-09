@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import Polkadot from '@ledgerhq/hw-app-polkadot';
 import React, { useState } from 'react';
 import { AnyJson } from 'types';
 import { defaultLedgerHardwareContext } from './defaults';
@@ -103,9 +104,9 @@ export const LedgerHardwareProvider = ({
 
   // Gets a Polkadot addresses on the device.
   const handleGetAddress = async (transport: AnyJson, accountIndex: number) => {
-    // const polkadot = new Polkadot(transport);
-    // const { deviceModel } = transport;
-    // const { id, productName } = deviceModel;
+    const polkadot = new Polkadot(transport);
+    const { deviceModel } = transport;
+    const { id, productName } = deviceModel;
 
     setTransportResponse({
       ack: 'success',
@@ -113,16 +114,16 @@ export const LedgerHardwareProvider = ({
       body: `Getting addresess ${accountIndex} in prgress.`,
     });
 
-    // const address = await polkadot.getAddress(
-    //   `'44'/354'/${accountIndex}'/0'/0'`,
-    //   false
-    // );
-    // return {
-    //   statusCode: 'ReceivedAddress',
-    //   device: { id, productName },
-    //   body: [address],
-    // };
-    return {};
+    const address = await polkadot.getAddress(
+      `'44'/354'/${accountIndex}'/0'/0'`,
+      false
+    );
+    return {
+      statusCode: 'ReceivedAddress',
+      device: { id, productName },
+      body: [address],
+    };
+    // return {};
   };
   return (
     <LedgerHardwareContext.Provider

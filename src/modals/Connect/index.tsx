@@ -52,18 +52,14 @@ export const Connect = () => {
       </CustomHeaderWrapper>
 
       {/* NOTE: pending CRA migration */}
-      {/* {name === 'polkadot' ? (
-        <>
-          <Action text="Hardware" />
-          <ExtensionsWrapper>
-            <SelectItems layout="two-col">
-              {[Ledger].map((Item: AnyFunction, i: number) => {
-                return <Item key={`hardware_item_${i}`} />;
-              })}
-            </SelectItems>
-          </ExtensionsWrapper>
-        </>
-      ) : null} */}
+      {/* <Action text="Hardware" />
+      <ExtensionsWrapper>
+        <SelectItems layout="two-col">
+          {[Ledger].map((Item: AnyFunction, i: number) => {
+            return <Item key={`hardware_item_${i}`} />;
+          })}
+        </SelectItems>
+      </ExtensionsWrapper> */}
 
       <Action text={t('extensions')} />
       <ExtensionsWrapper>
