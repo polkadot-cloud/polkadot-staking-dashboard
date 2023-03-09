@@ -18,7 +18,8 @@ export default defineConfig({
     })
   ],
   build: {
-    outDir: 'build'
+    outDir: 'build',
+    sourcemap: true,
   }, 
   optimizeDeps: {
     esbuildOptions: {

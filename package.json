@@ -10,6 +10,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "deploy": "gh-pages -d build",
+    "analyze": "source-map-explorer './build/assets/*.js'",
     "lint": "eslint ./src --fix && npx prettier --write ./src",
     "lint:scripts": "npx prettier --write ./.scripts",
     "locale:order": "node ./.scripts/localeOrderKeys.js",
