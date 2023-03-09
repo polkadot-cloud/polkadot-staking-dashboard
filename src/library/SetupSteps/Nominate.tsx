@@ -20,9 +20,7 @@ export const Nominate = ({ batchKey, bondFor, section }: NominationsProps) => {
   const { progress } = setup;
   const { maxNominations } = consts;
 
-  const setterFn = () => {
-    return getSetupProgress(bondFor, activeAccount).progress;
-  };
+  const setterFn = () => getSetupProgress(bondFor, activeAccount).progress;
 
   // handler for updating setup.bond
   const handleSetupUpdate = (value: any) => {

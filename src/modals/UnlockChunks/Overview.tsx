@@ -120,16 +120,14 @@ export const Overview = forwardRef(
             </div>
           )}
 
-          {unlocking.map((chunk: any, i: number) => {
-            return (
-              <Chunk
-                key={`unlock_chunk_${i}`}
-                chunk={chunk}
-                bondFor={bondFor}
-                onRebond={onRebondHandler}
-              />
-            );
-          })}
+          {unlocking.map((chunk: any, i: number) => (
+            <Chunk
+              key={`unlock_chunk_${i}`}
+              chunk={chunk}
+              bondFor={bondFor}
+              onRebond={onRebondHandler}
+            />
+          ))}
           <NotesWrapper>
             <StaticNote
               value={bondDurationFormatted}

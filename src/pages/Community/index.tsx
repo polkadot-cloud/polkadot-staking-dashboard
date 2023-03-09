@@ -24,10 +24,8 @@ export const CommunityInner = ({ page }: PageProps) => {
   );
 };
 
-export const Community = (props: PageProps) => {
-  return (
-    <CommunitySectionsProvider>
-      <CommunityInner {...props} />
-    </CommunitySectionsProvider>
-  );
-};
+export const Community = (props: PageProps) => (
+  <CommunitySectionsProvider>
+    <CommunityInner {...props} />
+  </CommunitySectionsProvider>
+);

@@ -8,9 +8,8 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, AnyJson, MaybeAccount } from 'types';
-// eslint-disable-next-line import/no-unresolved
 import { greaterThanZero, isNotZero, rmCommas, setStateWithRef } from 'Utils';
-import Worker from 'worker-loader!../../workers/stakers';
+import Worker from 'workers/stakers?worker';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
 import type {
   FastUnstakeContextInterface,
@@ -67,9 +66,7 @@ export const FastUnstakeProvider = ({
   const unsubRef = useRef(unsub);
 
   // localStorage key to fetch local metadata.
-  const getLocalkey = (a: MaybeAccount) => {
-    return `${network.name}_fast_unstake_${a}`;
-  };
+  const getLocalkey = (a: MaybeAccount) => `${network.name}_fast_unstake_${a}`;
 
   // check until bond duration eras surpasssed.
   const checkToEra = activeEra.index.minus(bondDuration);
@@ -255,12 +252,10 @@ export const FastUnstakeProvider = ({
     const exposuresRaw = await api.query.staking.erasStakers.entries(
       era.toString()
     );
-    const exposures = exposuresRaw.map(([keys, val]: AnyApi) => {
-      return {
-        keys: keys.toHuman(),
-        val: val.toHuman(),
-      };
-    });
+    const exposures = exposuresRaw.map(([keys, val]: AnyApi) => ({
+      keys: keys.toHuman(),
+      val: val.toHuman(),
+    }));
     worker.postMessage({
       task: 'process_fast_unstake_era',
       currentEra: era.toString(),

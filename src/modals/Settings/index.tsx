@@ -12,7 +12,7 @@ export const Settings = () => {
   const { t } = useTranslation('modals');
 
   // fetch flag to disable fiat
-  const DISABLE_FIAT = Number(process.env.REACT_APP_DISABLE_FIAT ?? 0);
+  const DISABLE_FIAT = Number(import.meta.env.VITE_DISABLE_FIAT ?? 0);
 
   return (
     <>

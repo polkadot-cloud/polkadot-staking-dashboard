@@ -16,9 +16,7 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
   const { unit, units } = useApi().network;
   const { txFees, resetTxFees } = useTxFees();
 
-  useEffect(() => {
-    return () => resetTxFees();
-  }, []);
+  useEffect(() => () => resetTxFees(), []);
 
   const txFeesUnit = planckToUnit(txFees, units).toFormat();
 
