@@ -3,7 +3,7 @@
 
 import type { BondedPool } from 'contexts/Pools/types';
 import type React from 'react';
-import type { AnyMetaBatch, BondFor, MaybeAccount } from 'types';
+import type { BondFor, MaybeAccount } from 'types';
 
 export interface BlockedProps {
   prefs: {
@@ -24,7 +24,6 @@ export interface IdentityProps {
   address: string;
   batchIndex: number;
   batchKey: string;
-  meta: AnyMetaBatch;
 }
 
 export interface PoolIdentityProps {

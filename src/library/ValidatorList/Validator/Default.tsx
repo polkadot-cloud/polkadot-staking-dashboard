@@ -110,7 +110,6 @@ export const Default = ({
         <div className="row">
           {selectActive && <Select item={validator} />}
           <Identity
-            meta={meta}
             address={address}
             batchIndex={batchIndex}
             batchKey={batchKey}
