@@ -30,7 +30,7 @@ export const Identity = ({ address, batchKey, batchIndex }: IdentityProps) => {
 
   useEffect(() => {
     setDisplay(getIdentityDisplay(identities[batchIndex], supers[batchIndex]));
-  }, [meta]);
+  }, [meta, address]);
 
   return (
     <IdentityWrapper
