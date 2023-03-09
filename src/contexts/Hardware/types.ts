@@ -13,9 +13,6 @@ export type LedgerHardwareContextInterface = {
   ) => Promise<void>;
 };
 
-// Copyright 2022 @paritytech/polkadot-native authors & contributors
-// SPDX-License-Identifier: Apache-2.0
-
 export type LedgerTask = 'get_address' | 'get_device_info';
 
 export interface LedgerResponse {

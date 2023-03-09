@@ -1,3 +1,6 @@
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 declare namespace NodeJS {
   interface ProcessEnv {
     readonly NODE_ENV: 'development' | 'production' | 'test';
@@ -66,8 +69,6 @@ declare module '*.module.sass' {
   export default classes;
 }
 
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
 declare module 'react-dom/client';
 declare module 'che-react-number-easing';
 
