@@ -44,7 +44,7 @@ export const PayoutListInner = ({
   } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { listFormat, setListFormat } = usePayoutList();
-  const { validators, meta } = useValidators();
+  const { validators } = useValidators();
   const { bondedPools } = useBondedPools();
 
   // current page
@@ -213,7 +213,6 @@ export const PayoutListInner = ({
                             <>
                               {batchIndex > 0 ? (
                                 <Identity
-                                  meta={meta}
                                   address={p.validator_stash}
                                   batchIndex={batchIndex}
                                   batchKey={batchKey}
