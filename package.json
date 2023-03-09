@@ -14,8 +14,7 @@
     "lint:scripts": "npx prettier --write ./.scripts",
     "locale:order": "node ./.scripts/localeOrderKeys.js",
     "locale:validate": "node ./.scripts/localeValidate.js",
-    "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "test": "vitest"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
