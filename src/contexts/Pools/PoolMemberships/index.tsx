@@ -62,11 +62,12 @@ export const PoolMembershipsProvider = ({
   };
 
   // unsubscribe from pool memberships on unmount
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       unsubscribeAll();
-    };
-  }, []);
+    },
+    []
+  );
 
   // unsubscribe from all pool memberships
   const unsubscribeAll = () => {

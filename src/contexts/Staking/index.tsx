@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
+import { useLedgers } from 'contexts/Accounts/Ledgers';
 import type { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type {
@@ -19,9 +20,7 @@ import {
   localStorageOrDefault,
   setStateWithRef,
 } from 'Utils';
-// eslint-disable-next-line import/no-unresolved
-import { useLedgers } from 'contexts/Accounts/Ledgers';
-import Worker from 'worker-loader!../../workers/stakers';
+import Worker from 'workers/stakers?worker';
 import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
@@ -236,12 +235,10 @@ export const StakingProvider = ({
     setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
 
     // humanise exposures to send to worker
-    const exposures = exposuresRaw.map(([keys, val]: AnyApi) => {
-      return {
-        keys: keys.toHuman(),
-        val: val.toHuman(),
-      };
-    });
+    const exposures = exposuresRaw.map(([keys, val]: AnyApi) => ({
+      keys: keys.toHuman(),
+      val: val.toHuman(),
+    }));
 
     // worker to calculate stats
     worker.postMessage({
@@ -403,12 +400,9 @@ export const StakingProvider = ({
    * Helper function to determine whether the active account
    * is nominating, or is yet to start.
    */
-  const inSetup = () => {
-    return (
-      !activeAccount ||
-      (!hasController() && !isBonding() && !isNominating() && !isUnlocking())
-    );
-  };
+  const inSetup = () =>
+    !activeAccount ||
+    (!hasController() && !isBonding() && !isNominating() && !isUnlocking());
 
   return (
     <StakingContext.Provider

@@ -33,9 +33,9 @@ export const MembershipStatus = () => {
   let membershipDisplay = t('pools.notInPool');
 
   if (selectedActivePool) {
-    const pool = bondedPools.find((p: any) => {
-      return p.addresses.stash === selectedActivePool.addresses.stash;
-    });
+    const pool = bondedPools.find(
+      (p: any) => p.addresses.stash === selectedActivePool.addresses.stash
+    );
     if (pool) {
       // Determine pool membership display.
       const metadata = meta.bonded_pools?.metadata ?? [];

@@ -266,13 +266,11 @@ export const PayoutListInner = ({
   );
 };
 
-export const PayoutList = (props: PayoutListProps) => {
-  return (
-    <PayoutListProvider>
-      <PayoutListShouldUpdate {...props} />
-    </PayoutListProvider>
-  );
-};
+export const PayoutList = (props: PayoutListProps) => (
+  <PayoutListProvider>
+    <PayoutListShouldUpdate {...props} />
+  </PayoutListProvider>
+);
 
 export class PayoutListShouldUpdate extends React.Component {
   static contextType = StakingContext;

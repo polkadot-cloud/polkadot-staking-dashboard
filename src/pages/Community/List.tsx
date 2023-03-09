@@ -42,11 +42,9 @@ export const List = () => {
   return (
     <PageRowWrapper className="page-padding">
       <ItemsWrapper variants={container} initial="hidden" animate="show">
-        {entityItems.map((item: any, index: number) => {
-          return (
-            <Item key={`community_item_${index}`} item={item} actionable />
-          );
-        })}
+        {entityItems.map((item: any, index: number) => (
+          <Item key={`community_item_${index}`} item={item} actionable />
+        ))}
       </ItemsWrapper>
     </PageRowWrapper>
   );
