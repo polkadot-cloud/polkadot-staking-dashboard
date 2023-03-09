@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "license": "apache-2.0",
   "private": false,
+  "homepage": "/",
   "dependencies": {
     "@babel/core": "^7.16.0",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
@@ -79,7 +80,6 @@
     "source-map-loader": "^3.0.0",
     "style-loader": "^3.3.1",
     "styled-components": "^5.3.8",
-    "tailwindcss": "^3.0.2",
     "web-vitals": "^3.1.0",
     "webpack": "^5.64.4",
     "webpack-dev-server": "^4.6.0",
@@ -149,7 +149,6 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "/",
   "jest": {
     "roots": [
       "<rootDir>/src"
