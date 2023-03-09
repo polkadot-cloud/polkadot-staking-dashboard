@@ -6,7 +6,7 @@ import NumberEasing from 'che-react-number-easing';
 import { useHelp } from 'contexts/Help';
 import { StatPie } from 'library/Graphs/StatBoxPie';
 import { StatBox } from './Item';
-import { PieProps } from './types';
+import type { PieProps } from './types';
 
 export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
   const help = helpKey !== undefined;

@@ -11,7 +11,7 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
-import { NominateStatusBarProps } from '../types';
+import type { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 
 export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {

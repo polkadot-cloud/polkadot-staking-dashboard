@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   ButtonHelp,
@@ -9,7 +9,7 @@ import {
 } from '@rossbulat/polkadot-dashboard-ui';
 import { useHelp } from 'contexts/Help';
 import { useOverlay } from 'contexts/Overlay';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TitleWrapper } from './Wrappers';
 

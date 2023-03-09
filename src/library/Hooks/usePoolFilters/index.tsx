@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { BondedPool } from 'contexts/Pools/types';
+import type { BondedPool } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { useTranslation } from 'react-i18next';
-import { AnyFunction, AnyJson } from 'types';
+import type { AnyFunction, AnyJson } from 'types';
 
 export const usePoolFilters = () => {
   const { t } = useTranslation('library');

@@ -57,6 +57,13 @@
     "@typescript-eslint/ban-ts-comment": "off",
     "no-nested-ternary": "off",
     "no-shadow": "off",
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports",
+        "fixStyle": "separate-type-imports"
+      }
+    ],
     "semi": [
       2,
       "always"

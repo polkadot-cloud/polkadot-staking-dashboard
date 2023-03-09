@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import {
+import type {
   Balances,
   BalancesContextInterface,
 } from 'contexts/Accounts/Balances/types';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { ImportedAccount } from 'contexts/Connect/types';
+import type { ImportedAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, MaybeAccount } from 'types';
+import type { AnyApi, MaybeAccount } from 'types';
 import { rmCommas, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
 

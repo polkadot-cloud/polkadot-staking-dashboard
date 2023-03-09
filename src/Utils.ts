@@ -4,8 +4,8 @@
 import { decodeAddress, encodeAddress } from '@polkadot/keyring';
 import { hexToU8a, isHex, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
-import { MutableRefObject, RefObject } from 'react';
-import { AnyJson, AnyMetaBatch } from 'types/index';
+import type { MutableRefObject, RefObject } from 'react';
+import type { AnyJson, AnyMetaBatch } from 'types/index';
 
 export const clipAddress = (val: string) => {
   if (typeof val !== 'string') {

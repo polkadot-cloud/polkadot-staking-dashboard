@@ -5,7 +5,7 @@ import { useApi } from 'contexts/Api';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { setStateWithRef } from 'Utils';
-import {
+import type {
   TimeLeftAll,
   TimeleftDuration,
   TimeLeftFormatted,

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { ListProps, PaginationWrapperProps } from './types';
+import type { ListProps, PaginationWrapperProps } from './types';
 
 export const Wrapper = styled.div`
   display: flex;

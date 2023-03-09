@@ -3,7 +3,7 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import { MinimisedProps } from '../types';
+import type { MinimisedProps } from '../types';
 
 export const Wrapper = styled(motion.div)<MinimisedProps>`
   border-radius: 0.7rem;

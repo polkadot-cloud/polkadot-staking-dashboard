@@ -5,7 +5,7 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { EXTENSIONS } from 'config/extensions';
 import { useExtensions } from 'contexts/Extensions';
-import { ExtensionConfig } from 'contexts/Extensions/types';
+import type { ExtensionConfig } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
 import { Action } from 'library/Modal/Action';
 import { SelectItems } from 'library/SelectItems';

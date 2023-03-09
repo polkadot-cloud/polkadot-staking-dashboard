@@ -6,14 +6,14 @@ import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import { ExtensionInjected } from 'contexts/Extensions/types';
+import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useNotifications } from 'contexts/Notifications';
 import { useTxFees } from 'contexts/TxFees';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AnyApi } from 'types';
-import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
+import type { AnyApi } from 'types';
+import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = ({
   tx,

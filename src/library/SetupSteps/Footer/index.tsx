@@ -5,7 +5,7 @@ import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { useTranslation } from 'react-i18next';
-import { FooterProps } from '../types';
+import type { FooterProps } from '../types';
 import { Wrapper } from './Wrapper';
 
 export const Footer = ({ complete, bondFor }: FooterProps) => {

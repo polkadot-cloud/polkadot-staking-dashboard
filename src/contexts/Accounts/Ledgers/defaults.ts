@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import { Ledger, LedgersContextInterface } from './types';
+import type { Ledger, LedgersContextInterface } from './types';
 
 export const ledger: Ledger = {
   address: null,

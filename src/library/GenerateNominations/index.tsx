@@ -23,7 +23,7 @@ import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { camelize } from 'Utils';
-import {
+import type {
   GenerateNominationsInnerProps,
   Nominations,
 } from '../SetupSteps/types';

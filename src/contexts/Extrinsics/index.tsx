@@ -4,7 +4,7 @@
 import React, { useRef, useState } from 'react';
 import { setStateWithRef } from 'Utils';
 import { defaultExtrinsicsContext } from './defaults';
-import { ExtrinsicsContextInterface } from './types';
+import type { ExtrinsicsContextInterface } from './types';
 
 export const ExtrinsicsContext =
   React.createContext<ExtrinsicsContextInterface>(defaultExtrinsicsContext);

@@ -9,7 +9,7 @@ import { StatBoxList } from 'library/StatBoxList';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
-import { PageProps } from '../types';
+import type { PageProps } from '../types';
 import { ActiveValidatorsStat } from './Stats/ActiveValidators';
 import { AverageCommissionStat } from './Stats/AverageCommission';
 import { TotalValidatorsStat } from './Stats/TotalValidators';

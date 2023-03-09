@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useConnect } from 'contexts/Connect';
-import { PoolMemberContext } from 'contexts/Pools/types';
+import type { PoolMemberContext } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
+import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef } from 'Utils';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';

@@ -15,7 +15,7 @@ import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AnyJson } from 'types';
+import type { AnyJson } from 'types';
 import { planckToUnit } from 'Utils';
 import { NotesWrapper } from '../Wrappers';
 import { Chunk } from './Chunk';

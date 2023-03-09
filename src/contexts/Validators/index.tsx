@@ -3,7 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import { VALIDATOR_COMMUNITY } from 'config/validators';
-import {
+import type {
   SessionParachainValidators,
   SessionValidators,
   Validator,
@@ -11,7 +11,7 @@ import {
   ValidatorsContextInterface,
 } from 'contexts/Validators/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, AnyMetaBatch, Fn } from 'types';
+import type { AnyApi, AnyMetaBatch, Fn } from 'types';
 import {
   greaterThanZero,
   planckToUnit,

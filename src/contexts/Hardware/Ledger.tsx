@@ -3,9 +3,9 @@
 
 import Polkadot from '@ledgerhq/hw-app-polkadot';
 import React, { useState } from 'react';
-import { AnyJson } from 'types';
+import type { AnyJson } from 'types';
 import { defaultLedgerHardwareContext } from './defaults';
-import {
+import type {
   LedgerHardwareContextInterface,
   LedgerResponse,
   LedgerTask,

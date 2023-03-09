@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, AnyMetaBatch } from 'types';
+import type { AnyApi, AnyMetaBatch } from 'types';
 import { setStateWithRef } from 'Utils';
 import { useApi } from '../Api';
 import { defaultIdentitiesContext } from './defaults';
-import { IdentitiesContextInterface } from './types';
+import type { IdentitiesContextInterface } from './types';
 
 // context definition
 export const IdentitiesContext =

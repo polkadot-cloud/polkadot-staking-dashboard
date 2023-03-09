@@ -4,12 +4,12 @@
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { ImportedAccount } from 'contexts/Connect/types';
+import type { ImportedAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, MaybeAccount } from 'types';
+import type { AnyApi, MaybeAccount } from 'types';
 import { rmCommas, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
-import { Ledger, LedgersContextInterface } from './types';
+import type { Ledger, LedgersContextInterface } from './types';
 
 export const LedgersContext = React.createContext<LedgersContextInterface>(
   defaults.defaultLedgersContext

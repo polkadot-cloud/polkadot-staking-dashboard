@@ -14,7 +14,7 @@ import { useFillVariables } from 'library/Hooks/useFillVariables';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AnyJson } from 'types';
+import type { AnyJson } from 'types';
 import { setStateWithRef } from 'Utils';
 import { Items } from './Items';
 import { PageToggle } from './PageToggle';

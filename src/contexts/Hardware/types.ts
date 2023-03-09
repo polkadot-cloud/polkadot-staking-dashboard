@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { AnyJson } from 'types';
+import type { AnyJson } from 'types';
 
 export type LedgerHardwareContextInterface = {
   transportError: LedgerResponse | null;

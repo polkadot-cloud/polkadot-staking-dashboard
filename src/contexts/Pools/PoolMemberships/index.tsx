@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import { ImportedAccount } from 'contexts/Connect/types';
-import {
+import type { ImportedAccount } from 'contexts/Connect/types';
+import type {
   PoolMembership,
   PoolMembershipsContextState,
 } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, Fn } from 'types';
+import type { AnyApi, Fn } from 'types';
 import { rmCommas, setStateWithRef } from 'Utils';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';

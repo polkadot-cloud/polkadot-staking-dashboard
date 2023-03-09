@@ -5,7 +5,7 @@ import { AppVersion, DefaultLocale } from 'consts';
 import { enGB, zhCN } from 'date-fns/locale';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { AnyJson } from 'types';
+import type { AnyJson } from 'types';
 import baseEn from './en/base.json';
 import helpEn from './en/help.json';
 import libEn from './en/library.json';

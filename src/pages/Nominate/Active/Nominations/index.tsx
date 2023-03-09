@@ -15,7 +15,7 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
-import { MaybeAccount } from 'types';
+import type { MaybeAccount } from 'types';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({

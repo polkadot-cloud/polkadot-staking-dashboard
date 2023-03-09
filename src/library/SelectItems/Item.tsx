@@ -4,7 +4,7 @@
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { SelectItemProps } from './types';
+import type { SelectItemProps } from './types';
 import { Wrapper } from './Wrapper';
 
 export const SelectItem = ({

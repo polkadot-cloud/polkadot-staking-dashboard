@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useTranslation } from 'react-i18next';
-import { CountdownProps } from './types';
+import type { CountdownProps } from './types';
 
 export const Countdown = ({ timeleft, markup = true }: CountdownProps) => {
   const { t } = useTranslation('base');

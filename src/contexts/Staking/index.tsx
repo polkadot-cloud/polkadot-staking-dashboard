@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
-import { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
-import {
+import type { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
+import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
+import type {
   EraStakers,
   NominationStatuses,
   StakingContextInterface,
@@ -12,7 +12,7 @@ import {
   StakingTargets,
 } from 'contexts/Staking/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, MaybeAccount } from 'types';
+import type { AnyApi, MaybeAccount } from 'types';
 import {
   greaterThanZero,
   isNotZero,

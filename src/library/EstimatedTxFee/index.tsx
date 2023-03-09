@@ -3,11 +3,12 @@
 
 import { useApi } from 'contexts/Api';
 import { TxFeesContext, useTxFees } from 'contexts/TxFees';
-import { EstimatedFeeContext } from 'contexts/TxFees/types';
-import React, { Context, useEffect } from 'react';
+import type { EstimatedFeeContext } from 'contexts/TxFees/types';
+import type { Context } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
-import { EstimatedTxFeeProps } from './types';
+import type { EstimatedTxFeeProps } from './types';
 import { Wrapper } from './Wrapper';
 
 export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {

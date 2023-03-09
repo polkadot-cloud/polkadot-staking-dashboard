@@ -5,7 +5,7 @@ import { PluginsList } from 'consts';
 import React, { useRef, useState } from 'react';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
-import { PluginsContextInterface } from './types';
+import type { PluginsContextInterface } from './types';
 
 export const PluginsContext = React.createContext<PluginsContextInterface>(
   defaults.defaultPluginsContext

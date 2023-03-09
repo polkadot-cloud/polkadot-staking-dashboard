@@ -5,7 +5,7 @@ import { Identicon } from 'library/Identicon';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import { clipAddress } from 'Utils';
 import { getIdentityDisplay } from '../../ValidatorList/Validator/Utils';
-import { IdentityProps } from '../types';
+import type { IdentityProps } from '../types';
 
 export const Identity = ({
   address,

@@ -5,12 +5,12 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { ImportedAccount } from 'contexts/Connect/types';
+import type { ImportedAccount } from 'contexts/Connect/types';
 import { Identicon } from 'library/Identicon';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isValidAddress, remToUnit } from 'Utils';
-import { PayeeInputProps } from './types';
+import type { PayeeInputProps } from './types';
 import { Wrapper } from './Wrapper';
 
 export const PayeeInput = ({

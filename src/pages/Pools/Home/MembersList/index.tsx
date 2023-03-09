@@ -15,7 +15,7 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { Selectable } from 'library/List/Selectable';
 import { useEffect, useRef, useState } from 'react';
-import { AnyApi, Sync } from 'types';
+import type { AnyApi, Sync } from 'types';
 import { isNotZero } from 'Utils';
 import { Member } from './Member';
 

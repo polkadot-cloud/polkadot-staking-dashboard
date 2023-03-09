@@ -9,7 +9,7 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useTxFees } from 'contexts/TxFees';
 import { AccountDropdown } from 'library/Form/AccountDropdown';
-import { InputItem } from 'library/Form/types';
+import type { InputItem } from 'library/Form/types';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';

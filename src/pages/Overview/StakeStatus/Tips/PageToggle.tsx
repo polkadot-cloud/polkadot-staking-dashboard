@@ -8,7 +8,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useUi } from 'contexts/UI';
 import { useTranslation } from 'react-i18next';
-import { PageToggleProps } from './types';
+import type { PageToggleProps } from './types';
 import { PageToggleWrapper } from './Wrappers';
 
 export const PageToggle = ({

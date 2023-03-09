@@ -6,7 +6,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useEffect, useMemo, useState } from 'react';
-import { BondFor } from 'types';
+import type { BondFor } from 'types';
 
 interface Props {
   bondFor: BondFor;

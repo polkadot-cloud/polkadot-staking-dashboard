@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ModalContextInterface } from './types';
+import type { ModalContextInterface } from './types';
 
 export const defaultModalContext: ModalContextInterface = {
   status: 0,

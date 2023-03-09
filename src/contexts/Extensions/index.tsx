@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { EXTENSIONS } from 'config/extensions';
-import {
+import type {
   ExtensionConfig,
   ExtensionInjected,
   ExtensionsContextInterface,
 } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi } from 'types';
+import type { AnyApi } from 'types';
 import { setStateWithRef } from 'Utils';
 import { defaultExtensionsContext } from './defaults';
 

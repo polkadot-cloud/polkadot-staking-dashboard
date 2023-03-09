@@ -6,7 +6,7 @@ import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useSetup } from 'contexts/Setup';
 import { useTranslation } from 'react-i18next';
-import { HeaderProps } from '../types';
+import type { HeaderProps } from '../types';
 import { Wrapper } from './Wrapper';
 
 export const Header = ({

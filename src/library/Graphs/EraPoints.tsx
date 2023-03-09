@@ -16,7 +16,7 @@ import { useTheme } from 'contexts/Themes';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import { graphColors } from 'styles/graphs';
-import { EraPointsProps } from './types';
+import type { EraPointsProps } from './types';
 
 ChartJS.register(
   CategoryScale,

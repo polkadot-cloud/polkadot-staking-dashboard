@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { extractUrlValue } from 'Utils';
-import { PoolsTabsContextInterface } from '../types';
+import type { PoolsTabsContextInterface } from '../types';
 
 export const PoolsTabsContext: React.Context<PoolsTabsContextInterface> =
   React.createContext({

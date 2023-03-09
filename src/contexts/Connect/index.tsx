@@ -4,18 +4,18 @@
 import Keyring from '@polkadot/keyring';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
-import {
+import type {
   ConnectContextInterface,
   ExternalAccount,
   ImportedAccount,
 } from 'contexts/Connect/types';
 import { useExtensions } from 'contexts/Extensions';
-import {
+import type {
   ExtensionInjected,
   ExtensionInterface,
 } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, MaybeAccount } from 'types';
+import type { AnyApi, MaybeAccount } from 'types';
 import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { defaultConnectContext } from './defaults';
 import { useImportExtension } from './Hooks/useImportExtension';

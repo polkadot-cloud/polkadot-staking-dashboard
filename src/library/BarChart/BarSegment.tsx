@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { BarSegmentShowLabelThreshold } from './defaults';
-import { BarSegmentProps } from './types';
+import type { BarSegmentProps } from './types';
 
 export const BarSegment = ({
   dataClass,

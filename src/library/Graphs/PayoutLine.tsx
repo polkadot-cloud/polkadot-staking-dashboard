@@ -21,8 +21,8 @@ import { useUi } from 'contexts/UI';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import { graphColors } from 'styles/graphs';
-import { AnySubscan } from 'types';
-import { PayoutLineProps } from './types';
+import type { AnySubscan } from 'types';
+import type { PayoutLineProps } from './types';
 import {
   calculatePayoutAverages,
   combineRewardsByDay,

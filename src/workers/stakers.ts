@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import { AnyJson } from 'types';
+import type { AnyJson } from 'types';
 import { planckToUnit, rmCommas } from 'Utils';
 
 // eslint-disable-next-line no-restricted-globals

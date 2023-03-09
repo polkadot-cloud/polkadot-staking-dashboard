@@ -3,7 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import { SideMenuStickyThreshold } from 'consts';
-import { ImportedAccount } from 'contexts/Connect/types';
+import type { ImportedAccount } from 'contexts/Connect/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import React, { useEffect, useRef, useState } from 'react';
 import { localStorageOrDefault, setStateWithRef } from 'Utils';
@@ -13,7 +13,7 @@ import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useStaking } from '../Staking';
 import * as defaults from './defaults';
-import { SyncStart, UIContextInterface } from './types';
+import type { SyncStart, UIContextInterface } from './types';
 
 export const UIContext = React.createContext<UIContextInterface>(
   defaults.defaultUIContext

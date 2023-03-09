@@ -4,7 +4,7 @@
 import { ButtonHelp } from '@rossbulat/polkadot-dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useBalances } from 'contexts/Accounts/Balances';
-import { Lock } from 'contexts/Accounts/Balances/types';
+import type { Lock } from 'contexts/Accounts/Balances/types';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';

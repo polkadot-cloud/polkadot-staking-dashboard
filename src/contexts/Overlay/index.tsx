@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { defaultOverlayContext } from './defaults';
-import { OverlayContextInterface } from './types';
+import type { OverlayContextInterface } from './types';
 
 export const OverlayContext = React.createContext<OverlayContextInterface>(
   defaultOverlayContext

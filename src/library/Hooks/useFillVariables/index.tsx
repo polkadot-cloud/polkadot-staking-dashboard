@@ -4,7 +4,7 @@
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { AnyJson } from 'types';
+import type { AnyJson } from 'types';
 import { capitalizeFirstLetter, planckToUnit } from 'Utils';
 
 export const useFillVariables = () => {

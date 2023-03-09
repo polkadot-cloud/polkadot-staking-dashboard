@@ -8,7 +8,7 @@ import { useConnect } from 'contexts/Connect';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit } from 'Utils';
-import { UnbondInputProps } from '../types';
+import type { UnbondInputProps } from '../types';
 import { InputWrapper } from '../Wrappers';
 
 export const UnbondInput = ({

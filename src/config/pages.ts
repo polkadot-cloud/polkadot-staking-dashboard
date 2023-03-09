@@ -16,7 +16,7 @@ import { Overview } from 'pages/Overview';
 import { Payouts } from 'pages/Payouts';
 import { Pools } from 'pages/Pools';
 import { Validators } from 'pages/Validators';
-import { PageCategories, PagesConfig } from 'types';
+import type { PageCategories, PagesConfig } from 'types';
 
 export const PAGE_CATEGORIES: PageCategories = [
   {

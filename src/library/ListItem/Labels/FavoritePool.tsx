@@ -10,7 +10,7 @@ import { useTooltip } from 'contexts/Tooltip';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FavoriteProps } from '../types';
+import type { FavoriteProps } from '../types';
 
 export const FavoritePool = ({ address }: FavoriteProps) => {
   const { t } = useTranslation('library');

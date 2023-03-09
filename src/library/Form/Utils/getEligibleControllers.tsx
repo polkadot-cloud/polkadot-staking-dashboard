@@ -5,12 +5,12 @@ import BigNumber from 'bignumber.js';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { ImportedAccount } from 'contexts/Connect/types';
+import type { ImportedAccount } from 'contexts/Connect/types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AnyJson } from 'types';
+import type { AnyJson } from 'types';
 import { planckToUnit } from 'Utils';
-import { InputItem } from '../types';
+import type { InputItem } from '../types';
 
 export const getEligibleControllers = (): Array<InputItem> => {
   const { t } = useTranslation('library');

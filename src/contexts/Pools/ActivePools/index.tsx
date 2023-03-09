@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import {
+import type {
   ActivePool,
   ActivePoolsContextState,
   BondedPool,
@@ -10,7 +10,7 @@ import {
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { AnyApi, Sync } from 'types';
+import type { AnyApi, Sync } from 'types';
 import { localStorageOrDefault, rmCommas, setStateWithRef } from 'Utils';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';

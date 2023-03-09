@@ -9,7 +9,7 @@ import { useNotifications } from 'contexts/Notifications';
 import { Identicon } from 'library/Identicon';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { applyWidthAsPadding } from 'Utils';
-import { StatAddress, StatProps } from './types';
+import type { StatAddress, StatProps } from './types';
 import { Wrapper } from './Wrapper';
 
 export const Stat = ({

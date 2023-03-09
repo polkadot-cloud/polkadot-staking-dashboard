@@ -7,12 +7,16 @@ import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, AnyJson, MaybeAccount } from 'types';
+import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 // eslint-disable-next-line import/no-unresolved
 import { greaterThanZero, isNotZero, rmCommas, setStateWithRef } from 'Utils';
 import Worker from 'worker-loader!../../workers/stakers';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
-import { FastUnstakeContextInterface, LocalMeta, MetaInterface } from './types';
+import type {
+  FastUnstakeContextInterface,
+  LocalMeta,
+  MetaInterface,
+} from './types';
 
 export const FastUnstakeContext =
   React.createContext<FastUnstakeContextInterface>(defaultFastUnstakeContext);

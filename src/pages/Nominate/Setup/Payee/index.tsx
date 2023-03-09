@@ -3,19 +3,20 @@
 
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
-import { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
+import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { Spacer } from 'library/Form/Wrappers';
-import { PayeeItem, usePayeeConfig } from 'library/Hooks/usePayeeConfig';
+import type { PayeeItem } from 'library/Hooks/usePayeeConfig';
+import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { PayeeInput } from 'library/PayeeInput';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import { SetupStepProps } from 'library/SetupSteps/types';
+import type { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MaybeAccount } from 'types';
+import type { MaybeAccount } from 'types';
 
 export const Payee = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');

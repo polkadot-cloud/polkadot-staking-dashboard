@@ -9,7 +9,7 @@ import { Identicon } from 'library/Identicon';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { clipAddress, remToUnit } from '../../Utils';
-import { PoolAccountProps } from './types';
+import type { PoolAccountProps } from './types';
 import { Wrapper } from './Wrapper';
 
 export const PoolAccount = ({

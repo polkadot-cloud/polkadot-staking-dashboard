@@ -5,12 +5,12 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import { ExtensionInjected } from 'contexts/Extensions/types';
+import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useNotifications } from 'contexts/Notifications';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Foot } from './Foot';
-import { ExtensionProps } from './types';
+import type { ExtensionProps } from './types';
 import { ConnectItem, ExtensionInner } from './Wrappers';
 
 export const Extension = ({ meta, size, flag }: ExtensionProps) => {

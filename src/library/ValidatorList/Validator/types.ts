@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BondFor, MaybeAccount } from 'types';
+import type { BondFor, MaybeAccount } from 'types';
 
 export interface NominationProps {
   validator: any;

@@ -10,13 +10,13 @@ import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { PoolMembership } from 'contexts/Pools/types';
+import type { PoolMembership } from 'contexts/Pools/types';
 import { Action } from 'library/Modal/Action';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CustomHeaderWrapper, PaddingWrapper } from '../Wrappers';
 import { AccountButton } from './Account';
-import { AccountNominating } from './types';
+import type { AccountNominating } from './types';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
 
 export const Accounts = () => {

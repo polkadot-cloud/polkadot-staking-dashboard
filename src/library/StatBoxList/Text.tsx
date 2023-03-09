@@ -4,7 +4,7 @@
 import { ButtonHelp } from '@rossbulat/polkadot-dashboard-ui';
 import { useHelp } from 'contexts/Help';
 import { StatBox } from './Item';
-import { TextProps } from './types';
+import type { TextProps } from './types';
 import { TextTitleWrapper } from './Wrapper';
 
 export const Text = ({

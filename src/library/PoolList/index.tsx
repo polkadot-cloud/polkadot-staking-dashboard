@@ -23,7 +23,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isNotZero } from 'Utils';
 import { PoolListProvider, usePoolList } from './context';
-import { PoolListProps } from './types';
+import type { PoolListProps } from './types';
 
 export const PoolListInner = ({
   allowMoreCols,

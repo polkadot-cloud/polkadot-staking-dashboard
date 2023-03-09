@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
-import { AnyFunction, AnyJson } from 'types';
+import type { AnyFunction, AnyJson } from 'types';
 import { defaultFiltersInterface } from './defaults';
-import {
+import type {
   FilterItem,
   FilterItems,
   FilterOrder,

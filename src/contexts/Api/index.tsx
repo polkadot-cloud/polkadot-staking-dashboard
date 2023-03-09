@@ -16,14 +16,14 @@ import {
   FallbackNominatorRewardedPerValidator,
   FallbackSessionsPerEra,
 } from 'consts';
-import {
+import type {
   APIConstants,
   APIContextInterface,
   ApiStatus,
   NetworkState,
 } from 'contexts/Api/types';
 import React, { useEffect, useState } from 'react';
-import { Network, NetworkName } from 'types';
+import type { Network, NetworkName } from 'types';
 import { extractUrlValue, rmCommas, varToUrlHash } from 'Utils';
 import * as defaults from './defaults';
 

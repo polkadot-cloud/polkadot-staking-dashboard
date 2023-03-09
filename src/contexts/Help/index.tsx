@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useEffect, useState } from 'react';
-import { MaybeString } from 'types';
+import type { MaybeString } from 'types';
 import * as defaults from './defaults';
-import {
+import type {
   HelpContextInterface,
   HelpContextProps,
   HelpContextState,

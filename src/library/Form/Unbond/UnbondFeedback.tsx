@@ -12,7 +12,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isNotZero, planckToUnit, unitToPlanck } from 'Utils';
-import { UnbondFeedbackProps } from '../types';
+import type { UnbondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
 import { UnbondInput } from './UnbondInput';

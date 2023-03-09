@@ -11,9 +11,9 @@ import {
   startOfDay,
   subDays,
 } from 'date-fns';
-import { AnyApi, AnySubscan } from 'types';
+import type { AnyApi, AnySubscan } from 'types';
 import { greaterThanZero, planckToUnit } from 'Utils';
-import { PayoutDayCursor } from './types';
+import type { PayoutDayCursor } from './types';
 
 // Given payouts, calculate daily income and fill missing days with zero amounts.
 export const calculatePayoutsByDay = (

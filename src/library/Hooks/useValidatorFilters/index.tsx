@@ -5,7 +5,7 @@ import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { useTranslation } from 'react-i18next';
-import { AnyFunction, AnyJson } from 'types';
+import type { AnyFunction, AnyJson } from 'types';
 
 export const useValidatorFilters = () => {
   const { t } = useTranslation('library');

@@ -26,9 +26,9 @@ import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AnySubscan } from 'types';
+import type { AnySubscan } from 'types';
 import { PageRowWrapper } from 'Wrappers';
-import { PageProps } from '../types';
+import type { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
 import { LastEraPayoutStat } from './Stats/LastEraPayout';
 

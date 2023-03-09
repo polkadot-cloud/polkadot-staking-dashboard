@@ -4,7 +4,7 @@
 import React, { useRef } from 'react';
 import { setStateWithRef } from 'Utils';
 import { defaultThemeContext } from './defaults';
-import { Theme, ThemeContextInterface } from './types';
+import type { Theme, ThemeContextInterface } from './types';
 
 export const ThemeContext =
   React.createContext<ThemeContextInterface>(defaultThemeContext);

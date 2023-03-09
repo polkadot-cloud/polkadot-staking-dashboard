@@ -8,7 +8,7 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTranslation } from 'react-i18next';
-import { AnyJson } from 'types';
+import type { AnyJson } from 'types';
 
 export const useUnstaking = () => {
   const { t } = useTranslation('library');

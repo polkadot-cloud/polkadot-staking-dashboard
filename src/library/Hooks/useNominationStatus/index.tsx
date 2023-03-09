@@ -9,7 +9,7 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { useTranslation } from 'react-i18next';
-import { MaybeAccount } from 'types';
+import type { MaybeAccount } from 'types';
 import { planckToUnit, rmCommas } from 'Utils';
 
 export const useNominationStatus = () => {

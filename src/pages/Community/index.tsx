@@ -3,7 +3,7 @@
 
 import { PageTitle } from 'library/PageTitle';
 import { useTranslation } from 'react-i18next';
-import { PageProps } from '../types';
+import type { PageProps } from '../types';
 import { CommunitySectionsProvider, useCommunitySections } from './context';
 import { Entity } from './Entity';
 import { List } from './List';

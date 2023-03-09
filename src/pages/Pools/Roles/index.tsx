@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
-import { RoleEditEntry, RolesProps } from './types';
+import type { RoleEditEntry, RolesProps } from './types';
 
 export const Roles = ({
   batchKey,

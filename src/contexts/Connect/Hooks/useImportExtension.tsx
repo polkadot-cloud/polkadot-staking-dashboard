@@ -4,14 +4,14 @@
 import Keyring from '@polkadot/keyring';
 import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
-import {
+import type {
   ExtensionAccount,
   ExtensionInterface,
 } from 'contexts/Extensions/types';
-import { AnyFunction } from 'types';
+import type { AnyFunction } from 'types';
 import { isValidAddress } from 'Utils';
 import { defaultHandleImportExtension } from '../defaults';
-import { HandleImportExtension, ImportedAccount } from '../types';
+import type { HandleImportExtension, ImportedAccount } from '../types';
 import {
   addToLocalExtensions,
   getActiveAccountLocal,

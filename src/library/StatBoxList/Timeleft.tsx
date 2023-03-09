@@ -6,7 +6,7 @@ import { useHelp } from 'contexts/Help';
 import { Countdown } from 'library/Countdown';
 import { StatPie } from 'library/Graphs/StatBoxPie';
 import { StatBox } from './Item';
-import { TimeleftProps } from './types';
+import type { TimeleftProps } from './types';
 import { TimeLeftWrapper } from './Wrapper';
 
 export const Timeleft = ({

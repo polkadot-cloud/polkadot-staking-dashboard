@@ -9,7 +9,7 @@ import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import { useTranslation } from 'react-i18next';
 import { GenerateNominations } from '../GenerateNominations';
-import { NominationsProps } from './types';
+import type { NominationsProps } from './types';
 
 export const Nominate = ({ batchKey, bondFor, section }: NominationsProps) => {
   const { t } = useTranslation('library');

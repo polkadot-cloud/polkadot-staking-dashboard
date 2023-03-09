@@ -13,7 +13,7 @@ import { useModal } from 'contexts/Modal';
 import { lazy, Suspense, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCommunitySections } from './context';
-import { ItemProps } from './types';
+import type { ItemProps } from './types';
 import { ItemWrapper } from './Wrappers';
 
 export const Item = ({ item, actionable }: ItemProps) => {
