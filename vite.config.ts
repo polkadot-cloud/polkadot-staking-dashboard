@@ -15,11 +15,10 @@ export default defineConfig({
     tsconfigPaths(),
     checker({
       typescript: true,
-    })
+    }),
   ],
   build: {
-    outDir: 'build',
-    sourcemap: true,
+    outDir: 'build'
   }, 
   optimizeDeps: {
     esbuildOptions: {
