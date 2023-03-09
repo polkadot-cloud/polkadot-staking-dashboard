@@ -89,8 +89,5 @@
     "vite-plugin-svgr": "^2.4.0",
     "vite-tsconfig-paths": "^4.0.5",
     "vitest": "^0.29.2"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   }
 }

@@ -140,5 +140,4 @@ export const planckToUnit = (val: BigNumber, units: number) =>
 
 export const rmCommas = (val: string): string => val.replace(/,/g, '');
 
-
 export default null as any;

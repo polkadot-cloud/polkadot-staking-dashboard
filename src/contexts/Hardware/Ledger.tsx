@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import Polkadot from '@ledgerhq/hw-app-polkadot';
+import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 import React, { useState } from 'react';
 import type { AnyJson } from 'types';
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
 import { defaultLedgerHardwareContext } from './defaults';
 import type {
   LedgerHardwareContextInterface,
