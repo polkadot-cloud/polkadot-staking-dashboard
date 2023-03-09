@@ -15,9 +15,10 @@
     "locale:order": "node ./.scripts/localeOrderKeys.js",
     "locale:validate": "node ./.scripts/localeValidate.js",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "visualizer": "vite-bundle-visualizer"
   },
   "dependencies": {
+    "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-brands-svg-icons": "^6.3.0",
     "@fortawesome/free-regular-svg-icons": "^6.3.0",
@@ -36,6 +37,7 @@
     "@types/lodash.throttle": "^4.1.7",
     "bignumber.js": "^9.1.1",
     "bn.js": "^5.2.1",
+    "buffer": "^6.0.3",
     "chart.js": "^4.2.1",
     "che-react-number-easing": "^0.1.4",
     "date-fns": "^2.29.3",
@@ -84,12 +86,10 @@
     "source-map-explorer": "^2.5.3",
     "typescript": "^4.9.3",
     "vite": "^4.1.0",
+    "vite-bundle-visualizer": "^0.6.0",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^2.4.0",
     "vite-tsconfig-paths": "^4.0.5",
     "vitest": "^0.29.2"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   }
 }

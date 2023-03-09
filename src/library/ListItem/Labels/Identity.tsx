@@ -9,21 +9,16 @@ import { clipAddress } from 'Utils';
 import { getIdentityDisplay } from '../../ValidatorList/Validator/Utils';
 import type { IdentityProps } from '../types';
 
-export const Identity = ({
-  address,
-  batchKey,
-  batchIndex,
-}: IdentityProps) => {
+export const Identity = ({ address, batchKey, batchIndex }: IdentityProps) => {
   const { meta } = useValidators();
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
   const stake = meta[batchKey]?.stake ?? [];
 
-  const [display, setDisplay] = useState(getIdentityDisplay(
-    identities[batchIndex],
-    supers[batchIndex]
-  ));
+  const [display, setDisplay] = useState(
+    getIdentityDisplay(identities[batchIndex], supers[batchIndex])
+  );
   // aggregate synced status
   const identitiesSynced = identities.length > 0 ?? false;
   const supersSynced = supers.length > 0 ?? false;
@@ -34,13 +29,8 @@ export const Identity = ({
   };
 
   useEffect(() => {
-    setDisplay(getIdentityDisplay(
-      identities[batchIndex],
-      supers[batchIndex]
-    )
-  );
-  }, [meta]);
-
+    setDisplay(getIdentityDisplay(identities[batchIndex], supers[batchIndex]));
+  }, [meta, address]);
 
   return (
     <IdentityWrapper

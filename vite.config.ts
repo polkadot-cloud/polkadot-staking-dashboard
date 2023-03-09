@@ -4,6 +4,7 @@ import svgr from 'vite-plugin-svgr';
 import eslint from 'vite-plugin-eslint';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import checker from 'vite-plugin-checker';
+import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -15,12 +16,21 @@ export default defineConfig({
     tsconfigPaths(),
     checker({
       typescript: true,
-    })
+    }),
   ],
-  server: {
-    open: true,
-  },
   build: {
     outDir: 'build'
-  }
+  }, 
+  optimizeDeps: {
+    esbuildOptions: {
+        define: {
+            global: 'globalThis'
+        },
+        plugins: [
+            NodeGlobalsPolyfillPlugin({
+                buffer: true
+            })
+        ]
+    }
+}
 })

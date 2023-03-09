@@ -105,11 +105,7 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
         <MenuPosition ref={posRef} />
         <div className="row">
           {selectActive && <Select item={who} />}
-          <Identity
-            address={who}
-            batchIndex={batchIndex}
-            batchKey={batchKey}
-          />
+          <Identity address={who} batchIndex={batchIndex} batchKey={batchKey} />
           <div>
             <Labels>
               {menuItems.length > 0 && (
