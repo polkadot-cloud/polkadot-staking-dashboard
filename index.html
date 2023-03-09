@@ -30,6 +30,12 @@
       content="Polkadot Staking Dashboard is the easiest way to stake DOT, check validator stats, manage your nominations and join nomination pools. Stake on Polkadot (DOT).">
     <meta property="twitter:image" content="/img/og-image.png">
     <link rel="manifest" href="/favicons/polkadot/site.webmanifest" crossorigin="use-credentials">
+
+    <!-- window Inject -->
+    <script type="module">
+      import { Buffer } from "buffer";
+      window.Buffer = Buffer;
+    </script>
     <title>Polkadot Staking Dashboard | Polkadot Staking (DOT)</title>
   </head>
   <body>

@@ -23,14 +23,14 @@ export default defineConfig({
   }, 
   optimizeDeps: {
     esbuildOptions: {
-        define: {
-            global: 'globalThis'
-        },
-        plugins: [
-            NodeGlobalsPolyfillPlugin({
-                buffer: true
-            })
-        ]
+      define: {
+        global: 'globalThis'
+      },
+      plugins: [
+        NodeGlobalsPolyfillPlugin({
+          buffer: true
+        })
+      ]
     }
-}
+  }
 })
