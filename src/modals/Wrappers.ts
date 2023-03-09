@@ -19,7 +19,7 @@ export const ModalWrapper = styled(motion.div)`
   position: fixed;
   width: 100%;
   height: 100%;
-  z-index: 10;
+  z-index: 9;
   backdrop-filter: blur(4px);
 
   > div {

@@ -126,6 +126,16 @@
           "得到的收益金额取决于提名人和验证人自己在那个Era绑定了多少{NETWORK_UNIT}."
         ]
       ],
+      "ledgerHardwareWallets": [
+        "Ledger硬件钱包",
+        [
+          "Staking Dashboard己完全支持可兼容的Ledger设备.您可开始使用Ledger管理Polkadot上的抵押.",
+          "因为您的私钥一直在硬件设备上,所以硬件钱包也称为冷钱包.硬件钱包没有连接互联网，所以使用该类钱包可确保安全.",
+          "为了使用Ledger设备导入和签署交易, 您的设备必须安装Polkadot Ledger App. 该应用程序可以通过Ledger自己的应用程序Ledger Live安装.",
+          "支持USB和蓝牙连接. 如果您的Ledger有蓝牙功能, 并且您的设备允许蓝牙连接, 您将能够通过Ledger设备无线导入帐户并签署交易.",
+          "详情请在其官方网站上查找:ledger.com."
+        ]
+      ],
       "lockedBalance": [
         "锁定余额",
         [
