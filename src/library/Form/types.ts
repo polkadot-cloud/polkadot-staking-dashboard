@@ -1,11 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BigNumber from 'bignumber.js';
-import { Balance } from 'contexts/Balances/types';
-import { ExternalAccount } from 'contexts/Connect/types';
-import { ExtensionAccount } from 'contexts/Extensions/types';
-import { BondFor } from 'types';
+import type BigNumber from 'bignumber.js';
+import type { Balance } from 'contexts/Accounts/Balances/types';
+import type { ExternalAccount } from 'contexts/Connect/types';
+import type { ExtensionAccount } from 'contexts/Extensions/types';
+import type { BondFor } from 'types';
 
 export interface ExtensionAccountItem extends ExtensionAccount {
   active?: boolean;
@@ -29,8 +29,8 @@ export interface DropdownInput {
 export interface AccountDropdownProps {
   items: Array<InputItem>;
   onChange: (o: any) => void;
-  placeholder: string;
-  value: InputItem;
+  placeholder?: string;
+  selected: InputItem;
   current: InputItem;
   height: string | number | undefined;
 }

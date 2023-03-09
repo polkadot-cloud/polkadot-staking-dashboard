@@ -4,7 +4,7 @@
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { SelectItemProps } from './types';
+import type { SelectItemProps } from './types';
 import { Wrapper } from './Wrapper';
 
 export const SelectItem = ({
@@ -13,40 +13,38 @@ export const SelectItem = ({
   icon,
   selected,
   onClick,
-  flex = false,
+  layout,
   hoverBorder = false,
   grow = true,
   disabled = false,
   includeToggle = true,
   bodyRef,
   containerRef,
-}: SelectItemProps) => {
-  return (
-    <Wrapper
-      selected={selected}
-      grow={grow}
-      hoverBorder={hoverBorder}
-      className={flex ? 'flex' : undefined}
-    >
-      <div className="inner" ref={containerRef}>
-        <button type="button" onClick={() => onClick()} disabled={disabled}>
-          <div className="icon">
-            <FontAwesomeIcon icon={icon} transform="grow-4" />
+}: SelectItemProps) => (
+  <Wrapper
+    selected={selected}
+    grow={grow}
+    hoverBorder={hoverBorder}
+    className={layout}
+  >
+    <div className="inner" ref={containerRef}>
+      <button type="button" onClick={() => onClick()} disabled={disabled}>
+        <div className="icon">
+          <FontAwesomeIcon icon={icon} transform="grow-4" />
+        </div>
+        <div className="body" ref={bodyRef}>
+          <h3>{title}</h3>
+          <p>{subtitle}</p>
+        </div>
+        {includeToggle ? (
+          <div className="toggle">
+            <FontAwesomeIcon
+              icon={selected ? faCircleCheck : faCircle}
+              transform="grow-6"
+            />
           </div>
-          <div className="body" ref={bodyRef}>
-            <h3>{title}</h3>
-            <p>{subtitle}</p>
-          </div>
-          {includeToggle ? (
-            <div className="toggle">
-              <FontAwesomeIcon
-                icon={selected ? faCircleCheck : faCircle}
-                transform="grow-6"
-              />
-            </div>
-          ) : null}
-        </button>
-      </div>
-    </Wrapper>
-  );
-};
+        ) : null}
+      </button>
+    </div>
+  </Wrapper>
+);

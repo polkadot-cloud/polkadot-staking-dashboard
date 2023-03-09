@@ -5,7 +5,7 @@ import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { HELP_CONFIG } from 'config/help';
 import { useHelp } from 'contexts/Help';
-import {
+import type {
   DefinitionWithKeys,
   ExternalItem,
   ExternalItems,

@@ -5,7 +5,7 @@ import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useNotifications } from 'contexts/Notifications';
-import { NotificationText } from 'contexts/Notifications/types';
+import type { NotificationText } from 'contexts/Notifications/types';
 import { Identicon } from 'library/Identicon';
 import { useTranslation } from 'react-i18next';
 import { clipAddress, remToUnit } from 'Utils';
@@ -66,7 +66,7 @@ export const ActiveAccount = () => {
               </>
             )}
 
-            {!accountData && t('overview.noAccountConnected')}
+            {!accountData ? t('overview.noActiveAccount') : null}
           </h3>
         </div>
       </div>

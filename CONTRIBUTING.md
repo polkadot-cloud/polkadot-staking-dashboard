@@ -12,20 +12,19 @@ Reach out to ross@parity.io for clarification of any content within this documen
 - React Chart JS 2 for graphing. [[docs](https://www.chartjs.org/docs/latest/), [React docs](https://react-chartjs-2.js.org/)]
 - Framer Motion. [[docs](https://www.framer.com/docs/animation/)]
 - [Font Awesome](https://fontawesome.com/v5/search) for the majority of icons. [Ionicons](https://ionic.io/ionicons) for side menu footer icons
-- Downshift for dropdowns [[docs](https://www.npmjs.com/package/downshift)]
 - SCSS for theme configuration and Styled Components [[docs](https://styled-components.com/docs)] for component styling.
 
 ## Environment Variables
 Optionally apply the following envrionment variables in an environment file such as `.env` or with `yarn build` to customise the build of staking dashboard:
 ```
 # disable all mentioning of fiat values and token prices
-REACT_APP_DISABLE_FIAT=1
+VITE_DISABLE_FIAT=1
 
 # display an organisation label in the network bar
-REACT_APP_ORGANISATION="© Parity Technologies"
+VITE_ORGANISATION="© Parity Technologies"
 
 # provide a privacy policy url in the network bar
-REACT_APP_PRIVACY_URL=https://www.parity.io/privacy/
+VITE_PRIVACY_URL=https://www.parity.io/privacy/
 ```
 ## Config Files
 There are some ad-hoc files defining app configuration where needed. These just provide a means of bootstrapping app data, and further abstraction could be explored in the future.

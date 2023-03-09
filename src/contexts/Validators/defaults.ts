@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ValidatorsContextInterface } from 'contexts/Validators/types';
+import type { ValidatorsContextInterface } from 'contexts/Validators/types';
 
 export const sessionValidators = {
   list: [],

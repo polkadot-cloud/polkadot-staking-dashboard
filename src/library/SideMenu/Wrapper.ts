@@ -7,7 +7,7 @@ import {
   SideMenuStickyThreshold,
 } from 'consts';
 import styled from 'styled-components';
-import { MinimisedProps } from './types';
+import type { MinimisedProps } from './types';
 
 export const Wrapper = styled.div<MinimisedProps>`
   border-radius: ${(props) => (props.minimised ? '0.7rem' : 0)};

@@ -6,15 +6,15 @@ import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import { ExtensionInjected } from 'contexts/Extensions/types';
+import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useNotifications } from 'contexts/Notifications';
 import { useTxFees } from 'contexts/TxFees';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AnyApi } from 'types';
+import type { AnyApi } from 'types';
 import { registerSaEvent } from 'Utils';
-import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
+import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = ({
   tx,
@@ -73,6 +73,7 @@ export const useSubmitExtrinsic = ({
 
     const { signer, source } = account;
 
+    // TODO: refactor to take into consideration source = ledger.
     const extension = extensions.find(
       (e: ExtensionInjected) => e.id === source
     );
@@ -86,6 +87,7 @@ export const useSubmitExtrinsic = ({
     // pre-submission state update
     setSubmitting(true);
 
+    // TODO: sign payload on ledger device and send.
     try {
       const unsub = await tx.signAndSend(
         from,

@@ -21,7 +21,7 @@ export const UnstakePrompts = () => {
   const { activeAccount } = useConnect();
   const { mode } = useTheme();
   const { openModalWith } = useModal();
-  const { networkSyncing } = useUi();
+  const { isNetworkSyncing } = useUi();
   const { isFastUnstaking, isUnstaking, getFastUnstakeText } = useUnstaking();
   const { getTransferOptions } = useTransferOptions();
   const { active, totalUnlockChuncks, totalUnlocked, totalUnlocking } =
@@ -37,7 +37,7 @@ export const UnstakePrompts = () => {
 
   return (
     <>
-      {(isUnstaking || isFastUnstaking) && !networkSyncing && (
+      {(isUnstaking || isFastUnstaking) && !isNetworkSyncing && (
         <PageRowWrapper className="page-padding" noVerticalSpacer>
           <CardWrapper
             style={{ border: `1px solid ${annuncementBorderColor}` }}

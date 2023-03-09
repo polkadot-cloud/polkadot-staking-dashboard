@@ -3,14 +3,13 @@
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { ImportedAccount } from 'contexts/Connect/types';
 import { useModal } from 'contexts/Modal';
 import { useTxFees } from 'contexts/TxFees';
 import { AccountDropdown } from 'library/Form/AccountDropdown';
-import { InputItem } from 'library/Form/types';
+import type { InputItem } from 'library/Form/types';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -33,7 +32,7 @@ export const UpdateController = () => {
   const account = getAccount(controller);
 
   // the selected value in the form
-  const [selected, setSelected] = useState<ImportedAccount | null>(null);
+  const [selected, setSelected] = useState<InputItem>(null);
 
   // get eligible controller accounts
   const items = getEligibleControllers();
@@ -44,8 +43,8 @@ export const UpdateController = () => {
   }, [activeAccount, items]);
 
   // handle account selection change
-  const handleOnChange = ({ selectedItem }: { selectedItem: InputItem }) => {
-    setSelected(selectedItem);
+  const handleOnChange = (item: InputItem) => {
+    setSelected(item);
   };
 
   // tx to submit
@@ -89,9 +88,8 @@ export const UpdateController = () => {
             <AccountDropdown
               items={items}
               onChange={handleOnChange}
-              placeholder={t('searchAccount')}
               current={account}
-              value={selected}
+              selected={selected}
               height="17rem"
             />
           </div>
@@ -107,6 +105,7 @@ export const UpdateController = () => {
             onClick={() => submitTx()}
             disabled={
               selected === null ||
+              !selected.active ||
               submitting ||
               !accountHasSigner(activeAccount) ||
               !txFeesValid

@@ -3,7 +3,7 @@
 
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { WarningProps } from '../types';
+import type { WarningProps } from '../types';
 import { Wrapper } from './Wrapper';
 
 export const Warning = ({ text }: WarningProps) => (

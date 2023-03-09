@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ReactNode } from 'react';
-import { MaybeString } from 'types';
+import type { ReactNode } from 'react';
+import type { MaybeString } from 'types';
 
 export type HelpItems = Array<HelpItem>;
 

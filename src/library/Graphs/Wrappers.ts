@@ -3,7 +3,7 @@
 
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import styled from 'styled-components';
-import {
+import type {
   CardHeaderWrapperProps,
   CardWrapperProps,
   GraphWrapperProps,

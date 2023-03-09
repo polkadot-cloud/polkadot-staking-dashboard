@@ -26,9 +26,9 @@ import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AnySubscan } from 'types';
+import type { AnySubscan } from 'types';
 import { PageRowWrapper } from 'Wrappers';
-import { PageProps } from '../types';
+import type { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
 import { LastEraPayoutStat } from './Stats/LastEraPayout';
 
@@ -55,7 +55,11 @@ export const Payouts = ({ page }: PageProps) => {
     // take non-zero rewards in most-recent order
     let pList: AnySubscan = [
       ...payouts.concat(poolClaims).filter((p: AnySubscan) => p.amount > 0),
-    ].slice(0, MaxPayoutDays);
+    ]
+      .sort(
+        (a: AnySubscan, b: AnySubscan) => b.block_timestamp - a.block_timestamp
+      )
+      .slice(0, MaxPayoutDays);
 
     // re-order rewards based on block timestamp
     pList = pList.sort((a: AnySubscan, b: AnySubscan) => {

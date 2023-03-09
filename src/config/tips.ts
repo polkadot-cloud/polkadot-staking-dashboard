@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import * as helpCenterJson from 'img/json/help-center-outline.json';
-import * as infoJson from 'img/json/info-outline.json';
+import helpCenterJson from 'img/json/help-center-outline.json';
+import infoJson from 'img/json/info-outline.json';
 
 export const TIPS_CONFIG = [
   {

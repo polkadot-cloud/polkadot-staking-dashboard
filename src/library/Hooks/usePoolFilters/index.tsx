@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { BondedPool } from 'contexts/Pools/types';
+import type { BondedPool } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { useTranslation } from 'react-i18next';
-import { AnyFunction, AnyJson } from 'types';
+import type { AnyFunction, AnyJson } from 'types';
 
 export const usePoolFilters = () => {
   const { t } = useTranslation('library');
@@ -67,36 +67,32 @@ export const usePoolFilters = () => {
    * Iterates through the supplied list and checks whether state is locked.
    * Returns the updated filtered list.
    */
-  const includeLocked = (list: any) => {
-    return list.filter((p: BondedPool) => p.state.toLowerCase() === 'Blocked');
-  };
+  const includeLocked = (list: any) =>
+    list.filter((p: BondedPool) => p.state.toLowerCase() === 'Blocked');
 
   /*
    * include destroying pools.
    * Iterates through the supplied list and checks whether state is destroying.
    * Returns the updated filtered list.
    */
-  const includeDestroying = (list: any) => {
-    return list.filter((p: BondedPool) => p.state === 'Destroying');
-  };
+  const includeDestroying = (list: any) =>
+    list.filter((p: BondedPool) => p.state === 'Destroying');
 
   /*
    * exclude locked pools.
    * Iterates through the supplied list and checks whether state is locked.
    * Returns the updated filtered list.
    */
-  const excludeLocked = (list: any) => {
-    return list.filter((p: BondedPool) => p.state !== 'Blocked');
-  };
+  const excludeLocked = (list: any) =>
+    list.filter((p: BondedPool) => p.state !== 'Blocked');
 
   /*
    * exclude destroying pools.
    * Iterates through the supplied list and checks whether state is destroying.
    * Returns the updated filtered list.
    */
-  const excludeDestroying = (list: any) => {
-    return list.filter((p: BondedPool) => p.state !== 'Destroying');
-  };
+  const excludeDestroying = (list: any) =>
+    list.filter((p: BondedPool) => p.state !== 'Destroying');
 
   // includes to be listed in filter overlay.
   const includesToLabels: { [key: string]: string } = {

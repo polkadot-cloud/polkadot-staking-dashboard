@@ -62,9 +62,7 @@ export const LeavePool = () => {
   const [bondValid, setBondValid] = useState(false);
 
   // unbond all validation
-  const isValid = (() => {
-    return greaterThanZero(freeToUnbond);
-  })();
+  const isValid = (() => greaterThanZero(freeToUnbond))();
 
   // update bond value on task change
   useEffect(() => {

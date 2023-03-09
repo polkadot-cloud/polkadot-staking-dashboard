@@ -10,7 +10,7 @@ import {
 } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
+import type {
   InterfaceLayoutProps,
   PageRowWrapperProps,
   PageTitleWrapperProps,

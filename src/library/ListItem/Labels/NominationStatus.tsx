@@ -8,7 +8,7 @@ import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero, planckToUnit, rmCommas } from 'Utils';
-import { NominationStatusProps } from '../types';
+import type { NominationStatusProps } from '../types';
 
 export const NominationStatus = ({
   address,

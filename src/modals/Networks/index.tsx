@@ -9,7 +9,7 @@ import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { NetworkName } from 'types';
+import type { NetworkName } from 'types';
 import { capitalizeFirstLetter } from 'Utils';
 import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
 import { PaddingWrapper } from '../Wrappers';

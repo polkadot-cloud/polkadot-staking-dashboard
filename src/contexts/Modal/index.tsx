@@ -5,7 +5,7 @@ import { useTxFees } from 'contexts/TxFees';
 import React, { useEffect, useRef, useState } from 'react';
 import { setStateWithRef } from 'Utils';
 import { defaultModalContext } from './defaults';
-import { ModalConfig, ModalContextInterface, ModalOptions } from './types';
+import type { ModalConfig, ModalContextInterface, ModalOptions } from './types';
 
 export const ModalContext =
   React.createContext<ModalContextInterface>(defaultModalContext);
@@ -70,12 +70,26 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     setModalResize(resize + 1);
   };
 
+  // closes one modal and opens another.
+  const replaceModalWith = (
+    modal: string,
+    config: ModalConfig = {},
+    size = 'large'
+  ) => {
+    setStatus(3);
+    setHeight(0);
+    setTimeout(() => {
+      openModalWith(modal, config, size);
+    }, 10);
+  };
+
   return (
     <ModalContext.Provider
       value={{
         status: statusRef.current,
         setStatus,
         openModalWith,
+        replaceModalWith,
         setModalHeight,
         setResize,
         height,

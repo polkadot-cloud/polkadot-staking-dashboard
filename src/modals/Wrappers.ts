@@ -4,16 +4,24 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-// Blurred background modal wrapper
-export const ModalWrapper = styled(motion.div)`
+// blurred background wrapper
+export const ModalBlurWrapper = styled(motion.div)`
   background: var(--overlay-modal-color);
   position: fixed;
   width: 100%;
   height: 100%;
   z-index: 9;
   backdrop-filter: blur(4px);
+`;
 
-  /* modal content wrapper */
+/* modal content wrapper */
+export const ModalWrapper = styled(motion.div)`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+  backdrop-filter: blur(4px);
+
   > div {
     height: 100%;
     display: flex;
@@ -228,4 +236,24 @@ export const NotesWrapper = styled.div<{
 export const WarningsWrapper = styled.div<{ noMargin?: boolean }>`
   margin-top: ${(props) => (props.noMargin ? '0' : '0.75rem')};
   width: 100%;
+`;
+
+export const CustomHeaderWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  margin: 0.5rem 0;
+
+  h1 {
+    color: var(--text-color-primary);
+    font-size: 1.4rem;
+    font-family: 'Unbounded', 'sans-serif', sans-serif;
+    padding: 0.5rem 0.5rem 0 0.5rem;
+    display: flex;
+    align-items: center;
+    > button {
+      margin-left: 1.25rem;
+    }
+  }
 `;

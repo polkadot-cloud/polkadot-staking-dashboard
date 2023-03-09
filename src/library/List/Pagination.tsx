@@ -4,7 +4,7 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PaginationWrapper } from '.';
-import { PaginationProps } from './types';
+import type { PaginationProps } from './types';
 
 export const Pagination = ({ page, total, setter }: PaginationProps) => {
   const { t } = useTranslation('library');

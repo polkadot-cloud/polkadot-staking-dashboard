@@ -5,9 +5,12 @@ import { bnToU8a, u8aConcat } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
 import { EmptyH256, ModPrefix, U32Opts } from 'consts';
-import { PoolConfigState, PoolsConfigContextState } from 'contexts/Pools/types';
+import type {
+  PoolConfigState,
+  PoolsConfigContextState,
+} from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi } from 'types';
+import type { AnyApi } from 'types';
 import { rmCommas, setStateWithRef } from 'Utils';
 import { useApi } from '../../Api';
 import * as defaults from './defaults';

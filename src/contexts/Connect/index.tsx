@@ -4,24 +4,19 @@
 import Keyring from '@polkadot/keyring';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
-import {
+import type {
   ConnectContextInterface,
   ExternalAccount,
   ImportedAccount,
 } from 'contexts/Connect/types';
 import { useExtensions } from 'contexts/Extensions';
-import {
+import type {
   ExtensionInjected,
   ExtensionInterface,
 } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, MaybeAccount } from 'types';
-import {
-  clipAddress,
-  localStorageOrDefault,
-  registerSaEvent,
-  setStateWithRef,
-} from 'Utils';
+import type { AnyApi, MaybeAccount } from 'types';
+import { clipAddress, localStorageOrDefault, registerSaEvent, setStateWithRef } from 'Utils';
 import { defaultConnectContext } from './defaults';
 import { useImportExtension } from './Hooks/useImportExtension';
 import {
@@ -62,7 +57,7 @@ export const ConnectProvider = ({
   const accountsRef = useRef(accounts);
 
   // store the currently active account
-  const [activeAccount, _setActiveAccount] = useState<string | null>(null);
+  const [activeAccount, setActiveAccountState] = useState<string | null>(null);
   const activeAccountRef = useRef<string | null>(activeAccount);
 
   // store the currently active account metadata
@@ -92,7 +87,7 @@ export const ConnectProvider = ({
     if (!checkingInjectedWeb3) {
       // unsubscribe from all accounts and reset state
       unsubscribeAll();
-      setStateWithRef(null, _setActiveAccount, activeAccountRef);
+      setStateWithRef(null, setActiveAccountState, activeAccountRef);
       setStateWithRef([], setAccounts, accountsRef);
       setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
       setStateWithRef([], setExtensionsInitialised, extensionsInitialisedRef);
@@ -386,10 +381,8 @@ export const ConnectProvider = ({
   };
 
   const handleExtensionError = (id: string, err: string) => {
-    // general error (maybe enabled but no accounts trust app)
-    if (err.substring(0, 5) === 'Error') {
-      setExtensionStatus(id, 'no_accounts');
-    } else {
+    // if not general error (maybe enabled but no accounts trust app)
+    if (err.substring(0, 5) !== 'Error') {
       // remove extension from local `active_extensions`.
       removeFromLocalExtensions(id);
 
@@ -412,7 +405,7 @@ export const ConnectProvider = ({
     } else {
       localStorage.setItem(`${network.name}_active_account`, address);
     }
-    setStateWithRef(address, _setActiveAccount, activeAccountRef);
+    setStateWithRef(address, setActiveAccountState, activeAccountRef);
   };
 
   const connectToAccount = (account: ImportedAccount | null) => {
@@ -433,9 +426,7 @@ export const ConnectProvider = ({
     return acc;
   };
 
-  const getActiveAccount = () => {
-    return activeAccountRef.current;
-  };
+  const getActiveAccount = () => activeAccountRef.current;
 
   // adds an external account (non-wallet) to accounts
   const addExternalAccount = (address: string, addedBy: string) => {

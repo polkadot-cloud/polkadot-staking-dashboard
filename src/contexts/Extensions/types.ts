@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { FunctionComponent, SVGProps } from 'react';
-import { AnyApi } from 'types';
+import type { FunctionComponent, SVGProps } from 'react';
+import type { AnyApi } from 'types';
 
 // top level required properties the extension must expose via their
 // `injectedWeb3` entry.
@@ -39,6 +39,7 @@ export interface ExtensionConfig {
   icon: FunctionComponent<
     SVGProps<SVGSVGElement> & { title?: string | undefined }
   >;
+  url: string;
 }
 
 // dashboard specific: miscellaneous metadata added to an extension by the

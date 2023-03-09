@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useMenu } from 'contexts/Menu';
 import { useModal } from 'contexts/Modal';
 import { useNotifications } from 'contexts/Notifications';
-import { NotificationText } from 'contexts/Notifications/types';
+import type { NotificationText } from 'contexts/Notifications/types';
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
 import { ParaValidator } from 'library/ListItem/Labels/ParaValidator';
 import {
@@ -27,7 +27,7 @@ import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator';
 import { Identity } from '../../ListItem/Labels/Identity';
 import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Select } from '../../ListItem/Labels/Select';
-import { DefaultProps } from './types';
+import type { DefaultProps } from './types';
 import { getIdentityDisplay } from './Utils';
 
 export const Default = ({
@@ -110,7 +110,6 @@ export const Default = ({
         <div className="row">
           {selectActive && <Select item={validator} />}
           <Identity
-            meta={meta}
             address={address}
             batchIndex={batchIndex}
             batchKey={batchKey}

@@ -7,9 +7,9 @@ import {
   getUnixTime,
   intervalToDuration,
 } from 'date-fns';
-import { TFunction } from 'i18next';
+import type { TFunction } from 'i18next';
 import { defaultDuration } from './defaults';
-import { TimeleftDuration } from './types';
+import type { TimeleftDuration } from './types';
 
 // adds `seconds` to the current time and returns the resulting date.
 export const fromNow = (seconds: number): Date => {

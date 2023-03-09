@@ -2,14 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import { useBalances } from 'contexts/Balances';
-import { Lock } from 'contexts/Balances/types';
+import { useBalances } from 'contexts/Accounts/Balances';
+import type { Lock } from 'contexts/Accounts/Balances/types';
+import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React from 'react';
-import { MaybeAccount } from 'types';
+import type { MaybeAccount } from 'types';
 import * as defaults from './defaults';
-import { TransferOptions, TransferOptionsContextInterface } from './types';
+import type { TransferOptions, TransferOptionsContextInterface } from './types';
 
 export const TransferOptionsContext =
   React.createContext<TransferOptionsContextInterface>(
@@ -25,8 +26,8 @@ export const TransferOptionsProvider = ({
   children: React.ReactNode;
 }) => {
   const { activeEra } = useNetworkMetrics();
-  const { getAccount, getAccountBalance, getLedgerForStash, getAccountLocks } =
-    useBalances();
+  const { getAccount, getAccountBalance, getAccountLocks } = useBalances();
+  const { getLedgerForStash } = useLedgers();
   const { membership } = usePoolMemberships();
 
   // get the bond and unbond amounts available to the user

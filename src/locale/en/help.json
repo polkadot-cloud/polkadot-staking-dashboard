@@ -135,6 +135,16 @@
           "The payout amounts received depend on how much {NETWORK_UNIT} the nominators, and validators themselves, had bonded for that era."
         ]
       ],
+      "ledgerHardwareWallets": [
+        "Ledger Hardware Wallets",
+        [
+          "Compatible Ledger devices are fully supported on staking dashboard. Use your Ledger to manage your staking activity on Polkadot.",
+          "Using a hardware wallet ensures a secure experience, whereby your keys stay on the hardware device at all times. This is also known as cold storage, as there is no active internet connection to your wallet.",
+          "In order to import and sign transactions with your Ledger device, your device must have the Polkadot Ledger app installed. The Polkadot app can be installed via Ledger's very own Ledger Live application.",
+          "Both USB and Bluetooth connections are supported in staking dashboard. So if your Ledger is bluetooth enabled, and your device allows bluetooth connections, you will be able to import accounts and sign transactions wirelessly through your Ledger device.",
+          "Find more information about Ledger at their official website, ledger.com."
+        ]
+      ],
       "lockedBalance": [
         "Locked Balance",
         [
@@ -193,7 +203,7 @@
         [
           "Nominations are the validators a staker chooses to nominate. You can nominate up to {MAX_NOMINATIONS} validators on {NETWORK_NAME}.",
           "For nomination pools, the pool owner and pool nominator are in charge of nominating validators on behalf of all the pool members.",
-          "Once nominations have been submitted, bonded funds are automatically distributed to nominees that are active in the curernt era.",
+          "Once nominations have been submitted, bonded funds are automatically distributed to nominees that are active in the current era.",
           "As long as at least one of your nominations is actively validating in a session, your funds will be backing that validator."
         ]
       ],

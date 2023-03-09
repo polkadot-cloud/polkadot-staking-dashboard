@@ -8,11 +8,11 @@ import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { BondedPool } from 'contexts/Pools/types';
+import type { BondedPool } from 'contexts/Pools/types';
 import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useValidators } from 'contexts/Validators';
-import { Validator } from 'contexts/Validators/types';
+import type { Validator } from 'contexts/Validators/types';
 import { formatDistance, fromUnixTime } from 'date-fns';
 import { motion } from 'framer-motion';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
@@ -23,9 +23,9 @@ import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
 import { locales } from 'locale';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AnySubscan } from 'types';
+import type { AnySubscan } from 'types';
 import { clipAddress, isNotZero, planckToUnit } from 'Utils';
-import { PayoutListProps } from '../types';
+import type { PayoutListProps } from '../types';
 import { ItemWrapper } from '../Wrappers';
 import { PayoutListProvider, usePayoutList } from './context';
 
@@ -44,7 +44,7 @@ export const PayoutListInner = ({
   } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { listFormat, setListFormat } = usePayoutList();
-  const { validators, meta } = useValidators();
+  const { validators } = useValidators();
   const { bondedPools } = useBondedPools();
 
   // current page
@@ -213,7 +213,6 @@ export const PayoutListInner = ({
                             <>
                               {batchIndex > 0 ? (
                                 <Identity
-                                  meta={meta}
                                   address={p.validator_stash}
                                   batchIndex={batchIndex}
                                   batchKey={batchKey}
@@ -267,13 +266,11 @@ export const PayoutListInner = ({
   );
 };
 
-export const PayoutList = (props: PayoutListProps) => {
-  return (
-    <PayoutListProvider>
-      <PayoutListShouldUpdate {...props} />
-    </PayoutListProvider>
-  );
-};
+export const PayoutList = (props: PayoutListProps) => (
+  <PayoutListProvider>
+    <PayoutListShouldUpdate {...props} />
+  </PayoutListProvider>
+);
 
 export class PayoutListShouldUpdate extends React.Component {
   static contextType = StakingContext;

@@ -16,7 +16,7 @@ import {
 } from 'library/ListItem/Wrappers';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { OversubscribedProps } from '../types';
+import type { OversubscribedProps } from '../types';
 
 export const Oversubscribed = ({
   batchIndex,

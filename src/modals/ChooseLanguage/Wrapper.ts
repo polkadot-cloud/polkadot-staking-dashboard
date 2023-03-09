@@ -23,6 +23,7 @@ export const ContentWrapper = styled.div`
 `;
 
 export const LocaleButton = styled.button<any>`
+  color: var(--text-color-primary);
   background: var(--button-primary-background);
   box-sizing: border-box;
   padding: 1rem;
@@ -39,6 +40,7 @@ export const LocaleButton = styled.button<any>`
   border: 1px solid rgba(0,0,0,0);
 `}
   h4 {
+    color: var(--text-color-secondary);
     margin: 0;
     &.selected {
       color: var(--status-success-color);

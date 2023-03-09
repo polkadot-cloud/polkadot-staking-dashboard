@@ -9,7 +9,7 @@ import { useState } from 'react';
 import Lottie from 'react-lottie';
 import { Link } from 'react-router-dom';
 import { registerSaEvent } from 'Utils';
-import { PrimaryProps } from '../types';
+import type { PrimaryProps } from '../types';
 import { MinimisedWrapper, Wrapper } from './Wrappers';
 
 export const Primary = ({

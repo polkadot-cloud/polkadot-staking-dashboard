@@ -8,7 +8,7 @@ import { PageTitle } from 'library/PageTitle';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
-import { PageProps } from '../types';
+import type { PageProps } from '../types';
 
 export const Favorites = ({ page }: PageProps) => {
   const { t } = useTranslation();

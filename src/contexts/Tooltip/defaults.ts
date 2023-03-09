@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { TooltipContextInterface } from './types';
+import type { TooltipContextInterface } from './types';
 
 export const defaultTooltipContext: TooltipContextInterface = {
   openTooltip: () => {},

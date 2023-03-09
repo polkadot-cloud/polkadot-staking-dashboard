@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import {
+import type {
   EraStakers,
   NominationStatuses,
   StakingContextInterface,

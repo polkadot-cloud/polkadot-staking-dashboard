@@ -4,7 +4,7 @@
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
-import { Validator } from 'contexts/Validators/types';
+import type { Validator } from 'contexts/Validators/types';
 import { Title } from 'library/Modal/Title';
 import { ValidatorList } from 'library/ValidatorList';
 import { useEffect, useState } from 'react';

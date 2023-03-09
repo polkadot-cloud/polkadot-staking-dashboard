@@ -3,8 +3,9 @@
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { useBalances } from 'contexts/Accounts/Balances';
+import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
@@ -24,7 +25,8 @@ export const Nominate = () => {
   const { api, network } = useApi();
   const { activeAccount } = useConnect();
   const { targets, staking, getControllerNotImported } = useStaking();
-  const { getBondedAccount, getLedgerForStash } = useBalances();
+  const { getBondedAccount } = useBalances();
+  const { getLedgerForStash } = useLedgers();
   const { setStatus: setModalStatus } = useModal();
   const { txFeesValid } = useTxFees();
   const { units, unit } = network;
@@ -54,11 +56,9 @@ export const Nominate = () => {
     if (!valid || !api) {
       return tx;
     }
-    const targetsToSubmit = nominations.map((item: any) => {
-      return {
-        Id: item.address,
-      };
-    });
+    const targetsToSubmit = nominations.map((item: any) => ({
+      Id: item.address,
+    }));
     tx = api.tx.staking.nominate(targetsToSubmit);
     return tx;
   };

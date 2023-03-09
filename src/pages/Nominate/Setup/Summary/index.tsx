@@ -11,11 +11,12 @@ import { useSetup } from 'contexts/Setup';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
-import { PayeeItem, usePayeeConfig } from 'library/Hooks/usePayeeConfig';
+import type { PayeeItem } from 'library/Hooks/usePayeeConfig';
+import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import { SetupStepProps } from 'library/SetupSteps/types';
+import type { SetupStepProps } from 'library/SetupSteps/types';
 import { useTranslation } from 'react-i18next';
 import { clipAddress, unitToPlanck } from 'Utils';
 import { SummaryWrapper } from './Wrapper';
@@ -38,11 +39,9 @@ export const Summary = ({ section }: SetupStepProps) => {
       return null;
     }
 
-    const targetsToSubmit = nominations.map((item: any) => {
-      return {
-        Id: item.address,
-      };
-    });
+    const targetsToSubmit = nominations.map((item: any) => ({
+      Id: item.address,
+    }));
 
     const controllerToSubmit = {
       Id: activeAccount,

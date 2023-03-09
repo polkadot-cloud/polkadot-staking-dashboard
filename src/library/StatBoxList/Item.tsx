@@ -7,20 +7,18 @@ import { Pie } from './Pie';
 import { Text } from './Text';
 import { StatBoxWrapper } from './Wrapper';
 
-export const StatBox = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <StatBoxWrapper
-      whileHover={{ scale: 1.02 }}
-      transition={{
-        duration: 0.5,
-        type: 'spring',
-        bounce: 0.4,
-      }}
-    >
-      {children}
-    </StatBoxWrapper>
-  );
-};
+export const StatBox = ({ children }: { children: React.ReactNode }) => (
+  <StatBoxWrapper
+    whileHover={{ scale: 1.02 }}
+    transition={{
+      duration: 0.5,
+      type: 'spring',
+      bounce: 0.4,
+    }}
+  >
+    {children}
+  </StatBoxWrapper>
+);
 
 export const StatBoxListItem = ({ format, params }: any) => {
   switch (format) {

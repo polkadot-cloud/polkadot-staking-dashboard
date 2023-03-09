@@ -3,7 +3,7 @@
 
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React, { useEffect, useState } from 'react';
-import { BondFor, MaybeAccount } from 'types';
+import type { BondFor, MaybeAccount } from 'types';
 import { greaterThanZero, localStorageOrDefault, unitToPlanck } from 'Utils';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
@@ -13,7 +13,7 @@ import {
   defaultPoolProgress,
   defaultSetupContext,
 } from './defaults';
-import {
+import type {
   NominatorProgress,
   NominatorSetup,
   NominatorSetups,

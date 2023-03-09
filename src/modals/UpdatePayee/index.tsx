@@ -3,15 +3,16 @@
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
+import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
-import { PayeeItem, usePayeeConfig } from 'library/Hooks/usePayeeConfig';
+import type { PayeeItem } from 'library/Hooks/usePayeeConfig';
+import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { PayeeInput } from 'library/PayeeInput';
@@ -20,7 +21,7 @@ import { SelectItem } from 'library/SelectItems/Item';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MaybeAccount } from 'types';
+import type { MaybeAccount } from 'types';
 import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {

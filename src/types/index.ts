@@ -1,10 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { Theme } from 'contexts/Themes/types';
-import { PageProps } from 'pages/types';
-import React, { FunctionComponent, SVGProps } from 'react';
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import type { Theme } from 'contexts/Themes/types';
+import type { PageProps } from 'pages/types';
+import type React from 'react';
+import type { FunctionComponent, SVGProps } from 'react';
 
 export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 

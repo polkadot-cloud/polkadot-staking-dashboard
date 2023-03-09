@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import { EstimatedFeeContext } from './types';
+import type { EstimatedFeeContext } from './types';
 
 export const defaultTxFees: EstimatedFeeContext = {
   txFees: new BigNumber(0),

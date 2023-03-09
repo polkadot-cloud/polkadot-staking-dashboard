@@ -11,7 +11,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { planckToUnit, unitToPlanck } from 'Utils';
-import { BondFeedbackProps } from '../types';
+import type { BondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
 import { BondInput } from './BondInput';

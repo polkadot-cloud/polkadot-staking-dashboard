@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { clipAddress, remToUnit } from 'Utils';
 import { Identicon } from '../Identicon';
-import { AccountProps } from './types';
+import type { AccountProps } from './types';
 import { Wrapper } from './Wrapper';
 
 export const Account = ({
