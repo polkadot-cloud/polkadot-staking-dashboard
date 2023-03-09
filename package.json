@@ -4,7 +4,7 @@
   "type": "module",
   "license": "Apache-2.0",
   "private": false,
-  "homepage": "/",
+  "homepage": "/polkadot-staking-dashboard/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
