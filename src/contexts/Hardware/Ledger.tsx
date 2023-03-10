@@ -36,8 +36,8 @@ export const LedgerHardwareProvider = ({
   // TODO: migrate into an array of statuses.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
 
+  // Handles errors that occur during a `executeLedgerLoop`.
   const handleErrors = (err: AnyJson) => {
-    // Handle Ledger connection errors.
     if (err?.id === 'NoDevice') {
       setTransportError({
         ack: 'failure',
@@ -59,12 +59,10 @@ export const LedgerHardwareProvider = ({
     let transport;
     let noDevice = false;
 
-    // Attempt to store the device model.
     if (tasks.includes('get_device_info')) {
       try {
         transport = await TransportWebUSB.create();
-        // const { deviceModel } = transport;
-        const deviceModel = null;
+        const { deviceModel } = transport;
         if (deviceModel) {
           const { id, productName } = deviceModel;
           setLedgerDeviceInfo({
@@ -80,7 +78,6 @@ export const LedgerHardwareProvider = ({
       }
     }
 
-    // Attempt to carry out desired tasks.
     if (!noDevice) {
       try {
         transport = await TransportWebUSB.create();
@@ -103,7 +100,7 @@ export const LedgerHardwareProvider = ({
     }
   };
 
-  // Gets a Polkadot addresses on the device.
+  // Gets a Polkadot address on the device.
   const handleGetAddress = async (transport: AnyJson, accountIndex: number) => {
     const polkadot = new Polkadot(transport);
     const { deviceModel } = transport;
@@ -112,7 +109,7 @@ export const LedgerHardwareProvider = ({
     setTransportResponse({
       ack: 'success',
       statusCode: 'GettingAddress',
-      body: `Getting addresess ${accountIndex} in prgress.`,
+      body: `Getting addresess ${accountIndex} in progress.`,
     });
 
     const address = await polkadot.getAddress(
@@ -124,7 +121,6 @@ export const LedgerHardwareProvider = ({
       device: { id, productName },
       body: [address],
     };
-    // return {};
   };
   return (
     <LedgerHardwareContext.Provider
