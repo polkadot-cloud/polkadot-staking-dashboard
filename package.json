@@ -12,8 +12,8 @@
     "deploy": "gh-pages -d build",
     "lint": "eslint ./src --fix && npx prettier --write ./src",
     "lint:scripts": "npx prettier --write ./.scripts",
-    "locale:order": "node ./.scripts/localeOrderKeys.js",
-    "locale:validate": "node ./.scripts/localeValidate.js",
+    "locale:order": "node ./.scripts/localeOrderKeys.cjs",
+    "locale:validate": "node ./.scripts/localeValidate.cjs",
     "test": "vitest",
     "visualizer": "vite-bundle-visualizer"
   },

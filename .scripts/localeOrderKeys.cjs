@@ -4,7 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const prettier = require('prettier');
-const { getDirectories, localeDir, orderJsonByKeys } = require('./utils');
+const { getDirectories, localeDir, orderJsonByKeys } = require('./utils.cjs');
 
 // Get all language paths to re-order.
 const languages = getDirectories(localeDir, []);
