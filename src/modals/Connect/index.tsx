@@ -12,7 +12,9 @@ import { SelectItems } from 'library/SelectItems';
 import { CustomHeaderWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { AnyFunction } from 'types';
 import { Extension } from './Extension';
+import { Ledger } from './Ledger';
 import { ReadOnly } from './ReadOnly';
 import { ExtensionsWrapper, Separator } from './Wrappers';
 
@@ -50,16 +52,13 @@ export const Connect = () => {
           />
         </h1>
       </CustomHeaderWrapper>
-
-      {/* NOTE: pending CRA migration */}
-      {/* <Action text="Hardware" />
+ 
+      <Action text="Hardware" />
       <ExtensionsWrapper>
         <SelectItems layout="two-col">
-          {[Ledger].map((Item: AnyFunction, i: number) => {
-            return <Item key={`hardware_item_${i}`} />;
-          })}
+          {[Ledger].map((Item: AnyFunction, i: number) => <Item key={`hardware_item_${i}`} />)}
         </SelectItems>
-      </ExtensionsWrapper> */}
+      </ExtensionsWrapper>
 
       <Action text={t('extensions')} />
       <ExtensionsWrapper>
