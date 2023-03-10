@@ -209,3 +209,5 @@ export const applyWidthAsPadding = (
     }px`;
   }
 };
+
+export const unescape = (val: string) => val.replace(/\\"/g, '"');
