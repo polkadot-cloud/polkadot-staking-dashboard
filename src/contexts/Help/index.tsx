@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useEffect, useState } from 'react';
-import { MaybeString } from 'types';
+import type { MaybeString } from 'types';
 import * as defaults from './defaults';
-import {
+import type {
   HelpContextInterface,
   HelpContextProps,
   HelpContextState,
@@ -34,19 +34,17 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
   }, [state.status]);
 
   const setDefinition = (definition: MaybeString) => {
-    const _state = {
+    setState({
       ...state,
       definition,
-    };
-    setState(_state);
+    });
   };
 
   const setStatus = (newStatus: number) => {
-    const _state = {
+    setState({
       ...state,
       status: newStatus,
-    };
-    setState(_state);
+    });
   };
 
   const openHelp = (definition: MaybeString) => {

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { applyWidthAsPadding } from 'Utils';
-import { ItemProps } from './types';
+import type { ItemProps } from './types';
 import { StatusRowWrapper } from './Wrappers';
 
 export const Item = ({ text, ctaText, onClick, leftIcon }: ItemProps) => {

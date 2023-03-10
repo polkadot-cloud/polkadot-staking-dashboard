@@ -4,8 +4,8 @@
 import { decodeAddress, encodeAddress } from '@polkadot/keyring';
 import { hexToU8a, isHex, u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
-import { MutableRefObject, RefObject } from 'react';
-import { AnyJson, AnyMetaBatch } from 'types/index';
+import type { MutableRefObject, RefObject } from 'react';
+import type { AnyJson, AnyMetaBatch } from 'types/index';
 
 export const clipAddress = (val: string) => {
   if (typeof val !== 'string') {
@@ -25,11 +25,10 @@ export const remToUnit = (rem: string) =>
  * Converts an on chain balance value in BigNumber planck to a decimal value in token unit. (1 token
  * token = 10^units planck).
  */
-export const planckToUnit = (val: BigNumber, units: number) => {
-  return new BigNumber(
+export const planckToUnit = (val: BigNumber, units: number) =>
+  new BigNumber(
     val.dividedBy(new BigNumber(10).exponentiatedBy(units)).toFixed(units)
   );
-};
 
 /**
  * Converts a balance in token unit to an equivalent value in planck by applying the chain decimals

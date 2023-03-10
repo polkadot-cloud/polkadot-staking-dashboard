@@ -17,7 +17,7 @@ export const MigrateProvider = ({
 }) => {
   const { isReady } = useApi();
   const { accounts } = useConnect();
-  const { networkSyncing } = useUi();
+  const { isNetworkSyncing } = useUi();
 
   // The local app version of the current user.
   const localAppVersion = localStorage.getItem('app_version');
@@ -40,7 +40,7 @@ export const MigrateProvider = ({
     });
 
   useEffect(() => {
-    if (isReady && !networkSyncing && !done) {
+    if (isReady && !isNetworkSyncing && !done) {
       // Carry out migrations if local version is different to current version.
       if (localAppVersion !== AppVersion) {
         // Added in 1.0.2.
@@ -61,7 +61,7 @@ export const MigrateProvider = ({
         setDone(true);
       }
     }
-  }, [networkSyncing]);
+  }, [isNetworkSyncing]);
 
   return (
     <MigrateContext.Provider value={{}}>{children}</MigrateContext.Provider>

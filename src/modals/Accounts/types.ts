@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BalanceLedger } from 'contexts/Balances/types';
-import { ExtensionAccount } from 'contexts/Extensions/types';
-import { MaybeAccount } from 'types';
+import type { Ledger } from 'contexts/Accounts/Ledgers/types';
+import type { ExtensionAccount } from 'contexts/Extensions/types';
+import type { MaybeAccount } from 'types';
 
 export interface AccountItemProps {
   meta: ExtensionAccount | null;
@@ -15,7 +15,7 @@ export interface AccountItemProps {
 
 export interface ControllerAccount {
   address: string;
-  ledger: BalanceLedger;
+  ledger: Ledger;
 }
 
 export interface AccountNominating {

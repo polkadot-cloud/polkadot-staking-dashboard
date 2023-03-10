@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ExtensionConfig } from 'contexts/Extensions/types';
+import type { ExtensionConfig } from 'contexts/Extensions/types';
 import { ReactComponent as EnkryptSVG } from './icons/enkrypt_icon.svg';
 import { ReactComponent as NovaWalletSVG } from './icons/nova_wallet.svg';
 import { ReactComponent as PolkadotJSSVG } from './icons/polkadot_js.svg';

@@ -10,7 +10,7 @@ import { CreatePoolStatusBar } from 'library/Form/CreatePoolStatusBar';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import { SetupStepProps } from 'library/SetupSteps/types';
+import type { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

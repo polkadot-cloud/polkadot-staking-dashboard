@@ -12,7 +12,7 @@ import { ReactComponent as PolkadotLogoSVG } from 'img/polkadot_logo.svg';
 import { ReactComponent as WestendIconSVG } from 'img/westend_icon.svg';
 import { ReactComponent as WestendInlineSVG } from 'img/westend_inline.svg';
 import { ReactComponent as WestendLogoSVG } from 'img/westend_logo.svg';
-import { Networks } from 'types';
+import type { Networks } from 'types';
 
 export const NetworkList: Networks = {
   polkadot: {

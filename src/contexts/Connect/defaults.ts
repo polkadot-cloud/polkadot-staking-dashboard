@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ConnectContextInterface } from 'contexts/Connect/types';
+import type { ConnectContextInterface } from 'contexts/Connect/types';
 
 export const defaultConnectContext: ConnectContextInterface = {
   // eslint-disable-next-line

@@ -1,14 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, {
-  MutableRefObject,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-} from 'react';
-import { AnyJson } from 'types';
-import { SelectItemsProps } from './types';
+import type { MutableRefObject } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
+import type { AnyJson } from 'types';
+import type { SelectItemsProps } from './types';
 import { SelectItemsWrapper, TwoThreshold } from './Wrapper';
 
 export const SelectItems = ({ layout, children }: SelectItemsProps) => {

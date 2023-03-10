@@ -23,7 +23,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isNotZero } from 'Utils';
 import { PoolListProvider, usePoolList } from './context';
-import { PoolListProps } from './types';
+import type { PoolListProps } from './types';
 
 export const PoolListInner = ({
   allowMoreCols,
@@ -270,13 +270,11 @@ export const PoolListInner = ({
   );
 };
 
-export const PoolList = (props: any) => {
-  return (
-    <PoolListProvider>
-      <PoolListShouldUpdate {...props} />
-    </PoolListProvider>
-  );
-};
+export const PoolList = (props: any) => (
+  <PoolListProvider>
+    <PoolListShouldUpdate {...props} />
+  </PoolListProvider>
+);
 
 export class PoolListShouldUpdate extends React.Component<any, any> {
   static contextType = StakingContext;

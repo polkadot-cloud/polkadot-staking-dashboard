@@ -5,9 +5,9 @@ import BigNumber from 'bignumber.js';
 import { useConnect } from 'contexts/Connect';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import React, { useEffect, useState } from 'react';
-import { MaybeAccount } from 'types';
+import type { MaybeAccount } from 'types';
 import * as defaults from './defaults';
-import { EstimatedFeeContext } from './types';
+import type { EstimatedFeeContext } from './types';
 
 export const TxFeesContext = React.createContext<EstimatedFeeContext>(
   defaults.defaultTxFees

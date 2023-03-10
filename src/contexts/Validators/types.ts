@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { AnyMetaBatch } from 'types';
+import type { AnyMetaBatch } from 'types';
 
 export interface ValidatorsContextInterface {
   fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => void;

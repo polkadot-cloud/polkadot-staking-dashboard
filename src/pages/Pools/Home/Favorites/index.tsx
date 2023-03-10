@@ -16,7 +16,7 @@ export const Favorites = () => {
   const { isReady } = useApi();
   const { favorites, removeFavorite } = usePoolsConfig();
   const { bondedPools } = useBondedPools();
-  const { poolsSyncing } = useUi();
+  const { isPoolSyncing } = useUi();
 
   // store local favorite list and update when favorites list is mutated
   const [favoritesList, setFavoritesList] = useState<Array<any>>([]);
@@ -41,7 +41,7 @@ export const Favorites = () => {
     <>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <CardWrapper>
-          {favoritesList === null || poolsSyncing ? (
+          {favoritesList === null || isPoolSyncing ? (
             <h3>{t('pools.fetchingFavoritePools')}...</h3>
           ) : (
             <>

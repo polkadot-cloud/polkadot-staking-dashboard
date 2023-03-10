@@ -8,7 +8,7 @@ import { Identicon } from 'library/Identicon';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { remToUnit } from 'Utils';
-import { AccountDropdownProps, InputItem } from '../types';
+import type { AccountDropdownProps, InputItem } from '../types';
 import { StyledDropdown, StyledSelect } from './Wrappers';
 
 export const AccountDropdown = ({

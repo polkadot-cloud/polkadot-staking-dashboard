@@ -11,9 +11,9 @@ import {
   startOfDay,
   subDays,
 } from 'date-fns';
-import { AnyApi, AnySubscan } from 'types';
+import type { AnyApi, AnySubscan } from 'types';
 import { greaterThanZero, planckToUnit } from 'Utils';
-import { PayoutDayCursor } from './types';
+import type { PayoutDayCursor } from './types';
 
 // Given payouts, calculate daily income and fill missing days with zero amounts.
 export const calculatePayoutsByDay = (
@@ -26,9 +26,10 @@ export const calculatePayoutsByDay = (
   let payoutsByDay: any = [];
 
   // remove days that are beyond end day limit
-  payouts = payouts.filter((p: AnySubscan) => {
-    return daysPassed(fromUnixTime(p.block_timestamp), new Date()) <= maxDays;
-  });
+  payouts = payouts.filter(
+    (p: AnySubscan) =>
+      daysPassed(fromUnixTime(p.block_timestamp), new Date()) <= maxDays
+  );
 
   // return now if no payouts.
   if (!payouts.length) return payouts;

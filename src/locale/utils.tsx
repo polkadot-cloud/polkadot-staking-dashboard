@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { DefaultLocale } from 'consts';
-import { AnyApi, AnyJson } from 'types';
+import type { AnyApi, AnyJson } from 'types';
 import { extractUrlValue, varToUrlHash } from 'Utils';
 import { availableLanguages, fallbackResources, lngNamespaces } from '.';
 

@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ExtensionsContextInterface } from './types';
+import type { ExtensionsContextInterface } from './types';
 
 export const defaultExtensionsContext: ExtensionsContextInterface = {
   extensions: [],

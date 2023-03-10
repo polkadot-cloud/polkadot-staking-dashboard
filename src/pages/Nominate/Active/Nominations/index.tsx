@@ -3,7 +3,7 @@
 
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
-import { useBalances } from 'contexts/Balances';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
@@ -15,7 +15,7 @@ import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
-import { MaybeAccount } from 'types';
+import type { MaybeAccount } from 'types';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({
@@ -58,9 +58,9 @@ export const Nominations = ({
   // callback function to stop nominating selected validators
   const cbStopNominatingSelected = (provider: any) => {
     const { selected } = provider;
-    const _nominations = [...nominations].filter((n) => {
-      return !selected.map((_s: any) => _s.address).includes(n);
-    });
+    const _nominations = [...nominations].filter(
+      (n) => !selected.map((_s: any) => _s.address).includes(n)
+    );
     openModalWith(
       'ChangeNominations',
       {

@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { NotificationsContextInterface } from './types';
+import type { NotificationsContextInterface } from './types';
 
 export const defaultNotificationsContext: NotificationsContextInterface = {
   // eslint-disable-next-line

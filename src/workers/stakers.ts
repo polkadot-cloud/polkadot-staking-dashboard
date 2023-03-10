@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import { AnyJson } from 'types';
-import { planckToUnit, rmCommas } from 'Utils';
+import type { AnyJson } from 'types';
 
 // eslint-disable-next-line no-restricted-globals
 export const ctx: Worker = self as any;
@@ -129,5 +128,16 @@ const processExposures = (data: AnyJson) => {
     who: activeAccount,
   };
 };
+
+/**
+ * Converts an on chain balance value in BigNumber planck to a decimal value in token unit. (1 token
+ * token = 10^units planck).
+ */
+export const planckToUnit = (val: BigNumber, units: number) =>
+  new BigNumber(
+    val.dividedBy(new BigNumber(10).exponentiatedBy(units)).toFixed(units)
+  );
+
+export const rmCommas = (val: string): string => val.replace(/,/g, '');
 
 export default null as any;

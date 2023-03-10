@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import Keyring from '@polkadot/keyring';
-import { ExtensionAccount } from 'contexts/Extensions/types';
-import { Network } from 'types';
+import type { ExtensionAccount } from 'contexts/Extensions/types';
+import type { Network } from 'types';
 import { localStorageOrDefault } from 'Utils';
-import { ExternalAccount, ImportedAccount } from './types';
+import type { ExternalAccount, ImportedAccount } from './types';
 
 // extension utils
 

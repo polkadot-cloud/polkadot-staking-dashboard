@@ -3,13 +3,13 @@
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useTxFees } from 'contexts/TxFees';
 import { AccountDropdown } from 'library/Form/AccountDropdown';
-import { InputItem } from 'library/Form/types';
+import type { InputItem } from 'library/Form/types';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';

@@ -3,7 +3,7 @@
 
 import { ButtonHelp } from '@rossbulat/polkadot-dashboard-ui';
 import { useHelp } from 'contexts/Help';
-import { LegendItemProps } from './types';
+import type { LegendItemProps } from './types';
 
 export const LegendItem = ({ dataClass, label, helpKey }: LegendItemProps) => {
   const { openHelp } = useHelp();

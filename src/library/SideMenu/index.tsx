@@ -9,7 +9,7 @@ import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
-import { UIContextInterface } from 'contexts/UI/types';
+import type { UIContextInterface } from 'contexts/UI/types';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
 import { ReactComponent as ForumSVG } from 'img/forum.svg';
 import { ReactComponent as InfoSVG } from 'img/info.svg';

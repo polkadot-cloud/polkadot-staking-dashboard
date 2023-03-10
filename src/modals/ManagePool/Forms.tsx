@@ -10,7 +10,7 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { BondedPool } from 'contexts/Pools/types';
+import type { BondedPool } from 'contexts/Pools/types';
 import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -50,9 +50,9 @@ export const Forms = forwardRef(
     useEffect(() => {
       if (task === 'set_pool_metadata') {
         let _metadata = '';
-        const pool = bondedPools.find((p: any) => {
-          return p.addresses.stash === selectedActivePool?.addresses.stash;
-        });
+        const pool = bondedPools.find(
+          (p: any) => p.addresses.stash === selectedActivePool?.addresses.stash
+        );
 
         if (pool) {
           const metadataBatch = meta.bonded_pools?.metadata ?? [];

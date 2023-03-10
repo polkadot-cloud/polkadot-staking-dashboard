@@ -1,9 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { RefObject, useState } from 'react';
+import type { RefObject } from 'react';
+import React, { useState } from 'react';
 import { defaultTooltipContext } from './defaults';
-import { TooltipContextInterface } from './types';
+import type { TooltipContextInterface } from './types';
 
 export const TooltipContext = React.createContext<TooltipContextInterface>(
   defaultTooltipContext

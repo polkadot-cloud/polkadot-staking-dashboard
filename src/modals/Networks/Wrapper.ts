@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { NetworkButtonProps } from './types';
+import type { NetworkButtonProps } from './types';
 
 export const Wrapper = styled.div`
   display: flex;

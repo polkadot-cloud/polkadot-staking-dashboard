@@ -3,8 +3,8 @@
 
 import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
@@ -62,9 +62,8 @@ export const Unstake = () => {
   const [bondValid, setBondValid] = useState(false);
 
   // unbond all validation
-  const isValid = (() => {
-    return greaterThanZero(freeToUnbond) && !controllerNotImported;
-  })();
+  const isValid = (() =>
+    greaterThanZero(freeToUnbond) && !controllerNotImported)();
 
   // update bond value on task change
   useEffect(() => {

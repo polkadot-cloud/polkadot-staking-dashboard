@@ -5,7 +5,7 @@ import { useTxFees } from 'contexts/TxFees';
 import React, { useEffect, useRef, useState } from 'react';
 import { setStateWithRef } from 'Utils';
 import { defaultModalContext } from './defaults';
-import { ModalConfig, ModalContextInterface, ModalOptions } from './types';
+import type { ModalConfig, ModalContextInterface, ModalOptions } from './types';
 
 export const ModalContext =
   React.createContext<ModalContextInterface>(defaultModalContext);

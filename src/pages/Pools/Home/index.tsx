@@ -178,10 +178,8 @@ export const HomeInner = () => {
   );
 };
 
-export const Home = () => {
-  return (
-    <PoolsTabsProvider>
-      <HomeInner />
-    </PoolsTabsProvider>
-  );
-};
+export const Home = () => (
+  <PoolsTabsProvider>
+    <HomeInner />
+  </PoolsTabsProvider>
+);

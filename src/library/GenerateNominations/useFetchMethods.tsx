@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useValidators } from 'contexts/Validators';
-import { Validator } from 'contexts/Validators/types';
+import type { Validator } from 'contexts/Validators/types';
 import { useValidatorFilters } from 'library/Hooks/useValidatorFilters';
 import { shuffle } from 'Utils';
 

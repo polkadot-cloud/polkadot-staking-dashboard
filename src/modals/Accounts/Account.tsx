@@ -5,11 +5,11 @@ import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import { ExtensionInjected } from 'contexts/Extensions/types';
+import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
 import { Identicon } from 'library/Identicon';
 import { clipAddress } from 'Utils';
-import { AccountItemProps } from './types';
+import type { AccountItemProps } from './types';
 import { AccountWrapper } from './Wrappers';
 
 export const AccountButton = (props: AccountItemProps) => {

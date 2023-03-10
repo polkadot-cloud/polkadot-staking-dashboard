@@ -1,8 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { Dispatch, SetStateAction } from 'react';
-import { AnyJson, MaybeAccount } from 'types';
+import type React from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import type { AnyJson, MaybeAccount } from 'types';
 
 export interface SelectItemsProps {
   layout?: 'two-col' | 'three-col';

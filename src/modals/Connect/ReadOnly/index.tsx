@@ -4,10 +4,10 @@
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ButtonMonoInvert } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
-import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
+import type { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import { useTranslation } from 'react-i18next';
 import { ReadOnlyInput } from '../ReadOnlyInput';
-import { ReadOnlyProps } from '../types';
+import type { ReadOnlyProps } from '../types';
 import { Wrapper } from './Wrapper';
 
 export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
@@ -15,9 +15,9 @@ export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
   const { accounts, forgetAccounts } = useConnect();
 
   // get all external accounts
-  const externalAccountsOnly = accounts.filter((a: ImportedAccount) => {
-    return a.source === 'external';
-  }) as Array<ExternalAccount>;
+  const externalAccountsOnly = accounts.filter(
+    (a: ImportedAccount) => a.source === 'external'
+  ) as Array<ExternalAccount>;
 
   // get external accounts added by user
   const externalAccountsByUser = externalAccountsOnly.filter(

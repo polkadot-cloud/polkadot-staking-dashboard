@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PoolMemberContext } from '../types';
+import type { PoolMemberContext } from '../types';
 
 export const defaultPoolMembers: PoolMemberContext = {
   // eslint-disable-next-line

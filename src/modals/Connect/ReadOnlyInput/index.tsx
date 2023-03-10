@@ -3,7 +3,7 @@
 
 import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
-import { ImportedAccount } from 'contexts/Connect/types';
+import type { ImportedAccount } from 'contexts/Connect/types';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isValidAddress } from 'Utils';

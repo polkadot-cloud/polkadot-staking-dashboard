@@ -5,7 +5,7 @@ import { ButtonHelp } from '@rossbulat/polkadot-dashboard-ui';
 import NumberEasing from 'che-react-number-easing';
 import { useHelp } from 'contexts/Help';
 import { StatBox } from './Item';
-import { NumberProps } from './types';
+import type { NumberProps } from './types';
 
 export const Number = ({
   label,

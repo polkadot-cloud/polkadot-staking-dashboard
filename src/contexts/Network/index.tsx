@@ -3,11 +3,11 @@
 
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, AnyJson } from 'types';
+import type { AnyApi, AnyJson } from 'types';
 import { setStateWithRef } from 'Utils';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
-import {
+import type {
   ActiveEra,
   NetworkMetrics,
   NetworkMetricsContextInterface,

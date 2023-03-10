@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { FiltersContextInterface } from './types';
+import type { FiltersContextInterface } from './types';
 
 export const defaultFiltersInterface: FiltersContextInterface = {
   // eslint-disable-next-line

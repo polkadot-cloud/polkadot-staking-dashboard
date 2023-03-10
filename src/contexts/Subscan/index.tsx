@@ -5,13 +5,13 @@ import { ApiEndpoints, ApiSubscanKey } from 'consts';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import React, { useEffect, useState } from 'react';
-import { AnyApi, AnySubscan } from 'types';
+import type { AnyApi, AnySubscan } from 'types';
 import { isNotZero } from 'Utils';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { usePlugins } from '../Plugins';
 import { defaultSubscanContext } from './defaults';
-import { SubscanContextInterface } from './types';
+import type { SubscanContextInterface } from './types';
 
 export const SubscanContext = React.createContext<SubscanContextInterface>(
   defaultSubscanContext

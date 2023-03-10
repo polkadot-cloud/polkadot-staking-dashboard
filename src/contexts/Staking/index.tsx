@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
-import { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
-import {
+import { useLedgers } from 'contexts/Accounts/Ledgers';
+import type { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
+import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
+import type {
   EraStakers,
   NominationStatuses,
   StakingContextInterface,
@@ -12,17 +13,16 @@ import {
   StakingTargets,
 } from 'contexts/Staking/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, MaybeAccount } from 'types';
+import type { AnyApi, MaybeAccount } from 'types';
 import {
   greaterThanZero,
   isNotZero,
   localStorageOrDefault,
   setStateWithRef,
 } from 'Utils';
-// eslint-disable-next-line import/no-unresolved
-import Worker from 'worker-loader!../../workers/stakers';
+import Worker from 'workers/stakers?worker';
+import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
-import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import * as defaults from './defaults';
@@ -47,12 +47,8 @@ export const StakingProvider = ({
   } = useConnect();
   const { isReady, api, apiStatus, network } = useApi();
   const { activeEra } = useNetworkMetrics();
-  const {
-    accounts,
-    getBondedAccount,
-    getLedgerForStash,
-    getAccountNominations,
-  } = useBalances();
+  const { balances, getBondedAccount, getAccountNominations } = useBalances();
+  const { getLedgerForStash } = useLedgers();
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
@@ -124,7 +120,7 @@ export const StakingProvider = ({
         ) as StakingTargets
       );
     }
-  }, [isReady, accounts, activeAccount, eraStakersRef.current?.stakers]);
+  }, [isReady, balances, activeAccount, eraStakersRef.current?.stakers]);
 
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
@@ -161,6 +157,7 @@ export const StakingProvider = ({
     }
   };
 
+  // subscribe to account ledger
   const subscribeToStakingkMetrics = async () => {
     if (api !== null && isReady && isNotZero(activeEra.index)) {
       const previousEra = activeEra.index.minus(1);
@@ -238,12 +235,10 @@ export const StakingProvider = ({
     setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
 
     // humanise exposures to send to worker
-    const exposures = exposuresRaw.map(([keys, val]: AnyApi) => {
-      return {
-        keys: keys.toHuman(),
-        val: val.toHuman(),
-      };
-    });
+    const exposures = exposuresRaw.map(([keys, val]: AnyApi) => ({
+      keys: keys.toHuman(),
+      val: val.toHuman(),
+    }));
 
     // worker to calculate stats
     worker.postMessage({
@@ -405,12 +400,9 @@ export const StakingProvider = ({
    * Helper function to determine whether the active account
    * is nominating, or is yet to start.
    */
-  const inSetup = () => {
-    return (
-      !activeAccount ||
-      (!hasController() && !isBonding() && !isNominating() && !isUnlocking())
-    );
-  };
+  const inSetup = () =>
+    !activeAccount ||
+    (!hasController() && !isBonding() && !isNominating() && !isUnlocking());
 
   return (
     <StakingContext.Provider

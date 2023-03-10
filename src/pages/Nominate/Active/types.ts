@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BigNumber from 'bignumber.js';
+import type BigNumber from 'bignumber.js';
 
 export interface BondedChartProps {
   active: BigNumber;

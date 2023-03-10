@@ -15,8 +15,8 @@ export interface UIContextInterface {
   sideMenuMinimised: number;
   containerRefs: any;
   isSyncing: boolean;
-  networkSyncing: boolean;
-  poolsSyncing: boolean;
+  isNetworkSyncing: boolean;
+  isPoolSyncing: boolean;
 }
 
 export interface SyncStart {

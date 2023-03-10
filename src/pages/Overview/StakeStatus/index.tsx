@@ -26,7 +26,7 @@ export const StakeStatus = () => {
   const { network } = useApi();
   const navigate = useNavigate();
   const {
-    networkSyncing,
+    isNetworkSyncing,
     isSyncing,
     getSyncById,
     getSyncStart,
@@ -81,9 +81,9 @@ export const StakeStatus = () => {
 
   const poolDisplay = () => {
     if (selectedActivePool) {
-      const pool = bondedPools.find((p: any) => {
-        return p.addresses.stash === selectedActivePool.addresses.stash;
-      });
+      const pool = bondedPools.find(
+        (p: any) => p.addresses.stash === selectedActivePool.addresses.stash
+      );
       if (pool) {
         const metadata = meta.bonded_pools?.metadata ?? [];
         const batchIndex = bondedPools.indexOf(pool);
@@ -111,7 +111,7 @@ export const StakeStatus = () => {
   return (
     <CardWrapper>
       <StatusWrapper includeBorder={showTips}>
-        {networkSyncing || (activeAccount && !getSyncSynced(syncId)) ? (
+        {isNetworkSyncing || (activeAccount && !getSyncSynced(syncId)) ? (
           <Item
             leftIcon={{ show: true, status: 'off' }}
             text={`${t('overview.syncingStatus')}...`}

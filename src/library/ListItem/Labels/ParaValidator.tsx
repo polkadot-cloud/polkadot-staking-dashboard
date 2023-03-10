@@ -8,7 +8,7 @@ import { useValidators } from 'contexts/Validators';
 import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ParaValidatorProps } from '../types';
+import type { ParaValidatorProps } from '../types';
 
 export const ParaValidator = ({ address }: ParaValidatorProps) => {
   const { t } = useTranslation('library');

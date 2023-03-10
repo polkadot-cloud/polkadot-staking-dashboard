@@ -8,7 +8,7 @@ import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { greaterThanZero } from 'Utils';
-import { BondedChartProps } from '../../pages/Nominate/Active/types';
+import type { BondedChartProps } from '../../pages/Nominate/Active/types';
 
 export const BondedChart = ({
   active,
