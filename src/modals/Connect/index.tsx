@@ -52,11 +52,13 @@ export const Connect = () => {
           />
         </h1>
       </CustomHeaderWrapper>
- 
+
       <Action text="Hardware" />
       <ExtensionsWrapper>
         <SelectItems layout="two-col">
-          {[Ledger].map((Item: AnyFunction, i: number) => <Item key={`hardware_item_${i}`} />)}
+          {[Ledger].map((Item: AnyFunction, i: number) => (
+            <Item key={`hardware_item_${i}`} />
+          ))}
         </SelectItems>
       </ExtensionsWrapper>
 
