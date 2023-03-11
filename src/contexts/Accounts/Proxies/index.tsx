@@ -24,36 +24,6 @@ export const ProxiesProvider = ({
 }) => {
   const { api, isReady, network } = useApi();
   const { accounts } = useConnect();
-  // if (!api) return;
-  // const unsub = api.queryMulti<AnyApi>(
-  //   [
-  //     [
-  //       api.query.proxy.proxies,
-  //       '5FADqQ1Qcm2qnbRtSoVshoKwzxzZUeV8nexs2p7eaT4bhgzA',
-  //     ],
-  //   ],
-  //   async ([result]): Promise<void> => {
-  //     console.log(result.toHuman());
-  //     const newProxies = result.toHuman();
-  //     if (newProxies != null) {
-  //       const { data, reserved } = newProxies;
-  //       console.log(data, reserved);
-  //       console.log(newProxies[0]);
-  //       console.log(newProxies[1]);
-  //       console.log(new BigNumber(rmCommas(newProxies[1].toString())));
-  //       const news = [];
-  //       for (const proxy of newProxies[0]) {
-  //         const { delegate, proxyType } = proxy;
-  //         console.log(delegate, proxyType);
-  //         newDelegates.push({
-  //           accounts: delegate,
-  //           type: proxyType,
-  //         });
-  //       }
-  //       console.log(newDelegates);
-  //     }
-  //   }
-  // );
 
   // proxy accounts state
   const [proxy, setProxy] = useState<Array<Proxy>>([]);
