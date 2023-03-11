@@ -71,7 +71,7 @@ export const Wrapper = styled.div`
         }
         h5 {
           opacity: 1;
-          color: white;
+          color: var(--text-color-primary);;
         }
         .bar {
           background: var(--network-color-primary);

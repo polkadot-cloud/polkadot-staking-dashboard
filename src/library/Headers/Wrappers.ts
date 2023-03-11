@@ -74,7 +74,7 @@ export const Item = styled.button`
   }
 
   > span {
-    color: white;
+    color: var(--text-color-primary);;
     line-height: 2.2rem;
     .icon {
       color: var(--text-color-secondary);
@@ -85,12 +85,12 @@ export const Item = styled.button`
   &.connect {
     background: var(--network-color-primary);
     > span {
-      color: 'white';
+      color: var(--text-color-primary);
     }
     .icon {
       margin-right: 0.6rem;
       path {
-        fill: white;
+        fill: var(--text-color-primary);
       }
     }
   }
