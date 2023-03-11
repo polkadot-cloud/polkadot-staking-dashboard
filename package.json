@@ -32,7 +32,7 @@
     "@polkadot/react-identicon": "^3.0.1",
     "@polkadot/rpc-provider": "^10.0.1",
     "@polkadot/util": "^11.0.1",
-    "@rossbulat/polkadot-dashboard-ui": "0.1.0-alpha.51",
+    "@rossbulat/polkadot-dashboard-ui": "0.1.0-alpha.53",
     "@substrate/connect": "^0.7.20",
     "@types/lodash.throttle": "^4.1.7",
     "bignumber.js": "^9.1.1",
