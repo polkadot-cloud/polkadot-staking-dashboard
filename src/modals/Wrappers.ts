@@ -125,7 +125,7 @@ export const ContentWrapper = styled.div`
       justify-content: flex-end;
     }
     &:hover {
-      background: var(--button-toggle-background);
+      background: var(--button-hover-background);
     }
     .icon {
       margin-right: 0.5rem;

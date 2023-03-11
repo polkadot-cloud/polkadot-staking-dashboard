@@ -8,7 +8,7 @@ const {
   getDirectories,
   localeDir,
   orderJsonByKeys,
-} = require('./utils');
+} = require('./utils.cjs');
 
 // Missing key validation function.
 const validateMissingKeys = () => {

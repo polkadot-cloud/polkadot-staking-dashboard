@@ -60,10 +60,6 @@ export const Wrapper = styled.div`
       }
     }
 
-    &:hover {
-      border-color: var(--border-secondary-color);
-    }
-
     button {
       font-size: 1rem;
     }
