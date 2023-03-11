@@ -5,7 +5,7 @@ import { FloatingMenuWidth } from 'consts';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  background: var(--background-modal);
+  background: var(--background-default);
   width: ${FloatingMenuWidth}px;
   padding: 0.25rem 0.75rem;
   display: flex;

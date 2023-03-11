@@ -43,7 +43,7 @@ export const HeightWrapper = styled.div<{ size: string }>`
 `;
 
 export const ContentWrapper = styled.div`
-  background: var(--background-modal);
+  background: var(--background-default);
   width: 100%;
   height: auto;
   overflow: hidden;
@@ -122,9 +122,9 @@ export const FilterListWrapper = styled.div`
 export const FilterListButton = styled.button<{ active: boolean }>`
   border: 1px solid
     ${(props) =>
-      props.active
-        ? 'var(--network-color-stroke)'
-        : 'var(--button-primary-background)'};
+    props.active
+      ? 'var(--network-color-stroke)'
+      : 'var(--button-primary-background)'};
   background: var(--button-primary-background);
   width: 100%;
   display: flex;
@@ -137,9 +137,9 @@ export const FilterListButton = styled.button<{ active: boolean }>`
 
   h4 {
     color: ${(props) =>
-      props.active
-        ? 'var(--network-color-stroke)'
-        : 'var(--text-color-secondary)'};
+    props.active
+      ? 'var(--network-color-stroke)'
+      : 'var(--text-color-secondary)'};
     font-variation-settings: 'wght' 560;
     transition: color 0.1s;
     margin: 0;
@@ -147,9 +147,9 @@ export const FilterListButton = styled.button<{ active: boolean }>`
 
   svg {
     color: ${(props) =>
-      props.active
-        ? 'var(--network-color-stroke)'
-        : 'var(--text-color-secondary)'};
+    props.active
+      ? 'var(--network-color-stroke)'
+      : 'var(--text-color-secondary)'};
     opacity: ${(props) => (props.active ? 1 : 0.7)};
     transition: color 0.1s;
     margin-left: 0.2rem;

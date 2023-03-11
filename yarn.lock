@@ -940,10 +940,10 @@
     tslib "^2.5.0"
     ws "^8.12.1"
 
-"@remix-run/router@1.3.3":
-  version "1.3.3"
-  resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.3.3.tgz#d6d531d69c0fa3a44fda7dc00b20d49b44549164"
-  integrity sha512-YRHie1yQEj0kqqCTCJEfHqYSSNlZQ696QJG+MMiW4mxSl9I0ojz/eRhJS4fs88Z5i6D1SmoF9d3K99/QOhI8/w==
+"@remix-run/router@1.4.0":
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.4.0.tgz#74935d538e4df8893e47831a7aea362f295bcd39"
+  integrity sha512-BJ9SxXux8zAg991UmT8slpwpsd31K1dHHbD3Ba4VzD+liLQ4WAMSxQp2d2ZPRPfN0jN2NPRowcSSoM7lCaF08Q==
 
 "@rollup/pluginutils@^4.2.1":
   version "4.2.1"
@@ -962,10 +962,10 @@
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
 
-"@rossbulat/polkadot-dashboard-ui@0.1.0-alpha.47":
-  version "0.1.0-alpha.47"
-  resolved "https://registry.npmjs.org/@rossbulat/polkadot-dashboard-ui/-/polkadot-dashboard-ui-0.1.0-alpha.47.tgz#1ef1f1aa8ea0f4cb61565adcb64ba69c84309a6d"
-  integrity sha512-dAxNxIM2GKLmO/2jaluGqt86CMiMcfS1ohFZ5g9Mr/hYIqy1rsoXHyKcCgVbUCsJ8dYY0SEPvnxhf+P1n4KJaw==
+"@rossbulat/polkadot-dashboard-ui@0.1.0-alpha.50":
+  version "0.1.0-alpha.50"
+  resolved "https://registry.npmjs.org/@rossbulat/polkadot-dashboard-ui/-/polkadot-dashboard-ui-0.1.0-alpha.50.tgz#b76c03a93e3765d1ac9755891e289411ae213a84"
+  integrity sha512-79kU07pZYu1KwLyHsaYoIirPhOE4WQtZQhPH7bMQJ3LbeY+UVJOsrZxjX4l8YeMgsyo60Rc2xGs1i5AIkwTYOA==
 
 "@scure/base@1.1.1":
   version "1.1.1"
@@ -2601,10 +2601,10 @@ formdata-polyfill@^4.0.10:
   dependencies:
     fetch-blob "^3.1.2"
 
-framer-motion@^10.2.3:
-  version "10.2.3"
-  resolved "https://registry.npmjs.org/framer-motion/-/framer-motion-10.2.3.tgz#80ac552648f05b707d0595be5e87551aa673689a"
-  integrity sha512-+TBxfia8Ym/lYSvTAhome7LYFIR8fKhImuln5zcp9D8nFI2wNSDdBRtK5WoWTyjHXJ7efv5xv376Ma85zHhtUg==
+framer-motion@^10.2.4:
+  version "10.2.4"
+  resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.2.4.tgz#e728a34c5c208aef4ee2b829409e0f59c7d6405c"
+  integrity sha512-0a5yR1jwOfSO0jJEpZUrgWYEa1EPU2yGVmytSu+uMYWV7bcFHwaHVYz2GchzWPH1rW7nXg8zmw8cp4+zNJJaUA==
   dependencies:
     tslib "^2.4.0"
   optionalDependencies:
@@ -3826,20 +3826,20 @@ react-lottie@^1.2.3:
     babel-runtime "^6.26.0"
     lottie-web "^5.1.3"
 
-react-router-dom@^6.8.2:
-  version "6.8.2"
-  resolved "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.8.2.tgz#a6654a3400be9aafd504d7125573568921b78b57"
-  integrity sha512-N/oAF1Shd7g4tWy+75IIufCGsHBqT74tnzHQhbiUTYILYF0Blk65cg+HPZqwC+6SqEyx033nKqU7by38v3lBZg==
+react-router-dom@^6.9.0:
+  version "6.9.0"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.9.0.tgz#dd8b4e461453bd4cad2e6404493d1a5b4bfea758"
+  integrity sha512-/seUAPY01VAuwkGyVBPCn1OXfVbaWGGu4QN9uj0kCPcTyNYgL1ldZpxZUpRU7BLheKQI4Twtl/OW2nHRF1u26Q==
   dependencies:
-    "@remix-run/router" "1.3.3"
-    react-router "6.8.2"
+    "@remix-run/router" "1.4.0"
+    react-router "6.9.0"
 
-react-router@6.8.2:
-  version "6.8.2"
-  resolved "https://registry.npmjs.org/react-router/-/react-router-6.8.2.tgz#98f83582a73f316a3287118b440f0cee30ed6f33"
-  integrity sha512-lF7S0UmXI5Pd8bmHvMdPKI4u4S5McxmHnzJhrYi9ZQ6wE+DA8JN5BzVC5EEBuduWWDaiJ8u6YhVOCmThBli+rw==
+react-router@6.9.0:
+  version "6.9.0"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.9.0.tgz#0f503d9becbc62d9e4ddc0f9bd4026e0fd29fbf5"
+  integrity sha512-51lKevGNUHrt6kLuX3e/ihrXoXCa9ixY/nVWRLlob4r/l0f45x3SzBvYJe3ctleLUQQ5fVa4RGgJOTH7D9Umhw==
   dependencies:
-    "@remix-run/router" "1.3.3"
+    "@remix-run/router" "1.4.0"
 
 react-scroll@^1.8.9:
   version "1.8.9"

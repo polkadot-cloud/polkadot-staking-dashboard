@@ -4,14 +4,16 @@
 import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
 import type { ImportedAccount } from 'contexts/Connect/types';
+import { useModal } from 'contexts/Modal';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { isValidAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 
 export const ReadOnlyInput = () => {
-  const { formatAccountSs58, accounts, addExternalAccount } = useConnect();
   const { t } = useTranslation('modals');
+  const { formatAccountSs58, accounts, addExternalAccount } = useConnect();
+  const { setResize } = useModal();
 
   // store current input value
   const [value, setValue] = useState('');
@@ -63,6 +65,7 @@ export const ReadOnlyInput = () => {
       setReformatted(false);
       setValue('');
       setValid(null);
+      setResize();
     }
   };
 
