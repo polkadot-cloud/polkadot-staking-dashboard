@@ -37,6 +37,7 @@ import { withProviders } from 'library/Hooks';
 import { Router } from 'Router';
 import { ThemeProvider } from 'styled-components';
 import { EntryWrapper as Wrapper } from 'Wrappers';
+import { ProxiesProvider } from 'contexts/Accounts/Proxies';
 
 // `polkadot-dashboard-ui` theme classes are inserted here.
 export const WrappedRouter = () => {
@@ -71,6 +72,7 @@ export const Providers = withProviders(
   HelpProvider,
   NetworkMetricsProvider,
   IdentitiesProvider,
+  ProxiesProvider,
   BalancesProvider,
   LedgersProvider,
   StakingProvider,
