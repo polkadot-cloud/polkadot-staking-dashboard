@@ -22,6 +22,6 @@ export const graphColors: Record<string, AnyJson> = {
   },
   grid: {
     light: '#e8e8e8',
-    dark: '#222',
+    dark: 'rgb(58,50,58)',
   },
 };
