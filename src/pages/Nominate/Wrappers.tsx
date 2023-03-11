@@ -32,7 +32,7 @@ export const Section = styled.div`
 
   > div {
     flex: 1;
-    background: var(--text-color-primary);;
+    background: var(--text-color-primary);
     border-radius: 0.75rem;
     margin-right: 1rem;
     padding: 0 1rem;

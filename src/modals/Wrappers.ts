@@ -198,7 +198,7 @@ export const FooterWrapper = styled.div`
     display: flex;
     align-items: center;
     &.primary {
-      color: var(--text-color-primary);;
+      color: white;
       background: var(--network-color-primary);
       border: 1px solid var(--network-color-primary);
     }

@@ -244,7 +244,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   .change {
     margin-left: 0.6rem;
     font-size: 0.9rem;
-    color: var(--text-color-primary);;
+    color: var(--text-color-primary);
     border-radius: 0.75rem;
     padding: 0.15rem 0.5rem;
     &.pos {
