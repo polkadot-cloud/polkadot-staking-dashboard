@@ -48,6 +48,6 @@ export const LocaleButton = styled.button<any>`
     }
   }
   &:hover {
-    background: var(--button-toggle-background);
+    background: var(--button-hover-background);
   }
 `;

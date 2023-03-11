@@ -962,10 +962,10 @@
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
 
-"@rossbulat/polkadot-dashboard-ui@0.1.0-alpha.47":
-  version "0.1.0-alpha.47"
-  resolved "https://registry.npmjs.org/@rossbulat/polkadot-dashboard-ui/-/polkadot-dashboard-ui-0.1.0-alpha.47.tgz#1ef1f1aa8ea0f4cb61565adcb64ba69c84309a6d"
-  integrity sha512-dAxNxIM2GKLmO/2jaluGqt86CMiMcfS1ohFZ5g9Mr/hYIqy1rsoXHyKcCgVbUCsJ8dYY0SEPvnxhf+P1n4KJaw==
+"@rossbulat/polkadot-dashboard-ui@0.1.0-alpha.50":
+  version "0.1.0-alpha.50"
+  resolved "https://registry.npmjs.org/@rossbulat/polkadot-dashboard-ui/-/polkadot-dashboard-ui-0.1.0-alpha.50.tgz#b76c03a93e3765d1ac9755891e289411ae213a84"
+  integrity sha512-79kU07pZYu1KwLyHsaYoIirPhOE4WQtZQhPH7bMQJ3LbeY+UVJOsrZxjX4l8YeMgsyo60Rc2xGs1i5AIkwTYOA==
 
 "@scure/base@1.1.1":
   version "1.1.1"

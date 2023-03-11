@@ -87,7 +87,7 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
     justify-content: flex-end;
   }
   &:hover {
-    background: var(--button-toggle-background);
+    background: var(--button-hover-background);
   }
   .icon {
     margin-right: 0.5rem;
@@ -157,7 +157,7 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
   align-items: center;
 
   &:hover {
-    background: var(--button-toggle-background);
+    background: var(--button-hover-background);
   }
 
   > h3 {

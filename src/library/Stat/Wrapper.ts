@@ -13,7 +13,8 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
     margin: 0 0 0.2rem 0;
 
     > .btn {
-      background: var(--button-tertiary-background);
+      color: var(--text-color-secondary);
+      background: var(--background-primary);
       display: flex;
       flex-flow: row wrap;
       justify-content: center;
