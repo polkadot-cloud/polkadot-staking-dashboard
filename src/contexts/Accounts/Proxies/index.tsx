@@ -25,9 +25,9 @@ export const ProxiesProvider = ({
   const { api, isReady, network } = useApi();
   const { accounts } = useConnect();
 
-  // proxy accounts state
-  const [proxy, setProxy] = useState<Array<Proxy>>([]);
-  const proxyRef = useRef(proxy);
+  // store the proxy accounts of each imported account.
+  const [proxies, setProxies] = useState<Array<Proxy>>([]);
+  const proxiesRef = useRef(proxies);
 
   const [unsubs, setUnsubs] = useState<AnyApi>([]);
   const unsubsRef = useRef(unsubs);
@@ -35,25 +35,25 @@ export const ProxiesProvider = ({
   useEffect(() => {
     if (isReady) {
       // local updated values
-      let newProxy = proxyRef.current;
+      let newProxy = proxiesRef.current;
       const newUnsubsProxy = unsubsRef.current;
 
       // get accounts removed: use these to unsubscribe
-      const accountsRemoved = proxyRef.current.filter(
+      const accountsRemoved = proxiesRef.current.filter(
         (a: Proxy) =>
           !accounts.find((c: ImportedAccount) => c.address === a.delegator)
       );
 
       const accountsAdded = accounts.filter(
         (c: ImportedAccount) =>
-          !proxyRef.current.find((a: Proxy) => a.delegator === c.address)
+          !proxiesRef.current.find((a: Proxy) => a.delegator === c.address)
       );
 
       // update proxy state for removal
-      newProxy = proxyRef.current.filter((l: Proxy) =>
+      newProxy = proxiesRef.current.filter((l: Proxy) =>
         accounts.find((c: ImportedAccount) => c.address === l.delegator)
       );
-      if (newProxy.length < proxyRef.current.length) {
+      if (newProxy.length < proxiesRef.current.length) {
         accountsRemoved.forEach((p: Proxy) => {
           const unsub = unsubsRef.current.find(
             (u: AnyApi) => u.key === p.delegator
@@ -63,7 +63,7 @@ export const ProxiesProvider = ({
             newUnsubsProxy.filter((u: AnyApi) => u.key !== p.delegator);
           }
         });
-        setStateWithRef(newProxy, setProxy, proxyRef);
+        setStateWithRef(newProxy, setProxies, proxiesRef);
         setStateWithRef(newUnsubsProxy, setUnsubs, unsubsRef);
       }
 
@@ -114,17 +114,17 @@ export const ProxiesProvider = ({
             reserved: new BigNumber(reserved),
           };
 
-          let currentProxy = Object.values(proxyRef.current);
+          let currentProxy = Object.values(proxiesRef.current);
           currentProxy = currentProxy
             .filter((d: Proxy) => d.delegator !== updatedProxy.delegator)
             .concat(updatedProxy);
 
-          setStateWithRef(currentProxy, setProxy, proxyRef);
+          setStateWithRef(currentProxy, setProxies, proxiesRef);
         } else {
           // no proxies: remove stale proxies if already in list.
-          let newProxy = Object.values(proxyRef.current);
+          let newProxy = Object.values(proxiesRef.current);
           newProxy = newProxy.filter((d: Proxy) => d.delegator !== address);
-          setStateWithRef(newProxy, setProxy, proxyRef);
+          setStateWithRef(newProxy, setProxies, proxiesRef);
         }
       }
     );
@@ -142,7 +142,7 @@ export const ProxiesProvider = ({
       value={{
         // getProxies,
         // isProxied,
-        proxyMeta: proxyRef.current,
+        proxyMeta: proxiesRef.current,
       }}
     >
       {children}
