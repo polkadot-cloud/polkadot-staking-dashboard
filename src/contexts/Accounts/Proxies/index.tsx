@@ -7,9 +7,9 @@ import { useConnect } from 'contexts/Connect';
 import type { ImportedAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi } from 'types';
-import { rmCommas, setStateWithRef } from 'Utils';
+import { clipAddress, rmCommas, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
-import type { Delegate, ProxiesContextInterface, Proxy } from './type';
+import type { ProxyAccount, ProxiesContextInterface, Proxy } from './type';
 
 export const ProxiesContext = React.createContext<ProxiesContextInterface>(
   defaults.defaultProxiesContext
@@ -97,12 +97,13 @@ export const ProxiesProvider = ({
         const reserved = rmCommas(data[1]);
 
         if (newProxies.length) {
-          const newDelegates: Array<Delegate> = [];
+          const newDelegates: Array<ProxyAccount> = [];
 
           for (const d of newProxies) {
             const { delegate, proxyType } = d;
             newDelegates.push({
-              account: delegate.toString(),
+              address: delegate.toString(),
+              name: clipAddress(delegate.toString()),
               type: proxyType.toString(),
             });
           }

@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import type { ProxyAccount } from 'contexts/Accounts/Proxies/type';
 import type {
   ExtensionAccount,
   ExtensionInjected,
@@ -23,7 +24,7 @@ export interface ConnectContextInterface {
   activeAccountMeta: ExtensionAccount | null;
 }
 
-export type ImportedAccount = ExtensionAccount | ExternalAccount;
+export type ImportedAccount = ExtensionAccount | ExternalAccount | ProxyAccount;
 
 export interface ExternalAccount {
   address: string;
