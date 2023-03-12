@@ -90,7 +90,6 @@ export const ActiveAccounWrapper = styled.div`
   }
 `;
 
-
 export const Separator = styled.div`
   border-bottom: 1px solid var(--border-primary-color);
   margin-top: 0.8rem;

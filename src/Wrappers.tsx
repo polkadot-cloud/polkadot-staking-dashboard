@@ -42,10 +42,10 @@ export const EntryWrapper = styled.div`
     color: var(--text-color-primary);
   }
   h4 {
-    color: var(--text-color-primary);
+    color: var(--text-color-secondary);
   }
   h5 {
-    color: var(--text-color-primary);
+    color: var(--text-color-secondary);
   }
   p {
     color: var(--text-color-secondary);

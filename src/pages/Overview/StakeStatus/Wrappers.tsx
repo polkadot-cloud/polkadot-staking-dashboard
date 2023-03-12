@@ -59,7 +59,7 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
     width: 100%;
 
     .text {
-      color: var(--text-color-secondary);
+      color: var(--text-color-primary);
       font-size: 1.25rem;
       line-height: 1.55rem;
       position: absolute;
