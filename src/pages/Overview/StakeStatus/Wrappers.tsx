@@ -24,7 +24,7 @@ export const StatusWrapper = styled.div<{ includeBorder: boolean }>`
     }
   }
   @media (max-width: ${SideMenuStickyThreshold}px) {
-    padding: 0 0.5rem;
+    padding: 0;
   }
 `;
 
@@ -33,8 +33,7 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
   width: 100%;
   display: flex;
   align-items: center;
-  padding-bottom: 0.75rem;
-  margin-bottom: 0.75rem;
+  padding: 1.15rem 1rem;
 
   > div {
     display: flex;
@@ -79,7 +78,7 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
       position: absolute;
       left: 0rem;
       top: 0.32rem;
-      margin-right: 0.75rem;
+      margin-right: 1rem;
 
       &.off {
         opacity: 0.1;
