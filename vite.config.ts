@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
-import svgr from 'vite-plugin-svgr';
-import eslint from 'vite-plugin-eslint';
-import tsconfigPaths from 'vite-tsconfig-paths';
+import { defineConfig } from 'vite';
 import checker from 'vite-plugin-checker';
+import eslint from 'vite-plugin-eslint';
+import svgr from 'vite-plugin-svgr';
+import tsconfigPaths from 'vite-tsconfig-paths';
 // TODO: Remove this once Ledger confirmed to be working without it.
 // import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 
@@ -23,8 +23,8 @@ export default defineConfig({
     }),
   ],
   build: {
-    outDir: 'build'
-  }, 
+    outDir: 'build',
+  },
   // optimizeDeps: {
   //   esbuildOptions: {
   //     define: {
@@ -37,4 +37,4 @@ export default defineConfig({
   //     ]
   //   }
   // }
-})
+});
