@@ -17,6 +17,7 @@ export const SplashWrapper = styled.div`
     display: flex;
     justify-content: center;
     z-index: 0;
+    margin-bottom: 2rem;
   }
 
   .content {
@@ -28,9 +29,10 @@ export const SplashWrapper = styled.div`
     h4 {
       margin-bottom: 0.5rem;
     }
-    h1,
+    h2,
     h4,
     h5 {
+      color: var(--text-color-secondary);
       text-align: center;
       margin-top: 0.35rem;
       svg {
