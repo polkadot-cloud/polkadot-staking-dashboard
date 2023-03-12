@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import type { MinimisedProps } from '../types';
 
-export const Wrapper = styled(motion.div) <MinimisedProps>`
+export const Wrapper = styled(motion.div)<MinimisedProps>`
   border-radius: 0.7rem;
   display: flex;
   flex-flow: row wrap;

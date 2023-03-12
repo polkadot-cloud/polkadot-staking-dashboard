@@ -4,7 +4,14 @@
 import type BigNumber from 'bignumber.js';
 import type { MaybeAccount } from 'types';
 
-export type ProxyType =  'Any' | 'NonTransfer' | 'Governance' |  'Staking' | 'IdentityJudgement' | 'CancelProxy' | 'Auction';
+export type ProxyType =
+  | 'Any'
+  | 'NonTransfer'
+  | 'Governance'
+  | 'Staking'
+  | 'IdentityJudgement'
+  | 'CancelProxy'
+  | 'Auction';
 
 export interface ProxyAccount {
   address: string;
@@ -26,5 +33,5 @@ export interface Proxy {
 
 export interface ProxiesContextInterface {
   proxies: Array<Proxy>;
-  getProxyAccounts: (a: string) => Array<ProxyAccount>,
+  getProxyAccounts: (a: string) => Array<ProxyAccount>;
 }

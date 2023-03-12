@@ -3,6 +3,7 @@
 
 import { BalancesProvider } from 'contexts/Accounts/Balances';
 import { LedgersProvider } from 'contexts/Accounts/Ledgers';
+import { ProxiesProvider } from 'contexts/Accounts/Proxies';
 import { APIProvider, useApi } from 'contexts/Api';
 import { ConnectProvider } from 'contexts/Connect';
 import { ExtensionsProvider } from 'contexts/Extensions';
@@ -37,7 +38,6 @@ import { withProviders } from 'library/Hooks';
 import { Router } from 'Router';
 import { ThemeProvider } from 'styled-components';
 import { EntryWrapper as Wrapper } from 'Wrappers';
-import { ProxiesProvider } from 'contexts/Accounts/Proxies';
 
 // `polkadot-dashboard-ui` theme classes are inserted here.
 export const WrappedRouter = () => {

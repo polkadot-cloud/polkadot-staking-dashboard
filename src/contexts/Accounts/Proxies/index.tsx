@@ -7,9 +7,14 @@ import { useConnect } from 'contexts/Connect';
 import type { ImportedAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi } from 'types';
-import { rmCommas, setStateWithRef } from 'Utils';
+import { clipAddress, rmCommas, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
-import type { ProxiesContextInterface, Proxy } from './type';
+import type {
+  Delegate,
+  ProxiesContextInterface,
+  Proxy,
+  ProxyAccount,
+} from './type';
 
 export const ProxiesContext = React.createContext<ProxiesContextInterface>(
   defaults.defaultProxiesContext
@@ -106,12 +111,22 @@ export const ProxiesProvider = ({
             reserved,
           };
 
-          setStateWithRef([...proxiesRef.current]
-            .filter((d: Proxy) => d.delegator !== address)
-            .concat(newProxy), setProxies, proxiesRef);
+          setStateWithRef(
+            [...proxiesRef.current]
+              .filter((d: Proxy) => d.delegator !== address)
+              .concat(newProxy),
+            setProxies,
+            proxiesRef
+          );
         } else {
           // no proxies: remove stale proxies if already in list.
-          setStateWithRef([...proxiesRef.current].filter((d: Proxy) => d.delegator !== address), setProxies, proxiesRef);
+          setStateWithRef(
+            [...proxiesRef.current].filter(
+              (d: Proxy) => d.delegator !== address
+            ),
+            setProxies,
+            proxiesRef
+          );
         }
       }
     );
@@ -124,13 +139,26 @@ export const ProxiesProvider = ({
     return unsub;
   };
 
-  // TODO: Gets the proxy accounts for a given proxy via the delegate
+  // Gets the proxy accounts for a given proxy via the delegate
   const getProxyAccounts = (address: string) => {
-    console.log(address);
-    // TODO: Filter proxies via delegate = address. If the supplied `address` is not a valid proxy
-    // delegator, return empty array. If delegate type is `All` or `Staking` type, add delegate to
-    // proxy accounts. return as type `ProxyAccount`.
-    return [];
+    const proxy = proxiesRef.current.find(
+      (p: Proxy) => p.delegator === address
+    );
+    if (!proxy) {
+      return [];
+    }
+    const delegates: Array<ProxyAccount> = proxy.delegates
+      .filter(
+        (d: Delegate) =>
+          d.delegate === address && ['All', 'Staking'].includes(d.type)
+      )
+      .map((d: Delegate) => ({
+        address: d.delegate,
+        signer: address,
+        name: clipAddress(d.delegate),
+        type: d.type,
+      }));
+    return delegates || [];
   };
 
   return (
