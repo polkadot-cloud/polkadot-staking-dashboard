@@ -12,6 +12,7 @@ import checker from 'vite-plugin-checker';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/polkadot-staking-dashboard/',
   plugins: [
     eslint(),
     react(),
