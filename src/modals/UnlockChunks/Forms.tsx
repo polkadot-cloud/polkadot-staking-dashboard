@@ -3,7 +3,7 @@
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonInvert, ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonInvert, ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';

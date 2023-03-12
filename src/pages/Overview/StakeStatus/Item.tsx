@@ -3,7 +3,7 @@
 
 import { faChevronRight, faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonInvertRounded } from '@polkadotcloud/dashboard-ui';
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { applyWidthAsPadding } from 'Utils';
 import type { ItemProps } from './types';
