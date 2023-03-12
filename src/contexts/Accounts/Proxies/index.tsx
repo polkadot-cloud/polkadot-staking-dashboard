@@ -6,7 +6,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { ImportedAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
-import type { AnyApi } from 'types';
+import type { AnyApi, MaybeAccount } from 'types';
 import { clipAddress, rmCommas, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
 import type {
@@ -140,7 +140,10 @@ export const ProxiesProvider = ({
   };
 
   // Gets the proxy accounts for a given proxy via the delegate
-  const getProxyAccounts = (address: string) => {
+  const getProxyAccounts = (address: MaybeAccount) => {
+    if (!address) {
+      return [];
+    }
     const proxy = proxiesRef.current.find(
       (p: Proxy) => p.delegator === address
     );
