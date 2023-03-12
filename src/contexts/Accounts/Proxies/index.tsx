@@ -7,9 +7,9 @@ import { useConnect } from 'contexts/Connect';
 import type { ImportedAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi } from 'types';
-import { clipAddress, rmCommas, setStateWithRef } from 'Utils';
+import { rmCommas, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
-import type { ProxyAccount, ProxiesContextInterface, Proxy } from './type';
+import type { ProxiesContextInterface, Proxy } from './type';
 
 export const ProxiesContext = React.createContext<ProxiesContextInterface>(
   defaults.defaultProxiesContext
@@ -35,7 +35,7 @@ export const ProxiesProvider = ({
   useEffect(() => {
     if (isReady) {
       // local updated values
-      let newProxy = proxiesRef.current;
+      let newProxies = proxiesRef.current;
       const newUnsubsProxy = unsubsRef.current;
 
       // get accounts removed: use these to unsubscribe
@@ -50,10 +50,10 @@ export const ProxiesProvider = ({
       );
 
       // update proxy state for removal
-      newProxy = proxiesRef.current.filter((l: Proxy) =>
+      newProxies = proxiesRef.current.filter((l: Proxy) =>
         accounts.find((c: ImportedAccount) => c.address === l.delegator)
       );
-      if (newProxy.length < proxiesRef.current.length) {
+      if (newProxies.length < proxiesRef.current.length) {
         accountsRemoved.forEach((p: Proxy) => {
           const unsub = unsubsRef.current.find(
             (u: AnyApi) => u.key === p.delegator
@@ -63,7 +63,7 @@ export const ProxiesProvider = ({
             newUnsubsProxy.filter((u: AnyApi) => u.key !== p.delegator);
           }
         });
-        setStateWithRef(newProxy, setProxies, proxiesRef);
+        setStateWithRef(newProxies, setProxies, proxiesRef);
         setStateWithRef(newUnsubsProxy, setUnsubs, unsubsRef);
       }
 
@@ -90,41 +90,28 @@ export const ProxiesProvider = ({
     const unsub: () => void = await api.queryMulti<AnyApi>(
       [[api.query.proxy.proxies, address]],
       async ([result]): Promise<void> => {
-        let updatedProxy: Proxy;
+        let newProxy: Proxy;
 
         const data = result.toHuman();
         const newProxies = data[0];
-        const reserved = rmCommas(data[1]);
+        const reserved = new BigNumber(rmCommas(data[1]));
 
         if (newProxies.length) {
-          const newDelegates: Array<ProxyAccount> = [];
-
-          for (const d of newProxies) {
-            const { delegate, proxyType } = d;
-            newDelegates.push({
-              address: delegate.toString(),
-              name: clipAddress(delegate.toString()),
-              type: proxyType.toString(),
-            });
-          }
-
-          updatedProxy = {
+          newProxy = {
             delegator: address,
-            delegates: newDelegates,
-            reserved: new BigNumber(reserved),
+            delegates: newProxies.map((d: AnyApi) => ({
+              delegate: d.delegate.toString(),
+              type: d.proxyType.toString(),
+            })),
+            reserved,
           };
 
-          let currentProxy = Object.values(proxiesRef.current);
-          currentProxy = currentProxy
-            .filter((d: Proxy) => d.delegator !== updatedProxy.delegator)
-            .concat(updatedProxy);
-
-          setStateWithRef(currentProxy, setProxies, proxiesRef);
+          setStateWithRef([...proxiesRef.current]
+            .filter((d: Proxy) => d.delegator !== address)
+            .concat(newProxy), setProxies, proxiesRef);
         } else {
           // no proxies: remove stale proxies if already in list.
-          let newProxy = Object.values(proxiesRef.current);
-          newProxy = newProxy.filter((d: Proxy) => d.delegator !== address);
-          setStateWithRef(newProxy, setProxies, proxiesRef);
+          setStateWithRef([...proxiesRef.current].filter((d: Proxy) => d.delegator !== address), setProxies, proxiesRef);
         }
       }
     );
@@ -137,12 +124,20 @@ export const ProxiesProvider = ({
     return unsub;
   };
 
+  // TODO: Gets the proxy accounts for a given proxy via the delegate
+  const getProxyAccounts = (address: string) => {
+    console.log(address);
+    // TODO: Filter proxies via delegate = address. If the supplied `address` is not a valid proxy
+    // delegator, return empty array. If delegate type is `All` or `Staking` type, add delegate to
+    // proxy accounts. return as type `ProxyAccount`.
+    return [];
+  };
+
   return (
     <ProxiesContext.Provider
       value={{
-        // getProxies,
-        // isProxied,
         proxies: proxiesRef.current,
+        getProxyAccounts,
       }}
     >
       {children}

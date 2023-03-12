@@ -11,9 +11,7 @@ export const proxy = {
 };
 
 export const defaultProxiesContext: ProxiesContextInterface = {
-  // eslint-disable-next-line
-  // getProxies: (address) => null,
-  // // eslint-disable-next-line
-  // isProxied: (address) => false,
   proxies: [],
+  // eslint-disable-next-line
+  getProxyAccounts: (a) => []
 };

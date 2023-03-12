@@ -4,23 +4,28 @@
 import type BigNumber from 'bignumber.js';
 import type { AnyApi, MaybeAccount } from 'types';
 
-export type ProxyType = 'Staking' | 'Any';
+export type ProxyType =  'Any' | 'NonTransfer' | 'Governance' |  'Staking' | 'IdentityJudgement' | 'CancelProxy' | 'Auction';
 
 export interface ProxyAccount {
   address: string;
+  signer: MaybeAccount;
   meta?: AnyApi;
   name: string;
   type: ProxyType;
 }
 
+export interface Delegate {
+  delegate: string;
+  type: ProxyType;
+}
+
 export interface Proxy {
   delegator: MaybeAccount;
-  delegates: Array<ProxyAccount>;
+  delegates: Array<Delegate>;
   reserved: BigNumber;
 }
 
 export interface ProxiesContextInterface {
-  // getProxies: (address: MaybeAccount) => Array<Delegate> | null;
-  // isProxied: (address: MaybeAccount) => boolean;
   proxies: Array<Proxy>;
+  getProxyAccounts: (a: string) => Array<ProxyAccount>,
 }
