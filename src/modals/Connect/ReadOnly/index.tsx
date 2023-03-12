@@ -5,6 +5,7 @@ import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ButtonMonoInvert } from '@rossbulat/polkadot-dashboard-ui';
 import { useConnect } from 'contexts/Connect';
 import type { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
+import { useModal } from 'contexts/Modal';
 import { useTranslation } from 'react-i18next';
 import { ReadOnlyInput } from '../ReadOnlyInput';
 import type { ReadOnlyProps } from '../types';
@@ -13,6 +14,7 @@ import { Wrapper } from './Wrapper';
 export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
   const { t } = useTranslation('modals');
   const { accounts, forgetAccounts } = useConnect();
+  const { setResize } = useModal();
 
   // get all external accounts
   const externalAccountsOnly = accounts.filter(
@@ -27,6 +29,7 @@ export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
   // forget account
   const forgetAccount = (account: ExternalAccount) => {
     forgetAccounts([account]);
+    setResize();
   };
   return (
     <Wrapper>

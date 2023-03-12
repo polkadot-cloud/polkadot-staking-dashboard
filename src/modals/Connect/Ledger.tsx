@@ -4,6 +4,7 @@
 import { faBluetoothB, faUsb } from '@fortawesome/free-brands-svg-icons';
 import { ButtonHelp, ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useHelp } from 'contexts/Help';
+import { useModal } from 'contexts/Modal';
 import { ReactComponent as LedgerLogoSVG } from 'img/ledgerLogo.svg';
 import React from 'react';
 import { Foot } from './Foot';
@@ -11,6 +12,7 @@ import { ConnectItem, HardwareInner } from './Wrappers';
 
 export const Ledger = (): React.ReactElement => {
   const { openHelp } = useHelp();
+  const { replaceModalWith } = useModal();
 
   return (
     <ConnectItem>
@@ -26,7 +28,7 @@ export const Ledger = (): React.ReactElement => {
             <ButtonSecondary
               text="USB"
               onClick={() => {
-                /* TODO */
+                replaceModalWith('LedgerImport', {}, 'large');
               }}
               iconLeft={faUsb}
               iconTransform="shrink-1"
@@ -36,7 +38,7 @@ export const Ledger = (): React.ReactElement => {
             <ButtonSecondary
               text="Bluetooth"
               onClick={() => {
-                /* TODO */
+                replaceModalWith('LedgerImport', {}, 'large');
               }}
               iconLeft={faBluetoothB}
               iconTransform="grow-1"

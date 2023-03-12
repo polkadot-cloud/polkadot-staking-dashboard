@@ -36,6 +36,7 @@ import { UpdateController } from './UpdateController';
 import { UpdatePayee } from './UpdatePayee';
 import { ValidatorMetrics } from './ValidatorMetrics';
 import { WithdrawPoolMember } from './WithdrawPoolMember';
+import { LedgerImport } from './LedgerImport';
 import {
   ContentWrapper,
   HeightWrapper,
@@ -146,6 +147,7 @@ export const Modal = () => {
                   {modal === 'Accounts' && <Accounts />}
                   {modal === 'GoToFeedback' && <GoToFeedback />}
                   {modal === 'JoinPool' && <JoinPool />}
+                  {modal === 'LedgerImport' && <LedgerImport />}
                   {modal === 'LeavePool' && <LeavePool />}
                   {modal === 'ManagePool' && <ManagePool />}
                   {modal === 'ManageFastUnstake' && <ManageFastUnstake />}

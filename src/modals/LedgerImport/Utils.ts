@@ -38,8 +38,7 @@ export const getDisplayFromLedgerCode = (
   return { title, subtitle };
 };
 
-// Determine the status of connection process. If the device is reported to be connected, ignore
-// `DeviceNotConnected` error returned by other tasks.
+// Determine the status of connection process.
 export const determineStatusFromCodes = (
   responses: Array<LedgerResponse>,
   inStatusBar: boolean
