@@ -2,14 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type BigNumber from 'bignumber.js';
-import type { AnyApi, MaybeAccount } from 'types';
+import type { MaybeAccount } from 'types';
 
 export type ProxyType =  'Any' | 'NonTransfer' | 'Governance' |  'Staking' | 'IdentityJudgement' | 'CancelProxy' | 'Auction';
 
 export interface ProxyAccount {
   address: string;
   signer: MaybeAccount;
-  meta?: AnyApi;
   name: string;
   type: ProxyType;
 }
