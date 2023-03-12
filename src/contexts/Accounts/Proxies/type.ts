@@ -22,5 +22,5 @@ export interface Proxy {
 export interface ProxiesContextInterface {
   // getProxies: (address: MaybeAccount) => Array<Delegate> | null;
   // isProxied: (address: MaybeAccount) => boolean;
-  proxyMeta: Array<Proxy>;
+  proxies: Array<Proxy>;
 }

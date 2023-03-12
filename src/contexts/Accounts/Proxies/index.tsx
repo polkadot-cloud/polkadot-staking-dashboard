@@ -142,7 +142,7 @@ export const ProxiesProvider = ({
       value={{
         // getProxies,
         // isProxied,
-        proxyMeta: proxiesRef.current,
+        proxies: proxiesRef.current,
       }}
     >
       {children}

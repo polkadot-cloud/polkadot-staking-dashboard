@@ -15,5 +15,5 @@ export const defaultProxiesContext: ProxiesContextInterface = {
   // getProxies: (address) => null,
   // // eslint-disable-next-line
   // isProxied: (address) => false,
-  proxyMeta: [],
+  proxies: [],
 };
