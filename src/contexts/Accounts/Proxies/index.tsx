@@ -151,13 +151,9 @@ export const ProxiesProvider = ({
       return [];
     }
     const delegates: Array<ProxyAccount> = proxy.delegates
-      .filter(
-        (d: Delegate) =>
-          d.delegate === address && ['All', 'Staking'].includes(d.type)
-      )
+      .filter((d: Delegate) => ['Any', 'Staking'].includes(d.type))
       .map((d: Delegate) => ({
         address: d.delegate,
-        signer: address,
         name: clipAddress(d.delegate),
         type: d.type,
       }));

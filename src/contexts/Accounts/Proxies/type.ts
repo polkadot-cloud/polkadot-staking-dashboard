@@ -15,7 +15,6 @@ export type ProxyType =
 
 export interface ProxyAccount {
   address: string;
-  signer: MaybeAccount;
   name: string;
   type: ProxyType;
 }
