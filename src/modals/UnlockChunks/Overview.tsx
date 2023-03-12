@@ -3,7 +3,7 @@
 
 import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';

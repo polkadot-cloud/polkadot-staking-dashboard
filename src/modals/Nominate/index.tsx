@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useApi } from 'contexts/Api';

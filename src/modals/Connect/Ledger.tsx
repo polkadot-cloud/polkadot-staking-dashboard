@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faBluetoothB, faUsb } from '@fortawesome/free-brands-svg-icons';
-import { ButtonHelp, ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp, ButtonSecondary } from '@polkadotcloud/dashboard-ui';
 import { useHelp } from 'contexts/Help';
 import { ReactComponent as LedgerLogoSVG } from 'img/ledgerLogo.svg';
 import React from 'react';
