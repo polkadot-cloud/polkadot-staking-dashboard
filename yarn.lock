@@ -952,6 +952,11 @@
     tslib "^2.5.0"
     ws "^8.13.0"
 
+"@polkadotcloud/dashboard-ui@0.1.0-alpha.1":
+  version "0.1.0-alpha.1"
+  resolved "https://registry.npmjs.org/@polkadotcloud/dashboard-ui/-/dashboard-ui-0.1.0-alpha.1.tgz#43e864eac443d2ed8cc27b37fbe2b588cb821439"
+  integrity sha512-EP/iQDz1tCAPv/M4YvTPeDsLduJWI8IXLZUBHUf6chv1NHfMGfSJl+O1i1LWLWGPVY4ipJHAxiCbZZoZb7hPYQ==
+
 "@remix-run/router@1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.4.0.tgz#74935d538e4df8893e47831a7aea362f295bcd39"
@@ -973,11 +978,6 @@
     "@types/estree" "^1.0.0"
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
-
-"@rossbulat/polkadot-dashboard-ui@0.1.0-alpha.54":
-  version "0.1.0-alpha.54"
-  resolved "https://registry.npmjs.org/@rossbulat/polkadot-dashboard-ui/-/polkadot-dashboard-ui-0.1.0-alpha.54.tgz#be19475ba3a454dd1103ad5373a0d0f411666cea"
-  integrity sha512-bN1/LIHi14u4Yrke/5Uyntd7li5BHWJkqIFkri1CO6qO8sOwtsf2ZpqZcRbnnwbzyz4hFRvksupQcHLZXDo35Q==
 
 "@scure/base@1.1.1":
   version "1.1.1"
@@ -2342,6 +2342,18 @@ eslint-plugin-react@^7.32.2:
     resolve "^2.0.0-next.4"
     semver "^6.3.0"
     string.prototype.matchall "^4.0.8"
+
+eslint-plugin-unused-imports@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/eslint-plugin-unused-imports/-/eslint-plugin-unused-imports-2.0.0.tgz#d8db8c4d0cfa0637a8b51ce3fd7d1b6bc3f08520"
+  integrity sha512-3APeS/tQlTrFa167ThtP0Zm0vctjr4M44HMpeg1P4bK6wItarumq0Ma82xorMKdFsWpphQBlRPzw/pxiVELX1A==
+  dependencies:
+    eslint-rule-composer "^0.3.0"
+
+eslint-rule-composer@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.npmjs.org/eslint-rule-composer/-/eslint-rule-composer-0.3.0.tgz#79320c927b0c5c0d3d3d2b76c8b4a488f25bbaf9"
+  integrity sha512-bt+Sh8CtDmn2OajxvNO+BX7Wn4CIWMpTRm3MaiKPCQcnnlm0CS2mhui6QaoeQugs+3Kj2ESKEEGJUdVafwhiCg==
 
 eslint-scope@^5.1.1:
   version "5.1.1"

@@ -5,11 +5,12 @@
   },
   "extends": [
     "eslint:recommended",
+    "plugin:import/recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "airbnb",
     // "airbnb-typescript",
-    "prettier"
+    "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -24,7 +25,8 @@
   "plugins": [
     "react",
     "@typescript-eslint",
-    "prefer-arrow-functions"
+    "prefer-arrow-functions",
+    "unused-imports"
   ],
   "rules": {
     "react/require-default-props": "off",
@@ -61,16 +63,11 @@
         "fixStyle": "separate-type-imports"
       }
     ],
-    "semi": [
-      2,
-      "always"
-    ],
+    "semi": [2, "always"],
     "react/jsx-filename-extension": [
       "warn",
       {
-        "extensions": [
-          ".tsx"
-        ]
+        "extensions": [".tsx"]
       }
     ],
     "import/extensions": [
@@ -81,9 +78,7 @@
         "tsx": "never"
       }
     ],
-    "@typescript-eslint/no-shadow": [
-      "error"
-    ],
+    "@typescript-eslint/no-shadow": ["error"],
     "prefer-arrow-functions/prefer-arrow-functions": [
       "warn",
       {

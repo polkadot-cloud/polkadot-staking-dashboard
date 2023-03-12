@@ -3,10 +3,7 @@
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  ButtonHelp,
-  ButtonInvertRounded,
-} from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp, ButtonInvertRounded } from '@polkadotcloud/dashboard-ui';
 import { useHelp } from 'contexts/Help';
 import { useOverlay } from 'contexts/Overlay';
 import type { FunctionComponent } from 'react';
