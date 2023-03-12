@@ -109,7 +109,7 @@ export const StakeStatus = () => {
         .earningRewards;
 
   return (
-    <CardWrapper>
+    <CardWrapper noPadding>
       <StatusWrapper includeBorder={showTips}>
         {isNetworkSyncing || (activeAccount && !getSyncSynced(syncId)) ? (
           <Item
