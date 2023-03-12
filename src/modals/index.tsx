@@ -18,6 +18,7 @@ import { Connect } from './Connect';
 import { GoToFeedback } from './GoToFeedback';
 import { JoinPool } from './JoinPool';
 import { LeavePool } from './LeavePool';
+import { LedgerImport } from './LedgerImport';
 import { ManageFastUnstake } from './ManageFastUnstake';
 import { ManagePool } from './ManagePool';
 import { Networks } from './Networks';
@@ -36,7 +37,6 @@ import { UpdateController } from './UpdateController';
 import { UpdatePayee } from './UpdatePayee';
 import { ValidatorMetrics } from './ValidatorMetrics';
 import { WithdrawPoolMember } from './WithdrawPoolMember';
-import { LedgerImport } from './LedgerImport';
 import {
   ContentWrapper,
   HeightWrapper,

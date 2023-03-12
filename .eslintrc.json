@@ -5,11 +5,12 @@
   },
   "extends": [
     "eslint:recommended",
+    "plugin:import/recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "airbnb",
     // "airbnb-typescript",
-    "prettier"
+    "plugin:prettier/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -21,7 +22,12 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["react", "@typescript-eslint", "prefer-arrow-functions"],
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "prefer-arrow-functions",
+    "unused-imports"
+  ],
   "rules": {
     "react/require-default-props": "off",
     "react/no-access-state-in-setstate": "off",
