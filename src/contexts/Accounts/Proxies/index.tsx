@@ -28,7 +28,7 @@ export const ProxiesProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, isReady, network } = useApi();
-  const { accounts } = useConnect();
+  const { accounts, activeAccount } = useConnect();
 
   // store the proxy accounts of each imported account.
   const [proxies, setProxies] = useState<Array<Proxy>>([]);
@@ -36,6 +36,9 @@ export const ProxiesProvider = ({
 
   const [unsubs, setUnsubs] = useState<AnyApi>([]);
   const unsubsRef = useRef(unsubs);
+
+  const [delegators, setDelegators] = useState<Array<MaybeAccount>>([]);
+  const delegatorsRef = useRef(delegators);
 
   useEffect(() => {
     if (isReady) {
@@ -88,6 +91,25 @@ export const ProxiesProvider = ({
       unsub();
     });
   }, []);
+
+  useEffect(() => {
+    const allProxies = [];
+    const proxiedAccounts = [];
+    for (const a of accounts) {
+      const proxy = proxiesRef.current.find(
+        (p: Proxy) => p.delegator === a.address
+      );
+      if (proxy) {
+        allProxies.push(proxy);
+      }
+    }
+    for (const p of allProxies) {
+      if (p.delegates.find((d: Delegate) => d.delegate === activeAccount)) {
+        proxiedAccounts.push(p.delegator);
+      }
+    }
+    setStateWithRef(proxiedAccounts, setDelegators, delegatorsRef);
+  }, [proxiesRef.current]);
 
   const subscribeToProxies = async (address: string) => {
     if (!api) return;
@@ -164,6 +186,7 @@ export const ProxiesProvider = ({
     <ProxiesContext.Provider
       value={{
         proxies: proxiesRef.current,
+        delegators: delegatorsRef.current,
         getProxyAccounts,
       }}
     >
