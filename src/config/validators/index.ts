@@ -490,7 +490,7 @@ export const VALIDATOR_COMMUNITY = [
   {
     name: 'TurboFlakes',
     thumbnail: 'TurboFlakes',
-    bio: 'TurboFlakes provides validators with character running on top of dedicated and high performance servers. Raiden, Coco and Momo are our named validators serving non-stop Polkadot and Kusama. We also provide end-user tooling to help you to interact with substrate blockchain networks. Feel free to reach out.',
+    bio: 'TurboFlakes provides validators with character running on top of dedicated and high performance servers. Raiden, Coco, Momo, Toto and Dodo are our named validators serving non-stop Polkadot and Kusama. We also provide end-user tooling to help you to interact with substrate blockchain networks. Feel free to reach out.',
     email: 'hey@turboflakes.io',
     twitter: '@turboflakes',
     website: 'https://turboflakes.io',
@@ -499,6 +499,8 @@ export const VALIDATOR_COMMUNITY = [
       kusama: [
         'FZsMKYHoQG1dAVhXBMyC7aYFYpASoBrrMYsAn1gJJUAueZX',
         'GA7j1FHWXpEU4kavowEte6LWR3NgZ8bkv4spWa9joiQF5R2',
+        'GwJweN3Q8VjBMkd2wWLQsgMXrwmFLD6ihfS146GkmiYg5gw',
+        'FUu6iSzpfStHnbtbzFy2gsnBLttwNgNSULSCQCgMjPfkYwF',
       ],
     },
   },
