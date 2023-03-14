@@ -30,7 +30,7 @@
     "@polkadot/api": "^10.0.1",
     "@polkadot/keyring": "^11.0.1",
     "@polkadot/react-identicon": "^3.0.2",
-    "@polkadot/rpc-provider": "^10.0.1",
+    "@polkadot/rpc-provider": "^10.1.2",
     "@polkadot/util": "^11.0.1",
     "@polkadotcloud/dashboard-ui": "0.1.0-alpha.1",
     "@substrate/connect": "^0.7.20",
