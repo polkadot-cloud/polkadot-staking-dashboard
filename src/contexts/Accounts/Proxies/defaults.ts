@@ -14,5 +14,5 @@ export const defaultProxiesContext: ProxiesContextInterface = {
   proxies: [],
   delegators: [],
   // eslint-disable-next-line
-  getProxyAccounts: (a) => [],
+  getDelegates: (a) => [],
 };

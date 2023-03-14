@@ -33,5 +33,5 @@ export interface Proxy {
 export interface ProxiesContextInterface {
   proxies: Array<Proxy>;
   delegators: Array<MaybeAccount>;
-  getProxyAccounts: (a: MaybeAccount) => Array<ProxyAccount>;
+  getDelegates: (a: MaybeAccount) => Array<ProxyAccount>;
 }

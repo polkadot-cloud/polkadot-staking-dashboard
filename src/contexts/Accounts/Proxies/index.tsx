@@ -42,8 +42,6 @@ export const ProxiesProvider = ({
 
   useEffect(() => {
     if (isReady) {
-      // local updated values
-      let newProxies = proxiesRef.current;
       const newUnsubsProxy = unsubsRef.current;
 
       // get accounts removed: use these to unsubscribe
@@ -58,7 +56,7 @@ export const ProxiesProvider = ({
       );
 
       // update proxy state for removal
-      newProxies = proxiesRef.current.filter((l: Proxy) =>
+      const newProxies = proxiesRef.current.filter((l: Proxy) =>
         accounts.find((c: ImportedAccount) => c.address === l.delegator)
       );
       if (newProxies.length < proxiesRef.current.length) {
@@ -162,7 +160,7 @@ export const ProxiesProvider = ({
   };
 
   // Gets the proxy accounts for a given proxy via the delegate
-  const getProxyAccounts = (address: MaybeAccount) => {
+  const getDelegates = (address: MaybeAccount) => {
     if (!address) {
       return [];
     }
@@ -187,7 +185,7 @@ export const ProxiesProvider = ({
       value={{
         proxies: proxiesRef.current,
         delegators: delegatorsRef.current,
-        getProxyAccounts,
+        getDelegates,
       }}
     >
       {children}
