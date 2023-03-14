@@ -940,6 +940,11 @@
     tslib "^2.5.0"
     ws "^8.12.1"
 
+"@polkadotcloud/dashboard-ui@0.1.0-alpha.1":
+  version "0.1.0-alpha.1"
+  resolved "https://registry.npmjs.org/@polkadotcloud/dashboard-ui/-/dashboard-ui-0.1.0-alpha.1.tgz#43e864eac443d2ed8cc27b37fbe2b588cb821439"
+  integrity sha512-EP/iQDz1tCAPv/M4YvTPeDsLduJWI8IXLZUBHUf6chv1NHfMGfSJl+O1i1LWLWGPVY4ipJHAxiCbZZoZb7hPYQ==
+
 "@remix-run/router@1.4.0":
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@remix-run/router/-/router-1.4.0.tgz#74935d538e4df8893e47831a7aea362f295bcd39"
@@ -961,11 +966,6 @@
     "@types/estree" "^1.0.0"
     estree-walker "^2.0.2"
     picomatch "^2.3.1"
-
-"@rossbulat/polkadot-dashboard-ui@0.1.0-alpha.53":
-  version "0.1.0-alpha.53"
-  resolved "https://registry.npmjs.org/@rossbulat/polkadot-dashboard-ui/-/polkadot-dashboard-ui-0.1.0-alpha.53.tgz#e4c11ff5b5e71b679f3e6393409de90b599a045c"
-  integrity sha512-FudjweM+7UEfAMObokET4ExAcjqXFDXHE+YW067wltrwGqnL1XFtnVkcoTYl1OudIyT3y4LIhxhcCBjJuLiRtQ==
 
 "@scure/base@1.1.1":
   version "1.1.1"

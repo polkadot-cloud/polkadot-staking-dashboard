@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/dashboard-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';

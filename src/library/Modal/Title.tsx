@@ -3,7 +3,7 @@
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonHelp } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp } from '@polkadotcloud/dashboard-ui';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
