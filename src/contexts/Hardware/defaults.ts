@@ -8,4 +8,12 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   transportResponse: null,
   ledgerDeviceInfo: null,
   executeLedgerLoop: async () => new Promise((resolve) => resolve()),
+  // eslint-disable-next-line
+  handleNewStatusCode: (a, s) => {},
+  // eslint-disable-next-line
+  setIsImporting: (b) => {},
+  cancelImport: () => {},
+  resetStatusCodes: () => {},
+  getIsImporting: () => false,
+  statusCodes: [],
 };

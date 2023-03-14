@@ -2,15 +2,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import Polkadot from '@ledgerhq/hw-app-polkadot';
-import TransportWebUSB from '@ledgerhq/hw-transport-webusb';
-import React, { useState } from 'react';
+import TransportWebHID from '@ledgerhq/hw-transport-webhid';
+import React, { useRef, useState } from 'react';
 import type { AnyJson } from 'types';
+import { setStateWithRef } from 'Utils';
 import { defaultLedgerHardwareContext } from './defaults';
 import type {
   LedgerHardwareContextInterface,
   LedgerResponse,
   LedgerTask,
 } from './types';
+
+export const TOTAL_ALLOWED_STATUS_CODES = 50;
 
 export const LedgerHardwareContext =
   React.createContext<LedgerHardwareContextInterface>(
@@ -24,6 +27,14 @@ export const LedgerHardwareProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  // Store whether an import is in process.
+  const [isImporting, setIsImportingState] = useState(false);
+  const isImportingRef = useRef(isImporting);
+
+  // Store status codes received from Ledger device.
+  const [statusCodes, setStatusCodes] = useState<Array<LedgerResponse>>([]);
+  const statusCodesRef = useRef(statusCodes);
+
   // Store the latest transport error of an attempted `executeLedgerLoop`.
   const [transportError, setTransportError] = useState<LedgerResponse | null>(
     null
@@ -61,7 +72,7 @@ export const LedgerHardwareProvider = ({
 
     if (tasks.includes('get_device_info')) {
       try {
-        transport = await TransportWebUSB.create();
+        transport = await TransportWebHID.create();
         const { deviceModel } = transport;
         if (deviceModel) {
           const { id, productName } = deviceModel;
@@ -70,7 +81,7 @@ export const LedgerHardwareProvider = ({
             productName,
           });
         }
-        transport.close();
+        await transport.close();
       } catch (err) {
         transport = null;
         noDevice = true;
@@ -80,7 +91,7 @@ export const LedgerHardwareProvider = ({
 
     if (!noDevice) {
       try {
-        transport = await TransportWebUSB.create();
+        transport = await TransportWebHID.create();
         let result = null;
         if (tasks.includes('get_address')) {
           result = await handleGetAddress(transport, options.accountIndex ?? 0);
@@ -92,7 +103,7 @@ export const LedgerHardwareProvider = ({
             });
           }
         }
-        transport.close();
+        await transport.close();
       } catch (err) {
         transport = null;
         handleErrors(err);
@@ -113,14 +124,46 @@ export const LedgerHardwareProvider = ({
     });
 
     const address = await polkadot.getAddress(
-      `'44'/354'/${accountIndex}'/0'/0'`,
+      `44'/354'/${accountIndex}'/0/0`,
       false
     );
+
     return {
       statusCode: 'ReceivedAddress',
       device: { id, productName },
       body: [address],
     };
+  };
+
+  // Handle an incoming new status code and persists to state.
+  //
+  // The most recent status code is stored at the start of the array at index 0. If total status
+  // codes are larger than the maximum allowed, the status code array is popped.
+  const handleNewStatusCode = (ack: string, statusCode: string) => {
+    const newStatusCodes = [{ ack, statusCode }, ...statusCodes];
+
+    // Remove last status code if there are more than allowed number of status codes.
+    if (newStatusCodes.length > TOTAL_ALLOWED_STATUS_CODES) {
+      newStatusCodes.pop();
+    }
+    setStateWithRef(newStatusCodes, setStatusCodes, statusCodesRef);
+  };
+
+  const setIsImporting = (val: boolean) => {
+    setStateWithRef(val, setIsImportingState, isImportingRef);
+  };
+
+  const cancelImport = () => {
+    setIsImporting(false);
+    resetStatusCodes();
+  };
+
+  const resetStatusCodes = () => {
+    setStateWithRef([], setStatusCodes, statusCodesRef);
+  };
+
+  const getIsImporting = () => {
+    return isImportingRef.current;
   };
   return (
     <LedgerHardwareContext.Provider
@@ -129,6 +172,12 @@ export const LedgerHardwareProvider = ({
         ledgerDeviceInfo,
         transportResponse,
         executeLedgerLoop,
+        setIsImporting,
+        cancelImport,
+        handleNewStatusCode,
+        resetStatusCodes,
+        getIsImporting,
+        statusCodes: statusCodesRef.current,
       }}
     >
       {children}
