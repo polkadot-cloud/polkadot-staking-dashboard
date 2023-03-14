@@ -24,7 +24,7 @@ export const StatusWrapper = styled.div<{ includeBorder: boolean }>`
     }
   }
   @media (max-width: ${SideMenuStickyThreshold}px) {
-    padding: 0 0.5rem;
+    padding: 0;
   }
 `;
 
@@ -33,8 +33,7 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
   width: 100%;
   display: flex;
   align-items: center;
-  padding-bottom: 0.75rem;
-  margin-bottom: 0.75rem;
+  padding: 1.15rem 1rem;
 
   > div {
     display: flex;
@@ -61,15 +60,13 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
     .text {
       color: var(--text-color-primary);
       font-size: 1.25rem;
-      line-height: 1.55rem;
       position: absolute;
       top: 0;
       left: 0;
       width: auto;
       max-width: 100%;
-      height: 2rem;
       padding: ${(props) =>
-        props.leftIcon ? '0.15rem 0 0 1.85rem' : '0.15rem 0 0 0'};
+        props.leftIcon ? '0.18rem 0 0 1.85rem' : '0.18rem 0 0 0'};
       text-align: left;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -79,7 +76,7 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
       position: absolute;
       left: 0rem;
       top: 0.32rem;
-      margin-right: 0.75rem;
+      margin-right: 1rem;
 
       &.off {
         opacity: 0.1;
