@@ -20,7 +20,7 @@ export const TransferOptionsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { getAccount, getAccountBalance, getLedgerForStash } = useBalances();
+  const { getAccount, getAccountBalance } = useBalances();
 
   // get the bond and unbond amounts available to the user
   const getTransferOptions = (address: MaybeAccount): TransferOptions => {

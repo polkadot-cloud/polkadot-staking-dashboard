@@ -4,14 +4,11 @@
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AnyJson } from 'types';
 import { AccountButton } from './Account';
-import { ControllerAccount, StashAcount } from './types';
 import { AccountWrapper, ContentWrapper, PaddingWrapper } from './Wrappers';
 
 export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
@@ -19,18 +16,8 @@ export const Accounts = forwardRef((props: AnyJson, ref: AnyJson) => {
 
   const { isReady } = useApi();
   const { getAccount, activeAccount } = useConnect();
-  const {
-    getLedgerForController,
-    accounts: balanceAccounts,
-    ledgers,
-  } = useBalances();
-  const { connectToAccount } = useConnect();
-  const { setStatus } = useModal();
   const { accounts } = useConnect();
   const { t } = useTranslation('modals');
-
-  const _controllers: Array<ControllerAccount> = [];
-  const _stashes: Array<StashAcount> = [];
 
   // store local copy of accounts
   const [localAccounts, setLocalAccounts] = useState(accounts);

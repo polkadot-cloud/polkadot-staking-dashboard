@@ -5,7 +5,6 @@ import { faCompressAlt, faExpandAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
@@ -36,7 +35,6 @@ export const SideMenu = () => {
     userSideMenuMinimised,
     setUserSideMenuMinimised,
   }: UIContextInterface = useUi();
-  const { openHelpWith } = useHelp();
   const { t } = useTranslation('base');
 
   // listen to window resize to hide SideMenu

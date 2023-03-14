@@ -2,9 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
-import { usePlugins } from 'contexts/Plugins';
 import { useOutsideAlerter } from 'library/Hooks';
-import { usePrices } from 'library/Hooks/usePrices';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { capitalizeFirstLetter } from 'Utils';
@@ -12,9 +10,7 @@ import { Status } from './Status';
 import { NetworkInfo, Separator, Summary, Wrapper } from './Wrappers';
 
 export const NetworkBar = () => {
-  const { plugins } = usePlugins();
   const { network, isLightClient } = useApi();
-  const prices = usePrices();
   const { t } = useTranslation('library');
 
   // currently not in use

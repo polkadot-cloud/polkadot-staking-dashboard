@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Option } from '@polkadot/types-codec';
-import BN from 'bn.js';
 import {
   BalanceLedger,
   BalancesAccount,
@@ -28,7 +27,7 @@ export const BalancesProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, isReady, network, consts } = useApi();
-  const { accounts: connectAccounts, addExternalAccount } = useConnect();
+  const { accounts: connectAccounts } = useConnect();
 
   // existential amount of unit for an account
   const existentialAmount = consts.existentialDeposit;
@@ -165,12 +164,6 @@ export const BalancesProvider = ({
 
         // get account balances
         const { free } = data;
-
-        // calculate free balance after app reserve
-        let freeAfterReserve = new BN(free).sub(existentialAmount);
-        freeAfterReserve = freeAfterReserve.lt(new BN(0))
-          ? new BN(0)
-          : freeAfterReserve;
 
         // set account balances to context
         _account.balance = {
