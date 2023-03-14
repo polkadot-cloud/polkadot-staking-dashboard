@@ -3,9 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
-import { useProxies } from 'contexts/Accounts/Proxies';
 import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
 import { useSubscan } from 'contexts/Subscan';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
@@ -44,10 +42,6 @@ export const Overview = () => {
     poolClaims,
     unclaimedPayouts
   );
-
-  const { activeAccount } = useConnect();
-  const { getProxyAccounts } = useProxies();
-  console.log(getProxyAccounts(activeAccount));
 
   const PAYOUTS_HEIGHT = 390;
 
