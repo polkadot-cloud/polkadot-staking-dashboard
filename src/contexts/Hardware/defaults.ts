@@ -9,6 +9,8 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   ledgerDeviceInfo: null,
   executeLedgerLoop: async () => new Promise((resolve) => resolve()),
   // eslint-disable-next-line
+  setIsPaired: (v) => {},
+  // eslint-disable-next-line
   handleNewStatusCode: (a, s) => {},
   // eslint-disable-next-line
   setIsImporting: (b) => {},
@@ -17,4 +19,5 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   resetStatusCodes: () => {},
   getIsImporting: () => false,
   statusCodes: [],
+  isPaired: 'unknown',
 };

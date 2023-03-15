@@ -4,11 +4,7 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@polkadotcloud/dashboard-ui';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
-import type {
-  LedgerResponse,
-  LedgerTask,
-  PairingStatus,
-} from 'contexts/Hardware/types';
+import type { LedgerResponse, LedgerTask } from 'contexts/Hardware/types';
 import { useModal } from 'contexts/Modal';
 import { CustomHeaderWrapper, PaddingWrapper } from 'modals/Wrappers';
 import React, { useEffect, useRef, useState } from 'react';
@@ -21,15 +17,14 @@ export const LedgerImport: React.FC = () => {
   const {
     executeLedgerLoop,
     transportResponse,
+    setIsPaired,
     setIsImporting,
     resetStatusCodes,
     getIsImporting,
     handleNewStatusCode,
     checkPaired,
+    isPaired,
   } = useLedgerHardware();
-
-  // Store whether the device has been paired.
-  const [isPaired, setIsPaired] = useState<PairingStatus>('unknown');
 
   // Store addresses retreived from Ledger device.
   //

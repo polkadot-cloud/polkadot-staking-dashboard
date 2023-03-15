@@ -11,6 +11,7 @@ import type {
   LedgerHardwareContextInterface,
   LedgerResponse,
   LedgerTask,
+  PairingStatus,
 } from './types';
 
 export const TOTAL_ALLOWED_STATUS_CODES = 50;
@@ -27,6 +28,10 @@ export const LedgerHardwareProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  // Store whether the device has been paired.
+  const [isPaired, setIsPairedState] = useState<PairingStatus>('unknown');
+  const isPairedRef = useRef(isPaired);
+
   // Store whether an import is in process.
   const [isImporting, setIsImportingState] = useState(false);
   const isImportingRef = useRef(isImporting);
@@ -159,6 +164,10 @@ export const LedgerHardwareProvider = ({
     setStateWithRef(newStatusCodes, setStatusCodes, statusCodesRef);
   };
 
+  const setIsPaired = (p: PairingStatus) => {
+    setStateWithRef(p, setIsPairedState, isPairedRef);
+  };
+
   const setIsImporting = (val: boolean) => {
     setStateWithRef(val, setIsImportingState, isImportingRef);
   };
@@ -182,6 +191,7 @@ export const LedgerHardwareProvider = ({
         ledgerDeviceInfo,
         transportResponse,
         executeLedgerLoop,
+        setIsPaired,
         setIsImporting,
         cancelImport,
         checkPaired,
@@ -189,6 +199,7 @@ export const LedgerHardwareProvider = ({
         resetStatusCodes,
         getIsImporting,
         statusCodes: statusCodesRef.current,
+        isPaired: isPairedRef.current,
       }}
     >
       {children}
