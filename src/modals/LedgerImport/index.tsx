@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import { ButtonSecondary } from '@polkadotcloud/dashboard-ui';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import type { LedgerResponse, LedgerTask } from 'contexts/Hardware/types';
@@ -22,9 +23,10 @@ export const LedgerImport: React.FC = () => {
     resetStatusCodes,
     getIsImporting,
     handleNewStatusCode,
-    checkPaired,
     isPaired,
     getStatusCodes,
+    handleErrors,
+    transport,
   } = useLedgerHardware();
 
   // Store whether this component is mounted.
@@ -51,11 +53,13 @@ export const LedgerImport: React.FC = () => {
   // Trigger a one-time connection to the device to determine if it is available. If the device
   // needs to be paired, a browser prompt will pop up and initialisation of `transport` will hault
   // until the user has completed or cancelled the pairing process.
-  const checkDevicePaired = async () => {
-    const paired = await checkPaired();
-    if (paired) {
+  const pairDevice = async () => {
+    try {
+      resetStatusCodes();
+      transport.current = await TransportWebHID.create();
+      await transport.current.device.close();
       setIsPaired('paired');
-    } else {
+    } catch (err) {
       setIsPaired('unpaired');
     }
   };
@@ -66,21 +70,37 @@ export const LedgerImport: React.FC = () => {
   // cleared once the address has been successfully fetched.
   let interval: ReturnType<typeof setInterval>;
   const handleLedgerLoop = () => {
-    interval = setInterval(() => {
-      if (
-        !isMounted.current ||
-        getStatusCodes()[0]?.statusCode === 'DeviceNotConnected'
-      ) {
-        clearInterval(interval);
+    const clearLoop = () => {
+      clearInterval(interval);
+    };
+
+    interval = setInterval(async () => {
+      if (getStatusCodes()[0]?.statusCode === 'DeviceNotConnected') {
         setIsPaired('unpaired');
-        resetStatusCodes();
+        clearLoop();
         return;
       }
-      const tasks: Array<LedgerTask> = ['get_device_info'];
-      if (getIsImporting()) {
-        tasks.push('get_address');
+      if (!isMounted.current) {
+        resetStatusCodes();
+        clearLoop();
+        return;
       }
-      executeLedgerLoop(tasks, { accountIndex: getNextAddressIndex() });
+
+      try {
+        if (!transport.current.device.opened) {
+          await transport.current.device.open();
+        }
+        const tasks: Array<LedgerTask> = ['get_device_info'];
+        if (getIsImporting()) {
+          tasks.push('get_address');
+        }
+        await executeLedgerLoop(transport.current, tasks, {
+          accountIndex: getNextAddressIndex(),
+        });
+        await transport.current.device.close();
+      } catch (err) {
+        handleErrors(err);
+      }
     }, 2000);
   };
 
@@ -111,7 +131,9 @@ export const LedgerImport: React.FC = () => {
 
   // Initialise listeners for Ledger IO.
   useEffect(() => {
-    checkDevicePaired();
+    if (isPaired !== 'paired') {
+      pairDevice();
+    }
   }, [isPaired]);
 
   // Once the device is paired, start `handleLedgerLoop`.
@@ -150,12 +172,12 @@ export const LedgerImport: React.FC = () => {
             text="Back"
             iconLeft={faChevronLeft}
             iconTransform="shrink-3"
-            onClick={() => replaceModalWith('Connect', {}, 'large')}
+            onClick={async () => replaceModalWith('Connect', {}, 'large')}
           />
         </h1>
       </CustomHeaderWrapper>
       {!addressesRef.current.length ? (
-        <Splash checkDevicePaired={checkDevicePaired} />
+        <Splash pairDevice={pairDevice} />
       ) : (
         <>{/* TODO: Manage Component */}</>
       )}

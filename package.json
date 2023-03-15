@@ -27,7 +27,6 @@
     "@ledgerhq/hw-app-polkadot": "^6.27.12",
     "@ledgerhq/hw-transport-web-ble": "^6.27.12",
     "@ledgerhq/hw-transport-webhid": "^6.27.12",
-    "@ledgerhq/hw-transport-webusb": "^6.27.12",
     "@polkadot/api": "^10.0.1",
     "@polkadot/keyring": "^11.0.1",
     "@polkadot/react-identicon": "^3.0.2",

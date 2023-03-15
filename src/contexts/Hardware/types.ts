@@ -7,6 +7,7 @@ export type LedgerHardwareContextInterface = {
   ledgerDeviceInfo: AnyJson;
   transportResponse: AnyJson;
   executeLedgerLoop: (
+    transport: AnyJson,
     tasks: Array<LedgerTask>,
     options?: AnyJson
   ) => Promise<void>;
@@ -14,11 +15,12 @@ export type LedgerHardwareContextInterface = {
   handleNewStatusCode: (ack: string, statusCode: string) => void;
   setIsImporting: (v: boolean) => void;
   cancelImport: () => void;
-  checkPaired: () => Promise<boolean>;
   resetStatusCodes: () => void;
   getIsImporting: () => boolean;
   getStatusCodes: () => Array<LedgerResponse>;
   isPaired: PairingStatus;
+  handleErrors: (e: AnyJson) => void;
+  transport: AnyJson;
 };
 
 export interface LedgerResponse {

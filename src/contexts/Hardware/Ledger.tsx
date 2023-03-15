@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import Polkadot from '@ledgerhq/hw-app-polkadot';
-import TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import React, { useRef, useState } from 'react';
 import type { AnyJson } from 'types';
 import { setStateWithRef } from 'Utils';
@@ -41,80 +40,54 @@ export const LedgerHardwareProvider = ({
   const statusCodesRef = useRef(statusCodes);
 
   // Store the latest ledger device info.
-  const [ledgerDeviceInfo, setLedgerDeviceInfo] = useState<AnyJson>(null);
+  const [ledgerDeviceInfo] = useState<AnyJson>(null);
 
   // Store the latest successful response from an attempted `executeLedgerLoop`.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
 
+  const t = useRef<any>(null);
+
   // Handles errors that occur during a `executeLedgerLoop`.
   const handleErrors = (err: AnyJson) => {
-    if (String(err).substring(0, 26) === 'TransportOpenUserCancelled') {
+    if (
+      String(err).startsWith('DOMException: Failed to open the device.') ||
+      String(err).startsWith('NotAllowedError: Failed to open the device.')
+    ) {
       handleNewStatusCode('failure', 'DeviceNotConnected');
+    } else if (String(err).startsWith('TransportOpenUserCancelled')) {
+      handleNewStatusCode('failure', 'DeviceNotConnected');
+    } else if (String(err).startsWith('TypeError')) {
+      handleNewStatusCode('failure', 'DeviceNotConnected');
+    } else if (
+      String(err).startsWith('TransportError: Ledger Device is busy')
+    ) {
+      // do nothing.
     } else {
       handleNewStatusCode('failure', 'AppNotOpen');
     }
     // DOMException: The device is already open.
   };
 
-  // Connects to a Ledger device to check if it
-  const checkPaired = async () => {
-    let transport;
-    try {
-      transport = await TransportWebHID.create();
-      await transport.close();
-      return true;
-    } catch (err) {
-      transport?.close();
-      return false;
-    }
-  };
-
   // Connects to a Ledger device to perform a task.
   const executeLedgerLoop = async (
+    transport: AnyJson,
     tasks: Array<LedgerTask>,
     options?: AnyJson
   ) => {
-    let transport;
-    let noDevice = false;
-
-    if (tasks.includes('get_device_info')) {
-      try {
-        transport = await TransportWebHID.create();
-        const { deviceModel } = transport;
-        if (deviceModel) {
-          const { id, productName } = deviceModel;
-          setLedgerDeviceInfo({
-            id,
-            productName,
+    try {
+      let result = null;
+      if (tasks.includes('get_address')) {
+        result = await handleGetAddress(transport, options.accountIndex ?? 0);
+        if (result) {
+          setTransportResponse({
+            ack: 'success',
+            options,
+            ...result,
           });
         }
-        await transport.close();
-      } catch (err) {
-        transport?.close();
-        noDevice = true;
-        handleErrors(err);
       }
-    }
-
-    if (!noDevice) {
-      try {
-        transport = await TransportWebHID.create();
-        let result = null;
-        if (tasks.includes('get_address')) {
-          result = await handleGetAddress(transport, options.accountIndex ?? 0);
-          if (result) {
-            setTransportResponse({
-              ack: 'success',
-              options,
-              ...result,
-            });
-          }
-        }
-        await transport.close();
-      } catch (err) {
-        transport?.close();
-        handleErrors(err);
-      }
+    } catch (err) {
+      handleErrors(err);
     }
   };
 
@@ -190,12 +163,13 @@ export const LedgerHardwareProvider = ({
         setIsPaired,
         setIsImporting,
         cancelImport,
-        checkPaired,
         handleNewStatusCode,
         resetStatusCodes,
         getIsImporting,
         getStatusCodes,
+        handleErrors,
         isPaired: isPairedRef.current,
+        transport: t,
       }}
     >
       {children}

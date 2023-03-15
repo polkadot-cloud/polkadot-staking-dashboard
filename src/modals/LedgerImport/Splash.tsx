@@ -9,7 +9,7 @@ import type { AnyFunction } from 'types';
 import { determineStatusFromCodes } from './Utils';
 import { SplashWrapper } from './Wrappers';
 
-export const Splash = ({ checkDevicePaired }: AnyFunction) => {
+export const Splash = ({ pairDevice }: AnyFunction) => {
   const { getStatusCodes, isPaired } = useLedgerHardware();
   const statusCodes = getStatusCodes();
 
@@ -40,7 +40,7 @@ export const Splash = ({ checkDevicePaired }: AnyFunction) => {
               >
                 <ButtonSecondary
                   text="Try Again"
-                  onClick={() => checkDevicePaired()}
+                  onClick={() => pairDevice()}
                   lg
                 />
               </div>

@@ -6,7 +6,8 @@ import type { LedgerHardwareContextInterface } from './types';
 export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   transportResponse: null,
   ledgerDeviceInfo: null,
-  executeLedgerLoop: async () => new Promise((resolve) => resolve()),
+  // eslint-disable-next-line
+  executeLedgerLoop: async (t, s, o) => new Promise((resolve) => resolve()),
   // eslint-disable-next-line
   setIsPaired: (v) => {},
   // eslint-disable-next-line
@@ -14,9 +15,11 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   // eslint-disable-next-line
   setIsImporting: (b) => {},
   cancelImport: () => {},
-  checkPaired: async () => new Promise((resolve) => resolve(false)),
   resetStatusCodes: () => {},
   getIsImporting: () => false,
   getStatusCodes: () => [],
   isPaired: 'unknown',
+  // eslint-disable-next-line
+  handleErrors: (e) => {},
+  transport: null,
 };
