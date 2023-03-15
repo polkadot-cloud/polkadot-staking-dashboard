@@ -93,7 +93,7 @@ export const LedgerHardwareProvider = ({
 
   // Timeout function for hanging tasks.
   const withTimeout = (millis: AnyFunction, promise: AnyFunction) => {
-    const timeout = new Promise((resolve, reject) =>
+    const timeout = new Promise((_, reject) =>
       setTimeout(() => reject(Error()), millis)
     );
     return Promise.race([promise, timeout]);
