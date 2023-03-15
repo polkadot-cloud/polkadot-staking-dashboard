@@ -26,6 +26,9 @@ export const LedgerImport: React.FC = () => {
     isPaired,
   } = useLedgerHardware();
 
+  // Store whether this component is mounted.
+  const isMounted = useRef(false);
+
   // Store addresses retreived from Ledger device.
   //
   // TODO: Initialise to any addresses saved in local storage.
@@ -64,6 +67,10 @@ export const LedgerImport: React.FC = () => {
   let interval: ReturnType<typeof setInterval>;
   const handleLedgerLoop = () => {
     interval = setInterval(() => {
+      if (!isMounted.current) {
+        clearInterval(interval);
+        return;
+      }
       const tasks: Array<LedgerTask> = ['get_device_info'];
       if (getIsImporting()) {
         tasks.push('get_address');
@@ -109,18 +116,18 @@ export const LedgerImport: React.FC = () => {
   useEffect(() => {
     if (isPaired === 'paired') {
       if (!addressesRef.current.length) {
-        console.log('start import');
+        console.log('start import & start ledger loop');
         setIsImporting(true);
+        handleLedgerLoop();
       }
-      console.log('start ledger loop');
-      handleLedgerLoop();
     }
   }, [isPaired]);
 
-  // Clear interval on unmount
+  // Keep `isMounted` up to date.
   useEffect(() => {
+    isMounted.current = true;
     return () => {
-      clearInterval(interval);
+      isMounted.current = false;
     };
   }, []);
 
@@ -142,7 +149,7 @@ export const LedgerImport: React.FC = () => {
         </h1>
       </CustomHeaderWrapper>
       {!addressesRef.current.length ? (
-        <Splash />
+        <Splash checkDevicePaired={checkDevicePaired} />
       ) : (
         <>{/* TODO: Manage Component */}</>
       )}
