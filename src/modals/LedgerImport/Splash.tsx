@@ -24,7 +24,7 @@ export const Splash = ({ checkDevicePaired }: AnyFunction) => {
           <h2>
             {isPaired !== 'paired'
               ? 'No Device Connected'
-              : statusCodes.length
+              : !statusCodes.length
               ? 'Checking...'
               : determineStatusFromCodes(statusCodes, false).title}
           </h2>
