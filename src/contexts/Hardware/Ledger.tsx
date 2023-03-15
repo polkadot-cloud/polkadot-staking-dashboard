@@ -3,7 +3,7 @@
 
 import Polkadot from '@ledgerhq/hw-app-polkadot';
 import React, { useRef, useState } from 'react';
-import type { AnyJson } from 'types';
+import type { AnyFunction, AnyJson } from 'types';
 import { setStateWithRef } from 'Utils';
 import { defaultLedgerHardwareContext } from './defaults';
 import type {
@@ -91,6 +91,14 @@ export const LedgerHardwareProvider = ({
     }
   };
 
+  // Timeout function for hanging tasks.
+  const withTimeout = (millis: AnyFunction, promise: AnyFunction) => {
+    const timeout = new Promise((resolve, reject) =>
+      setTimeout(() => reject(Error()), millis)
+    );
+    return Promise.race([promise, timeout]);
+  };
+
   // Gets a Polkadot address on the device.
   const handleGetAddress = async (transport: AnyJson, accountIndex: number) => {
     const polkadot = new Polkadot(transport);
@@ -103,16 +111,18 @@ export const LedgerHardwareProvider = ({
       body: `Getting addresess ${accountIndex} in progress.`,
     });
 
-    const address = await polkadot.getAddress(
-      `44'/354'/${accountIndex}'/0/0`,
-      false
+    const address = await withTimeout(
+      5000,
+      polkadot.getAddress(`44'/354'/${accountIndex}'/0/0`, false)
     );
 
-    return {
-      statusCode: 'ReceivedAddress',
-      device: { id, productName },
-      body: [address],
-    };
+    if (!(address instanceof Error)) {
+      return {
+        statusCode: 'ReceivedAddress',
+        device: { id, productName },
+        body: [address],
+      };
+    }
   };
 
   // Handle an incoming new status code and persists to state.
