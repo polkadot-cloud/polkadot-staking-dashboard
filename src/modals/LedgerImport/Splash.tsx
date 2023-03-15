@@ -31,7 +31,7 @@ export const Splash = ({ checkDevicePaired }: AnyFunction) => {
           </h2>
           {isPaired !== 'paired' ? (
             <>
-              <h5>Connect your Ledger device to continue.</h5>
+              <h5>Re-connect your Ledger device and Try Again to continue.</h5>
               <div
                 style={{
                   display: 'flex',
