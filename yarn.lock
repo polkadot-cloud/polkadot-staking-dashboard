@@ -1075,10 +1075,10 @@
     tslib "^2.5.0"
     ws "^8.13.0"
 
-"@polkadotcloud/dashboard-ui@0.1.0-alpha.1":
-  version "0.1.0-alpha.1"
-  resolved "https://registry.npmjs.org/@polkadotcloud/dashboard-ui/-/dashboard-ui-0.1.0-alpha.1.tgz#43e864eac443d2ed8cc27b37fbe2b588cb821439"
-  integrity sha512-EP/iQDz1tCAPv/M4YvTPeDsLduJWI8IXLZUBHUf6chv1NHfMGfSJl+O1i1LWLWGPVY4ipJHAxiCbZZoZb7hPYQ==
+"@polkadotcloud/dashboard-ui@0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@polkadotcloud/dashboard-ui/-/dashboard-ui-0.2.0.tgz#d8dcd6d90cfe1e6a58d30b7b93a20882e036e056"
+  integrity sha512-uRtzJJSyT/oSpyy11+FgHstfXam9ao3uPKS6AubMr5qVeCQH71oAiRdVW+TfwA7lmTpzC9xiAhuvYA+1HxqobA==
 
 "@remix-run/router@1.4.0":
   version "1.4.0"
