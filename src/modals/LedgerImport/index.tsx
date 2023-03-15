@@ -13,7 +13,7 @@ import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { Splash } from './Splash';
 
 export const LedgerImport: React.FC = () => {
-  const { replaceModalWith } = useModal();
+  const { replaceModalWith, setResize } = useModal();
   const {
     executeLedgerLoop,
     transportResponse,
@@ -24,6 +24,7 @@ export const LedgerImport: React.FC = () => {
     handleNewStatusCode,
     checkPaired,
     isPaired,
+    getStatusCodes,
   } = useLedgerHardware();
 
   // Store whether this component is mounted.
@@ -52,7 +53,6 @@ export const LedgerImport: React.FC = () => {
   // until the user has completed or cancelled the pairing process.
   const checkDevicePaired = async () => {
     const paired = await checkPaired();
-    console.log(paired);
     if (paired) {
       setIsPaired('paired');
     } else {
@@ -67,8 +67,13 @@ export const LedgerImport: React.FC = () => {
   let interval: ReturnType<typeof setInterval>;
   const handleLedgerLoop = () => {
     interval = setInterval(() => {
-      if (!isMounted.current) {
+      if (
+        !isMounted.current ||
+        getStatusCodes()[0]?.statusCode === 'DeviceNotConnected'
+      ) {
         clearInterval(interval);
+        setIsPaired('unpaired');
+        resetStatusCodes();
         return;
       }
       const tasks: Array<LedgerTask> = ['get_device_info'];
@@ -106,17 +111,13 @@ export const LedgerImport: React.FC = () => {
 
   // Initialise listeners for Ledger IO.
   useEffect(() => {
-    console.log('initialise check device paired');
-    if (!addressesRef.current.length) {
-      checkDevicePaired();
-    }
-  }, []);
+    checkDevicePaired();
+  }, [isPaired]);
 
   // Once the device is paired, start `handleLedgerLoop`.
   useEffect(() => {
     if (isPaired === 'paired') {
       if (!addressesRef.current.length) {
-        console.log('start import & start ledger loop');
         setIsImporting(true);
         handleLedgerLoop();
       }
@@ -130,6 +131,11 @@ export const LedgerImport: React.FC = () => {
       isMounted.current = false;
     };
   }, []);
+
+  // Resize modal on content change
+  useEffect(() => {
+    setResize();
+  }, [isPaired, getStatusCodes()]);
 
   // Listen for new Ledger status reports.
   useEffect(() => {

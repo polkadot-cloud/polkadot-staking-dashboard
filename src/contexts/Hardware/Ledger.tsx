@@ -44,7 +44,6 @@ export const LedgerHardwareProvider = ({
   const [ledgerDeviceInfo, setLedgerDeviceInfo] = useState<AnyJson>(null);
 
   // Store the latest successful response from an attempted `executeLedgerLoop`.
-  // TODO: migrate into an array of statuses.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
 
   // Handles errors that occur during a `executeLedgerLoop`.
@@ -59,11 +58,13 @@ export const LedgerHardwareProvider = ({
 
   // Connects to a Ledger device to check if it
   const checkPaired = async () => {
+    let transport;
     try {
-      const transport = await TransportWebHID.create();
+      transport = await TransportWebHID.create();
       await transport.close();
       return true;
     } catch (err) {
+      transport?.close();
       return false;
     }
   };
@@ -89,7 +90,7 @@ export const LedgerHardwareProvider = ({
         }
         await transport.close();
       } catch (err) {
-        transport = null;
+        transport?.close();
         noDevice = true;
         handleErrors(err);
       }
@@ -111,7 +112,7 @@ export const LedgerHardwareProvider = ({
         }
         await transport.close();
       } catch (err) {
-        transport = null;
+        transport?.close();
         handleErrors(err);
       }
     }
@@ -175,6 +176,11 @@ export const LedgerHardwareProvider = ({
   const getIsImporting = () => {
     return isImportingRef.current;
   };
+
+  const getStatusCodes = () => {
+    return statusCodesRef.current;
+  };
+
   return (
     <LedgerHardwareContext.Provider
       value={{
@@ -188,7 +194,7 @@ export const LedgerHardwareProvider = ({
         handleNewStatusCode,
         resetStatusCodes,
         getIsImporting,
-        statusCodes: statusCodesRef.current,
+        getStatusCodes,
         isPaired: isPairedRef.current,
       }}
     >

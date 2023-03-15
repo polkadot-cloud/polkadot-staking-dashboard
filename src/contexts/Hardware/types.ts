@@ -17,7 +17,7 @@ export type LedgerHardwareContextInterface = {
   checkPaired: () => Promise<boolean>;
   resetStatusCodes: () => void;
   getIsImporting: () => boolean;
-  statusCodes: Array<LedgerResponse>;
+  getStatusCodes: () => Array<LedgerResponse>;
   isPaired: PairingStatus;
 };
 

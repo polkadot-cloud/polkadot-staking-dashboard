@@ -10,7 +10,8 @@ import { determineStatusFromCodes } from './Utils';
 import { SplashWrapper } from './Wrappers';
 
 export const Splash = ({ checkDevicePaired }: AnyFunction) => {
-  const { statusCodes, isPaired } = useLedgerHardware();
+  const { getStatusCodes, isPaired } = useLedgerHardware();
+  const statusCodes = getStatusCodes();
 
   return (
     <>
@@ -28,23 +29,28 @@ export const Splash = ({ checkDevicePaired }: AnyFunction) => {
               ? 'Checking...'
               : determineStatusFromCodes(statusCodes, false).title}
           </h2>
-          {isPaired === 'unpaired' ? (
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                marginBottom: '1.5rem',
-              }}
-            >
-              <ButtonSecondary
-                text="Try Again"
-                onClick={() => checkDevicePaired()}
-                lg
-              />
-            </div>
-          ) : (
-            <h5>{determineStatusFromCodes(statusCodes, false).subtitle}</h5>
-          )}
+          {isPaired !== 'paired' ? (
+            <>
+              <h5>Connect your Ledger device to continue.</h5>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <ButtonSecondary
+                  text="Try Again"
+                  onClick={() => checkDevicePaired()}
+                  lg
+                />
+              </div>
+            </>
+          ) : null}
+          <h5>
+            {isPaired === 'paired'
+              ? determineStatusFromCodes(statusCodes, false).subtitle
+              : null}
+          </h5>
         </div>
       </SplashWrapper>
     </>

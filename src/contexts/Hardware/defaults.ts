@@ -17,6 +17,6 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   checkPaired: async () => new Promise((resolve) => resolve(false)),
   resetStatusCodes: () => {},
   getIsImporting: () => false,
-  statusCodes: [],
+  getStatusCodes: () => [],
   isPaired: 'unknown',
 };
