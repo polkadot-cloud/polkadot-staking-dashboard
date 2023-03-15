@@ -4,7 +4,6 @@
 import type { AnyJson } from 'types';
 
 export type LedgerHardwareContextInterface = {
-  transportError: LedgerResponse | null;
   ledgerDeviceInfo: AnyJson;
   transportResponse: AnyJson;
   executeLedgerLoop: (

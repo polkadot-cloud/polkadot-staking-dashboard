@@ -40,11 +40,6 @@ export const LedgerHardwareProvider = ({
   const [statusCodes, setStatusCodes] = useState<Array<LedgerResponse>>([]);
   const statusCodesRef = useRef(statusCodes);
 
-  // Store the latest transport error of an attempted `executeLedgerLoop`.
-  const [transportError, setTransportError] = useState<LedgerResponse | null>(
-    null
-  );
-
   // Store the latest ledger device info.
   const [ledgerDeviceInfo, setLedgerDeviceInfo] = useState<AnyJson>(null);
 
@@ -54,25 +49,21 @@ export const LedgerHardwareProvider = ({
 
   // Handles errors that occur during a `executeLedgerLoop`.
   const handleErrors = (err: AnyJson) => {
-    if (err?.id === 'NoDevice') {
-      setTransportError({
-        ack: 'failure',
-        statusCode: 'DeviceNotConnected',
-      });
+    if (String(err).substring(0, 26) === 'TransportOpenUserCancelled') {
+      handleNewStatusCode('failure', 'DeviceNotConnected');
     } else {
-      setTransportError({
-        ack: 'failure',
-        statusCode: 'AppNotOpen',
-      });
+      handleNewStatusCode('failure', 'AppNotOpen');
     }
+    // DOMException: The device is already open.
   };
 
   // Connects to a Ledger device to check if it
   const checkPaired = async () => {
     try {
-      await TransportWebHID.create();
+      const transport = await TransportWebHID.create();
+      await transport.close();
       return true;
-    } catch (e) {
+    } catch (err) {
       return false;
     }
   };
@@ -187,7 +178,6 @@ export const LedgerHardwareProvider = ({
   return (
     <LedgerHardwareContext.Provider
       value={{
-        transportError,
         ledgerDeviceInfo,
         transportResponse,
         executeLedgerLoop,
