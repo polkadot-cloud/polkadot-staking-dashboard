@@ -13,6 +13,7 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   // eslint-disable-next-line
   setIsImporting: (b) => {},
   cancelImport: () => {},
+  checkPaired: async () => new Promise((resolve) => resolve(false)),
   resetStatusCodes: () => {},
   getIsImporting: () => false,
   statusCodes: [],

@@ -62,6 +62,16 @@ export const LedgerHardwareProvider = ({
     }
   };
 
+  // Connects to a Ledger device to check if it
+  const checkPaired = async () => {
+    try {
+      await TransportWebHID.create();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+
   // Connects to a Ledger device to perform a task.
   const executeLedgerLoop = async (
     tasks: Array<LedgerTask>,
@@ -174,6 +184,7 @@ export const LedgerHardwareProvider = ({
         executeLedgerLoop,
         setIsImporting,
         cancelImport,
+        checkPaired,
         handleNewStatusCode,
         resetStatusCodes,
         getIsImporting,

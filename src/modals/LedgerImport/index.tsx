@@ -4,7 +4,11 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@polkadotcloud/dashboard-ui';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
-import type { LedgerResponse, LedgerTask } from 'contexts/Hardware/types';
+import type {
+  LedgerResponse,
+  LedgerTask,
+  PairingStatus,
+} from 'contexts/Hardware/types';
 import { useModal } from 'contexts/Modal';
 import { CustomHeaderWrapper, PaddingWrapper } from 'modals/Wrappers';
 import React, { useEffect, useRef, useState } from 'react';
@@ -21,7 +25,11 @@ export const LedgerImport: React.FC = () => {
     resetStatusCodes,
     getIsImporting,
     handleNewStatusCode,
+    checkPaired,
   } = useLedgerHardware();
+
+  // Store whether the device has been paired.
+  const [isPaired, setIsPaired] = useState<PairingStatus>('unknown');
 
   // Store addresses retreived from Ledger device.
   //
@@ -37,6 +45,21 @@ export const LedgerImport: React.FC = () => {
       return 0;
     }
     return addressesRef.current[addressesRef.current.length - 1].index + 1;
+  };
+
+  // Check whether the device is paired.
+  //
+  // Trigger a one-time connection to the device to determine if it is available. If the device
+  // needs to be paired, a browser prompt will pop up and initialisation of `transport` will hault
+  // until the user has completed or cancelled the pairing process.
+  const checkDevicePaired = async () => {
+    const paired = await checkPaired();
+    console.log(paired);
+    if (paired) {
+      setIsPaired('paired');
+    } else {
+      setIsPaired('unpaired');
+    }
   };
 
   // Connect to Ledger device and perform necessary tasks.
@@ -81,10 +104,26 @@ export const LedgerImport: React.FC = () => {
 
   // Initialise listeners for Ledger IO.
   useEffect(() => {
+    console.log('initialise check device paired');
     if (!addressesRef.current.length) {
-      setIsImporting(true);
+      checkDevicePaired();
     }
-    handleLedgerLoop();
+  }, []);
+
+  // Once the device is paired, start `handleLedgerLoop`.
+  useEffect(() => {
+    if (isPaired === 'paired') {
+      if (!addressesRef.current.length) {
+        console.log('start import');
+        setIsImporting(true);
+      }
+      console.log('start ledger loop');
+      handleLedgerLoop();
+    }
+  }, [isPaired]);
+
+  // Clear interval on unmount
+  useEffect(() => {
     return () => {
       clearInterval(interval);
     };

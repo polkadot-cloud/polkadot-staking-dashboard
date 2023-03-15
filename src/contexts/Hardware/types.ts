@@ -14,12 +14,11 @@ export type LedgerHardwareContextInterface = {
   handleNewStatusCode: (ack: string, statusCode: string) => void;
   setIsImporting: (v: boolean) => void;
   cancelImport: () => void;
+  checkPaired: () => Promise<boolean>;
   resetStatusCodes: () => void;
   getIsImporting: () => boolean;
   statusCodes: Array<LedgerResponse>;
 };
-
-export type LedgerTask = 'get_address' | 'get_device_info';
 
 export interface LedgerResponse {
   ack: string;
@@ -27,3 +26,7 @@ export interface LedgerResponse {
   body?: AnyJson;
   options?: AnyJson;
 }
+
+export type LedgerTask = 'get_address' | 'get_device_info';
+
+export type PairingStatus = 'paired' | 'unpaired' | 'unknown';
