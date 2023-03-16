@@ -10,11 +10,11 @@ import type { AnyApi, MaybeAccount } from 'types';
 import { clipAddress, rmCommas, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
 import type {
+  DelegateItem,
   Delegates,
   ProxiesContextInterface,
   Proxy,
   ProxyAccount,
-  ProxyDelegate,
 } from './type';
 
 export const ProxiesContext = React.createContext<ProxiesContextInterface>(
@@ -95,10 +95,10 @@ export const ProxiesProvider = ({
       // checking if delegator is not null to keep types happy.
       if (delegator) {
         // get each delegate of this proxy record.
-        for (const { delegate, type } of proxy.delegates) {
+        for (const { delegate, proxyType } of proxy.delegates) {
           const item = {
             delegator,
-            type,
+            proxyType,
           };
           // check if this delegate exists in `newDelegates`.
           if (Object.keys(newDelegates).includes(delegate)) {
@@ -139,7 +139,7 @@ export const ProxiesProvider = ({
             delegator: address,
             delegates: newProxies.map((d: AnyApi) => ({
               delegate: d.delegate.toString(),
-              type: d.proxyType.toString(),
+              proxyType: d.proxyType.toString(),
             })),
             reserved,
           };
@@ -172,38 +172,30 @@ export const ProxiesProvider = ({
     return unsub;
   };
 
-  // Gets the proxy accounts for a given proxy via the delegate
-  // TODO: needs to be re-written using `delegatesRef.current`.
-  const getProxies = (address: MaybeAccount) => {
-    if (!address) {
-      return [];
-    }
-    const proxy = proxiesRef.current.find(
-      (p: Proxy) => p.delegator === address
-    );
-    if (!proxy) {
-      return [];
-    }
-    const newProxies: Array<ProxyAccount> = proxy.delegates
-      .filter((d: ProxyDelegate) => ['Any', 'Staking'].includes(d.type))
-      .map((d: ProxyDelegate) => ({
-        address: d.delegate,
-        name: clipAddress(d.delegate),
-        type: d.type,
-      }));
-    return newProxies || [];
-  };
-
   // Gets the delegate for the given proxy account
-  const getProxiedAccounts = (delegate: MaybeAccount) =>
-    delegatesRef.current[delegate || ''] || [];
+  const getProxiedAccounts = (delegate: MaybeAccount) => {
+    const delegateItem = delegatesRef.current[delegate || ''] || [];
+
+    if (delegateItem == null) {
+      return [];
+    }
+    const newdelegateItem: Array<ProxyAccount> = delegateItem
+      .filter((item: DelegateItem) =>
+        ['Any', 'Staking'].includes(item.proxyType)
+      )
+      .map((d: DelegateItem) => ({
+        address: d.delegator,
+        name: clipAddress(d.delegator),
+        proxyType: d.proxyType,
+      }));
+    return newdelegateItem;
+  };
 
   return (
     <ProxiesContext.Provider
       value={{
         proxies: proxiesRef.current,
         delegates: delegatesRef.current,
-        getProxies,
         getProxiedAccounts,
       }}
     >

@@ -19,7 +19,7 @@ export interface Delegates {
 
 export interface DelegateItem {
   delegator: string;
-  type: ProxyType;
+  proxyType: ProxyType;
 }
 
 export interface Proxy {
@@ -30,18 +30,17 @@ export interface Proxy {
 
 export interface ProxyDelegate {
   delegate: string;
-  type: ProxyType;
+  proxyType: ProxyType;
 }
 
 export interface ProxyAccount {
   address: string;
   name: string;
-  type: ProxyType;
+  proxyType: ProxyType;
 }
 
 export interface ProxiesContextInterface {
   proxies: Array<Proxy>;
   delegates: Delegates;
-  getProxies: (a: MaybeAccount) => Array<ProxyAccount>;
-  getProxiedAccounts: (a: MaybeAccount) => Array<DelegateItem>;
+  getProxiedAccounts: (a: MaybeAccount) => Array<ProxyAccount>;
 }
