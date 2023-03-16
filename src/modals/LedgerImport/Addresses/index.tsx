@@ -35,9 +35,8 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
               onClick={async () => {
                 // re-pair the device if it has been disconnected.
                 await pairDevice();
-
                 setIsImporting(true);
-                handleLedgerLoop(true);
+                handleLedgerLoop();
               }}
             />
           </div>

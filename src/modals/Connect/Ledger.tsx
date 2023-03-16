@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faBluetoothB, faUsb } from '@fortawesome/free-brands-svg-icons';
+import { faUsb } from '@fortawesome/free-brands-svg-icons';
 import { ButtonHelp, ButtonSecondary } from '@polkadotcloud/dashboard-ui';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
@@ -34,15 +34,6 @@ export const Ledger = (): React.ReactElement => {
               iconTransform="shrink-1"
               lg
               marginRight
-            />
-            <ButtonSecondary
-              text="Bluetooth"
-              onClick={() => {
-                replaceModalWith('LedgerImport', {}, 'large');
-              }}
-              iconLeft={faBluetoothB}
-              iconTransform="grow-1"
-              lg
             />
           </div>
         </div>

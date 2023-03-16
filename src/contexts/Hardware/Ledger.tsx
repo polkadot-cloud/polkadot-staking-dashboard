@@ -58,11 +58,11 @@ export const LedgerHardwareProvider = ({
     try {
       resetStatusCodes();
       // try to forget current device
-      await t.current?.device?.forget();
-
+      if (isPairedRef.current !== 'paired') {
+        await t.current?.device?.forget();
+      }
       // establish a new connection with device.
       t.current = await TransportWebHID.create();
-      await t.current.device.close();
       setIsPaired('paired');
     } catch (err) {
       if (orUnpaired) {
@@ -85,13 +85,12 @@ export const LedgerHardwareProvider = ({
     } else if (
       String(err).startsWith('TransportError: Ledger Device is busy')
     ) {
-      // do nothing.
+      // do nothing
     } else if (String(err).startsWith('TransportStatusError')) {
-      handleNewStatusCode('failure', 'DeviceNotConnected');
+      handleNewStatusCode('failure', 'OpenAppToContinue');
     } else {
       handleNewStatusCode('failure', 'AppNotOpen');
     }
-    // DOMException: The device is already open.
   };
 
   // Connects to a Ledger device to perform a task.

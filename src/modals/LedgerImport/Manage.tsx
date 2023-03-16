@@ -44,12 +44,10 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
             <IconSVG width="24" height="24" className="ledgerIcon" />
             <div className="text">
               <h3>
-                {!isImporting
+                {!statusCodes.length
                   ? `Displaying ${addresses.length} Ledger Account${
                       addresses.length === 1 ? '' : 's'
                     }`
-                  : !statusCodes.length
-                  ? 'Connecting...'
                   : determineStatusFromCodes(statusCodes, true).title}
               </h3>
               {determineStatusFromCodes(statusCodes, true).subtitle ? (

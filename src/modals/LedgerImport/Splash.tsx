@@ -9,14 +9,36 @@ import { ReactComponent as CrossSVG } from 'img/cross.svg';
 import { ReactComponent as LogoSVG } from 'img/ledgerLogo.svg';
 import { Title } from 'library/Modal/Title';
 import { CustomHeaderWrapper } from 'modals/Wrappers';
+import { useEffect } from 'react';
 import type { AnyFunction } from 'types';
 import { determineStatusFromCodes } from './Utils';
 import { SplashWrapper } from './Wrappers';
 
-export const Splash = ({ pairDevice }: AnyFunction) => {
+export const Splash = ({ pairDevice, handleLedgerLoop }: AnyFunction) => {
   const { replaceModalWith, setStatus } = useModal();
-  const { getStatusCodes, isPaired } = useLedgerHardware();
+  const { getStatusCodes, isPaired, setIsImporting } = useLedgerHardware();
   const statusCodes = getStatusCodes();
+
+  // Initialise listeners for Ledger IO.
+  useEffect(() => {
+    if (isPaired !== 'paired') {
+      pairDevice();
+    }
+  }, [isPaired]);
+
+  // Once the device is paired, start `handleLedgerLoop`.
+  useEffect(() => {
+    if (isPaired === 'paired') {
+      setIsImporting(true);
+      handleLedgerLoop();
+    }
+  }, [isPaired]);
+
+  const statusCodeTitle = determineStatusFromCodes(statusCodes, false).title;
+  const statusCodeSubtitle = determineStatusFromCodes(
+    statusCodes,
+    false
+  ).subtitle;
 
   return (
     <>
@@ -46,14 +68,14 @@ export const Splash = ({ pairDevice }: AnyFunction) => {
         <div className="content">
           <h2>
             {isPaired !== 'paired'
-              ? 'No Device Connected'
+              ? 'Open the Polkadot app on Ledger and try again.'
               : !statusCodes.length
               ? 'Checking...'
-              : determineStatusFromCodes(statusCodes, false).title}
+              : statusCodeTitle}
           </h2>
           {isPaired !== 'paired' ? (
             <>
-              <h5>Re-connect your Ledger device and Try Again to continue.</h5>
+              <h5>Re-connect your Ledger device and try again to continue.</h5>
               <div
                 style={{
                   display: 'flex',
@@ -68,11 +90,7 @@ export const Splash = ({ pairDevice }: AnyFunction) => {
               </div>
             </>
           ) : null}
-          <h5>
-            {isPaired === 'paired'
-              ? determineStatusFromCodes(statusCodes, false).subtitle
-              : null}
-          </h5>
+          <h5>{isPaired === 'paired' ? statusCodeSubtitle : null}</h5>
         </div>
       </SplashWrapper>
     </>

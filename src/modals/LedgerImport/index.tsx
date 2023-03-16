@@ -52,17 +52,21 @@ export const LedgerImport: React.FC = () => {
   // The tasks sent to the device depend on the current state of the import process. The interval is
   // cleared once the address has been successfully fetched.
   let interval: ReturnType<typeof setInterval>;
-  const handleLedgerLoop = (pairOnClear = false) => {
+  const handleLedgerLoop = () => {
     interval = setInterval(async () => {
-      if (getStatusCodes()[0]?.statusCode === 'DeviceNotConnected') {
+      if (['DeviceNotConnected'].includes(getStatusCodes()[0]?.statusCode)) {
         setIsPaired('unpaired');
         clearLoop();
-
-        if (pairOnClear) {
-          await pairDevice();
-        }
         return;
       }
+
+      if (['OpenAppToContinue'].includes(getStatusCodes()[0]?.statusCode)) {
+        setIsPaired('unpaired');
+        setIsImporting(false);
+        clearLoop();
+        return;
+      }
+
       if (!isMounted.current) {
         resetStatusCodes();
         clearLoop();
@@ -119,23 +123,6 @@ export const LedgerImport: React.FC = () => {
     }
   };
 
-  // Initialise listeners for Ledger IO.
-  useEffect(() => {
-    if (isPaired !== 'paired') {
-      pairDevice();
-    }
-  }, [isPaired]);
-
-  // Once the device is paired, start `handleLedgerLoop`.
-  useEffect(() => {
-    if (isPaired === 'paired') {
-      if (!addressesRef.current.length) {
-        setIsImporting(true);
-        handleLedgerLoop();
-      }
-    }
-  }, [isPaired]);
-
   // Keep `isMounted` up to date.
   useEffect(() => {
     isMounted.current = true;
@@ -159,7 +146,7 @@ export const LedgerImport: React.FC = () => {
   return (
     <PaddingWrapper verticalOnly>
       {!addressesRef.current.length ? (
-        <Splash pairDevice={pairDevice} />
+        <Splash pairDevice={pairDevice} handleLedgerLoop={handleLedgerLoop} />
       ) : (
         <Manage
           addresses={addressesRef.current}

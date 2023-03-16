@@ -24,6 +24,9 @@ export const getDisplayFromLedgerCode = (
     case 'AppNotOpen':
       title = 'Open the Polkadot App';
       break;
+    case 'OpenAppToContinue':
+      title = 'Open the Polkadot app on Ledger and try again.';
+      break;
     case 'GettingAddress':
       title = 'Getting Address...';
       break;
