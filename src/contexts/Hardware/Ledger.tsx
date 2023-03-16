@@ -61,6 +61,10 @@ export const LedgerHardwareProvider = ({
       if (isPairedRef.current !== 'paired') {
         await t.current?.device?.forget();
       }
+      // close any open connections.
+      if (t.current?.device?.opened) {
+        await t.current?.device?.close();
+      }
       // establish a new connection with device.
       t.current = await TransportWebHID.create();
       setIsPaired('paired');
@@ -138,7 +142,7 @@ export const LedgerHardwareProvider = ({
 
     const address = await withTimeout(
       5000,
-      polkadot.getAddress(`44'/354'/${accountIndex}'/0/0`, false)
+      polkadot.getAddress(`'44'/354'/${accountIndex}'/0'/0'`, false)
     );
 
     if (!(address instanceof Error)) {
