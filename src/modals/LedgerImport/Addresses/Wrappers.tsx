@@ -8,9 +8,9 @@ export const AddressWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0rem 0rem 7rem 0rem;
-  overflow: scroll;
   height: auto;
   box-sizing: content-box;
+  overflow: auto;
 
   .heading {
     background: var(--background-primary);

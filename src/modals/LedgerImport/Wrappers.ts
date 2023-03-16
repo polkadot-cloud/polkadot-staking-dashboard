@@ -58,6 +58,7 @@ export const StatusBarWrapper = styled(motion.div)`
   bottom: 0;
   left: 0;
   width: 100%;
+  z-index: 10;
 
   > .inner {
     background: var(--background-list-item);
