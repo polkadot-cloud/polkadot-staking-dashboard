@@ -56,8 +56,6 @@ export const LedgerImport: React.FC = () => {
     interval = setInterval(async () => {
       // If the import modal is no longer open, cancel interval and reset import state.
       if (!isMounted.current) {
-        resetStatusCodes();
-        setIsImporting(false);
         clearInterval(interval);
         return;
       }
