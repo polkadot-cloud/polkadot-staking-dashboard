@@ -25,7 +25,7 @@ export const LedgerImport: React.FC = () => {
     isPaired,
     getStatusCodes,
     handleErrors,
-    transport,
+    getTransport,
   } = useLedgerHardware();
 
   // Store whether this component is mounted.
@@ -82,17 +82,16 @@ export const LedgerImport: React.FC = () => {
 
       // Attempt to carry out tasks on-device.
       try {
-        if (!transport.device.opened) {
-          await transport.device.open();
+        if (!getTransport().device.opened) {
+          await getTransport().device.open();
         }
         const tasks: Array<LedgerTask> = [];
         if (getIsImporting()) {
           tasks.push('get_address');
         }
-        await executeLedgerLoop(transport, tasks, {
+        await executeLedgerLoop(getTransport(), tasks, {
           accountIndex: getNextAddressIndex(),
         });
-        await transport.device.close();
       } catch (err) {
         handleErrors(err);
       }
@@ -134,8 +133,8 @@ export const LedgerImport: React.FC = () => {
       isMounted.current = false;
       resetStatusCodes();
       setIsImporting(false);
-      if (transport?.device?.opened) {
-        transport?.device?.close();
+      if (getTransport()?.device?.opened) {
+        getTransport().device.close();
       }
     };
   }, []);

@@ -20,7 +20,7 @@ export type LedgerHardwareContextInterface = {
   getIsImporting: () => boolean;
   getStatusCodes: () => Array<LedgerResponse>;
   handleErrors: (e: AnyJson) => void;
-  transport: AnyJson;
+  getTransport: () => AnyJson;
 };
 
 export interface LedgerResponse {

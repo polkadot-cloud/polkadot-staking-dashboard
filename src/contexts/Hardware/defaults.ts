@@ -21,5 +21,5 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   isPaired: 'unknown',
   // eslint-disable-next-line
   handleErrors: (e) => {},
-  transport: null,
+  getTransport: () => null,
 };

@@ -181,6 +181,10 @@ export const LedgerHardwareProvider = ({
     return statusCodesRef.current;
   };
 
+  const getTransport = () => {
+    return t.current;
+  };
+
   return (
     <LedgerHardwareContext.Provider
       value={{
@@ -196,7 +200,7 @@ export const LedgerHardwareProvider = ({
         getStatusCodes,
         handleErrors,
         isPaired: isPairedRef.current,
-        transport: t.current,
+        getTransport,
       }}
     >
       {children}
