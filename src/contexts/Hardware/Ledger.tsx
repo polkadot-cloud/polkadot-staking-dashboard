@@ -79,12 +79,10 @@ export const LedgerHardwareProvider = ({
   const handleErrors = (err: AnyJson) => {
     if (
       String(err).startsWith('DOMException: Failed to open the device.') ||
-      String(err).startsWith('NotAllowedError: Failed to open the device.')
+      String(err).startsWith('NotAllowedError: Failed to open the device.') ||
+      String(err).startsWith('TransportOpenUserCancelled') ||
+      String(err).startsWith('TypeError')
     ) {
-      handleNewStatusCode('failure', 'DeviceNotConnected');
-    } else if (String(err).startsWith('TransportOpenUserCancelled')) {
-      handleNewStatusCode('failure', 'DeviceNotConnected');
-    } else if (String(err).startsWith('TypeError')) {
       handleNewStatusCode('failure', 'DeviceNotConnected');
     } else if (
       String(err).startsWith('TransportError: Ledger Device is busy')
