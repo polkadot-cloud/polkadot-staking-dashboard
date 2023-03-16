@@ -41,7 +41,7 @@
     "chart.js": "^4.2.1",
     "che-react-number-easing": "^0.1.4",
     "date-fns": "^2.29.3",
-    "framer-motion": "^10.2.4",
+    "framer-motion": "^10.3.2",
     "i18next": "^22.4.11",
     "i18next-browser-languagedetector": "^7.0.1",
     "lodash.throttle": "^4.1.1",
@@ -65,7 +65,7 @@
     "@types/react-lottie": "^1.2.6",
     "@types/react-scroll": "^1.8.6",
     "@types/styled-components": "^5.1.26",
-    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
     "@typescript-eslint/parser": "^5.55.0",
     "@vitejs/plugin-react-swc": "^3.0.0",
     "eslint": "^8.36.0",
@@ -90,6 +90,6 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^2.4.0",
     "vite-tsconfig-paths": "^4.0.7",
-    "vitest": "^0.29.2"
+    "vitest": "^0.29.3"
   }
 }
