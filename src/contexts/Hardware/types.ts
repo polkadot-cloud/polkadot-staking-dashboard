@@ -5,6 +5,7 @@ import type { AnyJson } from 'types';
 
 export type LedgerHardwareContextInterface = {
   ledgerDeviceInfo: AnyJson;
+  pairDevice: () => Promise<void>;
   transportResponse: AnyJson;
   executeLedgerLoop: (
     transport: AnyJson,

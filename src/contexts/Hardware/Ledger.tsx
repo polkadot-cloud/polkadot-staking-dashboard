@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import Polkadot from '@ledgerhq/hw-app-polkadot';
+import TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import React, { useRef, useState } from 'react';
 import type { AnyFunction, AnyJson } from 'types';
 import { setStateWithRef } from 'Utils';
@@ -45,7 +46,30 @@ export const LedgerHardwareProvider = ({
   // Store the latest successful response from an attempted `executeLedgerLoop`.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
 
+  // The ledger transport interface.
   const t = useRef<any>(null);
+
+  // Check whether the device is paired.
+  //
+  // Trigger a one-time connection to the device to determine if it is available. If the device
+  // needs to be paired, a browser prompt will pop up and initialisation of `transport` will hault
+  // until the user has completed or cancelled the pairing process.
+  const pairDevice = async (orUnpaired = true) => {
+    try {
+      resetStatusCodes();
+      // try to forget current device
+      await t.current?.device?.forget();
+
+      // establish a new connection with device.
+      t.current = await TransportWebHID.create();
+      await t.current.device.close();
+      setIsPaired('paired');
+    } catch (err) {
+      if (orUnpaired) {
+        setIsPaired('unpaired');
+      }
+    }
+  };
 
   // Handles errors that occur during a `executeLedgerLoop`.
   const handleErrors = (err: AnyJson) => {
@@ -62,6 +86,8 @@ export const LedgerHardwareProvider = ({
       String(err).startsWith('TransportError: Ledger Device is busy')
     ) {
       // do nothing.
+    } else if (String(err).startsWith('TransportStatusError')) {
+      handleNewStatusCode('failure', 'DeviceNotConnected');
     } else {
       handleNewStatusCode('failure', 'AppNotOpen');
     }
@@ -167,6 +193,7 @@ export const LedgerHardwareProvider = ({
   return (
     <LedgerHardwareContext.Provider
       value={{
+        pairDevice,
         ledgerDeviceInfo,
         transportResponse,
         executeLedgerLoop,

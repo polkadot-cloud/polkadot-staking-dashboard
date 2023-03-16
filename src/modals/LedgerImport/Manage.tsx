@@ -10,7 +10,7 @@ import { Addresess } from './Addresses';
 import { determineStatusFromCodes } from './Utils';
 import { StatusBarWrapper } from './Wrappers';
 
-export const Manage = ({ addresses }: AnyJson) => {
+export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const { replaceModalWith } = useModal();
   const { setIsImporting, getIsImporting, getStatusCodes, resetStatusCodes } =
     useLedgerHardware();
@@ -19,7 +19,7 @@ export const Manage = ({ addresses }: AnyJson) => {
   const statusCodes = getStatusCodes();
   return (
     <>
-      <Addresess addresses={addresses} />
+      <Addresess addresses={addresses} handleLedgerLoop={handleLedgerLoop} />
 
       <StatusBarWrapper
         initial="hidden"

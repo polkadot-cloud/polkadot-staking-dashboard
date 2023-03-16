@@ -23,8 +23,6 @@ export const getDisplayFromLedgerCode = (
       break;
     case 'AppNotOpen':
       title = 'Open the Polkadot App';
-      subtitle =
-        'Tip: If the app is open after unlocking the device, quit and re-open the app.';
       break;
     case 'GettingAddress':
       title = 'Getting Address...';

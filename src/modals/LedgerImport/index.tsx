@@ -1,7 +1,6 @@
 // Copyright 2022 @paritytech/polkadot-native authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import type { LedgerResponse, LedgerTask } from 'contexts/Hardware/types';
 import { useModal } from 'contexts/Modal';
@@ -15,6 +14,7 @@ import { Splash } from './Splash';
 export const LedgerImport: React.FC = () => {
   const { setResize } = useModal();
   const {
+    pairDevice,
     executeLedgerLoop,
     transportResponse,
     setIsPaired,
@@ -47,36 +47,20 @@ export const LedgerImport: React.FC = () => {
     return addressesRef.current[addressesRef.current.length - 1].index + 1;
   };
 
-  // Check whether the device is paired.
-  //
-  // Trigger a one-time connection to the device to determine if it is available. If the device
-  // needs to be paired, a browser prompt will pop up and initialisation of `transport` will hault
-  // until the user has completed or cancelled the pairing process.
-  const pairDevice = async () => {
-    try {
-      resetStatusCodes();
-      transport.current = await TransportWebHID.create();
-      await transport.current.device.close();
-      setIsPaired('paired');
-    } catch (err) {
-      setIsPaired('unpaired');
-    }
-  };
-
   // Connect to Ledger device and perform necessary tasks.
   //
   // The tasks sent to the device depend on the current state of the import process. The interval is
   // cleared once the address has been successfully fetched.
   let interval: ReturnType<typeof setInterval>;
-  const handleLedgerLoop = () => {
-    const clearLoop = () => {
-      clearInterval(interval);
-    };
-
+  const handleLedgerLoop = (pairOnClear = false) => {
     interval = setInterval(async () => {
       if (getStatusCodes()[0]?.statusCode === 'DeviceNotConnected') {
         setIsPaired('unpaired');
         clearLoop();
+
+        if (pairOnClear) {
+          await pairDevice();
+        }
         return;
       }
       if (!isMounted.current) {
@@ -103,9 +87,14 @@ export const LedgerImport: React.FC = () => {
     }, 2000);
   };
 
+  const clearLoop = () => {
+    clearInterval(interval);
+  };
+
   // Handle new Ledger status report.
   const handleLedgerStatusResponse = (response: LedgerResponse) => {
     if (!response) return;
+    clearLoop();
 
     const { ack, statusCode, body, options } = response;
     handleNewStatusCode(ack, statusCode);
@@ -158,7 +147,7 @@ export const LedgerImport: React.FC = () => {
   // Resize modal on content change
   useEffect(() => {
     setResize();
-  }, [isPaired, getStatusCodes()]);
+  }, [isPaired, getStatusCodes(), addressesRef.current]);
 
   // Listen for new Ledger status reports.
   useEffect(() => {
@@ -170,7 +159,10 @@ export const LedgerImport: React.FC = () => {
       {!addressesRef.current.length ? (
         <Splash pairDevice={pairDevice} />
       ) : (
-        <Manage addresses={addressesRef.current} />
+        <Manage
+          addresses={addressesRef.current}
+          handleLedgerLoop={handleLedgerLoop}
+        />
       )}
     </PaddingWrapper>
   );

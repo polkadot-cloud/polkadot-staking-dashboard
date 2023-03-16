@@ -9,8 +9,8 @@ import type { AnyJson } from 'types';
 import { Address } from './Address';
 import { AddressWrapper } from './Wrappers';
 
-export const Addresess = ({ addresses }: AnyJson) => {
-  const { getIsImporting, setIsImporting } = useLedgerHardware();
+export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
+  const { getIsImporting, setIsImporting, pairDevice } = useLedgerHardware();
   const isImporting = getIsImporting();
   return (
     <>
@@ -32,7 +32,13 @@ export const Addresess = ({ addresses }: AnyJson) => {
               iconLeft={faArrowDown}
               text={isImporting ? ' Getting Account' : 'Get Another Account'}
               disabled={isImporting}
-              onClick={() => setIsImporting(true)}
+              onClick={async () => {
+                // re-pair the device if it has been disconnected.
+                await pairDevice();
+
+                setIsImporting(true);
+                handleLedgerLoop(true);
+              }}
             />
           </div>
         </AddressWrapper>
