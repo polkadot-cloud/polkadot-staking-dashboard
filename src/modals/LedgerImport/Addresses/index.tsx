@@ -6,7 +6,7 @@ import { ButtonText } from '@polkadotcloud/dashboard-ui';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { ReactComponent as AppSVG } from 'img/appIcons/polkadot.svg';
 import type { AnyJson } from 'types';
-// import { Address } from './Address';
+import { Address } from './Address';
 import { AddressWrapper } from './Wrappers';
 
 export const Addresess = ({ addresses }: AnyJson) => {
@@ -23,9 +23,9 @@ export const Addresess = ({ addresses }: AnyJson) => {
             </h4>
           </div>
           <div className="items">
-            {/* {addresses.map(({ address, index }: AnyJson, i: number) => (
+            {addresses.map(({ address, index }: AnyJson, i: number) => (
               <Address key={i} address={address} index={index} />
-            ))} */}
+            ))}
           </div>
           <div className="more">
             <ButtonText

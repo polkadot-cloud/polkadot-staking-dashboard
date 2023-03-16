@@ -244,6 +244,7 @@ export const CustomHeaderWrapper = styled.div`
   flex-flow: row wrap;
   align-items: center;
   margin: 0.5rem 0;
+  position: relative;
 
   h1 {
     color: var(--text-color-primary);
@@ -254,6 +255,16 @@ export const CustomHeaderWrapper = styled.div`
     align-items: center;
     > button {
       margin-left: 1.25rem;
+    }
+  }
+
+  .closeModal {
+    position: absolute;
+    top: 0rem;
+    right: 1.5rem;
+    opacity: 0.25;
+    &:hover {
+      opacity: 1;
     }
   }
 `;

@@ -7,7 +7,7 @@ export const AddressWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 0rem 0rem 8rem 0rem;
+  padding: 0rem 0rem 7rem 0rem;
   overflow: scroll;
   height: auto;
   box-sizing: content-box;
@@ -18,7 +18,7 @@ export const AddressWrapper = styled.div`
     position: sticky;
     width: 100%;
     top: 0px;
-    padding: 1rem;
+    padding: 0.75rem 1.25rem;
     z-index: 3;
     > h4 {
       margin: 0;
@@ -49,17 +49,15 @@ export const AddressWrapper = styled.div`
 
   .items {
     width: 100%;
-    margin-top: 1rem;
     padding: 0 1rem;
     display: flex;
     flex-direction: column;
 
     .item {
-      border-bottom: 1px solid var(--border-primary-color);
       display: flex;
       align-items: center;
       padding: 0rem 1rem 1rem 0.25rem;
-      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border-primary-color);
 
       &:last-child {
         border: none;
@@ -82,41 +80,44 @@ export const AddressWrapper = styled.div`
 
             .label {
               margin-right: 0.5rem;
-              margin-bottom: 0.5rem;
+              margin-bottom: 0.85rem;
             }
 
             h5,
             button {
-              font-size: 0.75rem;
+              font-size: 0.9rem;
               > span {
-                padding: 0.3rem 0.5rem;
-                border-radius: 0.75rem;
+                padding: 0.4rem 0.75rem;
+                border-radius: 1rem;
                 &.withBg {
-                  background: var(--background-menu);
+                  background: var(--background-list-item);
                 }
               }
 
               &.addressFull {
                 opacity: 0.8;
                 padding-left: 0.5rem;
+                margin-top: 0.85rem;
+                margin-bottom: 0.5rem;
               }
             }
 
             input {
+              background: var(--background-list-item);
               color: var(--color-text-primary);
+              border-radius: 0.75rem;
+              padding: 0.75rem 0.75rem;
               letter-spacing: 0.04rem;
-              font-size: 0.92rem;
-              padding: 0.5rem 0.5rem;
-              border-radius: 0.5rem;
+              font-size: 1rem;
               transition: background 0.2s, width 0.2s;
               text-overflow: ellipsis;
               white-space: nowrap;
               overflow: hidden;
               width: 135px;
-              background: none;
+              margin-left: 0.5rem;
 
               &:focus {
-                background: var(--background-secondary);
+                background: var(--background-menu);
                 width: 300px;
               }
             }

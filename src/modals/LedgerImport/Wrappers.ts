@@ -61,7 +61,7 @@ export const StatusBarWrapper = styled(motion.div)`
 
   > .inner {
     background: var(--background-list-item);
-    border-radius: 0.5rem;
+    border-radius: 1rem;
     display: flex;
     align-items: center;
     padding: 0.7rem 1rem;

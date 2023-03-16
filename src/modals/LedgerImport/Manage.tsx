@@ -3,6 +3,7 @@
 
 import { ButtonMonoInvert } from '@polkadotcloud/dashboard-ui';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { useModal } from 'contexts/Modal';
 import { ReactComponent as IconSVG } from 'img/ledgerIcon.svg';
 import type { AnyJson } from 'types';
 import { Addresess } from './Addresses';
@@ -10,6 +11,7 @@ import { determineStatusFromCodes } from './Utils';
 import { StatusBarWrapper } from './Wrappers';
 
 export const Manage = ({ addresses }: AnyJson) => {
+  const { replaceModalWith } = useModal();
   const { setIsImporting, getIsImporting, getStatusCodes, resetStatusCodes } =
     useLedgerHardware();
 
@@ -64,7 +66,14 @@ export const Manage = ({ addresses }: AnyJson) => {
                   resetStatusCodes();
                 }}
               />
-            ) : null}
+            ) : (
+              <ButtonMonoInvert
+                text="Done"
+                onClick={() => {
+                  replaceModalWith('Connect', {}, 'large');
+                }}
+              />
+            )}
           </div>
         </div>
       </StatusBarWrapper>

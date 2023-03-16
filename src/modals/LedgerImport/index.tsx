@@ -1,13 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-native authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
-import { ButtonSecondary } from '@polkadotcloud/dashboard-ui';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import type { LedgerResponse, LedgerTask } from 'contexts/Hardware/types';
 import { useModal } from 'contexts/Modal';
-import { CustomHeaderWrapper, PaddingWrapper } from 'modals/Wrappers';
+import { PaddingWrapper } from 'modals/Wrappers';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyJson } from 'types';
 import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
@@ -15,7 +13,7 @@ import { Manage } from './Manage';
 import { Splash } from './Splash';
 
 export const LedgerImport: React.FC = () => {
-  const { replaceModalWith, setResize } = useModal();
+  const { setResize } = useModal();
   const {
     executeLedgerLoop,
     transportResponse,
@@ -169,16 +167,6 @@ export const LedgerImport: React.FC = () => {
 
   return (
     <PaddingWrapper verticalOnly>
-      <CustomHeaderWrapper>
-        <h1>
-          <ButtonSecondary
-            text="Back"
-            iconLeft={faChevronLeft}
-            iconTransform="shrink-3"
-            onClick={async () => replaceModalWith('Connect', {}, 'large')}
-          />
-        </h1>
-      </CustomHeaderWrapper>
       {!addressesRef.current.length ? (
         <Splash pairDevice={pairDevice} />
       ) : (
