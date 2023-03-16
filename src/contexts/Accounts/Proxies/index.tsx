@@ -10,10 +10,11 @@ import type { AnyApi, MaybeAccount } from 'types';
 import { clipAddress, rmCommas, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
 import type {
-  Delegate,
+  Delegates,
   ProxiesContextInterface,
   Proxy,
   ProxyAccount,
+  ProxyDelegate,
 } from './type';
 
 export const ProxiesContext = React.createContext<ProxiesContextInterface>(
@@ -28,17 +29,19 @@ export const ProxiesProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, isReady, network } = useApi();
-  const { accounts, activeAccount } = useConnect();
+  const { accounts } = useConnect();
 
   // store the proxy accounts of each imported account.
   const [proxies, setProxies] = useState<Array<Proxy>>([]);
   const proxiesRef = useRef(proxies);
 
+  // store unsubs for proxy subscriptions.
   const [unsubs, setUnsubs] = useState<AnyApi>([]);
   const unsubsRef = useRef(unsubs);
 
-  const [delegators, setDelegators] = useState<Array<MaybeAccount>>([]);
-  const delegatorsRef = useRef(delegators);
+  // store the delegates and the corresponding delegators
+  const [delegates, setDelegates] = useState<Delegates>({});
+  const delegatesRef = useRef(delegates);
 
   useEffect(() => {
     if (isReady) {
@@ -83,31 +86,41 @@ export const ProxiesProvider = ({
     }
   }, [accounts, isReady, network]);
 
+  useEffect(() => {
+    // Reformat proxiesRef.current into a list of delegates.
+    const newDelegates: Delegates = {};
+    for (const proxy of proxiesRef.current) {
+      const { delegator } = proxy;
+
+      // checking if delegator is not null to keep types happy.
+      if (delegator) {
+        // get each delegate of this proxy record.
+        for (const { delegate, type } of proxy.delegates) {
+          const item = {
+            delegator,
+            type,
+          };
+          // check if this delegate exists in `newDelegates`.
+          if (Object.keys(newDelegates).includes(delegate)) {
+            // append delegator to the existing delegate record if it exists.
+            newDelegates[delegate].push(item);
+          } else {
+            // create a new delegate record if it does not yet exist in `newDelegates`.
+            newDelegates[delegate] = [item];
+          }
+        }
+      }
+    }
+
+    setStateWithRef(newDelegates, setDelegates, delegatesRef);
+  }, [proxiesRef.current]);
+
   // unsubscribe from proxy subscriptions on unmount
   useEffect(() => {
     Object.values(unsubsRef.current).forEach(({ unsub }: AnyApi) => {
       unsub();
     });
   }, []);
-
-  useEffect(() => {
-    const allProxies = [];
-    const proxiedAccounts = [];
-    for (const a of accounts) {
-      const proxy = proxiesRef.current.find(
-        (p: Proxy) => p.delegator === a.address
-      );
-      if (proxy) {
-        allProxies.push(proxy);
-      }
-    }
-    for (const p of allProxies) {
-      if (p.delegates.find((d: Delegate) => d.delegate === activeAccount)) {
-        proxiedAccounts.push(p.delegator);
-      }
-    }
-    setStateWithRef(proxiedAccounts, setDelegators, delegatorsRef);
-  }, [proxiesRef.current]);
 
   const subscribeToProxies = async (address: string) => {
     if (!api) return;
@@ -160,7 +173,8 @@ export const ProxiesProvider = ({
   };
 
   // Gets the proxy accounts for a given proxy via the delegate
-  const getDelegates = (address: MaybeAccount) => {
+  // TODO: needs to be re-written using `delegatesRef.current`.
+  const getProxies = (address: MaybeAccount) => {
     if (!address) {
       return [];
     }
@@ -170,22 +184,27 @@ export const ProxiesProvider = ({
     if (!proxy) {
       return [];
     }
-    const delegates: Array<ProxyAccount> = proxy.delegates
-      .filter((d: Delegate) => ['Any', 'Staking'].includes(d.type))
-      .map((d: Delegate) => ({
+    const newProxies: Array<ProxyAccount> = proxy.delegates
+      .filter((d: ProxyDelegate) => ['Any', 'Staking'].includes(d.type))
+      .map((d: ProxyDelegate) => ({
         address: d.delegate,
         name: clipAddress(d.delegate),
         type: d.type,
       }));
-    return delegates || [];
+    return newProxies || [];
   };
+
+  // Gets the delegate for the given proxy account
+  const getProxiedAccounts = (delegate: MaybeAccount) =>
+    delegatesRef.current[delegate || ''] || [];
 
   return (
     <ProxiesContext.Provider
       value={{
         proxies: proxiesRef.current,
-        delegators: delegatorsRef.current,
-        getDelegates,
+        delegates: delegatesRef.current,
+        getProxies,
+        getProxiedAccounts,
       }}
     >
       {children}
