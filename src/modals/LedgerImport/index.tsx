@@ -60,7 +60,11 @@ export const LedgerImport: React.FC = () => {
         return;
       }
 
-      if (['OpenAppToContinue'].includes(getStatusCodes()[0]?.statusCode)) {
+      if (
+        ['OpenAppToContinue', 'AppNotOpen'].includes(
+          getStatusCodes()[0]?.statusCode
+        )
+      ) {
         setIsPaired('unpaired');
         setIsImporting(false);
         clearLoop();

@@ -22,7 +22,7 @@ export const getDisplayFromLedgerCode = (
         : 'Connect a Ledger device to continue account import.';
       break;
     case 'AppNotOpen':
-      title = 'Open the Polkadot App';
+      title = 'Unlock your Ledger device and open the Polkadot app.';
       break;
     case 'OpenAppToContinue':
       title = 'Open the Polkadot app on Ledger and try again.';
