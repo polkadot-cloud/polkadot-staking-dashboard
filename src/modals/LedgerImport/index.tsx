@@ -144,7 +144,9 @@ export const LedgerImport: React.FC = () => {
 
   // Listen for new Ledger status reports.
   useEffect(() => {
-    handleLedgerStatusResponse(transportResponse);
+    if (getIsImporting()) {
+      handleLedgerStatusResponse(transportResponse);
+    }
   }, [transportResponse]);
 
   return (
