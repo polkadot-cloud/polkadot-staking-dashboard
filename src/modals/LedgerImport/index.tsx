@@ -136,6 +136,9 @@ export const LedgerImport: React.FC = () => {
       isMounted.current = false;
       resetStatusCodes();
       setIsImporting(false);
+      if (transport?.device?.opened) {
+        transport?.device?.close();
+      }
     };
   }, []);
 
