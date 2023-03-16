@@ -4,9 +4,8 @@
 import { ButtonMonoInvert } from '@polkadotcloud/dashboard-ui';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { ReactComponent as IconSVG } from 'img/ledgerIcon.svg';
-import { Title } from 'library/Modal/Title';
 import type { AnyJson } from 'types';
-// import { Addresess } from './Addresses';
+import { Addresess } from './Addresses';
 import { determineStatusFromCodes } from './Utils';
 import { StatusBarWrapper } from './Wrappers';
 
@@ -18,12 +17,7 @@ export const Manage = ({ addresses }: AnyJson) => {
   const statusCodes = getStatusCodes();
   return (
     <>
-      <Title title="" />
-      {/* <Addresess
-      addresses={addresses}
-      isImporting={isImporting}
-      toggleImport={toggleImport}
-    /> */}
+      <Addresess addresses={addresses} />
 
       <StatusBarWrapper
         initial="hidden"
