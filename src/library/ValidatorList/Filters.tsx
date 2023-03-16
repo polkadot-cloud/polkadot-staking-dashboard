@@ -10,7 +10,7 @@ import {
 import {
   ButtonInvertRounded,
   ButtonSecondary,
-} from '@rossbulat/polkadot-dashboard-ui';
+} from '@polkadotcloud/dashboard-ui';
 import { useFilters } from 'contexts/Filters';
 import { useOverlay } from 'contexts/Overlay';
 import { Container } from 'library/Filter/Container';

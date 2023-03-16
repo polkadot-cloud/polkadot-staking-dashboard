@@ -104,7 +104,7 @@ export const MinimisedWrapper = styled(motion.div)`
   }
   .icon {
     margin: 0;
-
+    color: var(--text-color-primary);
     .lpf {
       fill: var(--text-color-primary);
     }

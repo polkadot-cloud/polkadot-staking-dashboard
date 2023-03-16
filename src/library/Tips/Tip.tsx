@@ -5,7 +5,7 @@ import {
   ButtonInvertRounded,
   ButtonPrimary,
   ButtonSecondary,
-} from '@rossbulat/polkadot-dashboard-ui';
+} from '@polkadotcloud/dashboard-ui';
 import { useOverlay } from 'contexts/Overlay';
 import { usePlugins } from 'contexts/Plugins';
 import { Title } from 'library/Overlay/Title';

@@ -68,7 +68,7 @@ export const StyledButton = styled.button`
     justify-content: flex-end;
   }
   &:hover {
-    background: var(--button-toggle-background);
+    background: var(--button-hover-background);
   }
   .icon {
     margin-right: 0.75rem;
