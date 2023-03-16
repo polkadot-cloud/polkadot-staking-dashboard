@@ -54,12 +54,23 @@ export const LedgerImport: React.FC = () => {
   let interval: ReturnType<typeof setInterval>;
   const handleLedgerLoop = () => {
     interval = setInterval(async () => {
-      if (['DeviceNotConnected'].includes(getStatusCodes()[0]?.statusCode)) {
-        setIsPaired('unpaired');
-        clearLoop();
+      // If the import modal is no longer open, cancel interval and reset import state.
+      if (!isMounted.current) {
+        resetStatusCodes();
+        setIsImporting(false);
+        clearInterval(interval);
         return;
       }
 
+      // If the device is not connected, cancel execution but keep interval active.
+      if (['DeviceNotConnected'].includes(getStatusCodes()[0]?.statusCode)) {
+        setIsPaired('unpaired');
+        clearInterval(interval);
+        return;
+      }
+
+      // If the app is not open on the device, cancel execution and interval until the user tries
+      // again.
       if (
         ['OpenAppToContinue', 'AppNotOpen'].includes(
           getStatusCodes()[0]?.statusCode
@@ -67,42 +78,33 @@ export const LedgerImport: React.FC = () => {
       ) {
         setIsPaired('unpaired');
         setIsImporting(false);
-        clearLoop();
+        clearInterval(interval);
         return;
       }
 
-      if (!isMounted.current) {
-        resetStatusCodes();
-        clearLoop();
-        return;
-      }
-
+      // Attempt to carry out tasks on-device.
       try {
-        if (!transport.current.device.opened) {
-          await transport.current.device.open();
+        if (!transport.device.opened) {
+          await transport.device.open();
         }
-        const tasks: Array<LedgerTask> = ['get_device_info'];
+        const tasks: Array<LedgerTask> = [];
         if (getIsImporting()) {
           tasks.push('get_address');
         }
-        await executeLedgerLoop(transport.current, tasks, {
+        await executeLedgerLoop(transport, tasks, {
           accountIndex: getNextAddressIndex(),
         });
-        await transport.current.device.close();
+        await transport.device.close();
       } catch (err) {
         handleErrors(err);
       }
     }, 2000);
   };
 
-  const clearLoop = () => {
-    clearInterval(interval);
-  };
-
   // Handle new Ledger status report.
   const handleLedgerStatusResponse = (response: LedgerResponse) => {
     if (!response) return;
-    clearLoop();
+    clearInterval(interval);
 
     const { ack, statusCode, body, options } = response;
     handleNewStatusCode(ack, statusCode);
@@ -127,7 +129,7 @@ export const LedgerImport: React.FC = () => {
     }
   };
 
-  // Keep `isMounted` up to date.
+  // Keep `isMounted` up to date and tidy up context state when ledger import window closes.
   useEffect(() => {
     isMounted.current = true;
     return () => {
@@ -137,7 +139,7 @@ export const LedgerImport: React.FC = () => {
     };
   }, []);
 
-  // Resize modal on content change
+  // Resize modal on content change.
   useEffect(() => {
     setResize();
   }, [isPaired, getStatusCodes(), addressesRef.current]);

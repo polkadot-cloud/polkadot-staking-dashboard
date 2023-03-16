@@ -6,7 +6,6 @@ import type { LedgerHardwareContextInterface } from './types';
 export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   transportResponse: null,
   pairDevice: async () => new Promise((resolve) => resolve()),
-  ledgerDeviceInfo: null,
   // eslint-disable-next-line
   executeLedgerLoop: async (t, s, o) => new Promise((resolve) => resolve()),
   // eslint-disable-next-line

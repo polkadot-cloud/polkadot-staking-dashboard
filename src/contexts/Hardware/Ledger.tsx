@@ -40,9 +40,6 @@ export const LedgerHardwareProvider = ({
   const [statusCodes, setStatusCodes] = useState<Array<LedgerResponse>>([]);
   const statusCodesRef = useRef(statusCodes);
 
-  // Store the latest ledger device info.
-  const [ledgerDeviceInfo] = useState<AnyJson>(null);
-
   // Store the latest successful response from an attempted `executeLedgerLoop`.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
 
@@ -54,13 +51,9 @@ export const LedgerHardwareProvider = ({
   // Trigger a one-time connection to the device to determine if it is available. If the device
   // needs to be paired, a browser prompt will pop up and initialisation of `transport` will hault
   // until the user has completed or cancelled the pairing process.
-  const pairDevice = async (orUnpaired = true) => {
+  const pairDevice = async (orUnpaired = false) => {
     try {
       resetStatusCodes();
-      // try to forget current device
-      if (isPairedRef.current !== 'paired') {
-        await t.current?.device?.forget();
-      }
       // close any open connections.
       if (t.current?.device?.opened) {
         await t.current?.device?.close();
@@ -126,7 +119,7 @@ export const LedgerHardwareProvider = ({
     return Promise.race([promise, timeout]);
   };
 
-  // Gets a Polkadot address on the device.
+  // Gets a Polkadot address on device.
   const handleGetAddress = async (transport: AnyJson, accountIndex: number) => {
     const polkadot = new Polkadot(transport);
     const { deviceModel } = transport;
@@ -152,10 +145,7 @@ export const LedgerHardwareProvider = ({
     }
   };
 
-  // Handle an incoming new status code and persists to state.
-  //
-  // The most recent status code is stored at the start of the array at index 0. If total status
-  // codes are larger than the maximum allowed, the status code array is popped.
+  // Handle an incoming new status code and persist to state.
   const handleNewStatusCode = (ack: string, statusCode: string) => {
     const newStatusCodes = [{ ack, statusCode }, ...statusCodes];
 
@@ -195,7 +185,6 @@ export const LedgerHardwareProvider = ({
     <LedgerHardwareContext.Provider
       value={{
         pairDevice,
-        ledgerDeviceInfo,
         transportResponse,
         executeLedgerLoop,
         setIsPaired,
@@ -207,7 +196,7 @@ export const LedgerHardwareProvider = ({
         getStatusCodes,
         handleErrors,
         isPaired: isPairedRef.current,
-        transport: t,
+        transport: t.current,
       }}
     >
       {children}

@@ -17,10 +17,10 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
 
   const isImporting = getIsImporting();
   const statusCodes = getStatusCodes();
+
   return (
     <>
       <Addresess addresses={addresses} handleLedgerLoop={handleLedgerLoop} />
-
       <StatusBarWrapper
         initial="hidden"
         animate="show"
@@ -44,11 +44,7 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
             <IconSVG width="24" height="24" className="ledgerIcon" />
             <div className="text">
               <h3>
-                {!isImporting
-                  ? `Displaying ${addresses.length} Ledger Account${
-                      addresses.length === 1 ? '' : 's'
-                    }`
-                  : !statusCodes.length
+                {!isImporting || !statusCodes.length
                   ? `Displaying ${addresses.length} Ledger Account${
                       addresses.length === 1 ? '' : 's'
                     }`
