@@ -24,7 +24,7 @@ export const Splash = ({ pairDevice, handleLedgerLoop }: AnyFunction) => {
     if (isPaired !== 'paired') {
       pairDevice();
     }
-  }, [isPaired]);
+  }, []);
 
   // Once the device is paired, start `handleLedgerLoop`.
   useEffect(() => {
