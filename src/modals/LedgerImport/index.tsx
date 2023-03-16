@@ -11,6 +11,7 @@ import { CustomHeaderWrapper, PaddingWrapper } from 'modals/Wrappers';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyJson } from 'types';
 import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
+import { Manage } from './Manage';
 import { Splash } from './Splash';
 
 export const LedgerImport: React.FC = () => {
@@ -119,7 +120,9 @@ export const LedgerImport: React.FC = () => {
         name: clipAddress(address),
       }));
 
-      const newAddresses = addressesRef.current.concat(addressFormatted);
+      const newAddresses = addressesRef.current
+        .filter((a: AnyJson) => a.address !== addressFormatted.address)
+        .concat(addressFormatted);
 
       localStorage.setItem('ledger_addresses', JSON.stringify(newAddresses));
 
@@ -179,7 +182,7 @@ export const LedgerImport: React.FC = () => {
       {!addressesRef.current.length ? (
         <Splash pairDevice={pairDevice} />
       ) : (
-        <>{/* TODO: Manage Component */}</>
+        <Manage addresses={addressesRef.current} />
       )}
     </PaddingWrapper>
   );
