@@ -13,7 +13,8 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
     margin: 0 0 0.2rem 0;
 
     > .btn {
-      background: var(--button-tertiary-background);
+      color: var(--text-color-secondary);
+      background: var(--background-primary);
       display: flex;
       flex-flow: row wrap;
       justify-content: center;
@@ -41,7 +42,7 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
 
     .text {
       padding-left: ${(props) => (props.isAddress ? '3rem' : 0)};
-      color: var(--text-color-secondary);
+      color: var(--text-color-primary);
       padding-top: 0.1rem;
       position: absolute;
       left: 0;

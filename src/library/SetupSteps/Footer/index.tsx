@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonPrimary } from '@polkadotcloud/dashboard-ui';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { useTranslation } from 'react-i18next';

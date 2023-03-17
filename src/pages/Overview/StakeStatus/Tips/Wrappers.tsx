@@ -9,11 +9,11 @@ export const TipsWrapper = styled.div`
   width: 100%;
   display: flex;
   position: relative;
-  top: 0.25rem;
-  margin-top: 0.35rem;
+  padding: 0.5rem 0.75rem 0.5rem 1rem;
+  margin-bottom: 0.5rem;
 
   @media (max-width: ${SideMenuStickyThreshold}px) {
-    padding: 0 0.5rem;
+    padding: 0.5rem 1rem;
   }
 `;
 
@@ -115,12 +115,10 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
 `;
 
 export const PageToggleWrapper = styled.div`
-  border: 1px solid var(--border-primary-color);
   color: var(--text-color-secondary);
-  padding: 0.1rem 0.1rem;
   border-radius: 1.5rem;
   position: relative;
-  top: 0.1rem;
+  top: 0.2rem;
   display: flex;
   flex-flow: row wrap;
   margin-left: 0.5rem;
