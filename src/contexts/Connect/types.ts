@@ -17,7 +17,8 @@ export interface ConnectContextInterface {
   getActiveAccount: () => string | null;
   accountHasSigner: (a: MaybeAccount) => boolean;
   isReadOnlyAccount: (a: MaybeAccount) => boolean;
-  forgetAccounts: (a: Array<ExternalAccount>) => void;
+  addToAccounts: (a: Array<ImportedAccount>) => void;
+  forgetAccounts: (a: Array<ImportedAccount>) => void;
   accounts: Array<ExtensionAccount>;
   activeAccount: string | null;
   activeAccountMeta: ExtensionAccount | null;

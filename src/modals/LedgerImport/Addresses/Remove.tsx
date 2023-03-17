@@ -2,16 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonMono, ButtonMonoInvert } from '@polkadotcloud/dashboard-ui';
+import { useConnect } from 'contexts/Connect';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
 import type { ConfirmProps } from './types';
 import { ConfirmWrapper } from './Wrappers';
 
 export const Remove = ({ address }: ConfirmProps) => {
+  const { forgetAccounts } = useConnect();
   const { setStatus } = useOverlay();
-
-  // TODO: implement
-  const removeAddress = (a: string) => {};
+  const { getLedgerAccount, removeLedgerAccount } = useLedgerHardware();
 
   return (
     <ConfirmWrapper>
@@ -23,8 +24,12 @@ export const Remove = ({ address }: ConfirmProps) => {
         <ButtonMono
           text="Remove Account"
           onClick={() => {
-            removeAddress(address);
-            setStatus(0);
+            const account = getLedgerAccount(address);
+            if (account) {
+              removeLedgerAccount(address);
+              forgetAccounts([account]);
+              setStatus(0);
+            }
           }}
         />
       </div>

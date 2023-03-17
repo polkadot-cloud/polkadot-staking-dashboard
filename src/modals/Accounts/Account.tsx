@@ -7,6 +7,7 @@ import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
+import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
 import { Identicon } from 'library/Identicon';
 import { clipAddress } from 'Utils';
 import type { AccountItemProps } from './types';
@@ -47,10 +48,11 @@ export const AccountInner = ({
   label = undefined,
 }: AccountItemProps) => {
   const { extensions } = useExtensions();
-  const extension = extensions.find(
-    (e: ExtensionInjected) => e.id === meta?.source
-  );
-  const Icon = extension?.icon ?? undefined;
+  const Icon =
+    meta?.source === 'ledger'
+      ? LedgerIconSVG
+      : extensions.find((e: ExtensionInjected) => e.id === meta?.source)
+          ?.icon ?? undefined;
   const source = meta?.source ?? undefined;
   const imported = meta !== undefined && source !== 'external';
 

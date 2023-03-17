@@ -10,6 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonMono, ButtonText } from '@polkadotcloud/dashboard-ui';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
 import React, { useState } from 'react';
@@ -21,11 +22,7 @@ import type { AddressProps } from './types';
 
 export const Address = ({ address, index }: AddressProps) => {
   const { openOverlayWith } = useOverlay();
-
-  // TODO: implement
-  const addressExists = (a: string) => {
-    return false;
-  };
+  const { ledgerAccountExists } = useLedgerHardware();
 
   // store whether this address is being edited.
   const [editing, setEditing] = useState<boolean>(false);
@@ -147,7 +144,7 @@ export const Address = ({ address, index }: AddressProps) => {
         </div>
       </div>
       <div>
-        {addressExists(address) ? (
+        {ledgerAccountExists(address) ? (
           <>
             <ButtonMono
               iconLeft={faTimes}

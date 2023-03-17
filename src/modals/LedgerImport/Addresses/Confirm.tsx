@@ -2,16 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonMono, ButtonMonoInvert } from '@polkadotcloud/dashboard-ui';
+import { useConnect } from 'contexts/Connect';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
 import type { ConfirmProps } from './types';
 import { ConfirmWrapper } from './Wrappers';
 
 export const Confirm = ({ address }: ConfirmProps) => {
+  const { addToAccounts } = useConnect();
   const { setStatus } = useOverlay();
-
-  // TODO: implement
-  const importAddress = (a: string) => {};
+  const { addLedgerAccount } = useLedgerHardware();
 
   return (
     <ConfirmWrapper>
@@ -23,7 +24,10 @@ export const Confirm = ({ address }: ConfirmProps) => {
         <ButtonMono
           text="Import Account"
           onClick={() => {
-            importAddress(address);
+            const account = addLedgerAccount(address);
+            if (account) {
+              addToAccounts([account]);
+            }
             setStatus(0);
           }}
         />

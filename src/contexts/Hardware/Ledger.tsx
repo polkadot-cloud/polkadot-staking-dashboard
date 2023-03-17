@@ -3,9 +3,11 @@
 
 import Polkadot from '@ledgerhq/hw-app-polkadot';
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
+import { useApi } from 'contexts/Api';
+import type { LedgerAccount } from 'contexts/Connect/types';
 import React, { useRef, useState } from 'react';
 import type { AnyFunction, AnyJson } from 'types';
-import { setStateWithRef } from 'Utils';
+import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { defaultLedgerHardwareContext } from './defaults';
 import type {
   LedgerHardwareContextInterface,
@@ -28,6 +30,8 @@ export const LedgerHardwareProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { network } = useApi();
+
   // Store whether the device has been paired.
   const [isPaired, setIsPairedState] = useState<PairingStatus>('unknown');
   const isPairedRef = useRef(isPaired);
@@ -42,6 +46,17 @@ export const LedgerHardwareProvider = ({
 
   // Store the latest successful response from an attempted `executeLedgerLoop`.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
+
+  // Store the imported ledger accounts.
+  const initialLedgerAccounts = localStorageOrDefault(
+    'imported_addresses',
+    [],
+    true
+  ) as Array<LedgerAccount>;
+  const [ledgerAccounts, setLedgerAccountsState] = useState<
+    Array<LedgerAccount>
+  >(initialLedgerAccounts);
+  const ledgerAccountsRef = useRef(ledgerAccounts);
 
   // The ledger transport interface.
   const t = useRef<any>(null);
@@ -155,6 +170,67 @@ export const LedgerHardwareProvider = ({
     setStateWithRef(newStatusCodes, setStatusCodes, statusCodesRef);
   };
 
+  // Check if an address exists in imported addresses.
+  const ledgerAccountExists = (address: string) => {
+    const imported = localStorageOrDefault(
+      'ledger_accounts',
+      [],
+      true
+    ) as Array<LedgerAccount>;
+    return !!imported.find((a: LedgerAccount) => a.address === address);
+  };
+
+  const addLedgerAccount = (address: string) => {
+    let newImported = localStorageOrDefault(
+      'ledger_accounts',
+      [],
+      true
+    ) as Array<LedgerAccount>;
+
+    if (!newImported.find((a: LedgerAccount) => a.address === address)) {
+      const account = {
+        address,
+        network: network.name,
+        name: clipAddress(address), // TODO: refer to `ledger_address.name` instead.
+        source: 'ledger',
+      };
+      newImported = [...newImported].concat(account);
+      localStorage.setItem('ledger_accounts', JSON.stringify(newImported));
+      setStateWithRef(newImported, setLedgerAccountsState, ledgerAccountsRef);
+
+      return account;
+    }
+    return null;
+  };
+
+  const removeLedgerAccount = (address: string) => {
+    let newImported = localStorageOrDefault(
+      'ledger_accounts',
+      [],
+      true
+    ) as Array<LedgerAccount>;
+
+    newImported = newImported.filter(
+      (a: LedgerAccount) => a.address !== address
+    );
+    localStorage.setItem('ledger_accounts', JSON.stringify(newImported));
+    setStateWithRef(newImported, setLedgerAccountsState, ledgerAccountsRef);
+  };
+
+  // Gets an imported address along with its Ledger metadata.
+  const getLedgerAccount = (address: string) => {
+    const imported = localStorageOrDefault(
+      'ledger_accounts',
+      [],
+      true
+    ) as Array<LedgerAccount>;
+
+    if (!imported) {
+      return null;
+    }
+    return imported.find((a: LedgerAccount) => a.address === address) ?? null;
+  };
+
   const setIsPaired = (p: PairingStatus) => {
     setStateWithRef(p, setIsPairedState, isPairedRef);
   };
@@ -200,6 +276,10 @@ export const LedgerHardwareProvider = ({
         handleErrors,
         isPaired: isPairedRef.current,
         getTransport,
+        ledgerAccountExists,
+        addLedgerAccount,
+        removeLedgerAccount,
+        getLedgerAccount,
       }}
     >
       {children}

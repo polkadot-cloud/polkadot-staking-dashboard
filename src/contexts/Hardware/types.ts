@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import type { LedgerAccount } from 'contexts/Connect/types';
 import type { AnyJson } from 'types';
 
 export type LedgerHardwareContextInterface = {
@@ -21,6 +22,10 @@ export type LedgerHardwareContextInterface = {
   getStatusCodes: () => Array<LedgerResponse>;
   handleErrors: (e: AnyJson) => void;
   getTransport: () => AnyJson;
+  ledgerAccountExists: (a: string) => boolean;
+  addLedgerAccount: (a: string) => LedgerAccount | null;
+  removeLedgerAccount: (a: string) => void;
+  getLedgerAccount: (a: string) => LedgerAccount | null;
 };
 
 export interface LedgerResponse {

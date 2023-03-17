@@ -32,8 +32,6 @@ export const LedgerImport: React.FC = () => {
   const isMounted = useRef(false);
 
   // Store addresses retreived from Ledger device.
-  //
-  // TODO: Initialise to any addresses saved in local storage.
   const [addresses, setAddresses] = useState<AnyJson>(
     localStorageOrDefault('ledger_addresses', [], true)
   );

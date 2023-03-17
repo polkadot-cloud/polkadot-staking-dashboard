@@ -570,6 +570,7 @@ export const ConnectProvider = ({
         getActiveAccount,
         accountHasSigner,
         isReadOnlyAccount,
+        addToAccounts,
         forgetAccounts,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
