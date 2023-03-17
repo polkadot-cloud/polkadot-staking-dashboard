@@ -95,7 +95,7 @@ export const LedgerImport: React.FC = () => {
       } catch (err) {
         handleErrors(err);
       }
-    }, 2000);
+    }, 750);
   };
 
   // Handle new Ledger status report.
