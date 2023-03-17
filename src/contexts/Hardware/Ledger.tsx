@@ -310,15 +310,15 @@ export const LedgerHardwareProvider = ({
         getIsImporting,
         getStatusCodes,
         handleErrors,
-        isPaired: isPairedRef.current,
         getTransport,
         ledgerAccountExists,
         addLedgerAccount,
         removeLedgerAccount,
         renameLedgerAccount,
         getLedgerAccount,
-        ledgerAccounts: ledgerAccountsRef.current,
         signLedgerTx,
+        isPaired: isPairedRef.current,
+        ledgerAccounts: ledgerAccountsRef.current,
       }}
     >
       {children}

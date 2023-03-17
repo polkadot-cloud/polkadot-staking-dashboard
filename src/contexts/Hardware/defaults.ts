@@ -18,7 +18,6 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   resetStatusCodes: () => {},
   getIsImporting: () => false,
   getStatusCodes: () => [],
-  isPaired: 'unknown',
   // eslint-disable-next-line
   handleErrors: (e) => {},
   getTransport: () => null,
@@ -32,7 +31,8 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   renameLedgerAccount: (a, n) => {},
   // eslint-disable-next-line
   getLedgerAccount: (a) => null,
-  ledgerAccounts: [],
   // eslint-disable-next-line
   signLedgerTx: async (f, t) => new Promise((resolve) => resolve()),
+  isPaired: 'unknown',
+  ledgerAccounts: [],
 };

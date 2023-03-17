@@ -7,7 +7,6 @@ import type { AnyJson, MaybeAccount } from 'types';
 export type LedgerHardwareContextInterface = {
   pairDevice: () => Promise<boolean>;
   setIsPaired: (v: PairingStatus) => void;
-  isPaired: PairingStatus;
   transportResponse: AnyJson;
   executeLedgerLoop: (
     transport: AnyJson,
@@ -27,8 +26,9 @@ export type LedgerHardwareContextInterface = {
   removeLedgerAccount: (a: string) => void;
   renameLedgerAccount: (a: string, name: string) => void;
   getLedgerAccount: (a: string) => LedgerAccount | null;
-  ledgerAccounts: Array<LedgerAccount>;
   signLedgerTx: (f: MaybeAccount, t: string) => Promise<void>;
+  isPaired: PairingStatus;
+  ledgerAccounts: Array<LedgerAccount>;
 };
 
 export interface LedgerResponse {
