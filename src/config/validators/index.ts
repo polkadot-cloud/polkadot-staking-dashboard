@@ -30,7 +30,7 @@ import { ReactComponent as StakingFacilities } from './thumbnails/stakingfacilit
 import { ReactComponent as TurboFlakes } from './thumbnails/turboflakes.svg';
 import { ReactComponent as Validierungcc } from './thumbnails/validierungcc.svg';
 import { ReactComponent as Wojdot } from './thumbnails/wojdot.svg';
-import { ReactComponent as LetzBake } from './thumbnails/letzbake.svg';
+import { ReactComponent as Blockshard } from './thumbnails/blockshard.svg';
 
 export const VALIDATOR_COMMUNITY = [
   {
@@ -445,12 +445,12 @@ export const VALIDATOR_COMMUNITY = [
     },
   },
   {
-    name: 'LetzBake!',
-    Thumbnail: LetzBake,
-    bio: 'Non-custodial staking made in Switzerland. At your service since 2018.',
-    email: 'hello@letzbake.com',
-    twitter: '@letzbake1',
-    website: 'https://letzbake.com',
+    name: 'Blockshard',
+    Thumbnail: Blockshard,
+    bio: 'Non-custodial staking made in Switzerland. At your service since 2018. Previously known as LetzBake!',
+    email: 'hello@blockshard.io',
+    twitter: '@blockshard1',
+    website: 'https://blockshard.io',
     validators: {
       kusama: ['Cp4U5UYg2FaVUpyEtQgfBm9aqge6EEPkJxEFVZFYy7L1AZF'],
     },
