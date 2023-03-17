@@ -22,7 +22,7 @@ import type { AddressProps } from './types';
 
 export const Address = ({ address, index }: AddressProps) => {
   const { openOverlayWith } = useOverlay();
-  const { ledgerAccountExists } = useLedgerHardware();
+  const { ledgerAccountExists, renameLedgerAccount } = useLedgerHardware();
 
   // store whether this address is being edited.
   const [editing, setEditing] = useState<boolean>(false);
@@ -63,6 +63,7 @@ export const Address = ({ address, index }: AddressProps) => {
     setEditName(newName);
     setEditing(false);
     renameLocalAccount();
+    renameLedgerAccount(address, newName);
   };
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     let val = e.currentTarget.value || '';
@@ -88,9 +89,10 @@ export const Address = ({ address, index }: AddressProps) => {
         name: editName,
       };
     });
-
     localStorage.setItem('ledger_addresses', JSON.stringify(localLedger));
   };
+
+  const isImported = ledgerAccountExists(address);
 
   return (
     <div className="item">
@@ -103,8 +105,13 @@ export const Address = ({ address, index }: AddressProps) => {
             </h5>
           </section>
           <section className="row">
-            <FontAwesomeIcon icon={faPen} transform="shrink-2" opacity={0.5} />
+            <FontAwesomeIcon
+              icon={faPen}
+              transform="shrink-2"
+              opacity={isImported ? 0.1 : 0.5}
+            />
             <input
+              disabled={isImported}
               type="text"
               value={editing ? editName : name}
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
@@ -144,7 +151,7 @@ export const Address = ({ address, index }: AddressProps) => {
         </div>
       </div>
       <div>
-        {ledgerAccountExists(address) ? (
+        {isImported ? (
           <>
             <ButtonMono
               iconLeft={faTimes}

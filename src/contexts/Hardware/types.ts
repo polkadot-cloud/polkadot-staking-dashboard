@@ -25,7 +25,9 @@ export type LedgerHardwareContextInterface = {
   ledgerAccountExists: (a: string) => boolean;
   addLedgerAccount: (a: string) => LedgerAccount | null;
   removeLedgerAccount: (a: string) => void;
+  renameLedgerAccount: (a: string, name: string) => void;
   getLedgerAccount: (a: string) => LedgerAccount | null;
+  ledgerAccounts: Array<LedgerAccount>;
 };
 
 export interface LedgerResponse {

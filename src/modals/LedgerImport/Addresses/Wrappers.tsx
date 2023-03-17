@@ -120,6 +120,10 @@ export const AddressWrapper = styled.div`
                 background: var(--background-menu);
                 width: 300px;
               }
+
+              &:disabled {
+                background: none;
+              }
             }
           }
         }

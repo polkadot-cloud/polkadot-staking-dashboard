@@ -7,7 +7,7 @@ import { useApi } from 'contexts/Api';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import React, { useRef, useState } from 'react';
 import type { AnyFunction, AnyJson } from 'types';
-import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
+import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { defaultLedgerHardwareContext } from './defaults';
 import type {
   LedgerHardwareContextInterface,
@@ -187,11 +187,24 @@ export const LedgerHardwareProvider = ({
       true
     ) as Array<LedgerAccount>;
 
-    if (!newImported.find((a: LedgerAccount) => a.address === address)) {
+    const ledgerAddresses = localStorageOrDefault(
+      'ledger_addresses',
+      [],
+      true
+    ) as Array<AnyJson>;
+
+    const ledgerAddress = ledgerAddresses.find(
+      (a: AnyJson) => a.address === address
+    );
+
+    if (
+      ledgerAddress &&
+      !newImported.find((a: LedgerAccount) => a.address === address)
+    ) {
       const account = {
         address,
         network: network.name,
-        name: clipAddress(address), // TODO: refer to `ledger_address.name` instead.
+        name: ledgerAddress.name,
         source: 'ledger',
       };
       newImported = [...newImported].concat(account);
@@ -224,11 +237,28 @@ export const LedgerHardwareProvider = ({
       [],
       true
     ) as Array<LedgerAccount>;
-
     if (!imported) {
       return null;
     }
     return imported.find((a: LedgerAccount) => a.address === address) ?? null;
+  };
+
+  const renameLedgerAccount = (address: string, newName: string) => {
+    let newImported = localStorageOrDefault(
+      'ledger_accounts',
+      [],
+      true
+    ) as Array<LedgerAccount>;
+    newImported = newImported.map((a: LedgerAccount) =>
+      a.address === address
+        ? {
+            ...a,
+            name: newName,
+          }
+        : a
+    );
+    localStorage.setItem('ledger_accounts', JSON.stringify(newImported));
+    setStateWithRef(newImported, setLedgerAccountsState, ledgerAccountsRef);
   };
 
   const setIsPaired = (p: PairingStatus) => {
@@ -279,7 +309,9 @@ export const LedgerHardwareProvider = ({
         ledgerAccountExists,
         addLedgerAccount,
         removeLedgerAccount,
+        renameLedgerAccount,
         getLedgerAccount,
+        ledgerAccounts: ledgerAccountsRef.current,
       }}
     >
       {children}
