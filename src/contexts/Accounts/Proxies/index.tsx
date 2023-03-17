@@ -174,7 +174,7 @@ export const ProxiesProvider = ({
 
   // Gets the delegate for the given proxy account
   const getProxiedAccounts = (address: MaybeAccount) => {
-    const delegate = delegatesRef.current[address || ''] || [];
+    const delegate = delegatesRef.current[address || ''];
     if (!delegate) {
       return [];
     }
