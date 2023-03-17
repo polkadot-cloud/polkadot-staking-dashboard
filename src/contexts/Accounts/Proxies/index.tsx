@@ -173,13 +173,12 @@ export const ProxiesProvider = ({
   };
 
   // Gets the delegate for the given proxy account
-  const getProxiedAccounts = (delegate: MaybeAccount) => {
-    const delegateItem = delegatesRef.current[delegate || ''] || [];
-
-    if (delegateItem == null) {
+  const getProxiedAccounts = (address: MaybeAccount) => {
+    const delegate = delegatesRef.current[address || ''] || [];
+    if (!delegate) {
       return [];
     }
-    const newdelegateItem: Array<ProxyAccount> = delegateItem
+    const proxiedAccounts: Array<ProxyAccount> = delegate
       .filter((item: DelegateItem) =>
         ['Any', 'Staking'].includes(item.proxyType)
       )
@@ -188,7 +187,7 @@ export const ProxiesProvider = ({
         name: clipAddress(d.delegator),
         proxyType: d.proxyType,
       }));
-    return newdelegateItem;
+    return proxiedAccounts;
   };
 
   return (
