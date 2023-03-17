@@ -130,32 +130,57 @@ export const useSubmitExtrinsic = ({
       });
     };
 
+    const handleStatus = (status: AnyApi) => {
+      if (status.isReady) onReady();
+      if (status.isInBlock) onInBlock();
+    };
+
+    const unsubEvents = ['ExtrinsicSuccess', 'ExtrinsicFailed'];
+
     // pre-submission state update
     setSubmitting(true);
 
+    // handle Ledger signed transaction
     if (source === 'ledger') {
-      await signLedgerTx(from, tx.toString());
+      let signedTx = null;
+      try {
+        signedTx = await signLedgerTx(from, tx.toString());
+      } catch (e) {
+        // TODO: provide signing error for Ledger based SubmitTx bar.
+      }
+      if (signedTx) {
+        try {
+          const unsub = await tx.send(
+            from,
+            signedTx,
+            ({ status, events = [] }: AnyApi) => {
+              handleStatus(status);
+
+              if (status.isFinalized) {
+                events.forEach(({ event: { method } }: AnyApi) => {
+                  onFinalizedEvent(method);
+                  if (unsubEvents.includes(method)) unsub();
+                });
+              }
+            }
+          );
+        } catch (e) {
+          onError();
+        }
+      }
     } else {
+      // handle extension signed transaction
       try {
         const unsub = await tx.signAndSend(
           from,
           { signer },
           ({ status, events = [] }: AnyApi) => {
-            if (status.isReady) {
-              // extrinsic is ready (has been signed), add to pending. d
-              onReady();
-            }
-            if (status.isInBlock) {
-              // extrinsic is in block, assume tx completed.
-              onInBlock();
-            }
+            handleStatus(status);
+
             if (status.isFinalized) {
-              // let user know outcome of transaction.
               events.forEach(({ event: { method } }: AnyApi) => {
                 onFinalizedEvent(method);
-                if (['ExtrinsicSuccess', 'ExtrinsicFailed'].includes(method)) {
-                  unsub();
-                }
+                if (unsubEvents.includes(method)) unsub();
               });
             }
           }
