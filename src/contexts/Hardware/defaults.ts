@@ -33,4 +33,6 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   // eslint-disable-next-line
   getLedgerAccount: (a) => null,
   ledgerAccounts: [],
+  // eslint-disable-next-line
+  signLedgerTx: async (f, t) => new Promise((resolve) => resolve()),
 };

@@ -8,6 +8,7 @@ import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useExtrinsics } from 'contexts/Extrinsics';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useNotifications } from 'contexts/Notifications';
 import { useTxFees } from 'contexts/TxFees';
 import { useEffect, useState } from 'react';
@@ -24,11 +25,12 @@ export const useSubmitExtrinsic = ({
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
   const { api } = useApi();
-  const { setTxFees, setSender, txFees } = useTxFees();
-  const { addNotification } = useNotifications();
-  const { addPending, removePending } = useExtrinsics();
-  const { extensions } = useExtensions();
   const { getAccount } = useConnect();
+  const { addNotification } = useNotifications();
+  const { extensions } = useExtensions();
+  const { addPending, removePending } = useExtrinsics();
+  const { signLedgerTx } = useLedgerHardware();
+  const { setTxFees, setSender, txFees } = useTxFees();
 
   // if null account is provided, fallback to empty string
   const submitAddress: string = from ?? '';
@@ -66,81 +68,101 @@ export const useSubmitExtrinsic = ({
       return;
     }
 
-    const _accountNonce = await api.rpc.system.accountNextIndex(submitAddress);
-    const accountNonce = _accountNonce.toHuman();
+    const accountNonce = (
+      await api.rpc.system.accountNextIndex(submitAddress)
+    ).toHuman();
 
     const { signer, source } = account;
 
-    // TODO: refactor to take into consideration source = ledger.
-    const extension = extensions.find(
-      (e: ExtensionInjected) => e.id === source
-    );
-    if (extension === undefined) {
-      throw new Error(`${t('walletNotFound')}`);
-    } else {
-      // summons extension popup if not already connected.
-      extension.enable(DappName);
+    // if `activeAccount` is imported from an extension, ensure it is enabled.
+    if (source !== 'ledger') {
+      const extension = extensions.find(
+        (e: ExtensionInjected) => e.id === source
+      );
+      if (extension === undefined) {
+        throw new Error(`${t('walletNotFound')}`);
+      } else {
+        // summons extension popup if not already connected.
+        extension.enable(DappName);
+      }
     }
 
-    // pre-submission state update
-    setSubmitting(true);
+    const onReady = () => {
+      addPending(accountNonce);
+      addNotification({
+        title: t('pending'),
+        subtitle: t('transactionInitiated'),
+      });
+      callbackSubmit();
+    };
 
-    // TODO: sign payload on ledger device and send.
-    try {
-      const unsub = await tx.signAndSend(
-        from,
-        { signer },
-        ({ status, events = [] }: AnyApi) => {
-          // extrinsic is ready ( has been signed), add to pending
-          if (status.isReady) {
-            addPending(accountNonce);
-            addNotification({
-              title: t('pending'),
-              subtitle: t('transactionInitiated'),
-            });
-            callbackSubmit();
-          }
-
-          // extrinsic is in block, assume tx completed
-          if (status.isInBlock) {
-            setSubmitting(false);
-            removePending(accountNonce);
-            addNotification({
-              title: t('inBlock'),
-              subtitle: t('transactionInBlock'),
-            });
-            callbackInBlock();
-          }
-
-          // let user know outcome of transaction
-          if (status.isFinalized) {
-            events.forEach(({ event: { method } }: AnyApi) => {
-              if (method === 'ExtrinsicSuccess') {
-                addNotification({
-                  title: t('finalized'),
-                  subtitle: t('transactionSuccessful'),
-                });
-                unsub();
-              } else if (method === 'ExtrinsicFailed') {
-                addNotification({
-                  title: t('failed'),
-                  subtitle: t('errorWithTransaction'),
-                });
-                setSubmitting(false);
-                removePending(accountNonce);
-                unsub();
-              }
-            });
-          }
-        }
-      );
-    } catch (e) {
+    const onInBlock = () => {
       setSubmitting(false);
+      removePending(accountNonce);
+      addNotification({
+        title: t('inBlock'),
+        subtitle: t('transactionInBlock'),
+      });
+      callbackInBlock();
+    };
+
+    const onFinalizedEvent = (method: string) => {
+      if (method === 'ExtrinsicSuccess') {
+        addNotification({
+          title: t('finalized'),
+          subtitle: t('transactionSuccessful'),
+        });
+      } else if (method === 'ExtrinsicFailed') {
+        addNotification({
+          title: t('failed'),
+          subtitle: t('errorWithTransaction'),
+        });
+        setSubmitting(false);
+        removePending(accountNonce);
+      }
+    };
+
+    const onError = () => {
       removePending(accountNonce);
       addNotification({
         title: t('cancelled'),
         subtitle: t('transactionCancelled'),
       });
+    };
+
+    // pre-submission state update
+    setSubmitting(true);
+
+    if (source === 'ledger') {
+      await signLedgerTx(from, tx.toString());
+    } else {
+      try {
+        const unsub = await tx.signAndSend(
+          from,
+          { signer },
+          ({ status, events = [] }: AnyApi) => {
+            if (status.isReady) {
+              // extrinsic is ready (has been signed), add to pending. d
+              onReady();
+            }
+            if (status.isInBlock) {
+              // extrinsic is in block, assume tx completed.
+              onInBlock();
+            }
+            if (status.isFinalized) {
+              // let user know outcome of transaction.
+              events.forEach(({ event: { method } }: AnyApi) => {
+                onFinalizedEvent(method);
+                if (['ExtrinsicSuccess', 'ExtrinsicFailed'].includes(method)) {
+                  unsub();
+                }
+              });
+            }
+          }
+        );
+      } catch (e) {
+        onError();
+      }
     }
   };
 
