@@ -25,6 +25,7 @@ export const SplashWrapper = styled.div`
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
+    margin-bottom: 2rem;
 
     h4 {
       margin-bottom: 0.5rem;

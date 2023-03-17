@@ -50,9 +50,6 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
                     }`
                   : determineStatusFromCodes(statusCodes, true).title}
               </h3>
-              {determineStatusFromCodes(statusCodes, true).subtitle ? (
-                <h5>{determineStatusFromCodes(statusCodes, true).subtitle}</h5>
-              ) : null}
             </div>
           </div>
           <div>

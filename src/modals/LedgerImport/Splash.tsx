@@ -35,10 +35,6 @@ export const Splash = ({ pairDevice, handleLedgerLoop }: AnyFunction) => {
   }, [isPaired]);
 
   const statusCodeTitle = determineStatusFromCodes(statusCodes, false).title;
-  const statusCodeSubtitle = determineStatusFromCodes(
-    statusCodes,
-    false
-  ).subtitle;
 
   return (
     <>
@@ -75,7 +71,9 @@ export const Splash = ({ pairDevice, handleLedgerLoop }: AnyFunction) => {
           </h2>
           {isPaired !== 'paired' ? (
             <>
-              <h5>Re-connect your Ledger device and try again to continue.</h5>
+              <h5>
+                Tip: Ensure your Ledger device is connected before continuing.
+              </h5>
               <div
                 style={{
                   display: 'flex',
@@ -90,7 +88,6 @@ export const Splash = ({ pairDevice, handleLedgerLoop }: AnyFunction) => {
               </div>
             </>
           ) : null}
-          <h5>{isPaired === 'paired' ? statusCodeSubtitle : null}</h5>
         </div>
       </SplashWrapper>
     </>

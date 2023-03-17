@@ -10,16 +10,12 @@ export const getDisplayFromLedgerCode = (
   inStatusBar = false
 ) => {
   let title;
-  let subtitle = null;
 
   switch (statusCode) {
     case 'DeviceNotConnected':
       title = inStatusBar
         ? 'Waiting For Ledger Device'
         : 'Ledger Not Connected';
-      subtitle = inStatusBar
-        ? ''
-        : 'Connect a Ledger device to continue account import.';
       break;
     case 'AppNotOpen':
       title = 'Unlock your Ledger device and open the Polkadot app.';
@@ -36,7 +32,7 @@ export const getDisplayFromLedgerCode = (
     default:
       title = 'Connecting to Device...';
   }
-  return { title, subtitle };
+  return { title };
 };
 
 // Determine the status of connection process.
