@@ -12,9 +12,10 @@ import * as defaults from './defaults';
 import type {
   DelegateItem,
   Delegates,
+  ProxiedAccounts,
+  Proxies,
   ProxiesContextInterface,
   Proxy,
-  ProxyAccount,
 } from './type';
 
 export const ProxiesContext = React.createContext<ProxiesContextInterface>(
@@ -32,7 +33,7 @@ export const ProxiesProvider = ({
   const { accounts } = useConnect();
 
   // store the proxy accounts of each imported account.
-  const [proxies, setProxies] = useState<Array<Proxy>>([]);
+  const [proxies, setProxies] = useState<Proxies>([]);
   const proxiesRef = useRef(proxies);
 
   // store unsubs for proxy subscriptions.
@@ -178,7 +179,7 @@ export const ProxiesProvider = ({
     if (!delegate) {
       return [];
     }
-    const proxiedAccounts: Array<ProxyAccount> = delegate
+    const proxiedAccounts: ProxiedAccounts = delegate
       .filter((item: DelegateItem) =>
         ['Any', 'Staking'].includes(item.proxyType)
       )

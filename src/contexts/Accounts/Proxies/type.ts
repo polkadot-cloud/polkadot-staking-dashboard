@@ -13,6 +13,17 @@ export type ProxyType =
   | 'CancelProxy'
   | 'Auction';
 
+export type Proxies = Array<Proxy>;
+
+export interface Proxy {
+  delegator: MaybeAccount;
+  delegates: Array<{
+    delegate: string;
+    proxyType: ProxyType;
+  }>;
+  reserved: BigNumber;
+}
+
 export interface Delegates {
   [key: string]: Array<DelegateItem>;
 }
@@ -22,25 +33,16 @@ export interface DelegateItem {
   proxyType: ProxyType;
 }
 
-export interface Proxy {
-  delegator: MaybeAccount;
-  delegates: Array<ProxyDelegate>;
-  reserved: BigNumber;
-}
+export type ProxiedAccounts = Array<ProxiedAccount>;
 
-export interface ProxyDelegate {
-  delegate: string;
-  proxyType: ProxyType;
-}
-
-export interface ProxyAccount {
+export interface ProxiedAccount {
   address: string;
   name: string;
   proxyType: ProxyType;
 }
 
 export interface ProxiesContextInterface {
-  proxies: Array<Proxy>;
+  proxies: Proxies;
   delegates: Delegates;
-  getProxiedAccounts: (a: MaybeAccount) => Array<ProxyAccount>;
+  getProxiedAccounts: (a: MaybeAccount) => ProxiedAccounts;
 }
