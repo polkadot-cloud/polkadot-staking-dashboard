@@ -23,7 +23,10 @@ export interface ConnectContextInterface {
   activeAccountMeta: ExtensionAccount | null;
 }
 
-export type ImportedAccount = ExtensionAccount | ExternalAccount;
+export type ImportedAccount =
+  | ExtensionAccount
+  | ExternalAccount
+  | LedgerAccount;
 
 export interface ExternalAccount {
   address: string;
@@ -31,6 +34,13 @@ export interface ExternalAccount {
   name: string;
   source: string;
   addedBy: string;
+}
+
+export interface LedgerAccount {
+  address: string;
+  network: string;
+  name: string;
+  source: string;
 }
 
 export interface HandleImportExtension {

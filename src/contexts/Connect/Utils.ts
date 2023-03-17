@@ -5,7 +5,7 @@ import Keyring from '@polkadot/keyring';
 import type { ExtensionAccount } from 'contexts/Extensions/types';
 import type { Network } from 'types';
 import { localStorageOrDefault } from 'Utils';
-import type { ExternalAccount, ImportedAccount } from './types';
+import type { ExternalAccount, ImportedAccount, LedgerAccount } from './types';
 
 // extension utils
 
@@ -70,6 +70,25 @@ export const getActiveAccountLocal = (network: Network) => {
     _activeAccount = keyring.addFromAddress(_activeAccount).address;
   }
   return _activeAccount;
+};
+
+// gets local ledger accounts, formatting their addresses
+// using active network ss58 format.
+export const getLocalLedgerAccounts = (
+  network: Network,
+  activeNetworkOnly = false
+) => {
+  let localLedgerAccounts = localStorageOrDefault<Array<ExternalAccount>>(
+    'ledger_accounts',
+    [],
+    true
+  ) as Array<LedgerAccount>;
+  if (activeNetworkOnly) {
+    localLedgerAccounts = localLedgerAccounts.filter(
+      (l: LedgerAccount) => l.network === network.name
+    );
+  }
+  return localLedgerAccounts;
 };
 
 // gets local external accounts, formatting their addresses
