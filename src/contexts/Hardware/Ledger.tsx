@@ -51,7 +51,7 @@ export const LedgerHardwareProvider = ({
   // Trigger a one-time connection to the device to determine if it is available. If the device
   // needs to be paired, a browser prompt will pop up and initialisation of `transport` will hault
   // until the user has completed or cancelled the pairing process.
-  const pairDevice = async (orUnpaired = false) => {
+  const pairDevice = async () => {
     try {
       resetStatusCodes();
       // close any open connections.
@@ -61,10 +61,9 @@ export const LedgerHardwareProvider = ({
       // establish a new connection with device.
       t.current = await TransportWebHID.create();
       setIsPaired('paired');
+      return true;
     } catch (err) {
-      if (orUnpaired) {
-        setIsPaired('unpaired');
-      }
+      return false;
     }
   };
 

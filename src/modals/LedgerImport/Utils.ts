@@ -48,26 +48,10 @@ export const determineStatusFromCodes = (
     return getDisplayFromLedgerCode('', inStatusBar);
   }
 
-  // If the ledger device is busy for at least 3 intervals, the polkadot app is not open..
-  const appNotOpenPrompts = ['GettingAddress'];
-  const firstResponses = responses.slice(0, 3);
-  let appNotOpenCount = 0;
-
-  firstResponses.every((b: AnyJson) => {
-    if (appNotOpenPrompts.includes(b.statusCode)) {
-      appNotOpenCount += 1;
-      return true;
-    }
-    return false;
-  });
-  if (appNotOpenCount === 3) {
-    return getDisplayFromLedgerCode('AppNotOpen' || '', inStatusBar);
-  }
-
-  // Determine the latest status beyond app not being open.
   const latestStatusCode: string = responses[0].statusCode;
   let trueCode = latestStatusCode;
 
+  // Check that all responses are DeviceNotConnected before displaying the UI.
   if (latestStatusCode === 'DeviceNotConnected') {
     responses.every((b: AnyJson) => {
       if (b.statusCode !== 'DeviceNotConnected') {

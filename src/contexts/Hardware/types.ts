@@ -4,7 +4,7 @@
 import type { AnyJson } from 'types';
 
 export type LedgerHardwareContextInterface = {
-  pairDevice: () => Promise<void>;
+  pairDevice: () => Promise<boolean>;
   setIsPaired: (v: PairingStatus) => void;
   isPaired: PairingStatus;
   transportResponse: AnyJson;
