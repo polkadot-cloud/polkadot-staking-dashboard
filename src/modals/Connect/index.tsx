@@ -4,6 +4,7 @@
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { ButtonInvertRounded } from '@polkadotcloud/dashboard-ui';
 import { EXTENSIONS } from 'config/extensions';
+import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
 import type { ExtensionConfig } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
@@ -20,6 +21,7 @@ import { ExtensionsWrapper, Separator } from './Wrappers';
 
 export const Connect = () => {
   const { t } = useTranslation('modals');
+  const { network } = useApi();
   const { extensions } = useExtensions();
   const { replaceModalWith, setResize, height } = useModal();
 
@@ -53,14 +55,18 @@ export const Connect = () => {
         </h1>
       </CustomHeaderWrapper>
 
-      <Action text="Hardware" />
-      <ExtensionsWrapper>
-        <SelectItems layout="two-col">
-          {[Ledger].map((Item: AnyFunction, i: number) => (
-            <Item key={`hardware_item_${i}`} />
-          ))}
-        </SelectItems>
-      </ExtensionsWrapper>
+      {network.name === 'polkadot' ? (
+        <>
+          <Action text="Hardware" />
+          <ExtensionsWrapper>
+            <SelectItems layout="two-col">
+              {[Ledger].map((Item: AnyFunction, i: number) => (
+                <Item key={`hardware_item_${i}`} />
+              ))}
+            </SelectItems>
+          </ExtensionsWrapper>
+        </>
+      ) : null}
 
       <Action text={t('extensions')} />
       <ExtensionsWrapper>
