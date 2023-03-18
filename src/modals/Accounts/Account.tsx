@@ -3,15 +3,15 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { clipAddress } from 'Utils';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
 import { Identicon } from 'library/Identicon';
-import { clipAddress } from 'Utils';
-import type { AccountItemProps } from './types';
 import { AccountWrapper } from './Wrappers';
+import type { AccountItemProps } from './types';
 
 export const AccountButton = (props: AccountItemProps) => {
   const { meta } = props;

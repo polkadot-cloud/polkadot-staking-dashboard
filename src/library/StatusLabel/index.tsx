@@ -9,8 +9,8 @@ import { usePlugins } from 'contexts/Plugins';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import type { StatusLabelProps } from './types';
 import { Wrapper } from './Wrapper';
+import type { StatusLabelProps } from './types';
 
 export const StatusLabel = ({
   title,

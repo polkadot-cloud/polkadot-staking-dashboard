@@ -3,11 +3,11 @@
 
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { remToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { Identicon } from 'library/Identicon';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { remToUnit } from 'Utils';
 import type { AccountDropdownProps, InputItem } from '../types';
 import { StyledDropdown, StyledSelect } from './Wrappers';
 

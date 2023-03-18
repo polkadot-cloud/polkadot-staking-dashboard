@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonSecondary } from '@polkadotcloud/dashboard-ui';
+import { isValidAddress } from 'Utils';
 import { useConnect } from 'contexts/Connect';
 import type { ImportedAccount } from 'contexts/Connect/types';
 import { useModal } from 'contexts/Modal';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isValidAddress } from 'Utils';
 import { Wrapper } from './Wrapper';
 
 export const ReadOnlyInput = () => {

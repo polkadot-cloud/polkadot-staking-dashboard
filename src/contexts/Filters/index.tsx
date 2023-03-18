@@ -9,10 +9,10 @@ import type {
   FilterItems,
   FilterOrder,
   FilterOrders,
-  FiltersContextInterface,
   FilterSearch,
   FilterSearches,
   FilterType,
+  FiltersContextInterface,
 } from './types';
 
 export const FiltersContext = React.createContext<FiltersContextInterface>(

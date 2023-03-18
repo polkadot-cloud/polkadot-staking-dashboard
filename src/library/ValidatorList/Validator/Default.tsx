@@ -27,8 +27,8 @@ import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator';
 import { Identity } from '../../ListItem/Labels/Identity';
 import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Select } from '../../ListItem/Labels/Select';
-import type { DefaultProps } from './types';
 import { getIdentityDisplay } from './Utils';
+import type { DefaultProps } from './types';
 
 export const Default = ({
   validator,

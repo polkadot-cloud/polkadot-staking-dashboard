@@ -3,6 +3,7 @@
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
+import { planckToUnit } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
@@ -21,7 +22,6 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit } from 'Utils';
 import { NotesWrapper, PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const ManageFastUnstake = () => {

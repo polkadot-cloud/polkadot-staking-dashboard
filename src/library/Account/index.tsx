@@ -3,13 +3,13 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { clipAddress, remToUnit } from 'Utils';
 import { useConnect } from 'contexts/Connect';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { clipAddress, remToUnit } from 'Utils';
 import { Identicon } from '../Identicon';
-import type { AccountProps } from './types';
 import { Wrapper } from './Wrapper';
+import type { AccountProps } from './types';
 
 export const Account = ({
   filled = false,

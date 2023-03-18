@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { bnToU8a, u8aConcat } from '@polkadot/util';
+import { rmCommas, setStateWithRef } from 'Utils';
 import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
 import { EmptyH256, ModPrefix, U32Opts } from 'consts';
@@ -11,7 +12,6 @@ import type {
 } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi } from 'types';
-import { rmCommas, setStateWithRef } from 'Utils';
 import { useApi } from '../../Api';
 import * as defaults from './defaults';
 

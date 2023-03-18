@@ -1,6 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  greaterThanZero,
+  isNotZero,
+  localStorageOrDefault,
+  setStateWithRef,
+} from 'Utils';
 import BigNumber from 'bignumber.js';
 import { useLedgers } from 'contexts/Accounts/Ledgers';
 import type { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
@@ -14,12 +20,6 @@ import type {
 } from 'contexts/Staking/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
-import {
-  greaterThanZero,
-  isNotZero,
-  localStorageOrDefault,
-  setStateWithRef,
-} from 'Utils';
 import Worker from 'workers/stakers?worker';
 import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';

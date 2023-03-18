@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useRef, useState } from 'react';
 import { setStateWithRef } from 'Utils';
+import React, { useRef, useState } from 'react';
 import { defaultNotificationsContext } from './defaults';
 import type {
   NotificationInterface,

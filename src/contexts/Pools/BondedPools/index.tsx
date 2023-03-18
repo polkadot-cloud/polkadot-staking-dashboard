@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { setStateWithRef, shuffle } from 'Utils';
 import type {
   BondedPool,
   BondedPoolsContextState,
@@ -11,7 +12,6 @@ import type {
 import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
-import { setStateWithRef, shuffle } from 'Utils';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
