@@ -5,4 +5,5 @@
 **/package-lock.json
 **/.eslintrc.js
 **/tsconfig.json
+dist
 src/img/**/*
