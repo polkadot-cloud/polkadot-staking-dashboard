@@ -12,5 +12,6 @@
 *.html
 *.webmanifest
 LICENSE
+dist
 build
 vite.config.ts

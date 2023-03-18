@@ -25,6 +25,12 @@ export default defineConfig({
   build: {
     outDir: 'build',
   },
+  server: {
+    fs: {
+      // if developing npm packages locally, turn this to `false`.
+      strict: true,
+    }
+  }
   // optimizeDeps: {
   //   esbuildOptions: {
   //     define: {
