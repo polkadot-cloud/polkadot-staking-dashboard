@@ -6,8 +6,8 @@ import { useConnect } from 'contexts/Connect';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
-import type { ConfirmProps } from './types';
 import { ConfirmWrapper } from './Wrappers';
+import type { ConfirmProps } from './types';
 
 export const Confirm = ({ address }: ConfirmProps) => {
   const { addToAccounts } = useConnect();

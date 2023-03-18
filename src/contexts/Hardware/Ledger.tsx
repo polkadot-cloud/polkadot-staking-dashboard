@@ -3,11 +3,11 @@
 
 import Polkadot from '@ledgerhq/hw-app-polkadot';
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
+import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { useApi } from 'contexts/Api';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import React, { useRef, useState } from 'react';
 import type { AnyFunction, AnyJson, MaybeAccount } from 'types';
-import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { defaultLedgerHardwareContext } from './defaults';
 import type {
   LedgerHardwareContextInterface,

@@ -10,12 +10,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonMono, ButtonText } from '@polkadotcloud/dashboard-ui';
+import { clipAddress, localStorageOrDefault, unescape } from 'Utils';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
 import React, { useState } from 'react';
 import type { AnyJson } from 'types';
-import { clipAddress, localStorageOrDefault, unescape } from 'Utils';
 import { Confirm } from './Confirm';
 import { Remove } from './Remove';
 import type { AddressProps } from './types';

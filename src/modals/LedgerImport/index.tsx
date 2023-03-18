@@ -1,13 +1,13 @@
 // Copyright 2022 @paritytech/polkadot-native authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import type { LedgerResponse, LedgerTask } from 'contexts/Hardware/types';
 import { useModal } from 'contexts/Modal';
 import { PaddingWrapper } from 'modals/Wrappers';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyJson } from 'types';
-import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
 import { Manage } from './Manage';
 import { Splash } from './Splash';
 
