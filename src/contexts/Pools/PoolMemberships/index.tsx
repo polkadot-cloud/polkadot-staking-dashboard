@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { rmCommas, setStateWithRef } from 'Utils';
 import BigNumber from 'bignumber.js';
 import type { ImportedAccount } from 'contexts/Connect/types';
 import type {
@@ -9,7 +10,6 @@ import type {
 } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, Fn } from 'types';
-import { rmCommas, setStateWithRef } from 'Utils';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import * as defaults from './defaults';

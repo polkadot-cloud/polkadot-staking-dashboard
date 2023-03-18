@@ -2,6 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import Keyring from '@polkadot/keyring';
+import {
+  clipAddress,
+  localStorageOrDefault,
+  registerSaEvent,
+  setStateWithRef,
+} from 'Utils';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import type {
@@ -16,13 +22,6 @@ import type {
 } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
-import {
-  clipAddress,
-  localStorageOrDefault,
-  registerSaEvent,
-  setStateWithRef,
-} from 'Utils';
-import { defaultConnectContext } from './defaults';
 import { useImportExtension } from './Hooks/useImportExtension';
 import {
   extensionIsLocal,
@@ -31,6 +30,7 @@ import {
   removeFromLocalExtensions,
   removeLocalExternalAccounts,
 } from './Utils';
+import { defaultConnectContext } from './defaults';
 
 export const ConnectContext = React.createContext<ConnectContextInterface>(
   defaultConnectContext

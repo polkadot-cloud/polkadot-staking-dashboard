@@ -3,7 +3,8 @@
 
 import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
+import { planckToUnit } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -11,12 +12,11 @@ import { getUnixTime } from 'date-fns';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
+import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
-import { planckToUnit } from 'Utils';
 import { NotesWrapper } from '../Wrappers';
 import { Chunk } from './Chunk';
 import { ContentWrapper } from './Wrappers';

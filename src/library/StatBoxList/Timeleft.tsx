@@ -1,13 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp } from '@polkadotcloud/dashboard-ui';
 import { useHelp } from 'contexts/Help';
 import { Countdown } from 'library/Countdown';
 import { StatPie } from 'library/Graphs/StatBoxPie';
 import { StatBox } from './Item';
-import type { TimeleftProps } from './types';
 import { TimeLeftWrapper } from './Wrapper';
+import type { TimeleftProps } from './types';
 
 export const Timeleft = ({
   label,

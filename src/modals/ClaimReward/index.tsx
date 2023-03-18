@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
+import { greaterThanZero, planckToUnit } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -16,7 +17,6 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { greaterThanZero, planckToUnit } from 'Utils';
 import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const ClaimReward = () => {

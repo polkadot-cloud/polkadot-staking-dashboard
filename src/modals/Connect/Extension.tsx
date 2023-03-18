@@ -10,8 +10,8 @@ import { useNotifications } from 'contexts/Notifications';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Foot } from './Foot';
-import type { ExtensionProps } from './types';
 import { ConnectItem, ExtensionInner } from './Wrappers';
+import type { ExtensionProps } from './types';
 
 export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { t } = useTranslation('modals');

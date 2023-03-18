@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { PluginsList } from 'consts';
 import React, { useRef, useState } from 'react';
-import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
 import type { PluginsContextInterface } from './types';
 

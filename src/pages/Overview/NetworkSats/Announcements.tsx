@@ -3,6 +3,12 @@
 
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  capitalizeFirstLetter,
+  planckToUnit,
+  rmCommas,
+  sortWithNull,
+} from 'Utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -13,12 +19,6 @@ import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
 import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
 import { useTranslation } from 'react-i18next';
-import {
-  capitalizeFirstLetter,
-  planckToUnit,
-  rmCommas,
-  sortWithNull,
-} from 'Utils';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {

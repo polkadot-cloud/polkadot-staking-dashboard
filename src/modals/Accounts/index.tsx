@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonInvertRounded } from '@polkadotcloud/dashboard-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useApi } from 'contexts/Api';
@@ -16,8 +16,8 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CustomHeaderWrapper, PaddingWrapper } from '../Wrappers';
 import { AccountButton } from './Account';
-import type { AccountNominating } from './types';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
+import type { AccountNominating } from './types';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');

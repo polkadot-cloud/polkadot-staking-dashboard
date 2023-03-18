@@ -3,7 +3,8 @@
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonInvert, ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonInvert, ButtonSubmit } from '@polkadotcloud/dashboard-ui';
+import { planckToUnit, rmCommas } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
@@ -22,7 +23,6 @@ import { SubmitTx } from 'library/SubmitTx';
 import { WarningsWrapper } from 'modals/Wrappers';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit, rmCommas } from 'Utils';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(

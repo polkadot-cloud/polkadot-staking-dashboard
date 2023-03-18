@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonInvertRounded } from '@polkadotcloud/dashboard-ui';
+import { camelize } from 'Utils';
 import { HELP_CONFIG } from 'config/help';
 import { useHelp } from 'contexts/Help';
 import type {
@@ -16,7 +17,6 @@ import { useAnimation } from 'framer-motion';
 import { useFillVariables } from 'library/Hooks/useFillVariables';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { camelize } from 'Utils';
 import { Definition } from './Items/Definition';
 import { External } from './Items/External';
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';

@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { setStateWithRef } from 'Utils';
 import { useTxFees } from 'contexts/TxFees';
 import React, { useEffect, useRef, useState } from 'react';
-import { setStateWithRef } from 'Utils';
 import { defaultModalContext } from './defaults';
 import type { ModalConfig, ModalContextInterface, ModalOptions } from './types';
 

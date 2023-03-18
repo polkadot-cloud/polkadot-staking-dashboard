@@ -9,8 +9,8 @@ import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { SubmitTxProps } from './types';
 import { Wrapper } from './Wrappers';
+import type { SubmitTxProps } from './types';
 
 export const SubmitTx = ({
   buttons,

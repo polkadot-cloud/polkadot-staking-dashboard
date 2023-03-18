@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { isNotZero } from 'Utils';
 import { ApiEndpoints, ApiSubscanKey } from 'consts';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import React, { useEffect, useState } from 'react';
 import type { AnyApi, AnySubscan } from 'types';
-import { isNotZero } from 'Utils';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { usePlugins } from '../Plugins';

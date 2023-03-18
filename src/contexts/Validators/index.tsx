@@ -1,6 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  greaterThanZero,
+  planckToUnit,
+  rmCommas,
+  setStateWithRef,
+  shuffle,
+} from 'Utils';
 import BigNumber from 'bignumber.js';
 import { VALIDATOR_COMMUNITY } from 'config/validators';
 import type {
@@ -12,13 +19,6 @@ import type {
 } from 'contexts/Validators/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, AnyMetaBatch, Fn } from 'types';
-import {
-  greaterThanZero,
-  planckToUnit,
-  rmCommas,
-  setStateWithRef,
-  shuffle,
-} from 'Utils';
 import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';

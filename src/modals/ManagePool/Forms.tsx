@@ -4,7 +4,7 @@
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { ButtonInvert, ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonInvert, ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';

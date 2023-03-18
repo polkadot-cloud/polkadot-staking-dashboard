@@ -10,7 +10,7 @@ export const graphColors: Record<string, AnyJson> = {
   },
   inactive: {
     light: '#f2f1f0',
-    dark: '#1d1d1d',
+    dark: 'rgb(39,35,39)',
   },
   tooltip: {
     light: '#333',
@@ -22,6 +22,6 @@ export const graphColors: Record<string, AnyJson> = {
   },
   grid: {
     light: '#e8e8e8',
-    dark: '#222',
+    dark: 'rgb(58,50,58)',
   },
 };
