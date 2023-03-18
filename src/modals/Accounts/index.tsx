@@ -16,8 +16,8 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CustomHeaderWrapper, PaddingWrapper } from '../Wrappers';
 import { AccountButton } from './Account';
-import type { AccountNominating } from './types';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
+import type { AccountNominating } from './types';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');

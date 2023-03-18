@@ -4,10 +4,10 @@
 import { faChevronRight, faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonInvertRounded } from '@polkadotcloud/dashboard-ui';
-import { useEffect, useLayoutEffect, useRef } from 'react';
 import { applyWidthAsPadding } from 'Utils';
-import type { ItemProps } from './types';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { StatusRowWrapper } from './Wrappers';
+import type { ItemProps } from './types';
 
 export const Item = ({ text, ctaText, onClick, leftIcon }: ItemProps) => {
   const containerRef = useRef<HTMLDivElement>(null);

@@ -7,8 +7,8 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { BondInputProps } from '../types';
 import { InputWrapper } from '../Wrappers';
+import type { BondInputProps } from '../types';
 
 export const BondInput = ({
   setters = [],

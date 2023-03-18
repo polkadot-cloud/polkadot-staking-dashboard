@@ -3,6 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { isNotZero } from 'Utils';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
@@ -21,7 +22,6 @@ import { SearchInput } from 'library/List/SearchInput';
 import { Pool } from 'library/Pool';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isNotZero } from 'Utils';
 import { PoolListProvider, usePoolList } from './context';
 import type { PoolListProps } from './types';
 

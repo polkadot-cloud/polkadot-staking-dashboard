@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { greaterThanZero, planckToUnit } from 'Utils';
 import BigNumber from 'bignumber.js';
 import {
   addDays,
@@ -12,7 +13,6 @@ import {
   subDays,
 } from 'date-fns';
 import type { AnyApi, AnySubscan } from 'types';
-import { greaterThanZero, planckToUnit } from 'Utils';
 import type { PayoutDayCursor } from './types';
 
 // Given payouts, calculate daily income and fill missing days with zero amounts.

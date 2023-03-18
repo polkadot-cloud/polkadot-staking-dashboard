@@ -4,8 +4,8 @@
 import type { MutableRefObject } from 'react';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import type { AnyJson } from 'types';
-import type { SelectItemsProps } from './types';
 import { SelectItemsWrapper, TwoThreshold } from './Wrapper';
+import type { SelectItemsProps } from './types';
 
 export const SelectItems = ({ layout, children }: SelectItemsProps) => {
   // Initialise refs for container and body of items.

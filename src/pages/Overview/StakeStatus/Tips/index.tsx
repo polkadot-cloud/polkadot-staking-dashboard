@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { setStateWithRef } from 'Utils';
 import { TIPS_CONFIG } from 'config/tips';
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -15,7 +16,6 @@ import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
-import { setStateWithRef } from 'Utils';
 import { Items } from './Items';
 import { PageToggle } from './PageToggle';
 import { Syncing } from './Syncing';

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonHelp } from '@polkadotcloud/dashboard-ui';
+import { PageRowWrapper } from 'Wrappers';
 import BigNumber from 'bignumber.js';
 import { MaxPayoutDays } from 'consts';
 import { useHelp } from 'contexts/Help';
@@ -27,7 +28,6 @@ import { locales } from 'locale';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnySubscan } from 'types';
-import { PageRowWrapper } from 'Wrappers';
 import type { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
 import { LastEraPayoutStat } from './Stats/LastEraPayout';

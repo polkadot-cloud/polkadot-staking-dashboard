@@ -10,11 +10,11 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
-import { lazy, Suspense, useMemo } from 'react';
+import { Suspense, lazy, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ItemWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
 import type { ItemProps } from './types';
-import { ItemWrapper } from './Wrappers';
 
 export const Item = ({ item, actionable }: ItemProps) => {
   const { t } = useTranslation('pages');

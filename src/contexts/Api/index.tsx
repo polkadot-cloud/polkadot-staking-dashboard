@@ -4,6 +4,7 @@
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import * as Sc from '@substrate/connect';
+import { extractUrlValue, rmCommas, varToUrlHash } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { NetworkList } from 'config/networks';
 import {
@@ -24,7 +25,6 @@ import type {
 } from 'contexts/Api/types';
 import React, { useEffect, useState } from 'react';
 import type { Network, NetworkName } from 'types';
-import { extractUrlValue, rmCommas, varToUrlHash } from 'Utils';
 import * as defaults from './defaults';
 
 export const APIContext = React.createContext<APIContextInterface>(
