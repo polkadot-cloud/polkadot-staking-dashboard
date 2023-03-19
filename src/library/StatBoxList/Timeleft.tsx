@@ -6,8 +6,8 @@ import { useHelp } from 'contexts/Help';
 import { Countdown } from 'library/Countdown';
 import { StatPie } from 'library/Graphs/StatBoxPie';
 import { StatBox } from './Item';
-import type { TimeleftProps } from './types';
 import { TimeLeftWrapper } from './Wrapper';
+import type { TimeleftProps } from './types';
 
 export const Timeleft = ({
   label,

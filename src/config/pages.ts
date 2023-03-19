@@ -44,19 +44,19 @@ export const PAGES_CONFIG: PagesConfig = [
   },
   {
     category: 2,
-    key: 'nominate',
-    uri: `${UriPrefix}/nominate`,
-    hash: '/nominate',
-    Entry: Nominate,
-    animate: viewTrendingUpJson,
-  },
-  {
-    category: 2,
     key: 'pools',
     uri: `${UriPrefix}/pools`,
     hash: '/pools',
     Entry: Pools,
     animate: viewGroupJson,
+  },
+  {
+    category: 2,
+    key: 'nominate',
+    uri: `${UriPrefix}/nominate`,
+    hash: '/nominate',
+    Entry: Nominate,
+    animate: viewTrendingUpJson,
   },
   {
     category: 2,

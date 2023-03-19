@@ -1,15 +1,15 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { planckToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { TxFeesContext, useTxFees } from 'contexts/TxFees';
 import type { EstimatedFeeContext } from 'contexts/TxFees/types';
 import type { Context } from 'react';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit } from 'Utils';
-import type { EstimatedTxFeeProps } from './types';
 import { Wrapper } from './Wrapper';
+import type { EstimatedTxFeeProps } from './types';
 
 export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
   const { t } = useTranslation('library');

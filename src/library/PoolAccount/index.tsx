@@ -9,8 +9,8 @@ import { Identicon } from 'library/Identicon';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { clipAddress, remToUnit } from '../../Utils';
-import type { PoolAccountProps } from './types';
 import { Wrapper } from './Wrapper';
+import type { PoolAccountProps } from './types';
 
 export const PoolAccount = ({
   label,

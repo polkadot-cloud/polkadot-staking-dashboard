@@ -24,7 +24,7 @@
   },
   "include": [
     "src",
-    "src/tests"
-, "tests", "src/vite-env.d.ts"  ],
+    "tests"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
