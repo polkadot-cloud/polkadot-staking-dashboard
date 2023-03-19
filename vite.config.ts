@@ -27,7 +27,6 @@ export default defineConfig({
   },
   server: {
     fs: {
-      // if developing npm packages locally, turn this to `false`.
       strict: true,
     }
   }
