@@ -28,8 +28,8 @@ export default defineConfig({
   server: {
     fs: {
       strict: true,
-    }
-  }
+    },
+  },
   // optimizeDeps: {
   //   esbuildOptions: {
   //     define: {
