@@ -1,3 +1,5 @@
+![example workflow](https://github.com/paritytech/polkadot-staking-dashboard/actions/workflows/ci.yml/badge.svg)
+
 # Polkadot Staking Dashboard
 
 #### Staging (Latest Version):
