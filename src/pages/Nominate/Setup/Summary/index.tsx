@@ -61,7 +61,7 @@ export const Summary = ({ section }: SetupStepProps) => {
     return api.tx.utility.batch(txs);
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTxs(),
     from: activeAccount,
     shouldSubmit: true,
@@ -125,11 +125,10 @@ export const Summary = ({ section }: SetupStepProps) => {
           }}
         >
           <SubmitTx
-            onSubmit={submitTx}
-            submitting={submitting}
             submitText={`${t('nominate.startNominating')}`}
             valid
             noMargin
+            {...submitExtrinsic}
           />
         </div>
       </MotionContainer>

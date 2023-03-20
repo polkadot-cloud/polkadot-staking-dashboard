@@ -46,7 +46,7 @@ export const NominatePool = () => {
     return tx;
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: valid,
@@ -83,11 +83,7 @@ export const NominatePool = () => {
         <Action text={t('haveNomination', { count: nominations.length })} />
         <p>{t('onceSubmitted')}</p>
       </PaddingWrapper>
-      <SubmitTx
-        onSubmit={submitTx}
-        submitting={submitting}
-        valid={valid && warnings.length === 0}
-      />
+      <SubmitTx valid={valid && warnings.length === 0} {...submitExtrinsic} />
     </>
   );
 };

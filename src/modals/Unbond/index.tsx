@@ -125,7 +125,7 @@ export const Unbond = () => {
 
   const signingAccount = isPooling ? activeAccount : controller;
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: signingAccount,
     shouldSubmit: bondValid,
@@ -229,9 +229,8 @@ export const Unbond = () => {
       </PaddingWrapper>
       <SubmitTx
         fromController={isStaking}
-        onSubmit={submitTx}
-        submitting={submitting}
         valid={bondValid}
+        {...submitExtrinsic}
       />
     </>
   );

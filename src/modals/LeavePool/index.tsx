@@ -84,7 +84,7 @@ export const LeavePool = () => {
     return tx;
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: bondValid,
@@ -130,7 +130,7 @@ export const LeavePool = () => {
           deps={[bondDuration]}
         />
       </PaddingWrapper>
-      <SubmitTx onSubmit={submitTx} submitting={submitting} valid={bondValid} />
+      <SubmitTx valid={bondValid} {...submitExtrinsic} />
     </>
   );
 };

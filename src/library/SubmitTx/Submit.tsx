@@ -5,7 +5,6 @@ import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import { useConnect } from 'contexts/Connect';
 import { useTxFees } from 'contexts/TxFees';
-import { useTranslation } from 'react-i18next';
 import type { SubmitProps } from './types';
 
 export const Submit = ({
@@ -14,13 +13,12 @@ export const Submit = ({
   valid,
   submitText,
 }: SubmitProps) => {
-  const { t } = useTranslation('library');
   const { txFeesValid } = useTxFees();
   const { activeAccount, accountHasSigner } = useConnect();
 
   return (
     <ButtonSubmit
-      text={submitText || `${submitting ? t('submitting') : t('submit')}`}
+      text={`${submitText}`}
       iconLeft={faArrowAltCircleUp}
       iconTransform="grow-2"
       onClick={() => onSubmit()}

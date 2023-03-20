@@ -45,7 +45,7 @@ export const ChangePoolRoles = () => {
   };
 
   // handle extrinsic
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
@@ -81,7 +81,7 @@ export const ChangePoolRoles = () => {
           />
         </Wrapper>
       </PaddingWrapper>
-      <SubmitTx onSubmit={submitTx} submitting={submitting} valid />
+      <SubmitTx {...submitExtrinsic} valid />
     </>
   );
 };

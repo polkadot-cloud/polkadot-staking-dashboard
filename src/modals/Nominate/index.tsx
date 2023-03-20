@@ -59,7 +59,7 @@ export const Nominate = () => {
     return tx;
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: controller,
     shouldSubmit: valid,
@@ -104,9 +104,8 @@ export const Nominate = () => {
       </PaddingWrapper>
       <SubmitTx
         fromController
-        onSubmit={submitTx}
-        submitting={submitting}
         valid={valid && warnings.length === 0}
+        {...submitExtrinsic}
       />
     </>
   );

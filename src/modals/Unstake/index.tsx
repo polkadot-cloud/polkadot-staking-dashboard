@@ -93,7 +93,7 @@ export const Unstake = () => {
     return api.tx.utility.batch(txs);
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: controller,
     shouldSubmit: bondValid,
@@ -145,12 +145,7 @@ export const Unstake = () => {
           deps={[bondDuration]}
         />
       </PaddingWrapper>
-      <SubmitTx
-        fromController
-        onSubmit={submitTx}
-        submitting={submitting}
-        valid={bondValid}
-      />
+      <SubmitTx fromController valid={bondValid} {...submitExtrinsic} />
     </>
   );
 };

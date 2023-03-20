@@ -79,7 +79,7 @@ export const UpdatePayee = () => {
     return tx;
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: controller,
     shouldSubmit: isComplete(),
@@ -145,12 +145,7 @@ export const UpdatePayee = () => {
           ))}
         </SelectItems>
       </PaddingWrapper>
-      <SubmitTx
-        fromController
-        onSubmit={submitTx}
-        submitting={submitting}
-        valid={isComplete()}
-      />
+      <SubmitTx fromController valid={isComplete()} {...submitExtrinsic} />
     </>
   );
 };

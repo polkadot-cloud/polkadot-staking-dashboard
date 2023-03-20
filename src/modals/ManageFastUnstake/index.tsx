@@ -80,7 +80,7 @@ export const ManageFastUnstake = () => {
     return tx;
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: controller,
     shouldSubmit: valid,
@@ -192,16 +192,15 @@ export const ManageFastUnstake = () => {
       {!isExposed ? (
         <SubmitTx
           fromController
-          onSubmit={submitTx}
-          submitting={submitting}
           valid={valid}
           submitText={`${
-            submitting
+            submitExtrinsic.submitting
               ? t('submitting')
               : t('fastUnstakeSubmit', {
                   context: isFastUnstaking ? 'cancel' : 'register',
                 })
           }`}
+          {...submitExtrinsic}
         />
       ) : null}
     </>

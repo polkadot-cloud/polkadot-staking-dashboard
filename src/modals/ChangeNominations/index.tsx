@@ -91,7 +91,7 @@ export const ChangeNominations = () => {
     return tx;
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: signingAccount,
     shouldSubmit: valid,
@@ -145,12 +145,7 @@ export const ChangeNominations = () => {
         ) : null}
         <p>{t('changeNomination')}</p>
       </PaddingWrapper>
-      <SubmitTx
-        fromController={isStaking}
-        onSubmit={submitTx}
-        submitting={submitting}
-        valid={valid}
-      />
+      <SubmitTx fromController={isStaking} valid={valid} {...submitExtrinsic} />
     </>
   );
 };

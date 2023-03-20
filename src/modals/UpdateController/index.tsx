@@ -57,7 +57,7 @@ export const UpdateController = () => {
   };
 
   // handle extrinsic
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
@@ -92,9 +92,8 @@ export const UpdateController = () => {
         </Wrapper>
       </PaddingWrapper>
       <SubmitTx
-        onSubmit={submitTx}
-        submitting={submitting}
         valid={!(selected === null || !selected.active)}
+        {...submitExtrinsic}
       />
     </>
   );

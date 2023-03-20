@@ -2,8 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type React from 'react';
+import type { MaybeAccount } from 'types';
 
 export type SubmitTxProps = SubmitProps & {
+  from: MaybeAccount;
   buttons?: Array<React.ReactNode>;
   fromController?: boolean;
   noMargin?: boolean;

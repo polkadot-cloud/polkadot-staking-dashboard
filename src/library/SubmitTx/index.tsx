@@ -4,16 +4,18 @@
 import { faPenToSquare, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Submit } from './Submit';
+import { Default } from './Default';
+import { ManualSign } from './ManualSign';
 import { Wrapper } from './Wrappers';
 import type { SubmitTxProps } from './types';
 
 export const SubmitTx = ({
+  from,
   onSubmit,
   submitText,
   buttons = [],
@@ -25,9 +27,11 @@ export const SubmitTx = ({
   const { t } = useTranslation('library');
   const { unit } = useApi().network;
   const { notEnoughFunds } = useTxFees();
+  const { requiresManualSign } = useConnect();
   const { setResize } = useModal();
 
   const displayNote = notEnoughFunds || fromController;
+  submitText = submitText || `${submitting ? t('submitting') : t('submit')}`;
 
   useEffect(() => {
     setResize();
@@ -60,18 +64,23 @@ export const SubmitTx = ({
           </p>
         ) : null}
         <section className="foot">
-          <div>
-            <EstimatedTxFee />
-          </div>
-          <div>
-            {buttons}
-            <Submit
+          {requiresManualSign(from) ? (
+            <ManualSign
               onSubmit={onSubmit}
               submitting={submitting}
               valid={valid}
               submitText={submitText}
+              buttons={buttons}
             />
-          </div>
+          ) : (
+            <Default
+              onSubmit={onSubmit}
+              submitting={submitting}
+              valid={valid}
+              submitText={submitText}
+              buttons={buttons}
+            />
+          )}
         </section>
       </div>
     </Wrapper>

@@ -60,7 +60,7 @@ export const WithdrawPoolMember = () => {
     tx = api.tx.nominationPools.withdrawUnbonded(who, historyDepth.toString());
     return tx;
   };
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: valid,
@@ -87,7 +87,7 @@ export const WithdrawPoolMember = () => {
           </WarningsWrapper>
         ) : null}
       </PaddingWrapper>
-      <SubmitTx onSubmit={submitTx} submitting={submitting} valid={valid} />
+      <SubmitTx valid={valid} {...submitExtrinsic} />
     </>
   );
 };

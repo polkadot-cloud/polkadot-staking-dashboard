@@ -113,7 +113,7 @@ export const NominateFromFavorites = () => {
     return tx;
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: signingAccount,
     shouldSubmit: valid,
@@ -183,9 +183,8 @@ export const NominateFromFavorites = () => {
       </PaddingWrapper>
       <SubmitTx
         fromController={bondFor === 'nominator'}
-        onSubmit={submitTx}
-        submitting={submitting}
         valid={valid && !(bondFor === 'pool' && !isNominator() && !isOwner())}
+        {...submitExtrinsic}
       />
     </>
   );

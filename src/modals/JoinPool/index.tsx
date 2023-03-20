@@ -57,7 +57,7 @@ export const JoinPool = () => {
     return tx;
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: bondValid,
@@ -99,7 +99,7 @@ export const JoinPool = () => {
           txFees={largestTxFee}
         />
       </PaddingWrapper>
-      <SubmitTx onSubmit={submitTx} submitting={submitting} valid={bondValid} />
+      <SubmitTx valid={bondValid} {...submitExtrinsic} />
     </>
   );
 };

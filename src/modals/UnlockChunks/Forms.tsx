@@ -74,7 +74,7 @@ export const Forms = forwardRef(
       return tx;
     };
     const signingAccount = isStaking ? controller : activeAccount;
-    const { submitTx, submitting } = useSubmitExtrinsic({
+    const submitExtrinsic = useSubmitExtrinsic({
       tx: getTx(),
       from: signingAccount,
       shouldSubmit: valid,
@@ -136,8 +136,6 @@ export const Forms = forwardRef(
           </div>
           <SubmitTx
             fromController={isStaking}
-            onSubmit={submitTx}
-            submitting={submitting}
             valid={valid}
             buttons={[
               <ButtonInvert
@@ -148,6 +146,7 @@ export const Forms = forwardRef(
                 onClick={() => setSection(0)}
               />,
             ]}
+            {...submitExtrinsic}
           />
         </div>
       </ContentWrapper>

@@ -100,7 +100,7 @@ export const Bond = () => {
     return determineTx(bondToSubmit);
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(bondAfterTxFees),
     from: activeAccount,
     shouldSubmit: bondValid,
@@ -145,7 +145,7 @@ export const Bond = () => {
         />
         <p>{t('newlyBondedFunds')}</p>
       </PaddingWrapper>
-      <SubmitTx onSubmit={submitTx} submitting={submitting} valid={bondValid} />
+      <SubmitTx valid={bondValid} {...submitExtrinsic} />
     </>
   );
 };

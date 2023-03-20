@@ -131,7 +131,7 @@ export const Forms = forwardRef(
       return tx;
     };
 
-    const { submitTx, submitting } = useSubmitExtrinsic({
+    const submitExtrinsic = useSubmitExtrinsic({
       tx: getTx(),
       from: activeAccount,
       shouldSubmit: true,
@@ -200,8 +200,6 @@ export const Forms = forwardRef(
               </div>
             </>
             <SubmitTx
-              onSubmit={submitTx}
-              submitting={submitting}
               valid={valid}
               buttons={[
                 <ButtonInvert
@@ -210,9 +208,9 @@ export const Forms = forwardRef(
                   iconLeft={faChevronLeft}
                   iconTransform="shrink-1"
                   onClick={() => setSection(0)}
-                  disabled={submitting}
                 />,
               ]}
+              {...submitExtrinsic}
             />
           </div>
         </ContentWrapper>

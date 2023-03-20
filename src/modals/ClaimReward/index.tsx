@@ -54,7 +54,7 @@ export const ClaimReward = () => {
     return tx;
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: valid,
@@ -100,7 +100,7 @@ export const ClaimReward = () => {
           <p>{t('claimReward2')}</p>
         )}
       </PaddingWrapper>
-      <SubmitTx onSubmit={submitTx} submitting={submitting} valid={valid} />
+      <SubmitTx valid={valid} {...submitExtrinsic} />
     </>
   );
 };

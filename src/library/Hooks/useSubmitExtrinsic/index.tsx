@@ -58,7 +58,7 @@ export const useSubmitExtrinsic = ({
   };
 
   // submit extrinsic
-  const submitTx = async () => {
+  const onSubmit = async () => {
     if (
       submitting ||
       !shouldSubmit ||
@@ -190,7 +190,8 @@ export const useSubmitExtrinsic = ({
   };
 
   return {
-    submitTx,
+    onSubmit,
     submitting,
+    from,
   };
 };
