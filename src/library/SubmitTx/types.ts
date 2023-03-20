@@ -10,4 +10,5 @@ export interface SubmitTxProps {
   buttons?: Array<React.ReactNode>;
   fromController?: boolean;
   submitText?: string;
+  noMargin?: boolean;
 }

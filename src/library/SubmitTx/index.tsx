@@ -16,12 +16,13 @@ import { Wrapper } from './Wrappers';
 import type { SubmitTxProps } from './types';
 
 export const SubmitTx = ({
-  valid = false,
-  submitting = false,
   submit,
-  fromController = false,
-  buttons = [],
   submitText,
+  buttons = [],
+  valid = false,
+  noMargin = false,
+  submitting = false,
+  fromController = false,
 }: SubmitTxProps) => {
   const { t } = useTranslation('library');
   const { unit } = useApi().network;
@@ -36,7 +37,7 @@ export const SubmitTx = ({
   }, [notEnoughFunds, fromController]);
 
   return (
-    <Wrapper>
+    <Wrapper noMargin={noMargin}>
       <div className="inner">
         {displayNote ? (
           <p className="sign">
@@ -82,7 +83,6 @@ export const SubmitTx = ({
                 !txFeesValid
               }
             />
-            ,
           </div>
         </section>
       </div>
