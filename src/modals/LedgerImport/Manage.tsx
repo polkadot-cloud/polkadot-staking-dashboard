@@ -12,10 +12,10 @@ import { StatusBarWrapper } from './Wrappers';
 
 export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const { replaceModalWith } = useModal();
-  const { setIsImporting, getIsImporting, getStatusCodes, resetStatusCodes } =
+  const { setIsImporting, getIsExecuting, getStatusCodes, resetStatusCodes } =
     useLedgerHardware();
 
-  const isImporting = getIsImporting();
+  const isExecuting = getIsExecuting();
   const statusCodes = getStatusCodes();
 
   return (
@@ -44,7 +44,7 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
             <IconSVG width="24" height="24" className="ledgerIcon" />
             <div className="text">
               <h3>
-                {!isImporting || !statusCodes.length
+                {!isExecuting || !statusCodes.length
                   ? `Displaying ${addresses.length} Ledger Account${
                       addresses.length === 1 ? '' : 's'
                     }`
@@ -53,7 +53,7 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
             </div>
           </div>
           <div>
-            {isImporting ? (
+            {isExecuting ? (
               <ButtonMonoInvert
                 text="Cancel"
                 onClick={() => {

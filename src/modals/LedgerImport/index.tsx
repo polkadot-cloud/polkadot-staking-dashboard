@@ -20,7 +20,7 @@ export const LedgerImport: React.FC = () => {
     setIsPaired,
     setIsImporting,
     resetStatusCodes,
-    getIsImporting,
+    getIsExecuting,
     handleNewStatusCode,
     isPaired,
     getStatusCodes,
@@ -84,7 +84,7 @@ export const LedgerImport: React.FC = () => {
           await getTransport().device.open();
         }
         const tasks: Array<LedgerTask> = [];
-        if (getIsImporting()) {
+        if (getIsExecuting()) {
           tasks.push('get_address');
         }
         await executeLedgerLoop(getTransport(), tasks, {
@@ -144,7 +144,7 @@ export const LedgerImport: React.FC = () => {
 
   // Listen for new Ledger status reports.
   useEffect(() => {
-    if (getIsImporting()) {
+    if (getIsExecuting()) {
       handleLedgerStatusResponse(transportResponse);
     }
   }, [transportResponse]);

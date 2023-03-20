@@ -10,8 +10,8 @@ import { Address } from './Address';
 import { AddressWrapper } from './Wrappers';
 
 export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
-  const { getIsImporting, setIsImporting, pairDevice } = useLedgerHardware();
-  const isImporting = getIsImporting();
+  const { getIsExecuting, setIsImporting, pairDevice } = useLedgerHardware();
+  const isExecuting = getIsExecuting();
   return (
     <>
       {addresses.length ? (
@@ -30,8 +30,8 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
           <div className="more">
             <ButtonText
               iconLeft={faArrowDown}
-              text={isImporting ? ' Getting Account' : 'Get Another Account'}
-              disabled={isImporting}
+              text={isExecuting ? ' Getting Account' : 'Get Another Account'}
+              disabled={isExecuting}
               onClick={async () => {
                 // re-pair the device if it has been disconnected.
                 const paired = await pairDevice();
