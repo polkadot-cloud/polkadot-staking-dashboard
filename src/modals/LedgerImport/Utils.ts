@@ -26,6 +26,9 @@ export const getDisplayFromLedgerCode = (
     case 'GettingAddress':
       title = 'Getting Address...';
       break;
+    case 'SigningPayload':
+      title = 'Signing transaction...';
+      break;
     case 'ReceivedAddress':
       title = 'Successfully Fetched Address';
       break;

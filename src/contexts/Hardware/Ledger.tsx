@@ -177,7 +177,7 @@ export const LedgerHardwareProvider = ({
 
     setTransportResponse({
       ack: 'success',
-      statusCode: 'SigningPayload', // TODO: global search & handle from GetAddress
+      statusCode: 'SigningPayload',
       body: `Signing extrinsic in progress.`,
     });
 
