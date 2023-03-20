@@ -21,7 +21,7 @@ export interface ConnectContextInterface {
   forgetAccounts: (a: Array<ImportedAccount>) => void;
   accounts: Array<ExtensionAccount>;
   activeAccount: string | null;
-  activeAccountMeta: ExtensionAccount | null;
+  activeAccountMeta: ImportedAccount | null;
 }
 
 export type ImportedAccount =

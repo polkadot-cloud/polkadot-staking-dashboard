@@ -38,6 +38,6 @@ export interface LedgerResponse {
   options?: AnyJson;
 }
 
-export type LedgerTask = 'get_address';
+export type LedgerTask = 'get_address' | 'sign_tx';
 
 export type PairingStatus = 'paired' | 'unpaired' | 'unknown';
