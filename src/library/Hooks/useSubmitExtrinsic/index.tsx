@@ -8,7 +8,6 @@ import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useExtrinsics } from 'contexts/Extrinsics';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useNotifications } from 'contexts/Notifications';
 import { useTxFees } from 'contexts/TxFees';
 import { useEffect, useState } from 'react';
@@ -29,7 +28,6 @@ export const useSubmitExtrinsic = ({
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
   const { addPending, removePending } = useExtrinsics();
-  const { signLedgerTx } = useLedgerHardware();
   const { setTxFees, setSender, txFees } = useTxFees();
 
   // if null account is provided, fallback to empty string
@@ -142,9 +140,9 @@ export const useSubmitExtrinsic = ({
 
     // handle Ledger signed transaction
     if (source === 'ledger') {
-      let signedTx = null;
+      const signedTx = null;
       try {
-        signedTx = await signLedgerTx(from, tx.toString());
+        // TODO: useLedgerLoop
       } catch (e) {
         // TODO: provide signing error for Ledger based SubmitTx bar.
       }

@@ -31,8 +31,6 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   renameLedgerAccount: (a, n) => {},
   // eslint-disable-next-line
   getLedgerAccount: (a) => null,
-  // eslint-disable-next-line
-  signLedgerTx: async (f, t) => new Promise((resolve) => resolve()),
   isPaired: 'unknown',
   ledgerAccounts: [],
 };

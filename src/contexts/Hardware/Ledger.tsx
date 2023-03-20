@@ -7,7 +7,7 @@ import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { useApi } from 'contexts/Api';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import React, { useRef, useState } from 'react';
-import type { AnyFunction, AnyJson, MaybeAccount } from 'types';
+import type { AnyFunction, AnyJson } from 'types';
 import { defaultLedgerHardwareContext } from './defaults';
 import type {
   LedgerHardwareContextInterface,
@@ -206,17 +206,6 @@ export const LedgerHardwareProvider = ({
     setStateWithRef(newStatusCodes, setStatusCodes, statusCodesRef);
   };
 
-  // Sign a transaction using the ledger device.
-  const signLedgerTx = async (from: MaybeAccount, tx: AnyJson) => {
-    if (!from) return;
-
-    const paired = await pairDevice();
-    if (paired) {
-      setIsExecuting(true);
-    }
-    // TODO: implement
-  };
-
   // Check if an address exists in imported addresses.
   const ledgerAccountExists = (address: string) => {
     const imported = localStorageOrDefault(
@@ -358,7 +347,6 @@ export const LedgerHardwareProvider = ({
         removeLedgerAccount,
         renameLedgerAccount,
         getLedgerAccount,
-        signLedgerTx,
         isPaired: isPairedRef.current,
         ledgerAccounts: ledgerAccountsRef.current,
       }}
