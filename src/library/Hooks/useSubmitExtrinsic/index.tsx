@@ -40,7 +40,7 @@ export const useSubmitExtrinsic = ({
   useEffect(() => {
     setSender(from);
     calculateEstimatedFee();
-  }, [tx]);
+  }, [tx?.toString()]);
 
   const calculateEstimatedFee = async () => {
     if (tx === null) {
