@@ -169,7 +169,7 @@ export const LedgerHardwareProvider = ({
   const handleSignTx = async (
     transport: AnyJson,
     index: number,
-    payload: string
+    payload: AnyJson
   ) => {
     const polkadot = new Polkadot(transport);
     const { deviceModel } = transport;
@@ -183,8 +183,10 @@ export const LedgerHardwareProvider = ({
 
     const signedPayload = await polkadot.sign(
       `'44'/354'/${index}'/0'/0'`,
-      payload
+      JSON.stringify(payload) // TODO: might need .toU8a(true)
     );
+
+    // console.log('signed: ', signedPayload);
 
     if (!(signedPayload instanceof Error)) {
       return {

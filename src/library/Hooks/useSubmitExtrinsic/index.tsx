@@ -12,7 +12,7 @@ import { useNotifications } from 'contexts/Notifications';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyApi } from 'types';
+import type { AnyApi, AnyJson } from 'types';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = ({
@@ -54,6 +54,21 @@ export const useSubmitExtrinsic = ({
     if (partialFeeBn.toString() !== txFees.toString()) {
       setTxFees(partialFeeBn);
     }
+  };
+
+  // get payload string of the transaction, or an empty string if it is not ready.
+  const getPayload = () => {
+    if (api && tx) {
+      const extrinsicPayload = api.registry.createType('ExtrinsicPayload', tx, {
+        version: tx.version,
+      });
+
+      // TODO: complete to fully completed payload.
+      const payload: AnyJson = extrinsicPayload.toHuman();
+      payload.method = JSON.parse(payload.method);
+      return extrinsicPayload;
+    }
+    return '';
   };
 
   // submit extrinsic
@@ -191,6 +206,6 @@ export const useSubmitExtrinsic = ({
   return {
     onSubmit,
     submitting,
-    txString: tx?.toString() || '', // TODO: migrate to raw payload.
+    payload: getPayload(),
   };
 };

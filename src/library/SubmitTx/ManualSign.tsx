@@ -20,7 +20,7 @@ import type { SubmitProps } from './types';
 // TODO: integrate useLedgerLoop
 
 export const ManualSign = ({
-  txString,
+  payload,
   onSubmit,
   submitting,
   valid,
@@ -48,7 +48,7 @@ export const ManualSign = ({
   };
 
   const getPayload = () => {
-    return txString || '';
+    return payload || {};
   };
 
   // Ledger loop needs to keep track of whether this component is mounted. If it is unmounted then

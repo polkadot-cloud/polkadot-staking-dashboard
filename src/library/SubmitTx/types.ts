@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type React from 'react';
+import type { AnyJson } from 'types';
 
 export type SubmitTxProps = SubmitProps & {
   buttons?: Array<React.ReactNode>;
@@ -10,7 +11,7 @@ export type SubmitTxProps = SubmitProps & {
 };
 
 export interface SubmitProps {
-  txString?: string;
+  payload?: AnyJson;
   onSubmit: () => void;
   submitting: boolean;
   valid: boolean;
