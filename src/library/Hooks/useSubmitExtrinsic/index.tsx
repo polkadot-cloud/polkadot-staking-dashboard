@@ -192,6 +192,5 @@ export const useSubmitExtrinsic = ({
   return {
     onSubmit,
     submitting,
-    from,
   };
 };

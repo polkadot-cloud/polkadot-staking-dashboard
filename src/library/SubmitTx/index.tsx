@@ -15,7 +15,6 @@ import { Wrapper } from './Wrappers';
 import type { SubmitTxProps } from './types';
 
 export const SubmitTx = ({
-  from,
   onSubmit,
   submitText,
   buttons = [],
@@ -26,7 +25,7 @@ export const SubmitTx = ({
 }: SubmitTxProps) => {
   const { t } = useTranslation('library');
   const { unit } = useApi().network;
-  const { notEnoughFunds } = useTxMeta();
+  const { notEnoughFunds, sender } = useTxMeta();
   const { requiresManualSign } = useConnect();
   const { setResize } = useModal();
 
@@ -64,7 +63,7 @@ export const SubmitTx = ({
           </p>
         ) : null}
         <section className="foot">
-          {requiresManualSign(from) ? (
+          {requiresManualSign(sender) ? (
             <ManualSign
               onSubmit={onSubmit}
               submitting={submitting}
