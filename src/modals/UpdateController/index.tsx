@@ -92,7 +92,7 @@ export const UpdateController = () => {
         </Wrapper>
       </PaddingWrapper>
       <SubmitTx
-        submit={submitTx}
+        onSubmit={submitTx}
         submitting={submitting}
         valid={!(selected === null || !selected.active)}
       />

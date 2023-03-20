@@ -125,7 +125,7 @@ export const Summary = ({ section }: SetupStepProps) => {
           }}
         >
           <SubmitTx
-            submit={submitTx}
+            onSubmit={submitTx}
             submitting={submitting}
             submitText={`${t('nominate.startNominating')}`}
             valid

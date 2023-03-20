@@ -100,7 +100,7 @@ export const ClaimReward = () => {
           <p>{t('claimReward2')}</p>
         )}
       </PaddingWrapper>
-      <SubmitTx submit={submitTx} submitting={submitting} valid={valid} />
+      <SubmitTx onSubmit={submitTx} submitting={submitting} valid={valid} />
     </>
   );
 };

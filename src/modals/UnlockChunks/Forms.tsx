@@ -136,7 +136,7 @@ export const Forms = forwardRef(
           </div>
           <SubmitTx
             fromController={isStaking}
-            submit={submitTx}
+            onSubmit={submitTx}
             submitting={submitting}
             valid={valid}
             buttons={[

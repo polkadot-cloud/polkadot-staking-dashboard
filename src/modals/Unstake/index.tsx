@@ -147,7 +147,7 @@ export const Unstake = () => {
       </PaddingWrapper>
       <SubmitTx
         fromController
-        submit={submitTx}
+        onSubmit={submitTx}
         submitting={submitting}
         valid={bondValid}
       />

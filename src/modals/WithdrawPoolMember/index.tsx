@@ -87,7 +87,7 @@ export const WithdrawPoolMember = () => {
           </WarningsWrapper>
         ) : null}
       </PaddingWrapper>
-      <SubmitTx submit={submitTx} submitting={submitting} valid={valid} />
+      <SubmitTx onSubmit={submitTx} submitting={submitting} valid={valid} />
     </>
   );
 };

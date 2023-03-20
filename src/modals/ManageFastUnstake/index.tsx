@@ -192,7 +192,7 @@ export const ManageFastUnstake = () => {
       {!isExposed ? (
         <SubmitTx
           fromController
-          submit={submitTx}
+          onSubmit={submitTx}
           submitting={submitting}
           valid={valid}
           submitText={`${

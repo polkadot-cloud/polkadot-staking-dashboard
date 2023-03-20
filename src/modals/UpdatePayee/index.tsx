@@ -147,7 +147,7 @@ export const UpdatePayee = () => {
       </PaddingWrapper>
       <SubmitTx
         fromController
-        submit={submitTx}
+        onSubmit={submitTx}
         submitting={submitting}
         valid={isComplete()}
       />

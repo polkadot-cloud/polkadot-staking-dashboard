@@ -145,7 +145,7 @@ export const Bond = () => {
         />
         <p>{t('newlyBondedFunds')}</p>
       </PaddingWrapper>
-      <SubmitTx submit={submitTx} submitting={submitting} valid={bondValid} />
+      <SubmitTx onSubmit={submitTx} submitting={submitting} valid={bondValid} />
     </>
   );
 };

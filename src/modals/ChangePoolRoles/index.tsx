@@ -81,7 +81,7 @@ export const ChangePoolRoles = () => {
           />
         </Wrapper>
       </PaddingWrapper>
-      <SubmitTx submit={submitTx} submitting={submitting} valid />
+      <SubmitTx onSubmit={submitTx} submitting={submitting} valid />
     </>
   );
 };

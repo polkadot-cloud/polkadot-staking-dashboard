@@ -99,7 +99,7 @@ export const JoinPool = () => {
           txFees={largestTxFee}
         />
       </PaddingWrapper>
-      <SubmitTx submit={submitTx} submitting={submitting} valid={bondValid} />
+      <SubmitTx onSubmit={submitTx} submitting={submitting} valid={bondValid} />
     </>
   );
 };

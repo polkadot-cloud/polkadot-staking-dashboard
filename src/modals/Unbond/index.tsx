@@ -229,7 +229,7 @@ export const Unbond = () => {
       </PaddingWrapper>
       <SubmitTx
         fromController={isStaking}
-        submit={submitTx}
+        onSubmit={submitTx}
         submitting={submitting}
         valid={bondValid}
       />

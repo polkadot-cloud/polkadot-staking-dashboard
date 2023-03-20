@@ -84,7 +84,7 @@ export const NominatePool = () => {
         <p>{t('onceSubmitted')}</p>
       </PaddingWrapper>
       <SubmitTx
-        submit={submitTx}
+        onSubmit={submitTx}
         submitting={submitting}
         valid={valid && warnings.length === 0}
       />

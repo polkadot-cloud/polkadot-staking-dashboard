@@ -104,7 +104,7 @@ export const Nominate = () => {
       </PaddingWrapper>
       <SubmitTx
         fromController
-        submit={submitTx}
+        onSubmit={submitTx}
         submitting={submitting}
         valid={valid && warnings.length === 0}
       />

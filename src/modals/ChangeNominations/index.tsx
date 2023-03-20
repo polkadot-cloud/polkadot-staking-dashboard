@@ -147,7 +147,7 @@ export const ChangeNominations = () => {
       </PaddingWrapper>
       <SubmitTx
         fromController={isStaking}
-        submit={submitTx}
+        onSubmit={submitTx}
         submitting={submitting}
         valid={valid}
       />

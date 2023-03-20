@@ -200,7 +200,7 @@ export const Forms = forwardRef(
               </div>
             </>
             <SubmitTx
-              submit={submitTx}
+              onSubmit={submitTx}
               submitting={submitting}
               valid={valid}
               buttons={[

@@ -183,7 +183,7 @@ export const NominateFromFavorites = () => {
       </PaddingWrapper>
       <SubmitTx
         fromController={bondFor === 'nominator'}
-        submit={submitTx}
+        onSubmit={submitTx}
         submitting={submitting}
         valid={valid && !(bondFor === 'pool' && !isNominator() && !isOwner())}
       />
