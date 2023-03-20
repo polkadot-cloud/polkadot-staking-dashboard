@@ -9,7 +9,7 @@ import { Identicon } from 'library/Identicon';
 import { ConfirmWrapper } from './Wrappers';
 import type { ConfirmProps } from './types';
 
-export const Confirm = ({ address }: ConfirmProps) => {
+export const Confirm = ({ address, index }: ConfirmProps) => {
   const { addToAccounts } = useConnect();
   const { setStatus } = useOverlay();
   const { addLedgerAccount } = useLedgerHardware();
@@ -24,7 +24,7 @@ export const Confirm = ({ address }: ConfirmProps) => {
         <ButtonMono
           text="Import Account"
           onClick={() => {
-            const account = addLedgerAccount(address);
+            const account = addLedgerAccount(address, index);
             if (account) {
               addToAccounts([account]);
             }

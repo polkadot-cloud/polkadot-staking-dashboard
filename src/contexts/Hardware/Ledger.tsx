@@ -172,6 +172,12 @@ export const LedgerHardwareProvider = ({
   // Sign a transaction using the ledger device.
   const signLedgerTx = async (from: MaybeAccount, tx: AnyJson) => {
     if (!from) return;
+
+    const paired = await pairDevice();
+    if (paired) {
+      setIsImporting(true);
+    }
+
     console.log(tx);
     // TODO: implement
   };
@@ -186,7 +192,7 @@ export const LedgerHardwareProvider = ({
     return !!imported.find((a: LedgerAccount) => a.address === address);
   };
 
-  const addLedgerAccount = (address: string) => {
+  const addLedgerAccount = (address: string, index: number) => {
     let newImported = localStorageOrDefault(
       'ledger_accounts',
       [],
@@ -212,6 +218,7 @@ export const LedgerHardwareProvider = ({
         network: network.name,
         name: ledgerAddress.name,
         source: 'ledger',
+        index,
       };
       newImported = [...newImported].concat(account);
       localStorage.setItem('ledger_accounts', JSON.stringify(newImported));

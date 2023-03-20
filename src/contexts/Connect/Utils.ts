@@ -78,7 +78,7 @@ export const getLocalLedgerAccounts = (
   network: Network,
   activeNetworkOnly = false
 ) => {
-  let localLedgerAccounts = localStorageOrDefault<Array<ExternalAccount>>(
+  let localLedgerAccounts = localStorageOrDefault<Array<LedgerAccount>>(
     'ledger_accounts',
     [],
     true

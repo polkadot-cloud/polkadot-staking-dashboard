@@ -24,7 +24,7 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   // eslint-disable-next-line
   ledgerAccountExists: (a) => false,
   // eslint-disable-next-line
-  addLedgerAccount: (a) => null,
+  addLedgerAccount: (a, i) => null,
   // eslint-disable-next-line
   removeLedgerAccount: (a) => {},
   // eslint-disable-next-line

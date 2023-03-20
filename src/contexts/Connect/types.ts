@@ -42,6 +42,7 @@ export interface LedgerAccount {
   network: string;
   name: string;
   source: string;
+  index: number;
 }
 
 export interface HandleImportExtension {

@@ -7,9 +7,9 @@ import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
 import { ConfirmWrapper } from './Wrappers';
-import type { ConfirmProps } from './types';
+import type { RemoveProps } from './types';
 
-export const Remove = ({ address }: ConfirmProps) => {
+export const Remove = ({ address }: RemoveProps) => {
   const { forgetAccounts } = useConnect();
   const { setStatus } = useOverlay();
   const { getLedgerAccount, removeLedgerAccount } = useLedgerHardware();

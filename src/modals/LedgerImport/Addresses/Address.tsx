@@ -166,7 +166,10 @@ export const Address = ({ address, index }: AddressProps) => {
             iconLeft={faPlus}
             text="Import"
             onClick={() => {
-              openOverlayWith(<Confirm address={address} />, 'small');
+              openOverlayWith(
+                <Confirm address={address} index={index} />,
+                'small'
+              );
             }}
           />
         )}

@@ -8,4 +8,9 @@ export interface AddressProps {
 
 export interface ConfirmProps {
   address: string;
+  index: number;
+}
+
+export interface RemoveProps {
+  address: string;
 }
