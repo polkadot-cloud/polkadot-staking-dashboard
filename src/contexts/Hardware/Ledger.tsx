@@ -110,14 +110,21 @@ export const LedgerHardwareProvider = ({
     try {
       let result = null;
       if (tasks.includes('get_address')) {
-        result = await handleGetAddress(transport, options.accountIndex ?? 0);
-        if (result) {
-          setTransportResponse({
-            ack: 'success',
-            options,
-            ...result,
-          });
-        }
+        result = await handleGetAddress(transport, options?.accountIndex || 0);
+      } else if (tasks.includes('sign_tx')) {
+        result = await handleSignTx(
+          transport,
+          options?.accountIndex ?? 0,
+          options?.payload || {}
+        );
+      }
+
+      if (result) {
+        setTransportResponse({
+          ack: 'success',
+          options,
+          ...result,
+        });
       }
     } catch (err) {
       handleErrors(err);
@@ -133,7 +140,7 @@ export const LedgerHardwareProvider = ({
   };
 
   // Gets a Polkadot address on device.
-  const handleGetAddress = async (transport: AnyJson, accountIndex: number) => {
+  const handleGetAddress = async (transport: AnyJson, index: number) => {
     const polkadot = new Polkadot(transport);
     const { deviceModel } = transport;
     const { id, productName } = deviceModel;
@@ -141,12 +148,12 @@ export const LedgerHardwareProvider = ({
     setTransportResponse({
       ack: 'success',
       statusCode: 'GettingAddress',
-      body: `Getting addresess ${accountIndex} in progress.`,
+      body: `Getting addresess ${index} in progress.`,
     });
 
     const address = await withTimeout(
       500,
-      polkadot.getAddress(`'44'/354'/${accountIndex}'/0'/0'`, false)
+      polkadot.getAddress(`'44'/354'/${index}'/0'/0'`, false)
     );
 
     if (!(address instanceof Error)) {
@@ -159,9 +166,9 @@ export const LedgerHardwareProvider = ({
   };
 
   // Signs a payload on device.
-  const handleSignPayload = async (
+  const handleSignTx = async (
     transport: AnyJson,
-    accountIndex: number,
+    index: number,
     payload: AnyJson
   ) => {
     const polkadot = new Polkadot(transport);
@@ -176,7 +183,7 @@ export const LedgerHardwareProvider = ({
 
     const signedPayload = await withTimeout(
       500,
-      polkadot.getAddress(`'44'/354'/${accountIndex}'/0'/0'`, payload)
+      polkadot.getAddress(`'44'/354'/${index}'/0'/0'`, payload)
     );
 
     if (!(signedPayload instanceof Error)) {
