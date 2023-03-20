@@ -16,6 +16,7 @@ export interface ConnectContextInterface {
   addExternalAccount: (a: string, addedBy: string) => void;
   getActiveAccount: () => string | null;
   accountHasSigner: (a: MaybeAccount) => boolean;
+  requiresManualSign: (a: MaybeAccount) => boolean;
   isReadOnlyAccount: (a: MaybeAccount) => boolean;
   addToAccounts: (a: Array<ImportedAccount>) => void;
   forgetAccounts: (a: Array<ImportedAccount>) => void;

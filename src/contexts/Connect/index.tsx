@@ -501,6 +501,17 @@ export const ConnectProvider = ({
     return exists;
   };
 
+  // Checks whether an account needs manual signing. This is the case for Ledger accounts,
+  // transactions of which cannot be automatically signed by a provided `signer` as is the case with
+  // extensions.
+  const requiresManualSign = (address: MaybeAccount) => {
+    return (
+      accountsRef.current.find(
+        (a: ImportedAccount) => a.address === address && a.source !== 'ledger'
+      ) !== undefined
+    );
+  };
+
   const isReadOnlyAccount = (address: MaybeAccount) => {
     const account = getAccount(address) ?? {};
 
@@ -569,6 +580,7 @@ export const ConnectProvider = ({
         addExternalAccount,
         getActiveAccount,
         accountHasSigner,
+        requiresManualSign,
         isReadOnlyAccount,
         addToAccounts,
         forgetAccounts,
