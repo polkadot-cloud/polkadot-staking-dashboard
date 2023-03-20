@@ -14,9 +14,10 @@ import type { AnyFunction } from 'types';
 import { determineStatusFromCodes } from './Utils';
 import { SplashWrapper } from './Wrappers';
 
-export const Splash = ({ pairDevice, handleLedgerLoop }: AnyFunction) => {
+export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   const { replaceModalWith, setStatus } = useModal();
-  const { getStatusCodes, isPaired, setIsExecuting } = useLedgerHardware();
+  const { getStatusCodes, isPaired, setIsExecuting, pairDevice } =
+    useLedgerHardware();
   const statusCodes = getStatusCodes();
 
   // Initialise listeners for Ledger IO.

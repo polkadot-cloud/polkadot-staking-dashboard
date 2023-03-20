@@ -15,7 +15,6 @@ import { Splash } from './Splash';
 export const LedgerImport: React.FC = () => {
   const { setResize } = useModal();
   const {
-    pairDevice,
     transportResponse,
     setIsExecuting,
     resetStatusCodes,
@@ -108,7 +107,7 @@ export const LedgerImport: React.FC = () => {
   return (
     <PaddingWrapper verticalOnly>
       {!addressesRef.current.length ? (
-        <Splash pairDevice={pairDevice} handleLedgerLoop={handleLedgerLoop} />
+        <Splash handleLedgerLoop={handleLedgerLoop} />
       ) : (
         <Manage
           addresses={addressesRef.current}
