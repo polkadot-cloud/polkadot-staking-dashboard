@@ -25,7 +25,7 @@ export const useSubmitExtrinsic = ({
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
   const { api } = useApi();
-  const { getAccount } = useConnect();
+  const { getAccount, requiresManualSign } = useConnect();
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
   const { addPending, removePending } = useExtrinsics();
@@ -59,9 +59,15 @@ export const useSubmitExtrinsic = ({
 
   // submit extrinsic
   const submitTx = async () => {
-    if (submitting || !shouldSubmit || !api) {
+    if (
+      submitting ||
+      !shouldSubmit ||
+      !api ||
+      (requiresManualSign(from) && !signedTx)
+    ) {
       return;
     }
+
     const account = getAccount(submitAddress);
     if (account === null) {
       return;
@@ -71,7 +77,7 @@ export const useSubmitExtrinsic = ({
       await api.rpc.system.accountNextIndex(submitAddress)
     ).toHuman();
 
-    const { signer, source } = account;
+    const { source } = account;
 
     // if `activeAccount` is imported from an extension, ensure it is enabled.
     if (source !== 'ledger') {
@@ -161,6 +167,7 @@ export const useSubmitExtrinsic = ({
       }
     } else {
       // handle unsigned transaction.
+      const { signer } = account;
       try {
         const unsub = await tx.signAndSend(
           from,
