@@ -507,7 +507,7 @@ export const ConnectProvider = ({
   const requiresManualSign = (address: MaybeAccount) => {
     return (
       accountsRef.current.find(
-        (a: ImportedAccount) => a.address === address && a.source !== 'ledger'
+        (a: ImportedAccount) => a.address === address && a.source === 'ledger'
       ) !== undefined
     );
   };
