@@ -5,7 +5,6 @@ import type { AnyApi, MaybeAccount } from 'types';
 
 export interface UseSubmitExtrinsicProps {
   tx: AnyApi;
-  signedTx?: string | null;
   shouldSubmit: boolean;
   callbackSubmit: { (): void };
   callbackInBlock: { (): void };

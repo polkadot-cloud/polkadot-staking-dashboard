@@ -17,7 +17,6 @@ import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = ({
   tx,
-  signedTx,
   shouldSubmit,
   callbackSubmit,
   callbackInBlock,
@@ -29,7 +28,7 @@ export const useSubmitExtrinsic = ({
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
   const { addPending, removePending } = useExtrinsics();
-  const { setTxFees, setSender, txFees } = useTxMeta();
+  const { setTxFees, setSender, txFees, signedTx } = useTxMeta();
 
   // if null account is provided, fallback to empty string
   const submitAddress: string = from ?? '';
