@@ -4,7 +4,7 @@
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import { useConnect } from 'contexts/Connect';
-import { useTxFees } from 'contexts/TxFees';
+import { useTxMeta } from 'contexts/TxMeta';
 import type { SubmitProps } from './types';
 
 export const Submit = ({
@@ -13,7 +13,7 @@ export const Submit = ({
   valid,
   submitText,
 }: SubmitProps) => {
-  const { txFeesValid } = useTxFees();
+  const { txFeesValid } = useTxMeta();
   const { activeAccount, accountHasSigner } = useConnect();
 
   return (

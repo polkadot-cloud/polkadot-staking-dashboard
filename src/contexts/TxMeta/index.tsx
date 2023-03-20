@@ -7,15 +7,15 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import React, { useEffect, useState } from 'react';
 import type { MaybeAccount } from 'types';
 import * as defaults from './defaults';
-import type { EstimatedFeeContext } from './types';
+import type { TxMetaContextInterface } from './types';
 
-export const TxFeesContext = React.createContext<EstimatedFeeContext>(
-  defaults.defaultTxFees
+export const TxMetaContext = React.createContext<TxMetaContextInterface>(
+  defaults.defaultTxMeta
 );
 
-export const useTxFees = () => React.useContext(TxFeesContext);
+export const useTxMeta = () => React.useContext(TxMetaContext);
 
-export const TxFeesProvider = ({ children }: { children: React.ReactNode }) => {
+export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const { activeAccount } = useConnect();
   const { getTransferOptions } = useTransferOptions();
 
@@ -46,7 +46,7 @@ export const TxFeesProvider = ({ children }: { children: React.ReactNode }) => {
   })();
 
   return (
-    <TxFeesContext.Provider
+    <TxMetaContext.Provider
       value={{
         txFees,
         notEnoughFunds,
@@ -57,6 +57,6 @@ export const TxFeesProvider = ({ children }: { children: React.ReactNode }) => {
       }}
     >
       {children}
-    </TxFeesContext.Provider>
+    </TxMetaContext.Provider>
   );
 };

@@ -9,7 +9,7 @@ import { useExtensions } from 'contexts/Extensions';
 import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useNotifications } from 'contexts/Notifications';
-import { useTxFees } from 'contexts/TxFees';
+import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyApi } from 'types';
@@ -29,7 +29,7 @@ export const useSubmitExtrinsic = ({
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
   const { addPending, removePending } = useExtrinsics();
-  const { setTxFees, setSender, txFees } = useTxFees();
+  const { setTxFees, setSender, txFees } = useTxMeta();
 
   // if null account is provided, fallback to empty string
   const submitAddress: string = from ?? '';
@@ -51,7 +51,7 @@ export const useSubmitExtrinsic = ({
     const { partialFee } = await tx.paymentInfo(submitAddress);
     const partialFeeBn = new BigNumber(partialFee.toString());
 
-    // give tx fees to global useTxFees context
+    // give tx fees to global useTxMeta context
     if (partialFeeBn.toString() !== txFees.toString()) {
       setTxFees(partialFeeBn);
     }

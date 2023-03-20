@@ -4,7 +4,7 @@
 import type BigNumber from 'bignumber.js';
 import type { MaybeAccount } from 'types';
 
-export interface EstimatedFeeContext {
+export interface TxMetaContextInterface {
   txFees: BigNumber;
   notEnoughFunds: boolean;
   setTxFees: (f: BigNumber) => void;

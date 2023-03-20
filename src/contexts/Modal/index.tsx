@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { setStateWithRef } from 'Utils';
-import { useTxFees } from 'contexts/TxFees';
+import { useTxMeta } from 'contexts/TxMeta';
 import React, { useEffect, useRef, useState } from 'react';
 import { defaultModalContext } from './defaults';
 import type { ModalConfig, ModalContextInterface, ModalOptions } from './types';
@@ -14,7 +14,7 @@ export const useModal = () => React.useContext(ModalContext);
 
 // wrapper component to provide components with context
 export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
-  const { notEnoughFunds } = useTxFees();
+  const { notEnoughFunds } = useTxMeta();
 
   // Store the modal configuration options.
   const [options, setOptions] = useState<ModalOptions>({

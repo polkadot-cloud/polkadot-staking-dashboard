@@ -10,7 +10,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxFees } from 'contexts/TxFees';
+import { useTxMeta } from 'contexts/TxMeta';
 import { getUnixTime } from 'date-fns';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
@@ -36,7 +36,7 @@ export const Unbond = () => {
   const { bondFor } = config;
   const { stats } = usePoolsConfig();
   const { isDepositor, selectedActivePool } = useActivePools();
-  const { txFees } = useTxFees();
+  const { txFees } = useTxMeta();
   const { getTransferOptions } = useTransferOptions();
   const { erasToSeconds } = useErasToTimeLeft();
 

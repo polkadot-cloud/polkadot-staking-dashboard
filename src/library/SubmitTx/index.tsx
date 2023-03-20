@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { useTxFees } from 'contexts/TxFees';
+import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Default } from './Default';
@@ -26,7 +26,7 @@ export const SubmitTx = ({
 }: SubmitTxProps) => {
   const { t } = useTranslation('library');
   const { unit } = useApi().network;
-  const { notEnoughFunds } = useTxFees();
+  const { notEnoughFunds } = useTxMeta();
   const { requiresManualSign } = useConnect();
   const { setResize } = useModal();
 

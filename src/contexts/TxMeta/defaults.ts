@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import type { EstimatedFeeContext } from './types';
+import type { TxMetaContextInterface } from './types';
 
-export const defaultTxFees: EstimatedFeeContext = {
+export const defaultTxMeta: TxMetaContextInterface = {
   txFees: new BigNumber(0),
   notEnoughFunds: false,
   // eslint-disable-next-line
