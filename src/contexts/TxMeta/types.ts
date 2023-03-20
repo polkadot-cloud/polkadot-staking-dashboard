@@ -9,6 +9,7 @@ export interface TxMetaContextInterface {
   notEnoughFunds: boolean;
   setTxFees: (f: BigNumber) => void;
   resetTxFees: () => void;
+  sender: MaybeAccount;
   setSender: (s: MaybeAccount) => void;
   txFeesValid: boolean;
 }

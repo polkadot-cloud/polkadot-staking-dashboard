@@ -10,6 +10,7 @@ export const defaultTxMeta: TxMetaContextInterface = {
   // eslint-disable-next-line
   setTxFees: (f) => {},
   resetTxFees: () => {},
+  sender: null,
   // eslint-disable-next-line
   setSender: (s) => {},
   txFeesValid: false,

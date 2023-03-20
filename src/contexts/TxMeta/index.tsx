@@ -52,8 +52,9 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
         notEnoughFunds,
         setTxFees,
         resetTxFees,
-        setSender,
         txFeesValid,
+        sender,
+        setSender,
       }}
     >
       {children}
