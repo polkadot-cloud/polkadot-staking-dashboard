@@ -23,14 +23,20 @@ export const SubmitTx = ({
   submitting = false,
   fromController = false,
 }: SubmitTxProps) => {
-  const { t } = useTranslation('library');
+  const { t } = useTranslation();
   const { unit } = useApi().network;
   const { notEnoughFunds, sender } = useTxMeta();
   const { requiresManualSign } = useConnect();
   const { setResize } = useModal();
 
   const displayNote = notEnoughFunds || fromController;
-  submitText = submitText || `${submitting ? t('submitting') : t('submit')}`;
+  submitText =
+    submitText ||
+    `${
+      submitting
+        ? t('submitting', { ns: 'modals' })
+        : t('submit', { ns: 'modals' })
+    }`;
 
   useEffect(() => {
     setResize();
@@ -44,7 +50,7 @@ export const SubmitTx = ({
             {fromController ? (
               <>
                 <FontAwesomeIcon icon={faPenToSquare} className="icon" />
-                {t('signedByController')}
+                {t('signedByController', { ns: 'library' })}
               </>
             ) : null}
             {notEnoughFunds ? (
@@ -56,7 +62,7 @@ export const SubmitTx = ({
                   transform="shrink-1"
                 />{' '}
                 <span className="danger">
-                  {t('notEnough')} {unit}
+                  {t('notEnough', { ns: 'library' })} {unit}
                 </span>
               </>
             ) : null}

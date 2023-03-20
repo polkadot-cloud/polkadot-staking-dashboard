@@ -127,6 +127,7 @@ export const useSubmitExtrinsic = ({
     };
 
     const onError = () => {
+      setSubmitting(false);
       removePending(accountNonce);
       addNotification({
         title: t('cancelled'),
@@ -173,7 +174,6 @@ export const useSubmitExtrinsic = ({
           { signer },
           ({ status, events = [] }: AnyApi) => {
             handleStatus(status);
-
             if (status.isFinalized) {
               events.forEach(({ event: { method } }: AnyApi) => {
                 onFinalizedEvent(method);
