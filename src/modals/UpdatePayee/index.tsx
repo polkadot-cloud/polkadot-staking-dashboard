@@ -1,15 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
-import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import type { PayeeItem } from 'library/Hooks/usePayeeConfig';
 import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
@@ -32,7 +29,6 @@ export const UpdatePayee = () => {
   const { setStatus: setModalStatus } = useModal();
   const controller = getBondedAccount(activeAccount);
   const { staking, getControllerNotImported } = useStaking();
-  const { txFeesValid } = useTxFees();
   const { getPayeeItems } = usePayeeConfig();
   const { payee } = staking;
 
@@ -151,21 +147,9 @@ export const UpdatePayee = () => {
       </PaddingWrapper>
       <SubmitTx
         fromController
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              !isComplete() ||
-              submitting ||
-              getControllerNotImported(controller) ||
-              !txFeesValid
-            }
-          />,
-        ]}
+        submit={submitTx}
+        submitting={submitting}
+        valid={isComplete()}
       />
     </>
   );

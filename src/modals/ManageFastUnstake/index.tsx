@@ -1,8 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import { planckToUnit } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { useBalances } from 'contexts/Accounts/Balances';
@@ -13,7 +11,6 @@ import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
@@ -30,7 +27,6 @@ export const ManageFastUnstake = () => {
   const { activeAccount } = useConnect();
   const { getControllerNotImported } = useStaking();
   const { getBondedAccount } = useBalances();
-  const { txFeesValid } = useTxFees();
   const { activeEra, metrics } = useNetworkMetrics();
   const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
   const { setResize, setStatus } = useModal();
@@ -196,22 +192,16 @@ export const ManageFastUnstake = () => {
       {!isExposed ? (
         <SubmitTx
           fromController
-          buttons={[
-            <ButtonSubmit
-              key="button_submit"
-              text={`${
-                submitting
-                  ? t('submitting')
-                  : t('fastUnstakeSubmit', {
-                      context: isFastUnstaking ? 'cancel' : 'register',
-                    })
-              }`}
-              iconLeft={faArrowAltCircleUp}
-              iconTransform="grow-2"
-              onClick={() => submitTx()}
-              disabled={!valid || submitting || !txFeesValid}
-            />,
-          ]}
+          submit={submitTx}
+          submitting={submitting}
+          valid={valid}
+          submitText={`${
+            submitting
+              ? t('submitting')
+              : t('fastUnstakeSubmit', {
+                  context: isFastUnstaking ? 'cancel' : 'register',
+                })
+          }`}
         />
       ) : null}
     </>

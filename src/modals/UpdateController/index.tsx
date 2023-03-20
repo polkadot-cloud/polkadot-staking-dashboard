@@ -1,13 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { useTxFees } from 'contexts/TxFees';
 import { AccountDropdown } from 'library/Form/AccountDropdown';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { Warning } from 'library/Form/Warning';
@@ -26,7 +23,6 @@ export const UpdateController = () => {
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, getAccount, accountHasSigner } = useConnect();
   const { getBondedAccount } = useBalances();
-  const { txFeesValid } = useTxFees();
 
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
@@ -96,22 +92,9 @@ export const UpdateController = () => {
         </Wrapper>
       </PaddingWrapper>
       <SubmitTx
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              selected === null ||
-              !selected.active ||
-              submitting ||
-              !accountHasSigner(activeAccount) ||
-              !txFeesValid
-            }
-          />,
-        ]}
+        submit={submitTx}
+        submitting={submitting}
+        valid={!(selected === null || !selected.active)}
       />
     </>
   );

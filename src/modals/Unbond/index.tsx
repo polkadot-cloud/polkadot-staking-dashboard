@@ -1,8 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
@@ -38,7 +36,7 @@ export const Unbond = () => {
   const { bondFor } = config;
   const { stats } = usePoolsConfig();
   const { isDepositor, selectedActivePool } = useActivePools();
-  const { txFees, txFeesValid } = useTxFees();
+  const { txFees } = useTxFees();
   const { getTransferOptions } = useTransferOptions();
   const { erasToSeconds } = useErasToTimeLeft();
 
@@ -231,19 +229,9 @@ export const Unbond = () => {
       </PaddingWrapper>
       <SubmitTx
         fromController={isStaking}
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              submitting ||
-              !(bondValid && accountHasSigner(signingAccount) && txFeesValid)
-            }
-          />,
-        ]}
+        submit={submitTx}
+        submitting={submitting}
+        valid={bondValid}
       />
     </>
   );

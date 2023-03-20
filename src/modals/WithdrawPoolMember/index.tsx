@@ -1,15 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Action } from 'library/Modal/Action';
@@ -27,7 +24,6 @@ export const WithdrawPoolMember = () => {
   const { setStatus: setModalStatus, config } = useModal();
   const { activeEra } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
-  const { txFeesValid } = useTxFees();
 
   const { member, who } = config;
   const { historyDepth } = consts;
@@ -91,23 +87,7 @@ export const WithdrawPoolMember = () => {
           </WarningsWrapper>
         ) : null}
       </PaddingWrapper>
-      <SubmitTx
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              !valid ||
-              submitting ||
-              !accountHasSigner(activeAccount) ||
-              !txFeesValid
-            }
-          />,
-        ]}
-      />
+      <SubmitTx submit={submitTx} submitting={submitting} valid={valid} />
     </>
   );
 };

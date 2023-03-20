@@ -1,9 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faPenToSquare, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useTxFees } from 'contexts/TxFees';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
@@ -13,13 +16,18 @@ import { Wrapper } from './Wrappers';
 import type { SubmitTxProps } from './types';
 
 export const SubmitTx = ({
-  buttons,
+  valid = false,
+  submitting = false,
+  submit,
   fromController = false,
+  buttons = [],
+  submitText,
 }: SubmitTxProps) => {
   const { t } = useTranslation('library');
   const { unit } = useApi().network;
-  const { notEnoughFunds } = useTxFees();
+  const { notEnoughFunds, txFeesValid } = useTxFees();
   const { setResize } = useModal();
+  const { activeAccount, accountHasSigner } = useConnect();
 
   const displayNote = notEnoughFunds || fromController;
 
@@ -57,7 +65,25 @@ export const SubmitTx = ({
           <div>
             <EstimatedTxFee />
           </div>
-          <div>{buttons}</div>
+          <div>
+            {buttons}
+            <ButtonSubmit
+              key="button_submit"
+              text={
+                submitText || `${submitting ? t('submitting') : t('submit')}`
+              }
+              iconLeft={faArrowAltCircleUp}
+              iconTransform="grow-2"
+              onClick={() => submit()}
+              disabled={
+                submitting ||
+                !valid ||
+                !accountHasSigner(activeAccount) ||
+                !txFeesValid
+              }
+            />
+            ,
+          </div>
         </section>
       </div>
     </Wrapper>

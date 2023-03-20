@@ -1,15 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxFees } from 'contexts/TxFees';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
@@ -28,7 +25,6 @@ export const Bond = () => {
   const { setStatus: setModalStatus, config, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getTransferOptions } = useTransferOptions();
-  const { txFeesValid } = useTxFees();
   const { selectedActivePool } = useActivePools();
   const { bondFor } = config;
   const isStaking = bondFor === 'nominator';
@@ -149,21 +145,7 @@ export const Bond = () => {
         />
         <p>{t('newlyBondedFunds')}</p>
       </PaddingWrapper>
-      <SubmitTx
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              submitting ||
-              !(bondValid && accountHasSigner(activeAccount) && txFeesValid)
-            }
-          />,
-        ]}
-      />
+      <SubmitTx submit={submitTx} submitting={submitting} valid={bondValid} />
     </>
   );
 };

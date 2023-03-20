@@ -4,6 +4,10 @@
 import type React from 'react';
 
 export interface SubmitTxProps {
-  buttons: Array<React.ReactNode>;
+  submit: () => void;
+  submitting: boolean;
+  valid: boolean;
+  buttons?: Array<React.ReactNode>;
   fromController?: boolean;
+  submitText?: string;
 }

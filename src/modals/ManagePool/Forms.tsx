@@ -1,17 +1,15 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { ButtonInvert, ButtonSubmit } from '@polkadotcloud/dashboard-ui';
+import { ButtonInvert } from '@polkadotcloud/dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import type { BondedPool } from 'contexts/Pools/types';
-import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Action } from 'library/Modal/Action';
@@ -30,7 +28,6 @@ export const Forms = forwardRef(
     const { isOwner, isStateToggler, selectedActivePool } = useActivePools();
     const { bondedPools, meta, updateBondedPools, getBondedPool } =
       useBondedPools();
-    const { txFeesValid } = useTxFees();
     const poolId = selectedActivePool?.id;
 
     // valid to submit transaction
@@ -203,6 +200,9 @@ export const Forms = forwardRef(
               </div>
             </>
             <SubmitTx
+              submit={submitTx}
+              submitting={submitting}
+              valid={valid}
               buttons={[
                 <ButtonInvert
                   key="button_back"
@@ -211,19 +211,6 @@ export const Forms = forwardRef(
                   iconTransform="shrink-1"
                   onClick={() => setSection(0)}
                   disabled={submitting}
-                />,
-                <ButtonSubmit
-                  key="button_submit"
-                  text={`${submitting ? t('submitting') : t('submit')}`}
-                  iconLeft={faArrowAltCircleUp}
-                  iconTransform="grow-2"
-                  onClick={() => submitTx()}
-                  disabled={
-                    submitting ||
-                    !accountHasSigner(activeAccount) ||
-                    !valid ||
-                    !txFeesValid
-                  }
                 />,
               ]}
             />
