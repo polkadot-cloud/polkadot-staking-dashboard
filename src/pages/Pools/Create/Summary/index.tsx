@@ -3,7 +3,6 @@
 
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonPrimary } from '@polkadotcloud/dashboard-ui';
 import { unitToPlanck } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -12,13 +11,12 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useSetup } from 'contexts/Setup';
-import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
+import { SubmitTx } from 'library/SubmitTx';
 import { useTranslation } from 'react-i18next';
 import { SummaryWrapper } from './Wrapper';
 
@@ -33,7 +31,6 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { queryBondedPool, addToBondedPools } = useBondedPools();
   const { lastPoolId } = stats;
   const poolId = lastPoolId.plus(1);
-  const { txFeesValid } = useTxFees();
 
   const setup = getSetupProgress('pool', activeAccount);
   const { progress } = setup;
@@ -128,26 +125,21 @@ export const Summary = ({ section }: SetupStepProps) => {
             </div>
             <div>{t('pools.assigned')}</div>
           </section>
-          <section>
-            <EstimatedTxFee format="table" />
-          </section>
         </SummaryWrapper>
         <div
           style={{
             flex: 1,
-            flexDirection: 'row',
             width: '100%',
-            display: 'flex',
-            justifyContent: 'end',
+            borderRadius: '1rem',
+            overflow: 'hidden',
           }}
         >
-          <ButtonPrimary
-            lg
-            onClick={() => submitTx()}
-            disabled={
-              submitting || !accountHasSigner(activeAccount) || !txFeesValid
-            }
-            text={t('pools.createPool')}
+          <SubmitTx
+            submit={submitTx}
+            submitting={submitting}
+            submitText={`${t('pools.createPool')}`}
+            valid
+            noMargin
           />
         </div>
       </MotionContainer>
