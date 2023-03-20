@@ -12,7 +12,7 @@ import { StatusBarWrapper } from './Wrappers';
 
 export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const { replaceModalWith } = useModal();
-  const { setIsImporting, getIsExecuting, getStatusCodes, resetStatusCodes } =
+  const { setIsExecuting, getIsExecuting, getStatusCodes, resetStatusCodes } =
     useLedgerHardware();
 
   const isExecuting = getIsExecuting();
@@ -57,7 +57,7 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
               <ButtonMonoInvert
                 text="Cancel"
                 onClick={() => {
-                  setIsImporting(false);
+                  setIsExecuting(false);
                   resetStatusCodes();
                 }}
               />

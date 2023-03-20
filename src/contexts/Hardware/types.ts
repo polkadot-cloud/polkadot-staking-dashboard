@@ -14,7 +14,7 @@ export type LedgerHardwareContextInterface = {
     options?: AnyJson
   ) => Promise<void>;
   handleNewStatusCode: (ack: string, statusCode: string) => void;
-  setIsImporting: (v: boolean) => void;
+  setIsExecuting: (v: boolean) => void;
   cancelImport: () => void;
   resetStatusCodes: () => void;
   getIsExecuting: () => boolean;

@@ -37,7 +37,7 @@ export const LedgerHardwareProvider = ({
   const isPairedRef = useRef(isPaired);
 
   // Store whether an import is in process.
-  const [isExecuting, setIsImportingState] = useState(false);
+  const [isExecuting, setIsExecutingState] = useState(false);
   const isExecutingRef = useRef(isExecuting);
 
   // Store status codes received from Ledger device.
@@ -212,10 +212,8 @@ export const LedgerHardwareProvider = ({
 
     const paired = await pairDevice();
     if (paired) {
-      setIsImporting(true);
+      setIsExecuting(true);
     }
-
-    console.log(tx);
     // TODO: implement
   };
 
@@ -315,12 +313,12 @@ export const LedgerHardwareProvider = ({
     setStateWithRef(p, setIsPairedState, isPairedRef);
   };
 
-  const setIsImporting = (val: boolean) => {
-    setStateWithRef(val, setIsImportingState, isExecutingRef);
+  const setIsExecuting = (val: boolean) => {
+    setStateWithRef(val, setIsExecutingState, isExecutingRef);
   };
 
   const cancelImport = () => {
-    setIsImporting(false);
+    setIsExecuting(false);
     resetStatusCodes();
   };
 
@@ -347,7 +345,7 @@ export const LedgerHardwareProvider = ({
         transportResponse,
         executeLedgerLoop,
         setIsPaired,
-        setIsImporting,
+        setIsExecuting,
         cancelImport,
         handleNewStatusCode,
         resetStatusCodes,

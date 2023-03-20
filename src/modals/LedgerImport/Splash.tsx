@@ -16,7 +16,7 @@ import { SplashWrapper } from './Wrappers';
 
 export const Splash = ({ pairDevice, handleLedgerLoop }: AnyFunction) => {
   const { replaceModalWith, setStatus } = useModal();
-  const { getStatusCodes, isPaired, setIsImporting } = useLedgerHardware();
+  const { getStatusCodes, isPaired, setIsExecuting } = useLedgerHardware();
   const statusCodes = getStatusCodes();
 
   // Initialise listeners for Ledger IO.
@@ -29,7 +29,7 @@ export const Splash = ({ pairDevice, handleLedgerLoop }: AnyFunction) => {
   // Once the device is paired, start `handleLedgerLoop`.
   useEffect(() => {
     if (isPaired === 'paired') {
-      setIsImporting(true);
+      setIsExecuting(true);
       handleLedgerLoop();
     }
   }, [isPaired]);

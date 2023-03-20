@@ -13,7 +13,7 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   // eslint-disable-next-line
   handleNewStatusCode: (a, s) => {},
   // eslint-disable-next-line
-  setIsImporting: (b) => {},
+  setIsExecuting: (b) => {},
   cancelImport: () => {},
   resetStatusCodes: () => {},
   getIsExecuting: () => false,

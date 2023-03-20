@@ -10,7 +10,7 @@ import { Address } from './Address';
 import { AddressWrapper } from './Wrappers';
 
 export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
-  const { getIsExecuting, setIsImporting, pairDevice } = useLedgerHardware();
+  const { getIsExecuting, setIsExecuting, pairDevice } = useLedgerHardware();
   const isExecuting = getIsExecuting();
   return (
     <>
@@ -36,7 +36,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
                 // re-pair the device if it has been disconnected.
                 const paired = await pairDevice();
                 if (paired) {
-                  setIsImporting(true);
+                  setIsExecuting(true);
                   handleLedgerLoop();
                 }
               }}
