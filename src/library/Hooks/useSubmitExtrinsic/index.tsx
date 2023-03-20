@@ -17,6 +17,7 @@ import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = ({
   tx,
+  signedTx,
   shouldSubmit,
   callbackSubmit,
   callbackInBlock,
@@ -138,36 +139,28 @@ export const useSubmitExtrinsic = ({
     // pre-submission state update
     setSubmitting(true);
 
-    // handle Ledger signed transaction
-    if (source === 'ledger') {
-      const signedTx = null;
+    // handle signed transaction.
+    if (signedTx) {
       try {
-        // TODO: useLedgerLoop
-      } catch (e) {
-        // TODO: provide signing error for Ledger based SubmitTx bar.
-      }
-      if (signedTx) {
-        try {
-          const unsub = await tx.send(
-            from,
-            signedTx,
-            ({ status, events = [] }: AnyApi) => {
-              handleStatus(status);
+        const unsub = await tx.send(
+          from,
+          signedTx,
+          ({ status, events = [] }: AnyApi) => {
+            handleStatus(status);
 
-              if (status.isFinalized) {
-                events.forEach(({ event: { method } }: AnyApi) => {
-                  onFinalizedEvent(method);
-                  if (unsubEvents.includes(method)) unsub();
-                });
-              }
+            if (status.isFinalized) {
+              events.forEach(({ event: { method } }: AnyApi) => {
+                onFinalizedEvent(method);
+                if (unsubEvents.includes(method)) unsub();
+              });
             }
-          );
-        } catch (e) {
-          onError();
-        }
+          }
+        );
+      } catch (e) {
+        onError();
       }
     } else {
-      // handle extension signed transaction
+      // handle unsigned transaction.
       try {
         const unsub = await tx.signAndSend(
           from,
