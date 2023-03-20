@@ -145,7 +145,7 @@ export const LedgerHardwareProvider = ({
     });
 
     const address = await withTimeout(
-      5000,
+      500,
       polkadot.getAddress(`'44'/354'/${accountIndex}'/0'/0'`, false)
     );
 
@@ -154,6 +154,36 @@ export const LedgerHardwareProvider = ({
         statusCode: 'ReceivedAddress',
         device: { id, productName },
         body: [address],
+      };
+    }
+  };
+
+  // Signs a payload on device.
+  const handleSignPayload = async (
+    transport: AnyJson,
+    accountIndex: number,
+    payload: AnyJson
+  ) => {
+    const polkadot = new Polkadot(transport);
+    const { deviceModel } = transport;
+    const { id, productName } = deviceModel;
+
+    setTransportResponse({
+      ack: 'success',
+      statusCode: 'SigningPayload', // TODO: global search & handle from GetAddress
+      body: `Signing extrinsic in progress.`,
+    });
+
+    const signedPayload = await withTimeout(
+      500,
+      polkadot.getAddress(`'44'/354'/${accountIndex}'/0'/0'`, payload)
+    );
+
+    if (!(signedPayload instanceof Error)) {
+      return {
+        statusCode: 'SignedPayload',
+        device: { id, productName },
+        body: signedPayload,
       };
     }
   };
