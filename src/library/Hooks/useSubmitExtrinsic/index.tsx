@@ -191,5 +191,6 @@ export const useSubmitExtrinsic = ({
   return {
     onSubmit,
     submitting,
+    txString: tx?.toString() || '', // TODO: migrate to raw payload.
   };
 };

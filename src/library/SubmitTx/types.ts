@@ -10,6 +10,7 @@ export type SubmitTxProps = SubmitProps & {
 };
 
 export interface SubmitProps {
+  txString?: string;
   onSubmit: () => void;
   submitting: boolean;
   valid: boolean;

@@ -114,8 +114,8 @@ export const LedgerHardwareProvider = ({
       } else if (tasks.includes('sign_tx')) {
         result = await handleSignTx(
           transport,
-          options?.accountIndex ?? 0,
-          options?.payload || {}
+          options?.accountIndex || 0,
+          options?.payload || ''
         );
       }
 
@@ -169,7 +169,7 @@ export const LedgerHardwareProvider = ({
   const handleSignTx = async (
     transport: AnyJson,
     index: number,
-    payload: AnyJson
+    payload: string
   ) => {
     const polkadot = new Polkadot(transport);
     const { deviceModel } = transport;
@@ -181,9 +181,9 @@ export const LedgerHardwareProvider = ({
       body: `Signing extrinsic in progress.`,
     });
 
-    const signedPayload = await withTimeout(
-      500,
-      polkadot.getAddress(`'44'/354'/${index}'/0'/0'`, payload)
+    const signedPayload = await polkadot.sign(
+      `'44'/354'/${index}'/0'/0'`,
+      payload
     );
 
     if (!(signedPayload instanceof Error)) {

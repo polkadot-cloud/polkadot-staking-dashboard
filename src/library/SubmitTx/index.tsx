@@ -16,6 +16,7 @@ import type { SubmitTxProps } from './types';
 
 export const SubmitTx = ({
   onSubmit,
+  txString,
   submitText,
   buttons = [],
   valid = false,
@@ -71,6 +72,7 @@ export const SubmitTx = ({
         <section className="foot">
           {requiresManualSign(sender) ? (
             <ManualSign
+              txString={txString}
               onSubmit={onSubmit}
               submitting={submitting}
               valid={valid}
