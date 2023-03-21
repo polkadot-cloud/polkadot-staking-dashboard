@@ -63,9 +63,12 @@ export const useSubmitExtrinsic = ({
         version: tx.version,
       });
 
+      const methodHex = api.createType('Call', tx).toHex();
+
       // TODO: complete to fully completed payload.
       const payload: AnyJson = extrinsicPayload.toHuman();
       payload.method = JSON.parse(payload.method);
+
       return extrinsicPayload;
     }
     return '';
