@@ -29,7 +29,7 @@
     "@ledgerhq/hw-transport-webusb": "^6.27.12",
     "@polkadot/api": "^10.1.4",
     "@polkadot/keyring": "^11.0.1",
-    "@polkadot/react-identicon": "^3.0.2",
+    "@polkadot/react-identicon": "^3.1.1",
     "@polkadot/rpc-provider": "^10.1.4",
     "@polkadot/util": "^11.0.1",
     "@polkadotcloud/dashboard-ui": "0.2.0",
