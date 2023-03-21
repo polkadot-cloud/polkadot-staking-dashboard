@@ -2,12 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { LedgerTask } from 'contexts/Hardware/types';
+import type { AnyJson } from 'types';
 
 export interface LederLoopProps {
   tasks: Array<LedgerTask>;
   options: {
     accountIndex?: () => number;
-    payload?: () => string;
+    payload?: () => Promise<AnyJson>;
   };
   mounted: () => boolean;
 }

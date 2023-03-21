@@ -11,7 +11,7 @@ export type SubmitTxProps = SubmitProps & {
 };
 
 export interface SubmitProps {
-  payload?: AnyJson;
+  getPayload?: () => AnyJson;
   onSubmit: () => void;
   submitting: boolean;
   valid: boolean;

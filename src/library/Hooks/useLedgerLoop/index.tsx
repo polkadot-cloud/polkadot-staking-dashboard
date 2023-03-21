@@ -45,13 +45,9 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
 
       // Attempt to carry out tasks on-device.
       try {
-        if (!getTransport().device.opened) {
-          await getTransport().device.open();
-        }
-
         // get task arguments if they have been provided.
         const accountIndex = options?.accountIndex ? options.accountIndex() : 0;
-        const payload = options?.payload ? options.payload() : 0;
+        const payload = options?.payload ? await options.payload() : {};
 
         if (getIsExecuting()) {
           await executeLedgerLoop(getTransport(), tasks, {
@@ -67,10 +63,10 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
 
   // Listen for new Ledger status reports.
   useEffect(() => {
-    if (getIsExecuting()) {
+    if (!getIsExecuting()) {
       clearInterval(interval);
     }
-  }, [transportResponse]);
+  }, [transportResponse, getIsExecuting()]);
 
   return { handleLedgerLoop };
 };

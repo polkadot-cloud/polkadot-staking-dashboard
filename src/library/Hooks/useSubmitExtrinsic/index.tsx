@@ -3,6 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import { DappName } from 'consts';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
@@ -12,7 +13,7 @@ import { useNotifications } from 'contexts/Notifications';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyApi, AnyJson } from 'types';
+import type { AnyApi } from 'types';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = ({
@@ -28,10 +29,11 @@ export const useSubmitExtrinsic = ({
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
   const { addPending, removePending } = useExtrinsics();
+  const { getAccount: getBalanceAccount } = useBalances();
   const { setTxFees, setSender, txFees, signedTx } = useTxMeta();
 
   // if null account is provided, fallback to empty string
-  const submitAddress: string = from ?? '';
+  const submitAddress: string = from || '';
 
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);
@@ -56,22 +58,34 @@ export const useSubmitExtrinsic = ({
     }
   };
 
-  // get payload string of the transaction, or an empty string if it is not ready.
-  const getPayload = () => {
+  // get payload string of the transaction, or an empty object if it is not ready.
+  const getPayload = async () => {
     if (api && tx) {
-      const extrinsicPayload = api.registry.createType('ExtrinsicPayload', tx, {
+      const lastHeader = await api.rpc.chain.getHeader();
+
+      const payload = {
+        specVersion: api.runtimeVersion.specVersion.toHex(),
+        transactionVersion: api.runtimeVersion.transactionVersion.toHex(),
+        address: submitAddress,
+        blockHash: lastHeader.hash.toHex(),
+        blockNumber: lastHeader.number.toHex(),
+        era: '0x00',
+        genesisHash: api.genesisHash.toHex(),
+        method: api.createType('Call', tx).toHex(),
+        nonce: getBalanceAccount(from)?.nonce || 0,
+        signedExtensions: Object.values(
+          api.registry.metadata.extrinsic.signedExtensions.toHuman() || {}
+        )?.map((e: any) => e.identifier),
+        tip: tx.tip.toHex(),
         version: tx.version,
+      };
+
+      const raw = api.registry.createType('ExtrinsicPayload', payload, {
+        version: payload.version,
       });
-
-      const methodHex = api.createType('Call', tx).toHex();
-
-      // TODO: complete to fully completed payload.
-      const payload: AnyJson = extrinsicPayload.toHuman();
-      payload.method = JSON.parse(payload.method);
-
-      return extrinsicPayload;
+      return raw;
     }
-    return '';
+    return {};
   };
 
   // submit extrinsic
@@ -209,6 +223,6 @@ export const useSubmitExtrinsic = ({
   return {
     onSubmit,
     submitting,
-    payload: getPayload(),
+    getPayload,
   };
 };

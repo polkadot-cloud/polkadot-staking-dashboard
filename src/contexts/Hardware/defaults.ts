@@ -3,6 +3,11 @@
 
 import type { LedgerHardwareContextInterface } from './types';
 
+export const TOTAL_ALLOWED_STATUS_CODES = 50;
+export const LEDGER_DEFAULT_ACCOUNT = 0x80000000;
+export const LEDGER_DEFAULT_CHANGE = 0x80000000;
+export const LEDGER_DEFAULT_INDEX = 0x80000000;
+
 export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   transportResponse: null,
   pairDevice: async () => new Promise((resolve) => resolve(false)),

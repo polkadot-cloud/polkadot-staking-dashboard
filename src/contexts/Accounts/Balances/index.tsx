@@ -107,7 +107,7 @@ export const BalancesProvider = ({
         [api.query.staking.bonded, address],
         [api.query.staking.nominators, address],
       ],
-      async ([{ data }, locks, bonded, nominations]): Promise<void> => {
+      async ([{ data, nonce }, locks, bonded, nominations]): Promise<void> => {
         const newAccount: Balances = {
           address,
         };
@@ -119,6 +119,9 @@ export const BalancesProvider = ({
           free.minus(existentialAmount),
           0
         );
+
+        // set the account nonce
+        newAccount.nonce = nonce.toNumber();
 
         // set account balances to context
         newAccount.balance = {
