@@ -218,7 +218,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     switch (lc) {
       case true:
         newProvider = new ScProvider(Sc, endpoints.lightClient);
-        await newProvider.connect({ forceEmbeddedNode: true });
+        await newProvider.connect();
         break;
       default:
         newProvider = new WsProvider(endpoints.rpc);
