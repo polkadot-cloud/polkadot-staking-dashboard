@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type BigNumber from 'bignumber.js';
-import type { MaybeAccount, MaybeString } from 'types';
+import type { AnyJson, MaybeAccount } from 'types';
 
 export interface TxMetaContextInterface {
   txFees: BigNumber;
@@ -12,6 +12,6 @@ export interface TxMetaContextInterface {
   sender: MaybeAccount;
   setSender: (s: MaybeAccount) => void;
   txFeesValid: boolean;
-  signedTx: MaybeString;
-  setSignedTx: (s: MaybeString) => void;
+  signedTx: AnyJson;
+  setSignedTx: (s: AnyJson) => void;
 }

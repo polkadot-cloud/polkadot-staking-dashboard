@@ -49,6 +49,12 @@ export const LedgerHardwareProvider = ({
   const [statusCodes, setStatusCodes] = useState<Array<LedgerResponse>>([]);
   const statusCodesRef = useRef(statusCodes);
 
+  // Get the default message to display, set when a failed loop has happened.
+  const [defaultMessage, setDefaultMessageState] = useState<string | null>(
+    null
+  );
+  const defaultMessageRef = useRef(defaultMessage);
+
   // Store the latest successful response from an attempted `executeLedgerLoop`.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
 
@@ -85,6 +91,7 @@ export const LedgerHardwareProvider = ({
       setIsPaired('paired');
       return true;
     } catch (err) {
+      console.log(err);
       return false;
     }
   };
@@ -101,7 +108,9 @@ export const LedgerHardwareProvider = ({
       handleNewStatusCode('failure', 'DeviceNotConnected');
     } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
       handleNewStatusCode('failure', 'OpenAppToContinue');
+      setDefaultMessage('Open the Polkadot app on your Ledger device.');
     } else {
+      setDefaultMessage('Open the Polkadot app on your Ledger device.');
       handleNewStatusCode('failure', 'AppNotOpen');
     }
   };
@@ -166,6 +175,8 @@ export const LedgerHardwareProvider = ({
       body: `Getting addresess ${index} in progress.`,
     });
 
+    setDefaultMessage(null);
+
     const result: AnyJson = await withTimeout(
       500,
       polkadot.getAddress(
@@ -175,6 +186,8 @@ export const LedgerHardwareProvider = ({
         false
       )
     );
+
+    setDefaultMessage(null);
 
     await t.current?.device?.close();
 
@@ -210,12 +223,16 @@ export const LedgerHardwareProvider = ({
       body: `Signing extrinsic in progress.`,
     });
 
+    setDefaultMessage('Approve transaction on Ledger');
+
     const result = await polkadot.sign(
       LEDGER_DEFAULT_ACCOUNT + index,
       LEDGER_DEFAULT_CHANGE,
       LEDGER_DEFAULT_INDEX + 0,
       u8aToBuffer(payload.toU8a(true))
     );
+
+    setDefaultMessage('Signed Transaction Successfully.');
 
     await t.current?.device?.close();
 
@@ -230,7 +247,7 @@ export const LedgerHardwareProvider = ({
       return {
         statusCode: 'SignedPayload',
         device: { id, productName },
-        body: result,
+        body: result.signature,
       };
     }
   };
@@ -367,6 +384,14 @@ export const LedgerHardwareProvider = ({
     return t.current;
   };
 
+  const getDefaultMessage = () => {
+    return defaultMessageRef.current;
+  };
+
+  const setDefaultMessage = (val: string | null) => {
+    setStateWithRef(val, setDefaultMessageState, defaultMessageRef);
+  };
+
   return (
     <LedgerHardwareContext.Provider
       value={{
@@ -387,6 +412,7 @@ export const LedgerHardwareProvider = ({
         removeLedgerAccount,
         renameLedgerAccount,
         getLedgerAccount,
+        getDefaultMessage,
         isPaired: isPairedRef.current,
         ledgerAccounts: ledgerAccountsRef.current,
       }}

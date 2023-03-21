@@ -4,7 +4,7 @@
 import BigNumber from 'bignumber.js';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import React, { useEffect, useState } from 'react';
-import type { MaybeAccount, MaybeString } from 'types';
+import type { AnyJson, MaybeAccount } from 'types';
 import * as defaults from './defaults';
 import type { TxMetaContextInterface } from './types';
 
@@ -27,7 +27,7 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const [notEnoughFunds, setNotEnoughFunds] = useState(false);
 
   // store an optional signed transaction if extrinsics require manual signing (e.g. Ledger).
-  const [signedTx, setSignedTx] = useState<MaybeString>(null);
+  const [signedTx, setSignedTx] = useState<AnyJson>(null);
 
   useEffect(() => {
     const { freeBalance } = getTransferOptions(sender);

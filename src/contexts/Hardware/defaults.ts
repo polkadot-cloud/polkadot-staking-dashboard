@@ -38,4 +38,5 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   getLedgerAccount: (a) => null,
   isPaired: 'unknown',
   ledgerAccounts: [],
+  getDefaultMessage: () => null,
 };

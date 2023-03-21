@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { hexAddPrefix } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 import { DappName } from 'consts';
 import { useBalances } from 'contexts/Accounts/Balances';
@@ -30,7 +31,7 @@ export const useSubmitExtrinsic = ({
   const { extensions } = useExtensions();
   const { addPending, removePending } = useExtrinsics();
   const { getAccount: getBalanceAccount } = useBalances();
-  const { setTxFees, setSender, txFees, signedTx } = useTxMeta();
+  const { setTxFees, setSender, txFees, signedTx, setSignedTx } = useTxMeta();
 
   // if null account is provided, fallback to empty string
   const submitAddress: string = from || '';
@@ -42,7 +43,7 @@ export const useSubmitExtrinsic = ({
   useEffect(() => {
     setSender(from);
     calculateEstimatedFee();
-  }, [tx?.toString()]);
+  }, [tx?.toString(), signedTx, tx?.signature.toString()]);
 
   const calculateEstimatedFee = async () => {
     if (tx === null) {
@@ -175,24 +176,27 @@ export const useSubmitExtrinsic = ({
     // pre-submission state update
     setSubmitting(true);
 
+    // const payload: AnyJson = await getPayload();
+
     // handle signed transaction.
     if (signedTx) {
       try {
-        const unsub = await tx.send(
-          from,
-          signedTx,
-          ({ status, events = [] }: AnyApi) => {
-            handleStatus(status);
+        tx.addSignature(from, hexAddPrefix(signedTx.toString('hex')));
 
-            if (status.isFinalized) {
-              events.forEach(({ event: { method } }: AnyApi) => {
-                onFinalizedEvent(method);
-                if (unsubEvents.includes(method)) unsub();
-              });
-            }
+        const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
+          setSignedTx(null);
+          handleStatus(status);
+
+          if (status.isFinalized) {
+            events.forEach(({ event: { method } }: AnyApi) => {
+              onFinalizedEvent(method);
+              if (unsubEvents.includes(method)) unsub();
+            });
           }
-        );
+        });
       } catch (e) {
+        console.log(e);
+        setSignedTx(null);
         onError();
       }
     } else {

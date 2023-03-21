@@ -37,6 +37,7 @@ export const ManualSign = ({
     isPaired,
     getStatusCodes,
     getTransport,
+    getDefaultMessage,
   } = useLedgerHardware();
   const { activeAccount, accountHasSigner } = useConnect();
   const { txFeesValid, setSignedTx, signedTx } = useTxMeta();
@@ -66,7 +67,6 @@ export const ManualSign = ({
   const handleLedgerStatusResponse = (response: LedgerResponse) => {
     if (!response) return;
     const { ack, statusCode, body } = response;
-    // console.log(response.body);
 
     if (statusCode === 'SignedPayload') {
       handleNewStatusCode(ack, statusCode);
@@ -111,6 +111,9 @@ export const ManualSign = ({
   const statusCodes = getStatusCodes();
   const statusCodeTitle = determineStatusFromCodes(statusCodes, false).title;
 
+  const fallbackMessage = 'Waiting for Ledger Device...';
+  const defaultMessage = getDefaultMessage();
+
   return (
     <>
       <div>
@@ -118,27 +121,43 @@ export const ManualSign = ({
         <p>
           {valid
             ? isPaired !== 'paired'
-              ? 'Open the Polkadot app on Ledger to sign this transaction.'
+              ? defaultMessage ||
+                'Open the Polkadot app on Ledger to sign this transaction.'
               : !statusCodes.length
-              ? 'Checking...'
-              : statusCodeTitle
-            : '...'}
+              ? defaultMessage || statusCodeTitle
+              : fallbackMessage
+            : fallbackMessage}
         </p>
       </div>
       <div>
         {buttons}
-        <ButtonSubmit
-          text={`${signedTx ? submitText : 'Sign'}`}
-          iconLeft={signedTx ? faArrowAltCircleUp : faSquarePen}
-          iconTransform="grow-2"
-          onClick={() => (signedTx ? onSubmit() : pairDevice())}
-          disabled={
-            submitting ||
-            !valid ||
-            !accountHasSigner(activeAccount) ||
-            !txFeesValid
-          }
-        />
+        {signedTx !== null ? (
+          <ButtonSubmit
+            text={`${submitText}`}
+            iconLeft={faArrowAltCircleUp}
+            iconTransform="grow-2"
+            onClick={() => onSubmit()}
+            disabled={
+              submitting ||
+              !valid ||
+              !accountHasSigner(activeAccount) ||
+              !txFeesValid
+            }
+          />
+        ) : (
+          <ButtonSubmit
+            text="Sign"
+            iconLeft={faSquarePen}
+            iconTransform="grow-2"
+            onClick={() => pairDevice()}
+            disabled={
+              submitting ||
+              !valid ||
+              !accountHasSigner(activeAccount) ||
+              !txFeesValid
+            }
+          />
+        )}
       </div>
     </>
   );

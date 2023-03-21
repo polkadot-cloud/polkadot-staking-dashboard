@@ -12,11 +12,21 @@ import { StatusBarWrapper } from './Wrappers';
 
 export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const { replaceModalWith } = useModal();
-  const { setIsExecuting, getIsExecuting, getStatusCodes, resetStatusCodes } =
-    useLedgerHardware();
+  const {
+    setIsExecuting,
+    getIsExecuting,
+    getStatusCodes,
+    resetStatusCodes,
+    getDefaultMessage,
+  } = useLedgerHardware();
 
   const isExecuting = getIsExecuting();
   const statusCodes = getStatusCodes();
+
+  const fallbackMessage = `Displaying ${addresses.length} Ledger Account${
+    addresses.length === 1 ? '' : 's'
+  }`;
+  const defaultMessage = getDefaultMessage();
 
   return (
     <>
@@ -45,10 +55,9 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
             <div className="text">
               <h3>
                 {!isExecuting || !statusCodes.length
-                  ? `Displaying ${addresses.length} Ledger Account${
-                      addresses.length === 1 ? '' : 's'
-                    }`
-                  : determineStatusFromCodes(statusCodes, true).title}
+                  ? fallbackMessage
+                  : defaultMessage ||
+                    determineStatusFromCodes(statusCodes, true).title}
               </h3>
             </div>
           </div>

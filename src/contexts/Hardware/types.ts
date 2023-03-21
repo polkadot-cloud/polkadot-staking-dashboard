@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { LedgerAccount } from 'contexts/Connect/types';
-import type { AnyJson } from 'types';
+import type { AnyJson, MaybeString } from 'types';
 
 export type LedgerHardwareContextInterface = {
   pairDevice: () => Promise<boolean>;
@@ -28,6 +28,7 @@ export type LedgerHardwareContextInterface = {
   getLedgerAccount: (a: string) => LedgerAccount | null;
   isPaired: PairingStatus;
   ledgerAccounts: Array<LedgerAccount>;
+  getDefaultMessage: () => MaybeString;
 };
 
 export interface LedgerResponse {
