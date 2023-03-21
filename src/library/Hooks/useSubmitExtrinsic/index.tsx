@@ -80,9 +80,7 @@ export const useSubmitExtrinsic = ({
         version: tx.version,
       };
 
-      const raw = api.registry.createType('ExtrinsicPayload', payload, {
-        version: payload.version,
-      });
+      const raw = api.registry.createType('ExtrinsicPayload', payload);
       return raw;
     }
     return {};
