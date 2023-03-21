@@ -95,26 +95,11 @@ export const LedgerHardwareProvider = ({
     err = String(err);
 
     if (
-      // @ledgerhq/hw-app-polkadot
-      err.startsWith('DOMException: Failed to open the device.') ||
-      err.startsWith('NotAllowedError: Failed to open the device.') ||
-      err.startsWith('TransportOpenUserCancelled') ||
-      err.startsWith('TypeError') ||
-      // @zondax/ledger-substrate errors
       err.startsWith('Error: Transaction rejected') ||
       err.startsWith('Error: Ledger Device is busy')
     ) {
       handleNewStatusCode('failure', 'DeviceNotConnected');
-
-      // @ledgerhq/hw-app-polkadot
-    } else if (err.startsWith('TransportError: Ledger Device is busy')) {
-      // do nothing
-    } else if (
-      // @ledgerhq/hw-app-polkadot
-      err.startsWith('TransportStatusError') ||
-      // @zondax/ledger-substrate errors
-      err.startsWith('Error: Unknown Status Code: 28161')
-    ) {
+    } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
       handleNewStatusCode('failure', 'OpenAppToContinue');
     } else {
       handleNewStatusCode('failure', 'AppNotOpen');
