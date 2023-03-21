@@ -14,7 +14,7 @@ import { useNotifications } from 'contexts/Notifications';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyApi } from 'types';
+import type { AnyApi, AnyJson } from 'types';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = ({
@@ -81,7 +81,9 @@ export const useSubmitExtrinsic = ({
         version: tx.version,
       };
 
-      const raw = api.registry.createType('ExtrinsicPayload', payload);
+      const raw = api.registry.createType('ExtrinsicPayload', payload, {
+        version: tx.version,
+      });
       return raw;
     }
     return {};
@@ -176,12 +178,15 @@ export const useSubmitExtrinsic = ({
     // pre-submission state update
     setSubmitting(true);
 
-    // const payload: AnyJson = await getPayload();
+    const payload: AnyJson = await getPayload();
+    console.log(payload.toHuman());
 
     // handle signed transaction.
     if (signedTx) {
       try {
         tx.addSignature(from, hexAddPrefix(signedTx.toString('hex')));
+
+        console.log(tx.toHuman());
 
         const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
           setSignedTx(null);
