@@ -77,6 +77,7 @@ export const LedgerHardwareProvider = ({
   // Handles errors that occur during a `executeLedgerLoop`.
   const handleErrors = (err: AnyJson) => {
     ledgerInProgress.current = false;
+    setIsExecuting(false);
     err = String(err);
 
     if (

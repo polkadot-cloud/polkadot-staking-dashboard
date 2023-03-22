@@ -113,7 +113,7 @@ export const ManualSign = ({
   const statusCodes = getStatusCodes();
   const statusCodeTitle = determineStatusFromCodes(statusCodes, false).title;
 
-  const fallbackMessage = 'Connect your Ledger Device to Continue...';
+  const fallbackMessage = 'Ready to submit transaction.';
   const defaultMessage = getDefaultMessage();
 
   const messageDisplay = valid
@@ -127,7 +127,7 @@ export const ManualSign = ({
     <>
       <div>
         <EstimatedTxFee />
-        <p>{messageDisplay}</p>
+        {valid ? <p>{messageDisplay}</p> : null}
       </div>
       <div>
         {buttons}
@@ -146,12 +146,13 @@ export const ManualSign = ({
           />
         ) : (
           <ButtonSubmit
-            text="Sign"
+            text={getIsExecuting() ? 'Signing' : 'Sign'}
             iconLeft={faSquarePen}
             iconTransform="grow-2"
             onClick={() => pairDevice()}
             disabled={
               submitting ||
+              getIsExecuting() ||
               !valid ||
               !accountHasSigner(activeAccount) ||
               !txFeesValid
