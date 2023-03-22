@@ -242,7 +242,6 @@ export const LedgerHardwareProvider = ({
         throw new Error(error);
       }
     }
-
     if (!(result instanceof Error)) {
       return {
         statusCode: 'SignedPayload',

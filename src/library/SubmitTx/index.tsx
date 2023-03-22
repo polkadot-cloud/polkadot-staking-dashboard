@@ -26,7 +26,7 @@ export const SubmitTx = ({
 }: SubmitTxProps) => {
   const { t } = useTranslation();
   const { unit } = useApi().network;
-  const { notEnoughFunds, sender, setSignedTx } = useTxMeta();
+  const { notEnoughFunds, sender, setTxSignature } = useTxMeta();
   const { requiresManualSign } = useConnect();
   const { setResize } = useModal();
 
@@ -43,10 +43,10 @@ export const SubmitTx = ({
     setResize();
   }, [notEnoughFunds, fromController]);
 
-  // reset signedTx on unmount
+  // reset txSignature on unmount
   useEffect(() => {
     return () => {
-      setSignedTx(null);
+      setTxSignature(null);
     };
   }, []);
 

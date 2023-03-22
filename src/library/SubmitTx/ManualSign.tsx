@@ -40,7 +40,7 @@ export const ManualSign = ({
     getDefaultMessage,
   } = useLedgerHardware();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { txFeesValid, setSignedTx, signedTx } = useTxMeta();
+  const { txFeesValid, setTxSignature, txSignature } = useTxMeta();
   const { setResize } = useModal();
 
   const getAddressIndex = () => {
@@ -70,7 +70,7 @@ export const ManualSign = ({
 
     if (statusCode === 'SignedPayload') {
       handleNewStatusCode(ack, statusCode);
-      setSignedTx(body);
+      setTxSignature(body);
       setIsExecuting(false);
       resetStatusCodes();
     }
@@ -131,7 +131,7 @@ export const ManualSign = ({
       </div>
       <div>
         {buttons}
-        {signedTx !== null ? (
+        {txSignature !== null ? (
           <ButtonSubmit
             text={`${submitText}`}
             iconLeft={faArrowAltCircleUp}

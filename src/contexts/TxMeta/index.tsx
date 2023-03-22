@@ -27,7 +27,7 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const [notEnoughFunds, setNotEnoughFunds] = useState(false);
 
   // store an optional signed transaction if extrinsics require manual signing (e.g. Ledger).
-  const [signedTx, setSignedTx] = useState<AnyJson>(null);
+  const [txSignature, setTxSignature] = useState<AnyJson>(null);
 
   useEffect(() => {
     const { freeBalance } = getTransferOptions(sender);
@@ -55,8 +55,8 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
         txFeesValid,
         sender,
         setSender,
-        signedTx,
-        setSignedTx,
+        txSignature,
+        setTxSignature,
       }}
     >
       {children}

@@ -4,7 +4,6 @@
 import { hexAddPrefix } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 import { DappName } from 'consts';
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
@@ -14,7 +13,7 @@ import { useNotifications } from 'contexts/Notifications';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyApi, AnyJson } from 'types';
+import type { AnyApi } from 'types';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = ({
@@ -30,8 +29,8 @@ export const useSubmitExtrinsic = ({
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
   const { addPending, removePending } = useExtrinsics();
-  const { getAccount: getBalanceAccount } = useBalances();
-  const { setTxFees, setSender, txFees, signedTx, setSignedTx } = useTxMeta();
+  const { setTxFees, setSender, txFees, txSignature, setTxSignature } =
+    useTxMeta();
 
   // if null account is provided, fallback to empty string
   const submitAddress: string = from || '';
@@ -43,7 +42,7 @@ export const useSubmitExtrinsic = ({
   useEffect(() => {
     setSender(from);
     calculateEstimatedFee();
-  }, [tx?.toString(), signedTx, tx?.signature.toString()]);
+  }, [tx?.toString(), txSignature, tx?.signature.toString()]);
 
   const calculateEstimatedFee = async () => {
     if (tx === null) {
@@ -70,10 +69,9 @@ export const useSubmitExtrinsic = ({
         address: submitAddress,
         blockHash: lastHeader.hash.toHex(),
         blockNumber: lastHeader.number.toHex(),
-        era: '0x00',
         genesisHash: api.genesisHash.toHex(),
         method: api.createType('Call', tx).toHex(),
-        nonce: getBalanceAccount(from)?.nonce || 0,
+        nonce: tx.nonce.toHex(),
         signedExtensions: Object.values(
           api.registry.metadata.extrinsic.signedExtensions.toHuman() || {}
         )?.map((e: any) => e.identifier),
@@ -93,7 +91,7 @@ export const useSubmitExtrinsic = ({
       submitting ||
       !shouldSubmit ||
       !api ||
-      (requiresManualSign(from) && !signedTx)
+      (requiresManualSign(from) && !txSignature)
     ) {
       return;
     }
@@ -176,18 +174,24 @@ export const useSubmitExtrinsic = ({
     // pre-submission state update
     setSubmitting(true);
 
-    const payload: AnyJson = await getPayload();
-    console.log(payload.toHuman());
+    // const payload: AnyJson = await getPayload();
+    // console.log(payload.toHuman());
 
     // handle signed transaction.
-    if (signedTx) {
+    if (txSignature) {
       try {
-        tx.addSignature(from, hexAddPrefix(signedTx.toString('hex')));
+        // console.log(tx.toHuman());
+        // console.log(hexAddPrefix(txSignature.toString('hex')));
 
-        console.log(tx.toHuman());
+        tx.addSignature(
+          submitAddress,
+          hexAddPrefix(txSignature.toString('hex'))
+        );
+
+        // console.log(tx.toHuman());
 
         const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
-          setSignedTx(null);
+          setTxSignature(null);
           handleStatus(status);
 
           if (status.isFinalized) {
@@ -199,7 +203,7 @@ export const useSubmitExtrinsic = ({
         });
       } catch (e) {
         console.log(e);
-        setSignedTx(null);
+        setTxSignature(null);
         onError();
       }
     } else {
