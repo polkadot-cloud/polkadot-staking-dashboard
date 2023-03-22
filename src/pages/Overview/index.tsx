@@ -19,7 +19,9 @@ import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { AnyJson } from 'types';
 import { ActiveAccount } from './ActiveAccount';
 import { BalanceChart } from './BalanceChart';
 import { BalanceLinks } from './BalanceLinks';
@@ -59,9 +61,51 @@ export const Overview = () => {
     };
   }
 
+  const ref = React.useRef<AnyJson>(null);
+  const refInitialised = React.useRef<AnyJson>(false);
+  const getRef = () => {
+    return ref.current;
+  };
+
+  const handleOnHover = async () => {
+    if (!ref) return;
+    ref.current.play();
+  };
+
+  const handleComplete = (r: AnyJson) => {
+    // console.log(r.getLottie());
+    // console.log(r.getLottie().totalFrames);
+    r?.stop();
+  };
+
+  useEffect(() => {
+    console.log('try initialise');
+    if (!ref.current || refInitialised.current) return;
+    refInitialised.current = true;
+
+    ref.current.addEventListener('loop', () => handleComplete(ref.current));
+  }, [ref.current]);
+
+  useEffect(() => {
+    return () => {
+      // ref.current.removeEventListener('loop', handleComplete);
+    };
+  });
+
   return (
     <>
       <PageTitle title={t('overview.overview')} />
+      <PageRowWrapper>
+        <button type="button" onMouseEnter={handleOnHover}>
+          <dotlottie-player
+            ref={ref}
+            loop
+            autoplay
+            src="/lottie/analytics2.lottie"
+            style={{ height: '100%', width: '100%' }}
+          />
+        </button>
+      </PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
           <ActiveAccount />

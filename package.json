@@ -18,6 +18,7 @@
     "visualizer": "vite-bundle-visualizer"
   },
   "dependencies": {
+    "@dotlottie/player-component": "^1.3.2",
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@fortawesome/fontawesome-svg-core": "^6.3.0",
     "@fortawesome/free-brands-svg-icons": "^6.3.0",
@@ -34,7 +35,6 @@
     "@polkadot/util": "^11.0.1",
     "@polkadotcloud/dashboard-ui": "0.2.0",
     "@substrate/connect": "^0.7.21",
-    "@types/lodash.throttle": "^4.1.7",
     "bignumber.js": "^9.1.1",
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
@@ -58,6 +58,7 @@
     "vite-plugin-checker": "^0.5.6"
   },
   "devDependencies": {
+    "@types/lodash.throttle": "^4.1.7",
     "@ledgerhq/logs": "^6.10.1",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
