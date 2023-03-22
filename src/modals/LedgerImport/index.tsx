@@ -22,6 +22,7 @@ export const LedgerImport: React.FC = () => {
     handleNewStatusCode,
     isPaired,
     getStatusCodes,
+    setDefaultMessage,
     getTransport,
   } = useLedgerHardware();
 
@@ -98,6 +99,7 @@ export const LedgerImport: React.FC = () => {
       isMounted.current = false;
       resetStatusCodes();
       setIsExecuting(false);
+      setDefaultMessage(null);
       if (getTransport()?.device?.opened) {
         getTransport().device.close();
       }

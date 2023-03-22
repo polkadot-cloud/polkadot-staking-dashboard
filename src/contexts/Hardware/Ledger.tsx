@@ -74,6 +74,27 @@ export const LedgerHardwareProvider = ({
   // The ledger transport interface.
   const t = useRef<any>(null);
 
+  // Handles errors that occur during a `executeLedgerLoop`.
+  const handleErrors = (err: AnyJson) => {
+    ledgerInProgress.current = false;
+    err = String(err);
+
+    if (
+      err.startsWith('Error: Transaction rejected') ||
+      err.startsWith('TransportOpenUserCancelled') ||
+      err.startsWith('Error: Ledger Device is busy')
+    ) {
+      setDefaultMessage('Connect your Ledger device to continue.');
+      handleNewStatusCode('failure', 'DeviceNotConnected');
+    } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
+      handleNewStatusCode('failure', 'OpenAppToContinue');
+      setDefaultMessage('Open the Polkadot app on your Ledger device.');
+    } else {
+      setDefaultMessage('Open the Polkadot app on your Ledger device.');
+      handleNewStatusCode('failure', 'AppNotOpen');
+    }
+  };
+
   // Check whether the device is paired.
   //
   // Trigger a one-time connection to the device to determine if it is available. If the device
@@ -92,26 +113,8 @@ export const LedgerHardwareProvider = ({
       return true;
     } catch (err) {
       console.log(err);
+      handleErrors(err);
       return false;
-    }
-  };
-
-  // Handles errors that occur during a `executeLedgerLoop`.
-  const handleErrors = (err: AnyJson) => {
-    ledgerInProgress.current = false;
-    err = String(err);
-
-    if (
-      err.startsWith('Error: Transaction rejected') ||
-      err.startsWith('Error: Ledger Device is busy')
-    ) {
-      handleNewStatusCode('failure', 'DeviceNotConnected');
-    } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
-      handleNewStatusCode('failure', 'OpenAppToContinue');
-      setDefaultMessage('Open the Polkadot app on your Ledger device.');
-    } else {
-      setDefaultMessage('Open the Polkadot app on your Ledger device.');
-      handleNewStatusCode('failure', 'AppNotOpen');
     }
   };
 
@@ -148,6 +151,7 @@ export const LedgerHardwareProvider = ({
         });
       }
     } catch (err) {
+      console.log(err);
       handleErrors(err);
     }
   };
@@ -186,8 +190,6 @@ export const LedgerHardwareProvider = ({
         false
       )
     );
-
-    setDefaultMessage(null);
 
     await t.current?.device?.close();
 
@@ -412,6 +414,7 @@ export const LedgerHardwareProvider = ({
         renameLedgerAccount,
         getLedgerAccount,
         getDefaultMessage,
+        setDefaultMessage,
         isPaired: isPairedRef.current,
         ledgerAccounts: ledgerAccountsRef.current,
       }}

@@ -212,6 +212,7 @@ export const useSubmitExtrinsic = ({
       try {
         tx.addSignature(submitAddress, txSignature, txPayload);
 
+        // TODO: remove `await` and ensure it is working as intended.
         const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
           setTxSignature(null);
           handleStatus(status);

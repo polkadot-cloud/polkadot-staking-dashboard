@@ -38,6 +38,7 @@ export const ManualSign = ({
     getStatusCodes,
     getTransport,
     getDefaultMessage,
+    setDefaultMessage,
   } = useLedgerHardware();
   const { activeAccount, accountHasSigner } = useConnect();
   const { txFeesValid, setTxSignature, txSignature } = useTxMeta();
@@ -94,6 +95,7 @@ export const ManualSign = ({
       isMounted.current = false;
       resetStatusCodes();
       setIsExecuting(false);
+      setDefaultMessage(null);
       if (getTransport()?.device?.opened) {
         getTransport().device.close();
       }
@@ -111,23 +113,21 @@ export const ManualSign = ({
   const statusCodes = getStatusCodes();
   const statusCodeTitle = determineStatusFromCodes(statusCodes, false).title;
 
-  const fallbackMessage = 'Waiting for Ledger Device...';
+  const fallbackMessage = 'Connect your Ledger Device to Continue...';
   const defaultMessage = getDefaultMessage();
+
+  const messageDisplay = valid
+    ? defaultMessage ||
+      (!getIsExecuting() || !statusCodes.length
+        ? fallbackMessage
+        : statusCodeTitle)
+    : fallbackMessage;
 
   return (
     <>
       <div>
         <EstimatedTxFee />
-        <p>
-          {valid
-            ? isPaired !== 'paired'
-              ? defaultMessage ||
-                'Open the Polkadot app on Ledger to sign this transaction.'
-              : !statusCodes.length
-              ? defaultMessage || statusCodeTitle
-              : fallbackMessage
-            : fallbackMessage}
-        </p>
+        <p>{messageDisplay}</p>
       </div>
       <div>
         {buttons}

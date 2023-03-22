@@ -39,4 +39,6 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   isPaired: 'unknown',
   ledgerAccounts: [],
   getDefaultMessage: () => null,
+  // eslint-disable-next-line
+  setDefaultMessage: (m) => {},
 };

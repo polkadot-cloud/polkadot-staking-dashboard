@@ -64,6 +64,7 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
           });
         }
       } catch (err) {
+        console.log(err);
         handleErrors(err);
       }
     }, 750);

@@ -29,6 +29,7 @@ export type LedgerHardwareContextInterface = {
   isPaired: PairingStatus;
   ledgerAccounts: Array<LedgerAccount>;
   getDefaultMessage: () => MaybeString;
+  setDefaultMessage: (s: MaybeString) => void;
 };
 
 export interface LedgerResponse {

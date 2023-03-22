@@ -54,10 +54,10 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
             <IconSVG width="24" height="24" className="ledgerIcon" />
             <div className="text">
               <h3>
-                {!isExecuting || !statusCodes.length
-                  ? fallbackMessage
-                  : defaultMessage ||
-                    determineStatusFromCodes(statusCodes, true).title}
+                {defaultMessage ||
+                  (!isExecuting || !statusCodes.length
+                    ? fallbackMessage
+                    : determineStatusFromCodes(statusCodes, true).title)}
               </h3>
             </div>
           </div>
