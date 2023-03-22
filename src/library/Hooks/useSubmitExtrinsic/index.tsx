@@ -3,6 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import { DappName } from 'consts';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
@@ -28,6 +29,7 @@ export const useSubmitExtrinsic = ({
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
   const { addPending, removePending } = useExtrinsics();
+  const { getAccount: getBalanceAccount } = useBalances();
   const {
     setTxFees,
     getTxPayload,
@@ -78,10 +80,9 @@ export const useSubmitExtrinsic = ({
           current: lastHeader.number.toNumber(),
           period: 64,
         });
-        const nonce = api.registry.createType(
-          'Compact<Index>',
-          tx.nonce.toNumber()
-        );
+
+        const accountNonce = getBalanceAccount(submitAddress)?.nonce || 0;
+        const nonce = api.registry.createType('Compact<Index>', accountNonce);
 
         const payload = {
           specVersion: api.runtimeVersion.specVersion.toHex(),
