@@ -74,7 +74,7 @@ export const useSubmitExtrinsic = ({
         nonce: tx.nonce.toHex(),
         signedExtensions: Object.values(
           api.registry.metadata.extrinsic.signedExtensions.toHuman() || {}
-        )?.map((e: any) => e.identifier),
+        ).map((e: any) => e.identifier),
         tip: tx.tip.toHex(),
         version: tx.version,
       };
