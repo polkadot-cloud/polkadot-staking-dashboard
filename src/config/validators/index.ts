@@ -172,12 +172,12 @@ export const VALIDATOR_COMMUNITY = [
     },
   },
   {
-    name: 'LetzBake!',
-    thumbnail: 'Letzbake',
-    bio: 'Non-custodial staking made in Switzerland. At your service since 2018.',
-    email: 'hello@letzbake.com',
-    twitter: '@letzbake1',
-    website: 'https://letzbake.com',
+    name: 'Blockshard',
+    thumbnail: 'Blockshard',
+    bio: 'Non-custodial staking made in Switzerland. At your service since 2018. Previously known as LetzBake!',
+    email: 'hello@blockshard.io',
+    twitter: '@blockshard1',
+    website: 'https://blockshard.io',
     validators: {
       kusama: ['Cp4U5UYg2FaVUpyEtQgfBm9aqge6EEPkJxEFVZFYy7L1AZF'],
     },
