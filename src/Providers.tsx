@@ -3,6 +3,7 @@
 
 import { BalancesProvider } from 'contexts/Accounts/Balances';
 import { LedgersProvider } from 'contexts/Accounts/Ledgers';
+import { ProxiesProvider } from 'contexts/Accounts/Proxies';
 import { APIProvider, useApi } from 'contexts/Api';
 import { ConnectProvider } from 'contexts/Connect';
 import { ExtensionsProvider } from 'contexts/Extensions';
@@ -71,6 +72,7 @@ export const Providers = withProviders(
   HelpProvider,
   NetworkMetricsProvider,
   IdentitiesProvider,
+  ProxiesProvider,
   BalancesProvider,
   LedgersProvider,
   StakingProvider,
