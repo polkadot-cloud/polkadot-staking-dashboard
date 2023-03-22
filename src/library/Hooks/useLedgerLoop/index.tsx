@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect } from 'react';
 import type { LederLoopProps } from './types';
 
@@ -16,6 +17,7 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
     executeLedgerLoop,
     transportResponse,
   } = useLedgerHardware();
+  const { getTxPayload } = useTxMeta();
 
   // Connect to Ledger device and perform necessary tasks.
   //
@@ -47,7 +49,13 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
       try {
         // get task arguments if they have been provided.
         const accountIndex = options?.accountIndex ? options.accountIndex() : 0;
-        const payload = options?.payload ? await options.payload() : {};
+
+        // initialise payload.
+        if (options?.payload && !getTxPayload()) {
+          await options.payload();
+        }
+        // get payload.
+        const payload = getTxPayload();
 
         if (getIsExecuting()) {
           await executeLedgerLoop(getTransport(), tasks, {

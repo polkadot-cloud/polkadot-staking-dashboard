@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { setStateWithRef } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import React, { useEffect, useState } from 'react';
@@ -26,6 +27,11 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   // store whether the sender does not have enough funds.
   const [notEnoughFunds, setNotEnoughFunds] = useState(false);
 
+  // store the payload of a transaction if extrinsics require manual signing (e.g. Ledger).
+  // Used in useLedgerLoop, ref, getter and setter required.
+  const [txPayload, setTxPayloadState] = useState<AnyJson>(null);
+  const txPayloadRef = React.useRef(txPayload);
+
   // store an optional signed transaction if extrinsics require manual signing (e.g. Ledger).
   const [txSignature, setTxSignature] = useState<AnyJson>(null);
 
@@ -36,6 +42,14 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
 
   const resetTxFees = () => {
     setTxFees(new BigNumber(0));
+  };
+
+  const getTxPayload = () => {
+    return txPayloadRef.current;
+  };
+
+  const setTxPayload = (p: AnyJson) => {
+    setStateWithRef(p, setTxPayloadState, txPayloadRef);
   };
 
   const txFeesValid = (() => {
@@ -55,6 +69,8 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
         txFeesValid,
         sender,
         setSender,
+        getTxPayload,
+        setTxPayload,
         txSignature,
         setTxSignature,
       }}

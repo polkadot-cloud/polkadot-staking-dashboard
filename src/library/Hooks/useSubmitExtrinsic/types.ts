@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { AnyApi, AnyJson, MaybeAccount } from 'types';
+import type { AnyApi, MaybeAccount } from 'types';
 
 export interface UseSubmitExtrinsicProps {
   tx: AnyApi;
@@ -14,5 +14,5 @@ export interface UseSubmitExtrinsicProps {
 export interface UseSubmitExtrinsic {
   onSubmit: { (): void };
   submitting: boolean;
-  getPayload: () => AnyJson;
+  getPayload: () => void;
 }

@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { hexAddPrefix, numberToHex } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -13,7 +12,7 @@ import { useNotifications } from 'contexts/Notifications';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyApi } from 'types';
+import type { AnyApi, AnyJson } from 'types';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = ({
@@ -29,8 +28,15 @@ export const useSubmitExtrinsic = ({
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
   const { addPending, removePending } = useExtrinsics();
-  const { setTxFees, setSender, txFees, txSignature, setTxSignature } =
-    useTxMeta();
+  const {
+    setTxFees,
+    getTxPayload,
+    setTxPayload,
+    setSender,
+    txFees,
+    txSignature,
+    setTxSignature,
+  } = useTxMeta();
 
   // if null account is provided, fallback to empty string
   const submitAddress: string = from || '';
@@ -58,34 +64,55 @@ export const useSubmitExtrinsic = ({
     }
   };
 
-  // get payload string of the transaction, or an empty object if it is not ready.
+  // get payload string of the transaction and commit it to txMeta.
   const getPayload = async () => {
     if (api && tx) {
-      const lastHeader = await api.rpc.chain.getHeader();
+      if (getTxPayload() === null) {
+        const lastHeader = await api.rpc.chain.getHeader();
+        const blockNumber = api.registry.createType(
+          'BlockNumber',
+          lastHeader.number.toNumber()
+        );
+        const method = api.createType('Call', tx);
+        const era = api.registry.createType('ExtrinsicEra', {
+          current: lastHeader.number.toNumber(),
+          period: 64,
+        });
+        const nonce = api.registry.createType(
+          'Compact<Index>',
+          tx.nonce.toNumber()
+        );
 
-      const payload = {
-        specVersion: api.runtimeVersion.specVersion.toHex(),
-        transactionVersion: api.runtimeVersion.transactionVersion.toHex(),
-        address: submitAddress,
-        blockHash: lastHeader.hash.toHex(),
-        blockNumber: lastHeader.number.toHex(),
-        era: numberToHex(0),
-        genesisHash: api.genesisHash.toHex(),
-        method: api.createType('Call', tx).toHex(),
-        nonce: tx.nonce.toHex(),
-        signedExtensions: Object.values(
-          api.registry.metadata.extrinsic.signedExtensions.toHuman() || {}
-        ).map((e: any) => e.identifier),
-        tip: tx.tip.toHex(),
-        version: tx.version,
-      };
+        const payload = {
+          specVersion: api.runtimeVersion.specVersion.toHex(),
+          transactionVersion: api.runtimeVersion.transactionVersion.toHex(),
+          address: submitAddress,
+          blockHash: lastHeader.hash.toHex(),
+          blockNumber: blockNumber.toHex(),
+          era: era.toHex(),
+          genesisHash: api.genesisHash.toHex(),
+          method: method.toHex(),
+          nonce: nonce.toHex(),
+          signedExtensions: [
+            'CheckNonZeroSender',
+            'CheckSpecVersion',
+            'CheckTxVersion',
+            'CheckGenesis',
+            'CheckMortality',
+            'CheckNonce',
+            'CheckWeight',
+            'ChargeTransactionPayment',
+          ],
+          tip: api.registry.createType('Compact<Balance>', 0).toHex(),
+          version: tx.version,
+        };
+        const raw = api.registry.createType('ExtrinsicPayload', payload, {
+          version: payload.version,
+        });
 
-      console.log(payload);
-
-      const raw = api.registry.createType('ExtrinsicPayload', payload);
-      return raw;
+        setTxPayload(raw);
+      }
     }
-    return {};
   };
 
   // submit extrinsic
@@ -177,21 +204,12 @@ export const useSubmitExtrinsic = ({
     // pre-submission state update
     setSubmitting(true);
 
-    // const payload: AnyJson = await getPayload();
-    // console.log(payload.toHuman());
+    const txPayload: AnyJson = getTxPayload();
 
     // handle signed transaction.
     if (txSignature) {
       try {
-        // console.log(tx.toHuman());
-        // console.log(hexAddPrefix(txSignature.toString('hex')));
-
-        tx.addSignature(
-          submitAddress,
-          hexAddPrefix(txSignature.toString('hex'))
-        );
-
-        console.log(tx.toHuman());
+        tx.addSignature(submitAddress, txSignature, txPayload);
 
         const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
           setTxSignature(null);
