@@ -30,7 +30,11 @@ export default defineConfig({
       strict: true,
     },
   },
+  optimizeDeps: {
+    include: ['react/jsx-runtime'],
+  },
   // optimizeDeps: {
+  //  include: ['react/jsx-runtime'],
   //   esbuildOptions: {
   //     define: {
   //       global: 'globalThis'
