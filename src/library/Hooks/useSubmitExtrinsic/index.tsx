@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { hexAddPrefix } from '@polkadot/util';
+import { hexAddPrefix, numberToHex } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -69,6 +69,7 @@ export const useSubmitExtrinsic = ({
         address: submitAddress,
         blockHash: lastHeader.hash.toHex(),
         blockNumber: lastHeader.number.toHex(),
+        era: numberToHex(0),
         genesisHash: api.genesisHash.toHex(),
         method: api.createType('Call', tx).toHex(),
         nonce: tx.nonce.toHex(),
@@ -78,6 +79,8 @@ export const useSubmitExtrinsic = ({
         tip: tx.tip.toHex(),
         version: tx.version,
       };
+
+      console.log(payload);
 
       const raw = api.registry.createType('ExtrinsicPayload', payload);
       return raw;
@@ -188,7 +191,7 @@ export const useSubmitExtrinsic = ({
           hexAddPrefix(txSignature.toString('hex'))
         );
 
-        // console.log(tx.toHuman());
+        console.log(tx.toHuman());
 
         const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
           setTxSignature(null);
