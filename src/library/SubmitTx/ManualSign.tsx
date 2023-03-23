@@ -7,6 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import { useConnect } from 'contexts/Connect';
+import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import type { LedgerResponse } from 'contexts/Hardware/types';
 import { useModal } from 'contexts/Modal';
@@ -37,13 +38,12 @@ export const ManualSign = ({
     getDefaultMessage,
     setDefaultMessage,
   } = useLedgerHardware();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { activeAccount, accountHasSigner, getAccount } = useConnect();
   const { txFeesValid, setTxSignature, txSignature } = useTxMeta();
   const { setResize } = useModal();
 
-  // TODO: get the index of the sender.
   const getAddressIndex = () => {
-    return 0;
+    return (getAccount(activeAccount) as LedgerAccount)?.index || 0;
   };
 
   // Ledger loop needs to keep track of whether this component is mounted. If it is unmounted then
