@@ -23,6 +23,7 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const isExecuting = getIsExecuting();
   const statusCodes = getStatusCodes();
 
+  const { title, statusCode } = determineStatusFromCodes(statusCodes, false);
   const fallbackMessage = `Displaying ${addresses.length} Ledger Account${
     addresses.length === 1 ? '' : 's'
   }`;
@@ -57,7 +58,9 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
                 {defaultMessage ||
                   (!isExecuting || !statusCodes.length
                     ? fallbackMessage
-                    : determineStatusFromCodes(statusCodes, true).title)}
+                    : statusCode === 'TransactionRejected'
+                    ? fallbackMessage
+                    : title)}
               </h3>
             </div>
           </div>

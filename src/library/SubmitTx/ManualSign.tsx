@@ -100,22 +100,23 @@ export const ManualSign = ({
 
   const statusCodes = getStatusCodes();
   const statusCodeTitle = determineStatusFromCodes(statusCodes, false).title;
-
   const fallbackMessage = 'Ready to submit transaction.';
   const defaultMessage = getDefaultMessage();
-
-  const messageDisplay = valid
-    ? defaultMessage ||
-      (!getIsExecuting() || !statusCodes.length
-        ? fallbackMessage
-        : statusCodeTitle)
-    : fallbackMessage;
 
   return (
     <>
       <div>
         <EstimatedTxFee />
-        {valid ? <p>{messageDisplay}</p> : null}
+        {valid ? (
+          <p>
+            {valid
+              ? defaultMessage ||
+                (!getIsExecuting() || !statusCodes.length
+                  ? fallbackMessage
+                  : statusCodeTitle)
+              : fallbackMessage}
+          </p>
+        ) : null}
       </div>
       <div>
         {buttons}

@@ -47,7 +47,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   }, [isPaired]);
 
   const { title, statusCode } = determineStatusFromCodes(statusCodes, false);
-  const fallbackMessage = `Checking...`;
+  const fallbackMessage = 'Checking...';
   const defaultMessage = getDefaultMessage();
 
   return (
@@ -79,6 +79,8 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
           <h2>
             {defaultMessage ||
               (!getIsExecuting() || !statusCodes.length
+                ? fallbackMessage
+                : statusCode === 'TransactionRejected'
                 ? fallbackMessage
                 : title)}
           </h2>
