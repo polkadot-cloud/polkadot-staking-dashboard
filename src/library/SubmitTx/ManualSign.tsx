@@ -138,8 +138,8 @@ export const ManualSign = ({
             iconLeft={faSquarePen}
             iconTransform="grow-2"
             onClick={async () => {
-              await pairDevice();
-              if (isPaired === 'paired') {
+              const paired = await pairDevice();
+              if (paired) {
                 setIsExecuting(true);
                 handleLedgerLoop();
               }

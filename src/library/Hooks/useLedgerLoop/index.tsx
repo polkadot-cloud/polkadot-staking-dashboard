@@ -9,7 +9,6 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
   const {
     setIsPaired,
     getTransport,
-    handleErrors,
     setIsExecuting,
     getIsExecuting,
     getStatusCodes,
@@ -30,22 +29,16 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
     if (['DeviceNotConnected'].includes(getStatusCodes()[0]?.statusCode)) {
       setIsPaired('unpaired');
     } else {
-      // Attempt to carry out tasks on-device.
-      try {
-        // Get task arguments if they have been provided.
-        const accountIndex = options?.accountIndex ? options.accountIndex() : 0;
-        const payload = await getTxPayload();
+      // Get task options and execute the loop.
+      const accountIndex = options?.accountIndex ? options.accountIndex() : 0;
+      const payload = await getTxPayload();
 
-        if (getIsExecuting()) {
-          await executeLedgerLoop(getTransport(), tasks, {
-            accountIndex,
-            payload,
-          });
-        }
-      } catch (err) {
-        handleErrors(err);
+      if (getIsExecuting()) {
+        await executeLedgerLoop(getTransport(), tasks, {
+          accountIndex,
+          payload,
+        });
       }
-
       setIsExecuting(false);
     }
   };

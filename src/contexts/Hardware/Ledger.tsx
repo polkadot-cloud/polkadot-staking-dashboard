@@ -80,6 +80,11 @@ export const LedgerHardwareProvider = ({
     setIsExecuting(false);
     err = String(err);
 
+    // close any open connections.
+    if (t.current?.device?.opened) {
+      t.current?.device?.close();
+    }
+
     if (
       err.startsWith('TransportOpenUserCancelled') ||
       err.startsWith('Error: Ledger Device is busy')
@@ -160,7 +165,7 @@ export const LedgerHardwareProvider = ({
   const withTimeout = (millis: AnyFunction, promise: AnyFunction) => {
     const timeout = new Promise((_, reject) =>
       setTimeout(async () => {
-        await t.current?.device?.close();
+        t.current?.device?.close();
         reject(Error());
       }, millis)
     );

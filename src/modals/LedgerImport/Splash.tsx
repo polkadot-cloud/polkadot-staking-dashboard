@@ -34,8 +34,8 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   }, []);
 
   const initFetchAddress = async () => {
-    await pairDevice();
-    if (isPaired === 'paired') {
+    const paired = await pairDevice();
+    if (paired) {
       setIsExecuting(true);
       handleLedgerLoop();
     }
@@ -100,8 +100,8 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
                       : 'Try Again'
                   }
                   onClick={async () => {
-                    await pairDevice();
-                    if (isPaired === 'paired') {
+                    const paired = await pairDevice();
+                    if (paired) {
                       setIsExecuting(true);
                       handleLedgerLoop();
                     }
