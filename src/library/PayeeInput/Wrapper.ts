@@ -14,7 +14,7 @@ export const Wrapper = styled.div<{ activeInput?: boolean }>`
           ? 'var(--network-color-primary)'
           : 'var(--border-primary-color)'};
     padding: 0rem 0 0.4rem 0;
-    transition: border 0.15s;
+    transition: border var(--transition-duration);
 
     > h4 {
       color: var(--text-color-secondary);

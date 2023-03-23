@@ -103,7 +103,7 @@ export const ContentWrapper = styled.div`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    transition: all 0.15s;
+    transition: all var(--transition-duration);
     width: 100%;
 
     &:last-child {

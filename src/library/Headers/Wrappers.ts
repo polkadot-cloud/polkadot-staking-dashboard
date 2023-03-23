@@ -18,7 +18,7 @@ export const Wrapper = styled.div`
   align-items: center;
   align-content: center;
   padding: 0 1.25rem;
-  transition: all 0.15s;
+  transition: all var(--transition-duration);
   margin: 0.5rem 0;
   height: 4rem;
   z-index: 6;
@@ -58,7 +58,7 @@ export const Item = styled.button`
   align-items: center;
   cursor: pointer;
   font-size: 1.05rem;
-  transition: transform 0.15s ease-out;
+  transition: transform var(--transition-duration) ease-out;
 
   &:hover {
     transform: scale(1.03);

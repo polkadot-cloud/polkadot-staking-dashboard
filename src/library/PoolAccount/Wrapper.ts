@@ -17,7 +17,7 @@ export const Wrapper = styled.button<WrapperProps>`
   padding: 0 1rem;
   max-width: 250px;
   flex: 1;
-  transition: transform 0.15s ease-out;
+  transition: transform var(--transition-duration) ease-out;
 
   &:hover {
     transform: scale(1.03);

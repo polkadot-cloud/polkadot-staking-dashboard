@@ -48,7 +48,7 @@ export const Wrapper = styled.div`
         padding: 0.65rem 0.75rem;
         overflow: hidden;
         position: relative;
-        transition: background 0.15s;
+        transition: background var(--transition-duration);
       }
       &:first-child .bar {
         border-top-left-radius: 1.5rem;

@@ -90,7 +90,7 @@ export const Wrapper = styled.div<{
     width: 100%;
     position: relative;
     overflow: hidden;
-    transition: border 0.2s;
+    transition: border var(--transition-duration);
 
     &:hover {
       border-color: ${(props) =>

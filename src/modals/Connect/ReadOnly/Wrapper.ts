@@ -43,7 +43,7 @@ export const Wrapper = styled.div`
 
     > div {
       color: var(--text-color-secondary);
-      transition: opacity 0.2s;
+      transition: opacity var(--transition-duration);
 
       &:first-child {
         flex: 1;
