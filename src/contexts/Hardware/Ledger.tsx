@@ -85,7 +85,10 @@ export const LedgerHardwareProvider = ({
       t.current?.device?.close();
     }
 
-    if (
+    if (err === 'Error') {
+      setDefaultMessage('The connected Ledger device is not supported.');
+      handleNewStatusCode('failure', 'DeviceNotConnected');
+    } else if (
       err.startsWith('TransportOpenUserCancelled') ||
       err.startsWith('Error: Ledger Device is busy')
     ) {
