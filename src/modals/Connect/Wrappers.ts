@@ -55,6 +55,10 @@ export const HardwareInner = styled.div`
       display: flex;
       justify-content: center;
 
+      p {
+        margin-bottom: 0;
+      }
+
       &.margin {
         margin-top: 0.75rem;
       }

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faUsb } from '@fortawesome/free-brands-svg-icons';
-import { ButtonHelp, ButtonSecondary } from '@polkadotcloud/dashboard-ui';
+import { ButtonHelp, ButtonInvertRounded } from '@polkadotcloud/dashboard-ui';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as LedgerLogoSVG } from 'img/ledgerLogo.svg';
@@ -24,16 +24,17 @@ export const Ledger = (): React.ReactElement => {
           <div className="row">
             <LedgerLogoSVG className="logo ledger" />
           </div>
+          <div className="row">
+            <p>BETA</p>
+          </div>
           <div className="row margin">
-            <ButtonSecondary
+            <ButtonInvertRounded
               text="USB"
               onClick={() => {
                 replaceModalWith('LedgerImport', {}, 'large');
               }}
               iconLeft={faUsb}
               iconTransform="shrink-1"
-              lg
-              marginRight
             />
           </div>
         </div>
