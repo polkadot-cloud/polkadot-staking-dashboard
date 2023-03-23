@@ -101,13 +101,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
                       ? 'Continue'
                       : 'Try Again'
                   }
-                  onClick={async () => {
-                    const paired = await pairDevice();
-                    if (paired) {
-                      setIsExecuting(true);
-                      handleLedgerLoop();
-                    }
-                  }}
+                  onClick={async () => initFetchAddress()}
                 />
               </div>
             </>

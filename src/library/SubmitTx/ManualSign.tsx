@@ -39,7 +39,7 @@ export const ManualSign = ({
     setDefaultMessage,
   } = useLedgerHardware();
   const { activeAccount, accountHasSigner, getAccount } = useConnect();
-  const { txFeesValid, setTxSignature, txSignature } = useTxMeta();
+  const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();
   const { setResize } = useModal();
 
   const getAddressIndex = () => {
@@ -85,6 +85,13 @@ export const ManualSign = ({
     }
   }, [transportResponse]);
 
+  // automatically submit transaction when it is signed
+  useEffect(() => {
+    if (getTxSignature() !== null) {
+      onSubmit();
+    }
+  }, [getTxSignature()]);
+
   // Tidy up context state when this component is no longer mounted.
   useEffect(() => {
     return () => {
@@ -120,7 +127,7 @@ export const ManualSign = ({
       </div>
       <div>
         {buttons}
-        {txSignature !== null ? (
+        {getTxSignature() !== null || submitting ? (
           <ButtonSubmit
             text={`${submitText}`}
             iconLeft={faArrowAltCircleUp}

@@ -14,6 +14,6 @@ export interface TxMetaContextInterface {
   txFeesValid: boolean;
   getTxPayload: () => AnyJson;
   setTxPayload: (s: AnyJson) => void;
-  txSignature: AnyJson;
+  getTxSignature: () => AnyJson;
   setTxSignature: (s: AnyJson) => void;
 }

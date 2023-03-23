@@ -28,12 +28,12 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const [notEnoughFunds, setNotEnoughFunds] = useState(false);
 
   // store the payload of a transaction if extrinsics require manual signing (e.g. Ledger).
-  // Used in useLedgerLoop, ref, getter and setter required.
   const [txPayload, setTxPayloadState] = useState<AnyJson>(null);
   const txPayloadRef = React.useRef(txPayload);
 
   // store an optional signed transaction if extrinsics require manual signing (e.g. Ledger).
-  const [txSignature, setTxSignature] = useState<AnyJson>(null);
+  const [txSignature, setTxSignatureState] = useState<AnyJson>(null);
+  const txSignatureRef = React.useRef(txSignature);
 
   useEffect(() => {
     const { freeBalance } = getTransferOptions(sender);
@@ -50,6 +50,14 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
 
   const setTxPayload = (p: AnyJson) => {
     setStateWithRef(p, setTxPayloadState, txPayloadRef);
+  };
+
+  const getTxSignature = () => {
+    return txSignatureRef.current;
+  };
+
+  const setTxSignature = (s: AnyJson) => {
+    setStateWithRef(s, setTxSignatureState, txSignatureRef);
   };
 
   const txFeesValid = (() => {
@@ -71,7 +79,7 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
         setSender,
         getTxPayload,
         setTxPayload,
-        txSignature,
+        getTxSignature,
         setTxSignature,
       }}
     >

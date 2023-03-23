@@ -12,7 +12,7 @@ import { useExtrinsics } from 'contexts/Extrinsics';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useNotifications } from 'contexts/Notifications';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyApi, AnyJson } from 'types';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
@@ -37,7 +37,7 @@ export const useSubmitExtrinsic = ({
     setTxPayload,
     setSender,
     txFees,
-    txSignature,
+    getTxSignature,
     setTxSignature,
   } = useTxMeta();
   const { setIsExecuting, resetStatusCodes, setDefaultMessage } =
@@ -49,11 +49,14 @@ export const useSubmitExtrinsic = ({
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);
 
+  // track for one-shot transaction reset after submission.
+  const didTxReset = useRef<boolean>(false);
+
   // calculate fee upon setup changes and initial render
   useEffect(() => {
     setSender(from);
     calculateEstimatedFee();
-  }, [tx?.toString(), txSignature, tx?.signature.toString()]);
+  }, [tx?.toString(), getTxSignature(), tx?.signature.toString()]);
 
   // recalculate transaction payload on tx change
   useEffect(() => {
@@ -130,7 +133,7 @@ export const useSubmitExtrinsic = ({
       submitting ||
       !shouldSubmit ||
       !api ||
-      (requiresManualSign(from) && !txSignature)
+      (requiresManualSign(from) && !getTxSignature())
     ) {
       return;
     }
@@ -200,6 +203,15 @@ export const useSubmitExtrinsic = ({
       setSubmitting(false);
     };
 
+    const resetManualTx = () => {
+      setTxPayload(null);
+      setTxSignature(null);
+      setSubmitting(false);
+      setIsExecuting(false);
+      resetStatusCodes();
+      setDefaultMessage(null);
+    };
+
     const onError = () => {
       resetTx();
       removePending(accountNonce);
@@ -220,26 +232,28 @@ export const useSubmitExtrinsic = ({
     setSubmitting(true);
 
     const txPayload: AnyJson = getTxPayload();
+    const txSignature: AnyJson = getTxSignature();
 
     // handle signed transaction.
-    if (txSignature) {
+    if (getTxSignature()) {
       try {
         tx.addSignature(submitAddress, txSignature, txPayload);
 
-        const unsub = tx.send(({ status, events = [] }: AnyApi) => {
+        if (!didTxReset.current) {
+          didTxReset.current = true;
+          resetManualTx();
+        }
+
+        const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
           handleStatus(status);
 
           if (status.isFinalized) {
             events.forEach(({ event: { method } }: AnyApi) => {
               onFinalizedEvent(method);
-              if (unsubEvents.includes(method)) unsub();
+              if (unsubEvents?.includes(method)) unsub();
             });
           }
         });
-
-        setIsExecuting(false);
-        resetStatusCodes();
-        setDefaultMessage(null);
       } catch (e) {
         onError();
       }
@@ -247,15 +261,20 @@ export const useSubmitExtrinsic = ({
       // handle unsigned transaction.
       const { signer } = account;
       try {
-        const unsub = tx.signAndSend(
+        const unsub = await tx.signAndSend(
           from,
           { signer },
           ({ status, events = [] }: AnyApi) => {
+            if (!didTxReset.current) {
+              didTxReset.current = true;
+              resetTx();
+            }
+
             handleStatus(status);
             if (status.isFinalized) {
               events.forEach(({ event: { method } }: AnyApi) => {
                 onFinalizedEvent(method);
-                if (unsubEvents.includes(method)) unsub();
+                if (unsubEvents?.includes(method)) unsub();
               });
             }
           }
@@ -264,9 +283,6 @@ export const useSubmitExtrinsic = ({
         onError();
       }
     }
-
-    // remove transaction related state now tx has been submitted.
-    resetTx();
   };
 
   return {

@@ -9,7 +9,6 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
   const {
     setIsPaired,
     getTransport,
-    setIsExecuting,
     getIsExecuting,
     getStatusCodes,
     executeLedgerLoop,
@@ -39,7 +38,6 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
           payload,
         });
       }
-      setIsExecuting(false);
     }
   };
 

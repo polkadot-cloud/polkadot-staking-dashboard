@@ -16,6 +16,7 @@ export const LedgerImport: React.FC = () => {
   const { setResize } = useModal();
   const {
     transportResponse,
+    getIsExecuting,
     setIsExecuting,
     resetStatusCodes,
     handleNewStatusCode,
@@ -87,7 +88,9 @@ export const LedgerImport: React.FC = () => {
 
   // Listen for new Ledger status reports.
   useEffect(() => {
-    handleLedgerStatusResponse(transportResponse);
+    if (getIsExecuting()) {
+      handleLedgerStatusResponse(transportResponse);
+    }
   }, [transportResponse]);
 
   // Tidy up context state when this component is no longer mounted.

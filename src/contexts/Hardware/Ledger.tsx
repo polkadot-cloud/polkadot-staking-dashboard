@@ -148,7 +148,6 @@ export const LedgerHardwareProvider = ({
         );
       }
 
-      ledgerInProgress.current = false;
       if (result) {
         setTransportResponse({
           ack: 'success',
@@ -156,6 +155,8 @@ export const LedgerHardwareProvider = ({
           ...result,
         });
       }
+
+      ledgerInProgress.current = false;
     } catch (err) {
       handleErrors(err);
     }
@@ -248,6 +249,7 @@ export const LedgerHardwareProvider = ({
         throw new Error(error);
       }
     }
+
     if (!(result instanceof Error)) {
       return {
         statusCode: 'SignedPayload',
@@ -368,11 +370,6 @@ export const LedgerHardwareProvider = ({
     setStateWithRef(val, setIsExecutingState, isExecutingRef);
   };
 
-  const cancelImport = () => {
-    setIsExecuting(false);
-    resetStatusCodes();
-  };
-
   const resetStatusCodes = () => {
     setStateWithRef([], setStatusCodes, statusCodesRef);
   };
@@ -405,7 +402,6 @@ export const LedgerHardwareProvider = ({
         executeLedgerLoop,
         setIsPaired,
         setIsExecuting,
-        cancelImport,
         handleNewStatusCode,
         resetStatusCodes,
         getIsExecuting,
