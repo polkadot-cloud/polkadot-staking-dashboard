@@ -26,7 +26,7 @@ export const ConnectItem = styled.div`
 
   &.canConnect {
     > .inner {
-      transition: transform 0.15s;
+      transition: transform var(--transition-duration);
       &:hover {
         transform: scale(1.015);
       }
@@ -158,7 +158,7 @@ export const ConnectItemFoot = styled.div`
 
   a {
     color: var(--text-color-secondary);
-    transition: color 0.15s;
+    transition: color var(--transition-duration);
     display: flex;
     align-items: center;
     font-size: 0.92rem;

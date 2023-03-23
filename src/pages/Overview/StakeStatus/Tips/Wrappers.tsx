@@ -93,7 +93,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
-          transition: color 0.15s;
+          transition: color var(--transition-duration);
         }
         .more {
           color: var(--text-color-secondary);
@@ -102,7 +102,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           top: 0.43rem;
           display: flex;
           align-items: center;
-          transition: all 0.15s;
+          transition: all var(--transition-duration);
           font-size: 1rem;
           opacity: 0.5;
           > svg {
@@ -127,7 +127,7 @@ export const PageToggleWrapper = styled.div`
     margin: 0 0.5rem;
     opacity: 0.75;
     font-size: 1.1rem;
-    transition: color 0.2s;
+    transition: color var(--transition-duration);
     > svg {
       color: var(--text-color-secondary);
     }

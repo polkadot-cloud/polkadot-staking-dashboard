@@ -101,7 +101,7 @@ export const StatBoxWrapper = styled(motion.div)`
         padding: 0 0.5rem;
         width: max-content;
         max-width: 250px;
-        transition: opacity 0.1s;
+        transition: opacity var(--transition-duration);
 
         h3 {
           color: var(--text-color-invert);

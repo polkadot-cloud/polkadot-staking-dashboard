@@ -15,7 +15,7 @@ export const Wrapper = styled.button`
   display: flex;
   flex-flow: row-reverse wrap;
   align-items: center;
-  transition: all 0.15s;
+  transition: all var(--transition-duration);
 
   > section:last-child {
     color: var(--text-color-secondary);

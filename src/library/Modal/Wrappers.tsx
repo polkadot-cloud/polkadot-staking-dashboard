@@ -113,7 +113,7 @@ export const CloseWrapper = styled.div`
 
   > button {
     opacity: 0.4;
-    transition: opacity 0.15s ease-in-out;
+    transition: opacity var(--transition-duration) ease-in-out;
 
     &:hover {
       opacity: 1;
