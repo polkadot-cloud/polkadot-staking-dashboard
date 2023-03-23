@@ -50,7 +50,7 @@ export const SideInterfaceWrapper = styled.div<SideInterfaceWrapperProps>`
     props.minimised
       ? `${SideMenuMinimisedWidth}px`
       : `${SideMenuMaximisedWidth}px`};
-  transition: all 0.5s cubic-bezier(0.1, 1, 0.2, 1);
+  transition: all var(--transition-duration) cubic-bezier(0.1, 1, 0.2, 1);
 
   @media (max-width: ${SideMenuStickyThreshold}px) {
     position: fixed;
@@ -156,7 +156,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
       left: -1rem;
       transform: scale(0.75);
     }
-    transition: all 0.25s;
+    transition: all var(--transition-duration);
     margin: 0;
   }
 
@@ -188,7 +188,8 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
         margin-bottom: 0.5rem;
         margin-right: 0.75rem;
         font-size: ${(props) => (props.sticky ? '1.05rem' : '1.15rem')};
-        transition: opacity 0.1s, font-size 0.1s;
+        transition: opacity var(--transition-duration),
+          font-size var(--transition-duration);
         border-radius: 0.5rem;
 
         &.active {

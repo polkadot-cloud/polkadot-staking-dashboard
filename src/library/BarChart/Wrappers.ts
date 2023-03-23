@@ -80,7 +80,7 @@ export const Bar = styled.div`
     height: 100%;
     display: flex;
     align-items: center;
-    transition: width 1.5s cubic-bezier(0, 1, 0, 1);
+    transition: width var(--transition-duration) cubic-bezier(0, 1, 0, 1);
 
     > span {
       position: absolute;

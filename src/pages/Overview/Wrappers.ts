@@ -81,7 +81,7 @@ export const ActiveAccounWrapper = styled.div`
         color: var(--text-color-secondary);
         opacity: 0.9;
         cursor: pointer;
-        transition: opacity 0.1s;
+        transition: opacity var(--transition-duration);
         &:hover {
           opacity: 1;
         }
