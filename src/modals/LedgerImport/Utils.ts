@@ -38,7 +38,7 @@ export const getDisplayFromLedgerCode = (
     default:
       title = 'Connecting to Device...';
   }
-  return { title };
+  return { title, statusCode };
 };
 
 // Determine the status of connection process.

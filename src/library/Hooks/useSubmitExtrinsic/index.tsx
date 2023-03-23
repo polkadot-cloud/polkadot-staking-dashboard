@@ -55,6 +55,11 @@ export const useSubmitExtrinsic = ({
     calculateEstimatedFee();
   }, [tx?.toString(), txSignature, tx?.signature.toString()]);
 
+  // recalculate transaction payload on tx change
+  useEffect(() => {
+    buildPayload();
+  }, [tx?.toString()]);
+
   const calculateEstimatedFee = async () => {
     if (tx === null) {
       return;
@@ -69,8 +74,8 @@ export const useSubmitExtrinsic = ({
     }
   };
 
-  // get payload string of the transaction and commit it to txMeta.
-  const getPayload = async () => {
+  // build and set payload of the transaction and store it in TxMetaContext.
+  const buildPayload = async () => {
     if (api && tx) {
       if (getTxPayload() === null) {
         const lastHeader = await api.rpc.chain.getHeader();
@@ -236,7 +241,6 @@ export const useSubmitExtrinsic = ({
         resetStatusCodes();
         setDefaultMessage(null);
       } catch (e) {
-        console.log(e);
         onError();
       }
     } else {
@@ -268,6 +272,5 @@ export const useSubmitExtrinsic = ({
   return {
     onSubmit,
     submitting,
-    getPayload,
   };
 };

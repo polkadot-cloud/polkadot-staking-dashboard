@@ -18,7 +18,6 @@ export const LedgerImport: React.FC = () => {
     transportResponse,
     setIsExecuting,
     resetStatusCodes,
-    getIsExecuting,
     handleNewStatusCode,
     isPaired,
     getStatusCodes,
@@ -88,9 +87,7 @@ export const LedgerImport: React.FC = () => {
 
   // Listen for new Ledger status reports.
   useEffect(() => {
-    if (getIsExecuting()) {
-      handleLedgerStatusResponse(transportResponse);
-    }
+    handleLedgerStatusResponse(transportResponse);
   }, [transportResponse]);
 
   // Tidy up context state when this component is no longer mounted.

@@ -16,8 +16,14 @@ import { SplashWrapper } from './Wrappers';
 
 export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   const { replaceModalWith, setStatus } = useModal();
-  const { getStatusCodes, isPaired, setIsExecuting, pairDevice } =
-    useLedgerHardware();
+  const {
+    getStatusCodes,
+    isPaired,
+    getIsExecuting,
+    setIsExecuting,
+    pairDevice,
+    getDefaultMessage,
+  } = useLedgerHardware();
   const statusCodes = getStatusCodes();
 
   // Initialise listeners for Ledger IO.
@@ -27,15 +33,22 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     }
   }, []);
 
-  // Once the device is paired, start `handleLedgerLoop`.
-  useEffect(() => {
+  const initFetchAddress = async () => {
+    await pairDevice();
     if (isPaired === 'paired') {
       setIsExecuting(true);
       handleLedgerLoop();
     }
+  };
+
+  // Once the device is paired, start `handleLedgerLoop`.
+  useEffect(() => {
+    initFetchAddress();
   }, [isPaired]);
 
-  const statusCodeTitle = determineStatusFromCodes(statusCodes, false).title;
+  const { title, statusCode } = determineStatusFromCodes(statusCodes, false);
+  const fallbackMessage = `Checking...`;
+  const defaultMessage = getDefaultMessage();
 
   return (
     <>
@@ -64,13 +77,12 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
 
         <div className="content">
           <h2>
-            {isPaired !== 'paired'
-              ? 'Open the Polkadot app on Ledger and try again.'
-              : !statusCodes.length
-              ? 'Checking...'
-              : statusCodeTitle}
+            {defaultMessage ||
+              (!getIsExecuting() || !statusCodes.length
+                ? fallbackMessage
+                : title)}
           </h2>
-          {isPaired !== 'paired' ? (
+          {!getIsExecuting() ? (
             <>
               <h5>
                 Tip: Ensure your Ledger device is connected before continuing.
@@ -82,9 +94,18 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
                 }}
               >
                 <ButtonSecondary
-                  text="Try Again"
-                  onClick={() => pairDevice()}
-                  lg
+                  text={
+                    statusCode === 'DeviceNotConnected'
+                      ? 'Continue'
+                      : 'Try Again'
+                  }
+                  onClick={async () => {
+                    await pairDevice();
+                    if (isPaired === 'paired') {
+                      setIsExecuting(true);
+                      handleLedgerLoop();
+                    }
+                  }}
                 />
               </div>
             </>

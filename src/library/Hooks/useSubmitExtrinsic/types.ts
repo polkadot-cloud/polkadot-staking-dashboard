@@ -14,5 +14,4 @@ export interface UseSubmitExtrinsicProps {
 export interface UseSubmitExtrinsic {
   onSubmit: { (): void };
   submitting: boolean;
-  getPayload: () => void;
 }

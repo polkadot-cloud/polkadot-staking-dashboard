@@ -17,10 +17,7 @@ import { determineStatusFromCodes } from 'modals/LedgerImport/Utils';
 import React, { useEffect, useRef } from 'react';
 import type { SubmitProps } from './types';
 
-// TODO: integrate useLedgerLoop
-
 export const ManualSign = ({
-  getPayload,
   onSubmit,
   submitting,
   valid,
@@ -44,8 +41,8 @@ export const ManualSign = ({
   const { txFeesValid, setTxSignature, txSignature } = useTxMeta();
   const { setResize } = useModal();
 
+  // TODO: get the index of the sender.
   const getAddressIndex = () => {
-    // TODO: get the index of the sender.
     return 0;
   };
 
@@ -59,7 +56,6 @@ export const ManualSign = ({
     tasks: ['sign_tx'],
     options: {
       accountIndex: getAddressIndex,
-      payload: getPayload,
     },
     mounted: getIsMounted,
   });
@@ -102,14 +98,6 @@ export const ManualSign = ({
     };
   }, []);
 
-  // Once the device is paired, start `handleLedgerLoop`.
-  useEffect(() => {
-    if (isPaired === 'paired') {
-      setIsExecuting(true);
-      handleLedgerLoop();
-    }
-  }, [isPaired]);
-
   const statusCodes = getStatusCodes();
   const statusCodeTitle = determineStatusFromCodes(statusCodes, false).title;
 
@@ -149,7 +137,13 @@ export const ManualSign = ({
             text={getIsExecuting() ? 'Signing' : 'Sign'}
             iconLeft={faSquarePen}
             iconTransform="grow-2"
-            onClick={() => pairDevice()}
+            onClick={async () => {
+              await pairDevice();
+              if (isPaired === 'paired') {
+                setIsExecuting(true);
+                handleLedgerLoop();
+              }
+            }}
             disabled={
               submitting ||
               getIsExecuting() ||

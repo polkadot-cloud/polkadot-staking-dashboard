@@ -115,7 +115,6 @@ export const LedgerHardwareProvider = ({
       setIsPaired('paired');
       return true;
     } catch (err) {
-      console.log(err);
       handleErrors(err);
       return false;
     }
@@ -145,7 +144,6 @@ export const LedgerHardwareProvider = ({
       }
 
       ledgerInProgress.current = false;
-
       if (result) {
         setTransportResponse({
           ack: 'success',
@@ -154,7 +152,6 @@ export const LedgerHardwareProvider = ({
         });
       }
     } catch (err) {
-      console.log(err);
       handleErrors(err);
     }
   };
@@ -182,8 +179,6 @@ export const LedgerHardwareProvider = ({
       body: `Getting addresess ${index} in progress.`,
     });
 
-    setDefaultMessage(null);
-
     const result: AnyJson = await withTimeout(
       500,
       polkadot.getAddress(
@@ -194,6 +189,7 @@ export const LedgerHardwareProvider = ({
       )
     );
 
+    setDefaultMessage(null);
     await t.current?.device?.close();
 
     const error = result?.error_message;
