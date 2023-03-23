@@ -20,8 +20,11 @@ export const getDisplayFromLedgerCode = (
     case 'AppNotOpen':
       title = 'Unlock your Ledger device and open the Polkadot app.';
       break;
-    case 'OpenAppToContinue':
+    case 'AppNotOpenContinue':
       title = 'Open the Polkadot app on Ledger and try again.';
+      break;
+    case 'TransactionRejected':
+      title = 'Transaction was rejected on Ledger device.';
       break;
     case 'GettingAddress':
       title = 'Getting Address...';

@@ -81,14 +81,16 @@ export const LedgerHardwareProvider = ({
     err = String(err);
 
     if (
-      err.startsWith('Error: Transaction rejected') ||
       err.startsWith('TransportOpenUserCancelled') ||
       err.startsWith('Error: Ledger Device is busy')
     ) {
       setDefaultMessage('Connect your Ledger device to continue.');
       handleNewStatusCode('failure', 'DeviceNotConnected');
+    } else if (err.startsWith('Error: Transaction rejected')) {
+      setDefaultMessage('Transaction was rejected and is still pending.');
+      handleNewStatusCode('failure', 'TransactionRejected');
     } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
-      handleNewStatusCode('failure', 'OpenAppToContinue');
+      handleNewStatusCode('failure', 'AppNotOpenContinue');
       setDefaultMessage('Open the Polkadot app on your Ledger device.');
     } else {
       setDefaultMessage('Open the Polkadot app on your Ledger device.');

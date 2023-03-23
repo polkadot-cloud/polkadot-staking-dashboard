@@ -35,9 +35,12 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
       // If the app is not open on-device, or device is not connected, cancel execution and interval
       // until the user tries again.
       if (
-        ['DeviceNotConnected', 'OpenAppToContinue', 'AppNotOpen'].includes(
-          getStatusCodes()[0]?.statusCode
-        )
+        [
+          'DeviceNotConnected',
+          'AppNotOpenContinue',
+          'AppNotOpen',
+          'TransactionRejected',
+        ].includes(getStatusCodes()[0]?.statusCode)
       ) {
         setIsPaired('unpaired');
         setIsExecuting(false);

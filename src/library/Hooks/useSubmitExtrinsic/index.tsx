@@ -9,6 +9,7 @@ import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useExtrinsics } from 'contexts/Extrinsics';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useNotifications } from 'contexts/Notifications';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect, useState } from 'react';
@@ -39,6 +40,8 @@ export const useSubmitExtrinsic = ({
     txSignature,
     setTxSignature,
   } = useTxMeta();
+  const { setIsExecuting, resetStatusCodes, setDefaultMessage } =
+    useLedgerHardware();
 
   // if null account is provided, fallback to empty string
   const submitAddress: string = from || '';
@@ -186,8 +189,14 @@ export const useSubmitExtrinsic = ({
       }
     };
 
-    const onError = () => {
+    const resetTx = () => {
+      setTxPayload(null);
+      setTxSignature(null);
       setSubmitting(false);
+    };
+
+    const onError = () => {
+      resetTx();
       removePending(accountNonce);
       addNotification({
         title: t('cancelled'),
@@ -212,9 +221,7 @@ export const useSubmitExtrinsic = ({
       try {
         tx.addSignature(submitAddress, txSignature, txPayload);
 
-        // TODO: remove `await` and ensure it is working as intended.
-        const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
-          setTxSignature(null);
+        const unsub = tx.send(({ status, events = [] }: AnyApi) => {
           handleStatus(status);
 
           if (status.isFinalized) {
@@ -224,16 +231,19 @@ export const useSubmitExtrinsic = ({
             });
           }
         });
+
+        setIsExecuting(false);
+        resetStatusCodes();
+        setDefaultMessage(null);
       } catch (e) {
         console.log(e);
-        setTxSignature(null);
         onError();
       }
     } else {
       // handle unsigned transaction.
       const { signer } = account;
       try {
-        const unsub = await tx.signAndSend(
+        const unsub = tx.signAndSend(
           from,
           { signer },
           ({ status, events = [] }: AnyApi) => {
@@ -250,6 +260,9 @@ export const useSubmitExtrinsic = ({
         onError();
       }
     }
+
+    // remove transaction related state now tx has been submitted.
+    resetTx();
   };
 
   return {
