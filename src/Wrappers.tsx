@@ -50,7 +50,7 @@ export const SideInterfaceWrapper = styled.div<SideInterfaceWrapperProps>`
     props.minimised
       ? `${SideMenuMinimisedWidth}px`
       : `${SideMenuMaximisedWidth}px`};
-  transition: all var(--transition-duration) cubic-bezier(0.1, 1, 0.2, 1);
+  transition: all 0.5s cubic-bezier(0.1, 1, 0.2, 1);
 
   @media (max-width: ${SideMenuStickyThreshold}px) {
     position: fixed;
