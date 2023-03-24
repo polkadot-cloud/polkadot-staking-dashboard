@@ -1,24 +1,28 @@
-// Copyright 2022 @paritytech/polkadot-staking-dashboard authors & contributors
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { registerSaEvent } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { useState } from 'react';
 import Lottie from 'react-lottie';
 import { Link } from 'react-router-dom';
-import { registerSaEvent } from 'Utils';
-import { PrimaryProps } from '../types';
+import type { PrimaryProps } from '../types';
 import { MinimisedWrapper, Wrapper } from './Wrappers';
 
-export const Primary = (props: PrimaryProps) => {
+export const Primary = ({
+  name,
+  active,
+  to,
+  icon,
+  action,
+  minimised,
+  animate,
+}: PrimaryProps) => {
   const { setSideMenu } = useUi();
   const { network } = useApi();
-
-  const { name, active, to, icon, action, minimised } = props;
-
   const StyledWrapper = minimised ? MinimisedWrapper : Wrapper;
 
   let Action = null;
@@ -35,7 +39,7 @@ export const Primary = (props: PrimaryProps) => {
     case 'bullet':
       Action = (
         <div className={`action ${actionStatus}`}>
-          <FontAwesomeIcon icon={faCircle as IconProp} transform="shrink-4" />
+          <FontAwesomeIcon icon={faCircle} transform="shrink-4" />
         </div>
       );
       break;
@@ -43,9 +47,6 @@ export const Primary = (props: PrimaryProps) => {
       Action = null;
   }
 
-  // animate icon config
-
-  const { animate } = props;
   const [isStopped, setIsStopped] = useState(true);
 
   const animateOptions = {
@@ -61,9 +62,11 @@ export const Primary = (props: PrimaryProps) => {
     <Link
       to={to}
       onClick={() => {
-        setSideMenu(0);
-        setIsStopped(false);
-        registerSaEvent(`${network.name.toLowerCase()}_${name}_page_visit`);
+        if (!active) {
+          setSideMenu(0);
+          setIsStopped(false);
+          registerSaEvent(`${network.name.toLowerCase()}_${name}_page_visit`);
+        }
       }}
     >
       <StyledWrapper
@@ -104,5 +107,3 @@ export const Primary = (props: PrimaryProps) => {
     </Link>
   );
 };
-
-export default Primary;
