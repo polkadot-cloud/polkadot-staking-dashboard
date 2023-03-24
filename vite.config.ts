@@ -7,8 +7,6 @@ import checker from 'vite-plugin-checker';
 import eslint from 'vite-plugin-eslint';
 import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
-// TODO: Remove this once Ledger confirmed to be working without it.
-// import { NodeGlobalsPolyfillPlugin } from '@esbuild-plugins/node-globals-polyfill'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -33,17 +31,4 @@ export default defineConfig({
   optimizeDeps: {
     include: ['react/jsx-runtime'],
   },
-  // optimizeDeps: {
-  //  include: ['react/jsx-runtime'],
-  //   esbuildOptions: {
-  //     define: {
-  //       global: 'globalThis'
-  //     },
-  //     plugins: [
-  //       NodeGlobalsPolyfillPlugin({
-  //         buffer: true
-  //       })
-  //     ]
-  //   }
-  // }
 });
