@@ -62,7 +62,7 @@
         [
           "Bonding funds is the process of 'locking' (or staking) {NETWORK_UNIT}. Bonded {NETWORK_UNIT} will then be automatically allocated to one or more of your nominated validators.",
           "As a nominator, you allocate nominations yourself. In a pool, the pool owner or pool nominator will allocate nominations on your behalf, and your bonded funds will back those nominations.",
-          "The minimum active stake statistic is the minimum {NETWORK_UNIT} being bonded by a nominator for the current era. This value is also the minimum amount required to receive rewards."
+          "The minimum to earn rewards statistic is the minimum {NETWORK_UNIT} being bonded by a nominator for the current era. This value is also the minimum amount required to receive rewards."
         ]
       ],
       "commission": [
