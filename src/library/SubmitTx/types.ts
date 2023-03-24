@@ -10,8 +10,9 @@ export type SubmitTxProps = SubmitProps & {
 };
 
 export interface SubmitProps {
-  onSubmit: () => void;
+  onSubmit: (customEvent?: string) => void;
   submitting: boolean;
   valid: boolean;
   submitText?: string;
+  customEvent?: string;
 }

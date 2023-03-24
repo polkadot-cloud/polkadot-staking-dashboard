@@ -12,6 +12,7 @@ export const Submit = ({
   submitting,
   valid,
   submitText,
+  customEvent,
 }: SubmitProps) => {
   const { txFeesValid } = useTxMeta();
   const { activeAccount, accountHasSigner } = useConnect();
@@ -21,7 +22,7 @@ export const Submit = ({
       text={`${submitText}`}
       iconLeft={faArrowAltCircleUp}
       iconTransform="grow-2"
-      onClick={() => onSubmit()}
+      onClick={() => onSubmit(customEvent)}
       disabled={
         submitting || !valid || !accountHasSigner(activeAccount) || !txFeesValid
       }

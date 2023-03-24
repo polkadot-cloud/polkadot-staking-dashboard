@@ -22,6 +22,7 @@ export const SubmitTx = ({
   noMargin = false,
   submitting = false,
   fromController = false,
+  customEvent,
 }: SubmitTxProps) => {
   const { t } = useTranslation();
   const { unit } = useApi().network;
@@ -85,6 +86,7 @@ export const SubmitTx = ({
               valid={valid}
               submitText={submitText}
               buttons={buttons}
+              customEvent={customEvent}
             />
           ) : (
             <Default
@@ -93,6 +95,7 @@ export const SubmitTx = ({
               valid={valid}
               submitText={submitText}
               buttons={buttons}
+              customEvent={customEvent}
             />
           )}
         </section>

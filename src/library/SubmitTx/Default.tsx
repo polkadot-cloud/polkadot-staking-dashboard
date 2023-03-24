@@ -12,6 +12,7 @@ export const Default = ({
   valid,
   submitText,
   buttons,
+  customEvent,
 }: SubmitProps & { buttons?: Array<React.ReactNode> }) => {
   return (
     <>
@@ -25,6 +26,7 @@ export const Default = ({
           submitting={submitting}
           valid={valid}
           submitText={submitText}
+          customEvent={customEvent}
         />
       </div>
     </>

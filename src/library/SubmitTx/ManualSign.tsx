@@ -25,6 +25,7 @@ export const ManualSign = ({
   valid,
   submitText,
   buttons,
+  customEvent,
 }: SubmitProps & { buttons?: Array<React.ReactNode> }) => {
   const { t } = useTranslation('library');
   const {
@@ -90,7 +91,7 @@ export const ManualSign = ({
   // automatically submit transaction when it is signed
   useEffect(() => {
     if (getTxSignature() !== null) {
-      onSubmit();
+      onSubmit(customEvent);
     }
   }, [getTxSignature()]);
 
@@ -134,7 +135,7 @@ export const ManualSign = ({
             text={`${submitText}`}
             iconLeft={faArrowAltCircleUp}
             iconTransform="grow-2"
-            onClick={() => onSubmit()}
+            onClick={() => onSubmit(customEvent)}
             disabled={
               submitting ||
               !valid ||
