@@ -181,6 +181,7 @@ export const LedgerHardwareProvider = ({
     const { deviceModel } = transport;
     const { id, productName } = deviceModel;
 
+    setDefaultMessage(null);
     setTransportResponse({
       ack: 'success',
       statusCode: 'GettingAddress',
@@ -197,7 +198,6 @@ export const LedgerHardwareProvider = ({
       )
     );
 
-    setDefaultMessage(null);
     await ledgerTransport.current?.device?.close();
 
     const error = result?.error_message;
