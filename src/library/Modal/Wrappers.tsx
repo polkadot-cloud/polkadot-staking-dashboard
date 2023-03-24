@@ -10,6 +10,7 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
   flex-flow: row wrap;
   align-items: center;
   width: 100%;
+  min-height: 3rem;
 
   > div {
     display: flex;

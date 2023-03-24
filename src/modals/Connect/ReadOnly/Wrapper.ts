@@ -8,7 +8,6 @@ export const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
-  margin-bottom: 1.5rem;
 
   h3 {
     display: flex;

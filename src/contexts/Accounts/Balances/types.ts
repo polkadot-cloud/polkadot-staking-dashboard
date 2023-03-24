@@ -23,6 +23,7 @@ export interface Balance {
 }
 
 export interface Balances {
+  nonce?: number;
   address?: string;
   balance?: Balance;
   bonded?: string;

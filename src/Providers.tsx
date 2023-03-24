@@ -33,7 +33,7 @@ import { SubscanProvider } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
 import { TooltipProvider } from 'contexts/Tooltip';
 import { TransferOptionsProvider } from 'contexts/TransferOptions';
-import { TxFeesProvider } from 'contexts/TxFees';
+import { TxMetaProvider } from 'contexts/TxMeta';
 import { UIProvider } from 'contexts/UI';
 import { ValidatorsProvider } from 'contexts/Validators';
 import { withProviders } from 'library/Hooks';
@@ -91,7 +91,7 @@ export const Providers = withProviders(
   MenuProvider,
   TooltipProvider,
   NotificationsProvider,
-  TxFeesProvider,
+  TxMetaProvider,
   ExtrinsicsProvider,
   ModalProvider,
   OverlayProvider,

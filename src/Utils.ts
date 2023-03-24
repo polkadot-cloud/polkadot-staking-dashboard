@@ -209,3 +209,26 @@ export const applyWidthAsPadding = (
     }px`;
   }
 };
+
+export const unescape = (val: string) => val.replace(/\\"/g, '"');
+
+export const inChrome = () => {
+  const isChromium = (window as AnyJson)?.chrome || null;
+  const winNav = (window as AnyJson)?.navigator || null;
+  const isOpera = typeof (window as AnyJson)?.opr !== 'undefined';
+  const isIEedge = winNav?.userAgent.indexOf('Edg') > -1 || false;
+  const isIOSChrome = winNav?.userAgent.match('CriOS') || false;
+
+  if (isIOSChrome) {
+    return true;
+  }
+  if (
+    isChromium !== null &&
+    typeof isChromium !== 'undefined' &&
+    isOpera === false &&
+    isIEedge === false
+  ) {
+    return true;
+  }
+  return false;
+};

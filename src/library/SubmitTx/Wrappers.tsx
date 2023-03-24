@@ -3,11 +3,11 @@
 
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ noMargin?: boolean }>`
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-top: 1rem;
+  margin-top: ${(props) => (props.noMargin ? '0' : '1rem')};
 
   .sign {
     opacity: 0.75;

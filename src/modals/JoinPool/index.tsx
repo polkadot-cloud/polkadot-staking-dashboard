@@ -1,8 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import { planckToUnit, unitToPlanck } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -11,7 +9,6 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useSetup } from 'contexts/Setup';
 import { defaultPoolProgress } from 'contexts/Setup/defaults';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxFees } from 'contexts/TxFees';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -30,7 +27,6 @@ export const JoinPool = () => {
   const { activeAccount, accountHasSigner } = useConnect();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { setActiveAccountSetup } = useSetup();
-  const { txFeesValid } = useTxFees();
   const { getTransferOptions } = useTransferOptions();
   const { freeBalance } = getTransferOptions(activeAccount);
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' });
@@ -61,7 +57,7 @@ export const JoinPool = () => {
     return tx;
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: bondValid,
@@ -103,23 +99,7 @@ export const JoinPool = () => {
           txFees={largestTxFee}
         />
       </PaddingWrapper>
-      <SubmitTx
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              submitting ||
-              !bondValid ||
-              !accountHasSigner(activeAccount) ||
-              !txFeesValid
-            }
-          />,
-        ]}
-      />
+      <SubmitTx valid={bondValid} {...submitExtrinsic} />
     </>
   );
 };
