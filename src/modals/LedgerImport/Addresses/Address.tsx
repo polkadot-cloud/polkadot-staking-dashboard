@@ -100,7 +100,7 @@ export const Address = ({ address, index }: AddressProps) => {
     <div className="item">
       <div>
         <Identicon value={address} size={38} />
-        <div className="text">
+        <div className="inner">
           <section className="row">
             <h5 className="label">
               <span className="withBg">
@@ -156,7 +156,9 @@ export const Address = ({ address, index }: AddressProps) => {
               </div>
             ) : null}
           </section>
-          <h5 className="addressFull">{address}</h5>
+          <h5 className="addressFull">
+            <span>{address}</span>
+          </h5>
         </div>
       </div>
       <div>

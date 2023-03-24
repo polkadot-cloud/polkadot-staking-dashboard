@@ -63,23 +63,26 @@ export const AddressWrapper = styled.div`
       }
 
       > div {
-        flex: 1;
         display: flex;
         align-items: center;
+
         &:first-child {
-          section {
-            display: flex;
-            &.row {
-              align-items: center;
+          flex-shrink: 0;
+          flex-grow: 1;
+          > .inner {
+            width: 100%;
+
+            section {
+              width: 100%;
+              display: flex;
+              padding-left: 1rem;
+              &.row {
+                align-items: center;
+              }
+              .icon {
+                color: var(--text-color-primary);
+              }
             }
-            .icon {
-              color: var(--text-color-primary);
-            }
-          }
-          .text {
-            display: flex;
-            flex-direction: column;
-            padding-left: 1rem;
 
             .label {
               margin-right: 0.5rem;
@@ -96,15 +99,26 @@ export const AddressWrapper = styled.div`
                   background: var(--background-list-item);
                 }
               }
+            }
+            .addressFull {
+              opacity: 0.8;
+              margin-top: 0.85rem;
+              margin-bottom: 0.5rem;
+              position: relative;
+              width: 100%;
+              height: 1.8rem;
 
-              &.addressFull {
-                opacity: 0.8;
-                padding-left: 0.5rem;
-                margin-top: 0.85rem;
-                margin-bottom: 0.5rem;
+              > span {
+                position: absolute;
+                top: 0;
+                left: 0;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                width: 100%;
+                max-width: 100%;
               }
             }
-
             input {
               background: var(--background-list-item);
               color: var(--text-color-primary);
