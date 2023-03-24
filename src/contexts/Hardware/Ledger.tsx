@@ -60,6 +60,8 @@ export const LedgerHardwareProvider = ({
   // Store the latest successful response from an attempted `executeLedgerLoop`.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
 
+  const pairInProgress = useRef(false);
+
   const ledgerInProgress = useRef(false);
 
   // Store the imported ledger accounts.
@@ -112,6 +114,14 @@ export const LedgerHardwareProvider = ({
   // until the user has completed or cancelled the pairing process.
   const pairDevice = async () => {
     try {
+      if (isPairedRef.current === 'paired') {
+        return true;
+      }
+      if (pairInProgress.current) {
+        return false;
+      }
+      pairInProgress.current = true;
+
       resetStatusCodes();
       // close any open connections.
       if (ledgerTransport.current?.device?.opened) {
@@ -120,6 +130,7 @@ export const LedgerHardwareProvider = ({
       // establish a new connection with device.
       ledgerTransport.current = await TransportWebHID.create();
       setIsPaired('paired');
+      pairInProgress.current = false;
       return true;
     } catch (err) {
       handleErrors(err);
@@ -187,8 +198,11 @@ export const LedgerHardwareProvider = ({
       body: `Getting addresess ${index} in progress.`,
     });
 
+    if (!ledgerTransport.current?.device?.opened) {
+      await ledgerTransport.current?.device?.open();
+    }
     const result: AnyJson = await withTimeout(
-      500,
+      5000,
       polkadot.getAddress(
         LEDGER_DEFAULT_ACCOUNT + index,
         LEDGER_DEFAULT_CHANGE,
@@ -234,6 +248,9 @@ export const LedgerHardwareProvider = ({
 
     setDefaultMessage(t('approveTransactionLedger'));
 
+    if (!ledgerTransport.current?.device?.opened) {
+      await ledgerTransport.current?.device?.open();
+    }
     const result = await polkadot.sign(
       LEDGER_DEFAULT_ACCOUNT + index,
       LEDGER_DEFAULT_CHANGE,
@@ -242,7 +259,6 @@ export const LedgerHardwareProvider = ({
     );
 
     setDefaultMessage(t('signedTransactionSuccessfully'));
-
     await ledgerTransport.current?.device?.close();
 
     const error = result?.error_message;
