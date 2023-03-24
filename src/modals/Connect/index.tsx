@@ -57,7 +57,7 @@ export const Connect = () => {
 
       {network.name === 'polkadot' ? (
         <>
-          <Action text="Hardware" />
+          <Action text={t('hardware')} />
           <ExtensionsWrapper>
             <SelectItems layout="two-col">
               {[Ledger].map((Item: AnyFunction, i: number) => (

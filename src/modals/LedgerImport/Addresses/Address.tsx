@@ -15,12 +15,14 @@ import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 import { Confirm } from './Confirm';
 import { Remove } from './Remove';
 import type { AddressProps } from './types';
 
 export const Address = ({ address, index }: AddressProps) => {
+  const { t } = useTranslation('modals');
   const { openOverlayWith } = useOverlay();
   const { ledgerAccountExists, renameLedgerAccount } = useLedgerHardware();
 
@@ -101,7 +103,9 @@ export const Address = ({ address, index }: AddressProps) => {
         <div className="text">
           <section className="row">
             <h5 className="label">
-              <span className="withBg">Polkadot Account {index + 1}</span>
+              <span className="withBg">
+                Polkadot {t('account')} {index + 1}
+              </span>
             </h5>
           </section>
           <section className="row">
@@ -155,7 +159,7 @@ export const Address = ({ address, index }: AddressProps) => {
           <>
             <ButtonMono
               iconLeft={faTimes}
-              text="Remove"
+              text={t('remove')}
               onClick={() => {
                 openOverlayWith(<Remove address={address} />, 'small');
               }}
@@ -164,7 +168,7 @@ export const Address = ({ address, index }: AddressProps) => {
         ) : (
           <ButtonText
             iconLeft={faPlus}
-            text="Import"
+            text={t('import')}
             onClick={() => {
               openOverlayWith(
                 <Confirm address={address} index={index} />,

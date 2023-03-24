@@ -10,11 +10,13 @@ import { ReactComponent as LogoSVG } from 'img/ledgerLogo.svg';
 import { Title } from 'library/Modal/Title';
 import { CustomHeaderWrapper } from 'modals/Wrappers';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AnyFunction } from 'types';
 import { determineStatusFromCodes } from './Utils';
 import { SplashWrapper } from './Wrappers';
 
 export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
+  const { t } = useTranslation('modals');
   const { replaceModalWith, setStatus } = useModal();
   const {
     getStatusCodes,
@@ -47,7 +49,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   }, [isPaired]);
 
   const { title, statusCode } = determineStatusFromCodes(statusCodes, false);
-  const fallbackMessage = 'Checking...';
+  const fallbackMessage = t('checking');
   const defaultMessage = getDefaultMessage();
 
   return (
@@ -55,7 +57,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
       <CustomHeaderWrapper>
         <h1>
           <ButtonSecondary
-            text="Back"
+            text={t('back')}
             iconLeft={faChevronLeft}
             iconTransform="shrink-3"
             onClick={async () => replaceModalWith('Connect', {}, 'large')}
@@ -86,9 +88,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
           </h2>
           {!getIsExecuting() ? (
             <>
-              <h5>
-                Tip: Ensure your Ledger device is connected before continuing.
-              </h5>
+              <h5>{t('ensureLedgerIsConnected')}</h5>
               <div
                 style={{
                   display: 'flex',
@@ -98,8 +98,8 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
                 <ButtonSecondary
                   text={
                     statusCode === 'DeviceNotConnected'
-                      ? 'Continue'
-                      : 'Try Again'
+                      ? t('continue')
+                      : t('tryAgain')
                   }
                   onClick={async () => initFetchAddress()}
                 />

@@ -5,12 +5,14 @@ import { ButtonMonoInvert } from '@polkadotcloud/dashboard-ui';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as IconSVG } from 'img/ledgerIcon.svg';
+import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 import { Addresess } from './Addresses';
 import { determineStatusFromCodes } from './Utils';
 import { StatusBarWrapper } from './Wrappers';
 
 export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
+  const { t } = useTranslation('modals');
   const { replaceModalWith } = useModal();
   const {
     setIsExecuting,
@@ -24,9 +26,7 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const statusCodes = getStatusCodes();
 
   const { title, statusCode } = determineStatusFromCodes(statusCodes, false);
-  const fallbackMessage = `Displaying ${addresses.length} Ledger Account${
-    addresses.length === 1 ? '' : 's'
-  }`;
+  const fallbackMessage = `${t('ledgerAccounts', { count: addresses.length })}`;
   const defaultMessage = getDefaultMessage();
 
   return (
@@ -67,7 +67,7 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
           <div>
             {isExecuting ? (
               <ButtonMonoInvert
-                text="Cancel"
+                text={t('cancel')}
                 onClick={() => {
                   setIsExecuting(false);
                   resetStatusCodes();
@@ -75,7 +75,7 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
               />
             ) : (
               <ButtonMonoInvert
-                text="Done"
+                text={t('done')}
                 onClick={() => {
                   replaceModalWith('Connect', {}, 'large');
                 }}

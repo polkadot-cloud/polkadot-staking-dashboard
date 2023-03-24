@@ -6,10 +6,12 @@ import { useConnect } from 'contexts/Connect';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
+import { useTranslation } from 'react-i18next';
 import { ConfirmWrapper } from './Wrappers';
 import type { ConfirmProps } from './types';
 
 export const Confirm = ({ address, index }: ConfirmProps) => {
+  const { t } = useTranslation('modals');
   const { addToAccounts } = useConnect();
   const { setStatus } = useOverlay();
   const { addLedgerAccount } = useLedgerHardware();
@@ -17,12 +19,12 @@ export const Confirm = ({ address, index }: ConfirmProps) => {
   return (
     <ConfirmWrapper>
       <Identicon value={address} size={60} />
-      <h3>Import Account</h3>
+      <h3>{t('importAccount')}</h3>
       <h5>{address}</h5>
       <div className="footer">
-        <ButtonMonoInvert text="Cancel" onClick={() => setStatus(0)} />
+        <ButtonMonoInvert text={t('cancel')} onClick={() => setStatus(0)} />
         <ButtonMono
-          text="Import Account"
+          text={t('importAccount')}
           onClick={() => {
             const account = addLedgerAccount(address, index);
             if (account) {

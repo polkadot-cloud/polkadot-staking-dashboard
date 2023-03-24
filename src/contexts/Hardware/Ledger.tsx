@@ -8,6 +8,7 @@ import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { useApi } from 'contexts/Api';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AnyFunction, AnyJson } from 'types';
 import {
   LEDGER_DEFAULT_ACCOUNT,
@@ -35,6 +36,7 @@ export const LedgerHardwareProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { t } = useTranslation('modals');
   const { network } = useApi();
 
   // Store whether the device has been paired.
@@ -72,7 +74,7 @@ export const LedgerHardwareProvider = ({
   const ledgerAccountsRef = useRef(ledgerAccounts);
 
   // The ledger transport interface.
-  const t = useRef<any>(null);
+  const ledgerTransport = useRef<any>(null);
 
   // Handles errors that occur during a `executeLedgerLoop`.
   const handleErrors = (err: AnyJson) => {
@@ -81,27 +83,27 @@ export const LedgerHardwareProvider = ({
     err = String(err);
 
     // close any open connections.
-    if (t.current?.device?.opened) {
-      t.current?.device?.close();
+    if (ledgerTransport.current?.device?.opened) {
+      ledgerTransport.current?.device?.close();
     }
 
     if (err === 'Error') {
-      setDefaultMessage('The connected Ledger device is not supported.');
+      setDefaultMessage(t('ledgerNotSupported'));
       handleNewStatusCode('failure', 'DeviceNotConnected');
     } else if (
       err.startsWith('TransportOpenUserCancelled') ||
       err.startsWith('Error: Ledger Device is busy')
     ) {
-      setDefaultMessage('Connect your Ledger device to continue.');
+      setDefaultMessage(t('connectLedgerToContinue'));
       handleNewStatusCode('failure', 'DeviceNotConnected');
     } else if (err.startsWith('Error: Transaction rejected')) {
-      setDefaultMessage('Transaction was rejected and is still pending.');
+      setDefaultMessage(t('transactionRejectedPending'));
       handleNewStatusCode('failure', 'TransactionRejected');
     } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
       handleNewStatusCode('failure', 'AppNotOpenContinue');
-      setDefaultMessage('Open the Polkadot app on your Ledger device.');
+      setDefaultMessage(t('openPolkadotOnLedger'));
     } else {
-      setDefaultMessage('Open the Polkadot app on your Ledger device.');
+      setDefaultMessage(t('openPolkadotOnLedger'));
       handleNewStatusCode('failure', 'AppNotOpen');
     }
   };
@@ -115,11 +117,11 @@ export const LedgerHardwareProvider = ({
     try {
       resetStatusCodes();
       // close any open connections.
-      if (t.current?.device?.opened) {
-        await t.current?.device?.close();
+      if (ledgerTransport.current?.device?.opened) {
+        await ledgerTransport.current?.device?.close();
       }
       // establish a new connection with device.
-      t.current = await TransportWebHID.create();
+      ledgerTransport.current = await TransportWebHID.create();
       setIsPaired('paired');
       return true;
     } catch (err) {
@@ -169,7 +171,7 @@ export const LedgerHardwareProvider = ({
   const withTimeout = (millis: AnyFunction, promise: AnyFunction) => {
     const timeout = new Promise((_, reject) =>
       setTimeout(async () => {
-        t.current?.device?.close();
+        ledgerTransport.current?.device?.close();
         reject(Error());
       }, millis)
     );
@@ -199,7 +201,7 @@ export const LedgerHardwareProvider = ({
     );
 
     setDefaultMessage(null);
-    await t.current?.device?.close();
+    await ledgerTransport.current?.device?.close();
 
     const error = result?.error_message;
     if (error) {
@@ -233,7 +235,7 @@ export const LedgerHardwareProvider = ({
       body: `Signing extrinsic in progress.`,
     });
 
-    setDefaultMessage('Approve transaction on Ledger');
+    setDefaultMessage(t('approveTransactionLedger'));
 
     const result = await polkadot.sign(
       LEDGER_DEFAULT_ACCOUNT + index,
@@ -242,9 +244,9 @@ export const LedgerHardwareProvider = ({
       u8aToBuffer(payload.toU8a(true))
     );
 
-    setDefaultMessage('Signed Transaction Successfully.');
+    setDefaultMessage(t('signedTransactionSuccessfully'));
 
-    await t.current?.device?.close();
+    await ledgerTransport.current?.device?.close();
 
     const error = result?.error_message;
     if (error) {
@@ -386,7 +388,7 @@ export const LedgerHardwareProvider = ({
   };
 
   const getTransport = () => {
-    return t.current;
+    return ledgerTransport.current;
   };
 
   const getDefaultMessage = () => {

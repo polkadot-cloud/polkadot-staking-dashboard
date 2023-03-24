@@ -16,6 +16,7 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
 import { determineStatusFromCodes } from 'modals/LedgerImport/Utils';
 import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { SubmitProps } from './types';
 
 export const ManualSign = ({
@@ -25,6 +26,7 @@ export const ManualSign = ({
   submitText,
   buttons,
 }: SubmitProps & { buttons?: Array<React.ReactNode> }) => {
+  const { t } = useTranslation('library');
   const {
     pairDevice,
     transportResponse,
@@ -107,7 +109,7 @@ export const ManualSign = ({
 
   const statusCodes = getStatusCodes();
   const statusCodeTitle = determineStatusFromCodes(statusCodes, false).title;
-  const fallbackMessage = 'Ready to submit transaction.';
+  const fallbackMessage = t('submitTransaction');
   const defaultMessage = getDefaultMessage();
 
   return (
@@ -142,7 +144,7 @@ export const ManualSign = ({
           />
         ) : (
           <ButtonSubmit
-            text={getIsExecuting() ? 'Signing' : 'Sign'}
+            text={getIsExecuting() ? t('signing') : t('sign')}
             iconLeft={faSquarePen}
             iconTransform="grow-2"
             onClick={async () => {

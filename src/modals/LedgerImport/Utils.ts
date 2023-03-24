@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { LedgerResponse } from 'contexts/Hardware/types';
+import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 
 // formats a title and subtitle depending on the Ledger code received.
@@ -9,34 +10,33 @@ export const getDisplayFromLedgerCode = (
   statusCode: string,
   inStatusBar = false
 ) => {
+  const { t } = useTranslation('modals');
   let title;
 
   switch (statusCode) {
     case 'DeviceNotConnected':
-      title = inStatusBar
-        ? 'Waiting For Ledger Device'
-        : 'Ledger Not Connected';
+      title = inStatusBar ? t('waitingForLedger') : t('ledgerNotConnected');
       break;
     case 'AppNotOpen':
-      title = 'Unlock your Ledger device and open the Polkadot app.';
+      title = t('unlockYourLedger');
       break;
     case 'AppNotOpenContinue':
-      title = 'Open the Polkadot app on Ledger and try again.';
+      title = t('openPolkadotApp');
       break;
     case 'TransactionRejected':
-      title = 'Transaction was rejected on Ledger device.';
+      title = t('transactionWasRejected');
       break;
     case 'GettingAddress':
-      title = 'Getting Address...';
+      title = t('gettingAddress');
       break;
     case 'SigningPayload':
-      title = 'Signing transaction...';
+      title = t('signingTransaction');
       break;
     case 'ReceivedAddress':
-      title = 'Successfully Fetched Address';
+      title = t('successfullyFetchedAddress');
       break;
     default:
-      title = 'Connecting to Device...';
+      title = t('connectingToDevice');
   }
   return { title, statusCode };
 };

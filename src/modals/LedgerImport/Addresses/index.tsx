@@ -5,11 +5,13 @@ import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText } from '@polkadotcloud/dashboard-ui';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { ReactComponent as AppSVG } from 'img/appIcons/polkadot.svg';
+import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 import { Address } from './Address';
 import { AddressWrapper } from './Wrappers';
 
 export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
+  const { t } = useTranslation('modals');
   const { getIsExecuting, setIsExecuting, pairDevice } = useLedgerHardware();
   const isExecuting = getIsExecuting();
   return (
@@ -30,7 +32,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
           <div className="more">
             <ButtonText
               iconLeft={faArrowDown}
-              text={isExecuting ? ' Getting Account' : 'Get Another Account'}
+              text={isExecuting ? t('gettingAccount') : t('getAnotherAccount')}
               disabled={isExecuting}
               onClick={async () => {
                 // re-pair the device if it has been disconnected.
