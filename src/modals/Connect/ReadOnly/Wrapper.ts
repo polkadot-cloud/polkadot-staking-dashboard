@@ -8,7 +8,6 @@ export const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
-  margin-bottom: 1.5rem;
 
   h3 {
     display: flex;
@@ -44,7 +43,7 @@ export const Wrapper = styled.div`
 
     > div {
       color: var(--text-color-secondary);
-      transition: opacity 0.2s;
+      transition: opacity var(--transition-duration);
 
       &:first-child {
         flex: 1;

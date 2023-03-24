@@ -3,7 +3,15 @@
 
 import type React from 'react';
 
-export interface SubmitTxProps {
-  buttons: Array<React.ReactNode>;
+export type SubmitTxProps = SubmitProps & {
+  buttons?: Array<React.ReactNode>;
   fromController?: boolean;
+  noMargin?: boolean;
+};
+
+export interface SubmitProps {
+  onSubmit: () => void;
+  submitting: boolean;
+  valid: boolean;
+  submitText?: string;
 }

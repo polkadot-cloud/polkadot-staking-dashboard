@@ -26,7 +26,7 @@ export const Wrapper = styled.div<MinimisedProps>`
 
   @media (max-width: ${SideMenuStickyThreshold}px) {
     background: var(--gradient-side-menu);
-    transition: all 0.2s;
+    transition: all var(--transition-duration);
     border-radius: 0.75rem;
 
     &::-webkit-scrollbar {
@@ -50,7 +50,7 @@ export const Wrapper = styled.div<MinimisedProps>`
       button {
         color: var(--text-color-secondary);
         position: relative;
-        transition: color 0.2s;
+        transition: color var(--transition-duration);
         margin-top: ${(props) => (props.minimised ? '1rem' : 0)};
         margin-right: ${(props) => (props.minimised ? 0 : '0.9rem')};
         opacity: 0.75;

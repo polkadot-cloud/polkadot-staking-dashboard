@@ -4,7 +4,7 @@
 import BigNumber from 'bignumber.js';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
-import { useTxFees } from 'contexts/TxFees';
+import { useTxMeta } from 'contexts/TxMeta';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { CreatePoolStatusBar } from 'library/Form/CreatePoolStatusBar';
 import { Footer } from 'library/SetupSteps/Footer';
@@ -17,7 +17,7 @@ import { useTranslation } from 'react-i18next';
 export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const { activeAccount } = useConnect();
-  const { txFees } = useTxFees();
+  const { txFees } = useTxMeta();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress('pool', activeAccount);
   const { progress } = setup;
