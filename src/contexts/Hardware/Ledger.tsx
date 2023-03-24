@@ -368,16 +368,8 @@ export const LedgerHardwareProvider = ({
     setStateWithRef(newImported, setLedgerAccountsState, ledgerAccountsRef);
   };
 
-  const setIsPaired = (p: PairingStatus) => {
-    setStateWithRef(p, setIsPairedState, isPairedRef);
-  };
-
-  const setIsExecuting = (val: boolean) => {
-    setStateWithRef(val, setIsExecutingState, isExecutingRef);
-  };
-
-  const resetStatusCodes = () => {
-    setStateWithRef([], setStatusCodes, statusCodesRef);
+  const getTransport = () => {
+    return ledgerTransport.current;
   };
 
   const getIsExecuting = () => {
@@ -388,16 +380,24 @@ export const LedgerHardwareProvider = ({
     return statusCodesRef.current;
   };
 
-  const getTransport = () => {
-    return ledgerTransport.current;
-  };
-
   const getDefaultMessage = () => {
     return defaultMessageRef.current;
   };
 
   const setDefaultMessage = (val: string | null) => {
     setStateWithRef(val, setDefaultMessageState, defaultMessageRef);
+  };
+
+  const setIsPaired = (p: PairingStatus) => {
+    setStateWithRef(p, setIsPairedState, isPairedRef);
+  };
+
+  const setIsExecuting = (val: boolean) => {
+    setStateWithRef(val, setIsExecutingState, isExecutingRef);
+  };
+
+  const resetStatusCodes = () => {
+    setStateWithRef([], setStatusCodes, statusCodesRef);
   };
 
   return (
