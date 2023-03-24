@@ -329,7 +329,11 @@ export const LedgerHardwareProvider = ({
     newImported = newImported.filter(
       (a: LedgerAccount) => a.address !== address
     );
-    localStorage.setItem('ledger_accounts', JSON.stringify(newImported));
+    if (!newImported.length) {
+      localStorage.removeItem('ledger_accounts');
+    } else {
+      localStorage.setItem('ledger_accounts', JSON.stringify(newImported));
+    }
     setStateWithRef(newImported, setLedgerAccountsState, ledgerAccountsRef);
   };
 
