@@ -53,7 +53,6 @@ export const SplashWrapper = styled.div`
 `;
 
 export const StatusBarWrapper = styled(motion.div)`
-  background: var(--background-primary);
   padding: 0 0.5rem 0.5rem 0.5rem;
   position: absolute;
   bottom: 0;

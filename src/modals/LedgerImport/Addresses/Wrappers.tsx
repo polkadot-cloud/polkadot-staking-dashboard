@@ -13,7 +13,6 @@ export const AddressWrapper = styled.div`
   overflow: auto;
 
   .heading {
-    background: var(--background-primary);
     border-bottom: 1px solid var(--border-primary-color);
     position: sticky;
     width: 100%;
@@ -62,6 +61,7 @@ export const AddressWrapper = styled.div`
       &:last-child {
         border: none;
       }
+
       > div {
         flex: 1;
         display: flex;
@@ -71,6 +71,9 @@ export const AddressWrapper = styled.div`
             display: flex;
             &.row {
               align-items: center;
+            }
+            .icon {
+              color: var(--text-color-primary);
             }
           }
           .text {
@@ -104,7 +107,7 @@ export const AddressWrapper = styled.div`
 
             input {
               background: var(--background-list-item);
-              color: var(--color-text-primary);
+              color: var(--text-color-primary);
               border-radius: 0.75rem;
               padding: 0.75rem 0.75rem;
               letter-spacing: 0.04rem;

@@ -112,6 +112,7 @@ export const Address = ({ address, index }: AddressProps) => {
             <FontAwesomeIcon
               icon={faPen}
               transform="shrink-2"
+              className="icon"
               opacity={isImported ? 0.1 : 0.5}
             />
             <input
@@ -138,7 +139,11 @@ export const Address = ({ address, index }: AddressProps) => {
                   className="edit"
                   onClick={() => commitEdit()}
                 >
-                  <FontAwesomeIcon icon={faCheck} transform="grow-1" />
+                  <FontAwesomeIcon
+                    icon={faCheck}
+                    transform="grow-1"
+                    className="icon"
+                  />
                 </button>
                 &nbsp;
                 <button

@@ -105,7 +105,6 @@
     "ledgerAccounts_one": "Displaying {{count}} Ledger Account",
     "ledgerAccounts_other": " Displaying {{count}} Ledger Accounts",
     "ledgerNotConnected": "Ledger Not Connected",
-    "ledgerNotSupported": "The connected Ledger device is not supported.",
     "lightClient": "Light Client",
     "lockPool": "Lock Pool",
     "lockPoolSubtitle": "Once you lock the pool no one else can join the pool.",
