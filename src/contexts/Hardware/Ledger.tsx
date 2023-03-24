@@ -114,11 +114,8 @@ export const LedgerHardwareProvider = ({
   // until the user has completed or cancelled the pairing process.
   const pairDevice = async () => {
     try {
-      if (isPairedRef.current === 'paired') {
-        return true;
-      }
       if (pairInProgress.current) {
-        return false;
+        return isPairedRef.current === 'paired';
       }
       pairInProgress.current = true;
 
@@ -133,6 +130,7 @@ export const LedgerHardwareProvider = ({
       pairInProgress.current = false;
       return true;
     } catch (err) {
+      pairInProgress.current = false;
       handleErrors(err);
       return false;
     }
@@ -202,7 +200,7 @@ export const LedgerHardwareProvider = ({
       await ledgerTransport.current?.device?.open();
     }
     const result: AnyJson = await withTimeout(
-      5000,
+      2500,
       polkadot.getAddress(
         LEDGER_DEFAULT_ACCOUNT + index,
         LEDGER_DEFAULT_CHANGE,
