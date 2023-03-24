@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "VITE_ORGANISATION='© Web3 Foundation' VITE_PRIVACY_URL=https://polkadot.network/privacy/ VITE_DISCLAIMER_URL=https://polkadot.network/disclaimer/ REACT_APP_DISABLE_FIAT=1 vite",
     "build": "tsc && vite build",
-    "build:netlify": "VITE_ORGANISATION='© Web3 Foundation' VITE_PRIVACY_URL=https://polkadot.network/privacy/ VITE_DISCLAIMER_URL=https://polkadot.network/disclaimer/ VITE_DISABLE_FIAT=1  tsc && vite build",
+    "build:netlify": "VITE_ORGANISATION='© Web3 Foundation' VITE_PRIVACY_URL=https://polkadot.network/privacy/ VITE_DISCLAIMER_URL=https://polkadot.network/disclaimer/ VITE_DISABLE_FIAT=1 tsc && vite build",
     "preview": "vite preview",
     "deploy": "gh-pages -d build",
     "lint": "eslint . --fix && npx prettier --write .",
