@@ -25,6 +25,7 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
     }
 
     // If the app is not open on-device, or device is not connected, cancel execution.
+    // If we are to explore auto looping via an interval, this may wish to use `determineStatusFromCode` instead.
     if (['DeviceNotConnected'].includes(getStatusCodes()[0]?.statusCode)) {
       setIsPaired('unpaired');
     } else {

@@ -204,9 +204,7 @@ export const useSubmitExtrinsic = ({
     };
 
     const resetManualTx = () => {
-      setTxPayload(null);
-      setTxSignature(null);
-      setSubmitting(false);
+      resetTx();
       setIsExecuting(false);
       resetStatusCodes();
       setDefaultMessage(null);
