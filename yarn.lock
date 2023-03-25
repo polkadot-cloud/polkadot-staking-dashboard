@@ -949,10 +949,10 @@
     tslib "^2.5.0"
     ws "^8.13.0"
 
-"@polkadotcloud/dashboard-ui@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.npmjs.org/@polkadotcloud/dashboard-ui/-/dashboard-ui-0.2.1.tgz#b2247698e64f1796c2769463d61b6c4e74d03b03"
-  integrity sha512-mQJn3WotGMwsfthKYo6A6RnB/hzZXVIH/7cpBvSDtLhxWCjm/Hpkj4U1YgnM8DfiJIa/BssYPQFMA9EYpwchdQ==
+"@polkadotcloud/dashboard-ui@0.2.2":
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/@polkadotcloud/dashboard-ui/-/dashboard-ui-0.2.2.tgz#89ace0964b3a2df8d88b75a75e06f6dc133a346a"
+  integrity sha512-AUpBH7f2JW9dFr97GLHBKvOzWbVoAMjTy8e1IUsrfPygUDaD7FJ3SeQUOfbjPM5F3/v9iWpyHN3UM77MMjUMQQ==
 
 "@remix-run/router@1.4.0":
   version "1.4.0"
