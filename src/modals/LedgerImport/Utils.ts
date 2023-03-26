@@ -7,6 +7,7 @@ import type { AnyJson } from 'types';
 
 // formats a title and subtitle depending on the Ledger code received.
 export const getDisplayFromLedgerCode = (
+  appName: string,
   statusCode: string,
   inStatusBar = false
 ) => {
@@ -18,10 +19,10 @@ export const getDisplayFromLedgerCode = (
       title = inStatusBar ? t('waitingForLedger') : t('ledgerNotConnected');
       break;
     case 'AppNotOpen':
-      title = t('unlockYourLedger');
+      title = t('unlockYourLedger', { appName });
       break;
     case 'AppNotOpenContinue':
-      title = t('openPolkadotApp');
+      title = t('openLedgerApp', { appName });
       break;
     case 'TransactionRejected':
       title = t('transactionWasRejected');
@@ -43,11 +44,12 @@ export const getDisplayFromLedgerCode = (
 
 // Determine the status of connection process.
 export const determineStatusFromCodes = (
+  appName: string,
   responses: Array<LedgerResponse>,
   inStatusBar: boolean
 ) => {
   if (!responses.length) {
-    return getDisplayFromLedgerCode('', inStatusBar);
+    return getDisplayFromLedgerCode(appName, '', inStatusBar);
   }
 
   const latestStatusCode: string = responses[0].statusCode;
@@ -63,5 +65,5 @@ export const determineStatusFromCodes = (
       return true;
     });
   }
-  return getDisplayFromLedgerCode(trueCode || '', inStatusBar);
+  return getDisplayFromLedgerCode(appName, trueCode || '', inStatusBar);
 };

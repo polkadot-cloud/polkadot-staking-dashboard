@@ -10,7 +10,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonMono, ButtonText } from '@polkadotcloud/dashboard-ui';
-import { clipAddress, localStorageOrDefault, unescape } from 'Utils';
+import {
+  capitalizeFirstLetter,
+  clipAddress,
+  localStorageOrDefault,
+  unescape,
+} from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import type { LedgerAddress } from 'contexts/Hardware/types';
@@ -106,7 +111,7 @@ export const Address = ({ address, index }: AddressProps) => {
           <section className="row">
             <h5 className="label">
               <span className="withBg">
-                Polkadot {t('account')} {index + 1}
+                {capitalizeFirstLetter(network.name)} {t('account')} {index + 1}
               </span>
             </h5>
           </section>

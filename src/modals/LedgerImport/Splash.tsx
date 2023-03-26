@@ -3,6 +3,8 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@polkadotcloud/dashboard-ui';
+import { capitalizeFirstLetter } from 'Utils';
+import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
@@ -17,6 +19,7 @@ import { SplashWrapper } from './Wrappers';
 
 export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   const { t } = useTranslation('modals');
+  const { network } = useApi();
   const { replaceModalWith, setStatus } = useModal();
   const {
     getStatusCodes,
@@ -48,7 +51,11 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     initFetchAddress();
   }, [isPaired]);
 
-  const { title, statusCode } = determineStatusFromCodes(statusCodes, false);
+  const { title, statusCode } = determineStatusFromCodes(
+    capitalizeFirstLetter(network.name),
+    statusCodes,
+    false
+  );
   const fallbackMessage = t('checking');
   const defaultMessage = getDefaultMessage();
 

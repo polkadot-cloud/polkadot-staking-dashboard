@@ -98,7 +98,7 @@ export const LedgerHardwareProvider = ({
   }, [network]);
 
   // Handles errors that occur during a `executeLedgerLoop`.
-  const handleErrors = (err: AnyJson) => {
+  const handleErrors = (appName: string, err: AnyJson) => {
     ledgerInProgress.current = false;
     setIsExecuting(false);
     err = String(err);
@@ -119,9 +119,9 @@ export const LedgerHardwareProvider = ({
       handleNewStatusCode('failure', 'TransactionRejected');
     } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
       handleNewStatusCode('failure', 'AppNotOpenContinue');
-      setDefaultMessage(t('openPolkadotOnLedger'));
+      setDefaultMessage(t('openAppOnLedger', { appName }));
     } else {
-      setDefaultMessage(t('openPolkadotOnLedger'));
+      setDefaultMessage(t('openAppOnLedger', { appName }));
       handleNewStatusCode('failure', 'AppNotOpen');
     }
   };
@@ -150,7 +150,7 @@ export const LedgerHardwareProvider = ({
       return true;
     } catch (err) {
       pairInProgress.current = false;
-      handleErrors(err);
+      handleErrors('', err);
       return false;
     }
   };
@@ -194,7 +194,7 @@ export const LedgerHardwareProvider = ({
 
       ledgerInProgress.current = false;
     } catch (err) {
-      handleErrors(err);
+      handleErrors(appName, err);
     }
   };
 
@@ -484,7 +484,6 @@ export const LedgerHardwareProvider = ({
         resetStatusCodes,
         getIsExecuting,
         getStatusCodes,
-        handleErrors,
         getTransport,
         ledgerAccountExists,
         addLedgerAccount,

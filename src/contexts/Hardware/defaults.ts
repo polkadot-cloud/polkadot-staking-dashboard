@@ -22,8 +22,6 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   resetStatusCodes: () => {},
   getIsExecuting: () => false,
   getStatusCodes: () => [],
-  // eslint-disable-next-line
-  handleErrors: (e) => {},
   getTransport: () => null,
   // eslint-disable-next-line
   ledgerAccountExists: (a) => false,

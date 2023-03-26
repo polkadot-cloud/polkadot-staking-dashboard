@@ -6,6 +6,8 @@ import {
   faSquarePen,
 } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
+import { capitalizeFirstLetter } from 'Utils';
+import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
@@ -27,6 +29,7 @@ export const ManualSign = ({
   buttons,
 }: SubmitProps & { buttons?: Array<React.ReactNode> }) => {
   const { t } = useTranslation('library');
+  const { network } = useApi();
   const {
     pairDevice,
     transportResponse,
@@ -108,7 +111,11 @@ export const ManualSign = ({
   }, []);
 
   const statusCodes = getStatusCodes();
-  const statusCodeTitle = determineStatusFromCodes(statusCodes, false).title;
+  const statusCodeTitle = determineStatusFromCodes(
+    capitalizeFirstLetter(network.name),
+    statusCodes,
+    false
+  ).title;
   const fallbackMessage = t('submitTransaction');
   const defaultMessage = getDefaultMessage();
 

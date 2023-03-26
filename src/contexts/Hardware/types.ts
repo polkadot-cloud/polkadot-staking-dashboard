@@ -19,7 +19,6 @@ export type LedgerHardwareContextInterface = {
   resetStatusCodes: () => void;
   getIsExecuting: () => boolean;
   getStatusCodes: () => Array<LedgerResponse>;
-  handleErrors: (e: AnyJson) => void;
   getTransport: () => AnyJson;
   ledgerAccountExists: (a: string) => boolean;
   addLedgerAccount: (a: string, i: number) => LedgerAccount | null;
