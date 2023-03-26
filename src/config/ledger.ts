@@ -13,7 +13,7 @@ export const LedgerApps: Array<LedgerApp> = [
   },
   {
     network: 'kusama',
-    appName: 'Kusamaa',
+    appName: 'Kusama',
     Icon: KusamaSVG,
   },
 ];
