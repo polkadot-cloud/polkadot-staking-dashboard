@@ -20,7 +20,7 @@ type NetworkColor =
   | 'transparent'
   | 'pending';
 export interface Network {
-  name: string;
+  name: NetworkName;
   endpoints: {
     rpc: string;
     lightClient: AnyApi;
