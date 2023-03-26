@@ -18,6 +18,7 @@ import {
   defaultLedgerHardwareContext,
 } from './defaults';
 import type {
+  LedgerAddress,
   LedgerHardwareContextInterface,
   LedgerResponse,
   LedgerTask,
@@ -293,7 +294,7 @@ export const LedgerHardwareProvider = ({
       [],
       true
     ) as Array<LedgerAccount>;
-    return !!imported.find((a: LedgerAccount) => a.address === address);
+    return !!imported.find((a: LedgerAccount) => isLocalAddress(a, address));
   };
 
   const addLedgerAccount = (address: string, index: number) => {
@@ -307,15 +308,15 @@ export const LedgerHardwareProvider = ({
       'ledger_addresses',
       [],
       true
-    ) as Array<AnyJson>;
+    ) as Array<LedgerAddress>;
 
-    const ledgerAddress = ledgerAddresses.find(
-      (a: AnyJson) => a.address === address
+    const ledgerAddress = ledgerAddresses.find((a: LedgerAddress) =>
+      isLocalAddress(a, address)
     );
 
     if (
       ledgerAddress &&
-      !newImported.find((a: LedgerAccount) => a.address === address)
+      !newImported.find((a: LedgerAccount) => isLocalAddress(a, address))
     ) {
       const account = {
         address,
@@ -361,7 +362,9 @@ export const LedgerHardwareProvider = ({
     if (!imported) {
       return null;
     }
-    return imported.find((a: LedgerAccount) => a.address === address) ?? null;
+    return (
+      imported.find((a: LedgerAccount) => isLocalAddress(a, address)) ?? null
+    );
   };
 
   const renameLedgerAccount = (address: string, newName: string) => {
@@ -371,7 +374,7 @@ export const LedgerHardwareProvider = ({
       true
     ) as Array<LedgerAccount>;
     newImported = newImported.map((a: LedgerAccount) =>
-      a.address === address
+      isLocalAddress(a, address)
         ? {
             ...a,
             name: newName,
@@ -380,6 +383,13 @@ export const LedgerHardwareProvider = ({
     );
     localStorage.setItem('ledger_accounts', JSON.stringify(newImported));
     setStateWithRef(newImported, setLedgerAccountsState, ledgerAccountsRef);
+  };
+
+  const isLocalAddress = (
+    a: LedgerAccount | LedgerAddress,
+    address: string
+  ) => {
+    return a.address === address && a.network === network.name;
   };
 
   const getTransport = () => {

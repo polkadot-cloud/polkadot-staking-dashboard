@@ -11,18 +11,20 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonMono, ButtonText } from '@polkadotcloud/dashboard-ui';
 import { clipAddress, localStorageOrDefault, unescape } from 'Utils';
+import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import type { LedgerAddress } from 'contexts/Hardware/types';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyJson } from 'types';
 import { Confirm } from './Confirm';
 import { Remove } from './Remove';
 import type { AddressProps } from './types';
 
 export const Address = ({ address, index }: AddressProps) => {
   const { t } = useTranslation('modals');
+  const { network } = useApi();
   const { openOverlayWith } = useOverlay();
   const { ledgerAccountExists, renameLedgerAccount } = useLedgerHardware();
 
@@ -36,12 +38,12 @@ export const Address = ({ address, index }: AddressProps) => {
       'ledger_addresses',
       [],
       true
-    ) as Array<AnyJson>;
+    ) as Array<LedgerAddress>;
     if (!localLedger) {
       return defaultName;
     }
     const localAddress = localLedger.find(
-      (i: AnyJson) => i.address === address
+      (i: LedgerAddress) => i.address === address && i.network === network.name
     );
     return localAddress?.name ? unescape(localAddress.name) : defaultName;
   };
@@ -78,12 +80,12 @@ export const Address = ({ address, index }: AddressProps) => {
       'ledger_addresses',
       [],
       true
-    ) as Array<AnyJson>;
+    ) as Array<LedgerAddress>;
     if (!localLedger) {
       return false;
     }
-    localLedger = localLedger?.map((i: AnyJson) => {
-      if (i.address !== address) {
+    localLedger = localLedger?.map((i: LedgerAddress) => {
+      if (i.address !== address && i.network !== network.name) {
         return i;
       }
       return {
