@@ -1,9 +1,10 @@
 // Copyright 2022 @paritytech/polkadot-native authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
+import { clipAddress, setStateWithRef } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import type { LedgerAddress, LedgerResponse } from 'contexts/Hardware/types';
 import { useModal } from 'contexts/Modal';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
@@ -51,29 +52,18 @@ export const LedgerImport: React.FC = () => {
   });
 
   // Store addresses retreived from Ledger device. Defaults to local addresses.
-  const getLocalLedgerAddresses = (n: boolean) => {
-    const localAddresses = localStorageOrDefault(
-      'ledger_addresses',
-      [],
-      true
-    ) as Array<LedgerAddress>;
-
-    if (n) {
-      return localAddresses.filter(
-        (a: LedgerAddress) => a.network === network.name
-      );
-    }
-    return localAddresses;
-  };
-
   const [addresses, setAddresses] = useState<Array<LedgerAddress>>(
-    getLocalLedgerAddresses(true)
+    getLocalLedgerAddresses(network.name)
   );
   const addressesRef = useRef(addresses);
 
   // refresh imported ledger accounts on network change.
   useEffect(() => {
-    setStateWithRef(getLocalLedgerAddresses(true), setAddresses, addressesRef);
+    setStateWithRef(
+      getLocalLedgerAddresses(network.name),
+      setAddresses,
+      addressesRef
+    );
   }, [network]);
 
   // Handle new Ledger status report.
@@ -93,7 +83,7 @@ export const LedgerImport: React.FC = () => {
       }));
 
       // update the full list of local ledger addresses with new entry.
-      const newAddresses = getLocalLedgerAddresses(false)
+      const newAddresses = getLocalLedgerAddresses()
         .filter((a: AnyJson) => {
           if (a.address !== newAddress.address) {
             return true;

@@ -4,12 +4,13 @@
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import { u8aToBuffer } from '@polkadot/util';
 import { newSubstrateApp } from '@zondax/ledger-substrate';
-import { localStorageOrDefault, setStateWithRef } from 'Utils';
+import { setStateWithRef } from 'Utils';
 import { useApi } from 'contexts/Api';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyFunction, AnyJson } from 'types';
+import { getLocalLedgerAccounts, getLocalLedgerAddresses } from './Utils';
 import {
   LEDGER_DEFAULT_ACCOUNT,
   LEDGER_DEFAULT_CHANGE,
@@ -40,24 +41,9 @@ export const LedgerHardwareProvider = ({
   const { t } = useTranslation('modals');
   const { network } = useApi();
 
-  const getLocalLedgerAccounts = (networkOnly: boolean) => {
-    const localAddresses = localStorageOrDefault(
-      'ledger_accounts',
-      [],
-      true
-    ) as Array<LedgerAccount>;
-
-    if (networkOnly) {
-      return localAddresses.filter(
-        (a: LedgerAccount) => a.network === network.name
-      );
-    }
-    return localAddresses;
-  };
-
   const [ledgerAccounts, setLedgerAccountsState] = useState<
     Array<LedgerAccount>
-  >(getLocalLedgerAccounts(true));
+  >(getLocalLedgerAccounts(network.name));
   const ledgerAccountsRef = useRef(ledgerAccounts);
 
   // Store whether the device has been paired.
@@ -91,7 +77,7 @@ export const LedgerHardwareProvider = ({
   // refresh imported ledger accounts on network change.
   useEffect(() => {
     setStateWithRef(
-      getLocalLedgerAccounts(true),
+      getLocalLedgerAccounts(network.name),
       setLedgerAccountsState,
       ledgerAccountsRef
     );
@@ -318,20 +304,14 @@ export const LedgerHardwareProvider = ({
 
   // Check if an address exists in imported addresses.
   const ledgerAccountExists = (address: string) =>
-    !!getLocalLedgerAccounts(false).find((a: LedgerAccount) =>
+    !!getLocalLedgerAccounts().find((a: LedgerAccount) =>
       isLocalAddress(a, address)
     );
 
   const addLedgerAccount = (address: string, index: number) => {
-    let newLedgerAccounts = getLocalLedgerAccounts(false);
+    let newLedgerAccounts = getLocalLedgerAccounts();
 
-    const ledgerAddresses = localStorageOrDefault(
-      'ledger_addresses',
-      [],
-      true
-    ) as Array<LedgerAddress>;
-
-    const ledgerAddress = ledgerAddresses.find((a: LedgerAddress) =>
+    const ledgerAddress = getLocalLedgerAddresses().find((a: LedgerAddress) =>
       isLocalAddress(a, address)
     );
 
@@ -369,7 +349,7 @@ export const LedgerHardwareProvider = ({
   };
 
   const removeLedgerAccount = (address: string) => {
-    let newLedgerAccounts = getLocalLedgerAccounts(false);
+    let newLedgerAccounts = getLocalLedgerAccounts();
 
     newLedgerAccounts = newLedgerAccounts.filter((a: LedgerAccount) => {
       if (a.address !== address) {
@@ -399,7 +379,7 @@ export const LedgerHardwareProvider = ({
 
   // Gets an imported address along with its Ledger metadata.
   const getLedgerAccount = (address: string) => {
-    const localLedgerAccounts = getLocalLedgerAccounts(false);
+    const localLedgerAccounts = getLocalLedgerAccounts();
 
     if (!localLedgerAccounts) {
       return null;
@@ -412,7 +392,7 @@ export const LedgerHardwareProvider = ({
   };
 
   const renameLedgerAccount = (address: string, newName: string) => {
-    let newLedgerAccounts = getLocalLedgerAccounts(false);
+    let newLedgerAccounts = getLocalLedgerAccounts();
 
     newLedgerAccounts = newLedgerAccounts.map((a: LedgerAccount) =>
       isLocalAddress(a, address)
