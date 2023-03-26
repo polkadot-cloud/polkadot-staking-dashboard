@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { PAGES_CONFIG, PAGE_CATEGORIES } from 'config/pages';
+import { PagesConfig, PageCategories } from 'config/pages';
 import { PolkadotUrl, UriPrefix } from 'consts';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
@@ -40,8 +40,8 @@ export const Main = () => {
   const controllerNotImported = getControllerNotImported(controller);
 
   const [pageConfig, setPageConfig] = useState({
-    categories: Object.assign(PAGE_CATEGORIES),
-    pages: Object.assign(PAGES_CONFIG),
+    categories: Object.assign(PageCategories),
+    pages: Object.assign(PagesConfig),
   });
 
   useEffect(() => {

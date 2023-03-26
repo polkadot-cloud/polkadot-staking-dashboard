@@ -9,7 +9,7 @@ import {
   shuffle,
 } from 'Utils';
 import BigNumber from 'bignumber.js';
-import { VALIDATOR_COMMUNITY } from 'config/validators';
+import { ValidatorCommunity } from 'config/validators';
 import type {
   SessionParachainValidators,
   SessionValidators,
@@ -102,7 +102,7 @@ export const ValidatorsProvider = ({
 
   // stores validator community
 
-  const [validatorCommunity] = useState<any>([...shuffle(VALIDATOR_COMMUNITY)]);
+  const [validatorCommunity] = useState<any>([...shuffle(ValidatorCommunity)]);
 
   // reset validators list on network change
   useEffect(() => {

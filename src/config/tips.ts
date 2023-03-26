@@ -4,7 +4,7 @@
 import helpCenterJson from 'img/json/help-center-outline.json';
 import infoJson from 'img/json/info-outline.json';
 
-export const TIPS_CONFIG = [
+export const TipsConfig = [
   {
     id: 'connectExtensions',
     s: 1,
