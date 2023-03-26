@@ -139,6 +139,7 @@ export const LedgerHardwareProvider = ({
 
   // Connects to a Ledger device to perform a task.
   const executeLedgerLoop = async (
+    appName: string,
     transport: AnyJson,
     tasks: Array<LedgerTask>,
     options?: AnyJson
@@ -151,9 +152,14 @@ export const LedgerHardwareProvider = ({
 
       let result = null;
       if (tasks.includes('get_address')) {
-        result = await handleGetAddress(transport, options?.accountIndex || 0);
+        result = await handleGetAddress(
+          appName,
+          transport,
+          options?.accountIndex || 0
+        );
       } else if (tasks.includes('sign_tx')) {
         result = await handleSignTx(
+          appName,
           transport,
           options?.accountIndex || 0,
           options?.payload || ''
@@ -186,8 +192,12 @@ export const LedgerHardwareProvider = ({
   };
 
   // Gets a Polkadot address on device.
-  const handleGetAddress = async (transport: AnyJson, index: number) => {
-    const polkadot = newSubstrateApp(transport, 'Polkadot');
+  const handleGetAddress = async (
+    appName: string,
+    transport: AnyJson,
+    index: number
+  ) => {
+    const substrateApp = newSubstrateApp(transport, appName);
     const { deviceModel } = transport;
     const { id, productName } = deviceModel;
 
@@ -203,7 +213,7 @@ export const LedgerHardwareProvider = ({
     }
     const result: AnyJson = await withTimeout(
       2500,
-      polkadot.getAddress(
+      substrateApp.getAddress(
         LEDGER_DEFAULT_ACCOUNT + index,
         LEDGER_DEFAULT_CHANGE,
         LEDGER_DEFAULT_INDEX + 0,
@@ -231,11 +241,12 @@ export const LedgerHardwareProvider = ({
 
   // Signs a payload on device.
   const handleSignTx = async (
+    appName: string,
     transport: AnyJson,
     index: number,
     payload: AnyJson
   ) => {
-    const polkadot = newSubstrateApp(transport, 'Polkadot');
+    const substrateApp = newSubstrateApp(transport, appName);
     const { deviceModel } = transport;
     const { id, productName } = deviceModel;
 
@@ -250,7 +261,7 @@ export const LedgerHardwareProvider = ({
     if (!ledgerTransport.current?.device?.opened) {
       await ledgerTransport.current?.device?.open();
     }
-    const result = await polkadot.sign(
+    const result = await substrateApp.sign(
       LEDGER_DEFAULT_ACCOUNT + index,
       LEDGER_DEFAULT_CHANGE,
       LEDGER_DEFAULT_INDEX + 0,

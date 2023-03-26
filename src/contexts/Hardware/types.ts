@@ -9,6 +9,7 @@ export type LedgerHardwareContextInterface = {
   setIsPaired: (v: PairingStatus) => void;
   transportResponse: AnyJson;
   executeLedgerLoop: (
+    appName: string,
     transport: AnyJson,
     tasks: Array<LedgerTask>,
     options?: AnyJson
