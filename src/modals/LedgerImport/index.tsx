@@ -1,9 +1,11 @@
 // Copyright 2022 @paritytech/polkadot-native authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
+import { clipAddress, setStateWithRef } from 'Utils';
+import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
-import type { LedgerResponse } from 'contexts/Hardware/types';
+import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
+import type { LedgerAddress, LedgerResponse } from 'contexts/Hardware/types';
 import { useModal } from 'contexts/Modal';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
 import { PaddingWrapper } from 'modals/Wrappers';
@@ -13,6 +15,7 @@ import { Manage } from './Manage';
 import { Splash } from './Splash';
 
 export const LedgerImport: React.FC = () => {
+  const { network } = useApi();
   const { setResize } = useModal();
   const {
     transportResponse,
@@ -48,11 +51,20 @@ export const LedgerImport: React.FC = () => {
     mounted: getIsMounted,
   });
 
-  // Store addresses retreived from Ledger device.
-  const [addresses, setAddresses] = useState<AnyJson>(
-    localStorageOrDefault('ledger_addresses', [], true)
+  // Store addresses retreived from Ledger device. Defaults to local addresses.
+  const [addresses, setAddresses] = useState<Array<LedgerAddress>>(
+    getLocalLedgerAddresses(network.name)
   );
   const addressesRef = useRef(addresses);
+
+  // refresh imported ledger accounts on network change.
+  useEffect(() => {
+    setStateWithRef(
+      getLocalLedgerAddresses(network.name),
+      setAddresses,
+      addressesRef
+    );
+  }, [network]);
 
   // Handle new Ledger status report.
   const handleLedgerStatusResponse = (response: LedgerResponse) => {
@@ -62,21 +74,36 @@ export const LedgerImport: React.FC = () => {
     handleNewStatusCode(ack, statusCode);
 
     if (statusCode === 'ReceivedAddress') {
-      const addressFormatted = body.map(({ pubKey, address }: AnyJson) => ({
+      const newAddress = body.map(({ pubKey, address }: LedgerAddress) => ({
         index: options.accountIndex,
         pubKey,
         address,
         name: clipAddress(address),
+        network: network.name,
       }));
 
-      const newAddresses = addressesRef.current
-        .filter((a: AnyJson) => a.address !== addressFormatted.address)
-        .concat(addressFormatted);
-
+      // update the full list of local ledger addresses with new entry.
+      const newAddresses = getLocalLedgerAddresses()
+        .filter((a: AnyJson) => {
+          if (a.address !== newAddress.address) {
+            return true;
+          }
+          if (a.network !== network.name) {
+            return true;
+          }
+          return false;
+        })
+        .concat(newAddress);
       localStorage.setItem('ledger_addresses', JSON.stringify(newAddresses));
 
       setIsExecuting(false);
-      setStateWithRef(newAddresses, setAddresses, addressesRef);
+
+      // store only those accounts on the current network in state.
+      setStateWithRef(
+        newAddresses.filter((a: LedgerAddress) => a.network === network.name),
+        setAddresses,
+        addressesRef
+      );
       resetStatusCodes();
     }
   };

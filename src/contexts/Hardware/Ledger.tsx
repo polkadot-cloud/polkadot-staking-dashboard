@@ -4,12 +4,13 @@
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import { u8aToBuffer } from '@polkadot/util';
 import { newSubstrateApp } from '@zondax/ledger-substrate';
-import { localStorageOrDefault, setStateWithRef } from 'Utils';
+import { setStateWithRef } from 'Utils';
 import { useApi } from 'contexts/Api';
 import type { LedgerAccount } from 'contexts/Connect/types';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyFunction, AnyJson } from 'types';
+import { getLocalLedgerAccounts, getLocalLedgerAddresses } from './Utils';
 import {
   LEDGER_DEFAULT_ACCOUNT,
   LEDGER_DEFAULT_CHANGE,
@@ -18,6 +19,7 @@ import {
   defaultLedgerHardwareContext,
 } from './defaults';
 import type {
+  LedgerAddress,
   LedgerHardwareContextInterface,
   LedgerResponse,
   LedgerTask,
@@ -38,6 +40,11 @@ export const LedgerHardwareProvider = ({
 }) => {
   const { t } = useTranslation('modals');
   const { network } = useApi();
+
+  const [ledgerAccounts, setLedgerAccountsState] = useState<
+    Array<LedgerAccount>
+  >(getLocalLedgerAccounts(network.name));
+  const ledgerAccountsRef = useRef(ledgerAccounts);
 
   // Store whether the device has been paired.
   const [isPaired, setIsPairedState] = useState<PairingStatus>('unknown');
@@ -64,22 +71,20 @@ export const LedgerHardwareProvider = ({
 
   const ledgerInProgress = useRef(false);
 
-  // Store the imported ledger accounts.
-  const initialLedgerAccounts = localStorageOrDefault(
-    'imported_addresses',
-    [],
-    true
-  ) as Array<LedgerAccount>;
-  const [ledgerAccounts, setLedgerAccountsState] = useState<
-    Array<LedgerAccount>
-  >(initialLedgerAccounts);
-  const ledgerAccountsRef = useRef(ledgerAccounts);
-
   // The ledger transport interface.
   const ledgerTransport = useRef<any>(null);
 
+  // refresh imported ledger accounts on network change.
+  useEffect(() => {
+    setStateWithRef(
+      getLocalLedgerAccounts(network.name),
+      setLedgerAccountsState,
+      ledgerAccountsRef
+    );
+  }, [network]);
+
   // Handles errors that occur during a `executeLedgerLoop`.
-  const handleErrors = (err: AnyJson) => {
+  const handleErrors = (appName: string, err: AnyJson) => {
     ledgerInProgress.current = false;
     setIsExecuting(false);
     err = String(err);
@@ -89,7 +94,10 @@ export const LedgerHardwareProvider = ({
       ledgerTransport.current?.device?.close();
     }
 
-    if (
+    if (err === 'Error: Timeout') {
+      // only set default message here - maintain previous status code.
+      setDefaultMessage(t('ledgerRequestTimeout'));
+    } else if (
       err.startsWith('TransportOpenUserCancelled') ||
       err.startsWith('Error: Ledger Device is busy')
     ) {
@@ -100,11 +108,22 @@ export const LedgerHardwareProvider = ({
       handleNewStatusCode('failure', 'TransactionRejected');
     } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
       handleNewStatusCode('failure', 'AppNotOpenContinue');
-      setDefaultMessage(t('openPolkadotOnLedger'));
+      setDefaultMessage(t('openAppOnLedger', { appName }));
     } else {
-      setDefaultMessage(t('openPolkadotOnLedger'));
+      setDefaultMessage(t('openAppOnLedger', { appName }));
       handleNewStatusCode('failure', 'AppNotOpen');
     }
+  };
+
+  // Timeout function for hanging tasks.
+  const withTimeout = (millis: AnyFunction, promise: AnyFunction) => {
+    const timeout = new Promise((_, reject) =>
+      setTimeout(async () => {
+        ledgerTransport.current?.device?.close();
+        reject(Error('Timeout'));
+      }, millis)
+    );
+    return Promise.race([promise, timeout]);
   };
 
   // Check whether the device is paired.
@@ -131,13 +150,14 @@ export const LedgerHardwareProvider = ({
       return true;
     } catch (err) {
       pairInProgress.current = false;
-      handleErrors(err);
+      handleErrors('', err);
       return false;
     }
   };
 
   // Connects to a Ledger device to perform a task.
   const executeLedgerLoop = async (
+    appName: string,
     transport: AnyJson,
     tasks: Array<LedgerTask>,
     options?: AnyJson
@@ -150,15 +170,19 @@ export const LedgerHardwareProvider = ({
 
       let result = null;
       if (tasks.includes('get_address')) {
-        result = await handleGetAddress(transport, options?.accountIndex || 0);
+        result = await handleGetAddress(
+          appName,
+          transport,
+          options?.accountIndex || 0
+        );
       } else if (tasks.includes('sign_tx')) {
         result = await handleSignTx(
+          appName,
           transport,
           options?.accountIndex || 0,
           options?.payload || ''
         );
       }
-
       if (result) {
         setTransportResponse({
           ack: 'success',
@@ -166,27 +190,19 @@ export const LedgerHardwareProvider = ({
           ...result,
         });
       }
-
       ledgerInProgress.current = false;
     } catch (err) {
-      handleErrors(err);
+      handleErrors(appName, err);
     }
   };
 
-  // Timeout function for hanging tasks.
-  const withTimeout = (millis: AnyFunction, promise: AnyFunction) => {
-    const timeout = new Promise((_, reject) =>
-      setTimeout(async () => {
-        ledgerTransport.current?.device?.close();
-        reject(Error());
-      }, millis)
-    );
-    return Promise.race([promise, timeout]);
-  };
-
   // Gets a Polkadot address on device.
-  const handleGetAddress = async (transport: AnyJson, index: number) => {
-    const polkadot = newSubstrateApp(transport, 'Polkadot');
+  const handleGetAddress = async (
+    appName: string,
+    transport: AnyJson,
+    index: number
+  ) => {
+    const substrateApp = newSubstrateApp(transport, appName);
     const { deviceModel } = transport;
     const { id, productName } = deviceModel;
 
@@ -201,8 +217,8 @@ export const LedgerHardwareProvider = ({
       await ledgerTransport.current?.device?.open();
     }
     const result: AnyJson = await withTimeout(
-      2500,
-      polkadot.getAddress(
+      3000,
+      substrateApp.getAddress(
         LEDGER_DEFAULT_ACCOUNT + index,
         LEDGER_DEFAULT_CHANGE,
         LEDGER_DEFAULT_INDEX + 0,
@@ -230,11 +246,12 @@ export const LedgerHardwareProvider = ({
 
   // Signs a payload on device.
   const handleSignTx = async (
+    appName: string,
     transport: AnyJson,
     index: number,
     payload: AnyJson
   ) => {
-    const polkadot = newSubstrateApp(transport, 'Polkadot');
+    const substrateApp = newSubstrateApp(transport, appName);
     const { deviceModel } = transport;
     const { id, productName } = deviceModel;
 
@@ -249,7 +266,7 @@ export const LedgerHardwareProvider = ({
     if (!ledgerTransport.current?.device?.opened) {
       await ledgerTransport.current?.device?.open();
     }
-    const result = await polkadot.sign(
+    const result = await substrateApp.sign(
       LEDGER_DEFAULT_ACCOUNT + index,
       LEDGER_DEFAULT_CHANGE,
       LEDGER_DEFAULT_INDEX + 0,
@@ -287,35 +304,21 @@ export const LedgerHardwareProvider = ({
   };
 
   // Check if an address exists in imported addresses.
-  const ledgerAccountExists = (address: string) => {
-    const imported = localStorageOrDefault(
-      'ledger_accounts',
-      [],
-      true
-    ) as Array<LedgerAccount>;
-    return !!imported.find((a: LedgerAccount) => a.address === address);
-  };
+  const ledgerAccountExists = (address: string) =>
+    !!getLocalLedgerAccounts().find((a: LedgerAccount) =>
+      isLocalAddress(a, address)
+    );
 
   const addLedgerAccount = (address: string, index: number) => {
-    let newImported = localStorageOrDefault(
-      'ledger_accounts',
-      [],
-      true
-    ) as Array<LedgerAccount>;
+    let newLedgerAccounts = getLocalLedgerAccounts();
 
-    const ledgerAddresses = localStorageOrDefault(
-      'ledger_addresses',
-      [],
-      true
-    ) as Array<AnyJson>;
-
-    const ledgerAddress = ledgerAddresses.find(
-      (a: AnyJson) => a.address === address
+    const ledgerAddress = getLocalLedgerAddresses().find((a: LedgerAddress) =>
+      isLocalAddress(a, address)
     );
 
     if (
       ledgerAddress &&
-      !newImported.find((a: LedgerAccount) => a.address === address)
+      !newLedgerAccounts.find((a: LedgerAccount) => isLocalAddress(a, address))
     ) {
       const account = {
         address,
@@ -324,9 +327,22 @@ export const LedgerHardwareProvider = ({
         source: 'ledger',
         index,
       };
-      newImported = [...newImported].concat(account);
-      localStorage.setItem('ledger_accounts', JSON.stringify(newImported));
-      setStateWithRef(newImported, setLedgerAccountsState, ledgerAccountsRef);
+
+      // update the full list of local ledger accounts with new entry.
+      newLedgerAccounts = [...newLedgerAccounts].concat(account);
+      localStorage.setItem(
+        'ledger_accounts',
+        JSON.stringify(newLedgerAccounts)
+      );
+
+      // store only those accounts on the current network in state.
+      setStateWithRef(
+        newLedgerAccounts.filter(
+          (a: LedgerAccount) => a.network === network.name
+        ),
+        setLedgerAccountsState,
+        ledgerAccountsRef
+      );
 
       return account;
     }
@@ -334,52 +350,75 @@ export const LedgerHardwareProvider = ({
   };
 
   const removeLedgerAccount = (address: string) => {
-    let newImported = localStorageOrDefault(
-      'ledger_accounts',
-      [],
-      true
-    ) as Array<LedgerAccount>;
+    let newLedgerAccounts = getLocalLedgerAccounts();
 
-    newImported = newImported.filter(
-      (a: LedgerAccount) => a.address !== address
-    );
-    if (!newImported.length) {
+    newLedgerAccounts = newLedgerAccounts.filter((a: LedgerAccount) => {
+      if (a.address !== address) {
+        return true;
+      }
+      if (a.network !== network.name) {
+        return true;
+      }
+      return false;
+    });
+    if (!newLedgerAccounts.length) {
       localStorage.removeItem('ledger_accounts');
     } else {
-      localStorage.setItem('ledger_accounts', JSON.stringify(newImported));
+      localStorage.setItem(
+        'ledger_accounts',
+        JSON.stringify(newLedgerAccounts)
+      );
     }
-    setStateWithRef(newImported, setLedgerAccountsState, ledgerAccountsRef);
+    setStateWithRef(
+      newLedgerAccounts.filter(
+        (a: LedgerAccount) => a.network === network.name
+      ),
+      setLedgerAccountsState,
+      ledgerAccountsRef
+    );
   };
 
   // Gets an imported address along with its Ledger metadata.
   const getLedgerAccount = (address: string) => {
-    const imported = localStorageOrDefault(
-      'ledger_accounts',
-      [],
-      true
-    ) as Array<LedgerAccount>;
-    if (!imported) {
+    const localLedgerAccounts = getLocalLedgerAccounts();
+
+    if (!localLedgerAccounts) {
       return null;
     }
-    return imported.find((a: LedgerAccount) => a.address === address) ?? null;
+    return (
+      localLedgerAccounts.find((a: LedgerAccount) =>
+        isLocalAddress(a, address)
+      ) ?? null
+    );
   };
 
   const renameLedgerAccount = (address: string, newName: string) => {
-    let newImported = localStorageOrDefault(
-      'ledger_accounts',
-      [],
-      true
-    ) as Array<LedgerAccount>;
-    newImported = newImported.map((a: LedgerAccount) =>
-      a.address === address
+    let newLedgerAccounts = getLocalLedgerAccounts();
+
+    newLedgerAccounts = newLedgerAccounts.map((a: LedgerAccount) =>
+      isLocalAddress(a, address)
         ? {
             ...a,
             name: newName,
           }
         : a
     );
-    localStorage.setItem('ledger_accounts', JSON.stringify(newImported));
-    setStateWithRef(newImported, setLedgerAccountsState, ledgerAccountsRef);
+
+    localStorage.setItem('ledger_accounts', JSON.stringify(newLedgerAccounts));
+    setStateWithRef(
+      newLedgerAccounts.filter(
+        (a: LedgerAccount) => a.network === network.name
+      ),
+      setLedgerAccountsState,
+      ledgerAccountsRef
+    );
+  };
+
+  const isLocalAddress = (
+    a: LedgerAccount | LedgerAddress,
+    address: string
+  ) => {
+    return a.address === address && a.network === network.name;
   };
 
   const getTransport = () => {
@@ -426,7 +465,6 @@ export const LedgerHardwareProvider = ({
         resetStatusCodes,
         getIsExecuting,
         getStatusCodes,
-        handleErrors,
         getTransport,
         ledgerAccountExists,
         addLedgerAccount,
