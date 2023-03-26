@@ -85,7 +85,7 @@ export const Address = ({ address, index }: AddressProps) => {
       return false;
     }
     localLedger = localLedger?.map((i: LedgerAddress) => {
-      if (i.address !== address && i.network !== network.name) {
+      if (i.address !== address || i.network !== network.name) {
         return i;
       }
       return {

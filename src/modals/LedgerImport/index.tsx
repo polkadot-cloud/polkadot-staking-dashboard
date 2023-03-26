@@ -51,14 +51,30 @@ export const LedgerImport: React.FC = () => {
   });
 
   // Store addresses retreived from Ledger device. Defaults to local addresses.
-  const initialAddresses = localStorageOrDefault(
-    'ledger_addresses',
-    [],
-    true
-  ) as Array<LedgerAddress>;
-  const [addresses, setAddresses] =
-    useState<Array<LedgerAddress>>(initialAddresses);
+  const getLocalLedgerAddresses = (n: boolean) => {
+    const localAddresses = localStorageOrDefault(
+      'ledger_addresses',
+      [],
+      true
+    ) as Array<LedgerAddress>;
+
+    if (n) {
+      return localAddresses.filter(
+        (a: LedgerAddress) => a.network === network.name
+      );
+    }
+    return localAddresses;
+  };
+
+  const [addresses, setAddresses] = useState<Array<LedgerAddress>>(
+    getLocalLedgerAddresses(true)
+  );
   const addressesRef = useRef(addresses);
+
+  // refresh imported ledger accounts on network change.
+  useEffect(() => {
+    setStateWithRef(getLocalLedgerAddresses(true), setAddresses, addressesRef);
+  }, [network]);
 
   // Handle new Ledger status report.
   const handleLedgerStatusResponse = (response: LedgerResponse) => {
@@ -76,7 +92,8 @@ export const LedgerImport: React.FC = () => {
         network: network.name,
       }));
 
-      const newAddresses = addressesRef.current
+      // update the full list of local ledger addresses with new entry.
+      const newAddresses = getLocalLedgerAddresses(false)
         .filter((a: AnyJson) => {
           if (a.address !== newAddress.address) {
             return true;
@@ -87,11 +104,16 @@ export const LedgerImport: React.FC = () => {
           return false;
         })
         .concat(newAddress);
-
       localStorage.setItem('ledger_addresses', JSON.stringify(newAddresses));
 
       setIsExecuting(false);
-      setStateWithRef(newAddresses, setAddresses, addressesRef);
+
+      // store only those accounts on the current network in state.
+      setStateWithRef(
+        newAddresses.filter((a: LedgerAddress) => a.network === network.name),
+        setAddresses,
+        addressesRef
+      );
       resetStatusCodes();
     }
   };
