@@ -94,7 +94,10 @@ export const LedgerHardwareProvider = ({
       ledgerTransport.current?.device?.close();
     }
 
-    if (
+    if (err === 'Error: Timeout') {
+      // only set default message here - maintain previous status code.
+      setDefaultMessage(t('ledgerRequestTimeout'));
+    } else if (
       err.startsWith('TransportOpenUserCancelled') ||
       err.startsWith('Error: Ledger Device is busy')
     ) {
@@ -110,6 +113,17 @@ export const LedgerHardwareProvider = ({
       setDefaultMessage(t('openAppOnLedger', { appName }));
       handleNewStatusCode('failure', 'AppNotOpen');
     }
+  };
+
+  // Timeout function for hanging tasks.
+  const withTimeout = (millis: AnyFunction, promise: AnyFunction) => {
+    const timeout = new Promise((_, reject) =>
+      setTimeout(async () => {
+        ledgerTransport.current?.device?.close();
+        reject(Error('Timeout'));
+      }, millis)
+    );
+    return Promise.race([promise, timeout]);
   };
 
   // Check whether the device is paired.
@@ -169,7 +183,6 @@ export const LedgerHardwareProvider = ({
           options?.payload || ''
         );
       }
-
       if (result) {
         setTransportResponse({
           ack: 'success',
@@ -177,22 +190,10 @@ export const LedgerHardwareProvider = ({
           ...result,
         });
       }
-
       ledgerInProgress.current = false;
     } catch (err) {
       handleErrors(appName, err);
     }
-  };
-
-  // Timeout function for hanging tasks.
-  const withTimeout = (millis: AnyFunction, promise: AnyFunction) => {
-    const timeout = new Promise((_, reject) =>
-      setTimeout(async () => {
-        ledgerTransport.current?.device?.close();
-        reject(Error());
-      }, millis)
-    );
-    return Promise.race([promise, timeout]);
   };
 
   // Gets a Polkadot address on device.
@@ -216,7 +217,7 @@ export const LedgerHardwareProvider = ({
       await ledgerTransport.current?.device?.open();
     }
     const result: AnyJson = await withTimeout(
-      2500,
+      3000,
       substrateApp.getAddress(
         LEDGER_DEFAULT_ACCOUNT + index,
         LEDGER_DEFAULT_CHANGE,
