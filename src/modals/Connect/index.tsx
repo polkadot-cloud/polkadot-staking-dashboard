@@ -55,7 +55,7 @@ export const Connect = () => {
         </h1>
       </CustomHeaderWrapper>
 
-      {['polkadot'].includes(network.name) ? (
+      {['polkadot', 'kusama'].includes(network.name) ? (
         <>
           <Action text={t('hardware')} />
           <ExtensionsWrapper>
