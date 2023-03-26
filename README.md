@@ -68,10 +68,10 @@ export const ValidatorCommunity = [
 
 ### General Requirements
 
-| Requirement | Notes                                                                                                                                                                                              |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Accuracy    | Operator contact details must be working and valid.                                                                                                                                                |
-| Liveness    | All submitted validator addresses must be discoverable as a validator on the network in question - whether Polkadot or Kusama.                                                                     |
+| Requirement | Notes                                                                                                                                                                                             |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Accuracy    | Operator contact details must be working and valid.                                                                                                                                               |
+| Liveness    | All submitted validator addresses must be discoverable as a validator on the network in question - whether Polkadot or Kusama.                                                                    |
 | Ordering    | Please place your operator in alphabetical order within `ValidatorCommunity`. Operators are shuffled before being displayed in the dashboard, removing any bias associated with ordering methods. |
 
 Please submit an issue for any queries around adding your operator details.
