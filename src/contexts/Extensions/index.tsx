@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { setStateWithRef } from 'Utils';
-import { EXTENSIONS } from 'config/extensions';
+import { Extensions } from 'config/extensions';
 import type {
   ExtensionConfig,
   ExtensionInjected,
@@ -91,7 +91,7 @@ export const ExtensionsProvider = ({
   const getInstalledExtensions = () => {
     const { injectedWeb3 }: AnyApi = window;
     const installed: Array<ExtensionInjected> = [];
-    EXTENSIONS.forEach((e: ExtensionConfig) => {
+    Extensions.forEach((e: ExtensionConfig) => {
       if (injectedWeb3[e.id] !== undefined) {
         installed.push({
           ...e,

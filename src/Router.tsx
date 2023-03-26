@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PAGES_CONFIG } from 'config/pages';
+import { PagesConfig } from 'config/pages';
 import { useApi } from 'contexts/Api';
 import { useOverlay } from 'contexts/Overlay';
 import { useUi } from 'contexts/UI';
@@ -104,7 +104,7 @@ export const RouterInner = () => {
           <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
             <AnimatePresence>
               <Routes>
-                {PAGES_CONFIG.map((page, i) => {
+                {PagesConfig.map((page, i) => {
                   const { Entry, hash, key } = page;
 
                   return (

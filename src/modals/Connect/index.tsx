@@ -3,7 +3,7 @@
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { ButtonInvertRounded } from '@polkadotcloud/dashboard-ui';
-import { EXTENSIONS } from 'config/extensions';
+import { Extensions } from 'config/extensions';
 import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
 import type { ExtensionConfig } from 'contexts/Extensions/types';
@@ -25,11 +25,11 @@ export const Connect = () => {
   const { extensions } = useExtensions();
   const { replaceModalWith, setResize, height } = useModal();
 
-  const installed = EXTENSIONS.filter((a: ExtensionConfig) =>
+  const installed = Extensions.filter((a: ExtensionConfig) =>
     extensions.find((b: ExtensionConfig) => b.id === a.id)
   );
 
-  const other = EXTENSIONS.filter(
+  const other = Extensions.filter(
     (a: ExtensionConfig) =>
       !installed.find((b: ExtensionConfig) => b.id === a.id)
   );
@@ -55,7 +55,7 @@ export const Connect = () => {
         </h1>
       </CustomHeaderWrapper>
 
-      {network.name === 'polkadot' ? (
+      {['polkadot', 'kusama'].includes(network.name) ? (
         <>
           <Action text={t('hardware')} />
           <ExtensionsWrapper>
