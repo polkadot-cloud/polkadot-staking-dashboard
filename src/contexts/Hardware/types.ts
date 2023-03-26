@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { LedgerAccount } from 'contexts/Connect/types';
+import type { FunctionComponent, SVGProps } from 'react';
 import type { AnyJson, MaybeString, NetworkName } from 'types';
 
 export type LedgerHardwareContextInterface = {
@@ -49,3 +50,9 @@ export interface LedgerAddress {
   network: NetworkName;
   pubKey: string;
 }
+
+export type LedgerApp = {
+  network: NetworkName;
+  appName: string;
+  Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
+};

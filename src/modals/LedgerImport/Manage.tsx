@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonMonoInvert } from '@polkadotcloud/dashboard-ui';
-import { capitalizeFirstLetter } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as IconSVG } from 'img/ledgerIcon.svg';
 import { useTranslation } from 'react-i18next';
@@ -24,12 +24,13 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
     resetStatusCodes,
     getDefaultMessage,
   } = useLedgerHardware();
+  const { appName } = getLedgerApp(network.name);
 
   const isExecuting = getIsExecuting();
   const statusCodes = getStatusCodes();
 
   const { title, statusCode } = determineStatusFromCodes(
-    capitalizeFirstLetter(network.name),
+    appName,
     statusCodes,
     false
   );

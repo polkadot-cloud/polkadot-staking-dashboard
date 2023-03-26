@@ -3,11 +3,9 @@
 
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText } from '@polkadotcloud/dashboard-ui';
-import { capitalizeFirstLetter } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
-import { ReactComponent as AppSVGKusama } from 'img/appIcons/kusama.svg';
-import { ReactComponent as AppSVGPolkadot } from 'img/appIcons/polkadot.svg';
+import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 import { Address } from './Address';
@@ -18,15 +16,16 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const { name } = useApi().network;
   const { getIsExecuting, setIsExecuting, pairDevice } = useLedgerHardware();
   const isExecuting = getIsExecuting();
+  const { appName, Icon } = getLedgerApp(name);
+
   return (
     <>
       {addresses.length ? (
         <AddressWrapper>
           <div className="heading">
             <h4>
-              {name === 'polkadot' && <AppSVGPolkadot />}
-              {name === 'kusama' && <AppSVGKusama />}
-              <span>{capitalizeFirstLetter(name)}</span>
+              <Icon />
+              <span>{appName}</span>
             </h4>
           </div>
           <div className="items">

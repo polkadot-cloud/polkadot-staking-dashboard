@@ -10,15 +10,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonMono, ButtonText } from '@polkadotcloud/dashboard-ui';
-import {
-  capitalizeFirstLetter,
-  clipAddress,
-  localStorageOrDefault,
-  unescape,
-} from 'Utils';
+import { clipAddress, localStorageOrDefault, unescape } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
-import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
+import { getLedgerApp, getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import type { LedgerAddress } from 'contexts/Hardware/types';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
@@ -33,6 +28,7 @@ export const Address = ({ address, index }: AddressProps) => {
   const { network } = useApi();
   const { openOverlayWith } = useOverlay();
   const { ledgerAccountExists, renameLedgerAccount } = useLedgerHardware();
+  const { appName } = getLedgerApp(network.name);
 
   // store whether this address is being edited.
   const [editing, setEditing] = useState<boolean>(false);
@@ -104,7 +100,7 @@ export const Address = ({ address, index }: AddressProps) => {
           <section className="row">
             <h5 className="label">
               <span className="withBg">
-                {capitalizeFirstLetter(network.name)} {t('account')} {index + 1}
+                {appName} {t('account')} {index + 1}
               </span>
             </h5>
           </section>

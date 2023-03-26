@@ -3,9 +3,9 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@polkadotcloud/dashboard-ui';
-import { capitalizeFirstLetter } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
 import { ReactComponent as LogoSVG } from 'img/ledgerLogo.svg';
@@ -30,6 +30,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     getDefaultMessage,
   } = useLedgerHardware();
   const statusCodes = getStatusCodes();
+  const { appName } = getLedgerApp(network.name);
 
   // Initialise listeners for Ledger IO.
   useEffect(() => {
@@ -52,7 +53,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   }, [isPaired]);
 
   const { title, statusCode } = determineStatusFromCodes(
-    capitalizeFirstLetter(network.name),
+    appName,
     statusCodes,
     false
   );

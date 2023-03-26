@@ -6,11 +6,11 @@ import {
   faSquarePen,
 } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
-import { capitalizeFirstLetter } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { getLedgerApp } from 'contexts/Hardware/Utils';
 import type { LedgerResponse } from 'contexts/Hardware/types';
 import { useModal } from 'contexts/Modal';
 import { useTxMeta } from 'contexts/TxMeta';
@@ -46,6 +46,7 @@ export const ManualSign = ({
   const { activeAccount, accountHasSigner, getAccount } = useConnect();
   const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();
   const { setResize } = useModal();
+  const { appName } = getLedgerApp(network.name);
 
   const getAddressIndex = () => {
     return (getAccount(activeAccount) as LedgerAccount)?.index || 0;
@@ -112,7 +113,7 @@ export const ManualSign = ({
 
   const statusCodes = getStatusCodes();
   const statusCodeTitle = determineStatusFromCodes(
-    capitalizeFirstLetter(network.name),
+    appName,
     statusCodes,
     false
   ).title;
