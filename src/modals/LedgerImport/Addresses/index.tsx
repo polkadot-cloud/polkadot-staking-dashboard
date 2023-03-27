@@ -38,7 +38,7 @@ export const Addresess = ({
             </section>
             <section>
               <ButtonText
-                text="Reset"
+                text={t('reset')}
                 iconLeft={faCircleMinus}
                 onClick={() => {
                   openOverlayWith(

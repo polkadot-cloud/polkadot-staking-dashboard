@@ -38,11 +38,8 @@ export const Reset = ({ removeLedgerAddress }: AnyJson) => {
 
   return (
     <ConfirmWrapper>
-      <h3>Reset Ledger Accounts</h3>
-      <p>
-        Your Ledger address list will be reset, and any imported accounts will
-        be removed from the dashboard.
-      </p>
+      <h3>{t('resetLedgerAccounts')}</h3>
+      <p>{t('ledgerWillBeReset')}</p>
       <div className="footer">
         <ButtonMonoInvert text={t('cancel')} onClick={() => setStatus(0)} />
         <ButtonMono
