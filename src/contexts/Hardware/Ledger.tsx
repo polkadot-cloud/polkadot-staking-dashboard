@@ -129,8 +129,8 @@ export const LedgerHardwareProvider = ({
   // Check whether the device is paired.
   //
   // Trigger a one-time connection to the device to determine if it is available. If the device
-  // needs to be paired, a browser prompt will pop up and initialisation of `transport` will hault
-  // until the user has completed or cancelled the pairing process.
+  // needs to be paired, a browser prompt will pop up and initialisation of `transport` will throw
+  // an error.
   const pairDevice = async () => {
     try {
       if (pairInProgress.current) {
