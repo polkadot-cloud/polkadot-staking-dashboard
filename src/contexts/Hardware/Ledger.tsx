@@ -139,11 +139,11 @@ export const LedgerHardwareProvider = ({
       pairInProgress.current = true;
 
       resetStatusCodes();
-      // close any open connections.
+      // Close any open connections.
       if (ledgerTransport.current?.device?.opened) {
         await ledgerTransport.current?.device?.close();
       }
-      // establish a new connection with device.
+      // Establish a new connection with device.
       ledgerTransport.current = await TransportWebHID.create();
       setIsPaired('paired');
       pairInProgress.current = false;
