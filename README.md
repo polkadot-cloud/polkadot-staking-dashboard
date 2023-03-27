@@ -23,7 +23,7 @@ To add an operator, submit a PR with the following changes:
 
 ### Operator Structure
 
-The following table outlines the structure of a `VALIDATOR_COMMUNITY` entry:
+The following table outlines the structure of a `ValidatorCommunity` entry:
 
 | Element        | Key          | Required | Notes                                                                                       | Example                                                 |
 | -------------- | ------------ | -------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
@@ -39,12 +39,12 @@ The following table outlines the structure of a `VALIDATOR_COMMUNITY` entry:
 
 Upload your SVG icon as a React component. Look at the existing icons as examples, or use the [SVGR Playground](https://react-svgr.com/playground/) to convert your raw SVG file into a component.
 
-Next, add your operator details to the `VALIDATOR_COMMUNITY` object. Only provide the validator(s) for the particular network(s) you are operating in. If you have no operating validators on Kusama, for example, the `kusama` key can be omitted.
+Next, add your operator details to the `ValidatorCommunity` object. Only provide the validator(s) for the particular network(s) you are operating in. If you have no operating validators on Kusama, for example, the `kusama` key can be omitted.
 
 The following example defines 2 validators on the Polkadot network, and 1 on Kusama:
 
 ```
-export const VALIDATOR_COMMUNITY = [
+export const ValidatorCommunity = [
   ...
   {
     name: 'Validator Central',
@@ -68,11 +68,11 @@ export const VALIDATOR_COMMUNITY = [
 
 ### General Requirements
 
-| Requirement | Notes                                                                                                                                                                                              |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Accuracy    | Operator contact details must be working and valid.                                                                                                                                                |
-| Liveness    | All submitted validator addresses must be discoverable as a validator on the network in question - whether Polkadot or Kusama.                                                                     |
-| Ordering    | Please place your operator in alphabetical order within `VALIDATOR_COMMUNITY`. Operators are shuffled before being displayed in the dashboard, removing any bias associated with ordering methods. |
+| Requirement | Notes                                                                                                                                                                                             |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Accuracy    | Operator contact details must be working and valid.                                                                                                                                               |
+| Liveness    | All submitted validator addresses must be discoverable as a validator on the network in question - whether Polkadot or Kusama.                                                                    |
+| Ordering    | Please place your operator in alphabetical order within `ValidatorCommunity`. Operators are shuffled before being displayed in the dashboard, removing any bias associated with ordering methods. |
 
 Please submit an issue for any queries around adding your operator details.
 

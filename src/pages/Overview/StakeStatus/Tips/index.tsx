@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { setStateWithRef } from 'Utils';
-import { TIPS_CONFIG } from 'config/tips';
+import { TipsConfig } from 'config/tips';
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -132,7 +132,7 @@ export const Tips = () => {
   }
 
   // filter tips relevant to connected account.
-  let items = TIPS_CONFIG.filter((i: AnyJson) => segments.includes(i.s));
+  let items = TipsConfig.filter((i: AnyJson) => segments.includes(i.s));
 
   items = items.map((i: any) => {
     const { id } = i;

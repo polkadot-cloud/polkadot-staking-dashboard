@@ -3,7 +3,9 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@polkadotcloud/dashboard-ui';
+import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
 import { ReactComponent as LogoSVG } from 'img/ledgerLogo.svg';
@@ -17,6 +19,7 @@ import { SplashWrapper } from './Wrappers';
 
 export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   const { t } = useTranslation('modals');
+  const { network } = useApi();
   const { replaceModalWith, setStatus } = useModal();
   const {
     getStatusCodes,
@@ -27,6 +30,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     getDefaultMessage,
   } = useLedgerHardware();
   const statusCodes = getStatusCodes();
+  const { appName } = getLedgerApp(network.name);
 
   // Initialise listeners for Ledger IO.
   useEffect(() => {
@@ -48,7 +52,11 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     initFetchAddress();
   }, [isPaired]);
 
-  const { title, statusCode } = determineStatusFromCodes(statusCodes, false);
+  const { title, statusCode } = determineStatusFromCodes(
+    appName,
+    statusCodes,
+    false
+  );
   const fallbackMessage = t('checking');
   const defaultMessage = getDefaultMessage();
 

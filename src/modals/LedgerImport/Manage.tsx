@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonMonoInvert } from '@polkadotcloud/dashboard-ui';
+import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as IconSVG } from 'img/ledgerIcon.svg';
 import { useTranslation } from 'react-i18next';
@@ -13,6 +15,7 @@ import { StatusBarWrapper } from './Wrappers';
 
 export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const { t } = useTranslation('modals');
+  const { network } = useApi();
   const { replaceModalWith } = useModal();
   const {
     setIsExecuting,
@@ -21,11 +24,16 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
     resetStatusCodes,
     getDefaultMessage,
   } = useLedgerHardware();
+  const { appName } = getLedgerApp(network.name);
 
   const isExecuting = getIsExecuting();
   const statusCodes = getStatusCodes();
 
-  const { title, statusCode } = determineStatusFromCodes(statusCodes, false);
+  const { title, statusCode } = determineStatusFromCodes(
+    appName,
+    statusCodes,
+    false
+  );
   const fallbackMessage = `${t('ledgerAccounts', { count: addresses.length })}`;
   const defaultMessage = getDefaultMessage();
 

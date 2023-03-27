@@ -12,7 +12,7 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   transportResponse: null,
   pairDevice: async () => new Promise((resolve) => resolve(false)),
   // eslint-disable-next-line
-  executeLedgerLoop: async (t, s, o) => new Promise((resolve) => resolve()),
+  executeLedgerLoop: async (a, t, s, o) => new Promise((resolve) => resolve()),
   // eslint-disable-next-line
   setIsPaired: (v) => {},
   // eslint-disable-next-line
@@ -22,8 +22,6 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   resetStatusCodes: () => {},
   getIsExecuting: () => false,
   getStatusCodes: () => [],
-  // eslint-disable-next-line
-  handleErrors: (e) => {},
   getTransport: () => null,
   // eslint-disable-next-line
   ledgerAccountExists: (a) => false,

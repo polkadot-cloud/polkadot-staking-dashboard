@@ -2,13 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { LedgerAccount } from 'contexts/Connect/types';
-import type { AnyJson, MaybeString } from 'types';
+import type { FunctionComponent, SVGProps } from 'react';
+import type { AnyJson, MaybeString, NetworkName } from 'types';
 
 export type LedgerHardwareContextInterface = {
   pairDevice: () => Promise<boolean>;
   setIsPaired: (v: PairingStatus) => void;
   transportResponse: AnyJson;
   executeLedgerLoop: (
+    appName: string,
     transport: AnyJson,
     tasks: Array<LedgerTask>,
     options?: AnyJson
@@ -18,7 +20,6 @@ export type LedgerHardwareContextInterface = {
   resetStatusCodes: () => void;
   getIsExecuting: () => boolean;
   getStatusCodes: () => Array<LedgerResponse>;
-  handleErrors: (e: AnyJson) => void;
   getTransport: () => AnyJson;
   ledgerAccountExists: (a: string) => boolean;
   addLedgerAccount: (a: string, i: number) => LedgerAccount | null;
@@ -41,3 +42,17 @@ export interface LedgerResponse {
 export type LedgerTask = 'get_address' | 'sign_tx';
 
 export type PairingStatus = 'paired' | 'unpaired' | 'unknown';
+
+export interface LedgerAddress {
+  address: string;
+  index: number;
+  name: string;
+  network: NetworkName;
+  pubKey: string;
+}
+
+export type LedgerApp = {
+  network: NetworkName;
+  appName: string;
+  Icon: FunctionComponent<SVGProps<SVGSVGElement>>;
+};

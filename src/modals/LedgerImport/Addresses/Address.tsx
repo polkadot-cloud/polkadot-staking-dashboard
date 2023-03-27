@@ -11,45 +11,41 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonMono, ButtonText } from '@polkadotcloud/dashboard-ui';
 import { clipAddress, localStorageOrDefault, unescape } from 'Utils';
+import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { getLedgerApp, getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
+import type { LedgerAddress } from 'contexts/Hardware/types';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyJson } from 'types';
 import { Confirm } from './Confirm';
 import { Remove } from './Remove';
 import type { AddressProps } from './types';
 
 export const Address = ({ address, index }: AddressProps) => {
   const { t } = useTranslation('modals');
+  const { network } = useApi();
   const { openOverlayWith } = useOverlay();
   const { ledgerAccountExists, renameLedgerAccount } = useLedgerHardware();
+  const { appName } = getLedgerApp(network.name);
 
   // store whether this address is being edited.
   const [editing, setEditing] = useState<boolean>(false);
 
   // store the current name of the address
-  const initialName = () => {
-    const defaultName = clipAddress(address);
-    const localLedger = localStorageOrDefault(
-      'ledger_addresses',
-      [],
-      true
-    ) as Array<AnyJson>;
-    if (!localLedger) {
-      return defaultName;
-    }
-    const localAddress = localLedger.find(
-      (i: AnyJson) => i.address === address
+  const initialName = (() => {
+    const localAddress = getLocalLedgerAddresses().find(
+      (i: LedgerAddress) => i.address === address && i.network === network.name
     );
-    return localAddress?.name ? unescape(localAddress.name) : defaultName;
-  };
-
-  const [name, setName] = useState<string>(initialName());
+    return localAddress?.name
+      ? unescape(localAddress.name)
+      : clipAddress(address);
+  })();
+  const [name, setName] = useState<string>(initialName);
 
   // store the currently edited name.
-  const [editName, setEditName] = useState<string>(initialName());
+  const [editName, setEditName] = useState<string>(initialName);
 
   const cancelEditing = () => {
     setEditName(name);
@@ -78,12 +74,12 @@ export const Address = ({ address, index }: AddressProps) => {
       'ledger_addresses',
       [],
       true
-    ) as Array<AnyJson>;
+    ) as Array<LedgerAddress>;
     if (!localLedger) {
       return false;
     }
-    localLedger = localLedger?.map((i: AnyJson) => {
-      if (i.address !== address) {
+    localLedger = localLedger?.map((i: LedgerAddress) => {
+      if (i.address !== address || i.network !== network.name) {
         return i;
       }
       return {
@@ -104,7 +100,7 @@ export const Address = ({ address, index }: AddressProps) => {
           <section className="row">
             <h5 className="label">
               <span className="withBg">
-                Polkadot {t('account')} {index + 1}
+                {appName} {t('account')} {index + 1}
               </span>
             </h5>
           </section>

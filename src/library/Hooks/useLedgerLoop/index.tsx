@@ -1,7 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useTxMeta } from 'contexts/TxMeta';
 import type { LederLoopProps } from './types';
 
@@ -13,7 +15,11 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
     getStatusCodes,
     executeLedgerLoop,
   } = useLedgerHardware();
+  const {
+    network: { name },
+  } = useApi();
   const { getTxPayload } = useTxMeta();
+  const { appName } = getLedgerApp(name);
 
   // Connect to Ledger device and perform necessary tasks.
   //
@@ -34,7 +40,7 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
       const payload = await getTxPayload();
 
       if (getIsExecuting()) {
-        await executeLedgerLoop(getTransport(), tasks, {
+        await executeLedgerLoop(appName, getTransport(), tasks, {
           accountIndex,
           payload,
         });

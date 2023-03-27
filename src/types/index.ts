@@ -20,7 +20,7 @@ type NetworkColor =
   | 'transparent'
   | 'pending';
 export interface Network {
-  name: string;
+  name: NetworkName;
   endpoints: {
     rpc: string;
     lightClient: AnyApi;
@@ -59,7 +59,7 @@ export interface PageCategory {
   key: string;
 }
 
-export type PageCategories = Array<PageCategory>;
+export type PageCategoryItems = Array<PageCategory>;
 
 export interface PageItem {
   category: number;
@@ -76,7 +76,7 @@ export interface PageItem {
   };
 }
 
-export type PagesConfig = Array<PageItem>;
+export type PagesConfigItems = Array<PageItem>;
 
 export type MaybeAccount = string | null;
 

@@ -45,7 +45,7 @@ export const WrappedRouter = () => {
   const { network } = useApi();
 
   return (
-    <Entry className={`theme-${network.name} theme-${mode}`}>
+    <Entry mode={mode} network={network.name}>
       <Router />
     </Entry>
   );
