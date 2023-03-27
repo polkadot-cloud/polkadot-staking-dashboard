@@ -196,7 +196,7 @@ export const LedgerHardwareProvider = ({
     }
   };
 
-  // Gets a Polkadot address on device.
+  // Gets an app address on device.
   const handleGetAddress = async (
     appName: string,
     transport: AnyJson,
