@@ -116,15 +116,14 @@ export const Accounts = () => {
   return (
     <PaddingWrapper>
       <CustomHeaderWrapper>
-        <h1>
-          {t('accounts')}
-          <ButtonInvertRounded
-            text={t('goToConnect')}
-            iconLeft={faChevronLeft}
-            iconTransform="shrink-3"
-            onClick={() => replaceModalWith('Connect', {}, 'large')}
-          />
-        </h1>
+        <h1>{t('accounts')}</h1>
+        <ButtonInvertRounded
+          text={t('goToConnect')}
+          iconLeft={faChevronLeft}
+          iconTransform="shrink-3"
+          onClick={() => replaceModalWith('Connect', {}, 'large')}
+          marginLeft
+        />
       </CustomHeaderWrapper>
       {activeAccount ? (
         <>
