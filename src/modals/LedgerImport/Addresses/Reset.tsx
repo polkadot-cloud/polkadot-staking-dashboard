@@ -27,7 +27,7 @@ export const Reset = ({ removeLedgerAddress }: AnyJson) => {
     });
     forgetAccounts(ledgerAccounts);
 
-    // Remove local ledger addresses.
+    // Remove local Ledger addresses.
     getLocalLedgerAddresses().forEach((address: LedgerAddress) => {
       removeLedgerAddress(address.address);
     });
