@@ -129,8 +129,8 @@ export const LedgerHardwareProvider = ({
   // Check whether the device is paired.
   //
   // Trigger a one-time connection to the device to determine if it is available. If the device
-  // needs to be paired, a browser prompt will pop up and initialisation of `transport` will hault
-  // until the user has completed or cancelled the pairing process.
+  // needs to be paired, a browser prompt will pop up and initialisation of `transport` will throw
+  // an error.
   const pairDevice = async () => {
     try {
       if (pairInProgress.current) {
@@ -139,11 +139,11 @@ export const LedgerHardwareProvider = ({
       pairInProgress.current = true;
 
       resetStatusCodes();
-      // close any open connections.
+      // Close any open connections.
       if (ledgerTransport.current?.device?.opened) {
         await ledgerTransport.current?.device?.close();
       }
-      // establish a new connection with device.
+      // Establish a new connection with device.
       ledgerTransport.current = await TransportWebHID.create();
       setIsPaired('paired');
       pairInProgress.current = false;
@@ -196,7 +196,7 @@ export const LedgerHardwareProvider = ({
     }
   };
 
-  // Gets a Polkadot address on device.
+  // Gets an app address on device.
   const handleGetAddress = async (
     appName: string,
     transport: AnyJson,
