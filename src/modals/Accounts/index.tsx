@@ -147,7 +147,7 @@ export const Accounts = () => {
         <AccountWrapper>
           <div>
             <div>
-              <h3>{t('noActiveAccount')}</h3>
+              <h4>{t('noActiveAccount')}</h4>
             </div>
             <div />
           </div>

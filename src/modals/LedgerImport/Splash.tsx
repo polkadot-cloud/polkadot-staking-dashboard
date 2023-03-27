@@ -29,15 +29,10 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     pairDevice,
     getDefaultMessage,
   } = useLedgerHardware();
+  const { setResize } = useModal();
+
   const statusCodes = getStatusCodes();
   const { appName } = getLedgerApp(network.name);
-
-  // Initialise listeners for Ledger IO.
-  useEffect(() => {
-    if (isPaired !== 'paired') {
-      pairDevice();
-    }
-  }, []);
 
   const initFetchAddress = async () => {
     const paired = await pairDevice();
@@ -47,11 +42,6 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     }
   };
 
-  // Once the device is paired, start `handleLedgerLoop`.
-  useEffect(() => {
-    initFetchAddress();
-  }, [isPaired]);
-
   const { title, statusCode } = determineStatusFromCodes(
     appName,
     statusCodes,
@@ -59,6 +49,23 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   );
   const fallbackMessage = t('checking');
   const defaultMessage = getDefaultMessage();
+
+  // Initialise listeners for Ledger IO.
+  useEffect(() => {
+    if (isPaired !== 'paired') {
+      pairDevice();
+    }
+  }, []);
+
+  // Once the device is paired, start `handleLedgerLoop`.
+  useEffect(() => {
+    initFetchAddress();
+  }, [isPaired]);
+
+  // Resize modal on new message
+  useEffect(() => {
+    setResize();
+  }, [statusCodes, defaultMessage]);
 
   return (
     <>
