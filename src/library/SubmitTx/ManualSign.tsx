@@ -74,7 +74,7 @@ export const ManualSign = ({
 
     if (statusCode === 'SignedPayload') {
       if (uid !== body.uid) {
-        setDefaultMessage('Wrong transaction, please sign again.');
+        setDefaultMessage(t('wrongTransaction'));
         resetStatusCodes();
         setTxSignature(null);
       } else {
