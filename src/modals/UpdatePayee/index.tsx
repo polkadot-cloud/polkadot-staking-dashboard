@@ -46,12 +46,10 @@ export const UpdatePayee = () => {
 
   // update setup progress with payee config.
   const handleChangeDestination = (destination: PayeeOptions) => {
-    const val = {
+    setSelected({
       destination,
       account: isValidAddress(account || '') ? account : null,
-    };
-
-    setSelected(val);
+    });
   };
 
   // update setup progress with payee account.
