@@ -3,7 +3,6 @@
 
 import { ButtonHelp } from '@polkadotcloud/dashboard-ui';
 import { PageRowWrapper } from 'Wrappers';
-import BigNumber from 'bignumber.js';
 import { MaxPayoutDays } from 'consts';
 import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
@@ -52,16 +51,8 @@ export const Payouts = ({ page }: PageProps) => {
   const { width, height, minHeight } = formatSize(size, 300);
 
   useEffect(() => {
-    // take non-zero rewards in most-recent order
-    let pList: AnySubscan = sortNonZeroPayouts(payouts, poolClaims);
-
-    // re-order rewards based on block timestamp
-    pList = pList.sort((a: AnySubscan, b: AnySubscan) => {
-      const x = new BigNumber(a.block_timestamp);
-      const y = new BigNumber(b.block_timestamp);
-      return y.minus(x);
-    });
-    setPayoutLists(pList);
+    // filter zero rewards and order via block timestamp, most recent first.
+    setPayoutLists(sortNonZeroPayouts(payouts, poolClaims));
   }, [payouts, poolClaims]);
 
   useEffect(() => {
