@@ -203,15 +203,21 @@ export const useSubmitExtrinsic = ({
       setSubmitting(false);
     };
 
-    const resetManualTx = () => {
-      resetTx();
+    const resetLedgerTx = () => {
       setIsExecuting(false);
       resetStatusCodes();
       setDefaultMessage(null);
     };
-
-    const onError = () => {
+    const resetManualTx = () => {
       resetTx();
+      resetLedgerTx();
+    };
+
+    const onError = (type?: 'default' | 'ledger') => {
+      resetTx();
+      if (type === 'ledger') {
+        resetLedgerTx();
+      }
       removePending(accountNonce);
       addNotification({
         title: t('cancelled'),
@@ -242,9 +248,10 @@ export const useSubmitExtrinsic = ({
           resetManualTx();
         }
 
-        const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
-          handleStatus(status);
+        const unsub = await tx.send((result: AnyApi) => {
+          const { status, events = [] } = result;
 
+          handleStatus(status);
           if (status.isFinalized) {
             events.forEach(({ event: { method } }: AnyApi) => {
               onFinalizedEvent(method);
@@ -253,7 +260,7 @@ export const useSubmitExtrinsic = ({
           }
         });
       } catch (e) {
-        onError();
+        onError('ledger');
       }
     } else {
       // handle unsigned transaction.
@@ -278,7 +285,7 @@ export const useSubmitExtrinsic = ({
           }
         );
       } catch (e) {
-        onError();
+        onError('default');
       }
     }
   };
