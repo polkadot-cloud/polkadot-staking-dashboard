@@ -479,6 +479,15 @@ export const LedgerHardwareProvider = ({
     setStateWithRef([], setStatusCodes, statusCodesRef);
   };
 
+  const handleUnmount = () => {
+    resetStatusCodes();
+    setIsExecuting(false);
+    setDefaultMessage(null);
+    if (getTransport()?.device?.opened) {
+      getTransport().device.close();
+    }
+  };
+
   return (
     <LedgerHardwareContext.Provider
       value={{
@@ -499,6 +508,7 @@ export const LedgerHardwareProvider = ({
         getLedgerAccount,
         getDefaultMessage,
         setDefaultMessage,
+        handleUnmount,
         isPaired: isPairedRef.current,
         ledgerAccounts: ledgerAccountsRef.current,
       }}

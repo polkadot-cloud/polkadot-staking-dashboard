@@ -25,8 +25,7 @@ export const LedgerImport: React.FC = () => {
     handleNewStatusCode,
     isPaired,
     getStatusCodes,
-    setDefaultMessage,
-    getTransport,
+    handleUnmount,
   } = useLedgerHardware();
 
   // Gets the next non-imported address index.
@@ -153,12 +152,7 @@ export const LedgerImport: React.FC = () => {
   useEffect(() => {
     return () => {
       isMounted.current = false;
-      resetStatusCodes();
-      setIsExecuting(false);
-      setDefaultMessage(null);
-      if (getTransport()?.device?.opened) {
-        getTransport().device.close();
-      }
+      handleUnmount();
     };
   }, []);
 

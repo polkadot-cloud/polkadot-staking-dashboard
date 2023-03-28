@@ -40,9 +40,9 @@ export const ManualSign = ({
     handleNewStatusCode,
     isPaired,
     getStatusCodes,
-    getTransport,
     getDefaultMessage,
     setDefaultMessage,
+    handleUnmount,
   } = useLedgerHardware();
   const { activeAccount, accountHasSigner, getAccount } = useConnect();
   const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();
@@ -111,12 +111,7 @@ export const ManualSign = ({
   useEffect(() => {
     return () => {
       isMounted.current = false;
-      resetStatusCodes();
-      setIsExecuting(false);
-      setDefaultMessage(null);
-      if (getTransport()?.device?.opened) {
-        getTransport().device.close();
-      }
+      handleUnmount();
     };
   }, []);
 
