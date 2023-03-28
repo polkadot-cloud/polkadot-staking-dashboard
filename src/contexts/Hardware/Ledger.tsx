@@ -67,14 +67,16 @@ export const LedgerHardwareProvider = ({
   // Store the latest successful response from an attempted `executeLedgerLoop`.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
 
+  // Whether pairing is in progress: protects against re-renders & duplicate attempts.
   const pairInProgress = useRef(false);
 
-  const ledgerInProgress = useRef(false);
+  // Whether a ledger-loop is in progress: protects against re-renders & duplicate attempts.
+  const ledgerLoopInProgress = useRef(false);
 
   // The ledger transport interface.
   const ledgerTransport = useRef<any>(null);
 
-  // refresh imported ledger accounts on network change.
+  // Refresh imported ledger accounts on network change.
   useEffect(() => {
     setStateWithRef(
       getLocalLedgerAccounts(network.name),
@@ -83,17 +85,22 @@ export const LedgerHardwareProvider = ({
     );
   }, [network]);
 
-  // Handles errors that occur during a `executeLedgerLoop`.
+  // Handles errors that occur during `executeLedgerLoop` and `pairDevice` calls.
   const handleErrors = (appName: string, err: AnyJson) => {
-    ledgerInProgress.current = false;
-    setIsExecuting(false);
-    err = String(err);
+    // reset any in-progress calls.
+    ledgerLoopInProgress.current = false;
+    pairInProgress.current = false;
 
-    // close any open connections.
+    // execution failed - no longer executing.
+    setIsExecuting(false);
+
+    // close any open device connections.
     if (ledgerTransport.current?.device?.opened) {
       ledgerTransport.current?.device?.close();
     }
 
+    // format error message.
+    err = String(err);
     if (err === 'Error: Timeout') {
       // only set default message here - maintain previous status code.
       setDefaultMessage(t('ledgerRequestTimeout'));
@@ -115,7 +122,8 @@ export const LedgerHardwareProvider = ({
     }
   };
 
-  // Timeout function for hanging tasks.
+  // Timeout function for hanging tasks. Used for tasks that require no input from the device, such
+  // as getting an address that does not require confirmation.
   const withTimeout = (millis: AnyFunction, promise: AnyFunction) => {
     const timeout = new Promise((_, reject) =>
       setTimeout(async () => {
@@ -126,24 +134,27 @@ export const LedgerHardwareProvider = ({
     return Promise.race([promise, timeout]);
   };
 
-  // Check whether the device is paired.
+  // Attempt to pair a device.
   //
   // Trigger a one-time connection to the device to determine if it is available. If the device
-  // needs to be paired, a browser prompt will pop up and initialisation of `transport` will throw
-  // an error.
+  // needs to be paired, a browser prompt will open. If cancelled, an error will be thrown.
   const pairDevice = async () => {
     try {
+      // return `paired` if pairing is already in progress.
       if (pairInProgress.current) {
         return isPairedRef.current === 'paired';
       }
+      // set pairing in progress.
       pairInProgress.current = true;
 
+      // remove any previously stored status codes.
       resetStatusCodes();
-      // Close any open connections.
+
+      // close any open connections.
       if (ledgerTransport.current?.device?.opened) {
         await ledgerTransport.current?.device?.close();
       }
-      // Establish a new connection with device.
+      // establish a new connection with device.
       ledgerTransport.current = await TransportWebHID.create();
       setIsPaired('paired');
       pairInProgress.current = false;
@@ -155,7 +166,8 @@ export const LedgerHardwareProvider = ({
     }
   };
 
-  // Connects to a Ledger device to perform a task.
+  // Connects to a Ledger device to perform a task. This is the main execute function that handles
+  // all Ledger tasks, along with errors that occur during the process.
   const executeLedgerLoop = async (
     appName: string,
     transport: AnyJson,
@@ -163,11 +175,17 @@ export const LedgerHardwareProvider = ({
     options?: AnyJson
   ) => {
     try {
-      if (ledgerInProgress.current) {
+      // do not execute again if already in progress.
+      if (ledgerLoopInProgress.current) {
         return;
       }
-      ledgerInProgress.current = true;
 
+      // set ledger loop in progress.
+      ledgerLoopInProgress.current = true;
+
+      // test for tasks and execute them. This is designed such that `result` will only store the
+      // result of one task. This will have to be refactored if we ever need to execute multiple
+      // tasks at once.
       let result = null;
       if (tasks.includes('get_address')) {
         result = await handleGetAddress(
@@ -184,6 +202,9 @@ export const LedgerHardwareProvider = ({
           options?.payload || ''
         );
       }
+
+      // a populated result indicates a successful execution. Set the transport response state for
+      // other components to respond to via useEffect.
       if (result) {
         setTransportResponse({
           ack: 'success',
@@ -191,7 +212,7 @@ export const LedgerHardwareProvider = ({
           ...result,
         });
       }
-      ledgerInProgress.current = false;
+      ledgerLoopInProgress.current = false;
     } catch (err) {
       handleErrors(appName, err);
     }
