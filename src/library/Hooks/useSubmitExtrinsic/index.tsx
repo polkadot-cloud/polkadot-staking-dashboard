@@ -66,7 +66,7 @@ export const useSubmitExtrinsic = ({
   // recalculate transaction payload on tx change
   useEffect(() => {
     buildPayload();
-  }, [tx?.toString()]);
+  }, [tx?.toString(), tx?.toString().args, tx?.toString().method]);
 
   const calculateEstimatedFee = async () => {
     if (tx === null) {
@@ -85,49 +85,47 @@ export const useSubmitExtrinsic = ({
   // build and set payload of the transaction and store it in TxMetaContext.
   const buildPayload = async () => {
     if (api && tx) {
-      if (getTxPayload(uid) === null) {
-        const lastHeader = await api.rpc.chain.getHeader();
-        const blockNumber = api.registry.createType(
-          'BlockNumber',
-          lastHeader.number.toNumber()
-        );
-        const method = api.createType('Call', tx);
-        const era = api.registry.createType('ExtrinsicEra', {
-          current: lastHeader.number.toNumber(),
-          period: 64,
-        });
+      const lastHeader = await api.rpc.chain.getHeader();
+      const blockNumber = api.registry.createType(
+        'BlockNumber',
+        lastHeader.number.toNumber()
+      );
+      const method = api.createType('Call', tx);
+      const era = api.registry.createType('ExtrinsicEra', {
+        current: lastHeader.number.toNumber(),
+        period: 64,
+      });
 
-        const accountNonce = getBalanceAccount(submitAddress)?.nonce || 0;
-        const nonce = api.registry.createType('Compact<Index>', accountNonce);
+      const accountNonce = getBalanceAccount(submitAddress)?.nonce || 0;
+      const nonce = api.registry.createType('Compact<Index>', accountNonce);
 
-        const payload = {
-          specVersion: api.runtimeVersion.specVersion.toHex(),
-          transactionVersion: api.runtimeVersion.transactionVersion.toHex(),
-          address: submitAddress,
-          blockHash: lastHeader.hash.toHex(),
-          blockNumber: blockNumber.toHex(),
-          era: era.toHex(),
-          genesisHash: api.genesisHash.toHex(),
-          method: method.toHex(),
-          nonce: nonce.toHex(),
-          signedExtensions: [
-            'CheckNonZeroSender',
-            'CheckSpecVersion',
-            'CheckTxVersion',
-            'CheckGenesis',
-            'CheckMortality',
-            'CheckNonce',
-            'CheckWeight',
-            'ChargeTransactionPayment',
-          ],
-          tip: api.registry.createType('Compact<Balance>', 0).toHex(),
-          version: tx.version,
-        };
-        const raw = api.registry.createType('ExtrinsicPayload', payload, {
-          version: payload.version,
-        });
-        setTxPayload(raw, uid);
-      }
+      const payload = {
+        specVersion: api.runtimeVersion.specVersion.toHex(),
+        transactionVersion: api.runtimeVersion.transactionVersion.toHex(),
+        address: submitAddress,
+        blockHash: lastHeader.hash.toHex(),
+        blockNumber: blockNumber.toHex(),
+        era: era.toHex(),
+        genesisHash: api.genesisHash.toHex(),
+        method: method.toHex(),
+        nonce: nonce.toHex(),
+        signedExtensions: [
+          'CheckNonZeroSender',
+          'CheckSpecVersion',
+          'CheckTxVersion',
+          'CheckGenesis',
+          'CheckMortality',
+          'CheckNonce',
+          'CheckWeight',
+          'ChargeTransactionPayment',
+        ],
+        tip: api.registry.createType('Compact<Balance>', 0).toHex(),
+        version: tx.version,
+      };
+      const raw = api.registry.createType('ExtrinsicPayload', payload, {
+        version: payload.version,
+      });
+      setTxPayload(raw, uid);
     }
   };
 
