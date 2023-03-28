@@ -28,10 +28,10 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const [notEnoughFunds, setNotEnoughFunds] = useState(false);
 
   // store the payloads of transactions if extrinsics require manual signing (e.g. Ledger).
-  const [txPayload, setTxPayloadState] = useState<{ [key: string]: AnyJson }>(
+  const [txPayloads, setTxPayloadsState] = useState<{ [key: string]: AnyJson }>(
     {}
   );
-  const txPayloadRef = React.useRef(txPayload);
+  const txPayloadsRef = React.useRef(txPayloads);
 
   // store an optional signed transaction if extrinsics require manual signing (e.g. Ledger).
   const [txSignature, setTxSignatureState] = useState<AnyJson>(null);
@@ -47,28 +47,28 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const getActivePayloadUid = () => {
-    return Object.keys(txPayloadRef.current).length;
+    return Object.keys(txPayloadsRef.current).length;
   };
 
   const incrementPayloadUid = () => {
-    return Object.keys(txPayloadRef.current).length + 1;
+    return Object.keys(txPayloadsRef.current).length + 1;
   };
 
   const getTxPayload = (uid: number) => {
-    return txPayloadRef.current[`payload${uid}`] || null;
+    return txPayloadsRef.current[`payload${uid}`] || null;
   };
 
   const setTxPayload = (p: AnyJson, uid: number) => {
     const key = `payload${uid}`;
     setStateWithRef(
-      { ...txPayloadRef.current, [key]: p },
-      setTxPayloadState,
-      txPayloadRef
+      { ...txPayloadsRef.current, [key]: p },
+      setTxPayloadsState,
+      txPayloadsRef
     );
   };
 
   const resetTxPayloads = () => {
-    setStateWithRef({}, setTxPayloadState, txPayloadRef);
+    setStateWithRef({}, setTxPayloadsState, txPayloadsRef);
   };
 
   const getTxSignature = () => {
