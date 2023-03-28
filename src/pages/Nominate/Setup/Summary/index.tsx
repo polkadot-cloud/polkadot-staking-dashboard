@@ -3,14 +3,11 @@
 
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonPrimary } from '@polkadotcloud/dashboard-ui';
 import { clipAddress, unitToPlanck } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
-import { useTxFees } from 'contexts/TxFees';
-import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { Warning } from 'library/Form/Warning';
 import type { PayeeItem } from 'library/Hooks/usePayeeConfig';
 import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
@@ -18,6 +15,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
+import { SubmitTx } from 'library/SubmitTx';
 import { useTranslation } from 'react-i18next';
 import { SummaryWrapper } from './Wrapper';
 
@@ -27,7 +25,6 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { activeAccount, accountHasSigner } = useConnect();
   const { getSetupProgress, removeSetupProgress } = useSetup();
   const { getPayeeItems } = usePayeeConfig();
-  const { txFeesValid } = useTxFees();
   const { units } = network;
 
   const setup = getSetupProgress('nominator', activeAccount);
@@ -64,7 +61,7 @@ export const Summary = ({ section }: SetupStepProps) => {
     return api.tx.utility.batch(txs);
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTxs(),
     from: activeAccount,
     shouldSubmit: true,
@@ -118,26 +115,20 @@ export const Summary = ({ section }: SetupStepProps) => {
               {new BigNumber(bond).toFormat()} {network.unit}
             </div>
           </section>
-          <section>
-            <EstimatedTxFee format="table" />
-          </section>
         </SummaryWrapper>
         <div
           style={{
             flex: 1,
-            flexDirection: 'row',
             width: '100%',
-            display: 'flex',
-            justifyContent: 'end',
+            borderRadius: '1rem',
+            overflow: 'hidden',
           }}
         >
-          <ButtonPrimary
-            lg
-            onClick={() => submitTx()}
-            disabled={
-              submitting || !accountHasSigner(activeAccount) || !txFeesValid
-            }
-            text={t('nominate.startNominating')}
+          <SubmitTx
+            submitText={`${t('nominate.startNominating')}`}
+            valid
+            noMargin
+            {...submitExtrinsic}
           />
         </div>
       </MotionContainer>

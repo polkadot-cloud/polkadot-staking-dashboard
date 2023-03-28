@@ -1,15 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxFees } from 'contexts/TxFees';
 import { getUnixTime } from 'date-fns';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
@@ -33,7 +30,6 @@ export const Unstake = () => {
   const { getControllerNotImported } = useStaking();
   const { getBondedAccount, getAccountNominations } = useBalances();
   const { getTransferOptions } = useTransferOptions();
-  const { txFeesValid } = useTxFees();
   const { erasToSeconds } = useErasToTimeLeft();
 
   const controller = getBondedAccount(activeAccount);
@@ -97,7 +93,7 @@ export const Unstake = () => {
     return api.tx.utility.batch(txs);
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: controller,
     shouldSubmit: bondValid,
@@ -149,22 +145,7 @@ export const Unstake = () => {
           deps={[bondDuration]}
         />
       </PaddingWrapper>
-      <SubmitTx
-        fromController
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              submitting ||
-              !(bondValid && accountHasSigner(controller) && txFeesValid)
-            }
-          />,
-        ]}
-      />
+      <SubmitTx fromController valid={bondValid} {...submitExtrinsic} />
     </>
   );
 };

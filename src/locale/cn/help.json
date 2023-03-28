@@ -60,7 +60,7 @@
         [
           "质押金额是“锁定”（或抵押）{NETWORK_UNIT}的过程. 质押的{NETWORK_UNIT}将自动分配给一个或多个指定验证人.",
           "作为提名人，您可自主分配提名额。在提名池中，提名池所有者或池提名人将代表您分配提名额，您的质押金将用于支持这些提名.",
-          "最低可活跃抵押统计数是指在当前Era提名人中质押最少的{NETWORK_UNIT}.该值也是获得奖励所需的最低金额."
+          "最低收益抵押额统计数是指在当前Era提名人中质押最少的{NETWORK_UNIT}.该值也是获得奖励所需的最低金额."
         ]
       ],
       "commission": [
@@ -129,9 +129,9 @@
       "ledgerHardwareWallets": [
         "Ledger硬件钱包",
         [
-          "Staking Dashboard己完全支持可兼容的Ledger设备.您可开始使用Ledger管理Polkadot上的抵押.",
+          "Staking Dashboard己完全支持可兼容的Ledger设备.您可开始使用Ledger管理{NETWORK_NAME}上的抵押.",
           "因为您的私钥一直在硬件设备上,所以硬件钱包也称为冷钱包.硬件钱包没有连接互联网，所以使用该类钱包可确保安全.",
-          "为了使用Ledger设备导入和签署交易, 您的设备必须安装Polkadot Ledger App. 该应用程序可以通过Ledger自己的应用程序Ledger Live安装.",
+          "为了使用Ledger设备导入和签署交易, 您的设备必须安装{NETWORK_NAME} Ledger App. 该应用程序可以通过Ledger自己的应用程序Ledger Live安装.",
           "支持USB和蓝牙连接. 如果您的Ledger有蓝牙功能, 并且您的设备允许蓝牙连接, 您将能够通过Ledger设备无线导入帐户并签署交易.",
           "详情请在其官方网站上查找:ledger.com."
         ]

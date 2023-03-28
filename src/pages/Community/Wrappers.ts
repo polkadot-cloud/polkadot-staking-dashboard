@@ -94,7 +94,7 @@ export const ItemWrapper = styled(motion.div)`
         }
         &.active {
           background: var(--button-secondary-background);
-          transition: background 0.1s;
+          transition: background var(--transition-duration);
           &:hover {
             background: var(--button-hover-background);
           }

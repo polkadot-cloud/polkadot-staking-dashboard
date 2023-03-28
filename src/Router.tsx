@@ -1,7 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PAGES_CONFIG } from 'config/pages';
+import { Body, Main } from '@polkadotcloud/dashboard-ui';
+import { PageWrapper, SideInterfaceWrapper } from 'Wrappers';
+import { PagesConfig } from 'config/pages';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
 import { AnimatePresence } from 'framer-motion';
@@ -26,12 +28,6 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
-import {
-  BodyInterfaceWrapper,
-  MainInterfaceWrapper,
-  PageWrapper,
-  SideInterfaceWrapper,
-} from 'Wrappers';
 
 export const RouterInner = () => {
   const { t } = useTranslation('base');
@@ -56,7 +52,7 @@ export const RouterInner = () => {
 
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
-      <BodyInterfaceWrapper>
+      <Body>
         {/* Modal: closed by default */}
         <Modal />
         {/* Help: closed by default */}
@@ -77,14 +73,14 @@ export const RouterInner = () => {
         </SideInterfaceWrapper>
 
         {/* Main content window */}
-        <MainInterfaceWrapper ref={mainInterfaceRef}>
+        <Main ref={mainInterfaceRef}>
           {/* Fixed headers */}
           <Headers />
 
           <ErrorBoundary FallbackComponent={ErrorFallbackRoutes}>
             <AnimatePresence>
               <Routes>
-                {PAGES_CONFIG.map((page, i) => {
+                {PagesConfig.map((page, i) => {
                   const { Entry, hash, key } = page;
 
                   return (
@@ -118,8 +114,8 @@ export const RouterInner = () => {
               </Routes>
             </AnimatePresence>
           </ErrorBoundary>
-        </MainInterfaceWrapper>
-      </BodyInterfaceWrapper>
+        </Main>
+      </Body>
 
       {/* Network status and network details */}
       <NetworkBar />

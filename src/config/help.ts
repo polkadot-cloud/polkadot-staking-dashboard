@@ -3,7 +3,7 @@
 
 import type { HelpItems } from 'contexts/Help/types';
 
-export const HELP_CONFIG: HelpItems = [
+export const HelpConfig: HelpItems = [
   {
     key: 'overview',
     definitions: [

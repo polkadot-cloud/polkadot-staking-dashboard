@@ -8,4 +8,6 @@ export interface SubscanContextInterface {
   payouts: AnySubscan;
   poolClaims: AnySubscan;
   unclaimedPayouts: AnySubscan;
+  payoutsFromDate: string | undefined;
+  payoutsToDate: string | undefined;
 }

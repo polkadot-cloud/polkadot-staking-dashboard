@@ -49,7 +49,7 @@ export const fallbackResources = {
 // Refresh local storage resources if in development, or if new app version is present.
 if (
   localStorage.getItem('app_version') !== AppVersion ||
-  import.meta.env.NODE_ENV === 'development'
+  import.meta.env.MODE === 'development'
 ) {
   localStorage.removeItem('lng_resources');
 }

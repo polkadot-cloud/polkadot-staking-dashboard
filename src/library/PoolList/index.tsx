@@ -81,7 +81,10 @@ export const PoolListInner = ({
   const pageStart = pageEnd - (ListItemsPerPage - 1);
 
   // render batch
-  const batchEnd = renderIteration * ListItemsPerBatch - 1;
+  const batchEnd = Math.min(
+    renderIteration * ListItemsPerBatch - 1,
+    ListItemsPerPage
+  );
 
   // refetch list when pool list changes
   useEffect(() => {
@@ -180,6 +183,11 @@ export const PoolListInner = ({
 
   const filterTabsConfig = [
     {
+      label: t('all'),
+      includes: [],
+      excludes: [],
+    },
+    {
       label: t('active'),
       includes: ['active'],
       excludes: ['locked', 'destroying'],
@@ -224,7 +232,7 @@ export const PoolListInner = ({
             placeholder={t('search')}
           />
         )}
-        <Tabs config={filterTabsConfig} activeIndex={0} />
+        <Tabs config={filterTabsConfig} activeIndex={1} />
         {pagination && listPools.length > 0 && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
