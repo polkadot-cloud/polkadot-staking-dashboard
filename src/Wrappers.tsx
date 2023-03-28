@@ -16,17 +16,6 @@ import type {
   SideInterfaceWrapperProps,
 } from 'types/styles';
 
-/* BodyInterfaceWrapper
- *
- * An element that houses SideInterface and MainInterface.
- * Used once in Router.
- */
-export const BodyInterfaceWrapper = styled.div`
-  display: flex;
-  position: relative;
-  flex-grow: 1;
-`;
-
 /* SideInterfaceWrapper
  *
  * An element that houses the side menu and handles resizing
@@ -57,18 +46,6 @@ export const SideInterfaceWrapper = styled.div<SideInterfaceWrapperProps>`
     top: 0;
     left: ${(props) => (props.open ? 0 : `-${SideMenuMaximisedWidth}px`)};
   }
-`;
-
-/* MainInterfaceWrapper
- *
- * A column flex wrapper that hosts the main page content.
- * Used once in Router.
- */
-export const MainInterfaceWrapper = styled.div`
-  flex: 1;
-  display: flex;
-  flex-flow: column nowrap;
-  position: relative;
 `;
 
 /* PageWrapper
