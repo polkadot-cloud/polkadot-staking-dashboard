@@ -121,7 +121,6 @@ export const useSubmitExtrinsic = ({
         const raw = api.registry.createType('ExtrinsicPayload', payload, {
           version: payload.version,
         });
-
         setTxPayload(raw);
       }
     }
@@ -243,13 +242,11 @@ export const useSubmitExtrinsic = ({
       try {
         tx.addSignature(submitAddress, txSignature, txPayload);
 
-        if (!didTxReset.current) {
-          didTxReset.current = true;
-          resetManualTx();
-        }
-
-        const unsub = await tx.send((result: AnyApi) => {
-          const { status, events = [] } = result;
+        const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
+          if (!didTxReset.current) {
+            didTxReset.current = true;
+            resetManualTx();
+          }
 
           handleStatus(status);
           if (status.isFinalized) {
