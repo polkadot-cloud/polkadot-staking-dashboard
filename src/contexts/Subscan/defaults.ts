@@ -9,4 +9,6 @@ export const defaultSubscanContext: SubscanContextInterface = {
   payouts: [],
   poolClaims: [],
   unclaimedPayouts: [],
+  payoutsFromDate: undefined,
+  payoutsToDate: undefined,
 };
