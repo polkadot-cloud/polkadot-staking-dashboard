@@ -7,6 +7,7 @@ import type { AnyJson } from 'types';
 export interface LederLoopProps {
   tasks: Array<LedgerTask>;
   options: {
+    uid?: number;
     accountIndex?: () => number;
     payload?: () => Promise<AnyJson>;
   };

@@ -15,6 +15,7 @@ import { Wrapper } from './Wrappers';
 import type { SubmitTxProps } from './types';
 
 export const SubmitTx = ({
+  uid,
   onSubmit,
   submitText,
   buttons = [],
@@ -47,7 +48,7 @@ export const SubmitTx = ({
   useEffect(() => {
     return () => {
       // remove the pending tx meta state
-      removeTxPayload(0);
+      removeTxPayload(uid);
       setTxSignature(null);
     };
   }, []);
@@ -81,6 +82,7 @@ export const SubmitTx = ({
         <section className="foot">
           {requiresManualSign(sender) ? (
             <ManualSign
+              uid={uid}
               onSubmit={onSubmit}
               submitting={submitting}
               valid={valid}
@@ -89,6 +91,7 @@ export const SubmitTx = ({
             />
           ) : (
             <Default
+              uid={uid}
               onSubmit={onSubmit}
               submitting={submitting}
               valid={valid}

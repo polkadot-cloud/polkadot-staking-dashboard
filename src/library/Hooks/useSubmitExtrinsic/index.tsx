@@ -33,6 +33,7 @@ export const useSubmitExtrinsic = ({
   const { getAccount: getBalanceAccount } = useBalances();
   const {
     setTxFees,
+    incrementPayloadUid,
     getTxPayload,
     setTxPayload,
     removeTxPayload,
@@ -50,8 +51,8 @@ export const useSubmitExtrinsic = ({
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);
 
-  // TODO: store the uid of the extrinsic
-  // const [uid, setUid] = useState<number>(0);
+  // store the uid of the extrinsic
+  const [uid] = useState<number>(incrementPayloadUid());
 
   // track for one-shot transaction reset after submission.
   const didTxReset = useRef<boolean>(false);
@@ -84,7 +85,7 @@ export const useSubmitExtrinsic = ({
   // build and set payload of the transaction and store it in TxMetaContext.
   const buildPayload = async () => {
     if (api && tx) {
-      if (getTxPayload(0) === null) {
+      if (getTxPayload(uid) === null) {
         const lastHeader = await api.rpc.chain.getHeader();
         const blockNumber = api.registry.createType(
           'BlockNumber',
@@ -125,7 +126,7 @@ export const useSubmitExtrinsic = ({
         const raw = api.registry.createType('ExtrinsicPayload', payload, {
           version: payload.version,
         });
-        setTxPayload(raw, 0);
+        setTxPayload(raw, uid);
       }
     }
   };
@@ -201,7 +202,7 @@ export const useSubmitExtrinsic = ({
     };
 
     const resetTx = () => {
-      removeTxPayload(0);
+      removeTxPayload(uid);
       setTxSignature(null);
       setSubmitting(false);
     };
@@ -238,7 +239,7 @@ export const useSubmitExtrinsic = ({
     // pre-submission state update
     setSubmitting(true);
 
-    const txPayload: AnyJson = getTxPayload(0);
+    const txPayload: AnyJson = getTxPayload(uid);
     const txSignature: AnyJson = getTxSignature();
 
     // handle signed transaction.
@@ -292,6 +293,7 @@ export const useSubmitExtrinsic = ({
   };
 
   return {
+    uid,
     onSubmit,
     submitting,
   };

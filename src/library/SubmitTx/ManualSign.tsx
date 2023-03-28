@@ -22,6 +22,7 @@ import { useTranslation } from 'react-i18next';
 import type { SubmitProps } from './types';
 
 export const ManualSign = ({
+  uid,
   onSubmit,
   submitting,
   valid,
@@ -61,6 +62,7 @@ export const ManualSign = ({
   const { handleLedgerLoop } = useLedgerLoop({
     tasks: ['sign_tx'],
     options: {
+      uid,
       accountIndex: getAddressIndex,
     },
     mounted: getIsMounted,

@@ -46,13 +46,20 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     setTxFees(new BigNumber(0));
   };
 
+  const incrementPayloadUid = () =>
+    Object.keys(txPayloadRef.current).length + 1;
+
   const getTxPayload = (uid: number) => {
     return txPayloadRef.current[`payload${uid}`] || null;
   };
 
   const setTxPayload = (p: AnyJson, uid: number) => {
     const key = `payload${uid}`;
-    setStateWithRef({ [key]: p }, setTxPayloadState, txPayloadRef);
+    setStateWithRef(
+      { ...txPayloadRef.current, [key]: p },
+      setTxPayloadState,
+      txPayloadRef
+    );
   };
 
   const removeTxPayload = (uid: number) => {
@@ -60,7 +67,7 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     if (key in txPayloadRef.current) {
       const newtxPayload = { ...txPayloadRef.current };
       delete newtxPayload[key];
-      setTxPayload(newtxPayload, 0);
+      setTxPayload(newtxPayload, uid);
     }
   };
 
@@ -89,6 +96,7 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
         txFeesValid,
         sender,
         setSender,
+        incrementPayloadUid,
         getTxPayload,
         setTxPayload,
         removeTxPayload,
