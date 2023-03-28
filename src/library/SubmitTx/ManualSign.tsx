@@ -74,10 +74,13 @@ export const ManualSign = ({
 
     if (statusCode === 'SignedPayload') {
       if (uid !== body.uid) {
+        // UIDs do not match, so this is not the transaction we are waiting for.
         setDefaultMessage(t('wrongTransaction'));
         resetStatusCodes();
         setTxSignature(null);
       } else {
+        // Important: only set the signature (and therefore trigger the transaction submission) if
+        // UIDs match.
         handleNewStatusCode(ack, statusCode);
         setTxSignature(body.sig);
         resetStatusCodes();
