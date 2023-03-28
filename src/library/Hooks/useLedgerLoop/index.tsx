@@ -8,17 +8,12 @@ import { useTxMeta } from 'contexts/TxMeta';
 import type { LederLoopProps } from './types';
 
 export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
-  const {
-    setIsPaired,
-    getTransport,
-    getIsExecuting,
-    getStatusCodes,
-    executeLedgerLoop,
-  } = useLedgerHardware();
+  const { setIsPaired, getIsExecuting, getStatusCodes, executeLedgerLoop } =
+    useLedgerHardware();
   const {
     network: { name },
   } = useApi();
-  const { getTxPayload, getActivePayloadUid } = useTxMeta();
+  const { getTxPayload, getPayloadUid } = useTxMeta();
   const { appName } = getLedgerApp(name);
 
   // Connect to Ledger device and perform necessary tasks.
@@ -29,19 +24,17 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
     if (!mounted()) {
       return;
     }
-
     // If the app is not open on-device, or device is not connected, cancel execution.
     // If we are to explore auto looping via an interval, this may wish to use `determineStatusFromCode` instead.
     if (['DeviceNotConnected'].includes(getStatusCodes()[0]?.statusCode)) {
       setIsPaired('unpaired');
     } else {
       // Get task options and execute the loop.
-      const uid = getActivePayloadUid();
+      const uid = getPayloadUid();
       const accountIndex = options?.accountIndex ? options.accountIndex() : 0;
-      const payload = await getTxPayload(uid);
-
+      const payload = await getTxPayload();
       if (getIsExecuting()) {
-        await executeLedgerLoop(appName, getTransport(), tasks, {
+        await executeLedgerLoop(appName, tasks, {
           uid,
           accountIndex,
           payload,

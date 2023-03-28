@@ -31,10 +31,11 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   // are calculated asynchronously and extrinsic associated with them may be cancelled. For this
   // reason we give every payload a uid, and check whether this uid matches the active extrinsic
   // before submitting it.
-  const [txPayloads, setTxPayloadsState] = useState<{ [key: string]: AnyJson }>(
-    {}
-  );
-  const txPayloadsRef = React.useRef(txPayloads);
+  const [txPayload, setTxPayloadState] = useState<{
+    payload: AnyJson;
+    uid: number;
+  } | null>(null);
+  const txPayloadRef = React.useRef(txPayload);
 
   // Store an optional signed transaction if extrinsics require manual signing (e.g. Ledger).
   const [txSignature, setTxSignatureState] = useState<AnyJson>(null);
@@ -49,29 +50,31 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     setTxFees(new BigNumber(0));
   };
 
-  const getActivePayloadUid = () => {
-    return Object.keys(txPayloadsRef.current).length;
+  const getPayloadUid = () => {
+    return txPayloadRef.current?.uid || 1;
   };
 
   const incrementPayloadUid = () => {
-    return Object.keys(txPayloadsRef.current).length + 1;
+    return (txPayloadRef.current?.uid || 0) + 1;
   };
 
-  const getTxPayload = (uid: number) => {
-    return txPayloadsRef.current[`payload${uid}`] || null;
+  const getTxPayload = () => {
+    return txPayloadRef.current?.payload || null;
   };
 
   const setTxPayload = (p: AnyJson, uid: number) => {
-    const key = `payload${uid}`;
     setStateWithRef(
-      { ...txPayloadsRef.current, [key]: p },
-      setTxPayloadsState,
-      txPayloadsRef
+      {
+        payload: p,
+        uid,
+      },
+      setTxPayloadState,
+      txPayloadRef
     );
   };
 
   const resetTxPayloads = () => {
-    setStateWithRef({}, setTxPayloadsState, txPayloadsRef);
+    setStateWithRef(null, setTxPayloadState, txPayloadRef);
   };
 
   const getTxSignature = () => {
@@ -100,7 +103,7 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
         sender,
         setSender,
         incrementPayloadUid,
-        getActivePayloadUid,
+        getPayloadUid,
         getTxPayload,
         setTxPayload,
         resetTxPayloads,

@@ -105,18 +105,28 @@ export const LedgerHardwareProvider = ({
       // only set default message here - maintain previous status code.
       setDefaultMessage(t('ledgerRequestTimeout'));
     } else if (
-      err.startsWith('TransportOpenUserCancelled') ||
+      err.startsWith('Error: TransportError: Invalid channel') ||
+      err.startsWith('Error: InvalidStateError')
+    ) {
+      // occurs when tx was approved outside of active channel.
+      setDefaultMessage(t('queuedTransactionRejected'));
+    } else if (
+      err.startsWith('Error: TransportOpenUserCancelled') ||
       err.startsWith('Error: Ledger Device is busy')
     ) {
+      // occurs when the device is not connected.
       setDefaultMessage(t('connectLedgerToContinue'));
       handleNewStatusCode('failure', 'DeviceNotConnected');
     } else if (err.startsWith('Error: Transaction rejected')) {
+      // occurs when user rejects a transaction.
       setDefaultMessage(t('transactionRejectedPending'));
       handleNewStatusCode('failure', 'TransactionRejected');
     } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
+      // occurs when the required app is not open.
       handleNewStatusCode('failure', 'AppNotOpenContinue');
       setDefaultMessage(t('openAppOnLedger', { appName }));
     } else {
+      // miscellanous errors - assume app is not open or ready.
       setDefaultMessage(t('openAppOnLedger', { appName }));
       handleNewStatusCode('failure', 'AppNotOpen');
     }
@@ -170,7 +180,6 @@ export const LedgerHardwareProvider = ({
   // all Ledger tasks, along with errors that occur during the process.
   const executeLedgerLoop = async (
     appName: string,
-    transport: AnyJson,
     tasks: Array<LedgerTask>,
     options?: AnyJson
   ) => {
@@ -188,19 +197,13 @@ export const LedgerHardwareProvider = ({
       // tasks at once.
       let result = null;
       if (tasks.includes('get_address')) {
-        result = await handleGetAddress(
-          appName,
-          transport,
-          options?.accountIndex || 0
-        );
+        result = await handleGetAddress(appName, options?.accountIndex || 0);
       } else if (tasks.includes('sign_tx')) {
-        result = await handleSignTx(
-          appName,
-          transport,
-          options?.uid || 0,
-          options?.accountIndex || 0,
-          options?.payload || ''
-        );
+        const uid = options?.uid || 0;
+        const index = options?.accountIndex || 0;
+        const payload = options?.payload || '';
+
+        result = await handleSignTx(appName, uid, index, payload);
       }
 
       // a populated result indicates a successful execution. Set the transport response state for
@@ -219,13 +222,9 @@ export const LedgerHardwareProvider = ({
   };
 
   // Gets an app address on device.
-  const handleGetAddress = async (
-    appName: string,
-    transport: AnyJson,
-    index: number
-  ) => {
-    const substrateApp = newSubstrateApp(transport, appName);
-    const { deviceModel } = transport;
+  const handleGetAddress = async (appName: string, index: number) => {
+    const substrateApp = newSubstrateApp(ledgerTransport.current, appName);
+    const { deviceModel } = ledgerTransport.current;
     const { id, productName } = deviceModel;
 
     setDefaultMessage(null);
@@ -269,13 +268,12 @@ export const LedgerHardwareProvider = ({
   // Signs a payload on device.
   const handleSignTx = async (
     appName: string,
-    transport: AnyJson,
     uid: number,
     index: number,
     payload: AnyJson
   ) => {
-    const substrateApp = newSubstrateApp(transport, appName);
-    const { deviceModel } = transport;
+    const substrateApp = newSubstrateApp(ledgerTransport.current, appName);
+    const { deviceModel } = ledgerTransport.current;
     const { id, productName } = deviceModel;
 
     setTransportResponse({
@@ -480,9 +478,14 @@ export const LedgerHardwareProvider = ({
   };
 
   const handleUnmount = () => {
+    // reset refs
+    ledgerLoopInProgress.current = false;
+    pairInProgress.current = false;
+    // reset state
     resetStatusCodes();
     setIsExecuting(false);
     setDefaultMessage(null);
+    // close transport
     if (getTransport()?.device?.opened) {
       getTransport().device.close();
     }

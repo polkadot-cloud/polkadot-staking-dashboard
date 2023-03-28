@@ -139,6 +139,7 @@
     "poolIsNotNominating": "该提名池未提名任何验证人",
     "poolName": "提名池名称",
     "poolNominations": "池的提名",
+    "queuedTransactionRejected": "上一笔交易己被拒绝.请再试一次",
     "readOnly": "只读帐户无法签署交易.",
     "readOnlyAccount": "{{count}} 个只读帐户",
     "readOnlyAccounts": "只读帐户",
