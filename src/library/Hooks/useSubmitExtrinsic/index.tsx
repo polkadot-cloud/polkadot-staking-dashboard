@@ -66,7 +66,7 @@ export const useSubmitExtrinsic = ({
   // recalculate transaction payload on tx change
   useEffect(() => {
     buildPayload();
-  }, [tx?.toString(), tx?.toString().args, tx?.toString().method]);
+  }, [tx?.toString(), tx?.method?.args?.calls?.toString()]);
 
   const calculateEstimatedFee = async () => {
     if (tx === null) {
