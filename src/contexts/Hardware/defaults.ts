@@ -38,4 +38,5 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   getDefaultMessage: () => null,
   // eslint-disable-next-line
   setDefaultMessage: (m) => {},
+  handleUnmount: () => {},
 };

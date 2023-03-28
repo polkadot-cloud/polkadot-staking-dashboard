@@ -30,6 +30,7 @@ export type LedgerHardwareContextInterface = {
   ledgerAccounts: Array<LedgerAccount>;
   getDefaultMessage: () => MaybeString;
   setDefaultMessage: (s: MaybeString) => void;
+  handleUnmount: () => void;
 };
 
 export interface LedgerResponse {
