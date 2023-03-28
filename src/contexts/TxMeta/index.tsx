@@ -27,7 +27,7 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   // store whether the sender does not have enough funds.
   const [notEnoughFunds, setNotEnoughFunds] = useState(false);
 
-  // store the payload of a transaction if extrinsics require manual signing (e.g. Ledger).
+  // store the payloads of transactions if extrinsics require manual signing (e.g. Ledger).
   const [txPayload, setTxPayloadState] = useState<AnyJson>(null);
   const txPayloadRef = React.useRef(txPayload);
 
@@ -50,6 +50,10 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
 
   const setTxPayload = (p: AnyJson) => {
     setStateWithRef(p, setTxPayloadState, txPayloadRef);
+  };
+
+  const removeTxPayload = () => {
+    setTxPayload(null);
   };
 
   const getTxSignature = () => {
@@ -79,6 +83,7 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
         setSender,
         getTxPayload,
         setTxPayload,
+        removeTxPayload,
         getTxSignature,
         setTxSignature,
       }}

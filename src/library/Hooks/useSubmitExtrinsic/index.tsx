@@ -35,6 +35,7 @@ export const useSubmitExtrinsic = ({
     setTxFees,
     getTxPayload,
     setTxPayload,
+    removeTxPayload,
     setSender,
     txFees,
     getTxSignature,
@@ -197,7 +198,7 @@ export const useSubmitExtrinsic = ({
     };
 
     const resetTx = () => {
-      setTxPayload(null);
+      removeTxPayload();
       setTxSignature(null);
       setSubmitting(false);
     };
