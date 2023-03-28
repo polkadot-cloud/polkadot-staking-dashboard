@@ -62,13 +62,8 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     );
   };
 
-  const removeTxPayload = (uid: number) => {
-    const key = `payload${uid}`;
-    if (key in txPayloadRef.current) {
-      const newtxPayload = { ...txPayloadRef.current };
-      delete newtxPayload[key];
-      setTxPayload(newtxPayload, uid);
-    }
+  const resetTxPayloads = () => {
+    setStateWithRef({}, setTxPayloadState, txPayloadRef);
   };
 
   const getTxSignature = () => {
@@ -99,7 +94,7 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
         incrementPayloadUid,
         getTxPayload,
         setTxPayload,
-        removeTxPayload,
+        resetTxPayloads,
         getTxSignature,
         setTxSignature,
       }}

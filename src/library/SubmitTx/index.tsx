@@ -26,7 +26,7 @@ export const SubmitTx = ({
 }: SubmitTxProps) => {
   const { t } = useTranslation();
   const { unit } = useApi().network;
-  const { notEnoughFunds, sender, setTxSignature, removeTxPayload } =
+  const { notEnoughFunds, sender, setTxSignature, resetTxPayloads } =
     useTxMeta();
   const { requiresManualSign } = useConnect();
   const { setResize } = useModal();
@@ -48,7 +48,7 @@ export const SubmitTx = ({
   useEffect(() => {
     return () => {
       // remove the pending tx meta state
-      removeTxPayload(uid);
+      resetTxPayloads();
       setTxSignature(null);
     };
   }, []);
@@ -91,7 +91,6 @@ export const SubmitTx = ({
             />
           ) : (
             <Default
-              uid={uid}
               onSubmit={onSubmit}
               submitting={submitting}
               valid={valid}

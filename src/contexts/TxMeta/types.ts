@@ -15,7 +15,7 @@ export interface TxMetaContextInterface {
   incrementPayloadUid: () => number;
   getTxPayload: (u: number) => AnyJson;
   setTxPayload: (s: AnyJson, u: number) => void;
-  removeTxPayload: (u: number) => void;
+  resetTxPayloads: () => void;
   getTxSignature: () => AnyJson;
   setTxSignature: (s: AnyJson) => void;
 }

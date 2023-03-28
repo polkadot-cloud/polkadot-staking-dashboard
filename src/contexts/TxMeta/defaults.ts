@@ -21,7 +21,7 @@ export const defaultTxMeta: TxMetaContextInterface = {
   setTxPayload: (p, u) => {},
   getTxSignature: () => null,
   // eslint-disable-next-line
-  removeTxPayload: (u) => {},
+  resetTxPayloads: () => {},
   // eslint-disable-next-line
   setTxSignature: (s) => {},
 };
