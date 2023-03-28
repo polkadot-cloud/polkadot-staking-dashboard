@@ -13,7 +13,7 @@ import { useUi } from 'contexts/UI';
 import { format, fromUnixTime } from 'date-fns';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
-import { formatSize } from 'library/Graphs/Utils';
+import { formatSize, sortNonZeroPayouts } from 'library/Graphs/Utils';
 import {
   CardHeaderWrapper,
   CardWrapper,
@@ -53,13 +53,7 @@ export const Payouts = ({ page }: PageProps) => {
 
   useEffect(() => {
     // take non-zero rewards in most-recent order
-    let pList: AnySubscan = [
-      ...payouts.concat(poolClaims).filter((p: AnySubscan) => p.amount > 0),
-    ]
-      .sort(
-        (a: AnySubscan, b: AnySubscan) => b.block_timestamp - a.block_timestamp
-      )
-      .slice(0, MaxPayoutDays);
+    let pList: AnySubscan = sortNonZeroPayouts(payouts, poolClaims);
 
     // re-order rewards based on block timestamp
     pList = pList.sort((a: AnySubscan, b: AnySubscan) => {

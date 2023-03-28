@@ -3,6 +3,7 @@
 
 import { greaterThanZero, planckToUnit } from 'Utils';
 import BigNumber from 'bignumber.js';
+import { MaxPayoutDays } from 'consts';
 import {
   addDays,
   differenceInDays,
@@ -14,6 +15,17 @@ import {
 } from 'date-fns';
 import type { AnyApi, AnySubscan } from 'types';
 import type { PayoutDayCursor } from './types';
+
+// Take non-zero rewards in most-recent order.
+export const sortNonZeroPayouts = (
+  payouts: AnySubscan,
+  poolClaims: AnySubscan
+) =>
+  [...payouts.concat(poolClaims).filter((p: AnySubscan) => p.amount > 0)]
+    .sort(
+      (a: AnySubscan, b: AnySubscan) => b.block_timestamp - a.block_timestamp
+    )
+    .slice(0, MaxPayoutDays);
 
 // Given payouts, calculate daily income and fill missing days with zero amounts.
 export const calculatePayoutsByDay = (
