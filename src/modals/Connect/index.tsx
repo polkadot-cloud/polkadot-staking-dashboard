@@ -44,15 +44,14 @@ export const Connect = () => {
   return (
     <PaddingWrapper>
       <CustomHeaderWrapper>
-        <h1>
-          {t('connect')}
-          <ButtonInvertRounded
-            text={t('goToAccounts')}
-            iconRight={faChevronRight}
-            iconTransform="shrink-3"
-            onClick={() => replaceModalWith('Accounts', {}, 'large')}
-          />
-        </h1>
+        <h1>{t('connect')}</h1>
+        <ButtonInvertRounded
+          text={t('goToAccounts')}
+          iconRight={faChevronRight}
+          iconTransform="shrink-3"
+          onClick={() => replaceModalWith('Accounts', {}, 'large')}
+          marginLeft
+        />
       </CustomHeaderWrapper>
 
       {['polkadot', 'kusama'].includes(network.name) ? (

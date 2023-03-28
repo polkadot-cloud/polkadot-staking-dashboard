@@ -18,30 +18,35 @@ export const AddressWrapper = styled.div`
     width: 100%;
     top: 0px;
     padding: 0.75rem 1.25rem;
+    display: flex;
     z-index: 3;
-    > h4 {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      > span {
-        color: var(--text-color-primary);
-        margin-right: 0.5rem;
-      }
-      svg {
-        width: 1.1rem;
-        height: 1.1rem;
-        margin-right: 0.6rem;
-        path {
-          fill: var(--text-color-primary);
+    > section {
+      flex: 1;
+      &:first-child {
+        display: flex;
+        flex-grow: 1;
+        > h4 {
+          margin: 0;
+          padding: 0;
+          display: flex;
+          align-items: center;
+          > span {
+            color: var(--text-color-primary);
+            margin-right: 0.5rem;
+          }
+          svg {
+            width: 1.1rem;
+            height: 1.1rem;
+            margin-right: 0.6rem;
+            path {
+              fill: var(--text-color-primary);
+            }
+          }
         }
       }
-    }
-    h5 {
-      color: var(--text-color-secondary);
-      margin-top: 0.6rem;
-      svg {
-        margin: 0 0.4rem 0 0.25rem;
+      &:last-child {
+        display: flex;
+        justify-content: flex-end;
       }
     }
   }

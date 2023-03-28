@@ -122,7 +122,10 @@ export const ValidatorListInner = ({
   const pageStart = pageEnd - (ListItemsPerPage - 1);
 
   // render batch
-  const batchEnd = renderIteration * ListItemsPerBatch - 1;
+  const batchEnd = Math.min(
+    renderIteration * ListItemsPerBatch - 1,
+    ListItemsPerPage
+  );
 
   // reset list when validator list changes
   useEffect(() => {
