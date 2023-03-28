@@ -57,6 +57,35 @@ export const LedgerImport: React.FC = () => {
   );
   const addressesRef = useRef(addresses);
 
+  const removeLedgerAddress = (address: string) => {
+    let newLedgerAddresses = getLocalLedgerAddresses();
+
+    newLedgerAddresses = newLedgerAddresses.filter((a: LedgerAddress) => {
+      if (a.address !== address) {
+        return true;
+      }
+      if (a.network !== network.name) {
+        return true;
+      }
+      return false;
+    });
+    if (!newLedgerAddresses.length) {
+      localStorage.removeItem('ledger_addresses');
+    } else {
+      localStorage.setItem(
+        'ledger_addresses',
+        JSON.stringify(newLedgerAddresses)
+      );
+    }
+    setStateWithRef(
+      newLedgerAddresses.filter(
+        (a: LedgerAddress) => a.network === network.name
+      ),
+      setAddresses,
+      addressesRef
+    );
+  };
+
   // refresh imported ledger accounts on network change.
   useEffect(() => {
     setStateWithRef(
@@ -140,6 +169,7 @@ export const LedgerImport: React.FC = () => {
       ) : (
         <Manage
           addresses={addressesRef.current}
+          removeLedgerAddress={removeLedgerAddress}
           handleLedgerLoop={handleLedgerLoop}
         />
       )}

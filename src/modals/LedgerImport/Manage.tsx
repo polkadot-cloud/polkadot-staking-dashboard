@@ -13,7 +13,11 @@ import { Addresess } from './Addresses';
 import { determineStatusFromCodes } from './Utils';
 import { StatusBarWrapper } from './Wrappers';
 
-export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
+export const Manage = ({
+  addresses,
+  handleLedgerLoop,
+  removeLedgerAddress,
+}: AnyJson) => {
   const { t } = useTranslation('modals');
   const { network } = useApi();
   const { replaceModalWith } = useModal();
@@ -39,7 +43,11 @@ export const Manage = ({ addresses, handleLedgerLoop }: AnyJson) => {
 
   return (
     <>
-      <Addresess addresses={addresses} handleLedgerLoop={handleLedgerLoop} />
+      <Addresess
+        addresses={addresses}
+        handleLedgerLoop={handleLedgerLoop}
+        removeLedgerAddress={removeLedgerAddress}
+      />
       <StatusBarWrapper
         initial="hidden"
         animate="show"
