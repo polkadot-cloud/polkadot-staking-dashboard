@@ -18,7 +18,7 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
   const {
     network: { name },
   } = useApi();
-  const { getTxPayload } = useTxMeta();
+  const { getTxPayload, getActivePayloadUid } = useTxMeta();
   const { appName } = getLedgerApp(name);
 
   // Connect to Ledger device and perform necessary tasks.
@@ -36,7 +36,7 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
       setIsPaired('unpaired');
     } else {
       // Get task options and execute the loop.
-      const uid = options?.uid || 0;
+      const uid = getActivePayloadUid();
       const accountIndex = options?.accountIndex ? options.accountIndex() : 0;
       const payload = await getTxPayload(uid);
 

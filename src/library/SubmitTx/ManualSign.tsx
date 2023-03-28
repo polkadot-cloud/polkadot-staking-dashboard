@@ -62,7 +62,6 @@ export const ManualSign = ({
   const { handleLedgerLoop } = useLedgerLoop({
     tasks: ['sign_tx'],
     options: {
-      uid,
       accountIndex: getAddressIndex,
     },
     mounted: getIsMounted,
@@ -74,14 +73,18 @@ export const ManualSign = ({
     const { ack, statusCode, body } = response;
 
     if (statusCode === 'SignedPayload') {
-      handleNewStatusCode(ack, statusCode);
       if (uid !== body.uid) {
         setDefaultMessage('Wrong transaction, please sign again.');
+        resetStatusCodes();
+        setTxSignature(null);
       } else {
+        handleNewStatusCode(ack, statusCode);
         setTxSignature(body.sig);
         resetStatusCodes();
       }
       setIsExecuting(false);
+    } else {
+      handleNewStatusCode(ack, statusCode);
     }
   };
 
