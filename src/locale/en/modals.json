@@ -43,6 +43,7 @@
     "claimReward2": "Withdrawing rewards will immediately transfer them to your account as free balance.",
     "confirm": "Confirm",
     "confirmReformat": "Address was reformatted. Please confirm.",
+    "confirmReset": "Confirm Reset",
     "connect": "Connect",
     "connectLedgerToContinue": "Connect your Ledger device to continue.",
     "connected": "Connected",
