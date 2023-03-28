@@ -9,7 +9,6 @@ import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useUi } from 'contexts/UI';
-import { format, fromUnixTime } from 'date-fns';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { formatSize, sortNonZeroPayouts } from 'library/Graphs/Utils';
@@ -23,7 +22,6 @@ import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
-import { locales } from 'locale';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnySubscan } from 'types';
@@ -32,8 +30,8 @@ import { PayoutList } from './PayoutList';
 import { LastEraPayoutStat } from './Stats/LastEraPayout';
 
 export const Payouts = ({ page }: PageProps) => {
-  const { i18n, t } = useTranslation();
-  const { payouts, poolClaims } = useSubscan();
+  const { t } = useTranslation();
+  const { payouts, poolClaims, payoutsFromDate, payoutsToDate } = useSubscan();
   const { isSyncing } = useUi();
   const { plugins } = usePlugins();
   const { inSetup } = useStaking();
@@ -41,8 +39,6 @@ export const Payouts = ({ page }: PageProps) => {
   const { openHelp } = useHelp();
 
   const [payoutsList, setPayoutLists] = useState<AnySubscan>([]);
-  const [fromDate, setFromDate] = useState<string | undefined>();
-  const [toDate, setToDate] = useState<string | undefined>();
 
   const { key } = page;
 
@@ -52,33 +48,8 @@ export const Payouts = ({ page }: PageProps) => {
 
   useEffect(() => {
     // filter zero rewards and order via block timestamp, most recent first.
-    setPayoutLists(sortNonZeroPayouts(payouts, poolClaims));
+    setPayoutLists(sortNonZeroPayouts(payouts, poolClaims, true));
   }, [payouts, poolClaims]);
-
-  useEffect(() => {
-    // calculate the earliest and latest payout dates if they exist.
-    if (payoutsList.length) {
-      setFromDate(
-        format(
-          fromUnixTime(
-            payoutsList[Math.min(MaxPayoutDays - 2, payoutsList.length - 1)]
-              .block_timestamp
-          ),
-          'do MMM',
-          {
-            locale: locales[i18n.resolvedLanguage],
-          }
-        )
-      );
-
-      // latest payout date
-      setToDate(
-        format(fromUnixTime(payoutsList[0].block_timestamp), 'do MMM', {
-          locale: locales[i18n.resolvedLanguage],
-        })
-      );
-    }
-  }, [payoutsList.length]);
 
   return (
     <>
@@ -98,10 +69,12 @@ export const Payouts = ({ page }: PageProps) => {
               />
             </h4>
             <h2>
-              {payoutsList.length ? (
+              {payoutsFromDate && payoutsToDate ? (
                 <>
-                  {fromDate}
-                  {toDate !== fromDate && <>&nbsp;-&nbsp;{toDate}</>}
+                  {payoutsFromDate}
+                  {payoutsToDate !== payoutsFromDate && (
+                    <>&nbsp;-&nbsp;{payoutsToDate}</>
+                  )}
                 </>
               ) : (
                 t('payouts.none', { ns: 'pages' })
