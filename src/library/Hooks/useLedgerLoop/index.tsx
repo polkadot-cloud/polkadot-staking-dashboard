@@ -36,8 +36,8 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
       setIsPaired('unpaired');
     } else {
       // Get task options and execute the loop.
-      const accountIndex = options?.accountIndex ? options.accountIndex() : 0;
-      const payload = await getTxPayload();
+      const accountIndex = options?.accountIndex || null;
+      const payload = getTxPayload || null;
 
       if (getIsExecuting()) {
         await executeLedgerLoop(appName, getTransport(), tasks, {

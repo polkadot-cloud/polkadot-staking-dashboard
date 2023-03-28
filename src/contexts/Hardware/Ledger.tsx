@@ -173,15 +173,13 @@ export const LedgerHardwareProvider = ({
         result = await handleGetAddress(
           appName,
           transport,
-          options?.accountIndex || 0
+          options?.accountIndex() || 0
         );
       } else if (tasks.includes('sign_tx')) {
-        result = await handleSignTx(
-          appName,
-          transport,
-          options?.accountIndex || 0,
-          options?.payload || ''
-        );
+        const index = options?.accountIndex() || 0;
+        const payload = options?.payload ? await options.payload() : '';
+
+        result = await handleSignTx(appName, transport, index, payload);
       }
       if (result) {
         setTransportResponse({
