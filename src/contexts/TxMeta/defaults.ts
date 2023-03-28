@@ -14,10 +14,15 @@ export const defaultTxMeta: TxMetaContextInterface = {
   // eslint-disable-next-line
   setSender: (s) => {},
   txFeesValid: false,
-  getTxPayload: () => {},
+  incrementPayloadUid: () => 0,
+  getActivePayloadUid: () => 0,
   // eslint-disable-next-line
-  setTxPayload: (p) => {},
+  getTxPayload: (u) => {},
+  // eslint-disable-next-line
+  setTxPayload: (p, u) => {},
   getTxSignature: () => null,
+  // eslint-disable-next-line
+  resetTxPayloads: () => {},
   // eslint-disable-next-line
   setTxSignature: (s) => {},
 };

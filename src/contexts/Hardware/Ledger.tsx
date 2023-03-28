@@ -179,6 +179,7 @@ export const LedgerHardwareProvider = ({
         result = await handleSignTx(
           appName,
           transport,
+          options?.uid || 0,
           options?.accountIndex || 0,
           options?.payload || ''
         );
@@ -248,6 +249,7 @@ export const LedgerHardwareProvider = ({
   const handleSignTx = async (
     appName: string,
     transport: AnyJson,
+    uid: number,
     index: number,
     payload: AnyJson
   ) => {
@@ -287,7 +289,10 @@ export const LedgerHardwareProvider = ({
       return {
         statusCode: 'SignedPayload',
         device: { id, productName },
-        body: result.signature,
+        body: {
+          uid,
+          sig: result.signature,
+        },
       };
     }
   };

@@ -1,9 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
+import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
+import { useConnect } from 'contexts/Connect';
+import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import React from 'react';
-import { Submit } from './Submit';
 import type { SubmitProps } from './types';
 
 export const Default = ({
@@ -14,6 +17,9 @@ export const Default = ({
   buttons,
   customEvent,
 }: SubmitProps & { buttons?: Array<React.ReactNode> }) => {
+  const { txFeesValid } = useTxMeta();
+  const { activeAccount, accountHasSigner } = useConnect();
+
   return (
     <>
       <div>
@@ -21,12 +27,17 @@ export const Default = ({
       </div>
       <div>
         {buttons}
-        <Submit
-          onSubmit={onSubmit}
-          submitting={submitting}
-          valid={valid}
-          submitText={submitText}
-          customEvent={customEvent}
+        <ButtonSubmit
+          text={`${submitText}`}
+          iconLeft={faArrowAltCircleUp}
+          iconTransform="grow-2"
+          onClick={() => onSubmit(customEvent)}
+          disabled={
+            submitting ||
+            !valid ||
+            !accountHasSigner(activeAccount) ||
+            !txFeesValid
+          }
         />
       </div>
     </>

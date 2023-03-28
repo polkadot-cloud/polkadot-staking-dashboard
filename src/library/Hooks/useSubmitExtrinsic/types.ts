@@ -12,6 +12,7 @@ export interface UseSubmitExtrinsicProps {
 }
 
 export interface UseSubmitExtrinsic {
+  uid: number;
   onSubmit: { (customEventInBlock?: string): void };
   submitting: boolean;
 }
