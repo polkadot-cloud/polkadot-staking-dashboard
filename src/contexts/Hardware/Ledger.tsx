@@ -105,18 +105,28 @@ export const LedgerHardwareProvider = ({
       // only set default message here - maintain previous status code.
       setDefaultMessage(t('ledgerRequestTimeout'));
     } else if (
-      err.startsWith('TransportOpenUserCancelled') ||
+      err.startsWith('Error: TransportError: Invalid channel') ||
+      err.startsWith('Error: InvalidStateError')
+    ) {
+      // occurs when tx was approved outside of active channel.
+      setDefaultMessage('Previous transaction rejected. Please try again.');
+    } else if (
+      err.startsWith('Error: TransportOpenUserCancelled') ||
       err.startsWith('Error: Ledger Device is busy')
     ) {
+      // occurs when the device is not connected.
       setDefaultMessage(t('connectLedgerToContinue'));
       handleNewStatusCode('failure', 'DeviceNotConnected');
     } else if (err.startsWith('Error: Transaction rejected')) {
+      // occurs when user rejects a transaction.
       setDefaultMessage(t('transactionRejectedPending'));
       handleNewStatusCode('failure', 'TransactionRejected');
     } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
+      // occurs when the required app is not open.
       handleNewStatusCode('failure', 'AppNotOpenContinue');
       setDefaultMessage(t('openAppOnLedger', { appName }));
     } else {
+      // miscellanous errors - assume app is not open or ready.
       setDefaultMessage(t('openAppOnLedger', { appName }));
       handleNewStatusCode('failure', 'AppNotOpen');
     }
@@ -194,13 +204,11 @@ export const LedgerHardwareProvider = ({
           options?.accountIndex || 0
         );
       } else if (tasks.includes('sign_tx')) {
-        result = await handleSignTx(
-          appName,
-          transport,
-          options?.uid || 0,
-          options?.accountIndex || 0,
-          options?.payload || ''
-        );
+        const uid = options?.uid || 0;
+        const index = options?.accountIndex || 0;
+        const payload = options?.payload || '';
+
+        result = await handleSignTx(appName, transport, uid, index, payload);
       }
 
       // a populated result indicates a successful execution. Set the transport response state for
@@ -480,9 +488,14 @@ export const LedgerHardwareProvider = ({
   };
 
   const handleUnmount = () => {
+    // reset refs
+    ledgerLoopInProgress.current = false;
+    pairInProgress.current = false;
+    // reset state
     resetStatusCodes();
     setIsExecuting(false);
     setDefaultMessage(null);
+    // close transport
     if (getTransport()?.device?.opened) {
       getTransport().device.close();
     }

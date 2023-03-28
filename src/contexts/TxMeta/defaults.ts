@@ -15,9 +15,8 @@ export const defaultTxMeta: TxMetaContextInterface = {
   setSender: (s) => {},
   txFeesValid: false,
   incrementPayloadUid: () => 0,
-  getActivePayloadUid: () => 0,
-  // eslint-disable-next-line
-  getTxPayload: (u) => {},
+  getPayloadUid: () => 0,
+  getTxPayload: () => {},
   // eslint-disable-next-line
   setTxPayload: (p, u) => {},
   getTxSignature: () => null,
