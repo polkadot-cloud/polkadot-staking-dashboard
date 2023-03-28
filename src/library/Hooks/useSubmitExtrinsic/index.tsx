@@ -237,7 +237,7 @@ export const useSubmitExtrinsic = ({
     // pre-submission state update
     setSubmitting(true);
 
-    const txPayload: AnyJson = getTxPayload(uid);
+    const txPayload: AnyJson = getTxPayload();
     const txSignature: AnyJson = getTxSignature();
 
     // handle signed transaction.

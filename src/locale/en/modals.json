@@ -148,6 +148,7 @@
     "poolIsNotNominating": "Pool is Not Nominating.",
     "poolName": "Pool Name",
     "poolNominations": "Pool Nominations",
+    "queuedTransactionRejected": "Previous transaction rejected. Please try again.",
     "readOnly": "Your account is read only, and cannot sign transactions.",
     "readOnlyAccount_one": "{{count}} Read Only Account",
     "readOnlyAccount_other": "{{count}} Read Only Accounts",
