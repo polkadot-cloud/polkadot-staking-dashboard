@@ -12,9 +12,9 @@ export interface TxMetaContextInterface {
   sender: MaybeAccount;
   setSender: (s: MaybeAccount) => void;
   txFeesValid: boolean;
-  getTxPayload: () => AnyJson;
-  setTxPayload: (s: AnyJson) => void;
-  removeTxPayload: () => void;
+  getTxPayload: (u: number) => AnyJson;
+  setTxPayload: (s: AnyJson, u: number) => void;
+  removeTxPayload: (u: number) => void;
   getTxSignature: () => AnyJson;
   setTxSignature: (s: AnyJson) => void;
 }

@@ -37,7 +37,7 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
     } else {
       // Get task options and execute the loop.
       const accountIndex = options?.accountIndex ? options.accountIndex() : 0;
-      const payload = await getTxPayload();
+      const payload = await getTxPayload(0);
 
       if (getIsExecuting()) {
         await executeLedgerLoop(appName, getTransport(), tasks, {

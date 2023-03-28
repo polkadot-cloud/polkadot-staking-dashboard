@@ -47,7 +47,7 @@ export const SubmitTx = ({
   useEffect(() => {
     return () => {
       // remove the pending tx meta state
-      removeTxPayload();
+      removeTxPayload(0);
       setTxSignature(null);
     };
   }, []);

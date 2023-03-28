@@ -50,6 +50,9 @@ export const useSubmitExtrinsic = ({
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);
 
+  // TODO: store the uid of the extrinsic
+  // const [uid, setUid] = useState<number>(0);
+
   // track for one-shot transaction reset after submission.
   const didTxReset = useRef<boolean>(false);
 
@@ -81,7 +84,7 @@ export const useSubmitExtrinsic = ({
   // build and set payload of the transaction and store it in TxMetaContext.
   const buildPayload = async () => {
     if (api && tx) {
-      if (getTxPayload() === null) {
+      if (getTxPayload(0) === null) {
         const lastHeader = await api.rpc.chain.getHeader();
         const blockNumber = api.registry.createType(
           'BlockNumber',
@@ -122,7 +125,7 @@ export const useSubmitExtrinsic = ({
         const raw = api.registry.createType('ExtrinsicPayload', payload, {
           version: payload.version,
         });
-        setTxPayload(raw);
+        setTxPayload(raw, 0);
       }
     }
   };
@@ -198,7 +201,7 @@ export const useSubmitExtrinsic = ({
     };
 
     const resetTx = () => {
-      removeTxPayload();
+      removeTxPayload(0);
       setTxSignature(null);
       setSubmitting(false);
     };
@@ -235,7 +238,7 @@ export const useSubmitExtrinsic = ({
     // pre-submission state update
     setSubmitting(true);
 
-    const txPayload: AnyJson = getTxPayload();
+    const txPayload: AnyJson = getTxPayload(0);
     const txSignature: AnyJson = getTxSignature();
 
     // handle signed transaction.
