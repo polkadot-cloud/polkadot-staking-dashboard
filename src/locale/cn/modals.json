@@ -41,6 +41,7 @@
     "claimReward2": "提取收益将立即将其作为余额转入帐户",
     "confirm": "确认",
     "confirmReformat": "地址已重新格式化。请确认",
+    "confirmReset": "确认重设",
     "connect": "连接",
     "connectLedgerToContinue": "连接您的Ledger 设备继续",
     "connected": "己连接",

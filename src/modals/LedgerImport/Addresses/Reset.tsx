@@ -43,7 +43,7 @@ export const Reset = ({ removeLedgerAddress }: AnyJson) => {
       <div className="footer">
         <ButtonMonoInvert text={t('cancel')} onClick={() => setStatus(0)} />
         <ButtonMono
-          text="Confirm Reset"
+          text={t('confirmReset')}
           onClick={() => {
             removeAccounts();
             setStatus(0);
