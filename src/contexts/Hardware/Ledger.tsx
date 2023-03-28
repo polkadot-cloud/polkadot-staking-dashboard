@@ -210,7 +210,7 @@ export const LedgerHardwareProvider = ({
     setTransportResponse({
       ack: 'success',
       statusCode: 'GettingAddress',
-      body: `Getting addresess ${index} in progress.`,
+      body: null,
     });
 
     if (!ledgerTransport.current?.device?.opened) {
@@ -258,7 +258,7 @@ export const LedgerHardwareProvider = ({
     setTransportResponse({
       ack: 'success',
       statusCode: 'SigningPayload',
-      body: `Signing extrinsic in progress.`,
+      body: null,
     });
 
     setDefaultMessage(t('approveTransactionLedger'));
