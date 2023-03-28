@@ -18,22 +18,25 @@ export const useTxMeta = () => React.useContext(TxMetaContext);
 export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const { getTransferOptions } = useTransferOptions();
 
-  // store the transaction fees for the transaction.
+  // Store the transaction fees for the transaction.
   const [txFees, setTxFees] = useState(new BigNumber(0));
 
-  // store the sender of the transaction
+  // Store the sender of the transaction.
   const [sender, setSender] = useState<MaybeAccount>(null);
 
-  // store whether the sender does not have enough funds.
+  // Store whether the sender does not have enough funds.
   const [notEnoughFunds, setNotEnoughFunds] = useState(false);
 
-  // store the payloads of transactions if extrinsics require manual signing (e.g. Ledger).
+  // Store the payloads of transactions if extrinsics require manual signing (e.g. Ledger). payloads
+  // are calculated asynchronously and extrinsic associated with them may be cancelled. For this
+  // reason we give every payload a uid, and check whether this uid matches the active extrinsic
+  // before submitting it.
   const [txPayloads, setTxPayloadsState] = useState<{ [key: string]: AnyJson }>(
     {}
   );
   const txPayloadsRef = React.useRef(txPayloads);
 
-  // store an optional signed transaction if extrinsics require manual signing (e.g. Ledger).
+  // Store an optional signed transaction if extrinsics require manual signing (e.g. Ledger).
   const [txSignature, setTxSignatureState] = useState<AnyJson>(null);
   const txSignatureRef = React.useRef(txSignature);
 
