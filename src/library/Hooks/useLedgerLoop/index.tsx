@@ -42,6 +42,7 @@ export const useLedgerLoop = ({ tasks, options, mounted }: LederLoopProps) => {
 
       if (getIsExecuting()) {
         await executeLedgerLoop(appName, getTransport(), tasks, {
+          uid,
           accountIndex,
           payload,
         });

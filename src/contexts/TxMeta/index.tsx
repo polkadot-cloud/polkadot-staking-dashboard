@@ -46,8 +46,10 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     setTxFees(new BigNumber(0));
   };
 
-  const incrementPayloadUid = () =>
-    Object.keys(txPayloadRef.current).length + 1;
+  const incrementPayloadUid = () => {
+    const uid = Object.keys(txPayloadRef.current).length + 1;
+    return uid;
+  };
 
   const getTxPayload = (uid: number) => {
     return txPayloadRef.current[`payload${uid}`] || null;
