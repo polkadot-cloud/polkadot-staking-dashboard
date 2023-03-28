@@ -22,6 +22,7 @@ import { useTranslation } from 'react-i18next';
 import type { SubmitProps } from './types';
 
 export const ManualSign = ({
+  uid,
   onSubmit,
   submitting,
   valid,
@@ -72,10 +73,18 @@ export const ManualSign = ({
     const { ack, statusCode, body } = response;
 
     if (statusCode === 'SignedPayload') {
-      handleNewStatusCode(ack, statusCode);
-      setTxSignature(body);
+      if (uid !== body.uid) {
+        setDefaultMessage(t('wrongTransaction'));
+        resetStatusCodes();
+        setTxSignature(null);
+      } else {
+        handleNewStatusCode(ack, statusCode);
+        setTxSignature(body.sig);
+        resetStatusCodes();
+      }
       setIsExecuting(false);
-      resetStatusCodes();
+    } else {
+      handleNewStatusCode(ack, statusCode);
     }
   };
 

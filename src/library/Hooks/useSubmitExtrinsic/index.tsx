@@ -33,8 +33,10 @@ export const useSubmitExtrinsic = ({
   const { getAccount: getBalanceAccount } = useBalances();
   const {
     setTxFees,
+    incrementPayloadUid,
     getTxPayload,
     setTxPayload,
+    resetTxPayloads,
     setSender,
     txFees,
     getTxSignature,
@@ -49,6 +51,9 @@ export const useSubmitExtrinsic = ({
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);
 
+  // store the uid of the extrinsic
+  const [uid] = useState<number>(incrementPayloadUid());
+
   // track for one-shot transaction reset after submission.
   const didTxReset = useRef<boolean>(false);
 
@@ -61,7 +66,7 @@ export const useSubmitExtrinsic = ({
   // recalculate transaction payload on tx change
   useEffect(() => {
     buildPayload();
-  }, [tx?.toString()]);
+  }, [tx?.toString(), tx?.method?.args?.calls?.toString()]);
 
   const calculateEstimatedFee = async () => {
     if (tx === null) {
@@ -80,49 +85,47 @@ export const useSubmitExtrinsic = ({
   // build and set payload of the transaction and store it in TxMetaContext.
   const buildPayload = async () => {
     if (api && tx) {
-      if (getTxPayload() === null) {
-        const lastHeader = await api.rpc.chain.getHeader();
-        const blockNumber = api.registry.createType(
-          'BlockNumber',
-          lastHeader.number.toNumber()
-        );
-        const method = api.createType('Call', tx);
-        const era = api.registry.createType('ExtrinsicEra', {
-          current: lastHeader.number.toNumber(),
-          period: 64,
-        });
+      const lastHeader = await api.rpc.chain.getHeader();
+      const blockNumber = api.registry.createType(
+        'BlockNumber',
+        lastHeader.number.toNumber()
+      );
+      const method = api.createType('Call', tx);
+      const era = api.registry.createType('ExtrinsicEra', {
+        current: lastHeader.number.toNumber(),
+        period: 64,
+      });
 
-        const accountNonce = getBalanceAccount(submitAddress)?.nonce || 0;
-        const nonce = api.registry.createType('Compact<Index>', accountNonce);
+      const accountNonce = getBalanceAccount(submitAddress)?.nonce || 0;
+      const nonce = api.registry.createType('Compact<Index>', accountNonce);
 
-        const payload = {
-          specVersion: api.runtimeVersion.specVersion.toHex(),
-          transactionVersion: api.runtimeVersion.transactionVersion.toHex(),
-          address: submitAddress,
-          blockHash: lastHeader.hash.toHex(),
-          blockNumber: blockNumber.toHex(),
-          era: era.toHex(),
-          genesisHash: api.genesisHash.toHex(),
-          method: method.toHex(),
-          nonce: nonce.toHex(),
-          signedExtensions: [
-            'CheckNonZeroSender',
-            'CheckSpecVersion',
-            'CheckTxVersion',
-            'CheckGenesis',
-            'CheckMortality',
-            'CheckNonce',
-            'CheckWeight',
-            'ChargeTransactionPayment',
-          ],
-          tip: api.registry.createType('Compact<Balance>', 0).toHex(),
-          version: tx.version,
-        };
-        const raw = api.registry.createType('ExtrinsicPayload', payload, {
-          version: payload.version,
-        });
-        setTxPayload(raw);
-      }
+      const payload = {
+        specVersion: api.runtimeVersion.specVersion.toHex(),
+        transactionVersion: api.runtimeVersion.transactionVersion.toHex(),
+        address: submitAddress,
+        blockHash: lastHeader.hash.toHex(),
+        blockNumber: blockNumber.toHex(),
+        era: era.toHex(),
+        genesisHash: api.genesisHash.toHex(),
+        method: method.toHex(),
+        nonce: nonce.toHex(),
+        signedExtensions: [
+          'CheckNonZeroSender',
+          'CheckSpecVersion',
+          'CheckTxVersion',
+          'CheckGenesis',
+          'CheckMortality',
+          'CheckNonce',
+          'CheckWeight',
+          'ChargeTransactionPayment',
+        ],
+        tip: api.registry.createType('Compact<Balance>', 0).toHex(),
+        version: tx.version,
+      };
+      const raw = api.registry.createType('ExtrinsicPayload', payload, {
+        version: payload.version,
+      });
+      setTxPayload(raw, uid);
     }
   };
 
@@ -197,7 +200,7 @@ export const useSubmitExtrinsic = ({
     };
 
     const resetTx = () => {
-      setTxPayload(null);
+      resetTxPayloads();
       setTxSignature(null);
       setSubmitting(false);
     };
@@ -234,7 +237,7 @@ export const useSubmitExtrinsic = ({
     // pre-submission state update
     setSubmitting(true);
 
-    const txPayload: AnyJson = getTxPayload();
+    const txPayload: AnyJson = getTxPayload(uid);
     const txSignature: AnyJson = getTxSignature();
 
     // handle signed transaction.
@@ -288,6 +291,7 @@ export const useSubmitExtrinsic = ({
   };
 
   return {
+    uid,
     onSubmit,
     submitting,
   };
