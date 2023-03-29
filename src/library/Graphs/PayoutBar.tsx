@@ -70,9 +70,9 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
       unclaimedPayoutsNoSlash
     );
 
-  const { p: payoutsByDay } = allPayouts;
-  const { p: poolClaimsByDay } = allPoolClaims;
-  const { p: unclaimPayoutsByDay } = allUnclaimedPayouts;
+  const { p: graphPayouts } = allPayouts;
+  const { p: graphUnclaimedPayouts } = allUnclaimedPayouts;
+  const { p: graphPoolClaims } = allPoolClaims;
 
   // determine color for payouts
   const colorPayouts = notStaking
@@ -85,7 +85,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
     : colors.secondary[mode];
 
   const data = {
-    labels: payoutsByDay.map((item: AnySubscan) => {
+    labels: graphPayouts.map((item: AnySubscan) => {
       const dateObj = format(fromUnixTime(item.block_timestamp), 'do MMM', {
         locale: locales[i18n.resolvedLanguage],
       });
@@ -95,7 +95,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
       {
         order: 1,
         label: t('payout'),
-        data: payoutsByDay.map((item: AnySubscan) => item.amount),
+        data: graphPayouts.map((item: AnySubscan) => item.amount),
         borderColor: colorPayouts,
         backgroundColor: colorPayouts,
         pointRadius: 0,
@@ -104,7 +104,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
       {
         order: 2,
         label: t('poolClaim'),
-        data: poolClaimsByDay.map((item: AnySubscan) => item.amount),
+        data: graphPoolClaims.map((item: AnySubscan) => item.amount),
         borderColor: colorPoolClaims,
         backgroundColor: colorPoolClaims,
         pointRadius: 0,
@@ -112,8 +112,8 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
       },
       {
         order: 3,
+        data: graphUnclaimedPayouts.map((item: AnySubscan) => item.amount),
         label: t('unclaimedPayouts'),
-        data: unclaimPayoutsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPayouts,
         backgroundColor: colors.pending[mode],
         pointRadius: 0,

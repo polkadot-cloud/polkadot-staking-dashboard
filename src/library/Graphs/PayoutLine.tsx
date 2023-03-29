@@ -25,7 +25,7 @@ import type { AnySubscan } from 'types';
 import type { PayoutLineProps } from './types';
 import {
   calculatePayoutAverages,
-  combineRewardsByDay,
+  combineRewards,
   formatRewardsForGraphs,
 } from './Utils';
 
@@ -73,12 +73,12 @@ export const PayoutLine = ({
     [] // Note: we are not using `unclaimedPayouts` here.
   );
 
-  const { p: payoutsByDay, a: prePayoutsByDay } = allPayouts;
-  const { p: poolClaimsByDay, a: prePoolClaimsByDay } = allPoolClaims;
+  const { p: graphPayouts, a: graphPrePayouts } = allPayouts;
+  const { p: graphPoolClaims, a: graphPrePoolClaims } = allPoolClaims;
 
   // combine payouts and pool claims into one dataset and calculate averages.
-  const combined = combineRewardsByDay(payoutsByDay, poolClaimsByDay);
-  const preCombined = combineRewardsByDay(prePayoutsByDay, prePoolClaimsByDay);
+  const combined = combineRewards(graphPayouts, graphPoolClaims);
+  const preCombined = combineRewards(graphPrePayouts, graphPrePoolClaims);
 
   const combinedPayouts = calculatePayoutAverages(
     preCombined.concat(combined),
