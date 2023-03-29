@@ -111,11 +111,15 @@ export const LedgerHardwareProvider = ({
       // occurs when tx was approved outside of active channel.
       setDefaultMessage(t('queuedTransactionRejected'));
     } else if (
-      err.startsWith('Error: TransportOpenUserCancelled') ||
+      err.startsWith('TransportOpenUserCancelled') ||
       err.startsWith('Error: Ledger Device is busy')
     ) {
       // occurs when the device is not connected.
       setDefaultMessage(t('connectLedgerToContinue'));
+      handleNewStatusCode('failure', 'DeviceNotConnected');
+    } else if (err.startsWith('Error: LockedDeviceError')) {
+      // occurs when the device is connected but not unlocked.
+      setDefaultMessage(t('unlockLedgerToContinue'));
       handleNewStatusCode('failure', 'DeviceNotConnected');
     } else if (err.startsWith('Error: Transaction rejected')) {
       // occurs when user rejects a transaction.

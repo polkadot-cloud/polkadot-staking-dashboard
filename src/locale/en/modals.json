@@ -46,6 +46,7 @@
     "confirmReset": "Confirm Reset",
     "connect": "Connect",
     "connectLedgerToContinue": "Connect your Ledger device to continue.",
+    "unlockLedgerToContinue": "Unlock your Ledger device to continue.",
     "connected": "Connected",
     "connectingToDevice": "Connecting to Device...",
     "connectionType": "Connection Type",
