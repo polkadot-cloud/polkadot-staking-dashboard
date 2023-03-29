@@ -281,16 +281,17 @@ const processPayouts = (
   return { p, a };
 };
 
-// Get payout average in 10 day period after to `days` threshold
+// Get payout average in `avgDays` day period after to `days` threshold
 //
-// These payouts are used for calculating the 10-day average prior to the start of the payout graph.
+// These payouts are used for calculating the `avgDays`-day average prior to the start of the payout
+// graph.
 const getPreMaxDaysPayouts = (
   payouts: AnySubscan,
   fromDate: Date,
   days: number,
   avgDays: number
 ) => {
-  // remove payouts that are not within 10 `days` pre-graph window.
+  // remove payouts that are not within `avgDays` `days` pre-graph window.
   return payouts.filter(
     (p: AnySubscan) =>
       daysPassed(fromUnixTime(p.block_timestamp), fromDate) > days &&
