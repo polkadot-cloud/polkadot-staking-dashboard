@@ -62,6 +62,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   // get formatted rewards data for graph.
   const { allPayouts, allPoolClaims, allUnclaimedPayouts } =
     formatRewardsForGraphs(
+      new Date(),
       days,
       units,
       payoutsNoSlash,

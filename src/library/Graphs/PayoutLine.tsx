@@ -62,6 +62,7 @@ export const PayoutLine = ({
   );
 
   const { allPayouts, allPoolClaims } = formatRewardsForGraphs(
+    new Date(),
     days,
     units,
     payoutsNoSlash,
