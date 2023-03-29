@@ -140,17 +140,18 @@ export const calculatePayoutsByDay = (
 // Calculate average payouts per day.
 export const calculatePayoutAverages = (
   payouts: AnySubscan,
-  average: number,
-  days: number
+  fromDate: Date,
+  days: number,
+  avgDays: number
 ) => {
   // if we don't need to take an average, just return `payouts`.
-  if (average <= 1) return payouts;
+  if (avgDays <= 1) return payouts;
 
-  // create moving average value over `average` past days, if any.
-  const payoutsAverages = [];
+  // create moving average value over `avgDays` past days, if any.
+  let payoutsAverages = [];
   for (let i = 0; i < payouts.length; i++) {
     // average period end.
-    const end = Math.max(0, i - average);
+    const end = Math.max(0, i - avgDays);
 
     // the total amount earned in period.
     let total = 0;
@@ -171,13 +172,17 @@ export const calculatePayoutAverages = (
 
     payoutsAverages.push({
       amount: total / num,
-      event_id: payouts[i].event_id,
       block_timestamp: payouts[i].block_timestamp,
     });
   }
 
   // return an array with the expected number of items
-  return payoutsAverages.slice(0, days);
+  payoutsAverages = payoutsAverages.filter(
+    (p: AnySubscan) =>
+      daysPassed(fromUnixTime(p.block_timestamp), fromDate) <= days
+  );
+
+  return payoutsAverages;
 };
 
 // Fetch rewards and graph meta data.
@@ -250,7 +255,12 @@ const processPayouts = (
 
   // use normalised payouts for calculating the 10-day average prior to the start of the payout graph.
   const avgDays = 10;
-  const preNormalised = getPreMaxDaysPayouts(normalised, fromDate, days);
+  const preNormalised = getPreMaxDaysPayouts(
+    normalised,
+    fromDate,
+    days,
+    avgDays
+  );
   // start of average calculation should be the earliest date.
   const averageFromDate = subDays(fromDate, MaxPayoutDays);
 
@@ -277,13 +287,14 @@ const processPayouts = (
 const getPreMaxDaysPayouts = (
   payouts: AnySubscan,
   fromDate: Date,
-  days: number
+  days: number,
+  avgDays: number
 ) => {
   // remove payouts that are not within 10 `days` pre-graph window.
   return payouts.filter(
     (p: AnySubscan) =>
       daysPassed(fromUnixTime(p.block_timestamp), fromDate) > days &&
-      daysPassed(fromUnixTime(p.block_timestamp), fromDate) <= days + 10
+      daysPassed(fromUnixTime(p.block_timestamp), fromDate) <= days + avgDays
   );
 };
 

@@ -61,8 +61,11 @@ export const PayoutLine = ({
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
 
+  // define the most recent date that we will show on the graph.
+  const fromDate = new Date();
+
   const { allPayouts, allPoolClaims } = formatRewardsForGraphs(
-    new Date(),
+    fromDate,
     days,
     units,
     payoutsNoSlash,
@@ -75,9 +78,14 @@ export const PayoutLine = ({
 
   // combine payouts and pool claims into one dataset and calculate averages.
   const combined = combineRewardsByDay(payoutsByDay, poolClaimsByDay);
+  const preCombined = combineRewardsByDay(prePayoutsByDay, prePoolClaimsByDay);
 
-  // TODO: concat pre-payouts with payouts and pass into average function.
-  const combinedPayouts = calculatePayoutAverages(combined, 10, days);
+  const combinedPayouts = calculatePayoutAverages(
+    preCombined.concat(combined),
+    fromDate,
+    days,
+    10
+  );
 
   // determine color for payouts
   const color = notStaking
