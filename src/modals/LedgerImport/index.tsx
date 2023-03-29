@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-native authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { clipAddress, setStateWithRef } from 'Utils';
+import { clipAddress, registerSaEvent, setStateWithRef } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
@@ -133,6 +133,8 @@ export const LedgerImport: React.FC = () => {
         addressesRef
       );
       resetStatusCodes();
+
+      registerSaEvent(`${network.name.toLowerCase()}_ledger_account_fetched`);
     }
   };
 

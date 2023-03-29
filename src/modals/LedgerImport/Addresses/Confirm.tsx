@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonMono, ButtonMonoInvert } from '@polkadotcloud/dashboard-ui';
+import { registerSaEvent } from 'Utils';
+import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useOverlay } from 'contexts/Overlay';
@@ -12,6 +14,7 @@ import type { ConfirmProps } from './types';
 
 export const Confirm = ({ address, index }: ConfirmProps) => {
   const { t } = useTranslation('modals');
+  const { network } = useApi();
   const { addToAccounts } = useConnect();
   const { setStatus } = useOverlay();
   const { addLedgerAccount } = useLedgerHardware();
@@ -29,6 +32,9 @@ export const Confirm = ({ address, index }: ConfirmProps) => {
             const account = addLedgerAccount(address, index);
             if (account) {
               addToAccounts([account]);
+              registerSaEvent(
+                `${network.name.toLowerCase()}_ledger_account_import`
+              );
             }
             setStatus(0);
           }}

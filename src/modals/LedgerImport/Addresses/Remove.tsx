@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonMono, ButtonMonoInvert } from '@polkadotcloud/dashboard-ui';
+import { registerSaEvent } from 'Utils';
+import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useOverlay } from 'contexts/Overlay';
@@ -12,6 +14,7 @@ import type { RemoveProps } from './types';
 
 export const Remove = ({ address }: RemoveProps) => {
   const { t } = useTranslation('modals');
+  const { network } = useApi();
   const { forgetAccounts } = useConnect();
   const { setStatus } = useOverlay();
   const { getLedgerAccount, removeLedgerAccount } = useLedgerHardware();
@@ -30,6 +33,9 @@ export const Remove = ({ address }: RemoveProps) => {
             if (account) {
               removeLedgerAccount(address);
               forgetAccounts([account]);
+              registerSaEvent(
+                `${network.name.toLowerCase()}_ledger_account_removal`
+              );
               setStatus(0);
             }
           }}

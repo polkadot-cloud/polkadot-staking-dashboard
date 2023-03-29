@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonMono, ButtonMonoInvert } from '@polkadotcloud/dashboard-ui';
+import { registerSaEvent } from 'Utils';
+import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
@@ -15,6 +17,7 @@ import { ConfirmWrapper } from './Wrappers';
 
 export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
+  const { network } = useApi();
   const { setStatus } = useOverlay();
   const { forgetAccounts } = useConnect();
   const { ledgerAccounts, removeLedgerAccount } = useLedgerHardware();
@@ -46,6 +49,9 @@ export const Reset = ({ removeLedgerAddress }: AnyJson) => {
           text={t('confirmReset')}
           onClick={() => {
             removeAccounts();
+            registerSaEvent(
+              `${network.name.toLowerCase()}_ledger_accounts_reset`
+            );
             setStatus(0);
           }}
         />
