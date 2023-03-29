@@ -139,16 +139,16 @@ export const calculatePayoutsByDay = (
 
 // Calculate average payouts per day.
 export const calculatePayoutAverages = (
-  payoutsByDay: AnySubscan,
+  payouts: AnySubscan,
   average: number,
   days: number
 ) => {
-  // if we don't need to take an average, just return `payoutsByDay`.
-  if (average <= 1) return payoutsByDay;
+  // if we don't need to take an average, just return `payouts`.
+  if (average <= 1) return payouts;
 
   // create moving average value over `average` past days, if any.
   const payoutsAverages = [];
-  for (let i = 0; i < payoutsByDay.length; i++) {
+  for (let i = 0; i < payouts.length; i++) {
     // average period end.
     const end = Math.max(0, i - average);
 
@@ -158,21 +158,21 @@ export const calculatePayoutAverages = (
     let num = 0;
 
     for (let j = i; j >= end; j--) {
-      if (payoutsByDay[j]) {
-        total += payoutsByDay[j].amount;
+      if (payouts[j]) {
+        total += payouts[j].amount;
       }
       // increase by one to treat non-existent as zero value
       num += 1;
     }
 
     if (total === 0) {
-      total = payoutsByDay[i].amount;
+      total = payouts[i].amount;
     }
 
     payoutsAverages.push({
       amount: total / num,
-      event_id: payoutsByDay[i].event_id,
-      block_timestamp: payoutsByDay[i].block_timestamp,
+      event_id: payouts[i].event_id,
+      block_timestamp: payouts[i].block_timestamp,
     });
   }
 
@@ -265,6 +265,8 @@ const processPayouts = (
   a = a.concat(prefillMissingDays(a, averageFromDate, avgDays));
   // fill in gap days between payouts with zero values.
   a = fillGapDays(a, averageFromDate);
+  // reverse payouts: most recent last.
+  a = a.reverse();
 
   return { p, a };
 };
