@@ -61,7 +61,7 @@ export const PayoutLine = ({
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
 
-  const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
+  const { allPayouts, allPoolClaims } = formatRewardsForGraphs(
     days,
     units,
     payoutsNoSlash,
@@ -69,9 +69,13 @@ export const PayoutLine = ({
     [] // Note: we are not using `unclaimedPayouts` here.
   );
 
+  const { p: payoutsByDay, a: prePayoutsByDay } = allPayouts;
+  const { p: poolClaimsByDay, a: prePoolClaimsByDay } = allPoolClaims;
+
   // combine payouts and pool claims into one dataset and calculate averages.
   const combined = combineRewardsByDay(payoutsByDay, poolClaimsByDay);
 
+  // TODO: concat pre-payouts with payouts and pass into average function.
   const combinedPayouts = calculatePayoutAverages(combined, 10, days);
 
   // determine color for payouts

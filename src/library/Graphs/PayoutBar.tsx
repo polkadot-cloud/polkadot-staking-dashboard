@@ -47,18 +47,20 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
   const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
+  const notStaking = !isSyncing && inSetup() && !membership;
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts.filter(
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
 
+  // remove slashes from unclaimed payouts.
   const unclaimedPayoutsNoSlash = unclaimedPayouts.filter(
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
 
-  const notStaking = !isSyncing && inSetup() && !membership;
-  const { payoutsByDay, poolClaimsByDay, unclaimPayoutsByDay } =
+  // get formatted rewards data for graph.
+  const { allPayouts, allPoolClaims, allUnclaimedPayouts } =
     formatRewardsForGraphs(
       days,
       units,
@@ -66,6 +68,10 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
       poolClaims,
       unclaimedPayoutsNoSlash
     );
+
+  const { p: payoutsByDay } = allPayouts;
+  const { p: poolClaimsByDay } = allPoolClaims;
+  const { p: unclaimPayoutsByDay } = allUnclaimedPayouts;
 
   // determine color for payouts
   const colorPayouts = notStaking
