@@ -189,9 +189,14 @@ export const formatRewardsForGraphs = (
   unclaimedPayouts: AnySubscan
 ) => {
   // process staking payouts.
-  const payoutsByDay = processPayouts(payouts, days, units, 'staking');
-  const poolClaimsByDay = processPayouts(poolClaims, days, units, 'pools');
-  const unclaimPayoutsByDay = processPayouts(
+  const { p: payoutsByDay } = processPayouts(payouts, days, units, 'staking');
+  const { p: poolClaimsByDay } = processPayouts(
+    poolClaims,
+    days,
+    units,
+    'pools'
+  );
+  const { p: unclaimPayoutsByDay } = processPayouts(
     unclaimedPayouts,
     days,
     units,
@@ -226,7 +231,7 @@ const processPayouts = (
   p = fillGapDays(p);
   // reverse payouts: most recent last.
   p = p.reverse();
-  return p;
+  return { p };
 };
 
 // Combine reward payouts.
