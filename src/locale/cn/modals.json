@@ -44,6 +44,7 @@
     "confirmReset": "确认重设",
     "connect": "连接",
     "connectLedgerToContinue": "连接您的Ledger 设备继续",
+    "unlockLedgerToContinue": "解锁您的Ledger设备后继续",
     "connected": "己连接",
     "connectingToDevice": "连接到设备...",
     "connectionType": "连接类型",
