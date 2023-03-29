@@ -47,25 +47,32 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
   const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
+  const notStaking = !isSyncing && inSetup() && !membership;
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts.filter(
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
 
+  // remove slashes from unclaimed payouts.
   const unclaimedPayoutsNoSlash = unclaimedPayouts.filter(
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
 
-  const notStaking = !isSyncing && inSetup() && !membership;
-  const { payoutsByDay, poolClaimsByDay, unclaimPayoutsByDay } =
+  // get formatted rewards data for graph.
+  const { allPayouts, allPoolClaims, allUnclaimedPayouts } =
     formatRewardsForGraphs(
+      new Date(),
       days,
       units,
       payoutsNoSlash,
       poolClaims,
       unclaimedPayoutsNoSlash
     );
+
+  const { p: graphPayouts } = allPayouts;
+  const { p: graphUnclaimedPayouts } = allUnclaimedPayouts;
+  const { p: graphPoolClaims } = allPoolClaims;
 
   // determine color for payouts
   const colorPayouts = notStaking
@@ -78,7 +85,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
     : colors.secondary[mode];
 
   const data = {
-    labels: payoutsByDay.map((item: AnySubscan) => {
+    labels: graphPayouts.map((item: AnySubscan) => {
       const dateObj = format(fromUnixTime(item.block_timestamp), 'do MMM', {
         locale: locales[i18n.resolvedLanguage],
       });
@@ -88,7 +95,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
       {
         order: 1,
         label: t('payout'),
-        data: payoutsByDay.map((item: AnySubscan) => item.amount),
+        data: graphPayouts.map((item: AnySubscan) => item.amount),
         borderColor: colorPayouts,
         backgroundColor: colorPayouts,
         pointRadius: 0,
@@ -97,7 +104,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
       {
         order: 2,
         label: t('poolClaim'),
-        data: poolClaimsByDay.map((item: AnySubscan) => item.amount),
+        data: graphPoolClaims.map((item: AnySubscan) => item.amount),
         borderColor: colorPoolClaims,
         backgroundColor: colorPoolClaims,
         pointRadius: 0,
@@ -105,8 +112,8 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
       },
       {
         order: 3,
+        data: graphUnclaimedPayouts.map((item: AnySubscan) => item.amount),
         label: t('unclaimedPayouts'),
-        data: unclaimPayoutsByDay.map((item: AnySubscan) => item.amount),
         borderColor: colorPayouts,
         backgroundColor: colors.pending[mode],
         pointRadius: 0,
