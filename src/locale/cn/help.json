@@ -306,6 +306,12 @@
           "除了抵押的总金额外，还包括在提名池中抵押了的{NETWORK_UNIT}总金额.",
           "和抵押的金额不同，质押的池金额是被持有并锁定在提名池中."
         ]
+      ],
+      "ledgerRejectedTransactionOptions": [
+        "Ledger拒绝交易后选项",
+        [
+          "您可以再次签署交易或关闭窗口"
+        ]
       ]
     },
     "externals": {

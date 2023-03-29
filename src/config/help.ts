@@ -19,6 +19,7 @@ export const HelpConfig: HelpItems = [
       'Ideal Staked',
       'Supply Staked',
       'Ledger Hardware Wallets',
+      'Ledger Rejected Transaction Options',
     ],
     external: [
       [

@@ -5,13 +5,14 @@ import {
   faArrowAltCircleUp,
   faSquarePen,
 } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
+import { ButtonHelp, ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
 import type { LedgerResponse } from 'contexts/Hardware/types';
+import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
@@ -126,11 +127,16 @@ export const ManualSign = ({
   ).title;
   const fallbackMessage = t('submitTransaction');
   const defaultMessage = getDefaultMessage();
+  const { openHelp } = useHelp();
 
   return (
     <>
       <div>
         <EstimatedTxFee />
+        <ButtonHelp
+          marginLeft
+          onClick={() => openHelp('Ledger Rejected Transaction Options')}
+        />
         {valid ? (
           <p>
             {valid
