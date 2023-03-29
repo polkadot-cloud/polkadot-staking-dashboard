@@ -4,6 +4,7 @@
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
 import * as Sc from '@substrate/connect';
+import { extractUrlValue, rmCommas, varToUrlHash } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { NetworkList } from 'config/networks';
 import {
@@ -16,15 +17,14 @@ import {
   FallbackNominatorRewardedPerValidator,
   FallbackSessionsPerEra,
 } from 'consts';
-import {
+import type {
   APIConstants,
   APIContextInterface,
   ApiStatus,
   NetworkState,
 } from 'contexts/Api/types';
 import React, { useEffect, useState } from 'react';
-import { Network, NetworkName } from 'types';
-import { extractUrlValue, rmCommas, varToUrlHash } from 'Utils';
+import type { Network, NetworkName } from 'types';
 import * as defaults from './defaults';
 
 export const APIContext = React.createContext<APIContextInterface>(
@@ -128,9 +128,9 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   }, [provider]);
 
   // connection callback.
-  const connectedCallback = async (_provider: WsProvider | ScProvider) => {
+  const connectedCallback = async (newProvider: WsProvider | ScProvider) => {
     // initiate new api and set connected.
-    const newApi = await ApiPromise.create({ provider: _provider });
+    const newApi = await ApiPromise.create({ provider: newProvider });
     setApiStatus('connected');
 
     // store active network in localStorage.
@@ -218,7 +218,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     switch (lc) {
       case true:
         newProvider = new ScProvider(Sc, endpoints.lightClient);
-        await newProvider.connect({ forceEmbeddedNode: true });
+        await newProvider.connect();
         break;
       default:
         newProvider = new WsProvider(endpoints.rpc);

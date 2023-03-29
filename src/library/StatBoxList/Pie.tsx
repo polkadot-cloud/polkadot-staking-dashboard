@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp } from '@polkadotcloud/dashboard-ui';
 import NumberEasing from 'che-react-number-easing';
 import { useHelp } from 'contexts/Help';
 import { StatPie } from 'library/Graphs/StatBoxPie';
 import { StatBox } from './Item';
-import { PieProps } from './types';
+import type { PieProps } from './types';
 
 export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
   const help = helpKey !== undefined;

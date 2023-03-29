@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BigNumber from 'bignumber.js';
-import { AnyApi, AnyJson, AnyMetaBatch, MaybeAccount, Sync } from 'types';
+import type BigNumber from 'bignumber.js';
+import type { AnyApi, AnyJson, AnyMetaBatch, MaybeAccount, Sync } from 'types';
 
 // PoolsConfig types
 export interface PoolsConfigContextState {

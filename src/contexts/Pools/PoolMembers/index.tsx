@@ -1,11 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useConnect } from 'contexts/Connect';
-import { PoolMemberContext } from 'contexts/Pools/types';
-import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { setStateWithRef } from 'Utils';
+import { useConnect } from 'contexts/Connect';
+import type { PoolMemberContext } from 'contexts/Pools/types';
+import React, { useEffect, useRef, useState } from 'react';
+import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
 
@@ -64,11 +64,9 @@ export const PoolMembersProvider = ({
   };
 
   const unsubscribeAndResetMeta = () => {
-    Object.values(poolMembersSubsRef.current).map((batch: Array<Fn>) => {
-      return Object.entries(batch).map(([, v]) => {
-        return v();
-      });
-    });
+    Object.values(poolMembersSubsRef.current).map((batch: Array<Fn>) =>
+      Object.entries(batch).map(([, v]) => v())
+    );
     setStateWithRef({}, setPoolMembersMetaBatch, poolMembersMetaBatchesRef);
   };
 
@@ -91,13 +89,11 @@ export const PoolMembersProvider = ({
     setPoolMembers(exposures);
   };
 
-  const getMembersOfPool = (poolId: number) => {
-    return poolMembers.filter((p: any) => p.poolId === String(poolId)) ?? null;
-  };
+  const getMembersOfPool = (poolId: number) =>
+    poolMembers.filter((p: any) => p.poolId === String(poolId)) ?? null;
 
-  const getPoolMember = (who: MaybeAccount) => {
-    return poolMembers.find((p: any) => p.who === who) ?? null;
-  };
+  const getPoolMember = (who: MaybeAccount) =>
+    poolMembers.find((p: any) => p.who === who) ?? null;
 
   // queries a  pool member and formats to `poolMembers`.
   const queryPoolMember = async (who: MaybeAccount) => {

@@ -1,16 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useTxFees } from 'contexts/TxFees';
 import { useValidators } from 'contexts/Validators';
-import { Validator } from 'contexts/Validators/types';
+import type { Validator } from 'contexts/Validators/types';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
@@ -30,7 +27,6 @@ export const NominateFromFavorites = () => {
   const { favoritesList } = useValidators();
   const { selectedActivePool, isNominator, isOwner } = useActivePools();
   const controller = getBondedAccount(activeAccount);
-  const { txFeesValid } = useTxFees();
 
   const { maxNominations } = consts;
   const { bondFor, nominations } = config;
@@ -117,7 +113,7 @@ export const NominateFromFavorites = () => {
     return tx;
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: signingAccount,
     shouldSubmit: valid,
@@ -187,22 +183,8 @@ export const NominateFromFavorites = () => {
       </PaddingWrapper>
       <SubmitTx
         fromController={bondFor === 'nominator'}
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              !valid ||
-              submitting ||
-              (bondFor === 'pool' && !isNominator() && !isOwner()) ||
-              !accountHasSigner(signingAccount) ||
-              !txFeesValid
-            }
-          />,
-        ]}
+        valid={valid && !(bondFor === 'pool' && !isNominator() && !isOwner())}
+        {...submitExtrinsic}
       />
     </>
   );

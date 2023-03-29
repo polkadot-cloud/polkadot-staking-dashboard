@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-export const VALIDATOR_COMMUNITY = [
+export const ValidatorCommunity = [
   {
     name: '🍁 HIGH/STAKE 🥩',
     thumbnail: 'Highstake',
@@ -172,12 +172,12 @@ export const VALIDATOR_COMMUNITY = [
     },
   },
   {
-    name: 'LetzBake!',
-    thumbnail: 'Letzbake',
-    bio: 'Non-custodial staking made in Switzerland. At your service since 2018.',
-    email: 'hello@letzbake.com',
-    twitter: '@letzbake1',
-    website: 'https://letzbake.com',
+    name: 'Blockshard',
+    thumbnail: 'Blockshard',
+    bio: 'Non-custodial staking made in Switzerland. At your service since 2018. Previously known as LetzBake!',
+    email: 'hello@blockshard.io',
+    twitter: '@blockshard1',
+    website: 'https://blockshard.io',
     validators: {
       kusama: ['Cp4U5UYg2FaVUpyEtQgfBm9aqge6EEPkJxEFVZFYy7L1AZF'],
     },
@@ -314,7 +314,10 @@ export const VALIDATOR_COMMUNITY = [
     twitter: '@Polkadotters1',
     website: 'https://polkadotters.com/',
     validators: {
-      polkadot: ['16A4n4UQqgxw5ndeehPjUAobDNmuX2bBoPXVKj4xTe16ktRN'],
+      polkadot: [
+        '16A4n4UQqgxw5ndeehPjUAobDNmuX2bBoPXVKj4xTe16ktRN',
+        '12L5m9htNsUP58mBHFXcsABDSCohhX2J4nMuY9TrJHNLCssQ',
+      ],
       kusama: ['FVAFUJhJy9tj1X4PaEXX3tDzjaBEVsVunABAdsDMD4ZYmWA'],
     },
   },
@@ -487,7 +490,7 @@ export const VALIDATOR_COMMUNITY = [
   {
     name: 'TurboFlakes',
     thumbnail: 'TurboFlakes',
-    bio: 'TurboFlakes provides validators with character running on top of dedicated and high performance servers. Raiden, Coco and Momo are our named validators serving non-stop Polkadot and Kusama. We also provide end-user tooling to help you to interact with substrate blockchain networks. Feel free to reach out.',
+    bio: 'TurboFlakes provides validators with character running on top of dedicated and high performance servers. Raiden, Coco, Momo, Toto and Dodo are our named validators serving non-stop Polkadot and Kusama. We also provide end-user tooling to help you to interact with substrate blockchain networks. Feel free to reach out.',
     email: 'hey@turboflakes.io',
     twitter: '@turboflakes',
     website: 'https://turboflakes.io',
@@ -496,6 +499,8 @@ export const VALIDATOR_COMMUNITY = [
       kusama: [
         'FZsMKYHoQG1dAVhXBMyC7aYFYpASoBrrMYsAn1gJJUAueZX',
         'GA7j1FHWXpEU4kavowEte6LWR3NgZ8bkv4spWa9joiQF5R2',
+        'GwJweN3Q8VjBMkd2wWLQsgMXrwmFLD6ihfS146GkmiYg5gw',
+        'FUu6iSzpfStHnbtbzFy2gsnBLttwNgNSULSCQCgMjPfkYwF',
       ],
     },
   },

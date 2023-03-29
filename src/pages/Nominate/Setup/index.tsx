@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSecondary } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonSecondary } from '@polkadotcloud/dashboard-ui';
+import { extractUrlValue, removeVarFromUrlHash } from 'Utils';
+import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { CardWrapper } from 'library/Graphs/Wrappers';
@@ -11,8 +13,6 @@ import { Nominate } from 'library/SetupSteps/Nominate';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { Element } from 'react-scroll';
-import { extractUrlValue, removeVarFromUrlHash } from 'Utils';
-import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
 import { Summary } from './Summary';

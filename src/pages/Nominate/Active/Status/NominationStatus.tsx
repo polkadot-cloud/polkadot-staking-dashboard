@@ -6,8 +6,8 @@ import {
   faChevronCircleRight,
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
 import { useModal } from 'contexts/Modal';
@@ -25,7 +25,7 @@ export const NominationStatus = () => {
   const { t } = useTranslation('pages');
   const { isReady, network } = useApi();
   const { inSetup } = useStaking();
-  const { networkSyncing } = useUi();
+  const { isNetworkSyncing } = useUi();
   const { openModalWith } = useModal();
   const { metrics } = useNetworkMetrics();
   const { getBondedAccount } = useBalances();
@@ -79,7 +79,7 @@ export const NominationStatus = () => {
           ? !isUnstaking && !isReadOnlyAccount(controller)
             ? [unstakeButton]
             : []
-          : networkSyncing
+          : isNetworkSyncing
           ? []
           : [
               {

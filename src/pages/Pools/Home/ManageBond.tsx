@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
@@ -23,7 +23,7 @@ export const ManageBond = () => {
   const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
-  const { poolsSyncing } = useUi();
+  const { isPoolSyncing } = useUi();
   const { isBonding, isMember, selectedActivePool } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
   const { openHelp } = useHelp();
@@ -46,7 +46,7 @@ export const ManageBond = () => {
         <ButtonRowWrapper>
           <ButtonPrimary
             disabled={
-              poolsSyncing ||
+              isPoolSyncing ||
               !isBonding() ||
               !isMember() ||
               state === 'Destroying'
@@ -57,7 +57,7 @@ export const ManageBond = () => {
           />
           <ButtonPrimary
             disabled={
-              poolsSyncing ||
+              isPoolSyncing ||
               !isBonding() ||
               !isMember() ||
               state === 'Destroying'
@@ -69,7 +69,7 @@ export const ManageBond = () => {
             text="-"
           />
           <ButtonPrimary
-            disabled={poolsSyncing || !isMember() || state === 'Destroying'}
+            disabled={isPoolSyncing || !isMember() || state === 'Destroying'}
             iconLeft={faLockOpen}
             onClick={() =>
               openModalWith('UnlockChunks', { bondFor: 'pool' }, 'small')

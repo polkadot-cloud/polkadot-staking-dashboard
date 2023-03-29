@@ -2,21 +2,21 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import Keyring from '@polkadot/keyring';
+import { isValidAddress } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
-import {
+import type {
   ExtensionAccount,
   ExtensionInterface,
 } from 'contexts/Extensions/types';
-import { AnyFunction } from 'types';
-import { isValidAddress } from 'Utils';
-import { defaultHandleImportExtension } from '../defaults';
-import { HandleImportExtension, ImportedAccount } from '../types';
+import type { AnyFunction } from 'types';
 import {
   addToLocalExtensions,
   getActiveAccountLocal,
   getInExternalAccounts,
 } from '../Utils';
+import { defaultHandleImportExtension } from '../defaults';
+import type { HandleImportExtension, ImportedAccount } from '../types';
 
 export const useImportExtension = () => {
   const { network } = useApi();
@@ -65,9 +65,9 @@ export const useImportExtension = () => {
     keyring.setSS58Format(network.ss58);
 
     // remove accounts that do not contain correctly formatted addresses.
-    newAccounts = newAccounts.filter((i: ExtensionAccount) => {
-      return isValidAddress(i.address);
-    });
+    newAccounts = newAccounts.filter((i: ExtensionAccount) =>
+      isValidAddress(i.address)
+    );
 
     // reformat addresses to ensure correct ss58 format
     newAccounts.forEach(async (account: ExtensionAccount) => {
@@ -105,14 +105,12 @@ export const useImportExtension = () => {
     );
 
     // format accounts properties
-    newAccounts = newAccounts.map((a: ExtensionAccount) => {
-      return {
-        address: a.address,
-        source: id,
-        name: a.name,
-        signer: extension.signer,
-      };
-    });
+    newAccounts = newAccounts.map((a: ExtensionAccount) => ({
+      address: a.address,
+      source: id,
+      name: a.name,
+      signer: extension.signer,
+    }));
     return {
       newAccounts,
       meta: {

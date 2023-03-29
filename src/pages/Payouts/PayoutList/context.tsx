@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PayoutListContextInterface } from 'pages/Pools/types';
+import type { PayoutListContextInterface } from 'pages/Pools/types';
 import React, { useState } from 'react';
 
 export const PayoutListContext =

@@ -1,15 +1,20 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { AccountProvider } from 'contexts/Account';
+import { Entry } from '@polkadotcloud/dashboard-ui';
+import { Router } from 'Router';
+import { BalancesProvider } from 'contexts/Accounts/Balances';
+import { LedgersProvider } from 'contexts/Accounts/Ledgers';
+import { ProxiesProvider } from 'contexts/Accounts/Proxies';
 import { APIProvider, useApi } from 'contexts/Api';
-import { BalancesProvider } from 'contexts/Balances';
 import { ConnectProvider } from 'contexts/Connect';
 import { ExtensionsProvider } from 'contexts/Extensions';
 import { ExtrinsicsProvider } from 'contexts/Extrinsics';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
+import { LedgerHardwareProvider } from 'contexts/Hardware/Ledger';
 import { HelpProvider } from 'contexts/Help';
+import { IdentitiesProvider } from 'contexts/Identities';
 import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
 import { ModalProvider } from 'contexts/Modal';
@@ -28,13 +33,11 @@ import { SubscanProvider } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
 import { TooltipProvider } from 'contexts/Tooltip';
 import { TransferOptionsProvider } from 'contexts/TransferOptions';
-import { TxFeesProvider } from 'contexts/TxFees';
+import { TxMetaProvider } from 'contexts/TxMeta';
 import { UIProvider } from 'contexts/UI';
 import { ValidatorsProvider } from 'contexts/Validators';
 import { withProviders } from 'library/Hooks';
-import { Router } from 'Router';
 import { ThemeProvider } from 'styled-components';
-import { EntryWrapper as Wrapper } from 'Wrappers';
 
 // `polkadot-dashboard-ui` theme classes are inserted here.
 export const WrappedRouter = () => {
@@ -42,9 +45,9 @@ export const WrappedRouter = () => {
   const { network } = useApi();
 
   return (
-    <Wrapper className={`theme-${network.name} theme-${mode}`}>
+    <Entry mode={mode} network={network.name}>
       <Router />
-    </Wrapper>
+    </Entry>
   );
 };
 
@@ -63,12 +66,15 @@ export const ThemedRouter = () => {
 export const Providers = withProviders(
   FiltersProvider,
   APIProvider,
+  LedgerHardwareProvider,
   ExtensionsProvider,
   ConnectProvider,
   HelpProvider,
   NetworkMetricsProvider,
-  AccountProvider,
+  IdentitiesProvider,
+  ProxiesProvider,
   BalancesProvider,
+  LedgersProvider,
   StakingProvider,
   PoolsConfigProvider,
   BondedPoolsProvider,
@@ -85,7 +91,7 @@ export const Providers = withProviders(
   MenuProvider,
   TooltipProvider,
   NotificationsProvider,
-  TxFeesProvider,
+  TxMetaProvider,
   ExtrinsicsProvider,
   ModalProvider,
   OverlayProvider,

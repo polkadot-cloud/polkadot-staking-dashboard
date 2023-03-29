@@ -1,10 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import { Theme } from 'contexts/Themes/types';
-import { PageProps } from 'pages/types';
-import React, { FunctionComponent, SVGProps } from 'react';
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import type { Theme } from 'contexts/Themes/types';
+import type { PageProps } from 'pages/types';
+import type React from 'react';
+import type { FunctionComponent, SVGProps } from 'react';
 
 export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
@@ -19,7 +20,7 @@ type NetworkColor =
   | 'transparent'
   | 'pending';
 export interface Network {
-  name: string;
+  name: NetworkName;
   endpoints: {
     rpc: string;
     lightClient: AnyApi;
@@ -58,7 +59,7 @@ export interface PageCategory {
   key: string;
 }
 
-export type PageCategories = Array<PageCategory>;
+export type PageCategoryItems = Array<PageCategory>;
 
 export interface PageItem {
   category: number;
@@ -75,7 +76,7 @@ export interface PageItem {
   };
 }
 
-export type PagesConfig = Array<PageItem>;
+export type PagesConfigItems = Array<PageItem>;
 
 export type MaybeAccount = string | null;
 

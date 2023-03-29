@@ -4,7 +4,7 @@
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useEffect, useState } from 'react';
-import { AnyApi } from 'types';
+import type { AnyApi } from 'types';
 import { rmCommas } from 'Utils';
 
 export const useBlockNumber = () => {

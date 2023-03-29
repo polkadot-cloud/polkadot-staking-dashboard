@@ -3,14 +3,14 @@
 
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonHelp } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp } from '@polkadotcloud/dashboard-ui';
 import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import { StatusLabelProps } from './types';
 import { Wrapper } from './Wrapper';
+import type { StatusLabelProps } from './types';
 
 export const StatusLabel = ({
   title,

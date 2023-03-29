@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useRef } from 'react';
 import { setStateWithRef } from 'Utils';
+import React, { useRef } from 'react';
 import { defaultThemeContext } from './defaults';
-import { Theme, ThemeContextInterface } from './types';
+import type { Theme, ThemeContextInterface } from './types';
 
 export const ThemeContext =
   React.createContext<ThemeContextInterface>(defaultThemeContext);

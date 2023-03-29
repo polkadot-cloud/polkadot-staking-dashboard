@@ -26,15 +26,15 @@ export const BarChartWrapper = styled.div<{ lessPadding?: boolean }>`
   }
   .d1 {
     background: var(--network-color-primary);
-    color: white;
+    color: rgba(255, 255, 255, 0.9);
   }
   .d2 {
     background: var(--network-color-secondary);
-    color: white;
+    color: rgba(255, 255, 255, 0.9);
   }
   .d3 {
     background: var(--text-color-secondary);
-    color: white;
+    color: rgba(255, 255, 255, 0.9);
   }
   .d4 {
     background: var(--button-secondary-background);

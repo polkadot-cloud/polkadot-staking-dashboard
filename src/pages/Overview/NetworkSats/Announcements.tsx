@@ -3,27 +3,27 @@
 
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import BigNumber from 'bignumber.js';
-import { useApi } from 'contexts/Api';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import { BondedPool } from 'contexts/Pools/types';
-import { useStaking } from 'contexts/Staking';
-import { useUi } from 'contexts/UI';
-import { motion } from 'framer-motion';
-import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
-import { useTranslation } from 'react-i18next';
 import {
   capitalizeFirstLetter,
   planckToUnit,
   rmCommas,
   sortWithNull,
 } from 'Utils';
+import BigNumber from 'bignumber.js';
+import { useApi } from 'contexts/Api';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import type { BondedPool } from 'contexts/Pools/types';
+import { useStaking } from 'contexts/Staking';
+import { useUi } from 'contexts/UI';
+import { motion } from 'framer-motion';
+import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
+import { useTranslation } from 'react-i18next';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');
-  const { poolsSyncing, isSyncing } = useUi();
+  const { isPoolSyncing, isSyncing } = useUi();
   const { network } = useApi();
   const { staking } = useStaking();
   const { units } = network;
@@ -90,7 +90,7 @@ export const Announcements = () => {
     announcements.push(null);
   }
 
-  if (bondedPools.length && poolMembers.length > 0 && !poolsSyncing) {
+  if (bondedPools.length && poolMembers.length > 0 && !isPoolSyncing) {
     // total locked in pols
     announcements.push({
       class: 'neutral',

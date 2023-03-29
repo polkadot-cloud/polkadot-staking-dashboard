@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { BarSegmentShowLabelThreshold } from './defaults';
-import { BarSegmentProps } from './types';
+import type { BarSegmentProps } from './types';
 
 export const BarSegment = ({
   dataClass,
@@ -10,19 +10,17 @@ export const BarSegment = ({
   flexGrow,
   label,
   forceShow,
-}: BarSegmentProps) => {
-  return (
-    <div
-      className={dataClass}
-      style={{
-        width: `${flexGrow || forceShow ? 100 : widthPercent}%`,
-        flexGrow,
-      }}
-    >
-      {widthPercent >= BarSegmentShowLabelThreshold ||
-      (widthPercent < BarSegmentShowLabelThreshold && forceShow) ? (
-        <span>{label}</span>
-      ) : null}
-    </div>
-  );
-};
+}: BarSegmentProps) => (
+  <div
+    className={dataClass}
+    style={{
+      width: `${flexGrow || forceShow ? 100 : widthPercent}%`,
+      flexGrow,
+    }}
+  >
+    {widthPercent >= BarSegmentShowLabelThreshold ||
+    (widthPercent < BarSegmentShowLabelThreshold && forceShow) ? (
+      <span>{label}</span>
+    ) : null}
+  </div>
+);

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { determinePoolDisplay } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -11,13 +12,12 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
-import { determinePoolDisplay } from 'Utils';
 import { useStatusButtons } from './useStatusButtons';
 
 export const MembershipStatus = () => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
-  const { poolsSyncing } = useUi();
+  const { isPoolSyncing } = useUi();
   const { openModalWith } = useModal();
   const { label, buttons } = useStatusButtons();
   const { bondedPools, meta } = useBondedPools();
@@ -33,9 +33,9 @@ export const MembershipStatus = () => {
   let membershipDisplay = t('pools.notInPool');
 
   if (selectedActivePool) {
-    const pool = bondedPools.find((p: any) => {
-      return p.addresses.stash === selectedActivePool.addresses.stash;
-    });
+    const pool = bondedPools.find(
+      (p: any) => p.addresses.stash === selectedActivePool.addresses.stash
+    );
     if (pool) {
       // Determine pool membership display.
       const metadata = meta.bonded_pools?.metadata ?? [];
@@ -88,7 +88,7 @@ export const MembershipStatus = () => {
           label={t('pools.poolMembership')}
           helpKey="Pool Membership"
           stat={`${t('pools.notInPool')}`}
-          buttons={poolsSyncing ? [] : buttons}
+          buttons={isPoolSyncing ? [] : buttons}
         />
       )}
     </>

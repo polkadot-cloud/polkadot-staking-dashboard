@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { determinePoolDisplay } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -16,7 +17,6 @@ import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-import { determinePoolDisplay } from 'Utils';
 import { Item } from './Item';
 import { Tips } from './Tips';
 import { StatusWrapper } from './Wrappers';
@@ -26,7 +26,7 @@ export const StakeStatus = () => {
   const { network } = useApi();
   const navigate = useNavigate();
   const {
-    networkSyncing,
+    isNetworkSyncing,
     isSyncing,
     getSyncById,
     getSyncStart,
@@ -81,9 +81,9 @@ export const StakeStatus = () => {
 
   const poolDisplay = () => {
     if (selectedActivePool) {
-      const pool = bondedPools.find((p: any) => {
-        return p.addresses.stash === selectedActivePool.addresses.stash;
-      });
+      const pool = bondedPools.find(
+        (p: any) => p.addresses.stash === selectedActivePool.addresses.stash
+      );
       if (pool) {
         const metadata = meta.bonded_pools?.metadata ?? [];
         const batchIndex = bondedPools.indexOf(pool);
@@ -109,9 +109,9 @@ export const StakeStatus = () => {
         .earningRewards;
 
   return (
-    <CardWrapper>
+    <CardWrapper noPadding>
       <StatusWrapper includeBorder={showTips}>
-        {networkSyncing || (activeAccount && !getSyncSynced(syncId)) ? (
+        {isNetworkSyncing || (activeAccount && !getSyncSynced(syncId)) ? (
           <Item
             leftIcon={{ show: true, status: 'off' }}
             text={`${t('overview.syncingStatus')}...`}
@@ -120,9 +120,9 @@ export const StakeStatus = () => {
           <>
             {!activeAccount ? (
               <Item
-                text={t('overview.noAccountConnected')}
+                text={t('overview.noActiveAccount')}
                 ctaText={`${t('overview.connect')}`}
-                onClick={() => openModalWith('ConnectAccounts', {}, 'large')}
+                onClick={() => openModalWith('Accounts', {}, 'large')}
               />
             ) : (
               <>

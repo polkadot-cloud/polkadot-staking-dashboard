@@ -4,20 +4,20 @@
 import BigNumber from 'bignumber.js';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
-import { useTxFees } from 'contexts/TxFees';
+import { useTxMeta } from 'contexts/TxMeta';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { NominateStatusBar } from 'library/Form/NominateStatusBar';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import { SetupStepProps } from 'library/SetupSteps/types';
+import type { SetupStepProps } from 'library/SetupSteps/types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const { activeAccount } = useConnect();
-  const { txFees } = useTxFees();
+  const { txFees } = useTxMeta();
   const { getSetupProgress, setActiveAccountSetup } = useSetup();
   const setup = getSetupProgress('nominator', activeAccount);
   const { progress } = setup;

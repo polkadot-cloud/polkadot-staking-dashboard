@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { BondedPoolsContextState } from '../types';
+import type { BondedPoolsContextState } from '../types';
 
 export const defaultBondedPoolsContext: BondedPoolsContextState = {
   // eslint-disable-next-line

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { ListProps, PaginationWrapperProps } from './types';
+import type { ListProps, PaginationWrapperProps } from './types';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -37,7 +37,7 @@ export const Header = styled.div`
       font-size: 1.1rem;
       margin: 0 0.5rem 0 0.75rem;
       opacity: 0.6;
-      transition: all 0.2s;
+      transition: all var(--transition-duration);
 
       &:hover {
         opacity: 0.9;

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonPrimary } from '@polkadotcloud/dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -22,7 +22,7 @@ export const ClosurePrompts = () => {
   const { mode } = useTheme();
   const { openModalWith } = useModal();
   const { membership } = usePoolMemberships();
-  const { poolsSyncing } = useUi();
+  const { isPoolSyncing } = useUi();
   const { isBonding, selectedActivePool, isDepositor, poolNominations } =
     useActivePools();
   const { getTransferOptions } = useTransferOptions();
@@ -34,7 +34,7 @@ export const ClosurePrompts = () => {
 
   // is the pool in a state for the depositor to close
   const depositorCanClose =
-    !poolsSyncing &&
+    !isPoolSyncing &&
     isDepositor() &&
     state === 'Destroying' &&
     memberCounter === '1';
@@ -70,7 +70,7 @@ export const ClosurePrompts = () => {
                   marginRight
                   text={t('pools.unbond')}
                   disabled={
-                    poolsSyncing ||
+                    isPoolSyncing ||
                     (!depositorCanWithdraw && !depositorCanUnbond)
                   }
                   onClick={() =>
@@ -88,7 +88,7 @@ export const ClosurePrompts = () => {
                       ? t('pools.unlocked')
                       : String(totalUnlockChuncks ?? 0)
                   }
-                  disabled={poolsSyncing || !isBonding()}
+                  disabled={isPoolSyncing || !isBonding()}
                   onClick={() =>
                     openModalWith(
                       'UnlockChunks',

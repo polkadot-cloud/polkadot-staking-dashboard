@@ -1,15 +1,15 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { rmCommas, setStateWithRef } from 'Utils';
 import BigNumber from 'bignumber.js';
-import { ImportedAccount } from 'contexts/Connect/types';
-import {
+import type { ImportedAccount } from 'contexts/Connect/types';
+import type {
   PoolMembership,
   PoolMembershipsContextState,
 } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, Fn } from 'types';
-import { rmCommas, setStateWithRef } from 'Utils';
+import type { AnyApi, Fn } from 'types';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import * as defaults from './defaults';
@@ -62,11 +62,12 @@ export const PoolMembershipsProvider = ({
   };
 
   // unsubscribe from pool memberships on unmount
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       unsubscribeAll();
-    };
-  }, []);
+    },
+    []
+  );
 
   // unsubscribe from all pool memberships
   const unsubscribeAll = () => {

@@ -1,14 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { greaterThanZero } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { BarSegment } from 'library/BarChart/BarSegment';
 import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { useTranslation } from 'react-i18next';
-import { greaterThanZero } from 'Utils';
-import { BondedChartProps } from '../../pages/Nominate/Active/types';
+import type { BondedChartProps } from '../../pages/Nominate/Active/types';
 
 export const BondedChart = ({
   active,

@@ -10,6 +10,7 @@ import {
   faUserEdit,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { camelize } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -22,8 +23,7 @@ import { ValidatorList } from 'library/ValidatorList';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { camelize } from 'Utils';
-import {
+import type {
   GenerateNominationsInnerProps,
   Nominations,
 } from '../SetupSteps/types';
@@ -184,23 +184,19 @@ export const GenerateNominations = ({
     setSelectActive,
   }: any) => {
     removeValidatorMetaBatch(batchKey);
-    const _nominations = [...nominations].filter((n: any) => {
-      return !selected.map((_s: any) => _s.address).includes(n.address);
-    });
+    const _nominations = [...nominations].filter(
+      (n: any) => !selected.map((_s: any) => _s.address).includes(n.address)
+    );
     setNominations([..._nominations]);
     updateSetters([..._nominations]);
     setSelectActive(false);
     resetSelected();
   };
 
-  const disabledMaxNominations = () => {
-    return maxNominations.isLessThan(nominations.length);
-  };
-  const disabledAddFavorites = () => {
-    return (
-      !favoritesList?.length || maxNominations.isLessThan(nominations.length)
-    );
-  };
+  const disabledMaxNominations = () =>
+    maxNominations.isLessThan(nominations.length);
+  const disabledAddFavorites = () =>
+    !favoritesList?.length || maxNominations.isLessThan(nominations.length);
 
   // accumulate generation methods
   const methods = [
@@ -328,7 +324,7 @@ export const GenerateNominations = ({
         <div>
           {!isReadOnlyAccount(activeAccount) && !method && (
             <>
-              <SelectItems flex>
+              <SelectItems layout="three-col">
                 {methods.map((m: any, n: number) => (
                   <SelectItem
                     key={`gen_method_${n}`}
@@ -341,7 +337,7 @@ export const GenerateNominations = ({
                     includeToggle={false}
                     grow={false}
                     hoverBorder
-                    flex
+                    layout="three-col"
                   />
                 ))}
               </SelectItems>

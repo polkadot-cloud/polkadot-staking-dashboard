@@ -1,7 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { TIPS_CONFIG } from 'config/tips';
+import { setStateWithRef } from 'Utils';
+import { TipsConfig } from 'config/tips';
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -14,8 +15,7 @@ import { useFillVariables } from 'library/Hooks/useFillVariables';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AnyJson } from 'types';
-import { setStateWithRef } from 'Utils';
+import type { AnyJson } from 'types';
 import { Items } from './Items';
 import { PageToggle } from './PageToggle';
 import { Syncing } from './Syncing';
@@ -25,7 +25,7 @@ export const Tips = () => {
   const { i18n, t } = useTranslation();
   const { network } = useApi();
   const { activeAccount } = useConnect();
-  const { networkSyncing } = useUi();
+  const { isNetworkSyncing } = useUi();
   const { fillVariables } = useFillVariables();
   const { membership } = usePoolMemberships();
   const { isNominating, staking } = useStaking();
@@ -59,7 +59,7 @@ export const Tips = () => {
   // This function ensures totalPages is never surpassed, but does not guarantee
   // that the start item will maintain across resizes.
   const getPage = () => {
-    const totalItmes = networkSyncing ? 1 : items.length;
+    const totalItmes = isNetworkSyncing ? 1 : items.length;
     const itemsPerPage = getItemsPerPage();
     const totalPages = Math.ceil(totalItmes / itemsPerPage);
     if (pageRef.current > totalPages) {
@@ -132,7 +132,7 @@ export const Tips = () => {
   }
 
   // filter tips relevant to connected account.
-  let items = TIPS_CONFIG.filter((i: AnyJson) => segments.includes(i.s));
+  let items = TipsConfig.filter((i: AnyJson) => segments.includes(i.s));
 
   items = items.map((i: any) => {
     const { id } = i;
@@ -149,10 +149,10 @@ export const Tips = () => {
   });
 
   // determine items to be displayed
-  const end = networkSyncing
+  const end = isNetworkSyncing
     ? 1
     : Math.min(_page * _itemsPerPage, items.length);
-  const start = networkSyncing
+  const start = isNetworkSyncing
     ? 1
     : _page * _itemsPerPage - (_itemsPerPage - 1);
 
@@ -164,7 +164,7 @@ export const Tips = () => {
   return (
     <TipsWrapper>
       <div style={{ flexGrow: 1 }}>
-        {networkSyncing ? (
+        {isNetworkSyncing ? (
           <Syncing />
         ) : (
           <Items

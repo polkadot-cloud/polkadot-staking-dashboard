@@ -6,7 +6,7 @@ import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
-import { Pool } from 'library/Pool/types';
+import type { Pool } from 'library/Pool/types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { capitalizeFirstLetter, planckToUnit, rmCommas } from 'Utils';

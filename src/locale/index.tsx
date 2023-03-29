@@ -5,7 +5,7 @@ import { AppVersion, DefaultLocale } from 'consts';
 import { enGB, zhCN } from 'date-fns/locale';
 import i18next from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { AnyJson } from 'types';
+import type { AnyJson } from 'types';
 import baseEn from './en/base.json';
 import helpEn from './en/help.json';
 import libEn from './en/library.json';
@@ -49,7 +49,7 @@ export const fallbackResources = {
 // Refresh local storage resources if in development, or if new app version is present.
 if (
   localStorage.getItem('app_version') !== AppVersion ||
-  process.env.NODE_ENV === 'development'
+  import.meta.env.MODE === 'development'
 ) {
   localStorage.removeItem('lng_resources');
 }
@@ -66,7 +66,7 @@ const defaultLng = dynamicLoad ? DefaultLocale : lng;
 
 // configure i18n object.
 i18next.use(initReactI18next).init({
-  debug: process.env.REACT_APP_DEBUG_I18N === '1',
+  debug: import.meta.env.VITE_DEBUG_I18N === '1',
   fallbackLng: DefaultLocale,
   lng: defaultLng,
   resources,
@@ -87,9 +87,7 @@ const i18ToLocaleMap: { [key: string]: string } = {
 };
 
 // convert i18n locale key to BCP 47 key if needed.
-export const i18ToLocale = (l: string) => {
-  return i18ToLocaleMap[l] || DefaultLocale;
-};
+export const i18ToLocale = (l: string) => i18ToLocaleMap[l] || DefaultLocale;
 
 // export i18next for context.
 export { i18next };

@@ -4,7 +4,7 @@
 import { stringToU8a } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 import { NetworkList } from 'config/networks';
-import { APIConstants, APIContextInterface } from 'contexts/Api/types';
+import type { APIConstants, APIContextInterface } from 'contexts/Api/types';
 
 export const consts: APIConstants = {
   bondDuration: new BigNumber(0),

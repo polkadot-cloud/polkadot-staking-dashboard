@@ -3,15 +3,15 @@
 
 import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonHelp } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp } from '@polkadotcloud/dashboard-ui';
+import { planckToUnit } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit } from 'Utils';
-import { NominateStatusBarProps } from '../types';
+import type { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 
 export const NominateStatusBar = ({ value }: NominateStatusBarProps) => {

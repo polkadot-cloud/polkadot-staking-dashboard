@@ -9,11 +9,11 @@ export const TipsWrapper = styled.div`
   width: 100%;
   display: flex;
   position: relative;
-  top: 0.25rem;
-  margin-top: 0.35rem;
+  padding: 0.5rem 0.75rem 0.5rem 1rem;
+  margin-bottom: 0.5rem;
 
   @media (max-width: ${SideMenuStickyThreshold}px) {
-    padding: 0 0.5rem;
+    padding: 0.5rem 1rem;
   }
 `;
 
@@ -93,7 +93,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
-          transition: color 0.15s;
+          transition: color var(--transition-duration);
         }
         .more {
           color: var(--text-color-secondary);
@@ -102,7 +102,7 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           top: 0.43rem;
           display: flex;
           align-items: center;
-          transition: all 0.15s;
+          transition: all var(--transition-duration);
           font-size: 1rem;
           opacity: 0.5;
           > svg {
@@ -115,12 +115,10 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
 `;
 
 export const PageToggleWrapper = styled.div`
-  border: 1px solid var(--border-primary-color);
   color: var(--text-color-secondary);
-  padding: 0.1rem 0.1rem;
   border-radius: 1.5rem;
   position: relative;
-  top: 0.1rem;
+  top: 0.2rem;
   display: flex;
   flex-flow: row wrap;
   margin-left: 0.5rem;
@@ -129,7 +127,7 @@ export const PageToggleWrapper = styled.div`
     margin: 0 0.5rem;
     opacity: 0.75;
     font-size: 1.1rem;
-    transition: color 0.2s;
+    transition: color var(--transition-duration);
     > svg {
       color: var(--text-color-secondary);
     }

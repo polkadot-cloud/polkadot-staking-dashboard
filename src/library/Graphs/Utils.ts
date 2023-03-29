@@ -1,7 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { greaterThanZero, planckToUnit } from 'Utils';
 import BigNumber from 'bignumber.js';
+import { MaxPayoutDays } from 'consts';
 import {
   addDays,
   differenceInDays,
@@ -11,37 +13,60 @@ import {
   startOfDay,
   subDays,
 } from 'date-fns';
-import { AnyApi, AnySubscan } from 'types';
-import { greaterThanZero, planckToUnit } from 'Utils';
-import { PayoutDayCursor } from './types';
+import type { AnyApi, AnySubscan } from 'types';
+import type { PayoutDayCursor } from './types';
+
+// Take non-zero rewards in most-recent order.
+export const sortNonZeroPayouts = (
+  payouts: AnySubscan,
+  poolClaims: AnySubscan,
+  capMaxDays: boolean
+) => {
+  const list = [
+    ...payouts.concat(poolClaims).filter((p: AnySubscan) => p.amount > 0),
+  ].sort(
+    (a: AnySubscan, b: AnySubscan) => b.block_timestamp - a.block_timestamp
+  );
+
+  // this function always calculates from the current date (not fromDate).
+  const fromTimestamp = getUnixTime(subDays(new Date(), MaxPayoutDays));
+
+  if (capMaxDays) {
+    return list.filter((l: AnySubscan) => l.block_timestamp >= fromTimestamp);
+  }
+
+  return list;
+};
 
 // Given payouts, calculate daily income and fill missing days with zero amounts.
-export const calculatePayoutsByDay = (
-  payouts: any,
+export const calculateDailyPayouts = (
+  payouts: AnySubscan,
+  fromDate: Date,
   maxDays: number,
   units: number,
   // eslint-disable-next-line
   subject: string
 ) => {
-  let payoutsByDay: any = [];
+  let dailyPayouts: AnySubscan = [];
 
   // remove days that are beyond end day limit
-  payouts = payouts.filter((p: AnySubscan) => {
-    return daysPassed(fromUnixTime(p.block_timestamp), new Date()) <= maxDays;
-  });
+  payouts = payouts.filter(
+    (p: AnySubscan) =>
+      daysPassed(fromUnixTime(p.block_timestamp), fromDate) <= maxDays
+  );
 
   // return now if no payouts.
   if (!payouts.length) return payouts;
 
   // post-fill any missing days. [current day -> last payout]
-  payoutsByDay = postFillMissingDays(payouts, maxDays);
+  dailyPayouts = postFillMissingDays(payouts, fromDate, maxDays);
 
   // start iterating payouts, most recent first.
   //
   // payouts passed.
   let p = 0;
   // current day cursor.
-  let curDay: Date = new Date();
+  let curDay: Date = fromDate;
   // current payout cursor.
   let curPayout: PayoutDayCursor = {
     amount: new BigNumber(0),
@@ -59,8 +84,8 @@ export const calculatePayoutsByDay = (
     }
 
     // handle surpassed maximum days.
-    if (daysPassed(thisDay, new Date()) >= maxDays) {
-      payoutsByDay.push({
+    if (daysPassed(thisDay, fromDate) >= maxDays) {
+      dailyPayouts.push({
         amount: planckToUnit(curPayout.amount, units),
         event_id: getEventId(curPayout),
         block_timestamp: getUnixTime(curDay),
@@ -73,8 +98,8 @@ export const calculatePayoutsByDay = (
 
     // handle new day.
     if (daysDiff > 0) {
-      // add current payout cursor to payoutsByDay.
-      payoutsByDay.push({
+      // add current payout cursor to dailyPayouts.
+      dailyPayouts.push({
         amount: planckToUnit(curPayout.amount, units),
         event_id: getEventId(curPayout),
         block_timestamp: getUnixTime(curDay),
@@ -96,7 +121,7 @@ export const calculatePayoutsByDay = (
 
     // if only 1 payout exists, exit early here.
     if (payouts.length === 1) {
-      payoutsByDay.push({
+      dailyPayouts.push({
         amount: planckToUnit(curPayout.amount, units),
         event_id: getEventId(curPayout),
         block_timestamp: getUnixTime(curDay),
@@ -106,7 +131,7 @@ export const calculatePayoutsByDay = (
   }
 
   // return payout amounts as plain numbers.
-  return payoutsByDay.map((q: AnyApi) => ({
+  return dailyPayouts.map((q: AnyApi) => ({
     ...q,
     amount: Number(q.amount.toString()),
   }));
@@ -114,18 +139,19 @@ export const calculatePayoutsByDay = (
 
 // Calculate average payouts per day.
 export const calculatePayoutAverages = (
-  payoutsByDay: AnySubscan,
-  average: number,
-  days: number
+  payouts: AnySubscan,
+  fromDate: Date,
+  days: number,
+  avgDays: number
 ) => {
-  // if we don't need to take an average, just return `payoutsByDay`.
-  if (average <= 1) return payoutsByDay;
+  // if we don't need to take an average, just return `payouts`.
+  if (avgDays <= 1) return payouts;
 
-  // create moving average value over `average` past days, if any.
-  const payoutsAverages = [];
-  for (let i = 0; i < payoutsByDay.length; i++) {
+  // create moving average value over `avgDays` past days, if any.
+  let payoutsAverages = [];
+  for (let i = 0; i < payouts.length; i++) {
     // average period end.
-    const end = Math.max(0, i - average);
+    const end = Math.max(0, i - avgDays);
 
     // the total amount earned in period.
     let total = 0;
@@ -133,53 +159,69 @@ export const calculatePayoutAverages = (
     let num = 0;
 
     for (let j = i; j >= end; j--) {
-      if (payoutsByDay[j]) {
-        total += payoutsByDay[j].amount;
+      if (payouts[j]) {
+        total += payouts[j].amount;
       }
       // increase by one to treat non-existent as zero value
       num += 1;
     }
 
     if (total === 0) {
-      total = payoutsByDay[i].amount;
+      total = payouts[i].amount;
     }
 
     payoutsAverages.push({
       amount: total / num,
-      event_id: payoutsByDay[i].event_id,
-      block_timestamp: payoutsByDay[i].block_timestamp,
+      block_timestamp: payouts[i].block_timestamp,
     });
   }
 
   // return an array with the expected number of items
-  return payoutsAverages.slice(0, days);
+  payoutsAverages = payoutsAverages.filter(
+    (p: AnySubscan) =>
+      daysPassed(fromUnixTime(p.block_timestamp), fromDate) <= days
+  );
+
+  return payoutsAverages;
 };
 
 // Fetch rewards and graph meta data.
 //
 // Format provided payouts and returns the last payment.
 export const formatRewardsForGraphs = (
+  fromDate: Date,
   days: number,
   units: number,
   payouts: AnySubscan,
   poolClaims: AnySubscan,
   unclaimedPayouts: AnySubscan
 ) => {
-  // process staking payouts.
-  const payoutsByDay = processPayouts(payouts, days, units, 'staking');
-  const poolClaimsByDay = processPayouts(poolClaims, days, units, 'pools');
-  const unclaimPayoutsByDay = processPayouts(
+  // process nominator payouts.
+  const allPayouts = processPayouts(payouts, fromDate, days, units, 'nominate');
+
+  // process unclaimed nominator payouts.
+  const allUnclaimedPayouts = processPayouts(
     unclaimedPayouts,
+    fromDate,
     days,
     units,
-    'staking'
+    'nominate'
+  );
+
+  // process pool claims.
+  const allPoolClaims = processPayouts(
+    poolClaims,
+    fromDate,
+    days,
+    units,
+    'pools'
   );
 
   return {
     // reverse rewards: most recent last
-    payoutsByDay,
-    poolClaimsByDay,
-    unclaimPayoutsByDay,
+    allPayouts,
+    allUnclaimedPayouts,
+    allPoolClaims,
     lastReward: getLatestReward(payouts, poolClaims),
   };
 };
@@ -189,6 +231,7 @@ export const formatRewardsForGraphs = (
 // calls the relevant functions on raw payouts to format them correctly.
 const processPayouts = (
   payouts: AnySubscan,
+  fromDate: Date,
   days: number,
   units: number,
   subject: string
@@ -196,29 +239,69 @@ const processPayouts = (
   // normalise payout timestamps.
   const normalised = normalisePayouts(payouts);
   // calculate payouts per day from the current day.
-  let p = calculatePayoutsByDay(normalised, days, units, subject);
+  let p = calculateDailyPayouts(normalised, fromDate, days, units, subject);
   // pre-fill payouts if max days have not been reached.
-  p = p.concat(prefillMissingDays(p, days));
+  p = p.concat(prefillMissingDays(p, fromDate, days));
   // fill in gap days between payouts with zero values.
-  p = fillGapDays(p);
+  p = fillGapDays(p, fromDate);
   // reverse payouts: most recent last.
   p = p.reverse();
-  return p;
+
+  // use normalised payouts for calculating the 10-day average prior to the start of the payout graph.
+  const avgDays = 10;
+  const preNormalised = getPreMaxDaysPayouts(
+    normalised,
+    fromDate,
+    days,
+    avgDays
+  );
+  // start of average calculation should be the earliest date.
+  const averageFromDate = subDays(fromDate, MaxPayoutDays);
+
+  let a = calculateDailyPayouts(
+    preNormalised,
+    averageFromDate,
+    avgDays,
+    units,
+    subject
+  );
+  // prefill payouts if we are missing the earlier dates.
+  a = a.concat(prefillMissingDays(a, averageFromDate, avgDays));
+  // fill in gap days between payouts with zero values.
+  a = fillGapDays(a, averageFromDate);
+  // reverse payouts: most recent last.
+  a = a.reverse();
+
+  return { p, a };
 };
 
-// Combine reward payouts.
+// Get payout average in `avgDays` day period after to `days` threshold
+//
+// These payouts are used for calculating the `avgDays`-day average prior to the start of the payout
+// graph.
+const getPreMaxDaysPayouts = (
+  payouts: AnySubscan,
+  fromDate: Date,
+  days: number,
+  avgDays: number
+) => {
+  // remove payouts that are not within `avgDays` `days` pre-graph window.
+  return payouts.filter(
+    (p: AnySubscan) =>
+      daysPassed(fromUnixTime(p.block_timestamp), fromDate) > days &&
+      daysPassed(fromUnixTime(p.block_timestamp), fromDate) <= days + avgDays
+  );
+};
+
+// Combine payouts and pool claims.
 //
 // combines payouts and pool claims into daily records. Removes the `event_id` field from records.
-export const combineRewardsByDay = (
-  payoutsByDay: AnySubscan,
-  poolClaimsByDay: AnySubscan
-) => {
+export const combineRewards = (payouts: AnySubscan, poolClaims: AnySubscan) => {
   // we first check if actual payouts exist, e.g. there are non-zero payout
   // amounts present in either payouts or pool claims.
   const poolClaimExists =
-    poolClaimsByDay.find((p: AnySubscan) => p.amount > 0) || null;
-  const payoutExists =
-    payoutsByDay.find((p: AnySubscan) => p.amount > 0) || null;
+    poolClaims.find((p: AnySubscan) => p.amount > 0) || null;
+  const payoutExists = payouts.find((p: AnySubscan) => p.amount > 0) || null;
 
   // if no pool claims exist but payouts do, return payouts w.o. event_id
   // also do this if there are no payouts period.
@@ -226,7 +309,7 @@ export const combineRewardsByDay = (
     (!poolClaimExists && payoutExists) ||
     (!payoutExists && !poolClaimExists)
   ) {
-    return payoutsByDay.map((p: AnySubscan) => ({
+    return payouts.map((p: AnySubscan) => ({
       amount: p.amount,
       block_timestamp: p.block_timestamp,
     }));
@@ -234,7 +317,7 @@ export const combineRewardsByDay = (
 
   // if no payouts exist but pool claims do, return pool claims w.o. event_id
   if (!payoutExists && poolClaimExists) {
-    return poolClaimsByDay.map((p: AnySubscan) => ({
+    return poolClaims.map((p: AnySubscan) => ({
       amount: p.amount,
       block_timestamp: p.block_timestamp,
     }));
@@ -245,13 +328,13 @@ export const combineRewardsByDay = (
   // Now determine which dates to display.
   let payoutDays: Array<any> = [];
   // prefill `dates` with all pool claim and payout days
-  poolClaimsByDay.forEach((p: AnySubscan) => {
+  poolClaims.forEach((p: AnySubscan) => {
     const dayStart = getUnixTime(startOfDay(fromUnixTime(p.block_timestamp)));
     if (!payoutDays.includes(dayStart)) {
       payoutDays.push(dayStart);
     }
   });
-  payoutsByDay.forEach((p: AnySubscan) => {
+  payouts.forEach((p: AnySubscan) => {
     const dayStart = getUnixTime(startOfDay(fromUnixTime(p.block_timestamp)));
     if (!payoutDays.includes(dayStart)) {
       payoutDays.push(dayStart);
@@ -271,11 +354,11 @@ export const combineRewardsByDay = (
     let amount = 0;
 
     // check payouts exist on this day
-    const payoutsThisDay = payoutsByDay.filter((p: AnySubscan) =>
+    const payoutsThisDay = payouts.filter((p: AnySubscan) =>
       isSameDay(fromUnixTime(p.block_timestamp), fromUnixTime(d))
     );
     // check pool claims exist on this day
-    const poolClaimsThisDay = poolClaimsByDay.filter((p: AnySubscan) =>
+    const poolClaimsThisDay = poolClaims.filter((p: AnySubscan) =>
       isSameDay(fromUnixTime(p.block_timestamp), fromUnixTime(d))
     );
     // add amounts
@@ -330,14 +413,16 @@ export const getLatestReward = (
 // Fill in the days from the earliest payout day to `maxDays`.
 //
 // Takes the last (earliest) payout and fills the missing days from that payout day to `maxDays`.
-export const prefillMissingDays = (payoutsByDay: any, maxDays: number) => {
+export const prefillMissingDays = (
+  payouts: AnySubscan,
+  fromDate: Date,
+  maxDays: number
+) => {
   const newPayouts = [];
-  const payoutStartDay = subDays(startOfDay(new Date()), maxDays);
-  const payoutEndDay = !payoutsByDay.length
-    ? startOfDay(new Date())
-    : startOfDay(
-        fromUnixTime(payoutsByDay[payoutsByDay.length - 1].block_timestamp)
-      );
+  const payoutStartDay = subDays(startOfDay(fromDate), maxDays);
+  const payoutEndDay = !payouts.length
+    ? startOfDay(fromDate)
+    : startOfDay(fromUnixTime(payouts[payouts.length - 1].block_timestamp));
 
   const daysToPreFill = daysPassed(payoutStartDay, payoutEndDay);
 
@@ -356,11 +441,15 @@ export const prefillMissingDays = (payoutsByDay: any, maxDays: number) => {
 // Fill in the days from the current day to the last payout.
 //
 // Takes the first payout (most recent) and fills the missing days from current day.
-export const postFillMissingDays = (payouts: AnySubscan, maxDays: number) => {
+export const postFillMissingDays = (
+  payouts: AnySubscan,
+  fromDate: Date,
+  maxDays: number
+) => {
   const newPayouts = [];
   const payoutsEndDay = startOfDay(fromUnixTime(payouts[0].block_timestamp));
   const daysSinceLast = Math.min(
-    daysPassed(payoutsEndDay, startOfDay(new Date())),
+    daysPassed(payoutsEndDay, startOfDay(fromDate)),
     maxDays
   );
 
@@ -375,11 +464,11 @@ export const postFillMissingDays = (payouts: AnySubscan, maxDays: number) => {
 };
 
 // Fill gap days within payouts with zero amounts.
-export const fillGapDays = (payouts: AnySubscan) => {
+export const fillGapDays = (payouts: AnySubscan, fromDate: Date) => {
   const finalPayouts: AnySubscan = [];
 
   // current day cursor.
-  let curDay = new Date();
+  let curDay = fromDate;
 
   for (const p of payouts) {
     const thisDay = fromUnixTime(p.block_timestamp);

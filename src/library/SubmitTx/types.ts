@@ -1,9 +1,19 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import type React from 'react';
 
-export interface SubmitTxProps {
-  buttons: Array<React.ReactNode>;
+export type SubmitTxProps = SubmitProps & {
+  buttons?: Array<React.ReactNode>;
   fromController?: boolean;
+  noMargin?: boolean;
+};
+
+export interface SubmitProps {
+  uid?: number;
+  onSubmit: (customEvent?: string) => void;
+  submitting: boolean;
+  valid: boolean;
+  submitText?: string;
+  customEvent?: string;
 }

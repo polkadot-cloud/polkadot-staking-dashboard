@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PoolRoles } from 'contexts/Pools/types';
+import type { PoolRoles } from 'contexts/Pools/types';
 
 export interface RolesProps {
   batchKey: string;

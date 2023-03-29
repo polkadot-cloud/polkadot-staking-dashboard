@@ -1,8 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Dispatch, SetStateAction } from 'react';
-import { AnyJson, MaybeAccount } from 'types';
+import type React from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import type { AnyJson, MaybeAccount } from 'types';
+
+export interface SelectItemsProps {
+  layout?: 'two-col' | 'three-col';
+  children?: Array<React.ReactNode>;
+}
 
 export interface SelectItemProps {
   title: string;
@@ -10,7 +16,7 @@ export interface SelectItemProps {
   icon: AnyJson;
   selected: boolean;
   onClick: () => void;
-  flex?: boolean;
+  layout?: 'two-col' | 'three-col';
   hoverBorder?: boolean;
   grow?: boolean;
   disabled?: boolean;

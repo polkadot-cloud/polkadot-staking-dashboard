@@ -7,7 +7,7 @@ import { useOverlay } from 'contexts/Overlay';
 import { useAnimationControls } from 'framer-motion';
 import { Tip } from 'library/Tips/Tip';
 import React, { useEffect, useState } from 'react';
-import { ItemInnerWrapper, ItemsWrapper, ItemWrapper } from './Wrappers';
+import { ItemInnerWrapper, ItemWrapper, ItemsWrapper } from './Wrappers';
 
 export const ItemsInner = ({ items, page }: any) => {
   const controls = useAnimationControls();

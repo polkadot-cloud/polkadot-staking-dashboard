@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { capitalizeFirstLetter } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useOverlay } from 'contexts/Overlay';
 import { usePlugins } from 'contexts/Plugins';
@@ -8,7 +9,6 @@ import { useOutsideAlerter } from 'library/Hooks';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { capitalizeFirstLetter } from 'Utils';
 import { Disclaimer } from './Disclaimer';
 import { Status } from './Status';
 import { NetworkInfo, Separator, Summary, Wrapper } from './Wrappers';
@@ -36,9 +36,9 @@ export const NetworkBar = () => {
   const animate = open ? 'maximised' : 'minimised';
   const ref = useRef(null);
 
-  const PRIVACY_URL = process.env.REACT_APP_PRIVACY_URL;
-  const DISCLAIMER_URL = process.env.REACT_APP_DISCLAIMER_URL;
-  const ORGANISATION = process.env.REACT_APP_ORGANISATION;
+  const PRIVACY_URL = import.meta.env.VITE_PRIVACY_URL;
+  const DISCLAIMER_URL = import.meta.env.VITE_DISCLAIMER_URL;
+  const ORGANISATION = import.meta.env.VITE_ORGANISATION;
 
   const [networkName, setNetworkName] = useState<string>(
     capitalizeFirstLetter(network.name)

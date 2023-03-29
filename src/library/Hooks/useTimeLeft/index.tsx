@@ -1,15 +1,15 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { setStateWithRef } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { setStateWithRef } from 'Utils';
-import {
+import type {
   TimeLeftAll,
-  TimeleftDuration,
   TimeLeftFormatted,
   TimeLeftRaw,
+  TimeleftDuration,
 } from './types';
 import { getDuration } from './utils';
 
@@ -115,12 +115,13 @@ export const useTimeLeft = () => {
   }, [i18n.resolvedLanguage]);
 
   // clear intervals on unmount
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       clearInterval(minInterval);
       clearInterval(secInterval);
-    };
-  }, []);
+    },
+    []
+  );
 
   const setFromNow = (dateFrom: Date, dateTo: Date) => {
     setTimeleft(getTimeleft(getDuration(dateFrom)));

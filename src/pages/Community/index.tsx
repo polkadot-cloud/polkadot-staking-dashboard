@@ -3,11 +3,11 @@
 
 import { PageTitle } from 'library/PageTitle';
 import { useTranslation } from 'react-i18next';
-import { PageProps } from '../types';
-import { CommunitySectionsProvider, useCommunitySections } from './context';
+import type { PageProps } from '../types';
 import { Entity } from './Entity';
 import { List } from './List';
 import { Wrapper } from './Wrappers';
+import { CommunitySectionsProvider, useCommunitySections } from './context';
 
 export const CommunityInner = ({ page }: PageProps) => {
   const { t } = useTranslation('base');
@@ -24,10 +24,8 @@ export const CommunityInner = ({ page }: PageProps) => {
   );
 };
 
-export const Community = (props: PageProps) => {
-  return (
-    <CommunitySectionsProvider>
-      <CommunityInner {...props} />
-    </CommunitySectionsProvider>
-  );
-};
+export const Community = (props: PageProps) => (
+  <CommunitySectionsProvider>
+    <CommunityInner {...props} />
+  </CommunitySectionsProvider>
+);

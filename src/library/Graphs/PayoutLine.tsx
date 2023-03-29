@@ -21,11 +21,11 @@ import { useUi } from 'contexts/UI';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import { graphColors } from 'styles/graphs';
-import { AnySubscan } from 'types';
-import { PayoutLineProps } from './types';
+import type { AnySubscan } from 'types';
+import type { PayoutLineProps } from './types';
 import {
   calculatePayoutAverages,
-  combineRewardsByDay,
+  combineRewards,
   formatRewardsForGraphs,
 } from './Utils';
 
@@ -61,7 +61,11 @@ export const PayoutLine = ({
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
 
-  const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
+  // define the most recent date that we will show on the graph.
+  const fromDate = new Date();
+
+  const { allPayouts, allPoolClaims } = formatRewardsForGraphs(
+    fromDate,
     days,
     units,
     payoutsNoSlash,
@@ -69,10 +73,19 @@ export const PayoutLine = ({
     [] // Note: we are not using `unclaimedPayouts` here.
   );
 
-  // combine payouts and pool claims into one dataset and calculate averages.
-  const combined = combineRewardsByDay(payoutsByDay, poolClaimsByDay);
+  const { p: graphPayouts, a: graphPrePayouts } = allPayouts;
+  const { p: graphPoolClaims, a: graphPrePoolClaims } = allPoolClaims;
 
-  const combinedPayouts = calculatePayoutAverages(combined, 10, days);
+  // combine payouts and pool claims into one dataset and calculate averages.
+  const combined = combineRewards(graphPayouts, graphPoolClaims);
+  const preCombined = combineRewards(graphPrePayouts, graphPrePoolClaims);
+
+  const combinedPayouts = calculatePayoutAverages(
+    preCombined.concat(combined),
+    fromDate,
+    days,
+    10
+  );
 
   // determine color for payouts
   const color = notStaking

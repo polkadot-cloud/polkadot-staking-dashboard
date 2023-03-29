@@ -1,13 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { setStateWithRef } from 'Utils';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, AnyJson } from 'types';
-import { setStateWithRef } from 'Utils';
+import type { AnyApi, AnyJson } from 'types';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
-import {
+import type {
   ActiveEra,
   NetworkMetrics,
   NetworkMetricsContextInterface,

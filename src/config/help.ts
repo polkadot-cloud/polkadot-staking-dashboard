@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { HelpItems } from 'contexts/Help/types';
+import type { HelpItems } from 'contexts/Help/types';
 
-export const HELP_CONFIG: HelpItems = [
+export const HelpConfig: HelpItems = [
   {
     key: 'overview',
     definitions: [
@@ -18,6 +18,7 @@ export const HELP_CONFIG: HelpItems = [
       'Inflation',
       'Ideal Staked',
       'Supply Staked',
+      'Ledger Hardware Wallets',
     ],
     external: [
       [

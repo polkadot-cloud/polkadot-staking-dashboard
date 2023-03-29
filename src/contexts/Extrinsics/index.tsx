@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useRef, useState } from 'react';
 import { setStateWithRef } from 'Utils';
+import React, { useRef, useState } from 'react';
 import { defaultExtrinsicsContext } from './defaults';
-import { ExtrinsicsContextInterface } from './types';
+import type { ExtrinsicsContextInterface } from './types';
 
 export const ExtrinsicsContext =
   React.createContext<ExtrinsicsContextInterface>(defaultExtrinsicsContext);
@@ -20,14 +20,19 @@ export const ExtrinsicsProvider = ({
   const pendingRef = useRef(pending);
 
   const addPending = (nonce: string) => {
-    const _pending: string[] = [...pendingRef.current];
-    _pending.push(nonce);
-    setStateWithRef(_pending, setPending, pendingRef);
+    setStateWithRef(
+      [...pendingRef.current].concat(nonce),
+      setPending,
+      pendingRef
+    );
   };
 
   const removePending = (nonce: string) => {
-    const _pending = pendingRef.current.filter((n: string) => n !== nonce);
-    setStateWithRef(_pending, setPending, pendingRef);
+    setStateWithRef(
+      pendingRef.current.filter((n: string) => n !== nonce),
+      setPending,
+      pendingRef
+    );
   };
 
   return (

@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import {
+import { setStateWithRef, shuffle } from 'Utils';
+import type {
   BondedPool,
   BondedPoolsContextState,
   MaybePool,
@@ -10,8 +11,7 @@ import {
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
-import { setStateWithRef, shuffle } from 'Utils';
+import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
@@ -70,11 +70,9 @@ export const BondedPoolsProvider = ({
   }, [bondedPools]);
 
   const unsubscribe = () => {
-    Object.values(poolSubsRef.current).map((batch: Array<Fn>) => {
-      return Object.entries(batch).map(([, v]) => {
-        return v();
-      });
-    });
+    Object.values(poolSubsRef.current).map((batch: Array<Fn>) =>
+      Object.entries(batch).map(([, v]) => v())
+    );
     setBondedPools([]);
   };
 
@@ -292,13 +290,11 @@ export const BondedPoolsProvider = ({
   /*
    *  Helper: to add addresses to pool record.
    */
-  const getPoolWithAddresses = (id: number, pool: BondedPool) => {
-    return {
-      ...pool,
-      id,
-      addresses: createAccounts(id),
-    };
-  };
+  const getPoolWithAddresses = (id: number, pool: BondedPool) => ({
+    ...pool,
+    id,
+    addresses: createAccounts(id),
+  });
 
   const getBondedPool = (poolId: MaybePool) => {
     const pool = bondedPools.find((p: BondedPool) => p.id === poolId) ?? null;
