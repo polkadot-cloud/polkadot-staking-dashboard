@@ -249,7 +249,22 @@ const processPayouts = (
   p = p.reverse();
 
   // use normalised payouts for calculating the 10-day average prior to the start of the payout graph.
-  const a = getPreMaxDaysPayouts(normalised, fromDate, days);
+  const avgDays = 10;
+  const preNormalised = getPreMaxDaysPayouts(normalised, fromDate, days);
+  // start of average calculation should be the earliest date.
+  const averageFromDate = subDays(fromDate, MaxPayoutDays);
+
+  let a = calculatePayoutsByDay(
+    preNormalised,
+    averageFromDate,
+    avgDays,
+    units,
+    subject
+  );
+  // prefill payouts if we are missing the earlier dates.
+  a = a.concat(prefillMissingDays(a, averageFromDate, avgDays));
+  // fill in gap days between payouts with zero values.
+  a = fillGapDays(a, averageFromDate);
 
   return { p, a };
 };
