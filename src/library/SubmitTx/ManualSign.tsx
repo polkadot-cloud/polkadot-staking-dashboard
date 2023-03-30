@@ -133,10 +133,6 @@ export const ManualSign = ({
     <>
       <div>
         <EstimatedTxFee />
-        <ButtonHelp
-          marginLeft
-          onClick={() => openHelp('Ledger Rejected Transaction Options')}
-        />
         {valid ? (
           <p>
             {valid
@@ -145,6 +141,13 @@ export const ManualSign = ({
                   ? fallbackMessage
                   : statusCodeTitle)
               : fallbackMessage}
+            {defaultMessage ===
+            t('transactionRejectedPending', { ns: 'modals' }) ? (
+              <ButtonHelp
+                marginLeft
+                onClick={() => openHelp('Ledger Rejected Transaction Options')}
+              />
+            ) : null}
           </p>
         ) : null}
       </div>
