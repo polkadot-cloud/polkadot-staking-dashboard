@@ -61,3 +61,9 @@ export const Wrapper = styled.div<{ noMargin?: boolean }>`
     }
   }
 `;
+
+export const TransactionMessageWrapper = styled.p`
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+`;

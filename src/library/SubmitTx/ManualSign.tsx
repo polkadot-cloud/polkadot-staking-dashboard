@@ -20,6 +20,7 @@ import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
 import { determineStatusFromCodes } from 'modals/LedgerImport/Utils';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { TransactionMessageWrapper } from './Wrappers';
 import type { SubmitProps } from './types';
 
 export const ManualSign = ({
@@ -134,7 +135,7 @@ export const ManualSign = ({
       <div>
         <EstimatedTxFee />
         {valid ? (
-          <p>
+          <TransactionMessageWrapper>
             {valid
               ? defaultMessage ||
                 (!getIsExecuting() || !statusCodes.length
@@ -146,9 +147,10 @@ export const ManualSign = ({
               <ButtonHelp
                 marginLeft
                 onClick={() => openHelp('Ledger Rejected Transaction Options')}
+                backgroundSecondary
               />
             ) : null}
-          </p>
+          </TransactionMessageWrapper>
         ) : null}
       </div>
       <div>
