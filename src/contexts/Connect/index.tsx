@@ -1,6 +1,19 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+// using polkadot onboard
+// import { Account, WalletAggregator } from '@polkadot-onboard/core';
+// import { useWallets } from '@polkadot-onboard/react';
+// import { WalletConnectProvider } from '@polkadot-onboard/wallet-connect';
+
+// using univeral provider
+// import QRCodeModal from '@walletconnect/qrcode-modal';
+import { Web3Modal } from '@web3modal/standalone';
+
+import SignClient from '@walletconnect/sign-client';
+import type { SessionTypes } from '@walletconnect/types';
+import UniversalProvider from '@walletconnect/universal-provider';
+
 import Keyring from '@polkadot/keyring';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -11,6 +24,7 @@ import {
 } from 'contexts/Connect/types';
 import { useExtensions } from 'contexts/Extensions';
 import {
+  ExtensionAccount,
   ExtensionInjected,
   ExtensionInterface,
 } from 'contexts/Extensions/types';
@@ -26,6 +40,36 @@ import {
   removeFromLocalExtensions,
   removeLocalExternalAccounts,
 } from './Utils';
+
+// import { InjectedWalletProvider } from '@polkadot-onboard/injected-wallets';
+// import { PolkadotWalletsContextProvider, useWallets } from '@polkadot-onboard/react';
+
+const getAccounts = (session: SessionTypes.Struct) => {
+  let accounts: string[] = [];
+  if (session) {
+    const wcAccounts = Object.values(session.namespaces)
+      .map((namespace) => namespace.accounts)
+      .flat();
+    accounts = wcAccounts.map((wcAccount) => {
+      const address = wcAccount.split(':')[2];
+      return address;
+    });
+  }
+  return accounts;
+};
+
+const getCaipChainInfo = (networkName: string): string => {
+  const stakingDashboardRPCMap: Record<string, string> = {
+    polkadot: '91b171bb158e2d3848fa23a9f1c25182',
+    kusama: 'b0a8d493285c2df73290dfb7e61f870f',
+    westend: 'e143f23803ac50e8f6f8e62695d1ce9e',
+  };
+
+  // CAIP (chain agnostic improvement proposal) chain value is based on which network the user is currently connected to
+  const chainInfo = stakingDashboardRPCMap[networkName];
+
+  return `polkadot:${chainInfo}`;
+};
 
 export const ConnectContext = React.createContext<ConnectContextInterface>(
   defaultConnectContext
@@ -74,6 +118,22 @@ export const ConnectProvider = ({
     Array<AnyApi>
   >([]);
   const extensionsInitialisedRef = useRef(extensionsInitialised);
+
+  const [client, setClient] = useState<SignClient | null>(null);
+  const [session, setSession] = useState<SessionTypes.Struct | null>(null);
+  const [wcChainInfo, setWcChainInfo] = useState<string | null>(null);
+
+  const getClient = () => {
+    return client;
+  };
+
+  const getSession = () => {
+    return session;
+  };
+
+  const getWcChainInfo = () => {
+    return wcChainInfo;
+  };
 
   /* re-sync extensions accounts on network switch
    * do this if activeAccount is present.
@@ -259,6 +319,97 @@ export const ConnectProvider = ({
           id ||
             `unknown_extension_${extensionsInitialisedRef.current.length + 1}`
         );
+      } else if (id === 'wallet-connect') {
+        const wcSessionStorage = localStorage.getItem('WalletConnectSession');
+        // const wcProviderStorage = localStorage.getItem('wcProvider');
+        if (wcSessionStorage) {
+          const existingSession: SessionTypes.Struct = {
+            ...JSON.parse(wcSessionStorage),
+          };
+          setSession(existingSession);
+
+          const expiryDate = new Date(existingSession.expiry * 1000);
+          const currentDate = new Date();
+          if (expiryDate < currentDate) {
+            localStorage.removeItem('WalletConnectSession');
+            setSession(null);
+            return;
+          }
+
+          const provider = await UniversalProvider.init({
+            projectId: 'f75434b01141677e4ee7ddf70fee56b4',
+            relayUrl: 'wss://relay.walletconnect.com',
+            metadata: {
+              name: DappName,
+              description: 'Dapp Polkadot Nomination Pool Staking Dashboard',
+              url: '#',
+              icons: ['https://walletconnect.com/walletconnect-logo.png'],
+            },
+          });
+          setClient(provider.client);
+
+          const currentCaipChain = getCaipChainInfo(network.name);
+          setWcChainInfo(currentCaipChain);
+
+          const wcAccounts = getAccounts(existingSession);
+          const walletConnectAccountAddresses = wcAccounts.map(
+            (walletAccount: string) => {
+              return {
+                source: '',
+                addedBy: '',
+                address: walletAccount,
+                meta: provider.client.metadata,
+                name: `Wallet Connect:${walletAccount}`,
+                signer: provider.client,
+              };
+            }
+          );
+
+          const walletConnectAccountsSub = {
+            // eslint-disable-next-line
+            subscribe: (a: { (a: ExtensionAccount[]): void }) => {},
+          };
+
+          const extension: ExtensionInterface = {
+            provider,
+            accounts: walletConnectAccountsSub,
+            metadata: provider.client.metadata,
+            signer: provider.client,
+          };
+
+          const { newAccounts, meta } = handleImportExtension(
+            id,
+            accountsRef.current,
+            extension,
+            walletConnectAccountAddresses,
+            forgetAccounts
+          );
+
+          // store active wallet account if found in this extension
+          if (!activeWalletAccount) {
+            activeWalletAccount = getActiveExtensionAccount(newAccounts);
+          }
+
+          // set active account for network on final extension
+          if (i === total && activeAccountRef.current === null) {
+            const activeAccountRemoved =
+              activeWalletAccount?.address !== meta.removedActiveAccount &&
+              meta.removedActiveAccount !== null;
+
+            if (!activeAccountRemoved) {
+              connectActiveExtensionAccount(
+                activeWalletAccount,
+                connectToAccount
+              );
+            }
+          }
+
+          // concat accounts and store
+          addToAccounts(newAccounts);
+
+          // update initialised extensions
+          updateInitialisedExtensions(id);
+        }
       } else {
         try {
           // attempt to get extension `enable` property
@@ -327,6 +478,115 @@ export const ConnectProvider = ({
       updateInitialisedExtensions(
         `unknown_extension_${extensionsInitialisedRef.current.length + 1}`
       );
+    } else if (id === 'wallet-connect') {
+      /// using Universal Provider
+      //  Initialize the provider with projectId data
+      const provider = await UniversalProvider.init({
+        projectId: 'f75434b01141677e4ee7ddf70fee56b4',
+        relayUrl: 'wss://relay.walletconnect.com',
+        metadata: {
+          name: DappName,
+          description: 'Dapp Polkadot Nomination Pool Staking Dashboard',
+          url: '#',
+          icons: ['https://walletconnect.com/walletconnect-logo.png'],
+        },
+      });
+      setClient(provider.client);
+
+      const caipChainInfo = getCaipChainInfo(network.name);
+      setWcChainInfo(caipChainInfo);
+      const caipChainId = caipChainInfo.split(':')[1];
+
+      const params = {
+        requiredNamespaces: {
+          polkadot: {
+            methods: ['polkadot_signTransaction', 'polkadot_signMessage'],
+            chains: [caipChainInfo],
+            events: ['chainChanged", "accountsChanged'],
+            rpcMap: {
+              [caipChainId]: network.endpoints.rpc,
+            },
+          },
+        },
+      };
+
+      // initialize accounts
+      let wcAccounts: string[] = [];
+      // Subscribe for pairing URI
+      const { uri, approval } = await provider.client.connect(params);
+      const web3modal = new Web3Modal({
+        projectId: 'f75434b01141677e4ee7ddf70fee56b4',
+        walletConnectVersion: 2,
+      });
+      try {
+        if (uri) {
+          web3modal.openModal({ uri });
+        }
+        // Await session approval from the wallet.
+        const wcSession = await approval();
+        setSession(wcSession);
+        localStorage.setItem('WalletConnectSession', JSON.stringify(wcSession));
+
+        // get accounts
+        wcAccounts = getAccounts(wcSession as SessionTypes.Struct);
+        const walletConnectAccountAddresses = wcAccounts.map(
+          (walletAccount: string) => {
+            return {
+              source: '',
+              addedBy: '',
+              address: walletAccount,
+              meta: provider.client.metadata,
+              name: `Wallet Connect:${walletAccount}`,
+              signer: provider.client,
+            };
+          }
+        );
+        const walletConnectAccountsSub = {
+          // eslint-disable-next-line
+          subscribe: (a: { (a: ExtensionAccount[]): void }) => {},
+        };
+
+        const extension: ExtensionInterface = {
+          provider,
+          accounts: walletConnectAccountsSub,
+          metadata: provider.client.metadata,
+          signer: provider.client,
+        };
+
+        const { newAccounts, meta } = handleImportExtension(
+          id,
+          accountsRef.current,
+          extension,
+          walletConnectAccountAddresses,
+          forgetAccounts
+        );
+
+        //   // set active account for network if not yet set
+        if (activeAccountRef.current === null) {
+          const activeExtensionAccount = getActiveExtensionAccount(newAccounts);
+
+          if (
+            activeExtensionAccount !== meta.removedActiveAccount &&
+            meta.removedActiveAccount !== null
+          )
+            connectActiveExtensionAccount(
+              activeExtensionAccount,
+              connectToAccount
+            );
+        }
+        // concat accounts and store
+        addToAccounts(newAccounts);
+
+        // update initialised extensions
+        updateInitialisedExtensions(id);
+        // });
+        addToUnsubscribe(id, () => {});
+        // });
+      } catch (err) {
+        handleExtensionError(id, String(err));
+      } finally {
+        web3modal.closeModal();
+      }
     } else {
       try {
         // attempt to get extension `enable` property
@@ -531,6 +791,9 @@ export const ConnectProvider = ({
         formatAccountSs58,
         connectExtensionAccounts,
         getAccount,
+        getClient,
+        getSession,
+        getWcChainInfo,
         connectToAccount,
         disconnectFromAccount,
         addExternalAccount,

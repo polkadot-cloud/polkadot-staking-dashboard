@@ -1,6 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { SignClient } from '@walletconnect/sign-client/dist/types/client';
+import { SessionTypes } from '@walletconnect/types';
 import { ExtensionAccount, ExtensionInjected } from 'contexts/Extensions/types';
 import { MaybeAccount } from 'types';
 
@@ -8,6 +10,9 @@ export interface ConnectContextInterface {
   formatAccountSs58: (a: string) => string | null;
   connectExtensionAccounts: (e: ExtensionInjected) => void;
   getAccount: (account: MaybeAccount) => ExtensionAccount | null;
+  getClient: () => SignClient | null;
+  getSession: () => SessionTypes.Struct | null;
+  getWcChainInfo: () => string | null;
   connectToAccount: (a: ExtensionAccount) => void;
   disconnectFromAccount: () => void;
   addExternalAccount: (a: string, addedBy: string) => void;

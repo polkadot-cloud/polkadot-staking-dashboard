@@ -213,6 +213,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // connect function sets provider and updates active network.
   const connect = async (name: NetworkName, lc?: boolean) => {
     const { endpoints } = NetworkList[name];
+    console.log('what is endpoints rpc', endpoints.rpc);
 
     let newProvider;
     switch (lc) {

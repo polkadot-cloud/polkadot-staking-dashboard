@@ -25,10 +25,12 @@ export const addToLocalExtensions = (id: string) => {
       );
     }
   }
+  console.log('local extensions', localExtensions);
 };
 
 // removes extension from local `active_extensions`
 export const removeFromLocalExtensions = (id: string) => {
+  console.log('id is being removed from local storage', id);
   let localExtensions = localStorageOrDefault<string[]>(
     `active_extensions`,
     [],

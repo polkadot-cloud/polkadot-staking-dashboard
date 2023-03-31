@@ -21,6 +21,13 @@ module.exports = {
           inline: true,
         },
       },
+      {
+        test: /\.m?js$/,
+        exclude: [path.resolve(__dirname, "node_modules")],
+        resolve: {
+          fullySpecified: false
+        }
+      }
     ],
   },
   resolve: {

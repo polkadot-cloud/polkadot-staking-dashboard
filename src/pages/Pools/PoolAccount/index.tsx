@@ -30,6 +30,7 @@ export const PoolAccount = ({
   const identitiesSynced = identities.length > 0 ?? false;
   const supersSynced = supers.length > 0 ?? false;
   const synced = identitiesSynced && supersSynced;
+  console.log('synced', synced);
 
   const display = getIdentityDisplay(
     identities[batchIndex],

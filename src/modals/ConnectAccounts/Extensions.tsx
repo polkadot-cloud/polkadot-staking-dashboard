@@ -25,10 +25,6 @@ export const Extensions = forwardRef((props: forwardRefProps, ref: any) => {
   const { accounts } = useConnect();
   const { extensions } = useExtensions();
 
-  console.log('set section', setSection);
-  console.log('accounts', accounts);
-  console.log('extensions', extensions);
-
   const installed = EXTENSIONS.filter((a: ExtensionConfig) =>
     extensions.find((b: ExtensionConfig) => b.id === a.id)
   );

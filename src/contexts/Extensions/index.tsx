@@ -75,6 +75,21 @@ export const ExtensionsProvider = ({
       clearInterval(injectedWeb3Interval);
       // get installed extensions from `injectedWeb3`
       setExtensions(getInstalledExtensions());
+    } else if (!extensions && !injectedPresent) {
+      // set wallet connect extension if
+      // injected extensions aren't present
+      const wcPlaceholder: any = {};
+      const defaultExts: Array<ExtensionInjected> = [];
+      const walletConnectExtension = EXTENSIONS.filter(
+        (e) => e.id === 'wallet-connect'
+      )[0];
+      defaultExts.push({
+        ...walletConnectExtension,
+        ...wcPlaceholder[walletConnectExtension.id],
+      });
+
+      clearInterval(injectedWeb3Interval);
+      setExtensions(defaultExts);
     }
   });
 
@@ -91,6 +106,7 @@ export const ExtensionsProvider = ({
   const getInstalledExtensions = () => {
     const { injectedWeb3 }: AnyApi = window;
     const _exts: Array<ExtensionInjected> = [];
+
     EXTENSIONS.forEach((e: ExtensionConfig) => {
       if (e.id === 'wallet-connect') {
         _exts.push({
