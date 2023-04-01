@@ -37,8 +37,10 @@ export const Wrapper = styled.div<{ noMargin?: boolean }>`
       align-items: center;
 
       p {
+        display: flex;
+        flex-direction: row;
         color: var(--text-color-secondary);
-        font-size: 1rem;
+        font-size: 1.1rem;
         opacity: 0.75;
         margin: 0;
         padding-left: 0.5rem;
@@ -60,10 +62,4 @@ export const Wrapper = styled.div<{ noMargin?: boolean }>`
       }
     }
   }
-`;
-
-export const TransactionMessageWrapper = styled.p`
-  display: flex;
-  flex-direction: row;
-  margin: 0;
 `;
