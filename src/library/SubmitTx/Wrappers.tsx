@@ -40,7 +40,7 @@ export const Wrapper = styled.div<{ noMargin?: boolean }>`
         display: flex;
         flex-direction: row;
         color: var(--text-color-secondary);
-        font-size: 1.1rem;
+        font-size: 1rem;
         opacity: 0.75;
         margin: 0;
         padding-left: 0.5rem;
