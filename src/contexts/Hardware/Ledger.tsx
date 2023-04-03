@@ -9,7 +9,7 @@ import { useApi } from 'contexts/Api';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyFunction, AnyJson } from 'types';
+import type { AnyFunction, AnyJson, MaybeString } from 'types';
 import { getLocalLedgerAccounts, getLocalLedgerAddresses } from './Utils';
 import {
   LEDGER_DEFAULT_ACCOUNT,
@@ -67,6 +67,9 @@ export const LedgerHardwareProvider = ({
   // Store the latest successful response from an attempted `executeLedgerLoop`.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
 
+  // Store the helpKey options
+  const [helpKey, setHelpKey] = useState<MaybeString>(null);
+
   // Whether pairing is in progress: protects against re-renders & duplicate attempts.
   const pairInProgress = useRef(false);
 
@@ -84,6 +87,20 @@ export const LedgerHardwareProvider = ({
       ledgerAccountsRef
     );
   }, [network]);
+
+  useEffect(() => {
+    resetHelpKey();
+  }, [defaultMessage]);
+
+  const resetHelpKey = () => {
+    switch (defaultMessage) {
+      case t('transactionRejectedPending'):
+        setHelpKey('Ledger Rejected Transaction Options');
+        break;
+      default:
+        setHelpKey(null);
+    }
+  };
 
   // Handles errors that occur during `executeLedgerLoop` and `pairDevice` calls.
   const handleErrors = (appName: string, err: AnyJson) => {
@@ -518,6 +535,7 @@ export const LedgerHardwareProvider = ({
         handleUnmount,
         isPaired: isPairedRef.current,
         ledgerAccounts: ledgerAccountsRef.current,
+        helpKey,
       }}
     >
       {children}

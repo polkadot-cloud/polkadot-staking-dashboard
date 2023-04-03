@@ -44,6 +44,7 @@ export const ManualSign = ({
     getDefaultMessage,
     setDefaultMessage,
     handleUnmount,
+    helpKey,
   } = useLedgerHardware();
   const { activeAccount, accountHasSigner, getAccount } = useConnect();
   const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();
@@ -141,11 +142,10 @@ export const ManualSign = ({
                   ? fallbackMessage
                   : statusCodeTitle)
               : fallbackMessage}
-            {defaultMessage ===
-            t('transactionRejectedPending', { ns: 'modals' }) ? (
+            {helpKey !== null ? (
               <ButtonHelp
                 marginLeft
-                onClick={() => openHelp('Ledger Rejected Transaction Options')}
+                onClick={() => openHelp(helpKey)}
                 backgroundSecondary
               />
             ) : null}
