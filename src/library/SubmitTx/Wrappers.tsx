@@ -38,7 +38,6 @@ export const Wrapper = styled.div<{ noMargin?: boolean }>`
 
       p {
         display: flex;
-        flex-direction: row;
         color: var(--text-color-secondary);
         font-size: 1rem;
         opacity: 0.75;
