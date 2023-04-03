@@ -17,7 +17,7 @@ export type LedgerHardwareContextInterface = {
   handleNewStatusCode: (
     ack: string,
     statusCode: string,
-    helpKey?: MaybeString
+    helpKey?: string
   ) => void;
   setIsExecuting: (v: boolean) => void;
   resetStatusCodes: () => void;
@@ -41,7 +41,7 @@ export interface LedgerResponse {
   statusCode: string;
   body?: AnyJson;
   options?: AnyJson;
-  helpKey?: MaybeString;
+  helpKey?: string;
 }
 
 export type LedgerTask = 'get_address' | 'sign_tx';

@@ -109,7 +109,6 @@ export const ManualSign = ({
     if (getTxSignature() !== null) {
       onSubmit();
     }
-    console.log(statusCodes);
   }, [getTxSignature()]);
 
   // Tidy up context state when this component is no longer mounted.
@@ -130,9 +129,9 @@ export const ManualSign = ({
   const defaultMessage = getDefaultMessage();
   const { openHelp } = useHelp();
 
-  const helpKey = Object.values(statusCodes).find(
-    (a) => a.helpKey !== undefined
-  );
+  const helpKey =
+    Object.values(statusCodes).find((a) => a.helpKey !== undefined)?.helpKey ||
+    '';
 
   return (
     <>
@@ -149,7 +148,7 @@ export const ManualSign = ({
             {helpKey ? (
               <ButtonHelp
                 marginLeft
-                onClick={() => openHelp(helpKey.helpKey || '')}
+                onClick={() => openHelp(helpKey)}
                 backgroundSecondary
               />
             ) : null}

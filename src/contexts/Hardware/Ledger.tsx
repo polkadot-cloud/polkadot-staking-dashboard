@@ -9,7 +9,7 @@ import { useApi } from 'contexts/Api';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyFunction, AnyJson, MaybeString } from 'types';
+import type { AnyFunction, AnyJson } from 'types';
 import { getLocalLedgerAccounts, getLocalLedgerAddresses } from './Utils';
 import {
   LEDGER_DEFAULT_ACCOUNT,
@@ -328,7 +328,7 @@ export const LedgerHardwareProvider = ({
   const handleNewStatusCode = (
     ack: string,
     statusCode: string,
-    helpKey?: MaybeString
+    helpKey?: string
   ) => {
     const newStatusCodes = [{ ack, statusCode, helpKey }, ...statusCodes];
 
