@@ -5,7 +5,7 @@ import { faChrome, faUsb } from '@fortawesome/free-brands-svg-icons';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import {
   ButtonHelp,
-  ButtonInvertRounded,
+  ButtonPrimaryInvert,
   ButtonText,
 } from '@polkadotcloud/dashboard-ui';
 import { inChrome } from 'Utils';
@@ -48,7 +48,7 @@ export const Ledger = (): React.ReactElement => {
             />
           </div>
           <div className="row margin">
-            <ButtonInvertRounded
+            <ButtonPrimaryInvert
               text="USB"
               onClick={() => {
                 replaceModalWith('LedgerImport', {}, 'large');

@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
-  ButtonInvertRounded,
   ButtonPrimary,
+  ButtonPrimaryInvert,
   ButtonSecondary,
 } from '@polkadotcloud/dashboard-ui';
 import { useOverlay } from 'contexts/Overlay';
@@ -37,7 +37,7 @@ export const Tip = ({ title, description }: any) => {
                   closeOverlay();
                 }}
               />
-              <ButtonInvertRounded
+              <ButtonPrimaryInvert
                 text={t('module.cancel', { ns: 'tips' })}
                 onClick={() => setDisabling(false)}
                 style={{ marginLeft: '0.5rem' }}
