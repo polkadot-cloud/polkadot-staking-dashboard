@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ButtonInvertRounded } from '@polkadotcloud/dashboard-ui';
+import { ButtonPrimaryInvert } from '@polkadotcloud/dashboard-ui';
 import { camelize } from 'Utils';
 import { HelpConfig } from 'config/help';
 import { useHelp } from 'contexts/Help';
@@ -156,14 +156,14 @@ export const Help = () => {
           <ContentWrapper>
             <div className="buttons">
               {definition && (
-                <ButtonInvertRounded
+                <ButtonPrimaryInvert
                   lg
                   text={t('modal.allResources')}
                   iconLeft={faChevronLeft}
                   onClick={() => setDefinition(null)}
                 />
               )}
-              <ButtonInvertRounded
+              <ButtonPrimaryInvert
                 lg
                 text={t('modal.close')}
                 iconLeft={faTimes}
