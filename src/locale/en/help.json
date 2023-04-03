@@ -146,8 +146,8 @@
         ]
       ],
       "ledgerRejectedTransactionOptions": [
-        "Ledger Rejected Transaction Options",
-        ["You can either sign the transaction again or close the window"]
+        "ledger Rejected Transaction",
+        ["You can either sign the transaction again or close the window."]
       ],
       "lockedBalance": [
         "Locked Balance",

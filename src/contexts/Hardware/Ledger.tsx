@@ -127,7 +127,7 @@ export const LedgerHardwareProvider = ({
       handleNewStatusCode(
         'failure',
         'TransactionRejected',
-        'Ledger Rejected Transaction Options'
+        'ledger Rejected Transaction'
       );
     } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
       // occurs when the required app is not open.

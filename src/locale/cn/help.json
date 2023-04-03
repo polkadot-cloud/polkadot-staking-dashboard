@@ -136,8 +136,8 @@
           "详情请在其官方网站上查找:ledger.com."
         ]
       ],
-      "ledgerRejectedTransactionOptions": [
-        "Ledger拒绝交易后选项",
+      "ledgerRejectedTransaction": [
+        "Ledger拒绝交易",
         ["您可以再次签署交易或关闭窗口"]
       ],
       "lockedBalance": [
