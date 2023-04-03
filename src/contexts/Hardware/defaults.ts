@@ -16,7 +16,7 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   // eslint-disable-next-line
   setIsPaired: (v) => {},
   // eslint-disable-next-line
-  handleNewStatusCode: (a, s) => {},
+  handleNewStatusCode: (a, s, h) => {},
   // eslint-disable-next-line
   setIsExecuting: (b) => {},
   resetStatusCodes: () => {},
@@ -35,7 +35,6 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   getLedgerAccount: (a) => null,
   isPaired: 'unknown',
   ledgerAccounts: [],
-  helpKey: '',
   getDefaultMessage: () => null,
   // eslint-disable-next-line
   setDefaultMessage: (m) => {},

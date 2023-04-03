@@ -44,7 +44,6 @@ export const ManualSign = ({
     getDefaultMessage,
     setDefaultMessage,
     handleUnmount,
-    helpKey,
   } = useLedgerHardware();
   const { activeAccount, accountHasSigner, getAccount } = useConnect();
   const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();
@@ -110,6 +109,7 @@ export const ManualSign = ({
     if (getTxSignature() !== null) {
       onSubmit();
     }
+    console.log(statusCodes);
   }, [getTxSignature()]);
 
   // Tidy up context state when this component is no longer mounted.
@@ -130,6 +130,10 @@ export const ManualSign = ({
   const defaultMessage = getDefaultMessage();
   const { openHelp } = useHelp();
 
+  const helpKey = Object.values(statusCodes).find(
+    (a) => a.helpKey !== undefined
+  );
+
   return (
     <>
       <div>
@@ -142,10 +146,10 @@ export const ManualSign = ({
                   ? fallbackMessage
                   : statusCodeTitle)
               : fallbackMessage}
-            {helpKey !== null ? (
+            {helpKey ? (
               <ButtonHelp
                 marginLeft
-                onClick={() => openHelp(helpKey)}
+                onClick={() => openHelp(helpKey.helpKey || '')}
                 backgroundSecondary
               />
             ) : null}

@@ -67,9 +67,6 @@ export const LedgerHardwareProvider = ({
   // Store the latest successful response from an attempted `executeLedgerLoop`.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
 
-  // Store the helpKey options
-  const [helpKey, setHelpKey] = useState<MaybeString>(null);
-
   // Whether pairing is in progress: protects against re-renders & duplicate attempts.
   const pairInProgress = useRef(false);
 
@@ -87,20 +84,6 @@ export const LedgerHardwareProvider = ({
       ledgerAccountsRef
     );
   }, [network]);
-
-  useEffect(() => {
-    resetHelpKey();
-  }, [defaultMessage]);
-
-  const resetHelpKey = () => {
-    switch (defaultMessage) {
-      case t('transactionRejectedPending'):
-        setHelpKey('Ledger Rejected Transaction Options');
-        break;
-      default:
-        setHelpKey(null);
-    }
-  };
 
   // Handles errors that occur during `executeLedgerLoop` and `pairDevice` calls.
   const handleErrors = (appName: string, err: AnyJson) => {
@@ -141,7 +124,11 @@ export const LedgerHardwareProvider = ({
     } else if (err.startsWith('Error: Transaction rejected')) {
       // occurs when user rejects a transaction.
       setDefaultMessage(t('transactionRejectedPending'));
-      handleNewStatusCode('failure', 'TransactionRejected');
+      handleNewStatusCode(
+        'failure',
+        'TransactionRejected',
+        'Ledger Rejected Transaction Options'
+      );
     } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
       // occurs when the required app is not open.
       handleNewStatusCode('failure', 'AppNotOpenContinue');
@@ -338,8 +325,12 @@ export const LedgerHardwareProvider = ({
   };
 
   // Handle an incoming new status code and persist to state.
-  const handleNewStatusCode = (ack: string, statusCode: string) => {
-    const newStatusCodes = [{ ack, statusCode }, ...statusCodes];
+  const handleNewStatusCode = (
+    ack: string,
+    statusCode: string,
+    helpKey?: MaybeString
+  ) => {
+    const newStatusCodes = [{ ack, statusCode, helpKey }, ...statusCodes];
 
     // Remove last status code if there are more than allowed number of status codes.
     if (newStatusCodes.length > TOTAL_ALLOWED_STATUS_CODES) {
@@ -535,7 +526,6 @@ export const LedgerHardwareProvider = ({
         handleUnmount,
         isPaired: isPairedRef.current,
         ledgerAccounts: ledgerAccountsRef.current,
-        helpKey,
       }}
     >
       {children}

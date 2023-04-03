@@ -14,7 +14,11 @@ export type LedgerHardwareContextInterface = {
     tasks: Array<LedgerTask>,
     options?: AnyJson
   ) => Promise<void>;
-  handleNewStatusCode: (ack: string, statusCode: string) => void;
+  handleNewStatusCode: (
+    ack: string,
+    statusCode: string,
+    helpKey?: MaybeString
+  ) => void;
   setIsExecuting: (v: boolean) => void;
   resetStatusCodes: () => void;
   getIsExecuting: () => boolean;
@@ -27,7 +31,6 @@ export type LedgerHardwareContextInterface = {
   getLedgerAccount: (a: string) => LedgerAccount | null;
   isPaired: PairingStatus;
   ledgerAccounts: Array<LedgerAccount>;
-  helpKey: MaybeString;
   getDefaultMessage: () => MaybeString;
   setDefaultMessage: (s: MaybeString) => void;
   handleUnmount: () => void;
@@ -38,6 +41,7 @@ export interface LedgerResponse {
   statusCode: string;
   body?: AnyJson;
   options?: AnyJson;
+  helpKey?: MaybeString;
 }
 
 export type LedgerTask = 'get_address' | 'sign_tx';
