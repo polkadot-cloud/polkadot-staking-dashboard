@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonInvert } from '@polkadotcloud/dashboard-ui';
+import { ButtonSubmitInvert } from '@polkadotcloud/dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -86,7 +86,7 @@ export const BondInput = ({
           </div>
         </section>
         <section>
-          <ButtonInvert
+          <ButtonSubmitInvert
             text={t('max')}
             disabled={disabled || syncing || freeBalance.isZero()}
             onClick={() => {

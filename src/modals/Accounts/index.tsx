@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonInvertRounded } from '@polkadotcloud/dashboard-ui';
+import { ButtonPrimaryInvert } from '@polkadotcloud/dashboard-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useApi } from 'contexts/Api';
@@ -117,7 +117,7 @@ export const Accounts = () => {
     <PaddingWrapper>
       <CustomHeaderWrapper>
         <h1>{t('accounts')}</h1>
-        <ButtonInvertRounded
+        <ButtonPrimaryInvert
           text={t('goToConnect')}
           iconLeft={faChevronLeft}
           iconTransform="shrink-3"
