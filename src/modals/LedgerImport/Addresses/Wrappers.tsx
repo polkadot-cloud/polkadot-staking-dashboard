@@ -100,7 +100,6 @@ export const AddressWrapper = styled.div`
               &.label {
                 font-size: 0.85rem;
                 display: flex;
-                flex-flow: row wrap;
                 align-items: flex-end;
               }
               > span {
