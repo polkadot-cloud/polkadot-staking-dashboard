@@ -68,10 +68,13 @@ export const Wrapper = styled.div<{ activeInput?: boolean }>`
 
   .label {
     position: relative;
+    display: flex;
+    align-items: flex-end;
     max-width: 100%;
     overflow: hidden;
     height: 2rem;
     margin-top: 0.65rem;
+    font-size: 0.85rem;
 
     h5 {
       color: var(--text-color-secondary);
