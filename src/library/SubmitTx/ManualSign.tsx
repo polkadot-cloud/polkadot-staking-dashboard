@@ -129,10 +129,7 @@ export const ManualSign = ({
   const defaultMessage = getDefaultMessage();
   const { openHelp } = useHelp();
 
-  const helpKey =
-    Object.values(statusCodes).find((a) => a.helpKey !== undefined)?.helpKey ||
-    defaultMessage[1] ||
-    '';
+  const helpKey = defaultMessage[1] || '';
 
   return (
     <>

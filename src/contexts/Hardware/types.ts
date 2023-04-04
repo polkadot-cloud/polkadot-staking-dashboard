@@ -14,11 +14,7 @@ export type LedgerHardwareContextInterface = {
     tasks: Array<LedgerTask>,
     options?: AnyJson
   ) => Promise<void>;
-  handleNewStatusCode: (
-    ack: string,
-    statusCode: string,
-    helpKey?: string
-  ) => void;
+  handleNewStatusCode: (ack: string, statusCode: string) => void;
   setIsExecuting: (v: boolean) => void;
   resetStatusCodes: () => void;
   getIsExecuting: () => boolean;
@@ -41,7 +37,6 @@ export interface LedgerResponse {
   statusCode: string;
   body?: AnyJson;
   options?: AnyJson;
-  helpKey?: string;
 }
 
 export type LedgerTask = 'get_address' | 'sign_tx';

@@ -146,7 +146,7 @@
         ]
       ],
       "ledgerRejectedTransaction": [
-        "ledger Rejected Transaction",
+        "Ledger Rejected Transaction",
         ["You can either sign the transaction again or close the window."]
       ],
       "lockedBalance": [

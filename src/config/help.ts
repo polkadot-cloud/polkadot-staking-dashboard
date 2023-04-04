@@ -6,7 +6,7 @@ import type { HelpItems } from 'contexts/Help/types';
 export const HelpConfig: HelpItems = [
   {
     key: 'ledger',
-    definitions: ['Ledger Hardware Wallets', 'ledger Rejected Transaction'],
+    definitions: ['Ledger Hardware Wallets', 'Ledger Rejected Transaction'],
     external: [],
   },
   {

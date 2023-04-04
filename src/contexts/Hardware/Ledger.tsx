@@ -125,7 +125,7 @@ export const LedgerHardwareProvider = ({
       // occurs when user rejects a transaction.
       setDefaultMessage(
         t('transactionRejectedPending'),
-        'ledger Rejected Transaction'
+        'Ledger Rejected Transaction'
       );
       handleNewStatusCode('failure', 'TransactionRejected');
     } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
@@ -324,12 +324,8 @@ export const LedgerHardwareProvider = ({
   };
 
   // Handle an incoming new status code and persist to state.
-  const handleNewStatusCode = (
-    ack: string,
-    statusCode: string,
-    helpKey?: string
-  ) => {
-    const newStatusCodes = [{ ack, statusCode, helpKey }, ...statusCodes];
+  const handleNewStatusCode = (ack: string, statusCode: string) => {
+    const newStatusCodes = [{ ack, statusCode }, ...statusCodes];
 
     // Remove last status code if there are more than allowed number of status codes.
     if (newStatusCodes.length > TOTAL_ALLOWED_STATUS_CODES) {
