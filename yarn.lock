@@ -949,9 +949,14 @@
     tslib "^2.5.0"
     ws "^8.13.0"
 
-"@polkadotcloud/dashboard-ui@0.2.6":
+"@polkadotcloud/core-ui@^0.2.6":
   version "0.2.6"
-  resolved "https://registry.npmjs.org/@polkadotcloud/dashboard-ui/-/dashboard-ui-0.2.6.tgz#ed2865d51dd31072b209ece0d307f90348201810"
+  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.2.6.tgz#b1610b1ae130a6f89e062e1205015ad126c770a5"
+  integrity sha512-Oe977oQLjIEn7dI/xjWdcWn1gDixSJPPqJiOA3N5w94hHx03Zy3+yBvnt7UxsC1rRUSy8b0DbM3ZG2zgEl8OpA==
+
+"@polkadotcloud/core-ui@0.2.6":
+  version "0.2.6"
+  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/dashboard-ui-0.2.6.tgz#ed2865d51dd31072b209ece0d307f90348201810"
   integrity sha512-QZ/30U2s4ckRQScx3EjH2VzU+REtoEWwuS8FtdCEayyte/XLx+wBis280yLwAckAGe3pRSX1OH72gQUOs0tnnw==
 
 "@remix-run/router@1.5.0":
