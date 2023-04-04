@@ -33,6 +33,7 @@ export const SplashWrapper = styled.div`
     h2,
     h4,
     h5 {
+      display: flex;
       color: var(--text-color-secondary);
       text-align: center;
       margin-top: 0.35rem;
@@ -95,6 +96,8 @@ export const StatusBarWrapper = styled(motion.div)`
     }
     h3,
     h5 {
+      display: flex;
+      align-items: center;
       flex: 1;
       margin: 0;
     }

@@ -151,7 +151,7 @@
       ],
       "legerRequestTimeout": [
         "Leger Request Timeout",
-        ["Leger Request Timeout, Please try to conncect the device again"]
+        ["Leger Request Timeout, Please try to conncect the device again."]
       ],
       "lockedBalance": [
         "Locked Balance",
@@ -225,7 +225,7 @@
       "openAppOnLedger": [
         "Open App On Ledger",
         [
-          "Please make sure you have open the {NETWORK_NAME} app on your Ledger device."
+          "Please make sure you have open the {NETWORK_NAME} App on your Ledger device."
         ]
       ],
       "overSubscribed": [
@@ -286,7 +286,7 @@
       ],
       "queuedTransactionRejected": [
         "Queued Transaction Rejected",
-        ["Transaction was approved when the transaction window is closed"]
+        ["Transaction was approved when the transaction window is closed."]
       ],
       "reserveBalance": [
         "Reserve Balance",
@@ -335,7 +335,7 @@
       ],
       "wrongTransaction": [
         "Wrong Transaction",
-        ["This is not the transaction you are waiting for"]
+        ["You might have signed the historical transaction instead of the current one."]
       ],
       "yourBalance": [
         "Your Balance",

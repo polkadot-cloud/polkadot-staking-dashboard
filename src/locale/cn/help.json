@@ -142,7 +142,7 @@
       ],
       "legerRequestTimeout": [
         "Leger请求超时",
-        ["Leger请求超时,请再次尝试连接设备"]
+        ["Leger请求超时,请再次尝试连接设备."]
       ],
       "lockedBalance": [
         "锁定余额",
@@ -269,7 +269,7 @@
       ],
       "queuedTransactionRejected": [
         "等待交易已被拒绝",
-        ["请不要在交易窗口关闭时批准交易"]
+        ["请不要在交易窗口关闭时批准交易."]
       ],
       "reserveBalance": [
         "储备金额",
@@ -316,7 +316,7 @@
           "作为提名人，您可以选择支持哪个验证人并获得奖励."
         ]
       ],
-      "wrongTransaction": ["错误交易", ["该交易非正确交易, 请重试"]],
+      "wrongTransaction": ["错误交易", ["您可能已经签署了历史交易而不是当前交易."]],
       "yourBalance": [
         "余额",
         [
