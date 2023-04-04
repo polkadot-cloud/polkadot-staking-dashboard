@@ -7,7 +7,7 @@ import {
   ButtonHelp,
   ButtonPrimaryInvert,
   ButtonText,
-} from '@polkadotcloud/dashboard-ui';
+} from '@polkadotcloud/core-ui';
 import { inChrome } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';

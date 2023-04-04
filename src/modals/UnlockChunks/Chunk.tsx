@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
+import { ButtonSubmit } from '@polkadotcloud/core-ui';
 import { planckToUnit } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';

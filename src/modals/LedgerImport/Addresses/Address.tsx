@@ -9,7 +9,7 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonMono, ButtonText } from '@polkadotcloud/dashboard-ui';
+import { ButtonMono, ButtonText } from '@polkadotcloud/core-ui';
 import { clipAddress, localStorageOrDefault, unescape } from 'Utils';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';

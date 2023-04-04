@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSecondary } from '@polkadotcloud/dashboard-ui';
+import { ButtonSecondary } from '@polkadotcloud/core-ui';
 import { extractUrlValue, removeVarFromUrlHash } from 'Utils';
 import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
 import { useConnect } from 'contexts/Connect';
