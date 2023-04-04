@@ -1,11 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { capitalizeFirstLetter, planckToUnit } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import type { AnyJson } from 'types';
-import { capitalizeFirstLetter, planckToUnit } from 'Utils';
 
 export const useFillVariables = () => {
   const { network, consts } = useApi();

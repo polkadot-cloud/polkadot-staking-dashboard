@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import Keyring from '@polkadot/keyring';
-import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
+import {
+  clipAddress,
+  localStorageOrDefault,
+  setStateWithRef,
+} from '@polkadotcloud/utils';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import type {

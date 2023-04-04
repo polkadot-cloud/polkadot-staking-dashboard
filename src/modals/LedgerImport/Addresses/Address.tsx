@@ -10,7 +10,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonMono, ButtonText } from '@polkadotcloud/core-ui';
-import { clipAddress, localStorageOrDefault, unescape } from 'Utils';
+import {
+  clipAddress,
+  localStorageOrDefault,
+  unescape,
+} from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp, getLocalLedgerAddresses } from 'contexts/Hardware/Utils';

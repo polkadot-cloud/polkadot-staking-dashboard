@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faPlus, faShare } from '@fortawesome/free-solid-svg-icons';
+import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -10,7 +11,6 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit } from 'Utils';
 
 export const RewardsStatus = () => {
   const { t } = useTranslation('pages');
