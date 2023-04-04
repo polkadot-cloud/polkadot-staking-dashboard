@@ -58,6 +58,8 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
 export const Labels = styled.div`
   display: flex;
   justify-content: flex-end;
+  flex-flow: row wrap;
+  font-size: 0.85rem;
   align-items: center;
   overflow: hidden;
   flex: 1 1 100%;

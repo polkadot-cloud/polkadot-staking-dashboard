@@ -41,6 +41,13 @@ export const AccountWrapper = styled.div`
       align-items: center;
       padding: 0 0.25rem;
 
+      &.label {
+        font-size: 0.85rem;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: flex-end;
+      }
+
       &:first-child {
         flex-shrink: 1;
         overflow: hidden;

@@ -97,6 +97,12 @@ export const AddressWrapper = styled.div`
             h5,
             button {
               font-size: 0.9rem;
+              &.label {
+                font-size: 0.85rem;
+                display: flex;
+                flex-flow: row wrap;
+                align-items: flex-end;
+              }
               > span {
                 padding: 0.4rem 0.75rem;
                 border-radius: 1rem;

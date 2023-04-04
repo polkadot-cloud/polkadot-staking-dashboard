@@ -72,6 +72,10 @@ export const Wrapper = styled.div<{ activeInput?: boolean }>`
     overflow: hidden;
     height: 2rem;
     margin-top: 0.65rem;
+    font-size: 0.85rem;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: flex-end;
 
     h5 {
       color: var(--text-color-secondary);
