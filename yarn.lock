@@ -954,6 +954,11 @@
   resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.2.6.tgz#b1610b1ae130a6f89e062e1205015ad126c770a5"
   integrity sha512-Oe977oQLjIEn7dI/xjWdcWn1gDixSJPPqJiOA3N5w94hHx03Zy3+yBvnt7UxsC1rRUSy8b0DbM3ZG2zgEl8OpA==
 
+"@polkadotcloud/utils@0.2.7":
+  version "0.2.7"
+  resolved "https://registry.npmjs.org/@polkadotcloud/utils/-/utils-0.2.7.tgz#3946bf127a00c88fe33b56b75eba4bc657bcc689"
+  integrity sha512-JFRjcJSQxHE9gvbjbvVcP3tCF6C/OYoMGtTSG3A9/cc2YiNRQYJUL6Cp1ALCER6k+e6q+uV5bXkCmMnKkdvGJw==
+
 "@remix-run/router@1.5.0":
   version "1.5.0"
   resolved "https://registry.npmjs.org/@remix-run/router/-/router-1.5.0.tgz#57618e57942a5f0131374a9fdb0167e25a117fdc"
@@ -1674,9 +1679,9 @@ binary-extensions@^2.0.0:
   resolved "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
 
-"bip32-ed25519@git+https://github.com/Zondax/bip32-ed25519.git":
+"bip32-ed25519@https://github.com/Zondax/bip32-ed25519":
   version "0.0.4"
-  resolved "git+https://github.com/Zondax/bip32-ed25519.git#0949df01b5c93885339bc28116690292088f6134"
+  resolved "https://github.com/Zondax/bip32-ed25519#0949df01b5c93885339bc28116690292088f6134"
   dependencies:
     bn.js "^5.1.1"
     elliptic "^6.4.1"

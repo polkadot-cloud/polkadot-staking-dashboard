@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { localStorageOrDefault, setStateWithRef } from 'Utils';
+import { localStorageOrDefault, setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { SideMenuStickyThreshold } from 'consts';
 import type { ImportedAccount } from 'contexts/Connect/types';

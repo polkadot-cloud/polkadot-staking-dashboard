@@ -3,7 +3,7 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmitInvert } from '@polkadotcloud/core-ui';
-import { planckToUnit, rmCommas } from 'Utils';
+import { planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';

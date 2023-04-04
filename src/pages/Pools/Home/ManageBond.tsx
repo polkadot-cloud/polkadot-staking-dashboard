@@ -3,6 +3,8 @@
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/core-ui';
+import { planckToUnit } from '@polkadotcloud/utils';
+import { ButtonRowWrapper } from 'Wrappers';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
@@ -13,8 +15,6 @@ import { useUi } from 'contexts/UI';
 import { BondedChart } from 'library/BarChart/BondedChart';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit } from 'Utils';
-import { ButtonRowWrapper } from 'Wrappers';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');

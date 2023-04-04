@@ -5,9 +5,9 @@ import Keyring from '@polkadot/keyring';
 import {
   clipAddress,
   localStorageOrDefault,
-  registerSaEvent,
   setStateWithRef,
-} from 'Utils';
+} from '@polkadotcloud/utils';
+import { registerSaEvent } from 'Utils';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import type {

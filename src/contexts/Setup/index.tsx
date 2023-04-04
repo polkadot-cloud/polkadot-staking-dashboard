@@ -1,7 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { greaterThanZero, localStorageOrDefault, unitToPlanck } from 'Utils';
+import {
+  greaterThanZero,
+  localStorageOrDefault,
+  unitToPlanck,
+} from '@polkadotcloud/utils';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React, { useEffect, useState } from 'react';
 import type { BondFor, MaybeAccount } from 'types';

@@ -3,7 +3,7 @@
 
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { unitToPlanck } from 'Utils';
+import { unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';

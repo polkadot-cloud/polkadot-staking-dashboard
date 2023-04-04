@@ -6,7 +6,7 @@ import {
   isNotZero,
   localStorageOrDefault,
   setStateWithRef,
-} from 'Utils';
+} from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useLedgers } from 'contexts/Accounts/Ledgers';
 import type { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
