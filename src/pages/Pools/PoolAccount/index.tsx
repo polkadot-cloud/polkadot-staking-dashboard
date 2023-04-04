@@ -3,7 +3,7 @@
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, remToUnit } from 'Utils';
+import { clipAddress, remToUnit } from '@polkadotcloud/utils';
 import { useIdentities } from 'contexts/Identities';
 import { useNotifications } from 'contexts/Notifications';
 import type { NotificationText } from 'contexts/Notifications/types';

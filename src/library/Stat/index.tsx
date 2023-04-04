@@ -3,8 +3,8 @@
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/dashboard-ui';
-import { applyWidthAsPadding } from 'Utils';
+import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/core-ui';
+import { applyWidthAsPadding } from '@polkadotcloud/utils';
 import { useHelp } from 'contexts/Help';
 import { useNotifications } from 'contexts/Notifications';
 import { Identicon } from 'library/Identicon';

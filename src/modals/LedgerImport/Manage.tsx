@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-live authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp, ButtonMonoInvert } from '@polkadotcloud/dashboard-ui';
+import { ButtonHelp, ButtonMonoInvert } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp } from 'contexts/Hardware/Utils';

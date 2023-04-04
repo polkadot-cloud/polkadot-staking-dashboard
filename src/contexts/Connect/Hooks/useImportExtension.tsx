@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import Keyring from '@polkadot/keyring';
-import { isValidAddress } from 'Utils';
+import { isValidAddress } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
 import type {

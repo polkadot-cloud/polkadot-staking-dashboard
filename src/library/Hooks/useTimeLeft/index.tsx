@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { setStateWithRef } from 'Utils';
+import { setStateWithRef } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
