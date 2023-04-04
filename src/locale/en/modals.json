@@ -150,10 +150,11 @@
     "poolName": "Pool Name",
     "poolNominations": "Pool Nominations",
     "queuedTransactionRejected": "Previous transaction rejected. Please try again.",
-    "readOnlyCannotSign": "Your account is read only, and cannot sign transactions.",
+    "readOnly": "Read Only",
     "readOnlyAccount_one": "{{count}} Read Only Account",
     "readOnlyAccount_other": "{{count}} Read Only Accounts",
     "readOnlyAccounts": "Read Only Accounts",
+    "readOnlyCannotSign": "Your account is read only, and cannot sign transactions.",
     "rebond": "Rebond",
     "rebondSubtitle": "Rebonded funds will back active nominations from the start of the next era.",
     "rebondUnlock": "You can rebond unlocks at any time in this period, or withdraw them to your free balance thereafter.",
@@ -234,7 +235,6 @@
     "withdrawSubtitle": "Funds will be immediately available as free balance after withdrawing.",
     "withdrawUnlocked": "Withdraw Unlocked",
     "youMust_account": "You must have your account imported to stop nominating.",
-    "youMust_controller": "You must have your controller account imported to stop nominating.",
-    "readOnly":"Read Only"
+    "youMust_controller": "You must have your controller account imported to stop nominating."
   }
 }
