@@ -146,7 +146,7 @@ export const Unbond = () => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push(t('readOnly'));
+    warnings.push(t('readOnlyCannotSign'));
   }
 
   if (unclaimedRewards > 0 && bondFor === 'pool') {
