@@ -77,7 +77,7 @@ export const UpdateController = () => {
             <div style={{ marginBottom: '1.5rem' }}>
               {!accountHasSigner(activeAccount) ? (
                 <WarningsWrapper>
-                  <Warning text={t('readOnly')} />
+                  <Warning text={t('readOnlyCannotSign')} />
                 </WarningsWrapper>
               ) : null}
             </div>

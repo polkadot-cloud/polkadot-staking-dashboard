@@ -141,7 +141,7 @@
     "poolName": "提名池名称",
     "poolNominations": "池的提名",
     "queuedTransactionRejected": "上一笔交易己被拒绝.请再试一次",
-    "readOnly": "只读帐户无法签署交易.",
+    "readOnlyCannotSign": "只读帐户无法签署交易.",
     "readOnlyAccount": "{{count}} 个只读帐户",
     "readOnlyAccounts": "只读帐户",
     "rebond": "重新质押",
@@ -223,6 +223,7 @@
     "withdrawSubtitle": "资金将在取款后立即转作可用余额",
     "withdrawUnlocked": "取出己解锁",
     "youMust_account": "您必须导入帐户才能停止提名",
-    "youMust_controller": "您必须导入Controller帐户才能停止提名"
+    "youMust_controller": "您必须导入Controller帐户才能停止提名",
+    "readOnly":"只读"
   }
 }

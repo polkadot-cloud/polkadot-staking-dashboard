@@ -100,7 +100,7 @@ export const LeavePool = () => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push(<Warning text={t('readOnly')} />);
+    warnings.push(<Warning text={t('readOnlyCannotSign')} />);
   }
   if (greaterThanZero(unclaimedRewards)) {
     warnings.push(

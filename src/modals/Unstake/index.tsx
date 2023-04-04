@@ -109,7 +109,7 @@ export const Unstake = () => {
 
   const warnings = [];
   if (!accountHasSigner(controller)) {
-    warnings.push(<Warning text={t('readOnly')} />);
+    warnings.push(<Warning text={t('readOnlyCannotSign')} />);
   }
   if (controllerNotImported) {
     warnings.push(<Warning text={t('controllerImported')} />);
