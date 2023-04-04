@@ -31,8 +31,8 @@ export type LedgerHardwareContextInterface = {
   getLedgerAccount: (a: string) => LedgerAccount | null;
   isPaired: PairingStatus;
   ledgerAccounts: Array<LedgerAccount>;
-  getDefaultMessage: () => MaybeString;
-  setDefaultMessage: (s: MaybeString) => void;
+  getDefaultMessage: () => [MaybeString, MaybeString];
+  setDefaultMessage: (s: MaybeString, helpKey?: string) => void;
   handleUnmount: () => void;
 };
 

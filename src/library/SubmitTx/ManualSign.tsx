@@ -131,6 +131,7 @@ export const ManualSign = ({
 
   const helpKey =
     Object.values(statusCodes).find((a) => a.helpKey !== undefined)?.helpKey ||
+    defaultMessage[1] ||
     '';
 
   return (
@@ -140,7 +141,7 @@ export const ManualSign = ({
         {valid ? (
           <p>
             {valid
-              ? defaultMessage ||
+              ? defaultMessage[0] ||
                 (!getIsExecuting() || !statusCodes.length
                   ? fallbackMessage
                   : statusCodeTitle)
