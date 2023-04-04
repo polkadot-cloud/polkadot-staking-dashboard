@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonInvert } from '@polkadotcloud/dashboard-ui';
+import { ButtonSubmitInvert } from '@polkadotcloud/core-ui';
 import { planckToUnit, rmCommas } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { useBalances } from 'contexts/Accounts/Balances';
@@ -138,7 +138,7 @@ export const Forms = forwardRef(
             fromController={isStaking}
             valid={valid}
             buttons={[
-              <ButtonInvert
+              <ButtonSubmitInvert
                 key="button_back"
                 text={t('back')}
                 iconLeft={faChevronLeft}

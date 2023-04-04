@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { ButtonMonoInvert } from '@polkadotcloud/dashboard-ui';
+import { ButtonMonoInvert } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import type { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import { useModal } from 'contexts/Modal';

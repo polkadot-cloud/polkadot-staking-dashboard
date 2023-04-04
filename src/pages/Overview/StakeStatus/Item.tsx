@@ -3,7 +3,7 @@
 
 import { faChevronRight, faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonInvertRounded } from '@polkadotcloud/dashboard-ui';
+import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
 import { applyWidthAsPadding } from 'Utils';
 import { useEffect, useLayoutEffect, useRef } from 'react';
 import { StatusRowWrapper } from './Wrappers';
@@ -45,7 +45,7 @@ export const Item = ({ text, ctaText, onClick, leftIcon }: ItemProps) => {
             {text}
             <span className="cta" ref={subjectRef}>
               {ctaText ? (
-                <ButtonInvertRounded
+                <ButtonPrimaryInvert
                   text={ctaText}
                   iconRight={faChevronRight}
                   iconTransform="shrink-4"
