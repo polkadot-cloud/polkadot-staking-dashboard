@@ -103,13 +103,16 @@ export const LedgerHardwareProvider = ({
     err = String(err);
     if (err === 'Error: Timeout') {
       // only set default message here - maintain previous status code.
-      setDefaultMessage(t('ledgerRequestTimeout'));
+      setDefaultMessage(t('ledgerRequestTimeout'), 'Leger Request Timeout');
     } else if (
       err.startsWith('Error: TransportError: Invalid channel') ||
       err.startsWith('Error: InvalidStateError')
     ) {
       // occurs when tx was approved outside of active channel.
-      setDefaultMessage(t('queuedTransactionRejected'));
+      setDefaultMessage(
+        t('queuedTransactionRejected'),
+        'Queued Transaction Rejected'
+      );
     } else if (
       err.startsWith('TransportOpenUserCancelled') ||
       err.startsWith('Error: Ledger Device is busy')
@@ -131,10 +134,16 @@ export const LedgerHardwareProvider = ({
     } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
       // occurs when the required app is not open.
       handleNewStatusCode('failure', 'AppNotOpenContinue');
-      setDefaultMessage(t('openAppOnLedger', { appName }));
+      setDefaultMessage(
+        t('openAppOnLedger', { appName }),
+        'Open App On Ledger'
+      );
     } else {
       // miscellanous errors - assume app is not open or ready.
-      setDefaultMessage(t('openAppOnLedger', { appName }));
+      setDefaultMessage(
+        t('openAppOnLedger', { appName }),
+        'Open App On Ledger'
+      );
       handleNewStatusCode('failure', 'AppNotOpen');
     }
   };
