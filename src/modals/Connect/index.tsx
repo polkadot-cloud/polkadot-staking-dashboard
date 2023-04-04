@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimaryInvert } from '@polkadotcloud/dashboard-ui';
+import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
 import { Extensions } from 'config/extensions';
 import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
