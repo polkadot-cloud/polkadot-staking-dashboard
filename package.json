@@ -31,6 +31,7 @@
     "@polkadot/rpc-provider": "^10.1.4",
     "@polkadot/util": "^11.0.1",
     "@polkadotcloud/core-ui": "0.2.6",
+    "@polkadotcloud/utils": "^0.2.6",
     "@substrate/connect": "^0.7.22",
     "@types/lodash.throttle": "^4.1.7",
     "@zondax/ledger-substrate": "^0.40.6",
