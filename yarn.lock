@@ -515,7 +515,7 @@
   resolved "https://registry.npmjs.org/@ledgerhq/errors/-/errors-6.12.4.tgz#1c2f75dc3dee91b069f3446be484fa28676d1b45"
   integrity sha512-qi5poMrcIuFuivdzRjjQsNp7rRwUA5v3eo6D4yEy+l+w8wT4d4JtQ5u1TbrlGfFHfgLq7Lv6dsvh2ooLyWTyfg==
 
-"@ledgerhq/hw-transport-webhid@^6.27.12":
+"@ledgerhq/hw-transport-webhid@^6.27.13":
   version "6.27.13"
   resolved "https://registry.npmjs.org/@ledgerhq/hw-transport-webhid/-/hw-transport-webhid-6.27.13.tgz#c14a2b4b64241cf6206c49e618edb86b28573796"
   integrity sha512-VDQ8i08Atc7QQJ1+JE+EtuKoxBNL+ySyxMnzVAABMzhy6LGCwxzfNKP7Pb9vZNruWyRYVNCN3RiNPCMmiCDd1g==
@@ -631,7 +631,7 @@
     rxjs "^7.8.0"
     tslib "^2.5.0"
 
-"@polkadot/api@10.2.2", "@polkadot/api@^10.2.1":
+"@polkadot/api@10.2.2", "@polkadot/api@^10.2.2":
   version "10.2.2"
   resolved "https://registry.npmjs.org/@polkadot/api/-/api-10.2.2.tgz#feadf8809f85f6b95e9d80a2741219e8740b8482"
   integrity sha512-tv/E+8qN492b33CvSEZ57SjKQ8f6AMUSI6Js6lZreYPomSq5SzJWFH1mplOp3/VI0uX1O5c01dgMWkpM8W2ZKw==
@@ -665,7 +665,6 @@
 
 "@polkadot/networks@11.1.3", "@polkadot/networks@^11.1.3":
   version "11.1.3"
-
   resolved "https://registry.npmjs.org/@polkadot/networks/-/networks-11.1.3.tgz#e113c98269328267962c2047dccca4d2790cc8a5"
   integrity sha512-goLpX9SswAGGeh1jXB79wHEfWOF5rLIItMHYalujBmhQVxyAqbxP2tzQqPQXDLcnkWbgwkyYGLXaDD72GBqHZw==
   dependencies:
@@ -673,7 +672,7 @@
     "@substrate/ss58-registry" "^1.39.0"
     tslib "^2.5.0"
 
-"@polkadot/react-identicon@^3.1.3":
+"@polkadot/react-identicon@^3.1.4":
   version "3.1.4"
   resolved "https://registry.npmjs.org/@polkadot/react-identicon/-/react-identicon-3.1.4.tgz#5d103a7655894e2b53f2d78a37266681678f266d"
   integrity sha512-afwXe8H3yfsQx9/0k2XZU5xOObr4dSzAtT2pvkyCHJxsEoh39kdTW1JyMAkTSj5AsYP5lSUHiX/T3NV/Dgf7Pg==
@@ -1265,7 +1264,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.0.31":
+"@types/react@*", "@types/react@^18.0.33":
   version "18.0.33"
   resolved "https://registry.npmjs.org/@types/react/-/react-18.0.33.tgz#a1575160cb4376787c2f5fe0312302f824baa61e"
   integrity sha512-sHxzVxeanvQyQ1lr8NSHaj0kDzcNiGpILEVt69g9S31/7PfMvNCKLKcsHw4lYKjs3cGNJjXSP4mYzX43QlnjNA==
@@ -1293,7 +1292,7 @@
     "@types/react" "*"
     csstype "^3.0.2"
 
-"@typescript-eslint/eslint-plugin@^5.57.0":
+"@typescript-eslint/eslint-plugin@^5.57.1":
   version "5.57.1"
   resolved "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-5.57.1.tgz#d1ab162a3cd2671b8a1c9ddf6e2db73b14439735"
   integrity sha512-1MeobQkQ9tztuleT3v72XmY0XuKXVXusAhryoLuU5YZ+mXoYKZP9SQ7Flulh1NX4DTjpGTc2b/eMu4u7M7dhnQ==
@@ -1309,7 +1308,7 @@
     semver "^7.3.7"
     tsutils "^3.21.0"
 
-"@typescript-eslint/parser@^5.57.0":
+"@typescript-eslint/parser@^5.57.1":
   version "5.57.1"
   resolved "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-5.57.1.tgz#af911234bd4401d09668c5faf708a0570a17a748"
   integrity sha512-hlA0BLeVSA/wBPKdPGxoVr9Pp6GutGoY380FEhbVi0Ph4WNe8kLvqIRx76RSQt1lynZKfrXKs0/XeEk4zZycuA==
@@ -3051,7 +3050,7 @@ i18next-browser-languagedetector@^7.0.1:
   dependencies:
     "@babel/runtime" "^7.19.4"
 
-i18next@^22.4.13:
+i18next@^22.4.14:
   version "22.4.14"
   resolved "https://registry.npmjs.org/i18next/-/i18next-22.4.14.tgz#18dd94e9adc2618497c7de101a206e1ca3a18727"
   integrity sha512-VtLPtbdwGn0+DAeE00YkiKKXadkwg+rBUV+0v8v0ikEjwdiJ0gmYChVE4GIa9HXymY6wKapkL93vGT7xpq6aTw==
@@ -4740,7 +4739,7 @@ vite-plugin-svgr@^2.4.0:
     "@rollup/pluginutils" "^5.0.2"
     "@svgr/core" "^6.5.1"
 
-vite-tsconfig-paths@^4.0.7:
+vite-tsconfig-paths@^4.0.8:
   version "4.0.8"
   resolved "https://registry.npmjs.org/vite-tsconfig-paths/-/vite-tsconfig-paths-4.0.8.tgz#af5d3d074ae01c434713f7d81321ff3697af1b51"
   integrity sha512-p04zH+Ey+NT78571x0pdX7nVRIJSlmKVvYryFglSWOK3Hc72eDL0+JJfbyQiugaIBApJkaEqbBQvqpsFZOSVGg==
