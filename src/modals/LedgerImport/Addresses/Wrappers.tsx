@@ -89,17 +89,14 @@ export const AddressWrapper = styled.div`
               }
             }
 
-            .label {
-              margin-right: 0.5rem;
-              margin-bottom: 0.85rem;
-            }
-
             h5,
             button {
               font-size: 0.9rem;
               &.label {
                 display: flex;
                 align-items: flex-end;
+                margin-right: 0.5rem;
+                margin-bottom: 0.85rem;
               }
               > span {
                 padding: 0.4rem 0.75rem;
