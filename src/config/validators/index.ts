@@ -52,6 +52,21 @@ export const ValidatorCommunity = [
     },
   },
   {
+    name: 'Blockseeker.io',
+    thumbnail: 'Blockseeker',
+    bio: 'Independant validator, software engineer and web3 enthusiast, focusing on providing tools and building for web3 running bare metal/dedicated nodes to help decentralize the network. Only charges a small fee to help maintain nodes and effort in running them.',
+    email: 'dev@blockseeker.io',
+    twitter: '@blockseeker_io',
+    website: 'https://blockseeker.io',
+    validators: {
+      polkadot: ['131Qzz7SvHUn7zdDAt2jFZmzVsP2KkoiDWLZa9N7FivGTXpB'],
+      kusama: [
+        'HPuireorhWdSCQg5dG1zeGk7XCuAfkb21BtDyLqRuN62k67',
+        'J6if9c47o81JsMeB75VwkXtx1nVEaMPvQxuMRYhBR8H6ULU',
+      ],
+    },
+  },
+  {
     name: 'Coinbase Cloud',
     thumbnail: 'CoinbaseCloud',
     bio: 'Our staking infrastructure powers the leading crypto products and exchanges. We offer the same infrastructure in our public validators and make it available to you.',
