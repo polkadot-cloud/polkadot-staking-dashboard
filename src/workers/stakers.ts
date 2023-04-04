@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import type { AnyJson } from 'types';
 
@@ -128,16 +129,5 @@ const processExposures = (data: AnyJson) => {
     who: activeAccount,
   };
 };
-
-/**
- * Converts an on chain balance value in BigNumber planck to a decimal value in token unit. (1 token
- * token = 10^units planck).
- */
-export const planckToUnit = (val: BigNumber, units: number) =>
-  new BigNumber(
-    val.dividedBy(new BigNumber(10).exponentiatedBy(units)).toFixed(units)
-  );
-
-export const rmCommas = (val: string): string => val.replace(/,/g, '');
 
 export default null as any;

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonHelp } from '@polkadotcloud/core-ui';
+import { clipAddress, planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
@@ -15,13 +16,12 @@ import { GraphWrapper } from 'library/Graphs/Wrappers';
 import { useSize } from 'library/Hooks/useSize';
 import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
-import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
+import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
 import { PaddingWrapper } from 'modals/Wrappers';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { clipAddress, planckToUnit, rmCommas } from 'Utils';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');

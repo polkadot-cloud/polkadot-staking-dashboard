@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { setStateWithRef, shuffle } from 'Utils';
+import { setStateWithRef, shuffle } from '@polkadotcloud/utils';
 import type {
   BondedPool,
   BondedPoolsContextState,

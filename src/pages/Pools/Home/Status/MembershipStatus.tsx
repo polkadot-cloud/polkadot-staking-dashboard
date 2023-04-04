@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import { determinePoolDisplay } from 'Utils';
+import { determinePoolDisplay } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';

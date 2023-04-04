@@ -8,7 +8,7 @@ import {
   planckToUnit,
   rmCommas,
   sortWithNull,
-} from 'Utils';
+} from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
