@@ -2,21 +2,21 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { PAGES_CONFIG, PAGE_CATEGORIES } from 'config/pages';
+import { PageCategories, PagesConfig } from 'config/pages';
 import { PolkadotUrl, UriPrefix } from 'consts';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useSetup } from 'contexts/Setup';
-import { SetupContextInterface } from 'contexts/Setup/types';
+import type { SetupContextInterface } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import { UIContextInterface } from 'contexts/UI/types';
+import type { UIContextInterface } from 'contexts/UI/types';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
-import { PageCategory, PageItem, PagesConfig } from 'types';
+import type { PageCategory, PageItem, PagesConfigItems } from 'types';
 import { Heading } from './Heading/Heading';
 import { Primary } from './Primary';
 import { LogoWrapper } from './Wrapper';
@@ -40,8 +40,8 @@ export const Main = () => {
   const controllerNotImported = getControllerNotImported(controller);
 
   const [pageConfig, setPageConfig] = useState({
-    categories: Object.assign(PAGE_CATEGORIES),
-    pages: Object.assign(PAGES_CONFIG),
+    categories: Object.assign(PageCategories),
+    pages: Object.assign(PagesConfig),
   });
 
   useEffect(() => {
@@ -124,7 +124,7 @@ export const Main = () => {
   ]);
 
   // remove pages that network does not support
-  const pagesToDisplay: PagesConfig = Object.values(pageConfig.pages);
+  const pagesToDisplay: PagesConfigItems = Object.values(pageConfig.pages);
 
   return (
     <>

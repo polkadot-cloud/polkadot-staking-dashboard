@@ -1,6 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  PageRowWrapper,
+  RowPrimaryWrapper,
+  RowSecondaryWrapper,
+} from 'Wrappers';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -12,14 +17,8 @@ import { PoolList } from 'library/PoolList';
 import { StatBoxList } from 'library/StatBoxList';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  PageRowWrapper,
-  RowPrimaryWrapper,
-  RowSecondaryWrapper,
-} from 'Wrappers';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
-import { PoolsTabsProvider, usePoolsTabs } from './context';
 import { Favorites } from './Favorites';
 import { ManageBond } from './ManageBond';
 import { ManagePool } from './ManagePool';
@@ -30,6 +29,7 @@ import { MinCreateBondStat } from './Stats/MinCreateBond';
 import { MinJoinBondStat } from './Stats/MinJoinBond';
 import { PoolMembershipStat } from './Stats/PoolMembership';
 import { Status } from './Status';
+import { PoolsTabsProvider, usePoolsTabs } from './context';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
@@ -178,10 +178,8 @@ export const HomeInner = () => {
   );
 };
 
-export const Home = () => {
-  return (
-    <PoolsTabsProvider>
-      <HomeInner />
-    </PoolsTabsProvider>
-  );
-};
+export const Home = () => (
+  <PoolsTabsProvider>
+    <HomeInner />
+  </PoolsTabsProvider>
+);

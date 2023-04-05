@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
-import { useBalances } from 'contexts/Balances';
+import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/dashboard-ui';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useConnect } from 'contexts/Connect';
+import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
@@ -12,10 +13,9 @@ import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
-import { MaybeAccount } from 'types';
+import type { MaybeAccount } from 'types';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({
@@ -33,6 +33,7 @@ export const Nominations = ({
   const { getAccountNominations } = useBalances();
   const { isFastUnstaking } = useUnstaking();
   const { nominated: stakeNominated, poolNominated } = useValidators();
+  const { openHelp } = useHelp();
   let { favoritesList } = useValidators();
   if (favoritesList === null) {
     favoritesList = [];
@@ -57,9 +58,9 @@ export const Nominations = ({
   // callback function to stop nominating selected validators
   const cbStopNominatingSelected = (provider: any) => {
     const { selected } = provider;
-    const _nominations = [...nominations].filter((n) => {
-      return !selected.map((_s: any) => _s.address).includes(n);
-    });
+    const _nominations = [...nominations].filter(
+      (n) => !selected.map((_s: any) => _s.address).includes(n)
+    );
     openModalWith(
       'ChangeNominations',
       {
@@ -102,7 +103,7 @@ export const Nominations = ({
       <CardHeaderWrapper withAction>
         <h3>
           {isPool ? t('nominate.poolNominations') : t('nominate.nominations')}
-          <OpenHelpIcon helpKey="Nominations" />
+          <ButtonHelp marginLeft onClick={() => openHelp('Nominations')} />
         </h3>
         <div>
           {/* If regular staking and nominating, display stop button.

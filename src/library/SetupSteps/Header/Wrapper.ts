@@ -41,9 +41,5 @@ export const Wrapper = styled.div`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-
-    .help-icon {
-      margin-left: 0.6rem;
-    }
   }
 `;

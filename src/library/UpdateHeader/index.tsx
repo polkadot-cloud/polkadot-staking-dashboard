@@ -3,7 +3,8 @@
 
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { PayeeItem, usePayeeConfig } from 'library/Hooks/usePayeeConfig';
+import type { PayeeItem } from 'library/Hooks/usePayeeConfig';
+import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { Wrapper } from './Wrapper';
 
 interface UpdateHeaderProps {

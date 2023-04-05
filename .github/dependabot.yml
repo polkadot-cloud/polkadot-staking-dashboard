@@ -3,14 +3,10 @@ version: 2
 updates:
   - package-ecosystem: npm
     directory: '/'
-    labels:
-      - 'automerge'
     schedule:
       interval: daily
-    open-pull-requests-limit: 4
+    open-pull-requests-limit: 10
   - package-ecosystem: github-actions
     directory: '/'
-    labels:
-      - 'automerge'
     schedule:
       interval: daily

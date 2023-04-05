@@ -5,5 +5,5 @@
 **/package-lock.json
 **/.eslintrc.js
 **/tsconfig.json
-**/webpack.config.js
+dist
 src/img/**/*

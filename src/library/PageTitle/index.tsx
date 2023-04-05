@@ -3,9 +3,9 @@
 
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useRef, useState } from 'react';
 import { MenuPaddingWrapper, PageTitleWrapper } from 'Wrappers';
-import { PageTitleProps } from './types';
+import { useEffect, useRef, useState } from 'react';
+import type { PageTitleProps } from './types';
 
 export const PageTitle = ({ title, button, tabs = [] }: PageTitleProps) => {
   const [sticky, setSticky] = useState(false);

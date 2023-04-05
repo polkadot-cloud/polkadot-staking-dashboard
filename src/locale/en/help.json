@@ -1,16 +1,6 @@
 {
   "help": {
     "definitions": {
-      "activeBondThreshold": [
-        "Active Bond Threshold",
-        [
-          "The amount of {NETWORK_UNIT} needed to be actively nominating in an era. ",
-          "This value applies to nominators and for pools. In the pool's case, it is important to join a pool with a total bond amount of at least this value.",
-          "Being above this metric simply guarantees that you will be present in the active nominator set for the era. This amount still does not guarantee rewards, as your active nominations may still be over-subscribed.",
-          "Only the top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators are rewarded per validator in {NETWORK_NAME}. Ensuring your active bond is above this threshold will increase your chances of rewards.",
-          "You can keep track of these metrics from the dashboard and amend your staking position if necessary, whether increasing your bonded {NETWORK_UNIT}, changing your nominations, or joining another pool."
-        ]
-      ],
       "activeNominators": [
         "Active Nominators",
         [
@@ -21,6 +11,16 @@
       "activePools": [
         "Active Pools",
         ["The current amount of active nomination pools on {NETWORK_NAME}."]
+      ],
+      "activeStakeThreshold": [
+        "Active Stake Threshold",
+        [
+          "The amount of {NETWORK_UNIT} needed to be actively nominating in an era.",
+          "This value applies to nominators and for pools. In the pool's case, it is important to join a pool with a total bond amount of at least this value.",
+          "Being above this metric simply guarantees that you will be present in the active nominator set for the era. This amount still does not guarantee rewards, as your active nominations may still be over-subscribed.",
+          "Only the top {MAX_NOMINATOR_REWARDED_PER_VALIDATOR} nominators are rewarded per validator in {NETWORK_NAME}. Ensuring your active bond is above this threshold will increase your chances of rewards.",
+          "You can keep track of these metrics from the dashboard and amend your staking position if necessary, whether increasing your bonded {NETWORK_UNIT}, changing your nominations, or joining another pool."
+        ]
       ],
       "activeValidator": [
         "Active Validator",
@@ -62,7 +62,7 @@
         [
           "Bonding funds is the process of 'locking' (or staking) {NETWORK_UNIT}. Bonded {NETWORK_UNIT} will then be automatically allocated to one or more of your nominated validators.",
           "As a nominator, you allocate nominations yourself. In a pool, the pool owner or pool nominator will allocate nominations on your behalf, and your bonded funds will back those nominations.",
-          "The minimum active bond statistic is the minimum {NETWORK_UNIT} being bonded by a nominator for the current era.This value is also the minimum amount required to receive rewards."
+          "The minimum to earn rewards statistic is the minimum {NETWORK_UNIT} being bonded by a nominator for the current era. This value is also the minimum amount required to receive rewards."
         ]
       ],
       "commission": [
@@ -135,6 +135,16 @@
           "The payout amounts received depend on how much {NETWORK_UNIT} the nominators, and validators themselves, had bonded for that era."
         ]
       ],
+      "ledgerHardwareWallets": [
+        "Ledger Hardware Wallets",
+        [
+          "Compatible Ledger devices are fully supported on staking dashboard. Use your Ledger to manage your staking activity on {NETWORK_NAME}.",
+          "Using a hardware wallet ensures a secure experience, whereby your keys stay on the hardware device at all times. This is also known as cold storage, as there is no active internet connection to your wallet.",
+          "In order to import and sign transactions with your Ledger device, your device must have the {NETWORK_NAME} Ledger app installed. The {NETWORK_NAME} app can be installed via Ledger's very own Ledger Live application.",
+          "Both USB and Bluetooth connections are supported in staking dashboard. So if your Ledger is bluetooth enabled, and your device allows bluetooth connections, you will be able to import accounts and sign transactions wirelessly through your Ledger device.",
+          "Find more information about Ledger at their official website, ledger.com."
+        ]
+      ],
       "lockedBalance": [
         "Locked Balance",
         [
@@ -193,7 +203,7 @@
         [
           "Nominations are the validators a staker chooses to nominate. You can nominate up to {MAX_NOMINATIONS} validators on {NETWORK_NAME}.",
           "For nomination pools, the pool owner and pool nominator are in charge of nominating validators on behalf of all the pool members.",
-          "Once nominations have been submitted, bonded funds are automatically distributed to nominees that are active in the curernt era.",
+          "Once nominations have been submitted, bonded funds are automatically distributed to nominees that are active in the current era.",
           "As long as at least one of your nominations is actively validating in a session, your funds will be backing that validator."
         ]
       ],

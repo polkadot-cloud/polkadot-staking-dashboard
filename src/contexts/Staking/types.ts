@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BigNumber from 'bignumber.js';
-import { PayeeConfig } from 'contexts/Setup/types';
-import { MaybeAccount } from 'types';
+import type BigNumber from 'bignumber.js';
+import type { PayeeConfig } from 'contexts/Setup/types';
+import type { MaybeAccount } from 'types';
 
 export interface StakingMetrics {
   totalNominators: BigNumber;
@@ -14,12 +14,11 @@ export interface StakingMetrics {
   maxValidatorsCount: BigNumber;
   minNominatorBond: BigNumber;
   payee: PayeeConfig;
+  totalStaked: BigNumber;
 }
 
 export interface EraStakers {
   stakers: Array<any>;
-  totalStaked: BigNumber;
-  minActiveBond: BigNumber;
   nominators: Array<any> | undefined;
   totalActiveNominators: number;
   activeValidators: number;

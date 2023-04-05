@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 
 export const PoolStatus = () => {
   const { t } = useTranslation('pages');
-  const { poolsSyncing } = useUi();
+  const { isPoolSyncing } = useUi();
   const { getNominationStatus } = useNominationStatus();
   const { selectedActivePool, poolNominations } = useActivePools();
 
@@ -47,7 +47,7 @@ export const PoolStatus = () => {
       : '';
 
   // Determine pool status - right side.
-  const poolStatusRight = poolsSyncing
+  const poolStatusRight = isPoolSyncing
     ? t('pools.inactivePoolNotNominating')
     : !poolNominating
     ? t('pools.inactivePoolNotNominating')
@@ -61,7 +61,7 @@ export const PoolStatus = () => {
 
   return (
     <Stat
-      icon={poolsSyncing ? undefined : poolStateIcon}
+      icon={isPoolSyncing ? undefined : poolStateIcon}
       label={t('pools.poolStatus')}
       helpKey="Nomination Status"
       stat={`${poolStatusLeft}${poolStatusRight}`}

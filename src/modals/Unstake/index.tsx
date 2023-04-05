@@ -1,15 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxFees } from 'contexts/TxFees';
+import { getUnixTime } from 'date-fns';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -17,6 +15,7 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { StaticNote } from 'modals/Utils/StaticNote';
 import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -31,7 +30,6 @@ export const Unstake = () => {
   const { getControllerNotImported } = useStaking();
   const { getBondedAccount, getAccountNominations } = useBalances();
   const { getTransferOptions } = useTransferOptions();
-  const { txFeesValid } = useTxFees();
   const { erasToSeconds } = useErasToTimeLeft();
 
   const controller = getBondedAccount(activeAccount);
@@ -43,6 +41,7 @@ export const Unstake = () => {
 
   const bondDurationFormatted = timeleftAsString(
     t,
+    getUnixTime(new Date()) + 1,
     erasToSeconds(bondDuration),
     true
   );
@@ -59,9 +58,8 @@ export const Unstake = () => {
   const [bondValid, setBondValid] = useState(false);
 
   // unbond all validation
-  const isValid = (() => {
-    return greaterThanZero(freeToUnbond) && !controllerNotImported;
-  })();
+  const isValid = (() =>
+    greaterThanZero(freeToUnbond) && !controllerNotImported)();
 
   // update bond value on task change
   useEffect(() => {
@@ -95,7 +93,7 @@ export const Unstake = () => {
     return api.tx.utility.batch(txs);
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: controller,
     shouldSubmit: bondValid,
@@ -140,24 +138,14 @@ export const Unstake = () => {
             text={t('unstakeStopNominating', { count: nominations.length })}
           />
         )}
-        <p>{t('onceUnbonding', { bondDurationFormatted })}</p>
+        <StaticNote
+          value={bondDurationFormatted}
+          tKey="onceUnbonding"
+          valueKey="bondDurationFormatted"
+          deps={[bondDuration]}
+        />
       </PaddingWrapper>
-      <SubmitTx
-        fromController
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              submitting ||
-              !(bondValid && accountHasSigner(controller) && txFeesValid)
-            }
-          />,
-        ]}
-      />
+      <SubmitTx fromController valid={bondValid} {...submitExtrinsic} />
     </>
   );
 };

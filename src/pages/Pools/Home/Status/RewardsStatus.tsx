@@ -18,7 +18,7 @@ export const RewardsStatus = () => {
     network: { units, unit },
     isReady,
   } = useApi();
-  const { poolsSyncing } = useUi();
+  const { isPoolSyncing } = useUi();
   const { openModalWith } = useModal();
   const { selectedActivePool } = useActivePools();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -63,7 +63,7 @@ export const RewardsStatus = () => {
       label={t('pools.unclaimedRewards')}
       helpKey="Pool Rewards"
       stat={labelRewards}
-      buttons={poolsSyncing ? [] : buttonsRewards}
+      buttons={isPoolSyncing ? [] : buttonsRewards}
     />
   );
 };

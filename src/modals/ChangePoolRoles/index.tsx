@@ -1,13 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { useTxFees } from 'contexts/TxFees';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
@@ -21,9 +18,8 @@ export const ChangePoolRoles = () => {
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { replacePoolRoles } = useBondedPools();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { activeAccount } = useConnect();
   const { config } = useModal();
-  const { txFeesValid } = useTxFees();
   const { id: poolId, roleEdits } = config;
 
   // tx to submit
@@ -49,7 +45,7 @@ export const ChangePoolRoles = () => {
   };
 
   // handle extrinsic
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
@@ -85,20 +81,7 @@ export const ChangePoolRoles = () => {
           />
         </Wrapper>
       </PaddingWrapper>
-      <SubmitTx
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              submitting || !accountHasSigner(activeAccount) || !txFeesValid
-            }
-          />,
-        ]}
-      />
+      <SubmitTx {...submitExtrinsic} valid />
     </>
   );
 };

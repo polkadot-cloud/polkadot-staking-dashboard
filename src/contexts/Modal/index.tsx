@@ -1,11 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useTxFees } from 'contexts/TxFees';
-import React, { useEffect, useRef, useState } from 'react';
 import { setStateWithRef } from 'Utils';
+import { useTxMeta } from 'contexts/TxMeta';
+import React, { useEffect, useRef, useState } from 'react';
 import { defaultModalContext } from './defaults';
-import { ModalConfig, ModalContextInterface, ModalOptions } from './types';
+import type { ModalConfig, ModalContextInterface, ModalOptions } from './types';
 
 export const ModalContext =
   React.createContext<ModalContextInterface>(defaultModalContext);
@@ -14,7 +14,7 @@ export const useModal = () => React.useContext(ModalContext);
 
 // wrapper component to provide components with context
 export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
-  const { notEnoughFunds } = useTxFees();
+  const { notEnoughFunds } = useTxMeta();
 
   // Store the modal configuration options.
   const [options, setOptions] = useState<ModalOptions>({
@@ -70,12 +70,26 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     setModalResize(resize + 1);
   };
 
+  // closes one modal and opens another.
+  const replaceModalWith = (
+    modal: string,
+    config: ModalConfig = {},
+    size = 'large'
+  ) => {
+    setStatus(3);
+    setHeight(0);
+    setTimeout(() => {
+      openModalWith(modal, config, size);
+    }, 10);
+  };
+
   return (
     <ModalContext.Provider
       value={{
         status: statusRef.current,
         setStatus,
         openModalWith,
+        replaceModalWith,
         setModalHeight,
         setResize,
         height,

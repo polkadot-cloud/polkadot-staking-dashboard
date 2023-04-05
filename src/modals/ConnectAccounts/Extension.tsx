@@ -13,11 +13,11 @@ import { faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import { ExtensionInjected } from 'contexts/Extensions/types';
+import type { ExtensionInjected } from 'contexts/Extensions/types';
+import { ExtensionsWrapper } from 'modals/Connect/Wrappers';
+import type { ExtensionProps } from 'modals/Connect/types';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ExtensionProps } from './types';
-import { ExtensionWrapper } from './Wrappers';
 
 export const Extension = (props: ExtensionProps) => {
   const { t } = useTranslation('modals');
@@ -41,7 +41,7 @@ export const Extension = (props: ExtensionProps) => {
   }
 
   return (
-    <ExtensionWrapper>
+    <ExtensionsWrapper>
       {status === 'connected' || !installed ? (
         <ExtensionElement
           {...props}
@@ -59,7 +59,7 @@ export const Extension = (props: ExtensionProps) => {
           installed={installed}
         />
       )}
-    </ExtensionWrapper>
+    </ExtensionsWrapper>
   );
 };
 

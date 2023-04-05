@@ -1,11 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import { PluginsList } from 'consts';
 import React, { useRef, useState } from 'react';
-import { localStorageOrDefault, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
-import { PluginsContextInterface } from './types';
+import type { PluginsContextInterface } from './types';
 
 export const PluginsContext = React.createContext<PluginsContextInterface>(
   defaults.defaultPluginsContext
@@ -28,7 +28,7 @@ export const PluginsProvider = ({
     );
 
     // if fiat is disabled, remove binance_spot service
-    const DISABLE_FIAT = Number(process.env.REACT_APP_DISABLE_FIAT ?? 0);
+    const DISABLE_FIAT = Number(import.meta.env.VITE_DISABLE_FIAT ?? 0);
     if (DISABLE_FIAT && localPlugins.includes('binance_spot')) {
       const index = localPlugins.indexOf('binance_spot');
       if (index !== -1) {
@@ -59,9 +59,7 @@ export const PluginsProvider = ({
     setStateWithRef(localPlugins, setPlugins, pluginsRef);
   };
 
-  const getPlugins = () => {
-    return pluginsRef.current;
-  };
+  const getPlugins = () => pluginsRef.current;
 
   return (
     <PluginsContext.Provider

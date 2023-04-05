@@ -195,7 +195,7 @@ export const ValidatorStatusWrapper = styled.div<{ status: string }>`
 `;
 
 export const SelectWrapper = styled.button`
-  background: var(--background-modal);
+  background: var(--background-input);
   margin: 0 0.75rem 0 0.25rem;
   overflow: hidden;
   display: flex;

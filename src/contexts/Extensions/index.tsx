@@ -1,15 +1,15 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { EXTENSIONS } from 'config/extensions';
-import {
+import { setStateWithRef } from 'Utils';
+import { Extensions } from 'config/extensions';
+import type {
   ExtensionConfig,
   ExtensionInjected,
   ExtensionsContextInterface,
 } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi } from 'types';
-import { setStateWithRef } from 'Utils';
+import type { AnyApi } from 'types';
 import { defaultExtensionsContext } from './defaults';
 
 export const ExtensionsContext =
@@ -68,7 +68,6 @@ export const ExtensionsProvider = ({
       clearInterval(injectedWeb3Interval);
     };
   });
-
   // initialise extensions.
   useEffect(() => {
     if (!extensions && injectedPresent) {
@@ -80,7 +79,7 @@ export const ExtensionsProvider = ({
       // injected extensions aren't present
       const wcPlaceholder: any = {};
       const defaultExts: Array<ExtensionInjected> = [];
-      const walletConnectExtension = EXTENSIONS.filter(
+      const walletConnectExtension = Extensions.filter(
         (e) => e.id === 'wallet-connect'
       )[0];
       defaultExts.push({
@@ -105,22 +104,21 @@ export const ExtensionsProvider = ({
 
   const getInstalledExtensions = () => {
     const { injectedWeb3 }: AnyApi = window;
-    const _exts: Array<ExtensionInjected> = [];
-
-    EXTENSIONS.forEach((e: ExtensionConfig) => {
+    const installed: Array<ExtensionInjected> = [];
+    Extensions.forEach((e: ExtensionConfig) => {
       if (e.id === 'wallet-connect') {
-        _exts.push({
+        installed.push({
           ...e,
           ...injectedWeb3[e.id],
         });
       } else if (injectedWeb3[e.id] !== undefined) {
-        _exts.push({
+        installed.push({
           ...e,
           ...injectedWeb3[e.id],
         });
       }
     });
-    return _exts;
+    return installed;
   };
 
   return (

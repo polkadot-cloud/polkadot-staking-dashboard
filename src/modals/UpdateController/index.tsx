@@ -1,18 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { ImportedAccount } from 'contexts/Connect/types';
 import { useModal } from 'contexts/Modal';
-import { useTxFees } from 'contexts/TxFees';
 import { AccountDropdown } from 'library/Form/AccountDropdown';
-import { InputItem } from 'library/Form/types';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { Warning } from 'library/Form/Warning';
+import type { InputItem } from 'library/Form/types';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
@@ -27,13 +23,12 @@ export const UpdateController = () => {
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, getAccount, accountHasSigner } = useConnect();
   const { getBondedAccount } = useBalances();
-  const { txFeesValid } = useTxFees();
 
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
 
   // the selected value in the form
-  const [selected, setSelected] = useState<ImportedAccount | null>(null);
+  const [selected, setSelected] = useState<InputItem>(null);
 
   // get eligible controller accounts
   const items = getEligibleControllers();
@@ -44,8 +39,8 @@ export const UpdateController = () => {
   }, [activeAccount, items]);
 
   // handle account selection change
-  const handleOnChange = ({ selectedItem }: { selectedItem: InputItem }) => {
-    setSelected(selectedItem);
+  const handleOnChange = (item: InputItem) => {
+    setSelected(item);
   };
 
   // tx to submit
@@ -62,7 +57,7 @@ export const UpdateController = () => {
   };
 
   // handle extrinsic
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
@@ -89,30 +84,16 @@ export const UpdateController = () => {
             <AccountDropdown
               items={items}
               onChange={handleOnChange}
-              placeholder={t('searchAccount')}
               current={account}
-              value={selected}
+              selected={selected}
               height="17rem"
             />
           </div>
         </Wrapper>
       </PaddingWrapper>
       <SubmitTx
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              selected === null ||
-              submitting ||
-              !accountHasSigner(activeAccount) ||
-              !txFeesValid
-            }
-          />,
-        ]}
+        valid={!(selected === null || !selected.active)}
+        {...submitExtrinsic}
       />
     </>
   );

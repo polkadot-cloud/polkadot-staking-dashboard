@@ -5,7 +5,7 @@ import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { useTranslation } from 'react-i18next';
-import { AnyFunction, AnyJson } from 'types';
+import type { AnyFunction, AnyJson } from 'types';
 
 export const useValidatorFilters = () => {
   const { t } = useTranslation('library');
@@ -107,9 +107,8 @@ export const useValidatorFilters = () => {
    * Filters the supplied list and removes items that have blocked nominations.
    * Returns the updated filtered list.
    */
-  const filterBlockedNominations = (list: any) => {
-    return list.filter((validator: any) => validator?.prefs?.blocked !== true);
-  };
+  const filterBlockedNominations = (list: any) =>
+    list.filter((validator: any) => validator?.prefs?.blocked !== true);
 
   /*
    * filterActive
@@ -208,22 +207,16 @@ export const useValidatorFilters = () => {
    * Orders a list by commission, lowest first.
    * Returns the updated ordered list.
    */
-  const orderLowestCommission = (list: any) => {
-    return [...list].sort(
-      (a: any, b: any) => a.prefs.commission - b.prefs.commission
-    );
-  };
+  const orderLowestCommission = (list: any) =>
+    [...list].sort((a: any, b: any) => a.prefs.commission - b.prefs.commission);
 
   /*
    * orderHighestCommission
    * Orders a list by commission, highest first.
    * Returns the updated ordered list.
    */
-  const orderHighestCommission = (list: any) => {
-    return [...list].sort(
-      (a: any, b: any) => b.prefs.commission - a.prefs.commission
-    );
-  };
+  const orderHighestCommission = (list: any) =>
+    [...list].sort((a: any, b: any) => b.prefs.commission - a.prefs.commission);
 
   const ordersToLabels: { [key: string]: string } = {
     default: t('unordered'),
@@ -252,7 +245,9 @@ export const useValidatorFilters = () => {
    * Returns the updated filtered list.
    */
   const applySearch = (list: any, batchKey: string, searchTerm: string) => {
-    if (meta[batchKey] === undefined) return list;
+    if (meta[batchKey] === undefined || !searchTerm) {
+      return list;
+    }
     const filteredList: any = [];
     for (const validator of list) {
       const batchIndex =

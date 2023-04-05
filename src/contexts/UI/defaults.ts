@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { UIContextInterface } from './types';
+import type { UIContextInterface } from './types';
 
 export const defaultUIContext: UIContextInterface = {
   // eslint-disable-next-line
@@ -25,6 +25,6 @@ export const defaultUIContext: UIContextInterface = {
   sideMenuMinimised: 0,
   containerRefs: {},
   isSyncing: false,
-  networkSyncing: false,
-  poolsSyncing: false,
+  isNetworkSyncing: false,
+  isPoolSyncing: false,
 };

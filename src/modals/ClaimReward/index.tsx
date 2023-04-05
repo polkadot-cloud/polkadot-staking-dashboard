@@ -1,14 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { greaterThanZero, planckToUnit } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Action } from 'library/Modal/Action';
@@ -16,7 +14,6 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { greaterThanZero, planckToUnit } from 'Utils';
 import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const ClaimReward = () => {
@@ -25,7 +22,6 @@ export const ClaimReward = () => {
   const { setStatus: setModalStatus, config } = useModal();
   const { selectedActivePool } = useActivePools();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { txFeesValid } = useTxFees();
   const { units, unit } = network;
   let { unclaimedRewards } = selectedActivePool || {};
   unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
@@ -58,7 +54,7 @@ export const ClaimReward = () => {
     return tx;
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: valid,
@@ -104,23 +100,7 @@ export const ClaimReward = () => {
           <p>{t('claimReward2')}</p>
         )}
       </PaddingWrapper>
-      <SubmitTx
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              !valid ||
-              submitting ||
-              !accountHasSigner(activeAccount) ||
-              !txFeesValid
-            }
-          />,
-        ]}
-      />
+      <SubmitTx valid={valid} {...submitExtrinsic} />
     </>
   );
 };

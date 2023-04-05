@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import Keyring from '@polkadot/keyring';
-import { ExtensionAccount } from 'contexts/Extensions/types';
-import { Network } from 'types';
 import { localStorageOrDefault } from 'Utils';
-import { ExternalAccount, ImportedAccount } from './types';
+import type { ExtensionAccount } from 'contexts/Extensions/types';
+import type { Network } from 'types';
+import type { ExternalAccount, ImportedAccount, LedgerAccount } from './types';
 
 // extension utils
 
@@ -25,12 +25,10 @@ export const addToLocalExtensions = (id: string) => {
       );
     }
   }
-  console.log('local extensions', localExtensions);
 };
 
 // removes extension from local `active_extensions`
 export const removeFromLocalExtensions = (id: string) => {
-  console.log('id is being removed from local storage', id);
   let localExtensions = localStorageOrDefault<string[]>(
     `active_extensions`,
     [],
@@ -72,6 +70,25 @@ export const getActiveAccountLocal = (network: Network) => {
     _activeAccount = keyring.addFromAddress(_activeAccount).address;
   }
   return _activeAccount;
+};
+
+// gets local ledger accounts, formatting their addresses
+// using active network ss58 format.
+export const getLocalLedgerAccounts = (
+  network: Network,
+  activeNetworkOnly = false
+) => {
+  let localLedgerAccounts = localStorageOrDefault<Array<LedgerAccount>>(
+    'ledger_accounts',
+    [],
+    true
+  ) as Array<LedgerAccount>;
+  if (activeNetworkOnly) {
+    localLedgerAccounts = localLedgerAccounts.filter(
+      (l: LedgerAccount) => l.network === network.name
+    );
+  }
+  return localLedgerAccounts;
 };
 
 // gets local external accounts, formatting their addresses

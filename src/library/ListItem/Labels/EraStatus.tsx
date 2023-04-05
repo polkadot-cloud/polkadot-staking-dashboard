@@ -7,7 +7,7 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
-import { MaybeAccount } from 'types';
+import type { MaybeAccount } from 'types';
 import { capitalizeFirstLetter, planckToUnit, rmCommas } from 'Utils';
 
 export const EraStatus = ({ address }: { address: MaybeAccount }) => {

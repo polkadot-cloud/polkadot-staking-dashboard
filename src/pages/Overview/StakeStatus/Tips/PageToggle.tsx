@@ -8,8 +8,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useUi } from 'contexts/UI';
 import { useTranslation } from 'react-i18next';
-import { PageToggleProps } from './types';
 import { PageToggleWrapper } from './Wrappers';
+import type { PageToggleProps } from './types';
 
 export const PageToggle = ({
   start,
@@ -20,9 +20,9 @@ export const PageToggle = ({
   setPageHandler,
 }: PageToggleProps) => {
   const { t } = useTranslation();
-  const { networkSyncing } = useUi();
+  const { isNetworkSyncing } = useUi();
 
-  totalItems = networkSyncing ? 1 : totalItems;
+  totalItems = isNetworkSyncing ? 1 : totalItems;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (

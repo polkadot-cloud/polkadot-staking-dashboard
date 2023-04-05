@@ -10,6 +10,7 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
   flex-flow: row wrap;
   align-items: center;
   width: 100%;
+  min-height: 3rem;
 
   > div {
     display: flex;
@@ -94,10 +95,6 @@ export const StatWrapper = styled.div`
       display: flex;
       align-items: center;
 
-      > .help-icon {
-        margin-left: 0.5rem;
-      }
-
       .icon {
         margin-right: 0.425rem;
       }
@@ -117,7 +114,7 @@ export const CloseWrapper = styled.div`
 
   > button {
     opacity: 0.4;
-    transition: opacity 0.15ws ease-in-out;
+    transition: opacity var(--transition-duration) ease-in-out;
 
     &:hover {
       opacity: 1;

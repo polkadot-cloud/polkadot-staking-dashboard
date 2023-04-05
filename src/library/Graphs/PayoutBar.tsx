@@ -24,8 +24,8 @@ import { locales } from 'locale';
 import { Bar } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import { graphColors } from 'styles/graphs';
-import { AnySubscan } from 'types';
-import { PayoutBarProps } from './types';
+import type { AnySubscan } from 'types';
+import type { PayoutBarProps } from './types';
 import { formatRewardsForGraphs } from './Utils';
 
 ChartJS.register(
@@ -46,20 +46,33 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
   const { membership } = usePoolMemberships();
-  const { payouts, poolClaims } = useSubscan();
+  const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
+  const notStaking = !isSyncing && inSetup() && !membership;
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts.filter(
     (p: AnySubscan) => p.event_id !== 'Slashed'
   );
 
-  const notStaking = !isSyncing && inSetup() && !membership;
-  const { payoutsByDay, poolClaimsByDay } = formatRewardsForGraphs(
-    days,
-    units,
-    payoutsNoSlash,
-    poolClaims
+  // remove slashes from unclaimed payouts.
+  const unclaimedPayoutsNoSlash = unclaimedPayouts.filter(
+    (p: AnySubscan) => p.event_id !== 'Slashed'
   );
+
+  // get formatted rewards data for graph.
+  const { allPayouts, allPoolClaims, allUnclaimedPayouts } =
+    formatRewardsForGraphs(
+      new Date(),
+      days,
+      units,
+      payoutsNoSlash,
+      poolClaims,
+      unclaimedPayoutsNoSlash
+    );
+
+  const { p: graphPayouts } = allPayouts;
+  const { p: graphUnclaimedPayouts } = allUnclaimedPayouts;
+  const { p: graphPoolClaims } = allPoolClaims;
 
   // determine color for payouts
   const colorPayouts = notStaking
@@ -72,7 +85,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
     : colors.secondary[mode];
 
   const data = {
-    labels: payoutsByDay.map((item: AnySubscan) => {
+    labels: graphPayouts.map((item: AnySubscan) => {
       const dateObj = format(fromUnixTime(item.block_timestamp), 'do MMM', {
         locale: locales[i18n.resolvedLanguage],
       });
@@ -80,18 +93,29 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
     }),
     datasets: [
       {
+        order: 1,
         label: t('payout'),
-        data: payoutsByDay.map((item: AnySubscan) => item.amount),
+        data: graphPayouts.map((item: AnySubscan) => item.amount),
         borderColor: colorPayouts,
         backgroundColor: colorPayouts,
         pointRadius: 0,
         borderRadius: 3,
       },
       {
+        order: 2,
         label: t('poolClaim'),
-        data: poolClaimsByDay.map((item: AnySubscan) => item.amount),
+        data: graphPoolClaims.map((item: AnySubscan) => item.amount),
         borderColor: colorPoolClaims,
         backgroundColor: colorPoolClaims,
+        pointRadius: 0,
+        borderRadius: 3,
+      },
+      {
+        order: 3,
+        data: graphUnclaimedPayouts.map((item: AnySubscan) => item.amount),
+        label: t('unclaimedPayouts'),
+        borderColor: colorPayouts,
+        backgroundColor: colors.pending[mode],
         pointRadius: 0,
         borderRadius: 3,
       },
@@ -149,7 +173,11 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
         callbacks: {
           title: () => [],
           label: (context: any) =>
-            `${new BigNumber(context.parsed.y).toFormat()} ${unit}`,
+            `${
+              context.dataset.order === 3 ? `${t('pending')}: ` : ''
+            }${new BigNumber(context.parsed.y)
+              .decimalPlaces(units)
+              .toFormat()} ${unit}`,
         },
       },
     },

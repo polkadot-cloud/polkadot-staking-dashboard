@@ -1,6 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { planckToUnit } from 'Utils';
+import {
+  PageRowWrapper,
+  RowPrimaryWrapper,
+  RowSecondaryWrapper,
+  TopBarWrapper,
+} from 'Wrappers';
 import BigNumber from 'bignumber.js';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -13,13 +20,6 @@ import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit } from 'Utils';
-import {
-  PageRowWrapper,
-  RowPrimaryWrapper,
-  RowSecondaryWrapper,
-  TopBarWrapper,
-} from 'Wrappers';
 import { ActiveAccount } from './ActiveAccount';
 import { BalanceChart } from './BalanceChart';
 import { BalanceLinks } from './BalanceLinks';
@@ -34,8 +34,15 @@ export const Overview = () => {
   const { i18n, t } = useTranslation('pages');
   const { network } = useApi();
   const { units } = network;
-  const { payouts, poolClaims } = useSubscan();
-  const { lastReward } = formatRewardsForGraphs(14, units, payouts, poolClaims);
+  const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
+  const { lastReward } = formatRewardsForGraphs(
+    new Date(),
+    14,
+    units,
+    payouts,
+    poolClaims,
+    unclaimedPayouts
+  );
 
   const PAYOUTS_HEIGHT = 390;
 

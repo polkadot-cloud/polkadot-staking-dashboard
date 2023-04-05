@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/dashboard-ui';
 import { useConnect } from 'contexts/Connect';
+import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { Nominations } from 'pages/Nominate/Active/Nominations';
 import { useTranslation } from 'react-i18next';
 import { PageRowWrapper } from 'Wrappers';
@@ -31,6 +31,7 @@ export const ManagePool = () => {
   const isNominating = !!poolNominations?.targets?.length;
   const nominator = selectedActivePool?.addresses?.stash ?? null;
   const { state } = selectedActivePool?.bondedPool || {};
+  const { openHelp } = useHelp();
 
   const canNominate = isOwner() || isNominator();
 
@@ -44,7 +45,10 @@ export const ManagePool = () => {
             <CardHeaderWrapper withAction>
               <h3>
                 {t('pools.generateNominations')}
-                <OpenHelpIcon helpKey="Nominations" />
+                <ButtonHelp
+                  marginLeft
+                  onClick={() => openHelp('Nominations')}
+                />
               </h3>
               <div>
                 <ButtonPrimary

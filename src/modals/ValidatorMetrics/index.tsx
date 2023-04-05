@@ -1,8 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ButtonHelp } from '@polkadotcloud/dashboard-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
+import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
@@ -14,7 +16,6 @@ import { useSize } from 'library/Hooks/useSize';
 import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { StatsWrapper, StatWrapper } from 'library/Modal/Wrappers';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
 import { PaddingWrapper } from 'modals/Wrappers';
@@ -33,6 +34,7 @@ export const ValidatorMetrics = () => {
   const { activeEra } = useNetworkMetrics();
   const { eraStakers } = useStaking();
   const { stakers } = eraStakers;
+  const { openHelp } = useHelp();
 
   // is the validator in the active era
   const validatorInEra =
@@ -95,7 +97,8 @@ export const ValidatorMetrics = () => {
               <StatWrapper key={`metrics_stat_${i}`}>
                 <div className="inner">
                   <h4>
-                    {s.label} <OpenHelpIcon helpKey={s.help} />
+                    {s.label}{' '}
+                    <ButtonHelp marginLeft onClick={() => openHelp(s.help)} />
                   </h4>
                   <h2>{s.value}</h2>
                 </div>
@@ -120,7 +123,8 @@ export const ValidatorMetrics = () => {
           transparent
         >
           <h4>
-            {t('recentEraPoints')} <OpenHelpIcon helpKey="Era Points" />
+            {t('recentEraPoints')}{' '}
+            <ButtonHelp marginLeft onClick={() => openHelp('Era Points')} />
           </h4>
           <div className="inner" ref={ref} style={{ minHeight }}>
             <StatusLabel

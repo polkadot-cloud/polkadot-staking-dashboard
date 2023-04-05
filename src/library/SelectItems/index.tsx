@@ -1,23 +1,22 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, {
-  MutableRefObject,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-} from 'react';
-import { AnyJson } from 'types';
+import type { MutableRefObject } from 'react';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
+import type { AnyJson } from 'types';
 import { SelectItemsWrapper, TwoThreshold } from './Wrapper';
+import type { SelectItemsProps } from './types';
 
-export const SelectItems = ({ flex, children }: any) => {
+export const SelectItems = ({ layout, children }: SelectItemsProps) => {
   // Initialise refs for container and body of items.
   const containerRefs: Array<MutableRefObject<AnyJson>> = [];
   const bodyRefs: Array<MutableRefObject<AnyJson>> = [];
 
-  for (let i = 0; i < children.length; i++) {
-    bodyRefs.push(useRef(null));
-    containerRefs.push(useRef(null));
+  if (children) {
+    for (let i = 0; i < children.length; i++) {
+      bodyRefs.push(useRef(null));
+      containerRefs.push(useRef(null));
+    }
   }
 
   // Adjust all container heights to be uniform.
@@ -77,15 +76,17 @@ export const SelectItems = ({ flex, children }: any) => {
   }, []);
 
   return (
-    <SelectItemsWrapper className={flex ? 'flex' : undefined}>
-      {children.map((child: any, i: number) => (
-        <React.Fragment key={i}>
-          {React.cloneElement(child, {
-            bodyRef: bodyRefs[i],
-            containerRef: containerRefs[i],
-          })}
-        </React.Fragment>
-      ))}
+    <SelectItemsWrapper className={layout}>
+      {children
+        ? children.map((child: any, i: number) => (
+            <React.Fragment key={i}>
+              {React.cloneElement(child, {
+                bodyRef: bodyRefs[i],
+                containerRef: containerRefs[i],
+              })}
+            </React.Fragment>
+          ))
+        : null}
     </SelectItemsWrapper>
   );
 };

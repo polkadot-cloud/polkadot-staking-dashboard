@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useBalances } from 'contexts/Balances';
+import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -17,11 +17,11 @@ export const UnlockChunks = () => {
   const { activeAccount } = useConnect();
   const { config, setModalHeight } = useModal();
   const { bondFor } = config || {};
-  const { getLedgerForStash } = useBalances();
+  const { getLedgerForStash } = useLedgers();
   const { getPoolUnlocking } = useActivePools();
 
   // get the unlocking per bondFor
-  const _getUnlocking = () => {
+  const getUnlocking = () => {
     let unlocking = [];
     let ledger;
     switch (bondFor) {
@@ -35,7 +35,7 @@ export const UnlockChunks = () => {
     return unlocking;
   };
 
-  const unlocking = _getUnlocking();
+  const unlocking = getUnlocking();
 
   // active modal section
   const [section, setSection] = useState(0);
@@ -65,7 +65,7 @@ export const UnlockChunks = () => {
   // resize modal on state change
   useEffect(() => {
     setModalHeight(getModalHeight());
-  }, [task, section]);
+  }, [task, section, unlocking]);
 
   // resize this modal on window resize
   useEffect(() => {

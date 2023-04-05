@@ -3,14 +3,14 @@
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/dashboard-ui';
+import { applyWidthAsPadding } from 'Utils';
+import { useHelp } from 'contexts/Help';
 import { useNotifications } from 'contexts/Notifications';
 import { Identicon } from 'library/Identicon';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
-import { applyWidthAsPadding } from 'Utils';
-import { StatAddress, StatProps } from './types';
 import { Wrapper } from './Wrapper';
+import type { StatAddress, StatProps } from './types';
 
 export const Stat = ({
   label,
@@ -21,6 +21,7 @@ export const Stat = ({
   copy,
 }: StatProps) => {
   const { addNotification } = useNotifications();
+  const { openHelp } = useHelp();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const subjectRef = useRef<HTMLDivElement>(null);
@@ -54,7 +55,9 @@ export const Stat = ({
     <Wrapper isAddress={isAddress}>
       <h4>
         {label}
-        {helpKey !== undefined && <OpenHelpIcon helpKey={helpKey} />}
+        {helpKey !== undefined ? (
+          <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+        ) : null}
         {copy !== undefined ? (
           <button
             type="button"
@@ -70,12 +73,12 @@ export const Stat = ({
       </h4>
       <div className="content">
         <div className="text" ref={containerRef}>
-          {icon && (
+          {icon ? (
             <>
               <FontAwesomeIcon icon={icon} transform="shrink-4" />
               &nbsp;
             </>
-          )}
+          ) : null}
           {isAddress ? (
             <div className="identicon">
               <Identicon
@@ -85,7 +88,7 @@ export const Stat = ({
             </div>
           ) : null}
           {display}
-          {buttons && (
+          {buttons ? (
             <span ref={subjectRef}>
               {buttons.map((btn: any, index: number) => (
                 <React.Fragment key={`stat_${index}`}>
@@ -102,7 +105,7 @@ export const Stat = ({
                 </React.Fragment>
               ))}
             </span>
-          )}
+          ) : null}
         </div>
       </div>
     </Wrapper>

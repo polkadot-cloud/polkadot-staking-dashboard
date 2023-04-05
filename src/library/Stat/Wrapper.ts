@@ -12,11 +12,9 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
     align-items: center;
     margin: 0 0 0.2rem 0;
 
-    .help-icon {
-      margin-left: 0.55rem;
-    }
     > .btn {
-      background: var(--button-tertiary-background);
+      color: var(--text-color-secondary);
+      background: var(--background-primary);
       display: flex;
       flex-flow: row wrap;
       justify-content: center;
@@ -25,7 +23,7 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
       width: 1.5rem;
       height: 1.5rem;
       margin-left: 0.65rem;
-      transition: color 0.15s;
+      transition: color var(--transition-duration);
       &:hover {
         color: var(--network-color-primary);
       }
@@ -44,7 +42,7 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
 
     .text {
       padding-left: ${(props) => (props.isAddress ? '3rem' : 0)};
-      color: var(--text-color-secondary);
+      color: var(--text-color-primary);
       padding-top: 0.1rem;
       position: absolute;
       left: 0;

@@ -5,7 +5,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { SelectWrapper } from 'library/ListItem/Wrappers';
 import { useList } from '../../List/context';
-import { SelectProps } from '../types';
+import type { SelectProps } from '../types';
 
 export const Select = ({ item }: SelectProps) => {
   const { addToSelected, removeFromSelected, selected } = useList();

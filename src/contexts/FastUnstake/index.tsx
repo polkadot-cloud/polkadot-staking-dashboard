@@ -1,18 +1,21 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { greaterThanZero, isNotZero, rmCommas, setStateWithRef } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, AnyJson, MaybeAccount } from 'types';
-// eslint-disable-next-line import/no-unresolved
-import { greaterThanZero, isNotZero, rmCommas, setStateWithRef } from 'Utils';
-import Worker from 'worker-loader!../../workers/stakers';
+import type { AnyApi, AnyJson, MaybeAccount } from 'types';
+import Worker from 'workers/stakers?worker';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
-import { FastUnstakeContextInterface, LocalMeta, MetaInterface } from './types';
+import type {
+  FastUnstakeContextInterface,
+  LocalMeta,
+  MetaInterface,
+} from './types';
 
 export const FastUnstakeContext =
   React.createContext<FastUnstakeContextInterface>(defaultFastUnstakeContext);
@@ -63,9 +66,7 @@ export const FastUnstakeProvider = ({
   const unsubRef = useRef(unsub);
 
   // localStorage key to fetch local metadata.
-  const getLocalkey = (a: MaybeAccount) => {
-    return `${network.name}_fast_unstake_${a}`;
-  };
+  const getLocalkey = (a: MaybeAccount) => `${network.name}_fast_unstake_${a}`;
 
   // check until bond duration eras surpasssed.
   const checkToEra = activeEra.index.minus(bondDuration);
@@ -251,12 +252,10 @@ export const FastUnstakeProvider = ({
     const exposuresRaw = await api.query.staking.erasStakers.entries(
       era.toString()
     );
-    const exposures = exposuresRaw.map(([keys, val]: AnyApi) => {
-      return {
-        keys: keys.toHuman(),
-        val: val.toHuman(),
-      };
-    });
+    const exposures = exposuresRaw.map(([keys, val]: AnyApi) => ({
+      keys: keys.toHuman(),
+      val: val.toHuman(),
+    }));
     worker.postMessage({
       task: 'process_fast_unstake_era',
       currentEra: era.toString(),
@@ -280,16 +279,16 @@ export const FastUnstakeProvider = ({
       return u;
     };
     const subscribeHead = async () => {
-      const u = await api.query.fastUnstake.head((_head: AnyApi) => {
-        const h = _head.unwrapOrDefault(null).toHuman();
+      const u = await api.query.fastUnstake.head((result: AnyApi) => {
+        const h = result.unwrapOrDefault(null).toHuman();
         setStateWithRef(h, setHead, headRef);
       });
       return u;
     };
     const subscribeCounterForQueue = async () => {
       const u = await api.query.fastUnstake.counterForQueue(
-        (_counterForQueue: AnyApi) => {
-          const c = _counterForQueue.toHuman();
+        (result: AnyApi) => {
+          const c = result.toHuman();
           setStateWithRef(c, setCounterForQueue, counterForQueueRef);
         }
       );

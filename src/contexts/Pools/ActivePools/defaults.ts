@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import { ActivePool, ActivePoolsContextState } from '../types';
+import type { ActivePool, ActivePoolsContextState } from '../types';
 
 export const nominationStatus = {};
 

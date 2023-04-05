@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import {
+import type {
   ActiveEra,
   NetworkMetrics,
   NetworkMetricsContextInterface,
@@ -17,6 +17,7 @@ export const metrics: NetworkMetrics = {
   auctionCounter: new BigNumber(0),
   earliestStoredSession: new BigNumber(0),
   fastUnstakeErasToCheckPerBlock: 0,
+  minimumActiveStake: new BigNumber(0),
 };
 
 export const defaultNetworkContext: NetworkMetricsContextInterface = {

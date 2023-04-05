@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonInvert, ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonInvert } from '@polkadotcloud/dashboard-ui';
+import { planckToUnit, rmCommas } from 'Utils';
 import BigNumber from 'bignumber.js';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -14,7 +14,6 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Action } from 'library/Modal/Action';
@@ -22,7 +21,6 @@ import { SubmitTx } from 'library/SubmitTx';
 import { WarningsWrapper } from 'modals/Wrappers';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit, rmCommas } from 'Utils';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(
@@ -37,7 +35,6 @@ export const Forms = forwardRef(
     const { removePoolMember } = usePoolMembers();
     const { setStatus: setModalStatus, config } = useModal();
     const { getBondedAccount } = useBalances();
-    const { txFeesValid } = useTxFees();
 
     const { bondFor, poolClosure } = config || {};
     const { historyDepth } = consts;
@@ -77,7 +74,7 @@ export const Forms = forwardRef(
       return tx;
     };
     const signingAccount = isStaking ? controller : activeAccount;
-    const { submitTx, submitting } = useSubmitExtrinsic({
+    const submitExtrinsic = useSubmitExtrinsic({
       tx: getTx(),
       from: signingAccount,
       shouldSubmit: valid,
@@ -139,6 +136,7 @@ export const Forms = forwardRef(
           </div>
           <SubmitTx
             fromController={isStaking}
+            valid={valid}
             buttons={[
               <ButtonInvert
                 key="button_back"
@@ -147,20 +145,8 @@ export const Forms = forwardRef(
                 iconTransform="shrink-1"
                 onClick={() => setSection(0)}
               />,
-              <ButtonSubmit
-                key="button_submit"
-                text={`${submitting ? t('submitting') : t('submit')}`}
-                iconLeft={faArrowAltCircleUp}
-                iconTransform="grow-2"
-                onClick={() => submitTx()}
-                disabled={
-                  !valid ||
-                  submitting ||
-                  !accountHasSigner(signingAccount) ||
-                  !txFeesValid
-                }
-              />,
             ]}
+            {...submitExtrinsic}
           />
         </div>
       </ContentWrapper>

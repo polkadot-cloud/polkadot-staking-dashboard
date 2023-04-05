@@ -1,13 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ConnectContextInterface } from 'contexts/Connect/types';
+import type { ConnectContextInterface } from 'contexts/Connect/types';
 
 export const defaultConnectContext: ConnectContextInterface = {
   // eslint-disable-next-line
   formatAccountSs58: (a: string) => null,
   // eslint-disable-next-line
-  connectExtensionAccounts: (e) => {},
+  connectExtensionAccounts: async (e) => new Promise((resolve) => resolve()),
   // eslint-disable-next-line
   getAccount: (a) => null,
   // eslint-disable-next-line
@@ -25,7 +25,11 @@ export const defaultConnectContext: ConnectContextInterface = {
   // eslint-disable-next-line
   accountHasSigner: (a) => false,
   // eslint-disable-next-line
+  requiresManualSign: (a) => false,
+  // eslint-disable-next-line
   isReadOnlyAccount: (a) => false,
+  // eslint-disable-next-line
+  addToAccounts: (a) => {},
   // eslint-disable-next-line
   forgetAccounts: (a) => {},
   accounts: [],

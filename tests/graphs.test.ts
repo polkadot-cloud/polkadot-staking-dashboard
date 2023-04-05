@@ -8,6 +8,7 @@ import {
   postFillMissingDays,
   prefillMissingDays,
 } from 'library/Graphs/Utils';
+import { expect, test } from 'vitest';
 
 // payouts that were made 2, 3 and 4 days ago.
 const mockPayouts: any = [
@@ -54,10 +55,11 @@ test('post fill missing days works', () => {
   //  p0,  p1,  p2,   p3,   p4,  p5,   p6
   //  -    -    x     x     x    0     0
   const payouts = normalisePayouts(mockPayouts);
+  const fromDate = new Date();
   const maxDays = 7;
 
   // post fill the missing days for mock payouts.
-  const missingDays = postFillMissingDays(payouts, maxDays);
+  const missingDays = postFillMissingDays(payouts, fromDate, maxDays);
 
   // amount of missing days returned should be correct.
   expect(missingDays.length).toBe(2);
@@ -88,10 +90,11 @@ test('pre fill missing days works', () => {
   //  p0,  p1,  p2,   p3,   p4,   p5,   p6
   //            x     x     x     -     -
   const payouts = normalisePayouts(mockPayouts);
+  const fromDate = new Date();
   const maxDays = 7;
 
   // post fill the missing days for mock payouts.
-  const missingDays = prefillMissingDays(payouts, maxDays);
+  const missingDays = prefillMissingDays(payouts, fromDate, maxDays);
 
   // expect amount of missing days to be 2
   expect(missingDays.length).toBe(2);
@@ -122,13 +125,14 @@ test('pre fill and post fill missing days work together', () => {
   //  p0,  p1,  p2,   p3,   p4,   p5,   p6,   p7,   p8,   p9
   //  -    -    x     x     x     -     -     -     -     -
   const payouts = normalisePayouts(mockPayouts);
+  const fromDate = new Date();
   const maxDays = 10;
 
   // post fill the missing days for mock payouts.
-  const missingPostDays = postFillMissingDays(payouts, maxDays);
+  const missingPostDays = postFillMissingDays(payouts, fromDate, maxDays);
   expect(missingPostDays.length).toBe(2);
 
-  const missingPreDays = prefillMissingDays(payouts, maxDays);
+  const missingPreDays = prefillMissingDays(payouts, fromDate, maxDays);
   expect(missingPreDays.length).toBe(5);
 
   const finalPayouts = missingPostDays.concat(payouts).concat(missingPreDays);

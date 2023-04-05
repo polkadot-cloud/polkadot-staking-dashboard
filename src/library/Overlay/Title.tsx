@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonInvertRounded } from '@rossbulat/polkadot-dashboard-ui';
+import { ButtonHelp, ButtonInvertRounded } from '@polkadotcloud/dashboard-ui';
+import { useHelp } from 'contexts/Help';
 import { useOverlay } from 'contexts/Overlay';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
-import { FunctionComponent } from 'react';
+import type { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TitleWrapper } from './Wrappers';
 
@@ -21,6 +21,7 @@ interface TitleProps {
 export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
   const { t } = useTranslation('library');
   const { closeOverlay } = useOverlay();
+  const { openHelp } = useHelp();
 
   const graphic = Svg ? (
     <Svg style={{ width: '1.5rem', height: '1.5rem' }} />
@@ -34,7 +35,7 @@ export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
         {graphic}
         <h2>
           {title}
-          {helpKey && <OpenHelpIcon helpKey={helpKey} />}
+          {helpKey ? <ButtonHelp onClick={() => openHelp(helpKey)} /> : null}
         </h2>
       </div>
       {hideDone !== true ? (

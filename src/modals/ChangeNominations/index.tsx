@@ -1,14 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
@@ -25,7 +22,6 @@ export const ChangeNominations = () => {
   const { setStatus: setModalStatus, config } = useModal();
   const { poolNominations, isNominator, isOwner, selectedActivePool } =
     useActivePools();
-  const { txFeesValid } = useTxFees();
 
   const { nominations: newNominations, provider, bondFor } = config;
 
@@ -95,7 +91,7 @@ export const ChangeNominations = () => {
     return tx;
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: signingAccount,
     shouldSubmit: valid,
@@ -149,24 +145,7 @@ export const ChangeNominations = () => {
         ) : null}
         <p>{t('changeNomination')}</p>
       </PaddingWrapper>
-      <SubmitTx
-        fromController={isStaking}
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              !valid ||
-              submitting ||
-              !accountHasSigner(signingAccount) ||
-              !txFeesValid
-            }
-          />,
-        ]}
-      />
+      <SubmitTx fromController={isStaking} valid={valid} {...submitExtrinsic} />
     </>
   );
 };

@@ -10,11 +10,11 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
-import { lazy, Suspense, useMemo } from 'react';
+import { Suspense, lazy, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useCommunitySections } from './context';
-import { ItemProps } from './types';
 import { ItemWrapper } from './Wrappers';
+import { useCommunitySections } from './context';
+import type { ItemProps } from './types';
 
 export const Item = ({ item, actionable }: ItemProps) => {
   const { t } = useTranslation('pages');
@@ -54,9 +54,11 @@ export const Item = ({ item, actionable }: ItemProps) => {
     },
   };
 
-  const Thumbnail = useMemo(() => {
-    return lazy(() => import(`config/validators/thumbnails/${thumbnail}`));
-  }, []);
+  const Thumbnail = useMemo(
+    () =>
+      lazy(() => import(`../../config/validators/thumbnails/${thumbnail}.tsx`)),
+    []
+  );
 
   return (
     <ItemWrapper

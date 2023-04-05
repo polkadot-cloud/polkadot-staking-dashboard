@@ -1,14 +1,21 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { isNotZero } from 'Utils';
 import { ApiEndpoints, ApiSubscanKey } from 'consts';
+import { useNetworkMetrics } from 'contexts/Network';
+import { format, fromUnixTime } from 'date-fns';
+import { sortNonZeroPayouts } from 'library/Graphs/Utils';
+import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
+import { locales } from 'locale';
 import React, { useEffect, useState } from 'react';
-import { AnyApi, AnySubscan } from 'types';
+import { useTranslation } from 'react-i18next';
+import type { AnyApi, AnySubscan } from 'types';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { usePlugins } from '../Plugins';
 import { defaultSubscanContext } from './defaults';
-import { SubscanContextInterface } from './types';
+import type { SubscanContextInterface } from './types';
 
 export const SubscanContext = React.createContext<SubscanContextInterface>(
   defaultSubscanContext
@@ -24,6 +31,9 @@ export const SubscanProvider = ({
   const { network, isReady } = useApi();
   const { plugins, getPlugins } = usePlugins();
   const { activeAccount } = useConnect();
+  const { activeEra } = useNetworkMetrics();
+  const { erasToSeconds } = useErasToTimeLeft();
+  const { i18n } = useTranslation();
 
   // store fetched payouts from Subscan
   const [payouts, setPayouts] = useState<AnySubscan>([]);
@@ -31,25 +41,81 @@ export const SubscanProvider = ({
   // store fetched pool claims from Subscan
   const [poolClaims, setPoolClaims] = useState<AnySubscan>([]);
 
-  // reset payouts on network switch
-  useEffect(() => {
+  // store fetched unclaimed payouts from Subscan
+  const [unclaimedPayouts, setUnclaimedPayouts] = useState<AnyApi>([]);
+
+  // store the start date of fetched payouts and pool claims combined.
+  const [payoutsFromDate, setPayoutsFromDate] = useState<string | undefined>();
+
+  // store the end date of fetched payouts and pool claims combined.
+  const [payoutsToDate, setPayoutsToDate] = useState<string | undefined>();
+
+  // handle fetching the various types of payout and set state in one render.
+  const handleFetchPayouts = async () => {
+    if (activeAccount === null || !plugins.includes('subscan')) {
+      resetPayouts();
+      return;
+    }
+    const results = await Promise.all([fetchPayouts(), fetchPoolClaims()]);
+
+    const { newClaimedPayouts, newUnclaimedPayouts } = results[0];
+    const newPoolClaims = results[1];
+
+    setPayouts(newClaimedPayouts);
+    setUnclaimedPayouts(newUnclaimedPayouts);
+    setPoolClaims(newPoolClaims);
+  };
+
+  // reset all payout state
+  const resetPayouts = () => {
     setPayouts([]);
+    setUnclaimedPayouts([]);
     setPoolClaims([]);
+  };
+
+  // Fetch payouts on plugins toggle.
+  useEffect(() => {
+    if (isNotZero(activeEra.index)) {
+      handleFetchPayouts();
+    }
+  }, [plugins, activeEra]);
+
+  // Reset payouts on network switch.
+  useEffect(() => {
+    resetPayouts();
   }, [network]);
 
-  // fetch payouts as soon as network is ready
+  // Fetch payouts as soon as network is ready.
   useEffect(() => {
-    if (isReady) {
-      fetchPayouts();
-      fetchPoolClaims();
+    if (isReady && isNotZero(activeEra.index)) {
+      handleFetchPayouts();
     }
-  }, [isReady, network, activeAccount]);
+  }, [isReady, network, activeAccount, activeEra]);
 
-  // fetch payouts on plugins toggle
+  // Store start and end date of fetched payouts.
   useEffect(() => {
-    fetchPayouts();
-    fetchPoolClaims();
-  }, [plugins]);
+    const filteredPayouts = sortNonZeroPayouts(payouts, poolClaims, true);
+    if (filteredPayouts.length) {
+      setPayoutsFromDate(
+        format(
+          fromUnixTime(
+            filteredPayouts[filteredPayouts.length - 1].block_timestamp
+          ),
+          'do MMM',
+          {
+            locale: locales[i18n.resolvedLanguage],
+          }
+        )
+      );
+
+      // latest payout date
+      setPayoutsToDate(
+        format(fromUnixTime(filteredPayouts[0].block_timestamp), 'do MMM', {
+          locale: locales[i18n.resolvedLanguage],
+        })
+      );
+    }
+  }, [payouts, poolClaims, unclaimedPayouts]);
 
   /* fetchPayouts
    * fetches payout history from Subscan.
@@ -59,24 +125,15 @@ export const SubscanProvider = ({
    * Stores resulting payouts in context state.
    */
   const fetchPayouts = async () => {
-    if (activeAccount === null || !plugins.includes('subscan')) {
-      setPayouts([]);
-      return;
-    }
+    let newClaimedPayouts: Array<AnySubscan> = [];
+    let newUnclaimedPayouts: Array<AnySubscan> = [];
 
-    // fetch 2 pages of results if subscan is enabled
-    if (getPlugins().includes('subscan')) {
-      let _payouts: Array<AnySubscan> = [];
-
-      // fetch 3 pages of results
+    // fetch results if subscan is enabled
+    if (activeAccount && getPlugins().includes('subscan')) {
+      // fetch 1 page of results
       const results = await Promise.all([
         handleFetch(activeAccount, 0, ApiEndpoints.subscanRewardSlash, {
           is_stash: true,
-          claimed_filter: 'claimed',
-        }),
-        handleFetch(activeAccount, 1, ApiEndpoints.subscanRewardSlash, {
-          is_stash: true,
-          claimed_filter: 'claimed',
         }),
       ]);
 
@@ -91,11 +148,29 @@ export const SubscanProvider = ({
           const list = result.data.list.filter(
             (l: AnyApi) => l.block_timestamp !== 0
           );
-          _payouts = _payouts.concat(list);
+          newClaimedPayouts = newClaimedPayouts.concat(list);
+
+          const unclaimedList = result.data.list.filter(
+            (l: AnyApi) => l.block_timestamp === 0
+          );
+
+          // Inject block_timestamp for unclaimed payouts. We take the timestamp of the start of the
+          // following payout era - this is the time payouts become available to claim by
+          // validators.
+          unclaimedList.forEach((p: AnyApi) => {
+            p.block_timestamp = activeEra.start
+              .multipliedBy(0.001)
+              .minus(erasToSeconds(activeEra.index.minus(p.era).minus(1)))
+              .toNumber();
+          });
+          newUnclaimedPayouts = newUnclaimedPayouts.concat(unclaimedList);
         }
-        setPayouts(_payouts);
       }
     }
+    return {
+      newClaimedPayouts,
+      newUnclaimedPayouts,
+    };
   };
 
   /* fetchPoolClaims
@@ -106,19 +181,13 @@ export const SubscanProvider = ({
    * Stores resulting claims in context state.
    */
   const fetchPoolClaims = async () => {
-    if (activeAccount === null || !plugins.includes('subscan')) {
-      setPoolClaims([]);
-      return;
-    }
+    let newPoolClaims: Array<AnySubscan> = [];
 
-    // fetch 2 pages of results if subscan is enabled
-    if (getPlugins().includes('subscan')) {
-      let _poolClaims: Array<AnySubscan> = [];
-
-      // fetch 3 pages of results
+    // fetch results if subscan is enabled
+    if (activeAccount && getPlugins().includes('subscan')) {
+      // fetch 1 page of results
       const results = await Promise.all([
         handleFetch(activeAccount, 0, ApiEndpoints.subscanPoolRewards),
-        handleFetch(activeAccount, 1, ApiEndpoints.subscanPoolRewards),
       ]);
 
       // user may have turned off service while results were fetching.
@@ -137,11 +206,11 @@ export const SubscanProvider = ({
           const list = result.data.list.filter(
             (l: AnyApi) => l.block_timestamp !== 0
           );
-          _poolClaims = _poolClaims.concat(list);
+          newPoolClaims = newPoolClaims.concat(list);
         }
-        setPoolClaims(_poolClaims);
       }
     }
+    return newPoolClaims;
   };
 
   /* fetchEraPoints
@@ -212,6 +281,9 @@ export const SubscanProvider = ({
         fetchEraPoints,
         payouts,
         poolClaims,
+        unclaimedPayouts,
+        payoutsFromDate,
+        payoutsToDate,
       }}
     >
       {children}

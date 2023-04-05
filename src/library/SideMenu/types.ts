@@ -1,8 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { AnyJson } from '@polkadot/types-codec/types';
-import React, { FunctionComponent, SVGProps } from 'react';
+import type React from 'react';
+import type { FunctionComponent, SVGProps } from 'react';
+import type { AnyJson } from 'types';
 
 export interface MinimisedProps {
   minimised: number;

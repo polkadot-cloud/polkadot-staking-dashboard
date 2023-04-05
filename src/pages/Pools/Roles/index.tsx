@@ -6,21 +6,21 @@ import {
   faEdit,
   faTimesCircle,
 } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary } from '@rossbulat/polkadot-dashboard-ui';
-import { useAccount } from 'contexts/Account';
+import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useHelp } from 'contexts/Help';
+import { useIdentities } from 'contexts/Identities';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
-import { RoleEditEntry, RolesProps } from './types';
+import type { RoleEditEntry, RolesProps } from './types';
 
 export const Roles = ({
   batchKey,
@@ -31,12 +31,13 @@ export const Roles = ({
   const { t } = useTranslation('pages');
   const { isReady, network } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { fetchAccountMetaBatch } = useAccount();
+  const { fetchIdentitiesMetaBatch } = useIdentities();
   const { isOwner, selectedActivePool } = useActivePools();
-  const { poolsSyncing } = useUi();
+  const { isPoolSyncing } = useUi();
   const { openModalWith } = useModal();
   const { id } = selectedActivePool || { id: 0 };
   const roles = defaultRoles;
+  const { openHelp } = useHelp();
 
   const initialiseEdits = (() => {
     const initState: Record<string, RoleEditEntry> = {};
@@ -75,7 +76,7 @@ export const Roles = ({
   useEffect(() => {
     if (isReady && !fetched) {
       setFetched(true);
-      fetchAccountMetaBatch(batchKey, Object.values(roles), true);
+      fetchIdentitiesMetaBatch(batchKey, Object.values(roles), true);
     }
   }, [isReady, fetched]);
 
@@ -139,7 +140,8 @@ export const Roles = ({
     <>
       <CardHeaderWrapper withAction>
         <h3>
-          {t('pools.roles')} <OpenHelpIcon helpKey="Pool Roles" />
+          {t('pools.roles')}{' '}
+          <ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />
         </h3>
         {!(isOwner() === true || setters.length) ? (
           <></>
@@ -151,7 +153,7 @@ export const Roles = ({
                   iconLeft={faTimesCircle}
                   iconTransform="grow-1"
                   text={t('pools.cancel')}
-                  disabled={poolsSyncing || isReadOnlyAccount(activeAccount)}
+                  disabled={isPoolSyncing || isReadOnlyAccount(activeAccount)}
                   onClick={() => cancelHandler()}
                 />
               </div>
@@ -163,7 +165,7 @@ export const Roles = ({
                 iconTransform="grow-1"
                 text={isEditing ? t('pools.save') : t('pools.edit')}
                 disabled={
-                  poolsSyncing ||
+                  isPoolSyncing ||
                   isReadOnlyAccount(activeAccount) ||
                   !isRoleEditsValid()
                 }

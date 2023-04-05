@@ -4,8 +4,8 @@
 import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { StatusButtonProps } from './types';
 import { Wrapper } from './Wrapper';
+import type { StatusButtonProps } from './types';
 
 export const StatusButton = ({
   checked,

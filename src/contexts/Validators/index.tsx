@@ -1,17 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BigNumber from 'bignumber.js';
-import { VALIDATOR_COMMUNITY } from 'config/validators';
-import {
-  SessionParachainValidators,
-  SessionValidators,
-  Validator,
-  ValidatorAddresses,
-  ValidatorsContextInterface,
-} from 'contexts/Validators/types';
-import React, { useEffect, useRef, useState } from 'react';
-import { AnyApi, AnyMetaBatch, Fn } from 'types';
 import {
   greaterThanZero,
   planckToUnit,
@@ -19,8 +8,19 @@ import {
   setStateWithRef,
   shuffle,
 } from 'Utils';
+import BigNumber from 'bignumber.js';
+import { ValidatorCommunity } from 'config/validators';
+import type {
+  SessionParachainValidators,
+  SessionValidators,
+  Validator,
+  ValidatorAddresses,
+  ValidatorsContextInterface,
+} from 'contexts/Validators/types';
+import React, { useEffect, useRef, useState } from 'react';
+import type { AnyApi, AnyMetaBatch, Fn } from 'types';
+import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
-import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useActivePools } from '../Pools/ActivePools';
@@ -42,7 +42,7 @@ export const ValidatorsProvider = ({
   const { isReady, api, network, consts } = useApi();
   const { activeAccount } = useConnect();
   const { activeEra, metrics } = useNetworkMetrics();
-  const { accounts, getAccountNominations } = useBalances();
+  const { balances, getAccountNominations } = useBalances();
   const { poolNominations } = useActivePools();
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
@@ -102,7 +102,7 @@ export const ValidatorsProvider = ({
 
   // stores validator community
 
-  const [validatorCommunity] = useState<any>([...shuffle(VALIDATOR_COMMUNITY)]);
+  const [validatorCommunity] = useState<any>([...shuffle(ValidatorCommunity)]);
 
   // reset validators list on network change
   useEffect(() => {
@@ -123,11 +123,9 @@ export const ValidatorsProvider = ({
 
     return () => {
       // unsubscribe from any validator meta batches
-      Object.values(validatorSubsRef.current).map((batch: AnyMetaBatch) => {
-        return Object.entries(batch).map(([, v]: AnyApi) => {
-          return v();
-        });
-      });
+      Object.values(validatorSubsRef.current).map((batch: AnyMetaBatch) =>
+        Object.entries(batch).map(([, v]: AnyApi) => v())
+      );
     };
   }, [isReady, activeEra]);
 
@@ -150,7 +148,7 @@ export const ValidatorsProvider = ({
     if (isReady && activeAccount) {
       fetchNominatedList();
     }
-  }, [isReady, activeAccount, accounts]);
+  }, [isReady, activeAccount, balances]);
 
   const fetchNominatedList = async () => {
     if (!activeAccount) {
@@ -160,9 +158,7 @@ export const ValidatorsProvider = ({
     const targets = getAccountNominations(activeAccount);
 
     // format to list format
-    const targetsFormatted = targets.map((item: any) => {
-      return { address: item };
-    });
+    const targetsFormatted = targets.map((item: any) => ({ address: item }));
     // fetch preferences
     const nominationsWithPrefs = await fetchValidatorPrefs(targetsFormatted);
     if (nominationsWithPrefs) {
@@ -185,9 +181,7 @@ export const ValidatorsProvider = ({
     // get raw nominations list
     let n = poolNominations.targets;
     // format to list format
-    n = n.map((item: string) => {
-      return { address: item };
-    });
+    n = n.map((item: string) => ({ address: item }));
     // fetch preferences
     const nominationsWithPrefs = await fetchValidatorPrefs(n);
     if (nominationsWithPrefs) {
@@ -211,9 +205,9 @@ export const ValidatorsProvider = ({
 
   const fetchFavoriteList = async () => {
     // format to list format
-    const _favorites = [...favorites].map((item: string) => {
-      return { address: item };
-    });
+    const _favorites = [...favorites].map((item: string) => ({
+      address: item,
+    }));
     // // fetch preferences
     const favoritesWithPrefs = await fetchValidatorPrefs(_favorites);
     if (favoritesWithPrefs) {
@@ -380,8 +374,15 @@ export const ValidatorsProvider = ({
       }
     } else {
       // tidy up if existing batch exists
-      delete validatorMetaBatches[key];
-      delete validatorMetaBatchesRef.current[key];
+      const updatedValidatorMetaBatches: AnyMetaBatch = {
+        ...validatorMetaBatchesRef.current,
+      };
+      delete updatedValidatorMetaBatches[key];
+      setStateWithRef(
+        updatedValidatorMetaBatches,
+        setValidatorMetaBatch,
+        validatorMetaBatchesRef
+      );
 
       if (validatorSubsRef.current[key] !== undefined) {
         for (const unsub of validatorSubsRef.current[key]) {
@@ -562,12 +563,12 @@ export const ValidatorsProvider = ({
    * Helper function to add mataBatch unsubs by key.
    */
   const addMetaBatchUnsubs = (key: string, unsubs: Array<Fn>) => {
-    const _unsubs = validatorSubsRef.current;
-    const _keyUnsubs = _unsubs[key] ?? [];
+    const newUnsubs = validatorSubsRef.current;
+    const keyUnsubs = newUnsubs[key] ?? [];
 
-    _keyUnsubs.push(...unsubs);
-    _unsubs[key] = _keyUnsubs;
-    setStateWithRef(_unsubs, setValidatorSubs, validatorSubsRef);
+    keyUnsubs.push(...unsubs);
+    newUnsubs[key] = keyUnsubs;
+    setStateWithRef(newUnsubs, setValidatorSubs, validatorSubsRef);
   };
 
   const removeValidatorMetaBatch = (key: string) => {
@@ -577,8 +578,15 @@ export const ValidatorsProvider = ({
         unsub();
       }
       // wipe data
-      delete validatorMetaBatches[key];
-      delete validatorMetaBatchesRef.current[key];
+      const updatedValidatorMetaBatches: AnyMetaBatch = {
+        ...validatorMetaBatchesRef.current,
+      };
+      delete updatedValidatorMetaBatches[key];
+      setStateWithRef(
+        updatedValidatorMetaBatches,
+        setValidatorMetaBatch,
+        validatorMetaBatchesRef
+      );
     }
   };
 

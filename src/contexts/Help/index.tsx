@@ -2,10 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useEffect, useState } from 'react';
-import { MaybeString } from 'types';
+import type { MaybeString } from 'types';
 import * as defaults from './defaults';
-import {
-  HelpConfig,
+import type {
   HelpContextInterface,
   HelpContextProps,
   HelpContextState,
@@ -22,7 +21,6 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
   const [state, setState] = useState<HelpContextState>({
     status: 0,
     definition: null,
-    config: {},
   });
 
   // when fade out completes, reset active definiton
@@ -36,27 +34,24 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
   }, [state.status]);
 
   const setDefinition = (definition: MaybeString) => {
-    const _state = {
+    setState({
       ...state,
       definition,
-    };
-    setState(_state);
+    });
   };
 
   const setStatus = (newStatus: number) => {
-    const _state = {
+    setState({
       ...state,
       status: newStatus,
-    };
-    setState(_state);
+    });
   };
 
-  const openHelpWith = (definition: MaybeString, _config: HelpConfig = {}) => {
+  const openHelp = (definition: MaybeString) => {
     setState({
       ...state,
       definition,
       status: 1,
-      config: _config,
     });
   };
 
@@ -70,7 +65,7 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
   return (
     <HelpContext.Provider
       value={{
-        openHelpWith,
+        openHelp,
         closeHelp,
         setStatus,
         setDefinition,

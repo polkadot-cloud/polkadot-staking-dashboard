@@ -1,8 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { localStorageOrDefault, rmCommas, setStateWithRef } from 'Utils';
 import BigNumber from 'bignumber.js';
-import {
+import type {
   ActivePool,
   ActivePoolsContextState,
   BondedPool,
@@ -10,8 +11,7 @@ import {
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { AnyApi, Sync } from 'types';
-import { localStorageOrDefault, rmCommas, setStateWithRef } from 'Utils';
+import type { AnyApi, Sync } from 'types';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import { useBondedPools } from '../BondedPools';
@@ -103,42 +103,32 @@ export const ActivePoolsProvider = ({
     }
   }, [network, isReady, syncedRef.current]);
 
-  const getActivePoolMembership = () => {
+  const getActivePoolMembership = () =>
     // get the activePool that the active account
-    return (
-      activePoolsRef.current.find((a: ActivePool) => {
-        const p = membership?.poolId ? String(membership.poolId) : '0';
-        return String(a.id) === p;
-      }) || null
-    );
-  };
+    activePoolsRef.current.find((a: ActivePool) => {
+      const p = membership?.poolId ? String(membership.poolId) : '0';
+      return String(a.id) === p;
+    }) || null;
+  const getSelectedActivePool = () =>
+    activePoolsRef.current.find(
+      (a: ActivePool) => a.id === Number(selectedPoolId)
+    ) || null;
 
-  const getSelectedActivePool = () => {
-    return (
-      activePoolsRef.current.find(
-        (a: ActivePool) => a.id === Number(selectedPoolId)
-      ) || null
-    );
-  };
+  const getSelectedPoolNominations = () =>
+    poolNominationsRef.current[Number(selectedPoolId) ?? -1] ||
+    defaults.poolNominations;
 
-  const getSelectedPoolNominations = () => {
-    return (
-      poolNominationsRef.current[Number(selectedPoolId) ?? -1] ||
-      defaults.poolNominations
-    );
-  };
-
-  const getSelectedPoolTargets = () => {
-    return targetsRef.current[Number(selectedPoolId) ?? -1] || defaults.targets;
-  };
+  const getSelectedPoolTargets = () =>
+    targetsRef.current[Number(selectedPoolId) ?? -1] || defaults.targets;
 
   // unsubscribe all on component unmount
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       unsubscribeActivePools();
       unsubscribePoolNominations();
-    };
-  }, [network]);
+    },
+    [network]
+  );
 
   // re-calculate unclaimed payout when membership changes
   useEffect(() => {
@@ -389,9 +379,7 @@ export const ActivePoolsProvider = ({
    * isBonding
    * Returns whether active pool exists
    */
-  const isBonding = () => {
-    return !!getSelectedActivePool();
-  };
+  const isBonding = () => !!getSelectedActivePool();
 
   /*
    * isNominator
@@ -465,9 +453,8 @@ export const ActivePoolsProvider = ({
    * get the stash address of the bonded pool
    * that the member is participating in.
    */
-  const getPoolBondedAccount = () => {
-    return getSelectedActivePool()?.addresses?.stash || null;
-  };
+  const getPoolBondedAccount = () =>
+    getSelectedActivePool()?.addresses?.stash || null;
 
   /*
    * Get the status of nominations.

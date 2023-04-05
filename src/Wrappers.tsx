@@ -3,129 +3,18 @@
 
 import {
   InterfaceMaximumWidth,
-  ShowAccountsButtonWidthThreshold,
   SideMenuMaximisedWidth,
   SideMenuMinimisedWidth,
   SideMenuStickyThreshold,
 } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import {
+import type {
   InterfaceLayoutProps,
   PageRowWrapperProps,
   PageTitleWrapperProps,
   SideInterfaceWrapperProps,
 } from 'types/styles';
-
-/* EntryWrapper
- *
- * Highest level app component.
- * Provides global styling for headers and other global
- * classes used throughout the app and possibly the library.
- */
-export const EntryWrapper = styled.div`
-  background: var(--gradient-background);
-  width: 100%;
-  background-attachment: fixed;
-  display: flex;
-  flex-flow: column nowrap;
-  min-height: 100vh;
-  flex-grow: 1;
-
-  h1 {
-    color: var(--text-color-primary);
-  }
-  h2 {
-    color: var(--text-color-primary);
-  }
-  h3 {
-    color: var(--text-color-primary);
-  }
-  h4 {
-    color: var(--text-color-primary);
-  }
-  h5 {
-    color: var(--text-color-primary);
-  }
-  p {
-    color: var(--text-color-secondary);
-  }
-  a {
-    color: var(--text-color-secondary);
-  }
-  input {
-    color: var(--text-color-primary);
-  }
-
-  path.primary {
-    fill: var(--text-color-primary);
-  }
-
-  ellipse.primary {
-    fill: var(--text-color-primary);
-  }
-
-  input:focus,
-  textarea:focus,
-  select:focus {
-    outline: none;
-  }
-
-  input {
-    border: none;
-    padding: 0.7rem 0rem;
-    font-size: 1.1rem;
-    background: none;
-    transition: all 0.1s;
-  }
-
-  input::placeholder {
-    color: #aaa;
-  }
-
-  .textbox,
-  .textbox:focus {
-    border-bottom: 1px solid #ddd;
-  }
-
-  .searchbox,
-  .searchbox:focus {
-    border: 1px solid #ddd;
-  }
-
-  .page-padding {
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
-
-    @media (min-width: ${ShowAccountsButtonWidthThreshold + 1}px) {
-      padding-left: 2.25rem;
-      padding-right: 2.25rem;
-    }
-    @media (min-width: ${SideMenuStickyThreshold + 1}px) {
-      padding: 0 5rem 0 2.5rem;
-    }
-    @media (min-width: 1500px) {
-      padding: 0 5rem 0 2.5rem;
-    }
-  }
-  .label {
-    font-size: 0.85rem;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: flex-end;
-  }
-`;
-
-/* BodyInterfaceWrapper
- *
- * An element that houses SideInterface and MainInterface.
- * Used once in Router.
- */
-export const BodyInterfaceWrapper = styled.div`
-  display: flex;
-  position: relative;
-  flex-grow: 1;
-`;
 
 /* SideInterfaceWrapper
  *
@@ -157,18 +46,6 @@ export const SideInterfaceWrapper = styled.div<SideInterfaceWrapperProps>`
     top: 0;
     left: ${(props) => (props.open ? 0 : `-${SideMenuMaximisedWidth}px`)};
   }
-`;
-
-/* MainInterfaceWrapper
- *
- * A column flex wrapper that hosts the main page content.
- * Used once in Router.
- */
-export const MainInterfaceWrapper = styled.div`
-  flex: 1;
-  display: flex;
-  flex-flow: column nowrap;
-  position: relative;
 `;
 
 /* PageWrapper
@@ -256,7 +133,7 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
       left: -1rem;
       transform: scale(0.75);
     }
-    transition: all 0.25s;
+    transition: all var(--transition-duration);
     margin: 0;
   }
 
@@ -288,7 +165,8 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
         margin-bottom: 0.5rem;
         margin-right: 0.75rem;
         font-size: ${(props) => (props.sticky ? '1.05rem' : '1.15rem')};
-        transition: opacity 0.1s, font-size 0.1s;
+        transition: opacity var(--transition-duration),
+          font-size var(--transition-duration);
         border-radius: 0.5rem;
 
         &.active {

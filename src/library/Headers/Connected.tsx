@@ -1,14 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useBalances } from 'contexts/Balances';
+import { clipAddress } from 'Utils';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { PoolAccount } from 'library/PoolAccount';
 import { useTranslation } from 'react-i18next';
-import { clipAddress } from 'Utils';
 import { Account } from '../Account';
 import { HeadingWrapper } from './Wrappers';
 
@@ -19,7 +19,7 @@ export const Connected = () => {
   const { getBondedAccount } = useBalances();
   const controller = getBondedAccount(activeAccount);
   const { selectedActivePool } = useActivePools();
-  const { networkSyncing } = useUi();
+  const { isNetworkSyncing } = useUi();
 
   let poolAddress = '';
   if (selectedActivePool) {
@@ -27,7 +27,7 @@ export const Connected = () => {
     poolAddress = addresses.stash;
   }
 
-  const activeAccountLabel = networkSyncing
+  const activeAccountLabel = isNetworkSyncing
     ? undefined
     : hasController()
     ? controller !== activeAccount
@@ -54,7 +54,7 @@ export const Connected = () => {
           {/* controller account display / hide if no controller present */}
           {hasController() &&
           controller !== activeAccount &&
-          !networkSyncing ? (
+          !isNetworkSyncing ? (
             <HeadingWrapper>
               <Account
                 value={controller ?? ''}
@@ -75,7 +75,7 @@ export const Connected = () => {
           ) : null}
 
           {/* pool account display / hide if not in pool */}
-          {selectedActivePool !== null && !networkSyncing && (
+          {selectedActivePool !== null && !isNetworkSyncing && (
             <HeadingWrapper>
               <PoolAccount
                 value={poolAddress}

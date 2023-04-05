@@ -1,10 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { OpenHelpIcon } from 'library/OpenHelpIcon';
+import { ButtonHelp } from '@polkadotcloud/dashboard-ui';
+import { useHelp } from 'contexts/Help';
 import { StatBox } from './Item';
-import { TextProps } from './types';
 import { TextTitleWrapper } from './Wrapper';
+import type { TextProps } from './types';
 
 export const Text = ({
   label,
@@ -14,7 +15,7 @@ export const Text = ({
   primary,
 }: TextProps) => {
   const help = helpKey !== undefined;
-
+  const { openHelp } = useHelp();
   return (
     <StatBox>
       <div className="content chart">
@@ -25,7 +26,9 @@ export const Text = ({
           </TextTitleWrapper>
           <h4>
             {label}
-            {help && <OpenHelpIcon helpKey={helpKey} />}
+            {help ? (
+              <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
+            ) : null}
           </h4>
         </div>
       </div>

@@ -6,7 +6,7 @@ import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { Pie } from 'react-chartjs-2';
 import { graphColors } from 'styles/graphs';
-import { StatPieProps } from './types';
+import type { StatPieProps } from './types';
 
 ChartJS.register(ArcElement, Tooltip);
 

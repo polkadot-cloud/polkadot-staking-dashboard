@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import { AnyJson } from 'types';
-import { planckToUnit, rmCommas } from 'Utils';
+import type { AnyJson } from 'types';
 
 // eslint-disable-next-line no-restricted-globals
 export const ctx: Worker = self as any;
@@ -60,8 +59,7 @@ const processFastUnstakeEra = (data: AnyJson) => {
 
 // process exposures.
 //
-// abstracts active nominators and minimum active
-// bond from erasStakers.
+// abstracts active nominators erasStakers.
 const processExposures = (data: AnyJson) => {
   const { units, exposures, activeAccount } = data;
 
@@ -69,16 +67,10 @@ const processExposures = (data: AnyJson) => {
   let activeValidators = 0;
   const activeAccountOwnStake: Array<any> = [];
   const nominators: any = [];
-  let totalStaked = new BigNumber(0);
 
   exposures.forEach(({ keys, val }: any) => {
     const address = keys[1];
-    const total = val?.total
-      ? new BigNumber(rmCommas(val.total))
-      : new BigNumber(0);
-    totalStaked = totalStaked.plus(total);
     activeValidators++;
-
     stakers.push({
       address,
       ...val,
@@ -92,9 +84,9 @@ const processExposures = (data: AnyJson) => {
       return y.minus(x);
     });
 
-    // accumulate active nominators and min active bond threshold.
+    // accumulate active nominators and min active stake threshold.
     if (others.length) {
-      // accumulate active bond for all nominators
+      // accumulate active stake for all nominators
       for (const o of others) {
         const value = new BigNumber(rmCommas(o.value));
 
@@ -128,25 +120,24 @@ const processExposures = (data: AnyJson) => {
     }
   });
 
-  // order nominators by bond size, smallest first
-  const getMinBonds = nominators.sort((a: any, b: any) => {
-    return new BigNumber(a.value).minus(b.value).toString();
-  });
-
-  // get the smallest actve nominator bond
-  const minActiveBond = getMinBonds[0]?.value
-    ? new BigNumber(getMinBonds[0]?.value)
-    : new BigNumber(0);
-
   return {
     stakers,
-    totalStaked: totalStaked.toString(),
-    minActiveBond: planckToUnit(minActiveBond, units).toString(),
     totalActiveNominators: nominators.length,
     activeAccountOwnStake,
     activeValidators,
     who: activeAccount,
   };
 };
+
+/**
+ * Converts an on chain balance value in BigNumber planck to a decimal value in token unit. (1 token
+ * token = 10^units planck).
+ */
+export const planckToUnit = (val: BigNumber, units: number) =>
+  new BigNumber(
+    val.dividedBy(new BigNumber(10).exponentiatedBy(units)).toFixed(units)
+  );
+
+export const rmCommas = (val: string): string => val.replace(/,/g, '');
 
 export default null as any;

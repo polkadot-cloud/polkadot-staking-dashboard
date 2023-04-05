@@ -1,24 +1,23 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-// import { cryptoWaitReady, signatureVerify } from '@polkadot/util-crypto';
-import { ExtrinsicPayloadValue } from '@polkadot/types/types';
-
-import { SignClient } from '@walletconnect/sign-client/dist/types/client';
-import { SessionTypes } from '@walletconnect/types';
+import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
+import type { SessionTypes } from '@walletconnect/types';
 import BigNumber from 'bignumber.js';
 import { DappName } from 'consts';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import { ExtensionInjected } from 'contexts/Extensions/types';
+import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useExtrinsics } from 'contexts/Extrinsics';
+import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useNotifications } from 'contexts/Notifications';
-import { useTxFees } from 'contexts/TxFees';
-import { useEffect, useState } from 'react';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AnyApi } from 'types';
-import { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
+import type { AnyApi, AnyJson } from 'types';
+import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = ({
   tx,
@@ -29,23 +28,56 @@ export const useSubmitExtrinsic = ({
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
   const { api } = useApi();
-  const { setTxFees, setSender, txFees } = useTxFees();
+  const {
+    getAccount,
+    requiresManualSign,
+    getClient,
+    getSession,
+    getWcChainInfo,
+  } = useConnect();
   const { addNotification } = useNotifications();
-  const { addPending, removePending } = useExtrinsics();
   const { extensions } = useExtensions();
-  const { getAccount, getClient, getSession, getWcChainInfo } = useConnect();
+  const { addPending, removePending } = useExtrinsics();
+  const { getAccount: getBalanceAccount } = useBalances();
+  const {
+    setTxFees,
+    incrementPayloadUid,
+    getTxPayload,
+    setTxPayload,
+    resetTxPayloads,
+    setSender,
+    txFees,
+    getTxSignature,
+    setTxSignature,
+  } = useTxMeta();
+  const { setIsExecuting, resetStatusCodes, setDefaultMessage } =
+    useLedgerHardware();
 
   // if null account is provided, fallback to empty string
-  const submitAddress: string = from ?? '';
+  const submitAddress: string = from || '';
 
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);
+
+  // store the uid of the extrinsic
+  const [uid] = useState<number>(incrementPayloadUid());
+
+  // track for one-shot transaction reset after submission.
+  const didTxReset = useRef<boolean>(false);
+
+  // the unsigned payload used when signing with wallet-connect
+  const [unsignedPayload, setUnsignedPayload] = useState<AnyJson | null>(null);
 
   // calculate fee upon setup changes and initial render
   useEffect(() => {
     setSender(from);
     calculateEstimatedFee();
-  }, [tx]);
+  }, [tx?.toString(), getTxSignature(), tx?.signature.toString()]);
+
+  // recalculate transaction payload on tx change
+  useEffect(() => {
+    buildPayload();
+  }, [tx?.toString(), tx?.method?.args?.calls?.toString()]);
 
   const calculateEstimatedFee = async () => {
     if (tx === null) {
@@ -55,93 +87,39 @@ export const useSubmitExtrinsic = ({
     const { partialFee } = await tx.paymentInfo(submitAddress);
     const partialFeeBn = new BigNumber(partialFee.toString());
 
-    // give tx fees to global useTxFees context
+    // give tx fees to global useTxMeta context
     if (partialFeeBn.toString() !== txFees.toString()) {
       setTxFees(partialFeeBn);
     }
   };
 
-  // submit extrinsic
-  const submitTx = async () => {
-    if (submitting || !shouldSubmit || !api) {
-      return;
-    }
-    const account = getAccount(submitAddress);
-    if (account === null) {
-      return;
-    }
-
-    const _accountNonce = await api.rpc.system.accountNextIndex(submitAddress);
-    const accountNonce = _accountNonce.toHuman();
-
-    const { signer, source } = account;
-
-    const extension = extensions.find(
-      (e: ExtensionInjected) => e.id === source
-    );
-    if (extension === undefined) {
-      throw new Error(`${t('walletNotFound')}`);
-    } else if (extension.id === 'wallet-connect') {
-      const client: SignClient | null = getClient();
-      const session: SessionTypes.Struct | null = getSession();
-      const wcChainInfo: string | null = getWcChainInfo();
-
-      console.log('what is wc chain info', wcChainInfo);
-      console.log('what is client in submit', client);
-      console.log('what is session in submit', session);
-      console.log('what is tx in submit', tx);
-      console.log('what is tx as json', tx.toJSON());
-      console.log('what is tx raw', tx.toRawType());
-      console.log('what is tx to human', tx.toHuman());
-      console.log('what is tx  method', tx.method.toHex());
-      console.log('what is tx era', tx.era.toHex());
-      console.log('what is tx registry metadata', tx.registry.metadata);
-
-      interface IFormattedRpcResponse {
-        method?: string;
-        address?: string;
-        valid: boolean;
-        signature: any;
-        payload?: ExtrinsicPayloadValue | undefined;
-      }
-      const { block } = await api.rpc.chain.getBlock();
-      const blockHash = await api.rpc.chain.getBlockHash();
-      const genesisHash = await api.genesisHash;
-      const metadata = await api.rpc.state.getMetadata();
-      const { specVersion, transactionVersion, specName } =
-        await api.rpc.state.getRuntimeVersion();
-
-      console.log('what is block number', block.header.number);
-      console.log('what is blockHash', blockHash.hash);
-      console.log('what is genesis Hash', genesisHash);
-      console.log('what is metadata', metadata);
-      console.log('what is specVersion', specVersion);
-      console.log('what is transactionVersion', transactionVersion.toHuman());
-      console.log('what is specName', specName);
-      console.log('what is the tx version per dashboards view', tx.version);
-      console.log('what is era to hex', tx.era.toHuman());
-      console.log('what is method to human', tx.method.toHuman());
-
-      const _wcAccountNonce = await api.rpc.system.accountNextIndex(
-        submitAddress
+  // build and set payload of the transaction and store it in TxMetaContext.
+  const buildPayload = async () => {
+    if (api && tx) {
+      const lastHeader = await api.rpc.chain.getHeader();
+      const blockNumber = api.registry.createType(
+        'BlockNumber',
+        lastHeader.number.toNumber()
       );
-      const wcAccountNonce = _wcAccountNonce.toHuman();
-      const blockNumber = block.header.number;
+      const method = api.createType('Call', tx);
+      const era = api.registry.createType('ExtrinsicEra', {
+        current: lastHeader.number.toNumber(),
+        period: 64,
+      });
 
-      console.log('wc account nonce', wcAccountNonce);
-      const unsigned = {
-        specVersion: specVersion.toHex(),
-        transactionVersion: transactionVersion.toHex(),
-        address: `${submitAddress}`,
-        blockHash: blockHash.toHex(),
-        blockNumber,
-        era: api.registry.createType('ExtrinsicEra', {
-          current: blockNumber,
-          period: 64,
-        }),
-        genesisHash: genesisHash.toHex(),
-        method: tx.method.toHex(),
-        nonce: wcAccountNonce,
+      const accountNonce = getBalanceAccount(submitAddress)?.nonce || 0;
+      const nonce = api.registry.createType('Compact<Index>', accountNonce);
+
+      const payload = {
+        specVersion: api.runtimeVersion.specVersion.toHex(),
+        transactionVersion: api.runtimeVersion.transactionVersion.toHex(),
+        address: submitAddress,
+        blockHash: lastHeader.hash.toHex(),
+        blockNumber: blockNumber.toHex(),
+        era: era.toHex(),
+        genesisHash: api.genesisHash.toHex(),
+        method: method.toHex(),
+        nonce: nonce.toHex(),
         signedExtensions: [
           'CheckNonZeroSender',
           'CheckSpecVersion',
@@ -152,198 +130,271 @@ export const useSubmitExtrinsic = ({
           'CheckWeight',
           'ChargeTransactionPayment',
         ],
-        tip: '0x00000000000000000000000000000000',
-        version: 4,
+        tip: api.registry.createType('Compact<Balance>', 0).toHex(),
+        version: tx.version,
       };
-      console.log(unsigned);
+      setUnsignedPayload(payload);
 
-      const sendWalletConnectTx = async (
-        chainId: string,
-        fromAddress: string
-      ): Promise<IFormattedRpcResponse> => {
-        setSubmitting(true);
-        addPending(wcAccountNonce);
+      const raw = api.registry.createType('ExtrinsicPayload', payload, {
+        version: payload.version,
+      });
+      setTxPayload(raw, uid);
+    }
+  };
+
+  // submit extrinsic
+  const onSubmit = async () => {
+    if (
+      submitting ||
+      !shouldSubmit ||
+      !api ||
+      (requiresManualSign(from) && !getTxSignature())
+    ) {
+      return;
+    }
+
+    const account = getAccount(submitAddress);
+    if (account === null) {
+      return;
+    }
+
+    const accountNonce = (
+      await api.rpc.system.accountNextIndex(submitAddress)
+    ).toHuman();
+
+    const { source } = account;
+
+    // if `activeAccount` is imported from an extension, ensure it is enabled.
+    if (source !== 'ledger') {
+      const extension = extensions.find(
+        (e: ExtensionInjected) => e.id === source
+      );
+      if (extension === undefined) {
+        throw new Error(`${t('walletNotFound')}`);
+      } else if (source !== 'wallet-connect') {
+        // summons extension popup if not already connected.
+        extension.enable(DappName);
+      }
+    }
+
+    const onReady = () => {
+      addPending(accountNonce);
+      addNotification({
+        title: t('pending'),
+        subtitle: t('transactionInitiated'),
+      });
+      callbackSubmit();
+    };
+
+    const onInBlock = () => {
+      setSubmitting(false);
+      removePending(accountNonce);
+      addNotification({
+        title: t('inBlock'),
+        subtitle: t('transactionInBlock'),
+      });
+      callbackInBlock();
+    };
+
+    const onFinalizedEvent = (method: string) => {
+      if (method === 'ExtrinsicSuccess') {
         addNotification({
-          title: t('pending'),
-          subtitle: t('transactionInitiated'),
+          title: t('finalized'),
+          subtitle: t('transactionSuccessful'),
         });
-        try {
-          const result = await client!.request<{
-            signature: string;
-          }>({
-            chainId,
-            topic: session!.topic,
-            request: {
-              method: 'polkadot_signTransaction',
-              params: {
-                address: fromAddress,
-                transactionPayload: unsigned,
-              },
-            },
-          });
+      } else if (method === 'ExtrinsicFailed') {
+        addNotification({
+          title: t('failed'),
+          subtitle: t('errorWithTransaction'),
+        });
+        setSubmitting(false);
+        removePending(accountNonce);
+      }
+    };
 
-          return {
-            method: 'polkadot_signTransaction',
-            address: fromAddress,
-            valid: true,
-            signature: result.signature,
-          };
-        } catch (error: any) {
-          console.log('error occurred', error);
-          setSubmitting(false);
-          removePending(wcAccountNonce);
-          addNotification({
-            title: t('cancelled'),
-            subtitle: t('transactionCancelled'),
-          });
-          return {
-            method: 'polkadot_signTransaction',
-            address: fromAddress,
-            valid: false,
-            signature: '',
-          };
-        }
-      };
+    const resetTx = () => {
+      resetTxPayloads();
+      setTxSignature(null);
+      setSubmitting(false);
+    };
 
-      const result = await sendWalletConnectTx(
-        wcChainInfo as string,
-        submitAddress
-      );
+    const resetLedgerTx = () => {
+      setIsExecuting(false);
+      resetStatusCodes();
+      setDefaultMessage(null);
+    };
+    const resetManualTx = () => {
+      resetTx();
+      resetLedgerTx();
+    };
 
-      console.log('from value', from);
+    const onError = (type?: 'default' | 'ledger') => {
+      resetTx();
+      if (type === 'ledger') {
+        resetLedgerTx();
+      }
+      removePending(accountNonce);
+      addNotification({
+        title: t('cancelled'),
+        subtitle: t('transactionCancelled'),
+      });
+    };
 
-      const signingPayload = api.registry.createType(
-        'ExtrinsicPayload',
-        unsigned,
-        {
-          version: unsigned.version,
-        }
-      );
+    const handleStatus = (status: AnyApi) => {
+      if (status.isReady) onReady();
+      if (status.isInBlock) onInBlock();
+    };
 
-      tx.addSignature(submitAddress, result.signature, signingPayload);
+    const unsubEvents = ['ExtrinsicSuccess', 'ExtrinsicFailed'];
+
+    // pre-submission state update
+    setSubmitting(true);
+
+    const txPayload: AnyJson = getTxPayload();
+    const txSignature: AnyJson = getTxSignature();
+
+    interface IFormattedRpcResponse {
+      method?: string;
+      address?: string;
+      valid: boolean;
+      signature: any;
+    }
+
+    const sendWalletConnectTx = async (
+      chainId: string,
+      fromAddress: string,
+      client: SignClient,
+      session: SessionTypes.Struct,
+      payload: AnyJson
+    ): Promise<IFormattedRpcResponse> => {
+      setSubmitting(true);
+      addPending(accountNonce);
+      addNotification({
+        title: t('pending'),
+        subtitle: t('transactionInitiated'),
+      });
       try {
-        const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
-          // extrinsic is ready ( has been signed), add to pending
-          if (status.isReady) {
-            addPending(accountNonce);
-            addNotification({
-              title: t('pending'),
-              subtitle: t('transactionInitiated'),
-            });
-            callbackSubmit();
-          }
-
-          // extrinsic is in block, assume tx completed
-          if (status.isInBlock) {
-            setSubmitting(false);
-            removePending(accountNonce);
-            addNotification({
-              title: t('inBlock'),
-              subtitle: t('transactionInBlock'),
-            });
-            callbackInBlock();
-          }
-
-          // let user know outcome of transaction
-          if (status.isFinalized) {
-            events.forEach(({ event: { method } }: AnyApi) => {
-              if (method === 'ExtrinsicSuccess') {
-                addNotification({
-                  title: t('finalized'),
-                  subtitle: t('transactionSuccessful'),
-                });
-                unsub();
-              } else if (method === 'ExtrinsicFailed') {
-                addNotification({
-                  title: t('failed'),
-                  subtitle: t('errorWithTransaction'),
-                });
-                setSubmitting(false);
-                removePending(accountNonce);
-                unsub();
-              }
-            });
-          }
+        const result = await client.request<{
+          signature: string;
+        }>({
+          chainId,
+          topic: session.topic,
+          request: {
+            method: 'polkadot_signTransaction',
+            params: {
+              address: fromAddress,
+              transactionPayload: payload,
+            },
+          },
         });
-      } catch (e) {
-        console.log('error occurred', e);
+
+        return {
+          method: 'polkadot_signTransaction',
+          address: fromAddress,
+          valid: true,
+          signature: result.signature,
+        };
+      } catch (error: any) {
         setSubmitting(false);
         removePending(accountNonce);
         addNotification({
           title: t('cancelled'),
           subtitle: t('transactionCancelled'),
         });
+        return {
+          method: 'polkadot_signTransaction',
+          address: fromAddress,
+          valid: false,
+          signature: '',
+        };
+      }
+    };
+
+    // handle signed transaction.
+    if (getTxSignature()) {
+      try {
+        tx.addSignature(submitAddress, txSignature, txPayload);
+
+        const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
+          if (!didTxReset.current) {
+            didTxReset.current = true;
+            resetManualTx();
+          }
+
+          handleStatus(status);
+          if (status.isFinalized) {
+            events.forEach(({ event: { method } }: AnyApi) => {
+              onFinalizedEvent(method);
+              if (unsubEvents?.includes(method)) unsub();
+            });
+          }
+        });
+      } catch (e) {
+        onError('ledger');
+      }
+    } else if (source === 'wallet-connect') {
+      const wcSignClient: SignClient | null = getClient();
+      const wcSession: SessionTypes.Struct | null = getSession();
+      const wcChainInfo: string | null = getWcChainInfo();
+
+      try {
+        const result = await sendWalletConnectTx(
+          wcChainInfo as string,
+          submitAddress,
+          wcSignClient as SignClient,
+          wcSession as SessionTypes.Struct,
+          unsignedPayload as AnyJson
+        );
+        tx.addSignature(submitAddress, result.signature, getTxPayload());
+
+        const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
+          if (!didTxReset.current) {
+            didTxReset.current = true;
+            resetTx();
+          }
+
+          handleStatus(status);
+          if (status.isFinalized) {
+            events.forEach(({ event: { method } }: AnyApi) => {
+              onFinalizedEvent(method);
+              if (unsubEvents?.includes(method)) unsub();
+            });
+          }
+        });
+      } catch (e) {
+        onError('default');
       }
     } else {
-      // summons extension popup if not already connected.
-      extension.enable(DappName);
-      // pre-submission state update
-      setSubmitting(true);
-
+      // handle unsigned transaction.
+      const { signer } = account;
       try {
         const unsub = await tx.signAndSend(
           from,
           { signer },
           ({ status, events = [] }: AnyApi) => {
-            console.log('status', status);
-            console.log('events', events);
-            // extrinsic is ready ( has been signed), add to pending
-            if (status.isReady) {
-              addPending(accountNonce);
-              addNotification({
-                title: t('pending'),
-                subtitle: t('transactionInitiated'),
-              });
-              callbackSubmit();
+            if (!didTxReset.current) {
+              didTxReset.current = true;
+              resetTx();
             }
 
-            // extrinsic is in block, assume tx completed
-            if (status.isInBlock) {
-              setSubmitting(false);
-              removePending(accountNonce);
-              addNotification({
-                title: t('inBlock'),
-                subtitle: t('transactionInBlock'),
-              });
-              callbackInBlock();
-            }
-
-            // let user know outcome of transaction
+            handleStatus(status);
             if (status.isFinalized) {
               events.forEach(({ event: { method } }: AnyApi) => {
-                if (method === 'ExtrinsicSuccess') {
-                  addNotification({
-                    title: t('finalized'),
-                    subtitle: t('transactionSuccessful'),
-                  });
-                  unsub();
-                } else if (method === 'ExtrinsicFailed') {
-                  addNotification({
-                    title: t('failed'),
-                    subtitle: t('errorWithTransaction'),
-                  });
-                  setSubmitting(false);
-                  removePending(accountNonce);
-                  unsub();
-                }
+                onFinalizedEvent(method);
+                if (unsubEvents?.includes(method)) unsub();
               });
             }
           }
         );
       } catch (e) {
-        console.log('error occurred', e);
-        setSubmitting(false);
-        removePending(accountNonce);
-        addNotification({
-          title: t('cancelled'),
-          subtitle: t('transactionCancelled'),
-        });
+        onError('default');
       }
     }
   };
 
   return {
-    submitTx,
+    uid,
+    onSubmit,
     submitting,
   };
 };

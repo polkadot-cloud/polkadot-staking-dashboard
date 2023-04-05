@@ -1,17 +1,16 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { ButtonSubmit } from '@rossbulat/polkadot-dashboard-ui';
+import { isValidAddress } from 'Utils';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
+import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
-import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
-import { PayeeItem, usePayeeConfig } from 'library/Hooks/usePayeeConfig';
+import type { PayeeItem } from 'library/Hooks/usePayeeConfig';
+import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { PayeeInput } from 'library/PayeeInput';
@@ -20,7 +19,7 @@ import { SelectItem } from 'library/SelectItems/Item';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { MaybeAccount } from 'types';
+import type { MaybeAccount } from 'types';
 import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
@@ -31,7 +30,6 @@ export const UpdatePayee = () => {
   const { setStatus: setModalStatus } = useModal();
   const controller = getBondedAccount(activeAccount);
   const { staking, getControllerNotImported } = useStaking();
-  const { txFeesValid } = useTxFees();
   const { getPayeeItems } = usePayeeConfig();
   const { payee } = staking;
 
@@ -48,7 +46,10 @@ export const UpdatePayee = () => {
 
   // update setup progress with payee config.
   const handleChangeDestination = (destination: PayeeOptions) => {
-    setSelected({ destination, account });
+    setSelected({
+      destination,
+      account: isValidAddress(account || '') ? account : null,
+    });
   };
 
   // update setup progress with payee account.
@@ -71,11 +72,18 @@ export const UpdatePayee = () => {
     if (!api || !isComplete()) {
       return tx;
     }
-    tx = api.tx.staking.setPayee(selected.destination);
+    const payeeToSubmit =
+      selected.destination === 'Account'
+        ? {
+            Account: selected.account,
+          }
+        : selected.destination;
+
+    tx = api.tx.staking.setPayee(payeeToSubmit);
     return tx;
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: controller,
     shouldSubmit: isComplete(),
@@ -104,9 +112,6 @@ export const UpdatePayee = () => {
         : DefaultSelected
     );
   }, []);
-
-  // Ensure selected item is valid on change.
-  useEffect(() => {}, [selected]);
 
   return (
     <>
@@ -141,24 +146,7 @@ export const UpdatePayee = () => {
           ))}
         </SelectItems>
       </PaddingWrapper>
-      <SubmitTx
-        fromController
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              !isComplete() ||
-              submitting ||
-              getControllerNotImported(controller) ||
-              !txFeesValid
-            }
-          />,
-        ]}
-      />
+      <SubmitTx fromController valid={isComplete()} {...submitExtrinsic} />
     </>
   );
 };

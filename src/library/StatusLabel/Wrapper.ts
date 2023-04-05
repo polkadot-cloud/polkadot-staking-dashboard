@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { WrapperProps } from './types';
+import type { WrapperProps } from './types';
 
 export const Wrapper = styled.div<WrapperProps>`
   position: absolute;
@@ -35,10 +35,6 @@ export const Wrapper = styled.div<WrapperProps>`
       align-items: center;
       font-size: 1.2rem;
       opacity: 0.75;
-    }
-
-    span {
-      margin-left: 0.65rem;
     }
   }
 `;
