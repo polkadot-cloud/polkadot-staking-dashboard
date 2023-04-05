@@ -32,7 +32,7 @@
     "@polkadot/util": "^11.0.1",
     "@polkadotcloud/core-ui": "0.2.6",
     "@polkadotcloud/utils": "0.2.7",
-    "@substrate/connect": "^0.7.22",
+    "@substrate/connect": "^0.7.23",
     "@types/lodash.throttle": "^4.1.7",
     "@zondax/ledger-substrate": "^0.40.6",
     "bignumber.js": "^9.1.1",

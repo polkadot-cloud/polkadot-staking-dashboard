@@ -83,7 +83,7 @@ export const WithdrawPoolMember = () => {
         <Action text={`${t('withdraw')} ${totalWithdraw} ${network.unit}`} />
         {!accountHasSigner(activeAccount) ? (
           <WarningsWrapper>
-            <Warning text={t('readOnly')} />
+            <Warning text={t('readOnlyCannotSign')} />
           </WarningsWrapper>
         ) : null}
       </PaddingWrapper>

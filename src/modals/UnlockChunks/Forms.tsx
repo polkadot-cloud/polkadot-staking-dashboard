@@ -107,7 +107,7 @@ export const Forms = forwardRef(
           <div className="padding">
             {!accountHasSigner(signingAccount) ? (
               <WarningsWrapper>
-                <Warning text={t('readOnly')} />
+                <Warning text={t('readOnlyCannotSign')} />
               </WarningsWrapper>
             ) : null}
 

@@ -112,7 +112,7 @@ export const Bond = () => {
 
   const errors = [];
   if (!accountHasSigner(activeAccount)) {
-    errors.push(t('readOnly'));
+    errors.push(t('readOnlyCannotSign'));
   }
 
   return (
