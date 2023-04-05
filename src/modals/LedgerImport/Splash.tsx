@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSecondary } from '@polkadotcloud/dashboard-ui';
+import { ButtonSecondary } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp } from 'contexts/Hardware/Utils';

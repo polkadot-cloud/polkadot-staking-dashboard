@@ -3,7 +3,7 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, remToUnit } from 'Utils';
+import { clipAddress, remToUnit } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';

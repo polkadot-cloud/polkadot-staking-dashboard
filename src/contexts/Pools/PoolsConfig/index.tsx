@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { bnToU8a, u8aConcat } from '@polkadot/util';
-import { rmCommas, setStateWithRef } from 'Utils';
+import { rmCommas, setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import BN from 'bn.js';
 import { EmptyH256, ModPrefix, U32Opts } from 'consts';

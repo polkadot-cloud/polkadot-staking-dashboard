@@ -1,7 +1,7 @@
 // Copyright 2022 @paritytech/polkadot-native authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { clipAddress, setStateWithRef } from 'Utils';
+import { clipAddress, setStateWithRef } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';

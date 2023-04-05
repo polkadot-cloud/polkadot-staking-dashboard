@@ -3,7 +3,7 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { ButtonInvert } from '@polkadotcloud/dashboard-ui';
+import { ButtonSubmitInvert } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -173,7 +173,7 @@ export const Forms = forwardRef(
               <div className="padding">
                 {!accountHasSigner(activeAccount) && (
                   <WarningsWrapper>
-                    <Warning text={t('readOnly')} />
+                    <Warning text={t('readOnlyCannotSign')} />
                   </WarningsWrapper>
                 )}
 
@@ -202,7 +202,7 @@ export const Forms = forwardRef(
             <SubmitTx
               valid={valid}
               buttons={[
-                <ButtonInvert
+                <ButtonSubmitInvert
                   key="button_back"
                   text={t('back')}
                   iconLeft={faChevronLeft}

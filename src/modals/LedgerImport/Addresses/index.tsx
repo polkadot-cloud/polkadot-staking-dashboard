@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowDown, faCircleMinus } from '@fortawesome/free-solid-svg-icons';
-import { ButtonText } from '@polkadotcloud/dashboard-ui';
+import { ButtonText } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp } from 'contexts/Hardware/Utils';

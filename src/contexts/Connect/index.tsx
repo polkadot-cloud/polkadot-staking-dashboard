@@ -15,7 +15,11 @@ import type { SessionTypes } from '@walletconnect/types';
 import UniversalProvider from '@walletconnect/universal-provider';
 
 import Keyring from '@polkadot/keyring';
-import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
+import {
+  clipAddress,
+  localStorageOrDefault,
+  setStateWithRef,
+} from '@polkadotcloud/utils';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import type {
@@ -363,7 +367,7 @@ export const ConnectProvider = ({
           const existingSession: SessionTypes.Struct = {
             ...JSON.parse(wcSessionStorage),
           };
-          setSession(existingSession);
+          setSession(existingSession as SessionTypes.Struct);
 
           const expiryDate = new Date(existingSession.expiry * 1000);
           const currentDate = new Date();
@@ -561,7 +565,7 @@ export const ConnectProvider = ({
         }
         // Await session approval from the wallet.
         const wcSession = await approval();
-        setSession(wcSession);
+        setSession(wcSession as SessionTypes.Struct);
         localStorage.setItem('WalletConnectSession', JSON.stringify(wcSession));
 
         // get accounts
