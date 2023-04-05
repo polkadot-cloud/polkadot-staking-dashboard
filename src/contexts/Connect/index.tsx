@@ -8,7 +8,7 @@ import {
   setStateWithRef,
 } from '@polkadotcloud/utils';
 import type SignClient from '@walletconnect/sign-client';
-import type { SessionTypes } from '@walletconnect/types';
+import type { SessionTypes } from '@walletconnect/types/';
 import UniversalProvider from '@walletconnect/universal-provider';
 import { Web3Modal } from '@web3modal/standalone';
 import { DappName } from 'consts';
