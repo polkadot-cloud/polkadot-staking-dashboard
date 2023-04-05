@@ -44,7 +44,7 @@ export const SplashWrapper = styled.div`
     h5 {
       min-height: 2rem;
     }
-    button {
+    > button {
       cursor: pointer;
       z-index: 1;
       padding: 0.5rem 1.75rem !important;
