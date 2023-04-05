@@ -1,14 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-// import QRCodeModal from '@walletconnect/qrcode-modal';
-// import UniversalProvider from '@walletconnect/universal-provider';
-
-// import { Core } from '@walletconnect/core';
-// import { Web3Wallet } from '@walletconnect/web3wallet';
-
-// import { Web3Modal } from '@web3modal/standalone';
-
 import { faCheckCircle, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';

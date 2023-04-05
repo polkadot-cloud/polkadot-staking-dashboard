@@ -1,25 +1,16 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-// using polkadot onboard
-// import { Account, WalletAggregator } from '@polkadot-onboard/core';
-// import { useWallets } from '@polkadot-onboard/react';
-// import { WalletConnectProvider } from '@polkadot-onboard/wallet-connect';
-
-// using univeral provider
-// import QRCodeModal from '@walletconnect/qrcode-modal';
-import { Web3Modal } from '@web3modal/standalone';
-
-import type SignClient from '@walletconnect/sign-client';
-import type { SessionTypes } from '@walletconnect/types';
-import UniversalProvider from '@walletconnect/universal-provider';
-
 import Keyring from '@polkadot/keyring';
 import {
   clipAddress,
   localStorageOrDefault,
   setStateWithRef,
 } from '@polkadotcloud/utils';
+import type SignClient from '@walletconnect/sign-client';
+import type { SessionTypes } from '@walletconnect/types';
+import UniversalProvider from '@walletconnect/universal-provider';
+import { Web3Modal } from '@web3modal/standalone';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import type {
@@ -46,9 +37,6 @@ import {
   removeLocalExternalAccounts,
 } from './Utils';
 import { defaultConnectContext } from './defaults';
-
-// import { InjectedWalletProvider } from '@polkadot-onboard/injected-wallets';
-// import { PolkadotWalletsContextProvider, useWallets } from '@polkadot-onboard/react';
 
 const getAccounts = (session: SessionTypes.Struct) => {
   let accounts: string[] = [];
@@ -362,12 +350,11 @@ export const ConnectProvider = ({
         );
       } else if (id === 'wallet-connect') {
         const wcSessionStorage = localStorage.getItem('WalletConnectSession');
-        // const wcProviderStorage = localStorage.getItem('wcProvider');
         if (wcSessionStorage) {
           const existingSession: SessionTypes.Struct = {
             ...JSON.parse(wcSessionStorage),
           };
-          setSession(existingSession as SessionTypes.Struct);
+          setSession(existingSession);
 
           const expiryDate = new Date(existingSession.expiry * 1000);
           const currentDate = new Date();
@@ -520,8 +507,7 @@ export const ConnectProvider = ({
         `unknown_extension_${extensionsInitialisedRef.current.length + 1}`
       );
     } else if (id === 'wallet-connect') {
-      /// using Universal Provider
-      //  Initialize the provider with projectId data
+      //  Initialize the provider with projectId
       const provider = await UniversalProvider.init({
         projectId: 'f75434b01141677e4ee7ddf70fee56b4',
         relayUrl: 'wss://relay.walletconnect.com',
