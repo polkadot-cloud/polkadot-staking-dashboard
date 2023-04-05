@@ -113,19 +113,22 @@ export const ConnectProvider = ({
   >([]);
   const extensionsInitialisedRef = useRef(extensionsInitialised);
 
-  const [client, setClient] = useState<SignClient | null>(null);
-  const [session, setSession] = useState<SessionTypes.Struct | null>(null);
-  const [wcChainInfo, setWcChainInfo] = useState<string | null>(null);
+  const [client, setWalletConnectClient] = useState<SignClient | null>(null);
+  const [session, setWalletConnectSession] =
+    useState<SessionTypes.Struct | null>(null);
+  const [wcChainInfo, setWalletConnectChainInfo] = useState<string | null>(
+    null
+  );
 
-  const getClient = () => {
+  const getWalletConnectClient = () => {
     return client;
   };
 
-  const getSession = () => {
+  const getWalletConnectSession = () => {
     return session;
   };
 
-  const getWcChainInfo = () => {
+  const getWalletConnectChainInfo = () => {
     return wcChainInfo;
   };
 
@@ -354,13 +357,13 @@ export const ConnectProvider = ({
           const existingSession: SessionTypes.Struct = {
             ...JSON.parse(wcSessionStorage),
           };
-          setSession(existingSession);
+          setWalletConnectSession(existingSession);
 
           const expiryDate = new Date(existingSession.expiry * 1000);
           const currentDate = new Date();
           if (expiryDate < currentDate) {
             localStorage.removeItem('WalletConnectSession');
-            setSession(null);
+            setWalletConnectSession(null);
             return;
           }
 
@@ -374,10 +377,10 @@ export const ConnectProvider = ({
               icons: ['https://walletconnect.com/walletconnect-logo.png'],
             },
           });
-          setClient(provider.client);
+          setWalletConnectClient(provider.client);
 
           const currentCaipChain = getCaipChainInfo(network.name);
-          setWcChainInfo(currentCaipChain);
+          setWalletConnectChainInfo(currentCaipChain);
 
           const wcAccounts = getAccounts(existingSession);
           const walletConnectAccountAddresses = wcAccounts.map(
@@ -518,10 +521,10 @@ export const ConnectProvider = ({
           icons: ['https://walletconnect.com/walletconnect-logo.png'],
         },
       });
-      setClient(provider.client);
+      setWalletConnectClient(provider.client);
 
       const caipChainInfo = getCaipChainInfo(network.name);
-      setWcChainInfo(caipChainInfo);
+      setWalletConnectChainInfo(caipChainInfo);
       const caipChainId = caipChainInfo.split(':')[1];
 
       const params = {
@@ -551,7 +554,7 @@ export const ConnectProvider = ({
         }
         // Await session approval from the wallet.
         const wcSession = await approval();
-        setSession(wcSession as SessionTypes.Struct);
+        setWalletConnectSession(wcSession as SessionTypes.Struct);
         localStorage.setItem('WalletConnectSession', JSON.stringify(wcSession));
 
         // get accounts
@@ -825,9 +828,9 @@ export const ConnectProvider = ({
         formatAccountSs58,
         connectExtensionAccounts,
         getAccount,
-        getClient,
-        getSession,
-        getWcChainInfo,
+        getWalletConnectClient,
+        getWalletConnectSession,
+        getWalletConnectChainInfo,
         connectToAccount,
         disconnectFromAccount,
         addExternalAccount,

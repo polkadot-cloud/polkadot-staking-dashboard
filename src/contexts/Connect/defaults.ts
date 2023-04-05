@@ -11,11 +11,11 @@ export const defaultConnectContext: ConnectContextInterface = {
   // eslint-disable-next-line
   getAccount: (a) => null,
   // eslint-disable-next-line
-  getClient: () => null,
+  getWalletConnectClient: () => null,
   // eslint-disable-next-line
-  getSession: () => null,
+  getWalletConnectSession: () => null,
   // eslint-disable-next-line
-  getWcChainInfo: () => null,
+  getWalletConnectChainInfo: () => null,
   // eslint-disable-next-line
   connectToAccount: (a) => {},
   disconnectFromAccount: () => {},

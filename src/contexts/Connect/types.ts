@@ -13,9 +13,9 @@ export interface ConnectContextInterface {
   formatAccountSs58: (a: string) => string | null;
   connectExtensionAccounts: (e: ExtensionInjected) => Promise<void>;
   getAccount: (account: MaybeAccount) => ExtensionAccount | null;
-  getClient: () => SignClient | null;
-  getSession: () => SessionTypes.Struct | null;
-  getWcChainInfo: () => string | null;
+  getWalletConnectClient: () => SignClient | null;
+  getWalletConnectSession: () => SessionTypes.Struct | null;
+  getWalletConnectChainInfo: () => string | null;
   connectToAccount: (a: ExtensionAccount) => void;
   disconnectFromAccount: () => void;
   addExternalAccount: (a: string, addedBy: string) => void;

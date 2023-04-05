@@ -31,9 +31,9 @@ export const useSubmitExtrinsic = ({
   const {
     getAccount,
     requiresManualSign,
-    getClient,
-    getSession,
-    getWcChainInfo,
+    getWalletConnectClient,
+    getWalletConnectSession,
+    getWalletConnectChainInfo,
   } = useConnect();
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
@@ -333,9 +333,9 @@ export const useSubmitExtrinsic = ({
         onError('ledger');
       }
     } else if (source === 'wallet-connect') {
-      const wcSignClient: SignClient | null = getClient();
-      const wcSession: SessionTypes.Struct | null = getSession();
-      const wcChainInfo: string | null = getWcChainInfo();
+      const wcSignClient: SignClient | null = getWalletConnectClient();
+      const wcSession: SessionTypes.Struct | null = getWalletConnectSession();
+      const wcChainInfo: string | null = getWalletConnectChainInfo();
 
       try {
         const result = await sendWalletConnectTx(
