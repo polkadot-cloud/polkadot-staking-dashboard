@@ -60,7 +60,7 @@ export const Accounts = () => {
       // account is a stash if they have an active `staking` lock
       const activeLocks = locks.find((l) => {
         const { id } = l;
-        return id.trim() === 'staking';
+        return id === 'staking';
       });
       if (activeLocks !== undefined) {
         stashes.push(account.address);
