@@ -113,8 +113,9 @@ export const BalancesProvider = ({
         };
         const free = new BigNumber(data.free.toString());
         const reserved = new BigNumber(data.reserved.toString());
+
         const freeAfterReserve = BigNumber.max(
-          free.minus(existentialAmount),
+          free.minus(existentialAmount).minus(reserved),
           0
         );
 
@@ -124,7 +125,6 @@ export const BalancesProvider = ({
         // set account balances to context
         newAccount.balance = {
           free,
-          reserved,
           freeAfterReserve,
         };
 
