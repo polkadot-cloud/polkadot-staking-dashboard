@@ -74,7 +74,7 @@ export const TransferOptionsProvider = ({
         0
       );
 
-      // total additional balance that can be nonded.
+      // total additional balance that can be bonded.
       const totalAdditionalBond = totalPossibleBond.minus(active);
 
       return {
@@ -96,8 +96,8 @@ export const TransferOptionsProvider = ({
         new BigNumber(0)
       );
 
-      // total additional balance that can be nonded.
-      const totalAdditionalBondPool = totalPossibleBondPool.minus(activePool);
+      // total additional balance that can be bonded.
+      const totalAdditionalBondPool = totalPossibleBondPool;
 
       let totalUnlockingPool = new BigNumber(0);
       let totalUnlockedPool = new BigNumber(0);
