@@ -949,15 +949,15 @@
     tslib "^2.5.0"
     ws "^8.13.0"
 
-"@polkadotcloud/core-ui@0.2.6":
-  version "0.2.6"
-  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.2.6.tgz#b1610b1ae130a6f89e062e1205015ad126c770a5"
-  integrity sha512-Oe977oQLjIEn7dI/xjWdcWn1gDixSJPPqJiOA3N5w94hHx03Zy3+yBvnt7UxsC1rRUSy8b0DbM3ZG2zgEl8OpA==
+"@polkadotcloud/core-ui@^0.2.10":
+  version "0.2.10"
+  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.2.10.tgz#804399e96c197b15ab970665b6373afc9849ba25"
+  integrity sha512-AhBxoMnM9mP6DBh1rjpUSIEVPYCkuVX7JzXSTScEDsdMV5tjBlKmBtpVN/1AswJelRiuePSWZinZ3JJ+du5NAg==
 
-"@polkadotcloud/utils@0.2.7":
-  version "0.2.7"
-  resolved "https://registry.npmjs.org/@polkadotcloud/utils/-/utils-0.2.7.tgz#3946bf127a00c88fe33b56b75eba4bc657bcc689"
-  integrity sha512-JFRjcJSQxHE9gvbjbvVcP3tCF6C/OYoMGtTSG3A9/cc2YiNRQYJUL6Cp1ALCER6k+e6q+uV5bXkCmMnKkdvGJw==
+"@polkadotcloud/utils@^0.2.10":
+  version "0.2.10"
+  resolved "https://registry.npmjs.org/@polkadotcloud/utils/-/utils-0.2.10.tgz#3b9a7e03a3597920db0bf4a6edba6ef9c74fd232"
+  integrity sha512-VW3VI4swFeQG8PHLp4jSCuRv/hrsZi5cO3ka9Uhm8yI7nGCNXTajoUG7vTc9HZ5SvDqSwuLy4wNB1dRLvbw90Q==
 
 "@remix-run/router@1.5.0":
   version "1.5.0"
@@ -991,7 +991,7 @@
   resolved "https://registry.npmjs.org/@substrate/connect-extension-protocol/-/connect-extension-protocol-1.0.1.tgz#fa5738039586c648013caa6a0c95c43265dbe77d"
   integrity sha512-161JhCC1csjH3GE5mPLEd7HbWtwNSPJBg3p1Ksz9SFlTzj/bgEwudiRN2y5i0MoLGCIJRYKyKGMxVnd29PzNjg==
 
-"@substrate/connect@0.7.22", "@substrate/connect@^0.7.22":
+"@substrate/connect@0.7.22":
   version "0.7.22"
   resolved "https://registry.npmjs.org/@substrate/connect/-/connect-0.7.22.tgz#15a20d734bab082c87f2aaaf75ce012c83881ef7"
   integrity sha512-g12IYiepPu0OFWcm87ugDbfPr5a9TCGd4HJv1zXB2TRP/ZvYtHCE9+ftA5IvJbJPw6CI6/0XmUbP7Nz19HT/aw==
@@ -999,6 +999,15 @@
     "@substrate/connect-extension-protocol" "^1.0.1"
     eventemitter3 "^4.0.7"
     smoldot "1.0.0"
+
+"@substrate/connect@^0.7.23":
+  version "0.7.23"
+  resolved "https://registry.yarnpkg.com/@substrate/connect/-/connect-0.7.23.tgz#67c60f6498b5e61a654f5f64cebb7495bbafeaad"
+  integrity sha512-zlfI76HdUJszQWG7Dpwd0g7jjQv6LNZtE6Kd7OWv4OdpHJa1VpL2jGjg7YdLhwtx7qxqOuRiak1H+5KrsavzRQ==
+  dependencies:
+    "@substrate/connect-extension-protocol" "^1.0.1"
+    eventemitter3 "^4.0.7"
+    smoldot "1.0.1"
 
 "@substrate/ss58-registry@^1.39.0":
   version "1.39.0"
@@ -2378,13 +2387,14 @@ eslint-import-resolver-node@^0.3.7:
     is-core-module "^2.11.0"
     resolve "^1.22.1"
 
-eslint-import-resolver-typescript@^3.5.4:
-  version "3.5.4"
-  resolved "https://registry.npmjs.org/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-3.5.4.tgz#7370c326c3c08f0c1839c592d79d20b704de15d4"
-  integrity sha512-9xUpnedEmSfG57sN1UvWPiEhfJ8bPt0Wg2XysA7Mlc79iFGhmJtRUg9LxtkK81FhMUui0YuR2E8iUsVhePkh4A==
+eslint-import-resolver-typescript@^3.5.5:
+  version "3.5.5"
+  resolved "https://registry.yarnpkg.com/eslint-import-resolver-typescript/-/eslint-import-resolver-typescript-3.5.5.tgz#0a9034ae7ed94b254a360fbea89187b60ea7456d"
+  integrity sha512-TdJqPHs2lW5J9Zpe17DZNQuDnox4xo2o+0tE7Pggain9Rbc19ik8kFtXdxZ250FVx2kF4vlt2RSf4qlUpG7bhw==
   dependencies:
     debug "^4.3.4"
     enhanced-resolve "^5.12.0"
+    eslint-module-utils "^2.7.4"
     get-tsconfig "^4.5.0"
     globby "^13.1.3"
     is-core-module "^2.11.0"
@@ -4307,6 +4317,14 @@ smoldot@1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/smoldot/-/smoldot-1.0.0.tgz#438ddb9903fed28f24e52c4c0fb56f0b479209d7"
   integrity sha512-3/y/poD7j42NL6Z/Gp4OLm1qx8svyy255XQ5xRkjv9+O50RT0SeEmnBZmEbVmi1w6WmamPjt8URdzfN7xxgK9Q==
+  dependencies:
+    pako "^2.0.4"
+    ws "^8.8.1"
+
+smoldot@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/smoldot/-/smoldot-1.0.1.tgz#1749b62ddf75667a05dca2a52d8681596accf932"
+  integrity sha512-48M9tLU+5q0XHFUCuGULraghfqQU/yARkdcYZzulFB38f2aw4ujTHzlbE+bhiJ8+h63uoXdAQO0WeCsWDTXGkA==
   dependencies:
     pako "^2.0.4"
     ws "^8.8.1"

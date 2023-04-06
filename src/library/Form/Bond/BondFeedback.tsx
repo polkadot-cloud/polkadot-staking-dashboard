@@ -43,7 +43,10 @@ export const BondFeedback = ({
   const defaultBondStr = defaultBond ? String(defaultBond) : '';
 
   // get bond options for either staking or pooling.
-  const { freeBalance: freeBalanceBn } = allTransferOptions;
+  const freeBalanceBn =
+    bondFor === 'nominator'
+      ? allTransferOptions.nominate.totalAdditionalBond
+      : allTransferOptions.pool.totalAdditionalBond;
 
   // if we are bonding, subtract tx fees from bond amount
   const freeBondAmount = !disableTxFeeUpdate

@@ -133,10 +133,13 @@ export const BalancesProvider = ({
         };
 
         // get account locks
-        const newLocks = locks.toHuman();
-        for (let i = 0; i < newLocks.length; i++) {
-          newLocks[i].amount = new BigNumber(rmCommas(newLocks[i].amount));
-        }
+        const newLocks = locks.toHuman().map((l: AnyApi) => {
+          return {
+            ...l,
+            amount: new BigNumber(rmCommas(l.amount)),
+            id: l.id.trim(),
+          };
+        });
         newAccount.locks = newLocks;
 
         // set account bonded (controller) or null

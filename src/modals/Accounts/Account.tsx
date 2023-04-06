@@ -10,6 +10,7 @@ import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
 import { Identicon } from 'library/Identicon';
+import { useTranslation } from 'react-i18next';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 
@@ -47,6 +48,7 @@ export const AccountInner = ({
   meta,
   label = undefined,
 }: AccountItemProps) => {
+  const { t } = useTranslation('modals');
   const { extensions } = useExtensions();
   const Icon =
     meta?.source === 'ledger'
@@ -69,7 +71,7 @@ export const AccountInner = ({
           className="label warning"
           style={{ color: '#a17703', paddingLeft: '0.5rem' }}
         >
-          Read Only
+          {t('readOnly')}
         </div>
       )}
 
