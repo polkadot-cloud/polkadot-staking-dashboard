@@ -101,6 +101,7 @@ export const InflationWrapper = styled.div`
           width: 100%;
           padding: 0.5rem 0.5rem 1rem 0.5rem;
           display: flex;
+          flex-flow: column wrap;
 
           @media (min-width: ${SmallFontSizeMaxWidth + 225}px) {
             margin-bottom: 0;
@@ -115,11 +116,10 @@ export const InflationWrapper = styled.div`
             color: var(--text-color-secondary);
             display: flex;
             flex-flow: row wrap;
+            align-items: center;
             margin-top: 0.45rem;
             margin-bottom: 0;
           }
-          display: flex;
-          flex-flow: column wrap;
         }
 
         &:first-child {

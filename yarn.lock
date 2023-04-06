@@ -949,15 +949,15 @@
     tslib "^2.5.0"
     ws "^8.13.0"
 
-"@polkadotcloud/core-ui@0.2.6":
-  version "0.2.6"
-  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.2.6.tgz#b1610b1ae130a6f89e062e1205015ad126c770a5"
-  integrity sha512-Oe977oQLjIEn7dI/xjWdcWn1gDixSJPPqJiOA3N5w94hHx03Zy3+yBvnt7UxsC1rRUSy8b0DbM3ZG2zgEl8OpA==
+"@polkadotcloud/core-ui@^0.2.10":
+  version "0.2.10"
+  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.2.10.tgz#804399e96c197b15ab970665b6373afc9849ba25"
+  integrity sha512-AhBxoMnM9mP6DBh1rjpUSIEVPYCkuVX7JzXSTScEDsdMV5tjBlKmBtpVN/1AswJelRiuePSWZinZ3JJ+du5NAg==
 
-"@polkadotcloud/utils@0.2.7":
-  version "0.2.7"
-  resolved "https://registry.npmjs.org/@polkadotcloud/utils/-/utils-0.2.7.tgz#3946bf127a00c88fe33b56b75eba4bc657bcc689"
-  integrity sha512-JFRjcJSQxHE9gvbjbvVcP3tCF6C/OYoMGtTSG3A9/cc2YiNRQYJUL6Cp1ALCER6k+e6q+uV5bXkCmMnKkdvGJw==
+"@polkadotcloud/utils@^0.2.10":
+  version "0.2.10"
+  resolved "https://registry.npmjs.org/@polkadotcloud/utils/-/utils-0.2.10.tgz#3b9a7e03a3597920db0bf4a6edba6ef9c74fd232"
+  integrity sha512-VW3VI4swFeQG8PHLp4jSCuRv/hrsZi5cO3ka9Uhm8yI7nGCNXTajoUG7vTc9HZ5SvDqSwuLy4wNB1dRLvbw90Q==
 
 "@remix-run/router@1.5.0":
   version "1.5.0"
