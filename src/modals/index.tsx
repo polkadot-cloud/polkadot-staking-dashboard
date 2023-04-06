@@ -100,7 +100,8 @@ export const Modal = () => {
   }, [resize]);
 
   const handleResize = () => {
-    if (status !== 1) return;
+    if (status !== 1 || config?.disableWindowResize) return;
+
     let h = modalRef.current?.clientHeight ?? 0;
     h = h > maxHeight ? maxHeight : h;
     setModalHeight(h);
