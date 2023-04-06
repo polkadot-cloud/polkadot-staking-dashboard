@@ -37,7 +37,7 @@ export const BalanceChart = () => {
   );
 
   // user's total balance
-  const { free, miscFrozen } = balance;
+  const { free } = balance;
   const totalBalance = planckToUnit(
     free.plus(poolBondOpions.active).plus(unlockingPools),
     units
@@ -88,7 +88,8 @@ export const BalanceChart = () => {
     : new BigNumber(0);
 
   // available balance data
-  const fundsLocked = planckToUnit(miscFrozen.minus(lockStakingAmount), units);
+  // TODO: recalculate
+  const fundsLocked = new BigNumber(0);
   let fundsReserved = planckToUnit(existentialAmount, units);
   const fundsFree = planckToUnit(allTransferOptions.freeBalance, units).minus(
     fundsLocked

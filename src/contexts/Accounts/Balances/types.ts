@@ -17,8 +17,6 @@ export interface Lock {
 export interface Balance {
   free: BigNumber;
   reserved: BigNumber;
-  miscFrozen: BigNumber;
-  feeFrozen: BigNumber;
   freeAfterReserve: BigNumber;
 }
 
