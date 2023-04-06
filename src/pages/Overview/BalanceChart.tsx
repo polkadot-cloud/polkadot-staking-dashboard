@@ -67,16 +67,12 @@ export const BalanceChart = () => {
   const lockStakingAmount =
     locks.find((l: Lock) => l.id === 'staking')?.amount ?? new BigNumber(0);
 
+  // TODO: finish `fundsLocked` calculations.
   const locksOtherAmount = locks
     .filter((l: Lock) => l.id !== 'staking')
     .reduce((sum, l) => {
       return sum.plus(l.amount);
     }, new BigNumber(0));
-
-  const lockedBalanceToStake = BigNumber.max(
-    0,
-    lockStakingAmount.minus(locksOtherAmount)
-  );
 
   // total funds available, including existential deposit, minus staking.
   const graphAvailable = planckToUnit(free.minus(lockStakingAmount), units);
@@ -97,7 +93,9 @@ export const BalanceChart = () => {
     : new BigNumber(0);
 
   // available balance data
-  const fundsLocked = planckToUnit(lockedBalanceToStake, units);
+  // TODO: finish `fundsLocked` calculations.
+  const fundsLocked = new BigNumber(0);
+
   let fundsReserved = planckToUnit(existentialAmount, units);
 
   const fundsFree = planckToUnit(allTransferOptions.freeBalance, units).minus(
