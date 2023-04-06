@@ -82,7 +82,11 @@ export const ManageBond = () => {
             iconLeft={faLockOpen}
             marginRight
             onClick={() =>
-              openModalWith('UnlockChunks', { bondFor: 'nominator' }, 'small')
+              openModalWith(
+                'UnlockChunks',
+                { bondFor: 'nominator', disableWindowResize: true },
+                'small'
+              )
             }
             text={String(totalUnlockChuncks ?? 0)}
           />

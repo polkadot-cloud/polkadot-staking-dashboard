@@ -59,8 +59,8 @@ export const Overview = forwardRef(
     };
 
     return (
-      <ContentWrapper ref={ref}>
-        <div className="padding">
+      <ContentWrapper>
+        <div className="padding" ref={ref}>
           <StatsWrapper>
             <StatWrapper>
               <div className="inner">

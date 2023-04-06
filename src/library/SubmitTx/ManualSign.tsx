@@ -140,7 +140,9 @@ export const ManualSign = ({
                   : statusCodeTitle)
               : fallbackMessage}
           </p>
-        ) : null}
+        ) : (
+          <p>&nbsp;</p>
+        )}
       </div>
       <div>
         {buttons}
