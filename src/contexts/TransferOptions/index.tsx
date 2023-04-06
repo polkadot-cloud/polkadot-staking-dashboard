@@ -44,9 +44,12 @@ export const TransferOptionsProvider = ({
 
     // calculate total balance locked
     const maxLockBalance =
-      locks.reduce((prev, current) => {
-        return prev.amount.isGreaterThan(current.amount) ? prev : current;
-      })?.amount || new BigNumber(0);
+      locks.reduce(
+        (prev, current) => {
+          return prev.amount.isGreaterThan(current.amount) ? prev : current;
+        },
+        { amount: new BigNumber(0) }
+      )?.amount || new BigNumber(0);
 
     const points = membership?.points;
     const activePool = points ? new BigNumber(points) : new BigNumber(0);
