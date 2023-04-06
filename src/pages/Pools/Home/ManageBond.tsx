@@ -72,7 +72,11 @@ export const ManageBond = () => {
             disabled={isPoolSyncing || !isMember() || state === 'Destroying'}
             iconLeft={faLockOpen}
             onClick={() =>
-              openModalWith('UnlockChunks', { bondFor: 'pool' }, 'small')
+              openModalWith(
+                'UnlockChunks',
+                { bondFor: 'pool', disableWindowResize: true },
+                'small'
+              )
             }
             text={String(totalUnlockChuncks ?? 0)}
           />
