@@ -3,7 +3,6 @@
 
 import BigNumber from 'bignumber.js';
 import { useBalances } from 'contexts/Accounts/Balances';
-import type { Lock } from 'contexts/Accounts/Balances/types';
 import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
@@ -43,11 +42,11 @@ export const TransferOptionsProvider = ({
     const { freeAfterReserve } = balance;
     const { active, total, unlocking } = ledger;
 
-    // calculate total balance locked after staking
-    let totalLockedBalance = new BigNumber(0);
-    locks.forEach((l: Lock) => {
-      totalLockedBalance = totalLockedBalance.plus(l.amount);
-    });
+    // calculate total balance locked
+    const maxLockBalance =
+      locks.reduce((prev, current) => {
+        return prev.amount.isGreaterThan(current.amount) ? prev : current;
+      })?.amount || new BigNumber(0);
 
     const points = membership?.points;
     const activePool = points ? new BigNumber(points) : new BigNumber(0);
@@ -92,7 +91,7 @@ export const TransferOptionsProvider = ({
 
       // total possible balance that can be bonded
       const totalPossibleBondPool = BigNumber.max(
-        freeAfterReserve.minus(totalLockedBalance),
+        freeAfterReserve.minus(maxLockBalance),
         new BigNumber(0)
       );
 
