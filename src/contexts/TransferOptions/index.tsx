@@ -74,11 +74,15 @@ export const TransferOptionsProvider = ({
         0
       );
 
+      // total additional balance that can be nonded.
+      const totalAdditionalBond = totalPossibleBond.minus(active);
+
       return {
         active,
         totalUnlocking,
         totalUnlocked,
         totalPossibleBond,
+        totalAdditionalBond,
         totalUnlockChuncks: unlocking.length,
       };
     };
@@ -91,6 +95,9 @@ export const TransferOptionsProvider = ({
         freeAfterReserve.minus(totalLockedBalance),
         new BigNumber(0)
       );
+
+      // total additional balance that can be nonded.
+      const totalAdditionalBondPool = totalPossibleBondPool.minus(activePool);
 
       let totalUnlockingPool = new BigNumber(0);
       let totalUnlockedPool = new BigNumber(0);
@@ -107,6 +114,7 @@ export const TransferOptionsProvider = ({
         totalUnlocking: totalUnlockingPool,
         totalUnlocked: totalUnlockedPool,
         totalPossibleBond: totalPossibleBondPool,
+        totalAdditionalBond: totalAdditionalBondPool,
         totalUnlockChuncks: unlockingPool.length,
       };
     };
