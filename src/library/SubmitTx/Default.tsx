@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
+import { ButtonSubmit } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';

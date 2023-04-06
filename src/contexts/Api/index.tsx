@@ -3,8 +3,8 @@
 
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import { ScProvider } from '@polkadot/rpc-provider/substrate-connect';
+import { extractUrlValue, rmCommas, varToUrlHash } from '@polkadotcloud/utils';
 import * as Sc from '@substrate/connect';
-import { extractUrlValue, rmCommas, varToUrlHash } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { NetworkList } from 'config/networks';
 import {

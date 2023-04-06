@@ -3,7 +3,7 @@
 
 import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { capitalizeFirstLetter } from 'Utils';
+import { capitalizeFirstLetter } from '@polkadotcloud/utils';
 import { NetworkList } from 'config/networks';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';

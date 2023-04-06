@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-import { ButtonInvertRounded } from '@polkadotcloud/dashboard-ui';
+import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
 import { Separator } from 'Wrappers';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -20,7 +20,7 @@ export const BalanceLinks = () => {
       <h4>{t('overview.moreResources')}</h4>
       <section>
         <div>
-          <ButtonInvertRounded
+          <ButtonPrimaryInvert
             onClick={() =>
               window.open(
                 `https://${name}.subscan.io/account/${activeAccount}`,

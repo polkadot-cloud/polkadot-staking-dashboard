@@ -1,4 +1,4 @@
-![example workflow](https://github.com/paritytech/polkadot-staking-dashboard/actions/workflows/ci.yml/badge.svg) [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+![ci](https://github.com/paritytech/polkadot-staking-dashboard/actions/workflows/ci.yml/badge.svg) [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 # Polkadot Staking Dashboard
 
@@ -10,7 +10,7 @@ https://paritytech.github.io/polkadot-staking-dashboard
 
 https://staking.polkadot.network
 
-<img width="1744" alt="Screenshot 2022-12-20 at 13 46 30" src="https://user-images.githubusercontent.com/13929023/208601280-5a06b7cb-141e-42c8-a278-50cd4dec018d.png">
+<img width="1740" alt="Screenshot 2023-03-29 at 12 50 29" src="https://user-images.githubusercontent.com/13929023/228438730-e8a31b63-230a-49a7-806b-2c2e8642b409.png">
 
 ## Validator Operator Setup Guide
 
