@@ -47,7 +47,6 @@ export const ItemWrapper = styled(motion.div)`
         max-width: 100%;
 
         h4 {
-          margin: 0;
           color: var(--text-color-secondary);
           font-variation-settings: 'wght' 575;
           &.claim {

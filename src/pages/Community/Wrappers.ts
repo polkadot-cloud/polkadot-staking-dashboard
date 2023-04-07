@@ -87,9 +87,6 @@ export const ItemWrapper = styled(motion.div)`
         @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {
           margin: 0.25rem 1rem 0.25rem 0;
         }
-        > h4 {
-          margin: 0;
-        }
         &:disabled {
           cursor: default;
         }

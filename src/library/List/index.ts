@@ -20,7 +20,6 @@ export const Header = styled.div`
 
   h4 {
     color: var(--text-color-secondary);
-    margin: 0;
   }
 
   > div {
@@ -51,10 +50,6 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
   display: flex;
   align-items: center;
   padding: 0.75rem 0.5rem;
-
-  h4 {
-    margin: 0;
-  }
 
   > div:first-child {
     display: flex;

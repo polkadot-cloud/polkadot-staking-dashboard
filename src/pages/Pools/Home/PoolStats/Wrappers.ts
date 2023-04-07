@@ -115,7 +115,6 @@ export const HeaderWrapper = styled.div`
             display: flex;
             flex-flow: row wrap;
             margin-top: 0.45rem;
-            margin-bottom: 0;
           }
           display: flex;
           flex-flow: column wrap;

@@ -41,7 +41,6 @@ export const LocaleButton = styled.button<any>`
 `}
   h4 {
     color: var(--text-color-secondary);
-    margin: 0;
     &.selected {
       color: var(--status-success-color);
       margin-left: 0.75rem;

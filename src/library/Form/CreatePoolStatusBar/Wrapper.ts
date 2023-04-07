@@ -35,7 +35,7 @@ export const Wrapper = styled.div`
         display: flex;
         flex-flow: row wrap;
         align-items: center;
-        margin-bottom: 0.4rem;
+        margin: 1.25rem 0 0.4rem 0;
       }
       h5 {
         margin: 0;

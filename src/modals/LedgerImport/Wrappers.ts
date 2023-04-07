@@ -28,6 +28,7 @@ export const SplashWrapper = styled.div`
     margin-bottom: 2rem;
 
     h4 {
+      margin-top: 1.25rem;
       margin-bottom: 0.5rem;
     }
     h2,
@@ -145,9 +146,6 @@ export const TitleWrapper = styled.div`
     }
   }
 
-  > h4 {
-    margin: 0;
-  }
   > h5 {
     svg {
       margin-right: 0.4rem;

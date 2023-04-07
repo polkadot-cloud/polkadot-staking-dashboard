@@ -37,9 +37,6 @@ export const Wrapper = styled.div`
     }
   }
 
-  h4 {
-    margin-top: 0;
-  }
   button {
     color: var(--text-color-secondary);
     font-size: 1.25rem;

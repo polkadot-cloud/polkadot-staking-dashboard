@@ -213,13 +213,6 @@ export const PageRowWrapper = styled.div<PageRowWrapperProps>`
   flex-shrink: 0;
   flex-flow: row wrap;
   width: 100%;
-  /* kill heading padding, already applied to wrapper */
-  h1,
-  h2,
-  h3,
-  h4 {
-    margin-top: 0;
-  }
 `;
 
 /* RowPrimaryWrapper

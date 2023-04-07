@@ -18,6 +18,7 @@ export const Wrapper = styled.div<{ activeInput?: boolean }>`
 
     > h4 {
       color: var(--text-color-secondary);
+      margin-top: 1.25rem;
       margin-bottom: 0.5rem;
     }
 

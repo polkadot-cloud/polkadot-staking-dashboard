@@ -141,7 +141,6 @@ export const FilterListButton = styled.button<{ active: boolean }>`
         : 'var(--text-color-secondary)'};
     font-variation-settings: 'wght' 560;
     transition: color var(--transition-duration);
-    margin: 0;
   }
 
   svg {

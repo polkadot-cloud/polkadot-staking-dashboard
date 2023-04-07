@@ -116,7 +116,6 @@ export const InflationWrapper = styled.div`
             flex-flow: row wrap;
             align-items: center;
             margin-top: 0.45rem;
-            margin-bottom: 0;
           }
         }
 

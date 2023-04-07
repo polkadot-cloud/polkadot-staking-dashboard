@@ -21,7 +21,8 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
   width: 100%;
   padding: ${(props) => (props.padded ? '0.5rem 1.2rem' : '0.25rem')};
 
-  h2 {
+  h2,
+  h3 {
     margin-bottom: 1rem;
   }
   h2,
@@ -33,7 +34,8 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     flex-grow: ${(props) => (props.withAction ? 1 : 0)};
   }
   h4 {
-    margin: 0 0 0.6rem 0;
+    margin-top: 0;
+    margin-bottom: 0.6rem;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -92,6 +94,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
       margin-top: 1rem;
       margin-bottom: 0.75rem;
     }
+
     h4 {
       margin-top: 0;
       margin-bottom: 0;
