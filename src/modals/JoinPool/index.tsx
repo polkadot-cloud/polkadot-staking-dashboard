@@ -28,12 +28,12 @@ export const JoinPool = () => {
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { setActiveAccountSetup } = useSetup();
   const { getTransferOptions } = useTransferOptions();
-  const { freeBalance } = getTransferOptions(activeAccount);
+  const { totalPossibleBond } = getTransferOptions(activeAccount).pool;
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' });
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({
-    bond: planckToUnit(freeBalance, units).toString(),
+    bond: planckToUnit(totalPossibleBond, units).toString(),
   });
 
   // bond valid

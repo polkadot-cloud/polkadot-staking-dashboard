@@ -80,7 +80,11 @@ export const UnstakePrompts = () => {
                     onClick={() =>
                       openModalWith(
                         'UnlockChunks',
-                        { bondFor: 'nominator', poolClosure: true },
+                        {
+                          bondFor: 'nominator',
+                          poolClosure: true,
+                          disableWindowResize: true,
+                        },
                         'small'
                       )
                     }

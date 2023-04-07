@@ -64,7 +64,7 @@ export const BalanceChart = () => {
 
   // check account non-staking locks
   const locks = getAccountLocks(activeAccount);
-  const locksStaking = locks.find((l: Lock) => l.id.trim() === 'staking');
+  const locksStaking = locks.find((l: Lock) => l.id === 'staking');
   const lockStakingAmount = locksStaking
     ? locksStaking.amount
     : new BigNumber(0);

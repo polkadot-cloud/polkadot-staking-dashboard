@@ -151,7 +151,9 @@ export const ManualSign = ({
               />
             ) : null}
           </p>
-        ) : null}
+        ) : (
+          <p>&nbsp;</p>
+        )}
       </div>
       <div>
         {buttons}
