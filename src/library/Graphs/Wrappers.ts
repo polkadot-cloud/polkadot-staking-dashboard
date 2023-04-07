@@ -211,7 +211,6 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     &.secondary {
       color: var(--text-color-secondary);
       opacity: 0.7;
-      margin-bottom: 0;
       margin-top: 1.5rem;
     }
   }

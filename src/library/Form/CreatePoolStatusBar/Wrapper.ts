@@ -38,7 +38,6 @@ export const Wrapper = styled.div`
         margin: 1.25rem 0 0.4rem 0;
       }
       h5 {
-        margin: 0;
         position: relative;
         opacity: 0.75;
       }

@@ -59,7 +59,6 @@ export const ItemWrapper = styled(motion.div)`
 
         h5 {
           color: var(--text-color-secondary);
-          margin: 0;
           &.claim {
             color: var(--network-color-secondary);
             border: 1px solid var(--network-color-secondary);

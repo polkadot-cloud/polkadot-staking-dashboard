@@ -61,6 +61,7 @@ export const AddressWrapper = styled.div`
       align-items: center;
       padding: 0rem 1rem 1rem 0.25rem;
       border-bottom: 1px solid var(--border-primary-color);
+      margin-top: 1rem;
 
       &:last-child {
         border: none;

@@ -97,7 +97,6 @@ export const StatusBarWrapper = styled(motion.div)`
     h3,
     h5 {
       flex: 1;
-      margin: 0;
     }
     h5 {
       margin-top: 0.25rem;
