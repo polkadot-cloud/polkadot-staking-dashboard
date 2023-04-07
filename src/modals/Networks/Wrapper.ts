@@ -13,6 +13,7 @@ export const Wrapper = styled.div`
   h2 {
     color: var(--text-color-primary);
     margin-top: 0.5rem;
+    margin-bottom: 1rem;
   }
 `;
 

@@ -21,6 +21,9 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
   width: 100%;
   padding: ${(props) => (props.padded ? '0.5rem 1.2rem' : '0.25rem')};
 
+  h2 {
+    margin-bottom: 1rem;
+  }
   h2,
   h3 {
     color: var(--text-color-primary);
@@ -162,6 +165,8 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   }
 
   h2 {
+    margin-bottom: 1rem;
+
     .amount {
       text-overflow: ellipsis;
       white-space: nowrap;

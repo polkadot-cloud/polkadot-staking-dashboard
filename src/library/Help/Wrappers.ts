@@ -187,7 +187,6 @@ export const ItemWrapper = styled(motion.div)<any>`
     }
     > h2 {
       color: var(--text-color-primary);
-      margin: 0;
       text-align: left;
     }
 

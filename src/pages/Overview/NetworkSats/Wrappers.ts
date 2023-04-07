@@ -109,8 +109,6 @@ export const InflationWrapper = styled.div`
 
           h2 {
             color: var(--network-color-primary);
-            margin-top: 0rem;
-            margin-bottom: 0;
           }
           h4 {
             color: var(--text-color-secondary);

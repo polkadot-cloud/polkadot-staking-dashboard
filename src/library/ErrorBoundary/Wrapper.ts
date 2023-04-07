@@ -22,6 +22,10 @@ export const Wrapper = styled.div`
     color: var(--text-color-secondary);
   }
 
+  h2 {
+    margin: 1rem 0;
+  }
+
   h3 {
     &.with-margin {
       margin-top: 10rem;

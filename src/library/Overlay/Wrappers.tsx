@@ -96,7 +96,6 @@ export const TitleWrapper = styled.div`
         align-items: center;
         font-family: 'Unbounded', 'sans-serif', sans-serif;
         font-size: 1.3rem;
-        margin: 0;
 
         > button {
           margin-left: 0.85rem;

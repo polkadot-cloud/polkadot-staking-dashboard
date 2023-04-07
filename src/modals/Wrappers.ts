@@ -66,6 +66,8 @@ export const ContentWrapper = styled.div`
   position: relative;
 
   h2 {
+    margin: 1rem 0;
+
     &.unbounded {
       font-family: 'Unbounded';
     }

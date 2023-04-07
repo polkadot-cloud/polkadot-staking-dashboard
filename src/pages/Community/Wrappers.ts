@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
   h2 {
     color: var(--text-color-secondary);
     margin-top: 2rem;
+    margin-bottom: 1rem;
   }
 `;
 export const ItemsWrapper = styled(motion.div)`

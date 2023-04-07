@@ -35,7 +35,7 @@ export const ContentWrapper = styled.div`
     padding: 0 1rem 1rem 1rem;
 
     h2 {
-      margin-top: 0;
+      margin-bottom: 1rem;
     }
 
     input {
