@@ -33,7 +33,6 @@ export const Wrapper = styled.ul`
     }
     h5 {
       color: var(--text-color-secondary);
-      margin: 0;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;

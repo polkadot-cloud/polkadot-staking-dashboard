@@ -17,7 +17,6 @@ export const Wrapper = styled.div`
     color: var(--text-color-invert);
     font-size: 0.9rem;
     padding: 0;
-    margin: 0;
     text-align: center;
   }
 `;
