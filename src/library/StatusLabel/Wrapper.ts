@@ -28,7 +28,6 @@ export const Wrapper = styled.div<WrapperProps>`
       color: var(--text-color-secondary);
     }
     h2 {
-      padding: 0;
       display: flex;
       flex-flow: row wrap;
       align-items: center;
