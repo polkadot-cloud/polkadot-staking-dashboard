@@ -134,7 +134,6 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
       transform: scale(0.75);
     }
     transition: all var(--transition-duration);
-    margin: 0;
   }
 
   .tabs {
