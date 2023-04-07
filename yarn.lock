@@ -954,10 +954,10 @@
   resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.2.10.tgz#804399e96c197b15ab970665b6373afc9849ba25"
   integrity sha512-AhBxoMnM9mP6DBh1rjpUSIEVPYCkuVX7JzXSTScEDsdMV5tjBlKmBtpVN/1AswJelRiuePSWZinZ3JJ+du5NAg==
 
-"@polkadotcloud/utils@^0.2.10":
-  version "0.2.10"
-  resolved "https://registry.npmjs.org/@polkadotcloud/utils/-/utils-0.2.10.tgz#3b9a7e03a3597920db0bf4a6edba6ef9c74fd232"
-  integrity sha512-VW3VI4swFeQG8PHLp4jSCuRv/hrsZi5cO3ka9Uhm8yI7nGCNXTajoUG7vTc9HZ5SvDqSwuLy4wNB1dRLvbw90Q==
+"@polkadotcloud/utils@^0.2.12":
+  version "0.2.12"
+  resolved "https://registry.yarnpkg.com/@polkadotcloud/utils/-/utils-0.2.12.tgz#0a16e40943eb5b5f65ade677a3f353ac0bfe98e3"
+  integrity sha512-9GLA6yFjyVJnypoxpUXHsjdETnLFiWfjcKiYSpan/MCmU7g2UP7e3M/kyqPSo6P1Ai1W+x4UfGS7KwacSpsVOQ==
 
 "@remix-run/router@1.5.0":
   version "1.5.0"
