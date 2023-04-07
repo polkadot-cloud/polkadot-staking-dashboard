@@ -88,6 +88,8 @@ export const Labels = styled.div`
     display: flex;
     align-items: center;
     margin: 0 0.2rem;
+    font-size: inherit;
+
     @media (min-width: ${SmallFontSizeMaxWidth}px) {
       margin: 0 0.2rem;
       &.pool {
