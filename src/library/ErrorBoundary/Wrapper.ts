@@ -27,6 +27,7 @@ export const Wrapper = styled.div`
   }
 
   h3 {
+    margin: 1rem 0;
     &.with-margin {
       margin-top: 10rem;
     }

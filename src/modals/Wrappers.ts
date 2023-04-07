@@ -181,7 +181,6 @@ export const FooterWrapper = styled.div`
   h3 {
     color: var(--text-color-secondary);
     opacity: 0.5;
-    margin: 0;
     position: relative;
     top: 1.25rem;
     &.active {

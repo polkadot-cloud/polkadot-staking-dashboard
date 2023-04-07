@@ -53,7 +53,6 @@ export const ActiveAccounWrapper = styled.div`
     }
 
     h3 {
-      margin: 0;
       display: flex;
       flex-flow: row wrap;
       align-items: center;
