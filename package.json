@@ -30,7 +30,7 @@
     "@polkadot/react-identicon": "^3.1.4",
     "@polkadot/rpc-provider": "^10.1.4",
     "@polkadot/util": "^11.0.1",
-    "@polkadotcloud/core-ui": "^0.2.10",
+    "@polkadotcloud/core-ui": "^0.2.13",
     "@polkadotcloud/utils": "^0.2.10",
     "@substrate/connect": "^0.7.23",
     "@types/lodash.throttle": "^4.1.7",
