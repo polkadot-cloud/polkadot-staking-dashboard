@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import Keyring from '@polkadot/keyring';
+import { isValidAddress } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
 import type {
@@ -9,14 +10,13 @@ import type {
   ExtensionInterface,
 } from 'contexts/Extensions/types';
 import type { AnyFunction } from 'types';
-import { isValidAddress } from 'Utils';
-import { defaultHandleImportExtension } from '../defaults';
-import type { HandleImportExtension, ImportedAccount } from '../types';
 import {
   addToLocalExtensions,
   getActiveAccountLocal,
   getInExternalAccounts,
 } from '../Utils';
+import { defaultHandleImportExtension } from '../defaults';
+import type { HandleImportExtension, ImportedAccount } from '../types';
 
 export const useImportExtension = () => {
   const { network } = useApi();

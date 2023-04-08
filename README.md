@@ -1,3 +1,5 @@
+![ci](https://github.com/paritytech/polkadot-staking-dashboard/actions/workflows/ci.yml/badge.svg) [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 # Polkadot Staking Dashboard
 
 #### Staging (Latest Version):
@@ -8,7 +10,7 @@ https://paritytech.github.io/polkadot-staking-dashboard
 
 https://staking.polkadot.network
 
-<img width="1744" alt="Screenshot 2022-12-20 at 13 46 30" src="https://user-images.githubusercontent.com/13929023/208601280-5a06b7cb-141e-42c8-a278-50cd4dec018d.png">
+<img width="1740" alt="Screenshot 2023-03-29 at 12 50 29" src="https://user-images.githubusercontent.com/13929023/228438730-e8a31b63-230a-49a7-806b-2c2e8642b409.png">
 
 ## Validator Operator Setup Guide
 
@@ -21,7 +23,7 @@ To add an operator, submit a PR with the following changes:
 
 ### Operator Structure
 
-The following table outlines the structure of a `VALIDATOR_COMMUNITY` entry:
+The following table outlines the structure of a `ValidatorCommunity` entry:
 
 | Element        | Key          | Required | Notes                                                                                       | Example                                                 |
 | -------------- | ------------ | -------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
@@ -37,12 +39,12 @@ The following table outlines the structure of a `VALIDATOR_COMMUNITY` entry:
 
 Upload your SVG icon as a React component. Look at the existing icons as examples, or use the [SVGR Playground](https://react-svgr.com/playground/) to convert your raw SVG file into a component.
 
-Next, add your operator details to the `VALIDATOR_COMMUNITY` object. Only provide the validator(s) for the particular network(s) you are operating in. If you have no operating validators on Kusama, for example, the `kusama` key can be omitted.
+Next, add your operator details to the `ValidatorCommunity` object. Only provide the validator(s) for the particular network(s) you are operating in. If you have no operating validators on Kusama, for example, the `kusama` key can be omitted.
 
 The following example defines 2 validators on the Polkadot network, and 1 on Kusama:
 
 ```
-export const VALIDATOR_COMMUNITY = [
+export const ValidatorCommunity = [
   ...
   {
     name: 'Validator Central',
@@ -66,11 +68,11 @@ export const VALIDATOR_COMMUNITY = [
 
 ### General Requirements
 
-| Requirement | Notes                                                                                                                                                                                              |
-| ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Accuracy    | Operator contact details must be working and valid.                                                                                                                                                |
-| Liveness    | All submitted validator addresses must be discoverable as a validator on the network in question - whether Polkadot or Kusama.                                                                     |
-| Ordering    | Please place your operator in alphabetical order within `VALIDATOR_COMMUNITY`. Operators are shuffled before being displayed in the dashboard, removing any bias associated with ordering methods. |
+| Requirement | Notes                                                                                                                                                                                             |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Accuracy    | Operator contact details must be working and valid.                                                                                                                                               |
+| Liveness    | All submitted validator addresses must be discoverable as a validator on the network in question - whether Polkadot or Kusama.                                                                    |
+| Ordering    | Please place your operator in alphabetical order within `ValidatorCommunity`. Operators are shuffled before being displayed in the dashboard, removing any bias associated with ordering methods. |
 
 Please submit an issue for any queries around adding your operator details.
 

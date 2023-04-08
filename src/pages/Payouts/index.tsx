@@ -1,18 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp } from '@polkadotcloud/dashboard-ui';
-import BigNumber from 'bignumber.js';
+import { ButtonHelp } from '@polkadotcloud/core-ui';
+import { PageRowWrapper } from 'Wrappers';
 import { MaxPayoutDays } from 'consts';
 import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useUi } from 'contexts/UI';
-import { format, fromUnixTime } from 'date-fns';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
-import { formatSize } from 'library/Graphs/Utils';
+import { formatSize, sortNonZeroPayouts } from 'library/Graphs/Utils';
 import {
   CardHeaderWrapper,
   CardWrapper,
@@ -23,18 +22,16 @@ import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
-import { locales } from 'locale';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnySubscan } from 'types';
-import { PageRowWrapper } from 'Wrappers';
 import type { PageProps } from '../types';
 import { PayoutList } from './PayoutList';
 import { LastEraPayoutStat } from './Stats/LastEraPayout';
 
 export const Payouts = ({ page }: PageProps) => {
-  const { i18n, t } = useTranslation();
-  const { payouts, poolClaims } = useSubscan();
+  const { t } = useTranslation();
+  const { payouts, poolClaims, payoutsFromDate, payoutsToDate } = useSubscan();
   const { isSyncing } = useUi();
   const { plugins } = usePlugins();
   const { inSetup } = useStaking();
@@ -42,8 +39,6 @@ export const Payouts = ({ page }: PageProps) => {
   const { openHelp } = useHelp();
 
   const [payoutsList, setPayoutLists] = useState<AnySubscan>([]);
-  const [fromDate, setFromDate] = useState<string | undefined>();
-  const [toDate, setToDate] = useState<string | undefined>();
 
   const { key } = page;
 
@@ -52,48 +47,9 @@ export const Payouts = ({ page }: PageProps) => {
   const { width, height, minHeight } = formatSize(size, 300);
 
   useEffect(() => {
-    // take non-zero rewards in most-recent order
-    let pList: AnySubscan = [
-      ...payouts.concat(poolClaims).filter((p: AnySubscan) => p.amount > 0),
-    ]
-      .sort(
-        (a: AnySubscan, b: AnySubscan) => b.block_timestamp - a.block_timestamp
-      )
-      .slice(0, MaxPayoutDays);
-
-    // re-order rewards based on block timestamp
-    pList = pList.sort((a: AnySubscan, b: AnySubscan) => {
-      const x = new BigNumber(a.block_timestamp);
-      const y = new BigNumber(b.block_timestamp);
-      return y.minus(x);
-    });
-    setPayoutLists(pList);
+    // filter zero rewards and order via block timestamp, most recent first.
+    setPayoutLists(sortNonZeroPayouts(payouts, poolClaims, true));
   }, [payouts, poolClaims]);
-
-  useEffect(() => {
-    // calculate the earliest and latest payout dates if they exist.
-    if (payoutsList.length) {
-      setFromDate(
-        format(
-          fromUnixTime(
-            payoutsList[Math.min(MaxPayoutDays - 2, payoutsList.length - 1)]
-              .block_timestamp
-          ),
-          'do MMM',
-          {
-            locale: locales[i18n.resolvedLanguage],
-          }
-        )
-      );
-
-      // latest payout date
-      setToDate(
-        format(fromUnixTime(payoutsList[0].block_timestamp), 'do MMM', {
-          locale: locales[i18n.resolvedLanguage],
-        })
-      );
-    }
-  }, [payoutsList.length]);
 
   return (
     <>
@@ -113,10 +69,12 @@ export const Payouts = ({ page }: PageProps) => {
               />
             </h4>
             <h2>
-              {payoutsList.length ? (
+              {payoutsFromDate && payoutsToDate ? (
                 <>
-                  {fromDate}
-                  {toDate !== fromDate && <>&nbsp;-&nbsp;{toDate}</>}
+                  {payoutsFromDate}
+                  {payoutsToDate !== payoutsFromDate && (
+                    <>&nbsp;-&nbsp;{payoutsToDate}</>
+                  )}
                 </>
               ) : (
                 t('payouts.none', { ns: 'pages' })

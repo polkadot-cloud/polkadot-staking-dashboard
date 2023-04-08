@@ -18,6 +18,7 @@ import { Connect } from './Connect';
 import { GoToFeedback } from './GoToFeedback';
 import { JoinPool } from './JoinPool';
 import { LeavePool } from './LeavePool';
+import { LedgerImport } from './LedgerImport';
 import { ManageFastUnstake } from './ManageFastUnstake';
 import { ManagePool } from './ManagePool';
 import { Networks } from './Networks';
@@ -44,8 +45,16 @@ import {
 } from './Wrappers';
 
 export const Modal = () => {
-  const { setModalHeight, setStatus, status, modal, size, height, resize } =
-    useModal();
+  const {
+    setModalHeight,
+    setStatus,
+    status,
+    modal,
+    size,
+    height,
+    resize,
+    config,
+  } = useModal();
   const controls = useAnimation();
 
   const maxHeight = window.innerHeight * 0.8;
@@ -60,11 +69,17 @@ export const Modal = () => {
   };
 
   useEffect(() => {
-    window.addEventListener('resize', handleResize);
+    windowResize();
     return () => {
       window.removeEventListener('resize', handleResize);
     };
   });
+
+  const windowResize = () => {
+    if (!config?.disableWindowResize) {
+      window.addEventListener('resize', handleResize);
+    }
+  };
 
   useEffect(() => {
     // modal has been opened - fade in
@@ -85,7 +100,8 @@ export const Modal = () => {
   }, [resize]);
 
   const handleResize = () => {
-    if (status !== 1) return;
+    if (status !== 1 || config?.disableWindowResize) return;
+
     let h = modalRef.current?.clientHeight ?? 0;
     h = h > maxHeight ? maxHeight : h;
     setModalHeight(h);
@@ -146,6 +162,7 @@ export const Modal = () => {
                   {modal === 'Accounts' && <Accounts />}
                   {modal === 'GoToFeedback' && <GoToFeedback />}
                   {modal === 'JoinPool' && <JoinPool />}
+                  {modal === 'LedgerImport' && <LedgerImport />}
                   {modal === 'LeavePool' && <LeavePool />}
                   {modal === 'ManagePool' && <ManagePool />}
                   {modal === 'ManageFastUnstake' && <ManageFastUnstake />}

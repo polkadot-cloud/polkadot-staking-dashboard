@@ -9,7 +9,7 @@ import { ReactComponent as SignerSVG } from './icons/signer_icon.svg';
 import { ReactComponent as SubwalletSVG } from './icons/subwallet_icon.svg';
 import { ReactComponent as TalismanSVG } from './icons/talisman_icon.svg';
 
-export const EXTENSIONS: ExtensionConfig[] = [
+export const Extensions: Array<ExtensionConfig> = [
   {
     id: 'polkadot-js',
     title: (window as any)?.walletExtension?.isNovaWallet

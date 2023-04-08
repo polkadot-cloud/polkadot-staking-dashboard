@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-export const VALIDATOR_COMMUNITY = [
+export const ValidatorCommunity = [
   {
     name: '🍁 HIGH/STAKE 🥩',
     thumbnail: 'Highstake',
@@ -49,6 +49,21 @@ export const VALIDATOR_COMMUNITY = [
     validators: {
       polkadot: ['12bLdVAgWiKHgFHtAaQstasMUWVq35oG9iwHCwsKoFFNoNrk'],
       kusama: ['Hf8C626KBAjitMV7w8AhQWDCiPgUU47htEwbomq5mDMKeyL'],
+    },
+  },
+  {
+    name: 'Blockseeker.io',
+    thumbnail: 'Blockseeker',
+    bio: 'Independant validator, software engineer and web3 enthusiast, focusing on providing tools and building for web3 running bare metal/dedicated nodes to help decentralize the network. Only charges a small fee to help maintain nodes and effort in running them.',
+    email: 'dev@blockseeker.io',
+    twitter: '@blockseeker_io',
+    website: 'https://blockseeker.io',
+    validators: {
+      polkadot: ['131Qzz7SvHUn7zdDAt2jFZmzVsP2KkoiDWLZa9N7FivGTXpB'],
+      kusama: [
+        'HPuireorhWdSCQg5dG1zeGk7XCuAfkb21BtDyLqRuN62k67',
+        'J6if9c47o81JsMeB75VwkXtx1nVEaMPvQxuMRYhBR8H6ULU',
+      ],
     },
   },
   {
@@ -172,12 +187,12 @@ export const VALIDATOR_COMMUNITY = [
     },
   },
   {
-    name: 'LetzBake!',
-    thumbnail: 'Letzbake',
-    bio: 'Non-custodial staking made in Switzerland. At your service since 2018.',
-    email: 'hello@letzbake.com',
-    twitter: '@letzbake1',
-    website: 'https://letzbake.com',
+    name: 'Blockshard',
+    thumbnail: 'Blockshard',
+    bio: 'Non-custodial staking made in Switzerland. At your service since 2018. Previously known as LetzBake!',
+    email: 'hello@blockshard.io',
+    twitter: '@blockshard1',
+    website: 'https://blockshard.io',
     validators: {
       kusama: ['Cp4U5UYg2FaVUpyEtQgfBm9aqge6EEPkJxEFVZFYy7L1AZF'],
     },

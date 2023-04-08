@@ -3,6 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { isNotZero } from '@polkadotcloud/utils';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -10,13 +11,12 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTheme } from 'contexts/Themes';
 import { motion } from 'framer-motion';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
-import { ListProvider, useList } from 'library/List/context';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { Selectable } from 'library/List/Selectable';
+import { ListProvider, useList } from 'library/List/context';
 import { useEffect, useRef, useState } from 'react';
 import type { AnyApi, Sync } from 'types';
-import { isNotZero } from 'Utils';
 import { Member } from './Member';
 
 export const MembersListInner = ({
@@ -76,7 +76,10 @@ export const MembersListInner = ({
   const pageStart = pageEnd - (ListItemsPerPage - 1);
 
   // render batch
-  const batchEnd = renderIteration * ListItemsPerBatch - 1;
+  const batchEnd = Math.min(
+    renderIteration * ListItemsPerBatch - 1,
+    ListItemsPerPage
+  );
 
   // refetch list when list changes
   useEffect(() => {

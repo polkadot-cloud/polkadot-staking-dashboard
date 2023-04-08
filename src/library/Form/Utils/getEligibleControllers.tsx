@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
@@ -9,7 +10,6 @@ import type { ImportedAccount } from 'contexts/Connect/types';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
-import { planckToUnit } from 'Utils';
 import type { InputItem } from '../types';
 
 export const getEligibleControllers = (): Array<InputItem> => {

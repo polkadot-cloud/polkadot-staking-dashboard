@@ -1,8 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
+import { isNotZero, planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
@@ -12,7 +11,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxFees } from 'contexts/TxFees';
+import { useTxMeta } from 'contexts/TxMeta';
 import { getUnixTime } from 'date-fns';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
@@ -25,7 +24,6 @@ import { StaticNote } from 'modals/Utils/StaticNote';
 import { NotesWrapper, PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isNotZero, planckToUnit, unitToPlanck } from 'Utils';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');
@@ -38,7 +36,7 @@ export const Unbond = () => {
   const { bondFor } = config;
   const { stats } = usePoolsConfig();
   const { isDepositor, selectedActivePool } = useActivePools();
-  const { txFees, txFeesValid } = useTxFees();
+  const { txFees } = useTxMeta();
   const { getTransferOptions } = useTransferOptions();
   const { erasToSeconds } = useErasToTimeLeft();
 
@@ -127,7 +125,7 @@ export const Unbond = () => {
 
   const signingAccount = isPooling ? activeAccount : controller;
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: signingAccount,
     shouldSubmit: bondValid,
@@ -148,7 +146,7 @@ export const Unbond = () => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push(t('readOnly'));
+    warnings.push(t('readOnlyCannotSign'));
   }
 
   if (unclaimedRewards > 0 && bondFor === 'pool') {
@@ -231,19 +229,8 @@ export const Unbond = () => {
       </PaddingWrapper>
       <SubmitTx
         fromController={isStaking}
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              submitting ||
-              !(bondValid && accountHasSigner(signingAccount) && txFeesValid)
-            }
-          />,
-        ]}
+        valid={bondValid}
+        {...submitExtrinsic}
       />
     </>
   );

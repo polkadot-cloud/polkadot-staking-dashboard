@@ -3,8 +3,8 @@
 
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { clipAddress, remToUnit } from '@polkadotcloud/utils';
 import { Identicon } from 'library/Identicon';
-import { clipAddress, remToUnit } from 'Utils';
 import { RoleChangeWrapper } from './Wrapper';
 
 export const RoleChange = ({ roleName, oldAddress, newAddress }: any) => (

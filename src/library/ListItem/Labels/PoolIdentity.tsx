@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { clipAddress, determinePoolDisplay } from '@polkadotcloud/utils';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Identicon } from 'library/Identicon';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
-import { clipAddress, determinePoolDisplay } from 'Utils';
 import type { PoolIdentityProps } from '../types';
 
 export const PoolIdentity = ({

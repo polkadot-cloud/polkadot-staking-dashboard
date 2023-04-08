@@ -3,8 +3,8 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
-import type { ItemProps } from './types';
 import { ItemWrapper } from './Wrappers';
+import type { ItemProps } from './types';
 
 export const Item = ({
   disabled = false,

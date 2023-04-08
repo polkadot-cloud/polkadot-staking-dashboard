@@ -1,12 +1,16 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { isNotZero } from '@polkadotcloud/utils';
 import { ApiEndpoints, ApiSubscanKey } from 'consts';
 import { useNetworkMetrics } from 'contexts/Network';
+import { format, fromUnixTime } from 'date-fns';
+import { sortNonZeroPayouts } from 'library/Graphs/Utils';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
+import { locales } from 'locale';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AnyApi, AnySubscan } from 'types';
-import { isNotZero } from 'Utils';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { usePlugins } from '../Plugins';
@@ -29,6 +33,7 @@ export const SubscanProvider = ({
   const { activeAccount } = useConnect();
   const { activeEra } = useNetworkMetrics();
   const { erasToSeconds } = useErasToTimeLeft();
+  const { i18n } = useTranslation();
 
   // store fetched payouts from Subscan
   const [payouts, setPayouts] = useState<AnySubscan>([]);
@@ -38,6 +43,12 @@ export const SubscanProvider = ({
 
   // store fetched unclaimed payouts from Subscan
   const [unclaimedPayouts, setUnclaimedPayouts] = useState<AnyApi>([]);
+
+  // store the start date of fetched payouts and pool claims combined.
+  const [payoutsFromDate, setPayoutsFromDate] = useState<string | undefined>();
+
+  // store the end date of fetched payouts and pool claims combined.
+  const [payoutsToDate, setPayoutsToDate] = useState<string | undefined>();
 
   // handle fetching the various types of payout and set state in one render.
   const handleFetchPayouts = async () => {
@@ -62,24 +73,49 @@ export const SubscanProvider = ({
     setPoolClaims([]);
   };
 
-  // fetch payouts on plugins toggle
+  // Fetch payouts on plugins toggle.
   useEffect(() => {
     if (isNotZero(activeEra.index)) {
       handleFetchPayouts();
     }
   }, [plugins, activeEra]);
 
-  // reset payouts on network switch
+  // Reset payouts on network switch.
   useEffect(() => {
     resetPayouts();
   }, [network]);
 
-  // fetch payouts as soon as network is ready
+  // Fetch payouts as soon as network is ready.
   useEffect(() => {
     if (isReady && isNotZero(activeEra.index)) {
       handleFetchPayouts();
     }
   }, [isReady, network, activeAccount, activeEra]);
+
+  // Store start and end date of fetched payouts.
+  useEffect(() => {
+    const filteredPayouts = sortNonZeroPayouts(payouts, poolClaims, true);
+    if (filteredPayouts.length) {
+      setPayoutsFromDate(
+        format(
+          fromUnixTime(
+            filteredPayouts[filteredPayouts.length - 1].block_timestamp
+          ),
+          'do MMM',
+          {
+            locale: locales[i18n.resolvedLanguage],
+          }
+        )
+      );
+
+      // latest payout date
+      setPayoutsToDate(
+        format(fromUnixTime(filteredPayouts[0].block_timestamp), 'do MMM', {
+          locale: locales[i18n.resolvedLanguage],
+        })
+      );
+    }
+  }, [payouts, poolClaims, unclaimedPayouts]);
 
   /* fetchPayouts
    * fetches payout history from Subscan.
@@ -246,6 +282,8 @@ export const SubscanProvider = ({
         payouts,
         poolClaims,
         unclaimedPayouts,
+        payoutsFromDate,
+        payoutsToDate,
       }}
     >
       {children}

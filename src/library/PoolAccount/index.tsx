@@ -2,15 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { clipAddress, remToUnit } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Identicon } from 'library/Identicon';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { clipAddress, remToUnit } from '../../Utils';
-import type { PoolAccountProps } from './types';
 import { Wrapper } from './Wrapper';
+import type { PoolAccountProps } from './types';
 
 export const PoolAccount = ({
   label,

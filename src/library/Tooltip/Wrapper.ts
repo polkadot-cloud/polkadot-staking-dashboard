@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   background: var(--background-invert);
   display: flex;
   flex-flow: column wrap;
-  transition: opacity 0.1s;
+  transition: opacity var(--transition-duration);
   border-radius: 0.5rem;
   padding: 0.25rem 0.5rem;
   min-width: 100px;
@@ -17,7 +17,6 @@ export const Wrapper = styled.div`
     color: var(--text-color-invert);
     font-size: 0.9rem;
     padding: 0;
-    margin: 0;
     text-align: center;
   }
 `;

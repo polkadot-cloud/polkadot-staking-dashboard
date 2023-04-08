@@ -3,6 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { isNotZero } from '@polkadotcloud/utils';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
@@ -21,7 +22,6 @@ import { SearchInput } from 'library/List/SearchInput';
 import { Pool } from 'library/Pool';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isNotZero } from 'Utils';
 import { PoolListProvider, usePoolList } from './context';
 import type { PoolListProps } from './types';
 
@@ -81,7 +81,10 @@ export const PoolListInner = ({
   const pageStart = pageEnd - (ListItemsPerPage - 1);
 
   // render batch
-  const batchEnd = renderIteration * ListItemsPerBatch - 1;
+  const batchEnd = Math.min(
+    renderIteration * ListItemsPerBatch - 1,
+    ListItemsPerPage
+  );
 
   // refetch list when pool list changes
   useEffect(() => {
@@ -180,6 +183,11 @@ export const PoolListInner = ({
 
   const filterTabsConfig = [
     {
+      label: t('all'),
+      includes: [],
+      excludes: [],
+    },
+    {
       label: t('active'),
       includes: ['active'],
       excludes: ['locked', 'destroying'],
@@ -224,7 +232,7 @@ export const PoolListInner = ({
             placeholder={t('search')}
           />
         )}
-        <Tabs config={filterTabsConfig} activeIndex={0} />
+        <Tabs config={filterTabsConfig} activeIndex={1} />
         {pagination && listPools.length > 0 && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}

@@ -1,7 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { EXTENSIONS } from 'config/extensions';
+import { setStateWithRef } from '@polkadotcloud/utils';
+import { Extensions } from 'config/extensions';
 import type {
   ExtensionConfig,
   ExtensionInjected,
@@ -9,7 +10,6 @@ import type {
 } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi } from 'types';
-import { setStateWithRef } from 'Utils';
 import { defaultExtensionsContext } from './defaults';
 
 export const ExtensionsContext =
@@ -91,7 +91,7 @@ export const ExtensionsProvider = ({
   const getInstalledExtensions = () => {
     const { injectedWeb3 }: AnyApi = window;
     const installed: Array<ExtensionInjected> = [];
-    EXTENSIONS.forEach((e: ExtensionConfig) => {
+    Extensions.forEach((e: ExtensionConfig) => {
       if (injectedWeb3[e.id] !== undefined) {
         installed.push({
           ...e,

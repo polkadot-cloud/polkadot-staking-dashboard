@@ -14,8 +14,8 @@ import { Metrics } from '../../ListItem/Labels/Metrics';
 import { NominationStatus } from '../../ListItem/Labels/NominationStatus';
 import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Select } from '../../ListItem/Labels/Select';
-import type { NominationProps } from './types';
 import { getIdentityDisplay } from './Utils';
+import type { NominationProps } from './types';
 
 export const Nomination = ({
   validator,

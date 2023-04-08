@@ -1,15 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
+import { planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTxFees } from 'contexts/TxFees';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
@@ -19,7 +17,6 @@ import { SubmitTx } from 'library/SubmitTx';
 import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit, unitToPlanck } from 'Utils';
 
 export const Bond = () => {
   const { t } = useTranslation('modals');
@@ -28,12 +25,17 @@ export const Bond = () => {
   const { setStatus: setModalStatus, config, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getTransferOptions } = useTransferOptions();
-  const { txFeesValid } = useTxFees();
   const { selectedActivePool } = useActivePools();
   const { bondFor } = config;
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
-  const { freeBalance: freeBalanceBn } = getTransferOptions(activeAccount);
+  const { nominate, pool } = getTransferOptions(activeAccount);
+
+  const freeBalanceBn =
+    bondFor === 'nominator'
+      ? nominate.totalAdditionalBond
+      : pool.totalAdditionalBond;
+
   const freeBalance = planckToUnit(freeBalanceBn, units);
   const largestTxFee = useBondGreatestFee({ bondFor });
 
@@ -104,7 +106,7 @@ export const Bond = () => {
     return determineTx(bondToSubmit);
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(bondAfterTxFees),
     from: activeAccount,
     shouldSubmit: bondValid,
@@ -116,7 +118,7 @@ export const Bond = () => {
 
   const errors = [];
   if (!accountHasSigner(activeAccount)) {
-    errors.push(t('readOnly'));
+    errors.push(t('readOnlyCannotSign'));
   }
 
   return (
@@ -149,21 +151,7 @@ export const Bond = () => {
         />
         <p>{t('newlyBondedFunds')}</p>
       </PaddingWrapper>
-      <SubmitTx
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              submitting ||
-              !(bondValid && accountHasSigner(activeAccount) && txFeesValid)
-            }
-          />,
-        ]}
-      />
+      <SubmitTx valid={bondValid} {...submitExtrinsic} />
     </>
   );
 };

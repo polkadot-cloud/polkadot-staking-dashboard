@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/dashboard-ui';
+import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/core-ui';
+import { planckToUnit } from '@polkadotcloud/utils';
+import { ButtonRowWrapper } from 'Wrappers';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
@@ -13,8 +15,6 @@ import { useUi } from 'contexts/UI';
 import { BondedChart } from 'library/BarChart/BondedChart';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit } from 'Utils';
-import { ButtonRowWrapper } from 'Wrappers';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
@@ -29,9 +29,13 @@ export const ManageBond = () => {
   const { openHelp } = useHelp();
 
   const allTransferOptions = getTransferOptions(activeAccount);
-  const { freeBalance } = allTransferOptions;
-  const { active, totalUnlocking, totalUnlocked, totalUnlockChuncks } =
-    allTransferOptions.pool;
+  const {
+    active,
+    totalUnlocking,
+    totalUnlocked,
+    totalUnlockChuncks,
+    totalAdditionalBond,
+  } = allTransferOptions.pool;
 
   const { state } = selectedActivePool?.bondedPool || {};
 
@@ -72,7 +76,11 @@ export const ManageBond = () => {
             disabled={isPoolSyncing || !isMember() || state === 'Destroying'}
             iconLeft={faLockOpen}
             onClick={() =>
-              openModalWith('UnlockChunks', { bondFor: 'pool' }, 'small')
+              openModalWith(
+                'UnlockChunks',
+                { bondFor: 'pool', disableWindowResize: true },
+                'small'
+              )
             }
             text={String(totalUnlockChuncks ?? 0)}
           />
@@ -82,7 +90,7 @@ export const ManageBond = () => {
         active={planckToUnit(active, units)}
         unlocking={planckToUnit(totalUnlocking, units)}
         unlocked={planckToUnit(totalUnlocked, units)}
-        free={planckToUnit(freeBalance, units)}
+        free={planckToUnit(totalAdditionalBond, units)}
         inactive={active.isZero()}
       />
     </>

@@ -16,6 +16,7 @@ export const transferOptions: TransferOptions = {
     totalUnlocking: new BigNumber(0),
     totalUnlocked: new BigNumber(0),
     totalPossibleBond: new BigNumber(0),
+    totalAdditionalBond: new BigNumber(0),
     totalUnlockChuncks: 0,
   },
   pool: {
@@ -23,6 +24,7 @@ export const transferOptions: TransferOptions = {
     totalUnlocking: new BigNumber(0),
     totalUnlocked: new BigNumber(0),
     totalPossibleBond: new BigNumber(0),
+    totalAdditionalBond: new BigNumber(0),
     totalUnlockChuncks: 0,
   },
 };

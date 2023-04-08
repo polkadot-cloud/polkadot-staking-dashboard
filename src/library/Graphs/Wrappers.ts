@@ -23,6 +23,10 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
 
   h2,
   h3 {
+    margin-bottom: 1rem;
+  }
+  h2,
+  h3 {
     color: var(--text-color-primary);
     display: flex;
     flex-flow: row wrap;
@@ -30,7 +34,8 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     flex-grow: ${(props) => (props.withAction ? 1 : 0)};
   }
   h4 {
-    margin: 0 0 0.6rem 0;
+    margin-top: 0;
+    margin-bottom: 0.6rem;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -86,8 +91,10 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   .content {
     padding: 0 0.5rem;
     h3 {
+      margin-top: 1rem;
       margin-bottom: 0.75rem;
     }
+
     h4 {
       margin-top: 0;
       margin-bottom: 0;
@@ -162,6 +169,8 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   }
 
   h2 {
+    margin-bottom: 1rem;
+
     .amount {
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -202,7 +211,6 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     &.secondary {
       color: var(--text-color-secondary);
       opacity: 0.7;
-      margin-bottom: 0;
       margin-top: 1.5rem;
     }
   }
@@ -244,7 +252,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   .change {
     margin-left: 0.6rem;
     font-size: 0.9rem;
-    color: white;
+    color: var(--text-color-primary);
     border-radius: 0.75rem;
     padding: 0.15rem 0.5rem;
     &.pos {

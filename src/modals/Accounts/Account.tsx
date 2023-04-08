@@ -3,14 +3,16 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { clipAddress } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
+import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
 import { Identicon } from 'library/Identicon';
-import { clipAddress } from 'Utils';
-import type { AccountItemProps } from './types';
+import { useTranslation } from 'react-i18next';
 import { AccountWrapper } from './Wrappers';
+import type { AccountItemProps } from './types';
 
 export const AccountButton = (props: AccountItemProps) => {
   const { meta } = props;
@@ -46,11 +48,13 @@ export const AccountInner = ({
   meta,
   label = undefined,
 }: AccountItemProps) => {
+  const { t } = useTranslation('modals');
   const { extensions } = useExtensions();
-  const extension = extensions.find(
-    (e: ExtensionInjected) => e.id === meta?.source
-  );
-  const Icon = extension?.icon ?? undefined;
+  const Icon =
+    meta?.source === 'ledger'
+      ? LedgerIconSVG
+      : extensions.find((e: ExtensionInjected) => e.id === meta?.source)
+          ?.icon ?? undefined;
   const source = meta?.source ?? undefined;
   const imported = meta !== undefined && source !== 'external';
 
@@ -67,7 +71,7 @@ export const AccountInner = ({
           className="label warning"
           style={{ color: '#a17703', paddingLeft: '0.5rem' }}
         >
-          Read Only
+          {t('readOnly')}
         </div>
       )}
 

@@ -11,14 +11,9 @@ export const Wrapper = styled.div`
   h2 {
     color: var(--text-color-primary);
     margin-top: 0.5rem;
-    margin-bottom: 0;
   }
 
   h3 {
     margin-bottom: 0.5rem;
-  }
-
-  h4 {
-    margin: 0;
   }
 `;

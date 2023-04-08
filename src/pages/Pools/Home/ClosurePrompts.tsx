@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary } from '@polkadotcloud/dashboard-ui';
+import { ButtonPrimary } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -92,7 +92,11 @@ export const ClosurePrompts = () => {
                   onClick={() =>
                     openModalWith(
                       'UnlockChunks',
-                      { bondFor: 'pool', poolClosure: true },
+                      {
+                        bondFor: 'pool',
+                        poolClosure: true,
+                        disableWindowResize: true,
+                      },
                       'small'
                     )
                   }

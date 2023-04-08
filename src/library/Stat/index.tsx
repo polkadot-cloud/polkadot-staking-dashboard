@@ -3,14 +3,14 @@
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/dashboard-ui';
+import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/core-ui';
+import { applyWidthAsPadding } from '@polkadotcloud/utils';
 import { useHelp } from 'contexts/Help';
 import { useNotifications } from 'contexts/Notifications';
 import { Identicon } from 'library/Identicon';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
-import { applyWidthAsPadding } from 'Utils';
-import type { StatAddress, StatProps } from './types';
 import { Wrapper } from './Wrapper';
+import type { StatAddress, StatProps } from './types';
 
 export const Stat = ({
   label,

@@ -1,17 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { useTxFees } from 'contexts/TxFees';
 import { AccountDropdown } from 'library/Form/AccountDropdown';
-import type { InputItem } from 'library/Form/types';
 import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { Warning } from 'library/Form/Warning';
+import type { InputItem } from 'library/Form/types';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
@@ -26,7 +23,6 @@ export const UpdateController = () => {
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, getAccount, accountHasSigner } = useConnect();
   const { getBondedAccount } = useBalances();
-  const { txFeesValid } = useTxFees();
 
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
@@ -61,7 +57,7 @@ export const UpdateController = () => {
   };
 
   // handle extrinsic
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
@@ -81,7 +77,7 @@ export const UpdateController = () => {
             <div style={{ marginBottom: '1.5rem' }}>
               {!accountHasSigner(activeAccount) ? (
                 <WarningsWrapper>
-                  <Warning text={t('readOnly')} />
+                  <Warning text={t('readOnlyCannotSign')} />
                 </WarningsWrapper>
               ) : null}
             </div>
@@ -96,22 +92,8 @@ export const UpdateController = () => {
         </Wrapper>
       </PaddingWrapper>
       <SubmitTx
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              selected === null ||
-              !selected.active ||
-              submitting ||
-              !accountHasSigner(activeAccount) ||
-              !txFeesValid
-            }
-          />,
-        ]}
+        valid={!(selected === null || !selected.active)}
+        {...submitExtrinsic}
       />
     </>
   );

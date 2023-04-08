@@ -1,11 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { pageFromUri } from '@polkadotcloud/utils';
 import { useExtrinsics } from 'contexts/Extrinsics';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { useLocation } from 'react-router-dom';
-import { pageFromUri } from 'Utils';
 import { Connect } from './Connect';
 import { Connected } from './Connected';
 import { SideMenuToggle } from './SideMenuToggle';
@@ -15,17 +17,32 @@ import { LargeScreensOnly, Wrapper } from './Wrappers';
 export const Headers = () => {
   const { pathname } = useLocation();
   const { validators } = useValidators();
+  const { bondedPools } = useBondedPools();
+  const { poolMembers } = usePoolMembers();
   const { pending } = useExtrinsics();
   const { isSyncing } = useUi();
 
-  let syncing = isSyncing;
-
   // keep syncing if on validators page and still fetching
-  if (pageFromUri(pathname) === 'validators') {
-    if (!validators.length) {
-      syncing = true;
+  const onValidatorsSyncing = () => {
+    if (pageFromUri(pathname) === 'validators') {
+      if (!validators.length) {
+        return true;
+      }
     }
-  }
+    return false;
+  };
+
+  // keep syncing if on pools page and still fetching bonded pools or pool members
+  const onPoolsSyncing = () => {
+    if (pageFromUri(pathname) === 'pools') {
+      if (!bondedPools.length || !poolMembers.length) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const syncing = isSyncing || onValidatorsSyncing() || onPoolsSyncing();
 
   return (
     <>

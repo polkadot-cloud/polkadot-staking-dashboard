@@ -26,15 +26,15 @@ export const BarChartWrapper = styled.div<{ lessPadding?: boolean }>`
   }
   .d1 {
     background: var(--network-color-primary);
-    color: white;
+    color: rgba(255, 255, 255, 0.9);
   }
   .d2 {
     background: var(--network-color-secondary);
-    color: white;
+    color: rgba(255, 255, 255, 0.9);
   }
   .d3 {
     background: var(--text-color-secondary);
-    color: white;
+    color: rgba(255, 255, 255, 0.9);
   }
   .d4 {
     background: var(--button-secondary-background);
@@ -53,7 +53,7 @@ export const Legend = styled.div`
     padding: 0.5rem 1rem;
     font-variation-settings: 'wght' 600;
     font-size: 1.1rem;
-    margin-bottom: 0;
+    margin: 0;
 
     &:first-child {
       padding-left: 0;

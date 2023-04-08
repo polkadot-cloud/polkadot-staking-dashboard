@@ -38,10 +38,9 @@ export const Wrapper = styled.div`
         display: flex;
         flex-flow: row wrap;
         align-items: center;
-        margin-bottom: 0.4rem;
+        margin: 1.25rem 0 0.4rem 0;
       }
       h5 {
-        margin: 0;
         position: relative;
         opacity: 0.75;
       }
@@ -51,7 +50,7 @@ export const Wrapper = styled.div`
         padding: 0.65rem 0.75rem;
         overflow: hidden;
         position: relative;
-        transition: background 0.15s;
+        transition: background var(--transition-duration);
       }
       &:first-child .bar {
         border-top-left-radius: 1.5rem;
@@ -71,7 +70,7 @@ export const Wrapper = styled.div`
         }
         h5 {
           opacity: 1;
-          color: white;
+          color: var(--text-color-invert);
         }
         .bar {
           background: var(--network-color-primary);

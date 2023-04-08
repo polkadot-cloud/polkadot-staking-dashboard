@@ -130,7 +130,10 @@
     "search": "Search Pool ID, Name or Address",
     "searchAddress": "Search Address or Identity",
     "select": "Select",
+    "sign": "Sign",
     "signedByController": "Signed by Controller",
+    "signing": "Signing",
+    "submitTransaction": "Ready to submit transaction.",
     "syncing": "Syncing",
     "syncingPoolList": "Syncing Pool list",
     "tooSmall": "Bond amount is too small.",
@@ -153,6 +156,7 @@
     "viewPoolNominations": "View Pool Nominations",
     "waiting": "Waiting",
     "walletNotFound": "wallet not found",
-    "whenActivelyNominating": "when actively nominating."
+    "whenActivelyNominating": "when actively nominating.",
+    "wrongTransaction": "Wrong transaction, please sign again."
   }
 }

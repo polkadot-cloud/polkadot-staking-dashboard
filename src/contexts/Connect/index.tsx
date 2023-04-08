@@ -2,12 +2,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import Keyring from '@polkadot/keyring';
+import {
+  clipAddress,
+  localStorageOrDefault,
+  setStateWithRef,
+} from '@polkadotcloud/utils';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import type {
   ConnectContextInterface,
   ExternalAccount,
   ImportedAccount,
+  LedgerAccount,
 } from 'contexts/Connect/types';
 import { useExtensions } from 'contexts/Extensions';
 import type {
@@ -16,16 +22,16 @@ import type {
 } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
-import { clipAddress, localStorageOrDefault, setStateWithRef } from 'Utils';
-import { defaultConnectContext } from './defaults';
 import { useImportExtension } from './Hooks/useImportExtension';
 import {
   extensionIsLocal,
   getActiveAccountLocal,
   getLocalExternalAccounts,
+  getLocalLedgerAccounts,
   removeFromLocalExtensions,
   removeLocalExternalAccounts,
 } from './Utils';
+import { defaultConnectContext } from './defaults';
 
 export const ConnectContext = React.createContext<ConnectContextInterface>(
   defaultConnectContext
@@ -129,6 +135,7 @@ export const ConnectProvider = ({
   // in localStorage.
   useEffect(() => {
     if (extensionsFetched) {
+      importLedgerAccounts();
       importExternalAccounts();
     }
   }, [extensionsFetched]);
@@ -189,6 +196,40 @@ export const ConnectProvider = ({
     setStateWithRef(unsubsNew, setUnsubscribe, unsubscribeRef);
   };
 
+  /* importLedgerAccounts
+   * Checks previously added Ledger accounts from localStorage and adds them to
+   * `accounts` state. if local active account is present, it will also be assigned as active.
+   * Accounts are ignored if they are already imported through an extension. */
+  const importLedgerAccounts = () => {
+    // import any local external accounts
+    let localLedgerAccounts = getLocalLedgerAccounts(network, true);
+
+    if (localLedgerAccounts.length) {
+      // get and format active account if present
+      const activeAccountLocal = getActiveAccountLocal(network);
+
+      const activeAccountIsExternal =
+        localLedgerAccounts.find(
+          (a: ImportedAccount) => a.address === activeAccountLocal
+        ) ?? null;
+
+      // remove already-imported accounts
+      localLedgerAccounts = localLedgerAccounts.filter(
+        (l: LedgerAccount) =>
+          accountsRef.current.find(
+            (a: ImportedAccount) => a.address === l.address
+          ) === undefined
+      );
+
+      // set active account for network
+      if (activeAccountIsExternal) {
+        connectToAccount(activeAccountIsExternal);
+      }
+      // add Ledger accounts to imported
+      addToAccounts(localLedgerAccounts);
+    }
+  };
+
   /* importExternalAccounts
    * checks previously imported read-only accounts from
    * localStorage and adds them to `accounts` state.
@@ -210,7 +251,7 @@ export const ConnectProvider = ({
           (a: ImportedAccount) => a.address === activeAccountLocal
         ) ?? null;
 
-      // remove already-imported accounts (extensions may have already imported)
+      // remove already-imported accounts
       localExternalAccounts = localExternalAccounts.filter(
         (l: ExternalAccount) =>
           accountsRef.current.find(
@@ -464,6 +505,17 @@ export const ConnectProvider = ({
     return exists;
   };
 
+  // Checks whether an account needs manual signing. This is the case for Ledger accounts,
+  // transactions of which cannot be automatically signed by a provided `signer` as is the case with
+  // extensions.
+  const requiresManualSign = (address: MaybeAccount) => {
+    return (
+      accountsRef.current.find(
+        (a: ImportedAccount) => a.address === address && a.source === 'ledger'
+      ) !== undefined
+    );
+  };
+
   const isReadOnlyAccount = (address: MaybeAccount) => {
     const account = getAccount(address) ?? {};
 
@@ -532,7 +584,9 @@ export const ConnectProvider = ({
         addExternalAccount,
         getActiveAccount,
         accountHasSigner,
+        requiresManualSign,
         isReadOnlyAccount,
+        addToAccounts,
         forgetAccounts,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,

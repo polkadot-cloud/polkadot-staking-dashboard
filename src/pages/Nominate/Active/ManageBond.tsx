@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/dashboard-ui';
+import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/core-ui';
+import { planckToUnit } from '@polkadotcloud/utils';
+import { ButtonRowWrapper } from 'Wrappers';
 import type BigNumber from 'bignumber.js';
 import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useApi } from 'contexts/Api';
@@ -15,8 +17,6 @@ import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit } from 'Utils';
-import { ButtonRowWrapper } from 'Wrappers';
 import { BondedChart } from '../../../library/BarChart/BondedChart';
 
 export const ManageBond = () => {
@@ -82,7 +82,11 @@ export const ManageBond = () => {
             iconLeft={faLockOpen}
             marginRight
             onClick={() =>
-              openModalWith('UnlockChunks', { bondFor: 'nominator' }, 'small')
+              openModalWith(
+                'UnlockChunks',
+                { bondFor: 'nominator', disableWindowResize: true },
+                'small'
+              )
             }
             text={String(totalUnlockChuncks ?? 0)}
           />

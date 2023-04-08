@@ -6,10 +6,6 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
-
-  h3 {
-    margin-bottom: 0;
-  }
 `;
 
 export const StakingAccount = styled.div<{ last: boolean }>`
@@ -32,7 +28,7 @@ export const Section = styled.div`
 
   > div {
     flex: 1;
-    background: white;
+    background: var(--text-color-primary);
     border-radius: 0.75rem;
     margin-right: 1rem;
     padding: 0 1rem;

@@ -1,7 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { TIPS_CONFIG } from 'config/tips';
+import { setStateWithRef } from '@polkadotcloud/utils';
+import { TipsConfig } from 'config/tips';
 import { TipsThresholdMedium, TipsThresholdSmall } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -15,7 +16,6 @@ import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
-import { setStateWithRef } from 'Utils';
 import { Items } from './Items';
 import { PageToggle } from './PageToggle';
 import { Syncing } from './Syncing';
@@ -132,7 +132,7 @@ export const Tips = () => {
   }
 
   // filter tips relevant to connected account.
-  let items = TIPS_CONFIG.filter((i: AnyJson) => segments.includes(i.s));
+  let items = TipsConfig.filter((i: AnyJson) => segments.includes(i.s));
 
   items = items.map((i: any) => {
     const { id } = i;

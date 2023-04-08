@@ -91,10 +91,6 @@ export const LargeItemWrapper = styled.div`
       display: flex;
       flex-flow: row wrap;
       align-items: center;
-
-      h3 {
-        margin: 0;
-      }
     }
     svg {
       color: var(--network-color-primary);

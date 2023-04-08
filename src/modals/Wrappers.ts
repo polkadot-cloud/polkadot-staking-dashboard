@@ -66,6 +66,8 @@ export const ContentWrapper = styled.div`
   position: relative;
 
   h2 {
+    margin: 1rem 0;
+
     &.unbounded {
       font-family: 'Unbounded';
     }
@@ -103,7 +105,7 @@ export const ContentWrapper = styled.div`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    transition: all 0.15s;
+    transition: all var(--transition-duration);
     width: 100%;
 
     &:last-child {
@@ -179,7 +181,6 @@ export const FooterWrapper = styled.div`
   h3 {
     color: var(--text-color-secondary);
     opacity: 0.5;
-    margin: 0;
     position: relative;
     top: 1.25rem;
     &.active {
@@ -244,6 +245,7 @@ export const CustomHeaderWrapper = styled.div`
   flex-flow: row wrap;
   align-items: center;
   margin: 0.5rem 0;
+  position: relative;
 
   h1 {
     color: var(--text-color-primary);
@@ -254,6 +256,16 @@ export const CustomHeaderWrapper = styled.div`
     align-items: center;
     > button {
       margin-left: 1.25rem;
+    }
+  }
+
+  .closeModal {
+    position: absolute;
+    top: 0rem;
+    right: 1.5rem;
+    opacity: 0.25;
+    &:hover {
+      opacity: 1;
     }
   }
 `;

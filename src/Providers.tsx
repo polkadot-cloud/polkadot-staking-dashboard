@@ -1,8 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { Entry } from '@polkadotcloud/core-ui';
+import { Router } from 'Router';
 import { BalancesProvider } from 'contexts/Accounts/Balances';
 import { LedgersProvider } from 'contexts/Accounts/Ledgers';
+import { ProxiesProvider } from 'contexts/Accounts/Proxies';
 import { APIProvider, useApi } from 'contexts/Api';
 import { ConnectProvider } from 'contexts/Connect';
 import { ExtensionsProvider } from 'contexts/Extensions';
@@ -30,23 +33,21 @@ import { SubscanProvider } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
 import { TooltipProvider } from 'contexts/Tooltip';
 import { TransferOptionsProvider } from 'contexts/TransferOptions';
-import { TxFeesProvider } from 'contexts/TxFees';
+import { TxMetaProvider } from 'contexts/TxMeta';
 import { UIProvider } from 'contexts/UI';
 import { ValidatorsProvider } from 'contexts/Validators';
 import { withProviders } from 'library/Hooks';
-import { Router } from 'Router';
 import { ThemeProvider } from 'styled-components';
-import { EntryWrapper as Wrapper } from 'Wrappers';
 
-// `polkadot-dashboard-ui` theme classes are inserted here.
+// `@polkadotcloud/core-ui` theme classes are inserted here.
 export const WrappedRouter = () => {
   const { mode } = useTheme();
   const { network } = useApi();
 
   return (
-    <Wrapper className={`theme-${network.name} theme-${mode}`}>
+    <Entry mode={mode} network={network.name}>
       <Router />
-    </Wrapper>
+    </Entry>
   );
 };
 
@@ -71,6 +72,7 @@ export const Providers = withProviders(
   HelpProvider,
   NetworkMetricsProvider,
   IdentitiesProvider,
+  ProxiesProvider,
   BalancesProvider,
   LedgersProvider,
   StakingProvider,
@@ -89,7 +91,7 @@ export const Providers = withProviders(
   MenuProvider,
   TooltipProvider,
   NotificationsProvider,
-  TxFeesProvider,
+  TxMetaProvider,
   ExtrinsicsProvider,
   ModalProvider,
   OverlayProvider,

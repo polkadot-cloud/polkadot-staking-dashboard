@@ -14,7 +14,7 @@ export const CardsWrapper = styled(motion.div)`
 export const AccountWrapper = styled.div`
   width: 100%;
   margin: 0.5rem 0 0 0;
-  transition: transform 0.1s;
+  transition: transform var(--transition-duration);
 
   &:hover {
     transform: scale(1.006);
@@ -41,6 +41,12 @@ export const AccountWrapper = styled.div`
       align-items: center;
       padding: 0 0.25rem;
 
+      &.label {
+        font-size: 0.85rem;
+        display: flex;
+        align-items: flex-end;
+      }
+
       &:first-child {
         flex-shrink: 1;
         overflow: hidden;
@@ -49,7 +55,7 @@ export const AccountWrapper = styled.div`
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
-          transition: color 0.15s;
+          transition: color var(--transition-duration);
         }
       }
 

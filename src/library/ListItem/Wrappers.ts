@@ -58,6 +58,7 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
 export const Labels = styled.div`
   display: flex;
   justify-content: flex-end;
+  font-size: 0.85rem;
   align-items: center;
   overflow: hidden;
   flex: 1 1 100%;
@@ -87,6 +88,8 @@ export const Labels = styled.div`
     display: flex;
     align-items: center;
     margin: 0 0.2rem;
+    font-size: inherit;
+
     @media (min-width: ${SmallFontSizeMaxWidth}px) {
       margin: 0 0.2rem;
       &.pool {
@@ -186,7 +189,6 @@ export const ValidatorStatusWrapper = styled.div<{ status: string }>`
     color: ${(props) =>
       props.status === 'active' ? 'green' : 'var(--text-color-secondary)'};
     opacity: ${(props) => (props.status === 'active' ? 0.8 : 0.5)};
-    margin: 0;
     display: flex;
     overflow: hidden;
     text-overflow: ellipsis;

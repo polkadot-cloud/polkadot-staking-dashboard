@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonInvertRounded } from '@polkadotcloud/dashboard-ui';
+import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useApi } from 'contexts/Api';
@@ -16,8 +16,8 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CustomHeaderWrapper, PaddingWrapper } from '../Wrappers';
 import { AccountButton } from './Account';
-import type { AccountNominating } from './types';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
+import type { AccountNominating } from './types';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');
@@ -60,7 +60,7 @@ export const Accounts = () => {
       // account is a stash if they have an active `staking` lock
       const activeLocks = locks.find((l) => {
         const { id } = l;
-        return id.trim() === 'staking';
+        return id === 'staking';
       });
       if (activeLocks !== undefined) {
         stashes.push(account.address);
@@ -116,15 +116,14 @@ export const Accounts = () => {
   return (
     <PaddingWrapper>
       <CustomHeaderWrapper>
-        <h1>
-          {t('accounts')}
-          <ButtonInvertRounded
-            text={t('goToConnect')}
-            iconLeft={faChevronLeft}
-            iconTransform="shrink-3"
-            onClick={() => replaceModalWith('Connect', {}, 'large')}
-          />
-        </h1>
+        <h1>{t('accounts')}</h1>
+        <ButtonPrimaryInvert
+          text={t('goToConnect')}
+          iconLeft={faChevronLeft}
+          iconTransform="shrink-3"
+          onClick={() => replaceModalWith('Connect', {}, 'large')}
+          marginLeft
+        />
       </CustomHeaderWrapper>
       {activeAccount ? (
         <>
@@ -148,7 +147,7 @@ export const Accounts = () => {
         <AccountWrapper>
           <div>
             <div>
-              <h3>{t('noActiveAccount')}</h3>
+              <h4>{t('noActiveAccount')}</h4>
             </div>
             <div />
           </div>

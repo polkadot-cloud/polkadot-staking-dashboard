@@ -96,7 +96,6 @@ export const TitleWrapper = styled.div`
         align-items: center;
         font-family: 'Unbounded', 'sans-serif', sans-serif;
         font-size: 1.3rem;
-        margin: 0;
 
         > button {
           margin-left: 0.85rem;
@@ -133,7 +132,7 @@ export const FilterListButton = styled.button<{ active: boolean }>`
   border-radius: 1rem;
   padding: 0rem 1rem;
   margin: 1rem 0;
-  transition: border 0.1s;
+  transition: border var(--transition-duration);
 
   h4 {
     color: ${(props) =>
@@ -141,8 +140,7 @@ export const FilterListButton = styled.button<{ active: boolean }>`
         ? 'var(--network-color-stroke)'
         : 'var(--text-color-secondary)'};
     font-variation-settings: 'wght' 560;
-    transition: color 0.1s;
-    margin: 0;
+    transition: color var(--transition-duration);
   }
 
   svg {
@@ -151,7 +149,7 @@ export const FilterListButton = styled.button<{ active: boolean }>`
         ? 'var(--network-color-stroke)'
         : 'var(--text-color-secondary)'};
     opacity: ${(props) => (props.active ? 1 : 0.7)};
-    transition: color 0.1s;
+    transition: color var(--transition-duration);
     margin-left: 0.2rem;
     margin-right: 0.9rem;
   }

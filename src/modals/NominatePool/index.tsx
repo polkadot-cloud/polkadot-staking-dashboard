@@ -1,13 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { useTxFees } from 'contexts/TxFees';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Action } from 'library/Modal/Action';
@@ -24,7 +21,6 @@ export const NominatePool = () => {
   const { activeAccount, accountHasSigner } = useConnect();
   const { selectedActivePool, isOwner, isNominator, targets } =
     useActivePools();
-  const { txFeesValid } = useTxFees();
   const { nominations } = targets;
 
   // valid to submit transaction
@@ -50,7 +46,7 @@ export const NominatePool = () => {
     return tx;
   };
 
-  const { submitTx, submitting } = useSubmitExtrinsic({
+  const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: valid,
@@ -63,7 +59,7 @@ export const NominatePool = () => {
   // warnings
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push(t('readOnly'));
+    warnings.push(t('readOnlyCannotSign'));
   }
   if (!nominations.length) {
     warnings.push(t('noNominationsSet'));
@@ -87,24 +83,7 @@ export const NominatePool = () => {
         <Action text={t('haveNomination', { count: nominations.length })} />
         <p>{t('onceSubmitted')}</p>
       </PaddingWrapper>
-      <SubmitTx
-        buttons={[
-          <ButtonSubmit
-            key="button_submit"
-            text={`${submitting ? t('submitting') : t('submit')}`}
-            iconLeft={faArrowAltCircleUp}
-            iconTransform="grow-2"
-            onClick={() => submitTx()}
-            disabled={
-              !valid ||
-              submitting ||
-              warnings.length > 0 ||
-              !accountHasSigner(activeAccount) ||
-              !txFeesValid
-            }
-          />,
-        ]}
-      />
+      <SubmitTx valid={valid && warnings.length === 0} {...submitExtrinsic} />
     </>
   );
 };

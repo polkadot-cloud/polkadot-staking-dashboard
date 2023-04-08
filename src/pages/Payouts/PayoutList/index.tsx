@@ -3,6 +3,7 @@
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { clipAddress, isNotZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -24,9 +25,8 @@ import { locales } from 'locale';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnySubscan } from 'types';
-import { clipAddress, isNotZero, planckToUnit } from 'Utils';
-import type { PayoutListProps } from '../types';
 import { ItemWrapper } from '../Wrappers';
+import type { PayoutListProps } from '../types';
 import { PayoutListProvider, usePayoutList } from './context';
 
 export const PayoutListInner = ({
@@ -72,7 +72,10 @@ export const PayoutListInner = ({
   const pageStart = pageEnd - (ListItemsPerPage - 1);
 
   // render batch
-  const batchEnd = renderIteration * ListItemsPerBatch - 1;
+  const batchEnd = Math.min(
+    renderIteration * ListItemsPerBatch - 1,
+    ListItemsPerPage
+  );
 
   // refetch list when list changes
   useEffect(() => {

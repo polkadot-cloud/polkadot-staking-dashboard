@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { rmCommas, setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import type {
   Balances,
@@ -11,7 +12,6 @@ import { useConnect } from 'contexts/Connect';
 import type { ImportedAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
-import { rmCommas, setStateWithRef } from 'Utils';
 import * as defaults from './defaults';
 
 export const BalancesContext = React.createContext<BalancesContextInterface>(
@@ -107,7 +107,7 @@ export const BalancesProvider = ({
         [api.query.staking.bonded, address],
         [api.query.staking.nominators, address],
       ],
-      async ([{ data }, locks, bonded, nominations]): Promise<void> => {
+      async ([{ data, nonce }, locks, bonded, nominations]): Promise<void> => {
         const newAccount: Balances = {
           address,
         };
@@ -120,6 +120,9 @@ export const BalancesProvider = ({
           0
         );
 
+        // set the account nonce
+        newAccount.nonce = nonce.toNumber();
+
         // set account balances to context
         newAccount.balance = {
           free,
@@ -130,10 +133,13 @@ export const BalancesProvider = ({
         };
 
         // get account locks
-        const newLocks = locks.toHuman();
-        for (let i = 0; i < newLocks.length; i++) {
-          newLocks[i].amount = new BigNumber(rmCommas(newLocks[i].amount));
-        }
+        const newLocks = locks.toHuman().map((l: AnyApi) => {
+          return {
+            ...l,
+            amount: new BigNumber(rmCommas(l.amount)),
+            id: l.id.trim(),
+          };
+        });
         newAccount.locks = newLocks;
 
         // set account bonded (controller) or null

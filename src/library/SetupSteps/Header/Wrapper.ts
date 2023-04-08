@@ -36,7 +36,6 @@ export const Wrapper = styled.div`
   }
 
   h2 {
-    margin: 0;
     padding: 0.3rem 0;
     display: flex;
     flex-flow: row wrap;

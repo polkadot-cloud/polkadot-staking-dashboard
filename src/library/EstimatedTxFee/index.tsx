@@ -1,20 +1,20 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { planckToUnit } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
-import { TxFeesContext, useTxFees } from 'contexts/TxFees';
-import type { EstimatedFeeContext } from 'contexts/TxFees/types';
+import { TxMetaContext, useTxMeta } from 'contexts/TxMeta';
+import type { TxMetaContextInterface } from 'contexts/TxMeta/types';
 import type { Context } from 'react';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit } from 'Utils';
-import type { EstimatedTxFeeProps } from './types';
 import { Wrapper } from './Wrapper';
+import type { EstimatedTxFeeProps } from './types';
 
 export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
   const { t } = useTranslation('library');
   const { unit, units } = useApi().network;
-  const { txFees, resetTxFees } = useTxFees();
+  const { txFees, resetTxFees } = useTxMeta();
 
   useEffect(() => () => resetTxFees(), []);
 
@@ -40,15 +40,15 @@ export const EstimatedTxFeeInner = ({ format }: EstimatedTxFeeProps) => {
 };
 
 export class EstimatedTxFee extends React.Component<EstimatedTxFeeProps> {
-  static contextType: Context<EstimatedFeeContext> = TxFeesContext;
+  static contextType: Context<TxMetaContextInterface> = TxMetaContext;
 
   componentDidMount(): void {
-    const { resetTxFees } = this.context as EstimatedFeeContext;
+    const { resetTxFees } = this.context as TxMetaContextInterface;
     resetTxFees();
   }
 
   componentWillUnmount(): void {
-    const { resetTxFees } = this.context as EstimatedFeeContext;
+    const { resetTxFees } = this.context as TxMetaContextInterface;
     resetTxFees();
   }
 

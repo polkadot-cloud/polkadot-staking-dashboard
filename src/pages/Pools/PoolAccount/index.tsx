@@ -3,6 +3,7 @@
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { clipAddress, remToUnit } from '@polkadotcloud/utils';
 import { useIdentities } from 'contexts/Identities';
 import { useNotifications } from 'contexts/Notifications';
 import type { NotificationText } from 'contexts/Notifications/types';
@@ -10,7 +11,6 @@ import { motion } from 'framer-motion';
 import { Identicon } from 'library/Identicon';
 import { getIdentityDisplay } from 'library/ValidatorList/Validator/Utils';
 import { useTranslation } from 'react-i18next';
-import { clipAddress, remToUnit } from 'Utils';
 import type { PoolAccountProps } from '../types';
 import { Wrapper } from './Wrapper';
 

@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -10,10 +11,9 @@ import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit, unitToPlanck } from 'Utils';
-import type { BondFeedbackProps } from '../types';
 import { Warning } from '../Warning';
 import { Spacer } from '../Wrappers';
+import type { BondFeedbackProps } from '../types';
 import { BondInput } from './BondInput';
 
 export const BondFeedback = ({
@@ -43,7 +43,10 @@ export const BondFeedback = ({
   const defaultBondStr = defaultBond ? String(defaultBond) : '';
 
   // get bond options for either staking or pooling.
-  const { freeBalance: freeBalanceBn } = allTransferOptions;
+  const freeBalanceBn =
+    bondFor === 'nominator'
+      ? allTransferOptions.nominate.totalAdditionalBond
+      : allTransferOptions.pool.totalAdditionalBond;
 
   // if we are bonding, subtract tx fees from bond amount
   const freeBondAmount = !disableTxFeeUpdate

@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ButtonInvertRounded } from '@polkadotcloud/dashboard-ui';
-import { HELP_CONFIG } from 'config/help';
+import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
+import { camelize } from '@polkadotcloud/utils';
+import { HelpConfig } from 'config/help';
 import { useHelp } from 'contexts/Help';
 import type {
   DefinitionWithKeys,
@@ -16,7 +17,6 @@ import { useAnimation } from 'framer-motion';
 import { useFillVariables } from 'library/Hooks/useFillVariables';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { camelize } from 'Utils';
 import { Definition } from './Items/Definition';
 import { External } from './Items/External';
 import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
@@ -63,7 +63,7 @@ export const Help = () => {
 
   if (definition) {
     // get items for active category
-    meta = Object.values(HELP_CONFIG).find((c: HelpItem) =>
+    meta = Object.values(HelpConfig).find((c: HelpItem) =>
       c?.definitions?.find((d: string) => d === definition)
     );
   } else {
@@ -71,7 +71,7 @@ export const Help = () => {
     let _definitions: Array<string> = [];
     let _external: ExternalItems = [];
 
-    Object.values(HELP_CONFIG).forEach((c: HelpItem) => {
+    Object.values(HelpConfig).forEach((c: HelpItem) => {
       _definitions = _definitions.concat([...(c.definitions || [])]);
       _external = _external.concat([...(c.external || [])]);
     });
@@ -156,14 +156,14 @@ export const Help = () => {
           <ContentWrapper>
             <div className="buttons">
               {definition && (
-                <ButtonInvertRounded
+                <ButtonPrimaryInvert
                   lg
                   text={t('modal.allResources')}
                   iconLeft={faChevronLeft}
                   onClick={() => setDefinition(null)}
                 />
               )}
-              <ButtonInvertRounded
+              <ButtonPrimaryInvert
                 lg
                 text={t('modal.close')}
                 iconLeft={faTimes}

@@ -3,12 +3,12 @@
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { clipAddress, remToUnit } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { useNotifications } from 'contexts/Notifications';
 import type { NotificationText } from 'contexts/Notifications/types';
 import { Identicon } from 'library/Identicon';
 import { useTranslation } from 'react-i18next';
-import { clipAddress, remToUnit } from 'Utils';
 import { ActiveAccounWrapper } from './Wrappers';
 
 export const ActiveAccount = () => {

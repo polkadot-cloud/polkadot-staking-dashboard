@@ -27,8 +27,8 @@ import { FavoriteValidator } from '../../ListItem/Labels/FavoriteValidator';
 import { Identity } from '../../ListItem/Labels/Identity';
 import { Oversubscribed } from '../../ListItem/Labels/Oversubscribed';
 import { Select } from '../../ListItem/Labels/Select';
-import type { DefaultProps } from './types';
 import { getIdentityDisplay } from './Utils';
+import type { DefaultProps } from './types';
 
 export const Default = ({
   validator,
@@ -69,7 +69,7 @@ export const Default = ({
   const posRef = useRef(null);
   const menuItems = [
     {
-      icon: <FontAwesomeIcon icon={faChartLine} />,
+      icon: <FontAwesomeIcon icon={faChartLine} transform="shrink-3" />,
       wrap: null,
       title: `${t('viewMetrics')}`,
       cb: () => {
@@ -84,7 +84,7 @@ export const Default = ({
       },
     },
     {
-      icon: <FontAwesomeIcon icon={faCopy} />,
+      icon: <FontAwesomeIcon icon={faCopy} transform="shrink-3" />,
       wrap: null,
       title: `${t('copyAddress')}`,
       cb: () => {

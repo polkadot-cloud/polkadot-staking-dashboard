@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { extractUrlValue, varToUrlHash } from '@polkadotcloud/utils';
 import { DefaultLocale } from 'consts';
 import type { AnyApi, AnyJson } from 'types';
-import { extractUrlValue, varToUrlHash } from 'Utils';
 import { availableLanguages, fallbackResources, lngNamespaces } from '.';
 
 // Gets the active language
