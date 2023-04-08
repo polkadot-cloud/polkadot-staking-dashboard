@@ -109,8 +109,6 @@ export const InflationWrapper = styled.div`
 
           h2 {
             color: var(--network-color-primary);
-            margin-top: 0rem;
-            margin-bottom: 0;
           }
           h4 {
             color: var(--text-color-secondary);
@@ -118,7 +116,6 @@ export const InflationWrapper = styled.div`
             flex-flow: row wrap;
             align-items: center;
             margin-top: 0.45rem;
-            margin-bottom: 0;
           }
         }
 

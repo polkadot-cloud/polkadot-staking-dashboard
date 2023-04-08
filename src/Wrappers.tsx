@@ -134,7 +134,6 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
       transform: scale(0.75);
     }
     transition: all var(--transition-duration);
-    margin: 0;
   }
 
   .tabs {
@@ -214,13 +213,6 @@ export const PageRowWrapper = styled.div<PageRowWrapperProps>`
   flex-shrink: 0;
   flex-flow: row wrap;
   width: 100%;
-  /* kill heading padding, already applied to wrapper */
-  h1,
-  h2,
-  h3,
-  h4 {
-    margin-top: 0;
-  }
 `;
 
 /* RowPrimaryWrapper

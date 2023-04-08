@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
   h2 {
     color: var(--text-color-secondary);
     margin-top: 2rem;
+    margin-bottom: 1rem;
   }
 `;
 export const ItemsWrapper = styled(motion.div)`
@@ -85,9 +86,6 @@ export const ItemWrapper = styled(motion.div)`
         margin: 0.5rem 1rem 0.5rem 0;
         @media (min-width: ${VERTICAL_THRESHOLD + 1}px) {
           margin: 0.25rem 1rem 0.25rem 0;
-        }
-        > h4 {
-          margin: 0;
         }
         &:disabled {
           cursor: default;

@@ -69,7 +69,7 @@ export const Default = ({
   const posRef = useRef(null);
   const menuItems = [
     {
-      icon: <FontAwesomeIcon icon={faChartLine} />,
+      icon: <FontAwesomeIcon icon={faChartLine} transform="shrink-3" />,
       wrap: null,
       title: `${t('viewMetrics')}`,
       cb: () => {
@@ -84,7 +84,7 @@ export const Default = ({
       },
     },
     {
-      icon: <FontAwesomeIcon icon={faCopy} />,
+      icon: <FontAwesomeIcon icon={faCopy} transform="shrink-3" />,
       wrap: null,
       title: `${t('copyAddress')}`,
       cb: () => {

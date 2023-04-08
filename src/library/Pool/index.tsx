@@ -74,7 +74,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
 
   // add view pool nominations button to menu
   menuItems.push({
-    icon: <FontAwesomeIcon icon={faProjectDiagram} />,
+    icon: <FontAwesomeIcon icon={faProjectDiagram} transform="shrink-3" />,
     wrap: null,
     title: `${t('viewPoolNominations')}`,
     cb: () => {
@@ -91,7 +91,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
 
   // add copy pool address button to menu
   menuItems.push({
-    icon: <FontAwesomeIcon icon={faCopy} />,
+    icon: <FontAwesomeIcon icon={faCopy} transform="shrink-3" />,
     wrap: null,
     title: t('copyPoolAddress'),
     cb: () => {

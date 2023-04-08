@@ -96,9 +96,6 @@ export const ExtensionInner = styled.div`
       margin-right: 0.5rem;
     }
   }
-  h5 {
-    margin: 0;
-  }
   p {
     color: var(--text-color-secondary);
     padding: 0;
