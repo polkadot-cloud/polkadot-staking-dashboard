@@ -139,15 +139,15 @@
       "ledgerRejectedTransaction": [
         "Ledger拒绝交易",
         [
-          "The transaction was rejected on the Ledger device and will not be submitted.",
-          "Submit a transaction by approving it on the Ledger device."
+          "己在Ledger设备上拒绝交易, 该交易不会被上交.",
+          "请在Ledger设备上通过批准交易来提交交易."
         ]
       ],
       "ledgerRequestTimeout": [
         "Ledger请求超时",
         [
-          "Timeout errors can occur when the Ledger device is busy, or when an operation fails to complete in time.",
-          "Try performing the operation again, and if the error persists, try restarting the Ledger device."
+          "当Ledger设备繁忙时, 或者当操作未能及时完成时, 可能会发生超时报错.",
+          "请尝试再次执行该操作, 如果错误仍然存在, 请尝试重新启动Ledger设备."
         ]
       ],
       "lockedBalance": [
@@ -216,8 +216,8 @@
       "openAppOnLedger": [
         "在Ledger上打开相应的App",
         [
-          "This message occurs when the {NETWORK_NAME} Ledger app is not currently open on the connected device.",
-          "Open the {NETWORK_NAME} app on the Ledger device and try again."
+          "当{NETWORK_NAME} Ledger App当前未在连接的设备上打开时, 会出现此消息.",
+          "请在Ledger设备上打开 {NETWORK_NAME} App 然后重试."
         ]
       ],
       "overSubscribed": [
@@ -324,8 +324,8 @@
       "wrongTransaction": [
         "错误交易",
         [
-          "This error occurs when a Ledger device signed or is in the process of signing a different transaction than the currently active one on the dashboard.",
-          "Ensure there are no outstanding transactions on the Ledger device and try again."
+          "此错误发生原因为当Ledger设备正在签名或签名后的交易与Staking Dashboard上当前活动交易不同.",
+          "请确保Ledger设备上没有未完成的交易, 然后重试."
         ]
       ],
       "yourBalance": [
