@@ -5,6 +5,7 @@ import { usePlugins } from 'contexts/Plugins';
 import { Title } from 'library/Modal/Title';
 import { StatusButton } from 'library/StatusButton';
 import { useTranslation } from 'react-i18next';
+import { ContentWrapper } from '../Networks/Wrapper';
 import { PaddingWrapper } from '../Wrappers';
 
 export const Settings = () => {
@@ -18,33 +19,35 @@ export const Settings = () => {
     <>
       <Title title={t('settings')} />
       <PaddingWrapper>
-        <h4>{t('togglePlugins')}</h4>
-        <StatusButton
-          checked={plugins.includes('subscan')}
-          label="Subscan API"
-          onClick={() => {
-            togglePlugin('subscan');
-          }}
-        />
-        {!DISABLE_FIAT && (
+        <ContentWrapper>
+          <h4>{t('togglePlugins')}</h4>
           <StatusButton
-            checked={plugins.includes('binance_spot')}
-            label={t('binanceApi')}
+            checked={plugins.includes('subscan')}
+            label="Subscan API"
             onClick={() => {
-              togglePlugin('binance_spot');
+              togglePlugin('subscan');
             }}
           />
-        )}
+          {!DISABLE_FIAT && (
+            <StatusButton
+              checked={plugins.includes('binance_spot')}
+              label={t('binanceApi')}
+              onClick={() => {
+                togglePlugin('binance_spot');
+              }}
+            />
+          )}
 
-        <h4>{t('toggleFeatures')}</h4>
+          <h4>{t('toggleFeatures')}</h4>
 
-        <StatusButton
-          checked={plugins.includes('tips')}
-          label={t('dashboardTips')}
-          onClick={() => {
-            togglePlugin('tips');
-          }}
-        />
+          <StatusButton
+            checked={plugins.includes('tips')}
+            label={t('dashboardTips')}
+            onClick={() => {
+              togglePlugin('tips');
+            }}
+          />
+        </ContentWrapper>
       </PaddingWrapper>
     </>
   );

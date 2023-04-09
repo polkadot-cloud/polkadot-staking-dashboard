@@ -1,7 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp } from '@polkadotcloud/dashboard-ui';
+import { ButtonHelp } from '@polkadotcloud/core-ui';
+import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useBalances } from 'contexts/Accounts/Balances';
 import type { Lock } from 'contexts/Accounts/Balances/types';
@@ -15,7 +16,6 @@ import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useTranslation } from 'react-i18next';
-import { greaterThanZero, planckToUnit } from 'Utils';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
@@ -64,7 +64,7 @@ export const BalanceChart = () => {
 
   // check account non-staking locks
   const locks = getAccountLocks(activeAccount);
-  const locksStaking = locks.find((l: Lock) => l.id.trim() === 'staking');
+  const locksStaking = locks.find((l: Lock) => l.id === 'staking');
   const lockStakingAmount = locksStaking
     ? locksStaking.amount
     : new BigNumber(0);

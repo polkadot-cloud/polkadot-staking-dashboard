@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-live authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonMono, ButtonMonoInvert } from '@polkadotcloud/dashboard-ui';
+import { ButtonMono, ButtonMonoInvert } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
@@ -43,7 +43,7 @@ export const Reset = ({ removeLedgerAddress }: AnyJson) => {
       <div className="footer">
         <ButtonMonoInvert text={t('cancel')} onClick={() => setStatus(0)} />
         <ButtonMono
-          text="Confirm Reset"
+          text={t('confirmReset')}
           onClick={() => {
             removeAccounts();
             setStatus(0);

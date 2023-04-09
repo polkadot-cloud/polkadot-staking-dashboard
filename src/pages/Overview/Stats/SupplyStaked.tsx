@@ -1,13 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
 import { useTranslation } from 'react-i18next';
-import { planckToUnit } from 'Utils';
 
 export const SupplyStakedStat = () => {
   const { t } = useTranslation('pages');

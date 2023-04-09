@@ -132,9 +132,6 @@ export const Wrapper = styled.div<{
         padding: 1.25rem 1.35rem;
         overflow: hidden;
 
-        h3 {
-          margin: 0;
-        }
         p {
           margin: 0.4rem 0 0 0;
         }

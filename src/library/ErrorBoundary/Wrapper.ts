@@ -22,7 +22,12 @@ export const Wrapper = styled.div`
     color: var(--text-color-secondary);
   }
 
+  h2 {
+    margin: 1rem 0;
+  }
+
   h3 {
+    margin: 1rem 0;
     &.with-margin {
       margin-top: 10rem;
     }
@@ -32,9 +37,6 @@ export const Wrapper = styled.div`
     }
   }
 
-  h4 {
-    margin-top: 0;
-  }
   button {
     color: var(--text-color-secondary);
     font-size: 1.25rem;

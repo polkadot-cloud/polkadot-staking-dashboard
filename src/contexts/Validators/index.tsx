@@ -7,7 +7,7 @@ import {
   rmCommas,
   setStateWithRef,
   shuffle,
-} from 'Utils';
+} from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { ValidatorCommunity } from 'config/validators';
 import type {

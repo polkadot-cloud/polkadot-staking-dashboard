@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { setStateWithRef } from 'Utils';
+import { setStateWithRef } from '@polkadotcloud/utils';
 import { useTxMeta } from 'contexts/TxMeta';
 import React, { useEffect, useRef, useState } from 'react';
 import { defaultModalContext } from './defaults';
@@ -17,11 +17,12 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const { notEnoughFunds } = useTxMeta();
 
   // Store the modal configuration options.
-  const [options, setOptions] = useState<ModalOptions>({
+  const [options, setOptionsState] = useState<ModalOptions>({
     modal: '',
     config: {},
     size: 'large',
   });
+  const optionsRef = useRef(options);
 
   // Store the modal's current height.
   const [height, setHeight] = useState<number>(0);
@@ -36,6 +37,10 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     setResize();
   }, [statusRef.current, notEnoughFunds]);
+
+  const setOptions = (o: ModalOptions) => {
+    setStateWithRef(o, setOptionsState, optionsRef);
+  };
 
   const setStatus = (newStatus: number) => {
     setHeight(newStatus === 0 ? 0 : height);
@@ -94,9 +99,9 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
         setResize,
         height,
         resize,
-        modal: options.modal,
-        config: options.config,
-        size: options.size,
+        modal: optionsRef.current.modal,
+        config: optionsRef.current.config,
+        size: optionsRef.current.size,
       }}
     >
       {children}

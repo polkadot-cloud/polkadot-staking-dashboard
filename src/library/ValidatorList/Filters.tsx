@@ -7,10 +7,7 @@ import {
   faCheck,
   faFilterCircleXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import {
-  ButtonInvertRounded,
-  ButtonSecondary,
-} from '@polkadotcloud/dashboard-ui';
+import { ButtonPrimaryInvert, ButtonSecondary } from '@polkadotcloud/core-ui';
 import { useFilters } from 'contexts/Filters';
 import { useOverlay } from 'contexts/Overlay';
 import { Container } from 'library/Filter/Container';
@@ -41,7 +38,7 @@ export const Filters = () => {
   return (
     <>
       <div style={{ marginBottom: '1.1rem' }}>
-        <ButtonInvertRounded
+        <ButtonPrimaryInvert
           text={t('order')}
           marginRight
           iconLeft={faArrowDownWideShort}
@@ -49,7 +46,7 @@ export const Filters = () => {
             openOverlayWith(<OrderValidators />);
           }}
         />
-        <ButtonInvertRounded
+        <ButtonPrimaryInvert
           text={t('filter')}
           marginRight
           iconLeft={faFilterCircleXmark}

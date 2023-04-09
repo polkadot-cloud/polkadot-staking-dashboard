@@ -3,8 +3,8 @@
 
 import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
-import { planckToUnit } from 'Utils';
+import { ButtonSubmit } from '@polkadotcloud/core-ui';
+import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -59,8 +59,8 @@ export const Overview = forwardRef(
     };
 
     return (
-      <ContentWrapper ref={ref}>
-        <div className="padding">
+      <ContentWrapper>
+        <div className="padding" ref={ref}>
           <StatsWrapper>
             <StatWrapper>
               <div className="inner">

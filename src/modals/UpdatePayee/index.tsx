@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { isValidAddress } from '@polkadotcloud/utils';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -45,7 +46,10 @@ export const UpdatePayee = () => {
 
   // update setup progress with payee config.
   const handleChangeDestination = (destination: PayeeOptions) => {
-    setSelected({ destination, account });
+    setSelected({
+      destination,
+      account: isValidAddress(account || '') ? account : null,
+    });
   };
 
   // update setup progress with payee account.
@@ -108,9 +112,6 @@ export const UpdatePayee = () => {
         : DefaultSelected
     );
   }, []);
-
-  // Ensure selected item is valid on change.
-  useEffect(() => {}, [selected]);
 
   return (
     <>

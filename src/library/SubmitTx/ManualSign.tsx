@@ -5,7 +5,7 @@ import {
   faArrowAltCircleUp,
   faSquarePen,
 } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/dashboard-ui';
+import { ButtonSubmit } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { LedgerAccount } from 'contexts/Connect/types';
@@ -22,6 +22,7 @@ import { useTranslation } from 'react-i18next';
 import type { SubmitProps } from './types';
 
 export const ManualSign = ({
+  uid,
   onSubmit,
   submitting,
   valid,
@@ -39,9 +40,9 @@ export const ManualSign = ({
     handleNewStatusCode,
     isPaired,
     getStatusCodes,
-    getTransport,
     getDefaultMessage,
     setDefaultMessage,
+    handleUnmount,
   } = useLedgerHardware();
   const { activeAccount, accountHasSigner, getAccount } = useConnect();
   const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();
@@ -72,10 +73,21 @@ export const ManualSign = ({
     const { ack, statusCode, body } = response;
 
     if (statusCode === 'SignedPayload') {
-      handleNewStatusCode(ack, statusCode);
-      setTxSignature(body);
+      if (uid !== body.uid) {
+        // UIDs do not match, so this is not the transaction we are waiting for.
+        setDefaultMessage(t('wrongTransaction'));
+        resetStatusCodes();
+        setTxSignature(null);
+      } else {
+        // Important: only set the signature (and therefore trigger the transaction submission) if
+        // UIDs match.
+        handleNewStatusCode(ack, statusCode);
+        setTxSignature(body.sig);
+        resetStatusCodes();
+      }
       setIsExecuting(false);
-      resetStatusCodes();
+    } else {
+      handleNewStatusCode(ack, statusCode);
     }
   };
 
@@ -102,12 +114,7 @@ export const ManualSign = ({
   useEffect(() => {
     return () => {
       isMounted.current = false;
-      resetStatusCodes();
-      setIsExecuting(false);
-      setDefaultMessage(null);
-      if (getTransport()?.device?.opened) {
-        getTransport().device.close();
-      }
+      handleUnmount();
     };
   }, []);
 
@@ -133,7 +140,9 @@ export const ManualSign = ({
                   : statusCodeTitle)
               : fallbackMessage}
           </p>
-        ) : null}
+        ) : (
+          <p>&nbsp;</p>
+        )}
       </div>
       <div>
         {buttons}

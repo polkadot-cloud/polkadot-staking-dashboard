@@ -11,7 +11,6 @@ export type LedgerHardwareContextInterface = {
   transportResponse: AnyJson;
   executeLedgerLoop: (
     appName: string,
-    transport: AnyJson,
     tasks: Array<LedgerTask>,
     options?: AnyJson
   ) => Promise<void>;
@@ -30,6 +29,7 @@ export type LedgerHardwareContextInterface = {
   ledgerAccounts: Array<LedgerAccount>;
   getDefaultMessage: () => MaybeString;
   setDefaultMessage: (s: MaybeString) => void;
+  handleUnmount: () => void;
 };
 
 export interface LedgerResponse {

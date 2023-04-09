@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Entry } from '@polkadotcloud/dashboard-ui';
+import { Entry } from '@polkadotcloud/core-ui';
 import { Router } from 'Router';
 import { BalancesProvider } from 'contexts/Accounts/Balances';
 import { LedgersProvider } from 'contexts/Accounts/Ledgers';
@@ -39,7 +39,7 @@ import { ValidatorsProvider } from 'contexts/Validators';
 import { withProviders } from 'library/Hooks';
 import { ThemeProvider } from 'styled-components';
 
-// `polkadot-dashboard-ui` theme classes are inserted here.
+// `@polkadotcloud/core-ui` theme classes are inserted here.
 export const WrappedRouter = () => {
   const { mode } = useTheme();
   const { network } = useApi();

@@ -10,7 +10,7 @@ import {
   faUserEdit,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { camelize } from 'Utils';
+import { camelize } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
