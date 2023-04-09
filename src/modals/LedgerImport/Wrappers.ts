@@ -34,9 +34,6 @@ export const SplashWrapper = styled.div`
       align-items: center;
       justify-content: center;
       margin-top: 0.35rem;
-      svg {
-        margin-right: 0.3rem;
-      }
     }
 
     h2 {
