@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { clipAddress } from '@polkadotcloud/utils';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -10,7 +11,6 @@ import { useStaking } from 'contexts/Staking';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
-import { clipAddress } from 'Utils';
 
 export const ControllerStatus = () => {
   const { t } = useTranslation('pages');

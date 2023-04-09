@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { rmCommas, setStateWithRef } from 'Utils';
+import { rmCommas, setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import type {
   Balances,
@@ -133,10 +133,13 @@ export const BalancesProvider = ({
         };
 
         // get account locks
-        const newLocks = locks.toHuman();
-        for (let i = 0; i < newLocks.length; i++) {
-          newLocks[i].amount = new BigNumber(rmCommas(newLocks[i].amount));
-        }
+        const newLocks = locks.toHuman().map((l: AnyApi) => {
+          return {
+            ...l,
+            amount: new BigNumber(rmCommas(l.amount)),
+            id: l.id.trim(),
+          };
+        });
         newAccount.locks = newLocks;
 
         // set account bonded (controller) or null

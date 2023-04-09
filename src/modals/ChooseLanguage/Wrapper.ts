@@ -34,14 +34,15 @@ export const LocaleButton = styled.button<any>`
   align-items: center;
   width: 100%;
   border: 1px solid var(--status-success-color-transparent);
+  margin: 0.5rem 0;
   ${(props) =>
     props.connected !== true &&
     `
   border: 1px solid rgba(0,0,0,0);
 `}
+
   h4 {
     color: var(--text-color-secondary);
-    margin: 0;
     &.selected {
       color: var(--status-success-color);
       margin-left: 0.75rem;

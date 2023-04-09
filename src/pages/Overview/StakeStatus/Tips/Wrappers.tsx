@@ -86,7 +86,6 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           width: auto;
           height: 1.85rem;
           max-width: 100%;
-          margin: 0;
           padding: 0.15rem 1.75rem 0rem 0;
           text-align: left;
           font-size: 1.05rem;

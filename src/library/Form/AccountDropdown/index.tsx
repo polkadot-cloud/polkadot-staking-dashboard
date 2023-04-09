@@ -3,7 +3,7 @@
 
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { remToUnit } from 'Utils';
+import { remToUnit } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { Identicon } from 'library/Identicon';
 import { useEffect, useState } from 'react';

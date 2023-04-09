@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { isNotZero, planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -15,7 +16,6 @@ import { SubmitTx } from 'library/SubmitTx';
 import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { isNotZero, planckToUnit, rmCommas } from 'Utils';
 
 export const WithdrawPoolMember = () => {
   const { t } = useTranslation('modals');
@@ -83,7 +83,7 @@ export const WithdrawPoolMember = () => {
         <Action text={`${t('withdraw')} ${totalWithdraw} ${network.unit}`} />
         {!accountHasSigner(activeAccount) ? (
           <WarningsWrapper>
-            <Warning text={t('readOnly')} />
+            <Warning text={t('readOnlyCannotSign')} />
           </WarningsWrapper>
         ) : null}
       </PaddingWrapper>

@@ -3,8 +3,8 @@
 
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import { u8aToBuffer } from '@polkadot/util';
+import { setStateWithRef } from '@polkadotcloud/utils';
 import { newSubstrateApp } from '@zondax/ledger-substrate';
-import { setStateWithRef } from 'Utils';
 import { useApi } from 'contexts/Api';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';

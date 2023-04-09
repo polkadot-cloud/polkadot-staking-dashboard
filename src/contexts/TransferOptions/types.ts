@@ -15,6 +15,7 @@ export interface TransferOptions {
     totalUnlocking: BigNumber;
     totalUnlocked: BigNumber;
     totalPossibleBond: BigNumber;
+    totalAdditionalBond: BigNumber;
     totalUnlockChuncks: number;
   };
   pool: {
@@ -22,6 +23,7 @@ export interface TransferOptions {
     totalUnlocking: BigNumber;
     totalUnlocked: BigNumber;
     totalPossibleBond: BigNumber;
+    totalAdditionalBond: BigNumber;
     totalUnlockChuncks: number;
   };
 }
