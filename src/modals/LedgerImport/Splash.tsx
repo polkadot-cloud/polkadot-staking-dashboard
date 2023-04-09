@@ -3,9 +3,7 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonSecondary } from '@polkadotcloud/core-ui';
-import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
-import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
@@ -20,7 +18,6 @@ import { SplashWrapper } from './Wrappers';
 
 export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   const { t } = useTranslation('modals');
-  const { network } = useApi();
   const { replaceModalWith, setStatus } = useModal();
   const {
     getStatusCodes,
@@ -34,7 +31,6 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   const { openHelp } = useHelp();
 
   const statusCodes = getStatusCodes();
-  const { appName } = getLedgerApp(network.name);
 
   const initFetchAddress = async () => {
     const paired = await pairDevice();
@@ -44,11 +40,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     }
   };
 
-  const { title, statusCode } = determineStatusFromCodes(
-    appName,
-    statusCodes,
-    false
-  );
+  const statusCode = determineStatusFromCodes(statusCodes);
   const fallbackMessage = t('checking');
   const feedback = getFeedback();
   const helpKey = feedback?.helpKey;
@@ -97,12 +89,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
 
         <div className="content">
           <h2>
-            {feedback?.message ||
-              (!getIsExecuting() || !statusCodes.length
-                ? fallbackMessage
-                : statusCode === 'TransactionRejected'
-                ? fallbackMessage
-                : title)}
+            {feedback?.message || fallbackMessage}
             {helpKey ? (
               <ButtonHelp
                 marginLeft

@@ -239,12 +239,12 @@ export const LedgerHardwareProvider = ({
     const { deviceModel } = ledgerTransport.current;
     const { id, productName } = deviceModel;
 
-    resetFeedback();
     setTransportResponse({
       ack: 'success',
       statusCode: 'GettingAddress',
       body: null,
     });
+    setFeedback(t('gettingAddress'));
 
     if (!ledgerTransport.current?.device?.opened) {
       await ledgerTransport.current?.device?.open();
@@ -269,6 +269,8 @@ export const LedgerHardwareProvider = ({
     }
 
     if (!(result instanceof Error)) {
+      setFeedback(t('successfullyFetchedAddress'));
+
       return {
         statusCode: 'ReceivedAddress',
         device: { id, productName },
