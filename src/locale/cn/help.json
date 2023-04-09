@@ -136,9 +136,13 @@
           "详情请在其官方网站上查找:ledger.com."
         ]
       ],
-      "ledgerRejectedTransactionOptions": [
-        "Ledger拒绝交易后选项",
+      "ledgerRejectedTransaction": [
+        "Ledger拒绝交易",
         ["您可以再次签署交易或关闭窗口"]
+      ],
+      "legerRequestTimeout": [
+        "Leger请求超时",
+        ["Leger请求超时,请再次尝试连接设备."]
       ],
       "lockedBalance": [
         "锁定余额",
@@ -203,6 +207,10 @@
           "该值和验证人的自我抵押一起形成验证人总抵押数,值得注意的是,该值因为随着提名人在该Session的质押金额给活跃验证人的重新分配,每一个era都会发生变化."
         ]
       ],
+      "openAppOnLedger": [
+        "在Ledger上打开相应的App",
+        ["请确保您已在Ledger设备上打开{NETWORK_NAME} App."]
+      ],
       "overSubscribed": [
         "超额认选",
         [
@@ -259,6 +267,10 @@
           "状态切换人:如果提名池被冻结，可以更改池的状态和踢出（无权限解除绑定/撤回)成员."
         ]
       ],
+      "queuedTransactionRejected": [
+        "等待交易已被拒绝",
+        ["请不要在交易窗口关闭时批准交易."]
+      ],
       "reserveBalance": [
         "储备金额",
         [
@@ -304,6 +316,7 @@
           "作为提名人，您可以选择支持哪个验证人并获得奖励."
         ]
       ],
+      "wrongTransaction": ["错误交易", ["您可能已经签署了历史交易而不是当前交易."]],
       "yourBalance": [
         "余额",
         [

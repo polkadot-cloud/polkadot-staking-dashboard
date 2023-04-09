@@ -2,10 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSecondary } from '@polkadotcloud/core-ui';
+import { ButtonHelp, ButtonSecondary } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
+import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
 import { ReactComponent as LogoSVG } from 'img/ledgerLogo.svg';
@@ -30,6 +31,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     getDefaultMessage,
   } = useLedgerHardware();
   const { setResize } = useModal();
+  const { openHelp } = useHelp();
 
   const statusCodes = getStatusCodes();
   const { appName } = getLedgerApp(network.name);
@@ -49,6 +51,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   );
   const fallbackMessage = t('checking');
   const defaultMessage = getDefaultMessage();
+  const helpKey = defaultMessage[1] || '';
 
   // Initialise listeners for Ledger IO.
   useEffect(() => {
@@ -94,13 +97,21 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
 
         <div className="content">
           <h2>
-            {defaultMessage ||
+            {defaultMessage[0] ||
               (!getIsExecuting() || !statusCodes.length
                 ? fallbackMessage
                 : statusCode === 'TransactionRejected'
                 ? fallbackMessage
                 : title)}
+            {helpKey ? (
+              <ButtonHelp
+                marginLeft
+                onClick={() => openHelp(helpKey)}
+                backgroundSecondary
+              />
+            ) : null}
           </h2>
+
           {!getIsExecuting() ? (
             <>
               <h5>{t('ensureLedgerIsConnected')}</h5>

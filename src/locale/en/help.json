@@ -145,9 +145,13 @@
           "Find more information about Ledger at their official website, ledger.com."
         ]
       ],
-      "ledgerRejectedTransactionOptions": [
-        "Ledger Rejected Transaction Options",
-        ["You can either sign the transaction again or close the window"]
+      "ledgerRejectedTransaction": [
+        "Ledger Rejected Transaction",
+        ["You can either sign the transaction again or close the window."]
+      ],
+      "legerRequestTimeout": [
+        "Leger Request Timeout",
+        ["Leger Request Timeout, Please try to conncect the device again."]
       ],
       "lockedBalance": [
         "Locked Balance",
@@ -218,6 +222,12 @@
           "This value is added to the validator's self stake to form the total stake of the validator. Note that this value changes every era as the bonded funds of nominators are re-distributed to the active validators of that session."
         ]
       ],
+      "openAppOnLedger": [
+        "Open App On Ledger",
+        [
+          "Please make sure you have open the {NETWORK_NAME} App on your Ledger device."
+        ]
+      ],
       "overSubscribed": [
         "Over Subscribed",
         [
@@ -274,6 +284,10 @@
           "State-Toggler: Can change the pool's state and kick (permissionlessly unbond/withdraw) members if the pool is blocked."
         ]
       ],
+      "queuedTransactionRejected": [
+        "Queued Transaction Rejected",
+        ["Transaction was approved when the transaction window is closed."]
+      ],
       "reserveBalance": [
         "Reserve Balance",
         [
@@ -318,6 +332,10 @@
           "An entity that validates blocks for the {NETWORK_NAME} Relay Chain. Validators play a key role in {NETWORK_NAME} to secure the network and produce blocks.",
           "As a nominator, you choose which validators you wish to back, and receive rewards for doing so."
         ]
+      ],
+      "wrongTransaction": [
+        "Wrong Transaction",
+        ["You might have signed the historical transaction instead of the current one."]
       ],
       "yourBalance": [
         "Your Balance",

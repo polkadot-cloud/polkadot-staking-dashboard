@@ -9,7 +9,7 @@ import { useApi } from 'contexts/Api';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyFunction, AnyJson } from 'types';
+import type { AnyFunction, AnyJson, MaybeString } from 'types';
 import { getLocalLedgerAccounts, getLocalLedgerAddresses } from './Utils';
 import {
   LEDGER_DEFAULT_ACCOUNT,
@@ -59,9 +59,9 @@ export const LedgerHardwareProvider = ({
   const statusCodesRef = useRef(statusCodes);
 
   // Get the default message to display, set when a failed loop has happened.
-  const [defaultMessage, setDefaultMessageState] = useState<string | null>(
-    null
-  );
+  const [defaultMessage, setDefaultMessageState] = useState<
+    [MaybeString, MaybeString]
+  >([null, null]);
   const defaultMessageRef = useRef(defaultMessage);
 
   // Store the latest successful response from an attempted `executeLedgerLoop`.
@@ -103,13 +103,16 @@ export const LedgerHardwareProvider = ({
     err = String(err);
     if (err === 'Error: Timeout') {
       // only set default message here - maintain previous status code.
-      setDefaultMessage(t('ledgerRequestTimeout'));
+      setDefaultMessage(t('ledgerRequestTimeout'), 'Leger Request Timeout');
     } else if (
       err.startsWith('Error: TransportError: Invalid channel') ||
       err.startsWith('Error: InvalidStateError')
     ) {
       // occurs when tx was approved outside of active channel.
-      setDefaultMessage(t('queuedTransactionRejected'));
+      setDefaultMessage(
+        t('queuedTransactionRejected'),
+        'Queued Transaction Rejected'
+      );
     } else if (
       err.startsWith('TransportOpenUserCancelled') ||
       err.startsWith('Error: Ledger Device is busy')
@@ -123,19 +126,24 @@ export const LedgerHardwareProvider = ({
       handleNewStatusCode('failure', 'DeviceNotConnected');
     } else if (err.startsWith('Error: Transaction rejected')) {
       // occurs when user rejects a transaction.
-      setDefaultMessage(t('transactionRejectedPending'));
-      handleNewStatusCode(
-        'failure',
-        'TransactionRejected',
-        'Ledger Rejected Transaction Options'
+      setDefaultMessage(
+        t('transactionRejectedPending'),
+        'Ledger Rejected Transaction'
       );
+      handleNewStatusCode('failure', 'TransactionRejected');
     } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
       // occurs when the required app is not open.
       handleNewStatusCode('failure', 'AppNotOpenContinue');
-      setDefaultMessage(t('openAppOnLedger', { appName }));
+      setDefaultMessage(
+        t('openAppOnLedger', { appName }),
+        'Open App On Ledger'
+      );
     } else {
       // miscellanous errors - assume app is not open or ready.
-      setDefaultMessage(t('openAppOnLedger', { appName }));
+      setDefaultMessage(
+        t('openAppOnLedger', { appName }),
+        'Open App On Ledger'
+      );
       handleNewStatusCode('failure', 'AppNotOpen');
     }
   };
@@ -325,12 +333,8 @@ export const LedgerHardwareProvider = ({
   };
 
   // Handle an incoming new status code and persist to state.
-  const handleNewStatusCode = (
-    ack: string,
-    statusCode: string,
-    helpKey?: string
-  ) => {
-    const newStatusCodes = [{ ack, statusCode, helpKey }, ...statusCodes];
+  const handleNewStatusCode = (ack: string, statusCode: string) => {
+    const newStatusCodes = [{ ack, statusCode }, ...statusCodes];
 
     // Remove last status code if there are more than allowed number of status codes.
     if (newStatusCodes.length > TOTAL_ALLOWED_STATUS_CODES) {
@@ -473,8 +477,12 @@ export const LedgerHardwareProvider = ({
     return defaultMessageRef.current;
   };
 
-  const setDefaultMessage = (val: string | null) => {
-    setStateWithRef(val, setDefaultMessageState, defaultMessageRef);
+  const setDefaultMessage = (val: string | null, helpKey?: string) => {
+    setStateWithRef(
+      [val, helpKey || ''],
+      setDefaultMessageState,
+      defaultMessageRef
+    );
   };
 
   const setIsPaired = (p: PairingStatus) => {

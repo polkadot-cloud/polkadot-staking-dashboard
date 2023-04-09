@@ -8,7 +8,11 @@ export const HelpConfig: HelpItems = [
     key: 'ledger',
     definitions: [
       'Ledger Hardware Wallets',
-      'Ledger Rejected Transaction Options',
+      'Ledger Rejected Transaction',
+      'Leger Request Timeout',
+      'Queued Transaction Rejected',
+      'Open App On Ledger',
+      'Wrong Transaction',
     ],
     external: [],
   },
@@ -26,8 +30,6 @@ export const HelpConfig: HelpItems = [
       'Inflation',
       'Ideal Staked',
       'Supply Staked',
-      'Ledger Hardware Wallets',
-      'Ledger Rejected Transaction Options',
     ],
     external: [
       [

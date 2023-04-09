@@ -76,7 +76,7 @@ export const ManualSign = ({
     if (statusCode === 'SignedPayload') {
       if (uid !== body.uid) {
         // UIDs do not match, so this is not the transaction we are waiting for.
-        setDefaultMessage(t('wrongTransaction'));
+        setDefaultMessage(t('wrongTransaction'), 'Wrong Transaction');
         resetStatusCodes();
         setTxSignature(null);
       } else {
@@ -129,9 +129,7 @@ export const ManualSign = ({
   const defaultMessage = getDefaultMessage();
   const { openHelp } = useHelp();
 
-  const helpKey =
-    Object.values(statusCodes).find((a) => a.helpKey !== undefined)?.helpKey ||
-    '';
+  const helpKey = defaultMessage[1] || '';
 
   return (
     <>
@@ -140,7 +138,7 @@ export const ManualSign = ({
         {valid ? (
           <p>
             {valid
-              ? defaultMessage ||
+              ? defaultMessage[0] ||
                 (!getIsExecuting() || !statusCodes.length
                   ? fallbackMessage
                   : statusCodeTitle)
