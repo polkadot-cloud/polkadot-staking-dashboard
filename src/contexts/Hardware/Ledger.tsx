@@ -112,10 +112,7 @@ export const LedgerHardwareProvider = ({
       err.startsWith('Error: InvalidStateError')
     ) {
       // occurs when tx was approved outside of active channel.
-      setFeedbackMessage(
-        t('queuedTransactionRejected'),
-        'Queued Transaction Rejected'
-      );
+      setFeedbackMessage(t('wrongTransaction'), 'Wrong Transaction');
     } else if (
       err.startsWith('TransportOpenUserCancelled') ||
       err.startsWith('Error: Ledger Device is busy')
