@@ -9,16 +9,18 @@ import { useApi } from 'contexts/Api';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyFunction, AnyJson } from 'types';
+import type { AnyFunction, AnyJson, MaybeString } from 'types';
 import { getLocalLedgerAccounts, getLocalLedgerAddresses } from './Utils';
 import {
   LEDGER_DEFAULT_ACCOUNT,
   LEDGER_DEFAULT_CHANGE,
   LEDGER_DEFAULT_INDEX,
   TOTAL_ALLOWED_STATUS_CODES,
+  defaultFeedbackMessage,
   defaultLedgerHardwareContext,
 } from './defaults';
 import type {
+  FeedbackMessage,
   LedgerAddress,
   LedgerHardwareContextInterface,
   LedgerResponse,
@@ -59,10 +61,11 @@ export const LedgerHardwareProvider = ({
   const statusCodesRef = useRef(statusCodes);
 
   // Get the default message to display, set when a failed loop has happened.
-  const [defaultMessage, setDefaultMessageState] = useState<string | null>(
-    null
+  const [feedbackMessage, setFeedbackMessageState] = useState<FeedbackMessage>(
+    defaultFeedbackMessage
   );
-  const defaultMessageRef = useRef(defaultMessage);
+
+  const feedbackMessageRef = useRef(feedbackMessage);
 
   // Store the latest successful response from an attempted `executeLedgerLoop`.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
@@ -103,35 +106,44 @@ export const LedgerHardwareProvider = ({
     err = String(err);
     if (err === 'Error: Timeout') {
       // only set default message here - maintain previous status code.
-      setDefaultMessage(t('ledgerRequestTimeout'));
+      setFeedbackMessage(t('ledgerRequestTimeout'), 'Ledger Request Timeout');
     } else if (
       err.startsWith('Error: TransportError: Invalid channel') ||
       err.startsWith('Error: InvalidStateError')
     ) {
       // occurs when tx was approved outside of active channel.
-      setDefaultMessage(t('queuedTransactionRejected'));
+      setFeedbackMessage(t('queuedTransactionRejected'), 'Wrong Transaction');
     } else if (
       err.startsWith('TransportOpenUserCancelled') ||
       err.startsWith('Error: Ledger Device is busy')
     ) {
       // occurs when the device is not connected.
-      setDefaultMessage(t('connectLedgerToContinue'));
+      setFeedbackMessage(t('connectLedgerToContinue'));
       handleNewStatusCode('failure', 'DeviceNotConnected');
     } else if (err.startsWith('Error: LockedDeviceError')) {
       // occurs when the device is connected but not unlocked.
-      setDefaultMessage(t('unlockLedgerToContinue'));
+      setFeedbackMessage(t('unlockLedgerToContinue'));
       handleNewStatusCode('failure', 'DeviceNotConnected');
     } else if (err.startsWith('Error: Transaction rejected')) {
       // occurs when user rejects a transaction.
-      setDefaultMessage(t('transactionRejectedPending'));
+      setFeedbackMessage(
+        t('transactionRejectedPending'),
+        'Ledger Rejected Transaction'
+      );
       handleNewStatusCode('failure', 'TransactionRejected');
     } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
       // occurs when the required app is not open.
       handleNewStatusCode('failure', 'AppNotOpenContinue');
-      setDefaultMessage(t('openAppOnLedger', { appName }));
+      setFeedbackMessage(
+        t('openAppOnLedger', { appName }),
+        'Open App On Ledger'
+      );
     } else {
       // miscellanous errors - assume app is not open or ready.
-      setDefaultMessage(t('openAppOnLedger', { appName }));
+      setFeedbackMessage(
+        t('openAppOnLedger', { appName }),
+        'Open App On Ledger'
+      );
       handleNewStatusCode('failure', 'AppNotOpen');
     }
   };
@@ -231,7 +243,7 @@ export const LedgerHardwareProvider = ({
     const { deviceModel } = ledgerTransport.current;
     const { id, productName } = deviceModel;
 
-    setDefaultMessage(null);
+    resetFeedbackMessage();
     setTransportResponse({
       ack: 'success',
       statusCode: 'GettingAddress',
@@ -286,7 +298,7 @@ export const LedgerHardwareProvider = ({
       body: null,
     });
 
-    setDefaultMessage(t('approveTransactionLedger'));
+    setFeedbackMessage(t('approveTransactionLedger'));
 
     if (!ledgerTransport.current?.device?.opened) {
       await ledgerTransport.current?.device?.open();
@@ -298,7 +310,7 @@ export const LedgerHardwareProvider = ({
       u8aToBuffer(payload.toU8a(true))
     );
 
-    setDefaultMessage(t('signedTransactionSuccessfully'));
+    setFeedbackMessage(t('signedTransactionSuccessfully'));
     await ledgerTransport.current?.device?.close();
 
     const error = result?.error_message;
@@ -461,12 +473,27 @@ export const LedgerHardwareProvider = ({
     return statusCodesRef.current;
   };
 
-  const getDefaultMessage = () => {
-    return defaultMessageRef.current;
+  const getFeedbackMessage = () => {
+    return feedbackMessageRef.current;
   };
 
-  const setDefaultMessage = (val: string | null) => {
-    setStateWithRef(val, setDefaultMessageState, defaultMessageRef);
+  const setFeedbackMessage = (
+    message: MaybeString,
+    helpKey: MaybeString = null
+  ) => {
+    setStateWithRef(
+      { message, helpKey },
+      setFeedbackMessageState,
+      feedbackMessageRef
+    );
+  };
+
+  const resetFeedbackMessage = () => {
+    setStateWithRef(
+      defaultFeedbackMessage,
+      setFeedbackMessageState,
+      feedbackMessageRef
+    );
   };
 
   const setIsPaired = (p: PairingStatus) => {
@@ -488,7 +515,7 @@ export const LedgerHardwareProvider = ({
     // reset state
     resetStatusCodes();
     setIsExecuting(false);
-    setDefaultMessage(null);
+    resetFeedbackMessage();
     // close transport
     if (getTransport()?.device?.opened) {
       getTransport().device.close();
@@ -513,8 +540,9 @@ export const LedgerHardwareProvider = ({
         removeLedgerAccount,
         renameLedgerAccount,
         getLedgerAccount,
-        getDefaultMessage,
-        setDefaultMessage,
+        getFeedbackMessage,
+        setFeedbackMessage,
+        resetFeedbackMessage,
         handleUnmount,
         isPaired: isPairedRef.current,
         ledgerAccounts: ledgerAccountsRef.current,

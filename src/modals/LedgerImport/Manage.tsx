@@ -1,10 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-live authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonMonoInvert } from '@polkadotcloud/core-ui';
+import { ButtonHelp, ButtonMonoInvert } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
+import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as IconSVG } from 'img/ledgerIcon.svg';
 import { useTranslation } from 'react-i18next';
@@ -26,9 +27,10 @@ export const Manage = ({
     getIsExecuting,
     getStatusCodes,
     resetStatusCodes,
-    getDefaultMessage,
+    getFeedbackMessage,
   } = useLedgerHardware();
   const { appName } = getLedgerApp(network.name);
+  const { openHelp } = useHelp();
 
   const isExecuting = getIsExecuting();
   const statusCodes = getStatusCodes();
@@ -39,7 +41,8 @@ export const Manage = ({
     false
   );
   const fallbackMessage = `${t('ledgerAccounts', { count: addresses.length })}`;
-  const defaultMessage = getDefaultMessage();
+  const feedbackMessage = getFeedbackMessage();
+  const helpKey = feedbackMessage?.helpKey;
 
   return (
     <>
@@ -71,12 +74,19 @@ export const Manage = ({
             <IconSVG width="24" height="24" className="ledgerIcon" />
             <div className="text">
               <h3>
-                {defaultMessage ||
+                {feedbackMessage?.message ||
                   (!isExecuting || !statusCodes.length
                     ? fallbackMessage
                     : statusCode === 'TransactionRejected'
                     ? fallbackMessage
                     : title)}
+                {helpKey ? (
+                  <ButtonHelp
+                    marginLeft
+                    onClick={() => openHelp(helpKey)}
+                    backgroundSecondary
+                  />
+                ) : null}
               </h3>
             </div>
           </div>

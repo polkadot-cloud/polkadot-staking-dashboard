@@ -27,10 +27,16 @@ export type LedgerHardwareContextInterface = {
   getLedgerAccount: (a: string) => LedgerAccount | null;
   isPaired: PairingStatus;
   ledgerAccounts: Array<LedgerAccount>;
-  getDefaultMessage: () => MaybeString;
-  setDefaultMessage: (s: MaybeString) => void;
+  getFeedbackMessage: () => FeedbackMessage;
+  setFeedbackMessage: (s: MaybeString, helpKey?: MaybeString) => void;
+  resetFeedbackMessage: () => void;
   handleUnmount: () => void;
 };
+
+export interface FeedbackMessage {
+  message: MaybeString;
+  helpKey?: MaybeString;
+}
 
 export interface LedgerResponse {
   ack: string;

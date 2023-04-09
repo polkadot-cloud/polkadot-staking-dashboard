@@ -5,13 +5,14 @@ import {
   faArrowAltCircleUp,
   faSquarePen,
 } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/core-ui';
+import { ButtonHelp, ButtonSubmit } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
 import type { LedgerResponse } from 'contexts/Hardware/types';
+import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
@@ -40,8 +41,8 @@ export const ManualSign = ({
     handleNewStatusCode,
     isPaired,
     getStatusCodes,
-    getDefaultMessage,
-    setDefaultMessage,
+    getFeedbackMessage,
+    setFeedbackMessage,
     handleUnmount,
   } = useLedgerHardware();
   const { activeAccount, accountHasSigner, getAccount } = useConnect();
@@ -75,7 +76,7 @@ export const ManualSign = ({
     if (statusCode === 'SignedPayload') {
       if (uid !== body.uid) {
         // UIDs do not match, so this is not the transaction we are waiting for.
-        setDefaultMessage(t('wrongTransaction'));
+        setFeedbackMessage(t('wrongTransaction'), 'Wrong Transaction');
         resetStatusCodes();
         setTxSignature(null);
       } else {
@@ -125,7 +126,10 @@ export const ManualSign = ({
     false
   ).title;
   const fallbackMessage = t('submitTransaction');
-  const defaultMessage = getDefaultMessage();
+  const feedbackMessage = getFeedbackMessage();
+  const { openHelp } = useHelp();
+
+  const helpKey = feedbackMessage?.helpKey;
 
   return (
     <>
@@ -134,11 +138,18 @@ export const ManualSign = ({
         {valid ? (
           <p>
             {valid
-              ? defaultMessage ||
+              ? feedbackMessage?.message ||
                 (!getIsExecuting() || !statusCodes.length
                   ? fallbackMessage
                   : statusCodeTitle)
               : fallbackMessage}
+            {helpKey ? (
+              <ButtonHelp
+                marginLeft
+                onClick={() => openHelp(helpKey)}
+                backgroundSecondary
+              />
+            ) : null}
           </p>
         ) : (
           <p>&nbsp;</p>

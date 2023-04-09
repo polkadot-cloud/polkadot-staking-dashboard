@@ -8,6 +8,11 @@ export const LEDGER_DEFAULT_ACCOUNT = 0x80000000;
 export const LEDGER_DEFAULT_CHANGE = 0x80000000;
 export const LEDGER_DEFAULT_INDEX = 0x80000000;
 
+export const defaultFeedbackMessage = {
+  message: null,
+  helpKey: null,
+};
+
 export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   transportResponse: null,
   pairDevice: async () => new Promise((resolve) => resolve(false)),
@@ -35,8 +40,9 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   getLedgerAccount: (a) => null,
   isPaired: 'unknown',
   ledgerAccounts: [],
-  getDefaultMessage: () => null,
+  getFeedbackMessage: () => defaultFeedbackMessage,
   // eslint-disable-next-line
-  setDefaultMessage: (m) => {},
+  setFeedbackMessage: (s, h) => {},
+  resetFeedbackMessage: () => {},
   handleUnmount: () => {},
 };
