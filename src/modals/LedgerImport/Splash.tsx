@@ -13,7 +13,6 @@ import { CustomHeaderWrapper } from 'modals/Wrappers';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyFunction } from 'types';
-import { determineStatusFromCodes } from './Utils';
 import { SplashWrapper } from './Wrappers';
 
 export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
@@ -40,7 +39,6 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     }
   };
 
-  const statusCode = determineStatusFromCodes(statusCodes);
   const fallbackMessage = t('checking');
   const feedback = getFeedback();
   const helpKey = feedback?.helpKey;
@@ -105,7 +103,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
               <div className="button">
                 <ButtonSecondary
                   text={
-                    statusCode === 'DeviceNotConnected'
+                    statusCodes[0]?.statusCode === 'DeviceNotConnected'
                       ? t('continue')
                       : t('tryAgain')
                   }
