@@ -28,7 +28,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     getIsExecuting,
     setIsExecuting,
     pairDevice,
-    getDefaultMessage,
+    getFeedbackMessage,
   } = useLedgerHardware();
   const { setResize } = useModal();
   const { openHelp } = useHelp();
@@ -50,8 +50,8 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     false
   );
   const fallbackMessage = t('checking');
-  const defaultMessage = getDefaultMessage();
-  const helpKey = defaultMessage?.helpKey;
+  const feedbackMessage = getFeedbackMessage();
+  const helpKey = feedbackMessage?.helpKey;
 
   // Initialise listeners for Ledger IO.
   useEffect(() => {
@@ -68,7 +68,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   // Resize modal on new message
   useEffect(() => {
     setResize();
-  }, [statusCodes, defaultMessage]);
+  }, [statusCodes, feedbackMessage]);
 
   return (
     <>
@@ -97,7 +97,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
 
         <div className="content">
           <h2>
-            {defaultMessage?.message ||
+            {feedbackMessage?.message ||
               (!getIsExecuting() || !statusCodes.length
                 ? fallbackMessage
                 : statusCode === 'TransactionRejected'

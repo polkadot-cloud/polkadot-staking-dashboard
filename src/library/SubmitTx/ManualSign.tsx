@@ -41,8 +41,8 @@ export const ManualSign = ({
     handleNewStatusCode,
     isPaired,
     getStatusCodes,
-    getDefaultMessage,
-    setDefaultMessage,
+    getFeedbackMessage,
+    setFeedbackMessage,
     handleUnmount,
   } = useLedgerHardware();
   const { activeAccount, accountHasSigner, getAccount } = useConnect();
@@ -76,7 +76,7 @@ export const ManualSign = ({
     if (statusCode === 'SignedPayload') {
       if (uid !== body.uid) {
         // UIDs do not match, so this is not the transaction we are waiting for.
-        setDefaultMessage(t('wrongTransaction'), 'Wrong Transaction');
+        setFeedbackMessage(t('wrongTransaction'), 'Wrong Transaction');
         resetStatusCodes();
         setTxSignature(null);
       } else {
@@ -126,10 +126,10 @@ export const ManualSign = ({
     false
   ).title;
   const fallbackMessage = t('submitTransaction');
-  const defaultMessage = getDefaultMessage();
+  const feedbackMessage = getFeedbackMessage();
   const { openHelp } = useHelp();
 
-  const helpKey = defaultMessage?.helpKey;
+  const helpKey = feedbackMessage?.helpKey;
 
   return (
     <>
@@ -138,7 +138,7 @@ export const ManualSign = ({
         {valid ? (
           <p>
             {valid
-              ? defaultMessage?.message ||
+              ? feedbackMessage?.message ||
                 (!getIsExecuting() || !statusCodes.length
                   ? fallbackMessage
                   : statusCodeTitle)
