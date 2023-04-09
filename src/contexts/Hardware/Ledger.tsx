@@ -243,7 +243,7 @@ export const LedgerHardwareProvider = ({
     const { deviceModel } = ledgerTransport.current;
     const { id, productName } = deviceModel;
 
-    setFeedbackMessage(null);
+    resetFeedbackMessage();
     setTransportResponse({
       ack: 'success',
       statusCode: 'GettingAddress',
@@ -488,6 +488,14 @@ export const LedgerHardwareProvider = ({
     );
   };
 
+  const resetFeedbackMessage = () => {
+    setStateWithRef(
+      defaultFeedbackMessage,
+      setFeedbackMessageState,
+      feedbackMessageRef
+    );
+  };
+
   const setIsPaired = (p: PairingStatus) => {
     setStateWithRef(p, setIsPairedState, isPairedRef);
   };
@@ -507,7 +515,7 @@ export const LedgerHardwareProvider = ({
     // reset state
     resetStatusCodes();
     setIsExecuting(false);
-    setFeedbackMessage(null);
+    resetFeedbackMessage();
     // close transport
     if (getTransport()?.device?.opened) {
       getTransport().device.close();
@@ -534,6 +542,7 @@ export const LedgerHardwareProvider = ({
         getLedgerAccount,
         getFeedbackMessage,
         setFeedbackMessage,
+        resetFeedbackMessage,
         handleUnmount,
         isPaired: isPairedRef.current,
         ledgerAccounts: ledgerAccountsRef.current,

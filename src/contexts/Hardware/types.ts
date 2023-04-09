@@ -29,6 +29,7 @@ export type LedgerHardwareContextInterface = {
   ledgerAccounts: Array<LedgerAccount>;
   getFeedbackMessage: () => FeedbackMessage;
   setFeedbackMessage: (s: MaybeString, helpKey?: MaybeString) => void;
+  resetFeedbackMessage: () => void;
   handleUnmount: () => void;
 };
 

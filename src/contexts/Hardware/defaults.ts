@@ -43,5 +43,6 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   getFeedbackMessage: () => defaultFeedbackMessage,
   // eslint-disable-next-line
   setFeedbackMessage: (s, h) => {},
+  resetFeedbackMessage: () => {},
   handleUnmount: () => {},
 };

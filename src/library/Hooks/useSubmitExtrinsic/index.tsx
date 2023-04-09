@@ -42,7 +42,7 @@ export const useSubmitExtrinsic = ({
     getTxSignature,
     setTxSignature,
   } = useTxMeta();
-  const { setIsExecuting, resetStatusCodes, setFeedbackMessage } =
+  const { setIsExecuting, resetStatusCodes, resetFeedbackMessage } =
     useLedgerHardware();
 
   // if null account is provided, fallback to empty string
@@ -208,7 +208,7 @@ export const useSubmitExtrinsic = ({
     const resetLedgerTx = () => {
       setIsExecuting(false);
       resetStatusCodes();
-      setFeedbackMessage(null);
+      resetFeedbackMessage();
     };
     const resetManualTx = () => {
       resetTx();
