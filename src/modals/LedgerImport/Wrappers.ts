@@ -43,7 +43,6 @@ export const SplashWrapper = styled.div`
       margin-bottom: 0.75rem;
     }
     h5 {
-      margin-top: 0;
       min-height: 2rem;
     }
 
@@ -51,13 +50,6 @@ export const SplashWrapper = styled.div`
       display: flex;
       justify-content: center;
       margin-top: 1rem;
-
-      > button {
-        cursor: pointer;
-        z-index: 1;
-        padding: 0.5rem 1.75rem;
-        font-variation-settings: 'wght' 650;
-      }
     }
   }
 `;
