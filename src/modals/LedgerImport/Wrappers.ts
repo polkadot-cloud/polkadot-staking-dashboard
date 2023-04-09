@@ -55,7 +55,7 @@ export const SplashWrapper = styled.div`
       > button {
         cursor: pointer;
         z-index: 1;
-        padding: 0.5rem 1.75rem !important;
+        padding: 0.5rem 1.75rem;
         font-variation-settings: 'wght' 650;
       }
     }
