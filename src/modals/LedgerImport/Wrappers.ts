@@ -27,10 +27,6 @@ export const SplashWrapper = styled.div`
     justify-content: center;
     margin-bottom: 2rem;
 
-    h4 {
-      margin-top: 1.25rem;
-      margin-bottom: 0.5rem;
-    }
     h2,
     h4,
     h5 {
@@ -43,14 +39,30 @@ export const SplashWrapper = styled.div`
         margin-right: 0.3rem;
       }
     }
+
+    h2 {
+      margin-bottom: 0.75rem;
+    }
+    h4 {
+      margin-top: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
     h5 {
+      margin-top: 0;
       min-height: 2rem;
     }
-    > button {
-      cursor: pointer;
-      z-index: 1;
-      padding: 0.5rem 1.75rem !important;
-      font-variation-settings: 'wght' 650;
+
+    .button {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+
+      > button {
+        cursor: pointer;
+        z-index: 1;
+        padding: 0.5rem 1.75rem !important;
+        font-variation-settings: 'wght' 650;
+      }
     }
   }
 `;

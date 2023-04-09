@@ -115,12 +115,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
           {!getIsExecuting() ? (
             <>
               <h5>{t('ensureLedgerIsConnected')}</h5>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}
-              >
+              <div className="button">
                 <ButtonSecondary
                   text={
                     statusCode === 'DeviceNotConnected'
