@@ -27,7 +27,7 @@ export const Manage = ({
     getIsExecuting,
     getStatusCodes,
     resetStatusCodes,
-    getFeedbackMessage,
+    getFeedback,
   } = useLedgerHardware();
   const { appName } = getLedgerApp(network.name);
   const { openHelp } = useHelp();
@@ -41,8 +41,8 @@ export const Manage = ({
     false
   );
   const fallbackMessage = `${t('ledgerAccounts', { count: addresses.length })}`;
-  const feedbackMessage = getFeedbackMessage();
-  const helpKey = feedbackMessage?.helpKey;
+  const feedback = getFeedback();
+  const helpKey = feedback?.helpKey;
 
   return (
     <>
@@ -74,7 +74,7 @@ export const Manage = ({
             <IconSVG width="24" height="24" className="ledgerIcon" />
             <div className="text">
               <h3>
-                {feedbackMessage?.message ||
+                {feedback?.message ||
                   (!isExecuting || !statusCodes.length
                     ? fallbackMessage
                     : statusCode === 'TransactionRejected'

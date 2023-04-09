@@ -8,7 +8,7 @@ export const LEDGER_DEFAULT_ACCOUNT = 0x80000000;
 export const LEDGER_DEFAULT_CHANGE = 0x80000000;
 export const LEDGER_DEFAULT_INDEX = 0x80000000;
 
-export const defaultFeedbackMessage = {
+export const defaultFeedback = {
   message: null,
   helpKey: null,
 };
@@ -40,9 +40,9 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   getLedgerAccount: (a) => null,
   isPaired: 'unknown',
   ledgerAccounts: [],
-  getFeedbackMessage: () => defaultFeedbackMessage,
+  getFeedback: () => defaultFeedback,
   // eslint-disable-next-line
-  setFeedbackMessage: (s, h) => {},
-  resetFeedbackMessage: () => {},
+  setFeedback: (s, h) => {},
+  resetFeedback: () => {},
   handleUnmount: () => {},
 };
