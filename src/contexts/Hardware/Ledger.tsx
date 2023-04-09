@@ -16,7 +16,7 @@ import {
   LEDGER_DEFAULT_CHANGE,
   LEDGER_DEFAULT_INDEX,
   TOTAL_ALLOWED_STATUS_CODES,
-  defaultFeedbackMessage,
+  defaultFeedback,
   defaultLedgerHardwareContext,
 } from './defaults';
 import type {
@@ -24,6 +24,7 @@ import type {
   LedgerAddress,
   LedgerHardwareContextInterface,
   LedgerResponse,
+  LedgerStatusCode,
   LedgerTask,
   PairingStatus,
 } from './types';
@@ -61,11 +62,10 @@ export const LedgerHardwareProvider = ({
   const statusCodesRef = useRef(statusCodes);
 
   // Get the default message to display, set when a failed loop has happened.
-  const [feedbackMessage, setFeedbackMessageState] = useState<FeedbackMessage>(
-    defaultFeedbackMessage
-  );
+  const [feedback, setFeedbackState] =
+    useState<FeedbackMessage>(defaultFeedback);
 
-  const feedbackMessageRef = useRef(feedbackMessage);
+  const feedbackRef = useRef(feedback);
 
   // Store the latest successful response from an attempted `executeLedgerLoop`.
   const [transportResponse, setTransportResponse] = useState<AnyJson>(null);
@@ -106,27 +106,29 @@ export const LedgerHardwareProvider = ({
     err = String(err);
     if (err === 'Error: Timeout') {
       // only set default message here - maintain previous status code.
-      setFeedbackMessage(t('ledgerRequestTimeout'), 'Ledger Request Timeout');
+      setFeedback(t('ledgerRequestTimeout'), 'Ledger Request Timeout');
+      handleNewStatusCode('failure', 'DeviceTimeout');
     } else if (
       err.startsWith('Error: TransportError: Invalid channel') ||
       err.startsWith('Error: InvalidStateError')
     ) {
       // occurs when tx was approved outside of active channel.
-      setFeedbackMessage(t('queuedTransactionRejected'), 'Wrong Transaction');
+      setFeedback(t('queuedTransactionRejected'), 'Wrong Transaction');
+      handleNewStatusCode('failure', 'WrongTransaction');
     } else if (
       err.startsWith('TransportOpenUserCancelled') ||
       err.startsWith('Error: Ledger Device is busy')
     ) {
       // occurs when the device is not connected.
-      setFeedbackMessage(t('connectLedgerToContinue'));
+      setFeedback(t('connectLedgerToContinue'));
       handleNewStatusCode('failure', 'DeviceNotConnected');
     } else if (err.startsWith('Error: LockedDeviceError')) {
       // occurs when the device is connected but not unlocked.
-      setFeedbackMessage(t('unlockLedgerToContinue'));
-      handleNewStatusCode('failure', 'DeviceNotConnected');
+      setFeedback(t('unlockLedgerToContinue'));
+      handleNewStatusCode('failure', 'DeviceLocked');
     } else if (err.startsWith('Error: Transaction rejected')) {
       // occurs when user rejects a transaction.
-      setFeedbackMessage(
+      setFeedback(
         t('transactionRejectedPending'),
         'Ledger Rejected Transaction'
       );
@@ -134,16 +136,10 @@ export const LedgerHardwareProvider = ({
     } else if (err.startsWith('Error: Unknown Status Code: 28161')) {
       // occurs when the required app is not open.
       handleNewStatusCode('failure', 'AppNotOpenContinue');
-      setFeedbackMessage(
-        t('openAppOnLedger', { appName }),
-        'Open App On Ledger'
-      );
+      setFeedback(t('openAppOnLedger', { appName }), 'Open App On Ledger');
     } else {
       // miscellanous errors - assume app is not open or ready.
-      setFeedbackMessage(
-        t('openAppOnLedger', { appName }),
-        'Open App On Ledger'
-      );
+      setFeedback(t('openAppOnLedger', { appName }), 'Open App On Ledger');
       handleNewStatusCode('failure', 'AppNotOpen');
     }
   };
@@ -243,12 +239,12 @@ export const LedgerHardwareProvider = ({
     const { deviceModel } = ledgerTransport.current;
     const { id, productName } = deviceModel;
 
-    resetFeedbackMessage();
     setTransportResponse({
       ack: 'success',
       statusCode: 'GettingAddress',
       body: null,
     });
+    setFeedback(t('gettingAddress'));
 
     if (!ledgerTransport.current?.device?.opened) {
       await ledgerTransport.current?.device?.open();
@@ -273,6 +269,8 @@ export const LedgerHardwareProvider = ({
     }
 
     if (!(result instanceof Error)) {
+      setFeedback(t('successfullyFetchedAddress'));
+
       return {
         statusCode: 'ReceivedAddress',
         device: { id, productName },
@@ -298,7 +296,7 @@ export const LedgerHardwareProvider = ({
       body: null,
     });
 
-    setFeedbackMessage(t('approveTransactionLedger'));
+    setFeedback(t('approveTransactionLedger'));
 
     if (!ledgerTransport.current?.device?.opened) {
       await ledgerTransport.current?.device?.open();
@@ -310,7 +308,7 @@ export const LedgerHardwareProvider = ({
       u8aToBuffer(payload.toU8a(true))
     );
 
-    setFeedbackMessage(t('signedTransactionSuccessfully'));
+    setFeedback(t('signedTransactionSuccessfully'));
     await ledgerTransport.current?.device?.close();
 
     const error = result?.error_message;
@@ -333,7 +331,7 @@ export const LedgerHardwareProvider = ({
   };
 
   // Handle an incoming new status code and persist to state.
-  const handleNewStatusCode = (ack: string, statusCode: string) => {
+  const handleNewStatusCode = (ack: string, statusCode: LedgerStatusCode) => {
     const newStatusCodes = [{ ack, statusCode }, ...statusCodes];
 
     // Remove last status code if there are more than allowed number of status codes.
@@ -473,27 +471,16 @@ export const LedgerHardwareProvider = ({
     return statusCodesRef.current;
   };
 
-  const getFeedbackMessage = () => {
-    return feedbackMessageRef.current;
+  const getFeedback = () => {
+    return feedbackRef.current;
   };
 
-  const setFeedbackMessage = (
-    message: MaybeString,
-    helpKey: MaybeString = null
-  ) => {
-    setStateWithRef(
-      { message, helpKey },
-      setFeedbackMessageState,
-      feedbackMessageRef
-    );
+  const setFeedback = (message: MaybeString, helpKey: MaybeString = null) => {
+    setStateWithRef({ message, helpKey }, setFeedbackState, feedbackRef);
   };
 
-  const resetFeedbackMessage = () => {
-    setStateWithRef(
-      defaultFeedbackMessage,
-      setFeedbackMessageState,
-      feedbackMessageRef
-    );
+  const resetFeedback = () => {
+    setStateWithRef(defaultFeedback, setFeedbackState, feedbackRef);
   };
 
   const setIsPaired = (p: PairingStatus) => {
@@ -515,7 +502,7 @@ export const LedgerHardwareProvider = ({
     // reset state
     resetStatusCodes();
     setIsExecuting(false);
-    resetFeedbackMessage();
+    resetFeedback();
     // close transport
     if (getTransport()?.device?.opened) {
       getTransport().device.close();
@@ -540,9 +527,9 @@ export const LedgerHardwareProvider = ({
         removeLedgerAccount,
         renameLedgerAccount,
         getLedgerAccount,
-        getFeedbackMessage,
-        setFeedbackMessage,
-        resetFeedbackMessage,
+        getFeedback,
+        setFeedback,
+        resetFeedback,
         handleUnmount,
         isPaired: isPairedRef.current,
         ledgerAccounts: ledgerAccountsRef.current,

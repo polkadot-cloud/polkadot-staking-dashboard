@@ -6,18 +6,15 @@ import {
   faSquarePen,
 } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonSubmit } from '@polkadotcloud/core-ui';
-import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
-import { getLedgerApp } from 'contexts/Hardware/Utils';
 import type { LedgerResponse } from 'contexts/Hardware/types';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
-import { determineStatusFromCodes } from 'modals/LedgerImport/Utils';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { SubmitProps } from './types';
@@ -31,7 +28,7 @@ export const ManualSign = ({
   buttons,
 }: SubmitProps & { buttons?: Array<React.ReactNode> }) => {
   const { t } = useTranslation('library');
-  const { network } = useApi();
+
   const {
     pairDevice,
     transportResponse,
@@ -41,14 +38,13 @@ export const ManualSign = ({
     handleNewStatusCode,
     isPaired,
     getStatusCodes,
-    getFeedbackMessage,
-    setFeedbackMessage,
+    getFeedback,
+    setFeedback,
     handleUnmount,
   } = useLedgerHardware();
   const { activeAccount, accountHasSigner, getAccount } = useConnect();
   const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();
   const { setResize } = useModal();
-  const { appName } = getLedgerApp(network.name);
 
   const getAddressIndex = () => {
     return (getAccount(activeAccount) as LedgerAccount)?.index || 0;
@@ -76,7 +72,7 @@ export const ManualSign = ({
     if (statusCode === 'SignedPayload') {
       if (uid !== body.uid) {
         // UIDs do not match, so this is not the transaction we are waiting for.
-        setFeedbackMessage(t('wrongTransaction'), 'Wrong Transaction');
+        setFeedback(t('wrongTransaction'), 'Wrong Transaction');
         resetStatusCodes();
         setTxSignature(null);
       } else {
@@ -119,17 +115,11 @@ export const ManualSign = ({
     };
   }, []);
 
-  const statusCodes = getStatusCodes();
-  const statusCodeTitle = determineStatusFromCodes(
-    appName,
-    statusCodes,
-    false
-  ).title;
   const fallbackMessage = t('submitTransaction');
-  const feedbackMessage = getFeedbackMessage();
+  const feedback = getFeedback();
   const { openHelp } = useHelp();
 
-  const helpKey = feedbackMessage?.helpKey;
+  const helpKey = feedback?.helpKey;
 
   return (
     <>
@@ -137,12 +127,7 @@ export const ManualSign = ({
         <EstimatedTxFee />
         {valid ? (
           <p>
-            {valid
-              ? feedbackMessage?.message ||
-                (!getIsExecuting() || !statusCodes.length
-                  ? fallbackMessage
-                  : statusCodeTitle)
-              : fallbackMessage}
+            {feedback?.message || fallbackMessage}
             {helpKey ? (
               <ButtonHelp
                 marginLeft

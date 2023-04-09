@@ -3,9 +3,7 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonSecondary } from '@polkadotcloud/core-ui';
-import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
-import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
@@ -15,12 +13,10 @@ import { CustomHeaderWrapper } from 'modals/Wrappers';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyFunction } from 'types';
-import { determineStatusFromCodes } from './Utils';
 import { SplashWrapper } from './Wrappers';
 
 export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   const { t } = useTranslation('modals');
-  const { network } = useApi();
   const { replaceModalWith, setStatus } = useModal();
   const {
     getStatusCodes,
@@ -28,13 +24,12 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     getIsExecuting,
     setIsExecuting,
     pairDevice,
-    getFeedbackMessage,
+    getFeedback,
   } = useLedgerHardware();
   const { setResize } = useModal();
   const { openHelp } = useHelp();
 
   const statusCodes = getStatusCodes();
-  const { appName } = getLedgerApp(network.name);
 
   const initFetchAddress = async () => {
     const paired = await pairDevice();
@@ -44,14 +39,9 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     }
   };
 
-  const { title, statusCode } = determineStatusFromCodes(
-    appName,
-    statusCodes,
-    false
-  );
   const fallbackMessage = t('checking');
-  const feedbackMessage = getFeedbackMessage();
-  const helpKey = feedbackMessage?.helpKey;
+  const feedback = getFeedback();
+  const helpKey = feedback?.helpKey;
 
   // Initialise listeners for Ledger IO.
   useEffect(() => {
@@ -68,7 +58,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   // Resize modal on new message
   useEffect(() => {
     setResize();
-  }, [statusCodes, feedbackMessage]);
+  }, [statusCodes, feedback]);
 
   return (
     <>
@@ -97,12 +87,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
 
         <div className="content">
           <h2>
-            {feedbackMessage?.message ||
-              (!getIsExecuting() || !statusCodes.length
-                ? fallbackMessage
-                : statusCode === 'TransactionRejected'
-                ? fallbackMessage
-                : title)}
+            {feedback?.message || fallbackMessage}
             {helpKey ? (
               <ButtonHelp
                 marginLeft
@@ -118,7 +103,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
               <div className="button">
                 <ButtonSecondary
                   text={
-                    statusCode === 'DeviceNotConnected'
+                    statusCodes[0]?.statusCode === 'DeviceNotConnected'
                       ? t('continue')
                       : t('tryAgain')
                   }
