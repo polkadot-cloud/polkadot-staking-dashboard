@@ -129,7 +129,7 @@ export const ManualSign = ({
   const defaultMessage = getDefaultMessage();
   const { openHelp } = useHelp();
 
-  const helpKey = defaultMessage[1] || '';
+  const helpKey = defaultMessage?.helpKey;
 
   return (
     <>
@@ -138,7 +138,7 @@ export const ManualSign = ({
         {valid ? (
           <p>
             {valid
-              ? defaultMessage[0] ||
+              ? defaultMessage?.message ||
                 (!getIsExecuting() || !statusCodes.length
                   ? fallbackMessage
                   : statusCodeTitle)

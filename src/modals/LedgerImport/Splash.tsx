@@ -51,7 +51,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   );
   const fallbackMessage = t('checking');
   const defaultMessage = getDefaultMessage();
-  const helpKey = defaultMessage[1] || '';
+  const helpKey = defaultMessage?.helpKey;
 
   // Initialise listeners for Ledger IO.
   useEffect(() => {
@@ -97,7 +97,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
 
         <div className="content">
           <h2>
-            {defaultMessage[0] ||
+            {defaultMessage?.message ||
               (!getIsExecuting() || !statusCodes.length
                 ? fallbackMessage
                 : statusCode === 'TransactionRejected'

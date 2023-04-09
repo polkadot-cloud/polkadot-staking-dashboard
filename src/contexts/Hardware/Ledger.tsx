@@ -16,9 +16,11 @@ import {
   LEDGER_DEFAULT_CHANGE,
   LEDGER_DEFAULT_INDEX,
   TOTAL_ALLOWED_STATUS_CODES,
+  defaultDefaultMessage,
   defaultLedgerHardwareContext,
 } from './defaults';
 import type {
+  DefaultMessage,
   LedgerAddress,
   LedgerHardwareContextInterface,
   LedgerResponse,
@@ -59,9 +61,10 @@ export const LedgerHardwareProvider = ({
   const statusCodesRef = useRef(statusCodes);
 
   // Get the default message to display, set when a failed loop has happened.
-  const [defaultMessage, setDefaultMessageState] = useState<
-    [MaybeString, MaybeString]
-  >([null, null]);
+  const [defaultMessage, setDefaultMessageState] = useState<DefaultMessage>(
+    defaultDefaultMessage
+  );
+
   const defaultMessageRef = useRef(defaultMessage);
 
   // Store the latest successful response from an attempted `executeLedgerLoop`.
@@ -477,9 +480,12 @@ export const LedgerHardwareProvider = ({
     return defaultMessageRef.current;
   };
 
-  const setDefaultMessage = (val: string | null, helpKey?: string) => {
+  const setDefaultMessage = (
+    message: MaybeString,
+    helpKey: MaybeString = null
+  ) => {
     setStateWithRef(
-      [val, helpKey || ''],
+      { message, helpKey },
       setDefaultMessageState,
       defaultMessageRef
     );

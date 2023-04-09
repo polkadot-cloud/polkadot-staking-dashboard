@@ -42,7 +42,7 @@ export const Manage = ({
   );
   const fallbackMessage = `${t('ledgerAccounts', { count: addresses.length })}`;
   const defaultMessage = getDefaultMessage();
-  const helpKey = defaultMessage[1] || '';
+  const helpKey = defaultMessage?.helpKey;
 
   return (
     <>
@@ -74,7 +74,7 @@ export const Manage = ({
             <IconSVG width="24" height="24" className="ledgerIcon" />
             <div className="text">
               <h3>
-                {defaultMessage[0] ||
+                {defaultMessage?.message ||
                   (!isExecuting || !statusCodes.length
                     ? fallbackMessage
                     : statusCode === 'TransactionRejected'
