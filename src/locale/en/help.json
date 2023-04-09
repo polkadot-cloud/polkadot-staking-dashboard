@@ -284,6 +284,10 @@
           "State-Toggler: Can change the pool's state and kick (permissionlessly unbond/withdraw) members if the pool is blocked."
         ]
       ],
+      "queuedTransactionRejected": [
+        "Queued Transaction Rejected",
+        ["Transaction was approved when the transaction window is closed."]
+      ],
       "reserveBalance": [
         "Reserve Balance",
         [

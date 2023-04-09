@@ -10,6 +10,7 @@ export const HelpConfig: HelpItems = [
       'Ledger Hardware Wallets',
       'Ledger Rejected Transaction',
       'Leger Request Timeout',
+      'Queued Transaction Rejected',
       'Open App On Ledger',
       'Wrong Transaction',
     ],
