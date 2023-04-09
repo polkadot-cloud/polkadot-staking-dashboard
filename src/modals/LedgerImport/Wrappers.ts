@@ -34,9 +34,10 @@ export const SplashWrapper = styled.div`
     h2,
     h4,
     h5 {
-      display: flex;
       color: var(--text-color-secondary);
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-top: 0.35rem;
       svg {
         margin-right: 0.3rem;
