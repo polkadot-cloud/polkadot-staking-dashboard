@@ -28,7 +28,6 @@ export const SplashWrapper = styled.div`
     margin-bottom: 2rem;
 
     h2,
-    h4,
     h5 {
       color: var(--text-color-secondary);
       display: flex;
@@ -42,10 +41,6 @@ export const SplashWrapper = styled.div`
 
     h2 {
       margin-bottom: 0.75rem;
-    }
-    h4 {
-      margin-top: 1.25rem;
-      margin-bottom: 0.5rem;
     }
     h5 {
       margin-top: 0;
