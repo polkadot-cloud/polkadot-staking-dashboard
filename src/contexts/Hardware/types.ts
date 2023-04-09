@@ -14,7 +14,7 @@ export type LedgerHardwareContextInterface = {
     tasks: Array<LedgerTask>,
     options?: AnyJson
   ) => Promise<void>;
-  handleNewStatusCode: (ack: string, statusCode: string) => void;
+  handleNewStatusCode: (ack: string, statusCode: LedgerStatusCode) => void;
   setIsExecuting: (v: boolean) => void;
   resetStatusCodes: () => void;
   getIsExecuting: () => boolean;
@@ -38,9 +38,22 @@ export interface FeedbackMessage {
   helpKey?: MaybeString;
 }
 
+export type LedgerStatusCode =
+  | 'GettingAddress'
+  | 'ReceivedAddress'
+  | 'SigningPayload'
+  | 'SignedPayload'
+  | 'DeviceTimeout'
+  | 'WrongTransaction'
+  | 'DeviceNotConnected'
+  | 'DeviceLocked'
+  | 'TransactionRejected'
+  | 'AppNotOpenContinue'
+  | 'AppNotOpen';
+
 export interface LedgerResponse {
   ack: string;
-  statusCode: string;
+  statusCode: LedgerStatusCode;
   body?: AnyJson;
   options?: AnyJson;
 }

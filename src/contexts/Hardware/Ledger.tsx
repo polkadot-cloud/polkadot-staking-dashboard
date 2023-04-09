@@ -24,6 +24,7 @@ import type {
   LedgerAddress,
   LedgerHardwareContextInterface,
   LedgerResponse,
+  LedgerStatusCode,
   LedgerTask,
   PairingStatus,
 } from './types';
@@ -106,12 +107,14 @@ export const LedgerHardwareProvider = ({
     if (err === 'Error: Timeout') {
       // only set default message here - maintain previous status code.
       setFeedback(t('ledgerRequestTimeout'), 'Ledger Request Timeout');
+      handleNewStatusCode('failure', 'DeviceTimeout');
     } else if (
       err.startsWith('Error: TransportError: Invalid channel') ||
       err.startsWith('Error: InvalidStateError')
     ) {
       // occurs when tx was approved outside of active channel.
       setFeedback(t('queuedTransactionRejected'), 'Wrong Transaction');
+      handleNewStatusCode('failure', 'WrongTransaction');
     } else if (
       err.startsWith('TransportOpenUserCancelled') ||
       err.startsWith('Error: Ledger Device is busy')
@@ -122,7 +125,7 @@ export const LedgerHardwareProvider = ({
     } else if (err.startsWith('Error: LockedDeviceError')) {
       // occurs when the device is connected but not unlocked.
       setFeedback(t('unlockLedgerToContinue'));
-      handleNewStatusCode('failure', 'DeviceNotConnected');
+      handleNewStatusCode('failure', 'DeviceLocked');
     } else if (err.startsWith('Error: Transaction rejected')) {
       // occurs when user rejects a transaction.
       setFeedback(
@@ -326,7 +329,7 @@ export const LedgerHardwareProvider = ({
   };
 
   // Handle an incoming new status code and persist to state.
-  const handleNewStatusCode = (ack: string, statusCode: string) => {
+  const handleNewStatusCode = (ack: string, statusCode: LedgerStatusCode) => {
     const newStatusCodes = [{ ack, statusCode }, ...statusCodes];
 
     // Remove last status code if there are more than allowed number of status codes.
