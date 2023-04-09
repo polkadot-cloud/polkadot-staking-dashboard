@@ -149,9 +149,9 @@
         "Ledger Rejected Transaction",
         ["You can either sign the transaction again or close the window."]
       ],
-      "legerRequestTimeout": [
-        "Leger Request Timeout",
-        ["Leger Request Timeout, Please try to conncect the device again."]
+      "ledgerRequestTimeout": [
+        "Ledger Request Timeout",
+        ["Ledger Request Timeout, Please try to conncect the device again."]
       ],
       "lockedBalance": [
         "Locked Balance",

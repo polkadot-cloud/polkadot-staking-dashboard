@@ -106,7 +106,7 @@ export const LedgerHardwareProvider = ({
     err = String(err);
     if (err === 'Error: Timeout') {
       // only set default message here - maintain previous status code.
-      setFeedbackMessage(t('ledgerRequestTimeout'), 'Leger Request Timeout');
+      setFeedbackMessage(t('ledgerRequestTimeout'), 'Ledger Request Timeout');
     } else if (
       err.startsWith('Error: TransportError: Invalid channel') ||
       err.startsWith('Error: InvalidStateError')

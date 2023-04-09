@@ -140,9 +140,9 @@
         "Ledger拒绝交易",
         ["您可以再次签署交易或关闭窗口"]
       ],
-      "legerRequestTimeout": [
-        "Leger请求超时",
-        ["Leger请求超时,请再次尝试连接设备."]
+      "ledgerRequestTimeout": [
+        "Ledger请求超时",
+        ["Ledger请求超时,请再次尝试连接设备."]
       ],
       "lockedBalance": [
         "锁定余额",
