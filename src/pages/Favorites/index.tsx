@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PageRowWrapper } from 'Wrappers';
+import { PageRow } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
@@ -21,7 +21,7 @@ export const Favorites = ({ page }: PageProps) => {
   return (
     <>
       <PageTitle title={t(key, { ns: 'base' })} />
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      <PageRow noVerticalMargin>
         <CardWrapper>
           {favoritesList === null ? (
             <h3>
@@ -52,7 +52,7 @@ export const Favorites = ({ page }: PageProps) => {
             </>
           )}
         </CardWrapper>
-      </PageRowWrapper>
+      </PageRow>
     </>
   );
 };

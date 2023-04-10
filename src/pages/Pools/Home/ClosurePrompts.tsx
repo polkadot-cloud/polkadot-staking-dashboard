@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary } from '@polkadotcloud/core-ui';
+import { ButtonPrimary, PageRow } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -13,7 +13,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useTranslation } from 'react-i18next';
-import { ButtonRowWrapper, PageRowWrapper } from 'Wrappers';
+import { ButtonRowWrapper } from 'Wrappers';
 
 export const ClosurePrompts = () => {
   const { t } = useTranslation('pages');
@@ -49,7 +49,7 @@ export const ClosurePrompts = () => {
   return (
     <>
       {depositorCanClose && (
-        <PageRowWrapper className="page-padding" noVerticalSpacer>
+        <PageRow noVerticalMargin>
           <CardWrapper
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
@@ -104,7 +104,7 @@ export const ClosurePrompts = () => {
               </ButtonRowWrapper>
             </div>
           </CardWrapper>
-        </PageRowWrapper>
+        </PageRow>
       )}
     </>
   );
