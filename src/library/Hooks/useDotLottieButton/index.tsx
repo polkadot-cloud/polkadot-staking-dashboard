@@ -8,13 +8,14 @@ import type { AnyJson } from 'types';
 
 export const useDotLottieButton = (
   filename: string,
-  style: React.CSSProperties = {}
+  style: React.CSSProperties = {},
+  options: AnyJson = {}
 ) => {
   const { mode } = useTheme();
 
   const refLight = useRef<AnyJson>(null);
   const refDark = useRef<AnyJson>(null);
-  const refsInitialised = useRef<AnyJson>(false);
+  const refsInitialised = useRef<boolean>(false);
 
   const getRef = (m: Theme) => {
     return m === 'light' ? refLight.current : refDark.current;
@@ -26,7 +27,9 @@ export const useDotLottieButton = (
   };
 
   const handleComplete = (r: AnyJson) => {
-    r?.stop();
+    if (!options?.autoLoop) {
+      r?.stop();
+    }
   };
   useEffect(() => {
     if (!getRef('light') || !getRef('dark') || refsInitialised.current) return;
@@ -44,6 +47,7 @@ export const useDotLottieButton = (
     <dotlottie-player
       ref={refLight}
       loop
+      autoPlay={options?.autoLoop === true}
       src={`/lottie/${filename}-light.lottie`}
       style={{ height: '100%', width: '100%' }}
     />
@@ -53,6 +57,7 @@ export const useDotLottieButton = (
     <dotlottie-player
       ref={refDark}
       loop
+      autoPlay={options?.autoLoop === true}
       src={`/lottie/${filename}-dark.lottie`}
       style={{ height: '100%', width: '100%' }}
     />
