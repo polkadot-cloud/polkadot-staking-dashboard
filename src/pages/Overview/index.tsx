@@ -12,17 +12,15 @@ import BigNumber from 'bignumber.js';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useSubscan } from 'contexts/Subscan';
-import { useTheme } from 'contexts/Themes';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
+import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
-import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyJson } from 'types';
 import { ActiveAccount } from './ActiveAccount';
 import { BalanceChart } from './BalanceChart';
 import { BalanceLinks } from './BalanceLinks';
@@ -36,9 +34,12 @@ import { SupplyStakedStat } from './Stats/SupplyStaked';
 export const Overview = () => {
   const { i18n, t } = useTranslation('pages');
   const { network } = useApi();
-  const { mode } = useTheme();
   const { units } = network;
   const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
+  const icon = useDotLottieButton('trending', () => {
+    console.log('trending button clicked');
+  });
+
   const { lastReward } = formatRewardsForGraphs(
     new Date(),
     14,
@@ -64,80 +65,10 @@ export const Overview = () => {
     };
   }
 
-  const refLight = React.useRef<AnyJson>(null);
-  const refDark = React.useRef<AnyJson>(null);
-
-  const refsInitialised = React.useRef<AnyJson>(false);
-
-  const getRef = (m: string) => {
-    return m === 'light' ? refLight.current : refDark.current;
-  };
-
-  const handleOnHover = async (m: string) => {
-    if (!getRef(m)) return;
-    getRef(m).play();
-  };
-
-  const handleComplete = (r: AnyJson) => {
-    r?.stop();
-  };
-
-  useEffect(() => {
-    if (!getRef('light') || !getRef('dark') || refsInitialised.current) return;
-    refsInitialised.current = true;
-
-    getRef('light').addEventListener('loop', () =>
-      handleComplete(getRef('light'))
-    );
-    getRef('dark').addEventListener('loop', () =>
-      handleComplete(getRef('dark'))
-    );
-
-    return () => {
-      refLight.current.removeEventListener('loop', handleComplete);
-      refDark.current.removeEventListener('loop', handleComplete);
-    };
-  }, [getRef('light'), getRef('dark')]);
-
-  const [iconLight] = useState<any>(
-    <dotlottie-player
-      ref={refLight}
-      loop
-      autoplay
-      src="/lottie/trending-light.lottie"
-      style={{ height: '100%', width: '100%' }}
-    />
-  );
-
-  const [iconDark] = useState<any>(
-    <dotlottie-player
-      ref={refDark}
-      loop
-      autoplay
-      src="/lottie/trending-dark.lottie"
-      style={{ height: '100%', width: '100%' }}
-    />
-  );
-
   return (
     <>
       <PageTitle title={t('overview.overview')} />
-      <PageRowWrapper>
-        <button
-          type="button"
-          onMouseEnter={() => handleOnHover(mode)}
-          style={{ display: mode === 'light' ? 'block' : 'none' }}
-        >
-          {iconLight}
-        </button>
-        <button
-          type="button"
-          onMouseEnter={() => handleOnHover(mode)}
-          style={{ display: mode === 'dark' ? 'block' : 'none' }}
-        >
-          {iconDark}
-        </button>
-      </PageRowWrapper>
+      <PageRowWrapper>{icon}</PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
           <ActiveAccount />
