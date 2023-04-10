@@ -24,7 +24,7 @@ export const ControllerNotImported = () => {
       {getControllerNotImported(controller)
         ? !isSyncing &&
           !isReadOnlyAccount(activeAccount) && (
-            <PageRow noVerticalMargin>
+            <PageRow>
               <CardWrapper warning>
                 <CardHeaderWrapper>
                   <h4>{t('nominate.controllerNotImported')}</h4>

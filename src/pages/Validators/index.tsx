@@ -32,7 +32,7 @@ export const Validators = ({ page }: PageProps) => {
         <TotalValidatorsStat />
         <AverageCommissionStat />
       </StatBoxList>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           {!isReady ? (
             <div className="item">

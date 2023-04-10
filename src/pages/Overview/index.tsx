@@ -63,7 +63,7 @@ export const Overview = () => {
   return (
     <>
       <PageTitle title={t('overview.overview')} />
-      <PageRow noVerticalMargin>
+      <PageRow>
         <TopBarWrapper>
           <ActiveAccount />
         </TopBarWrapper>
@@ -73,10 +73,10 @@ export const Overview = () => {
         <SupplyStakedStat />
         <ActiveEraStat />
       </StatBoxList>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <StakeStatus />
       </PageRow>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <RowSecondaryWrapper
           hOrder={0}
           vOrder={0}
@@ -118,7 +118,7 @@ export const Overview = () => {
           </GraphWrapper>
         </RowPrimaryWrapper>
       </PageRow>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <NetworkStats />
       </PageRow>
     </>

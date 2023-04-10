@@ -56,7 +56,7 @@ export const Payouts = ({ page }: PageProps) => {
       <StatBoxList>
         <LastEraPayoutStat />
       </StatBoxList>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <GraphWrapper>
           <SubscanButton />
           <CardHeaderWrapper padded>
@@ -115,7 +115,7 @@ export const Payouts = ({ page }: PageProps) => {
       {!payoutsList?.length ? (
         <></>
       ) : (
-        <PageRow noVerticalMargin>
+        <PageRow>
           <CardWrapper>
             <PayoutList
               title={t('payouts.recentPayouts', { ns: 'pages' })}

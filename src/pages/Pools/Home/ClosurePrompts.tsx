@@ -49,7 +49,7 @@ export const ClosurePrompts = () => {
   return (
     <>
       {depositorCanClose && (
-        <PageRow noVerticalMargin>
+        <PageRow>
           <CardWrapper
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >

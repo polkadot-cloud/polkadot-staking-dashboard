@@ -26,7 +26,7 @@ export const Setup = () => {
   return (
     <>
       <PageTitle title={t('nominate.startNominating')} />
-      <PageRow noVerticalMargin>
+      <PageRow>
         <TopBarWrapper>
           <span>
             <ButtonSecondary
@@ -59,13 +59,13 @@ export const Setup = () => {
           <div className="right" />
         </TopBarWrapper>
       </PageRow>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           <Element name="payee" style={{ position: 'absolute' }} />
           <Payee section={1} />
         </CardWrapper>
       </PageRow>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
           <Nominate
@@ -75,13 +75,13 @@ export const Setup = () => {
           />
         </CardWrapper>
       </PageRow>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           <Element name="bond" style={{ position: 'absolute' }} />
           <Bond section={3} />
         </CardWrapper>
       </PageRow>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           <Element name="summary" style={{ position: 'absolute' }} />
           <Summary section={4} />

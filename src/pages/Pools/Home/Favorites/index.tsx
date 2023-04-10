@@ -39,7 +39,7 @@ export const Favorites = () => {
 
   return (
     <>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           {favoritesList === null || isPoolSyncing ? (
             <h3>{t('pools.fetchingFavoritePools')}...</h3>

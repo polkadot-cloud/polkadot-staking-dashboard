@@ -49,7 +49,7 @@ export const Active = () => {
       </StatBoxList>
       <ControllerNotImported />
       <UnstakePrompts />
-      <PageRow noVerticalMargin>
+      <PageRow>
         <RowPrimaryWrapper
           hOrder={1}
           vOrder={0}
@@ -69,7 +69,7 @@ export const Active = () => {
           </CardWrapper>
         </RowSecondaryWrapper>
       </PageRow>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           {nominations.length || inSetup() || isSyncing ? (
             <Nominations bondFor="nominator" nominator={activeAccount} />

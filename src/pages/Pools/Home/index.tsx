@@ -102,7 +102,7 @@ export const HomeInner = () => {
 
           <ClosurePrompts />
 
-          <PageRow noVerticalMargin>
+          <PageRow>
             <RowPrimaryWrapper
               hOrder={1}
               vOrder={0}
@@ -125,7 +125,7 @@ export const HomeInner = () => {
           {selectedActivePool !== null && (
             <>
               <ManagePool />
-              <PageRow noVerticalMargin>
+              <PageRow>
                 <CardWrapper>
                   <Roles
                     batchKey="pool_roles_manage"
@@ -133,7 +133,7 @@ export const HomeInner = () => {
                   />
                 </CardWrapper>
               </PageRow>
-              <PageRow noVerticalMargin>
+              <PageRow>
                 <PoolStats />
               </PageRow>
             </>
@@ -148,7 +148,7 @@ export const HomeInner = () => {
             <ActivePoolsStat />
             <MinJoinBondStat />
           </StatBoxList>
-          <PageRow noVerticalMargin>
+          <PageRow>
             <CardWrapper>
               <PoolList
                 batchKey="bonded_pools"
