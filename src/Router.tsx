@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Body, Main } from '@polkadotcloud/core-ui';
-import { PageWrapper, SideInterfaceWrapper } from 'Wrappers';
+import { Body, Main, Page } from '@polkadotcloud/core-ui';
+import { SideInterfaceWrapper } from 'Wrappers';
 import { PagesConfig } from 'config/pages';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
@@ -88,20 +88,14 @@ export const RouterInner = () => {
                       key={`main_interface_page_${i}`}
                       path={hash}
                       element={
-                        <PageWrapper
-                          key={`main_interface_key__${i}`}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 10 }}
-                          transition={{ duration: 0.2 }}
-                        >
+                        <Page>
                           <Helmet>
                             <title>{`${t(key)} : ${t('title', {
                               context: `${network.name}`,
                             })}`}</title>
                           </Helmet>
                           <Entry page={page} />
-                        </PageWrapper>
+                        </Page>
                       }
                     />
                   );

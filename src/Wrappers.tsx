@@ -7,7 +7,6 @@ import {
   SideMenuMinimisedWidth,
   SideMenuStickyThreshold,
 } from 'consts';
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import type {
   InterfaceLayoutProps,
@@ -46,21 +45,6 @@ export const SideInterfaceWrapper = styled.div<SideInterfaceWrapperProps>`
     top: 0;
     left: ${(props) => (props.open ? 0 : `-${SideMenuMaximisedWidth}px`)};
   }
-`;
-
-/* PageWrapper
- *
- * A motion.div that wraps every page.
- * Transitions can be applied to this wrapper that will
- * affect the entire page.
- */
-export const PageWrapper = styled(motion.div)`
-  max-width: ${InterfaceMaximumWidth}px;
-  display: flex;
-  flex-flow: column nowrap;
-  padding-bottom: 4.5rem;
-  width: 100%;
-  margin: 0 auto;
 `;
 
 /* PageTitleWrapper
