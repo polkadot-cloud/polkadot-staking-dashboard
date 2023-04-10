@@ -43,11 +43,13 @@ export const useDotLottieButton = (
     );
   }, [getRef('light'), getRef('dark')]);
 
+  const autoPlay = options?.autoLoop ?? undefined;
+
   const [iconLight] = useState<any>(
     <dotlottie-player
       ref={refLight}
       loop
-      autoPlay={options?.autoLoop === true}
+      autoPlay={autoPlay}
       src={`/lottie/${filename}-light.lottie`}
       style={{ height: '100%', width: '100%' }}
     />
@@ -57,7 +59,7 @@ export const useDotLottieButton = (
     <dotlottie-player
       ref={refDark}
       loop
-      autoPlay={options?.autoLoop === true}
+      autoPlay={autoPlay}
       src={`/lottie/${filename}-dark.lottie`}
       style={{ height: '100%', width: '100%' }}
     />
