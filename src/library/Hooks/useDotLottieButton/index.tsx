@@ -40,13 +40,6 @@ export const useDotLottieButton = (
     );
   }, [getRef('light'), getRef('dark')]);
 
-  useEffect(() => {
-    return () => {
-      refLight.current.removeEventListener('loop', handleComplete);
-      refDark.current.removeEventListener('loop', handleComplete);
-    };
-  }, []);
-
   const [iconLight] = useState<any>(
     <dotlottie-player
       ref={refLight}
