@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Body, Main } from '@polkadotcloud/core-ui';
-import { PageWrapper, SideInterfaceWrapper } from 'Wrappers';
+import { Body, Main, Side } from '@polkadotcloud/core-ui';
+import { PageWrapper } from 'Wrappers';
 import { PagesConfig } from 'config/pages';
 import { useApi } from 'contexts/Api';
 import { useUi } from 'contexts/UI';
@@ -68,9 +68,9 @@ export const RouterInner = () => {
         <Overlay />
 
         {/* Left side menu */}
-        <SideInterfaceWrapper open={sideMenuOpen} minimised={sideMenuMinimised}>
+        <Side open={sideMenuOpen} minimised={sideMenuMinimised}>
           <SideMenu />
-        </SideInterfaceWrapper>
+        </Side>
 
         {/* Main content window */}
         <Main ref={mainInterfaceRef}>
