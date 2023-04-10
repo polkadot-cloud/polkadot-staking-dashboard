@@ -1,11 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  PageRowWrapper,
-  RowPrimaryWrapper,
-  RowSecondaryWrapper,
-} from 'Wrappers';
+import { PageRow } from '@polkadotcloud/core-ui';
+import { RowPrimaryWrapper, RowSecondaryWrapper } from 'Wrappers';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -105,7 +102,7 @@ export const HomeInner = () => {
 
           <ClosurePrompts />
 
-          <PageRowWrapper className="page-padding" noVerticalSpacer>
+          <PageRow noVerticalMargin>
             <RowPrimaryWrapper
               hOrder={1}
               vOrder={0}
@@ -124,21 +121,21 @@ export const HomeInner = () => {
                 <ManageBond />
               </CardWrapper>
             </RowSecondaryWrapper>
-          </PageRowWrapper>
+          </PageRow>
           {selectedActivePool !== null && (
             <>
               <ManagePool />
-              <PageRowWrapper className="page-padding" noVerticalSpacer>
+              <PageRow noVerticalMargin>
                 <CardWrapper>
                   <Roles
                     batchKey="pool_roles_manage"
                     defaultRoles={getPoolRoles()}
                   />
                 </CardWrapper>
-              </PageRowWrapper>
-              <PageRowWrapper className="page-padding" noVerticalSpacer>
+              </PageRow>
+              <PageRow noVerticalMargin>
                 <PoolStats />
-              </PageRowWrapper>
+              </PageRow>
             </>
           )}
         </>
@@ -151,7 +148,7 @@ export const HomeInner = () => {
             <ActivePoolsStat />
             <MinJoinBondStat />
           </StatBoxList>
-          <PageRowWrapper className="page-padding" noVerticalSpacer>
+          <PageRow noVerticalMargin>
             <CardWrapper>
               <PoolList
                 batchKey="bonded_pools"
@@ -166,7 +163,7 @@ export const HomeInner = () => {
                 pagination
               />
             </CardWrapper>
-          </PageRowWrapper>
+          </PageRow>
         </>
       )}
       {activeTab === 3 && (
