@@ -24,7 +24,7 @@ export const Create = () => {
   return (
     <>
       <PageTitle title={t('pools.createAPool')} />
-      <PageRow noVerticalMargin>
+      <PageRow>
         <TopBarWrapper>
           <span>
             <ButtonSecondary
@@ -48,13 +48,13 @@ export const Create = () => {
           <div className="right" />
         </TopBarWrapper>
       </PageRow>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           <Element name="metadata" style={{ position: 'absolute' }} />
           <PoolName section={1} />
         </CardWrapper>
       </PageRow>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
           <Nominate
@@ -64,20 +64,20 @@ export const Create = () => {
           />
         </CardWrapper>
       </PageRow>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           <Element name="roles" style={{ position: 'absolute' }} />
           <PoolRoles section={3} />
         </CardWrapper>
       </PageRow>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           <Element name="bond" style={{ position: 'absolute' }} />
           <Bond section={4} />
         </CardWrapper>
       </PageRow>
 
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           <Element name="summary" style={{ position: 'absolute' }} />
           <Summary section={5} />

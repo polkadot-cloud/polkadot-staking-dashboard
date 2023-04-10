@@ -38,7 +38,7 @@ export const UnstakePrompts = () => {
   return (
     <>
       {(isUnstaking || isFastUnstaking) && !isNetworkSyncing && (
-        <PageRow noVerticalMargin>
+        <PageRow>
           <CardWrapper
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >

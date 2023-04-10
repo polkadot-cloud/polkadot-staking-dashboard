@@ -33,7 +33,7 @@ export const Members = () => {
     <>
       {/* Pool in Blocked state: allow root & stage toggler to unbond & withdraw members */}
       {showBlockedPrompt && (
-        <PageRow noVerticalMargin>
+        <PageRow>
           <CardWrapper
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
@@ -51,7 +51,7 @@ export const Members = () => {
 
       {/* Pool in Destroying state: allow anyone to unbond & withdraw members */}
       {selectedActivePool?.bondedPool?.state === 'Destroying' && (
-        <PageRow noVerticalMargin>
+        <PageRow>
           <CardWrapper
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
@@ -67,7 +67,7 @@ export const Members = () => {
         </PageRow>
       )}
 
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           <MembersList
             title={poolMembersTitle}

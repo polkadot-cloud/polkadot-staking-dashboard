@@ -21,7 +21,7 @@ export const Favorites = ({ page }: PageProps) => {
   return (
     <>
       <PageTitle title={t(key, { ns: 'base' })} />
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           {favoritesList === null ? (
             <h3>
