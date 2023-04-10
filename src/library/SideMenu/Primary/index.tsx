@@ -5,9 +5,7 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useUi } from 'contexts/UI';
 import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import type { AnyJson } from 'types';
 import type { PrimaryProps } from '../types';
 import { Wrapper } from './Wrappers';
 
@@ -21,7 +19,7 @@ export const Primary = ({
 }: PrimaryProps) => {
   const { setSideMenu } = useUi();
 
-  const [iconData] = useState<AnyJson>(useDotLottieButton(lottie));
+  const { icon, play } = useDotLottieButton(lottie);
 
   let Action = null;
   const actionStatus = action?.status ?? null;
@@ -50,7 +48,7 @@ export const Primary = ({
       to={to}
       onClick={() => {
         if (!active) {
-          iconData.play();
+          play();
           setSideMenu(0);
         }
       }}
@@ -66,7 +64,7 @@ export const Primary = ({
         }}
       >
         <div className={`dotlottie${minimised ? ` minimised` : ``}`}>
-          {iconData.icon}
+          {icon}
         </div>
         {!minimised && (
           <>
