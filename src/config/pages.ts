@@ -1,14 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faHashtag } from '@fortawesome/free-solid-svg-icons';
 import { UriPrefix } from 'consts';
-import analyticsJson from 'img/json/analytics-solid.json';
-import favoriteHeartJson from 'img/json/favorite-heart-solid.json';
-import viewGroupJson from 'img/json/groups-solid.json';
-import viewTrendingUpJson from 'img/json/trending-up-solid.json';
-import view1SolidJson from 'img/json/view-1-solid.json';
-import viewAgendaJson from 'img/json/view-agenda-solid.json';
 import { Community } from 'pages/Community';
 import { Favorites } from 'pages/Favorites';
 import { Nominate } from 'pages/Nominate';
@@ -40,7 +33,7 @@ export const PagesConfig: PagesConfigItems = [
     uri: `${UriPrefix}/`,
     hash: '/overview',
     Entry: Overview,
-    animate: view1SolidJson,
+    lottie: 'globe',
   },
   {
     category: 2,
@@ -48,7 +41,7 @@ export const PagesConfig: PagesConfigItems = [
     uri: `${UriPrefix}/pools`,
     hash: '/pools',
     Entry: Pools,
-    animate: viewGroupJson,
+    lottie: 'groups',
   },
   {
     category: 2,
@@ -56,7 +49,7 @@ export const PagesConfig: PagesConfigItems = [
     uri: `${UriPrefix}/nominate`,
     hash: '/nominate',
     Entry: Nominate,
-    animate: viewTrendingUpJson,
+    lottie: 'trending',
   },
   {
     category: 2,
@@ -64,7 +57,7 @@ export const PagesConfig: PagesConfigItems = [
     uri: `${UriPrefix}/payouts`,
     hash: '/payouts',
     Entry: Payouts,
-    animate: analyticsJson,
+    lottie: 'analytics',
   },
   {
     category: 3,
@@ -72,7 +65,7 @@ export const PagesConfig: PagesConfigItems = [
     uri: `${UriPrefix}/validators`,
     hash: '/validators',
     Entry: Validators,
-    animate: viewAgendaJson,
+    lottie: 'view',
   },
   {
     category: 3,
@@ -80,7 +73,7 @@ export const PagesConfig: PagesConfigItems = [
     uri: `${UriPrefix}/community`,
     hash: '/community',
     Entry: Community,
-    icon: faHashtag,
+    lottie: 'label',
   },
   {
     category: 3,
@@ -88,6 +81,6 @@ export const PagesConfig: PagesConfigItems = [
     uri: `${UriPrefix}/favorites`,
     hash: '/favorites',
     Entry: Favorites,
-    animate: favoriteHeartJson,
+    lottie: 'heart',
   },
 ];

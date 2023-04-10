@@ -4,8 +4,7 @@
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useUi } from 'contexts/UI';
-import { useState } from 'react';
-import Lottie from 'react-lottie';
+import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
 import { Link } from 'react-router-dom';
 import type { PrimaryProps } from '../types';
 import { MinimisedWrapper, Wrapper } from './Wrappers';
@@ -14,12 +13,13 @@ export const Primary = ({
   name,
   active,
   to,
-  icon,
   action,
   minimised,
-  animate,
+  lottie,
 }: PrimaryProps) => {
   const { setSideMenu } = useUi();
+  const icon = useDotLottieButton(lottie);
+
   const StyledWrapper = minimised ? MinimisedWrapper : Wrapper;
 
   let Action = null;
@@ -44,24 +44,12 @@ export const Primary = ({
       Action = null;
   }
 
-  const [isStopped, setIsStopped] = useState(true);
-
-  const animateOptions = {
-    loop: true,
-    autoplay: false,
-    animationData: animate,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
-    },
-  };
-
   return (
     <Link
       to={to}
       onClick={() => {
         if (!active) {
           setSideMenu(0);
-          setIsStopped(false);
         }
       }}
     >
@@ -75,25 +63,7 @@ export const Primary = ({
           duration: 0.1,
         }}
       >
-        <div className="icon">
-          {animate === undefined ? (
-            icon
-          ) : (
-            <Lottie
-              options={animateOptions}
-              width={minimised ? '1.5rem' : '1.35rem'}
-              height={minimised ? '1.5rem' : '1.35rem'}
-              isStopped={isStopped}
-              isPaused={isStopped}
-              eventListeners={[
-                {
-                  eventName: 'loopComplete',
-                  callback: () => setIsStopped(true),
-                },
-              ]}
-            />
-          )}
-        </div>
+        <div className={`lottie${minimised ? ` minimised` : ``}`}>{icon}</div>
         {!minimised && (
           <>
             <h4 className="name">{name}</h4> {Action}

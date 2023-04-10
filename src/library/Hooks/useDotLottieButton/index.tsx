@@ -8,7 +8,6 @@ import type { AnyJson } from 'types';
 
 export const useDotLottieButton = (
   filename: string,
-  onClick: () => void,
   style: React.CSSProperties = {}
 ) => {
   const { mode } = useTheme();
@@ -21,7 +20,7 @@ export const useDotLottieButton = (
     return m === 'light' ? refLight.current : refDark.current;
   };
 
-  const handleOnHover = async (m: Theme) => {
+  const handlePlayAnimation = async (m: Theme) => {
     if (!getRef(m)) return;
     getRef(m).play();
   };
@@ -39,18 +38,19 @@ export const useDotLottieButton = (
     getRef('dark').addEventListener('loop', () =>
       handleComplete(getRef('dark'))
     );
+  }, [getRef('light'), getRef('dark')]);
 
+  useEffect(() => {
     return () => {
       refLight.current.removeEventListener('loop', handleComplete);
       refDark.current.removeEventListener('loop', handleComplete);
     };
-  }, [getRef('light'), getRef('dark')]);
+  }, []);
 
   const [iconLight] = useState<any>(
     <dotlottie-player
       ref={refLight}
       loop
-      autoplay
       src={`/lottie/${filename}-light.lottie`}
       style={{ height: '100%', width: '100%' }}
     />
@@ -60,7 +60,6 @@ export const useDotLottieButton = (
     <dotlottie-player
       ref={refDark}
       loop
-      autoplay
       src={`/lottie/${filename}-dark.lottie`}
       style={{ height: '100%', width: '100%' }}
     />
@@ -70,17 +69,29 @@ export const useDotLottieButton = (
     <>
       <button
         type="button"
-        onMouseEnter={() => handleOnHover(mode)}
-        style={{ ...style, display: mode === 'light' ? 'block' : 'none' }}
-        onClick={() => onClick()}
+        style={{
+          ...style,
+          display: mode === 'light' ? 'block' : 'none',
+          height: 'inherit',
+          width: 'inherit',
+        }}
+        onClick={() => {
+          handlePlayAnimation(mode);
+        }}
       >
         {iconLight}
       </button>
       <button
         type="button"
-        onMouseEnter={() => handleOnHover(mode)}
-        style={{ ...style, display: mode === 'dark' ? 'block' : 'none' }}
-        onClick={() => onClick()}
+        style={{
+          ...style,
+          display: mode === 'dark' ? 'block' : 'none',
+          height: 'inherit',
+          width: 'inherit',
+        }}
+        onClick={() => {
+          handlePlayAnimation(mode);
+        }}
       >
         {iconDark}
       </button>

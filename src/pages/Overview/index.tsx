@@ -15,7 +15,6 @@ import { useSubscan } from 'contexts/Subscan';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
-import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
@@ -36,9 +35,6 @@ export const Overview = () => {
   const { network } = useApi();
   const { units } = network;
   const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
-  const icon = useDotLottieButton('trending', () => {
-    console.log('trending button clicked');
-  });
 
   const { lastReward } = formatRewardsForGraphs(
     new Date(),
@@ -68,7 +64,6 @@ export const Overview = () => {
   return (
     <>
       <PageTitle title={t('overview.overview')} />
-      <PageRowWrapper>{icon}</PageRowWrapper>
       <PageRowWrapper className="page-padding" noVerticalSpacer>
         <TopBarWrapper>
           <ActiveAccount />

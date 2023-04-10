@@ -15,19 +15,14 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
   position: relative;
   height: 3.2rem;
 
-  .icon {
+  .lottie {
     margin-left: ${(props) => (props.minimised ? 0 : '0.25rem')};
     margin-right: 0.65rem;
+    width: 1.5rem;
+    height: 1.5rem;
 
     .fa-icon {
       margin: 0 0.15rem;
-    }
-
-    .lpf {
-      fill: var(--text-color-primary);
-    }
-    .lps {
-      stroke: var(--text-color-primary);
     }
   }
   .name {
@@ -102,15 +97,11 @@ export const MinimisedWrapper = styled(motion.div)`
   &.inactive:hover {
     background: var(--gradient-highlight-secondary);
   }
-  .icon {
-    margin: 0;
+  .lottie {
     color: var(--text-color-primary);
-    .lpf {
-      fill: var(--text-color-primary);
-    }
-    .lps {
-      stroke: var(--text-color-primary);
-    }
+    margin: 0;
+    width: 1.5rem;
+    height: 1.5rem;
   }
   .action {
     &.minimised {
