@@ -6,12 +6,12 @@ import type { FunctionComponent, SVGProps } from 'react';
 import type { AnyJson } from 'types';
 
 export interface MinimisedProps {
-  minimised: number;
+  minimised: boolean;
 }
 
 export interface HeadingProps {
   title: string;
-  minimised: number;
+  minimised: boolean;
 }
 
 export interface PrimaryProps {
@@ -21,7 +21,7 @@ export interface PrimaryProps {
   icon?: React.ReactNode;
   animate?: AnyJson;
   action: undefined | { type: string; status: string; text?: string };
-  minimised: number;
+  minimised: boolean;
 }
 
 export interface SecondaryProps {
@@ -32,7 +32,7 @@ export interface SecondaryProps {
   to?: string;
   icon?: IconProps;
   action?: React.ReactNode;
-  minimised: number;
+  minimised: boolean;
   animate?: AnyJson;
 }
 

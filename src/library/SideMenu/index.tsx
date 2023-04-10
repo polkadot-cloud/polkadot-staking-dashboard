@@ -118,9 +118,7 @@ export const SideMenu = () => {
       <section>
         <button
           type="button"
-          onClick={() =>
-            setUserSideMenuMinimised(userSideMenuMinimised ? 0 : 1)
-          }
+          onClick={() => setUserSideMenuMinimised(!userSideMenuMinimised)}
         >
           <FontAwesomeIcon
             icon={userSideMenuMinimised ? faExpandAlt : faCompressAlt}

@@ -88,12 +88,12 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   // side menu control
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
 
-  // get side menu minimised state from local storage, default to 0.
+  // get side menu minimised state from local storage, default to false.
   const [userSideMenuMinimised, setUserSideMenuMinimisedState] = useState(
-    Number(localStorageOrDefault('side_menu_minimised', 0))
+    localStorageOrDefault('side_menu_minimised', false) as boolean
   );
   const userSideMenuMinimisedRef = useRef(userSideMenuMinimised);
-  const setUserSideMenuMinimised = (v: number) => {
+  const setUserSideMenuMinimised = (v: boolean) => {
     localStorage.setItem('side_menu_minimised', String(v));
     setStateWithRef(v, setUserSideMenuMinimisedState, userSideMenuMinimisedRef);
   };
@@ -101,14 +101,14 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   // automatic side menu minimised
   const [sideMenuMinimised, setSideMenuMinimised] = useState(
     window.innerWidth <= SideMenuStickyThreshold
-      ? 1
+      ? true
       : userSideMenuMinimisedRef.current
   );
 
   // resize side menu callback
   const resizeCallback = () => {
     if (window.innerWidth <= SideMenuStickyThreshold) {
-      setSideMenuMinimised(0);
+      setSideMenuMinimised(false);
     } else {
       setSideMenuMinimised(userSideMenuMinimisedRef.current);
     }

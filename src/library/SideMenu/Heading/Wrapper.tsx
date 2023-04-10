@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 
-export const Wrapper = styled.div<{ minimised: number }>`
+export const Wrapper = styled.div<{ minimised: boolean }>`
   display: flex;
   flex-flow: row wrap;
   justify-content: ${(props) => (props.minimised ? 'center' : 'flex-start')};

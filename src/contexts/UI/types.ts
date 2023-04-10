@@ -3,7 +3,7 @@
 
 export interface UIContextInterface {
   setSideMenu: (v: boolean) => void;
-  setUserSideMenuMinimised: (v: number) => void;
+  setUserSideMenuMinimised: (v: boolean) => void;
   setContainerRefs: (v: any) => void;
   getSyncById: (id: string) => number | null;
   getSyncStart: (id: string) => number;
@@ -11,8 +11,8 @@ export interface UIContextInterface {
   getSyncSynced: (id: string) => boolean;
   setSyncSynced: (id: string) => void;
   sideMenuOpen: boolean;
-  userSideMenuMinimised: number;
-  sideMenuMinimised: number;
+  userSideMenuMinimised: boolean;
+  sideMenuMinimised: boolean;
   containerRefs: any;
   isSyncing: boolean;
   isNetworkSyncing: boolean;

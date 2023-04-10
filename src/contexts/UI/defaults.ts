@@ -21,8 +21,8 @@ export const defaultUIContext: UIContextInterface = {
   // eslint-disable-next-line
   setSyncSynced: (i) => {},
   sideMenuOpen: false,
-  userSideMenuMinimised: 0,
-  sideMenuMinimised: 0,
+  userSideMenuMinimised: false,
+  sideMenuMinimised: false,
   containerRefs: {},
   isSyncing: false,
   isNetworkSyncing: false,
