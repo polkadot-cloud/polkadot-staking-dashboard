@@ -94,13 +94,6 @@ export const IconWrapper = styled.div<{ minimised: number }>`
   margin-left: ${(props) => (props.minimised ? 0 : '0.25rem')};
   margin-right: ${(props) => (props.minimised ? 0 : '0.65rem')};
 
-  .lpf {
-    fill: var(--text-color-primary);
-  }
-  .lps {
-    stroke: var(--text-color-primary);
-  }
-
   svg {
     .primary {
       fill: var(--text-color-secondary);
