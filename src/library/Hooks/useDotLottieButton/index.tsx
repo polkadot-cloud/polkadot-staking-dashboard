@@ -76,9 +76,7 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
           height: 'inherit',
           width: 'inherit',
         }}
-        onClick={() => {
-          handlePlayAnimation();
-        }}
+        onClick={() => handlePlayAnimation()}
       >
         {iconLight}
       </button>

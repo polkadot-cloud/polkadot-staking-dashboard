@@ -5,23 +5,23 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 export const Wrapper = styled(motion.div)`
+  border: none;
   border-radius: 0.7rem;
+  height: 3.2rem;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  padding: 0rem 0.5rem;
   margin: 0.4rem 0.2rem 0.3rem 0;
+  padding: 0rem 0.5rem;
   position: relative;
-  height: 3.2rem;
-  border: none;
 
   &.minimised {
-    border-radius: 0.5rem;
-    justify-content: center;
-    padding: 0.65rem 0rem;
-    margin: 0.7rem 0.2rem 0.5rem 0;
-    font-size: 1.1rem;
     border: 1px solid rgba(255, 255, 255, 0);
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    justify-content: center;
+    margin: 0.7rem 0.2rem 0.5rem 0;
+    padding: 0.65rem 0rem;
 
     &.action-success {
       border: 1px solid var(--network-color-primary);
@@ -41,9 +41,9 @@ export const Wrapper = styled(motion.div)`
       margin: 0 0.15rem;
     }
     &.minimised {
+      margin: 0;
       width: 1.5rem;
       height: 1.5rem;
-      margin: 0;
     }
   }
   .name {
@@ -53,12 +53,12 @@ export const Wrapper = styled(motion.div)`
   }
   .action {
     color: var(--status-success-color);
-    flex: 1;
     display: flex;
+    flex: 1;
+    font-size: 0.88rem;
     flex-flow: row wrap;
     justify-content: flex-end;
     margin-right: 0.4rem;
-    font-size: 0.88rem;
     opacity: 0.7;
 
     > span {
@@ -88,8 +88,8 @@ export const Wrapper = styled(motion.div)`
       > svg {
         flex: 0;
         position: absolute;
-        top: -4px;
         right: -3px;
+        top: -4px;
       }
     }
   }
