@@ -23,7 +23,11 @@ export const Syncing = () => {
       <ItemWrapper>
         <ItemInnerWrapper inactive>
           <section
-            style={{ paddingRight: '0.5rem', width: '2rem', height: '2rem' }}
+            style={{
+              marginRight: '0.5rem',
+              width: '1.5rem',
+              height: '1.5rem',
+            }}
           >
             {icon}
           </section>

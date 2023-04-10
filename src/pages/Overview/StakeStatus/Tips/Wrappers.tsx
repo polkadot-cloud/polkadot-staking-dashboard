@@ -34,6 +34,7 @@ export const ItemWrapper = styled(motion.div)`
 export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
   display: flex;
   flex-flow: row wrap;
+  align-items: center;
 
   > section {
     height: 100%;
