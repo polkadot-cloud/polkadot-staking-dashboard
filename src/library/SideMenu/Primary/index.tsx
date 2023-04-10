@@ -18,7 +18,7 @@ export const Primary = ({
   lottie,
 }: PrimaryProps) => {
   const { setSideMenu } = useUi();
-  const icon = useDotLottieButton(lottie);
+  const { icon, play } = useDotLottieButton(lottie);
 
   const StyledWrapper = minimised ? MinimisedWrapper : Wrapper;
 
@@ -49,6 +49,7 @@ export const Primary = ({
       to={to}
       onClick={() => {
         if (!active) {
+          play();
           setSideMenu(0);
         }
       }}

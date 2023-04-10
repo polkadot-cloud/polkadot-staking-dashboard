@@ -20,9 +20,9 @@ export const useDotLottieButton = (
     return m === 'light' ? refLight.current : refDark.current;
   };
 
-  const handlePlayAnimation = async (m: Theme) => {
-    if (!getRef(m)) return;
-    getRef(m).play();
+  const handlePlayAnimation = async () => {
+    if (!getRef(mode)) return;
+    getRef(mode).play();
   };
 
   const handleComplete = (r: AnyJson) => {
@@ -65,7 +65,7 @@ export const useDotLottieButton = (
     />
   );
 
-  return (
+  const icon = (
     <>
       <button
         type="button"
@@ -76,7 +76,7 @@ export const useDotLottieButton = (
           width: 'inherit',
         }}
         onClick={() => {
-          handlePlayAnimation(mode);
+          handlePlayAnimation();
         }}
       >
         {iconLight}
@@ -90,11 +90,13 @@ export const useDotLottieButton = (
           width: 'inherit',
         }}
         onClick={() => {
-          handlePlayAnimation(mode);
+          handlePlayAnimation();
         }}
       >
         {iconDark}
       </button>
     </>
   );
+
+  return { icon, play: handlePlayAnimation };
 };
