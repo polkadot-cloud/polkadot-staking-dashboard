@@ -3,10 +3,6 @@
 
 import type { RefObject } from 'react';
 
-export interface PageRowWrapperProps {
-  noVerticalSpacer?: boolean;
-}
-
 export interface SideInterfaceWrapperProps {
   minimised: number;
   open: number;

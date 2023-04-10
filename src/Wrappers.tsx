@@ -7,11 +7,9 @@ import {
   SideMenuMinimisedWidth,
   SideMenuStickyThreshold,
 } from 'consts';
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import type {
   InterfaceLayoutProps,
-  PageRowWrapperProps,
   PageTitleWrapperProps,
   SideInterfaceWrapperProps,
 } from 'types/styles';
@@ -46,21 +44,6 @@ export const SideInterfaceWrapper = styled.div<SideInterfaceWrapperProps>`
     top: 0;
     left: ${(props) => (props.open ? 0 : `-${SideMenuMaximisedWidth}px`)};
   }
-`;
-
-/* PageWrapper
- *
- * A motion.div that wraps every page.
- * Transitions can be applied to this wrapper that will
- * affect the entire page.
- */
-export const PageWrapper = styled(motion.div)`
-  max-width: ${InterfaceMaximumWidth}px;
-  display: flex;
-  flex-flow: column nowrap;
-  padding-bottom: 4.5rem;
-  width: 100%;
-  margin: 0 auto;
 `;
 
 /* PageTitleWrapper
@@ -199,20 +182,6 @@ export const MenuPaddingWrapper = styled.div`
   @media (max-width: ${SideMenuStickyThreshold}px) {
     display: block;
   }
-`;
-
-/* PageRowWrapper
- *
- * Used to separate page content based on rows.
- * Commonly used with RowPrimaryWrapper and RowSecondaryWrapper.
- */
-export const PageRowWrapper = styled.div<PageRowWrapperProps>`
-  margin-top: ${(props) => (props.noVerticalSpacer === true ? '0' : '1rem')};
-  margin-bottom: ${(props) => (props.noVerticalSpacer === true ? '0' : '1rem')};
-  display: flex;
-  flex-shrink: 0;
-  flex-flow: row wrap;
-  width: 100%;
 `;
 
 /* RowPrimaryWrapper
