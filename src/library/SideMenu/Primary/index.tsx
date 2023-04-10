@@ -4,23 +4,22 @@
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useUi } from 'contexts/UI';
-import { useState } from 'react';
-import Lottie from 'react-lottie';
+import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
 import { Link } from 'react-router-dom';
 import type { PrimaryProps } from '../types';
-import { MinimisedWrapper, Wrapper } from './Wrappers';
+import { Wrapper } from './Wrappers';
 
 export const Primary = ({
   name,
   active,
   to,
-  icon,
   action,
   minimised,
-  animate,
+  lottie,
 }: PrimaryProps) => {
   const { setSideMenu } = useUi();
-  const StyledWrapper = minimised ? MinimisedWrapper : Wrapper;
+
+  const { icon, play } = useDotLottieButton(lottie);
 
   let Action = null;
   const actionStatus = action?.status ?? null;
@@ -44,62 +43,35 @@ export const Primary = ({
       Action = null;
   }
 
-  const [isStopped, setIsStopped] = useState(true);
-
-  const animateOptions = {
-    loop: true,
-    autoplay: false,
-    animationData: animate,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
-    },
-  };
-
   return (
     <Link
       to={to}
       onClick={() => {
         if (!active) {
+          play();
           setSideMenu(0);
-          setIsStopped(false);
         }
       }}
     >
-      <StyledWrapper
+      <Wrapper
         className={`${active ? `active` : `inactive`}${
-          action ? ` action-${actionStatus}` : ``
-        }`}
+          minimised ? ` minimised` : ``
+        }${action ? ` action-${actionStatus}` : ``}`}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{
           duration: 0.1,
         }}
       >
-        <div className="icon">
-          {animate === undefined ? (
-            icon
-          ) : (
-            <Lottie
-              options={animateOptions}
-              width={minimised ? '1.5rem' : '1.35rem'}
-              height={minimised ? '1.5rem' : '1.35rem'}
-              isStopped={isStopped}
-              isPaused={isStopped}
-              eventListeners={[
-                {
-                  eventName: 'loopComplete',
-                  callback: () => setIsStopped(true),
-                },
-              ]}
-            />
-          )}
+        <div className={`dotlottie${minimised ? ` minimised` : ``}`}>
+          {icon}
         </div>
         {!minimised && (
           <>
             <h4 className="name">{name}</h4> {Action}
           </>
         )}
-      </StyledWrapper>
+      </Wrapper>
     </Link>
   );
 };

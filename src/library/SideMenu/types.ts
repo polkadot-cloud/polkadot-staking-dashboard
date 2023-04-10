@@ -18,8 +18,7 @@ export interface PrimaryProps {
   name: string;
   active: boolean;
   to: string;
-  icon?: React.ReactNode;
-  animate?: AnyJson;
+  lottie: AnyJson;
   action: undefined | { type: string; status: string; text?: string };
   minimised: number;
 }
@@ -30,10 +29,9 @@ export interface SecondaryProps {
   onClick: () => void;
   active?: boolean;
   to?: string;
-  icon?: IconProps;
+  icon: IconProps;
   action?: React.ReactNode;
   minimised: number;
-  animate?: AnyJson;
 }
 
 export interface IconProps {
