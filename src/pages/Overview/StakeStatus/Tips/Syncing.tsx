@@ -7,7 +7,7 @@ import { ItemInnerWrapper, ItemWrapper, ItemsWrapper } from './Wrappers';
 
 export const Syncing = () => {
   const { t } = useTranslation('tips');
-  const { icon } = useDotLottieButton('refresh', {}, { autoLoop: true });
+  const { icon } = useDotLottieButton('refresh', { autoLoop: true });
 
   return (
     <ItemsWrapper

@@ -3,14 +3,10 @@
 
 import { useTheme } from 'contexts/Themes';
 import type { Theme } from 'contexts/Themes/types';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { AnyJson } from 'types';
 
-export const useDotLottieButton = (
-  filename: string,
-  style: React.CSSProperties = {},
-  options: AnyJson = {}
-) => {
+export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
   const { mode } = useTheme();
 
   const refLight = useRef<AnyJson>(null);
@@ -27,7 +23,7 @@ export const useDotLottieButton = (
   };
 
   const handleComplete = (r: AnyJson) => {
-    if (!options?.autoLoop) {
+    if (options?.autoLoop !== true) {
       r?.stop();
     }
   };
@@ -41,7 +37,11 @@ export const useDotLottieButton = (
     getRef('dark').addEventListener('loop', () =>
       handleComplete(getRef('dark'))
     );
-  }, [getRef('light'), getRef('dark')]);
+  }, [getRef('light'), getRef('dark'), refsInitialised.current]);
+
+  useEffect(() => {
+    refsInitialised.current = false;
+  }, [options?.deps]);
 
   const autoPlay = options?.autoLoop ?? undefined;
 
@@ -70,7 +70,7 @@ export const useDotLottieButton = (
       <button
         type="button"
         style={{
-          ...style,
+          ...options?.style,
           display: mode === 'light' ? 'block' : 'none',
           height: 'inherit',
           width: 'inherit',
@@ -84,7 +84,7 @@ export const useDotLottieButton = (
       <button
         type="button"
         style={{
-          ...style,
+          ...options?.style,
           display: mode === 'dark' ? 'block' : 'none',
           height: 'inherit',
           width: 'inherit',
