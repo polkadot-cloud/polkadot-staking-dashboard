@@ -1,8 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp } from '@polkadotcloud/core-ui';
-import { PageRowWrapper } from 'Wrappers';
+import { ButtonHelp, PageRow } from '@polkadotcloud/core-ui';
 import { MaxPayoutDays } from 'consts';
 import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
@@ -57,7 +56,7 @@ export const Payouts = ({ page }: PageProps) => {
       <StatBoxList>
         <LastEraPayoutStat />
       </StatBoxList>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      <PageRow noVerticalMargin>
         <GraphWrapper>
           <SubscanButton />
           <CardHeaderWrapper padded>
@@ -112,11 +111,11 @@ export const Payouts = ({ page }: PageProps) => {
             </div>
           </div>
         </GraphWrapper>
-      </PageRowWrapper>
+      </PageRow>
       {!payoutsList?.length ? (
         <></>
       ) : (
-        <PageRowWrapper className="page-padding" noVerticalSpacer>
+        <PageRow noVerticalMargin>
           <CardWrapper>
             <PayoutList
               title={t('payouts.recentPayouts', { ns: 'pages' })}
@@ -124,7 +123,7 @@ export const Payouts = ({ page }: PageProps) => {
               pagination
             />
           </CardWrapper>
-        </PageRowWrapper>
+        </PageRow>
       )}
     </>
   );

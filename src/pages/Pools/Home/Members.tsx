@@ -3,7 +3,7 @@
 
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { PageRowWrapper } from 'Wrappers';
+import { PageRow } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -33,7 +33,7 @@ export const Members = () => {
     <>
       {/* Pool in Blocked state: allow root & bouncer to unbond & withdraw members */}
       {showBlockedPrompt && (
-        <PageRowWrapper className="page-padding" noVerticalSpacer>
+        <PageRow noVerticalMargin>
           <CardWrapper
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
@@ -46,12 +46,12 @@ export const Members = () => {
               </h4>
             </div>
           </CardWrapper>
-        </PageRowWrapper>
+        </PageRow>
       )}
 
       {/* Pool in Destroying state: allow anyone to unbond & withdraw members */}
       {selectedActivePool?.bondedPool?.state === 'Destroying' && (
-        <PageRowWrapper className="page-padding" noVerticalSpacer>
+        <PageRow noVerticalMargin>
           <CardWrapper
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
@@ -64,10 +64,10 @@ export const Members = () => {
               </h4>
             </div>
           </CardWrapper>
-        </PageRowWrapper>
+        </PageRow>
       )}
 
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      <PageRow noVerticalMargin>
         <CardWrapper>
           <MembersList
             title={poolMembersTitle}
@@ -78,7 +78,7 @@ export const Members = () => {
             allowMoreCols
           />
         </CardWrapper>
-      </PageRowWrapper>
+      </PageRow>
     </>
   );
 };

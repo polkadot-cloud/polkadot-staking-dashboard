@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PageRowWrapper } from 'Wrappers';
+import { PageRow } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { useEffect, useState } from 'react';
@@ -40,12 +40,12 @@ export const List = () => {
   };
 
   return (
-    <PageRowWrapper className="page-padding">
+    <PageRow>
       <ItemsWrapper variants={container} initial="hidden" animate="show">
         {entityItems.map((item: any, index: number) => (
           <Item key={`community_item_${index}`} item={item} actionable />
         ))}
       </ItemsWrapper>
-    </PageRowWrapper>
+    </PageRow>
   );
 };

@@ -27,28 +27,26 @@ export const SplashWrapper = styled.div`
     justify-content: center;
     margin-bottom: 2rem;
 
-    h4 {
-      margin-top: 1.25rem;
-      margin-bottom: 0.5rem;
-    }
     h2,
-    h4,
     h5 {
       color: var(--text-color-secondary);
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-top: 0.35rem;
-      svg {
-        margin-right: 0.3rem;
-      }
+    }
+
+    h2 {
+      margin-bottom: 0.75rem;
     }
     h5 {
       min-height: 2rem;
     }
-    button {
-      cursor: pointer;
-      z-index: 1;
-      padding: 0.5rem 1.75rem !important;
-      font-variation-settings: 'wght' 650;
+
+    .button {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
     }
   }
 `;
@@ -96,6 +94,8 @@ export const StatusBarWrapper = styled(motion.div)`
     }
     h3,
     h5 {
+      display: flex;
+      align-items: center;
       flex: 1;
     }
     h5 {

@@ -145,6 +145,20 @@
           "Find more information about Ledger at their official website, ledger.com."
         ]
       ],
+      "ledgerRejectedTransaction": [
+        "Ledger Rejected Transaction",
+        [
+          "The transaction was rejected on the Ledger device and will not be submitted.",
+          "Submit a transaction by approving it on the Ledger device."
+        ]
+      ],
+      "ledgerRequestTimeout": [
+        "Ledger Request Timeout",
+        [
+          "Timeout errors can occur when the Ledger device is busy, or when an operation fails to complete in time.",
+          "Try performing the operation again, and if the error persists, try restarting the Ledger device."
+        ]
+      ],
       "lockedBalance": [
         "Locked Balance",
         [
@@ -212,6 +226,13 @@
         [
           "The amount of {NETWORK_UNIT} backing the validator from its nominators.",
           "This value is added to the validator's self stake to form the total stake of the validator. Note that this value changes every era as the bonded funds of nominators are re-distributed to the active validators of that session."
+        ]
+      ],
+      "openAppOnLedger": [
+        "Open App On Ledger",
+        [
+          "This message occurs when the {NETWORK_NAME} Ledger app is not currently open on the connected device.",
+          "Open the {NETWORK_NAME} app on the Ledger device and try again."
         ]
       ],
       "overSubscribed": [
@@ -313,6 +334,13 @@
         [
           "An entity that validates blocks for the {NETWORK_NAME} Relay Chain. Validators play a key role in {NETWORK_NAME} to secure the network and produce blocks.",
           "As a nominator, you choose which validators you wish to back, and receive rewards for doing so."
+        ]
+      ],
+      "wrongTransaction": [
+        "Wrong Transaction",
+        [
+          "This error occurs when a Ledger device signed or is in the process of signing a different transaction than the currently active one on the dashboard.",
+          "Ensure there are no outstanding transactions on the Ledger device and try again."
         ]
       ],
       "yourBalance": [

@@ -3,31 +3,47 @@
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
-import type { MinimisedProps } from '../types';
 
-export const Wrapper = styled(motion.div)<MinimisedProps>`
+export const Wrapper = styled(motion.div)`
+  border: none;
   border-radius: 0.7rem;
+  height: 3.2rem;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  padding: 0rem 0.5rem;
   margin: 0.4rem 0.2rem 0.3rem 0;
+  padding: 0rem 0.5rem;
   position: relative;
-  height: 3.2rem;
 
-  .icon {
-    margin-left: ${(props) => (props.minimised ? 0 : '0.25rem')};
+  &.minimised {
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    justify-content: center;
+    margin: 0.7rem 0.2rem 0.5rem 0;
+    padding: 0.65rem 0rem;
+
+    &.action-success {
+      border: 1px solid var(--network-color-primary);
+    }
+    &.action-warning {
+      border: 1px solid var(--status);
+    }
+  }
+
+  .dotlottie {
+    color: var(--text-color-primary);
+    margin-left: 0.25rem;
     margin-right: 0.65rem;
-
+    width: 1.35rem;
+    height: 1.35rem;
     .fa-icon {
       margin: 0 0.15rem;
     }
-
-    .lpf {
-      fill: var(--text-color-primary);
-    }
-    .lps {
-      stroke: var(--text-color-primary);
+    &.minimised {
+      margin: 0;
+      width: 1.5rem;
+      height: 1.5rem;
     }
   }
   .name {
@@ -37,12 +53,12 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
   }
   .action {
     color: var(--status-success-color);
-    flex: 1;
     display: flex;
+    flex: 1;
+    font-size: 0.88rem;
     flex-flow: row wrap;
     justify-content: flex-end;
     margin-right: 0.4rem;
-    font-size: 0.88rem;
     opacity: 0.7;
 
     > span {
@@ -68,58 +84,23 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
         color: var(--status-warning-color);
       }
     }
-  }
-
-  &.active {
-    background: var(--gradient-highlight-primary);
-  }
-  &.inactive:hover {
-    background: var(--gradient-highlight-secondary);
-  }
-`;
-
-export const MinimisedWrapper = styled(motion.div)`
-  border-radius: 0.5rem;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-items: center;
-  padding: 0.65rem 0rem;
-  margin: 0.7rem 0.2rem 0.5rem 0;
-  font-size: 1.1rem;
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0);
-
-  &.action-success {
-    border: 1px solid var(--network-color-primary);
-  }
-  &.action-warning {
-    border: 1px solid var(--status);
-  }
-  &.active {
-    background: var(--gradient-highlight-primary);
-  }
-  &.inactive:hover {
-    background: var(--gradient-highlight-secondary);
-  }
-  .icon {
-    margin: 0;
-    color: var(--text-color-primary);
-    .lpf {
-      fill: var(--text-color-primary);
-    }
-    .lps {
-      stroke: var(--text-color-primary);
-    }
-  }
-  .action {
     &.minimised {
       > svg {
         flex: 0;
         position: absolute;
-        top: -4px;
         right: -3px;
+        top: -4px;
       }
     }
+  }
+
+  &.active {
+    background: var(--gradient-highlight-primary);
+  }
+  &.inactive:hover {
+    background: var(--gradient-highlight-secondary);
+  }
+  &.inactive:hover {
+    background: var(--gradient-highlight-secondary);
   }
 `;
