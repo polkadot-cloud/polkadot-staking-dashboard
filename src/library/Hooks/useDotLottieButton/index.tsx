@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useTheme } from 'contexts/Themes';
+import type { Theme } from 'contexts/Themes/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyJson } from 'types';
 
@@ -16,11 +17,11 @@ export const useDotLottieButton = (
   const refDark = useRef<AnyJson>(null);
   const refsInitialised = useRef<AnyJson>(false);
 
-  const getRef = (m: string) => {
+  const getRef = (m: Theme) => {
     return m === 'light' ? refLight.current : refDark.current;
   };
 
-  const handleOnHover = async (m: string) => {
+  const handleOnHover = async (m: Theme) => {
     if (!getRef(m)) return;
     getRef(m).play();
   };
