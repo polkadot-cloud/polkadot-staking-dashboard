@@ -5,9 +5,11 @@ import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useUi } from 'contexts/UI';
 import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import type { AnyJson } from 'types';
 import type { PrimaryProps } from '../types';
-import { MinimisedWrapper, Wrapper } from './Wrappers';
+import { Wrapper } from './Wrappers';
 
 export const Primary = ({
   name,
@@ -18,9 +20,8 @@ export const Primary = ({
   lottie,
 }: PrimaryProps) => {
   const { setSideMenu } = useUi();
-  const { icon, play } = useDotLottieButton(lottie, { deps: [minimised] });
 
-  const StyledWrapper = minimised ? MinimisedWrapper : Wrapper;
+  const [iconData] = useState<AnyJson>(useDotLottieButton(lottie));
 
   let Action = null;
   const actionStatus = action?.status ?? null;
@@ -49,15 +50,15 @@ export const Primary = ({
       to={to}
       onClick={() => {
         if (!active) {
-          play();
+          iconData.play();
           setSideMenu(0);
         }
       }}
     >
-      <StyledWrapper
+      <Wrapper
         className={`${active ? `active` : `inactive`}${
-          action ? ` action-${actionStatus}` : ``
-        }`}
+          minimised ? ` minimised` : ``
+        }${action ? ` action-${actionStatus}` : ``}`}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{
@@ -65,14 +66,14 @@ export const Primary = ({
         }}
       >
         <div className={`dotlottie${minimised ? ` minimised` : ``}`}>
-          {icon}
+          {iconData.icon}
         </div>
         {!minimised && (
           <>
             <h4 className="name">{name}</h4> {Action}
           </>
         )}
-      </StyledWrapper>
+      </Wrapper>
     </Link>
   );
 };
