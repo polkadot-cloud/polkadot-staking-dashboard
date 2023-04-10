@@ -1,52 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  InterfaceMaximumWidth,
-  SideMenuMaximisedWidth,
-  SideMenuMinimisedWidth,
-  SideMenuStickyThreshold,
-} from 'consts';
+import { InterfaceMaximumWidth, SideMenuStickyThreshold } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import type {
   InterfaceLayoutProps,
   PageRowWrapperProps,
   PageTitleWrapperProps,
-  SideInterfaceWrapperProps,
 } from 'types/styles';
-
-/* SideInterfaceWrapper
- *
- * An element that houses the side menu and handles resizing
- * on smaller screens.
- * Used once in Router.
- */
-export const SideInterfaceWrapper = styled.div<SideInterfaceWrapperProps>`
-  height: 100vh;
-  display: flex;
-  flex-flow: column nowrap;
-  position: sticky;
-  top: 0px;
-  z-index: 7;
-  flex: 0;
-  overflow: hidden;
-  min-width: ${(props) =>
-    props.minimised
-      ? `${SideMenuMinimisedWidth}px`
-      : `${SideMenuMaximisedWidth}px`};
-  max-width: ${(props) =>
-    props.minimised
-      ? `${SideMenuMinimisedWidth}px`
-      : `${SideMenuMaximisedWidth}px`};
-  transition: all 0.5s cubic-bezier(0.1, 1, 0.2, 1);
-
-  @media (max-width: ${SideMenuStickyThreshold}px) {
-    position: fixed;
-    top: 0;
-    left: ${(props) => (props.open ? 0 : `-${SideMenuMaximisedWidth}px`)};
-  }
-`;
 
 /* PageWrapper
  *

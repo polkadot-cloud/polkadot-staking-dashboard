@@ -7,11 +7,6 @@ export interface PageRowWrapperProps {
   noVerticalSpacer?: boolean;
 }
 
-export interface SideInterfaceWrapperProps {
-  minimised: boolean;
-  open: boolean;
-}
-
 export interface PageTitleWrapperProps {
   sticky: boolean;
   ref: RefObject<HTMLElement>;
