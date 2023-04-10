@@ -52,7 +52,7 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
       loop
       autoPlay={autoPlay}
       src={`${BaseURL}/lottie/${filename}-light.lottie`}
-      style={{ height: '100%', width: '100%' }}
+      style={{ height: 'inherit', width: 'inherit' }}
     />
   );
 
@@ -62,7 +62,7 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
       loop
       autoPlay={autoPlay}
       src={`${BaseURL}/lottie/${filename}-dark.lottie`}
-      style={{ height: '100%', width: '100%' }}
+      style={{ height: 'inherit', width: 'inherit' }}
     />
   );
 
