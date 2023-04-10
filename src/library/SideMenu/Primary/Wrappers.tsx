@@ -15,7 +15,7 @@ export const Wrapper = styled(motion.div)<MinimisedProps>`
   position: relative;
   height: 3.2rem;
 
-  .lottie {
+  .dotlottie {
     margin-left: ${(props) => (props.minimised ? 0 : '0.25rem')};
     margin-right: 0.65rem;
     width: 1.5rem;
@@ -97,7 +97,7 @@ export const MinimisedWrapper = styled(motion.div)`
   &.inactive:hover {
     background: var(--gradient-highlight-secondary);
   }
-  .lottie {
+  .dotlottie {
     color: var(--text-color-primary);
     margin: 0;
     width: 1.5rem;

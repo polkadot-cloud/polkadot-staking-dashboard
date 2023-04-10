@@ -64,7 +64,9 @@ export const Primary = ({
           duration: 0.1,
         }}
       >
-        <div className={`lottie${minimised ? ` minimised` : ``}`}>{icon}</div>
+        <div className={`dotlottie${minimised ? ` minimised` : ``}`}>
+          {icon}
+        </div>
         {!minimised && (
           <>
             <h4 className="name">{name}</h4> {Action}
