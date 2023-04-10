@@ -10,7 +10,6 @@ import {
 import styled from 'styled-components';
 import type {
   InterfaceLayoutProps,
-  PageRowWrapperProps,
   PageTitleWrapperProps,
   SideInterfaceWrapperProps,
 } from 'types/styles';
@@ -183,20 +182,6 @@ export const MenuPaddingWrapper = styled.div`
   @media (max-width: ${SideMenuStickyThreshold}px) {
     display: block;
   }
-`;
-
-/* PageRowWrapper
- *
- * Used to separate page content based on rows.
- * Commonly used with RowPrimaryWrapper and RowSecondaryWrapper.
- */
-export const PageRowWrapper = styled.div<PageRowWrapperProps>`
-  margin-top: ${(props) => (props.noVerticalSpacer === true ? '0' : '1rem')};
-  margin-bottom: ${(props) => (props.noVerticalSpacer === true ? '0' : '1rem')};
-  display: flex;
-  flex-shrink: 0;
-  flex-flow: row wrap;
-  width: 100%;
 `;
 
 /* RowPrimaryWrapper
