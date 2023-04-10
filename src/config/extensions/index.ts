@@ -8,6 +8,7 @@ import { ReactComponent as PolkadotJSSVG } from './icons/polkadot_js.svg';
 import { ReactComponent as SignerSVG } from './icons/signer_icon.svg';
 import { ReactComponent as SubwalletSVG } from './icons/subwallet_icon.svg';
 import { ReactComponent as TalismanSVG } from './icons/talisman_icon.svg';
+import { ReactComponent as PolkaGateSVG } from './icons/polkagate_icon.svg';
 
 export const Extensions: Array<ExtensionConfig> = [
   {
@@ -39,6 +40,12 @@ export const Extensions: Array<ExtensionConfig> = [
     title: 'SubWallet',
     icon: SubwalletSVG,
     url: 'subwallet.app',
+  },
+  {
+    id: 'polkagate',
+    title: 'PolkaGate',
+    icon: PolkaGateSVG,
+    url: 'polkagate.xyz',
   },
   {
     id: 'parity-signer-companion',
