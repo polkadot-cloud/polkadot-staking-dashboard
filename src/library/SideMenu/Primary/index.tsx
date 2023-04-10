@@ -49,7 +49,7 @@ export const Primary = ({
       onClick={() => {
         if (!active) {
           play();
-          setSideMenu(0);
+          setSideMenu(false);
         }
       }}
     >

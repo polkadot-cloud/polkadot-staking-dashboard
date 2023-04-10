@@ -3,11 +3,6 @@
 
 import type { RefObject } from 'react';
 
-export interface SideInterfaceWrapperProps {
-  minimised: number;
-  open: number;
-}
-
 export interface PageTitleWrapperProps {
   sticky: boolean;
   ref: RefObject<HTMLElement>;

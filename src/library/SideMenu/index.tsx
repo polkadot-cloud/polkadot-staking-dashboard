@@ -50,7 +50,7 @@ export const SideMenu = () => {
 
   const throttleCallback = () => {
     if (window.innerWidth >= SideMenuStickyThreshold) {
-      setSideMenu(0);
+      setSideMenu(false);
     }
   };
   const windowThrottle = throttle(throttleCallback, 200, {
@@ -60,7 +60,7 @@ export const SideMenu = () => {
 
   const ref = useRef(null);
   useOutsideAlerter(ref, () => {
-    setSideMenu(0);
+    setSideMenu(false);
   });
 
   const apiStatusClass =
@@ -118,9 +118,7 @@ export const SideMenu = () => {
       <section>
         <button
           type="button"
-          onClick={() =>
-            setUserSideMenuMinimised(userSideMenuMinimised ? 0 : 1)
-          }
+          onClick={() => setUserSideMenuMinimised(!userSideMenuMinimised)}
         >
           <FontAwesomeIcon
             icon={userSideMenuMinimised ? faExpandAlt : faCompressAlt}

@@ -90,7 +90,7 @@ export const MinimisedWrapper = styled(motion.button)`
   }
 `;
 
-export const IconWrapper = styled.div<{ minimised: number }>`
+export const IconWrapper = styled.div<{ minimised: boolean }>`
   margin-left: ${(props) => (props.minimised ? 0 : '0.25rem')};
   margin-right: ${(props) => (props.minimised ? 0 : '0.65rem')};
 
