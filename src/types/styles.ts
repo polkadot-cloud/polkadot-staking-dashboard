@@ -9,7 +9,7 @@ export interface PageRowWrapperProps {
 
 export interface SideInterfaceWrapperProps {
   minimised: number;
-  open: number;
+  open: boolean;
 }
 
 export interface PageTitleWrapperProps {

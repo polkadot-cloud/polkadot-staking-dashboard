@@ -60,7 +60,7 @@ export const Primary = ({
       to={to}
       onClick={() => {
         if (!active) {
-          setSideMenu(0);
+          setSideMenu(false);
           setIsStopped(false);
         }
       }}

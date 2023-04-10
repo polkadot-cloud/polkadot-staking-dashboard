@@ -86,7 +86,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // side menu control
-  const [sideMenuOpen, setSideMenuOpen] = useState(0);
+  const [sideMenuOpen, setSideMenuOpen] = useState(false);
 
   // get side menu minimised state from local storage, default to 0.
   const [userSideMenuMinimised, setUserSideMenuMinimisedState] = useState(
@@ -180,7 +180,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     setIsSyncing(syncing);
   }, [isReady, staking, metrics, balances, eraStakers, activePoolsSynced]);
 
-  const setSideMenu = (v: number) => {
+  const setSideMenu = (v: boolean) => {
     setSideMenuOpen(v);
   };
 
