@@ -90,7 +90,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
 
   // get side menu minimised state from local storage, default to false.
   const [userSideMenuMinimised, setUserSideMenuMinimisedState] = useState(
-    localStorageOrDefault('side_menu_minimised', false) as boolean
+    localStorageOrDefault('side_menu_minimised', false, true) as boolean
   );
   const userSideMenuMinimisedRef = useRef(userSideMenuMinimised);
   const setUserSideMenuMinimised = (v: boolean) => {
