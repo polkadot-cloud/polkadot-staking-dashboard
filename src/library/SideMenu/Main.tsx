@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageCategories, PagesConfig } from 'config/pages';
-import { PolkadotUrl, UriPrefix } from 'consts';
+import { BaseURL, PolkadotUrl } from 'consts';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -54,7 +54,7 @@ export const Main = () => {
       // set undefined action as default
       _pages[i].action = undefined;
 
-      if (uri === `${UriPrefix}/nominate`) {
+      if (uri === `${BaseURL}/nominate`) {
         // configure Stake action
         const warning = !isSyncing && controllerNotImported;
         const staking = !inNominatorSetup();
@@ -82,7 +82,7 @@ export const Main = () => {
         }
       }
 
-      if (uri === `${UriPrefix}/pools`) {
+      if (uri === `${BaseURL}/pools`) {
         // configure Pools action
         const inPool = membership;
         const setupPercent = getPoolSetupPercent(activeAccount);

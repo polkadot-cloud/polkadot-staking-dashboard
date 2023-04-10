@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { BaseURL } from 'consts';
 import { useTheme } from 'contexts/Themes';
 import type { Theme } from 'contexts/Themes/types';
 import { useEffect, useRef, useState } from 'react';
@@ -50,7 +51,7 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
       ref={refLight}
       loop
       autoPlay={autoPlay}
-      src={`/lottie/${filename}-light.lottie`}
+      src={`${BaseURL}/lottie/${filename}-light.lottie`}
       style={{ height: '100%', width: '100%' }}
     />
   );
@@ -60,7 +61,7 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
       ref={refDark}
       loop
       autoPlay={autoPlay}
-      src={`/lottie/${filename}-dark.lottie`}
+      src={`${BaseURL}/lottie/${filename}-dark.lottie`}
       style={{ height: '100%', width: '100%' }}
     />
   );

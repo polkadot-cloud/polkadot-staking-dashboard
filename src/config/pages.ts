@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { UriPrefix } from 'consts';
+import { BaseURL } from 'consts';
 import { Community } from 'pages/Community';
 import { Favorites } from 'pages/Favorites';
 import { Nominate } from 'pages/Nominate';
@@ -30,7 +30,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 1,
     key: 'overview',
-    uri: `${UriPrefix}/`,
+    uri: `${BaseURL}/`,
     hash: '/overview',
     Entry: Overview,
     lottie: 'globe',
@@ -38,7 +38,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 2,
     key: 'pools',
-    uri: `${UriPrefix}/pools`,
+    uri: `${BaseURL}/pools`,
     hash: '/pools',
     Entry: Pools,
     lottie: 'groups',
@@ -46,7 +46,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 2,
     key: 'nominate',
-    uri: `${UriPrefix}/nominate`,
+    uri: `${BaseURL}/nominate`,
     hash: '/nominate',
     Entry: Nominate,
     lottie: 'trending',
@@ -54,7 +54,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 2,
     key: 'payouts',
-    uri: `${UriPrefix}/payouts`,
+    uri: `${BaseURL}/payouts`,
     hash: '/payouts',
     Entry: Payouts,
     lottie: 'analytics',
@@ -62,7 +62,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 3,
     key: 'validators',
-    uri: `${UriPrefix}/validators`,
+    uri: `${BaseURL}/validators`,
     hash: '/validators',
     Entry: Validators,
     lottie: 'view',
@@ -70,7 +70,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 3,
     key: 'community',
-    uri: `${UriPrefix}/community`,
+    uri: `${BaseURL}/community`,
     hash: '/community',
     Entry: Community,
     lottie: 'label',
@@ -78,7 +78,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 3,
     key: 'favorites',
-    uri: `${UriPrefix}/favorites`,
+    uri: `${BaseURL}/favorites`,
     hash: '/favorites',
     Entry: Favorites,
     lottie: 'heart',
