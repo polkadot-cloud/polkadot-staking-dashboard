@@ -3,6 +3,7 @@
 
 import type { ExtensionConfig } from 'contexts/Extensions/types';
 import { ReactComponent as EnkryptSVG } from './icons/enkrypt_icon.svg';
+import { ReactComponent as FearlessSVG } from './icons/fearless_icon.svg';
 import { ReactComponent as NovaWalletSVG } from './icons/nova_wallet.svg';
 import { ReactComponent as PolkadotJSSVG } from './icons/polkadot_js.svg';
 import { ReactComponent as SignerSVG } from './icons/signer_icon.svg';
@@ -27,6 +28,12 @@ export const Extensions: Array<ExtensionConfig> = [
     title: 'Talisman',
     icon: TalismanSVG,
     url: 'talisman.xyz',
+  },
+  {
+    id: 'fearless-wallet',
+    title: 'Fearless Wallet',
+    icon: FearlessSVG,
+    url: 'fearlesswallet.io',
   },
   {
     id: 'enkrypt',
