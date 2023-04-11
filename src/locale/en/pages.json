@@ -12,11 +12,6 @@
       "validators": "'s Validators",
       "website": "Website"
     },
-    "favorites": {
-      "favoriteValidators": "Favorite Validators",
-      "fetchingFavoriteValidators": "Fetching favorite validators",
-      "noFavorites": "No Favorites."
-    },
     "nominate": {
       "activeNominations": "Active Nominations",
       "addFromFavorites": "Add From Favorites",

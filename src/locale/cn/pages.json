@@ -11,11 +11,6 @@
       "validators": "的验证人",
       "website": "个人网站"
     },
-    "favorites": {
-      "favoriteValidators": "收藏夹中的验证人",
-      "fetchingFavoriteValidators": "正在获取收藏夹的验证人",
-      "noFavorites": "无收藏夹"
-    },
     "nominate": {
       "activeNominations": "活跃提名人",
       "addFromFavorites": "从收藏夹添加",
