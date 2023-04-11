@@ -9,13 +9,15 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { ValidatorList } from 'library/ValidatorList';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ValidatorFavorites } from './Favorites';
 import { ActiveValidatorsStat } from './Stats/ActiveValidators';
 import { AverageCommissionStat } from './Stats/AverageCommission';
 import { TotalValidatorsStat } from './Stats/TotalValidators';
+import { ValidatorsTabsProvider } from './context';
 
-export const Validators = () => {
+export const ValidatorsInner = () => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { validators } = useValidators();
@@ -24,6 +26,13 @@ export const Validators = () => {
     includes: ['active'],
     excludes: ['all_commission', 'blocked_nominations', 'missing_identity'],
   };
+
+  // back to tab 0 if not in the first tab
+  useEffect(() => {
+    if (![0].includes(activeTab)) {
+      setActiveTab(0);
+    }
+  }, []);
 
   let tabs = [
     {
@@ -88,3 +97,9 @@ export const Validators = () => {
     </>
   );
 };
+
+export const Validators = () => (
+  <ValidatorsTabsProvider>
+    <ValidatorsInner />
+  </ValidatorsTabsProvider>
+);
