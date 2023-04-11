@@ -27,21 +27,21 @@ export const ValidatorsInner = () => {
 
   let tabs = [
     {
-      title: 'Validators',
+      title: t('validators.validators'),
       active: activeTab === 0,
       onClick: () => setActiveTab(0),
     },
   ];
 
   tabs = tabs.concat({
-    title: 'Favorites',
+    title: t('validators.favorites'),
     active: activeTab === 1,
     onClick: () => setActiveTab(1),
   });
 
   return (
     <>
-      <PageTitle title="Validators" tabs={tabs} />
+      <PageTitle title={t('validators.validators')} tabs={tabs} />
       {activeTab === 0 && (
         <>
           <StatBoxList>

@@ -217,9 +217,11 @@
       "activeValidators": "Active Validators",
       "averageCommission": "Average Commission",
       "connecting": "Connecting",
+      "favorites": "Favorites",
       "fetchingValidators": "Fetching validators",
       "networkValidators": "Network Validators",
-      "totalValidators": "Total Validators"
+      "totalValidators": "Total Validators",
+      "validators": "Validators"
     }
   }
 }
