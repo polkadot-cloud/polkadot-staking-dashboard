@@ -3,7 +3,7 @@
 
 import { PageRow } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
-import { TabsProvider, useTabs } from 'contexts/Tabs';
+import { useTabs } from 'contexts/Tabs';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
@@ -15,7 +15,7 @@ import { ActiveValidatorsStat } from './Stats/ActiveValidators';
 import { AverageCommissionStat } from './Stats/AverageCommission';
 import { TotalValidatorsStat } from './Stats/TotalValidators';
 
-export const ValidatorsInner = () => {
+export const Validators = () => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { validators } = useValidators();
@@ -88,9 +88,3 @@ export const ValidatorsInner = () => {
     </>
   );
 };
-
-export const Validators = () => (
-  <TabsProvider>
-    <ValidatorsInner />
-  </TabsProvider>
-);

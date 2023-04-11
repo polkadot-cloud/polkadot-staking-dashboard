@@ -8,7 +8,7 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { TabsProvider, useTabs } from 'contexts/Tabs';
+import { useTabs } from 'contexts/Tabs';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
 import { PoolList } from 'library/PoolList';
@@ -28,7 +28,7 @@ import { MinJoinBondStat } from './Stats/MinJoinBond';
 import { PoolMembershipStat } from './Stats/PoolMembership';
 import { Status } from './Status';
 
-export const HomeInner = () => {
+export const Home = () => {
   const { t } = useTranslation('pages');
   const { activeAccount } = useConnect();
   const { bondedPools, getAccountPools } = useBondedPools();
@@ -174,9 +174,3 @@ export const HomeInner = () => {
     </>
   );
 };
-
-export const Home = () => (
-  <TabsProvider>
-    <HomeInner />
-  </TabsProvider>
-);
