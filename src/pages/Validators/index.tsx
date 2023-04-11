@@ -3,7 +3,6 @@
 
 import { PageRow } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
-import { useTabs } from 'contexts/Tabs';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { PageTitle } from 'library/PageTitle';
@@ -15,13 +14,13 @@ import { ValidatorFavorites } from './Favorites';
 import { ActiveValidatorsStat } from './Stats/ActiveValidators';
 import { AverageCommissionStat } from './Stats/AverageCommission';
 import { TotalValidatorsStat } from './Stats/TotalValidators';
-import { ValidatorsTabsProvider } from './context';
+import { ValidatorsTabsProvider, useValidatorsTabs } from './context';
 
 export const ValidatorsInner = () => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { validators } = useValidators();
-  const { activeTab, setActiveTab } = useTabs();
+  const { activeTab, setActiveTab } = useValidatorsTabs();
   const defaultFilters = {
     includes: ['active'],
     excludes: ['all_commission', 'blocked_nominations', 'missing_identity'],

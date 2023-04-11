@@ -9,9 +9,9 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useSetup } from 'contexts/Setup';
-import { useTabs } from 'contexts/Tabs';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTranslation } from 'react-i18next';
+import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {
   const { t } = useTranslation('pages');
@@ -20,7 +20,7 @@ export const useStatusButtons = () => {
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { stats } = usePoolsConfig();
   const { membership } = usePoolMemberships();
-  const { setActiveTab } = useTabs();
+  const { setActiveTab } = usePoolsTabs();
   const { bondedPools } = useBondedPools();
   const { isOwner } = useActivePools();
   const { getTransferOptions } = useTransferOptions();

@@ -30,7 +30,6 @@ import { PoolsConfigProvider } from 'contexts/Pools/PoolsConfig';
 import { SetupProvider } from 'contexts/Setup';
 import { StakingProvider } from 'contexts/Staking';
 import { SubscanProvider } from 'contexts/Subscan';
-import { TabsProvider } from 'contexts/Tabs';
 import { useTheme } from 'contexts/Themes';
 import { TooltipProvider } from 'contexts/Tooltip';
 import { TransferOptionsProvider } from 'contexts/TransferOptions';
@@ -96,6 +95,5 @@ export const Providers = withProviders(
   ExtrinsicsProvider,
   ModalProvider,
   OverlayProvider,
-  MigrateProvider,
-  TabsProvider
+  MigrateProvider
 )(ThemedRouter);
