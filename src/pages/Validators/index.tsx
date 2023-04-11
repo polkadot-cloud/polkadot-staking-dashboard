@@ -10,7 +10,7 @@ import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
-import { Favorites } from './Favorites';
+import { ValidatorFavorites } from './Favorites';
 import { ActiveValidatorsStat } from './Stats/ActiveValidators';
 import { AverageCommissionStat } from './Stats/AverageCommission';
 import { TotalValidatorsStat } from './Stats/TotalValidators';
@@ -84,7 +84,7 @@ export const ValidatorsInner = () => {
           </PageRow>
         </>
       )}
-      {activeTab === 1 && <Favorites />}
+      {activeTab === 1 && <ValidatorFavorites />}
     </>
   );
 };

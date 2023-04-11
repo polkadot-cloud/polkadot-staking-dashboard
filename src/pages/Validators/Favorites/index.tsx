@@ -8,7 +8,7 @@ import { CardWrapper } from 'library/Graphs/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
 
-export const Favorites = () => {
+export const ValidatorFavorites = () => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { favoritesList } = useValidators();
