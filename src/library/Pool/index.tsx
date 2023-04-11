@@ -11,6 +11,7 @@ import { useNotifications } from 'contexts/Notifications';
 import type { NotificationText } from 'contexts/Notifications/types';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useTabs } from 'contexts/Tabs';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { FavoritePool } from 'library/ListItem/Labels/FavoritePool';
@@ -22,7 +23,6 @@ import {
   Separator,
   Wrapper,
 } from 'library/ListItem/Wrappers';
-import { usePoolsTabs } from 'pages/Pools/Home/context';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
@@ -42,8 +42,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const { validators } = useValidators();
   const { isPoolSyncing } = useUi();
 
-  // assumes component is under `PoolsTabsProvider` (Pools page)
-  const { setActiveTab } = usePoolsTabs();
+  const { setActiveTab } = useTabs();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
 
   // get metadata from pools metabatch

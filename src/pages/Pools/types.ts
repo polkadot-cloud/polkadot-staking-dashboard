@@ -8,11 +8,6 @@ export interface PoolAccountProps {
   batchIndex: number;
 }
 
-export interface PoolsTabsContextInterface {
-  setActiveTab: (t: number) => void;
-  activeTab: number;
-}
-
 export interface PayoutListContextInterface {
   setListFormat: (v: string) => void;
   listFormat: string;
