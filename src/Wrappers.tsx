@@ -1,67 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  InterfaceMaximumWidth,
-  SideMenuMaximisedWidth,
-  SideMenuMinimisedWidth,
-  SideMenuStickyThreshold,
-} from 'consts';
-import { motion } from 'framer-motion';
+import { InterfaceMaximumWidth, SideMenuStickyThreshold } from 'consts';
 import styled from 'styled-components';
-import type {
-  InterfaceLayoutProps,
-  PageRowWrapperProps,
-  PageTitleWrapperProps,
-  SideInterfaceWrapperProps,
-} from 'types/styles';
-
-/* SideInterfaceWrapper
- *
- * An element that houses the side menu and handles resizing
- * on smaller screens.
- * Used once in Router.
- */
-export const SideInterfaceWrapper = styled.div<SideInterfaceWrapperProps>`
-  height: 100vh;
-  display: flex;
-  flex-flow: column nowrap;
-  position: sticky;
-  top: 0px;
-  z-index: 7;
-  flex: 0;
-  overflow: hidden;
-  min-width: ${(props) =>
-    props.minimised
-      ? `${SideMenuMinimisedWidth}px`
-      : `${SideMenuMaximisedWidth}px`};
-  max-width: ${(props) =>
-    props.minimised
-      ? `${SideMenuMinimisedWidth}px`
-      : `${SideMenuMaximisedWidth}px`};
-  transition: all 0.5s cubic-bezier(0.1, 1, 0.2, 1);
-
-  @media (max-width: ${SideMenuStickyThreshold}px) {
-    position: fixed;
-    top: 0;
-    left: ${(props) => (props.open ? 0 : `-${SideMenuMaximisedWidth}px`)};
-  }
-`;
-
-/* PageWrapper
- *
- * A motion.div that wraps every page.
- * Transitions can be applied to this wrapper that will
- * affect the entire page.
- */
-export const PageWrapper = styled(motion.div)`
-  max-width: ${InterfaceMaximumWidth}px;
-  display: flex;
-  flex-flow: column nowrap;
-  padding-bottom: 4.5rem;
-  width: 100%;
-  margin: 0 auto;
-`;
+import type { InterfaceLayoutProps, PageTitleWrapperProps } from 'types/styles';
 
 /* PageTitleWrapper
  *
@@ -134,7 +76,6 @@ export const PageTitleWrapper = styled.header<PageTitleWrapperProps>`
       transform: scale(0.75);
     }
     transition: all var(--transition-duration);
-    margin: 0;
   }
 
   .tabs {
@@ -199,27 +140,6 @@ export const MenuPaddingWrapper = styled.div`
   display: none;
   @media (max-width: ${SideMenuStickyThreshold}px) {
     display: block;
-  }
-`;
-
-/* PageRowWrapper
- *
- * Used to separate page content based on rows.
- * Commonly used with RowPrimaryWrapper and RowSecondaryWrapper.
- */
-export const PageRowWrapper = styled.div<PageRowWrapperProps>`
-  margin-top: ${(props) => (props.noVerticalSpacer === true ? '0' : '1rem')};
-  margin-bottom: ${(props) => (props.noVerticalSpacer === true ? '0' : '1rem')};
-  display: flex;
-  flex-shrink: 0;
-  flex-flow: row wrap;
-  width: 100%;
-  /* kill heading padding, already applied to wrapper */
-  h1,
-  h2,
-  h3,
-  h4 {
-    margin-top: 0;
   }
 `;
 

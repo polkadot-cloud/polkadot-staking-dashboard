@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PageRowWrapper } from 'Wrappers';
+import { PageRow } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
@@ -32,7 +32,7 @@ export const Validators = ({ page }: PageProps) => {
         <TotalValidatorsStat />
         <AverageCommissionStat />
       </StatBoxList>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      <PageRow>
         <CardWrapper>
           {!isReady ? (
             <div className="item">
@@ -66,7 +66,7 @@ export const Validators = ({ page }: PageProps) => {
             </>
           )}
         </CardWrapper>
-      </PageRowWrapper>
+      </PageRow>
     </>
   );
 };

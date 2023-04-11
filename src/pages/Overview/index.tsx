@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { PageRow } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import {
-  PageRowWrapper,
   RowPrimaryWrapper,
   RowSecondaryWrapper,
   TopBarWrapper,
@@ -63,20 +63,20 @@ export const Overview = () => {
   return (
     <>
       <PageTitle title={t('overview.overview')} />
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      <PageRow>
         <TopBarWrapper>
           <ActiveAccount />
         </TopBarWrapper>
-      </PageRowWrapper>
+      </PageRow>
       <StatBoxList>
         <HistoricalRewardsRateStat />
         <SupplyStakedStat />
         <ActiveEraStat />
       </StatBoxList>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      <PageRow>
         <StakeStatus />
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      </PageRow>
+      <PageRow>
         <RowSecondaryWrapper
           hOrder={0}
           vOrder={0}
@@ -117,10 +117,10 @@ export const Overview = () => {
             <Payouts />
           </GraphWrapper>
         </RowPrimaryWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      </PageRow>
+      <PageRow>
         <NetworkStats />
-      </PageRowWrapper>
+      </PageRow>
     </>
   );
 };

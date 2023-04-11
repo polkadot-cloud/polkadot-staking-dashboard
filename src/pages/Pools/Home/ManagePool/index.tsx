@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/core-ui';
+import { ButtonHelp, ButtonPrimary, PageRow } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
@@ -12,7 +12,6 @@ import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { Nominations } from 'pages/Nominate/Active/Nominations';
 import { useTranslation } from 'react-i18next';
-import { PageRowWrapper } from 'Wrappers';
 
 export const ManagePool = () => {
   const { t } = useTranslation('pages');
@@ -36,7 +35,7 @@ export const ManagePool = () => {
   const canNominate = isOwner() || isNominator();
 
   return (
-    <PageRowWrapper className="page-padding" noVerticalSpacer>
+    <PageRow>
       <CardWrapper>
         {isSyncing ? (
           <Nominations bondFor="pool" nominator={activeAccount} />
@@ -75,6 +74,6 @@ export const ManagePool = () => {
           <Nominations bondFor="pool" nominator={nominator} />
         )}
       </CardWrapper>
-    </PageRowWrapper>
+    </PageRow>
   );
 };

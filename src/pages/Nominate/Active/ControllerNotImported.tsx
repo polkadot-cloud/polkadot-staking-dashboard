@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonPrimary } from '@polkadotcloud/core-ui';
+import { ButtonPrimary, PageRow } from '@polkadotcloud/core-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -9,7 +9,6 @@ import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { useTranslation } from 'react-i18next';
-import { PageRowWrapper } from 'Wrappers';
 
 export const ControllerNotImported = () => {
   const { t } = useTranslation('pages');
@@ -25,7 +24,7 @@ export const ControllerNotImported = () => {
       {getControllerNotImported(controller)
         ? !isSyncing &&
           !isReadOnlyAccount(activeAccount) && (
-            <PageRowWrapper className="page-padding" noVerticalSpacer>
+            <PageRow>
               <CardWrapper warning>
                 <CardHeaderWrapper>
                   <h4>{t('nominate.controllerNotImported')}</h4>
@@ -39,7 +38,7 @@ export const ControllerNotImported = () => {
                   />
                 </div>
               </CardWrapper>
-            </PageRowWrapper>
+            </PageRow>
           )
         : null}
     </>

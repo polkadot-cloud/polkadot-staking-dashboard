@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSecondary } from '@polkadotcloud/core-ui';
-import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
+import { ButtonSecondary, PageRow } from '@polkadotcloud/core-ui';
+import { TopBarWrapper } from 'Wrappers';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
@@ -55,7 +55,7 @@ export const Entity = () => {
   const batchKey = 'community_entity_validators';
 
   return (
-    <PageRowWrapper className="page-padding" noVerticalSpacer>
+    <PageRow>
       <TopBarWrapper>
         <ButtonSecondary
           lg
@@ -101,6 +101,6 @@ export const Entity = () => {
           </>
         )}
       </CardWrapper>
-    </PageRowWrapper>
+    </PageRow>
   );
 };

@@ -23,7 +23,6 @@ export const Wrapper = styled.div`
     flex: 1;
 
     > h4 {
-      margin: 0;
       padding: 0.5rem 1rem;
     }
   }

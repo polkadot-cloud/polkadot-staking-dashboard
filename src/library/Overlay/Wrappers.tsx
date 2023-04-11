@@ -96,7 +96,6 @@ export const TitleWrapper = styled.div`
         align-items: center;
         font-family: 'Unbounded', 'sans-serif', sans-serif;
         font-size: 1.3rem;
-        margin: 0;
 
         > button {
           margin-left: 0.85rem;
@@ -142,7 +141,6 @@ export const FilterListButton = styled.button<{ active: boolean }>`
         : 'var(--text-color-secondary)'};
     font-variation-settings: 'wght' 560;
     transition: color var(--transition-duration);
-    margin: 0;
   }
 
   svg {

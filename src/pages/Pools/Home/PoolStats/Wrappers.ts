@@ -109,15 +109,12 @@ export const HeaderWrapper = styled.div`
 
           h2 {
             color: var(--network-color-primary);
-            margin-top: 0rem;
-            margin-bottom: 0;
           }
           h4 {
             color: var(--text-color-secondary);
             display: flex;
             flex-flow: row wrap;
             margin-top: 0.45rem;
-            margin-bottom: 0;
           }
           display: flex;
           flex-flow: column wrap;
