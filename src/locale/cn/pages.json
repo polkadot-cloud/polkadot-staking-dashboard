@@ -214,9 +214,12 @@
       "activeValidators": "活跃验证人",
       "averageCommission": "平均佣金",
       "connecting": "连接中",
+      "favoriteValidators": "收藏夹中的验证人",
       "favorites": "收藏夹",
+      "fetchingFavoriteValidators": "正在获取收藏夹的验证人",
       "fetchingValidators": "正在获取验证人信息",
       "networkValidators": "验证人列表",
+      "noFavorites": "无收藏夹",
       "totalValidators": "所有验证人",
       "validators": "验证人"
     }

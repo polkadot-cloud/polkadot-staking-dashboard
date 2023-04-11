@@ -20,7 +20,7 @@ export const ValidatorFavorites = () => {
       <PageRow>
         <CardWrapper>
           {favoritesList === null ? (
-            <h3>{t('favorites.fetchingFavoriteValidators')}...</h3>
+            <h3>{t('validators.fetchingFavoriteValidators')}...</h3>
           ) : (
             <>
               {isReady && (
@@ -30,14 +30,14 @@ export const ValidatorFavorites = () => {
                       bondFor="nominator"
                       validators={favoritesList}
                       batchKey={batchKey}
-                      title={t('favorites.favoriteValidators')}
+                      title={t('validators.favoriteValidators')}
                       selectable={false}
                       refetchOnListUpdate
                       allowMoreCols
                       toggleFavorites
                     />
                   ) : (
-                    <h3>{t('favorites.noFavorites')}</h3>
+                    <h3>{t('validators.noFavorites')}</h3>
                   )}
                 </>
               )}
