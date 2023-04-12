@@ -24,7 +24,7 @@ export const ValidatorsTabsProvider = ({
   children: React.ReactNode;
 }) => {
   const tabFromUrl = extractUrlValue('t');
-  const initialActiveTab = [0, 1, 2, 3].includes(Number(tabFromUrl))
+  const initialActiveTab = [0, 1].includes(Number(tabFromUrl))
     ? Number(tabFromUrl)
     : 0;
 
