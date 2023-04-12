@@ -42,7 +42,7 @@
     "chart.js": "^4.2.1",
     "che-react-number-easing": "^0.1.4",
     "date-fns": "^2.29.3",
-    "framer-motion": "^10.11.2",
+    "framer-motion": "^10.11.5",
     "i18next": "^22.4.14",
     "i18next-browser-languagedetector": "^7.0.1",
     "lodash.throttle": "^4.1.1",
@@ -90,6 +90,6 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^2.4.0",
     "vite-tsconfig-paths": "^4.1.0",
-    "vitest": "^0.30.0"
+    "vitest": "^0.30.1"
   }
 }
