@@ -42,7 +42,6 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const { validators } = useValidators();
   const { isPoolSyncing } = useUi();
 
-  // assumes component is under `PoolsTabsProvider` (Pools page)
   const { setActiveTab } = usePoolsTabs();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
 

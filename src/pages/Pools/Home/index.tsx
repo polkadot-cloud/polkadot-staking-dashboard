@@ -16,7 +16,7 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
-import { Favorites } from './Favorites';
+import { PoolFavorites } from './Favorites';
 import { ManageBond } from './ManageBond';
 import { ManagePool } from './ManagePool';
 import { Members } from './Members';
@@ -168,7 +168,7 @@ export const HomeInner = () => {
       )}
       {activeTab === 3 && (
         <>
-          <Favorites />
+          <PoolFavorites />
         </>
       )}
     </>
