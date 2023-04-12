@@ -21,7 +21,7 @@ export const ValidatorsInner = () => {
 
   let tabs = [
     {
-      title: t('validators.validators'),
+      title: t('validators.allValidators'),
       active: activeTab === 0,
       onClick: () => setActiveTab(0),
     },

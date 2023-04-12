@@ -207,6 +207,7 @@
     },
     "validators": {
       "activeValidators": "活跃验证人",
+      "allValidators": "所有验证人",
       "averageCommission": "平均佣金",
       "connecting": "连接中",
       "favoriteValidators": "收藏夹中的验证人",
