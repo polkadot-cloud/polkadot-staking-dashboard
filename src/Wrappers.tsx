@@ -206,13 +206,3 @@ export const Separator = styled.div`
   width: 100%;
   margin: 0.67rem 0;
 `;
-
-/* ButtonRowWrapper
- *
- * A flex container for a row of buttons
- */
-export const ButtonRowWrapper = styled.div<{ verticalSpacing?: boolean }>`
-  display: flex;
-  align-items: center;
-  margin-top: ${(props) => (props.verticalSpacing ? '1rem' : 0)};
-`;
