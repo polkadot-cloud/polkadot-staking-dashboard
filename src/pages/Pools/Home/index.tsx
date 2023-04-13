@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PageRow } from '@polkadotcloud/core-ui';
+import { PageRow, PageTitle } from '@polkadotcloud/core-ui';
 import { RowPrimaryWrapper, RowSecondaryWrapper } from 'Wrappers';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useConnect } from 'contexts/Connect';
@@ -9,7 +9,6 @@ import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { CardWrapper } from 'library/Graphs/Wrappers';
-import { PageTitle } from 'library/PageTitle';
 import { PoolList } from 'library/PoolList';
 import { StatBoxList } from 'library/StatBoxList';
 import { useEffect } from 'react';
@@ -80,7 +79,7 @@ export const HomeInner = () => {
   return (
     <>
       <PageTitle
-        title={t('pools.pools')}
+        title={t('pools.pools') || ''}
         tabs={tabs}
         button={
           totalAccountPools

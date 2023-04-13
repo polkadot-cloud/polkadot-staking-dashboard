@@ -2,7 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary, PageRow } from '@polkadotcloud/core-ui';
+import {
+  ButtonHelp,
+  ButtonPrimary,
+  PageRow,
+  PageTitle,
+} from '@polkadotcloud/core-ui';
 import { RowPrimaryWrapper, RowSecondaryWrapper } from 'Wrappers';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useBalances } from 'contexts/Accounts/Balances';
@@ -14,7 +19,6 @@ import { useUi } from 'contexts/UI';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { useTranslation } from 'react-i18next';
 import { ControllerNotImported } from './ControllerNotImported';
@@ -41,7 +45,7 @@ export const Active = () => {
 
   return (
     <>
-      <PageTitle title={t('nominate.nominate')} />
+      <PageTitle title={t('nominate.nominate') || ''} />
       <StatBoxList>
         <ActiveNominatorsStat />
         <MinimumNominatorBondStat />

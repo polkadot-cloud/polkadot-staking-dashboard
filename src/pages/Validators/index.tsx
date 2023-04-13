@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PageTitle } from 'library/PageTitle';
+import { PageTitle } from '@polkadotcloud/core-ui';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AllValidators } from './AllValidators';
@@ -35,7 +35,7 @@ export const ValidatorsInner = () => {
 
   return (
     <>
-      <PageTitle title={t('validators.validators')} tabs={tabs} />
+      <PageTitle title={t('validators.validators') || ''} tabs={tabs} />
       {activeTab === 0 && <AllValidators />}
       {activeTab === 1 && <ValidatorFavorites />}
     </>
