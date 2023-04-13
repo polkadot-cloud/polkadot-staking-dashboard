@@ -196,17 +196,6 @@ export const RowSecondaryWrapper = styled.div<InterfaceLayoutProps>`
   }
 `;
 
-/* Separator
- *
- * A horizontal spacer with a bottom border.
- * General spacer for separating content by row.
- */
-export const Separator = styled.div`
-  border-bottom: 1px solid var(--border-primary-color);
-  width: 100%;
-  margin: 0.67rem 0;
-`;
-
 /* TopBarWrapper
  *
  * Positioned under titles for a Go Back button and other page header info.
