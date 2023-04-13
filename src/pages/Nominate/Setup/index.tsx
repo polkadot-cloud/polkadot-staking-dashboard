@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSecondary, PageRow } from '@polkadotcloud/core-ui';
+import { ButtonSecondary, PageHeading, PageRow } from '@polkadotcloud/core-ui';
 import { extractUrlValue, removeVarFromUrlHash } from '@polkadotcloud/utils';
-import { TopBarWrapper } from 'Wrappers';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { CardWrapper } from 'library/Graphs/Wrappers';
@@ -27,7 +26,7 @@ export const Setup = () => {
     <>
       <PageTitle title={t('nominate.startNominating')} />
       <PageRow>
-        <TopBarWrapper>
+        <PageHeading>
           <span>
             <ButtonSecondary
               lg
@@ -57,7 +56,7 @@ export const Setup = () => {
             />
           </span>
           <div className="right" />
-        </TopBarWrapper>
+        </PageHeading>
       </PageRow>
       <PageRow>
         <CardWrapper>
