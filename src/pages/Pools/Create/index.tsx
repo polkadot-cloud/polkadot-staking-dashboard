@@ -2,8 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSecondary, PageRow, PageTitle } from '@polkadotcloud/core-ui';
-import { TopBarWrapper } from 'Wrappers';
+import {
+  ButtonSecondary,
+  PageHeading,
+  PageRow,
+  PageTitle,
+} from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { CardWrapper } from 'library/Graphs/Wrappers';
@@ -24,7 +28,7 @@ export const Create = () => {
     <>
       <PageTitle title={`${t('pools.createAPool')}`} />
       <PageRow>
-        <TopBarWrapper>
+        <PageHeading>
           <span>
             <ButtonSecondary
               lg
@@ -45,7 +49,7 @@ export const Create = () => {
             />
           </span>
           <div className="right" />
-        </TopBarWrapper>
+        </PageHeading>
       </PageRow>
       <PageRow>
         <CardWrapper>

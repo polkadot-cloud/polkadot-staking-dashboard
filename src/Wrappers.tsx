@@ -57,49 +57,13 @@ export const RowSecondaryWrapper = styled.div<InterfaceLayoutProps>`
   }
 `;
 
-/* TopBarWrapper
+/* Separator
  *
- * Positioned under titles for a Go Back button and other page header info.
+ * A horizontal spacer with a bottom border.
+ * General spacer for separating content by row.
  */
-export const TopBarWrapper = styled.div`
+export const Separator = styled.div`
   border-bottom: 1px solid var(--border-primary-color);
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
   width: 100%;
-  margin-bottom: 0.25rem;
-
-  > span {
-    margin-right: 1rem;
-  }
-
-  h3 {
-    color: var(--text-color-secondary);
-    font-size: 1.15rem;
-    margin: 0.25rem 0;
-    min-height: 2rem;
-  }
-
-  .right {
-    flex: 1 1 0%;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-end;
-
-    button {
-      margin: 0 0 0 1rem;
-    }
-  }
-`;
-
-/* ButtonRowWrapper
- *
- * A flex container for a row of buttons
- */
-export const ButtonRowWrapper = styled.div<{ verticalSpacing?: boolean }>`
-  display: flex;
-  align-items: center;
-  margin-top: ${(props) => (props.verticalSpacing ? '1rem' : 0)};
+  margin: 0.67rem 0;
 `;

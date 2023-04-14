@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary, PageRow } from '@polkadotcloud/core-ui';
+import { ButtonPrimary, ButtonRow, PageRow } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -13,7 +13,6 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useTranslation } from 'react-i18next';
-import { ButtonRowWrapper } from 'Wrappers';
 
 export const ClosurePrompts = () => {
   const { t } = useTranslation('pages');
@@ -65,7 +64,7 @@ export const ClosurePrompts = () => {
                   ? t('pools.unbondYourFunds')
                   : t('pools.withdrawUnlock')}
               </h4>
-              <ButtonRowWrapper verticalSpacing>
+              <ButtonRow yMargin>
                 <ButtonPrimary
                   marginRight
                   text={t('pools.unbond')}
@@ -101,7 +100,7 @@ export const ClosurePrompts = () => {
                     )
                   }
                 />
-              </ButtonRowWrapper>
+              </ButtonRow>
             </div>
           </CardWrapper>
         </PageRow>
