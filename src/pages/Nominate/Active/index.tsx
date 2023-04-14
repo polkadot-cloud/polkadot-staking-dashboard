@@ -2,12 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/core-ui';
 import {
-  PageRowWrapper,
-  RowPrimaryWrapper,
-  RowSecondaryWrapper,
-} from 'Wrappers';
+  ButtonHelp,
+  ButtonPrimary,
+  PageRow,
+  PageTitle,
+} from '@polkadotcloud/core-ui';
+import { RowPrimaryWrapper, RowSecondaryWrapper } from 'Wrappers';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -18,7 +19,6 @@ import { useUi } from 'contexts/UI';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { useTranslation } from 'react-i18next';
 import { ControllerNotImported } from './ControllerNotImported';
@@ -45,7 +45,7 @@ export const Active = () => {
 
   return (
     <>
-      <PageTitle title={t('nominate.nominate')} />
+      <PageTitle title={`${t('nominate.nominate')}`} />
       <StatBoxList>
         <ActiveNominatorsStat />
         <MinimumNominatorBondStat />
@@ -53,7 +53,7 @@ export const Active = () => {
       </StatBoxList>
       <ControllerNotImported />
       <UnstakePrompts />
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      <PageRow>
         <RowPrimaryWrapper
           hOrder={1}
           vOrder={0}
@@ -72,8 +72,8 @@ export const Active = () => {
             <ManageBond />
           </CardWrapper>
         </RowSecondaryWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      </PageRow>
+      <PageRow>
         <CardWrapper>
           {nominations.length || inSetup() || isSyncing ? (
             <Nominations bondFor="nominator" nominator={activeAccount} />
@@ -115,7 +115,7 @@ export const Active = () => {
             </>
           )}
         </CardWrapper>
-      </PageRowWrapper>
+      </PageRow>
     </>
   );
 };

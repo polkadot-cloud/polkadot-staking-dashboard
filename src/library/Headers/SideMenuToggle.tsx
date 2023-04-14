@@ -14,7 +14,7 @@ export const SideMenuToggle = () => {
       <Item
         style={{ width: '50px', flex: 0 }}
         onClick={() => {
-          setSideMenu(sideMenuOpen ? 0 : 1);
+          setSideMenu(!sideMenuOpen);
         }}
       >
         <span>

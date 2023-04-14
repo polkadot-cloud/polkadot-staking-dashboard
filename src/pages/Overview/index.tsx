@@ -1,13 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { PageHeading, PageRow, PageTitle } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
-import {
-  PageRowWrapper,
-  RowPrimaryWrapper,
-  RowSecondaryWrapper,
-  TopBarWrapper,
-} from 'Wrappers';
+import { RowPrimaryWrapper, RowSecondaryWrapper } from 'Wrappers';
 import BigNumber from 'bignumber.js';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -15,7 +11,6 @@ import { useSubscan } from 'contexts/Subscan';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
-import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
@@ -62,21 +57,21 @@ export const Overview = () => {
 
   return (
     <>
-      <PageTitle title={t('overview.overview')} />
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <TopBarWrapper>
+      <PageTitle title={`${t('overview.overview')}`} />
+      <PageRow>
+        <PageHeading>
           <ActiveAccount />
-        </TopBarWrapper>
-      </PageRowWrapper>
+        </PageHeading>
+      </PageRow>
       <StatBoxList>
         <HistoricalRewardsRateStat />
         <SupplyStakedStat />
         <ActiveEraStat />
       </StatBoxList>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      <PageRow>
         <StakeStatus />
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      </PageRow>
+      <PageRow>
         <RowSecondaryWrapper
           hOrder={0}
           vOrder={0}
@@ -117,10 +112,10 @@ export const Overview = () => {
             <Payouts />
           </GraphWrapper>
         </RowPrimaryWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      </PageRow>
+      <PageRow>
         <NetworkStats />
-      </PageRowWrapper>
+      </PageRow>
     </>
   );
 };

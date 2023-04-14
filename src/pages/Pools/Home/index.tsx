@@ -1,25 +1,21 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  PageRowWrapper,
-  RowPrimaryWrapper,
-  RowSecondaryWrapper,
-} from 'Wrappers';
+import { PageRow, PageTitle } from '@polkadotcloud/core-ui';
+import { RowPrimaryWrapper, RowSecondaryWrapper } from 'Wrappers';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { CardWrapper } from 'library/Graphs/Wrappers';
-import { PageTitle } from 'library/PageTitle';
 import { PoolList } from 'library/PoolList';
 import { StatBoxList } from 'library/StatBoxList';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
-import { Favorites } from './Favorites';
+import { PoolFavorites } from './Favorites';
 import { ManageBond } from './ManageBond';
 import { ManagePool } from './ManagePool';
 import { Members } from './Members';
@@ -83,7 +79,7 @@ export const HomeInner = () => {
   return (
     <>
       <PageTitle
-        title={t('pools.pools')}
+        title={`${t('pools.pools')}`}
         tabs={tabs}
         button={
           totalAccountPools
@@ -105,7 +101,7 @@ export const HomeInner = () => {
 
           <ClosurePrompts />
 
-          <PageRowWrapper className="page-padding" noVerticalSpacer>
+          <PageRow>
             <RowPrimaryWrapper
               hOrder={1}
               vOrder={0}
@@ -124,21 +120,21 @@ export const HomeInner = () => {
                 <ManageBond />
               </CardWrapper>
             </RowSecondaryWrapper>
-          </PageRowWrapper>
+          </PageRow>
           {selectedActivePool !== null && (
             <>
               <ManagePool />
-              <PageRowWrapper className="page-padding" noVerticalSpacer>
+              <PageRow>
                 <CardWrapper>
                   <Roles
                     batchKey="pool_roles_manage"
                     defaultRoles={getPoolRoles()}
                   />
                 </CardWrapper>
-              </PageRowWrapper>
-              <PageRowWrapper className="page-padding" noVerticalSpacer>
+              </PageRow>
+              <PageRow>
                 <PoolStats />
-              </PageRowWrapper>
+              </PageRow>
             </>
           )}
         </>
@@ -151,7 +147,7 @@ export const HomeInner = () => {
             <ActivePoolsStat />
             <MinJoinBondStat />
           </StatBoxList>
-          <PageRowWrapper className="page-padding" noVerticalSpacer>
+          <PageRow>
             <CardWrapper>
               <PoolList
                 batchKey="bonded_pools"
@@ -166,12 +162,12 @@ export const HomeInner = () => {
                 pagination
               />
             </CardWrapper>
-          </PageRowWrapper>
+          </PageRow>
         </>
       )}
       {activeTab === 3 && (
         <>
-          <Favorites />
+          <PoolFavorites />
         </>
       )}
     </>

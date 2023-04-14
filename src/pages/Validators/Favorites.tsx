@@ -1,32 +1,26 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PageRowWrapper } from 'Wrappers';
+import { PageRow } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Graphs/Wrappers';
-import { PageTitle } from 'library/PageTitle';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
-import type { PageProps } from '../types';
 
-export const Favorites = ({ page }: PageProps) => {
-  const { t } = useTranslation();
+export const ValidatorFavorites = () => {
+  const { t } = useTranslation('pages');
   const { isReady } = useApi();
-  const { key } = page;
   const { favoritesList } = useValidators();
 
   const batchKey = 'favorite_validators';
 
   return (
     <>
-      <PageTitle title={t(key, { ns: 'base' })} />
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      <PageRow>
         <CardWrapper>
           {favoritesList === null ? (
-            <h3>
-              {t('favorites.fetchingFavoriteValidators', { ns: 'pages' })}...
-            </h3>
+            <h3>{t('validators.fetchingFavoriteValidators')}...</h3>
           ) : (
             <>
               {isReady && (
@@ -36,23 +30,21 @@ export const Favorites = ({ page }: PageProps) => {
                       bondFor="nominator"
                       validators={favoritesList}
                       batchKey={batchKey}
-                      title={t('favorites.favoriteValidators', {
-                        ns: 'pages',
-                      })}
+                      title={t('validators.favoriteValidators')}
                       selectable={false}
                       refetchOnListUpdate
                       allowMoreCols
                       toggleFavorites
                     />
                   ) : (
-                    <h3>{t('favorites.noFavorites', { ns: 'pages' })}</h3>
+                    <h3>{t('validators.noFavorites')}</h3>
                   )}
                 </>
               )}
             </>
           )}
         </CardWrapper>
-      </PageRowWrapper>
+      </PageRow>
     </>
   );
 };

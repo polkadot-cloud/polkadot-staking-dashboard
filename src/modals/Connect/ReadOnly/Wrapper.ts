@@ -12,7 +12,6 @@ export const Wrapper = styled.div`
   h3 {
     display: flex;
     align-items: center;
-    margin-bottom: 0;
     > span {
       margin-left: 1rem;
     }

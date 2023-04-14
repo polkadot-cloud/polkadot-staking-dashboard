@@ -29,7 +29,7 @@ export const TipWrapper = styled(motion.div)`
   }
 
   h4 {
-    margin-top: 0;
+    margin-bottom: 1.25rem;
   }
 
   p {

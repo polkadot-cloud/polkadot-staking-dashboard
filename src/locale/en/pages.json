@@ -12,11 +12,6 @@
       "validators": "'s Validators",
       "website": "Website"
     },
-    "favorites": {
-      "favoriteValidators": "Favorite Validators",
-      "fetchingFavoriteValidators": "Fetching favorite validators",
-      "noFavorites": "No Favorites."
-    },
     "nominate": {
       "activeNominations": "Active Nominations",
       "addFromFavorites": "Add From Favorites",
@@ -215,11 +210,17 @@
     },
     "validators": {
       "activeValidators": "Active Validators",
+      "allValidators": "All Validators",
       "averageCommission": "Average Commission",
       "connecting": "Connecting",
+      "favoriteValidators": "Favorite Validators",
+      "favorites": "Favorites",
+      "fetchingFavoriteValidators": "Fetching favorite validators",
       "fetchingValidators": "Fetching validators",
       "networkValidators": "Network Validators",
-      "totalValidators": "Total Validators"
+      "noFavorites": "No Favorites.",
+      "totalValidators": "Total Validators",
+      "validators": "Validators"
     }
   }
 }
