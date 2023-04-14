@@ -79,7 +79,7 @@ export const HomeInner = () => {
   return (
     <>
       <PageTitle
-        title={t('pools.pools') || ''}
+        title={`${t('pools.pools')}`}
         tabs={tabs}
         button={
           totalAccountPools

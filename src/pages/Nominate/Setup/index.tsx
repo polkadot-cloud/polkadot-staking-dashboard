@@ -24,7 +24,7 @@ export const Setup = () => {
 
   return (
     <>
-      <PageTitle title={t('nominate.startNominating') || ''} />
+      <PageTitle title={`${t('nominate.startNominating')}`} />
       <PageRow>
         <TopBarWrapper>
           <span>

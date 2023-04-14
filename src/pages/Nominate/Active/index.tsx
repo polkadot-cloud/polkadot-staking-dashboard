@@ -45,7 +45,7 @@ export const Active = () => {
 
   return (
     <>
-      <PageTitle title={t('nominate.nominate') || ''} />
+      <PageTitle title={`${t('nominate.nominate')}`} />
       <StatBoxList>
         <ActiveNominatorsStat />
         <MinimumNominatorBondStat />
