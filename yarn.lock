@@ -970,8 +970,7 @@
 "@polkadotcloud/core-ui@^0.2.21":
   version "0.2.21"
   resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.2.21.tgz#5f0263b2d9048887ea6387b68bc042bd87af38d6"
-  integrity sha512-Tqfip0f/jmNbnPRwTuZW7nbjDqDs8siO5rJC0nPoSONtPpy0XbY/kxOWAdck7RCy0tmktObQ7LtqvF9TjVEtLg==
-
+  resolved "https://registry.yarnpkg.com/@polkadotcloud/core-ui/-/core-ui-0.2.21.tgz#5f0263b2d9048887ea6387b68bc042bd87af38d6"
 "@polkadotcloud/utils@^0.2.14":
   version "0.2.14"
   resolved "https://registry.yarnpkg.com/@polkadotcloud/utils/-/utils-0.2.14.tgz#08bb811d0acd81a543ab906d129c37486812e059"

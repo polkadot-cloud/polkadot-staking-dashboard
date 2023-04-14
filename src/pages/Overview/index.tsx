@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageHeading, PageRow } from '@polkadotcloud/core-ui';
+import { PageHeading, PageRow, PageTitle } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import { RowPrimaryWrapper, RowSecondaryWrapper } from 'Wrappers';
 import BigNumber from 'bignumber.js';
@@ -11,7 +12,6 @@ import { useSubscan } from 'contexts/Subscan';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
-import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
@@ -58,7 +58,7 @@ export const Overview = () => {
 
   return (
     <>
-      <PageTitle title={t('overview.overview')} />
+      <PageTitle title={`${t('overview.overview')}`} />
       <PageRow>
         <PageHeading>
           <ActiveAccount />
