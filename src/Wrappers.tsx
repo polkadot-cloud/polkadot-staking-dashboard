@@ -67,4 +67,3 @@ export const Separator = styled.div`
   width: 100%;
   margin: 0.67rem 0;
 `;
-}
