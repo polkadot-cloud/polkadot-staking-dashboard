@@ -3,6 +3,8 @@
 
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { SignClient } from '@walletconnect/sign-client';
+import { Web3Modal } from '@web3modal/standalone';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import type { ExtensionInjected } from 'contexts/Extensions/types';
@@ -48,7 +50,10 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
 
   // click to connect to extension
   const handleClick = async () => {
-    if (status !== 'connected' && extension) {
+    // TODO: migrate
+    if (id === 'wallet-connect') {
+      handleWalletConnect();
+    } else if (status !== 'connected' && extension) {
       (async () => {
         await connectExtensionAccounts(extension);
         // force re-render to display error messages
@@ -59,6 +64,35 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
           subtitle: `${t('titleExtensionConnected', { title })}`,
         });
       })();
+    }
+  };
+
+  // click to connect to extension
+  const handleWalletConnect = async () => {
+    if (id === 'wallet-connect') {
+      console.log('this is wallet connect handler');
+      const projectId = 'f75434b01141677e4ee7ddf70fee56b4';
+      const web3Modal = new Web3Modal({
+        walletConnectVersion: 1, // or 2
+        projectId,
+        standaloneChains: ['eip155:43114'],
+      });
+      const signClient = await SignClient.init({ projectId });
+
+      const { uri, approval } = await signClient.connect({
+        requiredNamespaces: {
+          eip155: {
+            methods: ['eth_sign'],
+            chains: ['eip155:43114'],
+            events: ['accountsChanged'],
+          },
+        },
+      });
+      if (uri) {
+        web3Modal.openModal({ uri, standaloneChains: ['eip155:43114'] });
+        await approval();
+        web3Modal.closeModal();
+      }
     }
   };
 
