@@ -10,6 +10,9 @@ export const defaultConnectContext: ConnectContextInterface = {
   connectExtensionAccounts: async (e) => new Promise((resolve) => resolve()),
   // eslint-disable-next-line
   getAccount: (a) => null,
+  getWalletConnectClient: () => null,
+  getWalletConnectSession: () => null,
+  getWalletConnectChainInfo: () => null,
   // eslint-disable-next-line
   connectToAccount: (a) => {},
   disconnectFromAccount: () => {},

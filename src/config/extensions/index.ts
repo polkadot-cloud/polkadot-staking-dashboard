@@ -8,6 +8,7 @@ import { ReactComponent as PolkadotJSSVG } from './icons/polkadot_js.svg';
 import { ReactComponent as SignerSVG } from './icons/signer_icon.svg';
 import { ReactComponent as SubwalletSVG } from './icons/subwallet_icon.svg';
 import { ReactComponent as TalismanSVG } from './icons/talisman_icon.svg';
+import { ReactComponent as WalletConnectSVG } from './icons/wallet_connect.svg';
 
 export const Extensions: Array<ExtensionConfig> = [
   {
@@ -45,5 +46,11 @@ export const Extensions: Array<ExtensionConfig> = [
     title: 'Parity Signer Companion',
     icon: SignerSVG,
     url: 'parity.io/technologies/signer',
+  },
+  {
+    id: 'wallet-connect',
+    title: 'Wallet Connect',
+    icon: WalletConnectSVG,
+    url: 'walletconnect.com',
   },
 ];

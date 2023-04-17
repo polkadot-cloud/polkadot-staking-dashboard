@@ -1,6 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
+import type { SessionTypes } from '@walletconnect/types';
 import BigNumber from 'bignumber.js';
 import { DappName } from 'consts';
 import { useBalances } from 'contexts/Accounts/Balances';
@@ -26,7 +28,13 @@ export const useSubmitExtrinsic = ({
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
   const { api } = useApi();
-  const { getAccount, requiresManualSign } = useConnect();
+  const {
+    getAccount,
+    requiresManualSign,
+    getWalletConnectClient,
+    getWalletConnectSession,
+    getWalletConnectChainInfo,
+  } = useConnect();
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
   const { addPending, removePending } = useExtrinsics();
@@ -56,6 +64,9 @@ export const useSubmitExtrinsic = ({
 
   // track for one-shot transaction reset after submission.
   const didTxReset = useRef<boolean>(false);
+
+  // the unsigned payload used when signing with wallet-connect
+  const [unsignedPayload, setUnsignedPayload] = useState<AnyJson | null>(null);
 
   // calculate fee upon setup changes and initial render
   useEffect(() => {
@@ -122,6 +133,9 @@ export const useSubmitExtrinsic = ({
         tip: api.registry.createType('Compact<Balance>', 0).toHex(),
         version: tx.version,
       };
+
+      setUnsignedPayload(payload);
+
       const raw = api.registry.createType('ExtrinsicPayload', payload, {
         version: payload.version,
       });
@@ -158,7 +172,7 @@ export const useSubmitExtrinsic = ({
       );
       if (extension === undefined) {
         throw new Error(`${t('walletNotFound')}`);
-      } else {
+      } else if (source !== 'wallet-connect') {
         // summons extension popup if not already connected.
         extension.enable(DappName);
       }
@@ -240,6 +254,63 @@ export const useSubmitExtrinsic = ({
     const txPayload: AnyJson = getTxPayload();
     const txSignature: AnyJson = getTxSignature();
 
+    interface IFormattedRpcResponse {
+      method?: string;
+      address?: string;
+      valid: boolean;
+      signature: any;
+    }
+
+    const sendWalletConnectTx = async (
+      chainId: string,
+      fromAddress: string,
+      client: SignClient,
+      session: SessionTypes.Struct,
+      payload: AnyJson
+    ): Promise<IFormattedRpcResponse> => {
+      setSubmitting(true);
+      addPending(accountNonce);
+      addNotification({
+        title: t('pending'),
+        subtitle: t('transactionInitiated'),
+      });
+      try {
+        const result = await client.request<{
+          signature: string;
+        }>({
+          chainId,
+          topic: session.topic,
+          request: {
+            method: 'polkadot_signTransaction',
+            params: {
+              address: fromAddress,
+              transactionPayload: payload,
+            },
+          },
+        });
+
+        return {
+          method: 'polkadot_signTransaction',
+          address: fromAddress,
+          valid: true,
+          signature: result.signature,
+        };
+      } catch (error: any) {
+        setSubmitting(false);
+        removePending(accountNonce);
+        addNotification({
+          title: t('cancelled'),
+          subtitle: t('transactionCancelled'),
+        });
+        return {
+          method: 'polkadot_signTransaction',
+          address: fromAddress,
+          valid: false,
+          signature: '',
+        };
+      }
+    };
+
     // handle signed transaction.
     if (getTxSignature()) {
       try {
@@ -261,6 +332,38 @@ export const useSubmitExtrinsic = ({
         });
       } catch (e) {
         onError('ledger');
+      }
+    } else if (source === 'wallet-connect') {
+      const wcSignClient: SignClient | null = getWalletConnectClient();
+      const wcSession: SessionTypes.Struct | null = getWalletConnectSession();
+      const wcChainInfo: string | null = getWalletConnectChainInfo();
+
+      try {
+        const result = await sendWalletConnectTx(
+          wcChainInfo as string,
+          submitAddress,
+          wcSignClient as SignClient,
+          wcSession as SessionTypes.Struct,
+          unsignedPayload as AnyJson
+        );
+        tx.addSignature(submitAddress, result.signature, getTxPayload());
+
+        const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
+          if (!didTxReset.current) {
+            didTxReset.current = true;
+            resetTx();
+          }
+
+          handleStatus(status);
+          if (status.isFinalized) {
+            events.forEach(({ event: { method } }: AnyApi) => {
+              onFinalizedEvent(method);
+              if (unsubEvents?.includes(method)) unsub();
+            });
+          }
+        });
+      } catch (e) {
+        onError('default');
       }
     } else {
       // handle unsigned transaction.

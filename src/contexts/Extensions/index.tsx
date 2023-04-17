@@ -92,7 +92,12 @@ export const ExtensionsProvider = ({
     const { injectedWeb3 }: AnyApi = window;
     const installed: Array<ExtensionInjected> = [];
     Extensions.forEach((e: ExtensionConfig) => {
-      if (injectedWeb3[e.id] !== undefined) {
+      if (e.id === 'wallet-connect') {
+        installed.push({
+          ...e,
+          ...injectedWeb3[e.id],
+        });
+      } else if (injectedWeb3[e.id] !== undefined) {
         installed.push({
           ...e,
           ...injectedWeb3[e.id],
