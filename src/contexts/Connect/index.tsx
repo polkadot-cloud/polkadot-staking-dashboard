@@ -52,19 +52,6 @@ const getAccounts = (session: SessionTypes.Struct) => {
   return accounts;
 };
 
-const getCaipChainInfo = (networkName: string): string => {
-  const stakingDashboardRPCMap: Record<string, string> = {
-    polkadot: '91b171bb158e2d3848fa23a9f1c25182',
-    kusama: 'b0a8d493285c2df73290dfb7e61f870f',
-    westend: 'e143f23803ac50e8f6f8e62695d1ce9e',
-  };
-
-  // CAIP (chain agnostic improvement proposal) chain value is based on which network the user is currently connected to
-  const chainInfo = stakingDashboardRPCMap[networkName];
-
-  return `polkadot:${chainInfo}`;
-};
-
 export const ConnectContext = React.createContext<ConnectContextInterface>(
   defaultConnectContext
 );
@@ -379,7 +366,7 @@ export const ConnectProvider = ({
           });
           setWalletConnectClient(provider.client);
 
-          const currentCaipChain = getCaipChainInfo(network.name);
+          const currentCaipChain = `polkadot:${network.namespace}`;
           setWalletConnectChainInfo(currentCaipChain);
 
           const wcAccounts = getAccounts(existingSession);
@@ -523,7 +510,7 @@ export const ConnectProvider = ({
       });
       setWalletConnectClient(provider.client);
 
-      const caipChainInfo = getCaipChainInfo(network.name);
+      const caipChainInfo = `polkadot:${network.namespace}`;
       setWalletConnectChainInfo(caipChainInfo);
       const caipChainId = caipChainInfo.split(':')[1];
 
