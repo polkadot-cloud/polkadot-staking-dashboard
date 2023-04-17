@@ -21,7 +21,7 @@ export class WalletConnect {
     return provider;
   };
 
-  static getAccounts = (session: SessionTypes.Struct) => {
+  static getAccounts = (session: SessionTypes.Struct): string[] => {
     let accounts: string[] = [];
     if (session) {
       const wcAccounts = Object.values(session.namespaces)

@@ -7,8 +7,8 @@ import {
   localStorageOrDefault,
   setStateWithRef,
 } from '@polkadotcloud/utils';
-import type SignClient from '@walletconnect/sign-client';
 import type { SessionTypes } from '@walletconnect/types/';
+import type UniversalProvider from '@walletconnect/universal-provider/dist/types/UniversalProvider';
 import { Web3Modal } from '@web3modal/standalone';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -20,7 +20,6 @@ import type {
 } from 'contexts/Connect/types';
 import { useExtensions } from 'contexts/Extensions';
 import type {
-  ExtensionAccount,
   ExtensionInjected,
   ExtensionInterface,
 } from 'contexts/Extensions/types';
@@ -86,7 +85,10 @@ export const ConnectProvider = ({
   >([]);
   const extensionsInitialisedRef = useRef(extensionsInitialised);
 
-  const [client, setWalletConnectClient] = useState<SignClient | null>(null);
+  // store the wallet connect client.
+  const [walletConnectProvider, setWalletConnectProvider] =
+    useState<UniversalProvider | null>(null);
+
   const [session, setWalletConnectSession] =
     useState<SessionTypes.Struct | null>(null);
   const [wcChainInfo, setWalletConnectChainInfo] = useState<string | null>(
@@ -94,7 +96,7 @@ export const ConnectProvider = ({
   );
 
   const getWalletConnectClient = () => {
-    return client;
+    return walletConnectProvider?.client || null;
   };
 
   const getWalletConnectSession = () => {
@@ -155,7 +157,14 @@ export const ConnectProvider = ({
     }
   }, [extensionsInitialisedRef.current, checkingInjectedWeb3]);
 
-  // once extensions are fully initialised, fetch any ledger accounts and external accounts present
+  // Initialise Wallet Connect once extensions are fetched, or when network changes.
+  useEffect(() => {
+    if (extensionsFetched) {
+      initialiseWalletConnect();
+    }
+  }, [extensionsFetched, network]);
+
+  // once extensions are fetched, fetch any ledger accounts and external accounts present
   // in localStorage.
   useEffect(() => {
     if (extensionsFetched) {
@@ -324,9 +333,6 @@ export const ConnectProvider = ({
           id ||
             `unknown_extension_${extensionsInitialisedRef.current.length + 1}`
         );
-      } else if (id === 'wallet-connect') {
-        // initialise wallet connect.
-        initialiseWalletConnect(id, activeWalletAccount, i, total);
       } else {
         try {
           // attempt to get extension `enable` property
@@ -382,15 +388,10 @@ export const ConnectProvider = ({
     });
   };
 
-  /* initialiseWalletConnect: Handles the initialisation of wallet connect. This is done after web
-   * extensions have been fetched.
+  /* initialiseWalletConnect: Handles the initialisation of Wallet Connect. This is done at the same
+   * time that web extensions have been fetched.
    */
-  const initialiseWalletConnect = async (
-    id: string,
-    activeWalletAccount: ImportedAccount | null,
-    i: number,
-    total: number
-  ) => {
+  const initialiseWalletConnect = async () => {
     const wcSessionStorage = localStorage.getItem('WalletConnectSession');
 
     // If there is a session stored in local storage, we will try to connect to it.
@@ -409,66 +410,55 @@ export const ConnectProvider = ({
       }
 
       const provider = await WalletConnect.initialize();
-      setWalletConnectClient(provider.client);
-
-      const currentCaipChain = `polkadot:${network.namespace}`;
-      setWalletConnectChainInfo(currentCaipChain);
+      setWalletConnectProvider(provider);
+      setWalletConnectChainInfo(`polkadot:${network.namespace}`);
 
       const wcAccounts = WalletConnect.getAccounts(existingSession);
-      const walletConnectAccountAddresses = wcAccounts.map(
-        (walletAccount: string) => {
-          return {
-            source: '',
-            addedBy: '',
-            address: walletAccount,
-            meta: provider.client.metadata,
-            name: `Wallet Connect:${walletAccount}`,
-            signer: provider.client,
-          };
-        }
+
+      if (wcAccounts.length) {
+        const walletConnectAccountAddresses = wcAccounts.map(
+          (walletAccount: string) => {
+            return {
+              source: '',
+              addedBy: '',
+              address: walletAccount,
+              meta: provider.client.metadata,
+              name: clipAddress(walletAccount),
+              signer: provider.client,
+            };
+          }
+        );
+        importWalletConnectAccounts(walletConnectAccountAddresses);
+      }
+    }
+  };
+
+  /* importWalletConnectAccounts: Takes accounts provided by a wallet connect client and imports
+   * them into the dashbosard. */
+  const importWalletConnectAccounts = (wcAccounts: ImportedAccount[]) => {
+    if (wcAccounts.length) {
+      // get and format active account if present
+      const activeAccountLocal = getActiveAccountLocal(network);
+
+      const activeAccountIsWc =
+        wcAccounts.find(
+          (a: ImportedAccount) => a.address === activeAccountLocal
+        ) ?? null;
+
+      // remove already-imported accounts
+      wcAccounts = wcAccounts.filter(
+        (l: ImportedAccount) =>
+          accountsRef.current.find(
+            (a: ImportedAccount) => a.address === l.address
+          ) === undefined
       );
 
-      const walletConnectAccountsSub = {
-        // eslint-disable-next-line
-            subscribe: (a: { (a: ExtensionAccount[]): void }) => {},
-      };
-
-      const extension: ExtensionInterface = {
-        provider,
-        accounts: walletConnectAccountsSub,
-        metadata: provider.client.metadata,
-        signer: provider.client,
-      };
-
-      const { newAccounts, meta } = handleImportExtension(
-        id,
-        accountsRef.current,
-        extension,
-        walletConnectAccountAddresses,
-        forgetAccounts
-      );
-
-      // store active wallet account if found in this extension
-      if (!activeWalletAccount) {
-        activeWalletAccount = getActiveExtensionAccount(newAccounts);
+      // set active account for network
+      if (activeAccountIsWc) {
+        connectToAccount(activeAccountIsWc);
       }
-
-      // set active account for network on final extension
-      if (i === total && activeAccountRef.current === null) {
-        const activeAccountRemoved =
-          activeWalletAccount?.address !== meta.removedActiveAccount &&
-          meta.removedActiveAccount !== null;
-
-        if (!activeAccountRemoved) {
-          connectActiveExtensionAccount(activeWalletAccount, connectToAccount);
-        }
-      }
-
-      // concat accounts and store
-      addToAccounts(newAccounts);
-
-      // update initialised extensions
-      updateInitialisedExtensions(id);
+      // add Wallet Connect accounts to imported
+      addToAccounts(wcAccounts);
     }
   };
 
@@ -486,103 +476,62 @@ export const ConnectProvider = ({
         `unknown_extension_${extensionsInitialisedRef.current.length + 1}`
       );
     } else if (id === 'wallet-connect') {
-      const provider = await WalletConnect.initialize();
-      setWalletConnectClient(provider.client);
-
-      const chainId = `polkadot:${network.namespace}`;
-      setWalletConnectChainInfo(chainId);
-
-      const params = {
-        requiredNamespaces: {
-          polkadot: {
-            methods: ['polkadot_signTransaction', 'polkadot_signMessage'],
-            chains: [chainId],
-            events: ['chainChanged", "accountsChanged'],
-            rpcMap: {
-              [network.namespace]: network.endpoints.rpc,
+      if (wcChainInfo && walletConnectProvider) {
+        const params = {
+          requiredNamespaces: {
+            polkadot: {
+              methods: ['polkadot_signTransaction', 'polkadot_signMessage'],
+              chains: [wcChainInfo],
+              events: ['chainChanged", "accountsChanged'],
+              rpcMap: {
+                [network.namespace]: network.endpoints.rpc,
+              },
             },
           },
-        },
-      };
+        };
 
-      // initialize accounts
-      let wcAccounts: string[] = [];
-      // Subscribe for pairing URI
-      const { uri, approval } = await provider.client.connect(params);
-      const web3modal = new Web3Modal({
-        projectId: 'f75434b01141677e4ee7ddf70fee56b4',
-        walletConnectVersion: 2,
-      });
-      try {
-        if (uri) {
-          web3modal.openModal({ uri });
-        }
-        // Await session approval from the wallet.
-        const wcSession = await approval();
-        setWalletConnectSession(wcSession as SessionTypes.Struct);
-        localStorage.setItem('WalletConnectSession', JSON.stringify(wcSession));
-
-        // get accounts
-        wcAccounts = WalletConnect.getAccounts(
-          wcSession as SessionTypes.Struct
+        // initialize accounts
+        let wcAccounts: string[] = [];
+        // Subscribe for pairing URI
+        const { uri, approval } = await walletConnectProvider.client.connect(
+          params
         );
-        const walletConnectAccountAddresses = wcAccounts.map(
-          (walletAccount: string) => {
-            return {
-              source: '',
-              addedBy: '',
-              address: walletAccount,
-              meta: provider.client.metadata,
-              name: `Wallet Connect:${walletAccount}`,
-              signer: provider.client,
-            };
+        const web3modal = new Web3Modal({
+          projectId: 'f75434b01141677e4ee7ddf70fee56b4',
+          walletConnectVersion: 2,
+        });
+        try {
+          if (uri) {
+            web3modal.openModal({ uri });
           }
-        );
-        const walletConnectAccountsSub = {
-          // eslint-disable-next-line
-          subscribe: (a: { (a: ExtensionAccount[]): void }) => {},
-        };
+          // Await session approval from the wallet.
+          const wcSession = await approval();
+          setWalletConnectSession(wcSession as SessionTypes.Struct);
+          localStorage.setItem(
+            'WalletConnectSession',
+            JSON.stringify(wcSession)
+          );
 
-        const extension: ExtensionInterface = {
-          provider,
-          accounts: walletConnectAccountsSub,
-          metadata: provider.client.metadata,
-          signer: provider.client,
-        };
-
-        const { newAccounts, meta } = handleImportExtension(
-          id,
-          accountsRef.current,
-          extension,
-          walletConnectAccountAddresses,
-          forgetAccounts
-        );
-
-        //   // set active account for network if not yet set
-        if (activeAccountRef.current === null) {
-          const activeExtensionAccount = getActiveExtensionAccount(newAccounts);
-
-          if (
-            activeExtensionAccount !== meta.removedActiveAccount &&
-            meta.removedActiveAccount !== null
-          )
-            connectActiveExtensionAccount(
-              activeExtensionAccount,
-              connectToAccount
-            );
+          // get accounts
+          wcAccounts = WalletConnect.getAccounts(
+            wcSession as SessionTypes.Struct
+          );
+          const walletConnectAccountAddresses = wcAccounts.map(
+            (walletAccount: string) => {
+              return {
+                source: '',
+                addedBy: '',
+                address: walletAccount,
+                meta: walletConnectProvider.client.metadata,
+                name: clipAddress(walletAccount),
+                signer: walletConnectProvider.client,
+              };
+            }
+          );
+          importWalletConnectAccounts(walletConnectAccountAddresses);
+        } catch (err) {
+          web3modal.closeModal();
         }
-        // concat accounts and store
-        addToAccounts(newAccounts);
-
-        // update initialised extensions
-        updateInitialisedExtensions(id);
-        // });
-        addToUnsubscribe(id, () => {});
-        // });
-      } catch (err) {
-        handleExtensionError(id, String(err));
-      } finally {
-        web3modal.closeModal();
       }
     } else {
       try {
