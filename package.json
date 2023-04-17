@@ -35,7 +35,7 @@
     "@polkadotcloud/utils": "^0.2.14",
     "@substrate/connect": "^0.7.23",
     "@types/lodash.throttle": "^4.1.7",
-    "@zondax/ledger-substrate": "^0.40.6",
+    "@zondax/ledger-substrate": "^0.40.7",
     "bignumber.js": "^9.1.1",
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
