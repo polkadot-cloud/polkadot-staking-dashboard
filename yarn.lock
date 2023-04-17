@@ -1248,7 +1248,7 @@
     tslib "^2.5.0"
     ws "^8.13.0"
 
-"@polkadotcloud/core-ui@^0.2.18":
+"@polkadotcloud/core-ui@^0.2.21":
   version "0.2.21"
   resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.2.21.tgz#5f0263b2d9048887ea6387b68bc042bd87af38d6"
   integrity sha512-Tqfip0f/jmNbnPRwTuZW7nbjDqDs8siO5rJC0nPoSONtPpy0XbY/kxOWAdck7RCy0tmktObQ7LtqvF9TjVEtLg==
@@ -2569,9 +2569,9 @@ binary-extensions@^2.0.0:
   resolved "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
 
-"bip32-ed25519@git+https://github.com/Zondax/bip32-ed25519.git":
+"bip32-ed25519@https://github.com/Zondax/bip32-ed25519":
   version "0.0.4"
-  resolved "git+https://github.com/Zondax/bip32-ed25519.git#0949df01b5c93885339bc28116690292088f6134"
+  resolved "https://github.com/Zondax/bip32-ed25519#0949df01b5c93885339bc28116690292088f6134"
   dependencies:
     bn.js "^5.1.1"
     elliptic "^6.4.1"
