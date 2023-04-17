@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary, PageRow } from '@polkadotcloud/core-ui';
+import { ButtonPrimary, ButtonRow, PageRow } from '@polkadotcloud/core-ui';
 import { isNotZero } from '@polkadotcloud/utils';
-import { ButtonRowWrapper } from 'Wrappers';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -58,7 +57,7 @@ export const UnstakePrompts = () => {
                       { unit }
                     )}`}
               </h4>
-              <ButtonRowWrapper verticalSpacing>
+              <ButtonRow yMargin>
                 {isFastUnstaking ? (
                   <ButtonPrimary
                     marginRight
@@ -90,7 +89,7 @@ export const UnstakePrompts = () => {
                     }
                   />
                 )}
-              </ButtonRowWrapper>
+              </ButtonRow>
             </div>
           </CardWrapper>
         </PageRow>

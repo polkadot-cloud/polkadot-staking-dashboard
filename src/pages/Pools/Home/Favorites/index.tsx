@@ -11,7 +11,7 @@ import { PoolList } from 'library/PoolList';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const Favorites = () => {
+export const PoolFavorites = () => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { favorites, removeFavorite } = usePoolsConfig();

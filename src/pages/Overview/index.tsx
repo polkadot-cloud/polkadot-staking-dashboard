@@ -1,13 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PageRow } from '@polkadotcloud/core-ui';
+import { PageHeading, PageRow, PageTitle } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
-import {
-  RowPrimaryWrapper,
-  RowSecondaryWrapper,
-  TopBarWrapper,
-} from 'Wrappers';
+import { RowPrimaryWrapper, RowSecondaryWrapper } from 'Wrappers';
 import BigNumber from 'bignumber.js';
 import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -15,7 +11,6 @@ import { useSubscan } from 'contexts/Subscan';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
 import { GraphWrapper } from 'library/Graphs/Wrappers';
-import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
@@ -62,11 +57,11 @@ export const Overview = () => {
 
   return (
     <>
-      <PageTitle title={t('overview.overview')} />
+      <PageTitle title={`${t('overview.overview')}`} />
       <PageRow>
-        <TopBarWrapper>
+        <PageHeading>
           <ActiveAccount />
-        </TopBarWrapper>
+        </PageHeading>
       </PageRow>
       <StatBoxList>
         <HistoricalRewardsRateStat />
