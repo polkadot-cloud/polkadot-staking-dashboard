@@ -2,9 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary, PageRow } from '@polkadotcloud/core-ui';
-import { RowPrimaryWrapper, RowSecondaryWrapper } from 'Wrappers';
-import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
+import {
+  ButtonHelp,
+  ButtonPrimary,
+  PageRow,
+  PageTitle,
+  RowSection,
+} from '@polkadotcloud/core-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
@@ -14,7 +18,7 @@ import { useUi } from 'contexts/UI';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { PageTitle } from 'library/PageTitle';
+// import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { useTranslation } from 'react-i18next';
 import { ControllerNotImported } from './ControllerNotImported';
@@ -50,24 +54,14 @@ export const Active = () => {
       <ControllerNotImported />
       <UnstakePrompts />
       <PageRow>
-        <RowPrimaryWrapper
-          hOrder={1}
-          vOrder={0}
-          thresholdStickyMenu={SideMenuStickyThreshold}
-          thresholdFullWidth={SectionFullWidthThreshold}
-        >
+        <RowSection paddingLeft>
           <Status height={ROW_HEIGHT} />
-        </RowPrimaryWrapper>
-        <RowSecondaryWrapper
-          hOrder={0}
-          vOrder={1}
-          thresholdStickyMenu={SideMenuStickyThreshold}
-          thresholdFullWidth={SectionFullWidthThreshold}
-        >
+        </RowSection>
+        <RowSection secondary>
           <CardWrapper height={ROW_HEIGHT}>
             <ManageBond />
           </CardWrapper>
-        </RowSecondaryWrapper>
+        </RowSection>
       </PageRow>
       <PageRow>
         <CardWrapper>
