@@ -38,20 +38,6 @@ import {
 import { WalletConnect } from './WalletConnect';
 import { defaultConnectContext } from './defaults';
 
-const getAccounts = (session: SessionTypes.Struct) => {
-  let accounts: string[] = [];
-  if (session) {
-    const wcAccounts = Object.values(session.namespaces)
-      .map((namespace) => namespace.accounts)
-      .flat();
-    accounts = wcAccounts.map((wcAccount) => {
-      const address = wcAccount.split(':')[2];
-      return address;
-    });
-  }
-  return accounts;
-};
-
 export const ConnectContext = React.createContext<ConnectContextInterface>(
   defaultConnectContext
 );
