@@ -950,7 +950,7 @@
 
 "@polkadotcloud/core-ui@^0.2.22":
   version "0.2.22"
-  resolved "https://registry.yarnpkg.com/@polkadotcloud/core-ui/-/core-ui-0.2.22.tgz#5dbc1579d0e31a1e07d740a351187986dbb90239"
+  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.2.22.tgz#5dbc1579d0e31a1e07d740a351187986dbb90239"
   integrity sha512-IzEJSy4/rUoRfFm1hJh1tfLNJr7+HAIOVVl2IvBB4Qa0gF6N7MnD34bAjIYXnsSIitq01M6HE24RvtMUrQgq2w==
 
 "@polkadotcloud/utils@^0.2.14":
@@ -1426,7 +1426,7 @@
   dependencies:
     "@ledgerhq/hw-transport" "^6.27.1"
     bip32 "^4.0.0"
-    bip32-ed25519 "git+https://github.com/Zondax/bip32-ed25519.git"
+    bip32-ed25519 "https://github.com/Zondax/bip32-ed25519"
     bip39 "^3.0.4"
     blakejs "^1.2.1"
     bs58 "^5.0.0"
@@ -1658,7 +1658,6 @@ binary-extensions@^2.0.0:
 
 "bip32-ed25519@git+https://github.com/Zondax/bip32-ed25519.git":
   version "0.0.4"
-  uid "0949df01b5c93885339bc28116690292088f6134"
   resolved "git+https://github.com/Zondax/bip32-ed25519.git#0949df01b5c93885339bc28116690292088f6134"
   dependencies:
     bn.js "^5.1.1"
