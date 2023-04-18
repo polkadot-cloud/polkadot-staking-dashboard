@@ -430,7 +430,7 @@ export const ConnectProvider = ({
 
       const walletConnectAccountsSub = {
         // eslint-disable-next-line
-            subscribe: (a: { (a: ExtensionAccount[]): void }) => {},
+        subscribe: (a: { (a: ExtensionAccount[]): void }) => {},
       };
 
       const extension: ExtensionInterface = {
