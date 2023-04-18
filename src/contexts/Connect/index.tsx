@@ -35,7 +35,7 @@ import {
   removeFromLocalExtensions,
   removeLocalExternalAccounts,
 } from './Utils';
-import { WalletConnectInitializer } from './WalletConnect';
+import { WalletConnect } from './WalletConnect';
 import { defaultConnectContext } from './defaults';
 
 const getAccounts = (session: SessionTypes.Struct) => {
@@ -158,8 +158,8 @@ export const ConnectProvider = ({
     };
   }, [extensions?.length, network, checkingInjectedWeb3]);
 
-  // once initialised extensions equal total extensions present in
-  // `injectedWeb3`, mark extensions as fetched.
+  // once initialised extensions equal total extensions present in `injectedWeb3`, mark extensions
+  // as fetched.
   useEffect(() => {
     if (!checkingInjectedWeb3) {
       const countExtensions = extensions?.length ?? 0;
@@ -422,13 +422,13 @@ export const ConnectProvider = ({
         return;
       }
 
-      const provider = await WalletConnectInitializer.initialize();
+      const provider = await WalletConnect.initialize();
       setWalletConnectClient(provider.client);
 
       const currentCaipChain = `polkadot:${network.namespace}`;
       setWalletConnectChainInfo(currentCaipChain);
 
-      const wcAccounts = getAccounts(existingSession);
+      const wcAccounts = WalletConnect.getAccounts(existingSession);
       const walletConnectAccountAddresses = wcAccounts.map(
         (walletAccount: string) => {
           return {
@@ -500,7 +500,7 @@ export const ConnectProvider = ({
         `unknown_extension_${extensionsInitialisedRef.current.length + 1}`
       );
     } else if (id === 'wallet-connect') {
-      const provider = await WalletConnectInitializer.initialize();
+      const provider = await WalletConnect.initialize();
       setWalletConnectClient(provider.client);
 
       const chainId = `polkadot:${network.namespace}`;
@@ -537,7 +537,9 @@ export const ConnectProvider = ({
         localStorage.setItem('WalletConnectSession', JSON.stringify(wcSession));
 
         // get accounts
-        wcAccounts = getAccounts(wcSession as SessionTypes.Struct);
+        wcAccounts = WalletConnect.getAccounts(
+          wcSession as SessionTypes.Struct
+        );
         const walletConnectAccountAddresses = wcAccounts.map(
           (walletAccount: string) => {
             return {

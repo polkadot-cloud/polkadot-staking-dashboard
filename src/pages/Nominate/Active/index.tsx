@@ -18,7 +18,6 @@ import { useUi } from 'contexts/UI';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-// import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { useTranslation } from 'react-i18next';
 import { ControllerNotImported } from './ControllerNotImported';

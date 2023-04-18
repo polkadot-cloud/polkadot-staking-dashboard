@@ -133,6 +133,10 @@ export const useSubmitExtrinsic = ({
         tip: api.registry.createType('Compact<Balance>', 0).toHex(),
         version: tx.version,
       };
+<<<<<<< HEAD
+=======
+
+>>>>>>> rb-wallet-connect
       setUnsignedPayload(payload);
 
       const raw = api.registry.createType('ExtrinsicPayload', payload, {
