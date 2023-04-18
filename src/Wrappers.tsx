@@ -207,43 +207,6 @@ export const Separator = styled.div`
   margin: 0.67rem 0;
 `;
 
-/* TopBarWrapper
- *
- * Positioned under titles for a Go Back button and other page header info.
- */
-export const TopBarWrapper = styled.div`
-  border-bottom: 1px solid var(--border-primary-color);
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  padding-top: 0.75rem;
-  padding-bottom: 0.75rem;
-  width: 100%;
-  margin-bottom: 0.25rem;
-
-  > span {
-    margin-right: 1rem;
-  }
-
-  h3 {
-    color: var(--text-color-secondary);
-    font-size: 1.15rem;
-    margin: 0.25rem 0;
-    min-height: 2rem;
-  }
-
-  .right {
-    flex: 1 1 0%;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-end;
-
-    button {
-      margin: 0 0 0 1rem;
-    }
-  }
-`;
-
 /* ButtonRowWrapper
  *
  * A flex container for a row of buttons

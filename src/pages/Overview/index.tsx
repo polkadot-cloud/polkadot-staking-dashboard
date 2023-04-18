@@ -1,7 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PageRow, PageTitle, RowSection } from '@polkadotcloud/core-ui';
+import {
+  PageHeading,
+  PageRow,
+  PageTitle,
+  RowSection,
+} from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -55,11 +60,11 @@ export const Overview = () => {
 
   return (
     <>
-      <PageTitle title={t('overview.overview')} />
+      <PageTitle title={`t('overview.overview')`} />
       <PageRow>
-        <TopBarWrapper>
+        <PageHeading>
           <ActiveAccount />
-        </TopBarWrapper>
+        </PageHeading>
       </PageRow>
       <StatBoxList>
         <HistoricalRewardsRateStat />

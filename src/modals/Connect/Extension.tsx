@@ -70,7 +70,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   // click to connect to wallet connect
   const handleWalletConnect = async () => {
     if (id === 'wallet-connect') {
-      console.log('this is wallet connect handler');
+      // console.log('this is wallet connect handler');
       const projectId = 'f75434b01141677e4ee7ddf70fee56b4';
       const web3Modal = new Web3Modal({
         walletConnectVersion: 1, // or 2
