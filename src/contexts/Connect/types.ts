@@ -12,6 +12,7 @@ import type { MaybeAccount } from 'types';
 export interface ConnectContextInterface {
   formatAccountSs58: (a: string) => string | null;
   connectExtensionAccounts: (e: ExtensionInjected) => Promise<void>;
+  connectWalletConnectExtensionAccounts: (id: string) => Promise<void>;
   getAccount: (account: MaybeAccount) => ExtensionAccount | null;
   getWalletConnectClient: () => SignClient | null;
   getWalletConnectSession: () => SessionTypes.Struct | null;
