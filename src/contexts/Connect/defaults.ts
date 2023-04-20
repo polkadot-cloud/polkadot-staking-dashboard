@@ -13,7 +13,6 @@ export const defaultConnectContext: ConnectContextInterface = {
     new Promise((resolve) => resolve()),
   // eslint-disable-next-line
   getAccount: (a) => null,
-  // eslint-disable-next-line
   getWalletConnectClient: () => null,
   getWalletConnectSession: () => null,
   getWalletConnectChainInfo: () => null,
