@@ -15,11 +15,8 @@ export const defaultConnectContext: ConnectContextInterface = {
   getAccount: (a) => null,
   // eslint-disable-next-line
   getWalletConnectClient: () => null,
-  // eslint-disable-next-line
   getWalletConnectSession: () => null,
-  // eslint-disable-next-line
   getWalletConnectChainInfo: () => null,
-  // eslint-disable-next-line
   connectToAccount: (a) => {},
   disconnectFromAccount: () => {},
   // eslint-disable-next-line
