@@ -1,0 +1,95 @@
+name: Bug Report
+description: File a bug report
+labels: ['triage-needed', 'bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+        **NOTE** A number of issues reported against Polkadot Staking Dashboard are often found to already be fixed in more current versions of the project.
+        If possible, please make sure to checkout the latest code from 'main' branch of Polkadot Staking Dashboard to the latest possible and try to replicate locally before creating an issue.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Issue Description
+      description: Please explain your issue
+      value: 'Describe your issue'
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproducer
+    attributes:
+      label: Steps to reproduce the issue
+      description: Please explain the steps to reproduce the issue.
+      value: "Steps to reproduce the issue\n1.\n2.\n3.\n"
+    validations:
+      required: true
+
+  - type: textarea
+    id: received_results
+    attributes:
+      label: Describe the results you received
+      description: Please explain the results you are noticing, including stacktrace and error logs.
+      value: 'Describe the results you received'
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected_results
+    attributes:
+      label: Describe the results you expected
+      description: Please explain the results you are expecting
+      value: 'Describe the results you expected'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: upstream_latest
+    attributes:
+      label: Upstream Latest Release
+      description: Have you tried running the ["release candidate version"](https://paritytech.github.io/polkadot-staking-dashboard/)?
+      options:
+        - 'Yes'
+        - 'No'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browsers
+    attributes:
+      label: What browsers are you seeing the problem on?
+      multiple: true
+      options:
+        - Firefox
+        - Chrome
+        - Brave
+        - Safari
+        - Microsoft Edge
+        - Opera
+        - Other (fill in next field)
+
+  - type: textarea
+    id: additional_details
+    attributes:
+      label: Additional details
+      description: Please describe any additional environment details like (Browser, Which Wallet is used, Browser/Wallet versions etc.)
+      value: 'Additional details'
+
+  - type: textarea
+    id: additional_info
+    attributes:
+      label: Additional information
+      description: Please explain the additional information you deem important
+      value: 'Additional information like issue happens only occasionally or issue happens with a particular architecture or on a particular setting'
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots
+      description: Provide us with screenshots if needed to have a better understanding of the issue
+    validations:
+      required: false
