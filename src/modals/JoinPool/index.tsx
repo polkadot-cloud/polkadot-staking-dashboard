@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { planckToUnit, unitToPlanck } from 'Utils';
+import { planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -28,12 +28,12 @@ export const JoinPool = () => {
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { setActiveAccountSetup } = useSetup();
   const { getTransferOptions } = useTransferOptions();
-  const { freeBalance } = getTransferOptions(activeAccount);
+  const { totalPossibleBond } = getTransferOptions(activeAccount).pool;
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' });
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({
-    bond: planckToUnit(freeBalance, units).toString(),
+    bond: planckToUnit(totalPossibleBond, units).toString(),
   });
 
   // bond valid
@@ -77,7 +77,7 @@ export const JoinPool = () => {
 
   const errors = [];
   if (!accountHasSigner(activeAccount)) {
-    errors.push(t('readOnly'));
+    errors.push(t('readOnlyCannotSign'));
   }
   return (
     <>

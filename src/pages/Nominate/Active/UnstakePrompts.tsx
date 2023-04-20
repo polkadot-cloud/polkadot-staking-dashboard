@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary } from '@polkadotcloud/dashboard-ui';
+import { ButtonPrimary, ButtonRow, PageRow } from '@polkadotcloud/core-ui';
+import { isNotZero } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -12,8 +13,6 @@ import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { useTranslation } from 'react-i18next';
-import { isNotZero } from 'Utils';
-import { ButtonRowWrapper, PageRowWrapper } from 'Wrappers';
 
 export const UnstakePrompts = () => {
   const { t } = useTranslation('pages');
@@ -38,7 +37,7 @@ export const UnstakePrompts = () => {
   return (
     <>
       {(isUnstaking || isFastUnstaking) && !isNetworkSyncing && (
-        <PageRowWrapper className="page-padding" noVerticalSpacer>
+        <PageRow>
           <CardWrapper
             style={{ border: `1px solid ${annuncementBorderColor}` }}
           >
@@ -58,7 +57,7 @@ export const UnstakePrompts = () => {
                       { unit }
                     )}`}
               </h4>
-              <ButtonRowWrapper verticalSpacing>
+              <ButtonRow yMargin>
                 {isFastUnstaking ? (
                   <ButtonPrimary
                     marginRight
@@ -80,16 +79,20 @@ export const UnstakePrompts = () => {
                     onClick={() =>
                       openModalWith(
                         'UnlockChunks',
-                        { bondFor: 'nominator', poolClosure: true },
+                        {
+                          bondFor: 'nominator',
+                          poolClosure: true,
+                          disableWindowResize: true,
+                        },
                         'small'
                       )
                     }
                   />
                 )}
-              </ButtonRowWrapper>
+              </ButtonRow>
             </div>
           </CardWrapper>
-        </PageRowWrapper>
+        </PageRow>
       )}
     </>
   );

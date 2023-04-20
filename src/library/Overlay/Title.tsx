@@ -3,7 +3,7 @@
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonHelp, ButtonInvertRounded } from '@polkadotcloud/dashboard-ui';
+import { ButtonHelp, ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
 import { useHelp } from 'contexts/Help';
 import { useOverlay } from 'contexts/Overlay';
 import type { FunctionComponent } from 'react';
@@ -40,7 +40,7 @@ export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
       </div>
       {hideDone !== true ? (
         <div>
-          <ButtonInvertRounded
+          <ButtonPrimaryInvert
             text={t('done')}
             onClick={() => closeOverlay()}
           />

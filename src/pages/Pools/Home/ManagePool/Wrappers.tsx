@@ -45,7 +45,7 @@ export const RolesWrapper = styled.div`
       > h4 {
         display: flex;
         align-items: center;
-        margin-bottom: 0rem;
+        margin-top: 1.25rem;
       }
     }
   }

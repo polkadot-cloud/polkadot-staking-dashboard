@@ -26,7 +26,6 @@ export const AddressWrapper = styled.div`
         display: flex;
         flex-grow: 1;
         > h4 {
-          margin: 0;
           padding: 0;
           display: flex;
           align-items: center;
@@ -62,6 +61,7 @@ export const AddressWrapper = styled.div`
       align-items: center;
       padding: 0rem 1rem 1rem 0.25rem;
       border-bottom: 1px solid var(--border-primary-color);
+      margin-top: 1rem;
 
       &:last-child {
         border: none;
@@ -89,14 +89,15 @@ export const AddressWrapper = styled.div`
               }
             }
 
-            .label {
-              margin-right: 0.5rem;
-              margin-bottom: 0.85rem;
-            }
-
             h5,
             button {
               font-size: 0.9rem;
+              &.label {
+                display: flex;
+                align-items: flex-end;
+                margin-right: 0.5rem;
+                margin-bottom: 0.85rem;
+              }
               > span {
                 padding: 0.4rem 0.75rem;
                 border-radius: 1rem;
@@ -166,7 +167,6 @@ export const AddressWrapper = styled.div`
   .more {
     padding: 0 1.5rem;
     h4 {
-      margin: 0;
       padding: 0;
       opacity: var(--opacity-disabled);
     }

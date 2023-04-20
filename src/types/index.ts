@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import type { Theme } from 'contexts/Themes/types';
 import type { PageProps } from 'pages/types';
 import type React from 'react';
@@ -25,6 +24,7 @@ export interface Network {
     rpc: string;
     lightClient: AnyApi;
   };
+  namespace: string;
   colors: Record<NetworkColor, { [key in Theme]: string }>;
   subscanEndpoint: string;
   unit: string;
@@ -67,8 +67,7 @@ export interface PageItem {
   uri: string;
   hash: string;
   Entry: React.FC<PageProps>;
-  icon?: IconDefinition;
-  animate?: AnyJson;
+  lottie: AnyJson;
   action?: {
     type: string;
     status: string;

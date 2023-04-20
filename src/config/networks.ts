@@ -21,6 +21,7 @@ export const NetworkList: Networks = {
       rpc: 'wss://apps-rpc.polkadot.io',
       lightClient: Sc.WellKnownChain.polkadot,
     },
+    namespace: '91b171bb158e2d3848fa23a9f1c25182',
     colors: {
       primary: {
         light: 'rgb(211, 48, 121)',
@@ -73,6 +74,7 @@ export const NetworkList: Networks = {
       rpc: 'wss://kusama-rpc.polkadot.io',
       lightClient: Sc.WellKnownChain.ksmcc3,
     },
+    namespace: 'b0a8d493285c2df73290dfb7e61f870f',
     colors: {
       primary: {
         light: 'rgb(31, 41, 55)',
@@ -127,6 +129,7 @@ export const NetworkList: Networks = {
       rpc: 'wss://westend-rpc.polkadot.io',
       lightClient: Sc.WellKnownChain.westend2,
     },
+    namespace: 'e143f23803ac50e8f6f8e62695d1ce9e',
     colors: {
       primary: {
         light: '#da4e71',

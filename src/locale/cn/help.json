@@ -136,6 +136,20 @@
           "详情请在其官方网站上查找:ledger.com."
         ]
       ],
+      "ledgerRejectedTransaction": [
+        "Ledger拒绝交易",
+        [
+          "己在Ledger设备上拒绝交易, 该交易不会被上交.",
+          "请在Ledger设备上通过批准交易来提交交易."
+        ]
+      ],
+      "ledgerRequestTimeout": [
+        "Ledger请求超时",
+        [
+          "当Ledger设备繁忙时, 或者当操作未能及时完成时, 可能会发生超时报错.",
+          "请尝试再次执行该操作, 如果错误仍然存在, 请尝试重新启动Ledger设备."
+        ]
+      ],
       "lockedBalance": [
         "锁定余额",
         [
@@ -197,6 +211,13 @@
         [
           "{NETWORK_UNIT}验证人的总提名人质押的数量.",
           "该值和验证人的自我抵押一起形成验证人总抵押数,值得注意的是,该值因为随着提名人在该Session的质押金额给活跃验证人的重新分配,每一个era都会发生变化."
+        ]
+      ],
+      "openAppOnLedger": [
+        "在Ledger上打开相应的App",
+        [
+          "当{NETWORK_NAME} Ledger App当前未在连接的设备上打开时, 会出现此消息.",
+          "请在Ledger设备上打开 {NETWORK_NAME} App 然后重试."
         ]
       ],
       "overSubscribed": [
@@ -298,6 +319,13 @@
         [
           "验证在{NETWORK_NAME}中继链中的区块的实体. 验证人通过确保网络安全并生成区块在{NETWORK_NAME}起着关键作用.",
           "作为提名人，您可以选择支持哪个验证人并获得奖励."
+        ]
+      ],
+      "wrongTransaction": [
+        "错误交易",
+        [
+          "此错误发生原因为当Ledger设备正在签名或签名后的交易与Staking Dashboard上当前活动交易不同.",
+          "请确保Ledger设备上没有未完成的交易, 然后重试."
         ]
       ],
       "yourBalance": [

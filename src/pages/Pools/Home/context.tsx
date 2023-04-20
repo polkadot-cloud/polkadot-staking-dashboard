@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { extractUrlValue } from 'Utils';
+import { extractUrlValue } from '@polkadotcloud/utils';
 import React, { useState } from 'react';
 import type { PoolsTabsContextInterface } from '../types';
 
@@ -24,10 +24,10 @@ export const PoolsTabsProvider = ({
     ? Number(tabFromUrl)
     : 0;
 
-  const [activeTab, _setActiveTab] = useState<number>(initialActiveTab);
+  const [activeTab, setActiveTabState] = useState<number>(initialActiveTab);
 
   const setActiveTab = (t: number) => {
-    _setActiveTab(t);
+    setActiveTabState(t);
   };
 
   return (

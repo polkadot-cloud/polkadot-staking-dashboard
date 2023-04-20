@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { pageFromUri } from 'Utils';
+import { pageFromUri } from '@polkadotcloud/utils';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -24,7 +24,7 @@ export const Headers = () => {
 
   // keep syncing if on validators page and still fetching
   const onValidatorsSyncing = () => {
-    if (pageFromUri(pathname) === 'validators') {
+    if (pageFromUri(pathname, 'overview') === 'validators') {
       if (!validators.length) {
         return true;
       }
@@ -34,7 +34,7 @@ export const Headers = () => {
 
   // keep syncing if on pools page and still fetching bonded pools or pool members
   const onPoolsSyncing = () => {
-    if (pageFromUri(pathname) === 'pools') {
+    if (pageFromUri(pathname, 'overview') === 'pools') {
       if (!bondedPools.length || !poolMembers.length) {
         return true;
       }

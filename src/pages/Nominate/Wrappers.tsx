@@ -6,10 +6,6 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
-
-  h3 {
-    margin-bottom: 0;
-  }
 `;
 
 export const StakingAccount = styled.div<{ last: boolean }>`

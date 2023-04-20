@@ -1,6 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  greaterThanZero,
+  planckToUnit,
+  unitToPlanck,
+} from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -19,7 +24,6 @@ import { StaticNote } from 'modals/Utils/StaticNote';
 import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { greaterThanZero, planckToUnit, unitToPlanck } from 'Utils';
 
 export const LeavePool = () => {
   const { t } = useTranslation('modals');
@@ -96,7 +100,7 @@ export const LeavePool = () => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push(<Warning text={t('readOnly')} />);
+    warnings.push(<Warning text={t('readOnlyCannotSign')} />);
   }
   if (greaterThanZero(unclaimedRewards)) {
     warnings.push(

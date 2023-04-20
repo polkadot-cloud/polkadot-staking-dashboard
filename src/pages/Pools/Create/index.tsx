@@ -2,12 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSecondary } from '@polkadotcloud/dashboard-ui';
-import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
+import {
+  ButtonSecondary,
+  PageHeading,
+  PageRow,
+  PageTitle,
+} from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { CardWrapper } from 'library/Graphs/Wrappers';
-import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
 import { useTranslation } from 'react-i18next';
 import { Element } from 'react-scroll';
@@ -23,9 +26,9 @@ export const Create = () => {
 
   return (
     <>
-      <PageTitle title={t('pools.createAPool')} />
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <TopBarWrapper>
+      <PageTitle title={`${t('pools.createAPool')}`} />
+      <PageRow>
+        <PageHeading>
           <span>
             <ButtonSecondary
               lg
@@ -46,15 +49,15 @@ export const Create = () => {
             />
           </span>
           <div className="right" />
-        </TopBarWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+        </PageHeading>
+      </PageRow>
+      <PageRow>
         <CardWrapper>
           <Element name="metadata" style={{ position: 'absolute' }} />
           <PoolName section={1} />
         </CardWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      </PageRow>
+      <PageRow>
         <CardWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
           <Nominate
@@ -63,26 +66,26 @@ export const Create = () => {
             section={2}
           />
         </CardWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      </PageRow>
+      <PageRow>
         <CardWrapper>
           <Element name="roles" style={{ position: 'absolute' }} />
           <PoolRoles section={3} />
         </CardWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      </PageRow>
+      <PageRow>
         <CardWrapper>
           <Element name="bond" style={{ position: 'absolute' }} />
           <Bond section={4} />
         </CardWrapper>
-      </PageRowWrapper>
+      </PageRow>
 
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      <PageRow>
         <CardWrapper>
           <Element name="summary" style={{ position: 'absolute' }} />
           <Summary section={5} />
         </CardWrapper>
-      </PageRowWrapper>
+      </PageRow>
     </>
   );
 };

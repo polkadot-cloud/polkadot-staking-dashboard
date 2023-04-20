@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/dashboard-ui';
 import {
-  PageRowWrapper,
-  RowPrimaryWrapper,
-  RowSecondaryWrapper,
-} from 'Wrappers';
-import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
+  ButtonHelp,
+  ButtonPrimary,
+  PageRow,
+  PageTitle,
+  RowSection,
+} from '@polkadotcloud/core-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
@@ -18,7 +18,6 @@ import { useUi } from 'contexts/UI';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { useTranslation } from 'react-i18next';
 import { ControllerNotImported } from './ControllerNotImported';
@@ -45,7 +44,7 @@ export const Active = () => {
 
   return (
     <>
-      <PageTitle title={t('nominate.nominate')} />
+      <PageTitle title={`${t('nominate.nominate')}`} />
       <StatBoxList>
         <ActiveNominatorsStat />
         <MinimumNominatorBondStat />
@@ -53,27 +52,17 @@ export const Active = () => {
       </StatBoxList>
       <ControllerNotImported />
       <UnstakePrompts />
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <RowPrimaryWrapper
-          hOrder={1}
-          vOrder={0}
-          thresholdStickyMenu={SideMenuStickyThreshold}
-          thresholdFullWidth={SectionFullWidthThreshold}
-        >
+      <PageRow>
+        <RowSection paddingLeft>
           <Status height={ROW_HEIGHT} />
-        </RowPrimaryWrapper>
-        <RowSecondaryWrapper
-          hOrder={0}
-          vOrder={1}
-          thresholdStickyMenu={SideMenuStickyThreshold}
-          thresholdFullWidth={SectionFullWidthThreshold}
-        >
+        </RowSection>
+        <RowSection secondary>
           <CardWrapper height={ROW_HEIGHT}>
             <ManageBond />
           </CardWrapper>
-        </RowSecondaryWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+        </RowSection>
+      </PageRow>
+      <PageRow>
         <CardWrapper>
           {nominations.length || inSetup() || isSyncing ? (
             <Nominations bondFor="nominator" nominator={activeAccount} />
@@ -115,7 +104,7 @@ export const Active = () => {
             </>
           )}
         </CardWrapper>
-      </PageRowWrapper>
+      </PageRow>
     </>
   );
 };

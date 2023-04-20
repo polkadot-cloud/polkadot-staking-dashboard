@@ -2,13 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSecondary } from '@polkadotcloud/dashboard-ui';
-import { extractUrlValue, removeVarFromUrlHash } from 'Utils';
-import { PageRowWrapper, TopBarWrapper } from 'Wrappers';
+import {
+  ButtonSecondary,
+  PageHeading,
+  PageRow,
+  PageTitle,
+} from '@polkadotcloud/core-ui';
+import { extractUrlValue, removeVarFromUrlHash } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { CardWrapper } from 'library/Graphs/Wrappers';
-import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -25,9 +28,9 @@ export const Setup = () => {
 
   return (
     <>
-      <PageTitle title={t('nominate.startNominating')} />
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <TopBarWrapper>
+      <PageTitle title={`${t('nominate.startNominating')}`} />
+      <PageRow>
+        <PageHeading>
           <span>
             <ButtonSecondary
               lg
@@ -57,15 +60,15 @@ export const Setup = () => {
             />
           </span>
           <div className="right" />
-        </TopBarWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+        </PageHeading>
+      </PageRow>
+      <PageRow>
         <CardWrapper>
           <Element name="payee" style={{ position: 'absolute' }} />
           <Payee section={1} />
         </CardWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      </PageRow>
+      <PageRow>
         <CardWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
           <Nominate
@@ -74,19 +77,19 @@ export const Setup = () => {
             section={2}
           />
         </CardWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      </PageRow>
+      <PageRow>
         <CardWrapper>
           <Element name="bond" style={{ position: 'absolute' }} />
           <Bond section={3} />
         </CardWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      </PageRow>
+      <PageRow>
         <CardWrapper>
           <Element name="summary" style={{ position: 'absolute' }} />
           <Summary section={4} />
         </CardWrapper>
-      </PageRowWrapper>
+      </PageRow>
     </>
   );
 };

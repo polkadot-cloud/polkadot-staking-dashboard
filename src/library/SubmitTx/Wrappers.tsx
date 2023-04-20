@@ -38,6 +38,8 @@ export const Wrapper = styled.div<{ noMargin?: boolean }>`
 
       p {
         color: var(--text-color-secondary);
+        display: flex;
+        align-items: center;
         font-size: 1rem;
         opacity: 0.75;
         margin: 0;

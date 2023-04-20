@@ -67,11 +67,6 @@ export const StatBoxWrapper = styled(motion.div)`
       padding: 0.9rem 0;
     }
 
-    h3,
-    h4 {
-      margin: 0;
-    }
-
     h4 {
       flex: 1;
       display: flex;

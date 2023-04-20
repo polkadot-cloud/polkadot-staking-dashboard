@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
@@ -10,7 +11,6 @@ import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { useTranslation } from 'react-i18next';
 import type { MaybeAccount } from 'types';
-import { planckToUnit, rmCommas } from 'Utils';
 
 export const useNominationStatus = () => {
   const { t } = useTranslation();

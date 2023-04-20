@@ -18,6 +18,7 @@ export const Wrapper = styled.div<{ activeInput?: boolean }>`
 
     > h4 {
       color: var(--text-color-secondary);
+      margin-top: 1.25rem;
       margin-bottom: 0.5rem;
     }
 
@@ -68,10 +69,13 @@ export const Wrapper = styled.div<{ activeInput?: boolean }>`
 
   .label {
     position: relative;
+    display: flex;
+    align-items: flex-end;
     max-width: 100%;
     overflow: hidden;
     height: 2rem;
     margin-top: 0.65rem;
+    font-size: 0.85rem;
 
     h5 {
       color: var(--text-color-secondary);
@@ -79,7 +83,6 @@ export const Wrapper = styled.div<{ activeInput?: boolean }>`
       top: 0;
       left: 0;
       max-width: 100%;
-      margin: 0;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;

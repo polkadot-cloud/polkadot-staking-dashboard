@@ -147,7 +147,7 @@ export const DefinitionWrapper = styled(motion.div)`
   }
 
   h4 {
-    margin-top: 0;
+    margin-bottom: 1.25rem;
   }
 
   p {
@@ -187,7 +187,6 @@ export const ItemWrapper = styled(motion.div)<any>`
     }
     > h2 {
       color: var(--text-color-primary);
-      margin: 0;
       text-align: left;
     }
 

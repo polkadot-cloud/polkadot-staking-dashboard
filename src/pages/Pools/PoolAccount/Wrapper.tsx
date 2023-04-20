@@ -27,7 +27,6 @@ export const Wrapper = styled.div<{ last?: boolean }>`
       margin-right: 0.5rem;
     }
     h4 {
-      margin: 0;
       padding: 0;
 
       > .addr {

@@ -3,7 +3,7 @@
 
 import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { greaterThanZero, planckToUnit, rmCommas } from 'Utils';
+import { planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -65,17 +65,13 @@ export const Announcements = () => {
     subtitle: `${t('pools.beenClaimedBy', { unit })}`,
   });
 
-  if (greaterThanZero(rewardBalance)) {
-    announcements.push({
-      class: 'neutral',
-      title: `${rewardBalance.decimalPlaces(3).toFormat()} ${unit} ${t(
-        'pools.outstandingReward'
-      )}`,
-      subtitle: `${t('pools.availableToClaim', { unit })}`,
-    });
-  } else {
-    announcements.push(null);
-  }
+  announcements.push({
+    class: 'neutral',
+    title: `${rewardBalance.decimalPlaces(3).toFormat()} ${unit} ${t(
+      'pools.outstandingReward'
+    )}`,
+    subtitle: `${t('pools.availableToClaim', { unit })}`,
+  });
 
   return (
     <motion.div

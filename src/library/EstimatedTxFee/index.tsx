@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { planckToUnit } from 'Utils';
+import { planckToUnit } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { TxMetaContext, useTxMeta } from 'contexts/TxMeta';
 import type { TxMetaContextInterface } from 'contexts/TxMeta/types';
