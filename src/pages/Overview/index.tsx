@@ -18,7 +18,7 @@ import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
 import { useTranslation } from 'react-i18next';
-import { ActiveAccount } from './ActiveAccount';
+import { ActiveAccounts } from './ActiveAccounts';
 import { BalanceChart } from './BalanceChart';
 import { BalanceLinks } from './BalanceLinks';
 import { NetworkStats } from './NetworkSats';
@@ -63,7 +63,7 @@ export const Overview = () => {
       <PageTitle title={`${t('overview.overview')}`} />
       <PageRow>
         <PageHeading>
-          <ActiveAccount />
+          <ActiveAccounts />
         </PageHeading>
       </PageRow>
       <StatBoxList>
