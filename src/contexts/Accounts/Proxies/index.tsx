@@ -3,6 +3,7 @@
 
 import { clipAddress, rmCommas, setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import { SupportedProxies } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { ImportedAccount } from 'contexts/Connect/types';
@@ -116,13 +117,6 @@ export const ProxiesProvider = ({
     setStateWithRef(newDelegates, setDelegates, delegatesRef);
   }, [proxiesRef.current]);
 
-  // unsubscribe from proxy subscriptions on unmount
-  useEffect(() => {
-    Object.values(unsubsRef.current).forEach(({ unsub }: AnyApi) => {
-      unsub();
-    });
-  }, []);
-
   const subscribeToProxies = async (address: string) => {
     if (!api) return;
 
@@ -180,8 +174,8 @@ export const ProxiesProvider = ({
       return [];
     }
     const proxiedAccounts: ProxiedAccounts = delegate
-      .filter((item: DelegateItem) =>
-        ['Any', 'Staking'].includes(item.proxyType)
+      .filter(({ proxyType }: DelegateItem) =>
+        SupportedProxies.includes(proxyType)
       )
       .map((d: DelegateItem) => ({
         address: d.delegator,
@@ -190,6 +184,14 @@ export const ProxiesProvider = ({
       }));
     return proxiedAccounts;
   };
+
+  // Unsubscribe from proxy subscriptions on unmount.
+  useEffect(() => {
+    return () =>
+      Object.values(unsubsRef.current).forEach(({ unsub }: AnyApi) => {
+        unsub();
+      });
+  }, []);
 
   return (
     <ProxiesContext.Provider

@@ -54,8 +54,8 @@ export const Accounts = () => {
 
   const getAccountsStatus = () => {
     // accumulate imported stash accounts
-    for (const account of localAccounts) {
-      const locks = getAccountLocks(account.address);
+    for (const { address } of localAccounts) {
+      const locks = getAccountLocks(address);
 
       // account is a stash if they have an active `staking` lock
       const activeLocks = locks.find((l) => {
@@ -63,7 +63,7 @@ export const Accounts = () => {
         return id === 'staking';
       });
       if (activeLocks !== undefined) {
-        stashes.push(account.address);
+        stashes.push(address);
       }
     }
 
@@ -72,23 +72,20 @@ export const Accounts = () => {
     const newInPool: Array<PoolMembership> = [];
     const newNotStaking: string[] = [];
 
-    for (const account of localAccounts) {
-      const stash = stashes[stashes.indexOf(account.address)] ?? null;
+    for (const { address } of localAccounts) {
+      const stash = stashes[stashes.indexOf(address)] ?? null;
 
       const poolMember =
-        memberships.find(
-          (m: PoolMembership) => m.address === account.address
-        ) ?? null;
+        memberships.find((m: PoolMembership) => m.address === address) ?? null;
 
       if (stash) {
         const applied =
-          newNominating.find(
-            (a: AccountNominating) => a.stash === account.address
-          ) !== undefined;
+          newNominating.find((a: AccountNominating) => a.stash === address) !==
+          undefined;
 
         if (!applied) {
           newNominating.push({
-            stash: account.address,
+            stash: address,
             stashImported: true,
           });
         }
@@ -103,8 +100,8 @@ export const Accounts = () => {
 
       // if not doing anything, add to notStaking
       if (!stash && !poolMember) {
-        if (!newNotStaking.includes(account.address)) {
-          newNotStaking.push(account.address);
+        if (!newNotStaking.includes(address)) {
+          newNotStaking.push(address);
         }
       }
     }

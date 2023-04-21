@@ -12,6 +12,7 @@ export const BaseURL = '';
 export const DappName = 'Polkadot Staking Dashboard';
 export const PolkadotUrl = 'https://polkadot.network/staking/';
 export const DefaultNetwork = 'polkadot';
+export const SupportedProxies = ['Any', 'Staking'];
 
 /*
  * Data Structure Helpers
