@@ -13,6 +13,7 @@ export interface AccountItemProps {
   disconnect?: boolean;
   asElement?: boolean;
   badge?: string;
+  delegator?: string;
 }
 
 export interface DelegatesProps {

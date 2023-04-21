@@ -14,13 +14,17 @@ import { useTranslation } from 'react-i18next';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 
-export const AccountButton = (props: AccountItemProps) => {
+export const AccountButton = ({
+  meta,
+  address,
+  label,
+  badge,
+  disconnect = false,
+}: AccountItemProps) => {
   const { t } = useTranslation('modals');
-  const { meta, address, label, badge } = props;
-  const disconnect = props.disconnect ?? false;
-  const { connectToAccount, disconnectFromAccount } = useConnect();
-  const { extensions } = useExtensions();
   const { setStatus } = useModal();
+  const { extensions } = useExtensions();
+  const { connectToAccount, disconnectFromAccount } = useConnect();
 
   const Icon =
     meta?.source === 'ledger'
@@ -28,8 +32,7 @@ export const AccountButton = (props: AccountItemProps) => {
       : extensions.find((e: ExtensionInjected) => e.id === meta?.source)
           ?.icon ?? undefined;
 
-  const source = meta?.source ?? undefined;
-  const imported = meta !== undefined && source !== 'external';
+  const imported = meta !== undefined && meta?.source !== 'external';
 
   return (
     <AccountWrapper>
