@@ -5,6 +5,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useLedgers } from 'contexts/Accounts/Ledgers';
+import { useProxies } from 'contexts/Accounts/Proxies';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
@@ -17,7 +18,11 @@ import { useTranslation } from 'react-i18next';
 import { CustomHeaderWrapper, PaddingWrapper } from '../Wrappers';
 import { AccountButton } from './Account';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
-import type { AccountNominating } from './types';
+import type {
+  AccountInPool,
+  AccountNominating,
+  AccountNotStaking,
+} from './types';
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');
@@ -29,6 +34,7 @@ export const Accounts = () => {
   const { memberships } = usePoolMemberships();
   const { replaceModalWith, setResize } = useModal();
   const { extensions } = useExtensions();
+  const { getDelegates } = useProxies();
 
   const stashes: Array<string> = [];
 
@@ -36,9 +42,9 @@ export const Accounts = () => {
   const [localAccounts, setLocalAccounts] = useState(accounts);
 
   // store accounts that are actively newNominating.
-  const [nominating, setNominating] = useState<Array<AccountNominating>>([]);
-  const [inPool, setInPool] = useState<Array<PoolMembership>>([]);
-  const [notStaking, setNotStaking] = useState<string[]>([]);
+  const [nominating, setNominating] = useState<AccountNominating[]>([]);
+  const [inPool, setInPool] = useState<AccountInPool[]>([]);
+  const [notStaking, setNotStaking] = useState<AccountNotStaking[]>([]);
 
   useEffect(() => {
     setLocalAccounts(accounts);
@@ -58,51 +64,46 @@ export const Accounts = () => {
       const locks = getAccountLocks(address);
 
       // account is a stash if they have an active `staking` lock
-      const activeLocks = locks.find((l) => {
-        const { id } = l;
-        return id === 'staking';
-      });
-      if (activeLocks !== undefined) {
+      if (locks.find(({ id }) => id === 'staking')) {
         stashes.push(address);
       }
     }
 
     // construct account groupings
-    const newNominating: Array<AccountNominating> = [];
-    const newInPool: Array<PoolMembership> = [];
-    const newNotStaking: string[] = [];
+    const newNominating: AccountNominating[] = [];
+    const newInPool: AccountInPool[] = [];
+    const newNotStaking: AccountNotStaking[] = [];
 
     for (const { address } of localAccounts) {
-      const stash = stashes[stashes.indexOf(address)] ?? null;
+      const isStash = stashes[stashes.indexOf(address)] ?? null;
+      const delegates = getDelegates(address);
 
       const poolMember =
         memberships.find((m: PoolMembership) => m.address === address) ?? null;
 
-      if (stash) {
-        const applied =
-          newNominating.find((a: AccountNominating) => a.stash === address) !==
-          undefined;
-
-        if (!applied) {
-          newNominating.push({
-            stash: address,
-            stashImported: true,
-          });
-        }
+      // If stash exists, add address to nominating list.
+      if (
+        isStash &&
+        newNominating.find((a: AccountNominating) => a.address === address) ===
+          undefined
+      ) {
+        newNominating.push({ address, stashImported: true, delegates });
       }
 
-      // if pooling, add to active pooling
+      // if pooling, add address to active pooling.
       if (poolMember) {
-        if (!newInPool.includes(poolMember)) {
-          newInPool.push(poolMember);
+        if (!newInPool.find((n: AccountInPool) => n.address === address)) {
+          newInPool.push({ ...poolMember, delegates });
         }
       }
 
-      // if not doing anything, add to notStaking
-      if (!stash && !poolMember) {
-        if (!newNotStaking.includes(address)) {
-          newNotStaking.push(address);
-        }
+      // If not doing anything, add address to `notStaking`.
+      if (
+        !isStash &&
+        !poolMember &&
+        !newNotStaking.find((n: AccountNotStaking) => n.address === address)
+      ) {
+        newNotStaking.push({ address, delegates });
       }
     }
     setNominating(newNominating);
@@ -154,15 +155,12 @@ export const Accounts = () => {
         <>
           <AccountSeparator />
           <Action text={t('nominating')} />
-          {nominating.map((item: AccountNominating, i: number) => {
-            const { stash } = item;
-            const stashAccount = getAccount(stash);
-
+          {nominating.map(({ address }: AccountNominating, i: number) => {
             return (
               <AccountButton
                 key={`acc_nominating_${i}`}
-                address={stash}
-                meta={stashAccount}
+                address={address}
+                meta={getAccount(address)}
               />
             );
           })}
@@ -173,15 +171,12 @@ export const Accounts = () => {
         <>
           <AccountSeparator />
           <Action text={t('inPool')} />
-          {inPool.map((item: PoolMembership, i: number) => {
-            const { address } = item;
-            const account = getAccount(address);
-
+          {inPool.map(({ address }: AccountInPool, i: number) => {
             return (
               <AccountButton
                 key={`acc_in_pool_${i}`}
                 address={address}
-                meta={account}
+                meta={getAccount(address)}
               />
             );
           })}
@@ -192,15 +187,12 @@ export const Accounts = () => {
         <>
           <AccountSeparator />
           <Action text={t('notStaking')} />
-          {notStaking.map((item: string, i: number) => {
-            const account = getAccount(item);
-            const address = account?.address ?? '';
-
+          {notStaking.map(({ address }: AccountNotStaking, i: number) => {
             return (
               <AccountButton
                 key={`acc_not_staking_${i}`}
                 address={address}
-                meta={account}
+                meta={getAccount(address)}
               />
             );
           })}
