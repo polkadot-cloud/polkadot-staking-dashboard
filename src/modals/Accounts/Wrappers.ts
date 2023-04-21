@@ -80,6 +80,9 @@ export const AccountWrapper = styled.div`
         height: 1.05rem;
         margin-left: 0.75rem;
       }
+      .badge {
+        margin-left: 1rem;
+      }
 
       /* svg theming */
       svg {

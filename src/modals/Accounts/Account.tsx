@@ -15,11 +15,21 @@ import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 
 export const AccountButton = (props: AccountItemProps) => {
-  const { meta } = props;
+  const { t } = useTranslation('modals');
+  const { meta, address, label, badge } = props;
   const disconnect = props.disconnect ?? false;
   const { connectToAccount, disconnectFromAccount } = useConnect();
+  const { extensions } = useExtensions();
   const { setStatus } = useModal();
-  const imported = meta !== null;
+
+  const Icon =
+    meta?.source === 'ledger'
+      ? LedgerIconSVG
+      : extensions.find((e: ExtensionInjected) => e.id === meta?.source)
+          ?.icon ?? undefined;
+
+  const source = meta?.source ?? undefined;
+  const imported = meta !== undefined && source !== 'external';
 
   return (
     <AccountWrapper>
@@ -27,7 +37,7 @@ export const AccountButton = (props: AccountItemProps) => {
         type="button"
         disabled={!disconnect && !imported}
         onClick={() => {
-          if (imported) {
+          if (imported && meta) {
             if (disconnect) {
               disconnectFromAccount();
             } else {
@@ -37,56 +47,35 @@ export const AccountButton = (props: AccountItemProps) => {
           }
         }}
       >
-        <AccountInner {...props} />
+        <div>
+          <Identicon value={address ?? ''} size={26} />
+          <span className="name">
+            &nbsp; {meta?.name ?? clipAddress(address ?? '')}
+          </span>
+          {badge && <span className="badge">{badge}</span>}
+        </div>
+        {!imported && (
+          <div
+            className="label warning"
+            style={{ color: '#a17703', paddingLeft: '0.5rem' }}
+          >
+            {t('readOnly')}
+          </div>
+        )}
+
+        <div className={label === undefined ? `` : label[0]}>
+          {label !== undefined ? <h5>{label[1]}</h5> : null}
+          {Icon !== undefined ? <Icon className="icon" /> : null}
+
+          {!imported && (
+            <FontAwesomeIcon
+              icon={faGlasses}
+              className="icon"
+              style={{ opacity: 0.7 }}
+            />
+          )}
+        </div>
       </button>
     </AccountWrapper>
-  );
-};
-
-export const AccountInner = ({
-  address,
-  meta,
-  label = undefined,
-}: AccountItemProps) => {
-  const { t } = useTranslation('modals');
-  const { extensions } = useExtensions();
-  const Icon =
-    meta?.source === 'ledger'
-      ? LedgerIconSVG
-      : extensions.find((e: ExtensionInjected) => e.id === meta?.source)
-          ?.icon ?? undefined;
-  const source = meta?.source ?? undefined;
-  const imported = meta !== undefined && source !== 'external';
-
-  return (
-    <>
-      <div>
-        <Identicon value={address ?? ''} size={26} />
-        <span className="name">
-          &nbsp; {meta?.name ?? clipAddress(address ?? '')}
-        </span>
-      </div>
-      {!imported && (
-        <div
-          className="label warning"
-          style={{ color: '#a17703', paddingLeft: '0.5rem' }}
-        >
-          {t('readOnly')}
-        </div>
-      )}
-
-      <div className={label === undefined ? `` : label[0]}>
-        {label !== undefined ? <h5>{label[1]}</h5> : null}
-        {Icon !== undefined ? <Icon className="icon" /> : null}
-
-        {!imported && (
-          <FontAwesomeIcon
-            icon={faGlasses}
-            className="icon"
-            style={{ opacity: 0.7 }}
-          />
-        )}
-      </div>
-    </>
   );
 };

@@ -6,6 +6,7 @@ import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useProxies } from 'contexts/Accounts/Proxies';
+import type { ProxyDelegate } from 'contexts/Accounts/Proxies/type';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
@@ -13,7 +14,7 @@ import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { PoolMembership } from 'contexts/Pools/types';
 import { Action } from 'library/Modal/Action';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CustomHeaderWrapper, PaddingWrapper } from '../Wrappers';
 import { AccountButton } from './Account';
@@ -155,15 +156,31 @@ export const Accounts = () => {
         <>
           <AccountSeparator />
           <Action text={t('nominating')} />
-          {nominating.map(({ address }: AccountNominating, i: number) => {
-            return (
-              <AccountButton
-                key={`acc_nominating_${i}`}
-                address={address}
-                meta={getAccount(address)}
-              />
-            );
-          })}
+          {nominating.map(
+            ({ address, delegates }: AccountNominating, i: number) => {
+              const delegatesList = delegates?.delegates || [];
+
+              return (
+                <React.Fragment key={`acc_nominating_${i}`}>
+                  <AccountButton address={address} meta={getAccount(address)} />
+                  {delegatesList.length
+                    ? delegatesList.map(
+                        ({ delegate, proxyType }: ProxyDelegate) => {
+                          return (
+                            <AccountButton
+                              key={`acc_nominating_del_${i}`}
+                              address={delegate}
+                              meta={getAccount(delegate)}
+                              badge={`${proxyType} Proxy`}
+                            />
+                          );
+                        }
+                      )
+                    : null}
+                </React.Fragment>
+              );
+            }
+          )}
         </>
       ) : null}
 
@@ -171,13 +188,27 @@ export const Accounts = () => {
         <>
           <AccountSeparator />
           <Action text={t('inPool')} />
-          {inPool.map(({ address }: AccountInPool, i: number) => {
+          {inPool.map(({ address, delegates }: AccountInPool, i: number) => {
+            const delegatesList = delegates?.delegates || [];
+
             return (
-              <AccountButton
-                key={`acc_in_pool_${i}`}
-                address={address}
-                meta={getAccount(address)}
-              />
+              <React.Fragment key={`acc_in_pool_${i}`}>
+                <AccountButton address={address} meta={getAccount(address)} />
+                {delegatesList.length
+                  ? delegatesList.map(
+                      ({ delegate, proxyType }: ProxyDelegate) => {
+                        return (
+                          <AccountButton
+                            key={`acc_in_pool_del_${i}`}
+                            address={delegate}
+                            meta={getAccount(delegate)}
+                            badge={`${proxyType} Proxy`}
+                          />
+                        );
+                      }
+                    )
+                  : null}
+              </React.Fragment>
             );
           })}
         </>
@@ -187,15 +218,31 @@ export const Accounts = () => {
         <>
           <AccountSeparator />
           <Action text={t('notStaking')} />
-          {notStaking.map(({ address }: AccountNotStaking, i: number) => {
-            return (
-              <AccountButton
-                key={`acc_not_staking_${i}`}
-                address={address}
-                meta={getAccount(address)}
-              />
-            );
-          })}
+          {notStaking.map(
+            ({ address, delegates }: AccountNotStaking, i: number) => {
+              const delegatesList = delegates?.delegates || [];
+
+              return (
+                <React.Fragment key={`acc_not_staking_${i}`}>
+                  <AccountButton address={address} meta={getAccount(address)} />
+                  {delegatesList.length
+                    ? delegatesList.map(
+                        ({ delegate, proxyType }: ProxyDelegate) => {
+                          return (
+                            <AccountButton
+                              key={`acc_not_staking_del_${i}`}
+                              address={delegate}
+                              meta={getAccount(delegate)}
+                              badge={`${proxyType} Proxy`}
+                            />
+                          );
+                        }
+                      )
+                    : null}
+                </React.Fragment>
+              );
+            }
+          )}
         </>
       ) : null}
     </PaddingWrapper>
