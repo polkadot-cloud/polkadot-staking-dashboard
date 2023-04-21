@@ -120,9 +120,9 @@ export const ProxiesProvider = ({
   const subscribeToProxies = async (address: string) => {
     if (!api) return;
 
-    const unsub: () => void = await api.queryMulti<AnyApi>(
+    const unsub = await api.queryMulti<AnyApi>(
       [[api.query.proxy.proxies, address]],
-      async ([result]): Promise<void> => {
+      async ([result]) => {
         let newProxy: Proxy;
 
         const data = result.toHuman();
