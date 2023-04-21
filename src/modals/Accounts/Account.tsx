@@ -41,7 +41,7 @@ export const AccountButton = ({
   const imported = meta !== undefined && meta?.source !== 'external';
 
   const connectTo = delegator || address || '';
-  const connectProxy = delegator || null;
+  const connectProxy = delegator ? address || null : '';
 
   return (
     <AccountWrapper>
