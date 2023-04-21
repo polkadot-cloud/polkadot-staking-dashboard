@@ -31,6 +31,7 @@ export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
                 address={delegate}
                 meta={getAccount(delegate)}
                 badge={`${proxyType} Proxy`}
+                delegator={delegator}
               />
             );
           })}

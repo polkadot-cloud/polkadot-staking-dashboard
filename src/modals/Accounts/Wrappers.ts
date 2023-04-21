@@ -76,12 +76,25 @@ export const AccountWrapper = styled.div`
         }
       }
       .icon {
-        width: 1.05rem;
-        height: 1.05rem;
+        width: 1.1rem;
+        height: 1.1rem;
         margin-left: 0.75rem;
       }
       .badge {
+        background-color: var(--background-floating-card);
+        color: var(--text-color-secondary);
         margin-left: 1rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.45rem;
+        font-size: 0.9rem;
+      }
+
+      .delegator {
+        width: 0.85rem;
+        z-index: 0;
+      }
+      .identicon {
+        z-index: 1;
       }
 
       /* svg theming */

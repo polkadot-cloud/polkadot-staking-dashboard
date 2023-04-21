@@ -20,6 +20,7 @@ export const AccountButton = ({
   label,
   badge,
   disconnect = false,
+  delegator,
 }: AccountItemProps) => {
   const { t } = useTranslation('modals');
   const { setStatus } = useModal();
@@ -51,7 +52,14 @@ export const AccountButton = ({
         }}
       >
         <div>
-          <Identicon value={address ?? ''} size={26} />
+          {delegator && (
+            <div className="delegator">
+              <Identicon value={delegator} size={26} />
+            </div>
+          )}
+          <div className="identicon">
+            <Identicon value={address ?? ''} size={26} />
+          </div>
           <span className="name">
             &nbsp; {meta?.name ?? clipAddress(address ?? '')}
           </span>
