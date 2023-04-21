@@ -28,7 +28,7 @@ import type {
 export const Accounts = () => {
   const { t } = useTranslation('modals');
   const { isReady } = useApi();
-  const { getAccount, activeAccount } = useConnect();
+  const { activeAccount } = useConnect();
   const { getAccountLocks, balances } = useBalances();
   const { ledgers } = useLedgers();
   const { accounts } = useConnect();
@@ -137,7 +137,6 @@ export const Accounts = () => {
           </h4>
           <AccountButton
             address={activeAccount}
-            meta={getAccount(activeAccount)}
             label={['danger', t('disconnect')]}
             disconnect
           />
@@ -160,7 +159,7 @@ export const Accounts = () => {
             ({ address, delegates }: AccountNominating, i: number) => {
               return (
                 <React.Fragment key={`acc_nominating_${i}`}>
-                  <AccountButton address={address} meta={getAccount(address)} />
+                  <AccountButton address={address} />
                   {address && (
                     <Delegates delegator={address} delegates={delegates} />
                   )}
@@ -178,7 +177,7 @@ export const Accounts = () => {
           {inPool.map(({ address, delegates }: AccountInPool, i: number) => {
             return (
               <React.Fragment key={`acc_in_pool_${i}`}>
-                <AccountButton address={address} meta={getAccount(address)} />
+                <AccountButton address={address} />
                 {address && (
                   <Delegates delegator={address} delegates={delegates} />
                 )}
@@ -196,7 +195,7 @@ export const Accounts = () => {
             ({ address, delegates }: AccountNotStaking, i: number) => {
               return (
                 <React.Fragment key={`acc_not_staking_${i}`}>
-                  <AccountButton address={address} meta={getAccount(address)} />
+                  <AccountButton address={address} />
                   {address && (
                     <Delegates delegator={address} delegates={delegates} />
                   )}

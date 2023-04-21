@@ -15,7 +15,6 @@ import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 
 export const AccountButton = ({
-  meta,
   address,
   label,
   badge,
@@ -25,8 +24,14 @@ export const AccountButton = ({
   const { t } = useTranslation('modals');
   const { setStatus } = useModal();
   const { extensions } = useExtensions();
-  const { connectToAccount, disconnectFromAccount } = useConnect();
+  const {
+    connectToAccount,
+    disconnectFromAccount,
+    getAccount,
+    setActiveProxy,
+  } = useConnect();
 
+  const meta = getAccount(address || '');
   const Icon =
     meta?.source === 'ledger'
       ? LedgerIconSVG
@@ -34,6 +39,9 @@ export const AccountButton = ({
           ?.icon ?? undefined;
 
   const imported = meta !== undefined && meta?.source !== 'external';
+
+  const connectTo = delegator || address || '';
+  const connectProxy = delegator || null;
 
   return (
     <AccountWrapper>
@@ -44,8 +52,10 @@ export const AccountButton = ({
           if (imported && meta) {
             if (disconnect) {
               disconnectFromAccount();
+              setActiveProxy(null);
             } else {
-              connectToAccount(meta);
+              connectToAccount(getAccount(connectTo));
+              setActiveProxy(connectProxy);
               setStatus(2);
             }
           }

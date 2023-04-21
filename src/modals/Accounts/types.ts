@@ -2,12 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { Proxy } from 'contexts/Accounts/Proxies/type';
-import type { ExtensionAccount } from 'contexts/Extensions/types';
 import type { PoolMembership } from 'contexts/Pools/types';
 import type { MaybeAccount } from 'types';
 
 export interface AccountItemProps {
-  meta: ExtensionAccount | null;
   address?: MaybeAccount;
   label?: Array<string>;
   disconnect?: boolean;

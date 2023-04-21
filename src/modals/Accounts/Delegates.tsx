@@ -29,7 +29,6 @@ export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
               <AccountButton
                 key={`_del_${delegator}_${delegate}`}
                 address={delegate}
-                meta={getAccount(delegate)}
                 badge={`${proxyType} Proxy`}
                 delegator={delegator}
               />

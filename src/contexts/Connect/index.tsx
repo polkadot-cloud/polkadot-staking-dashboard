@@ -63,13 +63,21 @@ export const ConnectProvider = ({
   const accountsRef = useRef(accounts);
 
   // store the currently active account
-  const [activeAccount, setActiveAccountState] = useState<string | null>(null);
+  const [activeAccount, setActiveAccountState] = useState<MaybeAccount>(null);
   const activeAccountRef = useRef<string | null>(activeAccount);
 
   // store the currently active account metadata
   const [activeAccountMeta, setActiveAccountMeta] =
     useState<ImportedAccount | null>(null);
   const activeAccountMetaRef = useRef(activeAccountMeta);
+
+  // store the active proxy account
+  const [activeProxy, setActiveProxyState] = useState<MaybeAccount>(null);
+  const activeProxyRef = useRef(activeProxy);
+
+  const setActiveProxy = (proxy: MaybeAccount) => {
+    setStateWithRef(proxy, setActiveProxyState, activeProxyRef);
+  };
 
   // store unsubscribe handler for connected extensions
   const [unsubscribe, setUnsubscribe] = useState<AnyApi>([]);
@@ -588,8 +596,10 @@ export const ConnectProvider = ({
         isReadOnlyAccount,
         addToAccounts,
         forgetAccounts,
+        setActiveProxy,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
+        activeProxy: activeProxyRef.current,
         activeAccountMeta: activeAccountMetaRef.current,
       }}
     >
