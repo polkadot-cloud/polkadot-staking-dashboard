@@ -15,6 +15,11 @@ export interface AccountItemProps {
   badge?: string;
 }
 
+export interface DelegatesProps {
+  delegator: string;
+  delegates: Proxy | undefined;
+}
+
 export interface AccountInPool extends PoolMembership {
   delegates?: Proxy;
 }

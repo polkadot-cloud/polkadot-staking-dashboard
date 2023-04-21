@@ -6,7 +6,6 @@ import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useProxies } from 'contexts/Accounts/Proxies';
-import type { ProxyDelegate } from 'contexts/Accounts/Proxies/type';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
@@ -18,6 +17,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CustomHeaderWrapper, PaddingWrapper } from '../Wrappers';
 import { AccountButton } from './Account';
+import { Delegates } from './Delegates';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
 import type {
   AccountInPool,
@@ -158,25 +158,12 @@ export const Accounts = () => {
           <Action text={t('nominating')} />
           {nominating.map(
             ({ address, delegates }: AccountNominating, i: number) => {
-              const delegatesList = delegates?.delegates || [];
-
               return (
                 <React.Fragment key={`acc_nominating_${i}`}>
                   <AccountButton address={address} meta={getAccount(address)} />
-                  {delegatesList.length
-                    ? delegatesList.map(
-                        ({ delegate, proxyType }: ProxyDelegate) => {
-                          return (
-                            <AccountButton
-                              key={`acc_nominating_del_${i}`}
-                              address={delegate}
-                              meta={getAccount(delegate)}
-                              badge={`${proxyType} Proxy`}
-                            />
-                          );
-                        }
-                      )
-                    : null}
+                  {address && (
+                    <Delegates delegator={address} delegates={delegates} />
+                  )}
                 </React.Fragment>
               );
             }
@@ -189,25 +176,12 @@ export const Accounts = () => {
           <AccountSeparator />
           <Action text={t('inPool')} />
           {inPool.map(({ address, delegates }: AccountInPool, i: number) => {
-            const delegatesList = delegates?.delegates || [];
-
             return (
               <React.Fragment key={`acc_in_pool_${i}`}>
                 <AccountButton address={address} meta={getAccount(address)} />
-                {delegatesList.length
-                  ? delegatesList.map(
-                      ({ delegate, proxyType }: ProxyDelegate) => {
-                        return (
-                          <AccountButton
-                            key={`acc_in_pool_del_${i}`}
-                            address={delegate}
-                            meta={getAccount(delegate)}
-                            badge={`${proxyType} Proxy`}
-                          />
-                        );
-                      }
-                    )
-                  : null}
+                {address && (
+                  <Delegates delegator={address} delegates={delegates} />
+                )}
               </React.Fragment>
             );
           })}
@@ -220,25 +194,12 @@ export const Accounts = () => {
           <Action text={t('notStaking')} />
           {notStaking.map(
             ({ address, delegates }: AccountNotStaking, i: number) => {
-              const delegatesList = delegates?.delegates || [];
-
               return (
                 <React.Fragment key={`acc_not_staking_${i}`}>
                   <AccountButton address={address} meta={getAccount(address)} />
-                  {delegatesList.length
-                    ? delegatesList.map(
-                        ({ delegate, proxyType }: ProxyDelegate) => {
-                          return (
-                            <AccountButton
-                              key={`acc_not_staking_del_${i}`}
-                              address={delegate}
-                              meta={getAccount(delegate)}
-                              badge={`${proxyType} Proxy`}
-                            />
-                          );
-                        }
-                      )
-                    : null}
+                  {address && (
+                    <Delegates delegator={address} delegates={delegates} />
+                  )}
                 </React.Fragment>
               );
             }

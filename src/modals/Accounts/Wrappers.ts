@@ -101,3 +101,21 @@ export const AccountSeparator = styled.div`
   width: 100%;
   height: 0.5rem;
 `;
+
+export const AccountGroupWrapper = styled.div`
+  border-left: 1px solid var(--border-primary-color);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+  margin: 0.5rem 0 1.25rem 0;
+
+  > div {
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+`;
