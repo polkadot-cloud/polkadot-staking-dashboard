@@ -7,9 +7,8 @@ import {
   ButtonPrimary,
   PageRow,
   PageTitle,
+  RowSection,
 } from '@polkadotcloud/core-ui';
-import { RowPrimaryWrapper, RowSecondaryWrapper } from 'Wrappers';
-import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useBalances } from 'contexts/Accounts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
@@ -54,24 +53,14 @@ export const Active = () => {
       <ControllerNotImported />
       <UnstakePrompts />
       <PageRow>
-        <RowPrimaryWrapper
-          hOrder={1}
-          vOrder={0}
-          thresholdStickyMenu={SideMenuStickyThreshold}
-          thresholdFullWidth={SectionFullWidthThreshold}
-        >
+        <RowSection paddingLeft>
           <Status height={ROW_HEIGHT} />
-        </RowPrimaryWrapper>
-        <RowSecondaryWrapper
-          hOrder={0}
-          vOrder={1}
-          thresholdStickyMenu={SideMenuStickyThreshold}
-          thresholdFullWidth={SectionFullWidthThreshold}
-        >
+        </RowSection>
+        <RowSection secondary>
           <CardWrapper height={ROW_HEIGHT}>
             <ManageBond />
           </CardWrapper>
-        </RowSecondaryWrapper>
+        </RowSection>
       </PageRow>
       <PageRow>
         <CardWrapper>
