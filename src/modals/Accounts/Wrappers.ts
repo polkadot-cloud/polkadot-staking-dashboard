@@ -16,6 +16,13 @@ export const AccountWrapper = styled.div`
   margin: 0.5rem 0 0 0;
   transition: transform var(--transition-duration);
 
+  &.active {
+    > div,
+    button {
+      border: 1px solid var(--network-color-primary);
+    }
+  }
+
   &:hover {
     transform: scale(1.006);
     .name {
@@ -26,6 +33,7 @@ export const AccountWrapper = styled.div`
   > div,
   button {
     background: var(--button-primary-background);
+    border: 1px solid var(--transparent-color);
     color: var(--text-color-primary);
     width: 100%;
     border-radius: 0.75rem;

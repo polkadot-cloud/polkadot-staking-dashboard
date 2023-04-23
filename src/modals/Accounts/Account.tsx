@@ -25,9 +25,11 @@ export const AccountButton = ({
   const { setStatus } = useModal();
   const { extensions } = useExtensions();
   const {
+    activeAccount,
     connectToAccount,
     disconnectFromAccount,
     getAccount,
+    activeProxy,
     setActiveProxy,
   } = useConnect();
   const { getProxyDelegate } = useProxies();
@@ -46,8 +48,14 @@ export const AccountButton = ({
 
   const proxyDelegate = getProxyDelegate(connectTo, connectProxy);
 
+  const isActive =
+    (connectTo === activeAccount &&
+      address === activeAccount &&
+      !activeProxy) ||
+    (connectProxy === activeProxy && activeProxy);
+
   return (
-    <AccountWrapper>
+    <AccountWrapper className={isActive ? 'active' : undefined}>
       <button
         type="button"
         disabled={!disconnect && !imported}
