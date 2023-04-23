@@ -78,6 +78,13 @@ export const useSubmitExtrinsic = ({
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account.
   const wrapTxInProxy = () => {
+    // if already wrapped, return.
+    if (
+      tx?.method.toHuman().section === 'proxy' &&
+      tx?.method.toHuman().method === 'proxy'
+    ) {
+      return;
+    }
     if (activeProxy && tx && proxySupported) {
       submitAddress = activeProxy;
       tx = api?.tx.proxy.proxy(
