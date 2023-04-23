@@ -3,6 +3,7 @@
 
 import { faPenToSquare, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useProxies } from 'contexts/Accounts/Proxies';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -27,10 +28,11 @@ export const SubmitTx = ({
   const { t } = useTranslation();
   const { unit } = useApi().network;
   const { notEnoughFunds, sender, setTxSignature } = useTxMeta();
-  const { requiresManualSign } = useConnect();
+  const { requiresManualSign, activeAccount, activeProxy } = useConnect();
   const { setResize } = useModal();
+  const { getProxyDelegate } = useProxies();
 
-  const displayNote = notEnoughFunds || fromController;
+  const displayNote = notEnoughFunds || fromController || activeProxy;
   submitText =
     submitText ||
     `${
@@ -51,18 +53,26 @@ export const SubmitTx = ({
     };
   }, []);
 
+  const proxyDelegate = getProxyDelegate(activeAccount, activeProxy);
+
   return (
     <Wrapper noMargin={noMargin}>
       <div className="inner">
         {displayNote ? (
           <p className="sign">
-            {fromController ? (
+            {activeProxy && (
+              <>
+                <FontAwesomeIcon icon={faPenToSquare} className="icon" />
+                Signing from {proxyDelegate?.proxyType} proxy
+              </>
+            )}
+            {fromController && (
               <>
                 <FontAwesomeIcon icon={faPenToSquare} className="icon" />
                 {t('signedByController', { ns: 'library' })}
               </>
-            ) : null}
-            {notEnoughFunds ? (
+            )}
+            {notEnoughFunds && (
               <>
                 {fromController ? ' / ' : null}
                 <FontAwesomeIcon
@@ -74,7 +84,7 @@ export const SubmitTx = ({
                   {t('notEnough', { ns: 'library' })} {unit}
                 </span>
               </>
-            ) : null}
+            )}
           </p>
         ) : null}
         <section className="foot">
