@@ -60,6 +60,10 @@ export const useSubmitExtrinsic = ({
 
   // store whether this call is proxy sypported.
   const initialProxySupported = () => {
+    // Ledger devices do not support nesting on `proxy.proxy` calls.
+    if (getAccount(activeProxy)?.source === 'ledger') {
+      return false;
+    }
     const proxyDelegate = getProxyDelegate(activeAccount, activeProxy);
     return isSupportedProxyCall(
       proxyDelegate?.proxyType || '',
@@ -73,16 +77,21 @@ export const useSubmitExtrinsic = ({
   const didTxReset = useRef<boolean>(false);
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account.
-  if (activeProxy && tx && proxySupported) {
-    submitAddress = activeProxy;
-    tx = api?.tx.proxy.proxy(
-      {
-        id: from,
-      },
-      null,
-      tx
-    );
-  }
+  const wrapTxInProxy = () => {
+    if (activeProxy && tx && proxySupported) {
+      submitAddress = activeProxy;
+      tx = api?.tx.proxy.proxy(
+        {
+          id: from,
+        },
+        null,
+        tx
+      );
+    }
+  };
+
+  // Wrap tx with proxy on component mount.
+  wrapTxInProxy();
 
   // calculate fee upon setup changes and initial render
   useEffect(() => {
@@ -92,6 +101,7 @@ export const useSubmitExtrinsic = ({
 
   // recalculate transaction payload on tx change
   useEffect(() => {
+    wrapTxInProxy();
     buildPayload();
   }, [tx?.toString(), tx?.method?.args?.calls?.toString()]);
 
