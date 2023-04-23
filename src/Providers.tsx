@@ -39,26 +39,16 @@ import { ValidatorsProvider } from 'contexts/Validators';
 import { withProviders } from 'library/Hooks';
 import { ThemeProvider } from 'styled-components';
 
-// `@polkadotcloud/core-ui` theme classes are inserted here.
-export const WrappedRouter = () => {
-  const { mode } = useTheme();
-  const { network } = useApi();
-
-  return (
-    <Entry mode={mode} network={network.name}>
-      <Router />
-    </Entry>
-  );
-};
-
-// App-specific theme classes are inserted here.
+// App theme classes and `@polkadotcloud/core-ui` theme classes are inserted here.
 export const ThemedRouter = () => {
   const { mode } = useTheme();
   const { network } = useApi();
 
   return (
     <ThemeProvider theme={{ mode, network: `${network.name}-${mode}` }}>
-      <WrappedRouter />
+      <Entry mode={mode} network={network.name}>
+        <Router />
+      </Entry>
     </ThemeProvider>
   );
 };
