@@ -6,7 +6,6 @@ import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { clipAddress, remToUnit } from '@polkadotcloud/utils';
 import { useProxies } from 'contexts/Accounts/Proxies';
-import type { DelegateItem } from 'contexts/Accounts/Proxies/type';
 import { useConnect } from 'contexts/Connect';
 import { useNotifications } from 'contexts/Notifications';
 import type { NotificationText } from 'contexts/Notifications/types';
@@ -19,7 +18,7 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
   const { t } = useTranslation('pages');
   const { addNotification } = useNotifications();
   const { getAccount } = useConnect();
-  const { delegates } = useProxies();
+  const { getProxyDelegate } = useProxies();
 
   const primaryAddress = delegate || address || '';
   const delegatorAddress = delegate ? address : null;
@@ -35,10 +34,7 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
     };
   }
 
-  const proxyType: string | null =
-    delegates[primaryAddress]?.find(
-      ({ delegator }: DelegateItem) => delegator === delegatorAddress
-    )?.proxyType || null;
+  const proxyDelegate = getProxyDelegate(delegatorAddress, primaryAddress);
 
   return (
     <ItemWrapper>
@@ -60,7 +56,7 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
               {delegatorAddress && (
                 <>
                   <span>
-                    {proxyType} Proxy
+                    {proxyDelegate?.proxyType} Proxy
                     <FontAwesomeIcon icon={faArrowLeft} transform="shrink-2" />
                   </span>
                 </>

@@ -46,5 +46,6 @@ export interface ProxiesContextInterface {
   proxies: Proxies;
   delegates: Delegates;
   getDelegates: (a: MaybeAccount) => Proxy | undefined;
+  getProxyDelegate: (x: MaybeAccount, y: MaybeAccount) => ProxyDelegate | null;
   getProxiedAccounts: (a: MaybeAccount) => ProxiedAccounts;
 }

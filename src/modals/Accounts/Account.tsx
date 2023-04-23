@@ -5,7 +5,6 @@ import { faArrowLeft, faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { clipAddress } from '@polkadotcloud/utils';
 import { useProxies } from 'contexts/Accounts/Proxies';
-import type { DelegateItem } from 'contexts/Accounts/Proxies/type';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import type { ExtensionInjected } from 'contexts/Extensions/types';
@@ -31,7 +30,7 @@ export const AccountButton = ({
     getAccount,
     setActiveProxy,
   } = useConnect();
-  const { delegates } = useProxies();
+  const { getProxyDelegate } = useProxies();
 
   const meta = getAccount(address || '');
   const Icon =
@@ -45,13 +44,7 @@ export const AccountButton = ({
   const connectTo = delegator || address || '';
   const connectProxy = delegator ? address || null : '';
 
-  let proxyType: string | null = null;
-  if (connectProxy) {
-    proxyType =
-      delegates[connectProxy]?.find(
-        (d: DelegateItem) => d.delegator === connectTo
-      )?.proxyType || null;
-  }
+  const proxyDelegate = getProxyDelegate(connectTo, connectProxy);
 
   return (
     <AccountWrapper>
@@ -84,7 +77,7 @@ export const AccountButton = ({
             {delegator && (
               <>
                 <span>
-                  {proxyType} Proxy
+                  {proxyDelegate?.proxyType} Proxy
                   <FontAwesomeIcon icon={faArrowLeft} transform="shrink-2" />
                 </span>
               </>
