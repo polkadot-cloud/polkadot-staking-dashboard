@@ -26,7 +26,7 @@ export const useSubmitExtrinsic = ({
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
   const { api } = useApi();
-  const { getAccount, requiresManualSign } = useConnect();
+  const { getAccount, requiresManualSign, activeProxy } = useConnect();
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
   const { addPending, removePending } = useExtrinsics();
@@ -46,7 +46,7 @@ export const useSubmitExtrinsic = ({
     useLedgerHardware();
 
   // if null account is provided, fallback to empty string
-  const submitAddress: string = from || '';
+  let submitAddress: string = from || '';
 
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);
@@ -57,9 +57,21 @@ export const useSubmitExtrinsic = ({
   // track for one-shot transaction reset after submission.
   const didTxReset = useRef<boolean>(false);
 
+  // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account.
+  if (activeProxy && tx) {
+    submitAddress = activeProxy;
+    tx = api?.tx.proxy.proxy(
+      {
+        id: from,
+      },
+      null,
+      tx
+    );
+  }
+
   // calculate fee upon setup changes and initial render
   useEffect(() => {
-    setSender(from);
+    setSender(submitAddress);
     calculateEstimatedFee();
   }, [tx?.toString(), getTxSignature(), tx?.signature.toString()]);
 
@@ -135,7 +147,7 @@ export const useSubmitExtrinsic = ({
       submitting ||
       !shouldSubmit ||
       !api ||
-      (requiresManualSign(from) && !getTxSignature())
+      (requiresManualSign(submitAddress) && !getTxSignature())
     ) {
       return;
     }
@@ -267,7 +279,7 @@ export const useSubmitExtrinsic = ({
       const { signer } = account;
       try {
         const unsub = await tx.signAndSend(
-          from,
+          submitAddress,
           { signer },
           ({ status, events = [] }: AnyApi) => {
             if (!didTxReset.current) {
