@@ -76,6 +76,11 @@ export const ConnectProvider = ({
   const activeProxyRef = useRef(activeProxy);
 
   const setActiveProxy = (proxy: MaybeAccount) => {
+    if (proxy) {
+      localStorage.setItem('active_proxy', proxy);
+    } else {
+      localStorage.removeItem('active_proxy');
+    }
     setStateWithRef(proxy, setActiveProxyState, activeProxyRef);
   };
 

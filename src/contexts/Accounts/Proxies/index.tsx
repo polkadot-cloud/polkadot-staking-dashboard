@@ -1,7 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { clipAddress, rmCommas, setStateWithRef } from '@polkadotcloud/utils';
+import {
+  clipAddress,
+  localStorageOrDefault,
+  rmCommas,
+  setStateWithRef,
+} from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { SupportedProxies } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -17,6 +22,7 @@ import type {
   Proxies,
   ProxiesContextInterface,
   Proxy,
+  ProxyDelegate,
 } from './type';
 
 export const ProxiesContext = React.createContext<ProxiesContextInterface>(
@@ -31,7 +37,7 @@ export const ProxiesProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, isReady, network } = useApi();
-  const { accounts } = useConnect();
+  const { accounts, activeProxy, setActiveProxy, activeAccount } = useConnect();
 
   // store the proxy accounts of each imported account.
   const [proxies, setProxies] = useState<Proxies>([]);
@@ -44,78 +50,6 @@ export const ProxiesProvider = ({
   // store the delegates and the corresponding delegators
   const [delegates, setDelegates] = useState<Delegates>({});
   const delegatesRef = useRef(delegates);
-
-  useEffect(() => {
-    if (isReady) {
-      const newUnsubsProxy = unsubsRef.current;
-
-      // get accounts removed: use these to unsubscribe
-      const accountsRemoved = proxiesRef.current.filter(
-        (a: Proxy) =>
-          !accounts.find((c: ImportedAccount) => c.address === a.delegator)
-      );
-
-      const accountsAdded = accounts.filter(
-        (c: ImportedAccount) =>
-          !proxiesRef.current.find((a: Proxy) => a.delegator === c.address)
-      );
-
-      // update proxy state for removal
-      const newProxies = proxiesRef.current.filter((l: Proxy) =>
-        accounts.find((c: ImportedAccount) => c.address === l.delegator)
-      );
-      if (newProxies.length < proxiesRef.current.length) {
-        accountsRemoved.forEach((p: Proxy) => {
-          const unsub = unsubsRef.current.find(
-            (u: AnyApi) => u.key === p.delegator
-          );
-          if (unsub) {
-            unsub.unsub();
-            newUnsubsProxy.filter((u: AnyApi) => u.key !== p.delegator);
-          }
-        });
-        setStateWithRef(newProxies, setProxies, proxiesRef);
-        setStateWithRef(newUnsubsProxy, setUnsubs, unsubsRef);
-      }
-
-      // if accounts have changed, update state with new unsubs / accounts
-      if (accountsAdded.length) {
-        // subscribe to added accounts
-        accountsAdded.map((a: ImportedAccount) =>
-          subscribeToProxies(a.address)
-        );
-      }
-    }
-  }, [accounts, isReady, network]);
-
-  useEffect(() => {
-    // Reformat proxiesRef.current into a list of delegates.
-    const newDelegates: Delegates = {};
-    for (const proxy of proxiesRef.current) {
-      const { delegator } = proxy;
-
-      // checking if delegator is not null to keep types happy.
-      if (delegator) {
-        // get each delegate of this proxy record.
-        for (const { delegate, proxyType } of proxy.delegates) {
-          const item = {
-            delegator,
-            proxyType,
-          };
-          // check if this delegate exists in `newDelegates`.
-          if (Object.keys(newDelegates).includes(delegate)) {
-            // append delegator to the existing delegate record if it exists.
-            newDelegates[delegate].push(item);
-          } else {
-            // create a new delegate record if it does not yet exist in `newDelegates`.
-            newDelegates[delegate] = [item];
-          }
-        }
-      }
-    }
-
-    setStateWithRef(newDelegates, setDelegates, delegatesRef);
-  }, [proxiesRef.current]);
 
   const subscribeToProxies = async (address: string) => {
     if (!api) return;
@@ -192,6 +126,102 @@ export const ProxiesProvider = ({
       }));
     return proxiedAccounts;
   };
+
+  // Subscribe new accounts to proxies, and remove accounts that are no longer imported.
+  useEffect(() => {
+    if (isReady) {
+      const newUnsubsProxy = unsubsRef.current;
+
+      // get accounts removed: use these to unsubscribe
+      const accountsRemoved = proxiesRef.current.filter(
+        (a: Proxy) =>
+          !accounts.find((c: ImportedAccount) => c.address === a.delegator)
+      );
+
+      const accountsAdded = accounts.filter(
+        (c: ImportedAccount) =>
+          !proxiesRef.current.find((a: Proxy) => a.delegator === c.address)
+      );
+
+      // update proxy state for removal
+      const newProxies = proxiesRef.current.filter((l: Proxy) =>
+        accounts.find((c: ImportedAccount) => c.address === l.delegator)
+      );
+      if (newProxies.length < proxiesRef.current.length) {
+        accountsRemoved.forEach((p: Proxy) => {
+          const unsub = unsubsRef.current.find(
+            (u: AnyApi) => u.key === p.delegator
+          );
+          if (unsub) {
+            unsub.unsub();
+            newUnsubsProxy.filter((u: AnyApi) => u.key !== p.delegator);
+          }
+        });
+        setStateWithRef(newProxies, setProxies, proxiesRef);
+        setStateWithRef(newUnsubsProxy, setUnsubs, unsubsRef);
+      }
+
+      // if accounts have changed, update state with new unsubs / accounts
+      if (accountsAdded.length) {
+        // subscribe to added accounts
+        accountsAdded.map((a: ImportedAccount) =>
+          subscribeToProxies(a.address)
+        );
+      }
+    }
+  }, [accounts, isReady, network]);
+
+  // Listens to `proxies` state updates and reformats the data into a list of delegates.
+  useEffect(() => {
+    // Reformat proxiesRef.current into a list of delegates.
+    const newDelegates: Delegates = {};
+    for (const proxy of proxiesRef.current) {
+      const { delegator } = proxy;
+
+      // checking if delegator is not null to keep types happy.
+      if (delegator) {
+        // get each delegate of this proxy record.
+        for (const { delegate, proxyType } of proxy.delegates) {
+          const item = {
+            delegator,
+            proxyType,
+          };
+          // check if this delegate exists in `newDelegates`.
+          if (Object.keys(newDelegates).includes(delegate)) {
+            // append delegator to the existing delegate record if it exists.
+            newDelegates[delegate].push(item);
+          } else {
+            // create a new delegate record if it does not yet exist in `newDelegates`.
+            newDelegates[delegate] = [item];
+          }
+        }
+      }
+    }
+
+    setStateWithRef(newDelegates, setDelegates, delegatesRef);
+  }, [proxiesRef.current]);
+
+  // If active proxy has not yet been set, check local storage `activeProxy` & set it as active
+  // proxy if it is the delegate of `activeAccount`.
+  useEffect(() => {
+    const localActiveProxy = localStorageOrDefault('active_proxy', null);
+
+    if (
+      proxiesRef.current.length &&
+      localActiveProxy &&
+      !activeProxy &&
+      activeAccount
+    ) {
+      const isActive = (
+        proxiesRef.current.find((p: Proxy) => p.delegator === activeAccount)
+          ?.delegates || []
+      ).find((p: ProxyDelegate) => p.delegate === localActiveProxy);
+
+      if (isActive) {
+        setActiveProxy(localActiveProxy);
+      }
+    }
+  }, [accounts, activeAccount, proxiesRef.current]);
 
   // Unsubscribe from proxy subscriptions on unmount.
   useEffect(() => {
