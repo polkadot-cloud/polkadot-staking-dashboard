@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { SupportedProxies } from 'consts';
+import { isSupportedProxy } from 'config/proxies';
 import type { ProxyDelegate } from 'contexts/Accounts/Proxies/type';
 import { useConnect } from 'contexts/Connect';
 import type { ImportedAccount } from 'contexts/Connect/types';
@@ -18,7 +18,7 @@ export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
     delegates?.delegates.filter(
       (d: ProxyDelegate) =>
         accounts.find((a: ImportedAccount) => a.address === d.delegate) !==
-          undefined && SupportedProxies.includes(d.proxyType)
+          undefined && isSupportedProxy(d.proxyType)
     ) || [];
 
   return (

@@ -8,7 +8,7 @@ import {
   setStateWithRef,
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import { SupportedProxies } from 'consts';
+import { isSupportedProxy } from 'config/proxies';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import type { ImportedAccount } from 'contexts/Connect/types';
@@ -116,9 +116,7 @@ export const ProxiesProvider = ({
       return [];
     }
     const proxiedAccounts: ProxiedAccounts = delegate
-      .filter(({ proxyType }: DelegateItem) =>
-        SupportedProxies.includes(proxyType)
-      )
+      .filter(({ proxyType }: DelegateItem) => isSupportedProxy(proxyType))
       .map((d: DelegateItem) => ({
         address: d.delegator,
         name: clipAddress(d.delegator),
