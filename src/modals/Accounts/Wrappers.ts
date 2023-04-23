@@ -56,6 +56,15 @@ export const AccountWrapper = styled.div`
           white-space: nowrap;
           overflow: hidden;
           transition: color var(--transition-duration);
+          margin: 0 0.5rem;
+
+          > span {
+            opacity: 0.7;
+            margin-right: 0.5rem;
+            > svg {
+              margin-left: 0.5rem;
+            }
+          }
         }
       }
 

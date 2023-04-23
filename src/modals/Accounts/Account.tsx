@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faGlasses } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { clipAddress } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
@@ -71,7 +71,15 @@ export const AccountButton = ({
             <Identicon value={address ?? ''} size={26} />
           </div>
           <span className="name">
-            &nbsp; {meta?.name ?? clipAddress(address ?? '')}
+            {delegator && (
+              <>
+                <span>
+                  Proxy
+                  <FontAwesomeIcon icon={faArrowRight} transform="shrink-2" />
+                </span>
+              </>
+            )}
+            {meta?.name ?? clipAddress(address ?? '')}
           </span>
           {badge && <span className="badge">{badge}</span>}
         </div>
