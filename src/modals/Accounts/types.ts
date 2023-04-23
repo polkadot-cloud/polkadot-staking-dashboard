@@ -32,3 +32,5 @@ export interface AccountNotStaking {
   address: string;
   delegates?: Proxy;
 }
+
+export type AccountNominatingAndInPool = AccountNominating & AccountInPool;

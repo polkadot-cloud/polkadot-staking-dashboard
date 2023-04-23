@@ -22,6 +22,7 @@ import { AccountSeparator, AccountWrapper } from './Wrappers';
 import type {
   AccountInPool,
   AccountNominating,
+  AccountNominatingAndInPool,
   AccountNotStaking,
 } from './types';
 
@@ -46,6 +47,9 @@ export const Accounts = () => {
   const [nominating, setNominating] = useState<AccountNominating[]>([]);
   const [inPool, setInPool] = useState<AccountInPool[]>([]);
   const [notStaking, setNotStaking] = useState<AccountNotStaking[]>([]);
+  const [nominatingAndPool, setNominatingAndPool] = useState<
+    AccountNominatingAndInPool[]
+  >([]);
 
   useEffect(() => {
     setLocalAccounts(accounts);
@@ -73,9 +77,12 @@ export const Accounts = () => {
     // construct account groupings
     const newNominating: AccountNominating[] = [];
     const newInPool: AccountInPool[] = [];
+    const newNominatingAndInPool: AccountNominatingAndInPool[] = [];
     const newNotStaking: AccountNotStaking[] = [];
 
     for (const { address } of localAccounts) {
+      let isNominating = false;
+      let isInPool = false;
       const isStash = stashes[stashes.indexOf(address)] ?? null;
       const delegates = getDelegates(address);
 
@@ -88,13 +95,13 @@ export const Accounts = () => {
         newNominating.find((a: AccountNominating) => a.address === address) ===
           undefined
       ) {
-        newNominating.push({ address, stashImported: true, delegates });
+        isNominating = true;
       }
 
       // if pooling, add address to active pooling.
       if (poolMember) {
         if (!newInPool.find((n: AccountInPool) => n.address === address)) {
-          newInPool.push({ ...poolMember, delegates });
+          isInPool = true;
         }
       }
 
@@ -106,7 +113,25 @@ export const Accounts = () => {
       ) {
         newNotStaking.push({ address, delegates });
       }
+
+      if (isNominating && isInPool && poolMember) {
+        newNominatingAndInPool.push({
+          ...poolMember,
+          address,
+          stashImported: true,
+          delegates,
+        });
+      }
+
+      if (isNominating && !isInPool) {
+        newNominating.push({ address, stashImported: true, delegates });
+      }
+      if (!isNominating && isInPool && poolMember) {
+        newInPool.push({ ...poolMember, delegates });
+      }
     }
+
+    setNominatingAndPool(newNominatingAndInPool);
     setNominating(newNominating);
     setInPool(newInPool);
     setNotStaking(newNotStaking);
@@ -151,6 +176,26 @@ export const Accounts = () => {
           </div>
         </AccountWrapper>
       )}
+
+      {nominatingAndPool.length ? (
+        <>
+          <AccountSeparator />
+          <Action text="Nominating and In Pool" />
+          {nominatingAndPool.map(
+            ({ address, delegates }: AccountNominating, i: number) => {
+              return (
+                <React.Fragment key={`acc_nominating_${i}`}>
+                  <AccountButton address={address} />
+                  {address && (
+                    <Delegates delegator={address} delegates={delegates} />
+                  )}
+                </React.Fragment>
+              );
+            }
+          )}
+        </>
+      ) : null}
+
       {nominating.length ? (
         <>
           <AccountSeparator />
