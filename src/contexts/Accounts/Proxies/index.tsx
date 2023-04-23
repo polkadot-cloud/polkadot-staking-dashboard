@@ -216,9 +216,14 @@ export const ProxiesProvider = ({
   // If active proxy has not yet been set, check local storage `activeProxy` & set it as active
   // proxy if it is the delegate of `activeAccount`.
   useEffect(() => {
-    const localActiveProxy = localStorageOrDefault('active_proxy', null);
+    const localActiveProxy = localStorageOrDefault(
+      `${network.name}_active_proxy`,
+      null
+    );
 
-    if (
+    if (!localActiveProxy) {
+      setActiveProxy(null);
+    } else if (
       proxiesRef.current.length &&
       localActiveProxy &&
       !activeProxy &&
@@ -233,7 +238,7 @@ export const ProxiesProvider = ({
         setActiveProxy(localActiveProxy);
       }
     }
-  }, [accounts, activeAccount, proxiesRef.current]);
+  }, [accounts, activeAccount, proxiesRef.current, network]);
 
   // Unsubscribe from proxy subscriptions on unmount.
   useEffect(() => {
