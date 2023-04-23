@@ -1,9 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowRight, faGlasses } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { clipAddress } from '@polkadotcloud/utils';
+import { useProxies } from 'contexts/Accounts/Proxies';
+import type { DelegateItem } from 'contexts/Accounts/Proxies/type';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import type { ExtensionInjected } from 'contexts/Extensions/types';
@@ -17,7 +19,6 @@ import type { AccountItemProps } from './types';
 export const AccountButton = ({
   address,
   label,
-  badge,
   disconnect = false,
   delegator,
 }: AccountItemProps) => {
@@ -30,6 +31,7 @@ export const AccountButton = ({
     getAccount,
     setActiveProxy,
   } = useConnect();
+  const { delegates } = useProxies();
 
   const meta = getAccount(address || '');
   const Icon =
@@ -42,6 +44,14 @@ export const AccountButton = ({
 
   const connectTo = delegator || address || '';
   const connectProxy = delegator ? address || null : '';
+
+  let proxyType: string | null = null;
+  if (connectProxy) {
+    proxyType =
+      delegates[connectProxy]?.find(
+        (d: DelegateItem) => d.delegator === connectTo
+      )?.proxyType || null;
+  }
 
   return (
     <AccountWrapper>
@@ -74,14 +84,13 @@ export const AccountButton = ({
             {delegator && (
               <>
                 <span>
-                  Proxy
-                  <FontAwesomeIcon icon={faArrowRight} transform="shrink-2" />
+                  {proxyType} Proxy
+                  <FontAwesomeIcon icon={faArrowLeft} transform="shrink-2" />
                 </span>
               </>
             )}
             {meta?.name ?? clipAddress(address ?? '')}
           </span>
-          {badge && <span className="badge">{badge}</span>}
         </div>
         {!imported && (
           <div

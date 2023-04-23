@@ -2,8 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { clipAddress, remToUnit } from '@polkadotcloud/utils';
+import { useProxies } from 'contexts/Accounts/Proxies';
+import type { DelegateItem } from 'contexts/Accounts/Proxies/type';
 import { useConnect } from 'contexts/Connect';
 import { useNotifications } from 'contexts/Notifications';
 import type { NotificationText } from 'contexts/Notifications/types';
@@ -12,11 +15,16 @@ import { useTranslation } from 'react-i18next';
 import { ItemWrapper } from './Wrappers';
 import type { ActiveAccountProps } from './types';
 
-export const Item = ({ address, type }: ActiveAccountProps) => {
+export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
   const { t } = useTranslation('pages');
   const { addNotification } = useNotifications();
   const { getAccount } = useConnect();
-  const accountData = getAccount(address);
+  const { delegates } = useProxies();
+
+  const primaryAddress = delegate || address || '';
+  const delegatorAddress = delegate ? address : null;
+
+  const accountData = getAccount(primaryAddress);
 
   // click to copy notification
   let notification: NotificationText | null = null;
@@ -27,23 +35,41 @@ export const Item = ({ address, type }: ActiveAccountProps) => {
     };
   }
 
+  const proxyType: string | null =
+    delegates[primaryAddress]?.find(
+      ({ delegator }: DelegateItem) => delegator === delegatorAddress
+    )?.proxyType || null;
+
   return (
     <ItemWrapper>
-      <div className={`title${type ? ` ${type}` : null}`}>
+      <div className="title">
         <h4>
           {accountData && (
             <>
+              {delegatorAddress && (
+                <div className="delegator">
+                  <Identicon
+                    value={delegatorAddress || ''}
+                    size={remToUnit('1.7rem')}
+                  />
+                </div>
+              )}
               <div className="icon">
-                <Identicon
-                  value={accountData.address}
-                  size={remToUnit('1.7rem')}
-                />
+                <Identicon value={primaryAddress} size={remToUnit('1.7rem')} />
               </div>
-              {clipAddress(accountData.address)}
+              {delegatorAddress && (
+                <>
+                  <span>
+                    {proxyType} Proxy
+                    <FontAwesomeIcon icon={faArrowLeft} transform="shrink-2" />
+                  </span>
+                </>
+              )}
+              {clipAddress(primaryAddress)}
               <button
                 type="button"
                 onClick={() => {
-                  navigator.clipboard.writeText(accountData.address);
+                  navigator.clipboard.writeText(primaryAddress);
                   if (notification) {
                     addNotification(notification);
                   }
@@ -52,10 +78,10 @@ export const Item = ({ address, type }: ActiveAccountProps) => {
                 <FontAwesomeIcon
                   className="copy"
                   icon={faCopy}
-                  transform="shrink-2"
+                  transform="shrink-4"
                 />
               </button>
-              {accountData.name !== clipAddress(accountData.address) && (
+              {accountData.name !== clipAddress(primaryAddress) && (
                 <>
                   <div className="sep" />
                   <div className="rest">

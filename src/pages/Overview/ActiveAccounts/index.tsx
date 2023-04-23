@@ -11,7 +11,7 @@ export const ActiveAccounts = () => {
   return (
     <ActiveAccounsWrapper>
       <Item address={activeAccount} />
-      {activeProxy && <Item address={activeProxy} type="signer" />}
+      {activeProxy && <Item address={activeAccount} delegate={activeProxy} />}
     </ActiveAccounsWrapper>
   );
 };

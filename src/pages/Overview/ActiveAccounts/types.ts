@@ -5,5 +5,5 @@ import type { MaybeAccount } from 'types';
 
 export interface ActiveAccountProps {
   address: MaybeAccount;
-  type?: string;
+  delegate?: MaybeAccount;
 }

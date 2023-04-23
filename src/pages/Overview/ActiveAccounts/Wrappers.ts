@@ -26,10 +26,16 @@ export const ItemWrapper = styled.div`
   overflow: hidden;
   width: 100%;
 
+  .delegator {
+    width: 0.75rem;
+    z-index: 0;
+  }
+
   .icon {
     position: relative;
     top: 0.1rem;
     margin-right: 0.5rem;
+    z-index: 1;
   }
   .title {
     margin: 0;
@@ -50,7 +56,7 @@ export const ItemWrapper = styled.div`
     .name {
       position: absolute;
       left: 0;
-      bottom: -0.15rem;
+      bottom: 0;
       max-width: 100%;
       display: inline;
       text-overflow: ellipsis;
@@ -64,7 +70,7 @@ export const ItemWrapper = styled.div`
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
-    margin-left: 0.75rem;
+    margin-left: 0.25rem;
     padding: 0;
   }
 
@@ -76,7 +82,7 @@ export const ItemWrapper = styled.div`
 
     > .sep {
       border-right: 1px solid var(--border-secondary-color);
-      margin: 0 0.8rem;
+      margin: 0 0.65rem 0 0.25rem;
       width: 1px;
       height: 1.25rem;
     }
@@ -84,6 +90,14 @@ export const ItemWrapper = styled.div`
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
+    }
+
+    > span {
+      opacity: 0.7;
+      margin: 0 0.5rem;
+      > svg {
+        margin-left: 0.5rem;
+      }
     }
   }
 

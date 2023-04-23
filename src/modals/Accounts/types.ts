@@ -10,7 +10,6 @@ export interface AccountItemProps {
   label?: Array<string>;
   disconnect?: boolean;
   asElement?: boolean;
-  badge?: string;
   delegator?: string;
 }
 
