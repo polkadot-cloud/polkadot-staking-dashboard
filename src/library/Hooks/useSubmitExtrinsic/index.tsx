@@ -2,8 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
+import { isSupportedProxyCall } from 'config/proxies';
 import { DappName } from 'consts';
 import { useBalances } from 'contexts/Accounts/Balances';
+import { useProxies } from 'contexts/Accounts/Proxies';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
@@ -26,11 +28,13 @@ export const useSubmitExtrinsic = ({
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
   const { api } = useApi();
-  const { getAccount, requiresManualSign, activeProxy } = useConnect();
+  const { getAccount, requiresManualSign, activeAccount, activeProxy } =
+    useConnect();
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
   const { addPending, removePending } = useExtrinsics();
   const { getAccount: getBalanceAccount } = useBalances();
+  const { getProxyDelegate } = useProxies();
   const {
     setTxFees,
     incrementPayloadUid,
@@ -54,11 +58,22 @@ export const useSubmitExtrinsic = ({
   // store the uid of the extrinsic
   const [uid] = useState<number>(incrementPayloadUid());
 
+  // store whether this call is proxy sypported.
+  const initialProxySupported = () => {
+    const proxyDelegate = getProxyDelegate(activeAccount, activeProxy);
+    return isSupportedProxyCall(
+      proxyDelegate?.proxyType || '',
+      tx?.method.toHuman().section,
+      tx?.method.toHuman().method
+    );
+  };
+  const [proxySupported] = useState<boolean>(initialProxySupported());
+
   // track for one-shot transaction reset after submission.
   const didTxReset = useRef<boolean>(false);
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account.
-  if (activeProxy && tx) {
+  if (activeProxy && tx && proxySupported) {
     submitAddress = activeProxy;
     tx = api?.tx.proxy.proxy(
       {
@@ -306,5 +321,6 @@ export const useSubmitExtrinsic = ({
     uid,
     onSubmit,
     submitting,
+    proxySupported,
   };
 };

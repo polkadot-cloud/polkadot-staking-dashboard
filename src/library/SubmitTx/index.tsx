@@ -23,6 +23,7 @@ export const SubmitTx = ({
   valid = false,
   noMargin = false,
   submitting = false,
+  proxySupported,
   fromController = false,
 }: SubmitTxProps) => {
   const { t } = useTranslation();
@@ -60,13 +61,13 @@ export const SubmitTx = ({
       <div className="inner">
         {displayNote ? (
           <p className="sign">
-            {activeProxy && (
+            {activeProxy && proxySupported && (
               <>
                 <FontAwesomeIcon icon={faPenToSquare} className="icon" />
                 Signing from {proxyDelegate?.proxyType} proxy
               </>
             )}
-            {fromController && (
+            {!(activeProxy && proxySupported) && fromController && (
               <>
                 <FontAwesomeIcon icon={faPenToSquare} className="icon" />
                 {t('signedByController', { ns: 'library' })}
