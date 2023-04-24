@@ -1,6 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  faCircleArrowRight,
+  faExclamationTriangle,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { stringUpperFirst } from '@polkadot/util';
 import { ButtonPrimary, PageRow } from '@polkadotcloud/core-ui';
 import { useBalances } from 'contexts/Accounts/Balances';
@@ -28,7 +33,10 @@ export const ControllerNotStash = () => {
             <PageRow>
               <CardWrapper warning>
                 <CardHeaderWrapper>
-                  <h3>Controller Accounts are Being Deprecated</h3>
+                  <h3>
+                    <FontAwesomeIcon icon={faExclamationTriangle} />
+                    &nbsp; Controller Accounts are Being Deprecated
+                  </h3>
                   <h4>
                     Staking dashboard will soon remove support for controller
                     accounts in favour of proxies. Switch your controller
@@ -40,6 +48,7 @@ export const ControllerNotStash = () => {
                 <div>
                   <ButtonPrimary
                     text="Update Controller To Stash"
+                    iconLeft={faCircleArrowRight}
                     onClick={() =>
                       openModalWith('UpdateController', {}, 'large')
                     }
