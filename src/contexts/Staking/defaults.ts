@@ -48,6 +48,8 @@ export const defaultStakingContext: StakingContextInterface = {
   hasController: () => false,
   // eslint-disable-next-line
   getControllerNotImported: (a) => null,
+  // eslint-disable-next-line
+  addressDifferentToStash: (a) => false,
   isBonding: () => false,
   isNominating: () => false,
   inSetup: () => true,

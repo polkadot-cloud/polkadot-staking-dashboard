@@ -337,6 +337,25 @@ export const StakingProvider = ({
 
   /*
    * Helper function to determine whether the controller account
+   * is the same as the stash account.
+   */
+  const addressDifferentToStash = (address: MaybeAccount) => {
+    if (address === null || !activeAccount) {
+      return false;
+    }
+    // check if controller is imported
+    const exists = connectAccounts.find(
+      (acc: ImportedAccount) => acc.address === address
+    );
+    if (exists === undefined) {
+      return false;
+    }
+
+    return address !== activeAccount;
+  };
+
+  /*
+   * Helper function to determine whether the controller account
    * has been imported.
    */
   const getControllerNotImported = (address: MaybeAccount) => {
@@ -412,6 +431,7 @@ export const StakingProvider = ({
         setTargets,
         hasController,
         getControllerNotImported,
+        addressDifferentToStash,
         isBonding,
         isNominating,
         inSetup,

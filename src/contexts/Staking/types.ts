@@ -37,6 +37,7 @@ export interface StakingContextInterface {
   setTargets: (t: any) => any;
   hasController: () => boolean;
   getControllerNotImported: (a: MaybeAccount) => any;
+  addressDifferentToStash: (a: MaybeAccount) => boolean;
   isBonding: () => boolean;
   isNominating: () => boolean;
   inSetup: () => any;

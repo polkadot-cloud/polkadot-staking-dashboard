@@ -26,7 +26,7 @@ export const Main = () => {
   const { activeAccount, accounts } = useConnect();
   const { pathname } = useLocation();
   const { getBondedAccount } = useBalances();
-  const { getControllerNotImported, inSetup: inNominatorSetup } = useStaking();
+  const { inSetup: inNominatorSetup, addressDifferentToStash } = useStaking();
   const { membership } = usePoolMemberships();
   const controller = getBondedAccount(activeAccount);
   const {
@@ -36,7 +36,7 @@ export const Main = () => {
     getNominatorSetupPercent,
   }: SetupContextInterface = useSetup();
   const { isSyncing, sideMenuMinimised }: UIContextInterface = useUi();
-  const controllerNotImported = getControllerNotImported(controller);
+  const controllerDifferentToStash = addressDifferentToStash(controller);
 
   const [pageConfig, setPageConfig] = useState({
     categories: Object.assign(PageCategories),
@@ -56,8 +56,8 @@ export const Main = () => {
 
       if (uri === `${BaseURL}/nominate`) {
         // configure Stake action
-        const warning = !isSyncing && controllerNotImported;
         const staking = !inNominatorSetup();
+        const warning = !isSyncing && controllerDifferentToStash;
         const setupPercent = getNominatorSetupPercent(activeAccount);
 
         if (staking) {
@@ -111,7 +111,7 @@ export const Main = () => {
     network,
     activeAccount,
     accounts,
-    controllerNotImported,
+    controllerDifferentToStash,
     isSyncing,
     membership,
     inNominatorSetup(),
