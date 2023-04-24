@@ -137,7 +137,7 @@ export const ManualSign = ({
             ) : null}
           </p>
         ) : (
-          <p>&nbsp;</p>
+          <p>...</p>
         )}
       </div>
       <div>

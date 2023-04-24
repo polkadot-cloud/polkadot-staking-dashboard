@@ -26,8 +26,11 @@ export const defaultConnectContext: ConnectContextInterface = {
   addToAccounts: (a) => {},
   // eslint-disable-next-line
   forgetAccounts: (a) => {},
+  // eslint-disable-next-line
+  setActiveProxy: (p) => {},
   accounts: [],
   activeAccount: null,
+  activeProxy: null,
   activeAccountMeta: null,
 };
 

@@ -17,8 +17,9 @@ import { GraphWrapper } from 'library/Graphs/Wrappers';
 import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
+import { ControllerNotStash } from 'pages/Nominate/Active/ControllerNotStash';
 import { useTranslation } from 'react-i18next';
-import { ActiveAccount } from './ActiveAccount';
+import { ActiveAccounts } from './ActiveAccounts';
 import { BalanceChart } from './BalanceChart';
 import { BalanceLinks } from './BalanceLinks';
 import { NetworkStats } from './NetworkSats';
@@ -63,7 +64,7 @@ export const Overview = () => {
       <PageTitle title={`${t('overview.overview')}`} />
       <PageRow>
         <PageHeading>
-          <ActiveAccount />
+          <ActiveAccounts />
         </PageHeading>
       </PageRow>
       <StatBoxList>
@@ -71,6 +72,7 @@ export const Overview = () => {
         <SupplyStakedStat />
         <ActiveEraStat />
       </StatBoxList>
+      <ControllerNotStash />
       <PageRow>
         <StakeStatus />
       </PageRow>

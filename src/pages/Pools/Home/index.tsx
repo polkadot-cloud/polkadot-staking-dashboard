@@ -43,7 +43,7 @@ export const HomeInner = () => {
     }
   }, [selectedActivePool]);
 
-  const ROW_HEIGHT = 220;
+  const ROW_HEIGHT = 210;
 
   let tabs = [
     {

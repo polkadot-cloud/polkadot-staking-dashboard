@@ -11,7 +11,7 @@ export interface ConnectContextInterface {
   formatAccountSs58: (a: string) => string | null;
   connectExtensionAccounts: (e: ExtensionInjected) => Promise<void>;
   getAccount: (account: MaybeAccount) => ExtensionAccount | null;
-  connectToAccount: (a: ExtensionAccount) => void;
+  connectToAccount: (a: ImportedAccount | null) => void;
   disconnectFromAccount: () => void;
   addExternalAccount: (a: string, addedBy: string) => void;
   getActiveAccount: () => string | null;
@@ -20,8 +20,10 @@ export interface ConnectContextInterface {
   isReadOnlyAccount: (a: MaybeAccount) => boolean;
   addToAccounts: (a: Array<ImportedAccount>) => void;
   forgetAccounts: (a: Array<ImportedAccount>) => void;
+  setActiveProxy: (p: MaybeAccount) => void;
   accounts: Array<ExtensionAccount>;
-  activeAccount: string | null;
+  activeAccount: MaybeAccount;
+  activeProxy: MaybeAccount;
   activeAccountMeta: ImportedAccount | null;
 }
 
