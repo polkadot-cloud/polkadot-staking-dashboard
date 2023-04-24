@@ -53,6 +53,15 @@ export const Main = () => {
 
       // set undefined action as default
       _pages[i].action = undefined;
+      if (uri === `${BaseURL}/`) {
+        const warning = !isSyncing && controllerDifferentToStash;
+        if (warning) {
+          _pages[i].action = {
+            type: 'bullet',
+            status: 'warning',
+          };
+        }
+      }
 
       if (uri === `${BaseURL}/nominate`) {
         // configure Stake action

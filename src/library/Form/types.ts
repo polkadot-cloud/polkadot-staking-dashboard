@@ -5,7 +5,7 @@ import type BigNumber from 'bignumber.js';
 import type { Balance } from 'contexts/Accounts/Balances/types';
 import type { ExternalAccount } from 'contexts/Connect/types';
 import type { ExtensionAccount } from 'contexts/Extensions/types';
-import type { BondFor } from 'types';
+import type { BondFor, MaybeAccount } from 'types';
 
 export interface ExtensionAccountItem extends ExtensionAccount {
   active?: boolean;
@@ -27,12 +27,8 @@ export interface DropdownInput {
 }
 
 export interface AccountDropdownProps {
-  items: Array<InputItem>;
-  onChange: (o: any) => void;
-  placeholder?: string;
-  selected: InputItem;
   current: InputItem;
-  height: string | number | undefined;
+  to: MaybeAccount;
 }
 
 export interface BondFeedbackProps {
