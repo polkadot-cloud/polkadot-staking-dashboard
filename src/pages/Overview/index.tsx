@@ -83,7 +83,7 @@ export const Overview = () => {
             <BalanceLinks />
           </GraphWrapper>
         </RowSection>
-        <RowSection paddingLeft verticalOrder>
+        <RowSection hLast vLast>
           <GraphWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
             <SubscanButton />
             <div className="head">
