@@ -31,6 +31,7 @@ export const BalanceLinks = () => {
             iconRight={faExternalLinkAlt}
             iconTransform="shrink-2"
             text="Subscan"
+            disabled={!activeAccount}
           />
         </div>
       </section>
