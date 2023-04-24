@@ -33,7 +33,7 @@ export const ControllerNotStash = () => {
                     Staking dashboard will soon remove support for controller
                     accounts in favour of proxies. Switch your controller
                     account to your stash account to continue using the
-                    dashboard and to help in this transition to a better{' '}
+                    dashboard and to help in the transition to a better{' '}
                     {stringUpperFirst(network.name)}.
                   </h4>
                 </CardHeaderWrapper>
