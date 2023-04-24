@@ -53,7 +53,7 @@ export const Active = () => {
       <ControllerNotImported />
       <UnstakePrompts />
       <PageRow>
-        <RowSection paddingLeft>
+        <RowSection hLast>
           <Status height={ROW_HEIGHT} />
         </RowSection>
         <RowSection secondary>
