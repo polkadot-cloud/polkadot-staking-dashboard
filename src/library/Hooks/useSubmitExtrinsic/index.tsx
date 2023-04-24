@@ -60,6 +60,13 @@ export const useSubmitExtrinsic = ({
 
   // store whether this call is proxy sypported.
   const getProxySupported = () => {
+    // if already wrapped, return.
+    if (
+      tx?.method.toHuman().section === 'proxy' &&
+      tx?.method.toHuman().method === 'proxy'
+    ) {
+      return true;
+    }
     // Ledger devices do not support nesting on `proxy.proxy` calls.
     if (getAccount(activeProxy)?.source === 'ledger') {
       return false;
@@ -84,11 +91,7 @@ export const useSubmitExtrinsic = ({
     }
 
     // Check if the current call is a supported proxy call.
-    return isSupportedProxyCall(
-      proxyType,
-      tx?.method.toHuman().section,
-      tx?.method.toHuman().method
-    );
+    return isSupportedProxyCall(proxyType, pallet, method);
   };
 
   const [proxySupported, setProxySupported] = useState<boolean>(
