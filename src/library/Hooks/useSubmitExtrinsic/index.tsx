@@ -59,19 +59,44 @@ export const useSubmitExtrinsic = ({
   const [uid] = useState<number>(incrementPayloadUid());
 
   // store whether this call is proxy sypported.
-  const initialProxySupported = () => {
+  const getProxySupported = () => {
     // Ledger devices do not support nesting on `proxy.proxy` calls.
     if (getAccount(activeProxy)?.source === 'ledger') {
       return false;
     }
+
     const proxyDelegate = getProxyDelegate(activeAccount, activeProxy);
+    const proxyType = proxyDelegate?.proxyType || '';
+    const pallet = tx?.method.toHuman().section;
+    const method = tx?.method.toHuman().method;
+    const call = `${pallet}.${method}`;
+
+    // If a batch call, test if every inner call is a supported proxy call.
+    if (call === 'utility.batch') {
+      return (tx?.method?.toHuman()?.args?.calls || [])
+        .map((c: AnyJson) => ({
+          pallet: c.method,
+          method: c.section,
+        }))
+        .every((c: AnyJson) =>
+          isSupportedProxyCall(proxyType, c.pallet, c.method)
+        );
+    }
+
+    // Check if the current call is a supported proxy call.
     return isSupportedProxyCall(
-      proxyDelegate?.proxyType || '',
+      proxyType,
       tx?.method.toHuman().section,
       tx?.method.toHuman().method
     );
   };
-  const [proxySupported] = useState<boolean>(initialProxySupported());
+
+  const [proxySupported, setProxySupported] = useState<boolean>(
+    getProxySupported()
+  );
+  useEffect(() => {
+    setProxySupported(getProxySupported());
+  }, [tx?.toString()]);
 
   // track for one-shot transaction reset after submission.
   const didTxReset = useRef<boolean>(false);
