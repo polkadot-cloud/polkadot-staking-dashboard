@@ -687,7 +687,7 @@
     "@substrate/ss58-registry" "^1.39.0"
     tslib "^2.5.0"
 
-"@polkadot/networks@12.0.1":
+"@polkadot/networks@12.0.1", "@polkadot/networks@^12.0.1":
   version "12.0.1"
   resolved "https://registry.yarnpkg.com/@polkadot/networks/-/networks-12.0.1.tgz#156d19d6498261c7634f875056eaffdacee4f33d"
   integrity sha512-VJkrLzIVr8B6iHm/yH7lmNwsu/ullNhiTWalxX8Ayxd+yfKwm3dL6IzggFp1uyjykOYlMvlI28keZP32OlMfdg==
@@ -696,16 +696,16 @@
     "@substrate/ss58-registry" "^1.39.0"
     tslib "^2.5.0"
 
-"@polkadot/react-identicon@^3.1.4":
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/@polkadot/react-identicon/-/react-identicon-3.1.4.tgz#5d103a7655894e2b53f2d78a37266681678f266d"
-  integrity sha512-afwXe8H3yfsQx9/0k2XZU5xOObr4dSzAtT2pvkyCHJxsEoh39kdTW1JyMAkTSj5AsYP5lSUHiX/T3NV/Dgf7Pg==
+"@polkadot/react-identicon@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@polkadot/react-identicon/-/react-identicon-3.2.1.tgz#1c0f9bc71b3e99a0b670c09fdfd9a40d95475e54"
+  integrity sha512-M76zJTTViX1QwrIjxL693zlFyinDRVQuKPnxWodJKfuefEm1gY++F2U2bv5onQKFCWJNvzebwsJgYvmvlr7wFw==
   dependencies:
-    "@polkadot/keyring" "^11.1.3"
-    "@polkadot/ui-settings" "3.1.4"
-    "@polkadot/ui-shared" "3.1.4"
-    "@polkadot/util" "^11.1.3"
-    "@polkadot/util-crypto" "^11.1.3"
+    "@polkadot/keyring" "^12.0.1"
+    "@polkadot/ui-settings" "3.2.1"
+    "@polkadot/ui-shared" "3.2.1"
+    "@polkadot/util" "^12.0.1"
+    "@polkadot/util-crypto" "^12.0.1"
     ethereum-blockies-base64 "^1.0.2"
     jdenticon "3.2.0"
     react-copy-to-clipboard "^5.1.0"
@@ -887,21 +887,21 @@
     rxjs "^7.8.0"
     tslib "^2.5.0"
 
-"@polkadot/ui-settings@3.1.4":
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/@polkadot/ui-settings/-/ui-settings-3.1.4.tgz#bc39e242f7b054cc5d775c497085617878ff8af0"
-  integrity sha512-s/9Vs5hQ8/t9vRTtRvpjiWyVx+xrfJyCuRVhZ/8QFsStzULVVAooy7gn0AI+y5yNz0iFoyoFvfTRLlEYzPI5Gw==
+"@polkadot/ui-settings@3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@polkadot/ui-settings/-/ui-settings-3.2.1.tgz#fd373f1d27ebe97619ffef9cc8b2fe8edc7f367a"
+  integrity sha512-RufWgGg0y9uBUyMD1ENF/sqwNK1yZhQ9iOo+g/k5gUJBJk7bm/qf1Bb4Zc73WBPNatzExNPwNHxqiWUUmohtmA==
   dependencies:
-    "@polkadot/networks" "^11.1.3"
-    "@polkadot/util" "^11.1.3"
+    "@polkadot/networks" "^12.0.1"
+    "@polkadot/util" "^12.0.1"
     eventemitter3 "^5.0.0"
     store "^2.0.12"
     tslib "^2.5.0"
 
-"@polkadot/ui-shared@3.1.4":
-  version "3.1.4"
-  resolved "https://registry.yarnpkg.com/@polkadot/ui-shared/-/ui-shared-3.1.4.tgz#218a137941cf2afefb1c1fe9fe33872850e12ee9"
-  integrity sha512-jDdeOWKIy2r5isYp24b/KXqGcmub5MJfPKJ5mnUGz2F1GPhBAz+NAOGcmfUZeI/a6g1dPtN4mjbmapfG7c+dyQ==
+"@polkadot/ui-shared@3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@polkadot/ui-shared/-/ui-shared-3.2.1.tgz#76c6ed3e5475c7ca25e3b4cfb7e80e8b783ba419"
+  integrity sha512-TykBWVlw3+W21D8HbtzwB/Fl5YiWdcmms31mqu9fjddJtI4vkVmr7I4/HoMeuTJGi2qRpCWKo0vA1esVOJP9zQ==
   dependencies:
     colord "^2.9.3"
     tslib "^2.5.0"
