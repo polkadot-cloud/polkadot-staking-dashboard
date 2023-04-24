@@ -129,13 +129,10 @@ export const ProxiesProvider = ({
   const getProxyDelegate = (
     delegator: MaybeAccount,
     delegate: MaybeAccount
-  ): ProxyDelegate | null => {
-    return (
-      proxiesRef.current
-        .find((p: Proxy) => p.delegator === delegator)
-        ?.delegates.find((d: ProxyDelegate) => d.delegate === delegate) ?? null
-    );
-  };
+  ): ProxyDelegate | null =>
+    proxiesRef.current
+      .find((p: Proxy) => p.delegator === delegator)
+      ?.delegates.find((d: ProxyDelegate) => d.delegate === delegate) ?? null;
 
   // Subscribe new accounts to proxies, and remove accounts that are no longer imported.
   useEffect(() => {
