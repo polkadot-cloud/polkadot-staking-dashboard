@@ -75,8 +75,8 @@ export const useSubmitExtrinsic = ({
     if (call === 'utility.batch') {
       return (tx?.method?.toHuman()?.args?.calls || [])
         .map((c: AnyJson) => ({
-          pallet: c.method,
-          method: c.section,
+          pallet: c.section,
+          method: c.method,
         }))
         .every((c: AnyJson) =>
           isSupportedProxyCall(proxyType, c.pallet, c.method)
