@@ -58,7 +58,7 @@ export const Connected = () => {
                 canClick={false}
                 value={activeProxy}
                 readOnly={!accountHasSigner(activeProxy)}
-                label="Proxy"
+                label={`${t('proxy')}`}
                 format="name"
                 filled
               />

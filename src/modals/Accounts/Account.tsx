@@ -85,7 +85,7 @@ export const AccountButton = ({
             {delegator && (
               <>
                 <span>
-                  {proxyDelegate?.proxyType} Proxy
+                  {proxyDelegate?.proxyType} {t('proxy')}
                   <FontAwesomeIcon icon={faArrowLeft} transform="shrink-2" />
                 </span>
               </>

@@ -56,7 +56,7 @@ export const Item = ({ address, delegate = null }: ActiveAccountProps) => {
               {delegatorAddress && (
                 <>
                   <span>
-                    {proxyDelegate?.proxyType} Proxy
+                    {proxyDelegate?.proxyType} {t('overview.proxy')}
                     <FontAwesomeIcon icon={faArrowLeft} transform="shrink-2" />
                   </span>
                 </>

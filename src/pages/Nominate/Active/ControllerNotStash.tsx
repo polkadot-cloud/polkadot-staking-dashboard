@@ -15,8 +15,10 @@ import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
+import { useTranslation } from 'react-i18next';
 
 export const ControllerNotStash = () => {
+  const { t } = useTranslation('pages');
   const { network } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { addressDifferentToStash } = useStaking();
@@ -35,19 +37,16 @@ export const ControllerNotStash = () => {
                 <CardHeaderWrapper>
                   <h3>
                     <FontAwesomeIcon icon={faExclamationTriangle} />
-                    &nbsp; Controller Accounts are Being Deprecated
+                    &nbsp; {t('nominate.controllerAccountsDeprecated')}
                   </h3>
                   <h4>
-                    Staking dashboard will soon remove support for controller
-                    accounts in favour of proxies. Switch your controller
-                    account to your stash account to continue using the
-                    dashboard and to help in the transition to a better{' '}
-                    {stringUpperFirst(network.name)}.
+                    {t('nominate.proxyprompt')} {stringUpperFirst(network.name)}
+                    .
                   </h4>
                 </CardHeaderWrapper>
                 <div>
                   <ButtonPrimary
-                    text="Update Controller To Stash"
+                    text={t('nominate.updateToStash')}
                     iconLeft={faCircleArrowRight}
                     onClick={() =>
                       openModalWith('UpdateController', {}, 'large')

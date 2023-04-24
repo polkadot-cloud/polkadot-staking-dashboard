@@ -37,19 +37,19 @@ export const SubmitTx = ({
 
   // Default to active account, or controller / proxy if from those accounts.
   let signingOpts = {
-    label: 'Signer',
+    label: t('signer', { ns: 'library' }),
     who: getAccount(activeAccount),
   };
 
   if (!(activeProxy && proxySupported) && fromController) {
     signingOpts = {
-      label: 'Signed by Controller',
+      label: t('signedByController', { ns: 'library' }),
       who: getAccount(controller),
     };
   }
   if (activeProxy && proxySupported) {
     signingOpts = {
-      label: `Signed by Proxy`,
+      label: t('signedByProxy', { ns: 'library' }),
       who: getAccount(activeProxy),
     };
   }

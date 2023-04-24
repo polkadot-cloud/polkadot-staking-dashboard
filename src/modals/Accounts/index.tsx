@@ -180,7 +180,7 @@ export const Accounts = () => {
       {nominatingAndPool.length ? (
         <>
           <AccountSeparator />
-          <Action text="Nominating and In Pool" />
+          <Action text={t('nominatingAndInPool')} />
           {nominatingAndPool.map(
             ({ address, delegates }: AccountNominating, i: number) => {
               return (
