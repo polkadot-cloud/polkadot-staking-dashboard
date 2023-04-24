@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/core-ui';
+import { ButtonHelp, ButtonPrimary, ButtonRow } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
-import { ButtonRowWrapper } from 'Wrappers';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
@@ -47,7 +46,7 @@ export const ManageBond = () => {
           <ButtonHelp marginLeft onClick={() => openHelp('Bonded in Pool')} />
         </h4>
         <h2>{`${planckToUnit(active, units).toFormat()} ${network.unit}`}</h2>
-        <ButtonRowWrapper>
+        <ButtonRow>
           <ButtonPrimary
             disabled={
               isPoolSyncing ||
@@ -84,7 +83,7 @@ export const ManageBond = () => {
             }
             text={String(totalUnlockChuncks ?? 0)}
           />
-        </ButtonRowWrapper>
+        </ButtonRow>
       </CardHeaderWrapper>
       <BondedChart
         active={planckToUnit(active, units)}

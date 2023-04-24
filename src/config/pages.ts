@@ -1,9 +1,11 @@
+
+ 
+
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import { BaseURL } from 'consts';
 import { Community } from 'pages/Community';
-import { Favorites } from 'pages/Favorites';
 import { Nominate } from 'pages/Nominate';
 import { Overview } from 'pages/Overview';
 import { Payouts } from 'pages/Payouts';
@@ -74,13 +76,5 @@ export const PagesConfig: PagesConfigItems = [
     hash: '/community',
     Entry: Community,
     lottie: 'label',
-  },
-  {
-    category: 3,
-    key: 'favorites',
-    uri: `${BaseURL}/favorites`,
-    hash: '/favorites',
-    Entry: Favorites,
-    lottie: 'heart',
   },
 ];

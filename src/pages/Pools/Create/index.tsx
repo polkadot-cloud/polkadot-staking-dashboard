@@ -2,11 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSecondary, PageHeading, PageRow } from '@polkadotcloud/core-ui';
+import {
+  ButtonSecondary,
+  PageHeading,
+  PageRow,
+  PageTitle,
+} from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { CardWrapper } from 'library/Graphs/Wrappers';
-import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
 import { useTranslation } from 'react-i18next';
 import { Element } from 'react-scroll';
@@ -22,7 +26,7 @@ export const Create = () => {
 
   return (
     <>
-      <PageTitle title={t('pools.createAPool')} />
+      <PageTitle title={`${t('pools.createAPool')}`} />
       <PageRow>
         <PageHeading>
           <span>
