@@ -40,7 +40,6 @@
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
     "chart.js": "^4.2.1",
-    "che-react-number-easing": "^0.1.4",
     "date-fns": "^2.29.3",
     "framer-motion": "^10.12.4",
     "i18next": "^22.4.15",
