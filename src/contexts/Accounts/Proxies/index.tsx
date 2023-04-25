@@ -37,7 +37,13 @@ export const ProxiesProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, isReady, network } = useApi();
-  const { accounts, activeProxy, setActiveProxy, activeAccount } = useConnect();
+  const {
+    accounts,
+    activeProxy,
+    setActiveProxy,
+    activeAccount,
+    addExternalAccount,
+  } = useConnect();
 
   // store the proxy accounts of each imported account.
   const [proxies, setProxies] = useState<Proxies>([]);
@@ -229,11 +235,17 @@ export const ProxiesProvider = ({
       !activeProxy &&
       activeAccount
     ) {
+      // Add `activePrroxy` as external account if not imported.
+      if (
+        !accounts.find((a: ImportedAccount) => a.address === localActiveProxy)
+      ) {
+        addExternalAccount(localActiveProxy, 'system');
+      }
+
       const isActive = (
         proxiesRef.current.find((p: Proxy) => p.delegator === activeAccount)
           ?.delegates || []
       ).find((p: ProxyDelegate) => p.delegate === localActiveProxy);
-
       if (isActive) {
         setActiveProxy(localActiveProxy);
       }
