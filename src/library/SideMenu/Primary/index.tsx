@@ -59,7 +59,7 @@ export const Primary = ({
       <Wrapper
         className={`${active ? `active` : `inactive`}${
           minimised ? ` minimised` : ``
-        }${action ? ` action-${actionStatus}` : ``}`}
+        }${action ? ` ${actionStatus}` : ``}`}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{

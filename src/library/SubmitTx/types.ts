@@ -6,6 +6,7 @@ import type React from 'react';
 export type SubmitTxProps = SubmitProps & {
   buttons?: Array<React.ReactNode>;
   fromController?: boolean;
+  proxySupported: boolean;
   noMargin?: boolean;
 };
 

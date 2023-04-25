@@ -3,6 +3,7 @@
 
 import { faPenToSquare, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -22,16 +23,38 @@ export const SubmitTx = ({
   valid = false,
   noMargin = false,
   submitting = false,
+  proxySupported,
   fromController = false,
   customEvent,
 }: SubmitTxProps) => {
   const { t } = useTranslation();
   const { unit } = useApi().network;
   const { notEnoughFunds, sender, setTxSignature } = useTxMeta();
-  const { requiresManualSign } = useConnect();
+  const { requiresManualSign, activeAccount, activeProxy, getAccount } =
+    useConnect();
   const { setResize } = useModal();
+  const { getBondedAccount } = useBalances();
+  const controller = getBondedAccount(activeAccount);
 
-  const displayNote = notEnoughFunds || fromController;
+  // Default to active account, or controller / proxy if from those accounts.
+  let signingOpts = {
+    label: t('signer', { ns: 'library' }),
+    who: getAccount(activeAccount),
+  };
+
+  if (!(activeProxy && proxySupported) && fromController) {
+    signingOpts = {
+      label: t('signedByController', { ns: 'library' }),
+      who: getAccount(controller),
+    };
+  }
+  if (activeProxy && proxySupported) {
+    signingOpts = {
+      label: t('signedByProxy', { ns: 'library' }),
+      who: getAccount(activeProxy),
+    };
+  }
+
   submitText =
     submitText ||
     `${
@@ -40,14 +63,14 @@ export const SubmitTx = ({
         : t('submit', { ns: 'modals' })
     }`;
 
+  // Set resize on not enough funds
   useEffect(() => {
     setResize();
   }, [notEnoughFunds, fromController]);
 
-  // reset tx metadata on unmount
+  // Reset tx metadata on unmount
   useEffect(() => {
     return () => {
-      // remove the pending tx signature
       setTxSignature(null);
     };
   }, []);
@@ -55,29 +78,29 @@ export const SubmitTx = ({
   return (
     <Wrapper noMargin={noMargin}>
       <div className="inner">
-        {displayNote ? (
-          <p className="sign">
-            {fromController ? (
-              <>
-                <FontAwesomeIcon icon={faPenToSquare} className="icon" />
-                {t('signedByController', { ns: 'library' })}
-              </>
-            ) : null}
-            {notEnoughFunds ? (
-              <>
-                {fromController ? ' / ' : null}
-                <FontAwesomeIcon
-                  icon={faWarning}
-                  className="danger"
-                  transform="shrink-1"
-                />{' '}
-                <span className="danger">
-                  {t('notEnough', { ns: 'library' })} {unit}
-                </span>
-              </>
-            ) : null}
-          </p>
-        ) : null}
+        <p className="sign">
+          <span className="badge">
+            <FontAwesomeIcon icon={faPenToSquare} className="icon" />
+            {signingOpts.label}
+          </span>
+
+          {signingOpts.who?.name}
+
+          {notEnoughFunds && (
+            <span className="notEnough">
+              / &nbsp;
+              <FontAwesomeIcon
+                icon={faWarning}
+                className="danger"
+                transform="shrink-1"
+              />{' '}
+              <span className="danger">
+                {t('notEnough', { ns: 'library' })} {unit}
+              </span>
+            </span>
+          )}
+        </p>
+
         <section className="foot">
           {requiresManualSign(sender) ? (
             <ManualSign

@@ -1,9 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PageRow, PageTitle } from '@polkadotcloud/core-ui';
-import { RowPrimaryWrapper, RowSecondaryWrapper } from 'Wrappers';
-import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
+import { PageRow, PageTitle, RowSection } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -45,7 +43,7 @@ export const HomeInner = () => {
     }
   }, [selectedActivePool]);
 
-  const ROW_HEIGHT = 220;
+  const ROW_HEIGHT = 210;
 
   let tabs = [
     {
@@ -102,24 +100,14 @@ export const HomeInner = () => {
           <ClosurePrompts />
 
           <PageRow>
-            <RowPrimaryWrapper
-              hOrder={1}
-              vOrder={0}
-              thresholdStickyMenu={SideMenuStickyThreshold}
-              thresholdFullWidth={SectionFullWidthThreshold}
-            >
+            <RowSection hLast>
               <Status height={ROW_HEIGHT} />
-            </RowPrimaryWrapper>
-            <RowSecondaryWrapper
-              hOrder={0}
-              vOrder={1}
-              thresholdStickyMenu={SideMenuStickyThreshold}
-              thresholdFullWidth={SectionFullWidthThreshold}
-            >
+            </RowSection>
+            <RowSection secondary>
               <CardWrapper height={ROW_HEIGHT}>
                 <ManageBond />
               </CardWrapper>
-            </RowSecondaryWrapper>
+            </RowSection>
           </PageRow>
           {selectedActivePool !== null && (
             <>

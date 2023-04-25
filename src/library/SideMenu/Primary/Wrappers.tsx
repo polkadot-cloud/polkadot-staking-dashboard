@@ -23,11 +23,11 @@ export const Wrapper = styled(motion.div)`
     margin: 0.7rem 0.2rem 0.5rem 0;
     padding: 0.65rem 0rem;
 
-    &.action-success {
+    &.success {
       border: 1px solid var(--network-color-primary);
     }
-    &.action-warning {
-      border: 1px solid var(--status);
+    &.warning {
+      border: 1px solid var(--status-warning-color);
     }
   }
 

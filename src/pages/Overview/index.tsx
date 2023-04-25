@@ -1,11 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { PageHeading, PageRow, PageTitle } from '@polkadotcloud/core-ui';
+import {
+  PageHeading,
+  PageRow,
+  PageTitle,
+  RowSection,
+} from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
-import { RowPrimaryWrapper, RowSecondaryWrapper } from 'Wrappers';
 import BigNumber from 'bignumber.js';
-import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useSubscan } from 'contexts/Subscan';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
@@ -14,8 +17,9 @@ import { GraphWrapper } from 'library/Graphs/Wrappers';
 import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
+import { ControllerNotStash } from 'pages/Nominate/Active/ControllerNotStash';
 import { useTranslation } from 'react-i18next';
-import { ActiveAccount } from './ActiveAccount';
+import { ActiveAccounts } from './ActiveAccounts';
 import { BalanceChart } from './BalanceChart';
 import { BalanceLinks } from './BalanceLinks';
 import { NetworkStats } from './NetworkSats';
@@ -60,7 +64,7 @@ export const Overview = () => {
       <PageTitle title={`${t('overview.overview')}`} />
       <PageRow>
         <PageHeading>
-          <ActiveAccount />
+          <ActiveAccounts />
         </PageHeading>
       </PageRow>
       <StatBoxList>
@@ -68,27 +72,18 @@ export const Overview = () => {
         <SupplyStakedStat />
         <ActiveEraStat />
       </StatBoxList>
+      <ControllerNotStash />
       <PageRow>
         <StakeStatus />
       </PageRow>
       <PageRow>
-        <RowSecondaryWrapper
-          hOrder={0}
-          vOrder={0}
-          thresholdStickyMenu={SideMenuStickyThreshold}
-          thresholdFullWidth={SectionFullWidthThreshold}
-        >
+        <RowSection secondary>
           <GraphWrapper minHeight={PAYOUTS_HEIGHT} flex>
             <BalanceChart />
             <BalanceLinks />
           </GraphWrapper>
-        </RowSecondaryWrapper>
-        <RowPrimaryWrapper
-          hOrder={1}
-          vOrder={1}
-          thresholdStickyMenu={SideMenuStickyThreshold}
-          thresholdFullWidth={SectionFullWidthThreshold}
-        >
+        </RowSection>
+        <RowSection hLast vLast>
           <GraphWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
             <SubscanButton />
             <div className="head">
@@ -111,7 +106,7 @@ export const Overview = () => {
             </div>
             <Payouts />
           </GraphWrapper>
-        </RowPrimaryWrapper>
+        </RowSection>
       </PageRow>
       <PageRow>
         <NetworkStats />

@@ -24,6 +24,7 @@ export interface Network {
     rpc: string;
     lightClient: AnyApi;
   };
+  namespace: string;
   colors: Record<NetworkColor, { [key in Theme]: string }>;
   subscanEndpoint: string;
   unit: string;
