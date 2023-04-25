@@ -2,18 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonHelp } from '@polkadotcloud/core-ui';
-import NumberEasing from 'che-react-number-easing';
 import { useHelp } from 'contexts/Help';
+import Odometer from 'react-odometerjs';
 import { StatBox } from './Item';
 import type { NumberProps } from './types';
 
-export const Number = ({
-  label,
-  value,
-  unit,
-  helpKey,
-  currency = '',
-}: NumberProps) => {
+export const Number = ({ label, value, unit, helpKey }: NumberProps) => {
   const help = helpKey !== undefined;
   const { openHelp } = useHelp();
 
@@ -22,14 +16,11 @@ export const Number = ({
       <div className="content chart">
         <div className="labels">
           <h3 className="text">
-            <NumberEasing
-              ease="quintInOut"
-              precision={2}
-              speed={250}
-              trail={false}
+            <Odometer
+              animation="count"
+              duration={4500}
               value={value}
-              useLocaleString
-              currency={currency}
+              style={{ cursor: 'pointer' }}
             />
             {unit ? (
               <>

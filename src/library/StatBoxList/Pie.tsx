@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonHelp } from '@polkadotcloud/core-ui';
-import NumberEasing from 'che-react-number-easing';
 import { useHelp } from 'contexts/Help';
 import { StatPie } from 'library/Graphs/StatBoxPie';
+import { useEffect, useState } from 'react';
+import Odometer from 'react-odometerjs';
 import { StatBox } from './Item';
 import type { PieProps } from './types';
 
@@ -13,6 +14,23 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
   const showValue = stat?.value !== 0 || stat?.total === 0;
   const showTotal = !!stat?.total;
   const { openHelp } = useHelp();
+
+  const [value, setValue] = useState(0);
+  const [tValue, setTvalue] = useState(0);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => setValue(Number(stat?.value ?? 0)), 0);
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, []);
+
+  useEffect(() => {
+    const tTimeoutId = setTimeout(() => setTvalue(Number(stat?.total ?? 0)), 0);
+    return () => {
+      clearTimeout(tTimeoutId);
+    };
+  }, []);
 
   return (
     <StatBox>
@@ -30,26 +48,22 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
           <h3>
             {showValue ? (
               <>
-                <NumberEasing
-                  ease="quintInOut"
-                  precision={2}
-                  speed={250}
-                  trail={false}
-                  value={Number(stat?.value ?? 0)}
-                  useLocaleString
+                <Odometer
+                  animation="count"
+                  duration={2500}
+                  value={value}
+                  style={{ cursor: 'pointer' }}
                 />
                 {stat?.unit && <>{stat?.unit}</>}
 
                 {showTotal ? (
                   <span className="total">
                     /{' '}
-                    <NumberEasing
-                      ease="quintInOut"
-                      precision={2}
-                      speed={250}
-                      trail={false}
-                      value={Number(stat?.total ?? 0)}
-                      useLocaleString
+                    <Odometer
+                      animation="count"
+                      duration={2500}
+                      value={tValue}
+                      style={{ cursor: 'pointer' }}
                     />
                     {stat?.unit ? (
                       <>
