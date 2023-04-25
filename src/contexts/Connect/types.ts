@@ -20,7 +20,7 @@ export interface ConnectContextInterface {
   isReadOnlyAccount: (a: MaybeAccount) => boolean;
   addToAccounts: (a: Array<ImportedAccount>) => void;
   forgetAccounts: (a: Array<ImportedAccount>) => void;
-  setActiveProxy: (p: MaybeAccount) => void;
+  setActiveProxy: (p: MaybeAccount, l?: boolean) => void;
   accounts: Array<ExtensionAccount>;
   activeAccount: MaybeAccount;
   activeProxy: MaybeAccount;

@@ -208,6 +208,11 @@ export const ProxiesProvider = ({
     setStateWithRef(newDelegates, setDelegates, delegatesRef);
   }, [proxiesRef.current]);
 
+  // Reset active proxy state on network change.
+  useEffect(() => {
+    setActiveProxy(null, false);
+  }, [network]);
+
   // If active proxy has not yet been set, check local storage `activeProxy` & set it as active
   // proxy if it is the delegate of `activeAccount`.
   useEffect(() => {
