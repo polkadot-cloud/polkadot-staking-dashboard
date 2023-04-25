@@ -41,7 +41,7 @@ export const AccountButton = ({
       : extensions.find((e: ExtensionInjected) => e.id === meta?.source)
           ?.icon ?? undefined;
 
-  const imported = meta !== undefined && meta?.source !== 'external';
+  const imported = meta !== undefined;
 
   const connectTo = delegator || address || '';
   const connectProxy = delegator ? address || null : '';
@@ -93,7 +93,7 @@ export const AccountButton = ({
             {meta?.name ?? clipAddress(address ?? '')}
           </span>
         </div>
-        {!imported && (
+        {meta?.source === 'external' && (
           <div
             className="label warning"
             style={{ color: '#a17703', paddingLeft: '0.5rem' }}
@@ -106,7 +106,7 @@ export const AccountButton = ({
           {label !== undefined ? <h5>{label[1]}</h5> : null}
           {Icon !== undefined ? <Icon className="icon" /> : null}
 
-          {!imported && (
+          {meta?.source === 'external' && (
             <FontAwesomeIcon
               icon={faGlasses}
               className="icon"
