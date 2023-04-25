@@ -15,6 +15,7 @@ import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const ControllerNotStash = () => {
@@ -27,9 +28,17 @@ export const ControllerNotStash = () => {
   const { isSyncing } = useUi();
   const controller = getBondedAccount(activeAccount);
 
+  const [showPrompt, setShowPrompt] = useState<boolean>(
+    addressDifferentToStash(controller)
+  );
+
+  useEffect(() => {
+    setShowPrompt(addressDifferentToStash(controller));
+  }, [controller]);
+
   return (
     <>
-      {addressDifferentToStash(controller)
+      {showPrompt
         ? !isSyncing &&
           !isReadOnlyAccount(activeAccount) && (
             <PageRow>
