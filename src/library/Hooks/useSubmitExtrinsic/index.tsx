@@ -36,8 +36,8 @@ export const useSubmitExtrinsic = ({
     getWalletConnectClient,
     getWalletConnectSession,
     getWalletConnectChainInfo,
-    activeAccount, 
-    activeProxy
+    activeAccount,
+    activeProxy,
   } = useConnect();
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
