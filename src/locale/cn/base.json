@@ -14,10 +14,6 @@
         "subtitle": "收益作为自由余额发到其他帐户",
         "title": "转到其他帐户"
       },
-      "controller": {
-        "subtitle": "收益作为自由余额发到Controller帐户",
-        "title": "转到Controller帐户"
-      },
       "none": {
         "subtitle": "未设置收益到账地址'",
         "title_active": "未分配",

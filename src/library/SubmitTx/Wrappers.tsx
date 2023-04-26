@@ -13,9 +13,24 @@ export const Wrapper = styled.div<{ noMargin?: boolean }>`
     opacity: 0.75;
     font-size: 0.9rem;
     margin: 0;
-    padding-left: 0.5rem;
-    padding-bottom: 0;
+    padding-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
 
+    .badge {
+      border: 1px solid var(--border-secondary-color);
+      border-radius: 0.45rem;
+      padding: 0.2rem 0.5rem;
+      margin-right: 0.75rem;
+
+      > svg {
+        margin-right: 0.5rem;
+      }
+    }
+
+    .notEnough {
+      margin-left: 0.5rem;
+    }
     .danger {
       color: var(--status-danger-color);
     }
@@ -42,7 +57,7 @@ export const Wrapper = styled.div<{ noMargin?: boolean }>`
         align-items: center;
         font-size: 1rem;
         opacity: 0.75;
-        margin: 0;
+        margin: 0.1rem 0;
         padding-left: 0.5rem;
         font-variation-settings: 'wght' 575;
       }

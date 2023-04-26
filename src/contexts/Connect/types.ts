@@ -17,7 +17,7 @@ export interface ConnectContextInterface {
   getWalletConnectClient: () => SignClient | null;
   getWalletConnectSession: () => SessionTypes.Struct | null;
   getWalletConnectChainInfo: () => string | null;
-  connectToAccount: (a: ExtensionAccount) => void;
+  connectToAccount: (a: ImportedAccount | null) => void;
   disconnectFromAccount: () => void;
   addExternalAccount: (a: string, addedBy: string) => void;
   getActiveAccount: () => string | null;
@@ -26,8 +26,10 @@ export interface ConnectContextInterface {
   isReadOnlyAccount: (a: MaybeAccount) => boolean;
   addToAccounts: (a: Array<ImportedAccount>) => void;
   forgetAccounts: (a: Array<ImportedAccount>) => void;
+  setActiveProxy: (p: MaybeAccount, l?: boolean) => void;
   accounts: Array<ExtensionAccount>;
-  activeAccount: string | null;
+  activeAccount: MaybeAccount;
+  activeProxy: MaybeAccount;
   activeAccountMeta: ImportedAccount | null;
 }
 

@@ -91,7 +91,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   .content {
     padding: 0 0.5rem;
     h3 {
-      margin-top: 1rem;
+      margin-top: 0rem;
       margin-bottom: 0.75rem;
     }
 

@@ -5,16 +5,13 @@ import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { AccountDropdown } from 'library/Form/AccountDropdown';
-import { getEligibleControllers } from 'library/Form/Utils/getEligibleControllers';
 import { Warning } from 'library/Form/Warning';
-import type { InputItem } from 'library/Form/types';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
-import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Switch } from './Switch';
 import { Wrapper } from './Wrapper';
 
 export const UpdateController = () => {
@@ -27,30 +24,14 @@ export const UpdateController = () => {
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
 
-  // the selected value in the form
-  const [selected, setSelected] = useState<InputItem>(null);
-
-  // get eligible controller accounts
-  const items = getEligibleControllers();
-
-  // reset selected value on account change
-  useEffect(() => {
-    setSelected(null);
-  }, [activeAccount, items]);
-
-  // handle account selection change
-  const handleOnChange = (item: InputItem) => {
-    setSelected(item);
-  };
-
   // tx to submit
   const getTx = () => {
     let tx = null;
-    if (!selected || !api) {
+    if (!api) {
       return tx;
     }
     const controllerToSubmit = {
-      Id: selected?.address ?? '',
+      Id: activeAccount ?? '',
     };
     tx = api.tx.staking.setController(controllerToSubmit);
     return tx;
@@ -81,20 +62,11 @@ export const UpdateController = () => {
                 </WarningsWrapper>
               ) : null}
             </div>
-            <AccountDropdown
-              items={items}
-              onChange={handleOnChange}
-              current={account}
-              selected={selected}
-              height="17rem"
-            />
+            <Switch current={account} to={activeAccount} />
           </div>
         </Wrapper>
       </PaddingWrapper>
-      <SubmitTx
-        valid={!(selected === null || !selected.active)}
-        {...submitExtrinsic}
-      />
+      <SubmitTx valid={activeAccount !== null} {...submitExtrinsic} />
     </>
   );
 };

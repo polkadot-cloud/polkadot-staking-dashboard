@@ -14,10 +14,6 @@
         "subtitle": "Send payouts to another account as free balance.",
         "title": "To Another Account"
       },
-      "controller": {
-        "subtitle": "Payouts are sent to your controller account as free balance.",
-        "title": "To Controller Account"
-      },
       "none": {
         "subtitle": "Have no payout destination set.",
         "title_active": "Not Assigned",
