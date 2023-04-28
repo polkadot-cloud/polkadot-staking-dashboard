@@ -53,9 +53,9 @@ export const Unbond = () => {
     true
   );
 
-  let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
-  unclaimedRewards = planckToUnit(unclaimedRewards, network.units);
+  let { pendingRewards } = selectedActivePool || {};
+  pendingRewards = pendingRewards ?? new BigNumber(0);
+  pendingRewards = planckToUnit(pendingRewards, network.units);
 
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
@@ -149,9 +149,9 @@ export const Unbond = () => {
     warnings.push(t('readOnlyCannotSign'));
   }
 
-  if (unclaimedRewards > 0 && bondFor === 'pool') {
+  if (pendingRewards > 0 && bondFor === 'pool') {
     warnings.push(
-      `${t('unbondingWithdraw')} ${unclaimedRewards} ${network.unit}.`
+      `${t('unbondingWithdraw')} ${pendingRewards} ${network.unit}.`
     );
   }
   if (nominatorActiveBelowMin) {

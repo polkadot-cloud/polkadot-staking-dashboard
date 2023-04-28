@@ -1,4 +1,4 @@
-const Validierungcc = () => (
+const VFValidierung = () => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 513 513">
     <path
       strokeMiterlimit={10}
@@ -37,4 +37,4 @@ const Validierungcc = () => (
   </svg>
 );
 
-export default Validierungcc;
+export default VFValidierung;
