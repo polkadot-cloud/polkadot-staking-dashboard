@@ -6,9 +6,9 @@ import type { TimeLeftFormatted } from 'library/Hooks/useTimeLeft/types';
 export interface NumberProps {
   label: string;
   value: number;
+  decimals?: number;
   unit: string;
   helpKey: string;
-  currency?: string;
 }
 
 export interface PieProps {

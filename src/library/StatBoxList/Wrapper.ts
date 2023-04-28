@@ -125,10 +125,18 @@ export const StatBoxWrapper = styled(motion.div)`
       h3 {
         display: flex;
         flex-flow: row wrap;
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.25rem;
 
         &.text {
           margin-top: 0.15rem;
+          display: flex;
+          align-items: center;
+        }
+
+        .odometer {
+          position: relative;
+          top: -0.1rem;
+          margin-right: 0.2rem;
         }
 
         span.total {
@@ -151,7 +159,8 @@ export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
   font-variation-settings: 'wght' 580;
   display: flex;
   flex-flow: row wrap;
-  margin-bottom: 0.15rem;
+  margin-bottom: 0.45rem;
+
   font-size: 1.2rem;
   @media (min-width: 950px) {
     max-width: 300px;
