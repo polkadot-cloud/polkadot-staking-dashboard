@@ -23,18 +23,18 @@ export const RewardsStatus = () => {
   const { selectedActivePool } = useActivePools();
   const { activeAccount, isReadOnlyAccount } = useConnect();
 
-  let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
+  let { pendingRewards } = selectedActivePool || {};
+  pendingRewards = pendingRewards ?? new BigNumber(0);
 
   // Set the minimum unclaimed planck value to prevent e numbers.
   const minUnclaimedDisplay = new BigNumber(1_000_000);
 
-  const labelRewards = unclaimedRewards.isGreaterThan(minUnclaimedDisplay)
-    ? `${planckToUnit(unclaimedRewards, units)} ${unit}`
+  const labelRewards = pendingRewards.isGreaterThan(minUnclaimedDisplay)
+    ? `${planckToUnit(pendingRewards, units)} ${unit}`
     : `0 ${unit}`;
 
   // Display Reward buttons if unclaimed rewards is a non-zero value.
-  const buttonsRewards = unclaimedRewards.isGreaterThan(minUnclaimedDisplay)
+  const buttonsRewards = pendingRewards.isGreaterThan(minUnclaimedDisplay)
     ? [
         {
           title: t('pools.withdraw'),

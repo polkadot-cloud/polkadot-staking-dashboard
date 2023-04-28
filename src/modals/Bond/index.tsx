@@ -40,9 +40,9 @@ export const Bond = () => {
   const largestTxFee = useBondGreatestFee({ bondFor });
 
   // calculate any unclaimed pool rewards.
-  let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
-  unclaimedRewards = planckToUnit(unclaimedRewards, network.units);
+  let { pendingRewards } = selectedActivePool || {};
+  pendingRewards = pendingRewards ?? new BigNumber(0);
+  pendingRewards = planckToUnit(pendingRewards, network.units);
 
   // local bond value.
   const [bond, setBond] = useState<{ bond: string }>({
@@ -126,10 +126,10 @@ export const Bond = () => {
       <Close />
       <PaddingWrapper>
         <h2 className="title unbounded">{t('addToBond')}</h2>
-        {unclaimedRewards > 0 && bondFor === 'pool' ? (
+        {pendingRewards > 0 && bondFor === 'pool' ? (
           <WarningsWrapper>
             <Warning
-              text={`${t('bondingWithdraw')} ${unclaimedRewards} ${
+              text={`${t('bondingWithdraw')} ${pendingRewards} ${
                 network.unit
               }.`}
             />
