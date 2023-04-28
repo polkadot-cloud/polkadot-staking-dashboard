@@ -520,8 +520,8 @@ export const ValidatorCommunity = [
     },
   },
   {
-    name: 'validierung.cc',
-    thumbnail: 'Validierungcc',
+    name: 'VF Validierung',
+    thumbnail: 'VFValidierung',
     bio: 'We are crypto enthusiasts from Germany and offer independent and reliable validation and staking returns.',
     email: 'contact@validierung.cc',
     twitter: '@validierungcc',

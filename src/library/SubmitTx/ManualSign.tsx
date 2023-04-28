@@ -121,6 +121,8 @@ export const ManualSign = ({
   const { openHelp } = useHelp();
 
   const helpKey = feedback?.helpKey;
+  const disabled =
+    submitting || !valid || !accountHasSigner(activeAccount) || !txFeesValid;
 
   return (
     <>
@@ -149,12 +151,7 @@ export const ManualSign = ({
             iconLeft={faArrowAltCircleUp}
             iconTransform="grow-2"
             onClick={() => onSubmit(customEvent)}
-            disabled={
-              submitting ||
-              !valid ||
-              !accountHasSigner(activeAccount) ||
-              !txFeesValid
-            }
+            disabled={disabled}
           />
         ) : (
           <ButtonSubmit
@@ -168,13 +165,8 @@ export const ManualSign = ({
                 handleLedgerLoop();
               }
             }}
-            disabled={
-              submitting ||
-              getIsExecuting() ||
-              !valid ||
-              !accountHasSigner(activeAccount) ||
-              !txFeesValid
-            }
+            disabled={disabled || getIsExecuting()}
+            pulse={!(disabled || getIsExecuting())}
           />
         )}
       </div>
