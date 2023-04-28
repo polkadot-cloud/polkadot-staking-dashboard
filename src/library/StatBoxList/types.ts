@@ -8,7 +8,6 @@ export interface NumberProps {
   value: number;
   unit: string;
   helpKey: string;
-  currency?: string;
 }
 
 export interface PieProps {
