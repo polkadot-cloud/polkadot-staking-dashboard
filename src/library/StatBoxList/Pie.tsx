@@ -5,7 +5,6 @@ import { ButtonHelp } from '@polkadotcloud/core-ui';
 import { ReactOdometer } from '@polkadotcloud/react-odometer';
 import { useHelp } from 'contexts/Help';
 import { StatPie } from 'library/Graphs/StatBoxPie';
-import { useEffect, useState } from 'react';
 import { StatBox } from './Item';
 import type { PieProps } from './types';
 
@@ -14,23 +13,6 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
   const showValue = stat?.value !== 0 || stat?.total === 0;
   const showTotal = !!stat?.total;
   const { openHelp } = useHelp();
-
-  const [value, setValue] = useState(Number(stat?.value ?? 0));
-  const [tValue, setTvalue] = useState(Number(stat?.total ?? 0));
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => setValue(Number(stat?.value ?? 0)), 0);
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, [stat?.value]);
-
-  useEffect(() => {
-    const tTimeoutId = setTimeout(() => setTvalue(Number(stat?.total ?? 0)), 0);
-    return () => {
-      clearTimeout(tTimeoutId);
-    };
-  }, [stat?.total]);
 
   return (
     <StatBox>
@@ -48,12 +30,18 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
           <h3>
             {showValue ? (
               <>
-                <ReactOdometer duration={150} value={value} />
+                <ReactOdometer
+                  duration={150}
+                  value={Number(stat?.value ?? 0)}
+                />
                 {stat?.unit && <>{stat?.unit}</>}
 
                 {showTotal ? (
                   <span className="total">
-                    / <ReactOdometer duration={150} value={tValue} />
+                    <ReactOdometer
+                      duration={150}
+                      value={Number(stat?.value ?? 0)}
+                    />
                     {stat?.unit ? (
                       <>
                         &nbsp;
