@@ -12,7 +12,7 @@ export const Number = ({ label, value, unit, helpKey }: NumberProps) => {
   const help = helpKey !== undefined;
   const { openHelp } = useHelp();
 
-  const [number, setNumber] = useState(0);
+  const [number, setNumber] = useState(value);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => setNumber(value));

@@ -15,8 +15,8 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
   const showTotal = !!stat?.total;
   const { openHelp } = useHelp();
 
-  const [value, setValue] = useState(0);
-  const [tValue, setTvalue] = useState(0);
+  const [value, setValue] = useState(Number(stat?.value ?? 0));
+  const [tValue, setTvalue] = useState(Number(stat?.total ?? 0));
 
   useEffect(() => {
     const timeoutId = setTimeout(() => setValue(Number(stat?.value ?? 0)), 0);
