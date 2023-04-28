@@ -23,13 +23,13 @@ export const ClaimReward = () => {
   const { selectedActivePool } = useActivePools();
   const { activeAccount, accountHasSigner } = useConnect();
   const { units, unit } = network;
-  let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
+  let { pendingRewards } = selectedActivePool || {};
+  pendingRewards = pendingRewards ?? new BigNumber(0);
   const { claimType } = config;
 
   // ensure selected payout is valid
   useEffect(() => {
-    if (unclaimedRewards?.isGreaterThan(0)) {
+    if (pendingRewards?.isGreaterThan(0)) {
       setValid(true);
     } else {
       setValid(false);
@@ -68,7 +68,7 @@ export const ClaimReward = () => {
   if (!accountHasSigner(activeAccount)) {
     warnings.push(<Warning text={t('readOnlyCannotSign')} />);
   }
-  if (!greaterThanZero(unclaimedRewards)) {
+  if (!greaterThanZero(pendingRewards)) {
     warnings.push(<Warning text={t('noRewards')} />);
   }
 
@@ -90,7 +90,7 @@ export const ClaimReward = () => {
         ) : null}
         <Action
           text={`${t('claim')} ${`${planckToUnit(
-            unclaimedRewards,
+            pendingRewards,
             units
           )} ${unit}`}`}
         />

@@ -192,7 +192,7 @@ export const ActivePoolsProvider = ({
               bondedPool,
               rewardPool,
               rewardAccountBalance,
-              unclaimedRewards: pendingRewards,
+              pendingRewards,
             };
 
             // remove pool if it already exists
@@ -292,10 +292,13 @@ export const ActivePoolsProvider = ({
 
   // Utility functions
   /*
-   * updateUnclaimedRewards
+   * updateActivePoolPendingRewards
    * A helper function to set the unclaimed rewards of an active pool.
    */
-  const updateUnclaimedRewards = (amount: BigNumber, poolId: number) => {
+  const updateActivePoolPendingRewards = (
+    amount: BigNumber,
+    poolId: number
+  ) => {
     if (!poolId) return;
 
     // update the active pool the account is a member of
@@ -303,7 +306,7 @@ export const ActivePoolsProvider = ({
       if (a.id === poolId) {
         return {
           ...a,
-          unclaimedRewards: amount,
+          pendingRewards: amount,
         };
       }
       return a;
@@ -481,7 +484,10 @@ export const ActivePoolsProvider = ({
   const updatePendingRewards = async () => {
     const pendingRewards = await fetchPendingRewards();
 
-    updateUnclaimedRewards(pendingRewards, getActivePoolMembership()?.id || 0);
+    updateActivePoolPendingRewards(
+      pendingRewards,
+      getActivePoolMembership()?.id || 0
+    );
   };
 
   // unsubscribe all on component unmount
