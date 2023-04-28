@@ -1099,6 +1099,11 @@
   resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.2.27.tgz#b4a83793a60c3e8af232badff63ac368ea79ebb0"
   integrity sha512-S+rTlKI5rpKYOAurHWHNcE+AWdGIjXPXW/Roz5rGuUrkKsW8uWQ/UKzNT5BrXGxNsOhj3DyYG2gR2M4atxN4aA==
 
+"@polkadotcloud/react-odometer@0.1.16":
+  version "0.1.16"
+  resolved "https://registry.npmjs.org/@polkadotcloud/react-odometer/-/react-odometer-0.1.16.tgz#3a3149a656725df89c2759d9c452abbff57eb90b"
+  integrity sha512-MHXNt1xK8QafHPoXIrDBl5nIZ1dqWl425lXm0bWRE+ZogB76DmYc8xm5H0BJ55VP4+GTzKdfqGvVLoOYFgSt6A==
+
 "@polkadotcloud/utils@0.2.15":
   version "0.2.15"
   resolved "https://registry.npmjs.org/@polkadotcloud/utils/-/utils-0.2.15.tgz#43cdb031fa22635dc6d7033635651fcfaa8a2373"
@@ -1399,7 +1404,7 @@
 
 "@types/react@*", "@types/react@^18.2.0":
   version "18.2.0"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.0.tgz#15cda145354accfc09a18d2f2305f9fc099ada21"
+  resolved "https://registry.npmjs.org/@types/react/-/react-18.2.0.tgz#15cda145354accfc09a18d2f2305f9fc099ada21"
   integrity sha512-0FLj93y5USLHdnhIhABk83rm8XEGA7kH3cr+YUlvxoUGp1xNt/DINUMvqPxLyOQMzLmZe8i4RTHbvb8MC7NmrA==
   dependencies:
     "@types/prop-types" "*"
@@ -1985,15 +1990,6 @@ chart.js@^4.2.1:
   dependencies:
     "@kurkle/color" "^0.3.0"
 
-che-react-number-easing@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/che-react-number-easing/-/che-react-number-easing-0.1.4.tgz#4dfc190b63d2503b31bf08fbedc120790797333c"
-  integrity sha512-88jsYH8ht3DsnpE3gneGZ/0cuPaPB1sDMxFs71MVTyZWWjChDaJnYZXt1ZnAlrFlTqf1ARR1s6LYXAeVyawCJg==
-  dependencies:
-    eases "^1.0.8"
-    prop-types "^15.7.2"
-    react "^16.13.1"
-
 check-error@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/check-error/-/check-error-1.0.2.tgz#574d312edd88bb5dd8912e9286dd6c0aed4aac82"
@@ -2270,11 +2266,6 @@ doctrine@^3.0.0:
   integrity sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==
   dependencies:
     esutils "^2.0.2"
-
-eases@^1.0.8:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/eases/-/eases-1.0.8.tgz#f1f5069a6b6ed2ea510f9c6110398d63efe9aee6"
-  integrity sha512-U8TwgFYPktV07tV9yxoIu9TIWsXHGOuDJNXlyihWEMnGMXaoh2kkfWf0N1itbCjHWrgs+/leubuG7m+OgkfA0Q==
 
 electron-to-chromium@^1.4.284:
   version "1.4.361"
@@ -4112,7 +4103,7 @@ process-nextick-args@~2.0.0:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
   integrity sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==
 
-prop-types@^15.6.2, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -4224,15 +4215,6 @@ react-side-effect@^2.1.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-2.1.2.tgz#dc6345b9e8f9906dc2eeb68700b615e0b4fe752a"
   integrity sha512-PVjOcvVOyIILrYoyGEpDN3vmYNLdy1CajSFNt4TDsVQC5KpTijDvWVoR+/7Rz2xT978D8/ZtFceXxzsPwZEDvw==
-
-react@^16.13.1:
-  version "16.14.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.14.0.tgz#94d776ddd0aaa37da3eda8fc5b6b18a4c9a3114d"
-  integrity sha512-0X2CImDkJGApiAlcf0ODKIneSwBPhqJawOa5wCtKbu7ZECrmS26NvtSILynQ66cgkT/RJ4LidJOc3bUESwmU8g==
-  dependencies:
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
 
 react@^18.2.0:
   version "18.2.0"

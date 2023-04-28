@@ -19,6 +19,7 @@ export const LastEraPayoutStat = () => {
   const params = {
     label: t('payouts.lastEraPayout'),
     value: lastRewardUnit,
+    decimals: 3,
     unit,
     helpKey: 'Last Era Payout',
   };
