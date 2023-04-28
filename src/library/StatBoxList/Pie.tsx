@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonHelp } from '@polkadotcloud/core-ui';
+import { ReactOdometer } from '@polkadotcloud/react-odometer';
 import { useHelp } from 'contexts/Help';
 import { StatPie } from 'library/Graphs/StatBoxPie';
 import { useEffect, useState } from 'react';
-import Odometer from 'react-odometerjs';
 import { StatBox } from './Item';
 import type { PieProps } from './types';
 
@@ -23,14 +23,14 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, []);
+  }, [stat?.value]);
 
   useEffect(() => {
     const tTimeoutId = setTimeout(() => setTvalue(Number(stat?.total ?? 0)), 0);
     return () => {
       clearTimeout(tTimeoutId);
     };
-  }, []);
+  }, [stat?.total]);
 
   return (
     <StatBox>
@@ -48,23 +48,12 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
           <h3>
             {showValue ? (
               <>
-                <Odometer
-                  animation="count"
-                  duration={2500}
-                  value={value}
-                  style={{ cursor: 'pointer' }}
-                />
+                <ReactOdometer duration={150} value={value} />
                 {stat?.unit && <>{stat?.unit}</>}
 
                 {showTotal ? (
                   <span className="total">
-                    /{' '}
-                    <Odometer
-                      animation="count"
-                      duration={2500}
-                      value={tValue}
-                      style={{ cursor: 'pointer' }}
-                    />
+                    / <ReactOdometer duration={150} value={tValue} />
                     {stat?.unit ? (
                       <>
                         &nbsp;
