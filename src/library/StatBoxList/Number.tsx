@@ -23,12 +23,7 @@ export const Number = ({
         <div className="labels">
           <h3 className="text">
             <ReactOdometer duration={150} value={value} decimals={decimals} />
-            {unit ? (
-              <>
-                &nbsp;
-                {unit}
-              </>
-            ) : null}
+            {unit || null}
           </h3>
           <h4>
             {label}
