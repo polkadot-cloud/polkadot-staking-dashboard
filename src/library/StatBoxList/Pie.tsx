@@ -45,7 +45,7 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
 
             {showTotal ? (
               <span className="total">
-                <ReactOdometer duration={150} value={values.total} />
+                / <ReactOdometer duration={150} value={values.total} />
                 {stat?.unit ? (
                   <>
                     &nbsp;

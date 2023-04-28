@@ -21,7 +21,7 @@ export const Number = ({
     <StatBox>
       <div className="content chart">
         <div className="labels">
-          <h3 className="text">
+          <h3>
             <ReactOdometer duration={150} value={value} decimals={decimals} />
             {unit || null}
           </h3>
