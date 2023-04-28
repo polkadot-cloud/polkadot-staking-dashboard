@@ -32,6 +32,7 @@
     "@polkadot/rpc-provider": "^10.4.1",
     "@polkadot/util": "^11.0.1",
     "@polkadotcloud/core-ui": "0.2.27",
+    "@polkadotcloud/react-odometer": "^0.1.0",
     "@polkadotcloud/utils": "0.2.15",
     "@substrate/connect": "^0.7.24",
     "@types/lodash.throttle": "^4.1.7",

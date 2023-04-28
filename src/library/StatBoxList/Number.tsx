@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonHelp } from '@polkadotcloud/core-ui';
+import { ReactOdometer } from '@polkadotcloud/react-odometer';
 import { useHelp } from 'contexts/Help';
 import { useEffect, useState } from 'react';
-import Odometer from 'react-odometerjs';
 import { StatBox } from './Item';
 import type { NumberProps } from './types';
 
@@ -26,12 +26,7 @@ export const Number = ({ label, value, unit, helpKey }: NumberProps) => {
       <div className="content chart">
         <div className="labels">
           <h3 className="text">
-            <Odometer
-              animation="count"
-              duration={2500}
-              value={number}
-              style={{ cursor: 'pointer' }}
-            />
+            <ReactOdometer duration={150} value={number} />
             {unit ? (
               <>
                 &nbsp;
