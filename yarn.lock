@@ -1099,10 +1099,10 @@
   resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.2.27.tgz#b4a83793a60c3e8af232badff63ac368ea79ebb0"
   integrity sha512-S+rTlKI5rpKYOAurHWHNcE+AWdGIjXPXW/Roz5rGuUrkKsW8uWQ/UKzNT5BrXGxNsOhj3DyYG2gR2M4atxN4aA==
 
-"@polkadotcloud/react-odometer@0.1.4":
-  version "0.1.4"
-  resolved "https://registry.npmjs.org/@polkadotcloud/react-odometer/-/react-odometer-0.1.4.tgz#b69ff63b81874f6b7a3082537c30fc6a85fda711"
-  integrity sha512-3cS+D6jywPuIOEpFOkBnv/BbN1PAzBWf8QLtzXYA6NH97A16/IJD4yLjWBLZUDPl7MbCcNEPROGoLwdPMpoZJA==
+"@polkadotcloud/react-odometer@0.1.5":
+  version "0.1.5"
+  resolved "https://registry.npmjs.org/@polkadotcloud/react-odometer/-/react-odometer-0.1.5.tgz#8ec55aae5095aafb7a74f9d11c32ffea7aabc4ac"
+  integrity sha512-9UmfHVbIeWklRIRedfpd+I6dqhMFNbJA3bxN/szSeqh+eNBx5Gwok3oZJ3tbgQdJTburT/UYhhEOCd5mWI0ssQ==
 
 "@polkadotcloud/utils@0.2.15":
   version "0.2.15"
