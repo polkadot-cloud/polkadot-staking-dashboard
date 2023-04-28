@@ -23,14 +23,14 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, []);
+  }, [stat?.value]);
 
   useEffect(() => {
     const tTimeoutId = setTimeout(() => setTvalue(Number(stat?.total ?? 0)), 0);
     return () => {
       clearTimeout(tTimeoutId);
     };
-  }, []);
+  }, [stat?.total]);
 
   return (
     <StatBox>

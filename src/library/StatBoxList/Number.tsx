@@ -19,7 +19,7 @@ export const Number = ({ label, value, unit, helpKey }: NumberProps) => {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, []);
+  }, [value]);
 
   return (
     <StatBox>
