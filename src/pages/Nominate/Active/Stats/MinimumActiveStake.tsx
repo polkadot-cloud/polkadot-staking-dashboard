@@ -18,6 +18,7 @@ export const MinimumActiveStakeStat = () => {
     value: planckToUnit(minimumActiveStake, network.units).toNumber(),
     unit: `${network.unit}`,
     helpKey: 'Bonding',
+    decimals: 3,
   };
 
   return <Number {...params} />;
