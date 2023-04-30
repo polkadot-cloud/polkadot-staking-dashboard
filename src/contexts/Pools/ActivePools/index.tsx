@@ -40,7 +40,7 @@ export const ActivePoolsProvider = ({
 
   // determine active pools to subscribe to.
   const accountPools = useMemo(() => {
-    const _accountPools = Object.keys(getAccountPools(activeAccount));
+    const _accountPools = Object.keys(getAccountPools(activeAccount) || {});
     const p = membership?.poolId ? String(membership.poolId) : '-1';
 
     if (membership?.poolId && !_accountPools.includes(p || '-1')) {
