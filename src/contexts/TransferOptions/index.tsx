@@ -11,14 +11,6 @@ import type { MaybeAccount } from 'types';
 import * as defaults from './defaults';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
 
-export const TransferOptionsContext =
-  React.createContext<TransferOptionsContextInterface>(
-    defaults.defaultBalancesContext
-  );
-
-export const useTransferOptions = () =>
-  React.useContext(TransferOptionsContext);
-
 export const TransferOptionsProvider = ({
   children,
 }: {
@@ -138,3 +130,11 @@ export const TransferOptionsProvider = ({
     </TransferOptionsContext.Provider>
   );
 };
+
+export const TransferOptionsContext =
+  React.createContext<TransferOptionsContextInterface>(
+    defaults.defaultBalancesContext
+  );
+
+export const useTransferOptions = () =>
+  React.useContext(TransferOptionsContext);

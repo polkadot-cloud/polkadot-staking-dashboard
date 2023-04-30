@@ -126,7 +126,6 @@ export const BraveWarning = styled.div`
     .learn-more {
       color: var(--text-color-secondary);
       text-decoration: underline var(--border-primary-color);
-      font-weight: bold;
     }
   }
 `;

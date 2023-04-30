@@ -27,12 +27,6 @@ import React, { useEffect, useState } from 'react';
 import type { Network, NetworkName } from 'types';
 import * as defaults from './defaults';
 
-export const APIContext = React.createContext<APIContextInterface>(
-  defaults.defaultApiContext
-);
-
-export const useApi = () => React.useContext(APIContext);
-
 export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // Get the initial network and prepare meta tags if necessary.
   const getInitialNetwork = () => {
@@ -248,3 +242,9 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     </APIContext.Provider>
   );
 };
+
+export const APIContext = React.createContext<APIContextInterface>(
+  defaults.defaultApiContext
+);
+
+export const useApi = () => React.useContext(APIContext);

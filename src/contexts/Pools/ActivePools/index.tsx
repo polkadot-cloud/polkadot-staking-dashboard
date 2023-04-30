@@ -19,12 +19,6 @@ import { usePoolMemberships } from '../PoolMemberships';
 import { usePoolsConfig } from '../PoolsConfig';
 import * as defaults from './defaults';
 
-export const ActivePoolsContext = React.createContext<ActivePoolsContextState>(
-  defaults.defaultActivePoolContext
-);
-
-export const useActivePools = () => React.useContext(ActivePoolsContext);
-
 export const ActivePoolsProvider = ({
   children,
 }: {
@@ -40,7 +34,7 @@ export const ActivePoolsProvider = ({
 
   // determine active pools to subscribe to.
   const accountPools = useMemo(() => {
-    const _accountPools = Object.keys(getAccountPools(activeAccount));
+    const _accountPools = Object.keys(getAccountPools(activeAccount) || {});
     const p = membership?.poolId ? String(membership.poolId) : '-1';
 
     if (membership?.poolId && !_accountPools.includes(p || '-1')) {
@@ -54,8 +48,7 @@ export const ActivePoolsProvider = ({
   const activePoolsRef = useRef(activePools);
 
   // store active pools unsubs
-  const [unsubActivePools, setUnsubActivePools] = useState<Array<AnyApi>>([]);
-  const unsubActivePoolsRef = useRef(unsubActivePools);
+  const unsubActivePools = useRef<AnyApi[]>([]);
 
   // store active pools nominations.
   const [poolNominations, setPoolNominations] = useState<{
@@ -64,8 +57,7 @@ export const ActivePoolsProvider = ({
   const poolNominationsRef = useRef(poolNominations);
 
   // store pool nominations unsubs
-  const [unsubNominations, setUnsubNominations] = useState<Array<AnyApi>>([]);
-  const unsubNominationsRef = useRef(unsubNominations);
+  const unsubNominations = useRef<AnyApi[]>([]);
 
   // store account target validators
   const [targets, _setTargets] = useState<{
@@ -142,23 +134,23 @@ export const ActivePoolsProvider = ({
 
   // unsubscribe and reset poolNominations
   const unsubscribePoolNominations = () => {
-    if (unsubNominationsRef.current.length) {
-      for (const unsub of unsubNominationsRef.current) {
+    if (unsubNominations.current.length) {
+      for (const unsub of unsubNominations.current) {
         unsub();
       }
     }
     setStateWithRef({}, setPoolNominations, poolNominationsRef);
-    setStateWithRef([], setUnsubNominations, unsubNominationsRef);
+    unsubNominations.current = [];
   };
 
   // unsubscribe and reset activePool and poolNominations
   const unsubscribeActivePools = () => {
-    if (unsubActivePoolsRef.current.length) {
-      for (const unsub of unsubActivePoolsRef.current) {
+    if (unsubActivePools.current.length) {
+      for (const unsub of unsubActivePools.current) {
         unsub();
       }
       setStateWithRef([], setActivePools, activePoolsRef);
-      setStateWithRef([], setUnsubActivePools, unsubActivePoolsRef);
+      unsubActivePools.current = [];
     }
   };
 
@@ -235,11 +227,7 @@ export const ActivePoolsProvider = ({
 
     // initiate subscription, add to unsubs.
     await Promise.all([subscribeActivePool(poolId)]).then((unsubs: any) => {
-      setStateWithRef(
-        [...unsubActivePoolsRef.current, ...unsubs],
-        setUnsubActivePools,
-        unsubActivePoolsRef
-      );
+      unsubActivePools.current = unsubActivePools.current.concat(unsubs);
     });
   };
 
@@ -281,11 +269,7 @@ export const ActivePoolsProvider = ({
     // initiate subscription, add to unsubs.
     await Promise.all([subscribePoolNominations(poolBondAddress)]).then(
       (unsubs: any) => {
-        setStateWithRef(
-          [...unsubNominationsRef.current, ...unsubs],
-          setUnsubNominations,
-          unsubNominationsRef
-        );
+        unsubNominations.current = unsubNominations.current.concat(unsubs);
       }
     );
   };
@@ -513,10 +497,10 @@ export const ActivePoolsProvider = ({
   // when we are subscribed to all active pools, syncing is considered
   // completed.
   useEffect(() => {
-    if (unsubNominationsRef.current.length === accountPools.length) {
+    if (unsubNominations.current.length === accountPools.length) {
       setStateWithRef('synced', setSynced, syncedRef);
     }
-  }, [unsubNominationsRef.current]);
+  }, [accountPools, unsubNominations.current]);
 
   return (
     <ActivePoolsContext.Provider
@@ -543,3 +527,9 @@ export const ActivePoolsProvider = ({
     </ActivePoolsContext.Provider>
   );
 };
+
+export const ActivePoolsContext = React.createContext<ActivePoolsContextState>(
+  defaults.defaultActivePoolContext
+);
+
+export const useActivePools = () => React.useContext(ActivePoolsContext);

@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import type { VoidFn } from '@polkadot/api/types';
 import Keyring from '@polkadot/keyring';
 import {
   clipAddress,
@@ -14,7 +15,6 @@ import type {
   ConnectContextInterface,
   ExternalAccount,
   ImportedAccount,
-  LedgerAccount,
 } from 'contexts/Connect/types';
 import { useExtensions } from 'contexts/Extensions';
 import type {
@@ -33,12 +33,6 @@ import {
   removeLocalExternalAccounts,
 } from './Utils';
 import { defaultConnectContext } from './defaults';
-
-export const ConnectContext = React.createContext<ConnectContextInterface>(
-  defaultConnectContext
-);
-
-export const useConnect = () => React.useContext(ConnectContext);
 
 export const ConnectProvider = ({
   children,
@@ -87,9 +81,8 @@ export const ConnectProvider = ({
     setStateWithRef(proxy, setActiveProxyState, activeProxyRef);
   };
 
-  // store unsubscribe handler for connected extensions
-  const [unsubscribe, setUnsubscribe] = useState<AnyApi>([]);
-  const unsubscribeRef = useRef(unsubscribe);
+  // store unsubscribe handlers for connected extensions.
+  const unsubs = useRef<Record<string, VoidFn>>({});
 
   // store extensions whose account subscriptions have been initialised
   const [extensionsInitialised, setExtensionsInitialised] = useState<
@@ -160,7 +153,9 @@ export const ConnectProvider = ({
    * Unsubscrbe all account subscriptions
    */
   const unsubscribeAll = () => {
-    unsubscribeRef.current.forEach(({ unsub }: AnyApi) => unsub());
+    Object.values(unsubs.current).forEach((unsub) => {
+      unsub();
+    });
   };
 
   /*
@@ -168,17 +163,14 @@ export const ConnectProvider = ({
    */
   const forgetAccounts = (forget: Array<ImportedAccount>) => {
     if (!forget.length) return;
-    const addresses = forget.map((a: ImportedAccount) => a.address);
 
-    // unsubscribe from provided addresses
-    Object.values(
-      unsubscribeRef.current.filter((f: AnyApi) => addresses.includes(f.key))
-    ).forEach(({ unsub }: AnyApi) => unsub());
-
-    // filter addresses from current unsubs
-    const unsubsNew = unsubscribeRef.current.filter(
-      (f: AnyApi) => !addresses.includes(f.key)
-    );
+    for (const { address } of forget) {
+      const unsub = unsubs.current[address];
+      if (unsub) {
+        unsub();
+        delete unsubs.current[address];
+      }
+    }
 
     // if active account is being forgotten, disconnect
     const activeAccountUnsub = forget.find(
@@ -200,16 +192,14 @@ export const ConnectProvider = ({
       removeLocalExternalAccounts(network, externalToForget);
     }
 
-    // update accounts
-    const accountsNew = accountsRef.current.filter(
-      (a: ImportedAccount) =>
-        forget.find((e: ImportedAccount) => e.address === a.address) ===
-        undefined
+    // update accounts.
+    setStateWithRef(
+      [...accountsRef.current].filter(
+        (a) => forget.find((e) => e.address === a.address) === undefined
+      ),
+      setAccounts,
+      accountsRef
     );
-
-    // update accounts and corresponding unsubs
-    setStateWithRef(accountsNew, setAccounts, accountsRef);
-    setStateWithRef(unsubsNew, setUnsubscribe, unsubscribeRef);
   };
 
   /* importLedgerAccounts
@@ -225,16 +215,13 @@ export const ConnectProvider = ({
       const activeAccountLocal = getActiveAccountLocal(network);
 
       const activeAccountIsExternal =
-        localLedgerAccounts.find(
-          (a: ImportedAccount) => a.address === activeAccountLocal
-        ) ?? null;
+        localLedgerAccounts.find((a) => a.address === activeAccountLocal) ??
+        null;
 
       // remove already-imported accounts
       localLedgerAccounts = localLedgerAccounts.filter(
-        (l: LedgerAccount) =>
-          accountsRef.current.find(
-            (a: ImportedAccount) => a.address === l.address
-          ) === undefined
+        (l) =>
+          accountsRef.current.find((a) => a.address === l.address) === undefined
       );
 
       // set active account for network
@@ -263,16 +250,13 @@ export const ConnectProvider = ({
       const activeAccountLocal = getActiveAccountLocal(network);
 
       const activeAccountIsExternal =
-        localExternalAccounts.find(
-          (a: ImportedAccount) => a.address === activeAccountLocal
-        ) ?? null;
+        localExternalAccounts.find((a) => a.address === activeAccountLocal) ??
+        null;
 
       // remove already-imported accounts
       localExternalAccounts = localExternalAccounts.filter(
-        (l: ExternalAccount) =>
-          accountsRef.current.find(
-            (a: ImportedAccount) => a.address === l.address
-          ) === undefined
+        (l) =>
+          accountsRef.current.find((a) => a.address === l.address) === undefined
       );
 
       // set active account for network
@@ -476,12 +460,8 @@ export const ConnectProvider = ({
     setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
   };
 
-  const getAccount = (addr: MaybeAccount) => {
-    const acc =
-      accountsRef.current.find((a: ImportedAccount) => a?.address === addr) ||
-      null;
-    return acc;
-  };
+  const getAccount = (addr: MaybeAccount) =>
+    accountsRef.current.find((a) => a.address === addr) || null;
 
   const getActiveAccount = () => activeAccountRef.current;
 
@@ -503,8 +483,7 @@ export const ConnectProvider = ({
     // get all external accounts from localStorage
     const localExternalAccounts = getLocalExternalAccounts(network, false);
     const exists = localExternalAccounts.find(
-      (l: ExternalAccount) =>
-        l.address === address && l.network === network.name
+      (l) => l.address === address && l.network === network.name
     );
 
     // add external account to localStorage if not there already
@@ -518,24 +497,18 @@ export const ConnectProvider = ({
   };
 
   // checks whether an account can sign transactions
-  const accountHasSigner = (address: MaybeAccount) => {
-    const exists =
-      accountsRef.current.find(
-        (a: ImportedAccount) => a.address === address && a.source !== 'external'
-      ) !== undefined;
-    return exists;
-  };
+  const accountHasSigner = (address: MaybeAccount) =>
+    accountsRef.current.find(
+      (a) => a.address === address && a.source !== 'external'
+    ) !== undefined;
 
   // Checks whether an account needs manual signing. This is the case for Ledger accounts,
   // transactions of which cannot be automatically signed by a provided `signer` as is the case with
   // extensions.
-  const requiresManualSign = (address: MaybeAccount) => {
-    return (
-      accountsRef.current.find(
-        (a: ImportedAccount) => a.address === address && a.source === 'ledger'
-      ) !== undefined
-    );
-  };
+  const requiresManualSign = (address: MaybeAccount) =>
+    accountsRef.current.find(
+      (a) => a.address === address && a.source === 'ledger'
+    ) !== undefined;
 
   const isReadOnlyAccount = (address: MaybeAccount) => {
     const account = getAccount(address) ?? {};
@@ -582,16 +555,9 @@ export const ConnectProvider = ({
     );
   };
 
-  // add an accounts subscription to unsubscribe state
+  // add an extension id to unsubscribe state.
   const addToUnsubscribe = (id: string, unsub: AnyApi) => {
-    setStateWithRef(
-      [...unsubscribeRef.current].concat({
-        key: id,
-        unsub,
-      }),
-      setUnsubscribe,
-      unsubscribeRef
-    );
+    unsubs.current[id] = unsub;
   };
 
   return (
@@ -620,3 +586,9 @@ export const ConnectProvider = ({
     </ConnectContext.Provider>
   );
 };
+
+export const ConnectContext = React.createContext<ConnectContextInterface>(
+  defaultConnectContext
+);
+
+export const useConnect = () => React.useContext(ConnectContext);

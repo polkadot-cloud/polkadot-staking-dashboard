@@ -141,6 +141,7 @@ export const StatBoxWrapper = styled(motion.div)`
 
         span.total {
           color: var(--text-color-secondary);
+          display: flex;
           font-size: 0.95rem;
           margin-left: 0.4rem;
           position: relative;
