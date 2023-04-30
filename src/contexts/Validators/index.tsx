@@ -66,10 +66,7 @@ export const ValidatorsProvider = ({
   const validatorMetaBatchesRef = useRef(validatorMetaBatches);
 
   // stores the meta batch subscriptions for validator lists
-  const [validatorSubs, setValidatorSubs] = useState<{
-    [key: string]: Array<Fn>;
-  }>({});
-  const validatorSubsRef = useRef(validatorSubs);
+  const validatorSubsRef = useRef<Record<string, Fn[]>>({});
 
   // get favorites from local storage
   const getFavorites = () => {
@@ -561,7 +558,7 @@ export const ValidatorsProvider = ({
 
     keyUnsubs.push(...unsubs);
     newUnsubs[key] = keyUnsubs;
-    setStateWithRef(newUnsubs, setValidatorSubs, validatorSubsRef);
+    validatorSubsRef.current = newUnsubs;
   };
 
   const removeValidatorMetaBatch = (key: string) => {

@@ -4,7 +4,7 @@
 import { rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { AnyApi } from 'types';
 
 export const useBlockNumber = () => {
@@ -13,8 +13,8 @@ export const useBlockNumber = () => {
   // store the current block number.
   const [block, setBlock] = useState<BigNumber>(new BigNumber(0));
 
-  // store network metrics unsubscribe.
-  const [unsub, setUnsub] = useState<AnyApi>(undefined);
+  // store block unsub.
+  const unsub = useRef<AnyApi>();
 
   useEffect(() => {
     if (!isReady) return;
@@ -22,7 +22,7 @@ export const useBlockNumber = () => {
     subscribeBlockNumber();
 
     return () => {
-      if (unsub) unsub();
+      if (unsub.current) unsub.current();
     };
   }, [network, isReady]);
 
@@ -35,8 +35,8 @@ export const useBlockNumber = () => {
       });
       return u;
     };
-    Promise.all([subscribeBlock]).then((u) => {
-      setUnsub(u[0]);
+    Promise.all([subscribeBlock]).then(([u]) => {
+      unsub.current = u;
     });
   };
 

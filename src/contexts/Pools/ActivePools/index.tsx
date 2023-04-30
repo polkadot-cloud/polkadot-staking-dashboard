@@ -48,7 +48,7 @@ export const ActivePoolsProvider = ({
   const activePoolsRef = useRef(activePools);
 
   // store active pools unsubs
-  const unsubActivePoolsRef = useRef<AnyApi[]>([]);
+  const unsubActivePools = useRef<AnyApi[]>([]);
 
   // store active pools nominations.
   const [poolNominations, setPoolNominations] = useState<{
@@ -57,7 +57,7 @@ export const ActivePoolsProvider = ({
   const poolNominationsRef = useRef(poolNominations);
 
   // store pool nominations unsubs
-  const unsubNominationsRef = useRef<AnyApi[]>([]);
+  const unsubNominations = useRef<AnyApi[]>([]);
 
   // store account target validators
   const [targets, _setTargets] = useState<{
@@ -134,23 +134,23 @@ export const ActivePoolsProvider = ({
 
   // unsubscribe and reset poolNominations
   const unsubscribePoolNominations = () => {
-    if (unsubNominationsRef.current.length) {
-      for (const unsub of unsubNominationsRef.current) {
+    if (unsubNominations.current.length) {
+      for (const unsub of unsubNominations.current) {
         unsub();
       }
     }
     setStateWithRef({}, setPoolNominations, poolNominationsRef);
-    unsubNominationsRef.current = [];
+    unsubNominations.current = [];
   };
 
   // unsubscribe and reset activePool and poolNominations
   const unsubscribeActivePools = () => {
-    if (unsubActivePoolsRef.current.length) {
-      for (const unsub of unsubActivePoolsRef.current) {
+    if (unsubActivePools.current.length) {
+      for (const unsub of unsubActivePools.current) {
         unsub();
       }
       setStateWithRef([], setActivePools, activePoolsRef);
-      unsubActivePoolsRef.current = [];
+      unsubActivePools.current = [];
     }
   };
 
@@ -227,7 +227,7 @@ export const ActivePoolsProvider = ({
 
     // initiate subscription, add to unsubs.
     await Promise.all([subscribeActivePool(poolId)]).then((unsubs: any) => {
-      unsubActivePoolsRef.current = unsubActivePoolsRef.current.concat(unsubs);
+      unsubActivePools.current = unsubActivePools.current.concat(unsubs);
     });
   };
 
@@ -269,8 +269,7 @@ export const ActivePoolsProvider = ({
     // initiate subscription, add to unsubs.
     await Promise.all([subscribePoolNominations(poolBondAddress)]).then(
       (unsubs: any) => {
-        unsubNominationsRef.current =
-          unsubNominationsRef.current.concat(unsubs);
+        unsubNominations.current = unsubNominations.current.concat(unsubs);
       }
     );
   };
@@ -498,10 +497,10 @@ export const ActivePoolsProvider = ({
   // when we are subscribed to all active pools, syncing is considered
   // completed.
   useEffect(() => {
-    if (unsubNominationsRef.current.length === accountPools.length) {
+    if (unsubNominations.current.length === accountPools.length) {
       setStateWithRef('synced', setSynced, syncedRef);
     }
-  }, [accountPools, unsubNominationsRef.current]);
+  }, [accountPools, unsubNominations.current]);
 
   return (
     <ActivePoolsContext.Provider

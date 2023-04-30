@@ -31,10 +31,7 @@ export const BondedPoolsProvider = ({
   const poolMetaBatchesRef = useRef(poolMetaBatches);
 
   // stores the meta batch subscriptions for pool lists
-  const [poolSubs, setPoolSubs] = useState<{
-    [key: string]: Array<Fn>;
-  }>({});
-  const poolSubsRef = useRef(poolSubs);
+  const poolSubs = useRef<Record<string, Fn[]>>({});
 
   // store bonded pools
   const [bondedPools, setBondedPools] = useState<Array<BondedPool>>([]);
@@ -64,7 +61,7 @@ export const BondedPoolsProvider = ({
   }, [bondedPools]);
 
   const unsubscribe = () => {
-    Object.values(poolSubsRef.current).map((batch: Array<Fn>) =>
+    Object.values(poolSubs.current).map((batch: Array<Fn>) =>
       Object.entries(batch).map(([, v]) => v())
     );
     setBondedPools([]);
@@ -145,8 +142,8 @@ export const BondedPoolsProvider = ({
         poolMetaBatchesRef
       );
 
-      if (poolSubsRef.current[key] !== undefined) {
-        for (const unsub of poolSubsRef.current[key]) {
+      if (poolSubs.current[key] !== undefined) {
+        for (const unsub of poolSubs.current[key]) {
           unsub();
         }
       }
@@ -273,12 +270,12 @@ export const BondedPoolsProvider = ({
    * Helper: to add mataBatch unsubs by key.
    */
   const addMetaBatchUnsubs = (key: string, unsubs: Array<Fn>) => {
-    const _unsubs = poolSubsRef.current;
+    const _unsubs = poolSubs.current;
     const _keyUnsubs = _unsubs[key] ?? [];
 
     _keyUnsubs.push(...unsubs);
     _unsubs[key] = _keyUnsubs;
-    setStateWithRef(_unsubs, setPoolSubs, poolSubsRef);
+    poolSubs.current = _unsubs;
   };
 
   /*
