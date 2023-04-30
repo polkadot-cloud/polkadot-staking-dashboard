@@ -1,15 +1,21 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { rmCommas, setStateWithRef } from '@polkadotcloud/utils';
+import type { VoidFn } from '@polkadot/api/types';
+import {
+  addedTo,
+  matchedProperties,
+  removedFrom,
+  rmCommas,
+  setStateWithRef,
+} from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import type { ImportedAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
 import * as defaults from './defaults';
-import type { Ledger, LedgersContextInterface } from './types';
+import type { Ledger, LedgersContextInterface, UnlockChunkRaw } from './types';
 
 export const LedgersProvider = ({
   children,
@@ -17,136 +23,108 @@ export const LedgersProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, isReady, network } = useApi();
-  const { accounts, addExternalAccount } = useConnect();
+  const { accounts, addExternalAccount, getAccount } = useConnect();
 
-  // account ledgers to separate storage
+  // Account ledgers to separate storage.
   const [ledgers, setLedgers] = useState<Array<Ledger>>([]);
   const ledgersRef = useRef(ledgers);
+  const unsubs = useRef<Record<string, VoidFn>>({});
 
-  // ledger subscriptions state
-  const [unsubs, setUnsubs] = useState<AnyApi>([]);
-  const unsubsRef = useRef<AnyApi>(unsubs);
+  // Handle the syncing of accounts on accounts change.
+  const handleSyncAccounts = () => {
+    // Sync removed accounts.
+    const handleRemovedAccounts = () => {
+      const removed = removedFrom(accounts, ledgersRef.current, [
+        'address',
+      ]).map(({ address }) => address);
+      removed?.forEach((address) => unsubs.current[address]());
+      unsubs.current = Object.fromEntries(
+        Object.entries(unsubs.current).filter(([key]) => !removed.includes(key))
+      );
+    };
+    // Sync added accounts.
+    const handleAddedAccounts = () => {
+      addedTo(accounts, ledgersRef.current, ['address'])?.map(({ address }) =>
+        subscribeToLedger(address)
+      );
+    };
+    // Sync existing accounts.
+    const handleExistingAccounts = () => {
+      setStateWithRef(
+        matchedProperties(accounts, ledgersRef.current, ['address']),
+        setLedgers,
+        ledgersRef
+      );
+    };
+    handleRemovedAccounts();
+    handleAddedAccounts();
+    handleExistingAccounts();
+  };
 
   // fetch account balances & ledgers. Remove or add subscriptions
   useEffect(() => {
     if (isReady) {
-      // local updated values
-      let newLedgers = ledgersRef.current;
-      const newUnsubsLedgers = unsubsRef.current;
-
-      // get accounts removed: use these to unsubscribe
-      const accountsRemoved = ledgersRef.current.filter(
-        (a: Ledger) =>
-          !accounts.find((c: ImportedAccount) => c.address === a.address)
-      );
-      // get accounts added: use these to subscribe
-      const accountsAdded = accounts.filter(
-        (c: ImportedAccount) =>
-          !ledgersRef.current.find((a: Ledger) => a.address === c.address)
-      );
-
-      // update ledgers state for removal
-      newLedgers = ledgersRef.current.filter((l: Ledger) =>
-        accounts.find((c: ImportedAccount) => c.address === l.address)
-      );
-
-      // update ledgers state and unsubscribe if accounts have been removed
-      if (newLedgers.length < ledgersRef.current.length) {
-        // unsubscribe from removed ledgers if it exists
-        accountsRemoved.forEach((a: Ledger) => {
-          const unsub = unsubsRef.current.find(
-            (u: AnyApi) => u.key === a.address
-          );
-          if (unsub) {
-            unsub.unsub();
-            // remove unsub from balances
-            newUnsubsLedgers.filter((u: AnyApi) => u.key !== a.address);
-          }
-        });
-        // commit state updates
-        setStateWithRef(newUnsubsLedgers, setUnsubs, unsubsRef);
-        setStateWithRef(newLedgers, setLedgers, ledgersRef);
-      }
-
-      // if accounts have changed, update state with new unsubs / accounts
-      if (accountsAdded.length) {
-        // subscribe to added accounts
-        accountsAdded.map((a: ImportedAccount) => subscribeToLedger(a.address));
-      }
+      handleSyncAccounts();
     }
   }, [accounts, network, isReady]);
 
-  // unsubscribe from ledger subscriptions on unmount
+  // Unsubscribe from subscriptions on unmount.
   useEffect(() => {
-    Object.values(unsubsRef.current).forEach(({ unsub }: AnyApi) => {
-      unsub();
-    });
+    return () =>
+      Object.values(unsubs.current).forEach((unsub) => {
+        unsub();
+      });
   }, []);
 
   const subscribeToLedger = async (address: string) => {
     if (!api) return;
 
-    const unsub: () => void = await api.queryMulti<AnyApi>(
+    const unsub = await api.queryMulti<AnyApi>(
       [[api.query.staking.ledger, address]],
-      async ([result]): Promise<void> => {
-        let ledger: Ledger;
-
+      async ([result]) => {
         const newLedger = result.unwrapOr(null);
+
         // fallback to default ledger if not present
         if (newLedger !== null) {
           const { stash, total, active, unlocking } = newLedger;
 
-          // format unlocking chunks
-          const newUnlocking = [];
-          for (const u of unlocking.toHuman()) {
-            const { era, value } = u;
-
-            newUnlocking.push({
-              era: Number(rmCommas(era)),
-              value: new BigNumber(rmCommas(value)),
-            });
-          }
-
           // add stash as external account if not present
-          if (
-            accounts.find(
-              (s: ImportedAccount) => s.address === stash.toHuman()
-            ) === undefined
-          ) {
-            addExternalAccount(stash.toHuman(), 'system');
+          if (!getAccount(stash.toString())) {
+            addExternalAccount(stash.toString(), 'system');
           }
 
-          ledger = {
-            address,
-            stash: stash.toHuman(),
-            active: new BigNumber(rmCommas(active.toString())),
-            total: new BigNumber(rmCommas(total.toString())),
-            unlocking: newUnlocking,
-          };
-
-          // remove stale account if it's already in list, and concat.
-          let newLedgers = Object.values(ledgersRef.current);
-          newLedgers = newLedgers
-            .filter((l: Ledger) => l.stash !== ledger.stash)
-            .concat(ledger);
-
-          setStateWithRef(newLedgers, setLedgers, ledgersRef);
+          // remove stale account if it's already in list, concat, and add to state.
+          setStateWithRef(
+            Object.values([...ledgersRef.current])
+              .filter((l) => l.stash !== stash.toString())
+              .concat({
+                address,
+                stash: stash.toString(),
+                active: new BigNumber(rmCommas(active.toString())),
+                total: new BigNumber(rmCommas(total.toString())),
+                unlocking: unlocking
+                  .toHuman()
+                  .map(({ era, value }: UnlockChunkRaw) => ({
+                    era: Number(rmCommas(era)),
+                    value: new BigNumber(rmCommas(value)),
+                  })),
+              }),
+            setLedgers,
+            ledgersRef
+          );
         } else {
-          // no ledger: remove stale account if it's already in list.
-          let newLedgers = Object.values(ledgersRef.current);
-          newLedgers = newLedgers.filter((l: Ledger) => l.address !== address);
-          setStateWithRef(newLedgers, setLedgers, ledgersRef);
+          // no ledger: remove account if it's already in list.
+          setStateWithRef(
+            Object.values([...ledgersRef.current]).filter(
+              (l) => l.address !== address
+            ),
+            setLedgers,
+            ledgersRef
+          );
         }
       }
     );
-    setStateWithRef(
-      unsubsRef.current.concat({
-        key: address,
-        unsub,
-      }),
-      setUnsubs,
-      unsubsRef
-    );
+    unsubs.current[address] = unsub;
     return unsub;
   };
 
