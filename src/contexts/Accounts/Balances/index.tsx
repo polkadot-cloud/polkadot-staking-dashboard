@@ -48,23 +48,23 @@ export const BalancesProvider = ({
 
       // get accounts removed: use these to unsubscribe
       const accountsRemoved = balancesRef.current.filter(
-        (a: Balances) =>
-          !accounts.find((c: ImportedAccount) => c.address === a.address)
+        (a) => !accounts.find((c) => c.address === a.address)
       );
       // get accounts added: use these to subscribe
       const accountsAdded = accounts.filter(
-        (c: ImportedAccount) =>
-          !balancesRef.current.find((a: Balances) => a.address === c.address)
+        (c) => !balancesRef.current.find((a) => a.address === c.address)
       );
       // update accounts state for removal
-      newBalances = balancesRef.current.filter((a: Balances) =>
-        accounts.find((c: ImportedAccount) => c.address === a.address)
+      newBalances = balancesRef.current.filter((balanceItem) =>
+        accounts.find(
+          (accountItem) => accountItem.address === balanceItem.address
+        )
       );
 
       // update accounts state and unsubscribe if accounts have been removed
       if (newBalances.length < balancesRef.current.length) {
         // unsubscribe from removed balances
-        accountsRemoved.forEach((a: Balances) => {
+        accountsRemoved.forEach((a) => {
           const unsub = unsubsRef.current.find(
             (u: AnyApi) => u.key === a.address
           );
