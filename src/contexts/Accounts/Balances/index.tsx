@@ -33,8 +33,6 @@ export const BalancesProvider = ({
   // Balance accounts state.
   const [balances, setBalances] = useState<Array<Balances>>([]);
   const balancesRef = useRef(balances);
-
-  // Balance subscriptions state.
   const unsubs = useRef<Record<string, VoidFn>>({});
 
   // Handle the syncing of accounts on accounts change.
@@ -75,7 +73,7 @@ export const BalancesProvider = ({
     }
   }, [accounts, network, isReady]);
 
-  // Unsubscribe from balance subscriptions on unmount.
+  // Unsubscribe from subscriptions on unmount.
   useEffect(() => {
     return () =>
       Object.values(unsubs.current).forEach((unsub) => {
