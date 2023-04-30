@@ -20,6 +20,7 @@ export const AccountButton = ({
   label,
   disconnect = false,
   delegator,
+  noBorder = false,
 }: AccountItemProps) => {
   const { t } = useTranslation('modals');
   const { setStatus } = useModal();
@@ -71,6 +72,7 @@ export const AccountButton = ({
             }
           }
         }}
+        style={noBorder ? { border: 'none' } : undefined}
       >
         <div>
           {delegator && (
@@ -101,7 +103,6 @@ export const AccountButton = ({
             {t('readOnly')}
           </div>
         )}
-
         <div className={label === undefined ? `` : label[0]}>
           {label !== undefined ? <h5>{label[1]}</h5> : null}
           {Icon !== undefined ? <Icon className="icon" /> : null}
