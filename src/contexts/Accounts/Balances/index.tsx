@@ -45,40 +45,41 @@ export const BalancesProvider = ({
   // Balance subscriptions state.
   const unsubs = useRef<Record<string, VoidFn>>({});
 
-  // Syncs existing balance accounts with connect accounts.
-  const syncExistingAccounts = () => {
-    setStateWithRef(
-      matchedProperties(accounts, balancesRef.current, ['address']),
-      setBalances,
-      balancesRef
-    );
-  };
-
-  // Subscribes to added accounts.
-  const handleAddedAccounts = () => {
-    addedTo(accounts, balancesRef.current, ['address'])?.map(({ address }) =>
-      subscribeToBalances(address)
-    );
-  };
-
-  // Handles state and unsubscribe for removed accounts.
-  const handleRemovedAccounts = () => {
-    const removed = removedFrom(accounts, balancesRef.current, ['address']).map(
-      ({ address }) => address
-    );
-    removed?.forEach((address) => unsubs.current[address]());
-
-    unsubs.current = Object.fromEntries(
-      Object.entries(unsubs.current).filter(([key]) => !removed.includes(key))
-    );
+  // Handle the syncing of accounts on accounts change.
+  const handleSyncAccounts = () => {
+    // Sync removed accounts.
+    const handleRemovedAccounts = () => {
+      const removed = removedFrom(accounts, balancesRef.current, [
+        'address',
+      ]).map(({ address }) => address);
+      removed?.forEach((address) => unsubs.current[address]());
+      unsubs.current = Object.fromEntries(
+        Object.entries(unsubs.current).filter(([key]) => !removed.includes(key))
+      );
+    };
+    // Sync added accounts.
+    const handleAddedAccounts = () => {
+      addedTo(accounts, balancesRef.current, ['address'])?.map(({ address }) =>
+        subscribeToBalances(address)
+      );
+    };
+    // Sync existing accounts.
+    const handleExistingAccounts = () => {
+      setStateWithRef(
+        matchedProperties(accounts, balancesRef.current, ['address']),
+        setBalances,
+        balancesRef
+      );
+    };
+    handleRemovedAccounts();
+    handleAddedAccounts();
+    handleExistingAccounts();
   };
 
   // Handle accounts sync on connected accounts change.
   useEffect(() => {
     if (isReady) {
-      handleRemovedAccounts();
-      handleAddedAccounts();
-      syncExistingAccounts();
+      handleSyncAccounts();
     }
   }, [accounts, network, isReady]);
 
