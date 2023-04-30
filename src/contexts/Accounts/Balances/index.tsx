@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import type { VoidFn } from '@polkadot/api/types';
 import {
   addedTo,
   matchedProperties,
@@ -42,7 +43,7 @@ export const BalancesProvider = ({
   const balancesRef = useRef(balances);
 
   // Balance subscriptions state.
-  const unsubs = useRef<AnyApi[]>([]);
+  const unsubs = useRef<Record<string, VoidFn>>({});
 
   // Syncs existing balance accounts with connect accounts.
   const syncExistingAccounts = () => {
@@ -65,13 +66,10 @@ export const BalancesProvider = ({
     const removed = removedFrom(accounts, balancesRef.current, ['address']).map(
       ({ address }) => address
     );
-    if (!removed.length) return;
+    removed?.forEach((address) => unsubs.current[address]());
 
-    removed.forEach((address) =>
-      unsubs.current.find(({ key }: AnyApi) => key === address)?.unsub()
-    );
-    unsubs.current = unsubs.current.filter(
-      ({ key }: AnyApi) => !removed.includes(key)
+    unsubs.current = Object.fromEntries(
+      Object.entries(unsubs.current).filter(([key]) => !removed.includes(key))
     );
   };
 
@@ -87,7 +85,7 @@ export const BalancesProvider = ({
   // Unsubscribe from balance subscriptions on unmount.
   useEffect(() => {
     return () =>
-      Object.values(unsubs.current).forEach(({ unsub }: AnyApi) => {
+      Object.values(unsubs.current).forEach((unsub) => {
         unsub();
       });
   }, []);
@@ -173,10 +171,7 @@ export const BalancesProvider = ({
       }
     );
 
-    unsubs.current = unsubs.current.concat({
-      key: address,
-      unsub,
-    });
+    unsubs.current[address] = unsub;
     return unsub;
   };
 
