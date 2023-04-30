@@ -48,8 +48,7 @@ export const ActivePoolsProvider = ({
   const activePoolsRef = useRef(activePools);
 
   // store active pools unsubs
-  const [unsubActivePools, setUnsubActivePools] = useState<Array<AnyApi>>([]);
-  const unsubActivePoolsRef = useRef(unsubActivePools);
+  const unsubActivePoolsRef = useRef<AnyApi[]>([]);
 
   // store active pools nominations.
   const [poolNominations, setPoolNominations] = useState<{
@@ -58,8 +57,7 @@ export const ActivePoolsProvider = ({
   const poolNominationsRef = useRef(poolNominations);
 
   // store pool nominations unsubs
-  const [unsubNominations, setUnsubNominations] = useState<Array<AnyApi>>([]);
-  const unsubNominationsRef = useRef(unsubNominations);
+  const unsubNominationsRef = useRef<AnyApi[]>([]);
 
   // store account target validators
   const [targets, _setTargets] = useState<{
@@ -142,7 +140,7 @@ export const ActivePoolsProvider = ({
       }
     }
     setStateWithRef({}, setPoolNominations, poolNominationsRef);
-    setStateWithRef([], setUnsubNominations, unsubNominationsRef);
+    unsubNominationsRef.current = [];
   };
 
   // unsubscribe and reset activePool and poolNominations
@@ -152,7 +150,7 @@ export const ActivePoolsProvider = ({
         unsub();
       }
       setStateWithRef([], setActivePools, activePoolsRef);
-      setStateWithRef([], setUnsubActivePools, unsubActivePoolsRef);
+      unsubActivePoolsRef.current = [];
     }
   };
 
@@ -229,11 +227,7 @@ export const ActivePoolsProvider = ({
 
     // initiate subscription, add to unsubs.
     await Promise.all([subscribeActivePool(poolId)]).then((unsubs: any) => {
-      setStateWithRef(
-        [...unsubActivePoolsRef.current, ...unsubs],
-        setUnsubActivePools,
-        unsubActivePoolsRef
-      );
+      unsubActivePoolsRef.current = unsubActivePoolsRef.current.concat(unsubs);
     });
   };
 
@@ -275,11 +269,8 @@ export const ActivePoolsProvider = ({
     // initiate subscription, add to unsubs.
     await Promise.all([subscribePoolNominations(poolBondAddress)]).then(
       (unsubs: any) => {
-        setStateWithRef(
-          [...unsubNominationsRef.current, ...unsubs],
-          setUnsubNominations,
-          unsubNominationsRef
-        );
+        unsubNominationsRef.current =
+          unsubNominationsRef.current.concat(unsubs);
       }
     );
   };
@@ -510,7 +501,7 @@ export const ActivePoolsProvider = ({
     if (unsubNominationsRef.current.length === accountPools.length) {
       setStateWithRef('synced', setSynced, syncedRef);
     }
-  }, [unsubNominationsRef.current]);
+  }, [accountPools, unsubNominationsRef.current]);
 
   return (
     <ActivePoolsContext.Provider

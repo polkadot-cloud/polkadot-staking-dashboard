@@ -29,8 +29,7 @@ export const NetworkMetricsProvider = ({
   const metricsRef = useRef(metrics);
 
   // Store unsubscribe objects.
-  const [unsubs, setUnsubs] = useState<Array<AnyApi>>([]);
-  const unsubsRef = useRef(unsubs);
+  const unsubsRef = useRef<AnyApi[]>([]);
 
   // active subscription
   const initialiseSubscriptions = async () => {
@@ -100,7 +99,7 @@ export const NetworkMetricsProvider = ({
       // initiate subscription, add to unsubs.
       await Promise.all([subscribeToMetrics(), subscribeToActiveEra()]).then(
         (u: any) => {
-          setStateWithRef([...unsubsRef.current, ...u], setUnsubs, unsubsRef);
+          unsubsRef.current = unsubsRef.current.concat(u);
         }
       );
     }
@@ -116,7 +115,7 @@ export const NetworkMetricsProvider = ({
   // Set defaults for all metrics.
   const handleResetMetrics = () => {
     unsubscribe();
-    setStateWithRef([], setUnsubs, unsubsRef);
+    unsubsRef.current = [];
     setStateWithRef(defaults.activeEra, setActiveEra, activeEraRef);
     setStateWithRef(defaults.metrics, setMetrics, metricsRef);
   };
