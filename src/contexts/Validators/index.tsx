@@ -26,13 +26,6 @@ import { useNetworkMetrics } from '../Network';
 import { useActivePools } from '../Pools/ActivePools';
 import * as defaults from './defaults';
 
-export const ValidatorsContext =
-  React.createContext<ValidatorsContextInterface>(
-    defaults.defaultValidatorsContext
-  );
-
-export const useValidators = () => React.useContext(ValidatorsContext);
-
 // wrapper component to provide components with context
 export const ValidatorsProvider = ({
   children,
@@ -645,3 +638,10 @@ export const ValidatorsProvider = ({
     </ValidatorsContext.Provider>
   );
 };
+
+export const ValidatorsContext =
+  React.createContext<ValidatorsContextInterface>(
+    defaults.defaultValidatorsContext
+  );
+
+export const useValidators = () => React.useContext(ValidatorsContext);

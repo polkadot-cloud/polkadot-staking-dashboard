@@ -25,12 +25,6 @@ import type {
   ProxyDelegate,
 } from './type';
 
-export const ProxiesContext = React.createContext<ProxiesContextInterface>(
-  defaults.defaultProxiesContext
-);
-
-export const useProxies = () => React.useContext(ProxiesContext);
-
 export const ProxiesProvider = ({
   children,
 }: {
@@ -274,3 +268,9 @@ export const ProxiesProvider = ({
     </ProxiesContext.Provider>
   );
 };
+
+export const ProxiesContext = React.createContext<ProxiesContextInterface>(
+  defaults.defaultProxiesContext
+);
+
+export const useProxies = () => React.useContext(ProxiesContext);

@@ -22,16 +22,8 @@ export const AccountBalancesProvider = ({
   );
 };
 
-/**
- * @name AccountBalancesContext
- * @summary A context that provides an account's balances.
- */
 export const AccountBalancesContext =
   React.createContext<TransferOptionsContextInterface>(null);
 
-/**
- * @name useAccountBalances
- * @summary A hook to access the `AccountBalancesContext` provider.
- */
 export const useAccountBalances = () =>
   React.useContext(AccountBalancesContext);

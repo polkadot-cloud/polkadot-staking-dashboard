@@ -6,11 +6,6 @@ import React, { useState } from 'react';
 import { defaultMenuContext } from './defaults';
 import type { MenuContextInterface } from './types';
 
-export const MenuContext =
-  React.createContext<MenuContextInterface>(defaultMenuContext);
-
-export const useMenu = () => React.useContext(MenuContext);
-
 export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = useState(0);
   const [show, setShow] = useState(0);
@@ -90,3 +85,8 @@ export const MenuProvider = ({ children }: { children: React.ReactNode }) => {
     </MenuContext.Provider>
   );
 };
+
+export const MenuContext =
+  React.createContext<MenuContextInterface>(defaultMenuContext);
+
+export const useMenu = () => React.useContext(MenuContext);

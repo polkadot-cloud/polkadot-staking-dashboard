@@ -22,11 +22,6 @@ import type {
   MetaInterface,
 } from './types';
 
-export const FastUnstakeContext =
-  React.createContext<FastUnstakeContextInterface>(defaultFastUnstakeContext);
-
-export const useFastUnstake = () => React.useContext(FastUnstakeContext);
-
 const worker = new Worker();
 
 export const FastUnstakeProvider = ({
@@ -402,3 +397,8 @@ export const FastUnstakeProvider = ({
     </FastUnstakeContext.Provider>
   );
 };
+
+export const FastUnstakeContext =
+  React.createContext<FastUnstakeContextInterface>(defaultFastUnstakeContext);
+
+export const useFastUnstake = () => React.useContext(FastUnstakeContext);

@@ -11,12 +11,6 @@ import type { AnyApi, MaybeAccount } from 'types';
 import * as defaults from './defaults';
 import type { Ledger, LedgersContextInterface } from './types';
 
-export const LedgersContext = React.createContext<LedgersContextInterface>(
-  defaults.defaultLedgersContext
-);
-
-export const useLedgers = () => React.useContext(LedgersContext);
-
 export const LedgersProvider = ({
   children,
 }: {
@@ -195,3 +189,9 @@ export const LedgersProvider = ({
     </LedgersContext.Provider>
   );
 };
+
+export const LedgersContext = React.createContext<LedgersContextInterface>(
+  defaults.defaultLedgersContext
+);
+
+export const useLedgers = () => React.useContext(LedgersContext);

@@ -19,12 +19,6 @@ import { usePoolMemberships } from '../PoolMemberships';
 import { usePoolsConfig } from '../PoolsConfig';
 import * as defaults from './defaults';
 
-export const ActivePoolsContext = React.createContext<ActivePoolsContextState>(
-  defaults.defaultActivePoolContext
-);
-
-export const useActivePools = () => React.useContext(ActivePoolsContext);
-
 export const ActivePoolsProvider = ({
   children,
 }: {
@@ -543,3 +537,9 @@ export const ActivePoolsProvider = ({
     </ActivePoolsContext.Provider>
   );
 };
+
+export const ActivePoolsContext = React.createContext<ActivePoolsContextState>(
+  defaults.defaultActivePoolContext
+);
+
+export const useActivePools = () => React.useContext(ActivePoolsContext);

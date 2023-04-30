@@ -33,12 +33,6 @@ import {
 } from './Utils';
 import { defaultConnectContext } from './defaults';
 
-export const ConnectContext = React.createContext<ConnectContextInterface>(
-  defaultConnectContext
-);
-
-export const useConnect = () => React.useContext(ConnectContext);
-
 export const ConnectProvider = ({
   children,
 }: {
@@ -614,3 +608,9 @@ export const ConnectProvider = ({
     </ConnectContext.Provider>
   );
 };
+
+export const ConnectContext = React.createContext<ConnectContextInterface>(
+  defaultConnectContext
+);
+
+export const useConnect = () => React.useContext(ConnectContext);

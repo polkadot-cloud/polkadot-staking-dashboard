@@ -9,11 +9,6 @@ import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
 
-export const PoolMembersContext =
-  React.createContext<PoolMemberContext>(defaultPoolMembers);
-
-export const usePoolMembers = () => React.useContext(PoolMembersContext);
-
 export const PoolMembersProvider = ({
   children,
 }: {
@@ -329,3 +324,8 @@ export const PoolMembersProvider = ({
     </PoolMembersContext.Provider>
   );
 };
+
+export const PoolMembersContext =
+  React.createContext<PoolMemberContext>(defaultPoolMembers);
+
+export const usePoolMembers = () => React.useContext(PoolMembersContext);

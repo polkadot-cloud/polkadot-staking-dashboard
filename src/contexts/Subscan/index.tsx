@@ -17,12 +17,6 @@ import { usePlugins } from '../Plugins';
 import { defaultSubscanContext } from './defaults';
 import type { SubscanContextInterface } from './types';
 
-export const SubscanContext = React.createContext<SubscanContextInterface>(
-  defaultSubscanContext
-);
-
-export const useSubscan = () => React.useContext(SubscanContext);
-
 export const SubscanProvider = ({
   children,
 }: {
@@ -290,3 +284,9 @@ export const SubscanProvider = ({
     </SubscanContext.Provider>
   );
 };
+
+export const SubscanContext = React.createContext<SubscanContextInterface>(
+  defaultSubscanContext
+);
+
+export const useSubscan = () => React.useContext(SubscanContext);

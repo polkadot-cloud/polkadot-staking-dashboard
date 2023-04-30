@@ -27,12 +27,6 @@ import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import * as defaults from './defaults';
 
-export const StakingContext = React.createContext<StakingContextInterface>(
-  defaults.defaultStakingContext
-);
-
-export const useStaking = () => React.useContext(StakingContext);
-
 const worker = new Worker();
 
 export const StakingProvider = ({
@@ -445,3 +439,9 @@ export const StakingProvider = ({
     </StakingContext.Provider>
   );
 };
+
+export const StakingContext = React.createContext<StakingContextInterface>(
+  defaults.defaultStakingContext
+);
+
+export const useStaking = () => React.useContext(StakingContext);
