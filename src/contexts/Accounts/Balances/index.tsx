@@ -42,7 +42,12 @@ export const BalancesProvider = ({
       const removed = removedFrom(accounts, balancesRef.current, [
         'address',
       ]).map(({ address }) => address);
-      removed?.forEach((address) => unsubs.current[address]());
+
+      removed?.forEach((address) => {
+        const unsub = unsubs.current[address];
+        if (unsub) unsub();
+      });
+
       unsubs.current = Object.fromEntries(
         Object.entries(unsubs.current).filter(([key]) => !removed.includes(key))
       );

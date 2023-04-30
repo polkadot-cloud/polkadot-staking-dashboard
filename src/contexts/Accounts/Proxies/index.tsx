@@ -54,7 +54,12 @@ export const ProxiesProvider = ({
       const removed = removedFrom(accounts, proxiesRef.current, [
         'address',
       ]).map(({ address }) => address);
-      removed?.forEach((address) => unsubs.current[address]());
+
+      removed?.forEach((address) => {
+        const unsub = unsubs.current[address];
+        if (unsub) unsub();
+      });
+
       unsubs.current = Object.fromEntries(
         Object.entries(unsubs.current).filter(([key]) => !removed.includes(key))
       );
@@ -97,6 +102,7 @@ export const ProxiesProvider = ({
             [...proxiesRef.current]
               .filter(({ delegator }) => delegator !== address)
               .concat({
+                address,
                 delegator: address,
                 delegates: newProxies.map((d: AnyApi) => ({
                   delegate: d.delegate.toString(),
@@ -195,18 +201,19 @@ export const ProxiesProvider = ({
     }
   }, [accounts, activeAccount, proxiesRef.current, network]);
 
-  // Unsubscribe from subscriptions on unmount.
-  useEffect(() => {
-    return () =>
-      Object.values(unsubs.current).forEach((unsub) => {
-        unsub();
-      });
-  }, []);
-
-  // Reset active proxy state on network change.
+  // Reset active proxy state, unsubscribe from subscriptions on network change & unmount.
   useEffect(() => {
     setActiveProxy(null, false);
+    unsubAll();
+    return () => unsubAll();
   }, [network]);
+
+  const unsubAll = () => {
+    for (const unsub of Object.values(unsubs.current)) {
+      unsub();
+    }
+    unsubs.current = {};
+  };
 
   // Listens to `proxies` state updates and reformats the data into a list of delegates.
   useEffect(() => {
