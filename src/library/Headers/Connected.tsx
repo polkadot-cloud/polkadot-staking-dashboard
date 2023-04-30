@@ -3,6 +3,7 @@
 
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { PoolAccount } from 'library/PoolAccount';
 import { useTranslation } from 'react-i18next';
@@ -12,6 +13,7 @@ import { HeadingWrapper } from './Wrappers';
 export const Connected = () => {
   const { t } = useTranslation('library');
   const { activeAccount, activeProxy, accountHasSigner } = useConnect();
+  const { isNominating } = useStaking();
   const { selectedActivePool } = useActivePools();
   const { isNetworkSyncing } = useUi();
 
@@ -31,7 +33,13 @@ export const Connected = () => {
               canClick={false}
               value={activeAccount}
               readOnly={!accountHasSigner(activeAccount)}
-              label={isNetworkSyncing ? undefined : 'Nominator'}
+              label={
+                isNetworkSyncing
+                  ? undefined
+                  : isNominating()
+                  ? 'Nominator'
+                  : undefined
+              }
               format="name"
               filled
             />

@@ -38,8 +38,6 @@ export const Accounts = () => {
   const { extensions } = useExtensions();
   const { getDelegates } = useProxies();
 
-  const stashes: Array<string> = [];
-
   // store local copy of accounts
   const [localAccounts, setLocalAccounts] = useState(accounts);
 
@@ -51,19 +49,9 @@ export const Accounts = () => {
     AccountNominatingAndInPool[]
   >([]);
 
-  useEffect(() => {
-    setLocalAccounts(accounts);
-  }, [isReady, accounts]);
-
-  useEffect(() => {
-    getAccountsStatus();
-  }, [localAccounts, balances, ledgers, accounts, memberships]);
-
-  useEffect(() => {
-    setResize();
-  }, [activeAccount, accounts, balances, ledgers, extensions]);
-
   const getAccountsStatus = () => {
+    const stashes: Array<string> = [];
+
     // accumulate imported stash accounts
     for (const { address } of localAccounts) {
       const locks = getAccountLocks(address);
@@ -137,6 +125,18 @@ export const Accounts = () => {
     setNotStaking(newNotStaking);
   };
 
+  useEffect(() => {
+    setLocalAccounts(accounts);
+  }, [isReady, accounts]);
+
+  useEffect(() => {
+    getAccountsStatus();
+  }, [localAccounts, balances, ledgers, accounts, memberships]);
+
+  useEffect(() => {
+    setResize();
+  }, [activeAccount, accounts, balances, ledgers, extensions]);
+
   return (
     <PaddingWrapper>
       <CustomHeaderWrapper>
@@ -164,6 +164,7 @@ export const Accounts = () => {
             address={activeAccount}
             label={['danger', t('disconnect')]}
             disconnect
+            noBorder
           />
         </>
       ) : (
