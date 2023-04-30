@@ -42,8 +42,7 @@ export const BalancesProvider = ({
   const balancesRef = useRef(balances);
 
   // Balance subscriptions state.
-  const [unsubs, setUnsubs] = useState<AnyApi[]>([]);
-  const unsubsRef = useRef(unsubs);
+  const unsubs = useRef<AnyApi[]>([]);
 
   // Syncs existing balance accounts with connect accounts.
   const syncExistingAccounts = () => {
@@ -69,12 +68,10 @@ export const BalancesProvider = ({
     if (!removed.length) return;
 
     removed.forEach((address) =>
-      unsubsRef.current.find(({ key }: AnyApi) => key === address)?.unsub()
+      unsubs.current.find(({ key }: AnyApi) => key === address)?.unsub()
     );
-    setStateWithRef(
-      [...unsubsRef.current].filter((u: AnyApi) => !removed.includes(u.key)),
-      setUnsubs,
-      unsubsRef
+    unsubs.current = unsubs.current.filter(
+      ({ key }: AnyApi) => !removed.includes(key)
     );
   };
 
@@ -90,7 +87,7 @@ export const BalancesProvider = ({
   // Unsubscribe from balance subscriptions on unmount.
   useEffect(() => {
     return () =>
-      Object.values(unsubsRef.current).forEach(({ unsub }: AnyApi) => {
+      Object.values(unsubs.current).forEach(({ unsub }: AnyApi) => {
         unsub();
       });
   }, []);
@@ -176,14 +173,10 @@ export const BalancesProvider = ({
       }
     );
 
-    setStateWithRef(
-      unsubsRef.current.concat({
-        key: address,
-        unsub,
-      }),
-      setUnsubs,
-      unsubsRef
-    );
+    unsubs.current = unsubs.current.concat({
+      key: address,
+      unsub,
+    });
     return unsub;
   };
 
