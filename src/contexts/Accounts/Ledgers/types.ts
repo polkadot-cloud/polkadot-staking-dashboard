@@ -4,6 +4,10 @@
 import type BigNumber from 'bignumber.js';
 import type { AnyApi, MaybeAccount } from 'types';
 
+export interface UnlockChunkRaw {
+  era: string;
+  value: string;
+}
 export interface UnlockChunk {
   era: number;
   value: BigNumber;

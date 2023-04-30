@@ -16,6 +16,7 @@ export type ProxyType =
 export type Proxies = Array<Proxy>;
 
 export interface Proxy {
+  address: MaybeAccount;
   delegator: MaybeAccount;
   delegates: Array<ProxyDelegate>;
   reserved: BigNumber;

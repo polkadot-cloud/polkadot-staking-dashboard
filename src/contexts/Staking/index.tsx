@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import type { VoidFn } from '@polkadot/api/types';
 import {
   greaterThanZero,
   isNotZero,
@@ -27,12 +28,6 @@ import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import * as defaults from './defaults';
 
-export const StakingContext = React.createContext<StakingContextInterface>(
-  defaults.defaultStakingContext
-);
-
-export const useStaking = () => React.useContext(StakingContext);
-
 const worker = new Worker();
 
 export const StakingProvider = ({
@@ -56,8 +51,7 @@ export const StakingProvider = ({
   );
 
   // Store unsub object fro staking metrics.
-  const [unsub, setUnsub] = useState<{ (): void } | null>(null);
-  const unsubRef = useRef(unsub);
+  const unsub = useRef<VoidFn | null>(null);
 
   // Store eras stakers in state.
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaults.eraStakers);
@@ -96,9 +90,9 @@ export const StakingProvider = ({
 
   // Handle metrics unsubscribe.
   const unsubscribeMetrics = () => {
-    if (unsubRef.current !== null) {
-      unsubRef.current();
-      setUnsub(null);
+    if (unsub.current !== null) {
+      unsub.current();
+      unsub.current = null;
     }
   };
 
@@ -189,7 +183,7 @@ export const StakingProvider = ({
         }
       );
 
-      setUnsub(u);
+      unsub.current = u;
     }
   };
 
@@ -445,3 +439,9 @@ export const StakingProvider = ({
     </StakingContext.Provider>
   );
 };
+
+export const StakingContext = React.createContext<StakingContextInterface>(
+  defaults.defaultStakingContext
+);
+
+export const useStaking = () => React.useContext(StakingContext);

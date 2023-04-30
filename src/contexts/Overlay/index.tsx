@@ -5,12 +5,6 @@ import React, { useState } from 'react';
 import { defaultOverlayContext } from './defaults';
 import type { OverlayContextInterface } from './types';
 
-export const OverlayContext = React.createContext<OverlayContextInterface>(
-  defaultOverlayContext
-);
-
-export const useOverlay = () => React.useContext(OverlayContext);
-
 export const OverlayProvider = ({
   children,
 }: {
@@ -72,3 +66,9 @@ export const OverlayProvider = ({
     </OverlayContext.Provider>
   );
 };
+
+export const OverlayContext = React.createContext<OverlayContextInterface>(
+  defaultOverlayContext
+);
+
+export const useOverlay = () => React.useContext(OverlayContext);

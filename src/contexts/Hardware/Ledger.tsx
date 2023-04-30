@@ -29,13 +29,6 @@ import type {
   PairingStatus,
 } from './types';
 
-export const LedgerHardwareContext =
-  React.createContext<LedgerHardwareContextInterface>(
-    defaultLedgerHardwareContext
-  );
-
-export const useLedgerHardware = () => React.useContext(LedgerHardwareContext);
-
 export const LedgerHardwareProvider = ({
   children,
 }: {
@@ -539,3 +532,10 @@ export const LedgerHardwareProvider = ({
     </LedgerHardwareContext.Provider>
   );
 };
+
+export const LedgerHardwareContext =
+  React.createContext<LedgerHardwareContextInterface>(
+    defaultLedgerHardwareContext
+  );
+
+export const useLedgerHardware = () => React.useContext(LedgerHardwareContext);
