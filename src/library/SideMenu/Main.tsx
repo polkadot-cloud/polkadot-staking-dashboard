@@ -3,8 +3,8 @@
 
 import { PageCategories, PagesConfig } from 'config/pages';
 import { BaseURL, PolkadotUrl } from 'consts';
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useSetup } from 'contexts/Setup';

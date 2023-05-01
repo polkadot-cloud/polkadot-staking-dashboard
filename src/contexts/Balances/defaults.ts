@@ -4,7 +4,7 @@
 import type {
   BalancesContextInterface,
   Nominations,
-} from 'contexts/Accounts/Balances/types';
+} from 'contexts/Balances/types';
 
 export const nominations: Nominations = {
   targets: [],

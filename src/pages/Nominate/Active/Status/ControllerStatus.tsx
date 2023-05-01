@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { clipAddress } from '@polkadotcloud/utils';
-import { useBalances } from 'contexts/Accounts/Balances';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';

@@ -36,7 +36,7 @@ export const AccountBalancesProvider = ({
   const { existentialDeposit } = consts;
   const { accounts, addExternalAccount, getAccount } = useConnect();
 
-  const [balances, setBalances] = useState<Array<Balances>>([]);
+  const [balances, setBalances] = useState<Balances[]>([]);
   const balancesRef = useRef(balances);
 
   const [ledgers, setLedgers] = useState<Array<Ledger>>([]);
@@ -209,6 +209,7 @@ export const AccountBalancesProvider = ({
     <AccountBalancesContext.Provider
       value={{
         ledgers: ledgersRef.current,
+        balances: balancesRef.current,
         getStashLedger,
         getBalance,
         getLocks,

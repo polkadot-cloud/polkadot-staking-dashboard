@@ -19,8 +19,8 @@ import type {
 } from 'contexts/Validators/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, AnyMetaBatch, Fn } from 'types';
-import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
+import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useActivePools } from '../Pools/ActivePools';

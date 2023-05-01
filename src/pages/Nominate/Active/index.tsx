@@ -9,7 +9,7 @@ import {
   PageTitle,
   RowSection,
 } from '@polkadotcloud/core-ui';
-import { useBalances } from 'contexts/Accounts/Balances';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';

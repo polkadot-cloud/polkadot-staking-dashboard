@@ -6,6 +6,7 @@ import type { AccountBalancesContextInterface, Balance, Ledger } from './types';
 
 export const defaultAccountBalancesContext: AccountBalancesContextInterface = {
   ledgers: [],
+  balances: [],
   // eslint-disable-next-line
   getStashLedger: (address) => defaultLedger,
   // eslint-disable-next-line

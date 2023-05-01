@@ -4,7 +4,7 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { isValidAddress, remToUnit } from '@polkadotcloud/utils';
-import { useBalances } from 'contexts/Accounts/Balances';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import type { ImportedAccount } from 'contexts/Connect/types';
 import { Identicon } from 'library/Identicon';

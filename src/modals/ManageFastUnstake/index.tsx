@@ -3,8 +3,8 @@
 
 import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
 import { useModal } from 'contexts/Modal';

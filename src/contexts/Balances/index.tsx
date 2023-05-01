@@ -8,11 +8,11 @@ import {
   removedFrom,
   setStateWithRef,
 } from '@polkadotcloud/utils';
+import { useApi } from 'contexts/Api';
 import type {
   Balances,
   BalancesContextInterface,
-} from 'contexts/Accounts/Balances/types';
-import { useApi } from 'contexts/Api';
+} from 'contexts/Balances/types';
 import { useConnect } from 'contexts/Connect';
 import type { ImportedAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';

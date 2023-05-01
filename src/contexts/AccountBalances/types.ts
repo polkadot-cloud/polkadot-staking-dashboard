@@ -6,6 +6,7 @@ import type { MaybeAccount } from 'types';
 
 export interface AccountBalancesContextInterface {
   ledgers: Ledger[];
+  balances: Balances[];
   getStashLedger: (a: MaybeAccount) => Ledger;
   getBalance: (address: MaybeAccount) => Balance;
   getLocks: (address: MaybeAccount) => BalanceLock[];
@@ -47,5 +48,5 @@ export interface Ledger {
   stash: string | null;
   active: BigNumber;
   total: BigNumber;
-  unlocking: Array<UnlockChunk>;
+  unlocking: UnlockChunk[];
 }

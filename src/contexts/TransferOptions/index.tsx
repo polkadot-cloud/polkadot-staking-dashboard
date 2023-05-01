@@ -3,7 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import { useAccountBalances } from 'contexts/AccountBalances';
-import { useBalances } from 'contexts/Accounts/Balances';
+import { useBalances } from 'contexts/Balances';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React from 'react';

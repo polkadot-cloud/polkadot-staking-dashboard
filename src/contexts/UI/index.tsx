@@ -4,10 +4,10 @@
 import { localStorageOrDefault, setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { SideMenuStickyThreshold } from 'consts';
+import { useAccountBalances } from 'contexts/AccountBalances';
 import type { ImportedAccount } from 'contexts/Connect/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import React, { useEffect, useRef, useState } from 'react';
-import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
@@ -20,7 +20,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { accounts: connectAccounts } = useConnect();
   const { staking, eraStakers } = useStaking();
   const { activeEra, metrics } = useNetworkMetrics();
-  const { balances } = useBalances();
+  const { balances } = useAccountBalances();
   const { synced: activePoolsSynced } = useActivePools();
 
   // set whether the network has been synced.

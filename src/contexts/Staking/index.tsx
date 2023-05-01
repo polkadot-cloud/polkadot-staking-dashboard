@@ -22,8 +22,8 @@ import type {
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
-import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
+import { useBalances } from '../Balances';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import * as defaults from './defaults';
@@ -35,15 +35,15 @@ export const StakingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { isReady, api, apiStatus, network } = useApi();
   const {
     activeAccount,
     accounts: connectAccounts,
     getActiveAccount,
   } = useConnect();
-  const { isReady, api, apiStatus, network } = useApi();
   const { activeEra } = useNetworkMetrics();
-  const { balances, getBondedAccount, getAccountNominations } = useBalances();
   const { getStashLedger } = useAccountBalances();
+  const { balances, getBondedAccount, getAccountNominations } = useBalances();
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
