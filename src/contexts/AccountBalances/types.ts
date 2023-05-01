@@ -20,9 +20,8 @@ export interface Balance {
   freeAfterReserve: BigNumber;
 }
 export interface AccountBalancesContextInterface {
-  getLedgerForStash: (address: MaybeAccount) => Ledger;
-  getLedgerForController: (address: MaybeAccount) => Ledger | null;
   ledgers: AnyApi;
+  getStashLedger: (a: MaybeAccount) => Ledger;
 }
 
 export interface UnlockChunkRaw {

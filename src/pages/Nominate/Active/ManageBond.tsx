@@ -21,17 +21,17 @@ import { BondedChart } from '../../../library/BarChart/BondedChart';
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
   const { network } = useApi();
-  const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { getLedgerForStash } = useAccountBalances();
+  const { getStashLedger } = useAccountBalances();
   const { getTransferOptions } = useTransferOptions();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
-  const ledger = getLedgerForStash(activeAccount);
   const { isFastUnstaking } = useUnstaking();
   const { openHelp } = useHelp();
 
+  const { units } = network;
+  const ledger = getStashLedger(activeAccount);
   const { active }: { active: BigNumber } = ledger;
   const allTransferOptions = getTransferOptions(activeAccount);
 

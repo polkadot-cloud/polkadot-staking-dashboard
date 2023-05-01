@@ -43,7 +43,7 @@ export const StakingProvider = ({
   const { isReady, api, apiStatus, network } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { balances, getBondedAccount, getAccountNominations } = useBalances();
-  const { getLedgerForStash } = useAccountBalances();
+  const { getStashLedger } = useAccountBalances();
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
@@ -382,7 +382,7 @@ export const StakingProvider = ({
     if (!hasController() || !activeAccount) {
       return false;
     }
-    return greaterThanZero(getLedgerForStash(activeAccount).active);
+    return greaterThanZero(getStashLedger(activeAccount).active);
   };
 
   /*
@@ -393,7 +393,7 @@ export const StakingProvider = ({
     if (!hasController() || !activeAccount) {
       return false;
     }
-    const ledger = getLedgerForStash(activeAccount);
+    const ledger = getStashLedger(activeAccount);
     return ledger.unlocking.length;
   };
 

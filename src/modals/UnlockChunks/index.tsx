@@ -18,7 +18,7 @@ export const UnlockChunks = () => {
   const { activeAccount } = useConnect();
   const { config, setModalHeight } = useModal();
   const { bondFor } = config || {};
-  const { getLedgerForStash } = useAccountBalances();
+  const { getStashLedger } = useAccountBalances();
   const { getPoolUnlocking } = useActivePools();
 
   // get the unlocking per bondFor
@@ -30,7 +30,7 @@ export const UnlockChunks = () => {
         unlocking = getPoolUnlocking();
         break;
       default:
-        ledger = getLedgerForStash(activeAccount);
+        ledger = getStashLedger(activeAccount);
         unlocking = ledger.unlocking;
     }
     return unlocking;

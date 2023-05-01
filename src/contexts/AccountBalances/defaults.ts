@@ -5,11 +5,9 @@ import BigNumber from 'bignumber.js';
 import type { AccountBalancesContextInterface, Ledger } from './types';
 
 export const defaultAccountBalancesContext: AccountBalancesContextInterface = {
-  // eslint-disable-next-line
-  getLedgerForStash: (address) => ledger,
-  // eslint-disable-next-line
-  getLedgerForController: (address) => null,
   ledgers: [],
+  // eslint-disable-next-line
+  getStashLedger: (address) => ledger,
 };
 
 export const ledger: Ledger = {

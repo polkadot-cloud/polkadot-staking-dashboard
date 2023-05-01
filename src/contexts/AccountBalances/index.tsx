@@ -14,6 +14,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
+import { getLedger } from './Utils';
 import * as defaults from './defaults';
 import type {
   AccountBalancesContextInterface,
@@ -149,38 +150,15 @@ export const AccountBalancesProvider = ({
     return unsub;
   };
 
-  // Get a stash account's ledger metadata
-  const getLedgerForStash = (address: MaybeAccount) => {
-    const ledger = ledgersRef.current.find((l: Ledger) => l.stash === address);
-    if (ledger === undefined) {
-      return defaults.ledger;
-    }
-    if (ledger.stash === undefined) {
-      return defaults.ledger;
-    }
-    return ledger;
-  };
-
-  // Get a controler account's ledger returns null if ledger does not exist.
-  const getLedgerForController = (address: MaybeAccount) => {
-    const ledger = ledgersRef.current.find(
-      (l: Ledger) => l.address === address
-    );
-    if (ledger === undefined) {
-      return null;
-    }
-    if (ledger.address === undefined) {
-      return null;
-    }
-    return ledger;
+  const getStashLedger = (address: MaybeAccount) => {
+    return getLedger(ledgersRef.current, 'stash', address);
   };
 
   return (
     <AccountBalancesContext.Provider
       value={{
-        getLedgerForStash,
-        getLedgerForController,
         ledgers: ledgersRef.current,
+        getStashLedger,
       }}
     >
       {children}
