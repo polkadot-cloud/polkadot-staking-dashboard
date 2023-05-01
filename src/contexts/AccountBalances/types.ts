@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type BigNumber from 'bignumber.js';
-import type { AnyApi, MaybeAccount } from 'types';
+import type { MaybeAccount } from 'types';
 
 export interface AccountBalance {
   nonce?: number;
@@ -20,7 +20,7 @@ export interface Balance {
   freeAfterReserve: BigNumber;
 }
 export interface AccountBalancesContextInterface {
-  ledgers: AnyApi;
+  ledgers: Ledger[];
   getStashLedger: (a: MaybeAccount) => Ledger;
 }
 
