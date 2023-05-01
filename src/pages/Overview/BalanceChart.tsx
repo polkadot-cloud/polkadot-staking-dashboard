@@ -26,9 +26,9 @@ export const BalanceChart = () => {
   const { plugins } = usePlugins();
   const { openHelp } = useHelp();
   const { activeAccount } = useConnect();
-  const { existentialDeposit } = consts;
   const { getBalance, getLocks } = useAccountBalances();
   const { getTransferOptions } = useTransferOptions();
+  const { existentialDeposit } = consts;
   const balance = getBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
   const poolBondOpions = allTransferOptions.pool;

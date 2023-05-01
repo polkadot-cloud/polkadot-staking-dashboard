@@ -13,7 +13,7 @@ export const defaultAccountBalancesContext: AccountBalancesContextInterface = {
   // eslint-disable-next-line
   getLocks: (address) => [],
   // eslint-disable-next-line
-  getNonce: (address) => 0
+  getNonce: (address) => 0,
 };
 
 export const defaultLedger: Ledger = {
