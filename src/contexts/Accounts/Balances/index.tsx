@@ -24,9 +24,8 @@ export const BalancesProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, isReady, network, consts } = useApi();
+  const { api, isReady, network } = useApi();
   const { accounts, addExternalAccount } = useConnect();
-  const existentialAmount = consts.existentialDeposit;
 
   // Balance accounts state.
   const [balances, setBalances] = useState<Array<Balances>>([]);
@@ -192,7 +191,6 @@ export const BalancesProvider = ({
         getBondedAccount,
         getAccountNominations,
         isController,
-        existentialAmount,
         balances: balancesRef.current,
       }}
     >

@@ -5,7 +5,6 @@ import { ButtonHelp } from '@polkadotcloud/core-ui';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useAccountBalances } from 'contexts/AccountBalances';
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
@@ -21,12 +20,13 @@ export const BalanceChart = () => {
   const { t } = useTranslation('pages');
   const {
     network: { units, unit },
+    consts,
   } = useApi();
   const prices = usePrices();
   const { plugins } = usePlugins();
   const { openHelp } = useHelp();
   const { activeAccount } = useConnect();
-  const { existentialAmount } = useBalances();
+  const { existentialDeposit } = consts;
   const { getBalance, getLocks } = useAccountBalances();
   const { getTransferOptions } = useTransferOptions();
   const balance = getBalance(activeAccount);
@@ -89,7 +89,7 @@ export const BalanceChart = () => {
 
   // available balance data
   const fundsLocked = planckToUnit(miscFrozen.minus(lockStakingAmount), units);
-  let fundsReserved = planckToUnit(existentialAmount, units);
+  let fundsReserved = planckToUnit(existentialDeposit, units);
   const fundsFree = planckToUnit(allTransferOptions.freeBalance, units).minus(
     fundsLocked
   );

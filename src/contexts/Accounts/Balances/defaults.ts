@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import BigNumber from 'bignumber.js';
 import type {
   BalancesContextInterface,
   Nominations,
@@ -23,5 +22,4 @@ export const defaultBalancesContext: BalancesContextInterface = {
   // eslint-disable-next-line
   isController: (address) => false,
   balances: [],
-  existentialAmount: new BigNumber(0),
 };
