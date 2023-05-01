@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type BigNumber from 'bignumber.js';
-
-export type TransferOptionsContextInterface = null;
+import type { AnyApi, MaybeAccount } from 'types';
 
 export interface AccountBalance {
   nonce?: number;
@@ -19,4 +18,26 @@ export interface Balance {
   miscFrozen: BigNumber;
   feeFrozen: BigNumber;
   freeAfterReserve: BigNumber;
+}
+export interface AccountBalancesContextInterface {
+  getLedgerForStash: (address: MaybeAccount) => Ledger;
+  getLedgerForController: (address: MaybeAccount) => Ledger | null;
+  ledgers: AnyApi;
+}
+
+export interface UnlockChunkRaw {
+  era: string;
+  value: string;
+}
+export interface UnlockChunk {
+  era: number;
+  value: BigNumber;
+}
+
+export interface Ledger {
+  address: MaybeAccount;
+  stash: string | null;
+  active: BigNumber;
+  total: BigNumber;
+  unlocking: Array<UnlockChunk>;
 }

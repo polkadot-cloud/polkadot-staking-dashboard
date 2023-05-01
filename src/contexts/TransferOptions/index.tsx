@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
+import { useAccountBalances } from 'contexts/AccountBalances';
 import { useBalances } from 'contexts/Accounts/Balances';
-import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React from 'react';
@@ -18,7 +18,7 @@ export const TransferOptionsProvider = ({
 }) => {
   const { activeEra } = useNetworkMetrics();
   const { getAccount, getAccountBalance, getAccountLocks } = useBalances();
-  const { getLedgerForStash } = useLedgers();
+  const { getLedgerForStash } = useAccountBalances();
   const { membership } = usePoolMemberships();
 
   // get the bond and unbond amounts available to the user

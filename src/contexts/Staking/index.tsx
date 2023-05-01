@@ -9,7 +9,7 @@ import {
   setStateWithRef,
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import { useLedgers } from 'contexts/Accounts/Ledgers';
+import { useAccountBalances } from 'contexts/AccountBalances';
 import type { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type {
@@ -43,7 +43,7 @@ export const StakingProvider = ({
   const { isReady, api, apiStatus, network } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { balances, getBondedAccount, getAccountNominations } = useBalances();
-  const { getLedgerForStash } = useLedgers();
+  const { getLedgerForStash } = useAccountBalances();
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(

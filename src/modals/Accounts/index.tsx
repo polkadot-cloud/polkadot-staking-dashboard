@@ -3,8 +3,8 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
+import { useAccountBalances } from 'contexts/AccountBalances';
 import { useBalances } from 'contexts/Accounts/Balances';
-import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useProxies } from 'contexts/Accounts/Proxies';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -31,7 +31,7 @@ export const Accounts = () => {
   const { isReady } = useApi();
   const { activeAccount } = useConnect();
   const { getAccountLocks, balances } = useBalances();
-  const { ledgers } = useLedgers();
+  const { ledgers } = useAccountBalances();
   const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
   const { replaceModalWith, setResize } = useModal();

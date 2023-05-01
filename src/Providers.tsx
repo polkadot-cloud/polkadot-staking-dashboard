@@ -3,8 +3,8 @@
 
 import { Entry } from '@polkadotcloud/core-ui';
 import { Router } from 'Router';
+import { AccountBalancesProvider } from 'contexts/AccountBalances';
 import { BalancesProvider } from 'contexts/Accounts/Balances';
-import { LedgersProvider } from 'contexts/Accounts/Ledgers';
 import { ProxiesProvider } from 'contexts/Accounts/Proxies';
 import { APIProvider, useApi } from 'contexts/Api';
 import { ConnectProvider } from 'contexts/Connect';
@@ -64,7 +64,7 @@ export const Providers = withProviders(
   IdentitiesProvider,
   ProxiesProvider,
   BalancesProvider,
-  LedgersProvider,
+  AccountBalancesProvider,
   StakingProvider,
   PoolsConfigProvider,
   BondedPoolsProvider,
