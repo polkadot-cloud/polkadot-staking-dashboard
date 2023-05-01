@@ -3,7 +3,7 @@
 
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/core-ui';
-import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
@@ -30,7 +30,7 @@ export const Nominations = ({
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { getAccountNominations } = useBalances();
+  const { getAccountNominations } = useBonded();
   const { isFastUnstaking } = useUnstaking();
   const { nominated: stakeNominated, poolNominated } = useValidators();
   const { openHelp } = useHelp();

@@ -2,24 +2,23 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type {
-  BalancesContextInterface,
+  BondedContextInterface,
   Nominations,
-} from 'contexts/Balances/types';
+} from 'contexts/Bonded/types';
 
 export const nominations: Nominations = {
   targets: [],
   submittedIn: 0,
 };
 
-export const defaultBalancesContext: BalancesContextInterface = {
+export const defaultBondedContext: BondedContextInterface = {
   // eslint-disable-next-line
   getAccount: (address) => null,
-  // eslint-disable-next-line
   // eslint-disable-next-line
   getBondedAccount: (address) => null,
   // eslint-disable-next-line
   getAccountNominations: (address) => [],
   // eslint-disable-next-line
   isController: (address) => false,
-  balances: [],
+  bondedAccounts: [],
 };

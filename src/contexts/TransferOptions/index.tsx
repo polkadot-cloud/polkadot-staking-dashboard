@@ -3,7 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import { useAccountBalances } from 'contexts/AccountBalances';
-import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React from 'react';
@@ -17,7 +17,7 @@ export const TransferOptionsProvider = ({
   children: React.ReactNode;
 }) => {
   const { activeEra } = useNetworkMetrics();
-  const { getAccount } = useBalances();
+  const { getAccount } = useBonded();
   const { getStashLedger, getBalance, getLocks } = useAccountBalances();
   const { membership } = usePoolMemberships();
 
@@ -133,7 +133,7 @@ export const TransferOptionsProvider = ({
 
 export const TransferOptionsContext =
   React.createContext<TransferOptionsContextInterface>(
-    defaults.defaultBalancesContext
+    defaults.defaultBondedContext
   );
 
 export const useTransferOptions = () =>

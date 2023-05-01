@@ -4,7 +4,7 @@
 import { planckToUnit } from '@polkadotcloud/utils';
 import { useAccountBalances } from 'contexts/AccountBalances';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
@@ -22,7 +22,7 @@ export const Nominate = () => {
   const { api, network } = useApi();
   const { activeAccount } = useConnect();
   const { targets, staking, getControllerNotImported } = useStaking();
-  const { getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBonded();
   const { getStashLedger } = useAccountBalances();
   const { setStatus: setModalStatus } = useModal();
   const { units, unit } = network;

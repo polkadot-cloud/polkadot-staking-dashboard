@@ -4,11 +4,6 @@
 import type { MaybeAccount } from 'types';
 
 export interface BondedAccount {
-  address: string;
-  unsub: { (): void } | null;
-}
-
-export interface Balances {
   address?: string;
   bonded?: string;
   nominations?: Nominations;
@@ -21,10 +16,10 @@ export interface Nominations {
 
 export type Targets = string[];
 
-export interface BalancesContextInterface {
-  getAccount: (address: MaybeAccount) => Balances | null;
+export interface BondedContextInterface {
+  getAccount: (address: MaybeAccount) => BondedAccount | null;
   getBondedAccount: (address: MaybeAccount) => string | null;
   getAccountNominations: (address: MaybeAccount) => Targets;
   isController: (address: MaybeAccount) => boolean;
-  balances: Balances[];
+  bondedAccounts: BondedAccount[];
 }

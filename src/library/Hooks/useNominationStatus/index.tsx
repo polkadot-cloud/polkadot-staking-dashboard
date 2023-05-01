@@ -4,7 +4,7 @@
 import { planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
@@ -17,7 +17,7 @@ export const useNominationStatus = () => {
   const { network } = useApi();
   const { isSyncing } = useUi();
   const { meta, validators } = useValidators();
-  const { getAccountNominations } = useBalances();
+  const { getAccountNominations } = useBonded();
   const { poolNominations } = useActivePools();
   const { inSetup, eraStakers, getNominationsStatusFromTargets } = useStaking();
   const { stakers } = eraStakers;

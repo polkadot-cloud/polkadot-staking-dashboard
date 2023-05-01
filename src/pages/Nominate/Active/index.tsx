@@ -9,7 +9,7 @@ import {
   PageTitle,
   RowSection,
 } from '@polkadotcloud/core-ui';
-import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
@@ -35,7 +35,7 @@ export const Active = () => {
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
   const { targets, setTargets, inSetup } = useStaking();
-  const { getAccountNominations } = useBalances();
+  const { getAccountNominations } = useBonded();
   const { isFastUnstaking } = useUnstaking();
   const nominations = getAccountNominations(activeAccount);
   const { openHelp } = useHelp();

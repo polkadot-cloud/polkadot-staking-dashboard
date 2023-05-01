@@ -4,7 +4,7 @@
 import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
 import { useModal } from 'contexts/Modal';
@@ -26,7 +26,7 @@ export const ManageFastUnstake = () => {
   const { api, consts, network } = useApi();
   const { activeAccount } = useConnect();
   const { getControllerNotImported } = useStaking();
-  const { getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBonded();
   const { activeEra, metrics } = useNetworkMetrics();
   const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
   const { setResize, setStatus } = useModal();

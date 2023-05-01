@@ -9,33 +9,26 @@ import {
   setStateWithRef,
 } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
-import type {
-  Balances,
-  BalancesContextInterface,
-} from 'contexts/Balances/types';
 import { useConnect } from 'contexts/Connect';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
 import * as defaults from './defaults';
+import type { BondedAccount, BondedContextInterface } from './types';
 
-export const BalancesProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
   const { api, isReady, network } = useApi();
   const { accounts, addExternalAccount } = useConnect();
 
   // Balance accounts state.
-  const [balances, setBalances] = useState<Array<Balances>>([]);
-  const balancesRef = useRef(balances);
+  const [bondedAccounts, setBondedAccounts] = useState<BondedAccount[]>([]);
+  const bondedAccountsRef = useRef(bondedAccounts);
   const unsubs = useRef<Record<string, VoidFn>>({});
 
   // Handle the syncing of accounts on accounts change.
   const handleSyncAccounts = () => {
     // Sync removed accounts.
     const handleRemovedAccounts = () => {
-      const removed = removedFrom(accounts, balancesRef.current, [
+      const removed = removedFrom(accounts, bondedAccountsRef.current, [
         'address',
       ]).map(({ address }) => address);
 
@@ -50,16 +43,16 @@ export const BalancesProvider = ({
     };
     // Sync added accounts.
     const handleAddedAccounts = () => {
-      addedTo(accounts, balancesRef.current, ['address'])?.map(({ address }) =>
-        subscribeToBalances(address)
+      addedTo(accounts, bondedAccountsRef.current, ['address'])?.map(
+        ({ address }) => subscribeToBondedAccount(address)
       );
     };
     // Sync existing accounts.
     const handleExistingAccounts = () => {
       setStateWithRef(
-        matchedProperties(accounts, balancesRef.current, ['address']),
-        setBalances,
-        balancesRef
+        matchedProperties(accounts, bondedAccountsRef.current, ['address']),
+        setBondedAccounts,
+        bondedAccountsRef
       );
     };
     handleRemovedAccounts();
@@ -82,8 +75,8 @@ export const BalancesProvider = ({
       });
   }, []);
 
-  // Subscribe to account balances, bonded and nominators
-  const subscribeToBalances = async (address: string) => {
+  // Subscribe to account, get controller and nominations.
+  const subscribeToBondedAccount = async (address: string) => {
     if (!api) return;
 
     const unsub = await api.queryMulti<AnyApi>(
@@ -91,21 +84,23 @@ export const BalancesProvider = ({
         [api.query.staking.bonded, address],
         [api.query.staking.nominators, address],
       ],
-      async ([bonded, nominations]): Promise<void> => {
-        const newAccount: Balances = {
+      async ([controller, nominations]): Promise<void> => {
+        const newAccount: BondedAccount = {
           address,
         };
 
         // set account bonded (controller) or null
-        let newBonded = bonded.unwrapOr(null);
-        newBonded =
-          newBonded === null ? null : (newBonded.toHuman() as string | null);
-        newAccount.bonded = newBonded;
+        let newController = controller.unwrapOr(null);
+        newController =
+          newController === null
+            ? null
+            : (newController.toHuman() as string | null);
+        newAccount.bonded = newController;
 
         // add bonded (controller) account as external account if not presently imported
-        if (newBonded) {
-          if (accounts.find((s) => s.address === newBonded) === undefined) {
-            addExternalAccount(newBonded, 'system');
+        if (newController) {
+          if (accounts.find((s) => s.address === newController) === undefined) {
+            addExternalAccount(newController, 'system');
           }
         }
 
@@ -120,11 +115,11 @@ export const BalancesProvider = ({
               };
 
         // remove stale account if it's already in list.
-        const newBalances = Object.values(balancesRef.current)
+        const newBalances = Object.values(bondedAccountsRef.current)
           .filter((a) => a.address !== address)
           .concat(newAccount);
 
-        setStateWithRef(newBalances, setBalances, balancesRef);
+        setStateWithRef(newBalances, setBondedAccounts, bondedAccountsRef);
       }
     );
 
@@ -133,36 +128,37 @@ export const BalancesProvider = ({
   };
 
   const getBondedAccount = (address: MaybeAccount) =>
-    balancesRef.current.find((a) => a.address === address)?.bonded || null;
+    bondedAccountsRef.current.find((a) => a.address === address)?.bonded ||
+    null;
 
   const getAccountNominations = (address: MaybeAccount) =>
-    balancesRef.current.find((a) => a.address === address)?.nominations
+    bondedAccountsRef.current.find((a) => a.address === address)?.nominations
       ?.targets || [];
 
   const getAccount = (address: MaybeAccount) =>
-    balancesRef.current.find((a) => a.address === address) || null;
+    bondedAccountsRef.current.find((a) => a.address === address) || null;
 
   const isController = (address: MaybeAccount) =>
-    balancesRef.current.filter((a) => (a?.bonded || '') === address)?.length >
-      0 || false;
+    bondedAccountsRef.current.filter((a) => (a?.bonded || '') === address)
+      ?.length > 0 || false;
 
   return (
-    <BalancesContext.Provider
+    <BondedContext.Provider
       value={{
         getAccount,
         getBondedAccount,
         getAccountNominations,
         isController,
-        balances: balancesRef.current,
+        bondedAccounts: bondedAccountsRef.current,
       }}
     >
       {children}
-    </BalancesContext.Provider>
+    </BondedContext.Provider>
   );
 };
 
-export const BalancesContext = React.createContext<BalancesContextInterface>(
-  defaults.defaultBalancesContext
+export const BondedContext = React.createContext<BondedContextInterface>(
+  defaults.defaultBondedContext
 );
 
-export const useBalances = () => React.useContext(BalancesContext);
+export const useBonded = () => React.useContext(BondedContext);

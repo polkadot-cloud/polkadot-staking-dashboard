@@ -4,7 +4,7 @@
 import { isNotZero, planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -32,7 +32,7 @@ export const Unbond = () => {
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
-  const { getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBonded();
   const { bondFor } = config;
   const { stats } = usePoolsConfig();
   const { isDepositor, selectedActivePool } = useActivePools();

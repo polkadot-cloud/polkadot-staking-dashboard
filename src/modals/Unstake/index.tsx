@@ -7,7 +7,7 @@ import {
   unitToPlanck,
 } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
@@ -32,7 +32,7 @@ export const Unstake = () => {
   const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getControllerNotImported } = useStaking();
-  const { getBondedAccount, getAccountNominations } = useBalances();
+  const { getBondedAccount, getAccountNominations } = useBonded();
   const { getTransferOptions } = useTransferOptions();
   const { erasToSeconds } = useErasToTimeLeft();
 

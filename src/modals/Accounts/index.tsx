@@ -5,7 +5,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
 import { useAccountBalances } from 'contexts/AccountBalances';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
@@ -30,7 +30,7 @@ export const Accounts = () => {
   const { t } = useTranslation('modals');
   const { isReady } = useApi();
   const { activeAccount } = useConnect();
-  const { balances } = useBalances();
+  const { bondedAccounts } = useBonded();
   const { balances: accountBalances } = useAccountBalances();
   const { ledgers, getLocks } = useAccountBalances();
   const { accounts } = useConnect();
@@ -134,7 +134,7 @@ export const Accounts = () => {
     getAccountsStatus();
   }, [
     localAccounts,
-    balances,
+    bondedAccounts,
     accountBalances,
     ledgers,
     accounts,
@@ -143,7 +143,14 @@ export const Accounts = () => {
 
   useEffect(() => {
     setResize();
-  }, [activeAccount, accounts, balances, accountBalances, ledgers, extensions]);
+  }, [
+    activeAccount,
+    accounts,
+    bondedAccounts,
+    accountBalances,
+    ledgers,
+    extensions,
+  ]);
 
   return (
     <PaddingWrapper>

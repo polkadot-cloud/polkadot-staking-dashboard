@@ -23,7 +23,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
 import { useApi } from '../Api';
-import { useBalances } from '../Balances';
+import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import * as defaults from './defaults';
@@ -43,7 +43,8 @@ export const StakingProvider = ({
   } = useConnect();
   const { activeEra } = useNetworkMetrics();
   const { getStashLedger } = useAccountBalances();
-  const { balances, getBondedAccount, getAccountNominations } = useBalances();
+  const { bondedAccounts, getBondedAccount, getAccountNominations } =
+    useBonded();
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
@@ -114,7 +115,7 @@ export const StakingProvider = ({
         ) as StakingTargets
       );
     }
-  }, [isReady, balances, activeAccount, eraStakersRef.current?.stakers]);
+  }, [isReady, bondedAccounts, activeAccount, eraStakersRef.current?.stakers]);
 
   worker.onmessage = (message: MessageEvent) => {
     if (message) {

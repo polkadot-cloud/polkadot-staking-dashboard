@@ -7,7 +7,7 @@ import {
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
 import { useModal } from 'contexts/Modal';
@@ -27,7 +27,7 @@ export const NominationStatus = () => {
   const { isNetworkSyncing } = useUi();
   const { openModalWith } = useModal();
   const { metrics } = useNetworkMetrics();
-  const { getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBonded();
   const { checking, isExposed } = useFastUnstake();
   const { getNominationStatus } = useNominationStatus();
   const { activeAccount, isReadOnlyAccount } = useConnect();

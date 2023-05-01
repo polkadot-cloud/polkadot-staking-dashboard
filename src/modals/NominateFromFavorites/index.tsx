@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -22,7 +22,7 @@ export const NominateFromFavorites = () => {
   const { t } = useTranslation('modals');
   const { consts, api } = useApi();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBonded();
   const { config, setStatus: setModalStatus, setResize } = useModal();
   const { favoritesList } = useValidators();
   const { selectedActivePool, isNominator, isOwner } = useActivePools();
