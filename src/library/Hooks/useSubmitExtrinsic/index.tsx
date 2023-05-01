@@ -4,8 +4,8 @@
 import BigNumber from 'bignumber.js';
 import { isSupportedProxyCall } from 'config/proxies';
 import { DappName } from 'consts';
-import { useAccountBalances } from 'contexts/AccountBalances';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import type { ExtensionInjected } from 'contexts/Extensions/types';
@@ -33,7 +33,7 @@ export const useSubmitExtrinsic = ({
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
   const { addPending, removePending } = useExtrinsics();
-  const { getNonce } = useAccountBalances();
+  const { getNonce } = useBalances();
   const { getProxyDelegate } = useProxies();
   const {
     setTxFees,

@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { planckToUnit } from '@polkadotcloud/utils';
-import { useAccountBalances } from 'contexts/AccountBalances';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -23,7 +23,7 @@ export const Nominate = () => {
   const { activeAccount } = useConnect();
   const { targets, staking, getControllerNotImported } = useStaking();
   const { getBondedAccount } = useBonded();
-  const { getStashLedger } = useAccountBalances();
+  const { getStashLedger } = useBalances();
   const { setStatus: setModalStatus } = useModal();
   const { units, unit } = network;
   const { minNominatorBond } = staking;

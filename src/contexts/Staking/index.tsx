@@ -9,7 +9,7 @@ import {
   setStateWithRef,
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import { useAccountBalances } from 'contexts/AccountBalances';
+import { useBalances } from 'contexts/Balances';
 import type { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type {
@@ -42,7 +42,7 @@ export const StakingProvider = ({
     getActiveAccount,
   } = useConnect();
   const { activeEra } = useNetworkMetrics();
-  const { getStashLedger } = useAccountBalances();
+  const { getStashLedger } = useBalances();
   const { bondedAccounts, getBondedAccount, getAccountNominations } =
     useBonded();
 

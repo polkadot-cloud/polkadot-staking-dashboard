@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import type { AccountBalancesContextInterface, Balance, Ledger } from './types';
+import type { Balance, BalancesContextInterface, Ledger } from './types';
 
-export const defaultAccountBalancesContext: AccountBalancesContextInterface = {
+export const defaultBalancesContext: BalancesContextInterface = {
   ledgers: [],
   balances: [],
   // eslint-disable-next-line

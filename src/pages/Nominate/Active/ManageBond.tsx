@@ -5,8 +5,8 @@ import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary, ButtonRow } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import type BigNumber from 'bignumber.js';
-import { useAccountBalances } from 'contexts/AccountBalances';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
@@ -23,7 +23,7 @@ export const ManageBond = () => {
   const { network } = useApi();
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { getStashLedger } = useAccountBalances();
+  const { getStashLedger } = useBalances();
   const { getTransferOptions } = useTransferOptions();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();

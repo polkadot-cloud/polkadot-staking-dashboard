@@ -4,8 +4,8 @@
 import { ButtonHelp } from '@polkadotcloud/core-ui';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import { useAccountBalances } from 'contexts/AccountBalances';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
@@ -26,7 +26,7 @@ export const BalanceChart = () => {
   const { plugins } = usePlugins();
   const { openHelp } = useHelp();
   const { activeAccount } = useConnect();
-  const { getBalance, getLocks } = useAccountBalances();
+  const { getBalance, getLocks } = useBalances();
   const { getTransferOptions } = useTransferOptions();
   const { existentialDeposit } = consts;
   const balance = getBalance(activeAccount);

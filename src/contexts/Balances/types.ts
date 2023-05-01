@@ -4,7 +4,7 @@
 import type BigNumber from 'bignumber.js';
 import type { MaybeAccount } from 'types';
 
-export interface AccountBalancesContextInterface {
+export interface BalancesContextInterface {
   ledgers: Ledger[];
   balances: Balances[];
   getStashLedger: (a: MaybeAccount) => Ledger;

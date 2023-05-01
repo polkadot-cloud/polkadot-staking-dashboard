@@ -3,8 +3,8 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
-import { useAccountBalances } from 'contexts/AccountBalances';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
@@ -31,8 +31,8 @@ export const Accounts = () => {
   const { isReady } = useApi();
   const { activeAccount } = useConnect();
   const { bondedAccounts } = useBonded();
-  const { balances: accountBalances } = useAccountBalances();
-  const { ledgers, getLocks } = useAccountBalances();
+  const { balances } = useBalances();
+  const { ledgers, getLocks } = useBalances();
   const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
   const { replaceModalWith, setResize } = useModal();
@@ -132,25 +132,11 @@ export const Accounts = () => {
 
   useEffect(() => {
     getAccountsStatus();
-  }, [
-    localAccounts,
-    bondedAccounts,
-    accountBalances,
-    ledgers,
-    accounts,
-    memberships,
-  ]);
+  }, [localAccounts, bondedAccounts, balances, ledgers, accounts, memberships]);
 
   useEffect(() => {
     setResize();
-  }, [
-    activeAccount,
-    accounts,
-    bondedAccounts,
-    accountBalances,
-    ledgers,
-    extensions,
-  ]);
+  }, [activeAccount, accounts, bondedAccounts, balances, ledgers, extensions]);
 
   return (
     <PaddingWrapper>

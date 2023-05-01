@@ -17,17 +17,17 @@ import type { AnyApi, MaybeAccount } from 'types';
 import { getLedger } from './Utils';
 import * as defaults from './defaults';
 import type {
-  AccountBalancesContextInterface,
   Balances,
+  BalancesContextInterface,
   Ledger,
   UnlockChunkRaw,
 } from './types';
 
 /**
- * @name useAccountBalances
+ * @name useBalances
  * @summary A provider that subscribes to an account's balances and wrap app children.
  */
-export const AccountBalancesProvider = ({
+export const BalancesProvider = ({
   children,
 }: {
   children: React.ReactNode;
@@ -206,7 +206,7 @@ export const AccountBalancesProvider = ({
     balancesRef.current.find((a) => a.address === address)?.nonce ?? 0;
 
   return (
-    <AccountBalancesContext.Provider
+    <BalancesContext.Provider
       value={{
         ledgers: ledgersRef.current,
         balances: balancesRef.current,
@@ -217,14 +217,12 @@ export const AccountBalancesProvider = ({
       }}
     >
       {children}
-    </AccountBalancesContext.Provider>
+    </BalancesContext.Provider>
   );
 };
 
-export const AccountBalancesContext =
-  React.createContext<AccountBalancesContextInterface>(
-    defaults.defaultAccountBalancesContext
-  );
+export const BalancesContext = React.createContext<BalancesContextInterface>(
+  defaults.defaultBalancesContext
+);
 
-export const useAccountBalances = () =>
-  React.useContext(AccountBalancesContext);
+export const useBalances = () => React.useContext(BalancesContext);
