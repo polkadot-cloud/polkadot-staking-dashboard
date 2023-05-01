@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { MaybeAccount } from 'types';
-import * as defaults from './defaults';
+import { defaultLedger } from './defaults';
 import type { Ledger } from './types';
 
 /**
@@ -17,4 +17,4 @@ export const getLedger = (
   ledgers: Ledger[],
   key: 'stash' | 'address',
   address: MaybeAccount
-): Ledger => ledgers.find((l: Ledger) => l[key] === address) || defaults.ledger;
+): Ledger => ledgers.find((l: Ledger) => l[key] === address) || defaultLedger;

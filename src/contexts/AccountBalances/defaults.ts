@@ -7,10 +7,10 @@ import type { AccountBalancesContextInterface, Ledger } from './types';
 export const defaultAccountBalancesContext: AccountBalancesContextInterface = {
   ledgers: [],
   // eslint-disable-next-line
-  getStashLedger: (address) => ledger,
+  getStashLedger: (address) => defaultLedger,
 };
 
-export const ledger: Ledger = {
+export const defaultLedger: Ledger = {
   address: null,
   stash: null,
   active: new BigNumber(0),
