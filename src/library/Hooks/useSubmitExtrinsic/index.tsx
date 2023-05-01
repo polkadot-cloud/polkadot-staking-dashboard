@@ -4,7 +4,7 @@
 import BigNumber from 'bignumber.js';
 import { isSupportedProxyCall } from 'config/proxies';
 import { DappName } from 'consts';
-import { useBalances } from 'contexts/Accounts/Balances';
+import { useAccountBalances } from 'contexts/AccountBalances';
 import { useProxies } from 'contexts/Accounts/Proxies';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -33,7 +33,7 @@ export const useSubmitExtrinsic = ({
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
   const { addPending, removePending } = useExtrinsics();
-  const { getAccount: getBalanceAccount } = useBalances();
+  const { getNonce } = useAccountBalances();
   const { getProxyDelegate } = useProxies();
   const {
     setTxFees,
@@ -168,7 +168,7 @@ export const useSubmitExtrinsic = ({
         period: 64,
       });
 
-      const accountNonce = getBalanceAccount(submitAddress)?.nonce || 0;
+      const accountNonce = getNonce(submitAddress);
       const nonce = api.registry.createType('Compact<Index>', accountNonce);
 
       const payload = {

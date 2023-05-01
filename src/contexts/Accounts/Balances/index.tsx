@@ -6,10 +6,8 @@ import {
   addedTo,
   matchedProperties,
   removedFrom,
-  rmCommas,
   setStateWithRef,
 } from '@polkadotcloud/utils';
-import BigNumber from 'bignumber.js';
 import type {
   Balances,
   BalancesContextInterface,
@@ -92,45 +90,13 @@ export const BalancesProvider = ({
 
     const unsub = await api.queryMulti<AnyApi>(
       [
-        [api.query.system.account, address],
-        [api.query.balances.locks, address],
         [api.query.staking.bonded, address],
         [api.query.staking.nominators, address],
       ],
-      async ([{ data, nonce }, locks, bonded, nominations]): Promise<void> => {
+      async ([bonded, nominations]): Promise<void> => {
         const newAccount: Balances = {
           address,
         };
-        const free = new BigNumber(data.free.toString());
-        const reserved = new BigNumber(data.reserved.toString());
-        const miscFrozen = new BigNumber(data.miscFrozen.toString());
-        const feeFrozen = new BigNumber(data.feeFrozen.toString());
-        const freeAfterReserve = BigNumber.max(
-          free.minus(existentialAmount),
-          0
-        );
-
-        // set the account nonce
-        newAccount.nonce = nonce.toNumber();
-
-        // set account balances to context
-        newAccount.balance = {
-          free,
-          reserved,
-          miscFrozen,
-          feeFrozen,
-          freeAfterReserve,
-        };
-
-        // get account locks
-        const newLocks = locks.toHuman().map((l: AnyApi) => {
-          return {
-            ...l,
-            amount: new BigNumber(rmCommas(l.amount)),
-            id: l.id.trim(),
-          };
-        });
-        newAccount.locks = newLocks;
 
         // set account bonded (controller) or null
         let newBonded = bonded.unwrapOr(null);
@@ -169,34 +135,6 @@ export const BalancesProvider = ({
 
     unsubs.current[address] = unsub;
     return unsub;
-  };
-
-  // get an account's balance metadata
-  const getAccountBalance = (address: MaybeAccount) => {
-    const account = balancesRef.current.find(
-      (a: Balances) => a.address === address
-    );
-    if (account === undefined) {
-      return defaults.balance;
-    }
-    const { balance } = account;
-    if (balance?.free === undefined) {
-      return defaults.balance;
-    }
-    return balance;
-  };
-
-  // get an account's locks metadata
-  const getAccountLocks = (address: MaybeAccount) => {
-    const account = balancesRef.current.find(
-      (a: Balances) => a.address === address
-    );
-    if (account === undefined) {
-      return [];
-    }
-
-    const locks = account.locks ?? [];
-    return locks;
   };
 
   // get an account's bonded (controller) account)
@@ -251,8 +189,6 @@ export const BalancesProvider = ({
     <BalancesContext.Provider
       value={{
         getAccount,
-        getAccountBalance,
-        getAccountLocks,
         getBondedAccount,
         getAccountNominations,
         isController,

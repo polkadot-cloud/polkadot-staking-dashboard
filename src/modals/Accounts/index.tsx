@@ -30,8 +30,8 @@ export const Accounts = () => {
   const { t } = useTranslation('modals');
   const { isReady } = useApi();
   const { activeAccount } = useConnect();
-  const { getAccountLocks, balances } = useBalances();
-  const { ledgers } = useAccountBalances();
+  const { balances } = useBalances();
+  const { ledgers, getLocks } = useAccountBalances();
   const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
   const { replaceModalWith, setResize } = useModal();
@@ -54,7 +54,7 @@ export const Accounts = () => {
 
     // accumulate imported stash accounts
     for (const { address } of localAccounts) {
-      const locks = getAccountLocks(address);
+      const locks = getLocks(address);
 
       // account is a stash if they have an active `staking` lock
       if (locks.find(({ id }) => id === 'staking')) {

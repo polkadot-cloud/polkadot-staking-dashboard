@@ -17,8 +17,8 @@ export const TransferOptionsProvider = ({
   children: React.ReactNode;
 }) => {
   const { activeEra } = useNetworkMetrics();
-  const { getAccount, getAccountBalance, getAccountLocks } = useBalances();
-  const { getStashLedger } = useAccountBalances();
+  const { getAccount } = useBalances();
+  const { getStashLedger, getBalance, getLocks } = useAccountBalances();
   const { membership } = usePoolMemberships();
 
   // get the bond and unbond amounts available to the user
@@ -27,9 +27,9 @@ export const TransferOptionsProvider = ({
     if (account === null) {
       return defaults.transferOptions;
     }
-    const balance = getAccountBalance(address);
+    const balance = getBalance(address);
     const ledger = getStashLedger(address);
-    const locks = getAccountLocks(address);
+    const locks = getLocks(address);
 
     const { freeAfterReserve } = balance;
     const { active, total, unlocking } = ledger;

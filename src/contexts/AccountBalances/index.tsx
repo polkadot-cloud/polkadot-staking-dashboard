@@ -18,6 +18,7 @@ import { getLedger } from './Utils';
 import * as defaults from './defaults';
 import type {
   AccountBalancesContextInterface,
+  Balances,
   Ledger,
   UnlockChunkRaw,
 } from './types';
@@ -31,8 +32,12 @@ export const AccountBalancesProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, isReady, network } = useApi();
+  const { api, isReady, network, consts } = useApi();
+  const { existentialDeposit } = consts;
   const { accounts, addExternalAccount, getAccount } = useConnect();
+
+  const [balances, setBalances] = useState<Array<Balances>>([]);
+  const balancesRef = useRef(balances);
 
   const [ledgers, setLedgers] = useState<Array<Ledger>>([]);
   const ledgersRef = useRef(ledgers);
@@ -74,34 +79,18 @@ export const AccountBalancesProvider = ({
     handleExistingAccounts();
   };
 
-  // fetch account balances & ledgers. Remove or add subscriptions
-  useEffect(() => {
-    if (isReady) {
-      handleSyncAccounts();
-    }
-  }, [accounts, network, isReady]);
-
-  // Unsubscribe from subscriptions on unmount.
-  useEffect(() => {
-    return () =>
-      Object.values(unsubs.current).forEach((unsub) => {
-        unsub();
-      });
-  }, []);
-
   const handleSubscriptions = async (address: string) => {
     if (!api) return;
 
     const unsub = await api.queryMulti<AnyApi>(
       [
         [api.query.staking.ledger, address],
-        // [api.query.system.account, address],
-        // [api.query.balances.locks, address],
-        // [api.query.staking.bonded, address],
+        [api.query.system.account, address],
+        [api.query.balances.locks, address],
       ],
-      async ([ledger]) => {
-        const handleLedger = (result: AnyApi) => {
-          const newLedger = result.unwrapOr(null);
+      async ([ledger, { data: accountData, nonce }, locks]) => {
+        const handleLedger = () => {
+          const newLedger = ledger.unwrapOr(null);
 
           if (newLedger !== null) {
             const { stash, total, active, unlocking } = newLedger;
@@ -143,22 +132,87 @@ export const AccountBalancesProvider = ({
           }
         };
 
-        handleLedger(ledger);
+        const handleAccount = () => {
+          const free = new BigNumber(accountData.free.toString());
+          const newBalances: Balances = {
+            address,
+            nonce: nonce.toNumber(),
+            // TODO: change `balance` to `account`.
+            balance: {
+              free,
+              reserved: new BigNumber(accountData.reserved.toString()),
+              miscFrozen: new BigNumber(accountData.miscFrozen.toString()),
+              feeFrozen: new BigNumber(accountData.feeFrozen.toString()),
+              freeAfterReserve: BigNumber.max(
+                free.minus(existentialDeposit),
+                0
+              ),
+            },
+            locks: locks.toHuman().map((l: AnyApi) => ({
+              ...l,
+              id: l.id.trim(),
+              amount: new BigNumber(rmCommas(l.amount)),
+            })),
+          };
+
+          setStateWithRef(
+            Object.values(balancesRef.current)
+              .filter((a) => a.address !== address)
+              .concat(newBalances),
+            setBalances,
+            balancesRef
+          );
+        };
+
+        handleLedger();
+        handleAccount();
       }
     );
     unsubs.current[address] = unsub;
     return unsub;
   };
 
+  // fetch account balances & ledgers. Remove or add subscriptions
+  useEffect(() => {
+    if (isReady) {
+      handleSyncAccounts();
+    }
+  }, [accounts, network, isReady]);
+
+  // Unsubscribe from subscriptions on unmount.
+  useEffect(() => {
+    return () =>
+      Object.values(unsubs.current).forEach((unsub) => {
+        unsub();
+      });
+  }, []);
+
+  // Gets a ledger for a stash address.
   const getStashLedger = (address: MaybeAccount) => {
     return getLedger(ledgersRef.current, 'stash', address);
   };
+
+  // Gets an account's balance metadata.
+  const getBalance = (address: MaybeAccount) =>
+    balancesRef.current.find((a) => a.address === address)?.balance ||
+    defaults.defaultBalance;
+
+  // Gets an account's locks.
+  const getLocks = (address: MaybeAccount) =>
+    balancesRef.current.find((a) => a.address === address)?.locks ?? [];
+
+  // Gets an account's nonce.
+  const getNonce = (address: MaybeAccount) =>
+    balancesRef.current.find((a) => a.address === address)?.nonce ?? 0;
 
   return (
     <AccountBalancesContext.Provider
       value={{
         ledgers: ledgersRef.current,
         getStashLedger,
+        getBalance,
+        getLocks,
+        getNonce,
       }}
     >
       {children}

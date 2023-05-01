@@ -4,12 +4,19 @@
 import type BigNumber from 'bignumber.js';
 import type { MaybeAccount } from 'types';
 
-export interface AccountBalance {
-  nonce?: number;
+export interface AccountBalancesContextInterface {
+  ledgers: Ledger[];
+  getStashLedger: (a: MaybeAccount) => Ledger;
+  getBalance: (address: MaybeAccount) => Balance;
+  getLocks: (address: MaybeAccount) => BalanceLock[];
+  getNonce: (address: MaybeAccount) => number;
+}
+
+export interface Balances {
   address?: string;
+  nonce?: number;
   balance?: Balance;
-  bonded?: string;
-  locks?: Array<Lock>;
+  locks?: BalanceLock[];
 }
 
 export interface Balance {
@@ -19,10 +26,6 @@ export interface Balance {
   feeFrozen: BigNumber;
   freeAfterReserve: BigNumber;
 }
-export interface AccountBalancesContextInterface {
-  ledgers: Ledger[];
-  getStashLedger: (a: MaybeAccount) => Ledger;
-}
 
 export interface UnlockChunkRaw {
   era: string;
@@ -31,6 +34,12 @@ export interface UnlockChunkRaw {
 export interface UnlockChunk {
   era: number;
   value: BigNumber;
+}
+
+export interface BalanceLock {
+  id: string;
+  amount: BigNumber;
+  reasons: string;
 }
 
 export interface Ledger {

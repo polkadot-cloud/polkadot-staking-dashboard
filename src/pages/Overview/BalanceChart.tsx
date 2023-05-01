@@ -4,8 +4,8 @@
 import { ButtonHelp } from '@polkadotcloud/core-ui';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import { useAccountBalances } from 'contexts/AccountBalances';
 import { useBalances } from 'contexts/Accounts/Balances';
-import type { Lock } from 'contexts/Accounts/Balances/types';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
@@ -26,10 +26,10 @@ export const BalanceChart = () => {
   const { plugins } = usePlugins();
   const { openHelp } = useHelp();
   const { activeAccount } = useConnect();
-  const { getAccountBalance, existentialAmount, getAccountLocks } =
-    useBalances();
+  const { existentialAmount } = useBalances();
+  const { getBalance, getLocks } = useAccountBalances();
   const { getTransferOptions } = useTransferOptions();
-  const balance = getAccountBalance(activeAccount);
+  const balance = getBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
   const poolBondOpions = allTransferOptions.pool;
   const unlockingPools = poolBondOpions.totalUnlocking.plus(
@@ -63,8 +63,8 @@ export const BalanceChart = () => {
   );
 
   // check account non-staking locks
-  const locks = getAccountLocks(activeAccount);
-  const locksStaking = locks.find((l: Lock) => l.id === 'staking');
+  const locks = getLocks(activeAccount);
+  const locksStaking = locks.find((l) => l.id === 'staking');
   const lockStakingAmount = locksStaking
     ? locksStaking.amount
     : new BigNumber(0);

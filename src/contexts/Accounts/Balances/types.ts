@@ -9,25 +9,9 @@ export interface BondedAccount {
   unsub: { (): void } | null;
 }
 
-export interface Lock {
-  id: string;
-  amount: BigNumber;
-  reasons: string;
-}
-export interface Balance {
-  free: BigNumber;
-  reserved: BigNumber;
-  miscFrozen: BigNumber;
-  feeFrozen: BigNumber;
-  freeAfterReserve: BigNumber;
-}
-
 export interface Balances {
-  nonce?: number;
   address?: string;
-  balance?: Balance;
   bonded?: string;
-  locks?: Array<Lock>;
   nominations?: Nominations;
 }
 
@@ -40,11 +24,9 @@ export type Targets = string[];
 
 export interface BalancesContextInterface {
   getAccount: (address: MaybeAccount) => Balances | null;
-  getAccountBalance: (address: MaybeAccount) => Balance;
-  getAccountLocks: (address: MaybeAccount) => Array<Lock>;
   getBondedAccount: (address: MaybeAccount) => string | null;
   getAccountNominations: (address: MaybeAccount) => Targets;
   isController: (address: MaybeAccount) => boolean;
-  balances: Array<Balances>;
+  balances: Balances[];
   existentialAmount: BigNumber;
 }
