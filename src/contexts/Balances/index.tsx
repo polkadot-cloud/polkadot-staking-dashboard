@@ -14,7 +14,6 @@ import type {
   BalancesContextInterface,
 } from 'contexts/Balances/types';
 import { useConnect } from 'contexts/Connect';
-import type { ImportedAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
 import * as defaults from './defaults';
@@ -105,10 +104,7 @@ export const BalancesProvider = ({
 
         // add bonded (controller) account as external account if not presently imported
         if (newBonded) {
-          if (
-            accounts.find((s: ImportedAccount) => s.address === newBonded) ===
-            undefined
-          ) {
+          if (accounts.find((s) => s.address === newBonded) === undefined) {
             addExternalAccount(newBonded, 'system');
           }
         }
@@ -125,7 +121,7 @@ export const BalancesProvider = ({
 
         // remove stale account if it's already in list.
         const newBalances = Object.values(balancesRef.current)
-          .filter((a: Balances) => a.address !== address)
+          .filter((a) => a.address !== address)
           .concat(newAccount);
 
         setStateWithRef(newBalances, setBalances, balancesRef);
@@ -136,53 +132,19 @@ export const BalancesProvider = ({
     return unsub;
   };
 
-  // get an account's bonded (controller) account)
-  const getBondedAccount = (address: MaybeAccount) => {
-    const account = balancesRef.current.find(
-      (a: Balances) => a.address === address
-    );
-    if (account === undefined) {
-      return null;
-    }
-    const bonded = account.bonded ?? null;
-    return bonded;
-  };
+  const getBondedAccount = (address: MaybeAccount) =>
+    balancesRef.current.find((a) => a.address === address)?.bonded || null;
 
-  // get an account's nominations
-  const getAccountNominations = (address: MaybeAccount) => {
-    const account = balancesRef.current.find(
-      (a: Balances) => a.address === address
-    );
-    if (account === undefined) {
-      return [];
-    }
-    const nominations = account.nominations;
-    if (nominations === undefined) {
-      return [];
-    }
+  const getAccountNominations = (address: MaybeAccount) =>
+    balancesRef.current.find((a) => a.address === address)?.nominations
+      ?.targets || [];
 
-    const targets = nominations.targets ?? [];
-    return targets;
-  };
+  const getAccount = (address: MaybeAccount) =>
+    balancesRef.current.find((a) => a.address === address) || null;
 
-  // get an account
-  const getAccount = (address: MaybeAccount) => {
-    const account = balancesRef.current.find(
-      (a: Balances) => a.address === address
-    );
-    if (account === undefined) {
-      return null;
-    }
-    return account;
-  };
-
-  // check if an account is a controller account
-  const isController = (address: MaybeAccount) => {
-    const existsAsController = balancesRef.current.filter(
-      (a: Balances) => (a?.bonded || '') === address
-    );
-    return existsAsController.length > 0;
-  };
+  const isController = (address: MaybeAccount) =>
+    balancesRef.current.filter((a) => (a?.bonded || '') === address)?.length >
+      0 || false;
 
   return (
     <BalancesContext.Provider
