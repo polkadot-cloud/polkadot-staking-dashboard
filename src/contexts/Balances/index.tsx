@@ -172,6 +172,13 @@ export const BalancesProvider = ({
     return unsub;
   };
 
+  const unsubAll = () => {
+    for (const unsub of Object.values(unsubs.current)) {
+      unsub();
+    }
+    unsubs.current = {};
+  };
+
   // fetch account balances & ledgers. Remove or add subscriptions
   useEffect(() => {
     if (isReady) {
@@ -179,13 +186,11 @@ export const BalancesProvider = ({
     }
   }, [accounts, network, isReady]);
 
-  // Unsubscribe from subscriptions on unmount.
+  // Unsubscribe from subscriptions on network change & unmount.
   useEffect(() => {
-    return () =>
-      Object.values(unsubs.current).forEach((unsub) => {
-        unsub();
-      });
-  }, []);
+    unsubAll();
+    return () => unsubAll();
+  }, [network]);
 
   // Gets a ledger for a stash address.
   const getStashLedger = (address: MaybeAccount) => {
