@@ -27,11 +27,6 @@ import type {
   SetupContextInterface,
 } from './types';
 
-export const SetupContext =
-  React.createContext<SetupContextInterface>(defaultSetupContext);
-
-export const useSetup = () => React.useContext(SetupContext);
-
 export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   const { network } = useApi();
   const { inSetup } = useStaking();
@@ -244,3 +239,8 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     </SetupContext.Provider>
   );
 };
+
+export const SetupContext =
+  React.createContext<SetupContextInterface>(defaultSetupContext);
+
+export const useSetup = () => React.useContext(SetupContext);

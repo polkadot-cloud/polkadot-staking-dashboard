@@ -6,11 +6,6 @@ import React, { useRef } from 'react';
 import { defaultThemeContext } from './defaults';
 import type { Theme, ThemeContextInterface } from './types';
 
-export const ThemeContext =
-  React.createContext<ThemeContextInterface>(defaultThemeContext);
-
-export const useTheme = () => React.useContext(ThemeContext);
-
 export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
   let initialTheme: Theme = 'light';
 
@@ -64,3 +59,8 @@ export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
     </ThemeContext.Provider>
   );
 };
+
+export const ThemeContext =
+  React.createContext<ThemeContextInterface>(defaultThemeContext);
+
+export const useTheme = () => React.useContext(ThemeContext);

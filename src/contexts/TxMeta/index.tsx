@@ -9,12 +9,6 @@ import type { AnyJson, MaybeAccount } from 'types';
 import * as defaults from './defaults';
 import type { TxMetaContextInterface } from './types';
 
-export const TxMetaContext = React.createContext<TxMetaContextInterface>(
-  defaults.defaultTxMeta
-);
-
-export const useTxMeta = () => React.useContext(TxMetaContext);
-
 export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const { getTransferOptions } = useTransferOptions();
 
@@ -115,3 +109,9 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     </TxMetaContext.Provider>
   );
 };
+
+export const TxMetaContext = React.createContext<TxMetaContextInterface>(
+  defaults.defaultTxMeta
+);
+
+export const useTxMeta = () => React.useContext(TxMetaContext);

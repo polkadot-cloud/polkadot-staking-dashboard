@@ -12,11 +12,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi } from 'types';
 import { defaultExtensionsContext } from './defaults';
 
-export const ExtensionsContext =
-  React.createContext<ExtensionsContextInterface>(defaultExtensionsContext);
-
-export const useExtensions = () => React.useContext(ExtensionsContext);
-
 export const ExtensionsProvider = ({
   children,
 }: {
@@ -137,3 +132,8 @@ export const ExtensionsProvider = ({
     </ExtensionsContext.Provider>
   );
 };
+
+export const ExtensionsContext =
+  React.createContext<ExtensionsContextInterface>(defaultExtensionsContext);
+
+export const useExtensions = () => React.useContext(ExtensionsContext);

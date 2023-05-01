@@ -7,12 +7,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { defaultModalContext } from './defaults';
 import type { ModalConfig, ModalContextInterface, ModalOptions } from './types';
 
-export const ModalContext =
-  React.createContext<ModalContextInterface>(defaultModalContext);
-
-export const useModal = () => React.useContext(ModalContext);
-
-// wrapper component to provide components with context
 export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const { notEnoughFunds } = useTxMeta();
 
@@ -108,3 +102,8 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     </ModalContext.Provider>
   );
 };
+
+export const ModalContext =
+  React.createContext<ModalContextInterface>(defaultModalContext);
+
+export const useModal = () => React.useContext(ModalContext);

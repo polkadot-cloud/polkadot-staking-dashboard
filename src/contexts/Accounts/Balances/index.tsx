@@ -1,7 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { rmCommas, setStateWithRef } from '@polkadotcloud/utils';
+import type { VoidFn } from '@polkadot/api/types';
+import {
+  addedTo,
+  matchedProperties,
+  removedFrom,
+  rmCommas,
+  setStateWithRef,
+} from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import type {
   Balances,
@@ -14,12 +21,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
 import * as defaults from './defaults';
 
-export const BalancesContext = React.createContext<BalancesContextInterface>(
-  defaults.defaultBalancesContext
-);
-
-export const useBalances = () => React.useContext(BalancesContext);
-
 export const BalancesProvider = ({
   children,
 }: {
@@ -27,76 +28,65 @@ export const BalancesProvider = ({
 }) => {
   const { api, isReady, network, consts } = useApi();
   const { accounts, addExternalAccount } = useConnect();
-
-  // existential amount of unit for an account
   const existentialAmount = consts.existentialDeposit;
 
-  // balance accounts state
+  // Balance accounts state.
   const [balances, setBalances] = useState<Array<Balances>>([]);
   const balancesRef = useRef(balances);
+  const unsubs = useRef<Record<string, VoidFn>>({});
 
-  // balance subscriptions state
-  const [unsubs, setUnsubs] = useState<AnyApi>([]);
-  const unsubsRef = useRef<AnyApi>(unsubs);
+  // Handle the syncing of accounts on accounts change.
+  const handleSyncAccounts = () => {
+    // Sync removed accounts.
+    const handleRemovedAccounts = () => {
+      const removed = removedFrom(accounts, balancesRef.current, [
+        'address',
+      ]).map(({ address }) => address);
 
-  // fetch account balances. Remove or add subscriptions
+      removed?.forEach((address) => {
+        const unsub = unsubs.current[address];
+        if (unsub) unsub();
+      });
+
+      unsubs.current = Object.fromEntries(
+        Object.entries(unsubs.current).filter(([key]) => !removed.includes(key))
+      );
+    };
+    // Sync added accounts.
+    const handleAddedAccounts = () => {
+      addedTo(accounts, balancesRef.current, ['address'])?.map(({ address }) =>
+        subscribeToBalances(address)
+      );
+    };
+    // Sync existing accounts.
+    const handleExistingAccounts = () => {
+      setStateWithRef(
+        matchedProperties(accounts, balancesRef.current, ['address']),
+        setBalances,
+        balancesRef
+      );
+    };
+    handleRemovedAccounts();
+    handleAddedAccounts();
+    handleExistingAccounts();
+  };
+
+  // Handle accounts sync on connected accounts change.
   useEffect(() => {
     if (isReady) {
-      // local updated values
-      let newBalances = balancesRef.current;
-      const newUnsubsBalances = unsubsRef.current;
-
-      // get accounts removed: use these to unsubscribe
-      const accountsRemoved = balancesRef.current.filter(
-        (a: Balances) =>
-          !accounts.find((c: ImportedAccount) => c.address === a.address)
-      );
-      // get accounts added: use these to subscribe
-      const accountsAdded = accounts.filter(
-        (c: ImportedAccount) =>
-          !balancesRef.current.find((a: Balances) => a.address === c.address)
-      );
-      // update accounts state for removal
-      newBalances = balancesRef.current.filter((a: Balances) =>
-        accounts.find((c: ImportedAccount) => c.address === a.address)
-      );
-
-      // update accounts state and unsubscribe if accounts have been removed
-      if (newBalances.length < balancesRef.current.length) {
-        // unsubscribe from removed balances
-        accountsRemoved.forEach((a: Balances) => {
-          const unsub = unsubsRef.current.find(
-            (u: AnyApi) => u.key === a.address
-          );
-          if (unsub) {
-            unsub.unsub();
-            // remove unsub from balances
-            newUnsubsBalances.filter((u: AnyApi) => u.key !== a.address);
-          }
-        });
-        // commit state updates
-        setStateWithRef(newUnsubsBalances, setUnsubs, unsubsRef);
-        setStateWithRef(newBalances, setBalances, balancesRef);
-      }
-
-      // if accounts have changed, update state with new unsubs / accounts
-      if (accountsAdded.length) {
-        // subscribe to added accounts balances
-        accountsAdded.map((a: ImportedAccount) =>
-          subscribeToBalances(a.address)
-        );
-      }
+      handleSyncAccounts();
     }
   }, [accounts, network, isReady]);
 
-  // unsubscribe from balance subscriptions on unmount
+  // Unsubscribe from subscriptions on unmount.
   useEffect(() => {
-    Object.values(unsubsRef.current).forEach(({ unsub }: AnyApi) => {
-      unsub();
-    });
+    return () =>
+      Object.values(unsubs.current).forEach((unsub) => {
+        unsub();
+      });
   }, []);
 
-  // subscribe to account balances, bonded and nominators
+  // Subscribe to account balances, bonded and nominators
   const subscribeToBalances = async (address: string) => {
     if (!api) return;
 
@@ -177,14 +167,7 @@ export const BalancesProvider = ({
       }
     );
 
-    setStateWithRef(
-      unsubsRef.current.concat({
-        key: address,
-        unsub,
-      }),
-      setUnsubs,
-      unsubsRef
-    );
+    unsubs.current[address] = unsub;
     return unsub;
   };
 
@@ -281,3 +264,9 @@ export const BalancesProvider = ({
     </BalancesContext.Provider>
   );
 };
+
+export const BalancesContext = React.createContext<BalancesContextInterface>(
+  defaults.defaultBalancesContext
+);
+
+export const useBalances = () => React.useContext(BalancesContext);

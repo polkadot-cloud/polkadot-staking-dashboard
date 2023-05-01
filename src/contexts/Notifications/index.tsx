@@ -10,13 +10,6 @@ import type {
   NotificationsContextInterface,
 } from './types';
 
-export const NotificationsContext =
-  React.createContext<NotificationsContextInterface>(
-    defaultNotificationsContext
-  );
-
-export const useNotifications = () => React.useContext(NotificationsContext);
-
 export const NotificationsProvider = ({
   children,
 }: {
@@ -78,3 +71,10 @@ export const NotificationsProvider = ({
     </NotificationsContext.Provider>
   );
 };
+
+export const NotificationsContext =
+  React.createContext<NotificationsContextInterface>(
+    defaultNotificationsContext
+  );
+
+export const useNotifications = () => React.useContext(NotificationsContext);

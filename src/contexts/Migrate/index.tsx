@@ -8,8 +8,6 @@ import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
 import React, { useEffect, useState } from 'react';
 
-export const MigrateContext = React.createContext<any>(null);
-
 export const MigrateProvider = ({
   children,
 }: {
@@ -67,3 +65,5 @@ export const MigrateProvider = ({
     <MigrateContext.Provider value={{}}>{children}</MigrateContext.Provider>
   );
 };
+
+export const MigrateContext = React.createContext<any>(null);

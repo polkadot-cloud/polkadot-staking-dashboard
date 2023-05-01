@@ -72,7 +72,7 @@ export interface ActivePool {
   bondedPool: any;
   rewardPool: any;
   rewardAccountBalance: any;
-  unclaimedRewards: any;
+  pendingRewards: any;
 }
 
 export interface BondedPool {

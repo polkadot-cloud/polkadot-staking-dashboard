@@ -180,7 +180,6 @@ export const ItemWrapper = styled(motion.div)<any>`
 
     > h4 {
       color: var(--text-color-primary);
-      font-weight: normal;
       margin: 0.65rem 0;
       text-transform: uppercase;
       font-size: 0.7rem;

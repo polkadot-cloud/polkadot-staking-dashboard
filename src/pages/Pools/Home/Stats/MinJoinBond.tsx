@@ -16,6 +16,7 @@ export const MinJoinBondStat = () => {
   const params = {
     label: t('pools.minimumToJoinPool'),
     value: planckToUnit(stats.minJoinBond, units).toNumber(),
+    decimals: 3,
     unit: ` ${network.unit}`,
     helpKey: 'Minimum To Join Pool',
   };
