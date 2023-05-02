@@ -137,7 +137,6 @@ export const BalancesProvider = ({
           const newBalances: Balances = {
             address,
             nonce: nonce.toNumber(),
-            // TODO: change `balance` to `account`.
             balance: {
               free,
               reserved: new BigNumber(accountData.reserved.toString()),
