@@ -26,6 +26,7 @@ import { Nominate } from './Nominate';
 import { NominateFromFavorites } from './NominateFromFavorites';
 import { NominatePool } from './NominatePool';
 import { PoolNominations } from './PoolNominations';
+import { UpdateReserve } from './Reserve';
 import { SelectFavorites } from './SelectFavorites';
 import { Settings } from './Settings';
 import { StartStaking } from './StartStaking';
@@ -184,6 +185,7 @@ export const Modal = () => {
                   {modal === 'Unbond' && <Unbond />}
                   {modal === 'UpdatePayee' && <UpdatePayee />}
                   {modal === 'WithdrawPoolMember' && <WithdrawPoolMember />}
+                  {modal === 'UpdateReserve' && <UpdateReserve />}
                 </ErrorBoundary>
               </ContentWrapper>
             </HeightWrapper>

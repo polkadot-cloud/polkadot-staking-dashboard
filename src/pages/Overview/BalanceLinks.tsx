@@ -2,9 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimaryInvert, Separator } from '@polkadotcloud/core-ui';
+import {
+  ButtonPrimary,
+  ButtonPrimaryInvert,
+  Separator,
+} from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
 import { useTranslation } from 'react-i18next';
 import { MoreWrapper } from './Wrappers';
 
@@ -12,6 +17,7 @@ export const BalanceLinks = () => {
   const { t } = useTranslation('pages');
   const { name } = useApi().network;
   const { activeAccount } = useConnect();
+  const { openModalWith } = useModal();
 
   return (
     <MoreWrapper>
@@ -31,6 +37,14 @@ export const BalanceLinks = () => {
             iconTransform="shrink-2"
             text="Subscan"
             disabled={!activeAccount}
+          />
+        </div>
+        <div>
+          <ButtonPrimary
+            disabled={false}
+            marginRight
+            onClick={() => openModalWith('UpdateReserve')}
+            text="+"
           />
         </div>
       </section>
