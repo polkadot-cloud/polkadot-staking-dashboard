@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { setStateWithRef } from '@polkadotcloud/utils';
-import { useLedgers } from 'contexts/Accounts/Ledgers';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -18,7 +18,7 @@ export const UnlockChunks = () => {
   const { activeAccount } = useConnect();
   const { config, setModalHeight } = useModal();
   const { bondFor } = config || {};
-  const { getLedgerForStash } = useLedgers();
+  const { getStashLedger } = useBalances();
   const { getPoolUnlocking } = useActivePools();
 
   // get the unlocking per bondFor
@@ -30,7 +30,7 @@ export const UnlockChunks = () => {
         unlocking = getPoolUnlocking();
         break;
       default:
-        ledger = getLedgerForStash(activeAccount);
+        ledger = getStashLedger(activeAccount);
         unlocking = ledger.unlocking;
     }
     return unlocking;

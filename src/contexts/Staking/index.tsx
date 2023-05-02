@@ -9,7 +9,7 @@ import {
   setStateWithRef,
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import { useLedgers } from 'contexts/Accounts/Ledgers';
+import { useBalances } from 'contexts/Balances';
 import type { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type {
@@ -22,8 +22,8 @@ import type {
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
-import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
+import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import * as defaults from './defaults';
@@ -35,15 +35,16 @@ export const StakingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { isReady, api, apiStatus, network } = useApi();
   const {
     activeAccount,
     accounts: connectAccounts,
     getActiveAccount,
   } = useConnect();
-  const { isReady, api, apiStatus, network } = useApi();
   const { activeEra } = useNetworkMetrics();
-  const { balances, getBondedAccount, getAccountNominations } = useBalances();
-  const { getLedgerForStash } = useLedgers();
+  const { getStashLedger } = useBalances();
+  const { bondedAccounts, getBondedAccount, getAccountNominations } =
+    useBonded();
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
@@ -114,7 +115,7 @@ export const StakingProvider = ({
         ) as StakingTargets
       );
     }
-  }, [isReady, balances, activeAccount, eraStakersRef.current?.stakers]);
+  }, [isReady, bondedAccounts, activeAccount, eraStakersRef.current?.stakers]);
 
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
@@ -382,7 +383,7 @@ export const StakingProvider = ({
     if (!hasController() || !activeAccount) {
       return false;
     }
-    return greaterThanZero(getLedgerForStash(activeAccount).active);
+    return greaterThanZero(getStashLedger(activeAccount).active);
   };
 
   /*
@@ -393,7 +394,7 @@ export const StakingProvider = ({
     if (!hasController() || !activeAccount) {
       return false;
     }
-    const ledger = getLedgerForStash(activeAccount);
+    const ledger = getStashLedger(activeAccount);
     return ledger.unlocking.length;
   };
 

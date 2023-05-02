@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { Warning } from 'library/Form/Warning';
@@ -19,7 +19,7 @@ export const UpdateController = () => {
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, getAccount, accountHasSigner } = useConnect();
-  const { getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBonded();
 
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);

@@ -8,8 +8,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { stringUpperFirst } from '@polkadot/util';
 import { ButtonPrimary, PageRow } from '@polkadotcloud/core-ui';
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
@@ -23,7 +23,7 @@ export const ControllerNotStash = () => {
   const { network } = useApi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { addressDifferentToStash } = useStaking();
-  const { getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBonded();
   const { openModalWith } = useModal();
   const { isSyncing } = useUi();
   const controller = getBondedAccount(activeAccount);
