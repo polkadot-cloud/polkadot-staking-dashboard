@@ -3,8 +3,8 @@
 
 import { faPenToSquare, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useTxMeta } from 'contexts/TxMeta';
@@ -32,7 +32,7 @@ export const SubmitTx = ({
   const { requiresManualSign, activeAccount, activeProxy, getAccount } =
     useConnect();
   const { setResize } = useModal();
-  const { getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBonded();
   const controller = getBondedAccount(activeAccount);
 
   // Default to active account, or controller / proxy if from those accounts.

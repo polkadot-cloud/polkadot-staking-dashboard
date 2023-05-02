@@ -4,7 +4,7 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { isValidAddress, remToUnit } from '@polkadotcloud/utils';
-import { useBalances } from 'contexts/Accounts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import type { ImportedAccount } from 'contexts/Connect/types';
 import { Identicon } from 'library/Identicon';
@@ -21,7 +21,7 @@ export const PayeeInput = ({
 }: PayeeInputProps) => {
   const { t } = useTranslation('library');
   const { activeAccount, formatAccountSs58, accounts } = useConnect();
-  const { getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBonded();
   const controller = getBondedAccount(activeAccount);
 
   const accountMeta = accounts.find(

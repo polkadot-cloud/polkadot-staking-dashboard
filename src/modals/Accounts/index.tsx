@@ -3,15 +3,15 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
-import { useBalances } from 'contexts/Accounts/Balances';
-import { useLedgers } from 'contexts/Accounts/Ledgers';
-import { useProxies } from 'contexts/Accounts/Proxies';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { PoolMembership } from 'contexts/Pools/types';
+import { useProxies } from 'contexts/Proxies';
 import { Action } from 'library/Modal/Action';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -30,8 +30,9 @@ export const Accounts = () => {
   const { t } = useTranslation('modals');
   const { isReady } = useApi();
   const { activeAccount } = useConnect();
-  const { getAccountLocks, balances } = useBalances();
-  const { ledgers } = useLedgers();
+  const { bondedAccounts } = useBonded();
+  const { balances } = useBalances();
+  const { ledgers, getLocks } = useBalances();
   const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
   const { replaceModalWith, setResize } = useModal();
@@ -54,7 +55,7 @@ export const Accounts = () => {
 
     // accumulate imported stash accounts
     for (const { address } of localAccounts) {
-      const locks = getAccountLocks(address);
+      const locks = getLocks(address);
 
       // account is a stash if they have an active `staking` lock
       if (locks.find(({ id }) => id === 'staking')) {
@@ -131,11 +132,11 @@ export const Accounts = () => {
 
   useEffect(() => {
     getAccountsStatus();
-  }, [localAccounts, balances, ledgers, accounts, memberships]);
+  }, [localAccounts, bondedAccounts, balances, ledgers, accounts, memberships]);
 
   useEffect(() => {
     setResize();
-  }, [activeAccount, accounts, balances, ledgers, extensions]);
+  }, [activeAccount, accounts, bondedAccounts, balances, ledgers, extensions]);
 
   return (
     <PaddingWrapper>

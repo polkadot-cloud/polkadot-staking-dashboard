@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import { useBalances } from 'contexts/Accounts/Balances';
-import { useLedgers } from 'contexts/Accounts/Ledgers';
+import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React from 'react';
@@ -17,8 +17,8 @@ export const TransferOptionsProvider = ({
   children: React.ReactNode;
 }) => {
   const { activeEra } = useNetworkMetrics();
-  const { getAccount, getAccountBalance, getAccountLocks } = useBalances();
-  const { getLedgerForStash } = useLedgers();
+  const { getStashLedger, getBalance, getLocks } = useBalances();
+  const { getAccount } = useBonded();
   const { membership } = usePoolMemberships();
 
   // get the bond and unbond amounts available to the user
@@ -27,9 +27,9 @@ export const TransferOptionsProvider = ({
     if (account === null) {
       return defaults.transferOptions;
     }
-    const balance = getAccountBalance(address);
-    const ledger = getLedgerForStash(address);
-    const locks = getAccountLocks(address);
+    const balance = getBalance(address);
+    const ledger = getStashLedger(address);
+    const locks = getLocks(address);
 
     const { freeAfterReserve } = balance;
     const { active, total, unlocking } = ledger;
@@ -133,7 +133,7 @@ export const TransferOptionsProvider = ({
 
 export const TransferOptionsContext =
   React.createContext<TransferOptionsContextInterface>(
-    defaults.defaultBalancesContext
+    defaults.defaultBondedContext
   );
 
 export const useTransferOptions = () =>

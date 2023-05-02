@@ -3,8 +3,8 @@
 
 import { PageCategories, PagesConfig } from 'config/pages';
 import { BaseURL, PolkadotUrl } from 'consts';
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useSetup } from 'contexts/Setup';
@@ -25,7 +25,7 @@ export const Main = () => {
   const { network } = useApi();
   const { activeAccount, accounts } = useConnect();
   const { pathname } = useLocation();
-  const { getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBonded();
   const { inSetup: inNominatorSetup, addressDifferentToStash } = useStaking();
   const { membership } = usePoolMemberships();
   const controller = getBondedAccount(activeAccount);

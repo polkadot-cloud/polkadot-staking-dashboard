@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { isSupportedProxy } from 'config/proxies';
-import type { ProxyDelegate } from 'contexts/Accounts/Proxies/type';
 import { useConnect } from 'contexts/Connect';
 import type { ImportedAccount } from 'contexts/Connect/types';
+import type { ProxyDelegate } from 'contexts/Proxies/type';
 import { AccountButton } from './Account';
 import { AccountGroupWrapper } from './Wrappers';
 import type { DelegatesProps } from './types';

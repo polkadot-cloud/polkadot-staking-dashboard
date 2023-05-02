@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { clipAddress } from '@polkadotcloud/utils';
-import { useBalances } from 'contexts/Accounts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
 
 export const ControllerStatus = () => {
   const { t } = useTranslation('pages');
-  const { getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBonded();
   const { activeAccount, getAccount } = useConnect();
   const controller = getBondedAccount(activeAccount);
 
