@@ -73,6 +73,7 @@ export const SubmitTx = ({
 
   return (
     <Tx
+      margin
       label={signingOpts.label}
       name={signingOpts.who?.name || ''}
       notEnoughFunds={notEnoughFunds}
