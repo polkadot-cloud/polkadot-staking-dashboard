@@ -2,87 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 html {
-  font-size: 10px;
+  font-size: 10.5px;
   @media (min-width: 600px) {
-    font-size: 11.2px;
+    font-size: 11px;
   }
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: 'Inter', 'sans-serif', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  font-variation-settings: 'wght' 500;
-}
-
-h1 {
-  font-weight: normal;
-  font-size: 1.6rem;
-  line-height: 1.6rem;
-  font-variation-settings: 'wght' 600;
-  margin: 0 0 0.4rem 0;
-}
-
-h2 {
-  font-weight: normal;
-  font-size: 1.4rem;
-  line-height: 1.6rem;
-  font-variation-settings: 'wght' 650;
-  margin: 1rem 0;
-}
-
-h3 {
-  font-weight: normal;
-  font-size: 1.25rem;
-  line-height: 1.55rem;
-  font-variation-settings: 'wght' 560;
-  margin: 1rem 0;
-}
-
-h4 {
-  font-weight: normal;
-  font-size: 1.08rem;
-  line-height: 1.65rem;
-  font-variation-settings: 'wght' 500;
-  margin: 1.25rem 0;
-}
-
-h5 {
-  font-weight: normal;
-  font-size: 0.92rem;
-  line-height: 1.02rem;
-  margin: 1.25rem 0;
-  font-variation-settings: 'wght' 540;
-}
-
-p {
-  font-size: 0.98rem;
-  line-height: 1.5rem;
-  margin: 0.75rem 0;
-}
-
-a {
-  text-decoration: none;
-  cursor: pointer;
-}
-
-button {
-  font-family: 'Inter', 'sans-serif', sans-serif;
-  font-weight: normal;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-variation-settings: 'wght' 600;
-  margin: 0;
-  padding: 0;
-}
-
-input {
-  font-family: 'Inter', 'sans-serif', sans-serif;
 }

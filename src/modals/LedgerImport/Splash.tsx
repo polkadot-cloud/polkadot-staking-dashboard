@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSecondary } from '@polkadotcloud/core-ui';
-import { useApi } from 'contexts/Api';
+import { ButtonHelp, ButtonSecondary } from '@polkadotcloud/core-ui';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
-import { getLedgerApp } from 'contexts/Hardware/Utils';
+import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
+import { useTheme } from 'contexts/Themes';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
 import { ReactComponent as LogoSVG } from 'img/ledgerLogo.svg';
 import { Title } from 'library/Modal/Title';
@@ -14,12 +14,10 @@ import { CustomHeaderWrapper } from 'modals/Wrappers';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyFunction } from 'types';
-import { determineStatusFromCodes } from './Utils';
 import { SplashWrapper } from './Wrappers';
 
 export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   const { t } = useTranslation('modals');
-  const { network } = useApi();
   const { replaceModalWith, setStatus } = useModal();
   const {
     getStatusCodes,
@@ -27,12 +25,13 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     getIsExecuting,
     setIsExecuting,
     pairDevice,
-    getDefaultMessage,
+    getFeedback,
   } = useLedgerHardware();
+  const { mode } = useTheme();
   const { setResize } = useModal();
+  const { openHelp } = useHelp();
 
   const statusCodes = getStatusCodes();
-  const { appName } = getLedgerApp(network.name);
 
   const initFetchAddress = async () => {
     const paired = await pairDevice();
@@ -42,13 +41,9 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     }
   };
 
-  const { title, statusCode } = determineStatusFromCodes(
-    appName,
-    statusCodes,
-    false
-  );
   const fallbackMessage = t('checking');
-  const defaultMessage = getDefaultMessage();
+  const feedback = getFeedback();
+  const helpKey = feedback?.helpKey;
 
   // Initialise listeners for Ledger IO.
   useEffect(() => {
@@ -65,7 +60,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   // Resize modal on new message
   useEffect(() => {
     setResize();
-  }, [statusCodes, defaultMessage]);
+  }, [statusCodes, feedback]);
 
   return (
     <>
@@ -89,30 +84,31 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
       <Title title="" />
       <SplashWrapper>
         <div className="icon">
-          <LogoSVG style={{ transform: 'scale(0.6)' }} opacity={0.05} />
+          <LogoSVG
+            style={{ transform: 'scale(0.6)' }}
+            opacity={mode === 'dark' ? 0.5 : 0.1}
+          />
         </div>
 
         <div className="content">
           <h2>
-            {defaultMessage ||
-              (!getIsExecuting() || !statusCodes.length
-                ? fallbackMessage
-                : statusCode === 'TransactionRejected'
-                ? fallbackMessage
-                : title)}
+            {feedback?.message || fallbackMessage}
+            {helpKey ? (
+              <ButtonHelp
+                marginLeft
+                onClick={() => openHelp(helpKey)}
+                backgroundSecondary
+              />
+            ) : null}
           </h2>
+
           {!getIsExecuting() ? (
             <>
               <h5>{t('ensureLedgerIsConnected')}</h5>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}
-              >
+              <div className="button">
                 <ButtonSecondary
                   text={
-                    statusCode === 'DeviceNotConnected'
+                    statusCodes[0]?.statusCode === 'DeviceNotConnected'
                       ? t('continue')
                       : t('tryAgain')
                   }

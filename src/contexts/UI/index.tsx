@@ -4,22 +4,16 @@
 import { localStorageOrDefault, setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { SideMenuStickyThreshold } from 'consts';
+import { useBalances } from 'contexts/Balances';
 import type { ImportedAccount } from 'contexts/Connect/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import React, { useEffect, useRef, useState } from 'react';
-import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useStaking } from '../Staking';
 import * as defaults from './defaults';
 import type { SyncStart, UIContextInterface } from './types';
-
-export const UIContext = React.createContext<UIContextInterface>(
-  defaults.defaultUIContext
-);
-
-export const useUi = () => React.useContext(UIContext);
 
 export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { isReady } = useApi();
@@ -86,14 +80,14 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // side menu control
-  const [sideMenuOpen, setSideMenuOpen] = useState(0);
+  const [sideMenuOpen, setSideMenuOpen] = useState(false);
 
-  // get side menu minimised state from local storage, default to 0.
+  // get side menu minimised state from local storage, default to false.
   const [userSideMenuMinimised, setUserSideMenuMinimisedState] = useState(
-    Number(localStorageOrDefault('side_menu_minimised', 0))
+    localStorageOrDefault('side_menu_minimised', false, true) as boolean
   );
   const userSideMenuMinimisedRef = useRef(userSideMenuMinimised);
-  const setUserSideMenuMinimised = (v: number) => {
+  const setUserSideMenuMinimised = (v: boolean) => {
     localStorage.setItem('side_menu_minimised', String(v));
     setStateWithRef(v, setUserSideMenuMinimisedState, userSideMenuMinimisedRef);
   };
@@ -101,14 +95,14 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   // automatic side menu minimised
   const [sideMenuMinimised, setSideMenuMinimised] = useState(
     window.innerWidth <= SideMenuStickyThreshold
-      ? 1
+      ? true
       : userSideMenuMinimisedRef.current
   );
 
   // resize side menu callback
   const resizeCallback = () => {
     if (window.innerWidth <= SideMenuStickyThreshold) {
-      setSideMenuMinimised(0);
+      setSideMenuMinimised(false);
     } else {
       setSideMenuMinimised(userSideMenuMinimisedRef.current);
     }
@@ -180,7 +174,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     setIsSyncing(syncing);
   }, [isReady, staking, metrics, balances, eraStakers, activePoolsSynced]);
 
-  const setSideMenu = (v: number) => {
+  const setSideMenu = (v: boolean) => {
     setSideMenuOpen(v);
   };
 
@@ -213,3 +207,9 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     </UIContext.Provider>
   );
 };
+
+export const UIContext = React.createContext<UIContextInterface>(
+  defaults.defaultUIContext
+);
+
+export const useUi = () => React.useContext(UIContext);

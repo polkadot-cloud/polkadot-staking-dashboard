@@ -11,11 +11,6 @@
       "validators": "的验证人",
       "website": "个人网站"
     },
-    "favorites": {
-      "favoriteValidators": "藏夹中的验证人",
-      "fetchingFavoriteValidators": "正在获取收藏夹的验证人",
-      "noFavorites": "无收藏夹"
-    },
     "nominate": {
       "activeNominations": "活跃提名人",
       "addFromFavorites": "从收藏夹添加",
@@ -28,6 +23,7 @@
       "cancel": "取消",
       "change": "更改",
       "controllerAccount": "Controller 账户",
+      "controllerAccountsDeprecated": "Controller帐户将逐渐被淘汰",
       "controllerNotImported": "尚未导入Controller帐户。如果无法访问该帐户,请立即设置新帐户。否则,请将该账户导入扩展之一",
       "earningRewards": "挣取收益中",
       "inactiveNominations": "非活跃提名人",
@@ -46,6 +42,7 @@
       "payoutDestinationSubtitle": "选择如何接收收益。收益可以是复合式增长，也可以作为自由余额发回账户",
       "poolDestroy": "提名池正在被摧毁，不能做提名操作",
       "poolNominations": "池的提名",
+      "proxyprompt": "因本应用将很快取消对Controller帐户, 转而支持代理帐户. 请您尽快将Controller帐户切换到Stash帐户, 以便有更好体验",
       "readOnly": "只读帐户无法签署交易",
       "setNewController": "设置新Controller帐户",
       "startNominating": "开始提名",
@@ -64,6 +61,7 @@
       "unstakePromptRevert": "如果您需要取消解除抵押, 请重新质押您的{{unit}}并再次开始提名",
       "unstakePromptWaitingForUnlocks": "等待己解锁变为可提取",
       "update": "更改",
+      "updateToStash": "将Controller帐户更新为Stash帐户",
       "validator": "{{count}} 提名人",
       "waitingForActiveNominations": "等待有效提名",
       "yourNominations": "您的提名名单"
@@ -97,6 +95,7 @@
       "overview": "概述",
       "pool": "提名池",
       "poolMembersBonding": "名成员正在提名池活跃质押中",
+      "proxy": "代理账户",
       "recentPayouts": "最近收益",
       "reserve": "储备",
       "reserved": "己储备",
@@ -212,11 +211,17 @@
     },
     "validators": {
       "activeValidators": "活跃验证人",
+      "allValidators": "所有验证人",
       "averageCommission": "平均佣金",
       "connecting": "连接中",
+      "favoriteValidators": "收藏夹中的验证人",
+      "favorites": "收藏夹",
+      "fetchingFavoriteValidators": "正在获取收藏夹的验证人",
       "fetchingValidators": "正在获取验证人信息",
       "networkValidators": "验证人列表",
-      "totalValidators": "所有验证人"
+      "noFavorites": "无收藏夹",
+      "totalValidators": "所有验证人",
+      "validators": "验证人"
     }
   }
 }

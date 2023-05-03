@@ -5,18 +5,16 @@ import {
   faArrowAltCircleUp,
   faSquarePen,
 } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmit } from '@polkadotcloud/core-ui';
-import { useApi } from 'contexts/Api';
+import { ButtonHelp, ButtonSubmit } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
-import { getLedgerApp } from 'contexts/Hardware/Utils';
 import type { LedgerResponse } from 'contexts/Hardware/types';
+import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
-import { determineStatusFromCodes } from 'modals/LedgerImport/Utils';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { SubmitProps } from './types';
@@ -31,7 +29,7 @@ export const ManualSign = ({
   customEvent,
 }: SubmitProps & { buttons?: Array<React.ReactNode> }) => {
   const { t } = useTranslation('library');
-  const { network } = useApi();
+
   const {
     pairDevice,
     transportResponse,
@@ -41,14 +39,13 @@ export const ManualSign = ({
     handleNewStatusCode,
     isPaired,
     getStatusCodes,
-    getDefaultMessage,
-    setDefaultMessage,
+    getFeedback,
+    setFeedback,
     handleUnmount,
   } = useLedgerHardware();
   const { activeAccount, accountHasSigner, getAccount } = useConnect();
   const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();
   const { setResize } = useModal();
-  const { appName } = getLedgerApp(network.name);
 
   const getAddressIndex = () => {
     return (getAccount(activeAccount) as LedgerAccount)?.index || 0;
@@ -76,7 +73,7 @@ export const ManualSign = ({
     if (statusCode === 'SignedPayload') {
       if (uid !== body.uid) {
         // UIDs do not match, so this is not the transaction we are waiting for.
-        setDefaultMessage(t('wrongTransaction'));
+        setFeedback(t('wrongTransaction'), 'Wrong Transaction');
         resetStatusCodes();
         setTxSignature(null);
       } else {
@@ -119,14 +116,13 @@ export const ManualSign = ({
     };
   }, []);
 
-  const statusCodes = getStatusCodes();
-  const statusCodeTitle = determineStatusFromCodes(
-    appName,
-    statusCodes,
-    false
-  ).title;
   const fallbackMessage = t('submitTransaction');
-  const defaultMessage = getDefaultMessage();
+  const feedback = getFeedback();
+  const { openHelp } = useHelp();
+
+  const helpKey = feedback?.helpKey;
+  const disabled =
+    submitting || !valid || !accountHasSigner(activeAccount) || !txFeesValid;
 
   return (
     <>
@@ -134,14 +130,18 @@ export const ManualSign = ({
         <EstimatedTxFee />
         {valid ? (
           <p>
-            {valid
-              ? defaultMessage ||
-                (!getIsExecuting() || !statusCodes.length
-                  ? fallbackMessage
-                  : statusCodeTitle)
-              : fallbackMessage}
+            {feedback?.message || fallbackMessage}
+            {helpKey ? (
+              <ButtonHelp
+                marginLeft
+                onClick={() => openHelp(helpKey)}
+                backgroundSecondary
+              />
+            ) : null}
           </p>
-        ) : null}
+        ) : (
+          <p>...</p>
+        )}
       </div>
       <div>
         {buttons}
@@ -151,12 +151,7 @@ export const ManualSign = ({
             iconLeft={faArrowAltCircleUp}
             iconTransform="grow-2"
             onClick={() => onSubmit(customEvent)}
-            disabled={
-              submitting ||
-              !valid ||
-              !accountHasSigner(activeAccount) ||
-              !txFeesValid
-            }
+            disabled={disabled}
           />
         ) : (
           <ButtonSubmit
@@ -170,13 +165,8 @@ export const ManualSign = ({
                 handleLedgerLoop();
               }
             }}
-            disabled={
-              submitting ||
-              getIsExecuting() ||
-              !valid ||
-              !accountHasSigner(activeAccount) ||
-              !txFeesValid
-            }
+            disabled={disabled || getIsExecuting()}
+            pulse={!(disabled || getIsExecuting())}
           />
         )}
       </div>

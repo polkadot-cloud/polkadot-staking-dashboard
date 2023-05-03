@@ -46,9 +46,9 @@ export const LeavePool = () => {
     true
   );
 
-  let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
-  unclaimedRewards = planckToUnit(unclaimedRewards, network.units);
+  let { pendingRewards } = selectedActivePool || {};
+  pendingRewards = pendingRewards ?? new BigNumber(0);
+  pendingRewards = planckToUnit(pendingRewards, network.units);
 
   // convert BigNumber values to number
   const freeToUnbond = planckToUnit(activeBn, units);
@@ -100,12 +100,12 @@ export const LeavePool = () => {
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
-    warnings.push(<Warning text={t('readOnly')} />);
+    warnings.push(<Warning text={t('readOnlyCannotSign')} />);
   }
-  if (greaterThanZero(unclaimedRewards)) {
+  if (greaterThanZero(pendingRewards)) {
     warnings.push(
       <Warning
-        text={`${t('unbondingWithdraw')} ${unclaimedRewards.toString()} ${
+        text={`${t('unbondingWithdraw')} ${pendingRewards.toString()} ${
           network.unit
         }.`}
       />

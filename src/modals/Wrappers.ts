@@ -66,6 +66,8 @@ export const ContentWrapper = styled.div`
   position: relative;
 
   h2 {
+    margin: 1rem 0;
+
     &.unbounded {
       font-family: 'Unbounded';
     }
@@ -153,22 +155,6 @@ export const PaddingWrapper = styled.div<{
       : '1rem'};
 `;
 
-// modal header, used for extrinsics forms
-export const HeadingWrapper = styled.h3<{ noPadding?: boolean }>`
-  color: var(--text-color-secondary);
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  width: 100%;
-  margin-top: 0.25rem;
-  padding: ${(props) => (props.noPadding ? '0' : '0 1rem')};
-  flex: 1;
-
-  > svg {
-    margin-right: 0.75rem;
-  }
-`;
-
 // modal footer, used for extrinsics forms
 export const FooterWrapper = styled.div`
   display: flex;
@@ -179,7 +165,6 @@ export const FooterWrapper = styled.div`
   h3 {
     color: var(--text-color-secondary);
     opacity: 0.5;
-    margin: 0;
     position: relative;
     top: 1.25rem;
     &.active {

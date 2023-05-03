@@ -8,11 +8,11 @@ export const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
+  margin-top: 1rem;
 
   h3 {
     display: flex;
     align-items: center;
-    margin-bottom: 0;
     > span {
       margin-left: 1rem;
     }
@@ -23,6 +23,9 @@ export const Wrapper = styled.div`
 
   > .content {
     width: 100%;
+    > h5 {
+      margin-top: 1rem;
+    }
   }
 
   .accounts {

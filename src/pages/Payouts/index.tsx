@@ -1,8 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp } from '@polkadotcloud/core-ui';
-import { PageRowWrapper } from 'Wrappers';
+import { ButtonHelp, PageRow, PageTitle } from '@polkadotcloud/core-ui';
 import { MaxPayoutDays } from 'consts';
 import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
@@ -18,7 +17,6 @@ import {
   GraphWrapper,
 } from 'library/Graphs/Wrappers';
 import { useSize } from 'library/Hooks/useSize';
-import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
@@ -53,11 +51,11 @@ export const Payouts = ({ page }: PageProps) => {
 
   return (
     <>
-      <PageTitle title={t(key, { ns: 'base' })} />
+      <PageTitle title={`${t(key, { ns: 'base' })}`} />
       <StatBoxList>
         <LastEraPayoutStat />
       </StatBoxList>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+      <PageRow>
         <GraphWrapper>
           <SubscanButton />
           <CardHeaderWrapper padded>
@@ -112,11 +110,11 @@ export const Payouts = ({ page }: PageProps) => {
             </div>
           </div>
         </GraphWrapper>
-      </PageRowWrapper>
+      </PageRow>
       {!payoutsList?.length ? (
         <></>
       ) : (
-        <PageRowWrapper className="page-padding" noVerticalSpacer>
+        <PageRow>
           <CardWrapper>
             <PayoutList
               title={t('payouts.recentPayouts', { ns: 'pages' })}
@@ -124,7 +122,7 @@ export const Payouts = ({ page }: PageProps) => {
               pagination
             />
           </CardWrapper>
-        </PageRowWrapper>
+        </PageRow>
       )}
     </>
   );

@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 export interface UIContextInterface {
-  setSideMenu: (v: number) => void;
-  setUserSideMenuMinimised: (v: number) => void;
+  setSideMenu: (v: boolean) => void;
+  setUserSideMenuMinimised: (v: boolean) => void;
   setContainerRefs: (v: any) => void;
   getSyncById: (id: string) => number | null;
   getSyncStart: (id: string) => number;
   setSyncStart: (id: string, start: number) => void;
   getSyncSynced: (id: string) => boolean;
   setSyncSynced: (id: string) => void;
-  sideMenuOpen: number;
-  userSideMenuMinimised: number;
-  sideMenuMinimised: number;
+  sideMenuOpen: boolean;
+  userSideMenuMinimised: boolean;
+  sideMenuMinimised: boolean;
   containerRefs: any;
   isSyncing: boolean;
   isNetworkSyncing: boolean;

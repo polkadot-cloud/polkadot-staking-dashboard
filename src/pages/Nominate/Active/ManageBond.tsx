@@ -2,12 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/core-ui';
+import { ButtonHelp, ButtonPrimary, ButtonRow } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
-import { ButtonRowWrapper } from 'Wrappers';
 import type BigNumber from 'bignumber.js';
-import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
@@ -22,17 +21,17 @@ import { BondedChart } from '../../../library/BarChart/BondedChart';
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
   const { network } = useApi();
-  const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { getLedgerForStash } = useLedgers();
+  const { getStashLedger } = useBalances();
   const { getTransferOptions } = useTransferOptions();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
-  const ledger = getLedgerForStash(activeAccount);
   const { isFastUnstaking } = useUnstaking();
   const { openHelp } = useHelp();
 
+  const { units } = network;
+  const ledger = getStashLedger(activeAccount);
   const { active }: { active: BigNumber } = ledger;
   const allTransferOptions = getTransferOptions(activeAccount);
 
@@ -48,7 +47,7 @@ export const ManageBond = () => {
           <ButtonHelp marginLeft onClick={() => openHelp('Bonding')} />
         </h4>
         <h2>{`${planckToUnit(active, units).toFormat()} ${network.unit}`}</h2>
-        <ButtonRowWrapper>
+        <ButtonRow>
           <ButtonPrimary
             disabled={
               inSetup() ||
@@ -82,11 +81,15 @@ export const ManageBond = () => {
             iconLeft={faLockOpen}
             marginRight
             onClick={() =>
-              openModalWith('UnlockChunks', { bondFor: 'nominator' }, 'small')
+              openModalWith(
+                'UnlockChunks',
+                { bondFor: 'nominator', disableWindowResize: true },
+                'small'
+              )
             }
             text={String(totalUnlockChuncks ?? 0)}
           />
-        </ButtonRowWrapper>
+        </ButtonRow>
       </CardHeaderWrapper>
       <BondedChart
         active={planckToUnit(active, units)}

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import '@polkadotcloud/core-ui/index.css';
+import '@polkadotcloud/react-odometer/index.css';
 import { App } from 'App';
 import { createRoot } from 'react-dom/client';
 import 'styles/index.scss';

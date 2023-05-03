@@ -4,92 +4,6 @@
 import { SectionFullWidthThreshold } from 'consts';
 import styled from 'styled-components';
 
-export const ActiveAccounWrapper = styled.div`
-  width: 100%;
-
-  .account {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    overflow: hidden;
-    width: 100%;
-
-    .icon {
-      position: relative;
-      top: 0.1rem;
-      margin-right: 0.5rem;
-    }
-    .title {
-      margin: 0;
-      padding: 0;
-      flex: 1;
-      overflow: hidden;
-    }
-    .rest {
-      flex: 1 1 0%;
-      min-height: 1.8rem;
-      overflow: hidden;
-      position: relative;
-
-      .name {
-        position: absolute;
-        left: 0;
-        bottom: 0.1rem;
-        max-width: 100%;
-        display: inline;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        opacity: 0.75;
-      }
-    }
-
-    button {
-      width: 2rem;
-      height: 2rem;
-      border-radius: 50%;
-      margin-left: 0.75rem;
-      padding: 0;
-    }
-
-    h3 {
-      margin: 0;
-      display: flex;
-      flex-flow: row wrap;
-      align-items: center;
-      flex: 1;
-
-      > .sep {
-        border-right: 1px solid var(--border-secondary-color);
-        margin: 0 0.8rem;
-        width: 1px;
-        height: 1.25rem;
-      }
-      > .addr {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-      }
-    }
-
-    > *:last-child {
-      flex-grow: 1;
-      display: flex;
-      flex-flow: row-reverse wrap;
-
-      .copy {
-        color: var(--text-color-secondary);
-        opacity: 0.9;
-        cursor: pointer;
-        transition: opacity var(--transition-duration);
-        &:hover {
-          opacity: 1;
-        }
-      }
-    }
-  }
-`;
-
 export const Separator = styled.div`
   border-bottom: 1px solid var(--border-primary-color);
   margin-top: 0.8rem;
@@ -103,7 +17,7 @@ export const MoreWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 2.75rem;
+  margin-top: 3.5rem;
   @media (max-width: ${SectionFullWidthThreshold}px) {
     margin-top: 1rem;
     margin-bottom: 0.5rem;

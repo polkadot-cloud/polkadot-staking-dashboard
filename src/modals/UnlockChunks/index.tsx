@@ -1,7 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useLedgers } from 'contexts/Accounts/Ledgers';
+import { setStateWithRef } from '@polkadotcloud/utils';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -17,7 +18,7 @@ export const UnlockChunks = () => {
   const { activeAccount } = useConnect();
   const { config, setModalHeight } = useModal();
   const { bondFor } = config || {};
-  const { getLedgerForStash } = useLedgers();
+  const { getStashLedger } = useBalances();
   const { getPoolUnlocking } = useActivePools();
 
   // get the unlocking per bondFor
@@ -29,7 +30,7 @@ export const UnlockChunks = () => {
         unlocking = getPoolUnlocking();
         break;
       default:
-        ledger = getLedgerForStash(activeAccount);
+        ledger = getStashLedger(activeAccount);
         unlocking = ledger.unlocking;
     }
     return unlocking;
@@ -38,7 +39,12 @@ export const UnlockChunks = () => {
   const unlocking = getUnlocking();
 
   // active modal section
-  const [section, setSection] = useState(0);
+  const [section, setSectionState] = useState(0);
+  const sectionRef = useRef(section);
+
+  const setSection = (s: number) => {
+    setStateWithRef(s, setSectionState, sectionRef);
+  };
 
   // modal task
   const [task, setTask] = useState<string | null>(null);
@@ -54,7 +60,7 @@ export const UnlockChunks = () => {
   const getModalHeight = () => {
     let h = headerRef.current?.clientHeight ?? 0;
 
-    if (section === 0) {
+    if (sectionRef.current === 0) {
       h += overviewRef.current?.clientHeight ?? 0;
     } else {
       h += formsRef.current?.clientHeight ?? 0;
@@ -65,7 +71,7 @@ export const UnlockChunks = () => {
   // resize modal on state change
   useEffect(() => {
     setModalHeight(getModalHeight());
-  }, [task, section, unlocking]);
+  }, [task, sectionRef.current, unlocking]);
 
   // resize this modal on window resize
   useEffect(() => {
@@ -84,7 +90,7 @@ export const UnlockChunks = () => {
         <Title title={t('unlocks')} fixed />
       </FixedContentWrapper>
       <CardsWrapper
-        animate={section === 0 ? 'home' : 'next'}
+        animate={sectionRef.current === 0 ? 'home' : 'next'}
         transition={{
           duration: 0.5,
           type: 'spring',

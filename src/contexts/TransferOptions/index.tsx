@@ -2,9 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import { useBalances } from 'contexts/Accounts/Balances';
-import type { Lock } from 'contexts/Accounts/Balances/types';
-import { useLedgers } from 'contexts/Accounts/Ledgers';
+import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import React from 'react';
@@ -12,22 +11,14 @@ import type { MaybeAccount } from 'types';
 import * as defaults from './defaults';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
 
-export const TransferOptionsContext =
-  React.createContext<TransferOptionsContextInterface>(
-    defaults.defaultBalancesContext
-  );
-
-export const useTransferOptions = () =>
-  React.useContext(TransferOptionsContext);
-
 export const TransferOptionsProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
   const { activeEra } = useNetworkMetrics();
-  const { getAccount, getAccountBalance, getAccountLocks } = useBalances();
-  const { getLedgerForStash } = useLedgers();
+  const { getStashLedger, getBalance, getLocks } = useBalances();
+  const { getAccount } = useBonded();
   const { membership } = usePoolMemberships();
 
   // get the bond and unbond amounts available to the user
@@ -36,18 +27,21 @@ export const TransferOptionsProvider = ({
     if (account === null) {
       return defaults.transferOptions;
     }
-    const balance = getAccountBalance(address);
-    const ledger = getLedgerForStash(address);
-    const locks = getAccountLocks(address);
+    const balance = getBalance(address);
+    const ledger = getStashLedger(address);
+    const locks = getLocks(address);
 
     const { freeAfterReserve } = balance;
     const { active, total, unlocking } = ledger;
 
-    // calculate total balance locked after staking
-    let totalLockedBalance = new BigNumber(0);
-    locks.forEach((l: Lock) => {
-      totalLockedBalance = totalLockedBalance.plus(l.amount);
-    });
+    // calculate total balance locked
+    const maxLockBalance =
+      locks.reduce(
+        (prev, current) => {
+          return prev.amount.isGreaterThan(current.amount) ? prev : current;
+        },
+        { amount: new BigNumber(0) }
+      )?.amount || new BigNumber(0);
 
     const points = membership?.points;
     const activePool = points ? new BigNumber(points) : new BigNumber(0);
@@ -74,11 +68,15 @@ export const TransferOptionsProvider = ({
         0
       );
 
+      // total additional balance that can be bonded.
+      const totalAdditionalBond = totalPossibleBond.minus(active);
+
       return {
         active,
         totalUnlocking,
         totalUnlocked,
         totalPossibleBond,
+        totalAdditionalBond,
         totalUnlockChuncks: unlocking.length,
       };
     };
@@ -88,9 +86,12 @@ export const TransferOptionsProvider = ({
 
       // total possible balance that can be bonded
       const totalPossibleBondPool = BigNumber.max(
-        freeAfterReserve.minus(totalLockedBalance),
+        freeAfterReserve.minus(maxLockBalance),
         new BigNumber(0)
       );
+
+      // total additional balance that can be bonded.
+      const totalAdditionalBondPool = totalPossibleBondPool;
 
       let totalUnlockingPool = new BigNumber(0);
       let totalUnlockedPool = new BigNumber(0);
@@ -107,6 +108,7 @@ export const TransferOptionsProvider = ({
         totalUnlocking: totalUnlockingPool,
         totalUnlocked: totalUnlockedPool,
         totalPossibleBond: totalPossibleBondPool,
+        totalAdditionalBond: totalAdditionalBondPool,
         totalUnlockChuncks: unlockingPool.length,
       };
     };
@@ -128,3 +130,11 @@ export const TransferOptionsProvider = ({
     </TransferOptionsContext.Provider>
   );
 };
+
+export const TransferOptionsContext =
+  React.createContext<TransferOptionsContextInterface>(
+    defaults.defaultBondedContext
+  );
+
+export const useTransferOptions = () =>
+  React.useContext(TransferOptionsContext);

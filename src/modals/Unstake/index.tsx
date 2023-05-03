@@ -6,8 +6,8 @@ import {
   planckToUnit,
   unitToPlanck,
 } from '@polkadotcloud/utils';
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
@@ -32,7 +32,7 @@ export const Unstake = () => {
   const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getControllerNotImported } = useStaking();
-  const { getBondedAccount, getAccountNominations } = useBalances();
+  const { getBondedAccount, getAccountNominations } = useBonded();
   const { getTransferOptions } = useTransferOptions();
   const { erasToSeconds } = useErasToTimeLeft();
 
@@ -109,7 +109,7 @@ export const Unstake = () => {
 
   const warnings = [];
   if (!accountHasSigner(controller)) {
-    warnings.push(<Warning text={t('readOnly')} />);
+    warnings.push(<Warning text={t('readOnlyCannotSign')} />);
   }
   if (controllerNotImported) {
     warnings.push(<Warning text={t('controllerImported')} />);

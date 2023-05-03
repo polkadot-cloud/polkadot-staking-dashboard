@@ -13,6 +13,7 @@ export const Wrapper = styled.div`
   h2 {
     color: var(--text-color-primary);
     margin-top: 0.5rem;
+    margin-bottom: 1rem;
   }
 `;
 
@@ -73,7 +74,6 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
   }
 
   h4 {
-    margin: 0;
     &.selected {
       color: var(--status-success-color);
       margin-left: 0.75rem;
@@ -126,7 +126,6 @@ export const BraveWarning = styled.div`
     .learn-more {
       color: var(--text-color-secondary);
       text-decoration: underline var(--border-primary-color);
-      font-weight: bold;
     }
   }
 `;
@@ -164,7 +163,6 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
     margin: 0 0.75rem;
   }
   h4 {
-    margin: 0;
     &.selected {
       color: var(--status-success-color);
       margin: 0 0.75rem 0 0;

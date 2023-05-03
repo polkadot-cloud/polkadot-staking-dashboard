@@ -34,7 +34,9 @@ export const Account = ({
     switch (format) {
       case 'name':
         setDisplayValue(
-          value !== '' ? getAccount(value)?.name : clipAddress(value)
+          value !== ''
+            ? getAccount(value)?.name || clipAddress(value)
+            : clipAddress(value)
         );
         break;
       case 'text':

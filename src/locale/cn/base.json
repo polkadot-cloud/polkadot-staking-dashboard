@@ -2,7 +2,6 @@
   "base": {
     "active": "激活",
     "community": "社区",
-    "favorites": "收藏夹",
     "feedback": "反馈",
     "help": "帮助",
     "inactive": "未激活",
@@ -13,10 +12,6 @@
       "account": {
         "subtitle": "收益作为自由余额发到其他帐户",
         "title": "转到其他帐户"
-      },
-      "controller": {
-        "subtitle": "收益作为自由余额发到Controller帐户",
-        "title": "转到Controller帐户"
       },
       "none": {
         "subtitle": "未设置收益到账地址'",

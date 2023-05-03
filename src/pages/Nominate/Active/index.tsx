@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/core-ui';
 import {
-  PageRowWrapper,
-  RowPrimaryWrapper,
-  RowSecondaryWrapper,
-} from 'Wrappers';
-import { SectionFullWidthThreshold, SideMenuStickyThreshold } from 'consts';
-import { useBalances } from 'contexts/Accounts/Balances';
+  ButtonHelp,
+  ButtonPrimary,
+  PageRow,
+  PageTitle,
+  RowSection,
+} from '@polkadotcloud/core-ui';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
@@ -18,10 +18,9 @@ import { useUi } from 'contexts/UI';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { PageTitle } from 'library/PageTitle';
 import { StatBoxList } from 'library/StatBoxList';
 import { useTranslation } from 'react-i18next';
-import { ControllerNotImported } from './ControllerNotImported';
+import { ControllerNotStash } from './ControllerNotStash';
 import { ManageBond } from './ManageBond';
 import { Nominations } from './Nominations';
 import { ActiveNominatorsStat } from './Stats/ActiveNominators';
@@ -36,44 +35,34 @@ export const Active = () => {
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
   const { targets, setTargets, inSetup } = useStaking();
-  const { getAccountNominations } = useBalances();
+  const { getAccountNominations } = useBonded();
   const { isFastUnstaking } = useUnstaking();
   const nominations = getAccountNominations(activeAccount);
   const { openHelp } = useHelp();
 
-  const ROW_HEIGHT = 220;
+  const ROW_HEIGHT = 210;
 
   return (
     <>
-      <PageTitle title={t('nominate.nominate')} />
+      <PageTitle title={`${t('nominate.nominate')}`} />
       <StatBoxList>
         <ActiveNominatorsStat />
         <MinimumNominatorBondStat />
         <MinimumActiveStakeStat />
       </StatBoxList>
-      <ControllerNotImported />
+      <ControllerNotStash />
       <UnstakePrompts />
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
-        <RowPrimaryWrapper
-          hOrder={1}
-          vOrder={0}
-          thresholdStickyMenu={SideMenuStickyThreshold}
-          thresholdFullWidth={SectionFullWidthThreshold}
-        >
+      <PageRow>
+        <RowSection hLast>
           <Status height={ROW_HEIGHT} />
-        </RowPrimaryWrapper>
-        <RowSecondaryWrapper
-          hOrder={0}
-          vOrder={1}
-          thresholdStickyMenu={SideMenuStickyThreshold}
-          thresholdFullWidth={SectionFullWidthThreshold}
-        >
+        </RowSection>
+        <RowSection secondary>
           <CardWrapper height={ROW_HEIGHT}>
             <ManageBond />
           </CardWrapper>
-        </RowSecondaryWrapper>
-      </PageRowWrapper>
-      <PageRowWrapper className="page-padding" noVerticalSpacer>
+        </RowSection>
+      </PageRow>
+      <PageRow>
         <CardWrapper>
           {nominations.length || inSetup() || isSyncing ? (
             <Nominations bondFor="nominator" nominator={activeAccount} />
@@ -115,7 +104,7 @@ export const Active = () => {
             </>
           )}
         </CardWrapper>
-      </PageRowWrapper>
+      </PageRow>
     </>
   );
 };

@@ -15,4 +15,5 @@ export interface UseSubmitExtrinsic {
   uid: number;
   onSubmit: { (customEventInBlock?: string): void };
   submitting: boolean;
+  proxySupported: boolean;
 }

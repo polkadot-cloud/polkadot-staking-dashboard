@@ -60,8 +60,7 @@ export const SelectFavorites = () => {
   };
 
   const totalAfterSelection = nominations.length + selectedFavorites.length;
-  const overMaxNominations =
-    maxNominations.isLessThanOrEqualTo(totalAfterSelection);
+  const overMaxNominations = maxNominations.isLessThan(totalAfterSelection);
 
   return (
     <>

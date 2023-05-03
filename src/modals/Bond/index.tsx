@@ -29,14 +29,20 @@ export const Bond = () => {
   const { bondFor } = config;
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
-  const { freeBalance: freeBalanceBn } = getTransferOptions(activeAccount);
+  const { nominate, pool } = getTransferOptions(activeAccount);
+
+  const freeBalanceBn =
+    bondFor === 'nominator'
+      ? nominate.totalAdditionalBond
+      : pool.totalAdditionalBond;
+
   const freeBalance = planckToUnit(freeBalanceBn, units);
   const largestTxFee = useBondGreatestFee({ bondFor });
 
   // calculate any unclaimed pool rewards.
-  let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
-  unclaimedRewards = planckToUnit(unclaimedRewards, network.units);
+  let { pendingRewards } = selectedActivePool || {};
+  pendingRewards = pendingRewards ?? new BigNumber(0);
+  pendingRewards = planckToUnit(pendingRewards, network.units);
 
   // local bond value.
   const [bond, setBond] = useState<{ bond: string }>({
@@ -112,7 +118,7 @@ export const Bond = () => {
 
   const errors = [];
   if (!accountHasSigner(activeAccount)) {
-    errors.push(t('readOnly'));
+    errors.push(t('readOnlyCannotSign'));
   }
 
   return (
@@ -120,10 +126,10 @@ export const Bond = () => {
       <Close />
       <PaddingWrapper>
         <h2 className="title unbounded">{t('addToBond')}</h2>
-        {unclaimedRewards > 0 && bondFor === 'pool' ? (
+        {pendingRewards > 0 && bondFor === 'pool' ? (
           <WarningsWrapper>
             <Warning
-              text={`${t('bondingWithdraw')} ${unclaimedRewards} ${
+              text={`${t('bondingWithdraw')} ${pendingRewards} ${
                 network.unit
               }.`}
             />

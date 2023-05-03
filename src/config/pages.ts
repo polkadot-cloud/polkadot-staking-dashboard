@@ -1,16 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faHashtag } from '@fortawesome/free-solid-svg-icons';
-import { UriPrefix } from 'consts';
-import analyticsJson from 'img/json/analytics-solid.json';
-import favoriteHeartJson from 'img/json/favorite-heart-solid.json';
-import viewGroupJson from 'img/json/groups-solid.json';
-import viewTrendingUpJson from 'img/json/trending-up-solid.json';
-import view1SolidJson from 'img/json/view-1-solid.json';
-import viewAgendaJson from 'img/json/view-agenda-solid.json';
+import { BaseURL } from 'consts';
 import { Community } from 'pages/Community';
-import { Favorites } from 'pages/Favorites';
 import { Nominate } from 'pages/Nominate';
 import { Overview } from 'pages/Overview';
 import { Payouts } from 'pages/Payouts';
@@ -37,57 +29,49 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 1,
     key: 'overview',
-    uri: `${UriPrefix}/`,
+    uri: `${BaseURL}/`,
     hash: '/overview',
     Entry: Overview,
-    animate: view1SolidJson,
+    lottie: 'globe',
   },
   {
     category: 2,
     key: 'pools',
-    uri: `${UriPrefix}/pools`,
+    uri: `${BaseURL}/pools`,
     hash: '/pools',
     Entry: Pools,
-    animate: viewGroupJson,
+    lottie: 'groups',
   },
   {
     category: 2,
     key: 'nominate',
-    uri: `${UriPrefix}/nominate`,
+    uri: `${BaseURL}/nominate`,
     hash: '/nominate',
     Entry: Nominate,
-    animate: viewTrendingUpJson,
+    lottie: 'trending',
   },
   {
     category: 2,
     key: 'payouts',
-    uri: `${UriPrefix}/payouts`,
+    uri: `${BaseURL}/payouts`,
     hash: '/payouts',
     Entry: Payouts,
-    animate: analyticsJson,
+    lottie: 'analytics',
   },
   {
     category: 3,
     key: 'validators',
-    uri: `${UriPrefix}/validators`,
+    uri: `${BaseURL}/validators`,
     hash: '/validators',
     Entry: Validators,
-    animate: viewAgendaJson,
+    lottie: 'view',
   },
   {
     category: 3,
     key: 'community',
-    uri: `${UriPrefix}/community`,
+    uri: `${BaseURL}/community`,
     hash: '/community',
     Entry: Community,
-    icon: faHashtag,
-  },
-  {
-    category: 3,
-    key: 'favorites',
-    uri: `${UriPrefix}/favorites`,
-    hash: '/favorites',
-    Entry: Favorites,
-    animate: favoriteHeartJson,
+    lottie: 'label',
   },
 ];

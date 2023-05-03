@@ -96,7 +96,7 @@ export const UnbondPoolMember = () => {
         <h2 className="title unbounded">{t('unbondMemberFunds')}</h2>
         {!accountHasSigner(activeAccount) ? (
           <WarningsWrapper>
-            <Warning text={t('readOnly')} />
+            <Warning text={t('readOnlyCannotSign')} />
           </WarningsWrapper>
         ) : null}
         <Action text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />

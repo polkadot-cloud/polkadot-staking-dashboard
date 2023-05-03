@@ -19,19 +19,12 @@ import type {
 } from 'contexts/Validators/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, AnyMetaBatch, Fn } from 'types';
-import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
+import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useActivePools } from '../Pools/ActivePools';
 import * as defaults from './defaults';
-
-export const ValidatorsContext =
-  React.createContext<ValidatorsContextInterface>(
-    defaults.defaultValidatorsContext
-  );
-
-export const useValidators = () => React.useContext(ValidatorsContext);
 
 // wrapper component to provide components with context
 export const ValidatorsProvider = ({
@@ -42,7 +35,7 @@ export const ValidatorsProvider = ({
   const { isReady, api, network, consts } = useApi();
   const { activeAccount } = useConnect();
   const { activeEra, metrics } = useNetworkMetrics();
-  const { balances, getAccountNominations } = useBalances();
+  const { bondedAccounts, getAccountNominations } = useBonded();
   const { poolNominations } = useActivePools();
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
@@ -73,10 +66,7 @@ export const ValidatorsProvider = ({
   const validatorMetaBatchesRef = useRef(validatorMetaBatches);
 
   // stores the meta batch subscriptions for validator lists
-  const [validatorSubs, setValidatorSubs] = useState<{
-    [key: string]: Array<Fn>;
-  }>({});
-  const validatorSubsRef = useRef(validatorSubs);
+  const validatorSubsRef = useRef<Record<string, Fn[]>>({});
 
   // get favorites from local storage
   const getFavorites = () => {
@@ -148,7 +138,7 @@ export const ValidatorsProvider = ({
     if (isReady && activeAccount) {
       fetchNominatedList();
     }
-  }, [isReady, activeAccount, balances]);
+  }, [isReady, activeAccount, bondedAccounts]);
 
   const fetchNominatedList = async () => {
     if (!activeAccount) {
@@ -568,7 +558,7 @@ export const ValidatorsProvider = ({
 
     keyUnsubs.push(...unsubs);
     newUnsubs[key] = keyUnsubs;
-    setStateWithRef(newUnsubs, setValidatorSubs, validatorSubsRef);
+    validatorSubsRef.current = newUnsubs;
   };
 
   const removeValidatorMetaBatch = (key: string) => {
@@ -645,3 +635,10 @@ export const ValidatorsProvider = ({
     </ValidatorsContext.Provider>
   );
 };
+
+export const ValidatorsContext =
+  React.createContext<ValidatorsContextInterface>(
+    defaults.defaultValidatorsContext
+  );
+
+export const useValidators = () => React.useContext(ValidatorsContext);

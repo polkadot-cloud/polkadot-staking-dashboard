@@ -4,7 +4,7 @@
 import BigNumber from 'bignumber.js';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
 
-export const defaultBalancesContext: TransferOptionsContextInterface = {
+export const defaultBondedContext: TransferOptionsContextInterface = {
   // eslint-disable-next-line
   getTransferOptions: (a) => transferOptions,
 };
@@ -16,6 +16,7 @@ export const transferOptions: TransferOptions = {
     totalUnlocking: new BigNumber(0),
     totalUnlocked: new BigNumber(0),
     totalPossibleBond: new BigNumber(0),
+    totalAdditionalBond: new BigNumber(0),
     totalUnlockChuncks: 0,
   },
   pool: {
@@ -23,6 +24,7 @@ export const transferOptions: TransferOptions = {
     totalUnlocking: new BigNumber(0),
     totalUnlocked: new BigNumber(0),
     totalPossibleBond: new BigNumber(0),
+    totalAdditionalBond: new BigNumber(0),
     totalUnlockChuncks: 0,
   },
 };
