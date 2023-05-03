@@ -134,14 +134,16 @@ export const BalancesProvider = ({
 
         const handleAccount = () => {
           const free = new BigNumber(accountData.free.toString());
-          const newBalances: Balances = {
+
+          let newBalances: Balances = {
             address,
             nonce: nonce.toNumber(),
             balance: {
               free,
               reserved: new BigNumber(accountData.reserved.toString()),
-              miscFrozen: new BigNumber(accountData.miscFrozen.toString()),
-              feeFrozen: new BigNumber(accountData.feeFrozen.toString()),
+              frozen: new BigNumber(accountData.frozen),
+              miscFrozen: undefined,
+              feeFrozen: undefined,
               freeAfterReserve: BigNumber.max(
                 free.minus(existentialDeposit),
                 0
@@ -153,6 +155,29 @@ export const BalancesProvider = ({
               amount: new BigNumber(rmCommas(l.amount)),
             })),
           };
+
+          if (accountData.miscFrozen && accountData.feeFrozen) {
+            newBalances = {
+              address,
+              nonce: nonce.toNumber(),
+              balance: {
+                free,
+                reserved: new BigNumber(accountData.reserved.toString()),
+                frozen: undefined,
+                miscFrozen: new BigNumber(accountData.miscFrozen.toString()),
+                feeFrozen: new BigNumber(accountData.feeFrozen.toString()),
+                freeAfterReserve: BigNumber.max(
+                  free.minus(existentialDeposit),
+                  0
+                ),
+              },
+              locks: locks.toHuman().map((l: AnyApi) => ({
+                ...l,
+                id: l.id.trim(),
+                amount: new BigNumber(rmCommas(l.amount)),
+              })),
+            };
+          }
 
           setStateWithRef(
             Object.values(balancesRef.current)

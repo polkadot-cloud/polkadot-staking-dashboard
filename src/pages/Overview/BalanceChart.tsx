@@ -37,7 +37,9 @@ export const BalanceChart = () => {
   );
 
   // user's total balance
-  const { free, miscFrozen } = balance;
+  const { free, miscFrozen, frozen } = balance;
+  const balanceFrozen = miscFrozen ?? frozen;
+
   const totalBalance = planckToUnit(
     free.plus(poolBondOpions.active).plus(unlockingPools),
     units
@@ -88,25 +90,6 @@ export const BalanceChart = () => {
     : new BigNumber(0);
 
   // available balance data
-  const fundsLocked = planckToUnit(miscFrozen.minus(lockStakingAmount), units);
-  let fundsReserved = planckToUnit(existentialDeposit, units);
-  const fundsFree = planckToUnit(allTransferOptions.freeBalance, units).minus(
-    fundsLocked
-  );
-
-  // available balance percentages
-  const graphLocked = greaterThanZero(fundsLocked)
-    ? fundsLocked.dividedBy(graphAvailable.multipliedBy(0.01))
-    : new BigNumber(0);
-
-  const graphFree = greaterThanZero(fundsFree)
-    ? fundsFree.dividedBy(graphAvailable.multipliedBy(0.01))
-    : new BigNumber(0);
-
-  // get total available balance, including reserve and locks
-  if (graphAvailable < fundsReserved) {
-    fundsReserved = graphAvailable;
-  }
 
   // formatter for price feed.
   const usdFormatter = new Intl.NumberFormat('en-US', {
@@ -114,12 +97,50 @@ export const BalanceChart = () => {
     currency: 'USD',
   });
 
-  const isNominating = greaterThanZero(nominating);
-  const isInPool = greaterThanZero(
-    poolBondOpions.active
-      .plus(poolBondOpions.totalUnlocked)
-      .plus(poolBondOpions.totalUnlocking)
-  );
+  let graphLocked = new BigNumber(0);
+  let graphFree = new BigNumber(0);
+  let fundsLocked = new BigNumber(0);
+  let fundsReserved = new BigNumber(0);
+  let fundsFree = new BigNumber(0);
+
+  let isNominating = false;
+  let isInPool = false;
+
+  if (balanceFrozen) {
+    fundsLocked = planckToUnit(balanceFrozen.minus(lockStakingAmount), units);
+
+    fundsReserved = planckToUnit(existentialDeposit, units);
+    fundsFree = planckToUnit(allTransferOptions.freeBalance, units).minus(
+      fundsLocked
+    );
+
+    // available balance percentages
+    graphLocked = greaterThanZero(fundsLocked)
+      ? fundsLocked.dividedBy(graphAvailable.multipliedBy(0.01))
+      : new BigNumber(0);
+
+    graphFree = greaterThanZero(fundsFree)
+      ? fundsFree.dividedBy(graphAvailable.multipliedBy(0.01))
+      : new BigNumber(0);
+
+    // get total available balance, including reserve and locks
+    if (graphAvailable < fundsReserved) {
+      fundsReserved = graphAvailable;
+    }
+
+    // formatter for price feed.
+    // usdFormatter = new Intl.NumberFormat('en-US', {
+    //   style: 'currency',
+    //   currency: 'USD',
+    // });
+
+    isNominating = greaterThanZero(nominating);
+    isInPool = greaterThanZero(
+      poolBondOpions.active
+        .plus(poolBondOpions.totalUnlocked)
+        .plus(poolBondOpions.totalUnlocking)
+    );
+  }
 
   return (
     <>

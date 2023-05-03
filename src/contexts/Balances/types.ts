@@ -23,8 +23,9 @@ export interface Balances {
 export interface Balance {
   free: BigNumber;
   reserved: BigNumber;
-  miscFrozen: BigNumber;
-  feeFrozen: BigNumber;
+  frozen: BigNumber | undefined;
+  miscFrozen: BigNumber | undefined;
+  feeFrozen: BigNumber | undefined;
   freeAfterReserve: BigNumber;
 }
 

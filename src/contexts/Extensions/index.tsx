@@ -65,11 +65,15 @@ export const ExtensionsProvider = ({
   });
   // initialise extensions.
   useEffect(() => {
-    if (!extensions && injectedPresent) {
+    if (
+      onlyWalletConnectExtensionSet(extensions) ||
+      (noExtensionsPresent(extensions) && injectedPresent)
+    ) {
       clearInterval(injectedWeb3Interval);
       // get installed extensions from `injectedWeb3`
       setExtensions(getInstalledExtensions());
-    } else if (!extensions && !injectedPresent) {
+    }
+    if (!extensions && !injectedPresent) {
       // set wallet connect extension if
       // injected extensions aren't present
       const wcPlaceholder: any = {};
@@ -86,6 +90,22 @@ export const ExtensionsProvider = ({
       setExtensions(defaultExts);
     }
   });
+
+  const onlyWalletConnectExtensionSet = (
+    walletExtensions: ExtensionInjected[] | null
+  ): boolean => {
+    return (
+      walletExtensions !== null &&
+      walletExtensions.length === 1 &&
+      walletExtensions[0].id === 'wallet-connect'
+    );
+  };
+
+  const noExtensionsPresent = (
+    walletExtensions: ExtensionInjected[] | null
+  ): boolean => {
+    return !walletExtensions;
+  };
 
   const setExtensionStatus = (id: string, status: string) => {
     setStateWithRef(
