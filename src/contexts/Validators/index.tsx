@@ -19,8 +19,8 @@ import type {
 } from 'contexts/Validators/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, AnyMetaBatch, Fn } from 'types';
-import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
+import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useActivePools } from '../Pools/ActivePools';
@@ -35,7 +35,7 @@ export const ValidatorsProvider = ({
   const { isReady, api, network, consts } = useApi();
   const { activeAccount } = useConnect();
   const { activeEra, metrics } = useNetworkMetrics();
-  const { balances, getAccountNominations } = useBalances();
+  const { bondedAccounts, getAccountNominations } = useBonded();
   const { poolNominations } = useActivePools();
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
@@ -138,7 +138,7 @@ export const ValidatorsProvider = ({
     if (isReady && activeAccount) {
       fetchNominatedList();
     }
-  }, [isReady, activeAccount, balances]);
+  }, [isReady, activeAccount, bondedAccounts]);
 
   const fetchNominatedList = async () => {
     if (!activeAccount) {

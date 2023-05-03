@@ -5,8 +5,8 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmitInvert } from '@polkadotcloud/core-ui';
 import { planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -34,7 +34,7 @@ export const Forms = forwardRef(
     const { removeFromBondedPools } = useBondedPools();
     const { removePoolMember } = usePoolMembers();
     const { setStatus: setModalStatus, config } = useModal();
-    const { getBondedAccount } = useBalances();
+    const { getBondedAccount } = useBonded();
 
     const { bondFor, poolClosure } = config || {};
     const { historyDepth } = consts;

@@ -5,8 +5,8 @@ import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary, ButtonRow } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import type BigNumber from 'bignumber.js';
-import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
@@ -21,17 +21,17 @@ import { BondedChart } from '../../../library/BarChart/BondedChart';
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
   const { network } = useApi();
-  const { units } = network;
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { getLedgerForStash } = useLedgers();
+  const { getStashLedger } = useBalances();
   const { getTransferOptions } = useTransferOptions();
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
-  const ledger = getLedgerForStash(activeAccount);
   const { isFastUnstaking } = useUnstaking();
   const { openHelp } = useHelp();
 
+  const { units } = network;
+  const ledger = getStashLedger(activeAccount);
   const { active }: { active: BigNumber } = ledger;
   const allTransferOptions = getTransferOptions(activeAccount);
 
