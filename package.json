@@ -34,7 +34,7 @@
     "@polkadotcloud/core-ui": "^0.2.39",
     "@polkadotcloud/react-odometer": "0.1.16",
     "@polkadotcloud/utils": "0.2.19",
-    "@substrate/connect": "^0.7.25",
+    "@substrate/connect": "^0.7.26",
     "@types/lodash.throttle": "^4.1.7",
     "@walletconnect/core": "^2.4.4",
     "@walletconnect/qrcode-modal": "1.8.0",
@@ -67,7 +67,7 @@
   "devDependencies": {
     "@ledgerhq/logs": "^6.10.1",
     "@types/lodash.throttle": "^4.1.7",
-    "@types/react": "^18.2.2",
+    "@types/react": "^18.2.5",
     "@types/react-dom": "^18.2.3",
     "@types/react-helmet": "^6.1.6",
     "@types/react-scroll": "^1.8.6",
@@ -95,7 +95,7 @@
     "vite": "^4.3.4",
     "vite-bundle-visualizer": "^0.6.0",
     "vite-plugin-eslint": "^1.8.1",
-    "vite-plugin-svgr": "^2.4.0",
+    "vite-plugin-svgr": "^3.2.0",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^0.31.0"
   }
