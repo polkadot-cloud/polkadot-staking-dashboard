@@ -16,14 +16,16 @@ export type ProxyType =
 export type Proxies = Array<Proxy>;
 
 export interface Proxy {
+  address: MaybeAccount;
   delegator: MaybeAccount;
-  delegates: Array<{
-    delegate: string;
-    proxyType: ProxyType;
-  }>;
+  delegates: Array<ProxyDelegate>;
   reserved: BigNumber;
 }
 
+export interface ProxyDelegate {
+  delegate: string;
+  proxyType: ProxyType;
+}
 export interface Delegates {
   [key: string]: Array<DelegateItem>;
 }
@@ -44,5 +46,7 @@ export interface ProxiedAccount {
 export interface ProxiesContextInterface {
   proxies: Proxies;
   delegates: Delegates;
+  getDelegates: (a: MaybeAccount) => Proxy | undefined;
+  getProxyDelegate: (x: MaybeAccount, y: MaybeAccount) => ProxyDelegate | null;
   getProxiedAccounts: (a: MaybeAccount) => ProxiedAccounts;
 }

@@ -35,7 +35,7 @@ export const ManagePool = () => {
   const canNominate = isOwner() || isNominator();
 
   return (
-    <PageRow noVerticalMargin>
+    <PageRow>
       <CardWrapper>
         {isSyncing ? (
           <Nominations bondFor="pool" nominator={activeAccount} />

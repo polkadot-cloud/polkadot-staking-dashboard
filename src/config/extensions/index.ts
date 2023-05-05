@@ -3,6 +3,7 @@
 
 import type { ExtensionConfig } from 'contexts/Extensions/types';
 import { ReactComponent as EnkryptSVG } from './icons/enkrypt_icon.svg';
+import { ReactComponent as FearlessSVG } from './icons/fearless.svg';
 import { ReactComponent as NovaWalletSVG } from './icons/nova_wallet.svg';
 import { ReactComponent as PolkadotJSSVG } from './icons/polkadot_js.svg';
 import { ReactComponent as SignerSVG } from './icons/signer_icon.svg';
@@ -24,22 +25,16 @@ export const Extensions: Array<ExtensionConfig> = [
       : 'polkadot.js.org/extension',
   },
   {
-    id: 'talisman',
-    title: 'Talisman',
-    icon: TalismanSVG,
-    url: 'talisman.xyz',
-  },
-  {
     id: 'enkrypt',
     title: 'Enkrypt',
     icon: EnkryptSVG,
     url: 'enkrypt.com',
   },
   {
-    id: 'subwallet-js',
-    title: 'SubWallet',
-    icon: SubwalletSVG,
-    url: 'subwallet.app',
+    id: 'fearless-wallet',
+    title: 'Fearless Wallet',
+    icon: FearlessSVG,
+    url: 'fearlesswallet.io',
   },
   {
     id: 'polkagate',
@@ -52,5 +47,17 @@ export const Extensions: Array<ExtensionConfig> = [
     title: 'Parity Signer Companion',
     icon: SignerSVG,
     url: 'parity.io/technologies/signer',
+  },
+  {
+    id: 'subwallet-js',
+    title: 'SubWallet',
+    icon: SubwalletSVG,
+    url: 'subwallet.app',
+  },
+  {
+    id: 'talisman',
+    title: 'Talisman',
+    icon: TalismanSVG,
+    url: 'talisman.xyz',
   },
 ];

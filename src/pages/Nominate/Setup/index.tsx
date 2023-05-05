@@ -2,13 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSecondary, PageRow } from '@polkadotcloud/core-ui';
+import {
+  ButtonSecondary,
+  PageHeading,
+  PageRow,
+  PageTitle,
+} from '@polkadotcloud/core-ui';
 import { extractUrlValue, removeVarFromUrlHash } from '@polkadotcloud/utils';
-import { TopBarWrapper } from 'Wrappers';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { CardWrapper } from 'library/Graphs/Wrappers';
-import { PageTitle } from 'library/PageTitle';
 import { Nominate } from 'library/SetupSteps/Nominate';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -25,9 +28,9 @@ export const Setup = () => {
 
   return (
     <>
-      <PageTitle title={t('nominate.startNominating')} />
-      <PageRow noVerticalMargin>
-        <TopBarWrapper>
+      <PageTitle title={`${t('nominate.startNominating')}`} />
+      <PageRow>
+        <PageHeading>
           <span>
             <ButtonSecondary
               lg
@@ -57,15 +60,15 @@ export const Setup = () => {
             />
           </span>
           <div className="right" />
-        </TopBarWrapper>
+        </PageHeading>
       </PageRow>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           <Element name="payee" style={{ position: 'absolute' }} />
           <Payee section={1} />
         </CardWrapper>
       </PageRow>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           <Element name="nominate" style={{ position: 'absolute' }} />
           <Nominate
@@ -75,13 +78,13 @@ export const Setup = () => {
           />
         </CardWrapper>
       </PageRow>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           <Element name="bond" style={{ position: 'absolute' }} />
           <Bond section={3} />
         </CardWrapper>
       </PageRow>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           <Element name="summary" style={{ position: 'absolute' }} />
           <Summary section={4} />

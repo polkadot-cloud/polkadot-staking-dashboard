@@ -16,6 +16,7 @@ export const MinimumActiveStakeStat = () => {
   const params = {
     label: t('nominate.minimumToEarnRewards'),
     value: planckToUnit(minimumActiveStake, network.units).toNumber(),
+    decimals: 3,
     unit: `${network.unit}`,
     helpKey: 'Bonding',
   };

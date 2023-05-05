@@ -4,7 +4,7 @@
 import BigNumber from 'bignumber.js';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
 
-export const defaultBalancesContext: TransferOptionsContextInterface = {
+export const defaultBondedContext: TransferOptionsContextInterface = {
   // eslint-disable-next-line
   getTransferOptions: (a) => transferOptions,
 };

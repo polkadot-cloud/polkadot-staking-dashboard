@@ -40,7 +40,7 @@ export const List = () => {
   };
 
   return (
-    <PageRow>
+    <PageRow yMargin>
       <ItemsWrapper variants={container} initial="hidden" animate="show">
         {entityItems.map((item: any, index: number) => (
           <Item key={`community_item_${index}`} item={item} actionable />

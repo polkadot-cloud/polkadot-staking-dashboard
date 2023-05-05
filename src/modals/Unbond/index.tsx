@@ -3,8 +3,8 @@
 
 import { isNotZero, planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -32,7 +32,7 @@ export const Unbond = () => {
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
-  const { getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBonded();
   const { bondFor } = config;
   const { stats } = usePoolsConfig();
   const { isDepositor, selectedActivePool } = useActivePools();
@@ -53,9 +53,9 @@ export const Unbond = () => {
     true
   );
 
-  let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
-  unclaimedRewards = planckToUnit(unclaimedRewards, network.units);
+  let { pendingRewards } = selectedActivePool || {};
+  pendingRewards = pendingRewards ?? new BigNumber(0);
+  pendingRewards = planckToUnit(pendingRewards, network.units);
 
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
@@ -149,9 +149,9 @@ export const Unbond = () => {
     warnings.push(t('readOnlyCannotSign'));
   }
 
-  if (unclaimedRewards > 0 && bondFor === 'pool') {
+  if (pendingRewards > 0 && bondFor === 'pool') {
     warnings.push(
-      `${t('unbondingWithdraw')} ${unclaimedRewards} ${network.unit}.`
+      `${t('unbondingWithdraw')} ${pendingRewards} ${network.unit}.`
     );
   }
   if (nominatorActiveBelowMin) {

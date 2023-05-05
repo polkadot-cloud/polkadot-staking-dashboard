@@ -8,13 +8,6 @@ import { useApi } from '../Api';
 import { defaultIdentitiesContext } from './defaults';
 import type { IdentitiesContextInterface } from './types';
 
-// context definition
-export const IdentitiesContext =
-  React.createContext<IdentitiesContextInterface>(defaultIdentitiesContext);
-
-export const useIdentities = () => React.useContext(IdentitiesContext);
-
-// wrapper component to provide components with context
 export const IdentitiesProvider = ({
   children,
 }: {
@@ -28,8 +21,7 @@ export const IdentitiesProvider = ({
   const identitiesMetaBatchesRef = useRef(identitiesMetaBatches);
 
   // stores the meta batch subscriptions for validator lists
-  const [identitiesSubs, setIdentitiesSubs] = useState<AnyApi>({});
-  const identitiesSubsRef = useRef(identitiesSubs);
+  const identitiesSubsRef = useRef<AnyApi>({});
 
   // unsubscribe from any validator meta batches
   useEffect(
@@ -189,7 +181,7 @@ export const IdentitiesProvider = ({
 
     _keyUnsubs.push(...unsubs);
     _unsubs[key] = _keyUnsubs;
-    setStateWithRef(_unsubs, setIdentitiesSubs, identitiesSubsRef);
+    identitiesSubsRef.current = _unsubs;
   };
 
   return (
@@ -203,3 +195,8 @@ export const IdentitiesProvider = ({
     </IdentitiesContext.Provider>
   );
 };
+
+export const IdentitiesContext =
+  React.createContext<IdentitiesContextInterface>(defaultIdentitiesContext);
+
+export const useIdentities = () => React.useContext(IdentitiesContext);

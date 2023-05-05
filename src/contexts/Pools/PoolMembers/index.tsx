@@ -9,11 +9,6 @@ import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
 
-export const PoolMembersContext =
-  React.createContext<PoolMemberContext>(defaultPoolMembers);
-
-export const usePoolMembers = () => React.useContext(PoolMembersContext);
-
 export const PoolMembersProvider = ({
   children,
 }: {
@@ -31,10 +26,7 @@ export const PoolMembersProvider = ({
   const poolMembersMetaBatchesRef = useRef(poolMembersMetaBatches);
 
   // stores the meta batch subscriptions for pool lists
-  const [poolMembersSubs, setPoolMembersSubs] = useState<{
-    [key: string]: Array<Fn>;
-  }>({});
-  const poolMembersSubsRef = useRef(poolMembersSubs);
+  const poolMembersSubs = useRef<Record<string, Fn[]>>({});
 
   // clear existing state for network refresh
   useEffect(() => {
@@ -64,7 +56,7 @@ export const PoolMembersProvider = ({
   };
 
   const unsubscribeAndResetMeta = () => {
-    Object.values(poolMembersSubsRef.current).map((batch: Array<Fn>) =>
+    Object.values(poolMembersSubs.current).map((batch: Array<Fn>) =>
       Object.entries(batch).map(([, v]) => v())
     );
     setStateWithRef({}, setPoolMembersMetaBatch, poolMembersMetaBatchesRef);
@@ -157,8 +149,8 @@ export const PoolMembersProvider = ({
         poolMembersMetaBatchesRef
       );
 
-      if (poolMembersSubsRef.current[key] !== undefined) {
-        for (const unsub of poolMembersSubsRef.current[key]) {
+      if (poolMembersSubs.current[key] !== undefined) {
+        for (const unsub of poolMembersSubs.current[key]) {
           unsub();
         }
       }
@@ -293,11 +285,11 @@ export const PoolMembersProvider = ({
    * Helper: to add mataBatch unsubs by key.
    */
   const addMetaBatchUnsubs = (key: string, unsubs: Array<Fn>) => {
-    const _unsubs = poolMembersSubsRef.current;
+    const _unsubs = poolMembersSubs.current;
     const _keyUnsubs = _unsubs[key] ?? [];
     _keyUnsubs.push(...unsubs);
     _unsubs[key] = _keyUnsubs;
-    setStateWithRef(_unsubs, setPoolMembersSubs, poolMembersSubsRef);
+    poolMembersSubs.current = _unsubs;
   };
 
   // adds a record to poolMembers.
@@ -329,3 +321,8 @@ export const PoolMembersProvider = ({
     </PoolMembersContext.Provider>
   );
 };
+
+export const PoolMembersContext =
+  React.createContext<PoolMemberContext>(defaultPoolMembers);
+
+export const usePoolMembers = () => React.useContext(PoolMembersContext);

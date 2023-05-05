@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { isValidAddress } from '@polkadotcloud/utils';
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
@@ -26,7 +26,7 @@ export const UpdatePayee = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
   const { activeAccount } = useConnect();
-  const { getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBonded();
   const { setStatus: setModalStatus } = useModal();
   const controller = getBondedAccount(activeAccount);
   const { staking, getControllerNotImported } = useStaking();

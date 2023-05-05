@@ -4,22 +4,16 @@
 import { localStorageOrDefault, setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { SideMenuStickyThreshold } from 'consts';
+import { useBalances } from 'contexts/Balances';
 import type { ImportedAccount } from 'contexts/Connect/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import React, { useEffect, useRef, useState } from 'react';
-import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useStaking } from '../Staking';
 import * as defaults from './defaults';
 import type { SyncStart, UIContextInterface } from './types';
-
-export const UIContext = React.createContext<UIContextInterface>(
-  defaults.defaultUIContext
-);
-
-export const useUi = () => React.useContext(UIContext);
 
 export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { isReady } = useApi();
@@ -213,3 +207,9 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     </UIContext.Provider>
   );
 };
+
+export const UIContext = React.createContext<UIContextInterface>(
+  defaults.defaultUIContext
+);
+
+export const useUi = () => React.useContext(UIContext);

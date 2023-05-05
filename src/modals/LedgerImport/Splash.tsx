@@ -6,6 +6,7 @@ import { ButtonHelp, ButtonSecondary } from '@polkadotcloud/core-ui';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
+import { useTheme } from 'contexts/Themes';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
 import { ReactComponent as LogoSVG } from 'img/ledgerLogo.svg';
 import { Title } from 'library/Modal/Title';
@@ -26,6 +27,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     pairDevice,
     getFeedback,
   } = useLedgerHardware();
+  const { mode } = useTheme();
   const { setResize } = useModal();
   const { openHelp } = useHelp();
 
@@ -82,7 +84,10 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
       <Title title="" />
       <SplashWrapper>
         <div className="icon">
-          <LogoSVG style={{ transform: 'scale(0.6)' }} opacity={0.05} />
+          <LogoSVG
+            style={{ transform: 'scale(0.6)' }}
+            opacity={mode === 'dark' ? 0.5 : 0.1}
+          />
         </div>
 
         <div className="content">
