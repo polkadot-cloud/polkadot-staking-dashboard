@@ -78,25 +78,25 @@ export const SubmitTx = ({
       name={signingOpts.who?.name || ''}
       notEnoughFunds={notEnoughFunds}
       dangerMessage={`${t('notEnough', { ns: 'library' })} ${unit}`}
-      requiresManualSign={requiresManualSign(sender)}
-      ManualSign={
-        <ManualSign
-          uid={uid}
-          onSubmit={onSubmit}
-          submitting={submitting}
-          valid={valid}
-          submitText={submitText}
-          buttons={buttons}
-        />
-      }
-      DefaultSign={
-        <Default
-          onSubmit={onSubmit}
-          submitting={submitting}
-          valid={valid}
-          submitText={submitText}
-          buttons={buttons}
-        />
+      sign={
+        requiresManualSign(sender) ? (
+          <ManualSign
+            uid={uid}
+            onSubmit={onSubmit}
+            submitting={submitting}
+            valid={valid}
+            submitText={submitText}
+            buttons={buttons}
+          />
+        ) : (
+          <Default
+            onSubmit={onSubmit}
+            submitting={submitting}
+            valid={valid}
+            submitText={submitText}
+            buttons={buttons}
+          />
+        )
       }
     />
   );
