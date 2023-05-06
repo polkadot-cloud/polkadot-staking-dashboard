@@ -34,7 +34,7 @@ export const BondedPoolsProvider = ({
   const poolSubs = useRef<Record<string, Fn[]>>({});
 
   // store bonded pools
-  const [bondedPools, setBondedPools] = useState<Array<BondedPool>>([]);
+  const [bondedPools, setBondedPools] = useState<BondedPool[]>([]);
 
   // clear existing state for network refresh
   useEffect(() => {
@@ -61,7 +61,7 @@ export const BondedPoolsProvider = ({
   }, [bondedPools]);
 
   const unsubscribe = () => {
-    Object.values(poolSubs.current).map((batch: Array<Fn>) =>
+    Object.values(poolSubs.current).map((batch: Fn[]) =>
       Object.entries(batch).map(([, v]) => v())
     );
     setBondedPools([]);
@@ -215,7 +215,7 @@ export const BondedPoolsProvider = ({
     await Promise.all([
       subscribeToMetadata(ids),
       subscribeToNominations(addresses),
-    ]).then((unsubs: Array<Fn>) => {
+    ]).then((unsubs: Fn[]) => {
       addMetaBatchUnsubs(key, unsubs);
     });
   };
@@ -269,7 +269,7 @@ export const BondedPoolsProvider = ({
   /*
    * Helper: to add mataBatch unsubs by key.
    */
-  const addMetaBatchUnsubs = (key: string, unsubs: Array<Fn>) => {
+  const addMetaBatchUnsubs = (key: string, unsubs: Fn[]) => {
     const _unsubs = poolSubs.current;
     const _keyUnsubs = _unsubs[key] ?? [];
 
@@ -350,7 +350,7 @@ export const BondedPoolsProvider = ({
     return filteredList;
   };
 
-  const updateBondedPools = (updatedPools: Array<BondedPool>) => {
+  const updateBondedPools = (updatedPools: BondedPool[]) => {
     if (!updatedPools) {
       return;
     }

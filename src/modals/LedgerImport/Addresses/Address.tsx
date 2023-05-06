@@ -78,11 +78,11 @@ export const Address = ({ address, index }: AddressProps) => {
       'ledger_addresses',
       [],
       true
-    ) as Array<LedgerAddress>;
+    ) as LedgerAddress[];
     if (!localLedger) {
       return false;
     }
-    localLedger = localLedger?.map((i: LedgerAddress) => {
+    localLedger = localLedger?.map((i) => {
       if (i.address !== address || i.network !== network.name) {
         return i;
       }

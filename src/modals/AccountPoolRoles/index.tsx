@@ -54,7 +54,7 @@ export const AccountPoolRoles = () => {
   );
 };
 
-const Button = ({ item, poolId }: { item: Array<string>; poolId: string }) => {
+const Button = ({ item, poolId }: { item: string[]; poolId: string }) => {
   const { t } = useTranslation('modals');
   const { setStatus } = useModal();
   const { bondedPools } = useBondedPools();

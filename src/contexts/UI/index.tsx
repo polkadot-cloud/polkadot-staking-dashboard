@@ -33,17 +33,17 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const [isSyncing, setIsSyncing] = useState(false);
 
   // store sync start times.
-  const [syncStarts, setSyncStarts] = useState<Array<SyncStart>>([]);
+  const [syncStarts, setSyncStarts] = useState<SyncStart[]>([]);
 
   // gets the id of a sync
   const getSyncById = (id: string) => {
-    const existing = syncStarts.find((s: SyncStart) => s.id === id);
+    const existing = syncStarts.find((s) => s.id === id);
     return existing?.start || null;
   };
 
   // get a sync start for an id
   const getSyncStart = (id: string) => {
-    const existing = syncStarts.find((s: SyncStart) => s.id === id);
+    const existing = syncStarts.find((s) => s.id === id);
     return existing?.start || 0;
   };
 

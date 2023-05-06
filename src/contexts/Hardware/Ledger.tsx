@@ -37,9 +37,9 @@ export const LedgerHardwareProvider = ({
   const { t } = useTranslation('modals');
   const { network } = useApi();
 
-  const [ledgerAccounts, setLedgerAccountsState] = useState<
-    Array<LedgerAccount>
-  >(getLocalLedgerAccounts(network.name));
+  const [ledgerAccounts, setLedgerAccountsState] = useState<LedgerAccount[]>(
+    getLocalLedgerAccounts(network.name)
+  );
   const ledgerAccountsRef = useRef(ledgerAccounts);
 
   // Store whether the device has been paired.
@@ -51,7 +51,7 @@ export const LedgerHardwareProvider = ({
   const isExecutingRef = useRef(isExecuting);
 
   // Store status codes received from Ledger device.
-  const [statusCodes, setStatusCodes] = useState<Array<LedgerResponse>>([]);
+  const [statusCodes, setStatusCodes] = useState<LedgerResponse[]>([]);
   const statusCodesRef = useRef(statusCodes);
 
   // Get the default message to display, set when a failed loop has happened.
@@ -185,7 +185,7 @@ export const LedgerHardwareProvider = ({
   // all Ledger tasks, along with errors that occur during the process.
   const executeLedgerLoop = async (
     appName: string,
-    tasks: Array<LedgerTask>,
+    tasks: LedgerTask[],
     options?: AnyJson
   ) => {
     try {

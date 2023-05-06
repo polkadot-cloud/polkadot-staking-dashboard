@@ -120,7 +120,7 @@ export const usePoolFilters = () => {
   };
 
   // get filter functions from keys and type of filter.
-  const getFiltersFromKey = (key: Array<string>, type: string) => {
+  const getFiltersFromKey = (key: string[], type: string) => {
     const filters = type === 'include' ? includeToFunction : excludeToFunction;
     const fns = [];
     for (const k of key) {
@@ -133,8 +133,8 @@ export const usePoolFilters = () => {
 
   // applies filters based on the provided include and exclude keys.
   const applyFilter = (
-    includes: Array<string> | null,
-    excludes: Array<string> | null,
+    includes: string[] | null,
+    excludes: string[] | null,
     list: AnyJson,
     batchKey: string
   ) => {

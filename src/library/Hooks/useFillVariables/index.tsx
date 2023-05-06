@@ -19,7 +19,7 @@ export const useFillVariables = () => {
   const { metrics } = useNetworkMetrics();
   const { minimumActiveStake } = metrics;
 
-  const fillVariables = (d: AnyJson, keys: Array<string>) => {
+  const fillVariables = (d: AnyJson, keys: string[]) => {
     const fields: AnyJson = Object.entries(d).filter(([k]: any) =>
       keys.includes(k)
     );

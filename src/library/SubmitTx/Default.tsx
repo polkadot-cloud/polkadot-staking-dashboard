@@ -15,7 +15,7 @@ export const Default = ({
   valid,
   submitText,
   buttons,
-}: SubmitProps & { buttons?: Array<React.ReactNode> }) => {
+}: SubmitProps & { buttons?: React.ReactNode[] }) => {
   const { txFeesValid } = useTxMeta();
   const { activeAccount, accountHasSigner } = useConnect();
   const disabled =

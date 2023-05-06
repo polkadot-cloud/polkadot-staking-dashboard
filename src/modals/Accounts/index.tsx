@@ -51,7 +51,7 @@ export const Accounts = () => {
   >([]);
 
   const getAccountsStatus = () => {
-    const stashes: Array<string> = [];
+    const stashes: string[] = [];
 
     // accumulate imported stash accounts
     for (const { address } of localAccounts) {

@@ -33,7 +33,7 @@ export const FiltersProvider = ({
   const [searchTerms, setSearchTerms] = useState<FilterSearches>([]);
 
   // Get stored includes or excludes for a group.
-  const getFilters = (t: FilterType, g: string): Array<string> | null => {
+  const getFilters = (t: FilterType, g: string): string[] | null => {
     const current = t === 'exclude' ? excludes : includes;
     return current.find((e: FilterItem) => e.key === g)?.filters || null;
   };
@@ -80,7 +80,7 @@ export const FiltersProvider = ({
   const setMultiFilters = (
     t: FilterType,
     g: string,
-    fs: Array<string>,
+    fs: string[],
     reset: boolean
   ) => {
     // get the current filters from the group.

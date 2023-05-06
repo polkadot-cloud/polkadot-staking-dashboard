@@ -33,14 +33,10 @@ export const NominateFromFavorites = () => {
   const signingAccount = bondFor === 'pool' ? activeAccount : controller;
 
   // store filtered favorites
-  const [availableFavorites, setAvailableFavorites] = useState<
-    Array<Validator>
-  >([]);
+  const [availableFavorites, setAvailableFavorites] = useState<Validator[]>([]);
 
   // store selected favorites in local state
-  const [selectedFavorites, setSelectedFavorites] = useState<Array<Validator>>(
-    []
-  );
+  const [selectedFavorites, setSelectedFavorites] = useState<Validator[]>([]);
 
   // store filtered favorites
   useEffect(() => {

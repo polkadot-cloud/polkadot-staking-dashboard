@@ -78,11 +78,11 @@ export const getLocalLedgerAccounts = (
   network: Network,
   activeNetworkOnly = false
 ) => {
-  let localLedgerAccounts = localStorageOrDefault<Array<LedgerAccount>>(
+  let localLedgerAccounts = localStorageOrDefault<LedgerAccount[]>(
     'ledger_accounts',
     [],
     true
-  ) as Array<LedgerAccount>;
+  ) as LedgerAccount[];
   if (activeNetworkOnly) {
     localLedgerAccounts = localLedgerAccounts.filter(
       (l: LedgerAccount) => l.network === network.name
@@ -97,11 +97,11 @@ export const getLocalExternalAccounts = (
   network: Network,
   activeNetworkOnly = false
 ) => {
-  let localExternalAccounts = localStorageOrDefault<Array<ExternalAccount>>(
+  let localExternalAccounts = localStorageOrDefault<ExternalAccount[]>(
     'external_accounts',
     [],
     true
-  ) as Array<ExternalAccount>;
+  ) as ExternalAccount[];
   if (activeNetworkOnly) {
     localExternalAccounts = localExternalAccounts.filter(
       (l: ExternalAccount) => l.network === network.name
@@ -112,7 +112,7 @@ export const getLocalExternalAccounts = (
 
 // gets accounts that exist in local `external_accounts`
 export const getInExternalAccounts = (
-  accounts: Array<ExtensionAccount>,
+  accounts: ExtensionAccount[],
   network: Network
 ) => {
   const localExternalAccounts = getLocalExternalAccounts(network, true);
@@ -130,7 +130,7 @@ export const getInExternalAccounts = (
 // removes supplied accounts from local `external_accounts`.
 export const removeLocalExternalAccounts = (
   network: Network,
-  accounts: Array<ExternalAccount>
+  accounts: ExternalAccount[]
 ) => {
   let localExternalAccounts = getLocalExternalAccounts(network, true);
   localExternalAccounts = localExternalAccounts.filter(

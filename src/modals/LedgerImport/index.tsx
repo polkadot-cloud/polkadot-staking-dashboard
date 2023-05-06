@@ -51,7 +51,7 @@ export const LedgerImport: React.FC = () => {
   });
 
   // Store addresses retreived from Ledger device. Defaults to local addresses.
-  const [addresses, setAddresses] = useState<Array<LedgerAddress>>(
+  const [addresses, setAddresses] = useState<LedgerAddress[]>(
     getLocalLedgerAddresses(network.name)
   );
   const addressesRef = useRef(addresses);
@@ -59,7 +59,7 @@ export const LedgerImport: React.FC = () => {
   const removeLedgerAddress = (address: string) => {
     let newLedgerAddresses = getLocalLedgerAddresses();
 
-    newLedgerAddresses = newLedgerAddresses.filter((a: LedgerAddress) => {
+    newLedgerAddresses = newLedgerAddresses.filter((a) => {
       if (a.address !== address) {
         return true;
       }

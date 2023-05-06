@@ -49,7 +49,7 @@ export const UnbondFeedback = ({
   const { active } = transferOptions;
 
   // store errors
-  const [errors, setErrors] = useState<Array<string>>([]);
+  const [errors, setErrors] = useState<string[]>([]);
 
   // local bond state
   const [bond, setBond] = useState<{ bond: string }>({

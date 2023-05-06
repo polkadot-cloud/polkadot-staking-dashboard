@@ -20,7 +20,7 @@ import type {
   StakingTargets,
 } from 'contexts/Staking/types';
 import React, { useEffect, useRef, useState } from 'react';
-import type { AnyApi, MaybeAccount } from 'types';
+import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
@@ -303,7 +303,7 @@ export const StakingProvider = ({
    */
   const getNominationsStatusFromTargets = (
     who: MaybeAccount,
-    _targets: Array<any>
+    _targets: AnyJson[]
   ) => {
     const statuses: Record<string, string> = {};
 

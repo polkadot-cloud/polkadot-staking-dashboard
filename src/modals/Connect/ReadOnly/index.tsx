@@ -19,11 +19,11 @@ export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
   // get all external accounts
   const externalAccountsOnly = accounts.filter(
     (a: ImportedAccount) => a.source === 'external'
-  ) as Array<ExternalAccount>;
+  ) as ExternalAccount[];
 
   // get external accounts added by user
   const externalAccountsByUser = externalAccountsOnly.filter(
-    (a: ExternalAccount) => a.addedBy === 'user'
+    (a) => a.addedBy === 'user'
   );
 
   // forget account

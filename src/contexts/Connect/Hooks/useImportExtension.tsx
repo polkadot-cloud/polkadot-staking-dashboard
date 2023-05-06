@@ -28,10 +28,10 @@ export const useImportExtension = () => {
   // connected extensions. Calls separate method to handle account importing.
   const handleImportExtension = (
     id: string,
-    currentAccounts: Array<ExtensionAccount>,
+    currentAccounts: ExtensionAccount[],
     extension: ExtensionInterface,
-    newAccounts: Array<ExtensionAccount>,
-    forget: (a: Array<ImportedAccount>) => void
+    newAccounts: ExtensionAccount[],
+    forget: (a: ImportedAccount[]) => void
   ): HandleImportExtension => {
     // update extensions status to connected.
     setExtensionStatus(id, 'connected');
@@ -55,10 +55,10 @@ export const useImportExtension = () => {
   // Gets accounts to be imported and commits them to state.
   const handleInjectedAccounts = (
     id: string,
-    currentAccounts: Array<ExtensionAccount>,
+    currentAccounts: ExtensionAccount[],
     extension: ExtensionInterface,
-    newAccounts: Array<ExtensionAccount>,
-    forget: (a: Array<ImportedAccount>) => void
+    newAccounts: ExtensionAccount[],
+    forget: (a: ImportedAccount[]) => void
   ): HandleImportExtension => {
     // set network ss58 format
     const keyring = new Keyring();
@@ -122,7 +122,7 @@ export const useImportExtension = () => {
   // Get active extension account.
   //
   // checks if the local active account is in the extension.
-  const getActiveExtensionAccount = (accounts: Array<ImportedAccount>) =>
+  const getActiveExtensionAccount = (accounts: ImportedAccount[]) =>
     accounts.find(
       (a: ExtensionAccount) => a.address === getActiveAccountLocal(network)
     ) ?? null;

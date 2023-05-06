@@ -68,7 +68,7 @@ export const Help = () => {
     );
   } else {
     // get all items
-    let _definitions: Array<string> = [];
+    let _definitions: string[] = [];
     let _external: ExternalItems = [];
 
     Object.values(HelpConfig).forEach((c: HelpItem) => {

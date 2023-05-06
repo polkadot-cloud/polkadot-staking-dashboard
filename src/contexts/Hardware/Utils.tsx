@@ -19,7 +19,7 @@ export const getLocalLedgerAddresses = (network?: string) => {
     'ledger_addresses',
     [],
     true
-  ) as Array<LedgerAddress>;
+  ) as LedgerAddress[];
 
   if (network) {
     return localAddresses.filter((a: LedgerAddress) => a.network === network);
@@ -33,7 +33,7 @@ export const getLocalLedgerAccounts = (network?: string) => {
     'ledger_accounts',
     [],
     true
-  ) as Array<LedgerAccount>;
+  ) as LedgerAccount[];
 
   if (network) {
     return localAddresses.filter((a: LedgerAccount) => a.network === network);

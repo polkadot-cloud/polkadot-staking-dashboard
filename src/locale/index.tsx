@@ -21,7 +21,7 @@ export const locales: Record<string, AnyJson> = {
 };
 
 // available languages as an array of strings.
-export const availableLanguages: Array<Array<string>> = [
+export const availableLanguages: Array<string[]> = [
   ['en', 'English'],
   ['cn', '中文'],
 ];
@@ -79,9 +79,7 @@ if (dynamicLoad) {
 
 // map i18n to BCP 47 keys, with any custom amendments.
 const i18ToLocaleMap: Record<string, string> = {
-  ...Object.fromEntries(
-    availableLanguages.map((a: Array<string>) => [a[0], a[0]])
-  ),
+  ...Object.fromEntries(availableLanguages.map((a) => [a[0], a[0]])),
   en: 'en-gb',
   cn: 'zh-cn',
 };

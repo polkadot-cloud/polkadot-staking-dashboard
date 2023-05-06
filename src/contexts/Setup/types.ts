@@ -3,7 +3,7 @@
 
 import type { PoolRoles } from 'contexts/Pools/types';
 import type { ValidatorPrefs } from 'contexts/Validators/types';
-import type { BondFor, MaybeAccount, MaybeString } from 'types';
+import type { AnyJson, BondFor, MaybeAccount, MaybeString } from 'types';
 
 export type PayeeOptions =
   | 'Staked'
@@ -21,7 +21,7 @@ export interface NominatorSetup {
 
 export interface NominatorProgress {
   payee: PayeeConfig;
-  nominations: Array<any>;
+  nominations: AnyJson[];
   bond: MaybeString;
 }
 
@@ -40,7 +40,7 @@ export interface PoolSetup {
 export interface PoolProgress {
   metadata: string;
   bond: string;
-  nominations: Array<{ address: string; prefs: ValidatorPrefs }>;
+  nominations: { address: string; prefs: ValidatorPrefs }[];
   roles: PoolRoles | null;
 }
 

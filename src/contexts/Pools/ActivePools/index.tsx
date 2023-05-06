@@ -44,7 +44,7 @@ export const ActivePoolsProvider = ({
   }, [activeAccount, bondedPools, membership]);
 
   // stores member's active pools
-  const [activePools, setActivePools] = useState<Array<ActivePool>>([]);
+  const [activePools, setActivePools] = useState<ActivePool[]>([]);
   const activePoolsRef = useRef(activePools);
 
   // store active pools unsubs

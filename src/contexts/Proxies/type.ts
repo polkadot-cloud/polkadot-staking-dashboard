@@ -13,12 +13,12 @@ export type ProxyType =
   | 'CancelProxy'
   | 'Auction';
 
-export type Proxies = Array<Proxy>;
+export type Proxies = Proxy[];
 
 export interface Proxy {
   address: MaybeAccount;
   delegator: MaybeAccount;
-  delegates: Array<ProxyDelegate>;
+  delegates: ProxyDelegate[];
   reserved: BigNumber;
 }
 
@@ -33,7 +33,7 @@ export interface DelegateItem {
   proxyType: ProxyType;
 }
 
-export type ProxiedAccounts = Array<ProxiedAccount>;
+export type ProxiedAccounts = ProxiedAccount[];
 
 export interface ProxiedAccount {
   address: string;

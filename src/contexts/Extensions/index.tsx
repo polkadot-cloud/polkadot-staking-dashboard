@@ -26,7 +26,7 @@ export const ExtensionsProvider = ({
     useState<boolean>(true);
 
   // store the installed extensions in state
-  const [extensions, setExtensions] = useState<Array<ExtensionInjected> | null>(
+  const [extensions, setExtensions] = useState<ExtensionInjected[] | null>(
     null
   );
 
@@ -87,7 +87,7 @@ export const ExtensionsProvider = ({
 
   const getInstalledExtensions = () => {
     const { injectedWeb3 }: AnyApi = window;
-    const installed: Array<ExtensionInjected> = [];
+    const installed: ExtensionInjected[] = [];
     Extensions.forEach((e: ExtensionConfig) => {
       if (injectedWeb3[e.id] !== undefined) {
         installed.push({

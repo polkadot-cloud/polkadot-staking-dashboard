@@ -57,7 +57,7 @@ export interface PageCategory {
   key: string;
 }
 
-export type PageCategoryItems = Array<PageCategory>;
+export type PageCategoryItems = PageCategory[];
 
 export interface PageItem {
   category: number;
@@ -73,7 +73,7 @@ export interface PageItem {
   };
 }
 
-export type PagesConfigItems = Array<PageItem>;
+export type PagesConfigItems = PageItem[];
 
 export type MaybeAccount = string | null;
 

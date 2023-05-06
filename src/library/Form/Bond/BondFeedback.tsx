@@ -57,7 +57,7 @@ export const BondFeedback = ({
   const freeBalance = planckToUnit(freeBondAmount, units);
 
   // store errors
-  const [errors, setErrors] = useState<Array<string>>([]);
+  const [errors, setErrors] = useState<string[]>([]);
 
   // local bond state
   const [bond, setBond] = useState<{ bond: string }>({

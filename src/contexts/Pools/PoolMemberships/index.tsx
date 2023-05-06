@@ -23,9 +23,7 @@ export const PoolMembershipsProvider = ({
   const { accounts: connectAccounts, activeAccount } = useConnect();
 
   // stores pool membership
-  const [poolMemberships, setPoolMemberships] = useState<Array<PoolMembership>>(
-    []
-  );
+  const [poolMemberships, setPoolMemberships] = useState<PoolMembership[]>([]);
   const poolMembershipsRef = useRef(poolMemberships);
 
   // stores pool subscription objects

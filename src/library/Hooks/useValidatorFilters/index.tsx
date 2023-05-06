@@ -181,8 +181,8 @@ export const useValidatorFilters = () => {
   };
 
   const applyFilter = (
-    includes: Array<string> | null,
-    excludes: Array<string> | null,
+    includes: string[] | null,
+    excludes: string[] | null,
     list: AnyJson,
     batchKey: string
   ) => {
