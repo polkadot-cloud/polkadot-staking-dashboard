@@ -40,7 +40,7 @@ export const Address = ({ address, index }: AddressProps) => {
   // store the current name of the address
   const initialName = (() => {
     const localAddress = getLocalLedgerAddresses().find(
-      (i: LedgerAddress) => i.address === address && i.network === network.name
+      (i) => i.address === address && i.network === network.name
     );
     return localAddress?.name
       ? unescape(localAddress.name)

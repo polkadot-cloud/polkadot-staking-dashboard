@@ -288,7 +288,7 @@ export const BondedPoolsProvider = ({
   });
 
   const getBondedPool = (poolId: MaybePool) => {
-    const pool = bondedPools.find((p: BondedPool) => p.id === poolId) ?? null;
+    const pool = bondedPools.find((p) => p.id === poolId) ?? null;
     return pool;
   };
 
@@ -355,10 +355,8 @@ export const BondedPoolsProvider = ({
       return;
     }
     const _bondedPools = bondedPools.map(
-      (original: BondedPool) =>
-        updatedPools.find(
-          (updated: BondedPool) => updated.id === original.id
-        ) || original
+      (original) =>
+        updatedPools.find((updated) => updated.id === original.id) || original
     );
     setBondedPools(_bondedPools);
   };
@@ -373,7 +371,7 @@ export const BondedPoolsProvider = ({
   const addToBondedPools = (pool: BondedPool) => {
     if (!pool) return;
 
-    const exists = bondedPools.find((b: BondedPool) => b.id === pool.id);
+    const exists = bondedPools.find((b) => b.id === pool.id);
     if (!exists) {
       const _bondedPools = bondedPools.concat(pool);
       setBondedPools(_bondedPools);
@@ -425,7 +423,7 @@ export const BondedPoolsProvider = ({
     Object.entries(roles).forEach(([key, poolIds]: any) => {
       // now looping through a role
       poolIds.forEach((poolId: string) => {
-        const exists = Object.keys(pools).find((k: string) => k === poolId);
+        const exists = Object.keys(pools).find((k) => k === poolId);
         if (!exists) {
           pools[poolId] = [key];
         } else {
@@ -451,9 +449,7 @@ export const BondedPoolsProvider = ({
 
   // replaces the pool roles from roleEdits
   const replacePoolRoles = (poolId: number, roleEdits: any) => {
-    let pool =
-      bondedPools.find((b: BondedPool) => String(b.id) === String(poolId)) ||
-      null;
+    let pool = bondedPools.find((b) => String(b.id) === String(poolId)) || null;
 
     if (!pool) return;
 

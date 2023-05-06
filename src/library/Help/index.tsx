@@ -61,15 +61,15 @@ export const Help = () => {
 
   if (definition) {
     // get items for active category
-    meta = Object.values(HelpConfig).find((c: HelpItem) =>
-      c?.definitions?.find((d: string) => d === definition)
+    meta = Object.values(HelpConfig).find((c) =>
+      c?.definitions?.find((d) => d === definition)
     );
   } else {
     // get all items
     let _definitions: string[] = [];
     let _external: ExternalItems = [];
 
-    Object.values(HelpConfig).forEach((c: HelpItem) => {
+    Object.values(HelpConfig).forEach((c) => {
       _definitions = _definitions.concat([...(c.definitions || [])]);
       _external = _external.concat([...(c.external || [])]);
     });
@@ -98,7 +98,7 @@ export const Help = () => {
 
   // get active definiton
   const activeRecord = definition
-    ? definitions.find((d: string) => d === definition)
+    ? definitions.find((d) => d === definition)
     : null;
 
   let activeDefinition: DefinitionWithKeys | null = null;

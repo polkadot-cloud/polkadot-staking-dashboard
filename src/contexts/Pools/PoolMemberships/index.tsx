@@ -124,7 +124,7 @@ export const PoolMembershipsProvider = ({
       return defaults.poolMembership;
     }
     const poolMembership = poolMembershipsRef.current.find(
-      (m: PoolMembership) => m.address === activeAccount
+      (m) => m.address === activeAccount
     );
     if (poolMembership === undefined) {
       return defaults.poolMembership;

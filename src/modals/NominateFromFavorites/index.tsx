@@ -42,7 +42,7 @@ export const NominateFromFavorites = () => {
   useEffect(() => {
     if (favoritesList) {
       const _availableFavorites = favoritesList.filter(
-        (favorite: Validator) =>
+        (favorite) =>
           !nominations.find(
             (nomination: string) => nomination === favorite.address
           ) && !favorite.prefs.blocked

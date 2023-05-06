@@ -5,7 +5,7 @@ import Keyring from '@polkadot/keyring';
 import { localStorageOrDefault } from '@polkadotcloud/utils';
 import type { ExtensionAccount } from 'contexts/Extensions/types';
 import type { Network } from 'types';
-import type { ExternalAccount, ImportedAccount, LedgerAccount } from './types';
+import type { ExternalAccount, LedgerAccount } from './types';
 
 // extension utils
 
@@ -50,8 +50,7 @@ export const extensionIsLocal = (id: string) => {
   );
   let foundExtensionLocally = false;
   if (Array.isArray(localExtensions)) {
-    foundExtensionLocally =
-      localExtensions.find((l: string) => l === id) !== undefined;
+    foundExtensionLocally = localExtensions.find((l) => l === id) !== undefined;
   }
   return foundExtensionLocally;
 };
@@ -119,10 +118,7 @@ export const getInExternalAccounts = (
 
   return (
     localExternalAccounts.filter(
-      (a: ExternalAccount) =>
-        (accounts || []).find(
-          (b: ExtensionAccount) => b.address === a.address
-        ) !== undefined
+      (a) => (accounts || []).find((b) => b.address === a.address) !== undefined
     ) || []
   );
 };
@@ -134,10 +130,9 @@ export const removeLocalExternalAccounts = (
 ) => {
   let localExternalAccounts = getLocalExternalAccounts(network, true);
   localExternalAccounts = localExternalAccounts.filter(
-    (a: ExternalAccount) =>
+    (a) =>
       accounts.find(
-        (b: ImportedAccount) =>
-          b.address === a.address && a.network === network.name
+        (b) => b.address === a.address && a.network === network.name
       ) === undefined
   );
   localStorage.setItem(

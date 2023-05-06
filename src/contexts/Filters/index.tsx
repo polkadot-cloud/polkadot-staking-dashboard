@@ -35,7 +35,7 @@ export const FiltersProvider = ({
   // Get stored includes or excludes for a group.
   const getFilters = (t: FilterType, g: string): string[] | null => {
     const current = t === 'exclude' ? excludes : includes;
-    return current.find((e: FilterItem) => e.key === g)?.filters || null;
+    return current.find((e) => e.key === g)?.filters || null;
   };
 
   const setFilters = (t: FilterType, n: FilterItems) => {
@@ -115,7 +115,7 @@ export const FiltersProvider = ({
 
   // Get the current order of a list or null.
   const getOrder = (g: string) =>
-    orders.find((o: FilterOrder) => o.key === g)?.order || 'default';
+    orders.find((o) => o.key === g)?.order || 'default';
 
   // Sets an order key for a group.
   const setOrder = (g: string, o: string) => {
@@ -134,7 +134,7 @@ export const FiltersProvider = ({
 
   // Get the current search term of a list or null.
   const getSearchTerm = (g: string) =>
-    searchTerms.find((o: FilterSearch) => o.key === g)?.searchTerm || null;
+    searchTerms.find((o) => o.key === g)?.searchTerm || null;
 
   // Sets an order key for a group.
   const setSearchTerm = (g: string, t: string) => {

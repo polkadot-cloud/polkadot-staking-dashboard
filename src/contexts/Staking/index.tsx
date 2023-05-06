@@ -10,7 +10,7 @@ import {
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useBalances } from 'contexts/Balances';
-import type { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
+import type { ExternalAccount } from 'contexts/Connect/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type {
   EraStakers,
@@ -339,9 +339,7 @@ export const StakingProvider = ({
       return false;
     }
     // check if controller is imported
-    const exists = connectAccounts.find(
-      (acc: ImportedAccount) => acc.address === address
-    );
+    const exists = connectAccounts.find((acc) => acc.address === address);
     if (exists === undefined) {
       return false;
     }
@@ -358,9 +356,7 @@ export const StakingProvider = ({
       return false;
     }
     // check if controller is imported
-    const exists = connectAccounts.find(
-      (acc: ImportedAccount) => acc.address === address
-    );
+    const exists = connectAccounts.find((acc) => acc.address === address);
     if (exists === undefined) {
       return true;
     }

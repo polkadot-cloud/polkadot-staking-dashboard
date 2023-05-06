@@ -94,14 +94,12 @@ export const ActivePoolsProvider = ({
 
   const getActivePoolMembership = () =>
     // get the activePool that the active account
-    activePoolsRef.current.find((a: ActivePool) => {
+    activePoolsRef.current.find((a) => {
       const p = membership?.poolId ? String(membership.poolId) : '0';
       return String(a.id) === p;
     }) || null;
   const getSelectedActivePool = () =>
-    activePoolsRef.current.find(
-      (a: ActivePool) => a.id === Number(selectedPoolId)
-    ) || null;
+    activePoolsRef.current.find((a) => a.id === Number(selectedPoolId)) || null;
 
   const getSelectedPoolNominations = () =>
     poolNominationsRef.current[Number(selectedPoolId) ?? -1] ||
@@ -122,7 +120,7 @@ export const ActivePoolsProvider = ({
     const defaultSelected = membership?.poolId || accountPools[0] || null;
     const activePoolSelected =
       activePoolsRef.current.find(
-        (a: ActivePool) => String(a.id) === String(selectedPoolId)
+        (a) => String(a.id) === String(selectedPoolId)
       ) || null;
 
     if (defaultSelected && !activePoolSelected) {

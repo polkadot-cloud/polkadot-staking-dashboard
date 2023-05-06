@@ -336,20 +336,18 @@ export const LedgerHardwareProvider = ({
 
   // Check if an address exists in imported addresses.
   const ledgerAccountExists = (address: string) =>
-    !!getLocalLedgerAccounts().find((a: LedgerAccount) =>
-      isLocalAddress(a, address)
-    );
+    !!getLocalLedgerAccounts().find((a) => isLocalAddress(a, address));
 
   const addLedgerAccount = (address: string, index: number) => {
     let newLedgerAccounts = getLocalLedgerAccounts();
 
-    const ledgerAddress = getLocalLedgerAddresses().find((a: LedgerAddress) =>
+    const ledgerAddress = getLocalLedgerAddresses().find((a) =>
       isLocalAddress(a, address)
     );
 
     if (
       ledgerAddress &&
-      !newLedgerAccounts.find((a: LedgerAccount) => isLocalAddress(a, address))
+      !newLedgerAccounts.find((a) => isLocalAddress(a, address))
     ) {
       const account = {
         address,
@@ -416,11 +414,7 @@ export const LedgerHardwareProvider = ({
     if (!localLedgerAccounts) {
       return null;
     }
-    return (
-      localLedgerAccounts.find((a: LedgerAccount) =>
-        isLocalAddress(a, address)
-      ) ?? null
-    );
+    return localLedgerAccounts.find((a) => isLocalAddress(a, address)) ?? null;
   };
 
   const renameLedgerAccount = (address: string, newName: string) => {

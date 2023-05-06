@@ -10,7 +10,6 @@ import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import type { PoolMembership } from 'contexts/Pools/types';
 import { useProxies } from 'contexts/Proxies';
 import { Action } from 'library/Modal/Action';
 import React, { useEffect, useState } from 'react';
@@ -75,21 +74,19 @@ export const Accounts = () => {
       const isStash = stashes[stashes.indexOf(address)] ?? null;
       const delegates = getDelegates(address);
 
-      const poolMember =
-        memberships.find((m: PoolMembership) => m.address === address) ?? null;
+      const poolMember = memberships.find((m) => m.address === address) ?? null;
 
       // If stash exists, add address to nominating list.
       if (
         isStash &&
-        newNominating.find((a: AccountNominating) => a.address === address) ===
-          undefined
+        newNominating.find((a) => a.address === address) === undefined
       ) {
         isNominating = true;
       }
 
       // if pooling, add address to active pooling.
       if (poolMember) {
-        if (!newInPool.find((n: AccountInPool) => n.address === address)) {
+        if (!newInPool.find((n) => n.address === address)) {
           isInPool = true;
         }
       }
@@ -98,7 +95,7 @@ export const Accounts = () => {
       if (
         !isStash &&
         !poolMember &&
-        !newNotStaking.find((n: AccountNotStaking) => n.address === address)
+        !newNotStaking.find((n) => n.address === address)
       ) {
         newNotStaking.push({ address, delegates });
       }

@@ -26,12 +26,11 @@ export const Connect = () => {
   const { replaceModalWith, setResize, height } = useModal();
 
   const installed = Extensions.filter((a: ExtensionConfig) =>
-    extensions.find((b: ExtensionConfig) => b.id === a.id)
+    extensions.find((b) => b.id === a.id)
   );
 
   const other = Extensions.filter(
-    (a: ExtensionConfig) =>
-      !installed.find((b: ExtensionConfig) => b.id === a.id)
+    (a: ExtensionConfig) => !installed.find((b) => b.id === a.id)
   );
 
   // toggle read only management

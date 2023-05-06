@@ -30,7 +30,5 @@ export const isSupportedProxyCall = (
 
   const call = `${pallet}.${method}`;
   const calls = SupportedProxies[proxy];
-  return (
-    (calls || []).find((c: string) => ['*', call].includes(c)) !== undefined
-  );
+  return (calls || []).find((c) => ['*', call].includes(c)) !== undefined;
 };
