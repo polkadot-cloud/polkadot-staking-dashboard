@@ -155,22 +155,6 @@ export const PaddingWrapper = styled.div<{
       : '1rem'};
 `;
 
-// modal header, used for extrinsics forms
-export const HeadingWrapper = styled.h3<{ noPadding?: boolean }>`
-  color: var(--text-color-secondary);
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  width: 100%;
-  margin-top: 0.25rem;
-  padding: ${(props) => (props.noPadding ? '0' : '0 1rem')};
-  flex: 1;
-
-  > svg {
-    margin-right: 0.75rem;
-  }
-`;
-
 // modal footer, used for extrinsics forms
 export const FooterWrapper = styled.div`
   display: flex;
