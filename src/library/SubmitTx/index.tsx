@@ -78,7 +78,7 @@ export const SubmitTx = ({
       name={signingOpts.who?.name || ''}
       notEnoughFunds={notEnoughFunds}
       dangerMessage={`${t('notEnough', { ns: 'library' })} ${unit}`}
-      sign={
+      SignerComponent={
         requiresManualSign(sender) ? (
           <ManualSign
             uid={uid}
