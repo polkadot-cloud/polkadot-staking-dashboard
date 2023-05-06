@@ -10,7 +10,7 @@ import type {
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import type { AnyApi, Sync } from 'types';
+import type { AnyApi, AnyJson, Sync } from 'types';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import { useBondedPools } from '../BondedPools';
@@ -44,25 +44,23 @@ export const ActivePoolsProvider = ({
   }, [activeAccount, bondedPools, membership]);
 
   // stores member's active pools
-  const [activePools, setActivePools] = useState<Array<ActivePool>>([]);
+  const [activePools, setActivePools] = useState<ActivePool[]>([]);
   const activePoolsRef = useRef(activePools);
 
   // store active pools unsubs
   const unsubActivePools = useRef<AnyApi[]>([]);
 
   // store active pools nominations.
-  const [poolNominations, setPoolNominations] = useState<{
-    [key: number]: any;
-  }>({});
+  const [poolNominations, setPoolNominations] = useState<
+    Record<number, AnyJson>
+  >({});
   const poolNominationsRef = useRef(poolNominations);
 
   // store pool nominations unsubs
   const unsubNominations = useRef<AnyApi[]>([]);
 
   // store account target validators
-  const [targets, _setTargets] = useState<{
-    [key: number]: any;
-  }>({});
+  const [targets, _setTargets] = useState<Record<number, AnyJson>>({});
   const targetsRef = useRef(targets);
 
   // store whether active pool data has been synced.
@@ -96,14 +94,12 @@ export const ActivePoolsProvider = ({
 
   const getActivePoolMembership = () =>
     // get the activePool that the active account
-    activePoolsRef.current.find((a: ActivePool) => {
+    activePoolsRef.current.find((a) => {
       const p = membership?.poolId ? String(membership.poolId) : '0';
       return String(a.id) === p;
     }) || null;
   const getSelectedActivePool = () =>
-    activePoolsRef.current.find(
-      (a: ActivePool) => a.id === Number(selectedPoolId)
-    ) || null;
+    activePoolsRef.current.find((a) => a.id === Number(selectedPoolId)) || null;
 
   const getSelectedPoolNominations = () =>
     poolNominationsRef.current[Number(selectedPoolId) ?? -1] ||
@@ -124,7 +120,7 @@ export const ActivePoolsProvider = ({
     const defaultSelected = membership?.poolId || accountPools[0] || null;
     const activePoolSelected =
       activePoolsRef.current.find(
-        (a: ActivePool) => String(a.id) === String(selectedPoolId)
+        (a) => String(a.id) === String(selectedPoolId)
       ) || null;
 
     if (defaultSelected && !activePoolSelected) {
@@ -286,7 +282,7 @@ export const ActivePoolsProvider = ({
     if (!poolId) return;
 
     // update the active pool the account is a member of
-    const _activePools = [...activePoolsRef.current].map((a: ActivePool) => {
+    const _activePools = [...activePoolsRef.current].map((a) => {
       if (a.id === poolId) {
         return {
           ...a,
@@ -408,7 +404,7 @@ export const ActivePoolsProvider = ({
    */
   const getNominationsStatus = () => {
     const nominations = getSelectedPoolNominations().nominations?.targets || [];
-    const statuses: { [key: string]: string } = {};
+    const statuses: Record<string, string> = {};
 
     for (const nomination of nominations) {
       const s = eraStakers.stakers.find((_n: any) => _n.address === nomination);

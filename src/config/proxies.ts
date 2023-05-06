@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-export const SupportedProxies: { [key: string]: string[] } = {
+export const SupportedProxies: Record<string, string[]> = {
   Any: ['*'],
   Staking: [
     'staking.bond',
@@ -30,7 +30,5 @@ export const isSupportedProxyCall = (
 
   const call = `${pallet}.${method}`;
   const calls = SupportedProxies[proxy];
-  return (
-    (calls || []).find((c: string) => ['*', call].includes(c)) !== undefined
-  );
+  return (calls || []).find((c) => ['*', call].includes(c)) !== undefined;
 };

@@ -6,7 +6,6 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import type { PayeeItem } from 'library/Hooks/usePayeeConfig';
 import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
@@ -28,7 +27,7 @@ export const PayoutDestinationStatus = () => {
       return t('nominate.notAssigned');
     }
     const status = getPayeeItems(true).find(
-      (p: PayeeItem) => p.value === payee.destination
+      ({ value }) => value === payee.destination
     )?.activeTitle;
 
     if (status) {
@@ -40,7 +39,7 @@ export const PayoutDestinationStatus = () => {
   // Get the payee destination icon to display, falling back to wallet icon.
   const payeeIcon = inSetup()
     ? undefined
-    : getPayeeItems(true).find((p: PayeeItem) => p.value === payee.destination)
+    : getPayeeItems(true).find(({ value }) => value === payee.destination)
         ?.icon || faWallet;
 
   return (

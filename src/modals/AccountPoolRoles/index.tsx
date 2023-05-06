@@ -7,7 +7,6 @@ import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import type { BondedPool } from 'contexts/Pools/types';
 import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
@@ -54,12 +53,12 @@ export const AccountPoolRoles = () => {
   );
 };
 
-const Button = ({ item, poolId }: { item: Array<string>; poolId: string }) => {
+const Button = ({ item, poolId }: { item: string[]; poolId: string }) => {
   const { t } = useTranslation('modals');
   const { setStatus } = useModal();
   const { bondedPools } = useBondedPools();
   const { setSelectedPoolId } = useActivePools();
-  const pool = bondedPools.find((b: BondedPool) => String(b.id) === poolId);
+  const pool = bondedPools.find((b) => String(b.id) === poolId);
   const stash = pool?.addresses?.stash || '';
 
   return (

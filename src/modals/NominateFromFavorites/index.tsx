@@ -33,20 +33,16 @@ export const NominateFromFavorites = () => {
   const signingAccount = bondFor === 'pool' ? activeAccount : controller;
 
   // store filtered favorites
-  const [availableFavorites, setAvailableFavorites] = useState<
-    Array<Validator>
-  >([]);
+  const [availableFavorites, setAvailableFavorites] = useState<Validator[]>([]);
 
   // store selected favorites in local state
-  const [selectedFavorites, setSelectedFavorites] = useState<Array<Validator>>(
-    []
-  );
+  const [selectedFavorites, setSelectedFavorites] = useState<Validator[]>([]);
 
   // store filtered favorites
   useEffect(() => {
     if (favoritesList) {
       const _availableFavorites = favoritesList.filter(
-        (favorite: Validator) =>
+        (favorite) =>
           !nominations.find(
             (nomination: string) => nomination === favorite.address
           ) && !favorite.prefs.blocked
@@ -57,7 +53,7 @@ export const NominateFromFavorites = () => {
 
   // calculate active + selected favorites
   const nominationsToSubmit = nominations.concat(
-    selectedFavorites.map((favorite: Validator) => favorite.address)
+    selectedFavorites.map((favorite) => favorite.address)
   );
 
   // valid to submit transaction

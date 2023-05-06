@@ -46,7 +46,7 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
   const poolMembers = meta[batchKey]?.poolMembers ?? [];
   const member = poolMembers[batchIndex] ?? null;
 
-  const menuItems: Array<any> = [];
+  const menuItems: any[] = [];
 
   if (member && (canUnbondBlocked || canUnbondDestroying)) {
     const { points, unbondingEras } = member;

@@ -52,7 +52,7 @@ export const useFetchMehods = () => {
   };
 
   const fetchFavorites = () => {
-    let _favs: Array<Validator> = [];
+    let _favs: Validator[] = [];
 
     if (!favoritesList) {
       return _favs;

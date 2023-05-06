@@ -75,7 +75,7 @@ export const NominatePool = () => {
         <h2 className="title unbounded">{t('nominate')}</h2>
         {warnings.length ? (
           <WarningsWrapper>
-            {warnings.map((text: string, index: number) => (
+            {warnings.map((text, index) => (
               <Warning key={`warning_${index}`} text={text} />
             ))}
           </WarningsWrapper>

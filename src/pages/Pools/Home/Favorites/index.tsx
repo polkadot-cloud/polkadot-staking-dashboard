@@ -19,7 +19,7 @@ export const PoolFavorites = () => {
   const { isPoolSyncing } = useUi();
 
   // store local favorite list and update when favorites list is mutated
-  const [favoritesList, setFavoritesList] = useState<Array<any>>([]);
+  const [favoritesList, setFavoritesList] = useState<any[]>([]);
 
   useEffect(() => {
     // map favorites to bonded pools
