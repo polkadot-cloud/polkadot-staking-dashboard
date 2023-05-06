@@ -8,9 +8,7 @@ import type { FunctionComponent, SVGProps } from 'react';
 
 export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
-export interface Networks {
-  [key: string]: Network;
-}
+export type Networks = Record<string, Network>;
 
 type NetworkColor =
   | 'primary'
@@ -51,7 +49,7 @@ export interface Network {
     unit: string;
     priceTicker: string;
   };
-  params: { [key: string]: number };
+  params: Record<string, number>;
 }
 
 export interface PageCategory {

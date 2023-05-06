@@ -149,18 +149,18 @@ export const useValidatorFilters = () => {
     );
   };
 
-  const includesToLabels: { [key: string]: string } = {
+  const includesToLabels: Record<string, string> = {
     active: t('activeValidators'),
   };
 
-  const excludesToLabels: { [key: string]: string } = {
+  const excludesToLabels: Record<string, string> = {
     over_subscribed: t('overSubscribed'),
     all_commission: t('100Commission'),
     blocked_nominations: t('blockedNominations'),
     missing_identity: t('missingIdentity'),
   };
 
-  const filterToFunction: { [key: string]: AnyFunction } = {
+  const filterToFunction: Record<string, AnyFunction> = {
     active: filterActive,
     missing_identity: filterMissingIdentity,
     over_subscribed: filterOverSubscribed,
@@ -170,7 +170,7 @@ export const useValidatorFilters = () => {
     in_session: filterInSession,
   };
 
-  const getFiltersToApply = (excludes: Array<string>) => {
+  const getFiltersToApply = (excludes: string[]) => {
     const fns = [];
     for (const exclude of excludes) {
       if (filterToFunction[exclude]) {
@@ -218,13 +218,13 @@ export const useValidatorFilters = () => {
   const orderHighestCommission = (list: any) =>
     [...list].sort((a: any, b: any) => b.prefs.commission - a.prefs.commission);
 
-  const ordersToLabels: { [key: string]: string } = {
+  const ordersToLabels: Record<string, string> = {
     default: t('unordered'),
     low_commission: t('lowCommission'),
     high_commission: t('highCommission'),
   };
 
-  const orderToFunction: { [key: string]: AnyFunction } = {
+  const orderToFunction: Record<string, AnyFunction> = {
     low_commission: orderLowestCommission,
     high_commission: orderHighestCommission,
   };

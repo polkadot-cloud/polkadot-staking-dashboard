@@ -7,6 +7,7 @@ import type {
   ExtensionConfig,
   ExtensionInjected,
   ExtensionsContextInterface,
+  ExtensionsStatus,
 } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi } from 'types';
@@ -33,9 +34,10 @@ export const ExtensionsProvider = ({
   const [extensionsFetched, setExtensionsFetched] = useState(false);
 
   // store each extension's status in state.
-  const [extensionsStatus, setExtensionsStatus] = useState<{
-    [key: string]: string;
-  }>({});
+  const [extensionsStatus, setExtensionsStatus] = useState<ExtensionsStatus>(
+    {}
+  );
+
   const extensionsStatusRef = useRef(extensionsStatus);
 
   // listen for window.injectedWeb3.
@@ -75,7 +77,7 @@ export const ExtensionsProvider = ({
 
   const setExtensionStatus = (id: string, status: string) => {
     setStateWithRef(
-      Object.assign(extensionsStatusRef.current, {
+      Object.assign(extensionsStatusRef.current || {}, {
         [id]: status,
       }),
       setExtensionsStatus,

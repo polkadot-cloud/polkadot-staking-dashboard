@@ -15,7 +15,7 @@ import tipsEn from './en/tips.json';
 import { doDynamicImport, getInitialLanguage, getResources } from './utils';
 
 // available locales as key value pairs
-export const locales: { [key: string]: AnyJson } = {
+export const locales: Record<string, AnyJson> = {
   en: enGB,
   cn: zhCN,
 };
@@ -78,7 +78,7 @@ if (dynamicLoad) {
 }
 
 // map i18n to BCP 47 keys, with any custom amendments.
-const i18ToLocaleMap: { [key: string]: string } = {
+const i18ToLocaleMap: Record<string, string> = {
   ...Object.fromEntries(
     availableLanguages.map((a: Array<string>) => [a[0], a[0]])
   ),

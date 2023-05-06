@@ -12,9 +12,7 @@ export type PayeeOptions =
   | 'Account'
   | 'None';
 
-export type NominatorSetups = {
-  [key: string]: NominatorSetup;
-};
+export type NominatorSetups = Record<string, NominatorSetup>;
 
 export interface NominatorSetup {
   progress: NominatorProgress;
@@ -32,9 +30,7 @@ export interface PayeeConfig {
   account: MaybeAccount;
 }
 
-export type PoolSetups = {
-  [key: string]: PoolSetup;
-};
+export type PoolSetups = Record<string, PoolSetup>;
 
 export interface PoolSetup {
   progress: PoolProgress;

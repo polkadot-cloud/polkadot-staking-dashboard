@@ -10,7 +10,7 @@ import type {
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import type { AnyApi, Sync } from 'types';
+import type { AnyApi, AnyJson, Sync } from 'types';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import { useBondedPools } from '../BondedPools';
@@ -51,18 +51,16 @@ export const ActivePoolsProvider = ({
   const unsubActivePools = useRef<AnyApi[]>([]);
 
   // store active pools nominations.
-  const [poolNominations, setPoolNominations] = useState<{
-    [key: number]: any;
-  }>({});
+  const [poolNominations, setPoolNominations] = useState<
+    Record<number, AnyJson>
+  >({});
   const poolNominationsRef = useRef(poolNominations);
 
   // store pool nominations unsubs
   const unsubNominations = useRef<AnyApi[]>([]);
 
   // store account target validators
-  const [targets, _setTargets] = useState<{
-    [key: number]: any;
-  }>({});
+  const [targets, _setTargets] = useState<Record<number, AnyJson>>({});
   const targetsRef = useRef(targets);
 
   // store whether active pool data has been synced.
@@ -408,7 +406,7 @@ export const ActivePoolsProvider = ({
    */
   const getNominationsStatus = () => {
     const nominations = getSelectedPoolNominations().nominations?.targets || [];
-    const statuses: { [key: string]: string } = {};
+    const statuses: Record<string, string> = {};
 
     for (const nomination of nominations) {
       const s = eraStakers.stakers.find((_n: any) => _n.address === nomination);

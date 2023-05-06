@@ -25,7 +25,7 @@ export interface EraStakers {
   activeAccountOwnStake: Array<any>;
 }
 
-export type NominationStatuses = { [key: string]: string };
+export type NominationStatuses = Record<string, string>;
 
 export interface StakingTargets {
   nominations: string[];

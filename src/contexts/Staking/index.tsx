@@ -305,7 +305,7 @@ export const StakingProvider = ({
     who: MaybeAccount,
     _targets: Array<any>
   ) => {
-    const statuses: { [key: string]: string } = {};
+    const statuses: Record<string, string> = {};
 
     if (!_targets.length) {
       return statuses;

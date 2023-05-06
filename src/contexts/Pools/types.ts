@@ -41,7 +41,7 @@ export interface PoolMembership {
   poolId: number;
   points: string;
   lastRecordedRewardCounter: string;
-  unbondingEras: { [key: number]: string };
+  unbondingEras: Record<number, string>;
   unlocking: Array<{
     era: number;
     value: BigNumber;
@@ -89,7 +89,7 @@ export interface BondedPool {
   state: PoolState;
 }
 
-export type NominationStatuses = { [key: string]: string };
+export type NominationStatuses = Record<string, string>;
 
 export interface ActivePoolsContextState {
   isBonding: () => boolean;

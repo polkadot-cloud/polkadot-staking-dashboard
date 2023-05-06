@@ -52,10 +52,12 @@ export interface ExtensionMetadata {
 // dashboard specific: extensions context interface.
 export interface ExtensionsContextInterface {
   extensions: Array<ExtensionInjected>;
-  extensionsStatus: { [key: string]: string };
+  extensionsStatus: ExtensionsStatus;
   extensionsFetched: boolean;
   checkingInjectedWeb3: boolean;
   setExtensionStatus: (id: string, s: string) => void;
   setExtensionsFetched: (s: boolean) => void;
   setExtensions: (s: Array<ExtensionInjected>) => void;
 }
+
+export type ExtensionsStatus = Record<string, string>;
