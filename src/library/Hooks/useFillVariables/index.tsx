@@ -59,9 +59,7 @@ export const useFillVariables = () => {
 
         for (const varToVal of varsToValues) {
           if (val.constructor === Array) {
-            val = val.map((_d: string) =>
-              _d.replaceAll(varToVal[0], varToVal[1])
-            );
+            val = val.map((_d) => _d.replaceAll(varToVal[0], varToVal[1]));
           } else {
             val = val.replaceAll(varToVal[0], varToVal[1]);
           }

@@ -284,7 +284,7 @@ export const ActivePoolsProvider = ({
     if (!poolId) return;
 
     // update the active pool the account is a member of
-    const _activePools = [...activePoolsRef.current].map((a: ActivePool) => {
+    const _activePools = [...activePoolsRef.current].map((a) => {
       if (a.id === poolId) {
         return {
           ...a,

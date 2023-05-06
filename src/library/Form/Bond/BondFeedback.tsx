@@ -166,7 +166,7 @@ export const BondFeedback = ({
 
   return (
     <>
-      {errors.map((err: string, i: number) => (
+      {errors.map((err, i) => (
         <Warning key={`setup_error_${i}`} text={err} />
       ))}
       <Spacer />

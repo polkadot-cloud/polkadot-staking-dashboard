@@ -53,7 +53,7 @@ export const NominateFromFavorites = () => {
 
   // calculate active + selected favorites
   const nominationsToSubmit = nominations.concat(
-    selectedFavorites.map((favorite: Validator) => favorite.address)
+    selectedFavorites.map((favorite) => favorite.address)
   );
 
   // valid to submit transaction

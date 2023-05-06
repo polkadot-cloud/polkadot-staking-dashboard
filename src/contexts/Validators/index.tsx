@@ -191,7 +191,7 @@ export const ValidatorsProvider = ({
 
   const fetchFavoriteList = async () => {
     // format to list format
-    const _favorites = [...favorites].map((item: string) => ({
+    const _favorites = [...favorites].map((item) => ({
       address: item,
     }));
     // // fetch preferences

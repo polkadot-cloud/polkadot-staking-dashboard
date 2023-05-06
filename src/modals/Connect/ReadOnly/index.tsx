@@ -55,7 +55,7 @@ export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
         )}
         {externalAccountsByUser.length ? (
           <div className="accounts">
-            {externalAccountsByUser.map((a: ExternalAccount, i: number) => (
+            {externalAccountsByUser.map((a, i) => (
               <div key={`user_external_account_${i}`} className="account">
                 <div>{a.address}</div>
                 <ButtonMonoInvert

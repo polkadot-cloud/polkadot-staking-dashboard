@@ -426,7 +426,7 @@ export const LedgerHardwareProvider = ({
   const renameLedgerAccount = (address: string, newName: string) => {
     let newLedgerAccounts = getLocalLedgerAccounts();
 
-    newLedgerAccounts = newLedgerAccounts.map((a: LedgerAccount) =>
+    newLedgerAccounts = newLedgerAccounts.map((a) =>
       isLocalAddress(a, address)
         ? {
             ...a,

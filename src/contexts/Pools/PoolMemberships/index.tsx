@@ -3,7 +3,6 @@
 
 import { rmCommas, setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import type { ImportedAccount } from 'contexts/Connect/types';
 import type {
   PoolMembership,
   PoolMembershipsContextState,
@@ -42,9 +41,7 @@ export const PoolMembershipsProvider = ({
   // subscribe to account pool memberships
   const getPoolMemberships = async () => {
     Promise.all(
-      connectAccounts.map((a: ImportedAccount) =>
-        subscribeToPoolMembership(a.address)
-      )
+      connectAccounts.map((a) => subscribeToPoolMembership(a.address))
     );
   };
 

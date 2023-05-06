@@ -9,7 +9,6 @@ import { useModal } from 'contexts/Modal';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { Warning } from 'library/Form/Warning';
-import type { PayeeItem } from 'library/Hooks/usePayeeConfig';
 import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
@@ -134,7 +133,7 @@ export const UpdatePayee = () => {
           />
         </div>
         <SelectItems>
-          {getPayeeItems(true).map((item: PayeeItem) => (
+          {getPayeeItems(true).map((item) => (
             <SelectItem
               key={`payee_option_${item.value}`}
               account={account}

@@ -8,9 +8,7 @@ import { HelpConfig } from 'config/help';
 import { useHelp } from 'contexts/Help';
 import type {
   DefinitionWithKeys,
-  ExternalItem,
   ExternalItems,
-  ExternalWithKeys,
   HelpItem,
 } from 'contexts/Help/types';
 import { useAnimation } from 'framer-motion';
@@ -81,8 +79,8 @@ export const Help = () => {
   let definitions = meta?.definitions ?? [];
 
   const activeDefinitions = definitions
-    .filter((d: string) => d !== definition)
-    .map((d: string) => {
+    .filter((d) => d !== definition)
+    .map((d) => {
       const localeKey = camelize(d);
 
       return fillVariables(
@@ -128,7 +126,7 @@ export const Help = () => {
 
   // accumulate external resources
   const externals = meta?.external ?? [];
-  const activeExternals = externals.map((e: ExternalItem) => {
+  const activeExternals = externals.map((e) => {
     const localeKey = e[0];
     const url = e[1];
     const website = e[2];
@@ -193,33 +191,29 @@ export const Help = () => {
                   {activeDefinition ? `${t('modal.related')} ` : ''}
                   {t('modal.definitions')}
                 </h3>
-                {activeDefinitions.map(
-                  (item: DefinitionWithKeys, index: number) => (
-                    <Definition
-                      key={`def_${index}`}
-                      onClick={() => {}}
-                      title={item.title}
-                      description={item.description}
-                    />
-                  )
-                )}
+                {activeDefinitions.map((item, index: number) => (
+                  <Definition
+                    key={`def_${index}`}
+                    onClick={() => {}}
+                    title={item.title}
+                    description={item.description}
+                  />
+                ))}
               </>
             )}
 
             {activeExternals.length > 0 && (
               <>
                 <h3>{t('modal.articles')}</h3>
-                {activeExternals.map(
-                  (item: ExternalWithKeys, index: number) => (
-                    <External
-                      key={`ext_${index}`}
-                      width="100%"
-                      title={t(item.title)}
-                      url={item.url}
-                      website={item.website}
-                    />
-                  )
-                )}
+                {activeExternals.map((item, index: number) => (
+                  <External
+                    key={`ext_${index}`}
+                    width="100%"
+                    title={t(item.title)}
+                    url={item.url}
+                    website={item.website}
+                  />
+                ))}
               </>
             )}
           </ContentWrapper>

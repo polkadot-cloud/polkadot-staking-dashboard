@@ -392,20 +392,20 @@ export const BondedPoolsProvider = ({
     }
 
     const depositor = bondedPools
-      .filter((b: BondedPool) => b.roles.depositor === who)
-      .map((b: BondedPool) => b.id);
+      .filter((b) => b.roles.depositor === who)
+      .map((b) => b.id);
 
     const root = bondedPools
       .filter((b: BondedPool) => b.roles.root === who)
-      .map((b: BondedPool) => b.id);
+      .map((b) => b.id);
 
     const nominator = bondedPools
-      .filter((b: BondedPool) => b.roles.nominator === who)
-      .map((b: BondedPool) => b.id);
+      .filter((b) => b.roles.nominator === who)
+      .map((b) => b.id);
 
     const stateToggler = bondedPools
-      .filter((b: BondedPool) => b.roles.stateToggler === who)
-      .map((b: BondedPool) => b.id);
+      .filter((b) => b.roles.stateToggler === who)
+      .map((b) => b.id);
 
     return {
       depositor,
@@ -466,7 +466,7 @@ export const BondedPoolsProvider = ({
     };
 
     const newBondedPools = [
-      ...bondedPools.map((b: BondedPool) =>
+      ...bondedPools.map((b) =>
         String(b.id) === String(poolId) && pool !== null ? pool : b
       ),
     ];

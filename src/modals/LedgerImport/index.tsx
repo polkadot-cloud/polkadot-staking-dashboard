@@ -128,7 +128,7 @@ export const LedgerImport: React.FC = () => {
 
       // store only those accounts on the current network in state.
       setStateWithRef(
-        newAddresses.filter((a: LedgerAddress) => a.network === network.name),
+        newAddresses.filter((a) => a.network === network.name),
         setAddresses,
         addressesRef
       );

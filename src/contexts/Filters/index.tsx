@@ -58,7 +58,7 @@ export const FiltersProvider = ({
       return;
     }
     const newFilters = [...current]
-      .map((e: FilterItem) => {
+      .map((e) => {
         if (e.key !== g) return e;
         let { filters } = e;
 
@@ -72,7 +72,7 @@ export const FiltersProvider = ({
           filters,
         };
       })
-      .filter((e: FilterItem) => e.filters.length !== 0);
+      .filter((e) => e.filters.length !== 0);
     setFilters(t, newFilters);
   };
 
@@ -96,7 +96,7 @@ export const FiltersProvider = ({
 
     let newFilters: FilterItems;
     if (current.length) {
-      newFilters = [...current].map((e: FilterItem) => {
+      newFilters = [...current].map((e) => {
         // return groups we are not manipulating.
         if (e.key !== g) return e;
 
@@ -121,9 +121,9 @@ export const FiltersProvider = ({
   const setOrder = (g: string, o: string) => {
     let newOrders = [];
     if (o === 'default') {
-      newOrders = [...orders].filter((order: FilterOrder) => order.key !== g);
+      newOrders = [...orders].filter((order) => order.key !== g);
     } else if (orders.length) {
-      newOrders = [...orders].map((order: FilterOrder) =>
+      newOrders = [...orders].map((order) =>
         order.key !== g ? order : { ...order, order: o }
       );
     } else {
@@ -140,7 +140,7 @@ export const FiltersProvider = ({
   const setSearchTerm = (g: string, t: string) => {
     let newSearchTerms = [];
     if (orders.length) {
-      newSearchTerms = [...searchTerms].map((term: FilterSearch) =>
+      newSearchTerms = [...searchTerms].map((term) =>
         term.key !== g ? term : { ...term, searchTerm: t }
       );
     } else {

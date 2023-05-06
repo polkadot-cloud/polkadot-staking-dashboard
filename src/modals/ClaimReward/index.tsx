@@ -81,7 +81,7 @@ export const ClaimReward = () => {
         </h2>
         {warnings.length ? (
           <WarningsWrapper>
-            {warnings.map((warning: React.ReactNode, index: number) => (
+            {warnings.map((warning, index) => (
               <React.Fragment key={`warning_${index}`}>
                 {warning}
               </React.Fragment>

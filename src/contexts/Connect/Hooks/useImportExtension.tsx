@@ -105,7 +105,7 @@ export const useImportExtension = () => {
     );
 
     // format accounts properties
-    newAccounts = newAccounts.map((a: ExtensionAccount) => ({
+    newAccounts = newAccounts.map((a) => ({
       address: a.address,
       source: id,
       name: a.name,
