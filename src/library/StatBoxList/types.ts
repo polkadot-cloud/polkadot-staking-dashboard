@@ -45,4 +45,5 @@ export interface TimeleftProps {
   helpKey: string;
 }
 
-export type TimeLeftRaw = Array<Array<number | string>>;
+export type TimeLeftRaw = TimeLeftRawItem[];
+export type TimeLeftRawItem = Array<number | string>;

@@ -9,7 +9,7 @@ interface StaticNoteProps {
   value: string;
   tKey: string;
   valueKey: string;
-  deps?: Array<AnyJson>;
+  deps?: AnyJson[];
 }
 
 // Static notes store a single piece of text that is not updated after the initial render unless

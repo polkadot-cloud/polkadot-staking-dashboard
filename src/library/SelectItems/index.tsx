@@ -9,8 +9,8 @@ import type { SelectItemsProps } from './types';
 
 export const SelectItems = ({ layout, children }: SelectItemsProps) => {
   // Initialise refs for container and body of items.
-  const containerRefs: Array<MutableRefObject<AnyJson>> = [];
-  const bodyRefs: Array<MutableRefObject<AnyJson>> = [];
+  const containerRefs: MutableRefObject<AnyJson>[] = [];
+  const bodyRefs: MutableRefObject<AnyJson>[] = [];
 
   if (children) {
     for (let i = 0; i < children.length; i++) {

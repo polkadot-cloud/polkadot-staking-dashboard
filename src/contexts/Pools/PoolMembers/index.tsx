@@ -5,7 +5,7 @@ import { setStateWithRef } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import type { PoolMemberContext } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
-import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
+import type { AnyApi, AnyJson, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
 
@@ -18,7 +18,7 @@ export const PoolMembersProvider = ({
   const { activeAccount } = useConnect();
 
   // store pool members
-  const [poolMembers, setPoolMembers] = useState<Array<any>>([]);
+  const [poolMembers, setPoolMembers] = useState<AnyJson[]>([]);
 
   // stores the meta data batches for pool member lists
   const [poolMembersMetaBatches, setPoolMembersMetaBatch]: AnyMetaBatch =
@@ -56,7 +56,7 @@ export const PoolMembersProvider = ({
   };
 
   const unsubscribeAndResetMeta = () => {
-    Object.values(poolMembersSubs.current).map((batch: Array<Fn>) =>
+    Object.values(poolMembersSubs.current).map((batch: Fn[]) =>
       Object.entries(batch).map(([, v]) => v())
     );
     setStateWithRef({}, setPoolMembersMetaBatch, poolMembersMetaBatchesRef);
@@ -268,7 +268,7 @@ export const PoolMembersProvider = ({
       subscribeToIdentities(addresses),
       subscribeToSuperIdentities(addresses),
       subscribeToPoolMembers(addresses),
-    ]).then((unsubs: Array<Fn>) => {
+    ]).then((unsubs: Fn[]) => {
       addMetaBatchUnsubs(key, unsubs);
     });
   };
@@ -284,7 +284,7 @@ export const PoolMembersProvider = ({
   /*
    * Helper: to add mataBatch unsubs by key.
    */
-  const addMetaBatchUnsubs = (key: string, unsubs: Array<Fn>) => {
+  const addMetaBatchUnsubs = (key: string, unsubs: Fn[]) => {
     const _unsubs = poolMembersSubs.current;
     const _keyUnsubs = _unsubs[key] ?? [];
     _keyUnsubs.push(...unsubs);

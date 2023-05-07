@@ -18,14 +18,14 @@ export interface StakingMetrics {
 }
 
 export interface EraStakers {
-  stakers: Array<any>;
-  nominators: Array<any> | undefined;
+  stakers: any[];
+  nominators: any[] | undefined;
   totalActiveNominators: number;
   activeValidators: number;
-  activeAccountOwnStake: Array<any>;
+  activeAccountOwnStake: any[];
 }
 
-export type NominationStatuses = { [key: string]: string };
+export type NominationStatuses = Record<string, string>;
 
 export interface StakingTargets {
   nominations: string[];
@@ -33,7 +33,7 @@ export interface StakingTargets {
 
 export interface StakingContextInterface {
   getNominationsStatus: () => any;
-  getNominationsStatusFromTargets: (w: MaybeAccount, t: Array<any>) => any;
+  getNominationsStatusFromTargets: (w: MaybeAccount, t: any[]) => any;
   setTargets: (t: any) => any;
   hasController: () => boolean;
   getControllerNotImported: (a: MaybeAccount) => any;

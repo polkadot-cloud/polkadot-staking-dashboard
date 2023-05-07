@@ -13,7 +13,7 @@ import {
   startOfDay,
   subDays,
 } from 'date-fns';
-import type { AnyApi, AnySubscan } from 'types';
+import type { AnyApi, AnyJson, AnySubscan } from 'types';
 import type { PayoutDayCursor } from './types';
 
 // Take non-zero rewards in most-recent order.
@@ -326,7 +326,7 @@ export const combineRewards = (payouts: AnySubscan, poolClaims: AnySubscan) => {
   // We now know pool claims *and* payouts exist.
   //
   // Now determine which dates to display.
-  let payoutDays: Array<any> = [];
+  let payoutDays: AnyJson[] = [];
   // prefill `dates` with all pool claim and payout days
   poolClaims.forEach((p: AnySubscan) => {
     const dayStart = getUnixTime(startOfDay(fromUnixTime(p.block_timestamp)));

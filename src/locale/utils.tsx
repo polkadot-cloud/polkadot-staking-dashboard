@@ -105,7 +105,7 @@ export const changeLanguage = async (lng: string, i18next: AnyApi) => {
 // Bootstraps i18next with additional language resources.
 export const loadLngAsync = async (l: string) => {
   const resources: AnyJson = await Promise.all(
-    lngNamespaces.map(async (u: string) => {
+    lngNamespaces.map(async (u) => {
       const mod = await import(`./${l}/${u}.json`);
       return mod;
     })

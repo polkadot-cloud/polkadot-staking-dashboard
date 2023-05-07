@@ -66,7 +66,7 @@ const processExposures = (data: AnyJson) => {
 
   const stakers: any = [];
   let activeValidators = 0;
-  const activeAccountOwnStake: Array<any> = [];
+  const activeAccountOwnStake: any[] = [];
   const nominators: any = [];
 
   exposures.forEach(({ keys, val }: any) => {

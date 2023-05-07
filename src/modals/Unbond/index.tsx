@@ -181,7 +181,7 @@ export const Unbond = () => {
         <h2 className="title unbounded">{`${t('removeBond')}`}</h2>
         {warnings.length > 0 ? (
           <WarningsWrapper>
-            {warnings.map((err: string, i: number) => (
+            {warnings.map((err, i) => (
               <Warning key={`unbond_error_${i}`} text={err} />
             ))}
           </WarningsWrapper>

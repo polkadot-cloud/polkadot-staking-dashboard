@@ -28,10 +28,10 @@ export const useImportExtension = () => {
   // connected extensions. Calls separate method to handle account importing.
   const handleImportExtension = (
     id: string,
-    currentAccounts: Array<ExtensionAccount>,
+    currentAccounts: ExtensionAccount[],
     extension: ExtensionInterface,
-    newAccounts: Array<ExtensionAccount>,
-    forget: (a: Array<ImportedAccount>) => void
+    newAccounts: ExtensionAccount[],
+    forget: (a: ImportedAccount[]) => void
   ): HandleImportExtension => {
     // update extensions status to connected.
     setExtensionStatus(id, 'connected');
@@ -55,10 +55,10 @@ export const useImportExtension = () => {
   // Gets accounts to be imported and commits them to state.
   const handleInjectedAccounts = (
     id: string,
-    currentAccounts: Array<ExtensionAccount>,
+    currentAccounts: ExtensionAccount[],
     extension: ExtensionInterface,
-    newAccounts: Array<ExtensionAccount>,
-    forget: (a: Array<ImportedAccount>) => void
+    newAccounts: ExtensionAccount[],
+    forget: (a: ImportedAccount[]) => void
   ): HandleImportExtension => {
     // set network ss58 format
     const keyring = new Keyring();
@@ -82,14 +82,11 @@ export const useImportExtension = () => {
 
     // find any accounts that have been removed from this extension
     const goneFromExtension = currentAccounts
-      .filter((j: ImportedAccount) => j.source === id)
-      .filter(
-        (j: ImportedAccount) =>
-          !newAccounts.find((i: ExtensionAccount) => i.address === j.address)
-      );
+      .filter((j) => j.source === id)
+      .filter((j) => !newAccounts.find((i) => i.address === j.address));
     // check whether active account is present in forgotten accounts
     const activeGoneFromExtension = goneFromExtension.find(
-      (i: ImportedAccount) => i.address === getActiveAccountLocal(network)
+      (i) => i.address === getActiveAccountLocal(network)
     );
     // commit remove forgotten accounts
     forget(goneFromExtension);
@@ -97,15 +94,14 @@ export const useImportExtension = () => {
     // remove accounts that have already been added to currentAccounts via another extension.
     // note: does not include external accounts.
     newAccounts = newAccounts.filter(
-      (i: ExtensionAccount) =>
+      (i) =>
         !currentAccounts.find(
-          (j: ImportedAccount) =>
-            j.address === i.address && j.source !== 'external'
+          (j) => j.address === i.address && j.source !== 'external'
         )
     );
 
     // format accounts properties
-    newAccounts = newAccounts.map((a: ExtensionAccount) => ({
+    newAccounts = newAccounts.map((a) => ({
       address: a.address,
       source: id,
       name: a.name,
@@ -122,10 +118,8 @@ export const useImportExtension = () => {
   // Get active extension account.
   //
   // checks if the local active account is in the extension.
-  const getActiveExtensionAccount = (accounts: Array<ImportedAccount>) =>
-    accounts.find(
-      (a: ExtensionAccount) => a.address === getActiveAccountLocal(network)
-    ) ?? null;
+  const getActiveExtensionAccount = (accounts: ImportedAccount[]) =>
+    accounts.find((a) => a.address === getActiveAccountLocal(network)) ?? null;
 
   // Connect active extension account.
   //

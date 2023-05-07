@@ -3,7 +3,6 @@
 
 import { faAnglesRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import type { PayeeItem } from 'library/Hooks/usePayeeConfig';
 import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { Wrapper } from './Wrapper';
 
@@ -16,12 +15,10 @@ export const UpdateHeader = ({ current, selected }: UpdateHeaderProps) => {
   const { getPayeeItems } = usePayeeConfig();
 
   const currentTitle =
-    getPayeeItems(true).find((p: PayeeItem) => p.value === current)?.title ||
-    '';
+    getPayeeItems(true).find((p) => p.value === current)?.title || '';
 
   const selectedTitle =
-    getPayeeItems(true).find((p: PayeeItem) => p.value === selected)?.title ||
-    '';
+    getPayeeItems(true).find((p) => p.value === selected)?.title || '';
 
   return (
     <Wrapper>

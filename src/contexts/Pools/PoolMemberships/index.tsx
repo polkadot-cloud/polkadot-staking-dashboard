@@ -3,7 +3,6 @@
 
 import { rmCommas, setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import type { ImportedAccount } from 'contexts/Connect/types';
 import type {
   PoolMembership,
   PoolMembershipsContextState,
@@ -23,9 +22,7 @@ export const PoolMembershipsProvider = ({
   const { accounts: connectAccounts, activeAccount } = useConnect();
 
   // stores pool membership
-  const [poolMemberships, setPoolMemberships] = useState<Array<PoolMembership>>(
-    []
-  );
+  const [poolMemberships, setPoolMemberships] = useState<PoolMembership[]>([]);
   const poolMembershipsRef = useRef(poolMemberships);
 
   // stores pool subscription objects
@@ -44,9 +41,7 @@ export const PoolMembershipsProvider = ({
   // subscribe to account pool memberships
   const getPoolMemberships = async () => {
     Promise.all(
-      connectAccounts.map((a: ImportedAccount) =>
-        subscribeToPoolMembership(a.address)
-      )
+      connectAccounts.map((a) => subscribeToPoolMembership(a.address))
     );
   };
 
@@ -129,7 +124,7 @@ export const PoolMembershipsProvider = ({
       return defaults.poolMembership;
     }
     const poolMembership = poolMembershipsRef.current.find(
-      (m: PoolMembership) => m.address === activeAccount
+      (m) => m.address === activeAccount
     );
     if (poolMembership === undefined) {
       return defaults.poolMembership;
