@@ -20,7 +20,7 @@ export const ChooseLanguage = () => {
       <PaddingWrapper>
         <ContentWrapper>
           <div className="item">
-            {availableLanguages.map((a: Array<string>, i: number) => {
+            {availableLanguages.map((a, i) => {
               const code = a[0];
               const label = a[1];
 

@@ -7,7 +7,7 @@ import type { MaybeAccount } from 'types';
 
 export interface AccountItemProps {
   address?: MaybeAccount;
-  label?: Array<string>;
+  label?: string[];
   disconnect?: boolean;
   asElement?: boolean;
   delegator?: string;

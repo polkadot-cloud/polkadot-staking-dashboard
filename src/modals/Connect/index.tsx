@@ -26,12 +26,11 @@ export const Connect = () => {
   const { replaceModalWith, setResize, height } = useModal();
 
   const installed = Extensions.filter((a: ExtensionConfig) =>
-    extensions.find((b: ExtensionConfig) => b.id === a.id)
+    extensions.find((b) => b.id === a.id)
   );
 
   const other = Extensions.filter(
-    (a: ExtensionConfig) =>
-      !installed.find((b: ExtensionConfig) => b.id === a.id)
+    (a: ExtensionConfig) => !installed.find((b) => b.id === a.id)
   );
 
   // toggle read only management
@@ -70,11 +69,9 @@ export const Connect = () => {
       <Action text={t('extensions')} />
       <ExtensionsWrapper>
         <SelectItems layout="two-col">
-          {installed
-            .concat(other)
-            .map((extension: ExtensionConfig, i: number) => (
-              <Extension key={`extension_item_${i}`} meta={extension} />
-            ))}
+          {installed.concat(other).map((extension, i) => (
+            <Extension key={`extension_item_${i}`} meta={extension} />
+          ))}
         </SelectItems>
       </ExtensionsWrapper>
       <Separator />

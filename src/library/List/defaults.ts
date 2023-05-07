@@ -5,7 +5,7 @@
 export const defaultContext = {
   setSelectable: (_selectable: boolean) => {},
   addToSelected: (item: any) => {},
-  removeFromSelected: (items: Array<any>) => {},
+  removeFromSelected: (items: any[]) => {},
   resetSelected: () => {},
   setListFormat: (v: string) => {},
   selected: [],

@@ -19,7 +19,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
 import * as defaults from './defaults';
 import type {
-  DelegateItem,
   Delegates,
   ProxiedAccounts,
   Proxies,
@@ -146,7 +145,7 @@ export const ProxiesProvider = ({
     }
     const proxiedAccounts: ProxiedAccounts = delegate
       .filter(({ proxyType }) => isSupportedProxy(proxyType))
-      .map(({ delegator, proxyType }: DelegateItem) => ({
+      .map(({ delegator, proxyType }) => ({
         address: delegator,
         name: clipAddress(delegator),
         proxyType,

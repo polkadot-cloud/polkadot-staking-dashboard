@@ -6,10 +6,10 @@ import type { AnyApi, MaybeAccount } from 'types';
 
 export interface LocalMeta {
   isExposed: boolean;
-  checked: Array<number>;
+  checked: number[];
 }
 export interface MetaInterface {
-  checked: Array<number>;
+  checked: number[];
 }
 
 export interface FastUnstakeContextInterface {

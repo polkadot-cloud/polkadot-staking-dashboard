@@ -34,7 +34,7 @@ export const BondedPoolsProvider = ({
   const poolSubs = useRef<Record<string, Fn[]>>({});
 
   // store bonded pools
-  const [bondedPools, setBondedPools] = useState<Array<BondedPool>>([]);
+  const [bondedPools, setBondedPools] = useState<BondedPool[]>([]);
 
   // clear existing state for network refresh
   useEffect(() => {
@@ -61,7 +61,7 @@ export const BondedPoolsProvider = ({
   }, [bondedPools]);
 
   const unsubscribe = () => {
-    Object.values(poolSubs.current).map((batch: Array<Fn>) =>
+    Object.values(poolSubs.current).map((batch: Fn[]) =>
       Object.entries(batch).map(([, v]) => v())
     );
     setBondedPools([]);
@@ -215,7 +215,7 @@ export const BondedPoolsProvider = ({
     await Promise.all([
       subscribeToMetadata(ids),
       subscribeToNominations(addresses),
-    ]).then((unsubs: Array<Fn>) => {
+    ]).then((unsubs: Fn[]) => {
       addMetaBatchUnsubs(key, unsubs);
     });
   };
@@ -269,7 +269,7 @@ export const BondedPoolsProvider = ({
   /*
    * Helper: to add mataBatch unsubs by key.
    */
-  const addMetaBatchUnsubs = (key: string, unsubs: Array<Fn>) => {
+  const addMetaBatchUnsubs = (key: string, unsubs: Fn[]) => {
     const _unsubs = poolSubs.current;
     const _keyUnsubs = _unsubs[key] ?? [];
 
@@ -288,7 +288,7 @@ export const BondedPoolsProvider = ({
   });
 
   const getBondedPool = (poolId: MaybePool) => {
-    const pool = bondedPools.find((p: BondedPool) => p.id === poolId) ?? null;
+    const pool = bondedPools.find((p) => p.id === poolId) ?? null;
     return pool;
   };
 
@@ -350,15 +350,13 @@ export const BondedPoolsProvider = ({
     return filteredList;
   };
 
-  const updateBondedPools = (updatedPools: Array<BondedPool>) => {
+  const updateBondedPools = (updatedPools: BondedPool[]) => {
     if (!updatedPools) {
       return;
     }
     const _bondedPools = bondedPools.map(
-      (original: BondedPool) =>
-        updatedPools.find(
-          (updated: BondedPool) => updated.id === original.id
-        ) || original
+      (original) =>
+        updatedPools.find((updated) => updated.id === original.id) || original
     );
     setBondedPools(_bondedPools);
   };
@@ -373,7 +371,7 @@ export const BondedPoolsProvider = ({
   const addToBondedPools = (pool: BondedPool) => {
     if (!pool) return;
 
-    const exists = bondedPools.find((b: BondedPool) => b.id === pool.id);
+    const exists = bondedPools.find((b) => b.id === pool.id);
     if (!exists) {
       const _bondedPools = bondedPools.concat(pool);
       setBondedPools(_bondedPools);
@@ -392,20 +390,20 @@ export const BondedPoolsProvider = ({
     }
 
     const depositor = bondedPools
-      .filter((b: BondedPool) => b.roles.depositor === who)
-      .map((b: BondedPool) => b.id);
+      .filter((b) => b.roles.depositor === who)
+      .map((b) => b.id);
 
     const root = bondedPools
       .filter((b: BondedPool) => b.roles.root === who)
-      .map((b: BondedPool) => b.id);
+      .map((b) => b.id);
 
     const nominator = bondedPools
-      .filter((b: BondedPool) => b.roles.nominator === who)
-      .map((b: BondedPool) => b.id);
+      .filter((b) => b.roles.nominator === who)
+      .map((b) => b.id);
 
     const stateToggler = bondedPools
-      .filter((b: BondedPool) => b.roles.stateToggler === who)
-      .map((b: BondedPool) => b.id);
+      .filter((b) => b.roles.stateToggler === who)
+      .map((b) => b.id);
 
     return {
       depositor,
@@ -425,7 +423,7 @@ export const BondedPoolsProvider = ({
     Object.entries(roles).forEach(([key, poolIds]: any) => {
       // now looping through a role
       poolIds.forEach((poolId: string) => {
-        const exists = Object.keys(pools).find((k: string) => k === poolId);
+        const exists = Object.keys(pools).find((k) => k === poolId);
         if (!exists) {
           pools[poolId] = [key];
         } else {
@@ -451,9 +449,7 @@ export const BondedPoolsProvider = ({
 
   // replaces the pool roles from roleEdits
   const replacePoolRoles = (poolId: number, roleEdits: any) => {
-    let pool =
-      bondedPools.find((b: BondedPool) => String(b.id) === String(poolId)) ||
-      null;
+    let pool = bondedPools.find((b) => String(b.id) === String(poolId)) || null;
 
     if (!pool) return;
 
@@ -466,7 +462,7 @@ export const BondedPoolsProvider = ({
     };
 
     const newBondedPools = [
-      ...bondedPools.map((b: BondedPool) =>
+      ...bondedPools.map((b) =>
         String(b.id) === String(poolId) && pool !== null ? pool : b
       ),
     ];

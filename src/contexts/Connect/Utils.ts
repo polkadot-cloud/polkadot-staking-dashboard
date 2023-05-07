@@ -5,7 +5,7 @@ import Keyring from '@polkadot/keyring';
 import { localStorageOrDefault } from '@polkadotcloud/utils';
 import type { ExtensionAccount } from 'contexts/Extensions/types';
 import type { Network } from 'types';
-import type { ExternalAccount, ImportedAccount, LedgerAccount } from './types';
+import type { ExternalAccount, LedgerAccount } from './types';
 
 // extension utils
 
@@ -50,8 +50,7 @@ export const extensionIsLocal = (id: string) => {
   );
   let foundExtensionLocally = false;
   if (Array.isArray(localExtensions)) {
-    foundExtensionLocally =
-      localExtensions.find((l: string) => l === id) !== undefined;
+    foundExtensionLocally = localExtensions.find((l) => l === id) !== undefined;
   }
   return foundExtensionLocally;
 };
@@ -78,11 +77,11 @@ export const getLocalLedgerAccounts = (
   network: Network,
   activeNetworkOnly = false
 ) => {
-  let localLedgerAccounts = localStorageOrDefault<Array<LedgerAccount>>(
+  let localLedgerAccounts = localStorageOrDefault<LedgerAccount[]>(
     'ledger_accounts',
     [],
     true
-  ) as Array<LedgerAccount>;
+  ) as LedgerAccount[];
   if (activeNetworkOnly) {
     localLedgerAccounts = localLedgerAccounts.filter(
       (l: LedgerAccount) => l.network === network.name
@@ -97,11 +96,11 @@ export const getLocalExternalAccounts = (
   network: Network,
   activeNetworkOnly = false
 ) => {
-  let localExternalAccounts = localStorageOrDefault<Array<ExternalAccount>>(
+  let localExternalAccounts = localStorageOrDefault<ExternalAccount[]>(
     'external_accounts',
     [],
     true
-  ) as Array<ExternalAccount>;
+  ) as ExternalAccount[];
   if (activeNetworkOnly) {
     localExternalAccounts = localExternalAccounts.filter(
       (l: ExternalAccount) => l.network === network.name
@@ -112,17 +111,14 @@ export const getLocalExternalAccounts = (
 
 // gets accounts that exist in local `external_accounts`
 export const getInExternalAccounts = (
-  accounts: Array<ExtensionAccount>,
+  accounts: ExtensionAccount[],
   network: Network
 ) => {
   const localExternalAccounts = getLocalExternalAccounts(network, true);
 
   return (
     localExternalAccounts.filter(
-      (a: ExternalAccount) =>
-        (accounts || []).find(
-          (b: ExtensionAccount) => b.address === a.address
-        ) !== undefined
+      (a) => (accounts || []).find((b) => b.address === a.address) !== undefined
     ) || []
   );
 };
@@ -130,14 +126,13 @@ export const getInExternalAccounts = (
 // removes supplied accounts from local `external_accounts`.
 export const removeLocalExternalAccounts = (
   network: Network,
-  accounts: Array<ExternalAccount>
+  accounts: ExternalAccount[]
 ) => {
   let localExternalAccounts = getLocalExternalAccounts(network, true);
   localExternalAccounts = localExternalAccounts.filter(
-    (a: ExternalAccount) =>
+    (a) =>
       accounts.find(
-        (b: ImportedAccount) =>
-          b.address === a.address && a.network === network.name
+        (b) => b.address === a.address && a.network === network.name
       ) === undefined
   );
   localStorage.setItem(

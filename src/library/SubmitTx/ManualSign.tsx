@@ -26,7 +26,7 @@ export const ManualSign = ({
   valid,
   submitText,
   buttons,
-}: SubmitProps & { buttons?: Array<React.ReactNode> }) => {
+}: SubmitProps & { buttons?: React.ReactNode[] }) => {
   const { t } = useTranslation('library');
 
   const {

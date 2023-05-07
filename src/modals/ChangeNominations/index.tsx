@@ -136,7 +136,7 @@ export const ChangeNominations = () => {
         <Separator />
         {warnings.length ? (
           <WarningsWrapper noMargin>
-            {warnings.map((warning: React.ReactNode, index: number) => (
+            {warnings.map((warning, index) => (
               <React.Fragment key={`warning_${index}`}>
                 {warning}
               </React.Fragment>

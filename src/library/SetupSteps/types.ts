@@ -15,7 +15,7 @@ export interface FooterProps {
 }
 
 export interface GenerateNominationsInnerProps {
-  setters: Array<any>;
+  setters: any[];
   nominations: string[];
   batchKey: string;
 }
