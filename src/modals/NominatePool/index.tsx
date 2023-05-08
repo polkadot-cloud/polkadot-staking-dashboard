@@ -1,13 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ActionItem } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
@@ -80,7 +80,7 @@ export const NominatePool = () => {
             ))}
           </WarningsWrapper>
         ) : null}
-        <Action text={t('haveNomination', { count: nominations.length })} />
+        <ActionItem text={t('haveNomination', { count: nominations.length })} />
         <p>{t('onceSubmitted')}</p>
       </PaddingWrapper>
       <SubmitTx valid={valid && warnings.length === 0} {...submitExtrinsic} />
