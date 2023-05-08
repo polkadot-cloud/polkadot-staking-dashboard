@@ -39,7 +39,7 @@ export const BalancesProvider = ({
   const [balances, setBalances] = useState<Balances[]>([]);
   const balancesRef = useRef(balances);
 
-  const [ledgers, setLedgers] = useState<Array<Ledger>>([]);
+  const [ledgers, setLedgers] = useState<Ledger[]>([]);
   const ledgersRef = useRef(ledgers);
 
   const unsubs = useRef<Record<string, VoidFn>>({});

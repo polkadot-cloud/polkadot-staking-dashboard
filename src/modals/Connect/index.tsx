@@ -2,13 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
+import { ActionItem, ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
 import { Extensions } from 'config/extensions';
 import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
 import type { ExtensionConfig } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
-import { Action } from 'library/Modal/Action';
 import { SelectItems } from 'library/SelectItems';
 import { CustomHeaderWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
@@ -26,12 +25,11 @@ export const Connect = () => {
   const { replaceModalWith, setResize, height } = useModal();
 
   const installed = Extensions.filter((a: ExtensionConfig) =>
-    extensions.find((b: ExtensionConfig) => b.id === a.id)
+    extensions.find((b) => b.id === a.id)
   );
 
   const other = Extensions.filter(
-    (a: ExtensionConfig) =>
-      !installed.find((b: ExtensionConfig) => b.id === a.id)
+    (a: ExtensionConfig) => !installed.find((b) => b.id === a.id)
   );
 
   // toggle read only management
@@ -56,7 +54,7 @@ export const Connect = () => {
 
       {['polkadot', 'kusama'].includes(network.name) ? (
         <>
-          <Action text={t('hardware')} />
+          <ActionItem text={t('hardware')} />
           <ExtensionsWrapper>
             <SelectItems layout="two-col">
               {[Ledger].map((Item: AnyFunction, i: number) => (
@@ -67,18 +65,16 @@ export const Connect = () => {
         </>
       ) : null}
 
-      <Action text={t('extensions')} />
+      <ActionItem text={t('extensions')} />
       <ExtensionsWrapper>
         <SelectItems layout="two-col">
-          {installed
-            .concat(other)
-            .map((extension: ExtensionConfig, i: number) => (
-              <Extension key={`extension_item_${i}`} meta={extension} />
-            ))}
+          {installed.concat(other).map((extension, i) => (
+            <Extension key={`extension_item_${i}`} meta={extension} />
+          ))}
         </SelectItems>
       </ExtensionsWrapper>
       <Separator />
-      <Action text={t('readOnlyAccounts')} />
+      <ActionItem text={t('readOnlyAccounts')} />
       <ReadOnly setReadOnlyOpen={setReadOnlyOpen} readOnlyOpen={readOnlyOpen} />
     </PaddingWrapper>
   );

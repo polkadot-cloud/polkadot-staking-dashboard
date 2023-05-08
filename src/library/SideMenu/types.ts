@@ -25,7 +25,7 @@ export interface PrimaryProps {
 
 export interface SecondaryProps {
   name: string;
-  classes?: Array<string>;
+  classes?: string[];
   onClick: () => void;
   active?: boolean;
   to?: string;

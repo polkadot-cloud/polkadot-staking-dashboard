@@ -5,7 +5,6 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useNotifications } from 'contexts/Notifications';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -22,7 +21,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { title, icon: Icon, url } = meta;
 
   const { id } = meta;
-  const extension = extensions.find((e: ExtensionInjected) => e.id === id);
+  const extension = extensions.find((e) => e.id === id);
   const status = !extension ? 'not_found' : extensionsStatus[id];
   const disabled = status === 'connected' || !extension;
 

@@ -58,7 +58,7 @@ export const ConnectProvider = ({
   } = useImportExtension();
 
   // store accounts list
-  const [accounts, setAccounts] = useState<Array<ImportedAccount>>([]);
+  const [accounts, setAccounts] = useState<ImportedAccount[]>([]);
   const accountsRef = useRef(accounts);
 
   // store the currently active account
@@ -89,9 +89,9 @@ export const ConnectProvider = ({
   const unsubs = useRef<Record<string, VoidFn>>({});
 
   // store extensions whose account subscriptions have been initialised
-  const [extensionsInitialised, setExtensionsInitialised] = useState<
-    Array<AnyApi>
-  >([]);
+  const [extensionsInitialised, setExtensionsInitialised] = useState<AnyApi[]>(
+    []
+  );
   const extensionsInitialisedRef = useRef(extensionsInitialised);
 
   const [client, setWalletConnectClient] = useState<SignClient | null>(null);
@@ -184,7 +184,7 @@ export const ConnectProvider = ({
   /*
    * Unsubscrbe from some account subscriptions and update the resulting state.
    */
-  const forgetAccounts = (forget: Array<ImportedAccount>) => {
+  const forgetAccounts = (forget: ImportedAccount[]) => {
     if (!forget.length) return;
 
     for (const { address } of forget) {
@@ -209,7 +209,7 @@ export const ConnectProvider = ({
     // get any external accounts and remove from localStorage
     const externalToForget = forget.filter(
       (i: AnyApi) => 'network' in i
-    ) as Array<ExternalAccount>;
+    ) as ExternalAccount[];
 
     if (externalToForget.length) {
       removeLocalExternalAccounts(network, externalToForget);
@@ -762,7 +762,7 @@ export const ConnectProvider = ({
   };
 
   // add accounts to context state
-  const addToAccounts = (a: Array<ImportedAccount>) => {
+  const addToAccounts = (a: ImportedAccount[]) => {
     setStateWithRef(
       [...accountsRef.current].concat(a),
       setAccounts,

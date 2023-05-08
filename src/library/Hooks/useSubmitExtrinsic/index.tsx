@@ -10,7 +10,6 @@ import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useNotifications } from 'contexts/Notifications';
@@ -238,9 +237,7 @@ export const useSubmitExtrinsic = ({
 
     // if `activeAccount` is imported from an extension, ensure it is enabled.
     if (source !== 'ledger') {
-      const extension = extensions.find(
-        (e: ExtensionInjected) => e.id === source
-      );
+      const extension = extensions.find((e) => e.id === source);
       if (extension === undefined) {
         throw new Error(`${t('walletNotFound')}`);
       } else if (source !== 'wallet-connect') {

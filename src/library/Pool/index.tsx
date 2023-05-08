@@ -70,7 +70,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
         };
 
   // consruct pool menu items
-  const menuItems: Array<any> = [];
+  const menuItems: any[] = [];
 
   // add view pool nominations button to menu
   menuItems.push({

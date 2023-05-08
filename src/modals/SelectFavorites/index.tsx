@@ -21,9 +21,7 @@ export const SelectFavorites = () => {
   const { nominations, callback: generateNominationsCallback } = config;
 
   // store filtered favorites
-  const [availableFavorites, setAvailableFavorites] = useState<
-    Array<Validator>
-  >([]);
+  const [availableFavorites, setAvailableFavorites] = useState<Validator[]>([]);
 
   // store selected favorites in local state
   const [selectedFavorites, setSelectedFavorites] = useState([]);
@@ -32,7 +30,7 @@ export const SelectFavorites = () => {
   useEffect(() => {
     if (favoritesList) {
       const _availableFavorites = favoritesList.filter(
-        (favorite: Validator) =>
+        (favorite) =>
           !nominations.find(
             (nomination: Validator) => nomination.address === favorite.address
           ) && !favorite.prefs.blocked

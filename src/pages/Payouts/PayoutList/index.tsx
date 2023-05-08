@@ -9,11 +9,9 @@ import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import type { BondedPool } from 'contexts/Pools/types';
 import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useValidators } from 'contexts/Validators';
-import type { Validator } from 'contexts/Validators/types';
 import { formatDistance, fromUnixTime } from 'date-fns';
 import { motion } from 'framer-motion';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
@@ -159,12 +157,12 @@ export const PayoutListInner = ({
 
             // get validator if it exists
             const validator = validators.find(
-              (v: Validator) => v.address === p.validator_stash
+              (v) => v.address === p.validator_stash
             );
 
             // get pool if it exists
             const pool = bondedPools.find(
-              (_p: BondedPool) => String(_p.id) === String(p.pool_id)
+              ({ id }) => String(id) === String(p.pool_id)
             );
 
             const batchIndex = validator

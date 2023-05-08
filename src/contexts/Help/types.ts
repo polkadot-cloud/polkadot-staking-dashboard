@@ -4,15 +4,15 @@
 import type { ReactNode } from 'react';
 import type { MaybeString } from 'types';
 
-export type HelpItems = Array<HelpItem>;
+export type HelpItems = HelpItem[];
 
 export interface HelpItem {
   key?: string;
-  definitions?: Array<string>;
+  definitions?: string[];
   external?: ExternalItems;
 }
 
-export type ExternalItems = Array<ExternalItem>;
+export type ExternalItems = ExternalItem[];
 export type ExternalItem = [string, string, string];
 
 export type DefinitionWithKeys = {

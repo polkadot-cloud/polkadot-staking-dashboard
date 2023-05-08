@@ -7,6 +7,7 @@ import type {
   ExtensionConfig,
   ExtensionInjected,
   ExtensionsContextInterface,
+  ExtensionsStatus,
 } from 'contexts/Extensions/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi } from 'types';
@@ -25,7 +26,7 @@ export const ExtensionsProvider = ({
     useState<boolean>(true);
 
   // store the installed extensions in state
-  const [extensions, setExtensions] = useState<Array<ExtensionInjected> | null>(
+  const [extensions, setExtensions] = useState<ExtensionInjected[] | null>(
     null
   );
 
@@ -33,9 +34,10 @@ export const ExtensionsProvider = ({
   const [extensionsFetched, setExtensionsFetched] = useState(false);
 
   // store each extension's status in state.
-  const [extensionsStatus, setExtensionsStatus] = useState<{
-    [key: string]: string;
-  }>({});
+  const [extensionsStatus, setExtensionsStatus] = useState<ExtensionsStatus>(
+    {}
+  );
+
   const extensionsStatusRef = useRef(extensionsStatus);
 
   // listen for window.injectedWeb3.
@@ -109,7 +111,7 @@ export const ExtensionsProvider = ({
 
   const setExtensionStatus = (id: string, status: string) => {
     setStateWithRef(
-      Object.assign(extensionsStatusRef.current, {
+      Object.assign(extensionsStatusRef.current || {}, {
         [id]: status,
       }),
       setExtensionsStatus,
@@ -119,7 +121,7 @@ export const ExtensionsProvider = ({
 
   const getInstalledExtensions = () => {
     const { injectedWeb3 }: AnyApi = window;
-    const installed: Array<ExtensionInjected> = [];
+    const installed: ExtensionInjected[] = [];
     Extensions.forEach((e: ExtensionConfig) => {
       if (e.id === 'wallet-connect') {
         installed.push({
