@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
+import { ActionItem, ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
@@ -11,7 +11,6 @@ import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
-import { Action } from 'library/Modal/Action';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CustomHeaderWrapper, PaddingWrapper } from '../Wrappers';
@@ -179,7 +178,7 @@ export const Accounts = () => {
       {nominatingAndPool.length ? (
         <>
           <AccountSeparator />
-          <Action text={t('nominatingAndInPool')} />
+          <ActionItem text={t('nominatingAndInPool')} />
           {nominatingAndPool.map(({ address, delegates }, i) => (
             <React.Fragment key={`acc_nominating_${i}`}>
               <AccountButton address={address} />
@@ -194,7 +193,7 @@ export const Accounts = () => {
       {nominating.length ? (
         <>
           <AccountSeparator />
-          <Action text={t('nominating')} />
+          <ActionItem text={t('nominating')} />
           {nominating.map(({ address, delegates }, i) => (
             <React.Fragment key={`acc_nominating_${i}`}>
               <AccountButton address={address} />
@@ -209,7 +208,7 @@ export const Accounts = () => {
       {inPool.length ? (
         <>
           <AccountSeparator />
-          <Action text={t('inPool')} />
+          <ActionItem text={t('inPool')} />
           {inPool.map(({ address, delegates }, i) => (
             <React.Fragment key={`acc_in_pool_${i}`}>
               <AccountButton address={address} />
@@ -224,7 +223,7 @@ export const Accounts = () => {
       {notStaking.length ? (
         <>
           <AccountSeparator />
-          <Action text={t('notStaking')} />
+          <ActionItem text={t('notStaking')} />
           {notStaking.map(({ address, delegates }, i) => (
             <React.Fragment key={`acc_not_staking_${i}`}>
               <AccountButton address={address} />

@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ActionItem } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -14,7 +15,6 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
@@ -138,7 +138,7 @@ export const ManageFastUnstake = () => {
 
         {isExposed ? (
           <>
-            <Action
+            <ActionItem
               text={t('fastUnstakeExposedAgo', {
                 count: lastExposedAgo.toNumber(),
               })}
@@ -158,7 +158,7 @@ export const ManageFastUnstake = () => {
           <>
             {!isFastUnstaking ? (
               <>
-                <Action text={t('fastUnstake', { context: 'register' })} />
+                <ActionItem text={t('fastUnstake', { context: 'register' })} />
                 <NotesWrapper noPadding>
                   <p>
                     <>
@@ -177,7 +177,7 @@ export const ManageFastUnstake = () => {
               </>
             ) : (
               <>
-                <Action text={t('fastUnstakeRegistered')} />
+                <ActionItem text={t('fastUnstakeRegistered')} />
                 <NotesWrapper noPadding>
                   <p>
                     {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
