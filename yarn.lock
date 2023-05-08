@@ -669,7 +669,7 @@
     "@polkadot/util-crypto" "12.1.2"
     tslib "^2.5.0"
 
-"@polkadot/networks@12.1.2", "@polkadot/networks@^12.1.1", "@polkadot/networks@^12.1.2":
+"@polkadot/networks@12.1.2", "@polkadot/networks@^12.1.2":
   version "12.1.2"
   resolved "https://registry.npmjs.org/@polkadot/networks/-/networks-12.1.2.tgz#4631ec701f87f6a1805faaf24f0199ca50f36716"
   integrity sha512-9gC5GYGFKXHY4oQaMfYvLLxGJ55slT3V8Zc6uk96KKysEvpSMDXdPUAKZJ3SXN9Iz3KaEa9x6RD5ZEf5j6BJ6g==
@@ -678,16 +678,16 @@
     "@substrate/ss58-registry" "^1.40.0"
     tslib "^2.5.0"
 
-"@polkadot/react-identicon@^3.2.2":
-  version "3.2.2"
-  resolved "https://registry.npmjs.org/@polkadot/react-identicon/-/react-identicon-3.2.2.tgz#347cae637225f8f36be5a18feec163d0cc87ae34"
-  integrity sha512-3Dp3+ROHoAXsBL/8cLaCF75frW44IOe42rRGJhfz2B0E6h/InIKY8vdFOdWVWW4lqcB8Lq0PAUxCyImtj+K3KQ==
+"@polkadot/react-identicon@^3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@polkadot/react-identicon/-/react-identicon-3.3.1.tgz#c828049b27a58eff1b43b6e56aab5d74481f3acd"
+  integrity sha512-fIY2UuVIxZHRVcK/uCcWLg4xRjsnwkMAR3j9+qoPR0y8U2NE8LDEFPWdJ06FJjN4QZFmxc1l/jQ3TJCd6hIwRw==
   dependencies:
-    "@polkadot/keyring" "^12.1.1"
-    "@polkadot/ui-settings" "3.2.2"
-    "@polkadot/ui-shared" "3.2.2"
-    "@polkadot/util" "^12.1.1"
-    "@polkadot/util-crypto" "^12.1.1"
+    "@polkadot/keyring" "^12.1.2"
+    "@polkadot/ui-settings" "3.3.1"
+    "@polkadot/ui-shared" "3.3.1"
+    "@polkadot/util" "^12.1.2"
+    "@polkadot/util-crypto" "^12.1.2"
     ethereum-blockies-base64 "^1.0.2"
     jdenticon "3.2.0"
     react-copy-to-clipboard "^5.1.0"
@@ -799,26 +799,26 @@
     rxjs "^7.8.1"
     tslib "^2.5.0"
 
-"@polkadot/ui-settings@3.2.2":
-  version "3.2.2"
-  resolved "https://registry.npmjs.org/@polkadot/ui-settings/-/ui-settings-3.2.2.tgz#043bc2c86dc1ef5e3f71dd9e3c37e3b92c1752bc"
-  integrity sha512-JQGwcvEEYBoZ4MW1sE57alb3uv3Qjgq4NUNMJqVk3ImXyNwcRHDOdD39mJaGcnPHcQkQlI+4uugFTiIf+cwQfw==
+"@polkadot/ui-settings@3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@polkadot/ui-settings/-/ui-settings-3.3.1.tgz#3e178a9aad2cda79da22a81dcb6874eb62909c43"
+  integrity sha512-cOOjlHaoWWi7//wRKuWwcagfNoTqD4FxhxI19AMXG4xRPBLDh39tMGxzyd3yTsLMruscnDxdxN2Yj0jzn3FYKg==
   dependencies:
-    "@polkadot/networks" "^12.1.1"
-    "@polkadot/util" "^12.1.1"
-    eventemitter3 "^5.0.0"
+    "@polkadot/networks" "^12.1.2"
+    "@polkadot/util" "^12.1.2"
+    eventemitter3 "^5.0.1"
     store "^2.0.12"
     tslib "^2.5.0"
 
-"@polkadot/ui-shared@3.2.2":
-  version "3.2.2"
-  resolved "https://registry.npmjs.org/@polkadot/ui-shared/-/ui-shared-3.2.2.tgz#ec3b72becccfb3a0bc2fd4b6c223a8cb478aa35f"
-  integrity sha512-i6FQ3v22lIcwMh1CmhLirNaVBATfhKO9r3J0nba4DOpUDzweboOzNJTqgSldsx4CblaMgrT57MW8BkBC+zctvA==
+"@polkadot/ui-shared@3.3.1":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@polkadot/ui-shared/-/ui-shared-3.3.1.tgz#f85fe90d1d866956090d3b52b8cc906a17fb4c38"
+  integrity sha512-qT73rS8+Ja3UdEOVJ55Y9NZQkZSRBszHWE8miYm4zWBT5HYbWD2KWgCd9cjKVHmDk79MO1S81ULPwbD5qhgrEg==
   dependencies:
     colord "^2.9.3"
     tslib "^2.5.0"
 
-"@polkadot/util-crypto@12.1.2", "@polkadot/util-crypto@^12.1.1", "@polkadot/util-crypto@^12.1.2":
+"@polkadot/util-crypto@12.1.2", "@polkadot/util-crypto@^12.1.2":
   version "12.1.2"
   resolved "https://registry.npmjs.org/@polkadot/util-crypto/-/util-crypto-12.1.2.tgz#7045c85a63316e2aa2cddf930e0b3c6228b539b8"
   integrity sha512-xV5P7auvs2Qck+HGGk2uaJWyujbJSFc+VDlM/giqM2xKgfmkRUTgGtcBuLLLZq5R1A9tGW5DUQg0VgVHYJaNvw==
@@ -2612,7 +2612,7 @@ eventemitter3@^4.0.7:
   resolved "https://registry.npmjs.org/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
   integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
 
-eventemitter3@^5.0.0, eventemitter3@^5.0.1:
+eventemitter3@^5.0.1:
   version "5.0.1"
   resolved "https://registry.npmjs.org/eventemitter3/-/eventemitter3-5.0.1.tgz#53f5ffd0a492ac800721bb42c66b841de96423c4"
   integrity sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==
