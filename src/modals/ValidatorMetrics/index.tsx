@@ -92,19 +92,17 @@ export const ValidatorMetrics = () => {
 
       <PaddingWrapper horizontalOnly>
         <StatsWrapper>
-          {stats.map(
-            (s: { label: string; value: string; help: string }, i: number) => (
-              <StatWrapper key={`metrics_stat_${i}`}>
-                <div className="inner">
-                  <h4>
-                    {s.label}{' '}
-                    <ButtonHelp marginLeft onClick={() => openHelp(s.help)} />
-                  </h4>
-                  <h2>{s.value}</h2>
-                </div>
-              </StatWrapper>
-            )
-          )}
+          {stats.map((s, i) => (
+            <StatWrapper key={`metrics_stat_${i}`}>
+              <div className="inner">
+                <h4>
+                  {s.label}{' '}
+                  <ButtonHelp marginLeft onClick={() => openHelp(s.help)} />
+                </h4>
+                <h2>{s.value}</h2>
+              </div>
+            </StatWrapper>
+          ))}
         </StatsWrapper>
       </PaddingWrapper>
       <div

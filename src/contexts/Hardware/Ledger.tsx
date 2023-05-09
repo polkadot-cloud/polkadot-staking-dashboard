@@ -37,9 +37,9 @@ export const LedgerHardwareProvider = ({
   const { t } = useTranslation('modals');
   const { network } = useApi();
 
-  const [ledgerAccounts, setLedgerAccountsState] = useState<
-    Array<LedgerAccount>
-  >(getLocalLedgerAccounts(network.name));
+  const [ledgerAccounts, setLedgerAccountsState] = useState<LedgerAccount[]>(
+    getLocalLedgerAccounts(network.name)
+  );
   const ledgerAccountsRef = useRef(ledgerAccounts);
 
   // Store whether the device has been paired.
@@ -51,7 +51,7 @@ export const LedgerHardwareProvider = ({
   const isExecutingRef = useRef(isExecuting);
 
   // Store status codes received from Ledger device.
-  const [statusCodes, setStatusCodes] = useState<Array<LedgerResponse>>([]);
+  const [statusCodes, setStatusCodes] = useState<LedgerResponse[]>([]);
   const statusCodesRef = useRef(statusCodes);
 
   // Get the default message to display, set when a failed loop has happened.
@@ -185,7 +185,7 @@ export const LedgerHardwareProvider = ({
   // all Ledger tasks, along with errors that occur during the process.
   const executeLedgerLoop = async (
     appName: string,
-    tasks: Array<LedgerTask>,
+    tasks: LedgerTask[],
     options?: AnyJson
   ) => {
     try {
@@ -336,20 +336,18 @@ export const LedgerHardwareProvider = ({
 
   // Check if an address exists in imported addresses.
   const ledgerAccountExists = (address: string) =>
-    !!getLocalLedgerAccounts().find((a: LedgerAccount) =>
-      isLocalAddress(a, address)
-    );
+    !!getLocalLedgerAccounts().find((a) => isLocalAddress(a, address));
 
   const addLedgerAccount = (address: string, index: number) => {
     let newLedgerAccounts = getLocalLedgerAccounts();
 
-    const ledgerAddress = getLocalLedgerAddresses().find((a: LedgerAddress) =>
+    const ledgerAddress = getLocalLedgerAddresses().find((a) =>
       isLocalAddress(a, address)
     );
 
     if (
       ledgerAddress &&
-      !newLedgerAccounts.find((a: LedgerAccount) => isLocalAddress(a, address))
+      !newLedgerAccounts.find((a) => isLocalAddress(a, address))
     ) {
       const account = {
         address,
@@ -416,17 +414,13 @@ export const LedgerHardwareProvider = ({
     if (!localLedgerAccounts) {
       return null;
     }
-    return (
-      localLedgerAccounts.find((a: LedgerAccount) =>
-        isLocalAddress(a, address)
-      ) ?? null
-    );
+    return localLedgerAccounts.find((a) => isLocalAddress(a, address)) ?? null;
   };
 
   const renameLedgerAccount = (address: string, newName: string) => {
     let newLedgerAccounts = getLocalLedgerAccounts();
 
-    newLedgerAccounts = newLedgerAccounts.map((a: LedgerAccount) =>
+    newLedgerAccounts = newLedgerAccounts.map((a) =>
       isLocalAddress(a, address)
         ? {
             ...a,

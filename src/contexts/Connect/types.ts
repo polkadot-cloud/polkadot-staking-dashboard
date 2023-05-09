@@ -18,10 +18,10 @@ export interface ConnectContextInterface {
   accountHasSigner: (a: MaybeAccount) => boolean;
   requiresManualSign: (a: MaybeAccount) => boolean;
   isReadOnlyAccount: (a: MaybeAccount) => boolean;
-  addToAccounts: (a: Array<ImportedAccount>) => void;
-  forgetAccounts: (a: Array<ImportedAccount>) => void;
+  addToAccounts: (a: ImportedAccount[]) => void;
+  forgetAccounts: (a: ImportedAccount[]) => void;
   setActiveProxy: (p: MaybeAccount, l?: boolean) => void;
-  accounts: Array<ExtensionAccount>;
+  accounts: ExtensionAccount[];
   activeAccount: MaybeAccount;
   activeProxy: MaybeAccount;
   activeAccountMeta: ImportedAccount | null;
@@ -49,7 +49,7 @@ export interface LedgerAccount {
 }
 
 export interface HandleImportExtension {
-  newAccounts: Array<ExtensionAccount>;
+  newAccounts: ExtensionAccount[];
   meta: {
     removedActiveAccount: MaybeAccount;
   };

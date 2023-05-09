@@ -1,8 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faPenToSquare, faWarning } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Tx } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -12,7 +11,6 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Default } from './Default';
 import { ManualSign } from './ManualSign';
-import { Wrapper } from './Wrappers';
 import type { SubmitTxProps } from './types';
 
 export const SubmitTx = ({
@@ -21,7 +19,6 @@ export const SubmitTx = ({
   submitText,
   buttons = [],
   valid = false,
-  noMargin = false,
   submitting = false,
   proxySupported,
   fromController = false,
@@ -75,52 +72,32 @@ export const SubmitTx = ({
   }, []);
 
   return (
-    <Wrapper noMargin={noMargin}>
-      <div className="inner">
-        <p className="sign">
-          <span className="badge">
-            <FontAwesomeIcon icon={faPenToSquare} className="icon" />
-            {signingOpts.label}
-          </span>
-
-          {signingOpts.who?.name}
-
-          {notEnoughFunds && (
-            <span className="notEnough">
-              / &nbsp;
-              <FontAwesomeIcon
-                icon={faWarning}
-                className="danger"
-                transform="shrink-1"
-              />{' '}
-              <span className="danger">
-                {t('notEnough', { ns: 'library' })} {unit}
-              </span>
-            </span>
-          )}
-        </p>
-
-        <section className="foot">
-          {requiresManualSign(sender) ? (
-            <ManualSign
-              uid={uid}
-              onSubmit={onSubmit}
-              submitting={submitting}
-              valid={valid}
-              submitText={submitText}
-              buttons={buttons}
-            />
-          ) : (
-            <Default
-              onSubmit={onSubmit}
-              submitting={submitting}
-              valid={valid}
-              submitText={submitText}
-              buttons={buttons}
-            />
-          )}
-        </section>
-      </div>
-    </Wrapper>
+    <Tx
+      margin
+      label={signingOpts.label}
+      name={signingOpts.who?.name || ''}
+      notEnoughFunds={notEnoughFunds}
+      dangerMessage={`${t('notEnough', { ns: 'library' })} ${unit}`}
+      SignerComponent={
+        requiresManualSign(sender) ? (
+          <ManualSign
+            uid={uid}
+            onSubmit={onSubmit}
+            submitting={submitting}
+            valid={valid}
+            submitText={submitText}
+            buttons={buttons}
+          />
+        ) : (
+          <Default
+            onSubmit={onSubmit}
+            submitting={submitting}
+            valid={valid}
+            submitText={submitText}
+            buttons={buttons}
+          />
+        )
+      }
+    />
   );
 };

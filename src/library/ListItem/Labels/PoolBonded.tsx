@@ -36,9 +36,8 @@ export const PoolBonded = ({
   const targets = nominations[batchIndex]?.targets ?? [];
 
   // store nomination status in state
-  const [nominationsStatus, setNominationsStatus] = useState<{
-    [key: string]: string;
-  } | null>(null);
+  const [nominationsStatus, setNominationsStatus] =
+    useState<Record<string, string>>();
 
   // update pool nomination status as nominations metadata becomes available.
   // we cannot add effect dependencies here as this needs to trigger
@@ -73,7 +72,9 @@ export const PoolBonded = ({
   const poolBonded = planckToUnit(new BigNumber(rmCommas(points)), units);
 
   // determine nominations status and display
-  const nominationStatus = getPoolNominationStatusCode(nominationsStatus);
+  const nominationStatus = getPoolNominationStatusCode(
+    nominationsStatus || null
+  );
 
   return (
     <>

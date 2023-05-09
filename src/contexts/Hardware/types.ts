@@ -11,14 +11,14 @@ export type LedgerHardwareContextInterface = {
   transportResponse: AnyJson;
   executeLedgerLoop: (
     appName: string,
-    tasks: Array<LedgerTask>,
+    tasks: LedgerTask[],
     options?: AnyJson
   ) => Promise<void>;
   handleNewStatusCode: (ack: string, statusCode: LedgerStatusCode) => void;
   setIsExecuting: (v: boolean) => void;
   resetStatusCodes: () => void;
   getIsExecuting: () => boolean;
-  getStatusCodes: () => Array<LedgerResponse>;
+  getStatusCodes: () => LedgerResponse[];
   getTransport: () => AnyJson;
   ledgerAccountExists: (a: string) => boolean;
   addLedgerAccount: (a: string, i: number) => LedgerAccount | null;
@@ -26,7 +26,7 @@ export type LedgerHardwareContextInterface = {
   renameLedgerAccount: (a: string, name: string) => void;
   getLedgerAccount: (a: string) => LedgerAccount | null;
   isPaired: PairingStatus;
-  ledgerAccounts: Array<LedgerAccount>;
+  ledgerAccounts: LedgerAccount[];
   getFeedback: () => FeedbackMessage;
   setFeedback: (s: MaybeString, helpKey?: MaybeString) => void;
   resetFeedback: () => void;

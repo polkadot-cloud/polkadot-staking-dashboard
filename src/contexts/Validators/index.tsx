@@ -42,7 +42,7 @@ export const ValidatorsProvider = ({
   const { earliestStoredSession } = metrics;
 
   // stores the total validator entries
-  const [validators, setValidators] = useState<Array<Validator>>([]);
+  const [validators, setValidators] = useState<Validator[]>([]);
 
   // track whether the validator list has been fetched yet
   const [fetchedValidators, setFetchedValidators] = useState<number>(0);
@@ -78,17 +78,13 @@ export const ValidatorsProvider = ({
   const [favorites, setFavorites] = useState<string[]>(getFavorites());
 
   // stores the user's nominated validators as list
-  const [nominated, setNominated] = useState<Array<Validator> | null>(null);
+  const [nominated, setNominated] = useState<Validator[] | null>(null);
 
   // stores the nominated validators by the members pool's as list
-  const [poolNominated, setPoolNominated] = useState<Array<Validator> | null>(
-    null
-  );
+  const [poolNominated, setPoolNominated] = useState<Validator[] | null>(null);
 
   // stores the user's favorites validators as list
-  const [favoritesList, setFavoritesList] = useState<Array<Validator> | null>(
-    null
-  );
+  const [favoritesList, setFavoritesList] = useState<Validator[] | null>(null);
 
   // stores validator community
 
@@ -195,7 +191,7 @@ export const ValidatorsProvider = ({
 
   const fetchFavoriteList = async () => {
     // format to list format
-    const _favorites = [...favorites].map((item: string) => ({
+    const _favorites = [...favorites].map((item) => ({
       address: item,
     }));
     // // fetch preferences
@@ -224,7 +220,7 @@ export const ValidatorsProvider = ({
     setFetchedValidators(1);
 
     // fetch validator set
-    const v: Array<Validator> = [];
+    const v: Validator[] = [];
     let totalNonAllCommission = new BigNumber(0);
     const exposures = await api.query.staking.validators.entries();
     exposures.forEach(([a, p]: AnyApi) => {
@@ -476,7 +472,7 @@ export const ValidatorsProvider = ({
     await Promise.all([
       subscribeToIdentities(addresses),
       subscribeToSuperIdentities(addresses),
-    ]).then((unsubs: Array<Fn>) => {
+    ]).then((unsubs: Fn[]) => {
       addMetaBatchUnsubs(key, unsubs);
     });
 
@@ -552,7 +548,7 @@ export const ValidatorsProvider = ({
   /*
    * Helper function to add mataBatch unsubs by key.
    */
-  const addMetaBatchUnsubs = (key: string, unsubs: Array<Fn>) => {
+  const addMetaBatchUnsubs = (key: string, unsubs: Fn[]) => {
     const newUnsubs = validatorSubsRef.current;
     const keyUnsubs = newUnsubs[key] ?? [];
 

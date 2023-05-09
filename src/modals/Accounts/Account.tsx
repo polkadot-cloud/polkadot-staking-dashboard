@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { clipAddress } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
 import { useProxies } from 'contexts/Proxies';
 import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
@@ -39,8 +38,7 @@ export const AccountButton = ({
   const Icon =
     meta?.source === 'ledger'
       ? LedgerIconSVG
-      : extensions.find((e: ExtensionInjected) => e.id === meta?.source)
-          ?.icon ?? undefined;
+      : extensions.find((e) => e.id === meta?.source)?.icon ?? undefined;
 
   const imported = meta !== undefined;
 

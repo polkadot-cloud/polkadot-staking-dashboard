@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmitInvert } from '@polkadotcloud/core-ui';
+import { ActionItem, ButtonSubmitInvert } from '@polkadotcloud/core-ui';
 import { planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -16,7 +16,6 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Action } from 'library/Modal/Action';
 import { SubmitTx } from 'library/SubmitTx';
 import { WarningsWrapper } from 'modals/Wrappers';
 import { forwardRef, useEffect, useState } from 'react';
@@ -114,7 +113,7 @@ export const Forms = forwardRef(
             <div style={{ marginBottom: '2rem' }}>
               {task === 'rebond' && (
                 <>
-                  <Action
+                  <ActionItem
                     text={`${t('rebond')} ${planckToUnit(value, units)} ${
                       network.unit
                     }`}
@@ -124,7 +123,7 @@ export const Forms = forwardRef(
               )}
               {task === 'withdraw' && (
                 <>
-                  <Action
+                  <ActionItem
                     text={`${t('withdraw')} ${planckToUnit(value, units)} ${
                       network.unit
                     }`}
