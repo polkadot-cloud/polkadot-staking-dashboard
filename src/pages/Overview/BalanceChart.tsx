@@ -128,12 +128,6 @@ export const BalanceChart = () => {
       fundsReserved = graphAvailable;
     }
 
-    // formatter for price feed.
-    // usdFormatter = new Intl.NumberFormat('en-US', {
-    //   style: 'currency',
-    //   currency: 'USD',
-    // });
-
     isNominating = greaterThanZero(nominating);
     isInPool = greaterThanZero(
       poolBondOpions.active
