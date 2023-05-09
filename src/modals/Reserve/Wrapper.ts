@@ -12,17 +12,33 @@ export const SliderWrapper = styled.div`
   .slider {
     appearance: none;
     width: 100%;
-    marigin: 1.5rem;
+    margin-top: 1rem;
     height: 25px;
     background: var(--network-color-primary);
     border-radius: 1.5rem;
     opacity: 0.5;
-    transition: 1s;
-    transition: opacity 1s;
+    transition: 0.2s;
+    transition: opacity 0.2s;
     cursor: pointer;
 
     &:hover {
       opacity: 1;
+    }
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: 23px;
+      height: 24px;
+      border-radius: 1.25rem;
+      background: var(--network-color-secondary);
+      cursor: pointer;
+    }
+    &::-moz-range-thumb {
+      width: 23px;
+      height: 24px;
+      border-radius: 1.25rem;
+      background: var(--network-color-secondary);
+      cursor: pointer;
     }
   }
 `;
