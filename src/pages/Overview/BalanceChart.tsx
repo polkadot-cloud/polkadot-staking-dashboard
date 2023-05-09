@@ -1,13 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp } from '@polkadotcloud/core-ui';
+import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/core-ui';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
+import { useModal } from 'contexts/Modal';
 import { usePlugins } from 'contexts/Plugins';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { BarSegment } from 'library/BarChart/BarSegment';
@@ -15,9 +16,12 @@ import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useTranslation } from 'react-i18next';
+import { ButtonWrapper } from './Wrappers';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
+  const { openModalWith } = useModal();
+
   const {
     network: { units, unit },
     consts,
@@ -136,6 +140,14 @@ export const BalanceChart = () => {
               <>&nbsp;{usdFormatter.format(freeFiat.toNumber())}</>
             ) : null}
           </span>
+          <ButtonWrapper>
+            <ButtonPrimary
+              disabled={false}
+              marginRight
+              onClick={() => openModalWith('UpdateReserve')}
+              text="Update Reserve"
+            />
+          </ButtonWrapper>
         </h2>
       </div>
 

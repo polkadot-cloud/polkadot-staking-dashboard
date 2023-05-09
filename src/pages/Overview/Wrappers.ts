@@ -29,12 +29,9 @@ export const MoreWrapper = styled.div`
   section {
     width: 100%;
     margin-top: 0.1rem;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-
-    > div {
-      margin-right: 1rem;
-    }
   }
+`;
+
+export const ButtonWrapper = styled.div`
+  margin-left: 0.5rem;
 `;
