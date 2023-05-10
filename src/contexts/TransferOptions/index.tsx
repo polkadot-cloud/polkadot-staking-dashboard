@@ -132,6 +132,7 @@ export const TransferOptionsProvider = ({
 
     return {
       freeBalance,
+      forceReserved,
       nominate: nominateOptions(),
       pool: poolOptions(),
     };
