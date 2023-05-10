@@ -36,9 +36,20 @@ export const TransferOptionsProvider = ({
 
     const { free } = balance;
     const { active, total, unlocking } = ledger;
+    const totalLocked =
+      locks?.reduce(
+        (prev, { amount }) => prev.plus(amount),
+        new BigNumber(0)
+      ) || new BigNumber(0);
 
-    // TODO: refer to a new `reserveAmount` figure and deduct instead of `existentialDeposit`.
-    const freeMinusReserve = BigNumber.max(free.minus(existentialDeposit), 0);
+    // Calculate a forced amount of free balance that needs to be reserved to keep the account
+    // alive. Deducts `locks` from free balance reserve needed.
+    const forceReserved = BigNumber.max(
+      existentialDeposit.minus(totalLocked),
+      0
+    );
+    // Total free balance after `forceReserved` is subtracted.
+    const freeMinusReserve = BigNumber.max(free.minus(forceReserved), 0);
 
     // calculate total balance locked
     const maxLockBalance =
@@ -64,7 +75,7 @@ export const TransferOptionsProvider = ({
       }
     }
 
-    // free balance after reserve. Does not consider locks other than staking.
+    // free balance after `forceReserve` amount.
     const freeBalance = BigNumber.max(freeMinusReserve.minus(total), 0);
 
     const nominateOptions = () => {
