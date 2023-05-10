@@ -25,7 +25,6 @@ export interface Balance {
   reserved: BigNumber;
   miscFrozen: BigNumber;
   feeFrozen: BigNumber;
-  freeAfterReserve: BigNumber;
 }
 
 export interface UnlockChunkRaw {

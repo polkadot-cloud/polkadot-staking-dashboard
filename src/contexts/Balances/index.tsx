@@ -142,10 +142,6 @@ export const BalancesProvider = ({
               reserved: new BigNumber(accountData.reserved.toString()),
               miscFrozen: new BigNumber(accountData.miscFrozen.toString()),
               feeFrozen: new BigNumber(accountData.feeFrozen.toString()),
-              freeAfterReserve: BigNumber.max(
-                free.minus(existentialDeposit),
-                0
-              ),
             },
             locks: locks.toHuman().map((l: AnyApi) => ({
               ...l,

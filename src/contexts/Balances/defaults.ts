@@ -30,5 +30,4 @@ export const defaultBalance: Balance = {
   reserved: new BigNumber(0),
   miscFrozen: new BigNumber(0),
   feeFrozen: new BigNumber(0),
-  freeAfterReserve: new BigNumber(0),
 };
