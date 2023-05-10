@@ -20,7 +20,6 @@ export const BalanceChart = () => {
   const { t } = useTranslation('pages');
   const {
     network: { units, unit },
-    consts,
   } = useApi();
   const prices = usePrices();
   const { plugins } = usePlugins();
@@ -28,9 +27,9 @@ export const BalanceChart = () => {
   const { activeAccount } = useConnect();
   const { getBalance, getLocks } = useBalances();
   const { getTransferOptions } = useTransferOptions();
-  const { existentialDeposit } = consts;
   const balance = getBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
+  const { forceReserved } = allTransferOptions;
   const poolBondOpions = allTransferOptions.pool;
   const unlockingPools = poolBondOpions.totalUnlocking.plus(
     poolBondOpions.totalUnlocked
@@ -89,7 +88,7 @@ export const BalanceChart = () => {
 
   // available balance data
   const fundsLocked = planckToUnit(miscFrozen.minus(lockStakingAmount), units);
-  let fundsReserved = planckToUnit(existentialDeposit, units);
+  let fundsReserved = planckToUnit(forceReserved, units);
   const fundsFree = planckToUnit(allTransferOptions.freeBalance, units).minus(
     fundsLocked
   );
