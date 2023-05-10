@@ -49,14 +49,16 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const handleClick = async () => {
     if (status !== 'connected' && extension) {
       (async () => {
-        await connectExtensionAccounts(extension);
+        const connected = await connectExtensionAccounts(extension);
         // force re-render to display error messages
         setIncrement(increment + 1);
 
-        addNotification({
-          title: t('extensionConnected'),
-          subtitle: `${t('titleExtensionConnected', { title })}`,
-        });
+        if (connected) {
+          addNotification({
+            title: t('extensionConnected'),
+            subtitle: `${t('titleExtensionConnected', { title })}`,
+          });
+        }
       })();
     }
   };

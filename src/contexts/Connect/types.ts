@@ -9,7 +9,7 @@ import type { MaybeAccount } from 'types';
 
 export interface ConnectContextInterface {
   formatAccountSs58: (a: string) => string | null;
-  connectExtensionAccounts: (e: ExtensionInjected) => Promise<void>;
+  connectExtensionAccounts: (e: ExtensionInjected) => Promise<boolean>;
   getAccount: (account: MaybeAccount) => ExtensionAccount | null;
   connectToAccount: (a: ImportedAccount | null) => void;
   disconnectFromAccount: () => void;

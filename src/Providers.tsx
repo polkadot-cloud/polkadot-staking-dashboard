@@ -55,6 +55,7 @@ export const ThemedRouter = () => {
 
 export const Providers = withProviders(
   FiltersProvider,
+  NotificationsProvider,
   APIProvider,
   LedgerHardwareProvider,
   ExtensionsProvider,
@@ -80,7 +81,6 @@ export const Providers = withProviders(
   SubscanProvider,
   MenuProvider,
   TooltipProvider,
-  NotificationsProvider,
   TxMetaProvider,
   ExtrinsicsProvider,
   ModalProvider,
