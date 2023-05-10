@@ -41,6 +41,22 @@ export const ValidatorCommunity = [
     },
   },
   {
+    name: 'Aperture Mining 🎂',
+    thumbnail: 'ApertureMining',
+    bio: 'Self-hosted / Decentralized Nodes. Low commission and high reliability. We host our own hardware in our own facility right here in Philadelphia PA, USA. Aperture Mining has been offering cryptocurrency staking and mining solutions since 2018.',
+    email: 'validator@aperturemining.com',
+    website: 'https://aperturemining.com',
+    twitter: '@ApertureMining',
+    validators: {
+      polkadot: ['145SvVXoAwR5ufJynYWDeNXzfyxbf5VkCqkHu3Jt7FSdYBE2'],
+      kusama: [
+        'FJcnsNkMjY8tgJrDVeq5CKoB1b4Au2xGQjaMv8Ax5QAiV6p',
+        'Cad3MXUdmKLPyosPJ67ZhkQh7CjKjBFvb4hyjuNwnfaAGG5',
+        'Hcbo6hyfVgExCKrjmJic9bg4gLWgYy6HLrjcXUYy2VgLG7a',
+      ],
+    },
+  },
+  {
     name: 'bLd Nodes | ChadStakeKing',
     thumbnail: 'bLdNodes',
     bio: 'Independant validator, professionnal Web3 Devops engineer, bLd Nodes is focusing on providing small scale validators and collators with low commission. Proud co-founder of the DOT Validator Alliance',
