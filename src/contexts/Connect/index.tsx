@@ -359,7 +359,9 @@ export const ConnectProvider = ({
    * This is invoked by the user by clicking on an extension.
    * If activeAccount is not found here, it is simply ignored.
    */
-  const connectExtensionAccounts = async (e: ExtensionInjected) => {
+  const connectExtensionAccounts = async (
+    e: ExtensionInjected
+  ): Promise<boolean> => {
     // ensure the extension carries an `id` property
     const id = e?.id ?? undefined;
 
@@ -408,26 +410,27 @@ export const ConnectProvider = ({
             }
           });
           addToUnsubscribe(id, unsub);
+          return true;
         }
       } catch (err) {
         handleExtensionError(id, String(err));
       }
     }
+    return false;
   };
 
   const handleExtensionError = (id: string, err: string) => {
     // if not general error (maybe enabled but no accounts trust app)
-    if (err.substring(0, 5) !== 'Error') {
+    if (err.startsWith('Error')) {
       // remove extension from local `active_extensions`.
       removeFromLocalExtensions(id);
 
-      // authentication error (extension not enabled)
-      if (err.substring(0, 9) === 'AuthError') {
-        setExtensionStatus(id, 'not_authenticated');
-      }
       // extension not found (does not exist)
       if (err.substring(0, 17) === 'NotInstalledError') {
         setExtensionStatus(id, 'not_found');
+      } else {
+        // declare extension as no imported accounts authenticated.
+        setExtensionStatus(id, 'not_authenticated');
       }
     }
     // mark extension as initialised

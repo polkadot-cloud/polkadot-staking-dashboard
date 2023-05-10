@@ -32,8 +32,7 @@ export const BalancesProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, isReady, network, consts } = useApi();
-  const { existentialDeposit } = consts;
+  const { api, isReady, network } = useApi();
   const { accounts, addExternalAccount, getAccount } = useConnect();
 
   const [balances, setBalances] = useState<Balances[]>([]);
@@ -142,10 +141,6 @@ export const BalancesProvider = ({
               reserved: new BigNumber(accountData.reserved.toString()),
               miscFrozen: new BigNumber(accountData.miscFrozen.toString()),
               feeFrozen: new BigNumber(accountData.feeFrozen.toString()),
-              freeAfterReserve: BigNumber.max(
-                free.minus(existentialDeposit),
-                0
-              ),
             },
             locks: locks.toHuman().map((l: AnyApi) => ({
               ...l,
