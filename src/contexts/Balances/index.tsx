@@ -32,8 +32,7 @@ export const BalancesProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, isReady, network, consts } = useApi();
-  const { existentialDeposit } = consts;
+  const { api, isReady, network } = useApi();
   const { accounts, addExternalAccount, getAccount } = useConnect();
 
   const [balances, setBalances] = useState<Balances[]>([]);
