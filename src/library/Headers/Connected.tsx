@@ -1,8 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { clipAddress } from '@polkadotcloud/utils';
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
@@ -14,10 +12,8 @@ import { HeadingWrapper } from './Wrappers';
 
 export const Connected = () => {
   const { t } = useTranslation('library');
-  const { activeAccount, accountHasSigner } = useConnect();
-  const { hasController, getControllerNotImported } = useStaking();
-  const { getBondedAccount } = useBalances();
-  const controller = getBondedAccount(activeAccount);
+  const { activeAccount, activeProxy, accountHasSigner } = useConnect();
+  const { isNominating } = useStaking();
   const { selectedActivePool } = useActivePools();
   const { isNetworkSyncing } = useUi();
 
@@ -27,17 +23,9 @@ export const Connected = () => {
     poolAddress = addresses.stash;
   }
 
-  const activeAccountLabel = isNetworkSyncing
-    ? undefined
-    : hasController()
-    ? controller !== activeAccount
-      ? 'Stash'
-      : t('nominator')
-    : undefined;
-
   return (
     <>
-      {activeAccount ? (
+      {activeAccount && (
         <>
           {/* default account display / stash label if actively nominating */}
           <HeadingWrapper>
@@ -45,34 +33,17 @@ export const Connected = () => {
               canClick={false}
               value={activeAccount}
               readOnly={!accountHasSigner(activeAccount)}
-              label={activeAccountLabel}
+              label={
+                isNetworkSyncing
+                  ? undefined
+                  : isNominating()
+                  ? 'Nominator'
+                  : undefined
+              }
               format="name"
               filled
             />
           </HeadingWrapper>
-
-          {/* controller account display / hide if no controller present */}
-          {hasController() &&
-          controller !== activeAccount &&
-          !isNetworkSyncing ? (
-            <HeadingWrapper>
-              <Account
-                value={controller ?? ''}
-                readOnly={!accountHasSigner(controller)}
-                title={
-                  getControllerNotImported(controller)
-                    ? controller
-                      ? clipAddress(controller)
-                      : `${t('notImported')}`
-                    : undefined
-                }
-                format="name"
-                label="Controller"
-                canClick={false}
-                filled
-              />
-            </HeadingWrapper>
-          ) : null}
 
           {/* pool account display / hide if not in pool */}
           {selectedActivePool !== null && !isNetworkSyncing && (
@@ -87,8 +58,22 @@ export const Connected = () => {
               />
             </HeadingWrapper>
           )}
+
+          {/* proxy account display / hide if no proxy */}
+          {activeProxy && (
+            <HeadingWrapper>
+              <Account
+                canClick={false}
+                value={activeProxy}
+                readOnly={!accountHasSigner(activeProxy)}
+                label={`${t('proxy')}`}
+                format="name"
+                filled
+              />
+            </HeadingWrapper>
+          )}
         </>
-      ) : null}
+      )}
     </>
   );
 };

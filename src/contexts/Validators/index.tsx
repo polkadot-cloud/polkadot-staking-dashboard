@@ -19,19 +19,12 @@ import type {
 } from 'contexts/Validators/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, AnyMetaBatch, Fn } from 'types';
-import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
+import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useActivePools } from '../Pools/ActivePools';
 import * as defaults from './defaults';
-
-export const ValidatorsContext =
-  React.createContext<ValidatorsContextInterface>(
-    defaults.defaultValidatorsContext
-  );
-
-export const useValidators = () => React.useContext(ValidatorsContext);
 
 // wrapper component to provide components with context
 export const ValidatorsProvider = ({
@@ -42,14 +35,14 @@ export const ValidatorsProvider = ({
   const { isReady, api, network, consts } = useApi();
   const { activeAccount } = useConnect();
   const { activeEra, metrics } = useNetworkMetrics();
-  const { balances, getAccountNominations } = useBalances();
+  const { bondedAccounts, getAccountNominations } = useBonded();
   const { poolNominations } = useActivePools();
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
   const { earliestStoredSession } = metrics;
 
   // stores the total validator entries
-  const [validators, setValidators] = useState<Array<Validator>>([]);
+  const [validators, setValidators] = useState<Validator[]>([]);
 
   // track whether the validator list has been fetched yet
   const [fetchedValidators, setFetchedValidators] = useState<number>(0);
@@ -73,10 +66,7 @@ export const ValidatorsProvider = ({
   const validatorMetaBatchesRef = useRef(validatorMetaBatches);
 
   // stores the meta batch subscriptions for validator lists
-  const [validatorSubs, setValidatorSubs] = useState<{
-    [key: string]: Array<Fn>;
-  }>({});
-  const validatorSubsRef = useRef(validatorSubs);
+  const validatorSubsRef = useRef<Record<string, Fn[]>>({});
 
   // get favorites from local storage
   const getFavorites = () => {
@@ -88,17 +78,13 @@ export const ValidatorsProvider = ({
   const [favorites, setFavorites] = useState<string[]>(getFavorites());
 
   // stores the user's nominated validators as list
-  const [nominated, setNominated] = useState<Array<Validator> | null>(null);
+  const [nominated, setNominated] = useState<Validator[] | null>(null);
 
   // stores the nominated validators by the members pool's as list
-  const [poolNominated, setPoolNominated] = useState<Array<Validator> | null>(
-    null
-  );
+  const [poolNominated, setPoolNominated] = useState<Validator[] | null>(null);
 
   // stores the user's favorites validators as list
-  const [favoritesList, setFavoritesList] = useState<Array<Validator> | null>(
-    null
-  );
+  const [favoritesList, setFavoritesList] = useState<Validator[] | null>(null);
 
   // stores validator community
 
@@ -148,7 +134,7 @@ export const ValidatorsProvider = ({
     if (isReady && activeAccount) {
       fetchNominatedList();
     }
-  }, [isReady, activeAccount, balances]);
+  }, [isReady, activeAccount, bondedAccounts]);
 
   const fetchNominatedList = async () => {
     if (!activeAccount) {
@@ -205,7 +191,7 @@ export const ValidatorsProvider = ({
 
   const fetchFavoriteList = async () => {
     // format to list format
-    const _favorites = [...favorites].map((item: string) => ({
+    const _favorites = [...favorites].map((item) => ({
       address: item,
     }));
     // // fetch preferences
@@ -234,7 +220,7 @@ export const ValidatorsProvider = ({
     setFetchedValidators(1);
 
     // fetch validator set
-    const v: Array<Validator> = [];
+    const v: Validator[] = [];
     let totalNonAllCommission = new BigNumber(0);
     const exposures = await api.query.staking.validators.entries();
     exposures.forEach(([a, p]: AnyApi) => {
@@ -486,7 +472,7 @@ export const ValidatorsProvider = ({
     await Promise.all([
       subscribeToIdentities(addresses),
       subscribeToSuperIdentities(addresses),
-    ]).then((unsubs: Array<Fn>) => {
+    ]).then((unsubs: Fn[]) => {
       addMetaBatchUnsubs(key, unsubs);
     });
 
@@ -562,13 +548,13 @@ export const ValidatorsProvider = ({
   /*
    * Helper function to add mataBatch unsubs by key.
    */
-  const addMetaBatchUnsubs = (key: string, unsubs: Array<Fn>) => {
+  const addMetaBatchUnsubs = (key: string, unsubs: Fn[]) => {
     const newUnsubs = validatorSubsRef.current;
     const keyUnsubs = newUnsubs[key] ?? [];
 
     keyUnsubs.push(...unsubs);
     newUnsubs[key] = keyUnsubs;
-    setStateWithRef(newUnsubs, setValidatorSubs, validatorSubsRef);
+    validatorSubsRef.current = newUnsubs;
   };
 
   const removeValidatorMetaBatch = (key: string) => {
@@ -645,3 +631,10 @@ export const ValidatorsProvider = ({
     </ValidatorsContext.Provider>
   );
 };
+
+export const ValidatorsContext =
+  React.createContext<ValidatorsContextInterface>(
+    defaults.defaultValidatorsContext
+  );
+
+export const useValidators = () => React.useContext(ValidatorsContext);

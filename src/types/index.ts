@@ -8,9 +8,7 @@ import type { FunctionComponent, SVGProps } from 'react';
 
 export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
-export interface Networks {
-  [key: string]: Network;
-}
+export type Networks = Record<string, Network>;
 
 type NetworkColor =
   | 'primary'
@@ -24,6 +22,7 @@ export interface Network {
     rpc: string;
     lightClient: AnyApi;
   };
+  namespace: string;
   colors: Record<NetworkColor, { [key in Theme]: string }>;
   subscanEndpoint: string;
   unit: string;
@@ -50,7 +49,7 @@ export interface Network {
     unit: string;
     priceTicker: string;
   };
-  params: { [key: string]: number };
+  params: Record<string, number>;
 }
 
 export interface PageCategory {
@@ -58,7 +57,7 @@ export interface PageCategory {
   key: string;
 }
 
-export type PageCategoryItems = Array<PageCategory>;
+export type PageCategoryItems = PageCategory[];
 
 export interface PageItem {
   category: number;
@@ -74,7 +73,7 @@ export interface PageItem {
   };
 }
 
-export type PagesConfigItems = Array<PageItem>;
+export type PagesConfigItems = PageItem[];
 
 export type MaybeAccount = string | null;
 

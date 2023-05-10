@@ -17,12 +17,6 @@ import { usePlugins } from '../Plugins';
 import { defaultSubscanContext } from './defaults';
 import type { SubscanContextInterface } from './types';
 
-export const SubscanContext = React.createContext<SubscanContextInterface>(
-  defaultSubscanContext
-);
-
-export const useSubscan = () => React.useContext(SubscanContext);
-
 export const SubscanProvider = ({
   children,
 }: {
@@ -125,8 +119,8 @@ export const SubscanProvider = ({
    * Stores resulting payouts in context state.
    */
   const fetchPayouts = async () => {
-    let newClaimedPayouts: Array<AnySubscan> = [];
-    let newUnclaimedPayouts: Array<AnySubscan> = [];
+    let newClaimedPayouts: AnySubscan[] = [];
+    let newUnclaimedPayouts: AnySubscan[] = [];
 
     // fetch results if subscan is enabled
     if (activeAccount && getPlugins().includes('subscan')) {
@@ -181,7 +175,7 @@ export const SubscanProvider = ({
    * Stores resulting claims in context state.
    */
   const fetchPoolClaims = async () => {
-    let newPoolClaims: Array<AnySubscan> = [];
+    let newPoolClaims: AnySubscan[] = [];
 
     // fetch results if subscan is enabled
     if (activeAccount && getPlugins().includes('subscan')) {
@@ -290,3 +284,9 @@ export const SubscanProvider = ({
     </SubscanContext.Provider>
   );
 };
+
+export const SubscanContext = React.createContext<SubscanContextInterface>(
+  defaultSubscanContext
+);
+
+export const useSubscan = () => React.useContext(SubscanContext);

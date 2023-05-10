@@ -1,16 +1,16 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ActionItem } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
-import { useBalances } from 'contexts/Accounts/Balances';
-import { useLedgers } from 'contexts/Accounts/Ledgers';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
@@ -22,14 +22,14 @@ export const Nominate = () => {
   const { api, network } = useApi();
   const { activeAccount } = useConnect();
   const { targets, staking, getControllerNotImported } = useStaking();
-  const { getBondedAccount } = useBalances();
-  const { getLedgerForStash } = useLedgers();
+  const { getBondedAccount } = useBonded();
+  const { getStashLedger } = useBalances();
   const { setStatus: setModalStatus } = useModal();
   const { units, unit } = network;
   const { minNominatorBond } = staking;
   const controller = getBondedAccount(activeAccount);
   const { nominations } = targets;
-  const ledger = getLedgerForStash(activeAccount);
+  const ledger = getStashLedger(activeAccount);
   const { active } = ledger;
 
   const activeUnit = planckToUnit(active, units);
@@ -99,7 +99,7 @@ export const Nominate = () => {
             ))}
           </WarningsWrapper>
         ) : null}
-        <Action text={t('haveNomination', { count: nominations.length })} />
+        <ActionItem text={t('haveNomination', { count: nominations.length })} />
         <p>{t('onceSubmitted')}</p>
       </PaddingWrapper>
       <SubmitTx

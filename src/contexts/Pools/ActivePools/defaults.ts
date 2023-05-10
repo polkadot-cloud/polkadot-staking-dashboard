@@ -35,7 +35,7 @@ export const selectedActivePool: ActivePool = {
   bondedPool,
   rewardPool,
   rewardAccountBalance: {},
-  unclaimedRewards: new BigNumber(0),
+  pendingRewards: new BigNumber(0),
 };
 
 export const targets = {

@@ -2,15 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
+import { isSupportedProxyCall } from 'config/proxies';
 import { DappName } from 'consts';
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useNotifications } from 'contexts/Notifications';
+import { useProxies } from 'contexts/Proxies';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -26,11 +27,13 @@ export const useSubmitExtrinsic = ({
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
   const { api } = useApi();
-  const { getAccount, requiresManualSign } = useConnect();
+  const { getAccount, requiresManualSign, activeAccount, activeProxy } =
+    useConnect();
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
   const { addPending, removePending } = useExtrinsics();
-  const { getAccount: getBalanceAccount } = useBalances();
+  const { getNonce } = useBalances();
+  const { getProxyDelegate } = useProxies();
   const {
     setTxFees,
     incrementPayloadUid,
@@ -46,7 +49,7 @@ export const useSubmitExtrinsic = ({
     useLedgerHardware();
 
   // if null account is provided, fallback to empty string
-  const submitAddress: string = from || '';
+  let submitAddress: string = from || '';
 
   // whether the transaction is in progress
   const [submitting, setSubmitting] = useState(false);
@@ -54,17 +57,85 @@ export const useSubmitExtrinsic = ({
   // store the uid of the extrinsic
   const [uid] = useState<number>(incrementPayloadUid());
 
+  // store whether this call is proxy sypported.
+  const getProxySupported = () => {
+    // if already wrapped, return.
+    if (
+      tx?.method.toHuman().section === 'proxy' &&
+      tx?.method.toHuman().method === 'proxy'
+    ) {
+      return true;
+    }
+    // Ledger devices do not support nesting on `proxy.proxy` calls.
+    if (getAccount(activeProxy)?.source === 'ledger') {
+      return false;
+    }
+
+    const proxyDelegate = getProxyDelegate(activeAccount, activeProxy);
+    const proxyType = proxyDelegate?.proxyType || '';
+    const pallet = tx?.method.toHuman().section;
+    const method = tx?.method.toHuman().method;
+    const call = `${pallet}.${method}`;
+
+    // If a batch call, test if every inner call is a supported proxy call.
+    if (call === 'utility.batch') {
+      return (tx?.method?.toHuman()?.args?.calls || [])
+        .map((c: AnyJson) => ({
+          pallet: c.section,
+          method: c.method,
+        }))
+        .every((c: AnyJson) =>
+          isSupportedProxyCall(proxyType, c.pallet, c.method)
+        );
+    }
+
+    // Check if the current call is a supported proxy call.
+    return isSupportedProxyCall(proxyType, pallet, method);
+  };
+
+  const [proxySupported, setProxySupported] = useState<boolean>(
+    getProxySupported()
+  );
+  useEffect(() => {
+    setProxySupported(getProxySupported());
+  }, [tx?.toString()]);
+
   // track for one-shot transaction reset after submission.
   const didTxReset = useRef<boolean>(false);
 
+  // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account.
+  const wrapTxInProxy = () => {
+    // if already wrapped, return.
+    if (
+      tx?.method.toHuman().section === 'proxy' &&
+      tx?.method.toHuman().method === 'proxy'
+    ) {
+      return;
+    }
+    if (activeProxy && tx && proxySupported) {
+      submitAddress = activeProxy;
+      tx = api?.tx.proxy.proxy(
+        {
+          id: from,
+        },
+        null,
+        tx
+      );
+    }
+  };
+
+  // Wrap tx with proxy on component mount.
+  wrapTxInProxy();
+
   // calculate fee upon setup changes and initial render
   useEffect(() => {
-    setSender(from);
+    setSender(submitAddress);
     calculateEstimatedFee();
   }, [tx?.toString(), getTxSignature(), tx?.signature.toString()]);
 
   // recalculate transaction payload on tx change
   useEffect(() => {
+    wrapTxInProxy();
     buildPayload();
   }, [tx?.toString(), tx?.method?.args?.calls?.toString()]);
 
@@ -96,7 +167,7 @@ export const useSubmitExtrinsic = ({
         period: 64,
       });
 
-      const accountNonce = getBalanceAccount(submitAddress)?.nonce || 0;
+      const accountNonce = getNonce(submitAddress);
       const nonce = api.registry.createType('Compact<Index>', accountNonce);
 
       const payload = {
@@ -135,7 +206,7 @@ export const useSubmitExtrinsic = ({
       submitting ||
       !shouldSubmit ||
       !api ||
-      (requiresManualSign(from) && !getTxSignature())
+      (requiresManualSign(submitAddress) && !getTxSignature())
     ) {
       return;
     }
@@ -153,9 +224,7 @@ export const useSubmitExtrinsic = ({
 
     // if `activeAccount` is imported from an extension, ensure it is enabled.
     if (source !== 'ledger') {
-      const extension = extensions.find(
-        (e: ExtensionInjected) => e.id === source
-      );
+      const extension = extensions.find((e) => e.id === source);
       if (extension === undefined) {
         throw new Error(`${t('walletNotFound')}`);
       } else {
@@ -267,7 +336,7 @@ export const useSubmitExtrinsic = ({
       const { signer } = account;
       try {
         const unsub = await tx.signAndSend(
-          from,
+          submitAddress,
           { signer },
           ({ status, events = [] }: AnyApi) => {
             if (!didTxReset.current) {
@@ -294,5 +363,6 @@ export const useSubmitExtrinsic = ({
     uid,
     onSubmit,
     submitting,
+    proxySupported,
   };
 };

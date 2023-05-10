@@ -2,14 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { ExtensionConfig } from 'contexts/Extensions/types';
-import { ReactComponent as EnkryptSVG } from './icons/enkrypt_icon.svg';
-import { ReactComponent as NovaWalletSVG } from './icons/nova_wallet.svg';
-import { ReactComponent as PolkadotJSSVG } from './icons/polkadot_js.svg';
-import { ReactComponent as SignerSVG } from './icons/signer_icon.svg';
-import { ReactComponent as SubwalletSVG } from './icons/subwallet_icon.svg';
-import { ReactComponent as TalismanSVG } from './icons/talisman_icon.svg';
+import { ReactComponent as EnkryptSVG } from './icons/enkrypt.svg';
+import { ReactComponent as FearlessSVG } from './icons/fearless.svg';
+import { ReactComponent as NovaWalletSVG } from './icons/novawallet.svg';
+import { ReactComponent as ParitySignerSVG } from './icons/paritysigner.svg';
+import { ReactComponent as PolkadotJSSVG } from './icons/polkadotjs.svg';
+import { ReactComponent as PolkaGateSVG } from './icons/polkagate.svg';
+import { ReactComponent as SubwalletSVG } from './icons/subwallet.svg';
+import { ReactComponent as TalismanSVG } from './icons/talisman.svg';
 
-export const Extensions: Array<ExtensionConfig> = [
+export const Extensions: ExtensionConfig[] = [
   {
     id: 'polkadot-js',
     title: (window as any)?.walletExtension?.isNovaWallet
@@ -23,16 +25,28 @@ export const Extensions: Array<ExtensionConfig> = [
       : 'polkadot.js.org/extension',
   },
   {
-    id: 'talisman',
-    title: 'Talisman',
-    icon: TalismanSVG,
-    url: 'talisman.xyz',
-  },
-  {
     id: 'enkrypt',
     title: 'Enkrypt',
     icon: EnkryptSVG,
     url: 'enkrypt.com',
+  },
+  {
+    id: 'fearless-wallet',
+    title: 'Fearless Wallet',
+    icon: FearlessSVG,
+    url: 'fearlesswallet.io',
+  },
+  {
+    id: 'parity-signer-companion',
+    title: 'Parity Signer Companion',
+    icon: ParitySignerSVG,
+    url: 'parity.io/technologies/signer',
+  },
+  {
+    id: 'polkagate',
+    title: 'PolkaGate',
+    icon: PolkaGateSVG,
+    url: 'polkagate.xyz',
   },
   {
     id: 'subwallet-js',
@@ -41,9 +55,9 @@ export const Extensions: Array<ExtensionConfig> = [
     url: 'subwallet.app',
   },
   {
-    id: 'parity-signer-companion',
-    title: 'Parity Signer Companion',
-    icon: SignerSVG,
-    url: 'parity.io/technologies/signer',
+    id: 'talisman',
+    title: 'Talisman',
+    icon: TalismanSVG,
+    url: 'talisman.xyz',
   },
 ];

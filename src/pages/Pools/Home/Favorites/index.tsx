@@ -11,7 +11,7 @@ import { PoolList } from 'library/PoolList';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const Favorites = () => {
+export const PoolFavorites = () => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { favorites, removeFavorite } = usePoolsConfig();
@@ -19,7 +19,7 @@ export const Favorites = () => {
   const { isPoolSyncing } = useUi();
 
   // store local favorite list and update when favorites list is mutated
-  const [favoritesList, setFavoritesList] = useState<Array<any>>([]);
+  const [favoritesList, setFavoritesList] = useState<any[]>([]);
 
   useEffect(() => {
     // map favorites to bonded pools
@@ -39,7 +39,7 @@ export const Favorites = () => {
 
   return (
     <>
-      <PageRow noVerticalMargin>
+      <PageRow>
         <CardWrapper>
           {favoritesList === null || isPoolSyncing ? (
             <h3>{t('pools.fetchingFavoritePools')}...</h3>

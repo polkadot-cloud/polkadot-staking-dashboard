@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ActionItem } from '@polkadotcloud/core-ui';
 import {
   greaterThanZero,
   planckToUnit,
@@ -17,7 +18,6 @@ import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
-import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
@@ -46,9 +46,9 @@ export const LeavePool = () => {
     true
   );
 
-  let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
-  unclaimedRewards = planckToUnit(unclaimedRewards, network.units);
+  let { pendingRewards } = selectedActivePool || {};
+  pendingRewards = pendingRewards ?? new BigNumber(0);
+  pendingRewards = planckToUnit(pendingRewards, network.units);
 
   // convert BigNumber values to number
   const freeToUnbond = planckToUnit(activeBn, units);
@@ -102,10 +102,10 @@ export const LeavePool = () => {
   if (!accountHasSigner(activeAccount)) {
     warnings.push(<Warning text={t('readOnlyCannotSign')} />);
   }
-  if (greaterThanZero(unclaimedRewards)) {
+  if (greaterThanZero(pendingRewards)) {
     warnings.push(
       <Warning
-        text={`${t('unbondingWithdraw')} ${unclaimedRewards.toString()} ${
+        text={`${t('unbondingWithdraw')} ${pendingRewards.toString()} ${
           network.unit
         }.`}
       />
@@ -119,14 +119,14 @@ export const LeavePool = () => {
         <h2 className="title unbounded">{t('leavePool')}</h2>
         {warnings.length ? (
           <WarningsWrapper>
-            {warnings.map((warning: React.ReactNode, index: number) => (
+            {warnings.map((warning, index) => (
               <React.Fragment key={`warning_${index}`}>
                 {warning}
               </React.Fragment>
             ))}
           </WarningsWrapper>
         ) : null}
-        <Action text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
+        <ActionItem text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
         <StaticNote
           value={bondDurationFormatted}
           tKey="onceUnbonding"

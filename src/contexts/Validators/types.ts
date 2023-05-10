@@ -6,26 +6,24 @@ import type { AnyMetaBatch } from 'types';
 export interface ValidatorsContextInterface {
   fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => void;
   removeValidatorMetaBatch: (k: string) => void;
-  fetchValidatorPrefs: (
-    v: ValidatorAddresses
-  ) => Promise<Array<Validator> | null>;
+  fetchValidatorPrefs: (v: ValidatorAddresses) => Promise<Validator[] | null>;
   addFavorite: (a: string) => void;
   removeFavorite: (a: string) => void;
-  validators: Array<Validator>;
+  validators: Validator[];
   avgCommission: number;
   meta: AnyMetaBatch;
   session: SessionValidators;
-  sessionParachain: Array<string>;
-  favorites: Array<string>;
-  nominated: Array<Validator> | null;
-  poolNominated: Array<Validator> | null;
-  favoritesList: Array<Validator> | null;
-  validatorCommunity: Array<any>;
+  sessionParachain: string[];
+  favorites: string[];
+  nominated: Validator[] | null;
+  poolNominated: Validator[] | null;
+  favoritesList: Validator[] | null;
+  validatorCommunity: any[];
 }
 
-export type ValidatorAddresses = Array<{
+export type ValidatorAddresses = {
   address: string;
-}>;
+}[];
 
 export interface SessionValidators {
   list: string[];

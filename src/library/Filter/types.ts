@@ -14,7 +14,7 @@ export interface ItemProps {
 
 export interface CategoryProps {
   title: string;
-  buttons?: Array<any>;
+  buttons?: any[];
   children: React.ReactNode;
 }
 

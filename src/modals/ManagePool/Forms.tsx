@@ -3,7 +3,7 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { ButtonSubmitInvert } from '@polkadotcloud/core-ui';
+import { ActionItem, ButtonSubmitInvert } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -12,7 +12,6 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import type { BondedPool } from 'contexts/Pools/types';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Action } from 'library/Modal/Action';
 import { SubmitTx } from 'library/SubmitTx';
 import { WarningsWrapper } from 'modals/Wrappers';
 import React, { forwardRef, useEffect, useState } from 'react';
@@ -73,15 +72,15 @@ export const Forms = forwardRef(
           message = <p>{t('storedOnChain')}</p>;
           break;
         case 'destroy_pool':
-          title = <Action text={t('setToDestroying')} />;
+          title = <ActionItem text={t('setToDestroying')} />;
           message = <p>{t('setToDestroyingSubtitle')}</p>;
           break;
         case 'unlock_pool':
-          title = <Action text={t('unlockPool')} />;
+          title = <ActionItem text={t('unlockPool')} />;
           message = <p>{t('unlockPoolSubtitle')}</p>;
           break;
         case 'lock_pool':
-          title = <Action text={t('lockPool')} />;
+          title = <ActionItem text={t('lockPool')} />;
           message = <p>{t('lockPoolSubtitle')}</p>;
           break;
         default:

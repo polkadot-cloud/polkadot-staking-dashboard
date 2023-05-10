@@ -24,14 +24,8 @@ import type {
   NetworkState,
 } from 'contexts/Api/types';
 import React, { useEffect, useState } from 'react';
-import type { Network, NetworkName } from 'types';
+import type { NetworkName } from 'types';
 import * as defaults from './defaults';
-
-export const APIContext = React.createContext<APIContextInterface>(
-  defaults.defaultApiContext
-);
-
-export const useApi = () => React.useContext(APIContext);
 
 export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // Get the initial network and prepare meta tags if necessary.
@@ -39,7 +33,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     const urlNetworkRaw = extractUrlValue('n');
 
     const urlNetworkValid = !!Object.values(NetworkList).find(
-      (n: Network) => n.name === urlNetworkRaw
+      (n) => n.name === urlNetworkRaw
     );
 
     // use network from url if valid.
@@ -55,7 +49,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       'network'
     ) as NetworkName;
     const localNetworkValid = !!Object.values(NetworkList).find(
-      (n: Network) => n.name === localNetwork
+      (n) => n.name === localNetwork
     );
     return localNetworkValid ? localNetwork : DefaultNetwork;
   };
@@ -248,3 +242,9 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     </APIContext.Provider>
   );
 };
+
+export const APIContext = React.createContext<APIContextInterface>(
+  defaults.defaultApiContext
+);
+
+export const useApi = () => React.useContext(APIContext);

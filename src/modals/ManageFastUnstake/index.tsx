@@ -1,10 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ActionItem } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
 import { useModal } from 'contexts/Modal';
@@ -14,7 +15,6 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
@@ -26,7 +26,7 @@ export const ManageFastUnstake = () => {
   const { api, consts, network } = useApi();
   const { activeAccount } = useConnect();
   const { getControllerNotImported } = useStaking();
-  const { getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBonded();
   const { activeEra, metrics } = useNetworkMetrics();
   const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
   const { setResize, setStatus } = useModal();
@@ -130,7 +130,7 @@ export const ManageFastUnstake = () => {
         </h2>
         {warnings.length > 0 ? (
           <WarningsWrapper>
-            {warnings.map((text: string, index: number) => (
+            {warnings.map((text, index) => (
               <Warning key={index} text={text} />
             ))}
           </WarningsWrapper>
@@ -138,7 +138,7 @@ export const ManageFastUnstake = () => {
 
         {isExposed ? (
           <>
-            <Action
+            <ActionItem
               text={t('fastUnstakeExposedAgo', {
                 count: lastExposedAgo.toNumber(),
               })}
@@ -158,7 +158,7 @@ export const ManageFastUnstake = () => {
           <>
             {!isFastUnstaking ? (
               <>
-                <Action text={t('fastUnstake', { context: 'register' })} />
+                <ActionItem text={t('fastUnstake', { context: 'register' })} />
                 <NotesWrapper noPadding>
                   <p>
                     <>
@@ -177,7 +177,7 @@ export const ManageFastUnstake = () => {
               </>
             ) : (
               <>
-                <Action text={t('fastUnstakeRegistered')} />
+                <ActionItem text={t('fastUnstakeRegistered')} />
                 <NotesWrapper noPadding>
                   <p>
                     {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>

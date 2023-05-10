@@ -2,14 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { isValidAddress } from '@polkadotcloud/utils';
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { Warning } from 'library/Form/Warning';
-import type { PayeeItem } from 'library/Hooks/usePayeeConfig';
 import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
@@ -26,7 +25,7 @@ export const UpdatePayee = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
   const { activeAccount } = useConnect();
-  const { getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBonded();
   const { setStatus: setModalStatus } = useModal();
   const controller = getBondedAccount(activeAccount);
   const { staking, getControllerNotImported } = useStaking();
@@ -134,7 +133,7 @@ export const UpdatePayee = () => {
           />
         </div>
         <SelectItems>
-          {getPayeeItems(true).map((item: PayeeItem) => (
+          {getPayeeItems(true).map((item) => (
             <SelectItem
               key={`payee_option_${item.value}`}
               account={account}

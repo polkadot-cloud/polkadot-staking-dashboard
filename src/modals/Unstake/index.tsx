@@ -1,13 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ActionItem } from '@polkadotcloud/core-ui';
 import {
   greaterThanZero,
   planckToUnit,
   unitToPlanck,
 } from '@polkadotcloud/utils';
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
@@ -17,7 +18,6 @@ import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
-import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
@@ -32,7 +32,7 @@ export const Unstake = () => {
   const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getControllerNotImported } = useStaking();
-  const { getBondedAccount, getAccountNominations } = useBalances();
+  const { getBondedAccount, getAccountNominations } = useBonded();
   const { getTransferOptions } = useTransferOptions();
   const { erasToSeconds } = useErasToTimeLeft();
 
@@ -122,7 +122,7 @@ export const Unstake = () => {
         <h2 className="title unbounded">{t('unstake')} </h2>
         {warnings.length ? (
           <WarningsWrapper>
-            {warnings.map((warning: React.ReactNode, index: number) => (
+            {warnings.map((warning, index) => (
               <React.Fragment key={`warning_${index}`}>
                 {warning}
               </React.Fragment>
@@ -130,7 +130,7 @@ export const Unstake = () => {
           </WarningsWrapper>
         ) : null}
         {greaterThanZero(freeToUnbond) ? (
-          <Action
+          <ActionItem
             text={t('unstakeUnbond', {
               bond: freeToUnbond.toFormat(),
               unit: network.unit,
@@ -138,7 +138,7 @@ export const Unstake = () => {
           />
         ) : null}
         {nominations.length > 0 && (
-          <Action
+          <ActionItem
             text={t('unstakeStopNominating', { count: nominations.length })}
           />
         )}

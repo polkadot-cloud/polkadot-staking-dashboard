@@ -4,7 +4,6 @@
 import { ButtonSecondary } from '@polkadotcloud/core-ui';
 import { isValidAddress } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
-import type { ImportedAccount } from 'contexts/Connect/types';
 import { useModal } from 'contexts/Modal';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -41,7 +40,7 @@ export const ReadOnlyInput = () => {
     }
     // check address already imported
     const alreadyImported = accounts.find(
-      (a: ImportedAccount) => a.address.toUpperCase() === newValue.toUpperCase()
+      (a) => a.address.toUpperCase() === newValue.toUpperCase()
     );
     if (alreadyImported !== undefined) {
       setValid('already_imported');

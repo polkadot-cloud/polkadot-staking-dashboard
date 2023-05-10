@@ -16,6 +16,7 @@ export const MinCreateBondStat = () => {
   const params = {
     label: t('pools.minimumToCreatePool'),
     value: planckToUnit(stats.minCreateBond, units).toNumber(),
+    decimals: 3,
     unit: network.unit,
     helpKey: 'Minimum To Create Pool',
   };

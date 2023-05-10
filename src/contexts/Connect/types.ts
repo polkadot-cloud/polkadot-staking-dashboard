@@ -9,19 +9,21 @@ import type { MaybeAccount } from 'types';
 
 export interface ConnectContextInterface {
   formatAccountSs58: (a: string) => string | null;
-  connectExtensionAccounts: (e: ExtensionInjected) => Promise<void>;
+  connectExtensionAccounts: (e: ExtensionInjected) => Promise<boolean>;
   getAccount: (account: MaybeAccount) => ExtensionAccount | null;
-  connectToAccount: (a: ExtensionAccount) => void;
+  connectToAccount: (a: ImportedAccount | null) => void;
   disconnectFromAccount: () => void;
   addExternalAccount: (a: string, addedBy: string) => void;
   getActiveAccount: () => string | null;
   accountHasSigner: (a: MaybeAccount) => boolean;
   requiresManualSign: (a: MaybeAccount) => boolean;
   isReadOnlyAccount: (a: MaybeAccount) => boolean;
-  addToAccounts: (a: Array<ImportedAccount>) => void;
-  forgetAccounts: (a: Array<ImportedAccount>) => void;
-  accounts: Array<ExtensionAccount>;
-  activeAccount: string | null;
+  addToAccounts: (a: ImportedAccount[]) => void;
+  forgetAccounts: (a: ImportedAccount[]) => void;
+  setActiveProxy: (p: MaybeAccount, l?: boolean) => void;
+  accounts: ExtensionAccount[];
+  activeAccount: MaybeAccount;
+  activeProxy: MaybeAccount;
   activeAccountMeta: ImportedAccount | null;
 }
 
@@ -47,7 +49,7 @@ export interface LedgerAccount {
 }
 
 export interface HandleImportExtension {
-  newAccounts: Array<ExtensionAccount>;
+  newAccounts: ExtensionAccount[];
   meta: {
     removedActiveAccount: MaybeAccount;
   };

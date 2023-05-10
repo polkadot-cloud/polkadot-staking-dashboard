@@ -4,22 +4,16 @@
 import { localStorageOrDefault, setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { SideMenuStickyThreshold } from 'consts';
+import { useBalances } from 'contexts/Balances';
 import type { ImportedAccount } from 'contexts/Connect/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import React, { useEffect, useRef, useState } from 'react';
-import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useStaking } from '../Staking';
 import * as defaults from './defaults';
 import type { SyncStart, UIContextInterface } from './types';
-
-export const UIContext = React.createContext<UIContextInterface>(
-  defaults.defaultUIContext
-);
-
-export const useUi = () => React.useContext(UIContext);
 
 export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { isReady } = useApi();
@@ -39,17 +33,17 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const [isSyncing, setIsSyncing] = useState(false);
 
   // store sync start times.
-  const [syncStarts, setSyncStarts] = useState<Array<SyncStart>>([]);
+  const [syncStarts, setSyncStarts] = useState<SyncStart[]>([]);
 
   // gets the id of a sync
   const getSyncById = (id: string) => {
-    const existing = syncStarts.find((s: SyncStart) => s.id === id);
+    const existing = syncStarts.find((s) => s.id === id);
     return existing?.start || null;
   };
 
   // get a sync start for an id
   const getSyncStart = (id: string) => {
-    const existing = syncStarts.find((s: SyncStart) => s.id === id);
+    const existing = syncStarts.find((s) => s.id === id);
     return existing?.start || 0;
   };
 
@@ -213,3 +207,9 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     </UIContext.Provider>
   );
 };
+
+export const UIContext = React.createContext<UIContextInterface>(
+  defaults.defaultUIContext
+);
+
+export const useUi = () => React.useContext(UIContext);

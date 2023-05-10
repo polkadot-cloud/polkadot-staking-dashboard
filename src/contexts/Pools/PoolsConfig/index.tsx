@@ -15,12 +15,6 @@ import type { AnyApi } from 'types';
 import { useApi } from '../../Api';
 import * as defaults from './defaults';
 
-export const PoolsConfigContext = React.createContext<PoolsConfigContextState>(
-  defaults.defaultPoolsConfigContext
-);
-
-export const usePoolsConfig = () => React.useContext(PoolsConfigContext);
-
 export const PoolsConfigProvider = ({
   children,
 }: {
@@ -212,3 +206,9 @@ export const PoolsConfigProvider = ({
     </PoolsConfigContext.Provider>
   );
 };
+
+export const PoolsConfigContext = React.createContext<PoolsConfigContextState>(
+  defaults.defaultPoolsConfigContext
+);
+
+export const usePoolsConfig = () => React.useContext(PoolsConfigContext);

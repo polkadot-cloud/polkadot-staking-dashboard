@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ActionItem } from '@polkadotcloud/core-ui';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -9,7 +10,6 @@ import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import React, { useEffect, useState } from 'react';
@@ -23,13 +23,13 @@ export const ClaimReward = () => {
   const { selectedActivePool } = useActivePools();
   const { activeAccount, accountHasSigner } = useConnect();
   const { units, unit } = network;
-  let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
+  let { pendingRewards } = selectedActivePool || {};
+  pendingRewards = pendingRewards ?? new BigNumber(0);
   const { claimType } = config;
 
   // ensure selected payout is valid
   useEffect(() => {
-    if (unclaimedRewards?.isGreaterThan(0)) {
+    if (pendingRewards?.isGreaterThan(0)) {
       setValid(true);
     } else {
       setValid(false);
@@ -68,7 +68,7 @@ export const ClaimReward = () => {
   if (!accountHasSigner(activeAccount)) {
     warnings.push(<Warning text={t('readOnlyCannotSign')} />);
   }
-  if (!greaterThanZero(unclaimedRewards)) {
+  if (!greaterThanZero(pendingRewards)) {
     warnings.push(<Warning text={t('noRewards')} />);
   }
 
@@ -81,16 +81,16 @@ export const ClaimReward = () => {
         </h2>
         {warnings.length ? (
           <WarningsWrapper>
-            {warnings.map((warning: React.ReactNode, index: number) => (
+            {warnings.map((warning, index) => (
               <React.Fragment key={`warning_${index}`}>
                 {warning}
               </React.Fragment>
             ))}
           </WarningsWrapper>
         ) : null}
-        <Action
+        <ActionItem
           text={`${t('claim')} ${`${planckToUnit(
-            unclaimedRewards,
+            pendingRewards,
             units
           )} ${unit}`}`}
         />

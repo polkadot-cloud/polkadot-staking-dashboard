@@ -32,7 +32,7 @@ export interface PoolStats {
 
 // PoolMemberships types
 export interface PoolMembershipsContextState {
-  memberships: Array<PoolMembership>;
+  memberships: PoolMembership[];
   membership: PoolMembership | null;
 }
 
@@ -41,11 +41,11 @@ export interface PoolMembership {
   poolId: number;
   points: string;
   lastRecordedRewardCounter: string;
-  unbondingEras: { [key: number]: string };
-  unlocking: Array<{
+  unbondingEras: Record<number, string>;
+  unlocking: {
     era: number;
     value: BigNumber;
-  }>;
+  }[];
 }
 
 // BondedPool types
@@ -53,7 +53,7 @@ export interface BondedPoolsContextState {
   fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => void;
   queryBondedPool: (p: number) => any;
   getBondedPool: (p: number) => BondedPool | null;
-  updateBondedPools: (p: Array<BondedPool>) => void;
+  updateBondedPools: (p: BondedPool[]) => void;
   addToBondedPools: (p: BondedPool) => void;
   removeFromBondedPools: (p: number) => void;
   getPoolNominationStatus: (n: MaybeAccount, o: MaybeAccount) => any;
@@ -62,7 +62,7 @@ export interface BondedPoolsContextState {
   getAccountPools: (w: MaybeAccount) => any;
   replacePoolRoles: (poolId: number, roleEdits: AnyJson) => void;
   poolSearchFilter: (l: any, k: string, v: string) => void;
-  bondedPools: Array<BondedPool>;
+  bondedPools: BondedPool[];
   meta: AnyMetaBatch;
 }
 
@@ -72,7 +72,7 @@ export interface ActivePool {
   bondedPool: any;
   rewardPool: any;
   rewardAccountBalance: any;
-  unclaimedRewards: any;
+  pendingRewards: any;
 }
 
 export interface BondedPool {
@@ -89,7 +89,7 @@ export interface BondedPool {
   state: PoolState;
 }
 
-export type NominationStatuses = { [key: string]: string };
+export type NominationStatuses = Record<string, string>;
 
 export interface ActivePoolsContextState {
   isBonding: () => boolean;

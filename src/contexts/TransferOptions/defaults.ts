@@ -4,13 +4,14 @@
 import BigNumber from 'bignumber.js';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
 
-export const defaultBalancesContext: TransferOptionsContextInterface = {
+export const defaultBondedContext: TransferOptionsContextInterface = {
   // eslint-disable-next-line
   getTransferOptions: (a) => transferOptions,
 };
 
 export const transferOptions: TransferOptions = {
   freeBalance: new BigNumber(0),
+  forceReserved: new BigNumber(0),
   nominate: {
     active: new BigNumber(0),
     totalUnlocking: new BigNumber(0),

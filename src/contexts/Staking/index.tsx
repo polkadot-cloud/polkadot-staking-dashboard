@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import type { VoidFn } from '@polkadot/api/types';
 import {
   greaterThanZero,
   isNotZero,
@@ -8,8 +9,8 @@ import {
   setStateWithRef,
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import { useLedgers } from 'contexts/Accounts/Ledgers';
-import type { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
+import { useBalances } from 'contexts/Balances';
+import type { ExternalAccount } from 'contexts/Connect/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type {
   EraStakers,
@@ -19,19 +20,13 @@ import type {
   StakingTargets,
 } from 'contexts/Staking/types';
 import React, { useEffect, useRef, useState } from 'react';
-import type { AnyApi, MaybeAccount } from 'types';
+import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
-import { useBalances } from '../Accounts/Balances';
 import { useApi } from '../Api';
+import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import * as defaults from './defaults';
-
-export const StakingContext = React.createContext<StakingContextInterface>(
-  defaults.defaultStakingContext
-);
-
-export const useStaking = () => React.useContext(StakingContext);
 
 const worker = new Worker();
 
@@ -40,15 +35,16 @@ export const StakingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { isReady, api, apiStatus, network } = useApi();
   const {
     activeAccount,
     accounts: connectAccounts,
     getActiveAccount,
   } = useConnect();
-  const { isReady, api, apiStatus, network } = useApi();
   const { activeEra } = useNetworkMetrics();
-  const { balances, getBondedAccount, getAccountNominations } = useBalances();
-  const { getLedgerForStash } = useLedgers();
+  const { getStashLedger } = useBalances();
+  const { bondedAccounts, getBondedAccount, getAccountNominations } =
+    useBonded();
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
@@ -56,8 +52,7 @@ export const StakingProvider = ({
   );
 
   // Store unsub object fro staking metrics.
-  const [unsub, setUnsub] = useState<{ (): void } | null>(null);
-  const unsubRef = useRef(unsub);
+  const unsub = useRef<VoidFn | null>(null);
 
   // Store eras stakers in state.
   const [eraStakers, setEraStakers] = useState<EraStakers>(defaults.eraStakers);
@@ -96,9 +91,9 @@ export const StakingProvider = ({
 
   // Handle metrics unsubscribe.
   const unsubscribeMetrics = () => {
-    if (unsubRef.current !== null) {
-      unsubRef.current();
-      setUnsub(null);
+    if (unsub.current !== null) {
+      unsub.current();
+      unsub.current = null;
     }
   };
 
@@ -120,7 +115,7 @@ export const StakingProvider = ({
         ) as StakingTargets
       );
     }
-  }, [isReady, balances, activeAccount, eraStakersRef.current?.stakers]);
+  }, [isReady, bondedAccounts, activeAccount, eraStakersRef.current?.stakers]);
 
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
@@ -189,7 +184,7 @@ export const StakingProvider = ({
         }
       );
 
-      setUnsub(u);
+      unsub.current = u;
     }
   };
 
@@ -308,9 +303,9 @@ export const StakingProvider = ({
    */
   const getNominationsStatusFromTargets = (
     who: MaybeAccount,
-    _targets: Array<any>
+    _targets: AnyJson[]
   ) => {
-    const statuses: { [key: string]: string } = {};
+    const statuses: Record<string, string> = {};
 
     if (!_targets.length) {
       return statuses;
@@ -337,6 +332,23 @@ export const StakingProvider = ({
 
   /*
    * Helper function to determine whether the controller account
+   * is the same as the stash account.
+   */
+  const addressDifferentToStash = (address: MaybeAccount) => {
+    if (address === null || !activeAccount) {
+      return false;
+    }
+    // check if controller is imported
+    const exists = connectAccounts.find((acc) => acc.address === address);
+    if (exists === undefined) {
+      return false;
+    }
+
+    return address !== activeAccount;
+  };
+
+  /*
+   * Helper function to determine whether the controller account
    * has been imported.
    */
   const getControllerNotImported = (address: MaybeAccount) => {
@@ -344,9 +356,7 @@ export const StakingProvider = ({
       return false;
     }
     // check if controller is imported
-    const exists = connectAccounts.find(
-      (acc: ImportedAccount) => acc.address === address
-    );
+    const exists = connectAccounts.find((acc) => acc.address === address);
     if (exists === undefined) {
       return true;
     }
@@ -369,7 +379,7 @@ export const StakingProvider = ({
     if (!hasController() || !activeAccount) {
       return false;
     }
-    return greaterThanZero(getLedgerForStash(activeAccount).active);
+    return greaterThanZero(getStashLedger(activeAccount).active);
   };
 
   /*
@@ -380,7 +390,7 @@ export const StakingProvider = ({
     if (!hasController() || !activeAccount) {
       return false;
     }
-    const ledger = getLedgerForStash(activeAccount);
+    const ledger = getStashLedger(activeAccount);
     return ledger.unlocking.length;
   };
 
@@ -412,6 +422,7 @@ export const StakingProvider = ({
         setTargets,
         hasController,
         getControllerNotImported,
+        addressDifferentToStash,
         isBonding,
         isNominating,
         inSetup,
@@ -425,3 +436,9 @@ export const StakingProvider = ({
     </StakingContext.Provider>
   );
 };
+
+export const StakingContext = React.createContext<StakingContextInterface>(
+  defaults.defaultStakingContext
+);
+
+export const useStaking = () => React.useContext(StakingContext);

@@ -95,32 +95,32 @@ export const usePoolFilters = () => {
     list.filter((p: BondedPool) => p.state !== 'Destroying');
 
   // includes to be listed in filter overlay.
-  const includesToLabels: { [key: string]: string } = {
+  const includesToLabels: Record<string, string> = {
     active: t('activePools'),
   };
 
   // excludes to be listed in filter overlay.
-  const excludesToLabels: { [key: string]: string } = {
+  const excludesToLabels: Record<string, string> = {
     locked: t('lockedPools'),
     destroying: t('destroyingPools'),
   };
 
   // match include keys to their associated filter functions.
-  const includeToFunction: { [key: string]: AnyFunction } = {
+  const includeToFunction: Record<string, AnyFunction> = {
     active: includeActive,
     locked: includeLocked,
     destroying: includeDestroying,
   };
 
   // match exclude keys to their associated filter functions.
-  const excludeToFunction: { [key: string]: AnyFunction } = {
+  const excludeToFunction: Record<string, AnyFunction> = {
     active: excludeActive,
     locked: excludeLocked,
     destroying: excludeDestroying,
   };
 
   // get filter functions from keys and type of filter.
-  const getFiltersFromKey = (key: Array<string>, type: string) => {
+  const getFiltersFromKey = (key: string[], type: string) => {
     const filters = type === 'include' ? includeToFunction : excludeToFunction;
     const fns = [];
     for (const k of key) {
@@ -133,8 +133,8 @@ export const usePoolFilters = () => {
 
   // applies filters based on the provided include and exclude keys.
   const applyFilter = (
-    includes: Array<string> | null,
-    excludes: Array<string> | null,
+    includes: string[] | null,
+    excludes: string[] | null,
     list: AnyJson,
     batchKey: string
   ) => {

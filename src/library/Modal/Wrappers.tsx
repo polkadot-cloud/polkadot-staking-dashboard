@@ -121,18 +121,3 @@ export const CloseWrapper = styled.div`
     }
   }
 `;
-
-export const ActionWrapper = styled.h3`
-  border-bottom: 1px solid var(--border-primary-color);
-  color: var(--text-color-primary);
-  margin: 1.25rem 0 0 0;
-  width: 100%;
-  padding-bottom: 0.75rem;
-  display: flex;
-  align-items: center;
-  font-variation-settings: 'wght' 650;
-
-  > svg {
-    margin-right: 0.5rem;
-  }
-`;

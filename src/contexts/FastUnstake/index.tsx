@@ -22,11 +22,6 @@ import type {
   MetaInterface,
 } from './types';
 
-export const FastUnstakeContext =
-  React.createContext<FastUnstakeContextInterface>(defaultFastUnstakeContext);
-
-export const useFastUnstake = () => React.useContext(FastUnstakeContext);
-
 const worker = new Worker();
 
 export const FastUnstakeProvider = ({
@@ -67,8 +62,7 @@ export const FastUnstakeProvider = ({
   const counterForQueueRef = useRef(counterForQueue);
 
   // store fastUnstake subscription unsub.
-  const [unsub, setUnsub] = useState<Array<AnyApi>>([]);
-  const unsubRef = useRef(unsub);
+  const unsubs = useRef<AnyApi[]>([]);
 
   // localStorage key to fetch local metadata.
   const getLocalkey = (a: MaybeAccount) => `${network.name}_fast_unstake_${a}`;
@@ -85,16 +79,14 @@ export const FastUnstakeProvider = ({
       fastUnstakeErasToCheckPerBlock > 0
     ) {
       // cancel fast unstake check on network change or account change.
-      if (unsubRef.current.length) {
-        for (const u of unsubRef.current) {
-          u();
-        }
+      for (const u of unsubs.current) {
+        u();
       }
 
       setStateWithRef(false, setChecking, checkingRef);
       setStateWithRef(null, setqueueDeposit, queueDepositRef);
       setStateWithRef(null, setCounterForQueue, counterForQueueRef);
-      setStateWithRef([], setUnsub, unsubRef);
+      unsubs.current = [];
 
       // get any existing localStorage records for account.
       const localMeta: LocalMeta | null = getLocalMeta();
@@ -152,10 +144,8 @@ export const FastUnstakeProvider = ({
     }
 
     return () => {
-      if (unsubRef.current.length) {
-        for (const u of unsubRef.current) {
-          u();
-        }
+      for (const u of unsubs.current) {
+        u();
       }
     };
   }, [
@@ -308,7 +298,7 @@ export const FastUnstakeProvider = ({
       subscribeHead(),
       subscribeCounterForQueue(),
     ]).then((u: any) => {
-      setStateWithRef(u, setUnsub, unsubRef);
+      unsubs.current = u;
     });
   };
 
@@ -402,3 +392,8 @@ export const FastUnstakeProvider = ({
     </FastUnstakeContext.Provider>
   );
 };
+
+export const FastUnstakeContext =
+  React.createContext<FastUnstakeContextInterface>(defaultFastUnstakeContext);
+
+export const useFastUnstake = () => React.useContext(FastUnstakeContext);
