@@ -18,7 +18,7 @@ import { SliderWrapper } from './Wrapper';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');
-  const [reserve, setReserve] = useState(0);
+  const [reserve, setReserve] = useState(1);
   const { activeAccount, accountHasSigner } = useConnect();
   const { setStatus: setModalStatus } = useModal();
   const { api } = useApi();
@@ -79,7 +79,7 @@ export const UpdateReserve = () => {
             type="range"
             min="1"
             max="100"
-            // value={30}
+            value={reserve}
             onChange={updateReserve}
           />
           <p>Reserve: {reserve}</p>
