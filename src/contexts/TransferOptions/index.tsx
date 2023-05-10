@@ -75,7 +75,7 @@ export const TransferOptionsProvider = ({
       }
     }
 
-    // free balance after `forceReserve` amount.
+    // free balance after `total` ledger amount.
     const freeBalance = BigNumber.max(freeMinusReserve.minus(total), 0);
 
     const nominateOptions = () => {
