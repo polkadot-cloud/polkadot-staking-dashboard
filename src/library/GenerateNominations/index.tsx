@@ -141,7 +141,7 @@ export const GenerateNominations = ({
     }
   };
 
-  // callback function for adding nominations
+  // callback function for adding nominations.
   const cbAddNominations = ({ setSelectActive }: any) => {
     setSelectActive(false);
 
