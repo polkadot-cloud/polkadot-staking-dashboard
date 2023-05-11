@@ -75,7 +75,9 @@ export const ValidatorsProvider = ({
   // get favorites from local storage
   const getFavorites = () => {
     const localFavourites = localStorage.getItem(`${network.name}_favorites`);
-    return localFavourites !== null ? JSON.parse(localFavourites) : [];
+    return localFavourites !== null
+      ? (JSON.parse(localFavourites) as string[])
+      : [];
   };
 
   // stores the user's favorite validators
