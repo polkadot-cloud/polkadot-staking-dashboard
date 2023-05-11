@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
+import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -37,18 +37,18 @@ export const UpdateReserve = () => {
   );
 
   const updateReserve = (e: ChangeEvent<HTMLInputElement>) => {
-    setReserve(new BigNumber(unitToPlanck(e.currentTarget.value, units)));
+    setReserve(new BigNumber(e.currentTarget.value, units));
   };
 
   const warnings = [];
   if (!accountHasSigner(activeAccount)) {
     warnings.push(<Warning text={t('readOnlyCannotSign')} />);
   }
+  // might need to be removed
   if (fundsFree.isLessThan(new BigNumber(1))) {
     warnings.push(<Warning text="Balance must be more than 1" />);
   }
 
-  const reserveValue = planckToUnit(reserve, units).toString();
   return (
     <>
       <PaddingWrapper>
@@ -66,11 +66,12 @@ export const UpdateReserve = () => {
           <input
             className="slider"
             type="range"
+            step="0.1"
             min="0"
-            max={fundsFree.decimalPlaces(0).toString()}
-            value={reserveValue}
+            max={fundsFree.toString()}
+            value={reserve.toString()}
             onChange={updateReserve}
-            disabled={!accountHasSigner(activeAccount)}
+            disabled={warnings.length > 0}
           />
           <p>Reserve: {reserve.toString()}</p>
         </SliderWrapper>

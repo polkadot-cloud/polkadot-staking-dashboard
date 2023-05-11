@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -18,6 +19,7 @@ export const TransferOptionsProvider = ({
   children: React.ReactNode;
 }) => {
   const { consts } = useApi();
+  const { units } = useApi().network;
   const { activeEra } = useNetworkMetrics();
   const { getStashLedger, getBalance, getLocks } = useBalances();
   const { getAccount } = useBonded();
@@ -47,7 +49,9 @@ export const TransferOptionsProvider = ({
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
     // alive. Deducts `locks` from free balance reserve needed.
     const forceReserved = BigNumber.max(
-      existentialDeposit.minus(totalLocked).plus(reserve),
+      existentialDeposit
+        .minus(totalLocked)
+        .plus(unitToPlanck(reserve.toString(), units)),
       0
     );
     // Total free balance after `forceReserved` is subtracted.
