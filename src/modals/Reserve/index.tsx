@@ -8,8 +8,7 @@ import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
-import { Title } from 'library/Modal/Title';
-import { PaddingWrapper } from 'modals/Wrappers';
+import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import type { ChangeEvent } from 'react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -52,15 +51,15 @@ export const UpdateReserve = () => {
   return (
     <>
       <PaddingWrapper>
-        <Title title="Update Reserve" />
+        <h2 className="title unbounded">Update Reserve</h2>
         {warnings.length ? (
-          <div>
+          <WarningsWrapper>
             {warnings.map((warning, index) => (
               <React.Fragment key={`warning_${index}`}>
                 {warning}
               </React.Fragment>
             ))}
-          </div>
+          </WarningsWrapper>
         ) : null}
         <SliderWrapper>
           <input
