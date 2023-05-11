@@ -24,7 +24,11 @@ import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useActivePools } from '../Pools/ActivePools';
-import * as defaults from './defaults';
+import {
+  defaultSessionParachainValidators,
+  defaultSessionValidators,
+  defaultValidatorsContext,
+} from './defaults';
 
 // wrapper component to provide components with context
 export const ValidatorsProvider = ({
@@ -49,7 +53,7 @@ export const ValidatorsProvider = ({
 
   // stores the currently active validator set
   const [sessionValidators, setSessionValidators] = useState<SessionValidators>(
-    defaults.sessionValidators
+    defaultSessionValidators
   );
 
   // stores the average network commission rate
@@ -57,7 +61,7 @@ export const ValidatorsProvider = ({
 
   // stores the currently active parachain validator set
   const [sessionParachainValidators, setSessionParachainValidators] =
-    useState<SessionParachainValidators>(defaults.sessionParachainValidators);
+    useState<SessionParachainValidators>(defaultSessionParachainValidators);
 
   // stores the meta data batches for validator lists
   const [validatorMetaBatches, setValidatorMetaBatch] = useState<AnyMetaBatch>(
@@ -71,7 +75,9 @@ export const ValidatorsProvider = ({
   // get favorites from local storage
   const getFavorites = () => {
     const localFavourites = localStorage.getItem(`${network.name}_favorites`);
-    return localFavourites !== null ? JSON.parse(localFavourites) : [];
+    return localFavourites !== null
+      ? (JSON.parse(localFavourites) as string[])
+      : [];
   };
 
   // stores the user's favorite validators
@@ -87,14 +93,13 @@ export const ValidatorsProvider = ({
   const [favoritesList, setFavoritesList] = useState<Validator[] | null>(null);
 
   // stores validator community
-
   const [validatorCommunity] = useState<any>([...shuffle(ValidatorCommunity)]);
 
   // reset validators list on network change
   useEffect(() => {
     setFetchedValidators(0);
-    setSessionValidators(defaults.sessionValidators);
-    setSessionParachainValidators(defaults.sessionParachainValidators);
+    setSessionValidators(defaultSessionValidators);
+    setSessionParachainValidators(defaultSessionParachainValidators);
     removeValidatorMetaBatch('validators_browse');
     setAvgCommission(0);
     setValidators([]);
@@ -190,17 +195,13 @@ export const ValidatorsProvider = ({
   }, [isReady, favorites]);
 
   const fetchFavoriteList = async () => {
-    // format to list format
-    const _favorites = [...favorites].map((item) => ({
-      address: item,
-    }));
-    // // fetch preferences
-    const favoritesWithPrefs = await fetchValidatorPrefs(_favorites);
-    if (favoritesWithPrefs) {
-      setFavoritesList(favoritesWithPrefs);
-    } else {
-      setFavoritesList([]);
-    }
+    // fetch preferences
+    const favoritesWithPrefs = await fetchValidatorPrefs(
+      [...favorites].map((address) => ({
+        address,
+      }))
+    );
+    setFavoritesList(favoritesWithPrefs || []);
   };
 
   /*
@@ -383,11 +384,14 @@ export const ValidatorsProvider = ({
     }
 
     // store batch addresses
-    const batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-    batchesUpdated[key] = {};
-    batchesUpdated[key].addresses = addresses;
     setStateWithRef(
-      { ...batchesUpdated },
+      {
+        ...validatorMetaBatchesRef.current,
+        [key]: {
+          ...validatorMetaBatchesRef.current[key],
+          addresses,
+        },
+      },
       setValidatorMetaBatch,
       validatorMetaBatchesRef
     );
@@ -395,20 +399,22 @@ export const ValidatorsProvider = ({
     const subscribeToIdentities = async (addr: AnyApi) => {
       const unsub = await api.query.identity.identityOf.multi<AnyApi>(
         addr,
-        (_identities) => {
+        (result) => {
           const identities = [];
-          for (let i = 0; i < _identities.length; i++) {
-            identities.push(_identities[i].toHuman());
+          for (let i = 0; i < result.length; i++) {
+            identities.push(result[i].toHuman());
           }
-          const _batchesUpdated = Object.assign(
-            validatorMetaBatchesRef.current
-          );
 
           // check if batch still exists before updating
-          if (_batchesUpdated[key]) {
-            _batchesUpdated[key].identities = identities;
+          if (validatorMetaBatchesRef.current[key]) {
             setStateWithRef(
-              { ..._batchesUpdated },
+              {
+                ...validatorMetaBatchesRef.current,
+                [key]: {
+                  ...validatorMetaBatchesRef.current[key],
+                  identities,
+                },
+              },
               setValidatorMetaBatch,
               validatorMetaBatchesRef
             );
@@ -421,15 +427,15 @@ export const ValidatorsProvider = ({
     const subscribeToSuperIdentities = async (addr: AnyApi) => {
       const unsub = await api.query.identity.superOf.multi<AnyApi>(
         addr,
-        async (_supers) => {
+        async (result) => {
           // determine where supers exist
           const supers: AnyApi = [];
           const supersWithIdentity: AnyApi = [];
 
-          for (let i = 0; i < _supers.length; i++) {
-            const _super = _supers[i].toHuman();
-            supers.push(_super);
-            if (_super !== null) {
+          for (let i = 0; i < result.length; i++) {
+            const resultItem = result[i].toHuman();
+            supers.push(resultItem);
+            if (resultItem !== null) {
               supersWithIdentity.push(i);
             }
           }
@@ -451,15 +457,16 @@ export const ValidatorsProvider = ({
           );
           temp();
 
-          const _batchesUpdated = Object.assign(
-            validatorMetaBatchesRef.current
-          );
-
           // check if batch still exists before updating
-          if (_batchesUpdated[key]) {
-            _batchesUpdated[key].supers = supers;
+          if (validatorMetaBatchesRef.current[key]) {
             setStateWithRef(
-              { ..._batchesUpdated },
+              {
+                ...validatorMetaBatchesRef.current,
+                [key]: {
+                  ...validatorMetaBatchesRef.current[key],
+                  supers,
+                },
+              },
               setValidatorMetaBatch,
               validatorMetaBatchesRef
             );
@@ -485,10 +492,10 @@ export const ValidatorsProvider = ({
 
     const unsub3 = await api.query.staking.erasStakers.multi<AnyApi>(
       args,
-      (_validators) => {
+      (result) => {
         const stake = [];
 
-        for (let _validator of _validators) {
+        for (let _validator of result) {
           _validator = _validator.toHuman();
           let others = _validator.others ?? [];
 
@@ -527,14 +534,16 @@ export const ValidatorsProvider = ({
           });
         }
 
-        // commit update
-        const _batchesUpdated = Object.assign(validatorMetaBatchesRef.current);
-
         // check if batch still exists before updating
-        if (_batchesUpdated[key]) {
-          _batchesUpdated[key].stake = stake;
+        if (validatorMetaBatchesRef.current[key]) {
           setStateWithRef(
-            { ..._batchesUpdated },
+            {
+              ...validatorMetaBatchesRef.current,
+              [key]: {
+                ...validatorMetaBatchesRef.current[key],
+                stake,
+              },
+            },
             setValidatorMetaBatch,
             validatorMetaBatchesRef
           );
@@ -580,31 +589,30 @@ export const ValidatorsProvider = ({
    * Adds a favorite validator.
    */
   const addFavorite = (address: string) => {
-    const _favorites: any = Object.assign(favorites);
-    if (!_favorites.includes(address)) {
-      _favorites.push(address);
+    const newFavorites: any = Object.assign(favorites);
+    if (!newFavorites.includes(address)) {
+      newFavorites.push(address);
     }
 
     localStorage.setItem(
       `${network.name}_favorites`,
-      JSON.stringify(_favorites)
+      JSON.stringify(newFavorites)
     );
-    setFavorites([..._favorites]);
+    setFavorites([...newFavorites]);
   };
 
   /*
    * Removes a favorite validator if they exist.
    */
   const removeFavorite = (address: string) => {
-    let _favorites = Object.assign(favorites);
-    _favorites = _favorites.filter(
+    const newFavorites = Object.assign(favorites).filter(
       (validator: string) => validator !== address
     );
     localStorage.setItem(
       `${network.name}_favorites`,
-      JSON.stringify(_favorites)
+      JSON.stringify(newFavorites)
     );
-    setFavorites([..._favorites]);
+    setFavorites([...newFavorites]);
   };
 
   return (
@@ -633,8 +641,6 @@ export const ValidatorsProvider = ({
 };
 
 export const ValidatorsContext =
-  React.createContext<ValidatorsContextInterface>(
-    defaults.defaultValidatorsContext
-  );
+  React.createContext<ValidatorsContextInterface>(defaultValidatorsContext);
 
 export const useValidators = () => React.useContext(ValidatorsContext);

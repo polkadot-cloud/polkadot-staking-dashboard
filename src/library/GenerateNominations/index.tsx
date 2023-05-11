@@ -131,22 +131,13 @@ export const GenerateNominations = ({
     }
   };
 
-  const updateSetters = (_nominations: Nominations) => {
-    for (const s of setters) {
-      const { current, set } = s;
-      const callable = current?.callable ?? false;
-      let currentValue;
-
-      if (!callable) {
-        currentValue = current;
-      } else {
-        currentValue = current.fn();
-      }
-      const _set = {
+  const updateSetters = (newNominations: Nominations) => {
+    for (const { current, set } of setters) {
+      const currentValue = current?.callable ? current.fn() : current;
+      set({
         ...currentValue,
-        nominations: _nominations,
-      };
-      set(_set);
+        nominations: newNominations,
+      });
     }
   };
 
