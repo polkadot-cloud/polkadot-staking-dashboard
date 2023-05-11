@@ -26,7 +26,13 @@ import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
-import * as defaults from './defaults';
+import {
+  defaultEraStakers,
+  defaultNominationStatus,
+  defaultStakingContext,
+  defaultStakingMetrics,
+  defaultTargets,
+} from './defaults';
 
 const worker = new Worker();
 
@@ -48,14 +54,14 @@ export const StakingProvider = ({
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
-    defaults.stakingMetrics
+    defaultStakingMetrics
   );
 
   // Store unsub object fro staking metrics.
   const unsub = useRef<VoidFn | null>(null);
 
   // Store eras stakers in state.
-  const [eraStakers, setEraStakers] = useState<EraStakers>(defaults.eraStakers);
+  const [eraStakers, setEraStakers] = useState<EraStakers>(defaultEraStakers);
   const eraStakersRef = useRef(eraStakers);
 
   // Flags whether `eraStakers` is resyncing.
@@ -63,18 +69,18 @@ export const StakingProvider = ({
   const erasStakersSyncingRef = useRef(erasStakersSyncing);
 
   // Store target validators for the active account.
-  const [targets, _setTargets] = useState<StakingTargets>(
+  const [targets, setTargetsState] = useState<StakingTargets>(
     localStorageOrDefault<StakingTargets>(
       `${activeAccount ?? ''}_targets`,
-      defaults.targets,
+      defaultTargets,
       true
     ) as StakingTargets
   );
 
   useEffect(() => {
     if (apiStatus === 'connecting') {
-      setStateWithRef(defaults.eraStakers, setEraStakers, eraStakersRef);
-      setStakingMetrics(defaults.stakingMetrics);
+      setStateWithRef(defaultEraStakers, setEraStakers, eraStakersRef);
+      setStakingMetrics(stakingMetrics);
     }
   }, [apiStatus]);
 
@@ -107,10 +113,10 @@ export const StakingProvider = ({
   useEffect(() => {
     if (activeAccount) {
       // set account's targets
-      _setTargets(
+      setTargetsState(
         localStorageOrDefault(
           `${activeAccount}_targets`,
-          defaults.targets,
+          defaultTargets,
           true
         ) as StakingTargets
       );
@@ -249,79 +255,58 @@ export const StakingProvider = ({
    * Possible statuses: waiting, inactive, active.
    */
   const getNominationsStatus = () => {
-    if (inSetup()) {
-      return defaults.nominationStatus;
+    if (inSetup() || !activeAccount) {
+      return defaultNominationStatus;
     }
-    if (!activeAccount) {
-      return defaults.nominationStatus;
-    }
-    const nominations = getAccountNominations(activeAccount);
     const statuses: NominationStatuses = {};
-
-    for (const nomination of nominations) {
+    for (const nomination of getAccountNominations(activeAccount)) {
       const s = eraStakersRef.current.stakers.find(
-        (_n) => _n.address === nomination
+        ({ address }) => address === nomination
       );
 
       if (s === undefined) {
         statuses[nomination] = 'waiting';
         continue;
       }
-      const exists = (s.others ?? []).find(
-        (_o: any) => _o.who === activeAccount
-      );
-      if (exists === undefined) {
+      if (!(s.others ?? []).find(({ who }: any) => who === activeAccount)) {
         statuses[nomination] = 'inactive';
         continue;
       }
       statuses[nomination] = 'active';
     }
-
     return statuses;
   };
 
   /* Sets an account's stored target validators */
-  const setTargets = (_targets: StakingTargets) => {
-    localStorage.setItem(`${activeAccount}_targets`, JSON.stringify(_targets));
-    _setTargets(_targets);
-    return [];
+  const setTargets = (value: StakingTargets) => {
+    localStorage.setItem(`${activeAccount}_targets`, JSON.stringify(value));
+    setTargetsState(value);
   };
 
   /*
-   * Helper function to determine whether the active account
-   * has set a controller account.
-   */
-  const hasController = () => {
-    if (!activeAccount) {
-      return false;
-    }
-    return getBondedAccount(activeAccount) !== null;
-  };
-
-  /*
-   * Gets the nomination statuses of passed in nominations
+   * Gets the nomination statuses of passed in nominations.
    */
   const getNominationsStatusFromTargets = (
     who: MaybeAccount,
-    _targets: AnyJson[]
+    fromTargets: AnyJson[]
   ) => {
     const statuses: Record<string, string> = {};
 
-    if (!_targets.length) {
+    if (!fromTargets.length) {
       return statuses;
     }
 
-    for (const target of _targets) {
-      const s = eraStakersRef.current.stakers.find(
-        (_n: any) => _n.address === target
+    for (const target of fromTargets) {
+      const staker = eraStakersRef.current.stakers.find(
+        ({ address }: any) => address === target
       );
 
-      if (s === undefined) {
+      if (staker === undefined) {
         statuses[target] = 'waiting';
         continue;
       }
-      const exists = (s.others ?? []).find((_o: any) => _o.who === who);
-      if (exists === undefined) {
+
+      if (!(staker.others ?? []).find((o: any) => o.who === who)) {
         statuses[target] = 'inactive';
         continue;
       }
@@ -335,16 +320,11 @@ export const StakingProvider = ({
    * is the same as the stash account.
    */
   const addressDifferentToStash = (address: MaybeAccount) => {
-    if (address === null || !activeAccount) {
+    // check if controller is imported.
+    if (!connectAccounts.find((acc) => acc.address === address)) {
       return false;
     }
-    // check if controller is imported
-    const exists = connectAccounts.find((acc) => acc.address === address);
-    if (exists === undefined) {
-      return false;
-    }
-
-    return address !== activeAccount;
+    return address !== activeAccount && activeAccount !== null;
   };
 
   /*
@@ -376,38 +356,29 @@ export const StakingProvider = ({
 
   /*
    * Helper function to determine whether the active account
+   * has set a controller account.
+   */
+  const hasController = () => getBondedAccount(activeAccount) !== null;
+
+  /*
+   * Helper function to determine whether the active account
    * is bonding, or is yet to start.
    */
-  const isBonding = () => {
-    if (!hasController() || !activeAccount) {
-      return false;
-    }
-    return greaterThanZero(getStashLedger(activeAccount).active);
-  };
+  const isBonding = () =>
+    hasController() && greaterThanZero(getStashLedger(activeAccount).active);
 
   /*
    * Helper function to determine whether the active account
    * has funds unlocking.
    */
-  const isUnlocking = () => {
-    if (!hasController() || !activeAccount) {
-      return false;
-    }
-    const ledger = getStashLedger(activeAccount);
-    return ledger.unlocking.length;
-  };
+  const isUnlocking = () =>
+    hasController() && getStashLedger(activeAccount).unlocking.length;
 
   /*
    * Helper function to determine whether the active account
    * is nominating, or is yet to start.
    */
-  const isNominating = () => {
-    if (!activeAccount) {
-      return false;
-    }
-    const nominations = getAccountNominations(activeAccount);
-    return nominations.length > 0;
-  };
+  const isNominating = () => getAccountNominations(activeAccount).length > 0;
 
   /*
    * Helper function to determine whether the active account
@@ -441,7 +412,7 @@ export const StakingProvider = ({
 };
 
 export const StakingContext = React.createContext<StakingContextInterface>(
-  defaults.defaultStakingContext
+  defaultStakingContext
 );
 
 export const useStaking = () => React.useContext(StakingContext);
