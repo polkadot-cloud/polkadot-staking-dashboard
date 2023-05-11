@@ -48,6 +48,7 @@ export const UpdateReserve = () => {
     warnings.push(<Warning text="Balance must be more than 1" />);
   }
 
+  const reserveValue = planckToUnit(reserve, units).toString();
   return (
     <>
       <PaddingWrapper>
@@ -66,9 +67,10 @@ export const UpdateReserve = () => {
             className="slider"
             type="range"
             min="0"
-            max={fundsFree.toString()}
-            value={reserve.toString()}
+            max={fundsFree.decimalPlaces(0).toString()}
+            value={reserveValue}
             onChange={updateReserve}
+            disabled={!accountHasSigner(activeAccount)}
           />
           <p>Reserve: {reserve.toString()}</p>
         </SliderWrapper>
