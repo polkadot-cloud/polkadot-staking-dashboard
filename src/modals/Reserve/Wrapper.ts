@@ -24,6 +24,9 @@ export const SliderWrapper = styled.div`
     &:hover {
       opacity: 1;
     }
+    :disabled {
+      opacity: 0.5;
+    }
 
     &::-webkit-slider-thumb {
       appearance: none;
