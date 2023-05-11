@@ -435,9 +435,9 @@ export const ValidatorsProvider = ({
           const supersWithIdentity: AnyApi = [];
 
           for (let i = 0; i < result.length; i++) {
-            const resultHuman = result[i].toHuman();
-            supers.push(resultHuman);
-            if (resultHuman !== null) {
+            const resultItem = result[i].toHuman();
+            supers.push(resultItem);
+            if (resultItem !== null) {
               supersWithIdentity.push(i);
             }
           }
