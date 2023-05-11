@@ -356,18 +356,21 @@ export const StakingProvider = ({
       return false;
     }
     // check if controller is imported
-    const exists = connectAccounts.find((acc) => acc.address === address);
+    const exists = connectAccounts.find((a) => a.address === address);
     if (exists === undefined) {
       return true;
     }
-
+    // controller account exists. If it is a read-only account, then controller is imported.
     if (Object.prototype.hasOwnProperty.call(exists, 'addedBy')) {
-      const externalAccount = exists as ExternalAccount;
-      if (externalAccount.addedBy === 'user') {
+      if ((exists as ExternalAccount).addedBy === 'user') {
         return false;
       }
     }
-
+    // if the controller is a Ledger account, then it can act as a signer.
+    if (exists.source === 'ledger') {
+      return false;
+    }
+    // if a `signer` does not exist on the account, then controller is not imported.
     return !Object.prototype.hasOwnProperty.call(exists, 'signer');
   };
 

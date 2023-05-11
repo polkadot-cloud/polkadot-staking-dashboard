@@ -115,11 +115,11 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
               };
 
         // remove stale account if it's already in list.
-        const newBalances = Object.values(bondedAccountsRef.current)
+        const newBonded = Object.values(bondedAccountsRef.current)
           .filter((a) => a.address !== address)
           .concat(newAccount);
 
-        setStateWithRef(newBalances, setBondedAccounts, bondedAccountsRef);
+        setStateWithRef(newBonded, setBondedAccounts, bondedAccountsRef);
       }
     );
 
