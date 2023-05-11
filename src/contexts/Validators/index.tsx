@@ -401,10 +401,10 @@ export const ValidatorsProvider = ({
     const subscribeToIdentities = async (addr: AnyApi) => {
       const unsub = await api.query.identity.identityOf.multi<AnyApi>(
         addr,
-        (_identities) => {
+        (result) => {
           const identities = [];
-          for (let i = 0; i < _identities.length; i++) {
-            identities.push(_identities[i].toHuman());
+          for (let i = 0; i < result.length; i++) {
+            identities.push(result[i].toHuman());
           }
 
           // check if batch still exists before updating
@@ -429,15 +429,15 @@ export const ValidatorsProvider = ({
     const subscribeToSuperIdentities = async (addr: AnyApi) => {
       const unsub = await api.query.identity.superOf.multi<AnyApi>(
         addr,
-        async (_supers) => {
+        async (result) => {
           // determine where supers exist
           const supers: AnyApi = [];
           const supersWithIdentity: AnyApi = [];
 
-          for (let i = 0; i < _supers.length; i++) {
-            const _super = _supers[i].toHuman();
-            supers.push(_super);
-            if (_super !== null) {
+          for (let i = 0; i < result.length; i++) {
+            const resultHuman = result[i].toHuman();
+            supers.push(resultHuman);
+            if (resultHuman !== null) {
               supersWithIdentity.push(i);
             }
           }
@@ -494,10 +494,10 @@ export const ValidatorsProvider = ({
 
     const unsub3 = await api.query.staking.erasStakers.multi<AnyApi>(
       args,
-      (_validators) => {
+      (result) => {
         const stake = [];
 
-        for (let _validator of _validators) {
+        for (let _validator of result) {
           _validator = _validator.toHuman();
           let others = _validator.others ?? [];
 
