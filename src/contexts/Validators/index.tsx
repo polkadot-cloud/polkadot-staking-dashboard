@@ -388,11 +388,10 @@ export const ValidatorsProvider = ({
     // store batch addresses
     setStateWithRef(
       {
-        ...Object.assign(validatorMetaBatchesRef.current, {
-          [key]: {
-            addresses,
-          },
-        }),
+        ...validatorMetaBatchesRef.current,
+        [key]: {
+          addresses,
+        },
       },
       setValidatorMetaBatch,
       validatorMetaBatchesRef
@@ -411,11 +410,11 @@ export const ValidatorsProvider = ({
           if (validatorMetaBatchesRef.current[key]) {
             setStateWithRef(
               {
-                ...Object.assign(validatorMetaBatchesRef.current, {
-                  [key]: {
-                    identities,
-                  },
-                }),
+                ...validatorMetaBatchesRef.current,
+                [key]: {
+                  ...validatorMetaBatchesRef.current[key],
+                  identities,
+                },
               },
               setValidatorMetaBatch,
               validatorMetaBatchesRef
@@ -463,11 +462,11 @@ export const ValidatorsProvider = ({
           if (validatorMetaBatchesRef.current[key]) {
             setStateWithRef(
               {
-                ...Object.assign(validatorMetaBatchesRef.current, {
-                  [key]: {
-                    supers,
-                  },
-                }),
+                ...validatorMetaBatchesRef.current,
+                [key]: {
+                  ...validatorMetaBatchesRef.current[key],
+                  supers,
+                },
               },
               setValidatorMetaBatch,
               validatorMetaBatchesRef
@@ -540,11 +539,11 @@ export const ValidatorsProvider = ({
         if (validatorMetaBatchesRef.current[key]) {
           setStateWithRef(
             {
-              ...Object.assign(validatorMetaBatchesRef.current, {
-                [key]: {
-                  stake,
-                },
-              }),
+              ...validatorMetaBatchesRef.current,
+              [key]: {
+                ...validatorMetaBatchesRef.current[key],
+                stake,
+              },
             },
             setValidatorMetaBatch,
             validatorMetaBatchesRef
