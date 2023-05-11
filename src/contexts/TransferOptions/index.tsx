@@ -7,7 +7,7 @@ import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import React from 'react';
+import React, { useState } from 'react';
 import type { MaybeAccount } from 'types';
 import * as defaults from './defaults';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
@@ -23,6 +23,8 @@ export const TransferOptionsProvider = ({
   const { getAccount } = useBonded();
   const { membership } = usePoolMemberships();
   const { existentialDeposit } = consts;
+
+  const [reserve, setReserve] = useState(new BigNumber(0));
 
   // get the bond and unbond amounts available to the user
   const getTransferOptions = (address: MaybeAccount): TransferOptions => {
@@ -45,7 +47,7 @@ export const TransferOptionsProvider = ({
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
     // alive. Deducts `locks` from free balance reserve needed.
     const forceReserved = BigNumber.max(
-      existentialDeposit.minus(totalLocked),
+      existentialDeposit.minus(totalLocked).plus(reserve),
       0
     );
     // Total free balance after `forceReserved` is subtracted.
@@ -142,6 +144,8 @@ export const TransferOptionsProvider = ({
     <TransferOptionsContext.Provider
       value={{
         getTransferOptions,
+        setReserve,
+        reserve,
       }}
     >
       {children}
