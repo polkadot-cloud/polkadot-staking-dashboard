@@ -390,6 +390,7 @@ export const ValidatorsProvider = ({
       {
         ...validatorMetaBatchesRef.current,
         [key]: {
+          ...validatorMetaBatchesRef.current[key],
           addresses,
         },
       },
