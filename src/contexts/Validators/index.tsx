@@ -193,17 +193,13 @@ export const ValidatorsProvider = ({
   }, [isReady, favorites]);
 
   const fetchFavoriteList = async () => {
-    // format to list format
-    const _favorites = [...favorites].map((item) => ({
-      address: item,
-    }));
-    // // fetch preferences
-    const favoritesWithPrefs = await fetchValidatorPrefs(_favorites);
-    if (favoritesWithPrefs) {
-      setFavoritesList(favoritesWithPrefs);
-    } else {
-      setFavoritesList([]);
-    }
+    // fetch preferences
+    const favoritesWithPrefs = await fetchValidatorPrefs(
+      [...favorites].map((address) => ({
+        address,
+      }))
+    );
+    setFavoritesList(favoritesWithPrefs || []);
   };
 
   /*
