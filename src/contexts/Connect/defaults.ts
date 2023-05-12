@@ -7,7 +7,8 @@ export const defaultConnectContext: ConnectContextInterface = {
   // eslint-disable-next-line
   formatAccountSs58: (a: string) => null,
   // eslint-disable-next-line
-  connectExtensionAccounts: async (e) => new Promise((resolve) => resolve()),
+  connectExtensionAccounts: async (e) =>
+    new Promise((resolve) => resolve(false)),
   // eslint-disable-next-line
   connectWalletConnectExtensionAccounts: async (id) =>
     new Promise((resolve) => resolve()),
