@@ -9,11 +9,6 @@ export const Wrapper = styled.div`
   flex-flow: column wrap;
 `;
 
-export const FixedContentWrapper = styled.div`
-  padding-top: 1rem;
-  width: 100%;
-`;
-
 export const CardsWrapper = styled(motion.div)`
   width: 200%;
   display: flex;

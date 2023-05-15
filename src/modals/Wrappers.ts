@@ -253,3 +253,8 @@ export const CustomHeaderWrapper = styled.div`
     }
   }
 `;
+
+export const FixedContentWrapper = styled.div`
+  padding-top: 1rem;
+  width: 100%;
+`;

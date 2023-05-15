@@ -5,9 +5,10 @@ import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FixedContentWrapper } from '../Wrappers';
 import { Forms } from './Forms';
 import { Tasks } from './Tasks';
-import { CardsWrapper, FixedContentWrapper, Wrapper } from './Wrappers';
+import { CardsWrapper, Wrapper } from './Wrappers';
 
 export const ManagePool = () => {
   const { t } = useTranslation('modals');
