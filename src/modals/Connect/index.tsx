@@ -18,9 +18,9 @@ import {
   FixedTitleWrapper,
   MultiSectionWrapper,
   PaddingWrapper,
-  SectionWrapper,
-  SectionsWrapper,
   TabsWrapper,
+  ThreeSectionWrapper,
+  ThreeSectionsWrapper,
 } from 'modals/Wrappers';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -54,14 +54,17 @@ export const Connect = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const homeRef = useRef<HTMLDivElement>(null);
   const readOnlyRef = useRef<HTMLDivElement>(null);
+  const proxiesRef = useRef<HTMLDivElement>(null);
 
   // Resize modal on state change.
   useEffect(() => {
     let height = headerRef.current?.clientHeight || 0;
     if (section === 0) {
       height += homeRef.current?.clientHeight || 0;
-    } else {
+    } else if (section === 1) {
       height += readOnlyRef.current?.clientHeight || 0;
+    } else if (section === 2) {
+      height += proxiesRef.current?.clientHeight || 0;
     }
     setModalHeight(height);
   }, [section, readOnlyOpen, extensions]);
@@ -90,16 +93,23 @@ export const Connect = () => {
                 onClick={() => setSection(1)}
                 active={section === 1}
               />
+              <ButtonTab
+                title="Proxies"
+                onClick={() => setSection(2)}
+                active={section === 2}
+              />
             </TabsWrapper>
           </CustomHeaderWrapper>
         </FixedTitleWrapper>
 
-        <SectionsWrapper
+        <ThreeSectionsWrapper
           style={{
             maxHeight:
               modalMaxHeight() - (headerRef.current?.clientHeight || 0),
           }}
-          animate={section === 0 ? 'home' : 'next'}
+          animate={
+            section === 0 ? 'home' : section === 1 ? 'readOnly' : 'proxies'
+          }
           transition={{
             duration: 0.5,
             type: 'spring',
@@ -109,12 +119,15 @@ export const Connect = () => {
             home: {
               left: 0,
             },
-            next: {
+            readOnly: {
               left: '-100%',
+            },
+            proxies: {
+              left: '-200%',
             },
           }}
         >
-          <SectionWrapper>
+          <ThreeSectionWrapper>
             <PaddingWrapper ref={homeRef}>
               {['polkadot', 'kusama'].includes(network.name) ? (
                 <>
@@ -138,8 +151,8 @@ export const Connect = () => {
                 </SelectItems>
               </ExtensionsWrapper>
             </PaddingWrapper>
-          </SectionWrapper>
-          <SectionWrapper>
+          </ThreeSectionWrapper>
+          <ThreeSectionWrapper>
             <PaddingWrapper ref={readOnlyRef}>
               <ActionItem text={t('readOnlyAccounts')} />
               <ReadOnly
@@ -147,8 +160,17 @@ export const Connect = () => {
                 readOnlyOpen={readOnlyOpen}
               />
             </PaddingWrapper>
-          </SectionWrapper>
-        </SectionsWrapper>
+          </ThreeSectionWrapper>
+          <ThreeSectionWrapper>
+            <PaddingWrapper ref={proxiesRef}>
+              <ActionItem text={t('readOnlyAccounts')} />
+              <ReadOnly
+                setReadOnlyOpen={setReadOnlyOpen}
+                readOnlyOpen={readOnlyOpen}
+              />
+            </PaddingWrapper>
+          </ThreeSectionWrapper>
+        </ThreeSectionsWrapper>
       </MultiSectionWrapper>
     </>
   );

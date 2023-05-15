@@ -271,7 +271,7 @@ export const FixedTitleWrapper = styled.div<{ isStyled?: boolean }>`
   width: 100%;
 `;
 
-export const SectionsWrapper = styled(motion.div)`
+export const TwoSectionsWrapper = styled(motion.div)`
   width: 200%;
   height: auto;
   display: flex;
@@ -279,12 +279,31 @@ export const SectionsWrapper = styled(motion.div)`
   position: relative;
 `;
 
-export const SectionWrapper = styled.div`
+export const ThreeSectionsWrapper = styled(motion.div)`
+  width: 300%;
+  height: auto;
+  display: flex;
+  overflow: auto;
+  position: relative;
+`;
+
+export const TwoSectionWrapper = styled.div`
   border-radius: 1rem;
   display: flex;
   flex-flow: column nowrap;
   flex-basis: 50%;
   min-width: 50%;
+  height: auto;
+  overflow: auto;
+  flex-grow: 1;
+`;
+
+export const ThreeSectionWrapper = styled.div`
+  border-radius: 1rem;
+  display: flex;
+  flex-flow: column nowrap;
+  flex-basis: 33.33%;
+  min-width: 33.33%;
   height: auto;
   overflow: auto;
   flex-grow: 1;

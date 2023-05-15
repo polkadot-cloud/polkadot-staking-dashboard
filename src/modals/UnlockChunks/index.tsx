@@ -12,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import {
   FixedTitleWrapper,
   MultiSectionWrapper,
-  SectionsWrapper,
+  TwoSectionsWrapper,
 } from '../Wrappers';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
@@ -93,7 +93,7 @@ export const UnlockChunks = () => {
       <FixedTitleWrapper ref={headerRef}>
         <Title title={t('unlocks')} fixed />
       </FixedTitleWrapper>
-      <SectionsWrapper
+      <TwoSectionsWrapper
         animate={sectionRef.current === 0 ? 'home' : 'next'}
         transition={{
           duration: 0.5,
@@ -123,7 +123,7 @@ export const UnlockChunks = () => {
           task={task}
           ref={formsRef}
         />
-      </SectionsWrapper>
+      </TwoSectionsWrapper>
     </MultiSectionWrapper>
   );
 };

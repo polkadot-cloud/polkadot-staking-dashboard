@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import {
   FixedTitleWrapper,
   MultiSectionWrapper,
-  SectionsWrapper,
+  TwoSectionsWrapper,
 } from '../Wrappers';
 import { Forms } from './Forms';
 import { Tasks } from './Tasks';
@@ -44,7 +44,7 @@ export const ManagePool = () => {
       <FixedTitleWrapper ref={headerRef}>
         <Title title={t('managePool')} fixed />
       </FixedTitleWrapper>
-      <SectionsWrapper
+      <TwoSectionsWrapper
         animate={section === 0 ? 'home' : 'next'}
         transition={{
           duration: 0.5,
@@ -67,7 +67,7 @@ export const ManagePool = () => {
           section={section}
           ref={formsRef}
         />
-      </SectionsWrapper>
+      </TwoSectionsWrapper>
     </MultiSectionWrapper>
   );
 };
