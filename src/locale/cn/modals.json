@@ -2,7 +2,6 @@
   "modals": {
     "account": "账户",
     "accounts": "账户",
-    "activeAccount": "活跃帐户",
     "activeRoles": "有活跃角色在 {{count}} 个提名池",
     "activeRoles_zero": "无活跃角色在提名池",
     "add": "添加",

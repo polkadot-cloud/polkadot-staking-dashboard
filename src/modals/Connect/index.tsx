@@ -84,14 +84,16 @@ export const Connect = () => {
       <MultiSectionWrapper>
         <FixedTitleWrapper ref={headerRef} isStyled>
           <CustomHeaderWrapper>
-            <h1>{t('connect')}</h1>
-            <ButtonPrimaryInvert
-              text={t('goToAccounts')}
-              iconRight={faChevronRight}
-              iconTransform="shrink-3"
-              onClick={() => replaceModalWith('Accounts', {}, 'large')}
-              marginLeft
-            />
+            <div className="first">
+              <h1>{t('connect')}</h1>
+              <ButtonPrimaryInvert
+                text={t('goToAccounts')}
+                iconRight={faChevronRight}
+                iconTransform="shrink-3"
+                onClick={() => replaceModalWith('Accounts', {}, 'large')}
+                marginLeft
+              />
+            </div>
             <TabsWrapper>
               <ButtonTab
                 title={t('extensions')}

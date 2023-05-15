@@ -231,15 +231,25 @@ export const CustomHeaderWrapper = styled.div`
   margin-top: 0.5rem;
   position: relative;
 
-  h1 {
-    color: var(--text-color-primary);
-    font-size: 1.4rem;
-    font-family: 'Unbounded', 'sans-serif', sans-serif;
-    padding: 0.5rem 0.5rem 0 0.5rem;
-    display: flex;
-    align-items: center;
-    > button {
-      margin-left: 1.25rem;
+  > div {
+    &.first {
+      display: flex;
+      flex-grow: 1;
+
+      h1 {
+        color: var(--text-color-primary);
+        font-size: 1.4rem;
+        font-family: 'Unbounded', 'sans-serif', sans-serif;
+        padding: 0.5rem 0.5rem 0 0.5rem;
+        display: flex;
+        align-items: center;
+        > button {
+          margin-left: 1.25rem;
+        }
+      }
+    }
+    &.last {
+      display: flex;
     }
   }
 

@@ -2,7 +2,6 @@
   "modals": {
     "account": "Account",
     "accounts": "Accounts",
-    "activeAccount": "Active Account",
     "activeRoles_one": "Active Roles in {{count}} Pool",
     "activeRoles_other": "Active Roles in {{count}} Pools",
     "activeRoles_zero": "Active Roles In No Pool",

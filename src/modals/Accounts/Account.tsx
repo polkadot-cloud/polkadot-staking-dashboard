@@ -17,7 +17,6 @@ import type { AccountItemProps } from './types';
 export const AccountButton = ({
   address,
   label,
-  disconnect = false,
   delegator,
   noBorder = false,
 }: AccountItemProps) => {
@@ -27,7 +26,6 @@ export const AccountButton = ({
   const {
     activeAccount,
     connectToAccount,
-    disconnectFromAccount,
     getAccount,
     activeProxy,
     setActiveProxy,
@@ -57,17 +55,12 @@ export const AccountButton = ({
     <AccountWrapper className={isActive ? 'active' : undefined}>
       <button
         type="button"
-        disabled={!disconnect && !imported}
+        disabled={!imported}
         onClick={() => {
           if (imported && meta) {
-            if (disconnect) {
-              disconnectFromAccount();
-              setActiveProxy(null);
-            } else {
-              connectToAccount(getAccount(connectTo));
-              setActiveProxy(connectProxy);
-              setStatus(2);
-            }
+            connectToAccount(getAccount(connectTo));
+            setActiveProxy(connectProxy);
+            setStatus(2);
           }
         }}
         style={noBorder ? { border: 'none' } : undefined}
