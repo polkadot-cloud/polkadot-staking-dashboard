@@ -29,7 +29,7 @@
     "@polkadot/api": "^10.6.1",
     "@polkadot/keyring": "^12.1.1",
     "@polkadot/react-identicon": "^3.4.1",
-    "@polkadot/rpc-provider": "^10.5.1",
+    "@polkadot/rpc-provider": "^10.7.1",
     "@polkadot/util": "^12.1.1",
     "@polkadotcloud/core-ui": "^0.2.42",
     "@polkadotcloud/react-odometer": "0.1.16",
