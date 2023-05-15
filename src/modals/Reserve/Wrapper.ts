@@ -8,6 +8,7 @@ export const SliderWrapper = styled.div`
   flex-flow: column wrap;
   align-items: center;
   width: 100%;
+  overflow: auto;
 
   .slider {
     appearance: none;

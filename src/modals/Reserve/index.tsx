@@ -10,7 +10,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import type { ChangeEvent } from 'react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SliderWrapper } from './Wrapper';
 
@@ -23,6 +23,11 @@ export const UpdateReserve = () => {
   const allTransferOptions = getTransferOptions(activeAccount);
   const balance = getBalance(activeAccount);
   const { miscFrozen } = balance;
+  const { network } = useApi();
+
+  useEffect(() => {
+    setReserve(new BigNumber(0));
+  }, [activeAccount, network]);
 
   // check account non-staking locks
   const locks = getLocks(activeAccount);
@@ -43,9 +48,9 @@ export const UpdateReserve = () => {
   if (!accountHasSigner(activeAccount)) {
     warnings.push(<Warning text={t('readOnlyCannotSign')} />);
   }
-  // might need to be removed
-  if (fundsFree.isLessThan(new BigNumber(1))) {
-    warnings.push(<Warning text="Balance must be more than 1" />);
+
+  if (fundsFree.isLessThan(new BigNumber(0.1))) {
+    warnings.push(<Warning text="Balance must be more than 0.1" />);
   }
 
   return (
@@ -70,7 +75,7 @@ export const UpdateReserve = () => {
             max={fundsFree.toString()}
             value={reserve.toString()}
             onChange={updateReserve}
-            disabled={warnings.length > 0}
+            disabled={!accountHasSigner(activeAccount)}
           />
           <p>Reserve: {reserve.toString()}</p>
         </SliderWrapper>
