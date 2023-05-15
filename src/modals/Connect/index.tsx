@@ -12,6 +12,7 @@ import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
 import type { ExtensionConfig } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
+import { Close } from 'library/Modal/Close';
 import { SelectItems } from 'library/SelectItems';
 import {
   CustomHeaderWrapper,
@@ -82,6 +83,7 @@ export const Connect = () => {
   return (
     <>
       <MultiSectionWrapper>
+        <Close />
         <FixedTitleWrapper ref={headerRef} isStyled>
           <CustomHeaderWrapper>
             <div className="first">
