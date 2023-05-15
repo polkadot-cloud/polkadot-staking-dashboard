@@ -19,7 +19,7 @@ import { ActionWithButton, Wrapper } from './Wrapper';
 
 export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
   const { t } = useTranslation('modals');
-  const { accounts, forgetAccounts } = useConnect();
+  const { accounts, forgetAccounts, addExternalAccount } = useConnect();
   const { setResize } = useModal();
 
   // get all external accounts
@@ -58,7 +58,12 @@ export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
         <div className="content">
           {readOnlyOpen && (
             <>
-              <AccountInput />
+              <AccountInput
+                successCallback={async (value: string) => {
+                  addExternalAccount(value, 'user');
+                  return true;
+                }}
+              />
               {externalAccounts.length > 0 && (
                 <h5>
                   {t('readOnlyAccount', {

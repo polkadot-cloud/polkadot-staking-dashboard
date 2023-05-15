@@ -8,14 +8,13 @@ import { useModal } from 'contexts/Modal';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AccountInputWrapper } from './Wrapper';
+import type { AccountInputProps } from './types';
 
-export const AccountInput = () => {
+export const AccountInput = ({ successCallback }: AccountInputProps) => {
   const { t } = useTranslation('modals');
 
-  // TODO: alreadyImported message may need to be customised for proxies.
-  // TODO: addExternalAccount should be a prop like `callback`.
-  // TODO: add error callbacks for when account is not imported.
-  const { formatAccountSs58, accounts, addExternalAccount } = useConnect();
+  // TODO: add error callbacks for when account fails to import.
+  const { formatAccountSs58, accounts } = useConnect();
   const { setResize } = useModal();
 
   // store current input value
@@ -54,7 +53,7 @@ export const AccountInput = () => {
     setValid(isValidAddress(newValue) ? 'valid' : 'not_valid');
   };
 
-  const handleImport = () => {
+  const handleImport = async () => {
     // reformat address if in wrong format
     const addressFormatted = formatAccountSs58(value);
     if (addressFormatted) {
@@ -62,13 +61,18 @@ export const AccountInput = () => {
       setValue(addressFormatted);
       setReformatted(true);
     } else {
-      // add as external account
-      addExternalAccount(value, 'user');
-      // reset state
-      setReformatted(false);
-      setValue('');
-      setValid(null);
-      setResize();
+      // handle successful import.
+      const result = await successCallback(value);
+
+      // reset state on successful import.
+      if (result) {
+        setReformatted(false);
+        setValue('');
+        setValid(null);
+        setResize();
+      } else {
+        // TODO: error callbacks.
+      }
     }
   };
 
