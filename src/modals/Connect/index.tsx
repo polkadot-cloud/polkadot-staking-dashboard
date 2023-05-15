@@ -81,7 +81,7 @@ export const Connect = () => {
             />
             <TabsWrapper>
               <ButtonTab
-                title="Extensions"
+                title={t('extensions')}
                 onClick={() => setSection(0)}
                 active={section === 0}
               />
@@ -129,7 +129,7 @@ export const Connect = () => {
                 </>
               ) : null}
 
-              <ActionItem text={t('extensions')} />
+              <ActionItem text="Web" />
               <ExtensionsWrapper>
                 <SelectItems layout="two-col">
                   {installed.concat(other).map((extension, i) => (
