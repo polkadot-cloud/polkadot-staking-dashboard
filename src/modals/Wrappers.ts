@@ -266,8 +266,6 @@ export const MultiSectionWrapper = styled.div`
 export const FixedTitleWrapper = styled.div<{ isStyled?: boolean }>`
   background: ${(props) =>
     props.isStyled ? 'var(--background-default)' : 'transparent'};
-  border-bottom: ${(props) =>
-    props.isStyled ? '1px solid var(--border-primary-color)' : 'none'};
   padding: ${(props) =>
     props.isStyled ? '1rem 1rem 0rem 1rem' : ' 1rem 0 0 0'};
   width: 100%;
@@ -295,5 +293,5 @@ export const SectionWrapper = styled.div`
 export const TabsWrapper = styled.div`
   width: 100%;
   display: flex;
-  margin: 1rem 0 0.25rem 0;
+  margin: 1.25rem 0 0.25rem 0;
 `;

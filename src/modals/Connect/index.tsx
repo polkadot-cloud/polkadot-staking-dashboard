@@ -28,7 +28,7 @@ import type { AnyFunction } from 'types';
 import { Extension } from './Extension';
 import { Ledger } from './Ledger';
 import { ReadOnly } from './ReadOnly';
-import { ExtensionsWrapper, Separator } from './Wrappers';
+import { ExtensionsWrapper } from './Wrappers';
 
 export const Connect = () => {
   const { t } = useTranslation('modals');
@@ -86,7 +86,7 @@ export const Connect = () => {
                 active={section === 0}
               />
               <ButtonTab
-                title="Manual"
+                title="Read Only"
                 onClick={() => setSection(1)}
                 active={section === 1}
               />
@@ -137,17 +137,15 @@ export const Connect = () => {
                   ))}
                 </SelectItems>
               </ExtensionsWrapper>
-              <Separator />
+            </PaddingWrapper>
+          </SectionWrapper>
+          <SectionWrapper>
+            <PaddingWrapper ref={readOnlyRef}>
               <ActionItem text={t('readOnlyAccounts')} />
               <ReadOnly
                 setReadOnlyOpen={setReadOnlyOpen}
                 readOnlyOpen={readOnlyOpen}
               />
-            </PaddingWrapper>
-          </SectionWrapper>
-          <SectionWrapper>
-            <PaddingWrapper ref={readOnlyRef}>
-              <div>to do</div>
             </PaddingWrapper>
           </SectionWrapper>
         </SectionsWrapper>
