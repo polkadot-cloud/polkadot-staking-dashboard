@@ -48,8 +48,10 @@ export const UpdateReserve = () => {
     warnings.push(<Warning text={t('readOnlyCannotSign')} />);
   }
 
-  if (fundsFree.isLessThan(new BigNumber(0.1))) {
-    warnings.push(<Warning text="Balance must be more than 0.1" />);
+  if (fundsFree.isZero()) {
+    warnings.push(
+      <Warning text="The top of balance has been reached, will top up to the limit of the balance." />
+    );
   }
 
   return (
