@@ -254,17 +254,39 @@ export const CustomHeaderWrapper = styled.div`
   }
 `;
 
-// Fixed content wrapper for modals that have multiple sections.
-export const FixedContentWrapper = styled.div`
-  padding-top: 1rem;
+// Fixed content wrappers for modals that have multiple sections.
+
+export const MultiSectionWrapper = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+  padding: 0;
+`;
+
+export const FixedTitleWrapper = styled.div<{ isStyled?: boolean }>`
+  background: ${(props) =>
+    props.isStyled ? 'var(--background-default)' : 'transparent'};
+  border-bottom: ${(props) =>
+    props.isStyled ? '1px solid var(--border-primary-color)' : 'none'};
+  padding: ${(props) =>
+    props.isStyled ? '1rem 1rem 0.5rem 1rem' : ' 1rem 0 0 0'};
   width: 100%;
 `;
 
-export const SectionWrapper = styled(motion.div)`
+export const SectionsWrapper = styled(motion.div)`
   width: 200%;
   height: 100%;
   display: flex;
   overflow-x: hidden;
   overflow-y: auto;
   position: relative;
+`;
+
+export const SectionWrapper = styled.div`
+  border-radius: 1rem;
+  display: flex;
+  flex-flow: column nowrap;
+  flex-basis: 50%;
+  min-width: 50%;
+  height: auto;
+  flex-grow: 1;
 `;

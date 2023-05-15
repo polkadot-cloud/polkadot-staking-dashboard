@@ -3,11 +3,6 @@
 
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-  display: flex;
-  flex-flow: column wrap;
-`;
-
 export const ContentWrapper = styled.div`
   border-radius: 1rem;
   display: flex;
