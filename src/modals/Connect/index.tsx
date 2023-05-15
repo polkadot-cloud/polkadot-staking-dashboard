@@ -56,18 +56,28 @@ export const Connect = () => {
   const readOnlyRef = useRef<HTMLDivElement>(null);
   const proxiesRef = useRef<HTMLDivElement>(null);
 
+  const refreshModalHeight = () => {
+    // Preserve height by taking largest height from modals.
+    let height = headerRef.current?.clientHeight || 0;
+    height += Math.max(
+      homeRef.current?.clientHeight || 0,
+      readOnlyRef.current?.clientHeight || 0,
+      proxiesRef.current?.clientHeight || 0
+    );
+    setModalHeight(height);
+  };
+
   // Resize modal on state change.
   useEffect(() => {
-    let height = headerRef.current?.clientHeight || 0;
-    if (section === 0) {
-      height += homeRef.current?.clientHeight || 0;
-    } else if (section === 1) {
-      height += readOnlyRef.current?.clientHeight || 0;
-    } else if (section === 2) {
-      height += proxiesRef.current?.clientHeight || 0;
-    }
-    setModalHeight(height);
+    refreshModalHeight();
   }, [section, readOnlyOpen, extensions]);
+
+  useEffect(() => {
+    window.addEventListener('resize', refreshModalHeight);
+    return () => {
+      window.removeEventListener('resize', refreshModalHeight);
+    };
+  }, []);
 
   return (
     <>
