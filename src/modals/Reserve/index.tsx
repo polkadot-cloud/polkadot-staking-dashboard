@@ -27,6 +27,7 @@ export const UpdateReserve = () => {
   const { miscFrozen } = balance;
   const { network } = useApi();
   const { setStatus } = useModal();
+  const { forceReserved } = allTransferOptions;
 
   // check account non-staking locks
   const locks = getLocks(activeAccount);
@@ -50,7 +51,13 @@ export const UpdateReserve = () => {
 
   if (fundsFree.isZero()) {
     warnings.push(
-      <Warning text="The top of balance has been reached, will top up to the limit of the balance." />
+      <Warning text="The top of balance has been reached, will only top up to the limit of the balance." />
+    );
+  }
+
+  if (forceReserved.isZero()) {
+    warnings.push(
+      <Warning text="The total locked amount is bigger than the free balance, free balance stay put." />
     );
   }
 
