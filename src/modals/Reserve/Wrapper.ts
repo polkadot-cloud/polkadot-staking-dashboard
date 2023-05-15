@@ -45,3 +45,9 @@ export const SliderWrapper = styled.div`
     }
   }
 `;
+
+export const ConfirmButton = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+  align-items: flex-end;
+`;

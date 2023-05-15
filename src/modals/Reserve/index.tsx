@@ -14,7 +14,7 @@ import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import type { ChangeEvent } from 'react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { SliderWrapper } from './Wrapper';
+import { ConfirmButton, SliderWrapper } from './Wrapper';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');
@@ -71,24 +71,26 @@ export const UpdateReserve = () => {
             type="range"
             step="0.1"
             min="0"
-            max={fundsFree.toString()}
+            max="100"
             value={reserve.toString()}
             onChange={updateReserve}
-            // disabled={!accountHasSigner(activeAccount)}
+            disabled={!accountHasSigner(activeAccount)}
           />
           <p>Reserve: {reserve.toString()}</p>
         </SliderWrapper>
-        <ButtonPrimaryInvert
-          text="Confirm"
-          onClick={() => {
-            setStatus(0);
-            localStorage.setItem(
-              `${network.name}_${activeAccount}_reserve`,
-              reserve.toString()
-            );
-          }}
-          disabled={!accountHasSigner(activeAccount)}
-        />
+        <ConfirmButton>
+          <ButtonPrimaryInvert
+            text="Confirm"
+            onClick={() => {
+              setStatus(0);
+              localStorage.setItem(
+                `${network.name}_${activeAccount}_reserve`,
+                reserve.toString()
+              );
+            }}
+            disabled={!accountHasSigner(activeAccount)}
+          />
+        </ConfirmButton>
       </PaddingWrapper>
     </>
   );

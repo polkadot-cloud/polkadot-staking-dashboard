@@ -153,6 +153,7 @@ export const PaddingWrapper = styled.div<{
       : props.horizontalOnly
       ? '0 1rem'
       : '1rem'};
+  overflow: auto;
 `;
 
 // modal footer, used for extrinsics forms
