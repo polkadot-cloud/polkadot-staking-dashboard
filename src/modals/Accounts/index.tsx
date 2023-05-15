@@ -142,7 +142,9 @@ export const Accounts = () => {
           text={t('goToConnect')}
           iconLeft={faChevronLeft}
           iconTransform="shrink-3"
-          onClick={() => replaceModalWith('Connect', {}, 'large')}
+          onClick={() =>
+            replaceModalWith('Connect', { disableScroll: true }, 'large')
+          }
           marginLeft
         />
       </CustomHeaderWrapper>

@@ -70,7 +70,9 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
             text={t('back')}
             iconLeft={faChevronLeft}
             iconTransform="shrink-3"
-            onClick={async () => replaceModalWith('Connect', {}, 'large')}
+            onClick={async () =>
+              replaceModalWith('Connect', { disableScroll: true }, 'large')
+            }
           />
         </h1>
         <button

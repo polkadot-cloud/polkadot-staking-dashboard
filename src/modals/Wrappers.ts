@@ -228,7 +228,7 @@ export const CustomHeaderWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  margin: 0.5rem 0;
+  margin-top: 0.5rem;
   position: relative;
 
   h1 {
@@ -260,6 +260,7 @@ export const MultiSectionWrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   padding: 0;
+  position: relative;
 `;
 
 export const FixedTitleWrapper = styled.div<{ isStyled?: boolean }>`
@@ -268,16 +269,15 @@ export const FixedTitleWrapper = styled.div<{ isStyled?: boolean }>`
   border-bottom: ${(props) =>
     props.isStyled ? '1px solid var(--border-primary-color)' : 'none'};
   padding: ${(props) =>
-    props.isStyled ? '1rem 1rem 0.5rem 1rem' : ' 1rem 0 0 0'};
+    props.isStyled ? '1rem 1rem 0rem 1rem' : ' 1rem 0 0 0'};
   width: 100%;
 `;
 
 export const SectionsWrapper = styled(motion.div)`
   width: 200%;
-  height: 100%;
+  height: auto;
   display: flex;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: auto;
   position: relative;
 `;
 
@@ -288,5 +288,12 @@ export const SectionWrapper = styled.div`
   flex-basis: 50%;
   min-width: 50%;
   height: auto;
+  overflow: auto;
   flex-grow: 1;
+`;
+
+export const TabsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  margin: 1rem 0 0.25rem 0;
 `;

@@ -14,6 +14,7 @@ export interface ModalContextInterface {
   ) => void;
   setModalHeight: (v: number) => void;
   setResize: () => void;
+  modalMaxHeight: () => number;
   status: number;
   modal: string;
   config: AnyJson;
