@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ButtonSecondary } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -10,7 +11,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import type { ChangeEvent } from 'react';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { SliderWrapper } from './Wrapper';
 
@@ -24,10 +25,6 @@ export const UpdateReserve = () => {
   const balance = getBalance(activeAccount);
   const { miscFrozen } = balance;
   const { network } = useApi();
-
-  useEffect(() => {
-    setReserve(new BigNumber(0));
-  }, [activeAccount, network]);
 
   // check account non-staking locks
   const locks = getLocks(activeAccount);
@@ -75,10 +72,20 @@ export const UpdateReserve = () => {
             max={fundsFree.toString()}
             value={reserve.toString()}
             onChange={updateReserve}
-            disabled={!accountHasSigner(activeAccount)}
+            // disabled={warnings.length > 0}
           />
           <p>Reserve: {reserve.toString()}</p>
         </SliderWrapper>
+        <ButtonSecondary
+          onClick={() =>
+            localStorage.setItem(
+              `${network.name}_${activeAccount}_reserve`,
+              reserve.toString()
+            )
+          }
+          text="Confirm"
+          disabled={warnings.length > 0}
+        />
       </PaddingWrapper>
     </>
   );
