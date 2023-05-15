@@ -8,7 +8,6 @@ export const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
-  margin-top: 1rem;
 
   h3 {
     display: flex;
@@ -52,9 +51,18 @@ export const Wrapper = styled.div`
         flex: 1;
         display: flex;
         flex-flow: row wrap;
+        align-items: center;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+
+        h4 {
+          margin: 0;
+        }
+
+        > span {
+          margin-right: 0.75rem;
+        }
       }
       &:last-child {
         padding-left: 2rem;
@@ -64,6 +72,48 @@ export const Wrapper = styled.div`
 
     button {
       font-size: 1rem;
+    }
+  }
+`;
+
+export const ReadOnlyInputWrapper = styled.div`
+  width: 100%;
+  margin-top: 0.5rem;
+
+  .input {
+    border: 1px solid var(--border-primary-color);
+    border-radius: 1rem;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    padding: 0.25rem 0.5rem 0.25rem 1rem;
+
+    > section {
+      display: flex;
+      flex-flow: column wrap;
+
+      > input {
+        width: 100%;
+        border: none;
+        padding-right: 1rem;
+      }
+
+      &:first-child {
+        flex: 1;
+      }
+    }
+  }
+  h5 {
+    margin: 0.75rem 0.25rem;
+    &.neutral {
+      color: var(--text-color-secondary);
+      opacity: 0.8;
+    }
+    &.danger {
+      color: var(--status-danger-color);
+    }
+    &.success {
+      color: var(--status-success-color);
     }
   }
 `;

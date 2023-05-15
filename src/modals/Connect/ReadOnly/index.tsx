@@ -9,11 +9,12 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonMonoInvert, ButtonSecondary } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
-import type { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
+import type { ExternalAccount } from 'contexts/Connect/types';
 import { useModal } from 'contexts/Modal';
+import { Identicon } from 'library/Identicon';
 import { useTranslation } from 'react-i18next';
-import { ReadOnlyInput } from '../ReadOnlyInput';
 import type { ReadOnlyProps } from '../types';
+import { Input } from './Input';
 import { ActionWithButton, Wrapper } from './Wrapper';
 
 export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
@@ -23,11 +24,11 @@ export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
 
   // get all external accounts
   const externalAccountsOnly = accounts.filter(
-    (a: ImportedAccount) => a.source === 'external'
+    (a) => a.source === 'external'
   ) as ExternalAccount[];
 
   // get external accounts added by user
-  const externalAccountsByUser = externalAccountsOnly.filter(
+  const externalAccounts = externalAccountsOnly.filter(
     (a) => a.addedBy === 'user'
   );
 
@@ -57,21 +58,26 @@ export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
         <div className="content">
           {readOnlyOpen && (
             <>
-              <ReadOnlyInput />
-              {externalAccountsByUser.length > 0 && (
+              <Input />
+              {externalAccounts.length > 0 && (
                 <h5>
                   {t('readOnlyAccount', {
-                    count: externalAccountsByUser.length,
+                    count: externalAccounts.length,
                   })}
                 </h5>
               )}
             </>
           )}
-          {externalAccountsByUser.length ? (
+          {externalAccounts.length ? (
             <div className="accounts">
-              {externalAccountsByUser.map((a, i) => (
+              {externalAccounts.map((a, i) => (
                 <div key={`user_external_account_${i}`} className="account">
-                  <div>{a.address}</div>
+                  <div>
+                    <span>
+                      <Identicon value={a.address} size={26} />
+                    </span>
+                    <h4>{a.address}</h4>
+                  </div>
                   <ButtonSecondary
                     text={t('forget')}
                     onClick={() => {

@@ -174,7 +174,6 @@ export const Connect = () => {
           </ThreeSectionWrapper>
           <ThreeSectionWrapper>
             <PaddingWrapper ref={proxiesRef}>
-              <ActionItem text={t('readOnlyAccounts')} />
               <ReadOnly
                 setReadOnlyOpen={setReadOnlyOpen}
                 readOnlyOpen={readOnlyOpen}

@@ -7,9 +7,9 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Wrapper } from './Wrapper';
+import { ReadOnlyInputWrapper } from './Wrapper';
 
-export const ReadOnlyInput = () => {
+export const Input = () => {
   const { t } = useTranslation('modals');
   const { formatAccountSs58, accounts, addExternalAccount } = useConnect();
   const { setResize } = useModal();
@@ -100,7 +100,7 @@ export const ReadOnlyInput = () => {
   };
 
   return (
-    <Wrapper>
+    <ReadOnlyInputWrapper>
       <h5 className={labelClass}>{label}</h5>
       <div className="input">
         <section>
@@ -126,6 +126,6 @@ export const ReadOnlyInput = () => {
           )}
         </section>
       </div>
-    </Wrapper>
+    </ReadOnlyInputWrapper>
   );
 };
