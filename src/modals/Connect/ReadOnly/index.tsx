@@ -13,8 +13,8 @@ import type { ExternalAccount } from 'contexts/Connect/types';
 import { useModal } from 'contexts/Modal';
 import { Identicon } from 'library/Identicon';
 import { useTranslation } from 'react-i18next';
+import { AccountInput } from '../AccountInput';
 import type { ReadOnlyProps } from '../types';
-import { Input } from './Input';
 import { ActionWithButton, Wrapper } from './Wrapper';
 
 export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
@@ -58,7 +58,7 @@ export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
         <div className="content">
           {readOnlyOpen && (
             <>
-              <Input />
+              <AccountInput />
               {externalAccounts.length > 0 && (
                 <h5>
                   {t('readOnlyAccount', {

@@ -7,10 +7,14 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ReadOnlyInputWrapper } from './Wrapper';
+import { AccountInputWrapper } from './Wrapper';
 
-export const Input = () => {
+export const AccountInput = () => {
   const { t } = useTranslation('modals');
+
+  // TODO: alreadyImported message may need to be customised for proxies.
+  // TODO: addExternalAccount should be a prop like `callback`.
+  // TODO: add error callbacks for when account is not imported.
   const { formatAccountSs58, accounts, addExternalAccount } = useConnect();
   const { setResize } = useModal();
 
@@ -100,7 +104,7 @@ export const Input = () => {
   };
 
   return (
-    <ReadOnlyInputWrapper>
+    <AccountInputWrapper>
       <h5 className={labelClass}>{label}</h5>
       <div className="input">
         <section>
@@ -126,6 +130,6 @@ export const Input = () => {
           )}
         </section>
       </div>
-    </ReadOnlyInputWrapper>
+    </AccountInputWrapper>
   );
 };
