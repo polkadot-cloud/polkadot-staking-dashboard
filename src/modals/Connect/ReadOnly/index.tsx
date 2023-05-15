@@ -1,15 +1,20 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { ButtonMonoInvert } from '@polkadotcloud/core-ui';
+import {
+  faChevronRight,
+  faMinus,
+  faPlus,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonMonoInvert, ButtonSecondary } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import type { ExternalAccount, ImportedAccount } from 'contexts/Connect/types';
 import { useModal } from 'contexts/Modal';
 import { useTranslation } from 'react-i18next';
 import { ReadOnlyInput } from '../ReadOnlyInput';
 import type { ReadOnlyProps } from '../types';
-import { Wrapper } from './Wrapper';
+import { ActionWithButton, Wrapper } from './Wrapper';
 
 export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
   const { t } = useTranslation('modals');
@@ -32,43 +37,53 @@ export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
     setResize();
   };
   return (
-    <Wrapper>
-      <h3>
-        <ButtonMonoInvert
-          iconLeft={readOnlyOpen ? faMinus : faPlus}
-          text={!readOnlyOpen ? t('add') : t('hide')}
-          onClick={() => {
-            setReadOnlyOpen(!readOnlyOpen);
-          }}
-        />
-      </h3>
-      <div className="content">
-        {readOnlyOpen && (
-          <>
-            <ReadOnlyInput />
-            {externalAccountsByUser.length > 0 && (
-              <h5>
-                {t('readOnlyAccount', { count: externalAccountsByUser.length })}
-              </h5>
-            )}
-          </>
-        )}
-        {externalAccountsByUser.length ? (
-          <div className="accounts">
-            {externalAccountsByUser.map((a, i) => (
-              <div key={`user_external_account_${i}`} className="account">
-                <div>{a.address}</div>
-                <ButtonMonoInvert
-                  text={t('forget')}
-                  onClick={() => {
-                    forgetAccount(a);
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-        ) : null}
-      </div>
-    </Wrapper>
+    <>
+      <ActionWithButton>
+        <div>
+          <FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
+          <h3>{t('readOnlyAccounts')}</h3>
+        </div>
+        <div>
+          <ButtonMonoInvert
+            iconLeft={readOnlyOpen ? faMinus : faPlus}
+            text={!readOnlyOpen ? t('add') : t('hide')}
+            onClick={() => {
+              setReadOnlyOpen(!readOnlyOpen);
+            }}
+          />
+        </div>
+      </ActionWithButton>
+      <Wrapper>
+        <div className="content">
+          {readOnlyOpen && (
+            <>
+              <ReadOnlyInput />
+              {externalAccountsByUser.length > 0 && (
+                <h5>
+                  {t('readOnlyAccount', {
+                    count: externalAccountsByUser.length,
+                  })}
+                </h5>
+              )}
+            </>
+          )}
+          {externalAccountsByUser.length ? (
+            <div className="accounts">
+              {externalAccountsByUser.map((a, i) => (
+                <div key={`user_external_account_${i}`} className="account">
+                  <div>{a.address}</div>
+                  <ButtonSecondary
+                    text={t('forget')}
+                    onClick={() => {
+                      forgetAccount(a);
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : null}
+        </div>
+      </Wrapper>
+    </>
   );
 };

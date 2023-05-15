@@ -67,3 +67,28 @@ export const Wrapper = styled.div`
     }
   }
 `;
+
+export const ActionWithButton = styled.div`
+  border-bottom: 1px solid var(--border-primary-color);
+  width: 100%;
+  color: var(--text-color-primary);
+  display: flex;
+  align-items: center;
+  margin: 1.25rem 0 0;
+  padding-bottom: 0.75rem;
+
+  > div {
+    &:first-child {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+      font-variation-settings: 'wght' 650;
+      > svg {
+        margin-right: 0.5rem;
+      }
+    }
+    &:last-child {
+      font-variation-settings: 'wght' 650;
+    }
+  }
+`;

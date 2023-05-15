@@ -166,7 +166,6 @@ export const Connect = () => {
           </ThreeSectionWrapper>
           <ThreeSectionWrapper>
             <PaddingWrapper ref={readOnlyRef}>
-              <ActionItem text={t('readOnlyAccounts')} />
               <ReadOnly
                 setReadOnlyOpen={setReadOnlyOpen}
                 readOnlyOpen={readOnlyOpen}
