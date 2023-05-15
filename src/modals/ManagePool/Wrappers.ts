@@ -1,20 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
   flex-flow: column wrap;
   padding: 0;
-`;
-
-export const CardsWrapper = styled(motion.div)`
-  width: 200%;
-  display: flex;
-  overflow: hidden;
-  position: relative;
 `;
 
 export const ContentWrapper = styled.div`

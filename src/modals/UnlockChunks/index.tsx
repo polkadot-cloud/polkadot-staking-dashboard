@@ -9,10 +9,10 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FixedContentWrapper } from '../Wrappers';
+import { FixedContentWrapper, SectionWrapper } from '../Wrappers';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
-import { CardsWrapper, Wrapper } from './Wrappers';
+import { Wrapper } from './Wrappers';
 
 export const UnlockChunks = () => {
   const { t } = useTranslation('modals');
@@ -90,7 +90,7 @@ export const UnlockChunks = () => {
       <FixedContentWrapper ref={headerRef}>
         <Title title={t('unlocks')} fixed />
       </FixedContentWrapper>
-      <CardsWrapper
+      <SectionWrapper
         animate={sectionRef.current === 0 ? 'home' : 'next'}
         transition={{
           duration: 0.5,
@@ -120,7 +120,7 @@ export const UnlockChunks = () => {
           task={task}
           ref={formsRef}
         />
-      </CardsWrapper>
+      </SectionWrapper>
     </Wrapper>
   );
 };

@@ -5,10 +5,10 @@ import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FixedContentWrapper } from '../Wrappers';
+import { FixedContentWrapper, SectionWrapper } from '../Wrappers';
 import { Forms } from './Forms';
 import { Tasks } from './Tasks';
-import { CardsWrapper, Wrapper } from './Wrappers';
+import { Wrapper } from './Wrappers';
 
 export const ManagePool = () => {
   const { t } = useTranslation('modals');
@@ -41,7 +41,7 @@ export const ManagePool = () => {
       <FixedContentWrapper ref={headerRef}>
         <Title title={t('managePool')} fixed />
       </FixedContentWrapper>
-      <CardsWrapper
+      <SectionWrapper
         animate={section === 0 ? 'home' : 'next'}
         transition={{
           duration: 0.5,
@@ -64,7 +64,7 @@ export const ManagePool = () => {
           section={section}
           ref={formsRef}
         />
-      </CardsWrapper>
+      </SectionWrapper>
     </Wrapper>
   );
 };

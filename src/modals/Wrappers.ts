@@ -254,7 +254,17 @@ export const CustomHeaderWrapper = styled.div`
   }
 `;
 
+// Fixed content wrapper for modals that have multiple sections.
 export const FixedContentWrapper = styled.div`
   padding-top: 1rem;
   width: 100%;
+`;
+
+export const SectionWrapper = styled(motion.div)`
+  width: 200%;
+  height: 100%;
+  display: flex;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
 `;
