@@ -50,21 +50,17 @@ export const UpdateReserve = () => {
   }
 
   if (fundsFree.isZero()) {
-    warnings.push(
-      <Warning text="The top of balance has been reached, will only top up to the limit of the balance." />
-    );
+    warnings.push(<Warning text={t('reserveLimit')} />);
   }
 
   if (forceReserved.isZero()) {
-    warnings.push(
-      <Warning text="The total locked amount is bigger than the free balance, free balance stay put." />
-    );
+    warnings.push(<Warning text={t('reserveState')} />);
   }
 
   return (
     <>
       <PaddingWrapper>
-        <h2 className="title unbounded">Update Reserve</h2>
+        <h2 className="title unbounded">{t('updateReserve')}</h2>
         {warnings.length ? (
           <WarningsWrapper>
             {warnings.map((warning, index) => (
@@ -85,11 +81,13 @@ export const UpdateReserve = () => {
             onChange={updateReserve}
             disabled={!accountHasSigner(activeAccount)}
           />
-          <p>Reserve: {reserve.toString()}</p>
+          <p>
+            {t('reserve')}: {reserve.toString()}
+          </p>
         </SliderWrapper>
         <ConfirmButton>
           <ButtonPrimaryInvert
-            text="Confirm"
+            text={t('confirm')}
             onClick={() => {
               setStatus(0);
               localStorage.setItem(

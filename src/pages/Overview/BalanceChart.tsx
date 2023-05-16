@@ -144,7 +144,7 @@ export const BalanceChart = () => {
               disabled={!activeAccount}
               marginRight
               onClick={() => openModalWith('UpdateReserve')}
-              text="Update Reserve"
+              text={t('overview.updateReserve')}
             />
           </ButtonWrapper>
         </h2>
