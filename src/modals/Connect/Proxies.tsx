@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
+  faArrowRight,
   faChevronRight,
   faMinus,
   faPlus,
@@ -31,7 +32,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
       <ActionWithButton>
         <div>
           <FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
-          <h3>Proxy Delegate Accounts</h3>
+          <h3>Proxy Accounts</h3>
         </div>
         <div>
           <ButtonMonoInvert
@@ -68,10 +69,18 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                           <span>
                             <Identicon value={delegate} size={26} />
                           </span>
-                          <h4>{delegate}</h4>
-                          <h4>
-                            {delegator} / {proxyType}
-                          </h4>
+                          <div className="text">
+                            <h4 className="title">{delegate}</h4>
+                            <h4 className="subtitle">
+                              <span>{proxyType}</span>{' '}
+                              <FontAwesomeIcon
+                                icon={faArrowRight}
+                                transform="shrink-3"
+                                className="arrow"
+                              />
+                              {delegator}
+                            </h4>
+                          </div>
                         </div>
                         <div />
                         <ButtonSecondary text="Imported" disabled />

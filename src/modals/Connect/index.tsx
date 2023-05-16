@@ -146,7 +146,7 @@ export const Connect = () => {
           }}
         >
           <ThreeSectionWrapper>
-            <PaddingWrapper ref={homeRef}>
+            <PaddingWrapper horizontalOnly ref={homeRef}>
               {['polkadot', 'kusama'].includes(network.name) ? (
                 <>
                   <ActionItem text={t('hardware')} />
@@ -171,7 +171,7 @@ export const Connect = () => {
             </PaddingWrapper>
           </ThreeSectionWrapper>
           <ThreeSectionWrapper>
-            <PaddingWrapper ref={readOnlyRef}>
+            <PaddingWrapper horizontalOnly ref={readOnlyRef}>
               <ReadOnly
                 setInputOpen={setReadOnlyOpen}
                 inputOpen={readOnlyOpen}
@@ -179,7 +179,7 @@ export const Connect = () => {
             </PaddingWrapper>
           </ThreeSectionWrapper>
           <ThreeSectionWrapper>
-            <PaddingWrapper ref={proxiesRef}>
+            <PaddingWrapper horizontalOnly ref={proxiesRef}>
               <Proxies
                 setInputOpen={setNewProxyOpen}
                 inputOpen={newProxyOpen}

@@ -252,18 +252,31 @@ export const ManualAccountBasic = styled.div`
     &:first-child {
       flex: 1;
       display: flex;
-      flex-flow: row wrap;
       align-items: center;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-
-      h4 {
-        margin: 0;
-      }
 
       > span {
         margin-right: 0.75rem;
+      }
+
+      > .text {
+        display: flex;
+        flex-direction: column;
+        h4 {
+          margin: 0;
+          &.title {
+            font-variation-settings: 'wght' 600;
+          }
+          &.subtitle {
+            margin-top: 0.45rem;
+            opacity: 0.75;
+          }
+          > span {
+            color: var(--text-color-secondary);
+          }
+          .arrow {
+            margin: 0 0.25rem;
+          }
+        }
       }
     }
     &:last-child {

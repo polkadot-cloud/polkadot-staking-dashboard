@@ -76,7 +76,9 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                     <span>
                       <Identicon value={a.address} size={26} />
                     </span>
-                    <h4>{a.address}</h4>
+                    <div className="text">
+                      <h4>{a.address}</h4>
+                    </div>
                   </div>
                   <ButtonSecondary
                     text={t('forget')}
