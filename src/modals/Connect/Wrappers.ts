@@ -277,7 +277,7 @@ export const ManualAccountBasic = styled.div`
           &.subtitle > span {
             color: var(--text-color-secondary);
             opacity: 0.65;
-            margin-right: 0.25rem;
+            margin-right: 0.65rem;
           }
           .arrow {
             margin: 0 0.25rem;

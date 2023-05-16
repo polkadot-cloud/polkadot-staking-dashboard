@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
-  faArrowRight,
   faChevronRight,
   faMinus,
   faPlus,
@@ -76,12 +75,8 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                             </span>
                             <div className="text">
                               <h4 className="title">
-                                {delegateAccount?.name || delegate}
-                                <FontAwesomeIcon
-                                  icon={faArrowRight}
-                                  transform="shrink-3"
-                                />
                                 <span>{proxyType} Proxy</span>
+                                {delegateAccount?.name || delegate}
                               </h4>
                               <h4 className="subtitle">
                                 for {delegatorAccount?.name || delegator}
