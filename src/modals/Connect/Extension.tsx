@@ -74,16 +74,13 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
       <ExtensionInner>
         <div>
           <div className="body">
-            {!(
-              (disabled || status === 'connected') &&
-              id !== 'wallet-connect'
-            ) ? (
+            {!(disabled || status === 'connected') ? (
               <button
                 type="button"
                 className="button"
-                disabled={!(id === 'wallet-connect') && disabled}
+                disabled={disabled}
                 onClick={() => {
-                  if (status !== 'connected' || id === 'wallet-connect') {
+                  if (status !== 'connected') {
                     handleClick();
                   }
                 }}

@@ -500,6 +500,15 @@ export const ConnectProvider = ({
     // remove wallet conenct from local extensions
     removeFromLocalExtensions(id);
     setExtensionStatus(id, 'disconnected');
+
+    // remove active account if from wallet connect
+    if (
+      activeAccountMetaRef.current &&
+      activeAccountMetaRef.current.source === 'wallet-connect'
+    ) {
+      setActiveAccount(null);
+      setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
+    }
   };
 
   /* connectExtensionAccounts
