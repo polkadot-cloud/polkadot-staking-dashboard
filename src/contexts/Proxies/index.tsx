@@ -130,12 +130,9 @@ export const ProxiesProvider = ({
   };
 
   // Gets the delegates of the given account
-  const getDelegates = (address: MaybeAccount): Proxy | undefined => {
-    return (
-      proxiesRef.current.find(({ delegator }) => delegator === address) ||
-      undefined
-    );
-  };
+  const getDelegates = (address: MaybeAccount): Proxy | undefined =>
+    proxiesRef.current.find(({ delegator }) => delegator === address) ||
+    undefined;
 
   // Gets delegators and proxy types for the given delegate address
   const getProxiedAccounts = (address: MaybeAccount) => {

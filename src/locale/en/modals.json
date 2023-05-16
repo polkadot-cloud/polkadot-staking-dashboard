@@ -149,8 +149,6 @@
     "proxy": "Proxy",
     "queuedTransactionRejected": "Previous transaction rejected. Please try again.",
     "readOnly": "Read Only",
-    "readOnlyAccount_one": "{{count}} Read Only Account",
-    "readOnlyAccount_other": "{{count}} Read Only Accounts",
     "readOnlyAccounts": "Read Only Accounts",
     "readOnlyCannotSign": "Your account is read only, and cannot sign transactions.",
     "rebond": "Rebond",

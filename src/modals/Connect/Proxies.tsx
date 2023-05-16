@@ -9,9 +9,9 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonMonoInvert, ButtonSecondary } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
-import type { ExternalAccount } from 'contexts/Connect/types';
-import { useModal } from 'contexts/Modal';
+import { useProxies } from 'contexts/Proxies';
 import { Identicon } from 'library/Identicon';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { AccountInput } from './AccountInput';
 import { ActionWithButton, ManualAccountsWrapper } from './Wrappers';
@@ -19,24 +19,9 @@ import type { ListWithInputProps } from './types';
 
 export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
-  const { accounts, forgetAccounts, addExternalAccount } = useConnect();
-  const { setResize } = useModal();
+  const { addExternalAccount } = useConnect();
+  const { delegates } = useProxies();
 
-  // get all external accounts
-  const externalAccountsOnly = accounts.filter(
-    (a) => a.source === 'external'
-  ) as ExternalAccount[];
-
-  // get external accounts added by user
-  const externalAccounts = externalAccountsOnly.filter(
-    (a) => a.addedBy === 'user'
-  );
-
-  // forget account
-  const forgetAccount = (account: ExternalAccount) => {
-    forgetAccounts([account]);
-    setResize();
-  };
   return (
     <>
       <ActionWithButton>
@@ -64,32 +49,33 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                   return true;
                 }}
               />
-              {externalAccounts.length > 0 && (
-                <h5>
-                  {t('readOnlyAccount', {
-                    count: externalAccounts.length,
-                  })}
-                </h5>
-              )}
             </>
           )}
-          {externalAccounts.length ? (
+          {Object.entries(delegates).length ? (
             <div className="accounts">
-              {externalAccounts.map((a, i) => (
-                <div key={`user_external_account_${i}`} className="account">
-                  <div>
-                    <span>
-                      <Identicon value={a.address} size={26} />
-                    </span>
-                    <h4>{a.address}</h4>
-                  </div>
-                  <ButtonSecondary
-                    text={t('forget')}
-                    onClick={() => {
-                      forgetAccount(a);
-                    }}
-                  />
-                </div>
+              {Object.entries(delegates).map(([delegate, delegators], i) => (
+                <React.Fragment key={`user_delegate_account_${i}}`}>
+                  {delegators.map(({ delegator, proxyType }, j) => {
+                    return (
+                      <div
+                        key={`user_delegate_${i}_delegator_${j}`}
+                        className="account"
+                      >
+                        <div>
+                          <span>
+                            <Identicon value={delegate} size={26} />
+                          </span>
+                          <h4>{delegate}</h4>
+                          <h4>
+                            {delegator} / {proxyType}
+                          </h4>
+                        </div>
+                        <div />
+                        <ButtonSecondary text="Imported" disabled />
+                      </div>
+                    );
+                  })}
+                </React.Fragment>
               ))}
             </div>
           ) : null}

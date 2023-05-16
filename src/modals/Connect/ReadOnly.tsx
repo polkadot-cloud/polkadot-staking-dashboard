@@ -57,21 +57,12 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
       <ManualAccountsWrapper>
         <div className="content">
           {inputOpen && (
-            <>
-              <AccountInput
-                successCallback={async (value: string) => {
-                  addExternalAccount(value, 'user');
-                  return true;
-                }}
-              />
-              {externalAccounts.length > 0 && (
-                <h5>
-                  {t('readOnlyAccount', {
-                    count: externalAccounts.length,
-                  })}
-                </h5>
-              )}
-            </>
+            <AccountInput
+              successCallback={async (value: string) => {
+                addExternalAccount(value, 'user');
+                return true;
+              }}
+            />
           )}
           {externalAccounts.length ? (
             <div className="accounts">

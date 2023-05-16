@@ -140,7 +140,6 @@
     "proxy": "代理账户",
     "queuedTransactionRejected": "上一笔交易己被拒绝.请再试一次",
     "readOnly": "只读",
-    "readOnlyAccount": "{{count}} 个只读帐户",
     "readOnlyAccounts": "只读帐户",
     "readOnlyCannotSign": "只读帐户无法签署交易.",
     "rebond": "重新质押",
