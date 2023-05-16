@@ -114,15 +114,9 @@ export const UnbondFeedback = ({
     const _bond = bond.bond;
     const _decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
 
-    // unbond errors
     if (bondBn.isGreaterThan(active)) {
       newErrors.push(t('unbondAmount'));
     }
-
-    // unbond errors for staking only
-    if (bondFor === 'nominator')
-      if (getControllerNotImported(controller))
-        newErrors.push(t('importedToUnbond'));
 
     if (bond.bond !== '' && bondBn.isLessThan(1)) {
       newErrors.push(t('valueTooSmall'));
