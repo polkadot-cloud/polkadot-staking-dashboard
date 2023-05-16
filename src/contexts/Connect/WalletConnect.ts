@@ -14,8 +14,8 @@ export class WalletConnect {
       metadata: {
         name: DappName,
         description: 'Polkadot Staking Dashboard',
-        url: '#',
-        icons: ['https://walletconnect.com/walletconnect-logo.png'],
+        url: 'https://staking.polkadot.network/',
+        icons: ['../../../public/favicons/polkadot/apple-touch-icon.png'],
       },
     });
     return provider;

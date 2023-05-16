@@ -46,7 +46,6 @@ export const AccountButton = ({
   const connectProxy = delegator ? address || null : '';
 
   const proxyDelegate = getProxyDelegate(connectTo, connectProxy);
-
   const isActive =
     (connectTo === activeAccount &&
       address === activeAccount &&

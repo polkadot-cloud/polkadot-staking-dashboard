@@ -410,6 +410,11 @@ export const ConnectProvider = ({
       const provider = await WalletConnect.initialize();
       setWalletConnectClient(provider.client);
 
+      // handle Wallet Connect session delete event
+      provider.on('session_delete', () => {
+        handleWalletConnectSessionDelete(id);
+      });
+
       const currentCaipChain = `polkadot:${network.namespace}`;
       setWalletConnectChainInfo(currentCaipChain);
 
@@ -469,6 +474,32 @@ export const ConnectProvider = ({
       // update initialised extensions
       updateInitialisedExtensions(id);
     }
+  };
+
+  const handleWalletConnectSessionDelete = (id: string) => {
+    localStorage.removeItem('WalletConnectSession');
+    setWalletConnectSession(null);
+    setWalletConnectChainInfo(null);
+    setWalletConnectClient(null);
+
+    // remove wallet connect accounts from state
+    setStateWithRef(
+      [...accountsRef.current].filter((account) => account.source !== id),
+      setAccounts,
+      accountsRef
+    );
+
+    setStateWithRef(
+      [...extensionsInitialisedRef.current].filter(
+        (account) => account.source !== id
+      ),
+      setExtensionsInitialised,
+      extensionsInitialisedRef
+    );
+
+    // remove wallet conenct from local extensions
+    removeFromLocalExtensions(id);
+    setExtensionStatus(id, 'disconnected');
   };
 
   /* connectExtensionAccounts
@@ -575,6 +606,12 @@ export const ConnectProvider = ({
       }
       // Await session approval from the wallet.
       const wcSession = await approval();
+
+      // handle Wallet Connect session delete event
+      provider.on('session_delete', () => {
+        handleWalletConnectSessionDelete(id);
+      });
+
       setWalletConnectSession(wcSession as SessionTypes.Struct);
       localStorage.setItem('WalletConnectSession', JSON.stringify(wcSession));
 
