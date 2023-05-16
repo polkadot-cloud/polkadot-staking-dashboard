@@ -14,7 +14,7 @@ export const SliderWrapper = styled.div`
     width: 100%;
     margin-top: 1rem;
     height: 25px;
-    background: var(--network-color-primary);
+    background: var(--border-secondary-color);
     border-radius: 1.5rem;
     opacity: 0.5;
     transition: 0.2s;
@@ -33,14 +33,14 @@ export const SliderWrapper = styled.div`
       width: 23px;
       height: 24px;
       border-radius: 1.25rem;
-      background: var(--network-color-secondary);
+      background: var(--network-color-primary);
       cursor: pointer;
     }
     &::-moz-range-thumb {
       width: 23px;
       height: 24px;
       border-radius: 1.25rem;
-      background: var(--network-color-secondary);
+      background: var(--network-color-primary);
       cursor: pointer;
     }
   }
