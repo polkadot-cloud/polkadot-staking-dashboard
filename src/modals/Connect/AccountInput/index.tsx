@@ -10,7 +10,10 @@ import { useTranslation } from 'react-i18next';
 import { AccountInputWrapper } from './Wrapper';
 import type { AccountInputProps } from './types';
 
-export const AccountInput = ({ successCallback }: AccountInputProps) => {
+export const AccountInput = ({
+  successCallback,
+  defaultLabel,
+}: AccountInputProps) => {
   const { t } = useTranslation('modals');
 
   // TODO: add error callbacks for when account fails to import.
@@ -97,7 +100,7 @@ export const AccountInput = ({ successCallback }: AccountInputProps) => {
       labelClass = 'success';
       break;
     default:
-      label = t('inputAddress');
+      label = defaultLabel;
       labelClass = 'neutral';
   }
 

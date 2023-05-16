@@ -13,10 +13,10 @@ import { useProxies } from 'contexts/Proxies';
 import { Identicon } from 'library/Identicon';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ProxyInput } from './AccountInput/Proxy';
+import { AccountInput } from './AccountInput';
 import {
   ActionWithButton,
-  ManualAccountBasic,
+  ManualAccount,
   ManualAccountsWrapper,
 } from './Wrappers';
 import type { ListWithInputProps } from './types';
@@ -47,7 +47,8 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
         <div className="content">
           {inputOpen && (
             <>
-              <ProxyInput
+              <AccountInput
+                defaultLabel="Input Delegator Address"
                 successCallback={async (delegator) => {
                   const result = await handleDeclareDelegate(delegator);
                   return result;
@@ -66,7 +67,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                       const delegatorAccount = getAccount(delegator);
 
                       return (
-                        <ManualAccountBasic
+                        <ManualAccount
                           key={`user_delegate_${i}_delegator_${j}`}
                         >
                           <div>
@@ -85,7 +86,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                           </div>
                           <div />
                           <ButtonSecondary text="Declared" disabled />
-                        </ManualAccountBasic>
+                        </ManualAccount>
                       );
                     })}
                   </React.Fragment>

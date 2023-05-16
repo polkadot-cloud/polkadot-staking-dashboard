@@ -234,7 +234,7 @@ export const ManualAccountsWrapper = styled.div`
   }
 `;
 
-export const ManualAccountBasic = styled.div`
+export const ManualAccount = styled.div`
   background: var(--button-primary-background);
   width: 100%;
   border-radius: 1rem;

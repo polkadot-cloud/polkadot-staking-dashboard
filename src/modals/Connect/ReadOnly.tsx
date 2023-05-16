@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { AccountInput } from './AccountInput';
 import {
   ActionWithButton,
-  ManualAccountBasic,
+  ManualAccount,
   ManualAccountsWrapper,
 } from './Wrappers';
 import type { ListWithInputProps } from './types';
@@ -62,6 +62,7 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
         <div className="content">
           {inputOpen && (
             <AccountInput
+              defaultLabel={t('inputAddress')}
               successCallback={async (value: string) => {
                 addExternalAccount(value, 'user');
                 return true;
@@ -71,7 +72,7 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
           {externalAccounts.length ? (
             <div className="accounts">
               {externalAccounts.map((a, i) => (
-                <ManualAccountBasic key={`user_external_account_${i}`}>
+                <ManualAccount key={`user_external_account_${i}`}>
                   <div>
                     <span>
                       <Identicon value={a.address} size={26} />
@@ -86,7 +87,7 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                       forgetAccount(a);
                     }}
                   />
-                </ManualAccountBasic>
+                </ManualAccount>
               ))}
             </div>
           ) : null}
