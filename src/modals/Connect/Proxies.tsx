@@ -13,7 +13,7 @@ import { useProxies } from 'contexts/Proxies';
 import { Identicon } from 'library/Identicon';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { AccountInput } from './AccountInput';
+import { ProxyInput } from './AccountInput/Proxy';
 import {
   ActionWithButton,
   ManualAccountBasic,
@@ -23,7 +23,7 @@ import type { ListWithInputProps } from './types';
 
 export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
-  const { addExternalAccount, getAccount } = useConnect();
+  const { getAccount } = useConnect();
   const { delegates } = useProxies();
 
   return (
@@ -47,9 +47,11 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
         <div className="content">
           {inputOpen && (
             <>
-              <AccountInput
+              <ProxyInput
                 successCallback={async (value: string) => {
-                  addExternalAccount(value, 'user');
+                  console.debug(`process ${value}`);
+                  // TODO: query chain and see if delegate delegator pair is valid.
+                  // if valid, add to proxy accounts. Else return false.
                   return true;
                 }}
               />

@@ -30,6 +30,12 @@ export const AccountInputWrapper = styled.div`
       }
     }
   }
+  .submit {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
   h5 {
     margin: 0.75rem 0.25rem;
     &.neutral {
