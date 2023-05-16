@@ -15,6 +15,7 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { WarningsWrapper } from 'modals/Wrappers';
@@ -26,7 +27,7 @@ export const Forms = forwardRef(
   ({ setSection, unlock, task }: any, ref: any) => {
     const { t } = useTranslation('modals');
     const { api, network, consts } = useApi();
-    const { activeAccount, accountHasSigner } = useConnect();
+    const { activeAccount } = useConnect();
     const { removeFavorite: removeFavoritePool } = usePoolsConfig();
     const { membership } = usePoolMemberships();
     const { selectedActivePool } = useActivePools();
@@ -34,6 +35,7 @@ export const Forms = forwardRef(
     const { removePoolMember } = usePoolMembers();
     const { setStatus: setModalStatus, config } = useModal();
     const { getBondedAccount } = useBonded();
+    const { getSignerWarnings } = useSignerWarnings();
 
     const { bondFor, poolClosure } = config || {};
     const { historyDepth } = consts;
@@ -100,16 +102,19 @@ export const Forms = forwardRef(
 
     const value = unlock?.value ?? new BigNumber(0);
 
+    const warnings = getSignerWarnings(signingAccount, isStaking);
+
     return (
       <ContentWrapper>
         <div ref={ref}>
           <div className="padding">
-            {!accountHasSigner(signingAccount) ? (
+            {warnings.length > 0 ? (
               <WarningsWrapper>
-                <Warning text={t('readOnlyCannotSign')} />
+                {warnings.map((text, i) => (
+                  <Warning key={`warning${i}`} text={text} />
+                ))}
               </WarningsWrapper>
             ) : null}
-
             <div style={{ marginBottom: '2rem' }}>
               {task === 'rebond' && (
                 <>

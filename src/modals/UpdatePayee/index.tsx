@@ -10,6 +10,7 @@ import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { Warning } from 'library/Form/Warning';
 import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { PayeeInput } from 'library/PayeeInput';
@@ -28,8 +29,9 @@ export const UpdatePayee = () => {
   const { getBondedAccount } = useBonded();
   const { setStatus: setModalStatus } = useModal();
   const controller = getBondedAccount(activeAccount);
-  const { staking, getControllerNotImported } = useStaking();
+  const { staking } = useStaking();
   const { getPayeeItems } = usePayeeConfig();
+  const { getSignerWarnings } = useSignerWarnings();
   const { payee } = staking;
 
   const DefaultSelected: PayeeConfig = {
@@ -112,6 +114,8 @@ export const UpdatePayee = () => {
     );
   }, []);
 
+  const warnings = getSignerWarnings(controller, true);
+
   return (
     <>
       <Title
@@ -119,11 +123,13 @@ export const UpdatePayee = () => {
         helpKey="Payout Destination"
       />
       <PaddingWrapper style={{ paddingBottom: 0 }}>
-        {getControllerNotImported(controller) && (
-          <WarningsWrapper noMargin>
-            <Warning text={t('mustHaveControllerUpdate')} />
+        {warnings.length > 0 ? (
+          <WarningsWrapper>
+            {warnings.map((text, i) => (
+              <Warning key={`warning${i}`} text={text} />
+            ))}
           </WarningsWrapper>
-        )}
+        ) : null}
         <div style={{ width: '100%', padding: '0 0.5rem' }}>
           <PayeeInput
             payee={selected}

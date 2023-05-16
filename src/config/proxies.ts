@@ -20,8 +20,8 @@ export const UnsupportedIfUniqueController: string[] = [
   'staking.chill',
   'staking.nominate',
   'staking.rebond',
-  'staking.setPayee',
   'staking.unbond',
+  'staking.setPayee',
   'staking.withdrawUnbonded',
 ];
 

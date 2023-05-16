@@ -10,9 +10,9 @@ import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
 import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
-import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Close } from 'library/Modal/Close';
@@ -25,13 +25,13 @@ export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
   const { api, consts, network } = useApi();
   const { activeAccount } = useConnect();
-  const { getControllerNotImported } = useStaking();
   const { getBondedAccount } = useBonded();
   const { activeEra, metrics } = useNetworkMetrics();
   const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
   const { setResize, setStatus } = useModal();
   const { getTransferOptions } = useTransferOptions();
   const { isFastUnstaking } = useUnstaking();
+  const { getSignerWarnings } = useSignerWarnings();
 
   const { bondDuration, fastUnstakeDeposit } = consts;
   const { fastUnstakeErasToCheckPerBlock } = metrics;
@@ -91,10 +91,8 @@ export const ManageFastUnstake = () => {
   });
 
   // warnings
-  const warnings = [];
-  if (getControllerNotImported(controller)) {
-    warnings.push(t('mustHaveController'));
-  }
+  const warnings = getSignerWarnings(controller, true);
+
   if (!isFastUnstaking) {
     if (freeBalance.isLessThan(fastUnstakeDeposit)) {
       warnings.push(
@@ -130,8 +128,8 @@ export const ManageFastUnstake = () => {
         </h2>
         {warnings.length > 0 ? (
           <WarningsWrapper>
-            {warnings.map((text, index) => (
-              <Warning key={index} text={text} />
+            {warnings.map((text, i) => (
+              <Warning key={`warning_${i}`} text={text} />
             ))}
           </WarningsWrapper>
         ) : null}

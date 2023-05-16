@@ -46,7 +46,7 @@
     "connected": "己连接",
     "connectionType": "连接类型",
     "continue": "继续",
-    "controllerImported": "必须将Controller帐户导入到未绑定状态",
+    "controllerImported": "You must have your controller account imported to sign this transaction.",
     "dashboardTips": "提示消息",
     "destroyIrreversible": "销毁池是不可逆转的",
     "destroyPool": "销毁提名池",
@@ -101,8 +101,6 @@
     "lockPool": "锁定",
     "lockPoolSubtitle": "一旦锁定提名池，其他人就无法加入提名池",
     "managePool": "管理池",
-    "mustHaveController": "必须导入Controller帐户才能开始提名",
-    "mustHaveControllerUpdate": "必须导入Controller帐户才能更新奖励地址",
     "networks": "网络",
     "newTotalBond": "新质押总额:",
     "newlyBondedFunds": "新质押金将从下一个Era开始归回到活跃的提名中",
@@ -215,8 +213,6 @@
     "withdraw": "提取",
     "withdrawMemberFunds": "取出会员资金",
     "withdrawSubtitle": "资金将在取款后立即转作可用余额",
-    "withdrawUnlocked": "取出己解锁",
-    "youMust_account": "您必须导入帐户才能停止提名",
-    "youMust_controller": "您必须导入Controller帐户才能停止提名"
+    "withdrawUnlocked": "取出己解锁"
   }
 }

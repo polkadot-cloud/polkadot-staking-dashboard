@@ -48,7 +48,7 @@
     "connected": "Connected",
     "connectionType": "Connection Type",
     "continue": "Continue",
-    "controllerImported": "You must have your controller account imported to unbond.",
+    "controllerImported": "You must have your controller account imported to sign this transaction.",
     "dashboardTips": "Dashboard Tips",
     "destroyIrreversible": "Destroying a Pool is Irreversible",
     "destroyPool": "Destroy Pool",
@@ -109,8 +109,6 @@
     "lockPool": "Lock Pool",
     "lockPoolSubtitle": "Once you lock the pool no one else can join the pool.",
     "managePool": "Manage Pool",
-    "mustHaveController": "You must have your controller account imported to start nominating.",
-    "mustHaveControllerUpdate": "You must have your controller account imported to update your reward destination.",
     "networks": "Networks",
     "newTotalBond": "New total bond:",
     "newlyBondedFunds": "Newly bonded funds will back active nominations from the start of the next era.",
@@ -225,8 +223,6 @@
     "withdraw": "Withdraw",
     "withdrawMemberFunds": "Withdraw Member Funds",
     "withdrawSubtitle": "Funds will be immediately available as free balance after withdrawing.",
-    "withdrawUnlocked": "Withdraw Unlocked",
-    "youMust_account": "You must have your account imported to stop nominating.",
-    "youMust_controller": "You must have your controller account imported to stop nominating."
+    "withdrawUnlocked": "Withdraw Unlocked"
   }
 }

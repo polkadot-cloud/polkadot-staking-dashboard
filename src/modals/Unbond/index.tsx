@@ -16,6 +16,7 @@ import { getUnixTime } from 'date-fns';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
@@ -30,7 +31,7 @@ export const Unbond = () => {
   const { api, network, consts } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config } = useModal();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { activeAccount } = useConnect();
   const { staking, getControllerNotImported } = useStaking();
   const { getBondedAccount } = useBonded();
   const { bondFor } = config;
@@ -39,6 +40,7 @@ export const Unbond = () => {
   const { txFees } = useTxMeta();
   const { getTransferOptions } = useTransferOptions();
   const { erasToSeconds } = useErasToTimeLeft();
+  const { getSignerWarnings } = useSignerWarnings();
 
   const controller = getBondedAccount(activeAccount);
   const controllerNotImported = getControllerNotImported(controller);
@@ -144,10 +146,8 @@ export const Unbond = () => {
   const poolActiveBelowMin =
     bondFor === 'pool' && activeBn.isLessThan(poolToMinBn);
 
-  const warnings = [];
-  if (!accountHasSigner(activeAccount)) {
-    warnings.push(t('readOnlyCannotSign'));
-  }
+  // accumulate warnings.
+  const warnings = getSignerWarnings(signingAccount, isStaking);
 
   if (pendingRewards > 0 && bondFor === 'pool') {
     warnings.push(
@@ -181,8 +181,8 @@ export const Unbond = () => {
         <h2 className="title unbounded">{`${t('removeBond')}`}</h2>
         {warnings.length > 0 ? (
           <WarningsWrapper>
-            {warnings.map((err, i) => (
-              <Warning key={`unbond_error_${i}`} text={err} />
+            {warnings.map((text, i) => (
+              <Warning key={`warning${i}`} text={text} />
             ))}
           </WarningsWrapper>
         ) : null}
