@@ -100,7 +100,11 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                 </ManualAccount>
               ))}
             </div>
-          ) : null}
+          ) : (
+            <div style={{ padding: '0.5rem' }}>
+              <h4>No Read Only accounts have been added.</h4>
+            </div>
+          )}
         </div>
       </ManualAccountsWrapper>
     </>

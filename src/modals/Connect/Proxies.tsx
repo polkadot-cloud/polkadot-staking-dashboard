@@ -100,7 +100,11 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                 );
               })}
             </div>
-          ) : null}
+          ) : (
+            <div style={{ padding: '0.5rem' }}>
+              <h4>No proxy accounts have been declared.</h4>
+            </div>
+          )}
         </div>
       </ManualAccountsWrapper>
     </>
