@@ -1,6 +1,20 @@
 {
   "help": {
     "definitions": {
+      "readOnlyAccounts": [
+        "Read Only Accounts",
+        [
+          "Read Only accounts are accounts that can be imported, but are not able to sign transactions. This means that you can view the account's balance and staking information, but you cannot perform any staking actions with it."
+        ]
+      ],
+      "proxyAccounts": [
+        "Proxy Accounts",
+        [
+          "Proxy accounts are accounts that act on behalf of another account.",
+          "In proxy account terms, the proxy account is called the delegate account, and the proxied account it is acting on behalf of is called the delegator account.",
+          "Staking dashboard allows delegates to sign transactions on behalf of a delegator. If a delegate exists in the dashboard without its delegator, the delegator is imported as a read only account automatically."
+        ]
+      ],
       "activeNominators": [
         "活跃提名人",
         [

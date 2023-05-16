@@ -7,8 +7,13 @@ import {
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonMonoInvert, ButtonSecondary } from '@polkadotcloud/core-ui';
+import {
+  ButtonHelp,
+  ButtonMonoInvert,
+  ButtonSecondary,
+} from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
+import { useHelp } from 'contexts/Help';
 import { useProxies } from 'contexts/Proxies';
 import { Identicon } from 'library/Identicon';
 import React from 'react';
@@ -24,6 +29,7 @@ import type { ListWithInputProps } from './types';
 export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
   const { getAccount } = useConnect();
+  const { openHelp } = useHelp();
   const { delegates, handleDeclareDelegate } = useProxies();
 
   return (
@@ -32,6 +38,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
         <div>
           <FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
           <h3>Proxy Accounts</h3>
+          <ButtonHelp marginLeft onClick={() => openHelp('Proxy Accounts')} />
         </div>
         <div>
           <ButtonMonoInvert

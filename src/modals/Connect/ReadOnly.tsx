@@ -7,9 +7,14 @@ import {
   faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonMonoInvert, ButtonSecondary } from '@polkadotcloud/core-ui';
+import {
+  ButtonHelp,
+  ButtonMonoInvert,
+  ButtonSecondary,
+} from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import type { ExternalAccount } from 'contexts/Connect/types';
+import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { Identicon } from 'library/Identicon';
 import { useTranslation } from 'react-i18next';
@@ -25,6 +30,7 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
   const { accounts, forgetAccounts, addExternalAccount } = useConnect();
   const { setResize } = useModal();
+  const { openHelp } = useHelp();
 
   // get all external accounts
   const externalAccountsOnly = accounts.filter(
@@ -47,6 +53,10 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
         <div>
           <FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
           <h3>{t('readOnlyAccounts')}</h3>
+          <ButtonHelp
+            marginLeft
+            onClick={() => openHelp('Read Only Accounts')}
+          />
         </div>
         <div>
           <ButtonMonoInvert
