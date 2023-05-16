@@ -11,6 +11,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import type { BondedPool } from 'contexts/Pools/types';
 import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { WarningsWrapper } from 'modals/Wrappers';
@@ -23,10 +24,12 @@ export const Forms = forwardRef(
     const { t } = useTranslation('modals');
     const { api } = useApi();
     const { setStatus: setModalStatus } = useModal();
-    const { activeAccount, accountHasSigner } = useConnect();
+    const { activeAccount } = useConnect();
     const { isOwner, isStateToggler, selectedActivePool } = useActivePools();
     const { bondedPools, meta, updateBondedPools, getBondedPool } =
       useBondedPools();
+    const { getSignerWarnings } = useSignerWarnings();
+
     const poolId = selectedActivePool?.id;
 
     // valid to submit transaction
@@ -164,17 +167,21 @@ export const Forms = forwardRef(
       setValid(true);
     };
 
+    const warnings = getSignerWarnings(activeAccount, false);
+
     return (
       <>
         <ContentWrapper>
           <div className="items" ref={ref}>
             <>
               <div className="padding">
-                {!accountHasSigner(activeAccount) && (
+                {warnings.length > 0 ? (
                   <WarningsWrapper>
-                    <Warning text={t('readOnlyCannotSign')} />
+                    {warnings.map((text, i) => (
+                      <Warning key={`warning${i}`} text={text} />
+                    ))}
                   </WarningsWrapper>
-                )}
+                ) : null}
 
                 {/* include task title if present */}
                 {content.title !== undefined ? content.title : null}

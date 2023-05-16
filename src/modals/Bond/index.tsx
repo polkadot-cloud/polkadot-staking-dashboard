@@ -11,6 +11,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
@@ -23,9 +24,10 @@ export const Bond = () => {
   const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, config, setResize } = useModal();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { activeAccount } = useConnect();
   const { getTransferOptions } = useTransferOptions();
   const { selectedActivePool } = useActivePools();
+  const { getSignerWarnings } = useSignerWarnings();
   const { bondFor } = config;
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
@@ -116,10 +118,7 @@ export const Bond = () => {
     callbackInBlock: () => {},
   });
 
-  const errors = [];
-  if (!accountHasSigner(activeAccount)) {
-    errors.push(t('readOnlyCannotSign'));
-  }
+  const warnings = getSignerWarnings(activeAccount, false);
 
   return (
     <>
@@ -146,7 +145,7 @@ export const Bond = () => {
               current: bond,
             },
           ]}
-          parentErrors={errors}
+          parentErrors={warnings}
           txFees={largestTxFee}
         />
         <p>{t('newlyBondedFunds')}</p>

@@ -11,6 +11,7 @@ import { defaultPoolProgress } from 'contexts/Setup/defaults';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
@@ -24,10 +25,12 @@ export const JoinPool = () => {
   const { units } = network;
   const { setStatus: setModalStatus, config, setResize } = useModal();
   const { id: poolId, setActiveTab } = config;
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { activeAccount } = useConnect();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { setActiveAccountSetup } = useSetup();
   const { getTransferOptions } = useTransferOptions();
+  const { getSignerWarnings } = useSignerWarnings();
+
   const { totalPossibleBond } = getTransferOptions(activeAccount).pool;
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' });
 
@@ -75,10 +78,8 @@ export const JoinPool = () => {
     },
   });
 
-  const errors = [];
-  if (!accountHasSigner(activeAccount)) {
-    errors.push(t('readOnlyCannotSign'));
-  }
+  const warnings = getSignerWarnings(activeAccount, false);
+
   return (
     <>
       <Close />
@@ -95,7 +96,7 @@ export const JoinPool = () => {
               current: bond,
             },
           ]}
-          parentErrors={errors}
+          parentErrors={warnings}
           txFees={largestTxFee}
         />
       </PaddingWrapper>

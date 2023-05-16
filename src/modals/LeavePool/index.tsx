@@ -16,24 +16,26 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { getUnixTime } from 'date-fns';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const LeavePool = () => {
   const { t } = useTranslation('modals');
   const { api, network, consts } = useApi();
+  const { activeAccount } = useConnect();
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
-  const { activeAccount, accountHasSigner } = useConnect();
   const { getTransferOptions } = useTransferOptions();
   const { selectedActivePool } = useActivePools();
   const { erasToSeconds } = useErasToTimeLeft();
+  const { getSignerWarnings } = useSignerWarnings();
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active: activeBn } = allTransferOptions.pool;
@@ -98,17 +100,11 @@ export const LeavePool = () => {
     callbackInBlock: () => {},
   });
 
-  const warnings = [];
-  if (!accountHasSigner(activeAccount)) {
-    warnings.push(<Warning text={t('readOnlyCannotSign')} />);
-  }
+  const warnings = getSignerWarnings(activeAccount, false);
+
   if (greaterThanZero(pendingRewards)) {
     warnings.push(
-      <Warning
-        text={`${t('unbondingWithdraw')} ${pendingRewards.toString()} ${
-          network.unit
-        }.`}
-      />
+      `${t('unbondingWithdraw')} ${pendingRewards.toString()} ${network.unit}.`
     );
   }
 
@@ -117,12 +113,10 @@ export const LeavePool = () => {
       <Close />
       <PaddingWrapper>
         <h2 className="title unbounded">{t('leavePool')}</h2>
-        {warnings.length ? (
+        {warnings.length > 0 ? (
           <WarningsWrapper>
-            {warnings.map((warning, index) => (
-              <React.Fragment key={`warning_${index}`}>
-                {warning}
-              </React.Fragment>
+            {warnings.map((text, i) => (
+              <Warning key={`warning${i}`} text={text} />
             ))}
           </WarningsWrapper>
         ) : null}

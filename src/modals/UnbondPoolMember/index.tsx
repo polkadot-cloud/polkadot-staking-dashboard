@@ -15,6 +15,7 @@ import { useModal } from 'contexts/Modal';
 import { getUnixTime } from 'date-fns';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
@@ -28,8 +29,9 @@ export const UnbondPoolMember = () => {
   const { t } = useTranslation('modals');
   const { api, network, consts } = useApi();
   const { setStatus: setModalStatus, setResize, config } = useModal();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { activeAccount } = useConnect();
   const { erasToSeconds } = useErasToTimeLeft();
+  const { getSignerWarnings } = useSignerWarnings();
 
   const { units } = network;
   const { bondDuration } = consts;
@@ -89,14 +91,18 @@ export const UnbondPoolMember = () => {
     callbackInBlock: () => {},
   });
 
+  const warnings = getSignerWarnings(activeAccount, false);
+
   return (
     <>
       <Close />
       <PaddingWrapper>
         <h2 className="title unbounded">{t('unbondMemberFunds')}</h2>
-        {!accountHasSigner(activeAccount) ? (
+        {warnings.length > 0 ? (
           <WarningsWrapper>
-            <Warning text={t('readOnlyCannotSign')} />
+            {warnings.map((text, i) => (
+              <Warning key={`warning${i}`} text={text} />
+            ))}
           </WarningsWrapper>
         ) : null}
         <ActionItem text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />

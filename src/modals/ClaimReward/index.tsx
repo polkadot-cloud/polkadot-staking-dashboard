@@ -9,19 +9,22 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
+  const { activeAccount } = useConnect();
   const { setStatus: setModalStatus, config } = useModal();
   const { selectedActivePool } = useActivePools();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { getSignerWarnings } = useSignerWarnings();
+
   const { units, unit } = network;
   let { pendingRewards } = selectedActivePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);
@@ -64,12 +67,10 @@ export const ClaimReward = () => {
     callbackInBlock: () => {},
   });
 
-  const warnings = [];
-  if (!accountHasSigner(activeAccount)) {
-    warnings.push(<Warning text={t('readOnlyCannotSign')} />);
-  }
+  const warnings = getSignerWarnings(activeAccount, false);
+
   if (!greaterThanZero(pendingRewards)) {
-    warnings.push(<Warning text={t('noRewards')} />);
+    warnings.push(`${t('noRewards')}`);
   }
 
   return (
@@ -79,12 +80,10 @@ export const ClaimReward = () => {
         <h2 className="title unbounded">
           {claimType === 'bond' ? t('bond') : t('withdraw')} {t('rewards')}
         </h2>
-        {warnings.length ? (
+        {warnings.length > 0 ? (
           <WarningsWrapper>
-            {warnings.map((warning, index) => (
-              <React.Fragment key={`warning_${index}`}>
-                {warning}
-              </React.Fragment>
+            {warnings.map((text, i) => (
+              <Warning key={`warning${i}`} text={text} />
             ))}
           </WarningsWrapper>
         ) : null}
