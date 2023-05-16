@@ -13,11 +13,11 @@ import type { ExternalAccount } from 'contexts/Connect/types';
 import { useModal } from 'contexts/Modal';
 import { Identicon } from 'library/Identicon';
 import { useTranslation } from 'react-i18next';
-import { AccountInput } from '../AccountInput';
-import type { ReadOnlyProps } from '../types';
-import { ActionWithButton, Wrapper } from './Wrapper';
+import { AccountInput } from './AccountInput';
+import { ActionWithButton, ManualAccountsWrapper } from './Wrappers';
+import type { ListWithInputProps } from './types';
 
-export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
+export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
   const { accounts, forgetAccounts, addExternalAccount } = useConnect();
   const { setResize } = useModal();
@@ -46,17 +46,17 @@ export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
         </div>
         <div>
           <ButtonMonoInvert
-            iconLeft={readOnlyOpen ? faMinus : faPlus}
-            text={!readOnlyOpen ? t('add') : t('hide')}
+            iconLeft={inputOpen ? faMinus : faPlus}
+            text={!inputOpen ? t('add') : t('hide')}
             onClick={() => {
-              setReadOnlyOpen(!readOnlyOpen);
+              setInputOpen(!inputOpen);
             }}
           />
         </div>
       </ActionWithButton>
-      <Wrapper>
+      <ManualAccountsWrapper>
         <div className="content">
-          {readOnlyOpen && (
+          {inputOpen && (
             <>
               <AccountInput
                 successCallback={async (value: string) => {
@@ -94,7 +94,7 @@ export const ReadOnly = ({ setReadOnlyOpen, readOnlyOpen }: ReadOnlyProps) => {
             </div>
           ) : null}
         </div>
-      </Wrapper>
+      </ManualAccountsWrapper>
     </>
   );
 };

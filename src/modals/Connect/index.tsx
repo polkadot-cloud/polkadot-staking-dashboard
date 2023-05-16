@@ -28,6 +28,7 @@ import { useTranslation } from 'react-i18next';
 import type { AnyFunction } from 'types';
 import { Extension } from './Extension';
 import { Ledger } from './Ledger';
+import { Proxies } from './Proxies';
 import { ReadOnly } from './ReadOnly';
 import { ExtensionsWrapper } from './Wrappers';
 
@@ -47,6 +48,9 @@ export const Connect = () => {
 
   // toggle read only management
   const [readOnlyOpen, setReadOnlyOpen] = useState(false);
+
+  // toggle proxy delegate management
+  const [newProxyOpen, setNewProxyOpen] = useState(false);
 
   // active modal section
   const [section, setSection] = useState<number>(0);
@@ -71,7 +75,7 @@ export const Connect = () => {
   // Resize modal on state change.
   useEffect(() => {
     refreshModalHeight();
-  }, [section, readOnlyOpen, extensions]);
+  }, [section, readOnlyOpen, newProxyOpen, extensions]);
 
   useEffect(() => {
     window.addEventListener('resize', refreshModalHeight);
@@ -169,16 +173,16 @@ export const Connect = () => {
           <ThreeSectionWrapper>
             <PaddingWrapper ref={readOnlyRef}>
               <ReadOnly
-                setReadOnlyOpen={setReadOnlyOpen}
-                readOnlyOpen={readOnlyOpen}
+                setInputOpen={setReadOnlyOpen}
+                inputOpen={readOnlyOpen}
               />
             </PaddingWrapper>
           </ThreeSectionWrapper>
           <ThreeSectionWrapper>
             <PaddingWrapper ref={proxiesRef}>
-              <ReadOnly
-                setReadOnlyOpen={setReadOnlyOpen}
-                readOnlyOpen={readOnlyOpen}
+              <Proxies
+                setInputOpen={setNewProxyOpen}
+                inputOpen={newProxyOpen}
               />
             </PaddingWrapper>
           </ThreeSectionWrapper>
