@@ -14,7 +14,11 @@ import { Identicon } from 'library/Identicon';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { AccountInput } from './AccountInput';
-import { ActionWithButton, ManualAccountsWrapper } from './Wrappers';
+import {
+  ActionWithButton,
+  ManualAccountBasic,
+  ManualAccountsWrapper,
+} from './Wrappers';
 import type { ListWithInputProps } from './types';
 
 export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
@@ -57,9 +61,8 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                 <React.Fragment key={`user_delegate_account_${i}}`}>
                   {delegators.map(({ delegator, proxyType }, j) => {
                     return (
-                      <div
+                      <ManualAccountBasic
                         key={`user_delegate_${i}_delegator_${j}`}
-                        className="account"
                       >
                         <div>
                           <span>
@@ -72,7 +75,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                         </div>
                         <div />
                         <ButtonSecondary text="Imported" disabled />
-                      </div>
+                      </ManualAccountBasic>
                     );
                   })}
                 </React.Fragment>

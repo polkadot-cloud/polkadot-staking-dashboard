@@ -14,7 +14,11 @@ import { useModal } from 'contexts/Modal';
 import { Identicon } from 'library/Identicon';
 import { useTranslation } from 'react-i18next';
 import { AccountInput } from './AccountInput';
-import { ActionWithButton, ManualAccountsWrapper } from './Wrappers';
+import {
+  ActionWithButton,
+  ManualAccountBasic,
+  ManualAccountsWrapper,
+} from './Wrappers';
 import type { ListWithInputProps } from './types';
 
 export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
@@ -67,7 +71,7 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
           {externalAccounts.length ? (
             <div className="accounts">
               {externalAccounts.map((a, i) => (
-                <div key={`user_external_account_${i}`} className="account">
+                <ManualAccountBasic key={`user_external_account_${i}`}>
                   <div>
                     <span>
                       <Identicon value={a.address} size={26} />
@@ -80,7 +84,7 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                       forgetAccount(a);
                     }}
                   />
-                </div>
+                </ManualAccountBasic>
               ))}
             </div>
           ) : null}

@@ -232,47 +232,47 @@ export const ManualAccountsWrapper = styled.div`
     margin-top: 1rem;
     width: 100%;
   }
+`;
 
-  .account {
-    background: var(--button-primary-background);
-    width: 100%;
-    border-radius: 1rem;
-    margin-bottom: 1rem;
-    padding: 1rem;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    transition: border 0.1s;
+export const ManualAccountBasic = styled.div`
+  background: var(--button-primary-background);
+  width: 100%;
+  border-radius: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  transition: border 0.1s;
 
-    > div {
-      color: var(--text-color-secondary);
-      transition: opacity var(--transition-duration);
+  > div {
+    color: var(--text-color-secondary);
+    transition: opacity var(--transition-duration);
 
-      &:first-child {
-        flex: 1;
-        display: flex;
-        flex-flow: row wrap;
-        align-items: center;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+    &:first-child {
+      flex: 1;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
-        h4 {
-          margin: 0;
-        }
-
-        > span {
-          margin-right: 0.75rem;
-        }
+      h4 {
+        margin: 0;
       }
-      &:last-child {
-        padding-left: 2rem;
-        opacity: 0.25;
+
+      > span {
+        margin-right: 0.75rem;
       }
     }
-
-    button {
-      font-size: 1rem;
+    &:last-child {
+      padding-left: 2rem;
+      opacity: 0.25;
     }
+  }
+
+  button {
+    font-size: 1rem;
   }
 `;
