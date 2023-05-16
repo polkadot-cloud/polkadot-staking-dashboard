@@ -265,13 +265,19 @@ export const ManualAccountBasic = styled.div`
           margin: 0;
           &.title {
             font-variation-settings: 'wght' 600;
+            > svg {
+              margin: 0 0.6rem;
+            }
           }
           &.subtitle {
-            margin-top: 0.45rem;
-            opacity: 0.75;
+            margin-top: 0.4rem;
           }
-          > span {
+
+          &.title > span,
+          &.subtitle > span {
             color: var(--text-color-secondary);
+            opacity: 0.65;
+            margin-right: 0.25rem;
           }
           .arrow {
             margin: 0 0.25rem;

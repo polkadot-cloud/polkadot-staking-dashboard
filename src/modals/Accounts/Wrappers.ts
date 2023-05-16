@@ -60,7 +60,7 @@ export const AccountWrapper = styled.div`
 
           > span {
             opacity: 0.7;
-            margin-right: 0.5rem;
+            margin-right: 0.6rem;
             > svg {
               margin-left: 0.5rem;
             }

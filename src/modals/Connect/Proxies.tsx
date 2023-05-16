@@ -24,7 +24,7 @@ import type { ListWithInputProps } from './types';
 
 export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
-  const { addExternalAccount } = useConnect();
+  const { addExternalAccount, getAccount } = useConnect();
   const { delegates } = useProxies();
 
   return (
@@ -58,37 +58,44 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
           )}
           {Object.entries(delegates).length ? (
             <div className="accounts">
-              {Object.entries(delegates).map(([delegate, delegators], i) => (
-                <React.Fragment key={`user_delegate_account_${i}}`}>
-                  {delegators.map(({ delegator, proxyType }, j) => {
-                    return (
-                      <ManualAccountBasic
-                        key={`user_delegate_${i}_delegator_${j}`}
-                      >
-                        <div>
-                          <span>
-                            <Identicon value={delegate} size={26} />
-                          </span>
-                          <div className="text">
-                            <h4 className="title">{delegate}</h4>
-                            <h4 className="subtitle">
-                              <span>{proxyType}</span>{' '}
-                              <FontAwesomeIcon
-                                icon={faArrowRight}
-                                transform="shrink-3"
-                                className="arrow"
-                              />
-                              {delegator}
-                            </h4>
+              {Object.entries(delegates).map(([delegate, delegators], i) => {
+                const delegateAccount = getAccount(delegate);
+
+                return (
+                  <React.Fragment key={`user_delegate_account_${i}}`}>
+                    {delegators.map(({ delegator, proxyType }, j) => {
+                      const delegatorAccount = getAccount(delegator);
+
+                      return (
+                        <ManualAccountBasic
+                          key={`user_delegate_${i}_delegator_${j}`}
+                        >
+                          <div>
+                            <span>
+                              <Identicon value={delegate} size={26} />
+                            </span>
+                            <div className="text">
+                              <h4 className="title">
+                                {delegateAccount?.name || delegate}
+                                <FontAwesomeIcon
+                                  icon={faArrowRight}
+                                  transform="shrink-3"
+                                />
+                                <span>{proxyType} Proxy</span>
+                              </h4>
+                              <h4 className="subtitle">
+                                for {delegatorAccount?.name || delegator}
+                              </h4>
+                            </div>
                           </div>
-                        </div>
-                        <div />
-                        <ButtonSecondary text="Imported" disabled />
-                      </ManualAccountBasic>
-                    );
-                  })}
-                </React.Fragment>
-              ))}
+                          <div />
+                          <ButtonSecondary text="Imported" disabled />
+                        </ManualAccountBasic>
+                      );
+                    })}
+                  </React.Fragment>
+                );
+              })}
             </div>
           ) : null}
         </div>

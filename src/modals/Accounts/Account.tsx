@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowLeft, faGlasses } from '@fortawesome/free-solid-svg-icons';
+import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { clipAddress } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
@@ -79,7 +79,6 @@ export const AccountButton = ({
               <>
                 <span>
                   {proxyDelegate?.proxyType} {t('proxy')}
-                  <FontAwesomeIcon icon={faArrowLeft} transform="shrink-2" />
                 </span>
               </>
             )}
