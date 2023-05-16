@@ -70,14 +70,16 @@ export const UpdatePayee = () => {
   const getTx = () => {
     let tx = null;
 
-    if (!api || !isComplete()) {
+    if (!api) {
       return tx;
     }
     const payeeToSubmit =
       selected.destination === 'Account'
         ? {
-            Account: selected.account,
+            Account: !isComplete() ? activeAccount : selected.account,
           }
+        : !isComplete()
+        ? 'Staking'
         : selected.destination;
 
     tx = api.tx.staking.setPayee(payeeToSubmit);
