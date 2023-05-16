@@ -3,6 +3,9 @@
 
 import { setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import { useBonded } from 'contexts/Bonded';
+import { useConnect } from 'contexts/Connect';
+import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import React, { useEffect, useState } from 'react';
 import type { AnyJson, MaybeAccount } from 'types';
@@ -10,6 +13,9 @@ import * as defaults from './defaults';
 import type { TxMetaContextInterface } from './types';
 
 export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
+  const { getBondedAccount } = useBonded();
+  const { accountHasSigner, activeProxy } = useConnect();
+  const { getControllerNotImported } = useStaking();
   const { getTransferOptions } = useTransferOptions();
 
   // Store the transaction fees for the transaction.
@@ -86,9 +92,25 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     return true;
   })();
 
+  const controllerSignerAvailable = (stash: MaybeAccount) => {
+    const controller = getBondedAccount(stash);
+    if (controller !== stash) {
+      if (getControllerNotImported(controller)) {
+        return 'controller_not_imported';
+      }
+      if (!accountHasSigner(controller)) {
+        return 'read_only';
+      }
+    } else if (!accountHasSigner(activeProxy) && !accountHasSigner(stash)) {
+      return 'read_only';
+    }
+    return 'ok';
+  };
+
   return (
     <TxMetaContext.Provider
       value={{
+        controllerSignerAvailable,
         txFees,
         notEnoughFunds,
         setTxFees,
