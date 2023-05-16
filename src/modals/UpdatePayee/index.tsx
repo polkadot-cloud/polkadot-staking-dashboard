@@ -114,7 +114,7 @@ export const UpdatePayee = () => {
     );
   }, []);
 
-  const warnings = getSignerWarnings(controller, true);
+  const warnings = getSignerWarnings(activeAccount, true);
 
   return (
     <>

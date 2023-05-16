@@ -73,7 +73,7 @@ export const Nominate = () => {
   });
 
   // warnings
-  const warnings = getSignerWarnings(controller, true);
+  const warnings = getSignerWarnings(activeAccount, true);
   if (!nominations.length) {
     warnings.push(`${t('noNominationsSet')}`);
   }

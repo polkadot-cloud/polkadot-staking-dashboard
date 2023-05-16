@@ -147,7 +147,7 @@ export const Unbond = () => {
     bondFor === 'pool' && activeBn.isLessThan(poolToMinBn);
 
   // accumulate warnings.
-  const warnings = getSignerWarnings(signingAccount, isStaking);
+  const warnings = getSignerWarnings(activeAccount, isStaking);
 
   if (pendingRewards > 0 && bondFor === 'pool') {
     warnings.push(

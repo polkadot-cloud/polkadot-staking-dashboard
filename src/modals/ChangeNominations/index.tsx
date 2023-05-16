@@ -109,7 +109,7 @@ export const ChangeNominations = () => {
     callbackInBlock: () => {},
   });
 
-  const warnings = getSignerWarnings(signingAccount, isStaking);
+  const warnings = getSignerWarnings(activeAccount, isStaking);
 
   if (!nominations.length) {
     warnings.push(`${t('noNominationsSet')}`);

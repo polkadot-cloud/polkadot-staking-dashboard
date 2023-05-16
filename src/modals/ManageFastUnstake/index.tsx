@@ -91,7 +91,7 @@ export const ManageFastUnstake = () => {
   });
 
   // warnings
-  const warnings = getSignerWarnings(controller, true);
+  const warnings = getSignerWarnings(activeAccount, true);
 
   if (!isFastUnstaking) {
     if (freeBalance.isLessThan(fastUnstakeDeposit)) {

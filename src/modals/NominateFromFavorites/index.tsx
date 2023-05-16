@@ -120,7 +120,7 @@ export const NominateFromFavorites = () => {
     callbackInBlock: () => {},
   });
 
-  const warnings = getSignerWarnings(signingAccount, bondFor === 'nominator');
+  const warnings = getSignerWarnings(activeAccount, bondFor === 'nominator');
 
   return (
     <>
