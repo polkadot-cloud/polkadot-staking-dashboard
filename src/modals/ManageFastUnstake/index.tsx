@@ -91,7 +91,11 @@ export const ManageFastUnstake = () => {
   });
 
   // warnings
-  const warnings = getSignerWarnings(activeAccount, true);
+  const warnings = getSignerWarnings(
+    activeAccount,
+    true,
+    submitExtrinsic.proxySupported
+  );
 
   if (!isFastUnstaking) {
     if (freeBalance.isLessThan(fastUnstakeDeposit)) {

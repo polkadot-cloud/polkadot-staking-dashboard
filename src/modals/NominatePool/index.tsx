@@ -60,7 +60,11 @@ export const NominatePool = () => {
   });
 
   // warnings
-  const warnings = getSignerWarnings(activeAccount, false);
+  const warnings = getSignerWarnings(
+    activeAccount,
+    false,
+    submitExtrinsic.proxySupported
+  );
 
   if (!nominations.length) {
     warnings.push(t('noNominationsSet'));

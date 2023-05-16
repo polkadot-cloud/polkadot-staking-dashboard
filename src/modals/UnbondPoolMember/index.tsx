@@ -71,11 +71,11 @@ export const UnbondPoolMember = () => {
   // tx to submit
   const getTx = () => {
     let tx = null;
-    if (!bondValid || !api || !activeAccount) {
+    if (!api || !activeAccount) {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanck(bond.bond, units);
+    const bondToSubmit = unitToPlanck(!bondValid ? '0' : bond.bond, units);
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
     tx = api.tx.nominationPools.unbond(who, bondAsString);
     return tx;
@@ -91,7 +91,11 @@ export const UnbondPoolMember = () => {
     callbackInBlock: () => {},
   });
 
-  const warnings = getSignerWarnings(activeAccount, false);
+  const warnings = getSignerWarnings(
+    activeAccount,
+    false,
+    submitExtrinsic.proxySupported
+  );
 
   return (
     <>

@@ -50,7 +50,11 @@ export const UpdateController = () => {
     callbackInBlock: () => {},
   });
 
-  const warnings = getSignerWarnings(activeAccount, false);
+  const warnings = getSignerWarnings(
+    activeAccount,
+    false,
+    submitExtrinsic.proxySupported
+  );
 
   return (
     <>

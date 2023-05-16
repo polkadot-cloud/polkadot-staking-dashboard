@@ -100,11 +100,11 @@ export const Unbond = () => {
   // tx to submit
   const getTx = () => {
     let tx = null;
-    if (!bondValid || !api || !activeAccount) {
+    if (!api || !activeAccount) {
       return tx;
     }
 
-    const bondToSubmit = unitToPlanck(bond.bond, units);
+    const bondToSubmit = unitToPlanck(!bondValid ? '0' : bond.bond, units);
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
     // determine tx
@@ -138,7 +138,11 @@ export const Unbond = () => {
     bondFor === 'pool' && activeBn.isLessThan(poolToMinBn);
 
   // accumulate warnings.
-  const warnings = getSignerWarnings(activeAccount, isStaking);
+  const warnings = getSignerWarnings(
+    activeAccount,
+    isStaking,
+    submitExtrinsic.proxySupported
+  );
 
   if (pendingRewards > 0 && bondFor === 'pool') {
     warnings.push(

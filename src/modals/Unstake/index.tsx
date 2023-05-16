@@ -11,7 +11,6 @@ import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { getUnixTime } from 'date-fns';
 import { Warning } from 'library/Form/Warning';
@@ -32,7 +31,6 @@ export const Unstake = () => {
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount } = useConnect();
-  const { getControllerNotImported } = useStaking();
   const { getBondedAccount, getAccountNominations } = useBonded();
   const { getTransferOptions } = useTransferOptions();
   const { erasToSeconds } = useErasToTimeLeft();
@@ -40,7 +38,6 @@ export const Unstake = () => {
 
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
-  const controllerNotImported = getControllerNotImported(controller);
   const { bondDuration } = consts;
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active } = allTransferOptions.nominate;
@@ -64,8 +61,7 @@ export const Unstake = () => {
   const [bondValid, setBondValid] = useState(false);
 
   // unbond all validation
-  const isValid = (() =>
-    greaterThanZero(freeToUnbond) && !controllerNotImported)();
+  const isValid = (() => greaterThanZero(freeToUnbond))();
 
   // update bond value on task change
   useEffect(() => {
@@ -81,15 +77,14 @@ export const Unstake = () => {
   // tx to submit
   const getTx = () => {
     const tx = null;
-    if (!bondValid || !api || !activeAccount) {
-      return tx;
-    }
-    // controller must be imported to unstake
-    if (controllerNotImported) {
+    if (!api || !activeAccount) {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanck(String(bond.bond), units);
+    const bondToSubmit = unitToPlanck(
+      String(!bondValid ? '0' : bond.bond),
+      units
+    );
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
     if (!bondAsString) {
@@ -109,7 +104,11 @@ export const Unstake = () => {
     callbackInBlock: () => {},
   });
 
-  const warnings = getSignerWarnings(activeAccount, true);
+  const warnings = getSignerWarnings(
+    activeAccount,
+    true,
+    submitExtrinsic.proxySupported
+  );
 
   return (
     <>

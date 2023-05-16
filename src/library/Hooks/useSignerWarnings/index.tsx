@@ -11,7 +11,11 @@ export const useSignerWarnings = () => {
   const { activeProxy, accountHasSigner } = useConnect();
   const { controllerSignerAvailable } = useTxMeta();
 
-  const getSignerWarnings = (account: MaybeAccount, controller = false) => {
+  const getSignerWarnings = (
+    account: MaybeAccount,
+    controller = false,
+    proxySupported = false
+  ) => {
     const warnings = [];
 
     if (controller) {
@@ -25,7 +29,12 @@ export const useSignerWarnings = () => {
         default:
           break;
       }
-    } else if (!(accountHasSigner(account) || accountHasSigner(activeProxy))) {
+    } else if (
+      !(
+        accountHasSigner(account) ||
+        (accountHasSigner(activeProxy) && proxySupported)
+      )
+    ) {
       warnings.push(`${t('readOnlyCannotSign')}`);
     }
 

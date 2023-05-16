@@ -88,7 +88,11 @@ export const Bond = () => {
       return tx;
     }
 
-    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+    const bondAsString = !bondValid
+      ? '0'
+      : bondToSubmit.isNaN()
+      ? '0'
+      : bondToSubmit.toString();
 
     if (isPooling) {
       tx = api.tx.nominationPools.bondExtra({
@@ -102,7 +106,7 @@ export const Bond = () => {
 
   // the actual bond tx to submit
   const getTx = (bondToSubmit: BigNumber) => {
-    if (!bondValid || !api || !activeAccount) {
+    if (!api || !activeAccount) {
       return null;
     }
     return determineTx(bondToSubmit);
@@ -118,7 +122,11 @@ export const Bond = () => {
     callbackInBlock: () => {},
   });
 
-  const warnings = getSignerWarnings(activeAccount, false);
+  const warnings = getSignerWarnings(
+    activeAccount,
+    false,
+    submitExtrinsic.proxySupported
+  );
 
   return (
     <>

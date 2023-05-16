@@ -120,7 +120,11 @@ export const NominateFromFavorites = () => {
     callbackInBlock: () => {},
   });
 
-  const warnings = getSignerWarnings(activeAccount, bondFor === 'nominator');
+  const warnings = getSignerWarnings(
+    activeAccount,
+    bondFor === 'nominator',
+    submitExtrinsic.proxySupported
+  );
 
   return (
     <>

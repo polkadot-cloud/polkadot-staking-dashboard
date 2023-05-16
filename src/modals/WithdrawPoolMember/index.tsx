@@ -77,7 +77,11 @@ export const WithdrawPoolMember = () => {
     },
   });
 
-  const warnings = getSignerWarnings(activeAccount, false);
+  const warnings = getSignerWarnings(
+    activeAccount,
+    false,
+    submitExtrinsic.proxySupported
+  );
 
   return (
     <>

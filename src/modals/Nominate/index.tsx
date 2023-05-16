@@ -73,7 +73,11 @@ export const Nominate = () => {
   });
 
   // warnings
-  const warnings = getSignerWarnings(activeAccount, true);
+  const warnings = getSignerWarnings(
+    activeAccount,
+    true,
+    submitExtrinsic.proxySupported
+  );
   if (!nominations.length) {
     warnings.push(`${t('noNominationsSet')}`);
   }

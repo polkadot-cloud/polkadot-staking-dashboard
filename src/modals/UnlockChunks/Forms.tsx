@@ -102,7 +102,11 @@ export const Forms = forwardRef(
 
     const value = unlock?.value ?? new BigNumber(0);
 
-    const warnings = getSignerWarnings(activeAccount, isStaking);
+    const warnings = getSignerWarnings(
+      activeAccount,
+      isStaking,
+      submitExtrinsic.proxySupported
+    );
 
     return (
       <ContentWrapper>

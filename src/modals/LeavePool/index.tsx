@@ -80,11 +80,11 @@ export const LeavePool = () => {
   // tx to submit
   const getTx = () => {
     let tx = null;
-    if (!bondValid || !api || !activeAccount) {
+    if (!api || !activeAccount) {
       return tx;
     }
 
-    const bondToSubmit = unitToPlanck(bond.bond, units);
+    const bondToSubmit = unitToPlanck(!bondValid ? '0' : bond.bond, units);
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
     tx = api.tx.nominationPools.unbond(activeAccount, bondAsString);
     return tx;
@@ -100,7 +100,11 @@ export const LeavePool = () => {
     callbackInBlock: () => {},
   });
 
-  const warnings = getSignerWarnings(activeAccount, false);
+  const warnings = getSignerWarnings(
+    activeAccount,
+    false,
+    submitExtrinsic.proxySupported
+  );
 
   if (greaterThanZero(pendingRewards)) {
     warnings.push(

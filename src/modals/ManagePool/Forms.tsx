@@ -167,7 +167,11 @@ export const Forms = forwardRef(
       setValid(true);
     };
 
-    const warnings = getSignerWarnings(activeAccount, false);
+    const warnings = getSignerWarnings(
+      activeAccount,
+      false,
+      submitExtrinsic.proxySupported
+    );
 
     return (
       <>

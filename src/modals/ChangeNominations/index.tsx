@@ -109,7 +109,11 @@ export const ChangeNominations = () => {
     callbackInBlock: () => {},
   });
 
-  const warnings = getSignerWarnings(activeAccount, isStaking);
+  const warnings = getSignerWarnings(
+    activeAccount,
+    isStaking,
+    submitExtrinsic.proxySupported
+  );
 
   if (!nominations.length) {
     warnings.push(`${t('noNominationsSet')}`);

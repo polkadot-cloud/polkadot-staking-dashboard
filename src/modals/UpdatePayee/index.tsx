@@ -114,7 +114,11 @@ export const UpdatePayee = () => {
     );
   }, []);
 
-  const warnings = getSignerWarnings(activeAccount, true);
+  const warnings = getSignerWarnings(
+    activeAccount,
+    true,
+    submitExtrinsic.proxySupported
+  );
 
   return (
     <>
