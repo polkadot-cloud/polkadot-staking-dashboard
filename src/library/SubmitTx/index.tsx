@@ -18,6 +18,7 @@ export const SubmitTx = ({
   onSubmit,
   submitText,
   buttons = [],
+  submitAddress,
   valid = false,
   submitting = false,
   proxySupported,
@@ -86,6 +87,7 @@ export const SubmitTx = ({
             valid={valid}
             submitText={submitText}
             buttons={buttons}
+            submitAddress={submitAddress}
           />
         ) : (
           <Default
@@ -94,6 +96,7 @@ export const SubmitTx = ({
             valid={valid}
             submitText={submitText}
             buttons={buttons}
+            submitAddress={submitAddress}
           />
         )
       }

@@ -378,6 +378,7 @@ export const useSubmitExtrinsic = ({
     uid,
     onSubmit,
     submitting,
+    submitAddress,
     proxySupported,
   };
 };
