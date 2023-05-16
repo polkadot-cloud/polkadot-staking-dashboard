@@ -36,7 +36,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
         <div>
           <ButtonMonoInvert
             iconLeft={inputOpen ? faMinus : faPlus}
-            text={!inputOpen ? t('add') : t('hide')}
+            text={!inputOpen ? 'Declare' : t('hide')}
             onClick={() => {
               setInputOpen(!inputOpen);
             }}
