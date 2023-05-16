@@ -8,5 +8,5 @@ export interface AccountInputProps {
 }
 
 export interface ProxyInputProps {
-  successCallback: (a: string, b: string) => Promise<AnyJson[]>;
+  successCallback: (a: string) => Promise<AnyJson[]>;
 }

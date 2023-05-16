@@ -242,9 +242,25 @@ export const ProxiesProvider = ({
   }, [proxiesRef.current]);
 
   // Queries the chain to check if the given delegator & delegate pair is valid proxy.
-  const handleDeclareDelegate = async (delegate: string, delegator: string) => {
-    // TODO: query delegator to fetch its real delegates. Check if provided delegate is in this
-    // list.
+  const handleDeclareDelegate = async (delegator: string) => {
+    if (!api) return [];
+
+    const result: AnyApi = (await api.query.proxy.proxies(delegator)).toHuman();
+
+    let addDelegatorAsExternal = false;
+    for (const { delegate: newDelegate } of result[0] || []) {
+      if (
+        accounts.find(({ address }) => address === newDelegate) &&
+        !delegatesRef.current[newDelegate]
+      ) {
+        subscribeToProxies(delegator);
+        addDelegatorAsExternal = true;
+      }
+    }
+    if (addDelegatorAsExternal) {
+      addExternalAccount(delegator, 'system');
+    }
+
     return [];
   };
 

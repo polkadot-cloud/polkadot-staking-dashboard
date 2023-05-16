@@ -11,7 +11,7 @@ export const defaultProxiesContext: ProxiesContextInterface = {
   // eslint-disable-next-line
   getProxiedAccounts: (a) => [],
   // eslint-disable-next-line
-  handleDeclareDelegate: (a, b) => new Promise((resolve) => resolve([])),
+  handleDeclareDelegate: (a) => new Promise((resolve) => resolve([])),
   proxies: [],
   delegates: {},
 };

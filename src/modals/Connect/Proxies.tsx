@@ -48,11 +48,8 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
           {inputOpen && (
             <>
               <ProxyInput
-                successCallback={async (delegate, delegator) => {
-                  const result = await handleDeclareDelegate(
-                    delegate,
-                    delegator
-                  );
+                successCallback={async (delegator) => {
+                  const result = await handleDeclareDelegate(delegator);
                   return result;
                 }}
               />
@@ -87,7 +84,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                             </div>
                           </div>
                           <div />
-                          <ButtonSecondary text="Imported" disabled />
+                          <ButtonSecondary text="Declared" disabled />
                         </ManualAccountBasic>
                       );
                     })}
