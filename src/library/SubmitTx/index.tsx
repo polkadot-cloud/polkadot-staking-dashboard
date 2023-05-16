@@ -32,22 +32,21 @@ export const SubmitTx = ({
   const { getBondedAccount } = useBonded();
   const controller = getBondedAccount(activeAccount);
 
-  // Default to active account, or controller / proxy if from those accounts.
+  // Default to active account
   let signingOpts = {
     label: t('signer', { ns: 'library' }),
     who: getAccount(activeAccount),
   };
 
-  if (!(activeProxy && proxySupported) && fromController) {
-    signingOpts = {
-      label: t('signedByController', { ns: 'library' }),
-      who: getAccount(controller),
-    };
-  }
   if (activeProxy && proxySupported) {
     signingOpts = {
       label: t('signedByProxy', { ns: 'library' }),
       who: getAccount(activeProxy),
+    };
+  } else if (!(activeProxy && proxySupported) && fromController) {
+    signingOpts = {
+      label: t('signedByController', { ns: 'library' }),
+      who: getAccount(controller),
     };
   }
 

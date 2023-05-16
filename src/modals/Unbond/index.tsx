@@ -32,7 +32,7 @@ export const Unbond = () => {
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount } = useConnect();
-  const { staking, getControllerNotImported } = useStaking();
+  const { staking } = useStaking();
   const { getBondedAccount } = useBonded();
   const { bondFor } = config;
   const { stats } = usePoolsConfig();
@@ -43,7 +43,6 @@ export const Unbond = () => {
   const { getSignerWarnings } = useSignerWarnings();
 
   const controller = getBondedAccount(activeAccount);
-  const controllerNotImported = getControllerNotImported(controller);
   const { minNominatorBond: minNominatorBondBn } = staking;
   const { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn } = stats;
   const { bondDuration } = consts;
@@ -88,14 +87,10 @@ export const Unbond = () => {
       : BigNumber.max(freeToUnbond.minus(minJoinBond), 0)
     : BigNumber.max(freeToUnbond.minus(minNominatorBond), 0);
 
-  // unbond some validation
-  const isValid = isPooling ? true : !controllerNotImported;
-
   // update bond value on task change
   useEffect(() => {
     setBond({ bond: unbondToMin.toString() });
-    setBondValid(isValid);
-  }, [freeToUnbond.toString(), isValid]);
+  }, [freeToUnbond.toString()]);
 
   // modal resize on form update
   useEffect(() => {
@@ -106,10 +101,6 @@ export const Unbond = () => {
   const getTx = () => {
     let tx = null;
     if (!bondValid || !api || !activeAccount) {
-      return tx;
-    }
-    // stake unbond: controller must be imported
-    if (isStaking && controllerNotImported) {
       return tx;
     }
 

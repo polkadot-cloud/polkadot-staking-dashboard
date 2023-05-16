@@ -102,7 +102,7 @@ export const Bond = () => {
 
   // the actual bond tx to submit
   const getTx = (bondToSubmit: BigNumber) => {
-    if (!bondValid || !activeAccount) {
+    if (!bondValid || !api || !activeAccount) {
       return null;
     }
     return determineTx(bondToSubmit);
