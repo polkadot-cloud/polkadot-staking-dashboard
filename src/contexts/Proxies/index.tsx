@@ -241,11 +241,19 @@ export const ProxiesProvider = ({
     setStateWithRef(newDelegates, setDelegates, delegatesRef);
   }, [proxiesRef.current]);
 
+  // Queries the chain to check if the given delegator & delegate pair is valid proxy.
+  const handleDeclareDelegate = async (delegate: string, delegator: string) => {
+    // TODO: query delegator to fetch its real delegates. Check if provided delegate is in this
+    // list.
+    return [];
+  };
+
   return (
     <ProxiesContext.Provider
       value={{
         proxies: proxiesRef.current,
         delegates: delegatesRef.current,
+        handleDeclareDelegate,
         getDelegates,
         getProxyDelegate,
         getProxiedAccounts,

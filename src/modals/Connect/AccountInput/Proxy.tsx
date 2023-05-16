@@ -8,9 +8,9 @@ import { useModal } from 'contexts/Modal';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AccountInputWrapper } from './Wrapper';
-import type { AccountInputProps } from './types';
+import type { ProxyInputProps } from './types';
 
-export const ProxyInput = ({ successCallback }: AccountInputProps) => {
+export const ProxyInput = ({ successCallback }: ProxyInputProps) => {
   const { t } = useTranslation('modals');
 
   const { formatAccountSs58, accounts } = useConnect();
@@ -103,7 +103,7 @@ export const ProxyInput = ({ successCallback }: AccountInputProps) => {
     }
 
     // handle successful import.
-    const result = await successCallback(delegate);
+    const result = await successCallback(delegate, delegator);
 
     // reset state on successful import.
     if (result) {

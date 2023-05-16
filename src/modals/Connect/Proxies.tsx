@@ -24,7 +24,7 @@ import type { ListWithInputProps } from './types';
 export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
   const { getAccount } = useConnect();
-  const { delegates } = useProxies();
+  const { delegates, handleDeclareDelegate } = useProxies();
 
   return (
     <>
@@ -48,11 +48,12 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
           {inputOpen && (
             <>
               <ProxyInput
-                successCallback={async (value: string) => {
-                  console.debug(`process ${value}`);
-                  // TODO: query chain and see if delegate delegator pair is valid.
-                  // if valid, add to proxy accounts. Else return false.
-                  return true;
+                successCallback={async (delegate, delegator) => {
+                  const result = await handleDeclareDelegate(
+                    delegate,
+                    delegator
+                  );
+                  return result;
                 }}
               />
             </>

@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type BigNumber from 'bignumber.js';
-import type { MaybeAccount } from 'types';
+import type { AnyJson, MaybeAccount } from 'types';
 
 export type ProxyType =
   | 'Any'
@@ -42,9 +42,13 @@ export interface ProxiedAccount {
 }
 
 export interface ProxiesContextInterface {
-  proxies: Proxies;
-  delegates: Delegates;
   getDelegates: (a: MaybeAccount) => Proxy | undefined;
   getProxyDelegate: (x: MaybeAccount, y: MaybeAccount) => ProxyDelegate | null;
   getProxiedAccounts: (a: MaybeAccount) => ProxiedAccounts;
+  handleDeclareDelegate: (
+    delegate: string,
+    delegator: string
+  ) => Promise<AnyJson[]>;
+  proxies: Proxies;
+  delegates: Delegates;
 }
