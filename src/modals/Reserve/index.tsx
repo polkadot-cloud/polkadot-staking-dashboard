@@ -58,47 +58,43 @@ export const UpdateReserve = () => {
   }
 
   return (
-    <>
-      <PaddingWrapper>
-        <h2 className="title unbounded">{t('updateReserve')}</h2>
-        {warnings.length ? (
-          <WarningsWrapper>
-            {warnings.map((warning, index) => (
-              <React.Fragment key={`warning_${index}`}>
-                {warning}
-              </React.Fragment>
-            ))}
-          </WarningsWrapper>
-        ) : null}
-        <SliderWrapper>
-          <input
-            className="slider"
-            type="range"
-            step="0.1"
-            min="0"
-            max="100"
-            value={reserve.toString()}
-            onChange={updateReserve}
-            disabled={!accountHasSigner(activeAccount)}
-          />
-          <p>
-            {t('reserve')}: {reserve.toString()}
-          </p>
-        </SliderWrapper>
-        <ConfirmButton>
-          <ButtonPrimaryInvert
-            text={t('confirm')}
-            onClick={() => {
-              setStatus(0);
-              localStorage.setItem(
-                `${network.name}_${activeAccount}_reserve`,
-                reserve.toString()
-              );
-            }}
-            disabled={!accountHasSigner(activeAccount)}
-          />
-        </ConfirmButton>
-      </PaddingWrapper>
-    </>
+    <PaddingWrapper>
+      <h2 className="title unbounded">{t('updateReserve')}</h2>
+      {warnings.length ? (
+        <WarningsWrapper>
+          {warnings.map((warning, index) => (
+            <React.Fragment key={`warning_${index}`}>{warning}</React.Fragment>
+          ))}
+        </WarningsWrapper>
+      ) : null}
+      <SliderWrapper>
+        <input
+          className="slider"
+          type="range"
+          step="0.1"
+          min="0"
+          max="100"
+          value={reserve.toString()}
+          onChange={updateReserve}
+          disabled={!accountHasSigner(activeAccount)}
+        />
+        <p>
+          {t('reserve')}: {reserve.toString()}
+        </p>
+      </SliderWrapper>
+      <ConfirmButton>
+        <ButtonPrimaryInvert
+          text={t('confirm')}
+          onClick={() => {
+            setStatus(0);
+            localStorage.setItem(
+              `${network.name}_${activeAccount}_reserve`,
+              reserve.toString()
+            );
+          }}
+          disabled={!accountHasSigner(activeAccount)}
+        />
+      </ConfirmButton>
+    </PaddingWrapper>
   );
 };
