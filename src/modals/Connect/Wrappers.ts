@@ -9,7 +9,7 @@ import styled from 'styled-components';
 export const ExtensionsWrapper = styled.div`
   width: 100%;
   padding: 0 0.4rem;
-  margin: 0.5rem 0;
+  margin: 0.5rem 0 1rem 0;
 
   @media (max-width: ${TwoThreshold}px) {
     padding: 0;
