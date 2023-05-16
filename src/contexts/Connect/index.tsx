@@ -493,7 +493,7 @@ export const ConnectProvider = ({
     addToAccounts([externalAccount]);
   };
 
-  // checks whether an account can sign transactions
+  // Checks whether an account can sign transactions
   const accountHasSigner = (address: MaybeAccount) =>
     accountsRef.current.find(
       (a) => a.address === address && a.source !== 'external'
