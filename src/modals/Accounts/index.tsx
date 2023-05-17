@@ -159,7 +159,7 @@ export const Accounts = () => {
               style={{
                 color: 'var(--network-color-primary)',
               }}
-              text="Disconnect"
+              text={t('disconnect')}
               iconRight={faLinkSlash}
               onClick={() => {
                 disconnectFromAccount();

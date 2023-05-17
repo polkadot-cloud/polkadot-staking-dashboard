@@ -102,7 +102,7 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
             </div>
           ) : (
             <div style={{ padding: '0.5rem' }}>
-              <h4>No Read Only accounts have been added.</h4>
+              <h4>{t('noReadOnlyAdded')}</h4>
             </div>
           )}
         </div>
