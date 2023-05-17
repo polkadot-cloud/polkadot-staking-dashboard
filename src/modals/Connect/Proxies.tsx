@@ -28,10 +28,16 @@ import type { ListWithInputProps } from './types';
 
 export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
-  const { getAccount } = useConnect();
+  const { accounts, getAccount } = useConnect();
   const { openHelp } = useHelp();
   const { delegates, handleDeclareDelegate } = useProxies();
 
+  // Filter delegates to only show those who are imported in the dashboard.
+  const importedDelegates = Object.fromEntries(
+    Object.entries(delegates).filter(([delegate]) =>
+      accounts.find((a) => a.address === delegate)
+    )
+  );
   return (
     <>
       <ActionWithButton>
@@ -63,42 +69,34 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
               />
             </>
           )}
-          {Object.entries(delegates).length ? (
+          {Object.entries(importedDelegates).length ? (
             <div className="accounts">
-              {Object.entries(delegates).map(([delegate, delegators], i) => {
-                const delegateAccount = getAccount(delegate);
-
-                return (
+              {Object.entries(importedDelegates).map(
+                ([delegate, delegators], i) => (
                   <React.Fragment key={`user_delegate_account_${i}}`}>
-                    {delegators.map(({ delegator, proxyType }, j) => {
-                      const delegatorAccount = getAccount(delegator);
-
-                      return (
-                        <ManualAccount
-                          key={`user_delegate_${i}_delegator_${j}`}
-                        >
-                          <div>
-                            <span>
-                              <Identicon value={delegate} size={26} />
-                            </span>
-                            <div className="text">
-                              <h4 className="title">
-                                <span>{proxyType} Proxy</span>
-                                {delegateAccount?.name || delegate}
-                              </h4>
-                              <h4 className="subtitle">
-                                for {delegatorAccount?.name || delegator}
-                              </h4>
-                            </div>
+                    {delegators.map(({ delegator, proxyType }, j) => (
+                      <ManualAccount key={`user_delegate_${i}_delegator_${j}`}>
+                        <div>
+                          <span>
+                            <Identicon value={delegate} size={26} />
+                          </span>
+                          <div className="text">
+                            <h4 className="title">
+                              <span>{proxyType} Proxy</span>
+                              {getAccount(delegate)?.name || delegate}
+                            </h4>
+                            <h4 className="subtitle">
+                              for {getAccount(delegator)?.name || delegator}
+                            </h4>
                           </div>
-                          <div />
-                          <ButtonSecondary text="Declared" disabled />
-                        </ManualAccount>
-                      );
-                    })}
+                        </div>
+                        <div />
+                        <ButtonSecondary text="Declared" disabled />
+                      </ManualAccount>
+                    ))}
                   </React.Fragment>
-                );
-              })}
+                )
+              )}
             </div>
           ) : (
             <div style={{ padding: '0.5rem' }}>
