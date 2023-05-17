@@ -55,8 +55,14 @@ export const ProxiesProvider = ({
       ]).map(({ address }) => address);
 
       removed?.forEach((address) => {
-        const unsub = unsubs.current[address];
-        if (unsub) unsub();
+        // if delegates still exist for removed account, re-add the account as a read only system
+        // account.
+        if (delegatesRef.current[address]) {
+          addExternalAccount(address, 'system');
+        } else {
+          const unsub = unsubs.current[address];
+          if (unsub) unsub();
+        }
       });
 
       unsubs.current = Object.fromEntries(
