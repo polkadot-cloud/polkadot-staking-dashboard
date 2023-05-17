@@ -19,7 +19,7 @@ export const useSignerWarnings = () => {
     const warnings = [];
 
     if (controller) {
-      switch (controllerSignerAvailable(account)) {
+      switch (controllerSignerAvailable(account, proxySupported)) {
         case 'controller_not_imported':
           warnings.push(`${t('controllerImported')}`);
           break;

@@ -92,8 +92,12 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     return true;
   })();
 
-  const controllerSignerAvailable = (stash: MaybeAccount) => {
+  const controllerSignerAvailable = (
+    stash: MaybeAccount,
+    proxySupported: boolean
+  ) => {
     const controller = getBondedAccount(stash);
+
     if (controller !== stash) {
       if (getControllerNotImported(controller)) {
         return 'controller_not_imported';
@@ -101,7 +105,10 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
       if (!accountHasSigner(controller)) {
         return 'read_only';
       }
-    } else if (!accountHasSigner(activeProxy) && !accountHasSigner(stash)) {
+    } else if (
+      (!proxySupported || !accountHasSigner(activeProxy)) &&
+      !accountHasSigner(stash)
+    ) {
       return 'read_only';
     }
     return 'ok';

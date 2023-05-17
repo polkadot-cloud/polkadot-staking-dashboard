@@ -6,7 +6,8 @@ import type { AnyJson, MaybeAccount } from 'types';
 
 export interface TxMetaContextInterface {
   controllerSignerAvailable: (
-    a: MaybeAccount
+    a: MaybeAccount,
+    b: boolean
   ) => 'controller_not_imported' | 'read_only' | 'ok';
   txFees: BigNumber;
   notEnoughFunds: boolean;
