@@ -16,7 +16,6 @@ export const AccountInput = ({
 }: AccountInputProps) => {
   const { t } = useTranslation('modals');
 
-  // TODO: add error callbacks for when account fails to import.
   const { formatAccountSs58, accounts } = useConnect();
   const { setResize } = useModal();
 
@@ -28,6 +27,9 @@ export const AccountInput = ({
 
   // store whether address was formatted (displays confirm prompt)
   const [reformatted, setReformatted] = useState(false);
+
+  // store whether the form is being submitted.
+  const [submitting, setSubmitting] = useState<boolean>(false);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
@@ -65,7 +67,9 @@ export const AccountInput = ({
       setReformatted(true);
     } else {
       // handle successful import.
+      setSubmitting(true);
       const result = await successCallback(value);
+      setSubmitting(false);
 
       // reset state on successful import.
       if (result) {
@@ -126,8 +130,8 @@ export const AccountInput = ({
           {!reformatted ? (
             <ButtonSecondary
               onClick={() => handleImport()}
-              text={t('import')}
-              disabled={valid !== 'valid'}
+              text={submitting ? 'Importing' : t('import')}
+              disabled={valid !== 'valid' || submitting}
             />
           ) : (
             <ButtonSecondary
