@@ -77,8 +77,6 @@ export const AccountInput = ({
         setValue('');
         setValid(null);
         setResize();
-      } else {
-        // TODO: error callbacks.
       }
     }
   };
