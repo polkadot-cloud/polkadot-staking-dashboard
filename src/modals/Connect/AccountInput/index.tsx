@@ -130,7 +130,7 @@ export const AccountInput = ({
           {!reformatted ? (
             <ButtonSecondary
               onClick={() => handleImport()}
-              text={submitting ? 'Importing' : t('import')}
+              text={submitting ? t('importing') : t('import')}
               disabled={valid !== 'valid' || submitting}
             />
           ) : (

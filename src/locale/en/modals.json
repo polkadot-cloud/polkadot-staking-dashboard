@@ -96,6 +96,7 @@
     "importAccount": "Import Account",
     "importedAccount_one": "{{count}} Imported Account",
     "importedAccount_other": "{{count}} Imported Accounts",
+    "importing": "Importing",
     "inPool": "In Pool",
     "inputAddress": "Input Address",
     "inputDelegatorAddress": "Input Delegator Address",
