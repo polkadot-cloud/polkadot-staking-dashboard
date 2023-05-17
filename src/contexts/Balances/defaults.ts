@@ -28,6 +28,5 @@ export const defaultLedger: Ledger = {
 export const defaultBalance: Balance = {
   free: new BigNumber(0),
   reserved: new BigNumber(0),
-  miscFrozen: new BigNumber(0),
-  feeFrozen: new BigNumber(0),
+  frozen: new BigNumber(0),
 };
