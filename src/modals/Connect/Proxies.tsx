@@ -37,13 +37,13 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
       <ActionWithButton>
         <div>
           <FontAwesomeIcon icon={faChevronRight} transform="shrink-4" />
-          <h3>Proxy Accounts</h3>
+          <h3>{t('proxyAccounts')}</h3>
           <ButtonHelp marginLeft onClick={() => openHelp('Proxy Accounts')} />
         </div>
         <div>
           <ButtonMonoInvert
             iconLeft={inputOpen ? faMinus : faPlus}
-            text={!inputOpen ? 'Declare' : t('hide')}
+            text={!inputOpen ? t('declare') : t('hide')}
             onClick={() => {
               setInputOpen(!inputOpen);
             }}
@@ -55,7 +55,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
           {inputOpen && (
             <>
               <AccountInput
-                defaultLabel="Input Delegator Address"
+                defaultLabel={t('inputDelegatorAddress')}
                 successCallback={async (delegator) => {
                   const result = await handleDeclareDelegate(delegator);
                   return result;
@@ -83,16 +83,18 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                             </span>
                             <div className="text">
                               <h4 className="title">
-                                <span>{proxyType} Proxy</span>
+                                <span>
+                                  {proxyType} {t('proxy')}
+                                </span>
                                 {delegateAccount?.name || delegate}
                               </h4>
                               <h4 className="subtitle">
-                                for {delegatorAccount?.name || delegator}
+                                {t('for')} {delegatorAccount?.name || delegator}
                               </h4>
                             </div>
                           </div>
                           <div />
-                          <ButtonSecondary text="Declared" disabled />
+                          <ButtonSecondary text={t('declared')} disabled />
                         </ManualAccount>
                       );
                     })}
@@ -102,7 +104,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
             </div>
           ) : (
             <div style={{ padding: '0.5rem' }}>
-              <h4>No proxy accounts have been declared.</h4>
+              <h4>{t('noProxyAccountsDeclared')}</h4>
             </div>
           )}
         </div>

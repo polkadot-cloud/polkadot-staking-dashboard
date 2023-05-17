@@ -223,6 +223,15 @@
     "withdraw": "Withdraw",
     "withdrawMemberFunds": "Withdraw Member Funds",
     "withdrawSubtitle": "Funds will be immediately available as free balance after withdrawing.",
-    "withdrawUnlocked": "Withdraw Unlocked"
+    "withdrawUnlocked": "Withdraw Unlocked",
+    "proxyAccounts":"Proxy Accounts",
+    "declare":"Declare",
+    "inputDelegatorAddress":"Input Delegator Address",
+    "for":"For",
+    "noProxyAccountsDeclared":"No proxy accounts have been declared.",
+    "declared":"Declared",
+    "noReadOnlyAdded":"No Read Only accounts have been added",
+   "proxies":"Proxies",
+   "web":"Web"
   }
 }

@@ -277,17 +277,17 @@
         ]
       ],
       "proxyAccounts": [
-        "Proxy Accounts",
+        "代理帐户",
         [
-          "Proxy accounts are accounts that act on behalf of another account.",
-          "In proxy account terms, the proxy account is called the delegate account, and the proxied account it is acting on behalf of is called the delegator account.",
-          "Staking dashboard allows delegates to sign transactions on behalf of a delegator. If a delegate exists in the dashboard without its delegator, the delegator is imported as a read only account automatically."
+          "代理帐户是代理另一个帐户的帐户.",
+          "在代理帐户术语中, 代理帐户称为委托帐户, 代理帐户所代表的代理帐户被称为委托人帐户.",
+          "Staking Dashboard允许被委托人代表委托人签署交易. 如果被委托人在没有委托人的委托的情况下被导入, 则被委托人将自动列为只读帐户."
         ]
       ],
       "readOnlyAccounts": [
-        "Read Only Accounts",
+        "只读帐户",
         [
-          "Read Only accounts are accounts that can be imported, but are not able to sign transactions. This means that you can view the account's balance and staking information, but you cannot perform any staking actions with it."
+          "只读帐户是可以导入但不能签署交易记录的帐户.这意味着您可以查看帐户的余额和质押信息, 但不能使用它执行任何抵押操作."
         ]
       ],
       "reserveBalance": [

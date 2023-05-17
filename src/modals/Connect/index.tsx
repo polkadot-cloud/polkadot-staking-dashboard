@@ -107,12 +107,12 @@ export const Connect = () => {
                 active={section === 0}
               />
               <ButtonTab
-                title="Read Only"
+                title={t('readOnly')}
                 onClick={() => setSection(1)}
                 active={section === 1}
               />
               <ButtonTab
-                title="Proxies"
+                title={t('proxies')}
                 onClick={() => setSection(2)}
                 active={section === 2}
               />
@@ -160,7 +160,7 @@ export const Connect = () => {
                 </>
               ) : null}
 
-              <ActionItem text="Web" />
+              <ActionItem text={t('web')} />
               <ExtensionsWrapper>
                 <SelectItems layout="two-col">
                   {installed.concat(other).map((extension, i) => (
