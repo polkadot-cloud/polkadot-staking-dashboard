@@ -15,11 +15,13 @@ export const Default = ({
   valid,
   submitText,
   buttons,
+  submitAddress,
 }: SubmitProps & { buttons?: React.ReactNode[] }) => {
   const { txFeesValid } = useTxMeta();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { accountHasSigner } = useConnect();
+
   const disabled =
-    submitting || !valid || !accountHasSigner(activeAccount) || !txFeesValid;
+    submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;
 
   return (
     <>

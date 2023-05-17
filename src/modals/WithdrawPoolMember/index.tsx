@@ -10,6 +10,7 @@ import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
@@ -20,10 +21,11 @@ import { useTranslation } from 'react-i18next';
 export const WithdrawPoolMember = () => {
   const { t } = useTranslation('modals');
   const { api, network, consts } = useApi();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { activeAccount } = useConnect();
   const { setStatus: setModalStatus, config } = useModal();
   const { activeEra } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
+  const { getSignerWarnings } = useSignerWarnings();
 
   const { member, who } = config;
   const { historyDepth } = consts;
@@ -75,6 +77,12 @@ export const WithdrawPoolMember = () => {
     },
   });
 
+  const warnings = getSignerWarnings(
+    activeAccount,
+    false,
+    submitExtrinsic.proxySupported
+  );
+
   return (
     <>
       <Close />
@@ -83,9 +91,11 @@ export const WithdrawPoolMember = () => {
         <ActionItem
           text={`${t('withdraw')} ${totalWithdraw} ${network.unit}`}
         />
-        {!accountHasSigner(activeAccount) ? (
+        {warnings.length > 0 ? (
           <WarningsWrapper>
-            <Warning text={t('readOnlyCannotSign')} />
+            {warnings.map((text, i) => (
+              <Warning key={`warning${i}`} text={text} />
+            ))}
           </WarningsWrapper>
         ) : null}
       </PaddingWrapper>

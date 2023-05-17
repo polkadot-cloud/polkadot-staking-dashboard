@@ -65,12 +65,14 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   return (
     <>
       <CustomHeaderWrapper>
-        <h1>
+        <h1 style={{ paddingLeft: '1rem' }}>
           <ButtonSecondary
             text={t('back')}
             iconLeft={faChevronLeft}
             iconTransform="shrink-3"
-            onClick={async () => replaceModalWith('Connect', {}, 'large')}
+            onClick={async () =>
+              replaceModalWith('Connect', { disableScroll: true }, 'large')
+            }
           />
         </h1>
         <button

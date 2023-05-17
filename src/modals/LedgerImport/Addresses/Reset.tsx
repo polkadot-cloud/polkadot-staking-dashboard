@@ -33,7 +33,7 @@ export const Reset = ({ removeLedgerAddress }: AnyJson) => {
     });
 
     // Go back to Connect modal.
-    replaceModalWith('Connect', {}, 'large');
+    replaceModalWith('Connect', { disableScroll: true }, 'large');
   };
 
   return (

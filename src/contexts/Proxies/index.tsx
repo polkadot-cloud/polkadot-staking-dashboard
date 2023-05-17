@@ -55,8 +55,14 @@ export const ProxiesProvider = ({
       ]).map(({ address }) => address);
 
       removed?.forEach((address) => {
-        const unsub = unsubs.current[address];
-        if (unsub) unsub();
+        // if delegates still exist for removed account, re-add the account as a read only system
+        // account.
+        if (delegatesRef.current[address]) {
+          addExternalAccount(address, 'system');
+        } else {
+          const unsub = unsubs.current[address];
+          if (unsub) unsub();
+        }
       });
 
       unsubs.current = Object.fromEntries(
@@ -130,12 +136,9 @@ export const ProxiesProvider = ({
   };
 
   // Gets the delegates of the given account
-  const getDelegates = (address: MaybeAccount): Proxy | undefined => {
-    return (
-      proxiesRef.current.find(({ delegator }) => delegator === address) ||
-      undefined
-    );
-  };
+  const getDelegates = (address: MaybeAccount): Proxy | undefined =>
+    proxiesRef.current.find(({ delegator }) => delegator === address) ||
+    undefined;
 
   // Gets delegators and proxy types for the given delegate address
   const getProxiedAccounts = (address: MaybeAccount) => {
@@ -244,11 +247,35 @@ export const ProxiesProvider = ({
     setStateWithRef(newDelegates, setDelegates, delegatesRef);
   }, [proxiesRef.current]);
 
+  // Queries the chain to check if the given delegator & delegate pair is valid proxy.
+  const handleDeclareDelegate = async (delegator: string) => {
+    if (!api) return [];
+
+    const result: AnyApi = (await api.query.proxy.proxies(delegator)).toHuman();
+
+    let addDelegatorAsExternal = false;
+    for (const { delegate: newDelegate } of result[0] || []) {
+      if (
+        accounts.find(({ address }) => address === newDelegate) &&
+        !delegatesRef.current[newDelegate]
+      ) {
+        subscribeToProxies(delegator);
+        addDelegatorAsExternal = true;
+      }
+    }
+    if (addDelegatorAsExternal) {
+      addExternalAccount(delegator, 'system');
+    }
+
+    return [];
+  };
+
   return (
     <ProxiesContext.Provider
       value={{
         proxies: proxiesRef.current,
         delegates: delegatesRef.current,
+        handleDeclareDelegate,
         getDelegates,
         getProxyDelegate,
         getProxiedAccounts,

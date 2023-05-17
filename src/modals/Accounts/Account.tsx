@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowLeft, faGlasses } from '@fortawesome/free-solid-svg-icons';
+import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { clipAddress } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
@@ -17,7 +17,6 @@ import type { AccountItemProps } from './types';
 export const AccountButton = ({
   address,
   label,
-  disconnect = false,
   delegator,
   noBorder = false,
 }: AccountItemProps) => {
@@ -27,7 +26,6 @@ export const AccountButton = ({
   const {
     activeAccount,
     connectToAccount,
-    disconnectFromAccount,
     getAccount,
     activeProxy,
     setActiveProxy,
@@ -57,17 +55,12 @@ export const AccountButton = ({
     <AccountWrapper className={isActive ? 'active' : undefined}>
       <button
         type="button"
-        disabled={!disconnect && !imported}
+        disabled={!imported}
         onClick={() => {
           if (imported && meta) {
-            if (disconnect) {
-              disconnectFromAccount();
-              setActiveProxy(null);
-            } else {
-              connectToAccount(getAccount(connectTo));
-              setActiveProxy(connectProxy);
-              setStatus(2);
-            }
+            connectToAccount(getAccount(connectTo));
+            setActiveProxy(connectProxy);
+            setStatus(2);
           }
         }}
         style={noBorder ? { border: 'none' } : undefined}
@@ -86,7 +79,6 @@ export const AccountButton = ({
               <>
                 <span>
                   {proxyDelegate?.proxyType} {t('proxy')}
-                  <FontAwesomeIcon icon={faArrowLeft} transform="shrink-2" />
                 </span>
               </>
             )}

@@ -54,10 +54,11 @@ export const Modal = () => {
     height,
     resize,
     config,
+    modalMaxHeight,
   } = useModal();
   const controls = useAnimation();
 
-  const maxHeight = window.innerHeight * 0.8;
+  const maxHeight = modalMaxHeight();
 
   const onFadeIn = async () => {
     await controls.start('visible');
@@ -146,7 +147,10 @@ export const Modal = () => {
               size={size}
               style={{
                 height,
-                overflow: height >= maxHeight ? 'scroll' : 'hidden',
+                overflow:
+                  height >= maxHeight && !config?.disableScroll
+                    ? 'scroll'
+                    : 'hidden',
               }}
             >
               <ContentWrapper ref={modalRef}>

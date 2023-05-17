@@ -26,6 +26,7 @@ export const ManualSign = ({
   valid,
   submitText,
   buttons,
+  submitAddress,
 }: SubmitProps & { buttons?: React.ReactNode[] }) => {
   const { t } = useTranslation('library');
 
@@ -121,7 +122,7 @@ export const ManualSign = ({
 
   const helpKey = feedback?.helpKey;
   const disabled =
-    submitting || !valid || !accountHasSigner(activeAccount) || !txFeesValid;
+    submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;
 
   return (
     <>

@@ -16,6 +16,15 @@ export const SupportedProxies: Record<string, string[]> = {
   ],
 };
 
+export const UnsupportedIfUniqueController: string[] = [
+  'staking.chill',
+  'staking.nominate',
+  'staking.rebond',
+  'staking.unbond',
+  'staking.setPayee',
+  'staking.withdrawUnbonded',
+];
+
 export const isSupportedProxy = (proxy: string) =>
   Object.keys(SupportedProxies).includes(proxy) || proxy === 'Any';
 

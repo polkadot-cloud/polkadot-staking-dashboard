@@ -469,7 +469,7 @@ export const ConnectProvider = ({
     keyring.setSS58Format(network.ss58);
     const formatted = keyring.addFromAddress(address).address;
 
-    const externalAccount = {
+    const newAccount = {
       address: formatted,
       network: network.name,
       name: clipAddress(address),
@@ -477,23 +477,44 @@ export const ConnectProvider = ({
       addedBy,
     };
 
-    // get all external accounts from localStorage
+    // get all external accounts from localStorage.
     const localExternalAccounts = getLocalExternalAccounts(network, false);
-    const exists = localExternalAccounts.find(
+    const existsLocal = localExternalAccounts.find(
       (l) => l.address === address && l.network === network.name
     );
 
-    // add external account to localStorage if not there already
-    if (!exists) {
-      const localExternal = localExternalAccounts.concat(externalAccount);
-      localStorage.setItem('external_accounts', JSON.stringify(localExternal));
-    }
+    // check that address is not sitting in imported accounts (currently cannot check which
+    // network).
+    const existsImported = accountsRef.current.find(
+      (a) => a.address === address
+    );
 
-    // add external account to imported accounts
-    addToAccounts([externalAccount]);
+    // add external account if not there already.
+    if (!existsLocal && !existsImported) {
+      localStorage.setItem(
+        'external_accounts',
+        JSON.stringify(localExternalAccounts.concat(newAccount))
+      );
+
+      // add external account to imported accounts
+      addToAccounts([newAccount]);
+    } else if (existsLocal && existsLocal.addedBy !== 'system') {
+      // the external account needs to change to `system` so it cannot be removed. This will replace
+      // the whole entry.
+      localStorage.setItem(
+        'external_accounts',
+        JSON.stringify(
+          localExternalAccounts.map((item) =>
+            item.address !== address ? item : newAccount
+          )
+        )
+      );
+      // refresh accounts state.
+      replaceAccount(newAccount);
+    }
   };
 
-  // checks whether an account can sign transactions
+  // Checks whether an account can sign transactions
   const accountHasSigner = (address: MaybeAccount) =>
     accountsRef.current.find(
       (a) => a.address === address && a.source !== 'external'
@@ -532,7 +553,7 @@ export const ConnectProvider = ({
     }
   };
 
-  // update initialised extensions
+  // update initialised extensions.
   const updateInitialisedExtensions = (id: string) => {
     if (!extensionsInitialisedRef.current.includes(id)) {
       setStateWithRef(
@@ -543,10 +564,21 @@ export const ConnectProvider = ({
     }
   };
 
-  // add accounts to context state
+  // add accounts to context state.
   const addToAccounts = (a: ImportedAccount[]) => {
     setStateWithRef(
       [...accountsRef.current].concat(a),
+      setAccounts,
+      accountsRef
+    );
+  };
+
+  // replaces an account in context state.
+  const replaceAccount = (a: ImportedAccount) => {
+    setStateWithRef(
+      [...accountsRef.current].map((item) =>
+        item.address !== a.address ? item : a
+      ),
       setAccounts,
       accountsRef
     );

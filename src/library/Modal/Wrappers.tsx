@@ -111,6 +111,7 @@ export const CloseWrapper = styled.div`
   position: absolute;
   right: 1.5rem;
   top: 1.5rem;
+  z-index: 2;
 
   > button {
     opacity: 0.4;

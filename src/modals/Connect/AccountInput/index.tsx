@@ -7,11 +7,16 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Wrapper } from './Wrapper';
+import { AccountInputWrapper } from './Wrapper';
+import type { AccountInputProps } from './types';
 
-export const ReadOnlyInput = () => {
+export const AccountInput = ({
+  successCallback,
+  defaultLabel,
+}: AccountInputProps) => {
   const { t } = useTranslation('modals');
-  const { formatAccountSs58, accounts, addExternalAccount } = useConnect();
+
+  const { formatAccountSs58, accounts } = useConnect();
   const { setResize } = useModal();
 
   // store current input value
@@ -22,6 +27,9 @@ export const ReadOnlyInput = () => {
 
   // store whether address was formatted (displays confirm prompt)
   const [reformatted, setReformatted] = useState(false);
+
+  // store whether the form is being submitted.
+  const [submitting, setSubmitting] = useState<boolean>(false);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
@@ -50,7 +58,7 @@ export const ReadOnlyInput = () => {
     setValid(isValidAddress(newValue) ? 'valid' : 'not_valid');
   };
 
-  const handleImport = () => {
+  const handleImport = async () => {
     // reformat address if in wrong format
     const addressFormatted = formatAccountSs58(value);
     if (addressFormatted) {
@@ -58,13 +66,20 @@ export const ReadOnlyInput = () => {
       setValue(addressFormatted);
       setReformatted(true);
     } else {
-      // add as external account
-      addExternalAccount(value, 'user');
-      // reset state
-      setReformatted(false);
-      setValue('');
-      setValid(null);
-      setResize();
+      // handle successful import.
+      setSubmitting(true);
+      const result = await successCallback(value);
+      setSubmitting(false);
+
+      // reset state on successful import.
+      if (result) {
+        setReformatted(false);
+        setValue('');
+        setValid(null);
+        setResize();
+      } else {
+        // TODO: error callbacks.
+      }
     }
   };
 
@@ -89,7 +104,7 @@ export const ReadOnlyInput = () => {
       labelClass = 'success';
       break;
     default:
-      label = t('inputAddress');
+      label = defaultLabel;
       labelClass = 'neutral';
   }
 
@@ -100,7 +115,7 @@ export const ReadOnlyInput = () => {
   };
 
   return (
-    <Wrapper>
+    <AccountInputWrapper>
       <h5 className={labelClass}>{label}</h5>
       <div className="input">
         <section>
@@ -115,8 +130,8 @@ export const ReadOnlyInput = () => {
           {!reformatted ? (
             <ButtonSecondary
               onClick={() => handleImport()}
-              text={t('import')}
-              disabled={valid !== 'valid'}
+              text={submitting ? t('importing') : t('import')}
+              disabled={valid !== 'valid' || submitting}
             />
           ) : (
             <ButtonSecondary
@@ -126,6 +141,6 @@ export const ReadOnlyInput = () => {
           )}
         </section>
       </div>
-    </Wrapper>
+    </AccountInputWrapper>
   );
 };

@@ -29,6 +29,8 @@ export const HelpConfig: HelpItems = [
       'Inflation',
       'Ideal Staked',
       'Supply Staked',
+      'Read Only Accounts',
+      'Proxy Accounts',
     ],
     external: [
       [
