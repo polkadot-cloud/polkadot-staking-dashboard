@@ -89,6 +89,7 @@
     "import": "导入",
     "importAccount": "导入帐户",
     "importedAccount": "{{count}} 个己导入帐户",
+    "importing": "导入中",
     "inPool": "提名池中",
     "inputAddress": "输入地址",
     "inputDelegatorAddress": "输入委托人地址",
