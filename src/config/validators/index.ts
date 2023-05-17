@@ -30,6 +30,10 @@ export const ValidatorCommunity = [
       polkadot: [
         '1y6CPLgccsysCEii3M7jQF834GZsz9A3HMcZz3w7RjGPpBL',
         '1gBKvQ9vbraAfhxEroBnxoGp9687Hu5wR7NYSwgJeAsw4x8',
+        '12Ftq9EM1qc3persmD9NFrzFZqF5CALsP7oKDUsGTBe7FBDm',
+        '13N2JTpk5hhLczQRqxJRmfuCbxTusvDgXYfzkjVoEbaHtpZV',
+        '13avpNYE4rTxhN2EfJv8zcX1U52JLNgiTtgqrpEDoLZwZxd',
+        '15xzmgiDUyguYSqZjhi4dGPiUbsW4Z6b3cYALgbUjhE5pKpT',
       ],
       kusama: [
         'DVUNoinHdSNfismcrFaBwdJfysxc7A48QkNvTDnTSPXPw3q',
@@ -37,6 +41,8 @@ export const ValidatorCommunity = [
         'E8zY6KdAH1vuKKMaPdHYLAziht32v2BLqXk6qBw7WtiV2Dv',
         'Ff3xdNrXA47svhiTJHj9uNhxLo29PYjYcJ9cUseAd9FK6iQ',
         'EyQ1wV8jQdKYEWh7FiN2mnkFzAepfq6LfKbWLy7qQkLynGg',
+        'J9KLy6nouPoj5rA2RWX8C9wrmrg84Mv3hpB7mZTN7Jvww7C',
+        'Czy1KnZV1DqSPcHd6k1WL6fe4nsyhAuiJ9ALZtVvyomdc8y',
       ],
     },
   },

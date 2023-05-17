@@ -23,10 +23,7 @@ export interface Balances {
 export interface Balance {
   free: BigNumber;
   reserved: BigNumber;
-  frozen: BigNumber | undefined;
-  miscFrozen: BigNumber | undefined;
-  feeFrozen: BigNumber | undefined;
-  freeAfterReserve: BigNumber;
+  frozen: BigNumber;
 }
 
 export interface UnlockChunkRaw {

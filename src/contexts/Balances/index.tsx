@@ -12,7 +12,6 @@ import {
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useTransferOptions } from 'contexts/TransferOptions';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
 import { getLedger } from './Utils';
@@ -35,7 +34,6 @@ export const BalancesProvider = ({
 }) => {
   const { api, isReady, network } = useApi();
   const { accounts, addExternalAccount, getAccount } = useConnect();
-  const { activeAccount } = useConnect();
 
   const [balances, setBalances] = useState<Balances[]>([]);
   const balancesRef = useRef(balances);
@@ -44,9 +42,6 @@ export const BalancesProvider = ({
   const ledgersRef = useRef(ledgers);
 
   const unsubs = useRef<Record<string, VoidFn>>({});
-  const { getTransferOptions } = useTransferOptions();
-  const allTransferOptions = getTransferOptions(activeAccount);
-  const { forceReserved } = allTransferOptions;
 
   // Handle the syncing of accounts on accounts change.
   const handleSyncAccounts = () => {
@@ -138,17 +133,17 @@ export const BalancesProvider = ({
 
         const handleAccount = () => {
           const free = new BigNumber(accountData.free.toString());
-
-          let newBalances: Balances = {
+          const newBalances: Balances = {
             address,
             nonce: nonce.toNumber(),
             balance: {
               free,
               reserved: new BigNumber(accountData.reserved.toString()),
-              frozen: new BigNumber(accountData.frozen),
-              miscFrozen: undefined,
-              feeFrozen: undefined,
-              freeAfterReserve: BigNumber.max(free.minus(forceReserved), 0),
+              frozen: new BigNumber(
+                network.name === 'westend' // this can be removed once system.account is upgraded on Polkadot and Kusama
+                  ? accountData.frozen.toString()
+                  : accountData.miscFrozen.toString()
+              ),
             },
             locks: locks.toHuman().map((l: AnyApi) => ({
               ...l,
@@ -156,26 +151,6 @@ export const BalancesProvider = ({
               amount: new BigNumber(rmCommas(l.amount)),
             })),
           };
-
-          if (accountData.miscFrozen && accountData.feeFrozen) {
-            newBalances = {
-              address,
-              nonce: nonce.toNumber(),
-              balance: {
-                free,
-                reserved: new BigNumber(accountData.reserved.toString()),
-                frozen: undefined,
-                miscFrozen: new BigNumber(accountData.miscFrozen.toString()),
-                feeFrozen: new BigNumber(accountData.feeFrozen.toString()),
-                freeAfterReserve: BigNumber.max(free.minus(forceReserved), 0),
-              },
-              locks: locks.toHuman().map((l: AnyApi) => ({
-                ...l,
-                id: l.id.trim(),
-                amount: new BigNumber(rmCommas(l.amount)),
-              })),
-            };
-          }
 
           setStateWithRef(
             Object.values(balancesRef.current)

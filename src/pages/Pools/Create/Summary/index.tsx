@@ -24,11 +24,12 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const { api, network } = useApi();
   const { units } = network;
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { activeAccount, activeProxy, accountHasSigner } = useConnect();
   const { getSetupProgress, removeSetupProgress } = useSetup();
   const { stats } = usePoolsConfig();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
+
   const { lastPoolId } = stats;
   const poolId = lastPoolId.plus(1);
 
@@ -88,9 +89,9 @@ export const Summary = ({ section }: SetupStepProps) => {
         bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        {!accountHasSigner(activeAccount) && (
-          <Warning text={t('pools.readOnly')} />
-        )}
+        {!(
+          accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
+        ) && <Warning text={t('pools.readOnly')} />}
         <SummaryWrapper>
           <section>
             <div>

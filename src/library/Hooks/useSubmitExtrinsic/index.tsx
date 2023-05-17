@@ -4,10 +4,14 @@
 import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import type { SessionTypes } from '@walletconnect/types';
 import BigNumber from 'bignumber.js';
-import { isSupportedProxyCall } from 'config/proxies';
+import {
+  isSupportedProxyCall,
+  UnsupportedIfUniqueController,
+} from 'config/proxies';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import { useExtrinsics } from 'contexts/Extrinsics';
@@ -35,7 +39,6 @@ export const useSubmitExtrinsic = ({
     getWalletConnectClient,
     getWalletConnectSession,
     getWalletConnectChainInfo,
-    activeAccount,
     activeProxy,
   } = useConnect();
   const { addNotification } = useNotifications();
@@ -43,6 +46,8 @@ export const useSubmitExtrinsic = ({
   const { addPending, removePending } = useExtrinsics();
   const { getNonce } = useBalances();
   const { getProxyDelegate } = useProxies();
+  const { getBondedAccount } = useBonded();
+  const controller = getBondedAccount(from);
   const {
     setTxFees,
     incrementPayloadUid,
@@ -80,11 +85,16 @@ export const useSubmitExtrinsic = ({
       return false;
     }
 
-    const proxyDelegate = getProxyDelegate(activeAccount, activeProxy);
+    const proxyDelegate = getProxyDelegate(from, activeProxy);
     const proxyType = proxyDelegate?.proxyType || '';
     const pallet = tx?.method.toHuman().section;
     const method = tx?.method.toHuman().method;
     const call = `${pallet}.${method}`;
+
+    // If call is from controller, & controller is different from stash, then proxy is not
+    // supported.
+    const controllerNotSupported = (c: string) =>
+      UnsupportedIfUniqueController.includes(c) && controller !== from;
 
     // If a batch call, test if every inner call is a supported proxy call.
     if (call === 'utility.batch') {
@@ -93,13 +103,18 @@ export const useSubmitExtrinsic = ({
           pallet: c.section,
           method: c.method,
         }))
-        .every((c: AnyJson) =>
-          isSupportedProxyCall(proxyType, c.pallet, c.method)
+        .every(
+          (c: AnyJson) =>
+            isSupportedProxyCall(proxyType, c.pallet, c.method) &&
+            !controllerNotSupported(`${pallet}.${method}`)
         );
     }
 
     // Check if the current call is a supported proxy call.
-    return isSupportedProxyCall(proxyType, pallet, method);
+    return (
+      isSupportedProxyCall(proxyType, pallet, method) &&
+      !controllerNotSupported(call)
+    );
   };
 
   const [proxySupported, setProxySupported] = useState<boolean>(
@@ -465,6 +480,7 @@ export const useSubmitExtrinsic = ({
     uid,
     onSubmit,
     submitting,
+    submitAddress,
     proxySupported,
   };
 };
