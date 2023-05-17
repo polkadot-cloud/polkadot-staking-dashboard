@@ -21,7 +21,7 @@ import { SummaryWrapper } from './Wrapper';
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const { api, network } = useApi();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { activeAccount, activeProxy, accountHasSigner } = useConnect();
   const { getSetupProgress, removeSetupProgress } = useSetup();
   const { getPayeeItems } = usePayeeConfig();
   const { units } = network;
@@ -83,9 +83,9 @@ export const Summary = ({ section }: SetupStepProps) => {
         bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        {!accountHasSigner(activeAccount) && (
-          <Warning text={t('nominate.readOnly')} />
-        )}
+        {!(
+          accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
+        ) && <Warning text={t('nominate.readOnly')} />}
         <SummaryWrapper>
           <section>
             <div>

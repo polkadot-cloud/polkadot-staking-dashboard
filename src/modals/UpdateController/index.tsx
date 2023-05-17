@@ -6,6 +6,7 @@ import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
@@ -18,8 +19,9 @@ export const UpdateController = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
-  const { activeAccount, getAccount, accountHasSigner } = useConnect();
+  const { activeAccount, getAccount } = useConnect();
   const { getBondedAccount } = useBonded();
+  const { getSignerWarnings } = useSignerWarnings();
 
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
@@ -48,6 +50,12 @@ export const UpdateController = () => {
     callbackInBlock: () => {},
   });
 
+  const warnings = getSignerWarnings(
+    activeAccount,
+    false,
+    submitExtrinsic.proxySupported
+  );
+
   return (
     <>
       <Close />
@@ -56,9 +64,11 @@ export const UpdateController = () => {
         <Wrapper>
           <div style={{ width: '100%' }}>
             <div style={{ marginBottom: '1.5rem' }}>
-              {!accountHasSigner(activeAccount) ? (
+              {warnings.length > 0 ? (
                 <WarningsWrapper>
-                  <Warning text={t('readOnlyCannotSign')} />
+                  {warnings.map((text, i) => (
+                    <Warning key={`warning${i}`} text={text} />
+                  ))}
                 </WarningsWrapper>
               ) : null}
             </div>

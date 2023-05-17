@@ -82,6 +82,8 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     }, 10);
   };
 
+  const modalMaxHeight = () => window.innerHeight * 0.8;
+
   return (
     <ModalContext.Provider
       value={{
@@ -93,6 +95,7 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
         setResize,
         height,
         resize,
+        modalMaxHeight,
         modal: optionsRef.current.modal,
         config: optionsRef.current.config,
         size: optionsRef.current.size,

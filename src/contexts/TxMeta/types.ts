@@ -5,6 +5,10 @@ import type BigNumber from 'bignumber.js';
 import type { AnyJson, MaybeAccount } from 'types';
 
 export interface TxMetaContextInterface {
+  controllerSignerAvailable: (
+    a: MaybeAccount,
+    b: boolean
+  ) => 'controller_not_imported' | 'read_only' | 'ok';
   txFees: BigNumber;
   notEnoughFunds: boolean;
   setTxFees: (f: BigNumber) => void;

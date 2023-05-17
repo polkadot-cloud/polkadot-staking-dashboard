@@ -1,8 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ActionItem, ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
+import { faChevronLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
+import {
+  ActionItem,
+  ButtonPrimaryInvert,
+  ButtonText,
+} from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
@@ -27,11 +31,11 @@ import type {
 export const Accounts = () => {
   const { t } = useTranslation('modals');
   const { isReady } = useApi();
-  const { activeAccount } = useConnect();
+  const { activeAccount, disconnectFromAccount, setActiveProxy, accounts } =
+    useConnect();
   const { bondedAccounts } = useBonded();
   const { balances } = useBalances();
   const { ledgers, getLocks } = useBalances();
-  const { accounts } = useConnect();
   const { memberships } = usePoolMemberships();
   const { replaceModalWith, setResize } = useModal();
   const { extensions } = useExtensions();
@@ -137,35 +141,36 @@ export const Accounts = () => {
   return (
     <PaddingWrapper>
       <CustomHeaderWrapper>
-        <h1>{t('accounts')}</h1>
-        <ButtonPrimaryInvert
-          text={t('goToConnect')}
-          iconLeft={faChevronLeft}
-          iconTransform="shrink-3"
-          onClick={() => replaceModalWith('Connect', {}, 'large')}
-          marginLeft
-        />
-      </CustomHeaderWrapper>
-      {activeAccount ? (
-        <>
-          <h4
-            style={{
-              padding: '0.5rem 0.5rem 0 0.5rem',
-              margin: 0,
-              opacity: 0.9,
-            }}
-          >
-            {t('activeAccount')}
-          </h4>
-          <AccountButton
-            address={activeAccount}
-            label={['danger', t('disconnect')]}
-            disconnect
-            noBorder
+        <div className="first">
+          <h1>{t('accounts')}</h1>
+          <ButtonPrimaryInvert
+            text={t('goToConnect')}
+            iconLeft={faChevronLeft}
+            iconTransform="shrink-3"
+            onClick={() =>
+              replaceModalWith('Connect', { disableScroll: true }, 'large')
+            }
+            marginLeft
           />
-        </>
-      ) : (
-        <AccountWrapper>
+        </div>
+        <div>
+          {activeAccount && (
+            <ButtonText
+              style={{
+                color: 'var(--network-color-primary)',
+              }}
+              text={t('disconnect')}
+              iconRight={faLinkSlash}
+              onClick={() => {
+                disconnectFromAccount();
+                setActiveProxy(null);
+              }}
+            />
+          )}
+        </div>
+      </CustomHeaderWrapper>
+      {!activeAccount && !accounts.length && (
+        <AccountWrapper style={{ marginTop: '1.5rem' }}>
           <div>
             <div>
               <h4>{t('noActiveAccount')}</h4>

@@ -82,7 +82,7 @@ export const Manage = ({
               <ButtonMonoInvert
                 text={t('done')}
                 onClick={() => {
-                  replaceModalWith('Connect', {}, 'large');
+                  replaceModalWith('Connect', { disableScroll: true }, 'large');
                 }}
               />
             )}
