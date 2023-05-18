@@ -107,11 +107,13 @@ export const Commission = ({ setSection }: any) => {
 
         <div
           style={{
+            display: 'flex',
+            alignItems: 'center',
             padding: '1rem 0.5rem 0.25rem 0.5rem',
           }}
         >
           <h4>{commission}% </h4>
-          <div style={{ padding: '0.5rem 0.25rem' }}>
+          <div style={{ padding: '0rem 0.25rem 0rem 1.25rem', flexGrow: 1 }}>
             <Slider
               value={commission}
               step={0.25}
