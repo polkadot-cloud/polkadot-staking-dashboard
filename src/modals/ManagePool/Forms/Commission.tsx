@@ -7,11 +7,14 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
+import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import { WarningsWrapper } from 'modals/Wrappers';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -20,10 +23,16 @@ export const Commission = ({ setSection }: any) => {
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount } = useConnect();
+  const { getBondedPool } = useBondedPools();
   const { isOwner, selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
-
   const poolId = selectedActivePool?.id;
+  const bondedPool = getBondedPool(poolId || 0);
+
+  // Store the current commission value.
+  const [commission, setCommission] = useState<number>(
+    bondedPool?.commission?.current || 0
+  );
 
   // Valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
@@ -79,7 +88,38 @@ export const Commission = ({ setSection }: any) => {
           </WarningsWrapper>
         ) : null}
 
-        <p>Commission message.</p>
+        <div
+          style={{
+            boxShadow: '0 0 0 5px var(--network-color-transparent) !important',
+            padding: '1rem 0.5rem',
+          }}
+        >
+          <h3>Set Commission</h3>
+          <Slider
+            style={{ margin: '0.75rem 0' }}
+            value={commission}
+            step={0.25}
+            onChange={(val) => {
+              if (typeof val === 'number') {
+                setCommission(val);
+              }
+            }}
+            trackStyle={{
+              backgroundColor: 'var(--network-color-primary)',
+            }}
+            railStyle={{
+              backgroundColor: 'var(--button-secondary-background)',
+            }}
+            handleStyle={{
+              backgroundColor: 'var(--background-primary)',
+              borderColor: 'var(--network-color-primary)',
+              opacity: 1,
+            }}
+            activeDotStyle={{
+              backgroundColor: 'var(--background-primary)',
+            }}
+          />
+        </div>
       </div>
       <SubmitTx
         valid={valid}
