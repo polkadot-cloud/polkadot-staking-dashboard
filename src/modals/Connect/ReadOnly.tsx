@@ -18,7 +18,7 @@ import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { Identicon } from 'library/Identicon';
 import { useTranslation } from 'react-i18next';
-import { AccountInput } from './AccountInput';
+import { AccountInput } from '../../library/AccountInput';
 import {
   ActionWithButton,
   ManualAccount,

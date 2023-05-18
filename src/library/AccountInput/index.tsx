@@ -14,7 +14,7 @@ export const AccountInput = ({
   successCallback,
   defaultLabel,
 }: AccountInputProps) => {
-  const { t } = useTranslation('modals');
+  const { t } = useTranslation('library');
 
   const { formatAccountSs58, accounts } = useConnect();
   const { setResize } = useModal();

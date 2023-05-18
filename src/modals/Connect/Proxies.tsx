@@ -18,7 +18,7 @@ import { useProxies } from 'contexts/Proxies';
 import { Identicon } from 'library/Identicon';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { AccountInput } from './AccountInput';
+import { AccountInput } from '../../library/AccountInput';
 import {
   ActionWithButton,
   ManualAccount,
