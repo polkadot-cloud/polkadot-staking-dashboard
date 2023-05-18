@@ -44,7 +44,7 @@ export const FavoritePool = ({ address }: FavoriteProps) => {
   };
 
   return (
-    <div className="label pool">
+    <div className="label">
       <TooltipTrigger
         className="tooltip-trigger-element as-button"
         data-tooltip-text={tooltipText}
