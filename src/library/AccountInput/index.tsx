@@ -1,6 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonSecondary } from '@polkadotcloud/core-ui';
 import { isValidAddress } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
@@ -13,6 +15,10 @@ import type { AccountInputProps } from './types';
 export const AccountInput = ({
   successCallback,
   defaultLabel,
+  resetOnSuccess = false,
+  successLabel,
+  locked = false,
+  inactive = false,
 }: AccountInputProps) => {
   const { t } = useTranslation('library');
 
@@ -30,6 +36,9 @@ export const AccountInput = ({
 
   // store whether the form is being submitted.
   const [submitting, setSubmitting] = useState<boolean>(false);
+
+  // store whether account input is in success lock state.
+  const [successLock, setSuccessLocked] = useState<boolean>(locked);
 
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
@@ -72,17 +81,19 @@ export const AccountInput = ({
       setSubmitting(false);
 
       // reset state on successful import.
-      if (result) {
-        setReformatted(false);
-        setValue('');
-        setValid(null);
-        setResize();
+      if (result && resetOnSuccess) {
+        resetInput();
+      } else {
+        // flag reset & lock state.
+        setSuccessLocked(true);
       }
     }
   };
 
   let label;
   let labelClass;
+  const showSuccess = successLock && successLabel;
+
   switch (valid) {
     case 'confirm_reformat':
       label = t('confirmReformat');
@@ -98,12 +109,13 @@ export const AccountInput = ({
       labelClass = 'danger';
       break;
     case 'valid':
-      label = t('valid');
-      labelClass = 'success';
+      label = showSuccess ? successLabel : t('valid');
+      labelClass = showSuccess ? 'neutral' : 'success';
       break;
     default:
       label = defaultLabel;
       labelClass = 'neutral';
+      break;
   }
 
   const handleConfirm = () => {
@@ -112,30 +124,56 @@ export const AccountInput = ({
     handleImport();
   };
 
+  const resetInput = () => {
+    setReformatted(false);
+    setValue('');
+    setValid(null);
+    setResize();
+    setSuccessLocked(false);
+  };
+
   return (
-    <AccountInputWrapper>
-      <h5 className={labelClass}>{label}</h5>
-      <div className="input">
+    <AccountInputWrapper className={inactive ? 'inactive' : undefined}>
+      {inactive && <div className="inactive-block" />}
+      <h5 className={labelClass}>
+        {successLock && (
+          <>
+            <FontAwesomeIcon icon={faCheck} />
+            &nbsp;
+          </>
+        )}{' '}
+        {label}
+      </h5>
+      <div className={`input${successLock ? ` disabled` : ``}`}>
         <section>
           <input
             placeholder={`${t('address')}`}
             type="text"
             onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
             value={value}
+            disabled={successLock}
           />
         </section>
         <section>
-          {!reformatted ? (
-            <ButtonSecondary
-              onClick={() => handleImport()}
-              text={submitting ? t('importing') : t('import')}
-              disabled={valid !== 'valid' || submitting}
-            />
+          {successLock ? (
+            <>
+              <ButtonSecondary onClick={() => resetInput()} text="Reset" />
+            </>
           ) : (
-            <ButtonSecondary
-              onClick={() => handleConfirm()}
-              text={t('confirm')}
-            />
+            <>
+              {!reformatted ? (
+                <ButtonSecondary
+                  onClick={() => handleImport()}
+                  text={submitting ? t('importing') : t('import')}
+                  disabled={valid !== 'valid' || submitting}
+                />
+              ) : (
+                <ButtonSecondary
+                  onClick={() => handleConfirm()}
+                  text={t('confirm')}
+                />
+              )}
+            </>
           )}
         </section>
       </div>
