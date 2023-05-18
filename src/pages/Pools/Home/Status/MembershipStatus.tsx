@@ -53,7 +53,8 @@ export const MembershipStatus = () => {
         icon: faCog,
         disabled: !isReady || isReadOnlyAccount(activeAccount),
         small: true,
-        onClick: () => openModalWith('ManagePool', {}, 'small'),
+        onClick: () =>
+          openModalWith('ManagePool', { disableWindowResize: true }, 'small'),
       });
     }
 
