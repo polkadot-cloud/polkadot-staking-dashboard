@@ -90,7 +90,6 @@ export const Commission = ({ setSection }: any) => {
 
         <div
           style={{
-            boxShadow: '0 0 0 5px var(--network-color-transparent) !important',
             padding: '1rem 0.5rem',
           }}
         >

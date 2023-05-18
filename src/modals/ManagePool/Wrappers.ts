@@ -39,4 +39,8 @@ export const ContentWrapper = styled.div`
       margin: 0.2rem 0;
     }
   }
+
+  .rc-slider-handle-dragging {
+    box-shadow: 0 0 0 5px var(--network-color-transparent) !important;
+  }
 `;
