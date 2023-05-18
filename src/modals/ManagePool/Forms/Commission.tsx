@@ -20,6 +20,7 @@ import 'rc-slider/assets/index.css';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { MaybeAccount } from 'types';
+import { CommissionWrapper } from '../Wrappers';
 
 export const Commission = ({ setSection }: any) => {
   const { t } = useTranslation('modals');
@@ -45,6 +46,11 @@ export const Commission = ({ setSection }: any) => {
 
   // Valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
+
+  const resetToDefault = () => {
+    setCommission(bondedPool?.commission?.current[0] || 0);
+    setPayee(bondedPool?.commission?.current[1] || null);
+  };
 
   useEffect(() => {
     setValid(isOwner());
@@ -105,15 +111,9 @@ export const Commission = ({ setSection }: any) => {
 
         <ActionItem text="Set Commission" />
 
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            padding: '1rem 0.5rem 0.25rem 0.5rem',
-          }}
-        >
-          <h4>{commission}% </h4>
-          <div style={{ padding: '0rem 0.25rem 0rem 1.25rem', flexGrow: 1 }}>
+        <CommissionWrapper>
+          <h4 className="current">{commission}% </h4>
+          <div className="slider">
             <Slider
               value={commission}
               step={0.25}
@@ -138,12 +138,15 @@ export const Commission = ({ setSection }: any) => {
               }}
             />
           </div>
-        </div>
+        </CommissionWrapper>
         <AccountInput
-          defaultLabel="Payee Account"
+          defaultLabel="Input Payee Account"
+          successLabel="Payee Added"
+          locked={payee !== null}
           successCallback={async (input) => {
             setPayee(input);
           }}
+          inactive={commission === 0}
         />
       </div>
       <SubmitTx
@@ -154,7 +157,10 @@ export const Commission = ({ setSection }: any) => {
             text={t('back')}
             iconLeft={faChevronLeft}
             iconTransform="shrink-1"
-            onClick={() => setSection(0)}
+            onClick={() => {
+              setSection(0);
+              resetToDefault();
+            }}
           />,
         ]}
         {...submitExtrinsic}
