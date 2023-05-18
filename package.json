@@ -51,7 +51,7 @@
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.4",
     "react-helmet": "^6.1.0",
-    "react-i18next": "^12.2.2",
+    "react-i18next": "^12.3.1",
     "react-router-dom": "^6.11.2",
     "react-scroll": "^1.8.9",
     "styled-components": "^5.3.10",
