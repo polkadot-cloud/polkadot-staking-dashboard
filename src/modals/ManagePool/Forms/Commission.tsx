@@ -2,12 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmitInvert } from '@polkadotcloud/core-ui';
+import { ActionItem, ButtonSubmitInvert } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { AccountInput } from 'library/AccountInput';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -17,6 +18,7 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { MaybeAccount } from 'types';
 
 export const Commission = ({ setSection }: any) => {
   const { t } = useTranslation('modals');
@@ -26,12 +28,18 @@ export const Commission = ({ setSection }: any) => {
   const { getBondedPool } = useBondedPools();
   const { isOwner, selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
+
   const poolId = selectedActivePool?.id;
   const bondedPool = getBondedPool(poolId || 0);
 
   // Store the current commission value.
   const [commission, setCommission] = useState<number>(
-    bondedPool?.commission?.current || 0
+    bondedPool?.commission?.current[0] || 0
+  );
+
+  // Store the commission payee.
+  const [payee, setPayee] = useState<MaybeAccount>(
+    bondedPool?.commission?.current[1] || null
   );
 
   // Valid to submit transaction
@@ -47,7 +55,11 @@ export const Commission = ({ setSection }: any) => {
     if (!valid || !api) {
       return null;
     }
-    return api.tx.nominationPools.setCommission(poolId, [5, activeAccount]);
+
+    return api.tx.nominationPools.setCommission(
+      poolId,
+      payee && commission !== 0 ? [commission, payee] : null
+    );
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
@@ -88,37 +100,46 @@ export const Commission = ({ setSection }: any) => {
           </WarningsWrapper>
         ) : null}
 
+        <ActionItem text="Set Commission" />
+
         <div
           style={{
-            padding: '1rem 0.5rem',
+            padding: '1rem 0.5rem 0.25rem 0.5rem',
           }}
         >
-          <h3>Set Commission</h3>
-          <Slider
-            style={{ margin: '0.75rem 0' }}
-            value={commission}
-            step={0.25}
-            onChange={(val) => {
-              if (typeof val === 'number') {
-                setCommission(val);
-              }
-            }}
-            trackStyle={{
-              backgroundColor: 'var(--network-color-primary)',
-            }}
-            railStyle={{
-              backgroundColor: 'var(--button-secondary-background)',
-            }}
-            handleStyle={{
-              backgroundColor: 'var(--background-primary)',
-              borderColor: 'var(--network-color-primary)',
-              opacity: 1,
-            }}
-            activeDotStyle={{
-              backgroundColor: 'var(--background-primary)',
-            }}
-          />
+          <h4>{commission}% </h4>
+          <div style={{ padding: '0.5rem 0.25rem' }}>
+            <Slider
+              value={commission}
+              step={0.25}
+              onChange={(val) => {
+                if (typeof val === 'number') {
+                  setCommission(val);
+                }
+              }}
+              trackStyle={{
+                backgroundColor: 'var(--network-color-primary)',
+              }}
+              railStyle={{
+                backgroundColor: 'var(--button-secondary-background)',
+              }}
+              handleStyle={{
+                backgroundColor: 'var(--background-primary)',
+                borderColor: 'var(--network-color-primary)',
+                opacity: 1,
+              }}
+              activeDotStyle={{
+                backgroundColor: 'var(--background-primary)',
+              }}
+            />
+          </div>
         </div>
+        <AccountInput
+          defaultLabel="Payee Account"
+          successCallback={async (input) => {
+            setPayee(input);
+          }}
+        />
       </div>
       <SubmitTx
         valid={valid}

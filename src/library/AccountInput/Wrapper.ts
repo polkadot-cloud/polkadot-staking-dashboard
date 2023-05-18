@@ -22,6 +22,7 @@ export const AccountInputWrapper = styled.div`
       > input {
         width: 100%;
         border: none;
+        margin: 0;
         padding-right: 1rem;
       }
 
