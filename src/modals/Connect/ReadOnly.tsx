@@ -72,6 +72,7 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
         <div className="content">
           {inputOpen && (
             <AccountInput
+              resetOnSuccess
               defaultLabel={t('inputAddress')}
               successCallback={async (value: string) => {
                 addExternalAccount(value, 'user');

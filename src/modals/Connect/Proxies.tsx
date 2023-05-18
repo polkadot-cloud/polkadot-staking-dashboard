@@ -61,6 +61,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
           {inputOpen && (
             <>
               <AccountInput
+                resetOnSuccess
                 defaultLabel={t('inputDelegatorAddress')}
                 successCallback={async (delegator) => {
                   const result = await handleDeclareDelegate(delegator);
