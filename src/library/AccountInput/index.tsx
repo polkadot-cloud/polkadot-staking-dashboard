@@ -121,7 +121,7 @@ export const AccountInput = ({
       labelClass = showSuccess ? 'neutral' : 'success';
       break;
     default:
-      label = defaultLabel;
+      label = showSuccess ? successLabel : defaultLabel;
       labelClass = 'neutral';
       break;
   }
