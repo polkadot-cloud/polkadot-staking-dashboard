@@ -7,18 +7,21 @@ import { ButtonSecondary } from '@polkadotcloud/core-ui';
 import { isValidAddress } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AccountInputWrapper } from './Wrapper';
 import type { AccountInputProps } from './types';
 
 export const AccountInput = ({
   successCallback,
+  resetCallback,
   defaultLabel,
   resetOnSuccess = false,
   successLabel,
   locked = false,
   inactive = false,
+  disallowAlreadyImported = true,
+  initialValue = null,
 }: AccountInputProps) => {
   const { t } = useTranslation('library');
 
@@ -26,7 +29,7 @@ export const AccountInput = ({
   const { setResize } = useModal();
 
   // store current input value
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(initialValue || '');
 
   // store whether current input value is valid
   const [valid, setValid] = useState<string | null>(null);
@@ -59,7 +62,7 @@ export const AccountInput = ({
     const alreadyImported = accounts.find(
       (a) => a.address.toUpperCase() === newValue.toUpperCase()
     );
-    if (alreadyImported !== undefined) {
+    if (alreadyImported !== undefined && disallowAlreadyImported) {
       setValid('already_imported');
       return;
     }
@@ -89,6 +92,11 @@ export const AccountInput = ({
       }
     }
   };
+
+  // If initial value changes, update current input value.
+  useEffect(() => {
+    setValue(initialValue || '');
+  }, [initialValue]);
 
   let label;
   let labelClass;
@@ -130,6 +138,9 @@ export const AccountInput = ({
     setValid(null);
     setResize();
     setSuccessLocked(false);
+    if (resetCallback) {
+      resetCallback();
+    }
   };
 
   return (

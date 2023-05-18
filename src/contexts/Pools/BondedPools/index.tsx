@@ -288,7 +288,7 @@ export const BondedPoolsProvider = ({
   });
 
   const getBondedPool = (poolId: MaybePool) =>
-    bondedPools.find((p) => p.id === poolId) ?? null;
+    bondedPools.find((p) => p.id === String(poolId)) ?? null;
 
   /*
    * poolSearchFilter

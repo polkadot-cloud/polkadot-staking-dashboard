@@ -27,37 +27,50 @@ export const Commission = ({ setSection }: any) => {
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount } = useConnect();
-  const { getBondedPool } = useBondedPools();
+  const { getBondedPool, updateBondedPools } = useBondedPools();
   const { isOwner, selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
 
-  const poolId = selectedActivePool?.id;
-  const bondedPool = getBondedPool(poolId || 0);
+  const poolId = selectedActivePool?.id || 0;
+  const bondedPool = getBondedPool(poolId);
+  const initialCommission = Number(
+    (bondedPool?.commission?.current?.[0] || '0%').slice(0, -1)
+  );
+  const initialPayee = bondedPool?.commission?.current?.[1] || null;
 
   // Store the current commission value.
-  const [commission, setCommission] = useState<number>(
-    bondedPool?.commission?.current[0] || 0
-  );
+  const [commission, setCommission] = useState<number>(initialCommission);
 
   // Store the commission payee.
-  const [payee, setPayee] = useState<MaybeAccount>(
-    bondedPool?.commission?.current[1] || null
-  );
+  const [payee, setPayee] = useState<MaybeAccount>(initialPayee);
 
   // Valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
 
   const resetToDefault = () => {
-    setCommission(bondedPool?.commission?.current[0] || 0);
-    setPayee(bondedPool?.commission?.current[1] || null);
+    setCommission(initialCommission);
+    setPayee(initialPayee);
   };
 
+  const hasCurrentCommission = payee && commission !== 0;
+
+  const commissionCurrent = () => {
+    return hasCurrentCommission ? [`${commission}%`, payee] : null;
+  };
+  const invalidCurrentCommission =
+    (commission === 0 && payee !== null) ||
+    (commission !== 0 && payee === null);
+
   useEffect(() => {
-    setValid(isOwner());
-  }, [isOwner()]);
+    setValid(isOwner() && !invalidCurrentCommission);
+  }, [isOwner(), invalidCurrentCommission, bondedPool]);
+
+  useEffect(() => {
+    setCommission(initialCommission);
+    setPayee(initialPayee);
+  }, [bondedPool]);
 
   // tx to submit.
-  // TODO: update to set real commission.
   const getTx = () => {
     if (!valid || !api) {
       return null;
@@ -65,7 +78,7 @@ export const Commission = ({ setSection }: any) => {
 
     return api.tx.nominationPools.setCommission(
       poolId,
-      payee && commission !== 0
+      hasCurrentCommission
         ? [new BigNumber(commission).multipliedBy(10000000).toString(), payee]
         : null
     );
@@ -79,16 +92,18 @@ export const Commission = ({ setSection }: any) => {
       setModalStatus(2);
     },
     callbackInBlock: () => {
-      // TODO: update commission setting in `bondedPools` entry.
-      // const pool = getBondedPool(poolId);
-      // if (pool) {
-      //   updateBondedPools([
-      //     {
-      //       ...pool,
-      //       state: poolStateFromTask(task),
-      //     },
-      //   ]);
-      // }
+      const pool = getBondedPool(poolId);
+      if (pool) {
+        updateBondedPools([
+          {
+            ...pool,
+            commission: {
+              ...pool.commission,
+              current: commissionCurrent(),
+            },
+          },
+        ]);
+      }
     },
   });
 
@@ -146,6 +161,11 @@ export const Commission = ({ setSection }: any) => {
           successCallback={async (input) => {
             setPayee(input);
           }}
+          resetCallback={() => {
+            setPayee(null);
+          }}
+          disallowAlreadyImported={false}
+          initialValue={payee}
           inactive={commission === 0}
         />
       </div>
