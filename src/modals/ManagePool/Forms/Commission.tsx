@@ -3,6 +3,7 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ActionItem, ButtonSubmitInvert } from '@polkadotcloud/core-ui';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -58,7 +59,9 @@ export const Commission = ({ setSection }: any) => {
 
     return api.tx.nominationPools.setCommission(
       poolId,
-      payee && commission !== 0 ? [commission, payee] : null
+      payee && commission !== 0
+        ? [new BigNumber(commission).multipliedBy(10000000).toString(), payee]
+        : null
     );
   };
 
