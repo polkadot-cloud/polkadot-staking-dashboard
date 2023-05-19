@@ -198,18 +198,18 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   const commissionFeedback = (() => {
     if (!commissionChanged) {
       return {
-        text: 'Commission Rate',
+        text: t('commissionRate'),
         label: 'neutral',
       };
     }
     if (commissionAboveMax) {
       return {
-        text: 'Cannot Be Above Max',
+        text: t('cannotBeAboveMax'),
         label: 'danger',
       };
     }
     return {
-      text: 'Commission Updated',
+      text: t('commissionUpdated'),
       label: 'neutral',
     };
   })();
@@ -217,18 +217,18 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   const maxCommissionFeedback = (() => {
     if (!maxCommissionChanged) {
       return {
-        text: 'Max Commission',
+        text: t('maxCommissio'),
         label: 'neutral',
       };
     }
     if (invalidMaxCommission) {
       return {
-        text: 'Cannot Be Above Existing',
+        text: t('cannotBeAboveExisting'),
         label: 'danger',
       };
     }
     return {
-      text: 'Maximum Commission Updated',
+      text: t('maximumCommissionUpdated'),
       label: 'neutral',
     };
   })();
@@ -261,7 +261,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
           </WarningsWrapper>
         ) : null}
 
-        <ActionItem text="Set Commission" />
+        <ActionItem text={t('setCommission')} />
 
         <CommissionWrapper>
           <h5 className={commissionFeedback.label}>
@@ -288,8 +288,8 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
         </CommissionWrapper>
 
         <AccountInput
-          defaultLabel="Input Payee Account"
-          successLabel="Payee Added"
+          defaultLabel={t('inputPayeeAccount')}
+          successLabel={`${t('payeeAdded')}`}
           locked={payee !== null}
           successCallback={async (input) => {
             setPayee(input);
@@ -307,7 +307,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
             marginTop: '2rem',
             borderBottomWidth: maxCommissionEnabled ? '1px' : 0,
           }}
-          text="Set Max Commission"
+          text={t('setMaxCommission')}
           toggled={maxCommissionEnabled}
           onToggle={(val) => setMaxCommissionEnabled(val)}
           disabled={!!maxCommissionSet}
