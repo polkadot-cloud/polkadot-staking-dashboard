@@ -80,8 +80,8 @@ export const Commission = ({ setSection }: any) => {
 
   // Monitor when input items change.
   const commissionChanged =
-    (!commissionCurrentSet && commission === initialCommission) ||
-    commission !== initialCommission;
+    (!commissionCurrentSet && commission !== initialCommission) ||
+    (commissionCurrentSet && commission !== initialCommission);
 
   const maxCommissionChanged =
     (!maxCommissionSet && maxCommission === initialMaxCommission) ||
