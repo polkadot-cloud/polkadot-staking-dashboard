@@ -13,6 +13,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
+import { DefaultLocale } from 'consts';
 import { useApi } from 'contexts/Api';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
@@ -87,7 +88,7 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const data = {
     labels: graphPayouts.map((item: AnySubscan) => {
       const dateObj = format(fromUnixTime(item.block_timestamp), 'do MMM', {
-        locale: locales[i18n.resolvedLanguage ?? 'en'],
+        locale: locales[i18n.resolvedLanguage ?? DefaultLocale],
       });
       return `${dateObj}`;
     }),

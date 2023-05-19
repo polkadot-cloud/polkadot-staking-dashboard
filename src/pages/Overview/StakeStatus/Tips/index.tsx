@@ -3,7 +3,7 @@
 
 import { setStateWithRef } from '@polkadotcloud/utils';
 import { TipsConfig } from 'config/tips';
-import { TipsThresholdMedium, TipsThresholdSmall } from 'consts';
+import { DefaultLocale, TipsThresholdMedium, TipsThresholdSmall } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -143,7 +143,7 @@ export const Tips = () => {
         title: t(`${id}.0`, { ns: 'tips' }),
         subtitle: t(`${id}.1`, { ns: 'tips' }),
         description: i18n.getResource(
-          i18n.resolvedLanguage ?? 'en',
+          i18n.resolvedLanguage ?? DefaultLocale,
           'tips',
           `${id}.2`
         ),

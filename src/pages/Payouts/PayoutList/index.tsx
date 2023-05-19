@@ -5,7 +5,7 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { clipAddress, isNotZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
+import { DefaultLocale, ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -249,7 +249,10 @@ export const PayoutListInner = ({
                               new Date(),
                               {
                                 addSuffix: true,
-                                locale: locales[i18n.resolvedLanguage ?? 'en'],
+                                locale:
+                                  locales[
+                                    i18n.resolvedLanguage ?? DefaultLocale
+                                  ],
                               }
                             )}
                           </h5>
