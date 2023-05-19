@@ -61,9 +61,11 @@ export const Commission = ({ setSection }: any) => {
     (commission === 0 && payee !== null) ||
     (commission !== 0 && payee === null);
 
+  const noChange = commission === initialCommission;
+
   useEffect(() => {
-    setValid(isOwner() && !invalidCurrentCommission);
-  }, [isOwner(), invalidCurrentCommission, bondedPool]);
+    setValid(isOwner() && !invalidCurrentCommission && !noChange);
+  }, [isOwner(), invalidCurrentCommission, bondedPool, noChange]);
 
   useEffect(() => {
     setCommission(initialCommission);
