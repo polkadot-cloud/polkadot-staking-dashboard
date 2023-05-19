@@ -20,7 +20,7 @@ export const EmptyH256 = new Uint8Array(32);
 export const ModPrefix = stringToU8a('modl');
 export const U32Opts = { bitLength: 32, isLe: true };
 
-export const InterfaceMaximumWidth = 1550;
+export const InterfaceMaximumWidth = 1500;
 export const SideMenuMaximisedWidth = 185;
 export const SideMenuMinimisedWidth = 75;
 export const SideMenuStickyThreshold = 1175;
