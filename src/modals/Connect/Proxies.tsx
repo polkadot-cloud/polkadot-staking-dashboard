@@ -89,8 +89,9 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                               {getAccount(delegate)?.name || delegate}
                             </h4>
                             <h4 className="subtitle">
-                              {t('for')}{' '}
-                              {getAccount(delegator)?.name || delegator}
+                              {t('for', {
+                                who: getAccount(delegator)?.name || delegator,
+                              })}
                             </h4>
                           </div>
                         </div>

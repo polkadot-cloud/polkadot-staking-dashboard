@@ -77,7 +77,7 @@
     "favoriteValidators": "Favorite Validators",
     "feedback": "Feedback",
     "feedbackPage": "We host a feedback page on",
-    "for": "For",
+    "for": "For {{who}}",
     "forget": "Forget",
     "getAnotherAccount": "Get Another Account",
     "gettingAccount": "Getting Account",
