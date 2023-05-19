@@ -10,7 +10,7 @@ import type { DelegatesProps } from './types';
 export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
   const { getAccount, accounts } = useConnect();
 
-  // Remove delegates that are not imported accounts. Default to empty array if there are no
+  // Filter delegates that are external or not imported. Default to empty array if there are no
   // delegates for this address.
   const delegatesList =
     delegates?.delegates.filter(
