@@ -83,16 +83,20 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                           </span>
                           <div className="text">
                             <h4 className="title">
-                              <span>{proxyType} Proxy</span>
+                              <span>
+                                {proxyType} {t('proxy')}
+                              </span>
                               {getAccount(delegate)?.name || delegate}
                             </h4>
                             <h4 className="subtitle">
-                              for {getAccount(delegator)?.name || delegator}
+                              {t('for', {
+                                who: getAccount(delegator)?.name || delegator,
+                              })}
                             </h4>
                           </div>
                         </div>
                         <div />
-                        <ButtonSecondary text="Declared" disabled />
+                        <ButtonSecondary text={t('declared')} disabled />
                       </ManualAccount>
                     ))}
                   </React.Fragment>

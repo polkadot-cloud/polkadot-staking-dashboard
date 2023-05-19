@@ -38,8 +38,8 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
               }}
             >
               <div>
-                <h3>Manage Commission</h3>
-                <p>Update pool commission settings.</p>
+                <h3>{t('manageCommission')}</h3>
+                <p>{t('updatePoolCommission')}</p>
               </div>
               <div>
                 <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
