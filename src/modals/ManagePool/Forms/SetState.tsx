@@ -134,8 +134,6 @@ export const SetState = ({ setSection, task }: any) => {
             ))}
           </WarningsWrapper>
         ) : null}
-
-        {/* include task title if present */}
         {content.title}
         {content.message}
       </div>
