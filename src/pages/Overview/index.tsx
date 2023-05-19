@@ -9,6 +9,7 @@ import {
 } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import { DefaultLocale } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useSubscan } from 'contexts/Subscan';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
@@ -55,7 +56,7 @@ export const Overview = () => {
     formatTo = new Date();
     formatOpts = {
       addSuffix: true,
-      locale: locales[i18n.resolvedLanguage ?? 'en'],
+      locale: locales[i18n.resolvedLanguage ?? DefaultLocale],
     };
   }
 
