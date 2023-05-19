@@ -55,7 +55,7 @@ export const Overview = () => {
     formatTo = new Date();
     formatOpts = {
       addSuffix: true,
-      locale: locales[i18n.resolvedLanguage],
+      locale: locales[i18n.resolvedLanguage ?? 'en'],
     };
   }
 
