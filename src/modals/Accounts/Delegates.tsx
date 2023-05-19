@@ -8,15 +8,16 @@ import { AccountGroupWrapper } from './Wrappers';
 import type { DelegatesProps } from './types';
 
 export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
-  const { accounts } = useConnect();
+  const { getAccount, accounts } = useConnect();
 
-  // Remove delegates that are not imported accounts. Default to empty array if there are no
+  // Filter delegates that are external or not imported. Default to empty array if there are no
   // delegates for this address.
   const delegatesList =
     delegates?.delegates.filter(
-      (d) =>
-        accounts.find((a) => a.address === d.delegate) !== undefined &&
-        isSupportedProxy(d.proxyType)
+      ({ delegate, proxyType }) =>
+        accounts.find(({ address }) => address === delegate) !== undefined &&
+        isSupportedProxy(proxyType) &&
+        getAccount(delegate || null)?.source !== 'external'
     ) || [];
 
   return (
