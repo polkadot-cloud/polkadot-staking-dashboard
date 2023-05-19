@@ -40,3 +40,42 @@ export const ContentWrapper = styled.div`
     }
   }
 `;
+
+export const CommissionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 0.5rem 0 0.5rem;
+
+  > h5 {
+    margin: 1rem 0 0.5rem 0;
+
+    &.neutral {
+      color: var(--text-color-primary);
+      opacity: 0.8;
+    }
+    &.danger {
+      color: var(--status-danger-color);
+    }
+    &.success {
+      color: var(--status-success-color);
+    }
+  }
+
+  > div {
+    display: flex;
+    align-items: center;
+
+    > .current {
+      width: 3rem;
+    }
+
+    > .slider {
+      padding: 0 0.25rem 0 1.25rem;
+      flex-grow: 1;
+
+      .rc-slider-handle-dragging {
+        box-shadow: 0 0 0 5px var(--network-color-transparent) !important;
+      }
+    }
+  }
+`;

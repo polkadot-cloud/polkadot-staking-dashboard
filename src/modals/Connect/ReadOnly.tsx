@@ -16,9 +16,9 @@ import { useConnect } from 'contexts/Connect';
 import type { ExternalAccount } from 'contexts/Connect/types';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
+import { AccountInput } from 'library/AccountInput';
 import { Identicon } from 'library/Identicon';
 import { useTranslation } from 'react-i18next';
-import { AccountInput } from './AccountInput';
 import {
   ActionWithButton,
   ManualAccount,
@@ -72,6 +72,7 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
         <div className="content">
           {inputOpen && (
             <AccountInput
+              resetOnSuccess
               defaultLabel={t('inputAddress')}
               successCallback={async (value: string) => {
                 addExternalAccount(value, 'user');

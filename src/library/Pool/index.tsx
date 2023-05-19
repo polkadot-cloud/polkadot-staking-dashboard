@@ -15,6 +15,7 @@ import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
 import { FavoritePool } from 'library/ListItem/Labels/FavoritePool';
 import { PoolBonded } from 'library/ListItem/Labels/PoolBonded';
+import { PoolCommission } from 'library/ListItem/Labels/PoolCommission';
 import { PoolIdentity } from 'library/ListItem/Labels/PoolIdentity';
 import {
   Labels,
@@ -36,14 +37,19 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
 
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { meta } = useBondedPools();
+  const { meta, getBondedPool } = useBondedPools();
   const { membership } = usePoolMemberships();
   const { addNotification } = useNotifications();
   const { validators } = useValidators();
   const { isPoolSyncing } = useUi();
-
   const { setActiveTab } = usePoolsTabs();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
+  const bondedPool = getBondedPool(id);
+
+  let currentCommission = bondedPool?.commission?.current?.[0];
+  if (currentCommission) {
+    currentCommission = `${Number(currentCommission.slice(0, -1))}%`;
+  }
 
   // get metadata from pools metabatch
   const nominations = meta[batchKey]?.nominations ?? [];
@@ -121,9 +127,12 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
           />
           <div>
             <Labels>
-              <FavoritePool address={addresses.stash} />
+              {currentCommission && (
+                <PoolCommission commission={currentCommission} />
+              )}
               <PoolId id={id} />
               <Members members={memberCounter} />
+              <FavoritePool address={addresses.stash} />
               <button
                 type="button"
                 className="label"
