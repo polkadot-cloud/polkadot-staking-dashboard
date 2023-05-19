@@ -15,8 +15,7 @@ export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
   const delegatesList =
     delegates?.delegates.filter(
       ({ delegate, proxyType }) =>
-        accounts.find((address) => address.address === delegate) !==
-          undefined &&
+        accounts.find(({ address }) => address === delegate) !== undefined &&
         isSupportedProxy(proxyType) &&
         getAccount(delegate || null)?.source !== 'external'
     ) || [];
