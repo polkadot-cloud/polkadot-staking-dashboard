@@ -14,10 +14,11 @@ export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
   // delegates for this address.
   const delegatesList =
     delegates?.delegates.filter(
-      (d) =>
-        accounts.find((a) => a.address === d.delegate) !== undefined &&
-        isSupportedProxy(d.proxyType) &&
-        getAccount(d.delegate || '')?.source !== 'external'
+      ({ delegate, proxyType }) =>
+        accounts.find((address) => address.address === delegate) !==
+          undefined &&
+        isSupportedProxy(proxyType) &&
+        getAccount(delegate || null)?.source !== 'external'
     ) || [];
 
   return (
