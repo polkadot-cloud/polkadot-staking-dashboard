@@ -48,6 +48,17 @@ export const CommissionWrapper = styled.div`
 
   > h5 {
     margin: 1rem 0 0.5rem 0;
+
+    &.neutral {
+      color: var(--text-color-primary);
+      opacity: 0.8;
+    }
+    &.danger {
+      color: var(--status-danger-color);
+    }
+    &.success {
+      color: var(--status-success-color);
+    }
   }
 
   > div {

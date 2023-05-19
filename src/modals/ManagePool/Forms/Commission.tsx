@@ -34,10 +34,14 @@ export const Commission = ({ setSection }: any) => {
 
   const poolId = selectedActivePool?.id || 0;
   const bondedPool = getBondedPool(poolId);
+
+  const commissionCurrentSet = !!bondedPool?.commission?.current;
   const initialCommission = Number(
     (bondedPool?.commission?.current?.[0] || '0%').slice(0, -1)
   );
   const initialPayee = bondedPool?.commission?.current?.[1] || null;
+
+  const maxCommissionSet = !!bondedPool?.commission?.max;
   const initialMaxCommission = Number(
     (bondedPool?.commission?.max || '100%').slice(0, -1)
   );
@@ -64,17 +68,42 @@ export const Commission = ({ setSection }: any) => {
   const hasCurrentCommission = payee && commission !== 0;
 
   const commissionCurrent = () => {
-    return hasCurrentCommission ? [`${commission}%`, payee] : null;
+    return hasCurrentCommission ? [`${commission.toFixed(2)}%`, payee] : null;
   };
+
+  // Monitor when input items are invalid.
   const invalidCurrentCommission =
     (commission === 0 && payee !== null) ||
     (commission !== 0 && payee === null);
 
-  const noChange = commission === initialCommission;
+  const invalidMaxCommission = maxCommission > initialMaxCommission;
+
+  // Monitor when input items change.
+  const commissionChanged =
+    (!commissionCurrentSet && commission === initialCommission) ||
+    commission !== initialCommission;
+
+  const maxCommissionChanged =
+    (!maxCommissionSet && maxCommission === initialMaxCommission) ||
+    maxCommission !== initialMaxCommission;
+
+  // Global form change.
+  const noChange = !commissionChanged && !maxCommissionChanged;
 
   useEffect(() => {
-    setValid(isOwner() && !invalidCurrentCommission && !noChange);
-  }, [isOwner(), invalidCurrentCommission, bondedPool, noChange]);
+    setValid(
+      isOwner() &&
+        !invalidCurrentCommission &&
+        !invalidMaxCommission &&
+        !noChange
+    );
+  }, [
+    isOwner(),
+    invalidCurrentCommission,
+    invalidMaxCommission,
+    bondedPool,
+    noChange,
+  ]);
 
   useEffect(() => {
     resetToDefault();
@@ -86,12 +115,33 @@ export const Commission = ({ setSection }: any) => {
       return null;
     }
 
-    return api.tx.nominationPools.setCommission(
-      poolId,
-      hasCurrentCommission
-        ? [new BigNumber(commission).multipliedBy(10000000).toString(), payee]
-        : null
-    );
+    const txs = [];
+    if (commissionChanged) {
+      txs.push(
+        api.tx.nominationPools.setCommission(
+          poolId,
+          hasCurrentCommission
+            ? [
+                new BigNumber(commission).multipliedBy(10000000).toString(),
+                payee,
+              ]
+            : null
+        )
+      );
+    }
+    if (maxCommissionChanged) {
+      txs.push(
+        api.tx.nominationPools.setCommissionMax(
+          poolId,
+          new BigNumber(maxCommission).multipliedBy(10000000).toString()
+        )
+      );
+    }
+
+    if (txs.length === 1) {
+      return txs[0];
+    }
+    return api.tx.utility.batch(txs);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
@@ -110,6 +160,9 @@ export const Commission = ({ setSection }: any) => {
             commission: {
               ...pool.commission,
               current: commissionCurrent(),
+              max: maxCommissionChanged
+                ? `${maxCommission.toFixed(2)}%`
+                : pool.commission?.max || null,
             },
           },
         ]);
@@ -139,6 +192,28 @@ export const Commission = ({ setSection }: any) => {
       backgroundColor: 'var(--background-primary)',
     },
   };
+
+  const maxCommissionFeedback = (() => {
+    if (!maxCommissionChanged) {
+      return {
+        check: false,
+        text: 'Set Maximum',
+        label: 'neutral',
+      };
+    }
+    if (maxCommission > initialMaxCommission) {
+      return {
+        check: false,
+        text: 'Cannot be above existing',
+        label: 'danger',
+      };
+    }
+    return {
+      check: true,
+      text: 'Maximum Valid',
+      label: 'success',
+    };
+  })();
 
   return (
     <>
@@ -189,8 +264,13 @@ export const Commission = ({ setSection }: any) => {
         <ActionItem text="Set Max Commission" />
 
         <CommissionWrapper>
-          <h5>
-            <FontAwesomeIcon icon={faCheck} /> &nbsp;Valid
+          <h5 className={maxCommissionFeedback.label}>
+            {maxCommissionFeedback.check && (
+              <>
+                <FontAwesomeIcon icon={faCheck} /> &nbsp;
+              </>
+            )}
+            {maxCommissionFeedback.text}
           </h5>
           <div>
             <h4 className="current">{maxCommission}% </h4>
