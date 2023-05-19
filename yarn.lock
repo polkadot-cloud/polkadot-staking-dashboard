@@ -4709,10 +4709,10 @@ util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
-vite-bundle-visualizer@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.npmjs.org/vite-bundle-visualizer/-/vite-bundle-visualizer-0.6.0.tgz#c8d1d0e846d57dcec3909abfd07524cd7492d5c9"
-  integrity sha512-FubYa69t5SHD0sT2naUGpRaOlKMlDqlJkWcqxR+1NJVwt8zYBdBg/mKI1dG4xelnd6c7TLC9BXOAB1nM6rD0XA==
+vite-bundle-visualizer@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/vite-bundle-visualizer/-/vite-bundle-visualizer-0.7.0.tgz#126ea401230e668272b6b299bcba71835a772a88"
+  integrity sha512-2qHi7aXMnM9hGe7Nr4Jg4D6TZLaNzr+qbw7XKvnpIPiTF/8c90n9sSl/Q6oc7FV5bkiSCLvyNRTzHLVyv53zQA==
   dependencies:
     cac "^6.7.14"
     rollup-plugin-visualizer "^5.9.0"
