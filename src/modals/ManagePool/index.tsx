@@ -23,6 +23,11 @@ export const ManagePool = () => {
   // active modal section
   const [section, setSection] = useState<number>(0);
 
+  // counter to trigger modal height calculation
+  const [calculateHeight, setCalculateHeight] = useState<number>(0);
+  const incrementCalculateHeight = () =>
+    setCalculateHeight(calculateHeight + 1);
+
   // refs for wrappers
   const headerRef = useRef<HTMLDivElement>(null);
   const tasksRef = useRef<HTMLDivElement>(null);
@@ -37,7 +42,7 @@ export const ManagePool = () => {
       height += formsRef.current?.clientHeight || 0;
     }
     setModalHeight(height);
-  }, [section, task]);
+  }, [section, task, calculateHeight]);
 
   return (
     <MultiSectionWrapper>
@@ -66,6 +71,7 @@ export const ManagePool = () => {
           task={task}
           section={section}
           ref={formsRef}
+          incrementCalculateHeight={incrementCalculateHeight}
         />
       </TwoSectionsWrapper>
     </MultiSectionWrapper>

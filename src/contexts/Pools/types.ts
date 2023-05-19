@@ -87,6 +87,12 @@ export interface BondedPool {
     stateToggler: string;
   };
   state: PoolState;
+  commission?: {
+    current?: AnyJson;
+    max?: AnyJson;
+    changeRate?: AnyJson;
+    throttleFrom?: AnyJson;
+  };
 }
 
 export type NominationStatuses = Record<string, string>;

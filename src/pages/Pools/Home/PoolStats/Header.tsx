@@ -15,8 +15,13 @@ export const Header = () => {
   const { selectedActivePool } = useActivePools();
   const { getMembersOfPool } = usePoolMembers();
 
-  const { state, points } = selectedActivePool?.bondedPool || {};
+  const { state, points, commission } = selectedActivePool?.bondedPool || {};
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
+
+  let currentCommission = commission?.current?.[0];
+  if (currentCommission) {
+    currentCommission = `${Number(currentCommission.slice(0, -1))}%`;
+  }
 
   const bonded = planckToUnit(
     new BigNumber(points ? rmCommas(points) : 0),
@@ -48,6 +53,14 @@ export const Header = () => {
               <h4>{t('pools.poolState')}</h4>
             </div>
           </div>
+          {currentCommission && (
+            <div>
+              <div className="inner">
+                <h2>{currentCommission}</h2>
+                <h4>Pool Commission</h4>
+              </div>
+            </div>
+          )}
           <div>
             <div className="inner">
               <h2>{poolMembers.length}</h2>
