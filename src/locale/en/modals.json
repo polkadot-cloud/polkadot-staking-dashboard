@@ -226,6 +226,18 @@
     "withdraw": "Withdraw",
     "withdrawMemberFunds": "Withdraw Member Funds",
     "withdrawSubtitle": "Funds will be immediately available as free balance after withdrawing.",
-    "withdrawUnlocked": "Withdraw Unlocked"
+    "withdrawUnlocked": "Withdraw Unlocked",
+    "manageCommission":"Manage Commission",
+    "updatePoolCommission":"Update pool commission settings.",
+    "commissionRate":"Commission Rate",
+    "cannotBeAboveMax":"Cannot Be Above Max",
+    "commissionUpdated":"Commission Updated",
+    "maxCommission":"Max Commission",
+    "cannotBeAboveExisting":"Cannot Be Above Existing",
+    "maximumCommissionUpdated":"Maximum Commission Updated",
+    "setCommission":"Set Commission",
+    "inputPayeeAccount":"Input Payee Account",
+    "payeeAdded":"Payee Added",
+    "setMaxCommission":"Set Max Commission"
   }
 }

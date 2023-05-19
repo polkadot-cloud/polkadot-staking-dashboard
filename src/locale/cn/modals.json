@@ -216,6 +216,18 @@
     "withdraw": "提取",
     "withdrawMemberFunds": "取出会员资金",
     "withdrawSubtitle": "资金将在取款后立即转作可用余额",
-    "withdrawUnlocked": "取出己解锁"
+    "withdrawUnlocked": "取出己解锁",
+    "manageCommission":"管理佣金值",
+    "updatePoolCommission":"更新提名池佣金设置",
+    "commissionRate":"佣金率",
+    "cannotBeAboveMax":"不能高于最大佣金值",
+    "commissionUpdated":"佣金值最新值",
+    "maxCommission":"最高佣金值",
+    "cannotBeAboveExisting":"不能高于己设定佣金值",
+    "maximumCommissionUpdated":"最高佣金值最新值",
+    "setCommission":"设置佣金值",
+    "inputPayeeAccount":"输入收款人账户",
+    "payeeAdded":"已添加收款人",
+    "setMaxCommission":"设置最高佣金值"
   }
 }
