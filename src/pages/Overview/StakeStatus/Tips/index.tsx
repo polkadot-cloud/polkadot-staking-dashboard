@@ -142,7 +142,11 @@ export const Tips = () => {
         ...i,
         title: t(`${id}.0`, { ns: 'tips' }),
         subtitle: t(`${id}.1`, { ns: 'tips' }),
-        description: i18n.getResource(i18n.resolvedLanguage, 'tips', `${id}.2`),
+        description: i18n.getResource(
+          i18n.resolvedLanguage ?? 'en',
+          'tips',
+          `${id}.2`
+        ),
       },
       ['title', 'subtitle', 'description']
     );

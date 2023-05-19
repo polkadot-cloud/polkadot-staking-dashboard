@@ -249,7 +249,7 @@ export const PayoutListInner = ({
                               new Date(),
                               {
                                 addSuffix: true,
-                                locale: locales[i18n.resolvedLanguage],
+                                locale: locales[i18n.resolvedLanguage ?? 'en'],
                               }
                             )}
                           </h5>

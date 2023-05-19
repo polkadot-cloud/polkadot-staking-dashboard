@@ -105,7 +105,7 @@ export const SubscanProvider = ({
       // latest payout date
       setPayoutsToDate(
         format(fromUnixTime(filteredPayouts[0].block_timestamp), 'do MMM', {
-          locale: locales[i18n.resolvedLanguage],
+          locale: locales[i18n.resolvedLanguage ?? 'en'],
         })
       );
     }

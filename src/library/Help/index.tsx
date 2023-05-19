@@ -87,7 +87,7 @@ export const Help = () => {
         {
           title: t(`definitions.${localeKey}.0`),
           description: i18n.getResource(
-            i18n.resolvedLanguage,
+            i18n.resolvedLanguage ?? 'en',
             'help',
             `definitions.${localeKey}.1`
           ),
@@ -107,7 +107,7 @@ export const Help = () => {
 
     const title = t(`definitions.${localeKey}.0`);
     const description = i18n.getResource(
-      i18n.resolvedLanguage,
+      i18n.resolvedLanguage ?? 'en',
       'help',
       `definitions.${localeKey}.1`
     );
