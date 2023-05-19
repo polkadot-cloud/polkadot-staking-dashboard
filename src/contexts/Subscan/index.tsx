@@ -97,7 +97,7 @@ export const SubscanProvider = ({
           ),
           'do MMM',
           {
-            locale: locales[i18n.resolvedLanguage],
+            locale: locales[i18n.resolvedLanguage || 'en'],
           }
         )
       );
