@@ -1,8 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faCheck, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ActionItem, ButtonSubmitInvert } from '@polkadotcloud/core-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -23,7 +22,7 @@ import { useTranslation } from 'react-i18next';
 import type { MaybeAccount } from 'types';
 import { CommissionWrapper } from '../Wrappers';
 
-export const Commission = ({ setSection }: any) => {
+export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
@@ -48,6 +47,11 @@ export const Commission = ({ setSection }: any) => {
 
   // Store the current commission value.
   const [commission, setCommission] = useState<number>(initialCommission);
+
+  // Max commission enabled
+  const [maxCommissionEnabled, setMaxCommissionEnabled] = useState<boolean>(
+    !!maxCommissionSet
+  );
 
   // Store the maximum commission value.
   const [maxCommission, setMaxCommission] =
@@ -90,12 +94,17 @@ export const Commission = ({ setSection }: any) => {
   // Global form change.
   const noChange = !commissionChanged && !maxCommissionChanged;
 
+  // Check there are txs to submit
+  const txsToSubmit =
+    commissionChanged || (maxCommissionChanged && maxCommissionEnabled);
+
   useEffect(() => {
     setValid(
       isOwner() &&
         !invalidCurrentCommission &&
         !invalidMaxCommission &&
-        !noChange
+        !noChange &&
+        txsToSubmit
     );
   }, [
     isOwner(),
@@ -103,11 +112,17 @@ export const Commission = ({ setSection }: any) => {
     invalidMaxCommission,
     bondedPool,
     noChange,
+    txsToSubmit,
   ]);
 
   useEffect(() => {
     resetToDefault();
   }, [bondedPool]);
+
+  // Trigger modal resize when max commission is enabled / disabled.
+  useEffect(() => {
+    incrementCalculateHeight();
+  }, [maxCommissionEnabled]);
 
   // tx to submit.
   const getTx = () => {
@@ -129,7 +144,7 @@ export const Commission = ({ setSection }: any) => {
         )
       );
     }
-    if (maxCommissionChanged) {
+    if (maxCommissionChanged && maxCommissionEnabled) {
       txs.push(
         api.tx.nominationPools.setCommissionMax(
           poolId,
@@ -196,22 +211,19 @@ export const Commission = ({ setSection }: any) => {
   const maxCommissionFeedback = (() => {
     if (!maxCommissionChanged) {
       return {
-        check: false,
         text: 'Set Maximum',
         label: 'neutral',
       };
     }
     if (maxCommission > initialMaxCommission) {
       return {
-        check: false,
         text: 'Cannot be above existing',
         label: 'danger',
       };
     }
     return {
-      check: true,
-      text: 'Maximum Valid',
-      label: 'success',
+      text: 'Maximum Commission Valid',
+      label: 'neutral',
     };
   })();
 
@@ -261,36 +273,42 @@ export const Commission = ({ setSection }: any) => {
           inactive={commission === 0}
         />
 
-        <ActionItem text="Set Max Commission" />
+        <ActionItem
+          style={{
+            marginTop: '2rem',
+            borderBottomWidth: maxCommissionEnabled ? '1px' : 0,
+          }}
+          text="Set Max Commission"
+          toggled={maxCommissionEnabled}
+          onToggle={(val) => setMaxCommissionEnabled(val)}
+          disabled={!!maxCommissionSet}
+        />
 
-        <CommissionWrapper>
-          <h5 className={maxCommissionFeedback.label}>
-            {maxCommissionFeedback.check && (
-              <>
-                <FontAwesomeIcon icon={faCheck} /> &nbsp;
-              </>
-            )}
-            {maxCommissionFeedback.text}
-          </h5>
-          <div>
-            <h4 className="current">{maxCommission}% </h4>
-            <div className="slider">
-              <Slider
-                value={maxCommission}
-                step={0.25}
-                onChange={(val) => {
-                  if (typeof val === 'number') {
-                    setMaxCommission(val);
-                    if (val < commission) {
-                      setCommission(val);
+        {maxCommissionEnabled && (
+          <CommissionWrapper>
+            <h5 className={maxCommissionFeedback.label}>
+              {maxCommissionFeedback.text}
+            </h5>
+            <div>
+              <h4 className="current">{maxCommission}% </h4>
+              <div className="slider">
+                <Slider
+                  value={maxCommission}
+                  step={0.25}
+                  onChange={(val) => {
+                    if (typeof val === 'number') {
+                      setMaxCommission(val);
+                      if (val < commission) {
+                        setCommission(val);
+                      }
                     }
-                  }
-                }}
-                {...sliderProps}
-              />
+                  }}
+                  {...sliderProps}
+                />
+              </div>
             </div>
-          </div>
-        </CommissionWrapper>
+          </CommissionWrapper>
+        )}
       </div>
       <SubmitTx
         valid={valid}

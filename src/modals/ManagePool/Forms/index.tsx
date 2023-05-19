@@ -8,7 +8,7 @@ import { SetMetadata } from './SetMetadata';
 import { SetState } from './SetState';
 
 export const Forms = forwardRef(
-  ({ setSection, task, section }: any, ref: any) => {
+  ({ setSection, task, section, incrementCalculateHeight }: any, ref: any) => {
     return (
       <>
         <ContentWrapper>
@@ -16,7 +16,11 @@ export const Forms = forwardRef(
             {task === 'set_pool_metadata' ? (
               <SetMetadata setSection={setSection} section={section} />
             ) : task === 'manage_commission' ? (
-              <Commission setSection={setSection} section={section} />
+              <Commission
+                setSection={setSection}
+                section={section}
+                incrementCalculateHeight={incrementCalculateHeight}
+              />
             ) : (
               <SetState setSection={setSection} task={task} />
             )}
