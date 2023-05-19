@@ -43,19 +43,28 @@ export const ContentWrapper = styled.div`
 
 export const CommissionWrapper = styled.div`
   display: flex;
-  align-items: center;
-  padding: 1rem 0.5rem 0.25rem 0.5rem;
+  flex-direction: column;
+  padding: 0 0.5rem 0 0.5rem;
 
-  > .current {
-    width: 3rem;
+  > h5 {
+    margin: 1rem 0 0.5rem 0;
   }
 
-  > .slider {
-    padding: 0rem 0.25rem 0rem 1.25rem;
-    flex-grow: 1;
+  > div {
+    display: flex;
+    align-items: center;
 
-    .rc-slider-handle-dragging {
-      box-shadow: 0 0 0 5px var(--network-color-transparent) !important;
+    > .current {
+      width: 3rem;
+    }
+
+    > .slider {
+      padding: 0 0.25rem 0 1.25rem;
+      flex-grow: 1;
+
+      .rc-slider-handle-dragging {
+        box-shadow: 0 0 0 5px var(--network-color-transparent) !important;
+      }
     }
   }
 `;

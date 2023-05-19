@@ -1,7 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ActionItem, ButtonSubmitInvert } from '@polkadotcloud/core-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -37,9 +38,16 @@ export const Commission = ({ setSection }: any) => {
     (bondedPool?.commission?.current?.[0] || '0%').slice(0, -1)
   );
   const initialPayee = bondedPool?.commission?.current?.[1] || null;
+  const initialMaxCommission = Number(
+    (bondedPool?.commission?.max || '100%').slice(0, -1)
+  );
 
   // Store the current commission value.
   const [commission, setCommission] = useState<number>(initialCommission);
+
+  // Store the maximum commission value.
+  const [maxCommission, setMaxCommission] =
+    useState<number>(initialMaxCommission);
 
   // Store the commission payee.
   const [payee, setPayee] = useState<MaybeAccount>(initialPayee);
@@ -50,6 +58,7 @@ export const Commission = ({ setSection }: any) => {
   const resetToDefault = () => {
     setCommission(initialCommission);
     setPayee(initialPayee);
+    setMaxCommission(initialMaxCommission);
   };
 
   const hasCurrentCommission = payee && commission !== 0;
@@ -68,8 +77,7 @@ export const Commission = ({ setSection }: any) => {
   }, [isOwner(), invalidCurrentCommission, bondedPool, noChange]);
 
   useEffect(() => {
-    setCommission(initialCommission);
-    setPayee(initialPayee);
+    resetToDefault();
   }, [bondedPool]);
 
   // tx to submit.
@@ -115,6 +123,23 @@ export const Commission = ({ setSection }: any) => {
     submitExtrinsic.proxySupported
   );
 
+  const sliderProps = {
+    trackStyle: {
+      backgroundColor: 'var(--network-color-primary)',
+    },
+    railStyle: {
+      backgroundColor: 'var(--button-secondary-background)',
+    },
+    handleStyle: {
+      backgroundColor: 'var(--background-primary)',
+      borderColor: 'var(--network-color-primary)',
+      opacity: 1,
+    },
+    activeDotStyle: {
+      backgroundColor: 'var(--background-primary)',
+    },
+  };
+
   return (
     <>
       <div className="padding">
@@ -129,33 +154,23 @@ export const Commission = ({ setSection }: any) => {
         <ActionItem text="Set Commission" />
 
         <CommissionWrapper>
-          <h4 className="current">{commission}% </h4>
-          <div className="slider">
-            <Slider
-              value={commission}
-              step={0.25}
-              onChange={(val) => {
-                if (typeof val === 'number') {
-                  setCommission(val);
-                }
-              }}
-              trackStyle={{
-                backgroundColor: 'var(--network-color-primary)',
-              }}
-              railStyle={{
-                backgroundColor: 'var(--button-secondary-background)',
-              }}
-              handleStyle={{
-                backgroundColor: 'var(--background-primary)',
-                borderColor: 'var(--network-color-primary)',
-                opacity: 1,
-              }}
-              activeDotStyle={{
-                backgroundColor: 'var(--background-primary)',
-              }}
-            />
+          <div style={{ margin: '0.75rem 0' }}>
+            <h4 className="current">{commission}% </h4>
+            <div className="slider">
+              <Slider
+                value={commission}
+                step={0.25}
+                onChange={(val) => {
+                  if (typeof val === 'number') {
+                    setCommission(val);
+                  }
+                }}
+                {...sliderProps}
+              />
+            </div>
           </div>
         </CommissionWrapper>
+
         <AccountInput
           defaultLabel="Input Payee Account"
           successLabel="Payee Added"
@@ -170,6 +185,32 @@ export const Commission = ({ setSection }: any) => {
           initialValue={payee}
           inactive={commission === 0}
         />
+
+        <ActionItem text="Set Max Commission" />
+
+        <CommissionWrapper>
+          <h5>
+            <FontAwesomeIcon icon={faCheck} /> &nbsp;Valid
+          </h5>
+          <div>
+            <h4 className="current">{maxCommission}% </h4>
+            <div className="slider">
+              <Slider
+                value={maxCommission}
+                step={0.25}
+                onChange={(val) => {
+                  if (typeof val === 'number') {
+                    setMaxCommission(val);
+                    if (val < commission) {
+                      setCommission(val);
+                    }
+                  }
+                }}
+                {...sliderProps}
+              />
+            </div>
+          </div>
+        </CommissionWrapper>
       </div>
       <SubmitTx
         valid={valid}
