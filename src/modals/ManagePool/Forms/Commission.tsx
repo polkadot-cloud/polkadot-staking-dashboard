@@ -70,17 +70,9 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   };
 
   const hasCurrentCommission = payee && commission !== 0;
-
   const commissionCurrent = () => {
     return hasCurrentCommission ? [`${commission.toFixed(2)}%`, payee] : null;
   };
-
-  // Monitor when input items are invalid.
-  const invalidCurrentCommission =
-    (commission === 0 && payee !== null) ||
-    (commission !== 0 && payee === null);
-
-  const invalidMaxCommission = maxCommission > initialMaxCommission;
 
   // Monitor when input items change.
   const commissionChanged =
@@ -93,6 +85,18 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
 
   // Global form change.
   const noChange = !commissionChanged && !maxCommissionChanged;
+
+  // Monitor when input items are invalid.
+  const commissionAboveMax = commission > maxCommission;
+
+  const invalidCurrentCommission =
+    commissionChanged &&
+    ((commission === 0 && payee !== null) ||
+      (commission !== 0 && payee === null) ||
+      commissionAboveMax);
+
+  const invalidMaxCommission =
+    maxCommissionChanged && maxCommission > initialMaxCommission;
 
   // Check there are txs to submit
   const txsToSubmit =
@@ -191,6 +195,44 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     submitExtrinsic.proxySupported
   );
 
+  const commissionFeedback = (() => {
+    if (!commissionChanged) {
+      return {
+        text: 'Commission Rate',
+        label: 'neutral',
+      };
+    }
+    if (commissionAboveMax) {
+      return {
+        text: 'Cannot Be Above Max',
+        label: 'danger',
+      };
+    }
+    return {
+      text: 'Commission Updated',
+      label: 'neutral',
+    };
+  })();
+
+  const maxCommissionFeedback = (() => {
+    if (!maxCommissionChanged) {
+      return {
+        text: 'Max Commission',
+        label: 'neutral',
+      };
+    }
+    if (invalidMaxCommission) {
+      return {
+        text: 'Cannot Be Above Existing',
+        label: 'danger',
+      };
+    }
+    return {
+      text: 'Maximum Commission Updated',
+      label: 'neutral',
+    };
+  })();
+
   const sliderProps = {
     trackStyle: {
       backgroundColor: 'var(--network-color-primary)',
@@ -208,25 +250,6 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     },
   };
 
-  const maxCommissionFeedback = (() => {
-    if (!maxCommissionChanged) {
-      return {
-        text: 'Set Maximum',
-        label: 'neutral',
-      };
-    }
-    if (maxCommission > initialMaxCommission) {
-      return {
-        text: 'Cannot be above existing',
-        label: 'danger',
-      };
-    }
-    return {
-      text: 'Maximum Commission Valid',
-      label: 'neutral',
-    };
-  })();
-
   return (
     <>
       <div className="padding">
@@ -241,7 +264,10 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
         <ActionItem text="Set Commission" />
 
         <CommissionWrapper>
-          <div style={{ margin: '0.75rem 0' }}>
+          <h5 className={commissionFeedback.label}>
+            {commissionFeedback.text}
+          </h5>
+          <div>
             <h4 className="current">{commission}% </h4>
             <div className="slider">
               <Slider
@@ -250,6 +276,9 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
                 onChange={(val) => {
                   if (typeof val === 'number') {
                     setCommission(val);
+                    if (val > maxCommission && maxCommissionEnabled) {
+                      setMaxCommission(Math.min(initialMaxCommission, val));
+                    }
                   }
                 }}
                 {...sliderProps}
