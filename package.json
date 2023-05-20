@@ -31,7 +31,7 @@
     "@polkadot/react-identicon": "^3.4.1",
     "@polkadot/rpc-provider": "^10.5.1",
     "@polkadot/util": "^12.1.1",
-    "@polkadotcloud/core-ui": "^0.2.48",
+    "@polkadotcloud/core-ui": "^0.2.51",
     "@polkadotcloud/react-odometer": "0.1.16",
     "@polkadotcloud/utils": "0.2.20",
     "@substrate/connect": "^0.7.26",
