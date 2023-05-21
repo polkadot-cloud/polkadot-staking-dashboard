@@ -264,6 +264,14 @@
           "This does not mean that you were not nominating or generating rewards in that period - only that the payout for that period was not yet made."
         ]
       ],
+      "polkadotVault": [
+        "Polkadot Vault",
+        [
+          "Polkadot Vault (formerly Parity Signer) is a cold storage solution that allows you to use a phone in airplane mode as an air-gapped wallet.",
+          "The Vault app is not technically a wallet, as it does not allow to transfer funds.",
+          "It is more of a key-chain tool that will enable you the create, manage, and restore accounts."
+        ]
+      ],
       "poolMembership": [
         "Pool Membership",
         [

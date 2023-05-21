@@ -22,6 +22,11 @@ export const Ledger = (): React.ReactElement => {
   const { replaceModalWith } = useModal();
   const { name } = useApi().network;
 
+  // Only render on Polkadot and Kusama networks.
+  if (!['polkadot', 'kusama'].includes(name)) {
+    return <></>;
+  }
+
   return (
     <ConnectItem>
       <HardwareInner>

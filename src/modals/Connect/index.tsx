@@ -8,7 +8,6 @@ import {
   ButtonTab,
 } from '@polkadotcloud/core-ui';
 import { Extensions } from 'config/extensions';
-import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
 import type { ExtensionConfig } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
@@ -30,11 +29,11 @@ import { Extension } from './Extension';
 import { Ledger } from './Ledger';
 import { Proxies } from './Proxies';
 import { ReadOnly } from './ReadOnly';
+import { Vault } from './Vault';
 import { ExtensionsWrapper } from './Wrappers';
 
 export const Connect = () => {
   const { t } = useTranslation('modals');
-  const { network } = useApi();
   const { extensions } = useExtensions();
   const { replaceModalWith, setModalHeight, modalMaxHeight } = useModal();
 
@@ -147,18 +146,14 @@ export const Connect = () => {
         >
           <ThreeSectionWrapper>
             <PaddingWrapper horizontalOnly ref={homeRef}>
-              {['polkadot', 'kusama'].includes(network.name) ? (
-                <>
-                  <ActionItem text={t('hardware')} />
-                  <ExtensionsWrapper>
-                    <SelectItems layout="two-col">
-                      {[Ledger].map((Item: AnyFunction, i: number) => (
-                        <Item key={`hardware_item_${i}`} />
-                      ))}
-                    </SelectItems>
-                  </ExtensionsWrapper>
-                </>
-              ) : null}
+              <ActionItem text={t('hardware')} />
+              <ExtensionsWrapper>
+                <SelectItems layout="two-col">
+                  {[Vault, Ledger].map((Item: AnyFunction, i: number) => (
+                    <Item key={`hardware_item_${i}`} />
+                  ))}
+                </SelectItems>
+              </ExtensionsWrapper>
 
               <ActionItem text={t('web')} />
               <ExtensionsWrapper>
