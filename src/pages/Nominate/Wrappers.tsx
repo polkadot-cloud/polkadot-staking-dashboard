@@ -40,3 +40,7 @@ export const Spacer = styled.div`
   height: 1px;
   margin: 0.75rem 0;
 `;
+
+export const TextSpace = styled.h4`
+  margin: 0.5rem 0;
+`;

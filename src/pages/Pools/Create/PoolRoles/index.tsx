@@ -7,6 +7,7 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
+import { TextSpace } from 'pages/Nominate/Wrappers';
 import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Roles } from '../../Roles';
@@ -68,18 +69,18 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
         bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <h4 style={{ margin: '0.5rem 0' }}>
+        <TextSpace>
           <Trans
             defaults={`${t('pools.poolCreator')}`}
             components={{ b: <b /> }}
           />
-        </h4>
-        <h4 style={{ marginTop: 0 }}>
+        </TextSpace>
+        <TextSpace>
           <Trans
             defaults={`${t('pools.assignedToAnyAccount')}`}
             components={{ b: <b /> }}
           />
-        </h4>
+        </TextSpace>
         <Roles
           batchKey="pool_roles_create"
           listenIsValid={setRolesValid}
