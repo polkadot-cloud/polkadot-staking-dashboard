@@ -55,7 +55,7 @@ export const Forms = forwardRef(
 
     // ensure unlock value is valid
     useEffect(() => {
-      setValid(unlock?.value?.toNumber() > 0 ?? false);
+      setValid(unlock?.value > new BigNumber(0) ?? false);
     }, [unlock]);
 
     // tx to submit
