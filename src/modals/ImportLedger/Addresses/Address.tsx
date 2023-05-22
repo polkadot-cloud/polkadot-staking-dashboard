@@ -3,7 +3,6 @@
 
 import {
   faCheck,
-  faPen,
   faPlus,
   faTimes,
   faXmark,
@@ -98,70 +97,65 @@ export const Address = ({ address, index }: AddressProps) => {
 
   return (
     <div className="item">
-      <div>
-        <Identicon value={address} size={38} />
-        <div className="inner">
-          <section className="row">
-            <h5 className="label">
-              <span className="withBg">
-                {appName} {t('account')} {index + 1}
-              </span>
-            </h5>
-          </section>
-          <section className="row">
-            <FontAwesomeIcon
-              icon={faPen}
-              transform="shrink-2"
-              className="icon"
-              opacity={isImported ? 0.1 : 0.5}
-            />
-            <input
-              disabled={isImported}
-              type="text"
-              value={editing ? editName : name}
-              onChange={(e: React.FormEvent<HTMLInputElement>) =>
-                handleChange(e)
-              }
-              onFocus={() => setEditing(true)}
-              onBlur={() => commitEdit()}
-              onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => {
-                if (e.key === 'Enter') {
-                  commitEdit();
-                  e.currentTarget.blur();
-                }
-              }}
-            />
-            {editing ? (
-              <div style={{ display: 'flex' }}>
-                &nbsp;
-                <button
-                  type="button"
-                  className="edit"
-                  onClick={() => commitEdit()}
-                >
-                  <FontAwesomeIcon
-                    icon={faCheck}
-                    transform="grow-1"
-                    className="icon"
-                  />
-                </button>
-                &nbsp;
-                <button
-                  type="button"
-                  className="edit"
-                  onClick={() => cancelEditing()}
-                >
-                  <FontAwesomeIcon icon={faXmark} transform="grow-1" />
-                </button>
-              </div>
-            ) : null}
-          </section>
-          <h5 className="addressFull">
-            <span>{address}</span>
+      <div className="content">
+        <div className="head">
+          <h5>
+            {appName} {t('account')} {index + 1}
           </h5>
         </div>
+        <div className="inner">
+          <div className="identicon">
+            <Identicon value={address} size={38} />
+          </div>
+          <div>
+            <section className="row">
+              <input
+                disabled={isImported}
+                type="text"
+                value={editing ? editName : name}
+                onChange={(e) => handleChange(e)}
+                onFocus={() => setEditing(true)}
+                onBlur={() => commitEdit()}
+                onKeyUp={(e) => {
+                  if (e.key === 'Enter') {
+                    commitEdit();
+                    e.currentTarget.blur();
+                  }
+                }}
+              />
+
+              {editing ? (
+                <div style={{ display: 'flex' }}>
+                  &nbsp;
+                  <button
+                    type="button"
+                    className="edit"
+                    onClick={() => commitEdit()}
+                  >
+                    <FontAwesomeIcon
+                      icon={faCheck}
+                      transform="grow-1"
+                      className="icon"
+                    />
+                  </button>
+                  &nbsp;
+                  <button
+                    type="button"
+                    className="edit"
+                    onClick={() => cancelEditing()}
+                  >
+                    <FontAwesomeIcon icon={faXmark} transform="grow-1" />
+                  </button>
+                </div>
+              ) : null}
+            </section>
+            <h5 className="addressFull">
+              <span>{address}</span>
+            </h5>
+          </div>
+        </div>
       </div>
-      <div>
+      <div className="action">
         {isImported ? (
           <>
             <ButtonMono

@@ -46,7 +46,7 @@ export const Vault = (): React.ReactElement => {
             <ButtonPrimaryInvert
               text={t('import')}
               onClick={() => {
-                replaceModalWith('VaultImport', {}, 'large');
+                replaceModalWith('ImportVault', {}, 'large');
               }}
               iconLeft={faQrcode}
               iconTransform="shrink-1"

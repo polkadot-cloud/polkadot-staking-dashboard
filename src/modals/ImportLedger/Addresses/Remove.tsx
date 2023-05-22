@@ -6,8 +6,8 @@ import { useConnect } from 'contexts/Connect';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
+import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { useTranslation } from 'react-i18next';
-import { ConfirmWrapper } from './Wrappers';
 import type { RemoveProps } from './types';
 
 export const Remove = ({ address }: RemoveProps) => {

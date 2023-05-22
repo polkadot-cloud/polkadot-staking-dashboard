@@ -134,6 +134,7 @@
     "reGenerate": "Re-Generate",
     "remove": "Remove",
     "removeSelected": "Remove Selected",
+    "reset": "Reset",
     "search": "Search Pool ID, Name or Address",
     "searchAddress": "Search Address or Identity",
     "select": "Select",
