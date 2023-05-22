@@ -167,7 +167,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     setIsPoolSyncing(poolSyncing);
 
     // eraStakers total active nominators has synced
-    if (!eraStakers.totalActiveNominators) {
+    if (eraStakers.totalActiveNominators === undefined) {
       syncing = true;
     }
 

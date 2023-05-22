@@ -20,7 +20,7 @@ export interface StakingMetrics {
 export interface EraStakers {
   stakers: any[];
   nominators: any[] | undefined;
-  totalActiveNominators: number;
+  totalActiveNominators: number | undefined;
   activeValidators: number;
   activeAccountOwnStake: any[];
 }
