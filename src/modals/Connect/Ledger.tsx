@@ -56,7 +56,7 @@ export const Ledger = (): React.ReactElement => {
             <ButtonPrimaryInvert
               text="USB"
               onClick={() => {
-                replaceModalWith('LedgerImport', {}, 'large');
+                replaceModalWith('ImportLedger', {}, 'large');
               }}
               iconLeft={faUsb}
               iconTransform="shrink-1"
