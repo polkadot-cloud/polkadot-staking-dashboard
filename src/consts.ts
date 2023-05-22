@@ -11,7 +11,7 @@ export const AppVersion = '1.0.8';
 export const BaseURL = '';
 export const DappName = 'Polkadot Staking Dashboard';
 export const PolkadotUrl = 'https://polkadot.network/staking/';
-export const DefaultNetwork = 'polkadot';
+export const DefaultNetwork = 'creditcoin';
 
 /*
  * Data Structure Helpers
