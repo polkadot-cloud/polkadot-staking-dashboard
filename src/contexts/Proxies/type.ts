@@ -10,8 +10,7 @@ export type ProxyType =
   | 'Governance'
   | 'Staking'
   | 'IdentityJudgement'
-  | 'CancelProxy'
-  | 'Auction';
+  | 'CancelProxy';
 
 export type Proxies = Proxy[];
 

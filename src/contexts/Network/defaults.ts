@@ -14,8 +14,6 @@ export const activeEra: ActiveEra = {
 };
 export const metrics: NetworkMetrics = {
   totalIssuance: new BigNumber(0),
-  auctionCounter: new BigNumber(0),
-  earliestStoredSession: new BigNumber(0),
   fastUnstakeErasToCheckPerBlock: 0,
   minimumActiveStake: new BigNumber(0),
 };

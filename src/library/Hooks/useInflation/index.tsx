@@ -12,23 +12,13 @@ export const useInflation = () => {
   const { staking } = useStaking();
   const { params } = network;
   const { lastTotalStake } = staking;
-  const { totalIssuance, auctionCounter } = metrics;
+  const { totalIssuance } = metrics;
 
-  const {
-    auctionAdjust,
-    auctionMax,
-    falloff,
-    maxInflation,
-    minInflation,
-    stakeTarget,
-  } = params;
+  const { falloff, maxInflation, minInflation, stakeTarget } = params;
 
   const BIGNUMBER_MILLION = new BigNumber(1_000_000);
 
-  const calculateInflation = (
-    totalStaked: BigNumber,
-    numAuctions: BigNumber
-  ) => {
+  const calculateInflation = (totalStaked: BigNumber) => {
     const stakedFraction =
       totalStaked.isZero() || totalIssuance.isZero()
         ? 0
@@ -36,9 +26,7 @@ export const useInflation = () => {
             .multipliedBy(BIGNUMBER_MILLION)
             .dividedBy(totalIssuance)
             .toNumber() / BIGNUMBER_MILLION.toNumber();
-    const idealStake =
-      stakeTarget -
-      Math.min(auctionMax, numAuctions.toNumber()) * auctionAdjust;
+    const idealStake = stakeTarget;
     const idealInterest = maxInflation / idealStake;
     const inflation =
       100 *
@@ -57,5 +45,5 @@ export const useInflation = () => {
     };
   };
 
-  return calculateInflation(lastTotalStake, auctionCounter);
+  return calculateInflation(lastTotalStake);
 };

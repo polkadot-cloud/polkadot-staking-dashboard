@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
-  greaterThanZero,
   planckToUnit,
   rmCommas,
   setStateWithRef,
@@ -38,12 +37,11 @@ export const ValidatorsProvider = ({
 }) => {
   const { isReady, api, network, consts } = useApi();
   const { activeAccount } = useConnect();
-  const { activeEra, metrics } = useNetworkMetrics();
+  const { activeEra } = useNetworkMetrics();
   const { bondedAccounts, getAccountNominations } = useBonded();
   const { poolNominations } = useActivePools();
   const { units } = network;
   const { maxNominatorRewardedPerValidator } = consts;
-  const { earliestStoredSession } = metrics;
 
   // stores the total validator entries
   const [validators, setValidators] = useState<Validator[]>([]);
@@ -119,13 +117,6 @@ export const ValidatorsProvider = ({
       );
     };
   }, [isReady, activeEra]);
-
-  // fetch parachain session validators when earliestStoredSession ready
-  useEffect(() => {
-    if (isReady && greaterThanZero(earliestStoredSession)) {
-      subscribeParachainValidators();
-    }
-  }, [isReady, earliestStoredSession]);
 
   // pre-populating validator meta batches. Needed for generating nominations
   useEffect(() => {
@@ -273,24 +264,6 @@ export const ValidatorsProvider = ({
           unsub,
         });
       });
-    }
-  };
-
-  /*
-   * subscribe to active parachain validators
-   */
-  const subscribeParachainValidators = async () => {
-    if (api !== null && isReady) {
-      const unsub: AnyApi = await api.query.paraSessionInfo.accountKeys(
-        earliestStoredSession.toString(),
-        (v: AnyApi) => {
-          setSessionParachainValidators({
-            ...sessionParachainValidators,
-            list: v.toHuman(),
-            unsub,
-          });
-        }
-      );
     }
   };
 
