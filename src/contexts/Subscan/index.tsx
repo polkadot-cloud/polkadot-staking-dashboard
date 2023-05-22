@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { isNotZero } from '@polkadotcloud/utils';
-import { ApiEndpoints, ApiSubscanKey } from 'consts';
+import { ApiEndpoints, ApiSubscanKey, DefaultLocale } from 'consts';
 import { useNetworkMetrics } from 'contexts/Network';
 import { format, fromUnixTime } from 'date-fns';
 import { sortNonZeroPayouts } from 'library/Graphs/Utils';
@@ -97,7 +97,7 @@ export const SubscanProvider = ({
           ),
           'do MMM',
           {
-            locale: locales[i18n.resolvedLanguage],
+            locale: locales[i18n.resolvedLanguage ?? DefaultLocale],
           }
         )
       );
@@ -105,7 +105,7 @@ export const SubscanProvider = ({
       // latest payout date
       setPayoutsToDate(
         format(fromUnixTime(filteredPayouts[0].block_timestamp), 'do MMM', {
-          locale: locales[i18n.resolvedLanguage],
+          locale: locales[i18n.resolvedLanguage ?? DefaultLocale],
         })
       );
     }

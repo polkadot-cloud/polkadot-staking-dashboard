@@ -5,6 +5,7 @@ import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
 import { camelize } from '@polkadotcloud/utils';
 import { HelpConfig } from 'config/help';
+import { DefaultLocale } from 'consts';
 import { useHelp } from 'contexts/Help';
 import type {
   DefinitionWithKeys,
@@ -87,7 +88,7 @@ export const Help = () => {
         {
           title: t(`definitions.${localeKey}.0`),
           description: i18n.getResource(
-            i18n.resolvedLanguage,
+            i18n.resolvedLanguage ?? DefaultLocale,
             'help',
             `definitions.${localeKey}.1`
           ),
@@ -107,7 +108,7 @@ export const Help = () => {
 
     const title = t(`definitions.${localeKey}.0`);
     const description = i18n.getResource(
-      i18n.resolvedLanguage,
+      i18n.resolvedLanguage ?? DefaultLocale,
       'help',
       `definitions.${localeKey}.1`
     );

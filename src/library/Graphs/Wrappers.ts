@@ -53,7 +53,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
  * Used to separate the main modules throughout the app.
  */
 export const CardWrapper = styled.div<CardWrapperProps>`
-  box-shadow: var(--card-shadow) var(--card-shadow-color);
+  box-shadow: var(--card-shadow);
   background: var(--background-primary);
   padding: ${(props) =>
     props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1.2rem'};
@@ -123,10 +123,10 @@ export const CardWrapper = styled.div<CardWrapperProps>`
  */
 
 export const GraphWrapper = styled.div<GraphWrapperProps>`
-  box-shadow: var(--card-shadow) var(--card-shadow-color);
+  box-shadow: var(--card-shadow);
   background: ${(props) =>
     props.transparent ? 'none' : 'var(--background-primary)'};
-  border-radius: 1rem;
+  border-radius: 1.1rem;
   display: flex;
   flex-flow: column nowrap;
   flex: 1;

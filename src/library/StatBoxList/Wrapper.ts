@@ -51,9 +51,10 @@ export const StatBoxWrapper = styled(motion.div)`
 
   .content {
     background: var(--background-primary);
-    box-shadow: var(--card-shadow) var(--card-shadow-color-secondary);
+    box-shadow: var(--card-shadow-secondary);
+
     @media (max-width: 799px) {
-      box-shadow: var(--card-shadow) var(--card-shadow-color);
+      box-shadow: var(--card-shadow);
     }
     display: flex;
     border-radius: 0.95rem;

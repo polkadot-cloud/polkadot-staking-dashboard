@@ -3,6 +3,7 @@
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
 import { forwardRef } from 'react';
@@ -11,6 +12,7 @@ import { ContentWrapper } from './Wrappers';
 
 export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
   const { t } = useTranslation('modals');
+  const { name } = useApi().network;
   const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
 
   const poolLocked = selectedActivePool?.bondedPool?.state === 'Blocked';
@@ -26,6 +28,24 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
           ref={ref}
           style={{ paddingBottom: '1.5rem', paddingTop: '1.5rem' }}
         >
+          {name === 'westend' && (
+            <button
+              type="button"
+              className="action-button"
+              onClick={() => {
+                setSection(1);
+                setTask('manage_commission');
+              }}
+            >
+              <div>
+                <h3>{t('manageCommission')}</h3>
+                <p>{t('updatePoolCommission')}</p>
+              </div>
+              <div>
+                <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
+              </div>
+            </button>
+          )}
           {isOwner() && (
             <button
               type="button"

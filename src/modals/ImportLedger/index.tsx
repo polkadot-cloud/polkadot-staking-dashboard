@@ -14,7 +14,7 @@ import type { AnyJson } from 'types';
 import { Manage } from './Manage';
 import { Splash } from './Splash';
 
-export const LedgerImport: React.FC = () => {
+export const ImportLedger: React.FC = () => {
   const { network } = useApi();
   const { setResize } = useModal();
   const {
