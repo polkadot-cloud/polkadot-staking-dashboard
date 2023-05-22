@@ -103,7 +103,7 @@ const processExposures = (data: AnyJson) => {
         } else {
           nominators[index].value = new BigNumber(nominators[index].value)
             .plus(value)
-            .toString();
+            .toFixed();
         }
       }
 
@@ -115,7 +115,7 @@ const processExposures = (data: AnyJson) => {
           value: planckToUnit(
             new BigNumber(rmCommas(own.value)),
             units
-          ).toString(),
+          ).toFixed(),
         });
       }
     }

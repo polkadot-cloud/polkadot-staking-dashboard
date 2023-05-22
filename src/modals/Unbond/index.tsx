@@ -78,7 +78,7 @@ export const Unbond = () => {
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({
-    bond: freeToUnbond.toString(),
+    bond: freeToUnbond.toFixed(),
   });
 
   // bond valid
@@ -93,8 +93,8 @@ export const Unbond = () => {
 
   // update bond value on task change
   useEffect(() => {
-    setBond({ bond: unbondToMin.toString() });
-  }, [freeToUnbond.toString()]);
+    setBond({ bond: unbondToMin.toFixed() });
+  }, [freeToUnbond.toFixed()]);
 
   // modal resize on form update
   useEffect(() => {
@@ -109,7 +109,7 @@ export const Unbond = () => {
     }
 
     const bondToSubmit = unitToPlanck(!bondValid ? '0' : bond.bond, units);
-    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toFixed();
 
     // determine tx
     if (isPooling) {

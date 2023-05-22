@@ -46,7 +46,7 @@ export const Summary = ({ section }: SetupStepProps) => {
     const targetsToSubmit = nominations.map((item: any) => item.address);
 
     const bondToSubmit = unitToPlanck(bond, units);
-    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toFixed();
 
     const txs = [
       api.tx.nominationPools.create(

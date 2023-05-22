@@ -48,7 +48,7 @@ export const Bond = () => {
 
   // local bond value.
   const [bond, setBond] = useState<{ bond: string }>({
-    bond: freeBalance.toString(),
+    bond: freeBalance.toFixed(),
   });
 
   // bond valid.
@@ -73,8 +73,8 @@ export const Bond = () => {
 
   // update bond value on task change.
   useEffect(() => {
-    setBond({ bond: freeBalance.toString() });
-  }, [freeBalance.toString()]);
+    setBond({ bond: freeBalance.toFixed() });
+  }, [freeBalance.toFixed()]);
 
   // modal resize on form update
   useEffect(() => {
@@ -92,7 +92,7 @@ export const Bond = () => {
       ? '0'
       : bondToSubmit.isNaN()
       ? '0'
-      : bondToSubmit.toString();
+      : bondToSubmit.toFixed();
 
     if (isPooling) {
       tx = api.tx.nominationPools.bondExtra({

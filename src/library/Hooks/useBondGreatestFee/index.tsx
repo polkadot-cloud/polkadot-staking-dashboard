@@ -38,7 +38,7 @@ export const useBondGreatestFee = ({ bondFor }: Props) => {
 
   // estimate the largest possible tx fee based on users free balance.
   const txLargestFee = async () => {
-    const bond = freeBalance.toString();
+    const bond = freeBalance.toFixed();
 
     let tx = null;
     if (!api) {

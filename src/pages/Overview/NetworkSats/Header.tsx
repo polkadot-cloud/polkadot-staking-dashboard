@@ -61,7 +61,7 @@ export const Header = () => {
           <div>
             <div className="inner">
               <h2>
-                {totalIssuance.toString() === '0'
+                {totalIssuance.toFixed() === '0'
                   ? '0'
                   : new BigNumber(inflation).decimalPlaces(2).toFormat()}
                 %

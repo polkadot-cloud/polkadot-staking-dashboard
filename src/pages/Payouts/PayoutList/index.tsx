@@ -197,7 +197,7 @@ export const PayoutListInner = ({
                               {planckToUnit(
                                 new BigNumber(p.amount),
                                 units
-                              ).toString()}{' '}
+                              ).toFixed()}{' '}
                               {unit}
                             </>
                           </h4>

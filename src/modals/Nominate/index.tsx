@@ -88,7 +88,7 @@ export const Nominate = () => {
   if (!activeUnit.isGreaterThan(minNominatorBondUnit)) {
     warnings.push(
       `${t('notMeetMinimum', {
-        minNominatorBondUnit: minNominatorBondUnit.toString(),
+        minNominatorBondUnit: minNominatorBondUnit.toFixed(),
         unit,
       })}`
     );
