@@ -11,10 +11,12 @@ import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as VaultSVG } from 'img/polkadotVault.svg';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Foot } from './Foot';
 import { ConnectItem, HardwareInner } from './Wrappers';
 
 export const Vault = (): React.ReactElement => {
+  const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
   const { replaceModalWith } = useModal();
 
@@ -42,7 +44,7 @@ export const Vault = (): React.ReactElement => {
           </div>
           <div className="row margin">
             <ButtonPrimaryInvert
-              text="Import"
+              text={t('import')}
               onClick={() => {
                 replaceModalWith('VaultImport', {}, 'large');
               }}
