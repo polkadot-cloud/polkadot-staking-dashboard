@@ -5,7 +5,6 @@ import type { ExtensionConfig } from 'contexts/Extensions/types';
 import { ReactComponent as EnkryptSVG } from './icons/enkrypt.svg';
 import { ReactComponent as FearlessSVG } from './icons/fearless.svg';
 import { ReactComponent as NovaWalletSVG } from './icons/novawallet.svg';
-import { ReactComponent as ParitySignerSVG } from './icons/paritysigner.svg';
 import { ReactComponent as PolkadotJSSVG } from './icons/polkadotjs.svg';
 import { ReactComponent as PolkaGateSVG } from './icons/polkagate.svg';
 import { ReactComponent as SubwalletSVG } from './icons/subwallet.svg';
@@ -35,12 +34,6 @@ export const Extensions: ExtensionConfig[] = [
     title: 'Fearless Wallet',
     icon: FearlessSVG,
     url: 'fearlesswallet.io',
-  },
-  {
-    id: 'parity-signer-companion',
-    title: 'Parity Signer Companion',
-    icon: ParitySignerSVG,
-    url: 'parity.io/technologies/signer',
   },
   {
     id: 'polkagate',

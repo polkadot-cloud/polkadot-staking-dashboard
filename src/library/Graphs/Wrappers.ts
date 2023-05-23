@@ -126,7 +126,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   box-shadow: var(--card-shadow);
   background: ${(props) =>
     props.transparent ? 'none' : 'var(--background-primary)'};
-  border-radius: 1rem;
+  border-radius: 1.1rem;
   display: flex;
   flex-flow: column nowrap;
   flex: 1;
