@@ -28,7 +28,7 @@ import type {
   NetworkState,
 } from 'contexts/Api/types';
 import React, { useEffect, useState } from 'react';
-import type { NetworkName } from 'types';
+import type { AnyApi, NetworkName } from 'types';
 import * as defaults from './defaults';
 
 export const APIProvider = ({ children }: { children: React.ReactNode }) => {
@@ -71,6 +71,11 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     } else {
       localStorage.removeItem('light_client');
     }
+
+    setNetwork({
+      name,
+      meta: NetworkList[name],
+    });
 
     // handle light client state, which will trigger dynamic Sc import.
     setIsLightClient(lightClient);
@@ -120,7 +125,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   // Handle light client connection.
-  const handleLightClientConnection = async (Sc: any) => {
+  const handleLightClientConnection = async (Sc: AnyApi) => {
     const newProvider = new ScProvider(
       Sc,
       NetworkList[network.name].endpoints.lightClient
@@ -135,7 +140,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       const { promise: ScPromise, cancel } = makeCancelable(
         import('@substrate/connect')
       );
-      ScPromise.then((Sc: any) => {
+      ScPromise.then((Sc: AnyApi) => {
         handleLightClientConnection(Sc);
       });
       return () => {
@@ -249,10 +254,6 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       await newProvider.connect();
     }
     setProvider(newProvider);
-    setNetwork({
-      name,
-      meta: NetworkList[name],
-    });
   };
 
   return (
