@@ -1,7 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp, ButtonMonoInvert } from '@polkadotcloud/core-ui';
+import {
+  ButtonHelp,
+  ButtonMonoInvert,
+  ButtonPrimaryInvert,
+} from '@polkadotcloud/core-ui';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useTranslation } from 'react-i18next';
@@ -63,7 +67,7 @@ export const StatusBar = ({
               }
             />
           ) : (
-            <ButtonMonoInvert
+            <ButtonPrimaryInvert
               text={t('done')}
               onClick={() => {
                 replaceModalWith('Connect', { disableScroll: true }, 'large');
