@@ -3,17 +3,17 @@
 
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText } from '@polkadotcloud/core-ui';
+import { useOverlay } from 'contexts/Overlay';
 import { ReactComponent as Icon } from 'img/polkadotVault.svg';
 import { Heading } from 'library/Import/Heading';
 import { StatusBar } from 'library/Import/StatusBar';
 import { AddressesWrapper } from 'library/Import/Wrappers';
-import { useState } from 'react';
+import { Reader } from './Reader';
 
 export const ImportVault = () => {
-  const addresses = [];
+  const { openOverlayWith, status: overlayStatus } = useOverlay();
 
-  // Store whether an import is in progress.
-  const [importing, setImporting] = useState<boolean>(false);
+  const addresses = [];
 
   return (
     <>
@@ -29,9 +29,9 @@ export const ImportVault = () => {
           <ButtonText
             iconLeft={faQrcode}
             text="Import An Account"
-            disabled={importing}
+            disabled={overlayStatus !== 0}
             onClick={async () => {
-              setImporting(true);
+              openOverlayWith(<Reader />, 'small');
             }}
           />
         </div>
