@@ -9,6 +9,7 @@ import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
 import { useProxies } from 'contexts/Proxies';
 import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
+import { ReactComponent as PolkadotVaultIconSVG } from 'img/polkadotVault.svg';
 import { Identicon } from 'library/Identicon';
 import { useTranslation } from 'react-i18next';
 import { AccountWrapper } from './Wrappers';
@@ -33,13 +34,15 @@ export const AccountButton = ({
   const { getProxyDelegate } = useProxies();
 
   const meta = getAccount(address || '');
+
   const Icon =
     meta?.source === 'ledger'
       ? LedgerIconSVG
-      : extensions.find((e) => e.id === meta?.source)?.icon ?? undefined;
+      : meta?.source === 'polkadotVault'
+      ? PolkadotVaultIconSVG
+      : extensions.find(({ id }) => id === meta?.source)?.icon ?? undefined;
 
-  const imported = meta !== undefined;
-
+  const imported = !!meta;
   const connectTo = delegator || address || '';
   const connectProxy = delegator ? address || null : '';
 
@@ -57,7 +60,7 @@ export const AccountButton = ({
         type="button"
         disabled={!imported}
         onClick={() => {
-          if (imported && meta) {
+          if (imported) {
             connectToAccount(getAccount(connectTo));
             setActiveProxy(connectProxy);
             setStatus(2);

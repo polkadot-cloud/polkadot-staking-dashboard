@@ -48,6 +48,14 @@ export interface LedgerAccount {
   index: number;
 }
 
+export interface VaultAccount {
+  address: string;
+  network: string;
+  name: string;
+  source: string;
+  index: number;
+}
+
 export interface HandleImportExtension {
   newAccounts: ExtensionAccount[];
   meta: {

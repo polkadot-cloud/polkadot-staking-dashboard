@@ -5,7 +5,7 @@ import Keyring from '@polkadot/keyring';
 import { localStorageOrDefault } from '@polkadotcloud/utils';
 import type { ExtensionAccount } from 'contexts/Extensions/types';
 import type { Network } from 'types';
-import type { ExternalAccount, LedgerAccount } from './types';
+import type { ExternalAccount } from './types';
 
 // extension utils
 
@@ -71,42 +71,21 @@ export const getActiveAccountLocal = (network: Network) => {
   return _activeAccount;
 };
 
-// gets local ledger accounts, formatting their addresses
-// using active network ss58 format.
-export const getLocalLedgerAccounts = (
-  network: Network,
-  activeNetworkOnly = false
-) => {
-  let localLedgerAccounts = localStorageOrDefault<LedgerAccount[]>(
-    'ledger_accounts',
-    [],
-    true
-  ) as LedgerAccount[];
-  if (activeNetworkOnly) {
-    localLedgerAccounts = localLedgerAccounts.filter(
-      (l: LedgerAccount) => l.network === network.name
-    );
-  }
-  return localLedgerAccounts;
-};
-
 // gets local external accounts, formatting their addresses
 // using active network ss58 format.
 export const getLocalExternalAccounts = (
   network: Network,
   activeNetworkOnly = false
 ) => {
-  let localExternalAccounts = localStorageOrDefault<ExternalAccount[]>(
+  let localAccounts = localStorageOrDefault<ExternalAccount[]>(
     'external_accounts',
     [],
     true
   ) as ExternalAccount[];
   if (activeNetworkOnly) {
-    localExternalAccounts = localExternalAccounts.filter(
-      (l: ExternalAccount) => l.network === network.name
-    );
+    localAccounts = localAccounts.filter((l) => l.network === network.name);
   }
-  return localExternalAccounts;
+  return localAccounts;
 };
 
 // gets accounts that exist in local `external_accounts`

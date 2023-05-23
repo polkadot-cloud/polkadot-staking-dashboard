@@ -20,6 +20,10 @@ import type {
   ExtensionInjected,
   ExtensionInterface,
 } from 'contexts/Extensions/types';
+import {
+  getLocalLedgerAccounts,
+  getLocalVaultAccounts,
+} from 'contexts/Hardware/Utils';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
 import { useImportExtension } from './Hooks/useImportExtension';
@@ -27,7 +31,6 @@ import {
   extensionIsLocal,
   getActiveAccountLocal,
   getLocalExternalAccounts,
-  getLocalLedgerAccounts,
   removeFromLocalExtensions,
   removeLocalExternalAccounts,
 } from './Utils';
@@ -143,6 +146,7 @@ export const ConnectProvider = ({
   // in localStorage.
   useEffect(() => {
     if (extensionsFetched) {
+      importVaultAccounts();
       importLedgerAccounts();
       importExternalAccounts();
     }
@@ -207,28 +211,57 @@ export const ConnectProvider = ({
    * Accounts are ignored if they are already imported through an extension. */
   const importLedgerAccounts = () => {
     // import any local external accounts
-    let localLedgerAccounts = getLocalLedgerAccounts(network, true);
+    let localAccounts = getLocalLedgerAccounts(network.name);
 
-    if (localLedgerAccounts.length) {
-      // get and format active account if present
-      const activeAccountLocal = getActiveAccountLocal(network);
-
-      const activeAccountIsExternal =
-        localLedgerAccounts.find((a) => a.address === activeAccountLocal) ??
-        null;
+    if (localAccounts.length) {
+      const activeAccountInSet =
+        localAccounts.find(
+          ({ address }) => address === getActiveAccountLocal(network)
+        ) ?? null;
 
       // remove already-imported accounts
-      localLedgerAccounts = localLedgerAccounts.filter(
+      localAccounts = localAccounts.filter(
         (l) =>
-          accountsRef.current.find((a) => a.address === l.address) === undefined
+          accountsRef.current.find(({ address }) => address === l.address) ===
+          undefined
       );
 
       // set active account for network
-      if (activeAccountIsExternal) {
-        connectToAccount(activeAccountIsExternal);
+      if (activeAccountInSet) {
+        connectToAccount(activeAccountInSet);
       }
       // add Ledger accounts to imported
-      addToAccounts(localLedgerAccounts);
+      addToAccounts(localAccounts);
+    }
+  };
+
+  /* importVaultAccounts
+   * Checks previously added Polkadot Vault accounts from localStorage and adds them to
+   * `accounts` state. if local active account is present, it will also be assigned as active.
+   * Accounts are ignored if they are already imported through an extension. */
+  const importVaultAccounts = () => {
+    // import any local external accounts
+    let localAccounts = getLocalVaultAccounts(network.name);
+
+    if (localAccounts.length) {
+      const activeAccountInSet =
+        localAccounts.find(
+          ({ address }) => address === getActiveAccountLocal(network)
+        ) ?? null;
+
+      // remove already-imported accounts
+      localAccounts = localAccounts.filter(
+        (l) =>
+          accountsRef.current.find(({ address }) => address === l.address) ===
+          undefined
+      );
+
+      // set active account for network
+      if (activeAccountInSet) {
+        connectToAccount(activeAccountInSet);
+      }
+      // add Ledger accounts to imported
+      addToAccounts(localAccounts);
     }
   };
 
@@ -242,28 +275,27 @@ export const ConnectProvider = ({
    */
   const importExternalAccounts = () => {
     // import any local external accounts
-    let localExternalAccounts = getLocalExternalAccounts(network, true);
+    let localAccounts = getLocalExternalAccounts(network, true);
 
-    if (localExternalAccounts.length) {
-      // get and format active account if present
-      const activeAccountLocal = getActiveAccountLocal(network);
-
-      const activeAccountIsExternal =
-        localExternalAccounts.find((a) => a.address === activeAccountLocal) ??
-        null;
+    if (localAccounts.length) {
+      const activeAccountInSet =
+        localAccounts.find(
+          ({ address }) => address === getActiveAccountLocal(network)
+        ) ?? null;
 
       // remove already-imported accounts
-      localExternalAccounts = localExternalAccounts.filter(
+      localAccounts = localAccounts.filter(
         (l) =>
-          accountsRef.current.find((a) => a.address === l.address) === undefined
+          accountsRef.current.find(({ address }) => address === l.address) ===
+          undefined
       );
 
       // set active account for network
-      if (activeAccountIsExternal) {
-        connectToAccount(activeAccountIsExternal);
+      if (activeAccountInSet) {
+        connectToAccount(activeAccountInSet);
       }
       // add external accounts to imported
-      addToAccounts(localExternalAccounts);
+      addToAccounts(localAccounts);
     }
   };
 
@@ -457,8 +489,8 @@ export const ConnectProvider = ({
     setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
   };
 
-  const getAccount = (addr: MaybeAccount) =>
-    accountsRef.current.find((a) => a.address === addr) || null;
+  const getAccount = (who: MaybeAccount) =>
+    accountsRef.current.find(({ address }) => address === who) || null;
 
   const getActiveAccount = () => activeAccountRef.current;
 

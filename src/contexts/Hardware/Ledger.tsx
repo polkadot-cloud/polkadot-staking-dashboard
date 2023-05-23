@@ -10,7 +10,11 @@ import type { LedgerAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyFunction, AnyJson, MaybeString } from 'types';
-import { getLocalLedgerAccounts, getLocalLedgerAddresses } from './Utils';
+import {
+  getLocalLedgerAccounts,
+  getLocalLedgerAddresses,
+  isLocalNetworkAddress,
+} from './Utils';
 import {
   LEDGER_DEFAULT_ACCOUNT,
   LEDGER_DEFAULT_CHANGE,
@@ -21,7 +25,6 @@ import {
 } from './defaults';
 import type {
   FeedbackMessage,
-  LedgerAddress,
   LedgerHardwareContextInterface,
   LedgerResponse,
   LedgerStatusCode,
@@ -79,7 +82,7 @@ export const LedgerHardwareProvider = ({
       setLedgerAccountsState,
       ledgerAccountsRef
     );
-  }, [network]);
+  }, [network.name]);
 
   // Handles errors that occur during `executeLedgerLoop` and `pairDevice` calls.
   const handleErrors = (appName: string, err: AnyJson) => {
@@ -336,18 +339,22 @@ export const LedgerHardwareProvider = ({
 
   // Check if an address exists in imported addresses.
   const ledgerAccountExists = (address: string) =>
-    !!getLocalLedgerAccounts().find((a) => isLocalAddress(a, address));
+    !!getLocalLedgerAccounts().find((a) =>
+      isLocalNetworkAddress(network.name, a, address)
+    );
 
   const addLedgerAccount = (address: string, index: number) => {
     let newLedgerAccounts = getLocalLedgerAccounts();
 
     const ledgerAddress = getLocalLedgerAddresses().find((a) =>
-      isLocalAddress(a, address)
+      isLocalNetworkAddress(network.name, a, address)
     );
 
     if (
       ledgerAddress &&
-      !newLedgerAccounts.find((a) => isLocalAddress(a, address))
+      !newLedgerAccounts.find((a) =>
+        isLocalNetworkAddress(network.name, a, address)
+      )
     ) {
       const account = {
         address,
@@ -366,9 +373,7 @@ export const LedgerHardwareProvider = ({
 
       // store only those accounts on the current network in state.
       setStateWithRef(
-        newLedgerAccounts.filter(
-          (a: LedgerAccount) => a.network === network.name
-        ),
+        newLedgerAccounts.filter((a) => a.network === network.name),
         setLedgerAccountsState,
         ledgerAccountsRef
       );
@@ -414,14 +419,18 @@ export const LedgerHardwareProvider = ({
     if (!localLedgerAccounts) {
       return null;
     }
-    return localLedgerAccounts.find((a) => isLocalAddress(a, address)) ?? null;
+    return (
+      localLedgerAccounts.find((a) =>
+        isLocalNetworkAddress(network.name, a, address)
+      ) ?? null
+    );
   };
 
   const renameLedgerAccount = (address: string, newName: string) => {
     let newLedgerAccounts = getLocalLedgerAccounts();
 
     newLedgerAccounts = newLedgerAccounts.map((a) =>
-      isLocalAddress(a, address)
+      isLocalNetworkAddress(network.name, a, address)
         ? {
             ...a,
             name: newName,
@@ -437,13 +446,6 @@ export const LedgerHardwareProvider = ({
       setLedgerAccountsState,
       ledgerAccountsRef
     );
-  };
-
-  const isLocalAddress = (
-    a: LedgerAccount | LedgerAddress,
-    address: string
-  ) => {
-    return a.address === address && a.network === network.name;
   };
 
   const getTransport = () => {

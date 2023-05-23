@@ -1,7 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { LedgerHardwareContextInterface } from './types';
+import type {
+  LedgerHardwareContextInterface,
+  VaultHardwareContextInterface,
+} from './types';
 
 export const TOTAL_ALLOWED_STATUS_CODES = 50;
 export const LEDGER_DEFAULT_ACCOUNT = 0x80000000;
@@ -45,4 +48,18 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   setFeedback: (s, h) => {},
   resetFeedback: () => {},
   handleUnmount: () => {},
+};
+
+export const defaultVaultrHardwareContext: VaultHardwareContextInterface = {
+  // eslint-disable-next-line
+  vaultAccountExists: (a) => false,
+  // eslint-disable-next-line
+  addVaultAccount: (a, i) => null,
+  // eslint-disable-next-line
+  removeVaultAccount: (a) => {},
+  // eslint-disable-next-line
+  renameVaultAccount: (a, n) => {},
+  // eslint-disable-next-line
+  getVaultAccount: (a) => null,
+  vaultAccounts: [],
 };
