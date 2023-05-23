@@ -90,6 +90,10 @@ export const calculateDailyPayouts = (
         event_id: getEventId(curPayout),
         block_timestamp: getUnixTime(curDay),
       });
+      curPayout = {
+        amount: new BigNumber(0),
+        event_id: '',
+      };
       break;
     }
 
@@ -116,7 +120,7 @@ export const calculateDailyPayouts = (
       };
     } else {
       // in same day. Aadd payout amount to current payout cursor.
-      curPayout.amount = curPayout.amount.plus(payout.amount);
+      curPayout.amount = curPayout.amount.plus(new BigNumber(payout.amount));
     }
 
     // if only 1 payout exists, exit early here.
@@ -128,6 +132,14 @@ export const calculateDailyPayouts = (
       });
       break;
     }
+  }
+
+  if (curPayout.amount.isGreaterThan(0)) {
+    dailyPayouts.push({
+      amount: planckToUnit(curPayout.amount, units),
+      event_id: getEventId(curPayout),
+      block_timestamp: getUnixTime(curDay),
+    });
   }
 
   // return payout amounts as plain numbers.
