@@ -217,7 +217,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   const maxCommissionFeedback = (() => {
     if (!maxCommissionChanged) {
       return {
-        text: t('maxCommissio'),
+        text: t('maxCommission'),
         label: 'neutral',
       };
     }
