@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { isNotZero } from '@polkadotcloud/utils';
-import { ApiEndpoints, ApiSubscanKey, DefaultLocale } from 'consts';
+import { ApiEndpoints, DefaultLocale } from 'consts';
 import { useNetworkMetrics } from 'contexts/Network';
 import { format, fromUnixTime } from 'date-fns';
 import { sortNonZeroPayouts } from 'library/Graphs/Utils';
@@ -161,6 +161,13 @@ export const SubscanProvider = ({
         }
       }
     }
+
+    // sort payouts by block_timestamp
+    // FIXME: the payouts should already be correctly sorted when fetched from Subscan but for some reason they are not.
+    newClaimedPayouts.sort((a, b) => b.block_timestamp - a.block_timestamp);
+
+    newUnclaimedPayouts.sort((a, b) => b.block_timestamp - a.block_timestamp);
+
     return {
       newClaimedPayouts,
       newUnclaimedPayouts,
@@ -220,7 +227,7 @@ export const SubscanProvider = ({
 
     const res = await handleFetch(address, 0, ApiEndpoints.subscanEraStat);
 
-    if (res.message === 'Success') {
+    if (res.message.toLowerCase() === 'success') {
       if (getPlugins().includes('subscan')) {
         if (res.data?.list !== null) {
           const list = [];
@@ -260,7 +267,6 @@ export const SubscanProvider = ({
     const res: Response = await fetch(network.subscanEndpoint + endpoint, {
       headers: {
         'Content-Type': 'application/json',
-        'X-API-Key': ApiSubscanKey,
       },
       body: JSON.stringify(bodyJson),
       method: 'POST',
