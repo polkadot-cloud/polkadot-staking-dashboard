@@ -967,10 +967,10 @@
   resolved "https://registry.npmjs.org/@polkadotcloud/react-odometer/-/react-odometer-0.1.16.tgz#3a3149a656725df89c2759d9c452abbff57eb90b"
   integrity sha512-MHXNt1xK8QafHPoXIrDBl5nIZ1dqWl425lXm0bWRE+ZogB76DmYc8xm5H0BJ55VP4+GTzKdfqGvVLoOYFgSt6A==
 
-"@polkadotcloud/utils@0.2.20":
-  version "0.2.20"
-  resolved "https://registry.yarnpkg.com/@polkadotcloud/utils/-/utils-0.2.20.tgz#7b413e3e5cd67b8c0eb70da30c79b47e356d667b"
-  integrity sha512-wj1Gk9ApieY5NYzPn7fSM+3dWTS9/jTH14uhmeAVCw6k7qz8Tgg+mka2Rnvl3hiu45bqZA7yhMEvJlB6PP9WPQ==
+"@polkadotcloud/utils@^0.2.21":
+  version "0.2.21"
+  resolved "https://registry.npmjs.org/@polkadotcloud/utils/-/utils-0.2.21.tgz#539ca255ab034d7d494d15c1b1e3c18bb7998c69"
+  integrity sha512-8h1y4MYTcnz4qJ19ZJ7BlvY4pONW3ecbAzTT8/yNCoVTVcudMx3PYPdGb8c/cSc3PS2U8KdNJuxl9MjtBjlecQ==
 
 "@remix-run/router@1.6.2":
   version "1.6.2"
