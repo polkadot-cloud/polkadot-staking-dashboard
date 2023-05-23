@@ -22,10 +22,6 @@ export const consts: APIConstants = {
 
 export const defaultApiContext: APIContextInterface = {
   // eslint-disable-next-line
-  connect: async () => {
-    await new Promise((resolve) => resolve(null));
-  },
-  // eslint-disable-next-line
   switchNetwork: async (n, lc) => {
     await new Promise((resolve) => resolve(null));
   },
