@@ -2,9 +2,9 @@
   "tips": {
     "connectExtensions": [
       "Connect Extensions",
-      "Connect your accounts to begin using Polkadot staking dashboard.",
+      "Connect your accounts to begin using Polkadot Staking Dashboard.",
       [
-        "Connect your accounts to begin using Polkadot staking dashboard.",
+        "Connect your accounts to begin using Polkadot Staking Dashboard.",
         "Accounts are accessed via web extensions, that act as wallets. Your wallet is used to sign transactions that you submit within the dashboard.",
         "Connect your wallets from the Connect button at the top right of the dashboard, and select the account you wish to stake with to continue.",
         "Staking dashboard supports a range of extensions and wallets."
