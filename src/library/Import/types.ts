@@ -21,6 +21,7 @@ export interface AddressProps {
   address: string;
   index: number;
   initial: string;
+  badgePrefix: string;
   renameHandler: AnyFunction;
   existsHandler: AnyFunction;
   addHandler: AnyFunction;

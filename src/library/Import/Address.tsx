@@ -10,8 +10,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonMono, ButtonText } from '@polkadotcloud/core-ui';
 import { clipAddress, unescape } from '@polkadotcloud/utils';
-import { useApi } from 'contexts/Api';
-import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
 import React, { useState } from 'react';
@@ -24,6 +22,7 @@ export const Address = ({
   address,
   index,
   initial,
+  badgePrefix,
   existsHandler,
   renameHandler,
   addHandler,
@@ -31,9 +30,7 @@ export const Address = ({
   getHandler,
 }: AddressProps) => {
   const { t } = useTranslation('modals');
-  const { network } = useApi();
   const { openOverlayWith } = useOverlay();
-  const { appName } = getLedgerApp(network.name);
 
   // store whether this address is being edited.
   const [editing, setEditing] = useState<boolean>(false);
@@ -71,7 +68,7 @@ export const Address = ({
       <div className="content">
         <div className="head">
           <h5>
-            {appName} {t('account')} {index + 1}
+            {badgePrefix} {t('account')} {index + 1}
           </h5>
         </div>
         <div className="inner">

@@ -6,7 +6,7 @@ import { ButtonText } from '@polkadotcloud/core-ui';
 import { clipAddress, unescape } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
-import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
+import { getLedgerApp, getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import { Address } from 'library/Import/Address';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import { useTranslation } from 'react-i18next';
@@ -24,6 +24,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
     setIsExecuting,
     pairDevice,
   } = useLedgerHardware();
+  const { appName } = getLedgerApp(network.name);
   const isExecuting = getIsExecuting();
 
   return (
@@ -46,6 +47,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
                 address={address}
                 index={index}
                 initial={initialName}
+                badgePrefix={appName}
                 existsHandler={ledgerAccountExists}
                 renameHandler={renameLedgerAccount}
                 addHandler={addLedgerAccount}
