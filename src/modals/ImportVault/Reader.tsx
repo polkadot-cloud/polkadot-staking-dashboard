@@ -51,8 +51,9 @@ export const Reader = () => {
   }, [qrData]);
 
   const valid =
-    isValidAddress(qrData) ||
-    (!vaultAccountExists(qrData) && !formatAccountSs58(qrData));
+    isValidAddress(qrData) &&
+    !vaultAccountExists(qrData) &&
+    !formatAccountSs58(qrData);
 
   return (
     <QRCameraWrapper>
@@ -92,7 +93,7 @@ export const Reader = () => {
           <ButtonPrimary
             marginRight
             text="Import Address"
-            disabled={valid}
+            disabled={!valid}
             onClick={() => {
               const account = addVaultAccount(qrData, vaultAccounts.length);
               if (account) {
