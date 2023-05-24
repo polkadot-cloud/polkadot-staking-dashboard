@@ -47,7 +47,6 @@ export const ImportVault = () => {
                 index={index}
                 initial={name}
                 badgePrefix={capitalizeFirstLetter(network.name)}
-                disableEditIfImported
                 existsHandler={vaultAccountExists}
                 renameHandler={renameVaultAccount}
                 addHandler={addVaultAccount}

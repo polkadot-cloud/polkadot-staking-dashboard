@@ -49,7 +49,6 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
                 index={index}
                 initial={initialName}
                 badgePrefix={appName}
-                disableEditIfImported
                 existsHandler={ledgerAccountExists}
                 renameHandler={renameLedgerAccount}
                 addHandler={addLedgerAccount}

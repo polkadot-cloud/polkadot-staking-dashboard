@@ -205,6 +205,22 @@ export const ConnectProvider = ({
     );
   };
 
+  // renames an account
+  const renameImportedAccount = (address: MaybeAccount, newName: string) => {
+    setStateWithRef(
+      [...accountsRef.current].map((a) =>
+        a.address !== address
+          ? a
+          : {
+              ...a,
+              name: newName,
+            }
+      ),
+      setAccounts,
+      accountsRef
+    );
+  };
+
   /* importLedgerAccounts
    * Checks previously added Ledger accounts from localStorage and adds them to
    * `accounts` state. if local active account is present, it will also be assigned as active.
@@ -637,6 +653,7 @@ export const ConnectProvider = ({
         addToAccounts,
         forgetAccounts,
         setActiveProxy,
+        renameImportedAccount,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
         activeProxy: activeProxyRef.current,

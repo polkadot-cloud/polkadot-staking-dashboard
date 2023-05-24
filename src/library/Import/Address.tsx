@@ -10,6 +10,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonMono, ButtonText } from '@polkadotcloud/core-ui';
 import { clipAddress, unescape } from '@polkadotcloud/utils';
+import { useConnect } from 'contexts/Connect';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
 import React, { useState } from 'react';
@@ -32,6 +33,7 @@ export const Address = ({
 }: AddressProps) => {
   const { t } = useTranslation('modals');
   const { openOverlayWith } = useOverlay();
+  const { renameImportedAccount } = useConnect();
 
   // store whether this address is being edited.
   const [editing, setEditing] = useState<boolean>(false);
@@ -55,6 +57,7 @@ export const Address = ({
     setEditName(newName);
     setEditing(false);
     renameHandler(address, newName);
+    renameImportedAccount(address, newName);
   };
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     let val = e.currentTarget.value || '';

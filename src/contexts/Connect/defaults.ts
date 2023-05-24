@@ -29,6 +29,8 @@ export const defaultConnectContext: ConnectContextInterface = {
   forgetAccounts: (a) => {},
   // eslint-disable-next-line
   setActiveProxy: (p, l) => {},
+  // eslint-disable-next-line
+  renameImportedAccount: (a, n) => {},
   accounts: [],
   activeAccount: null,
   activeProxy: null,
