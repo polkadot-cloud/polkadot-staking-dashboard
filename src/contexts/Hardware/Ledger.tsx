@@ -3,7 +3,7 @@
 
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import { u8aToBuffer } from '@polkadot/util';
-import { setStateWithRef } from '@polkadotcloud/utils';
+import { localStorageOrDefault, setStateWithRef } from '@polkadotcloud/utils';
 import { newSubstrateApp } from '@zondax/ledger-substrate';
 import { useApi } from 'contexts/Api';
 import type { LedgerAccount } from 'contexts/Connect/types';
@@ -25,6 +25,7 @@ import {
 } from './defaults';
 import type {
   FeedbackMessage,
+  LedgerAddress,
   LedgerHardwareContextInterface,
   LedgerResponse,
   LedgerStatusCode,
@@ -424,6 +425,7 @@ export const LedgerHardwareProvider = ({
     );
   };
 
+  // Renames an imported ledger account.
   const renameLedgerAccount = (address: string, newName: string) => {
     let newLedgerAccounts = getLocalLedgerAccounts();
 
@@ -435,13 +437,31 @@ export const LedgerHardwareProvider = ({
           }
         : a
     );
-
+    renameLocalLedgerAddress(address, newName);
     localStorage.setItem('ledger_accounts', JSON.stringify(newLedgerAccounts));
     setStateWithRef(
       newLedgerAccounts.filter((a) => a.network === network.name),
       setLedgerAccountsState,
       ledgerAccountsRef
     );
+  };
+
+  // Renames a record from local ledger addresses.
+  const renameLocalLedgerAddress = (address: string, name: string) => {
+    const localLedger = (
+      localStorageOrDefault('ledger_addresses', [], true) as LedgerAddress[]
+    )?.map((i) =>
+      !(i.address === address && i.network === network.name)
+        ? i
+        : {
+            ...i,
+            name,
+          }
+    );
+
+    if (localLedger) {
+      localStorage.setItem('ledger_addresses', JSON.stringify(localLedger));
+    }
   };
 
   const getTransport = () => {

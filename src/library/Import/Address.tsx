@@ -9,14 +9,9 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonMono, ButtonText } from '@polkadotcloud/core-ui';
-import {
-  clipAddress,
-  localStorageOrDefault,
-  unescape,
-} from '@polkadotcloud/utils';
+import { clipAddress, unescape } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { getLedgerApp, getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
-import type { LedgerAddress } from 'contexts/Hardware/types';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
 import React, { useState } from 'react';
@@ -69,34 +64,12 @@ export const Address = ({
     setName(newName);
     setEditName(newName);
     setEditing(false);
-    renameLocalAccount();
     renameHandler(address, newName);
   };
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     let val = e.currentTarget.value || '';
     val = unescape(val);
     setEditName(val);
-  };
-
-  const renameLocalAccount = () => {
-    let localLedger = localStorageOrDefault(
-      'ledger_addresses',
-      [],
-      true
-    ) as LedgerAddress[];
-    if (!localLedger) {
-      return false;
-    }
-    localLedger = localLedger?.map((i) => {
-      if (i.address !== address || i.network !== network.name) {
-        return i;
-      }
-      return {
-        ...i,
-        name: editName,
-      };
-    });
-    localStorage.setItem('ledger_addresses', JSON.stringify(localLedger));
   };
 
   const isImported = existsHandler(address);
