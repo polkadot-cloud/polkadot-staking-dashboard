@@ -7,7 +7,6 @@ import { useSetup } from 'contexts/Setup';
 import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
-import { TextSpace } from 'pages/Nominate/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { GenerateNominations } from '../GenerateNominations';
 import type { NominationsProps } from './types';
@@ -38,9 +37,9 @@ export const Nominate = ({ batchKey, bondFor, section }: NominationsProps) => {
         bondFor={bondFor}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <TextSpace>
+        <h4 className="withMargin">
           {t('chooseValidators', { maxNominations: maxNominations.toString() })}
-        </TextSpace>
+        </h4>
         <GenerateNominations
           batchKey={batchKey}
           setters={[

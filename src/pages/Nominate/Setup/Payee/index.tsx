@@ -13,7 +13,6 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
-import { TextSpace } from 'pages/Nominate/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { MaybeAccount } from 'types';
@@ -79,7 +78,9 @@ export const Payee = ({ section }: SetupStepProps) => {
         bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <TextSpace>{t('nominate.payoutDestinationSubtitle')}</TextSpace>
+        <h4 className="withMargin">
+          {t('nominate.payoutDestinationSubtitle')}
+        </h4>
 
         <SelectItems layout="three-col">
           {getPayeeItems().map((item) => (
