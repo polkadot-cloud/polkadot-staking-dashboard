@@ -251,7 +251,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
     const newProvider = lc || new WsProvider(endpoints.rpc);
     if (lc) {
-      await newProvider.connect();
+      await newProvider.connect({ forceEmbeddedNode: true });
     }
     setProvider(newProvider);
   };
