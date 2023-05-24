@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonMono, ButtonText } from '@polkadotcloud/core-ui';
 import { clipAddress, unescape } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
-import { getLedgerApp, getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
+import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
 import React, { useState } from 'react';
@@ -23,6 +23,7 @@ import type { AddressProps } from './types';
 export const Address = ({
   address,
   index,
+  initial,
   existsHandler,
   renameHandler,
   addHandler,
@@ -37,19 +38,10 @@ export const Address = ({
   // store whether this address is being edited.
   const [editing, setEditing] = useState<boolean>(false);
 
-  // store the current name of the address
-  const initialName = (() => {
-    const localAddress = getLocalLedgerAddresses().find(
-      (i) => i.address === address && i.network === network.name
-    );
-    return localAddress?.name
-      ? unescape(localAddress.name)
-      : clipAddress(address);
-  })();
-  const [name, setName] = useState<string>(initialName);
+  const [name, setName] = useState<string>(initial);
 
   // store the currently edited name.
-  const [editName, setEditName] = useState<string>(initialName);
+  const [editName, setEditName] = useState<string>(initial);
 
   const cancelEditing = () => {
     setEditName(name);

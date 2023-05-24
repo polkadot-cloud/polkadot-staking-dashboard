@@ -20,6 +20,7 @@ export interface HeadingProps {
 export interface AddressProps {
   address: string;
   index: number;
+  initial: string;
   renameHandler: AnyFunction;
   existsHandler: AnyFunction;
   addHandler: AnyFunction;

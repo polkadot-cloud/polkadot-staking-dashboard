@@ -3,7 +3,10 @@
 
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText } from '@polkadotcloud/core-ui';
+import { clipAddress, unescape } from '@polkadotcloud/utils';
+import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import { Address } from 'library/Import/Address';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import { useTranslation } from 'react-i18next';
@@ -11,6 +14,7 @@ import type { AnyJson } from 'types';
 
 export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const { t } = useTranslation('modals');
+  const { network } = useApi();
   const {
     getIsExecuting,
     ledgerAccountExists,
@@ -26,18 +30,30 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
     <>
       <AddressesWrapper>
         <div className="items">
-          {addresses.map(({ address, index }: AnyJson, i: number) => (
-            <Address
-              key={i}
-              address={address}
-              index={index}
-              existsHandler={ledgerAccountExists}
-              renameHandler={renameLedgerAccount}
-              addHandler={addLedgerAccount}
-              removeHandler={removeLedgerAccount}
-              getHandler
-            />
-          ))}
+          {addresses.map(({ address, index }: AnyJson, i: number) => {
+            const initialName = (() => {
+              const localAddress = getLocalLedgerAddresses().find(
+                (a) => a.address === address && a.network === network.name
+              );
+              return localAddress?.name
+                ? unescape(localAddress.name)
+                : clipAddress(address);
+            })();
+
+            return (
+              <Address
+                key={i}
+                address={address}
+                index={index}
+                initial={initialName}
+                existsHandler={ledgerAccountExists}
+                renameHandler={renameLedgerAccount}
+                addHandler={addLedgerAccount}
+                removeHandler={removeLedgerAccount}
+                getHandler
+              />
+            );
+          })}
         </div>
         <div className="more">
           <ButtonText
