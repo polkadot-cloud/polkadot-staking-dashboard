@@ -4,14 +4,20 @@
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonPrimary, ButtonSecondary } from '@polkadotcloud/core-ui';
-import { isValidAddress } from '@polkadotcloud/utils';
+import { clipAddress, isValidAddress } from '@polkadotcloud/utils';
+import { useConnect } from 'contexts/Connect';
+import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { useOverlay } from 'contexts/Overlay';
+import { Identicon } from 'library/Identicon';
 import { useEffect, useState } from 'react';
 import { QrReader } from 'react-qr-reader';
 import { QRCameraWrapper } from './Wrappers';
 
 export const Reader = () => {
+  const { addToAccounts } = useConnect();
   const { setStatus: setOverlayStatus } = useOverlay();
+  const { addVaultAccount, vaultAccountExists, vaultAccounts } =
+    useVaultHardware();
 
   // Store data from QR Code scanner.
   const [qrData, setQrData] = useState<any>(undefined);
@@ -36,7 +42,9 @@ export const Reader = () => {
       qrData === undefined
         ? 'Waiting for QR Code'
         : isValidAddress(qrData)
-        ? 'Address Received'
+        ? vaultAccountExists(qrData)
+          ? 'Account Already Imported'
+          : 'Address Received:'
         : 'Invalid Address'
     );
   }, [qrData]);
@@ -65,8 +73,29 @@ export const Reader = () => {
       </div>
       <div className="foot">
         <h3>{feedback}</h3>
+        <h3 className="address">
+          {isValidAddress(qrData) ? (
+            <>
+              <Identicon value={qrData} size={22} />
+              {clipAddress(qrData)}
+            </>
+          ) : (
+            '...'
+          )}
+        </h3>
         <div>
-          <ButtonPrimary text="Import Address" disabled marginRight />
+          <ButtonPrimary
+            marginRight
+            text="Import Address"
+            disabled={!isValidAddress(qrData) || vaultAccountExists(qrData)}
+            onClick={() => {
+              const account = addVaultAccount(qrData, vaultAccounts.length + 1);
+              if (account) {
+                addToAccounts([account]);
+              }
+              setOverlayStatus(0);
+            }}
+          />
           <ButtonSecondary text="Cancel" onClick={() => setOverlayStatus(0)} />
         </div>
       </div>

@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { setStateWithRef } from '@polkadotcloud/utils';
+import { clipAddress, setStateWithRef } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import type { VaultAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { getLocalVaultAccounts, isLocalNetworkAddress } from './Utils';
-import { defaultVaultrHardwareContext } from './defaults';
+import { defaultVaultHardwareContext } from './defaults';
 import type { VaultHardwareContextInterface } from './types';
 
 export const VaultHardwareProvider = ({
@@ -28,7 +28,7 @@ export const VaultHardwareProvider = ({
     );
 
   // Adds a vault account to state and local storage.
-  const addVaultAccount = (address: string, name: string, index: number) => {
+  const addVaultAccount = (address: string, index: number) => {
     let newVaultAccounts = getLocalVaultAccounts();
 
     if (
@@ -39,7 +39,7 @@ export const VaultHardwareProvider = ({
       const account = {
         address,
         network: network.name,
-        name,
+        name: clipAddress(address),
         source: 'vault',
         index,
       };
@@ -150,7 +150,7 @@ export const VaultHardwareProvider = ({
 
 export const VaultHardwareContext =
   React.createContext<VaultHardwareContextInterface>(
-    defaultVaultrHardwareContext
+    defaultVaultHardwareContext
   );
 
-export const useLedgerHardware = () => React.useContext(VaultHardwareContext);
+export const useVaultHardware = () => React.useContext(VaultHardwareContext);

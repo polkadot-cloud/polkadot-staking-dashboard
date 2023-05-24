@@ -38,7 +38,7 @@ export const AccountButton = ({
   const Icon =
     meta?.source === 'ledger'
       ? LedgerIconSVG
-      : meta?.source === 'polkadotVault'
+      : meta?.source === 'vault'
       ? PolkadotVaultIconSVG
       : extensions.find(({ id }) => id === meta?.source)?.icon ?? undefined;
 

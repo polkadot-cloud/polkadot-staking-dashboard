@@ -45,9 +45,16 @@ export const QRCameraWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 1.75rem;
 
-    h3 {
-      margin: 1.5rem 0;
+    .address {
+      display: flex;
+      margin-top: 0.5rem;
+      margin-bottom: 1.25rem;
+
+      svg {
+        margin-right: 0.6rem;
+      }
     }
     > div {
       display: flex;

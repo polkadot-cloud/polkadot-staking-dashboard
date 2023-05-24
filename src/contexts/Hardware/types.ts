@@ -78,7 +78,7 @@ export type LedgerApp = {
 
 export type VaultHardwareContextInterface = {
   vaultAccountExists: (a: string) => boolean;
-  addVaultAccount: (a: string, n: string, i: number) => LedgerAccount | null;
+  addVaultAccount: (a: string, i: number) => LedgerAccount | null;
   removeVaultAccount: (a: string) => void;
   renameVaultAccount: (a: string, name: string) => void;
   getVaultAccount: (a: string) => LedgerAccount | null;

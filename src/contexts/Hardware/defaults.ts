@@ -50,11 +50,11 @@ export const defaultLedgerHardwareContext: LedgerHardwareContextInterface = {
   handleUnmount: () => {},
 };
 
-export const defaultVaultrHardwareContext: VaultHardwareContextInterface = {
+export const defaultVaultHardwareContext: VaultHardwareContextInterface = {
   // eslint-disable-next-line
   vaultAccountExists: (a) => false,
   // eslint-disable-next-line
-  addVaultAccount: (a, n, i) => null,
+  addVaultAccount: (a, i) => null,
   // eslint-disable-next-line
   removeVaultAccount: (a) => {},
   // eslint-disable-next-line
