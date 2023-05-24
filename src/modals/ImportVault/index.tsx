@@ -17,13 +17,7 @@ export const ImportVault = () => {
 
   return (
     <>
-      <Heading
-        title="Polkadot Vault"
-        disabled={!addresses.length}
-        handleReset={() => {
-          /* TODO: Reset */
-        }}
-      />
+      <Heading title="Polkadot Vault" disabled={!addresses.length} />
       <AddressesWrapper>
         <div className="more">
           <ButtonText

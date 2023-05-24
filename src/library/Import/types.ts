@@ -12,7 +12,7 @@ export interface StatusBarProps {
 export interface HeadingProps {
   connectTo?: string;
   disabled: boolean;
-  handleReset: () => void;
+  handleReset?: () => void;
   Icon?: FunctionComponent<SVGProps<SVGSVGElement>>;
   title: string;
 }

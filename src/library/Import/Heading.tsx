@@ -37,13 +37,19 @@ export const Heading = ({
         </h4>
       </section>
       <section>
-        <ButtonText
-          text={t('reset')}
-          iconLeft={faCircleMinus}
-          onClick={() => handleReset()}
-          disabled={disabled}
-          marginLeft
-        />
+        {handleReset && (
+          <ButtonText
+            text={t('reset')}
+            iconLeft={faCircleMinus}
+            onClick={() => {
+              if (typeof handleReset === 'function') {
+                handleReset();
+              }
+            }}
+            disabled={disabled}
+            marginLeft
+          />
+        )}
       </section>
     </HeadingWrapper>
   );
