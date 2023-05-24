@@ -1,13 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ActionItem } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
@@ -18,9 +19,11 @@ export const NominatePool = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { activeAccount } = useConnect();
   const { selectedActivePool, isOwner, isNominator, targets } =
     useActivePools();
+  const { getSignerWarnings } = useSignerWarnings();
+
   const { nominations } = targets;
 
   // valid to submit transaction
@@ -57,10 +60,12 @@ export const NominatePool = () => {
   });
 
   // warnings
-  const warnings = [];
-  if (!accountHasSigner(activeAccount)) {
-    warnings.push(t('readOnlyCannotSign'));
-  }
+  const warnings = getSignerWarnings(
+    activeAccount,
+    false,
+    submitExtrinsic.proxySupported
+  );
+
   if (!nominations.length) {
     warnings.push(t('noNominationsSet'));
   }
@@ -75,12 +80,12 @@ export const NominatePool = () => {
         <h2 className="title unbounded">{t('nominate')}</h2>
         {warnings.length ? (
           <WarningsWrapper>
-            {warnings.map((text: string, index: number) => (
-              <Warning key={`warning_${index}`} text={text} />
+            {warnings.map((text, i) => (
+              <Warning key={`warning_${i}`} text={text} />
             ))}
           </WarningsWrapper>
         ) : null}
-        <Action text={t('haveNomination', { count: nominations.length })} />
+        <ActionItem text={t('haveNomination', { count: nominations.length })} />
         <p>{t('onceSubmitted')}</p>
       </PaddingWrapper>
       <SubmitTx valid={valid && warnings.length === 0} {...submitExtrinsic} />

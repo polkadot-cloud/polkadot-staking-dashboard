@@ -16,12 +16,6 @@ import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
 
-export const BondedPoolsContext = React.createContext<BondedPoolsContextState>(
-  defaultBondedPoolsContext
-);
-
-export const useBondedPools = () => React.useContext(BondedPoolsContext);
-
 export const BondedPoolsProvider = ({
   children,
 }: {
@@ -37,13 +31,10 @@ export const BondedPoolsProvider = ({
   const poolMetaBatchesRef = useRef(poolMetaBatches);
 
   // stores the meta batch subscriptions for pool lists
-  const [poolSubs, setPoolSubs] = useState<{
-    [key: string]: Array<Fn>;
-  }>({});
-  const poolSubsRef = useRef(poolSubs);
+  const poolSubs = useRef<Record<string, Fn[]>>({});
 
   // store bonded pools
-  const [bondedPools, setBondedPools] = useState<Array<BondedPool>>([]);
+  const [bondedPools, setBondedPools] = useState<BondedPool[]>([]);
 
   // clear existing state for network refresh
   useEffect(() => {
@@ -70,7 +61,7 @@ export const BondedPoolsProvider = ({
   }, [bondedPools]);
 
   const unsubscribe = () => {
-    Object.values(poolSubsRef.current).map((batch: Array<Fn>) =>
+    Object.values(poolSubs.current).map((batch: Fn[]) =>
       Object.entries(batch).map(([, v]) => v())
     );
     setBondedPools([]);
@@ -151,8 +142,8 @@ export const BondedPoolsProvider = ({
         poolMetaBatchesRef
       );
 
-      if (poolSubsRef.current[key] !== undefined) {
-        for (const unsub of poolSubsRef.current[key]) {
+      if (poolSubs.current[key] !== undefined) {
+        for (const unsub of poolSubs.current[key]) {
           unsub();
         }
       }
@@ -224,7 +215,7 @@ export const BondedPoolsProvider = ({
     await Promise.all([
       subscribeToMetadata(ids),
       subscribeToNominations(addresses),
-    ]).then((unsubs: Array<Fn>) => {
+    ]).then((unsubs: Fn[]) => {
       addMetaBatchUnsubs(key, unsubs);
     });
   };
@@ -278,13 +269,13 @@ export const BondedPoolsProvider = ({
   /*
    * Helper: to add mataBatch unsubs by key.
    */
-  const addMetaBatchUnsubs = (key: string, unsubs: Array<Fn>) => {
-    const _unsubs = poolSubsRef.current;
-    const _keyUnsubs = _unsubs[key] ?? [];
+  const addMetaBatchUnsubs = (key: string, unsubs: Fn[]) => {
+    const newUnsubs = poolSubs.current;
+    const newUnsubItem = newUnsubs[key] ?? [];
 
-    _keyUnsubs.push(...unsubs);
-    _unsubs[key] = _keyUnsubs;
-    setStateWithRef(_unsubs, setPoolSubs, poolSubsRef);
+    newUnsubItem.push(...unsubs);
+    newUnsubs[key] = newUnsubItem;
+    poolSubs.current = newUnsubs;
   };
 
   /*
@@ -296,10 +287,8 @@ export const BondedPoolsProvider = ({
     addresses: createAccounts(id),
   });
 
-  const getBondedPool = (poolId: MaybePool) => {
-    const pool = bondedPools.find((p: BondedPool) => p.id === poolId) ?? null;
-    return pool;
-  };
+  const getBondedPool = (poolId: MaybePool) =>
+    bondedPools.find((p) => p.id === String(poolId)) ?? null;
 
   /*
    * poolSearchFilter
@@ -359,15 +348,13 @@ export const BondedPoolsProvider = ({
     return filteredList;
   };
 
-  const updateBondedPools = (updatedPools: Array<BondedPool>) => {
+  const updateBondedPools = (updatedPools: BondedPool[]) => {
     if (!updatedPools) {
       return;
     }
     const _bondedPools = bondedPools.map(
-      (original: BondedPool) =>
-        updatedPools.find(
-          (updated: BondedPool) => updated.id === original.id
-        ) || original
+      (original) =>
+        updatedPools.find((updated) => updated.id === original.id) || original
     );
     setBondedPools(_bondedPools);
   };
@@ -382,7 +369,7 @@ export const BondedPoolsProvider = ({
   const addToBondedPools = (pool: BondedPool) => {
     if (!pool) return;
 
-    const exists = bondedPools.find((b: BondedPool) => b.id === pool.id);
+    const exists = bondedPools.find((b) => b.id === pool.id);
     if (!exists) {
       const _bondedPools = bondedPools.concat(pool);
       setBondedPools(_bondedPools);
@@ -401,20 +388,20 @@ export const BondedPoolsProvider = ({
     }
 
     const depositor = bondedPools
-      .filter((b: BondedPool) => b.roles.depositor === who)
-      .map((b: BondedPool) => b.id);
+      .filter((b) => b.roles.depositor === who)
+      .map((b) => b.id);
 
     const root = bondedPools
       .filter((b: BondedPool) => b.roles.root === who)
-      .map((b: BondedPool) => b.id);
+      .map((b) => b.id);
 
     const nominator = bondedPools
-      .filter((b: BondedPool) => b.roles.nominator === who)
-      .map((b: BondedPool) => b.id);
+      .filter((b) => b.roles.nominator === who)
+      .map((b) => b.id);
 
     const stateToggler = bondedPools
-      .filter((b: BondedPool) => b.roles.stateToggler === who)
-      .map((b: BondedPool) => b.id);
+      .filter((b) => b.roles.stateToggler === who)
+      .map((b) => b.id);
 
     return {
       depositor,
@@ -434,7 +421,7 @@ export const BondedPoolsProvider = ({
     Object.entries(roles).forEach(([key, poolIds]: any) => {
       // now looping through a role
       poolIds.forEach((poolId: string) => {
-        const exists = Object.keys(pools).find((k: string) => k === poolId);
+        const exists = Object.keys(pools).find((k) => k === poolId);
         if (!exists) {
           pools[poolId] = [key];
         } else {
@@ -460,9 +447,7 @@ export const BondedPoolsProvider = ({
 
   // replaces the pool roles from roleEdits
   const replacePoolRoles = (poolId: number, roleEdits: any) => {
-    let pool =
-      bondedPools.find((b: BondedPool) => String(b.id) === String(poolId)) ||
-      null;
+    let pool = bondedPools.find((b) => String(b.id) === String(poolId)) || null;
 
     if (!pool) return;
 
@@ -475,7 +460,7 @@ export const BondedPoolsProvider = ({
     };
 
     const newBondedPools = [
-      ...bondedPools.map((b: BondedPool) =>
+      ...bondedPools.map((b) =>
         String(b.id) === String(poolId) && pool !== null ? pool : b
       ),
     ];
@@ -506,3 +491,9 @@ export const BondedPoolsProvider = ({
     </BondedPoolsContext.Provider>
   );
 };
+
+export const BondedPoolsContext = React.createContext<BondedPoolsContextState>(
+  defaultBondedPoolsContext
+);
+
+export const useBondedPools = () => React.useContext(BondedPoolsContext);

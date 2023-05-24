@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ActionItem } from '@polkadotcloud/core-ui';
 import {
   greaterThanZero,
   planckToUnit,
@@ -15,25 +16,26 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { getUnixTime } from 'date-fns';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
-import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const LeavePool = () => {
   const { t } = useTranslation('modals');
   const { api, network, consts } = useApi();
+  const { activeAccount } = useConnect();
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
-  const { activeAccount, accountHasSigner } = useConnect();
   const { getTransferOptions } = useTransferOptions();
   const { selectedActivePool } = useActivePools();
   const { erasToSeconds } = useErasToTimeLeft();
+  const { getSignerWarnings } = useSignerWarnings();
 
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active: activeBn } = allTransferOptions.pool;
@@ -46,9 +48,9 @@ export const LeavePool = () => {
     true
   );
 
-  let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
-  unclaimedRewards = planckToUnit(unclaimedRewards, network.units);
+  let { pendingRewards } = selectedActivePool || {};
+  pendingRewards = pendingRewards ?? new BigNumber(0);
+  pendingRewards = planckToUnit(pendingRewards, network.units);
 
   // convert BigNumber values to number
   const freeToUnbond = planckToUnit(activeBn, units);
@@ -78,11 +80,11 @@ export const LeavePool = () => {
   // tx to submit
   const getTx = () => {
     let tx = null;
-    if (!bondValid || !api || !activeAccount) {
+    if (!api || !activeAccount) {
       return tx;
     }
 
-    const bondToSubmit = unitToPlanck(bond.bond, units);
+    const bondToSubmit = unitToPlanck(!bondValid ? '0' : bond.bond, units);
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
     tx = api.tx.nominationPools.unbond(activeAccount, bondAsString);
     return tx;
@@ -98,17 +100,15 @@ export const LeavePool = () => {
     callbackInBlock: () => {},
   });
 
-  const warnings = [];
-  if (!accountHasSigner(activeAccount)) {
-    warnings.push(<Warning text={t('readOnlyCannotSign')} />);
-  }
-  if (greaterThanZero(unclaimedRewards)) {
+  const warnings = getSignerWarnings(
+    activeAccount,
+    false,
+    submitExtrinsic.proxySupported
+  );
+
+  if (greaterThanZero(pendingRewards)) {
     warnings.push(
-      <Warning
-        text={`${t('unbondingWithdraw')} ${unclaimedRewards.toString()} ${
-          network.unit
-        }.`}
-      />
+      `${t('unbondingWithdraw')} ${pendingRewards.toString()} ${network.unit}.`
     );
   }
 
@@ -117,16 +117,14 @@ export const LeavePool = () => {
       <Close />
       <PaddingWrapper>
         <h2 className="title unbounded">{t('leavePool')}</h2>
-        {warnings.length ? (
+        {warnings.length > 0 ? (
           <WarningsWrapper>
-            {warnings.map((warning: React.ReactNode, index: number) => (
-              <React.Fragment key={`warning_${index}`}>
-                {warning}
-              </React.Fragment>
+            {warnings.map((text, i) => (
+              <Warning key={`warning${i}`} text={text} />
             ))}
           </WarningsWrapper>
         ) : null}
-        <Action text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
+        <ActionItem text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
         <StaticNote
           value={bondDurationFormatted}
           tKey="onceUnbonding"

@@ -19,7 +19,7 @@ export const useFillVariables = () => {
   const { metrics } = useNetworkMetrics();
   const { minimumActiveStake } = metrics;
 
-  const fillVariables = (d: AnyJson, keys: Array<string>) => {
+  const fillVariables = (d: AnyJson, keys: string[]) => {
     const fields: AnyJson = Object.entries(d).filter(([k]: any) =>
       keys.includes(k)
     );
@@ -59,9 +59,7 @@ export const useFillVariables = () => {
 
         for (const varToVal of varsToValues) {
           if (val.constructor === Array) {
-            val = val.map((_d: string) =>
-              _d.replaceAll(varToVal[0], varToVal[1])
-            );
+            val = val.map((_d) => _d.replaceAll(varToVal[0], varToVal[1]));
           } else {
             val = val.replaceAll(varToVal[0], varToVal[1]);
           }

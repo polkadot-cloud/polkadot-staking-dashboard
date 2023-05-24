@@ -5,6 +5,8 @@ import BigNumber from 'bignumber.js';
 import type { TxMetaContextInterface } from './types';
 
 export const defaultTxMeta: TxMetaContextInterface = {
+  // eslint-disable-next-line
+  controllerSignerAvailable: (a, b) => 'ok',
   txFees: new BigNumber(0),
   notEnoughFunds: false,
   // eslint-disable-next-line

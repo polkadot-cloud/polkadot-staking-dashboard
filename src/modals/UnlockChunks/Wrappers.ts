@@ -1,27 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
-
-export const Wrapper = styled.div`
-  display: flex;
-  flex-flow: column wrap;
-`;
-
-export const FixedContentWrapper = styled.div`
-  padding-top: 1rem;
-  width: 100%;
-`;
-
-export const CardsWrapper = styled(motion.div)`
-  width: 200%;
-  display: flex;
-  overflow: hidden;
-  overflow-y: auto;
-  position: relative;
-  height: 100%;
-`;
 
 export const ContentWrapper = styled.div`
   border-radius: 1rem;
@@ -66,6 +46,10 @@ export const ChunkWrapper = styled.div<any>`
         justify-content: center;
       }
     }
+  }
+
+  h2 {
+    margin: 0;
   }
 
   h4 {

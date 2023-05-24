@@ -30,6 +30,10 @@ export const ValidatorCommunity = [
       polkadot: [
         '1y6CPLgccsysCEii3M7jQF834GZsz9A3HMcZz3w7RjGPpBL',
         '1gBKvQ9vbraAfhxEroBnxoGp9687Hu5wR7NYSwgJeAsw4x8',
+        '12Ftq9EM1qc3persmD9NFrzFZqF5CALsP7oKDUsGTBe7FBDm',
+        '13N2JTpk5hhLczQRqxJRmfuCbxTusvDgXYfzkjVoEbaHtpZV',
+        '13avpNYE4rTxhN2EfJv8zcX1U52JLNgiTtgqrpEDoLZwZxd',
+        '15xzmgiDUyguYSqZjhi4dGPiUbsW4Z6b3cYALgbUjhE5pKpT',
       ],
       kusama: [
         'DVUNoinHdSNfismcrFaBwdJfysxc7A48QkNvTDnTSPXPw3q',
@@ -37,6 +41,24 @@ export const ValidatorCommunity = [
         'E8zY6KdAH1vuKKMaPdHYLAziht32v2BLqXk6qBw7WtiV2Dv',
         'Ff3xdNrXA47svhiTJHj9uNhxLo29PYjYcJ9cUseAd9FK6iQ',
         'EyQ1wV8jQdKYEWh7FiN2mnkFzAepfq6LfKbWLy7qQkLynGg',
+        'J9KLy6nouPoj5rA2RWX8C9wrmrg84Mv3hpB7mZTN7Jvww7C',
+        'Czy1KnZV1DqSPcHd6k1WL6fe4nsyhAuiJ9ALZtVvyomdc8y',
+      ],
+    },
+  },
+  {
+    name: 'Aperture Mining 🎂',
+    thumbnail: 'ApertureMining',
+    bio: 'Self-hosted / Decentralized Nodes. Low commission and high reliability. We host our own hardware in our own facility right here in Philadelphia PA, USA. Aperture Mining has been offering cryptocurrency staking and mining solutions since 2018.',
+    email: 'validator@aperturemining.com',
+    website: 'https://aperturemining.com',
+    twitter: '@ApertureMining',
+    validators: {
+      polkadot: ['145SvVXoAwR5ufJynYWDeNXzfyxbf5VkCqkHu3Jt7FSdYBE2'],
+      kusama: [
+        'FJcnsNkMjY8tgJrDVeq5CKoB1b4Au2xGQjaMv8Ax5QAiV6p',
+        'Cad3MXUdmKLPyosPJ67ZhkQh7CjKjBFvb4hyjuNwnfaAGG5',
+        'Hcbo6hyfVgExCKrjmJic9bg4gLWgYy6HLrjcXUYy2VgLG7a',
       ],
     },
   },
@@ -520,8 +542,8 @@ export const ValidatorCommunity = [
     },
   },
   {
-    name: 'validierung.cc',
-    thumbnail: 'Validierungcc',
+    name: 'VF Validierung',
+    thumbnail: 'VFValidierung',
     bio: 'We are crypto enthusiasts from Germany and offer independent and reliable validation and staking returns.',
     email: 'contact@validierung.cc',
     twitter: '@validierungcc',

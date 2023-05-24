@@ -1,27 +1,29 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useBalances } from 'contexts/Accounts/Balances';
 import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PaddingWrapper, Separator, WarningsWrapper } from '../Wrappers';
 
 export const ChangeNominations = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { activeAccount, accountHasSigner } = useConnect();
-  const { getBondedAccount, getAccountNominations } = useBalances();
+  const { activeAccount } = useConnect();
+  const { getBondedAccount, getAccountNominations } = useBonded();
   const { setStatus: setModalStatus, config } = useModal();
   const { poolNominations, isNominator, isOwner, selectedActivePool } =
     useActivePools();
+  const { getSignerWarnings } = useSignerWarnings();
 
   const { nominations: newNominations, provider, bondFor } = config;
 
@@ -107,20 +109,14 @@ export const ChangeNominations = () => {
     callbackInBlock: () => {},
   });
 
-  const warnings = [];
+  const warnings = getSignerWarnings(
+    activeAccount,
+    isStaking,
+    submitExtrinsic.proxySupported
+  );
+
   if (!nominations.length) {
-    warnings.push(<Warning text={t('noNominationsSet')} />);
-  }
-  if (!accountHasSigner(signingAccount)) {
-    warnings.push(
-      <Warning
-        text={`${
-          bondFor === 'nominator'
-            ? t('youMust', { context: 'controller' })
-            : t('youMust', { context: 'account' })
-        }`}
-      />
-    );
+    warnings.push(`${t('noNominationsSet')}`);
   }
 
   return (
@@ -136,10 +132,8 @@ export const ChangeNominations = () => {
         <Separator />
         {warnings.length ? (
           <WarningsWrapper noMargin>
-            {warnings.map((warning: React.ReactNode, index: number) => (
-              <React.Fragment key={`warning_${index}`}>
-                {warning}
-              </React.Fragment>
+            {warnings.map((text, i) => (
+              <Warning key={`warning_${i}`} text={text} />
             ))}
           </WarningsWrapper>
         ) : null}

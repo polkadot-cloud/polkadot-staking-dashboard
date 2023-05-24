@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ActionItem } from '@polkadotcloud/core-ui';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -8,28 +9,30 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
+  const { activeAccount } = useConnect();
   const { setStatus: setModalStatus, config } = useModal();
   const { selectedActivePool } = useActivePools();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { getSignerWarnings } = useSignerWarnings();
+
   const { units, unit } = network;
-  let { unclaimedRewards } = selectedActivePool || {};
-  unclaimedRewards = unclaimedRewards ?? new BigNumber(0);
+  let { pendingRewards } = selectedActivePool || {};
+  pendingRewards = pendingRewards ?? new BigNumber(0);
   const { claimType } = config;
 
   // ensure selected payout is valid
   useEffect(() => {
-    if (unclaimedRewards?.isGreaterThan(0)) {
+    if (pendingRewards?.isGreaterThan(0)) {
       setValid(true);
     } else {
       setValid(false);
@@ -64,12 +67,14 @@ export const ClaimReward = () => {
     callbackInBlock: () => {},
   });
 
-  const warnings = [];
-  if (!accountHasSigner(activeAccount)) {
-    warnings.push(<Warning text={t('readOnlyCannotSign')} />);
-  }
-  if (!greaterThanZero(unclaimedRewards)) {
-    warnings.push(<Warning text={t('noRewards')} />);
+  const warnings = getSignerWarnings(
+    activeAccount,
+    false,
+    submitExtrinsic.proxySupported
+  );
+
+  if (!greaterThanZero(pendingRewards)) {
+    warnings.push(`${t('noRewards')}`);
   }
 
   return (
@@ -79,18 +84,16 @@ export const ClaimReward = () => {
         <h2 className="title unbounded">
           {claimType === 'bond' ? t('bond') : t('withdraw')} {t('rewards')}
         </h2>
-        {warnings.length ? (
+        {warnings.length > 0 ? (
           <WarningsWrapper>
-            {warnings.map((warning: React.ReactNode, index: number) => (
-              <React.Fragment key={`warning_${index}`}>
-                {warning}
-              </React.Fragment>
+            {warnings.map((text, i) => (
+              <Warning key={`warning${i}`} text={text} />
             ))}
           </WarningsWrapper>
         ) : null}
-        <Action
+        <ActionItem
           text={`${t('claim')} ${`${planckToUnit(
-            unclaimedRewards,
+            pendingRewards,
             units
           )} ${unit}`}`}
         />

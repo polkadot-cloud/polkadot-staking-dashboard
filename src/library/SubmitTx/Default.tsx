@@ -15,9 +15,13 @@ export const Default = ({
   valid,
   submitText,
   buttons,
-}: SubmitProps & { buttons?: Array<React.ReactNode> }) => {
+  submitAddress,
+}: SubmitProps & { buttons?: React.ReactNode[] }) => {
   const { txFeesValid } = useTxMeta();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { accountHasSigner } = useConnect();
+
+  const disabled =
+    submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;
 
   return (
     <>
@@ -31,12 +35,8 @@ export const Default = ({
           iconLeft={faArrowAltCircleUp}
           iconTransform="grow-2"
           onClick={() => onSubmit()}
-          disabled={
-            submitting ||
-            !valid ||
-            !accountHasSigner(activeAccount) ||
-            !txFeesValid
-          }
+          disabled={disabled}
+          pulse={!disabled}
         />
       </div>
     </>

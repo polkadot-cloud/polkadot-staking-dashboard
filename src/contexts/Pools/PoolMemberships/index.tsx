@@ -3,7 +3,6 @@
 
 import { rmCommas, setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import type { ImportedAccount } from 'contexts/Connect/types';
 import type {
   PoolMembership,
   PoolMembershipsContextState,
@@ -14,14 +13,6 @@ import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import * as defaults from './defaults';
 
-export const PoolMembershipsContext =
-  React.createContext<PoolMembershipsContextState>(
-    defaults.defaultPoolMembershipsContext
-  );
-
-export const usePoolMemberships = () =>
-  React.useContext(PoolMembershipsContext);
-
 export const PoolMembershipsProvider = ({
   children,
 }: {
@@ -31,16 +22,11 @@ export const PoolMembershipsProvider = ({
   const { accounts: connectAccounts, activeAccount } = useConnect();
 
   // stores pool membership
-  const [poolMemberships, setPoolMemberships] = useState<Array<PoolMembership>>(
-    []
-  );
+  const [poolMemberships, setPoolMemberships] = useState<PoolMembership[]>([]);
   const poolMembershipsRef = useRef(poolMemberships);
 
   // stores pool subscription objects
-  const [poolMembershipUnsubs, setPoolMembershipUnsubs] = useState<Array<Fn>>(
-    []
-  );
-  const poolMembershipUnsubRefs = useRef<Array<AnyApi>>(poolMembershipUnsubs);
+  const poolMembershipUnsubs = useRef<AnyApi[]>([]);
 
   useEffect(() => {
     if (isReady) {
@@ -55,9 +41,7 @@ export const PoolMembershipsProvider = ({
   // subscribe to account pool memberships
   const getPoolMemberships = async () => {
     Promise.all(
-      connectAccounts.map((a: ImportedAccount) =>
-        subscribeToPoolMembership(a.address)
-      )
+      connectAccounts.map((a) => subscribeToPoolMembership(a.address))
     );
   };
 
@@ -71,7 +55,7 @@ export const PoolMembershipsProvider = ({
 
   // unsubscribe from all pool memberships
   const unsubscribeAll = () => {
-    Object.values(poolMembershipUnsubRefs.current).forEach((v: Fn) => v());
+    Object.values(poolMembershipUnsubs.current).forEach((v: Fn) => v());
   };
 
   // subscribe to an account's pool membership
@@ -130,8 +114,7 @@ export const PoolMembershipsProvider = ({
       }
     );
 
-    const _unsubs = poolMembershipUnsubRefs.current.concat(unsub);
-    setStateWithRef(_unsubs, setPoolMembershipUnsubs, poolMembershipUnsubRefs);
+    poolMembershipUnsubs.current = poolMembershipUnsubs.current.concat(unsub);
     return unsub;
   };
 
@@ -141,7 +124,7 @@ export const PoolMembershipsProvider = ({
       return defaults.poolMembership;
     }
     const poolMembership = poolMembershipsRef.current.find(
-      (m: PoolMembership) => m.address === activeAccount
+      (m) => m.address === activeAccount
     );
     if (poolMembership === undefined) {
       return defaults.poolMembership;
@@ -160,3 +143,11 @@ export const PoolMembershipsProvider = ({
     </PoolMembershipsContext.Provider>
   );
 };
+
+export const PoolMembershipsContext =
+  React.createContext<PoolMembershipsContextState>(
+    defaults.defaultPoolMembershipsContext
+  );
+
+export const usePoolMemberships = () =>
+  React.useContext(PoolMembershipsContext);

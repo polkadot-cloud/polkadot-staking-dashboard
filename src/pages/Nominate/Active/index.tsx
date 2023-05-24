@@ -9,7 +9,7 @@ import {
   PageTitle,
   RowSection,
 } from '@polkadotcloud/core-ui';
-import { useBalances } from 'contexts/Accounts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
@@ -20,7 +20,7 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatBoxList } from 'library/StatBoxList';
 import { useTranslation } from 'react-i18next';
-import { ControllerNotImported } from './ControllerNotImported';
+import { ControllerNotStash } from './ControllerNotStash';
 import { ManageBond } from './ManageBond';
 import { Nominations } from './Nominations';
 import { ActiveNominatorsStat } from './Stats/ActiveNominators';
@@ -35,12 +35,12 @@ export const Active = () => {
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
   const { targets, setTargets, inSetup } = useStaking();
-  const { getAccountNominations } = useBalances();
+  const { getAccountNominations } = useBonded();
   const { isFastUnstaking } = useUnstaking();
   const nominations = getAccountNominations(activeAccount);
   const { openHelp } = useHelp();
 
-  const ROW_HEIGHT = 220;
+  const ROW_HEIGHT = 210;
 
   return (
     <>
@@ -50,10 +50,10 @@ export const Active = () => {
         <MinimumNominatorBondStat />
         <MinimumActiveStakeStat />
       </StatBoxList>
-      <ControllerNotImported />
+      <ControllerNotStash />
       <UnstakePrompts />
       <PageRow>
-        <RowSection paddingLeft>
+        <RowSection hLast>
           <Status height={ROW_HEIGHT} />
         </RowSection>
         <RowSection secondary>

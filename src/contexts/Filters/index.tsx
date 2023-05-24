@@ -15,12 +15,6 @@ import type {
   FiltersContextInterface,
 } from './types';
 
-export const FiltersContext = React.createContext<FiltersContextInterface>(
-  defaultFiltersInterface
-);
-
-export const useFilters = () => React.useContext(FiltersContext);
-
 export const FiltersProvider = ({
   children,
 }: {
@@ -39,9 +33,9 @@ export const FiltersProvider = ({
   const [searchTerms, setSearchTerms] = useState<FilterSearches>([]);
 
   // Get stored includes or excludes for a group.
-  const getFilters = (t: FilterType, g: string): Array<string> | null => {
+  const getFilters = (t: FilterType, g: string): string[] | null => {
     const current = t === 'exclude' ? excludes : includes;
-    return current.find((e: FilterItem) => e.key === g)?.filters || null;
+    return current.find((e) => e.key === g)?.filters || null;
   };
 
   const setFilters = (t: FilterType, n: FilterItems) => {
@@ -64,7 +58,7 @@ export const FiltersProvider = ({
       return;
     }
     const newFilters = [...current]
-      .map((e: FilterItem) => {
+      .map((e) => {
         if (e.key !== g) return e;
         let { filters } = e;
 
@@ -78,7 +72,7 @@ export const FiltersProvider = ({
           filters,
         };
       })
-      .filter((e: FilterItem) => e.filters.length !== 0);
+      .filter((e) => e.filters.length !== 0);
     setFilters(t, newFilters);
   };
 
@@ -86,7 +80,7 @@ export const FiltersProvider = ({
   const setMultiFilters = (
     t: FilterType,
     g: string,
-    fs: Array<string>,
+    fs: string[],
     reset: boolean
   ) => {
     // get the current filters from the group.
@@ -102,7 +96,7 @@ export const FiltersProvider = ({
 
     let newFilters: FilterItems;
     if (current.length) {
-      newFilters = [...current].map((e: FilterItem) => {
+      newFilters = [...current].map((e) => {
         // return groups we are not manipulating.
         if (e.key !== g) return e;
 
@@ -121,15 +115,15 @@ export const FiltersProvider = ({
 
   // Get the current order of a list or null.
   const getOrder = (g: string) =>
-    orders.find((o: FilterOrder) => o.key === g)?.order || 'default';
+    orders.find((o) => o.key === g)?.order || 'default';
 
   // Sets an order key for a group.
   const setOrder = (g: string, o: string) => {
     let newOrders = [];
     if (o === 'default') {
-      newOrders = [...orders].filter((order: FilterOrder) => order.key !== g);
+      newOrders = [...orders].filter((order) => order.key !== g);
     } else if (orders.length) {
-      newOrders = [...orders].map((order: FilterOrder) =>
+      newOrders = [...orders].map((order) =>
         order.key !== g ? order : { ...order, order: o }
       );
     } else {
@@ -140,13 +134,13 @@ export const FiltersProvider = ({
 
   // Get the current search term of a list or null.
   const getSearchTerm = (g: string) =>
-    searchTerms.find((o: FilterSearch) => o.key === g)?.searchTerm || null;
+    searchTerms.find((o) => o.key === g)?.searchTerm || null;
 
   // Sets an order key for a group.
   const setSearchTerm = (g: string, t: string) => {
     let newSearchTerms = [];
     if (orders.length) {
-      newSearchTerms = [...searchTerms].map((term: FilterSearch) =>
+      newSearchTerms = [...searchTerms].map((term) =>
         term.key !== g ? term : { ...term, searchTerm: t }
       );
     } else {
@@ -219,3 +213,9 @@ export const FiltersProvider = ({
     </FiltersContext.Provider>
   );
 };
+
+export const FiltersContext = React.createContext<FiltersContextInterface>(
+  defaultFiltersInterface
+);
+
+export const useFilters = () => React.useContext(FiltersContext);

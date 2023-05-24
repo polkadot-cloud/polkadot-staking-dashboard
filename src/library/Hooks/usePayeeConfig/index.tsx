@@ -4,7 +4,6 @@
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import {
   faArrowDown,
-  faArrowRight,
   faArrowRightFromBracket,
   faRedoAlt,
   faStop,
@@ -22,8 +21,8 @@ export interface PayeeItem {
 
 export const usePayeeConfig = () => {
   const { t } = useTranslation('base');
-  const getPayeeItems = (extended?: boolean): Array<PayeeItem> => {
-    let items: Array<PayeeItem> = [
+  const getPayeeItems = (extended?: boolean): PayeeItem[] => {
+    let items: PayeeItem[] = [
       {
         value: 'Staked',
         title: t('payee.staked.title', { context: 'default' }),
@@ -49,13 +48,6 @@ export const usePayeeConfig = () => {
 
     if (extended) {
       items = items.concat([
-        {
-          value: 'Controller',
-          title: t('payee.controller.title'),
-          activeTitle: t('payee.controller.title'),
-          subtitle: t('payee.controller.subtitle'),
-          icon: faArrowRight,
-        },
         {
           value: 'None',
           title: t('payee.none.title', { context: 'default' }),

@@ -4,9 +4,8 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { isValidAddress, remToUnit } from '@polkadotcloud/utils';
-import { useBalances } from 'contexts/Accounts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import type { ImportedAccount } from 'contexts/Connect/types';
 import { Identicon } from 'library/Identicon';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -21,12 +20,10 @@ export const PayeeInput = ({
 }: PayeeInputProps) => {
   const { t } = useTranslation('library');
   const { activeAccount, formatAccountSs58, accounts } = useConnect();
-  const { getBondedAccount } = useBalances();
+  const { getBondedAccount } = useBonded();
   const controller = getBondedAccount(activeAccount);
 
-  const accountMeta = accounts.find(
-    (a: ImportedAccount) => a.address === activeAccount
-  );
+  const accountMeta = accounts.find((a) => a.address === activeAccount);
 
   // store whether account value is valid.
   const [valid, setValid] = useState<boolean>(isValidAddress(account || ''));

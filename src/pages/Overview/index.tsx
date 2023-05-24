@@ -9,6 +9,7 @@ import {
 } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import { DefaultLocale } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useSubscan } from 'contexts/Subscan';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
@@ -17,8 +18,9 @@ import { GraphWrapper } from 'library/Graphs/Wrappers';
 import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
+import { ControllerNotStash } from 'pages/Nominate/Active/ControllerNotStash';
 import { useTranslation } from 'react-i18next';
-import { ActiveAccount } from './ActiveAccount';
+import { ActiveAccounts } from './ActiveAccounts';
 import { BalanceChart } from './BalanceChart';
 import { BalanceLinks } from './BalanceLinks';
 import { NetworkStats } from './NetworkSats';
@@ -54,7 +56,7 @@ export const Overview = () => {
     formatTo = new Date();
     formatOpts = {
       addSuffix: true,
-      locale: locales[i18n.resolvedLanguage],
+      locale: locales[i18n.resolvedLanguage ?? DefaultLocale],
     };
   }
 
@@ -63,7 +65,7 @@ export const Overview = () => {
       <PageTitle title={`${t('overview.overview')}`} />
       <PageRow>
         <PageHeading>
-          <ActiveAccount />
+          <ActiveAccounts />
         </PageHeading>
       </PageRow>
       <StatBoxList>
@@ -71,6 +73,7 @@ export const Overview = () => {
         <SupplyStakedStat />
         <ActiveEraStat />
       </StatBoxList>
+      <ControllerNotStash />
       <PageRow>
         <StakeStatus />
       </PageRow>
@@ -81,7 +84,7 @@ export const Overview = () => {
             <BalanceLinks />
           </GraphWrapper>
         </RowSection>
-        <RowSection paddingLeft verticalOrder>
+        <RowSection hLast vLast>
           <GraphWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
             <SubscanButton />
             <div className="head">

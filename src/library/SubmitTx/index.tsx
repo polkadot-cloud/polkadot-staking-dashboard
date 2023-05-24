@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faPenToSquare, faWarning } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Tx } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useTxMeta } from 'contexts/TxMeta';
@@ -11,7 +11,6 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Default } from './Default';
 import { ManualSign } from './ManualSign';
-import { Wrapper } from './Wrappers';
 import type { SubmitTxProps } from './types';
 
 export const SubmitTx = ({
@@ -19,18 +18,39 @@ export const SubmitTx = ({
   onSubmit,
   submitText,
   buttons = [],
+  submitAddress,
   valid = false,
-  noMargin = false,
   submitting = false,
+  proxySupported,
   fromController = false,
 }: SubmitTxProps) => {
   const { t } = useTranslation();
   const { unit } = useApi().network;
   const { notEnoughFunds, sender, setTxSignature } = useTxMeta();
-  const { requiresManualSign } = useConnect();
+  const { requiresManualSign, activeAccount, activeProxy, getAccount } =
+    useConnect();
   const { setResize } = useModal();
+  const { getBondedAccount } = useBonded();
+  const controller = getBondedAccount(activeAccount);
 
-  const displayNote = notEnoughFunds || fromController;
+  // Default to active account
+  let signingOpts = {
+    label: t('signer', { ns: 'library' }),
+    who: getAccount(activeAccount),
+  };
+
+  if (activeProxy && proxySupported) {
+    signingOpts = {
+      label: t('signedByProxy', { ns: 'library' }),
+      who: getAccount(activeProxy),
+    };
+  } else if (!(activeProxy && proxySupported) && fromController) {
+    signingOpts = {
+      label: t('signedByController', { ns: 'library' }),
+      who: getAccount(controller),
+    };
+  }
+
   submitText =
     submitText ||
     `${
@@ -39,65 +59,47 @@ export const SubmitTx = ({
         : t('submit', { ns: 'modals' })
     }`;
 
+  // Set resize on not enough funds
   useEffect(() => {
     setResize();
   }, [notEnoughFunds, fromController]);
 
-  // reset tx metadata on unmount
+  // Reset tx metadata on unmount
   useEffect(() => {
     return () => {
-      // remove the pending tx signature
       setTxSignature(null);
     };
   }, []);
 
   return (
-    <Wrapper noMargin={noMargin}>
-      <div className="inner">
-        {displayNote ? (
-          <p className="sign">
-            {fromController ? (
-              <>
-                <FontAwesomeIcon icon={faPenToSquare} className="icon" />
-                {t('signedByController', { ns: 'library' })}
-              </>
-            ) : null}
-            {notEnoughFunds ? (
-              <>
-                {fromController ? ' / ' : null}
-                <FontAwesomeIcon
-                  icon={faWarning}
-                  className="danger"
-                  transform="shrink-1"
-                />{' '}
-                <span className="danger">
-                  {t('notEnough', { ns: 'library' })} {unit}
-                </span>
-              </>
-            ) : null}
-          </p>
-        ) : null}
-        <section className="foot">
-          {requiresManualSign(sender) ? (
-            <ManualSign
-              uid={uid}
-              onSubmit={onSubmit}
-              submitting={submitting}
-              valid={valid}
-              submitText={submitText}
-              buttons={buttons}
-            />
-          ) : (
-            <Default
-              onSubmit={onSubmit}
-              submitting={submitting}
-              valid={valid}
-              submitText={submitText}
-              buttons={buttons}
-            />
-          )}
-        </section>
-      </div>
-    </Wrapper>
+    <Tx
+      margin
+      label={signingOpts.label}
+      name={signingOpts.who?.name || ''}
+      notEnoughFunds={notEnoughFunds}
+      dangerMessage={`${t('notEnough', { ns: 'library' })} ${unit}`}
+      SignerComponent={
+        requiresManualSign(sender) ? (
+          <ManualSign
+            uid={uid}
+            onSubmit={onSubmit}
+            submitting={submitting}
+            valid={valid}
+            submitText={submitText}
+            buttons={buttons}
+            submitAddress={submitAddress}
+          />
+        ) : (
+          <Default
+            onSubmit={onSubmit}
+            submitting={submitting}
+            valid={valid}
+            submitText={submitText}
+            buttons={buttons}
+            submitAddress={submitAddress}
+          />
+        )
+      }
+    />
   );
 };

@@ -26,7 +26,8 @@ export const ManualSign = ({
   valid,
   submitText,
   buttons,
-}: SubmitProps & { buttons?: Array<React.ReactNode> }) => {
+  submitAddress,
+}: SubmitProps & { buttons?: React.ReactNode[] }) => {
   const { t } = useTranslation('library');
 
   const {
@@ -120,6 +121,8 @@ export const ManualSign = ({
   const { openHelp } = useHelp();
 
   const helpKey = feedback?.helpKey;
+  const disabled =
+    submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;
 
   return (
     <>
@@ -137,7 +140,7 @@ export const ManualSign = ({
             ) : null}
           </p>
         ) : (
-          <p>&nbsp;</p>
+          <p>...</p>
         )}
       </div>
       <div>
@@ -148,12 +151,7 @@ export const ManualSign = ({
             iconLeft={faArrowAltCircleUp}
             iconTransform="grow-2"
             onClick={() => onSubmit()}
-            disabled={
-              submitting ||
-              !valid ||
-              !accountHasSigner(activeAccount) ||
-              !txFeesValid
-            }
+            disabled={disabled}
           />
         ) : (
           <ButtonSubmit
@@ -167,13 +165,8 @@ export const ManualSign = ({
                 handleLedgerLoop();
               }
             }}
-            disabled={
-              submitting ||
-              getIsExecuting() ||
-              !valid ||
-              !accountHasSigner(activeAccount) ||
-              !txFeesValid
-            }
+            disabled={disabled || getIsExecuting()}
+            pulse={!(disabled || getIsExecuting())}
           />
         )}
       </div>

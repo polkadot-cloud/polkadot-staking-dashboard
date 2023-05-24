@@ -7,12 +7,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { defaultModalContext } from './defaults';
 import type { ModalConfig, ModalContextInterface, ModalOptions } from './types';
 
-export const ModalContext =
-  React.createContext<ModalContextInterface>(defaultModalContext);
-
-export const useModal = () => React.useContext(ModalContext);
-
-// wrapper component to provide components with context
 export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const { notEnoughFunds } = useTxMeta();
 
@@ -88,6 +82,8 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     }, 10);
   };
 
+  const modalMaxHeight = () => window.innerHeight * 0.8;
+
   return (
     <ModalContext.Provider
       value={{
@@ -99,6 +95,7 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
         setResize,
         height,
         resize,
+        modalMaxHeight,
         modal: optionsRef.current.modal,
         config: optionsRef.current.config,
         size: optionsRef.current.size,
@@ -108,3 +105,8 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     </ModalContext.Provider>
   );
 };
+
+export const ModalContext =
+  React.createContext<ModalContextInterface>(defaultModalContext);
+
+export const useModal = () => React.useContext(ModalContext);

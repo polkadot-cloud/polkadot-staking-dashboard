@@ -2,17 +2,29 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonHelp } from '@polkadotcloud/core-ui';
-import NumberEasing from 'che-react-number-easing';
+import { ReactOdometer } from '@polkadotcloud/react-odometer';
 import { useHelp } from 'contexts/Help';
 import { StatPie } from 'library/Graphs/StatBoxPie';
+import { useEffect, useState } from 'react';
 import { StatBox } from './Item';
 import type { PieProps } from './types';
 
 export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
   const help = helpKey !== undefined;
-  const showValue = stat?.value !== 0 || stat?.total === 0;
   const showTotal = !!stat?.total;
   const { openHelp } = useHelp();
+
+  const [values, setValues] = useState<any>({
+    value: Number(stat?.value || 0),
+    total: Number(stat?.total || 0),
+  });
+
+  useEffect(() => {
+    setValues({
+      value: Number(stat?.value || 0),
+      total: Number(stat?.total || 0),
+    });
+  }, [stat]);
 
   return (
     <StatBox>
@@ -28,41 +40,21 @@ export const Pie = ({ label, stat, graph, tooltip, helpKey }: PieProps) => {
 
         <div className="labels">
           <h3>
-            {showValue ? (
-              <>
-                <NumberEasing
-                  ease="quintInOut"
-                  precision={2}
-                  speed={250}
-                  trail={false}
-                  value={Number(stat?.value ?? 0)}
-                  useLocaleString
-                />
-                {stat?.unit && <>{stat?.unit}</>}
+            <ReactOdometer duration={150} value={values.value} />
+            {stat?.unit && <>{stat?.unit}</>}
 
-                {showTotal ? (
-                  <span className="total">
-                    /{' '}
-                    <NumberEasing
-                      ease="quintInOut"
-                      precision={2}
-                      speed={250}
-                      trail={false}
-                      value={Number(stat?.total ?? 0)}
-                      useLocaleString
-                    />
-                    {stat?.unit ? (
-                      <>
-                        &nbsp;
-                        {stat?.unit}
-                      </>
-                    ) : null}
-                  </span>
+            {showTotal ? (
+              <span className="total">
+                /&nbsp;
+                <ReactOdometer duration={150} value={values.total} />
+                {stat?.unit ? (
+                  <>
+                    &nbsp;
+                    {stat?.unit}
+                  </>
                 ) : null}
-              </>
-            ) : (
-              <>0</>
-            )}
+              </span>
+            ) : null}
           </h3>
           <h4>
             {label}{' '}

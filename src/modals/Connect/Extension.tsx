@@ -7,7 +7,6 @@ import { SignClient } from '@walletconnect/sign-client';
 import { Web3Modal } from '@web3modal/standalone';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useNotifications } from 'contexts/Notifications';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -23,7 +22,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { title, icon: Icon, url } = meta;
 
   const { id } = meta;
-  const extension = extensions.find((e: ExtensionInjected) => e.id === id);
+  const extension = extensions.find((e) => e.id === id);
   const status = !extension ? 'not_found' : extensionsStatus[id];
   const disabled = status === 'connected' || !extension;
 
@@ -55,14 +54,16 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
       handleWalletConnect();
     } else if (status !== 'connected' && extension) {
       (async () => {
-        await connectExtensionAccounts(extension);
+        const connected = await connectExtensionAccounts(extension);
         // force re-render to display error messages
         setIncrement(increment + 1);
 
-        addNotification({
-          title: t('extensionConnected'),
-          subtitle: `${t('titleExtensionConnected', { title })}`,
-        });
+        if (connected) {
+          addNotification({
+            title: t('extensionConnected'),
+            subtitle: `${t('titleExtensionConnected', { title })}`,
+          });
+        }
       })();
     }
   };

@@ -155,22 +155,6 @@ export const PaddingWrapper = styled.div<{
       : '1rem'};
 `;
 
-// modal header, used for extrinsics forms
-export const HeadingWrapper = styled.h3<{ noPadding?: boolean }>`
-  color: var(--text-color-secondary);
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  width: 100%;
-  margin-top: 0.25rem;
-  padding: ${(props) => (props.noPadding ? '0' : '0 1rem')};
-  flex: 1;
-
-  > svg {
-    margin-right: 0.75rem;
-  }
-`;
-
 // modal footer, used for extrinsics forms
 export const FooterWrapper = styled.div`
   display: flex;
@@ -244,18 +228,28 @@ export const CustomHeaderWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
-  margin: 0.5rem 0;
+  margin-top: 0.5rem;
   position: relative;
 
-  h1 {
-    color: var(--text-color-primary);
-    font-size: 1.4rem;
-    font-family: 'Unbounded', 'sans-serif', sans-serif;
-    padding: 0.5rem 0.5rem 0 0.5rem;
-    display: flex;
-    align-items: center;
-    > button {
-      margin-left: 1.25rem;
+  > div {
+    &.first {
+      display: flex;
+      flex-grow: 1;
+
+      h1 {
+        color: var(--text-color-primary);
+        font-size: 1.4rem;
+        font-family: 'Unbounded', 'sans-serif', sans-serif;
+        padding: 0.5rem 0.5rem 0 0.5rem;
+        display: flex;
+        align-items: center;
+        > button {
+          margin-left: 1.25rem;
+        }
+      }
+    }
+    &.last {
+      display: flex;
     }
   }
 
@@ -268,4 +262,65 @@ export const CustomHeaderWrapper = styled.div`
       opacity: 1;
     }
   }
+`;
+
+// Fixed content wrappers for modals that have multiple sections.
+
+export const MultiSectionWrapper = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+  padding: 0;
+  position: relative;
+`;
+
+export const FixedTitleWrapper = styled.div<{ isStyled?: boolean }>`
+  background: ${(props) =>
+    props.isStyled ? 'var(--background-default)' : 'transparent'};
+  padding: ${(props) =>
+    props.isStyled ? '1rem 1rem 0rem 1rem' : ' 1rem 0 0 0'};
+  width: 100%;
+`;
+
+export const TwoSectionsWrapper = styled(motion.div)`
+  width: 200%;
+  height: auto;
+  display: flex;
+  overflow: auto;
+  position: relative;
+`;
+
+export const ThreeSectionsWrapper = styled(motion.div)`
+  width: 300%;
+  height: auto;
+  display: flex;
+  overflow: auto;
+  position: relative;
+`;
+
+export const TwoSectionWrapper = styled.div`
+  border-radius: 1rem;
+  display: flex;
+  flex-flow: column nowrap;
+  flex-basis: 50%;
+  min-width: 50%;
+  height: auto;
+  overflow: auto;
+  flex-grow: 1;
+`;
+
+export const ThreeSectionWrapper = styled.div`
+  border-radius: 1rem;
+  display: flex;
+  flex-flow: column nowrap;
+  flex-basis: 33.33%;
+  min-width: 33.33%;
+  height: auto;
+  overflow: auto;
+  flex-grow: 1;
+`;
+
+export const TabsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  margin: 1.25rem 0 0.25rem 0;
 `;

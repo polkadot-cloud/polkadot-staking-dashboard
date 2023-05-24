@@ -37,7 +37,7 @@ export const BarChartWrapper = styled.div<{ lessPadding?: boolean }>`
     color: rgba(255, 255, 255, 0.9);
   }
   .d4 {
-    background: var(--button-secondary-background);
+    background: var(--button-tertiary-background);
     color: var(--text-color-secondary);
   }
 `;
@@ -71,7 +71,7 @@ export const Bar = styled.div`
   background: var(--button-secondary-background);
   display: flex;
   width: 100%;
-  height: 3.3rem;
+  height: 3.5rem;
   border-radius: 0.55rem;
   overflow: hidden;
 

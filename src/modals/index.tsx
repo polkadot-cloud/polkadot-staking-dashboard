@@ -16,9 +16,9 @@ import { ChooseLanguage } from './ChooseLanguage';
 import { ClaimReward } from './ClaimReward';
 import { Connect } from './Connect';
 import { GoToFeedback } from './GoToFeedback';
+import { ImportLedger } from './ImportLedger';
 import { JoinPool } from './JoinPool';
 import { LeavePool } from './LeavePool';
-import { LedgerImport } from './LedgerImport';
 import { ManageFastUnstake } from './ManageFastUnstake';
 import { ManagePool } from './ManagePool';
 import { Networks } from './Networks';
@@ -54,10 +54,11 @@ export const Modal = () => {
     height,
     resize,
     config,
+    modalMaxHeight,
   } = useModal();
   const controls = useAnimation();
 
-  const maxHeight = window.innerHeight * 0.8;
+  const maxHeight = modalMaxHeight();
 
   const onFadeIn = async () => {
     await controls.start('visible');
@@ -146,7 +147,10 @@ export const Modal = () => {
               size={size}
               style={{
                 height,
-                overflow: height >= maxHeight ? 'scroll' : 'hidden',
+                overflow:
+                  height >= maxHeight && !config?.disableScroll
+                    ? 'scroll'
+                    : 'hidden',
               }}
             >
               <ContentWrapper ref={modalRef}>
@@ -162,7 +166,7 @@ export const Modal = () => {
                   {modal === 'Accounts' && <Accounts />}
                   {modal === 'GoToFeedback' && <GoToFeedback />}
                   {modal === 'JoinPool' && <JoinPool />}
-                  {modal === 'LedgerImport' && <LedgerImport />}
+                  {modal === 'ImportLedger' && <ImportLedger />}
                   {modal === 'LeavePool' && <LeavePool />}
                   {modal === 'ManagePool' && <ManagePool />}
                   {modal === 'ManageFastUnstake' && <ManageFastUnstake />}

@@ -4,9 +4,8 @@
 import { ButtonHelp } from '@polkadotcloud/core-ui';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import { useBalances } from 'contexts/Accounts/Balances';
-import type { Lock } from 'contexts/Accounts/Balances/types';
 import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
@@ -26,18 +25,18 @@ export const BalanceChart = () => {
   const { plugins } = usePlugins();
   const { openHelp } = useHelp();
   const { activeAccount } = useConnect();
-  const { getAccountBalance, existentialAmount, getAccountLocks } =
-    useBalances();
+  const { getBalance, getLocks } = useBalances();
   const { getTransferOptions } = useTransferOptions();
-  const balance = getAccountBalance(activeAccount);
+  const balance = getBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
+  const { forceReserved } = allTransferOptions;
   const poolBondOpions = allTransferOptions.pool;
   const unlockingPools = poolBondOpions.totalUnlocking.plus(
     poolBondOpions.totalUnlocked
   );
 
   // user's total balance
-  const { free, miscFrozen } = balance;
+  const { free, frozen } = balance;
   const totalBalance = planckToUnit(
     free.plus(poolBondOpions.active).plus(unlockingPools),
     units
@@ -63,8 +62,8 @@ export const BalanceChart = () => {
   );
 
   // check account non-staking locks
-  const locks = getAccountLocks(activeAccount);
-  const locksStaking = locks.find((l: Lock) => l.id === 'staking');
+  const locks = getLocks(activeAccount);
+  const locksStaking = locks.find(({ id }) => id === 'staking');
   const lockStakingAmount = locksStaking
     ? locksStaking.amount
     : new BigNumber(0);
@@ -88,8 +87,8 @@ export const BalanceChart = () => {
     : new BigNumber(0);
 
   // available balance data
-  const fundsLocked = planckToUnit(miscFrozen.minus(lockStakingAmount), units);
-  let fundsReserved = planckToUnit(existentialAmount, units);
+  const fundsLocked = planckToUnit(frozen.minus(lockStakingAmount), units);
+  let fundsReserved = planckToUnit(forceReserved, units);
   const fundsFree = planckToUnit(allTransferOptions.freeBalance, units).minus(
     fundsLocked
   );

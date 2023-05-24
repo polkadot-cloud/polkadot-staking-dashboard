@@ -6,87 +6,106 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { clipAddress } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
+import { useProxies } from 'contexts/Proxies';
 import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
 import { Identicon } from 'library/Identicon';
 import { useTranslation } from 'react-i18next';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 
-export const AccountButton = (props: AccountItemProps) => {
-  const { meta } = props;
-  const disconnect = props.disconnect ?? false;
-  const { connectToAccount, disconnectFromAccount } = useConnect();
-  const { setStatus } = useModal();
-  const imported = meta !== null;
-
-  return (
-    <AccountWrapper>
-      <button
-        type="button"
-        disabled={!disconnect && !imported}
-        onClick={() => {
-          if (imported) {
-            if (disconnect) {
-              disconnectFromAccount();
-            } else {
-              connectToAccount(meta);
-              setStatus(2);
-            }
-          }
-        }}
-      >
-        <AccountInner {...props} />
-      </button>
-    </AccountWrapper>
-  );
-};
-
-export const AccountInner = ({
+export const AccountButton = ({
   address,
-  meta,
-  label = undefined,
+  label,
+  delegator,
+  noBorder = false,
 }: AccountItemProps) => {
   const { t } = useTranslation('modals');
+  const { setStatus } = useModal();
   const { extensions } = useExtensions();
+  const {
+    activeAccount,
+    connectToAccount,
+    getAccount,
+    activeProxy,
+    setActiveProxy,
+  } = useConnect();
+  const { getProxyDelegate } = useProxies();
+
+  const meta = getAccount(address || '');
   const Icon =
     meta?.source === 'ledger'
       ? LedgerIconSVG
-      : extensions.find((e: ExtensionInjected) => e.id === meta?.source)
-          ?.icon ?? undefined;
-  const source = meta?.source ?? undefined;
-  const imported = meta !== undefined && source !== 'external';
+      : extensions.find((e) => e.id === meta?.source)?.icon ?? undefined;
+
+  const imported = meta !== undefined;
+
+  const connectTo = delegator || address || '';
+  const connectProxy = delegator ? address || null : '';
+
+  const proxyDelegate = getProxyDelegate(connectTo, connectProxy);
+
+  const isActive =
+    (connectTo === activeAccount &&
+      address === activeAccount &&
+      !activeProxy) ||
+    (connectProxy === activeProxy && activeProxy);
 
   return (
-    <>
-      <div>
-        <Identicon value={address ?? ''} size={26} />
-        <span className="name">
-          &nbsp; {meta?.name ?? clipAddress(address ?? '')}
-        </span>
-      </div>
-      {!imported && (
-        <div
-          className="label warning"
-          style={{ color: '#a17703', paddingLeft: '0.5rem' }}
-        >
-          {t('readOnly')}
+    <AccountWrapper className={isActive ? 'active' : undefined}>
+      <button
+        type="button"
+        disabled={!imported}
+        onClick={() => {
+          if (imported && meta) {
+            connectToAccount(getAccount(connectTo));
+            setActiveProxy(connectProxy);
+            setStatus(2);
+          }
+        }}
+        style={noBorder ? { border: 'none' } : undefined}
+      >
+        <div>
+          {delegator && (
+            <div className="delegator">
+              <Identicon value={delegator} size={26} />
+            </div>
+          )}
+          <div className="identicon">
+            <Identicon value={address ?? ''} size={26} />
+          </div>
+          <span className="name">
+            {delegator && (
+              <>
+                <span>
+                  {proxyDelegate?.proxyType} {t('proxy')}
+                </span>
+              </>
+            )}
+            {meta?.name ?? clipAddress(address ?? '')}
+          </span>
         </div>
-      )}
-
-      <div className={label === undefined ? `` : label[0]}>
-        {label !== undefined ? <h5>{label[1]}</h5> : null}
-        {Icon !== undefined ? <Icon className="icon" /> : null}
-
-        {!imported && (
-          <FontAwesomeIcon
-            icon={faGlasses}
-            className="icon"
-            style={{ opacity: 0.7 }}
-          />
+        {meta?.source === 'external' && (
+          <div
+            className="label warning"
+            style={{ color: '#a17703', paddingLeft: '0.5rem' }}
+          >
+            {t('readOnly')}
+          </div>
         )}
-      </div>
-    </>
+        <div className={label === undefined ? `` : label[0]}>
+          {label !== undefined ? <h5>{label[1]}</h5> : null}
+          {Icon !== undefined ? <Icon className="icon" /> : null}
+
+          {meta?.source === 'external' && (
+            <FontAwesomeIcon
+              icon={faGlasses}
+              className="icon"
+              style={{ opacity: 0.7 }}
+            />
+          )}
+        </div>
+      </button>
+    </AccountWrapper>
   );
 };

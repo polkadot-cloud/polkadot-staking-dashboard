@@ -7,7 +7,8 @@ export const defaultConnectContext: ConnectContextInterface = {
   // eslint-disable-next-line
   formatAccountSs58: (a: string) => null,
   // eslint-disable-next-line
-  connectExtensionAccounts: async (e) => new Promise((resolve) => resolve()),
+  connectExtensionAccounts: async (e) =>
+    new Promise((resolve) => resolve(false)),
   // eslint-disable-next-line
   getAccount: (a) => null,
   getWalletConnectClient: () => null,
@@ -29,8 +30,11 @@ export const defaultConnectContext: ConnectContextInterface = {
   addToAccounts: (a) => {},
   // eslint-disable-next-line
   forgetAccounts: (a) => {},
+  // eslint-disable-next-line
+  setActiveProxy: (p, l) => {},
   accounts: [],
   activeAccount: null,
+  activeProxy: null,
   activeAccountMeta: null,
 };
 

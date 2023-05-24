@@ -1,20 +1,19 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
-
-export const CardsWrapper = styled(motion.div)`
-  width: 200%;
-  display: flex;
-  overflow: hidden;
-  position: relative;
-`;
 
 export const AccountWrapper = styled.div`
   width: 100%;
   margin: 0.5rem 0 0 0;
   transition: transform var(--transition-duration);
+
+  &.active {
+    > div,
+    button {
+      border: 1px solid var(--network-color-primary);
+    }
+  }
 
   &:hover {
     transform: scale(1.006);
@@ -26,6 +25,7 @@ export const AccountWrapper = styled.div`
   > div,
   button {
     background: var(--button-primary-background);
+    border: 1px solid var(--transparent-color);
     color: var(--text-color-primary);
     width: 100%;
     border-radius: 0.75rem;
@@ -56,6 +56,15 @@ export const AccountWrapper = styled.div`
           white-space: nowrap;
           overflow: hidden;
           transition: color var(--transition-duration);
+          margin: 0 0.5rem;
+
+          > span {
+            opacity: 0.7;
+            margin-right: 0.6rem;
+            > svg {
+              margin-left: 0.5rem;
+            }
+          }
         }
       }
 
@@ -76,9 +85,25 @@ export const AccountWrapper = styled.div`
         }
       }
       .icon {
-        width: 1.05rem;
-        height: 1.05rem;
+        width: 1.1rem;
+        height: 1.1rem;
         margin-left: 0.75rem;
+      }
+      .badge {
+        background-color: var(--background-floating-card);
+        color: var(--text-color-secondary);
+        margin-left: 1rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.45rem;
+        font-size: 0.9rem;
+      }
+
+      .delegator {
+        width: 0.85rem;
+        z-index: 0;
+      }
+      .identicon {
+        z-index: 1;
       }
 
       /* svg theming */
@@ -97,4 +122,22 @@ export const AccountWrapper = styled.div`
 export const AccountSeparator = styled.div`
   width: 100%;
   height: 0.5rem;
+`;
+
+export const AccountGroupWrapper = styled.div`
+  border-left: 1px solid var(--border-primary-color);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-left: 1rem;
+  margin: 0.5rem 0 1.25rem 0;
+
+  > div {
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 `;
