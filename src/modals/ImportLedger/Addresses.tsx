@@ -4,14 +4,22 @@
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText } from '@polkadotcloud/core-ui';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { Address } from 'library/Import/Address';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
-import { Address } from './Address';
 
 export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const { t } = useTranslation('modals');
-  const { getIsExecuting, setIsExecuting, pairDevice } = useLedgerHardware();
+  const {
+    getIsExecuting,
+    ledgerAccountExists,
+    renameLedgerAccount,
+    addLedgerAccount,
+    removeLedgerAccount,
+    setIsExecuting,
+    pairDevice,
+  } = useLedgerHardware();
   const isExecuting = getIsExecuting();
 
   return (
@@ -19,7 +27,16 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
       <AddressesWrapper>
         <div className="items">
           {addresses.map(({ address, index }: AnyJson, i: number) => (
-            <Address key={i} address={address} index={index} />
+            <Address
+              key={i}
+              address={address}
+              index={index}
+              existsHandler={ledgerAccountExists}
+              renameHandler={renameLedgerAccount}
+              addHandler={addLedgerAccount}
+              removeHandler={removeLedgerAccount}
+              getHandler
+            />
           ))}
         </div>
         <div className="more">

@@ -1,5 +1,5 @@
 import type { FunctionComponent, SVGProps } from 'react';
-import type { MaybeString } from 'types';
+import type { AnyFunction, MaybeString } from 'types';
 
 export interface StatusBarProps {
   handleCancel?: () => void;
@@ -15,4 +15,26 @@ export interface HeadingProps {
   handleReset?: () => void;
   Icon?: FunctionComponent<SVGProps<SVGSVGElement>>;
   title: string;
+}
+
+export interface AddressProps {
+  address: string;
+  index: number;
+  renameHandler: AnyFunction;
+  existsHandler: AnyFunction;
+  addHandler: AnyFunction;
+  removeHandler: AnyFunction;
+  getHandler: AnyFunction;
+}
+
+export interface ConfirmProps {
+  address: string;
+  index: number;
+  addHandler: AnyFunction;
+}
+
+export interface RemoveProps {
+  address: string;
+  getHandler: AnyFunction;
+  removeHandler: AnyFunction;
 }

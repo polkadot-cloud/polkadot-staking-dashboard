@@ -11,7 +11,7 @@ import { StatusBar } from 'library/Import/StatusBar';
 import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 import { Addresess } from './Addresses';
-import { Reset } from './Addresses/Reset';
+import { Reset } from './Reset';
 
 export const Manage = ({
   addresses,

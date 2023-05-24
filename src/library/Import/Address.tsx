@@ -15,7 +15,6 @@ import {
   unescape,
 } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp, getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import type { LedgerAddress } from 'contexts/Hardware/types';
 import { useOverlay } from 'contexts/Overlay';
@@ -26,11 +25,18 @@ import { Confirm } from './Confirm';
 import { Remove } from './Remove';
 import type { AddressProps } from './types';
 
-export const Address = ({ address, index }: AddressProps) => {
+export const Address = ({
+  address,
+  index,
+  existsHandler,
+  renameHandler,
+  addHandler,
+  removeHandler,
+  getHandler,
+}: AddressProps) => {
   const { t } = useTranslation('modals');
   const { network } = useApi();
   const { openOverlayWith } = useOverlay();
-  const { ledgerAccountExists, renameLedgerAccount } = useLedgerHardware();
   const { appName } = getLedgerApp(network.name);
 
   // store whether this address is being edited.
@@ -64,7 +70,7 @@ export const Address = ({ address, index }: AddressProps) => {
     setEditName(newName);
     setEditing(false);
     renameLocalAccount();
-    renameLedgerAccount(address, newName);
+    renameHandler(address, newName);
   };
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     let val = e.currentTarget.value || '';
@@ -93,7 +99,7 @@ export const Address = ({ address, index }: AddressProps) => {
     localStorage.setItem('ledger_addresses', JSON.stringify(localLedger));
   };
 
-  const isImported = ledgerAccountExists(address);
+  const isImported = existsHandler(address);
 
   return (
     <div className="item">
@@ -162,7 +168,14 @@ export const Address = ({ address, index }: AddressProps) => {
               iconLeft={faTimes}
               text={t('remove')}
               onClick={() => {
-                openOverlayWith(<Remove address={address} />, 'small');
+                openOverlayWith(
+                  <Remove
+                    address={address}
+                    removeHandler={removeHandler}
+                    getHandler={getHandler}
+                  />,
+                  'small'
+                );
               }}
             />
           </>
@@ -172,7 +185,11 @@ export const Address = ({ address, index }: AddressProps) => {
             text={t('import')}
             onClick={() => {
               openOverlayWith(
-                <Confirm address={address} index={index} />,
+                <Confirm
+                  address={address}
+                  index={index}
+                  addHandler={addHandler}
+                />,
                 'small'
               );
             }}
