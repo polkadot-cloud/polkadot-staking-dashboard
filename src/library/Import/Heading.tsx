@@ -46,7 +46,7 @@ export const Heading = ({
                 handleReset();
               }
             }}
-            disabled={disabled}
+            disabled={disabled || false}
             marginLeft
           />
         )}

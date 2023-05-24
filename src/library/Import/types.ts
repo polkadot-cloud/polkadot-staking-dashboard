@@ -11,7 +11,7 @@ export interface StatusBarProps {
 
 export interface HeadingProps {
   connectTo?: string;
-  disabled: boolean;
+  disabled?: boolean;
   handleReset?: () => void;
   Icon?: FunctionComponent<SVGProps<SVGSVGElement>>;
   title: string;
@@ -22,6 +22,7 @@ export interface AddressProps {
   index: number;
   initial: string;
   badgePrefix: string;
+  disableEditIfImported?: boolean;
   renameHandler: AnyFunction;
   existsHandler: AnyFunction;
   addHandler: AnyFunction;

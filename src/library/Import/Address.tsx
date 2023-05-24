@@ -23,6 +23,7 @@ export const Address = ({
   index,
   initial,
   badgePrefix,
+  disableEditIfImported = false,
   existsHandler,
   renameHandler,
   addHandler,
@@ -78,7 +79,7 @@ export const Address = ({
           <div>
             <section className="row">
               <input
-                disabled={isImported}
+                disabled={isImported && disableEditIfImported}
                 type="text"
                 value={editing ? editName : name}
                 onChange={(e) => handleChange(e)}

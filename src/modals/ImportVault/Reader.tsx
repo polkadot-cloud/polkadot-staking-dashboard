@@ -89,7 +89,7 @@ export const Reader = () => {
             text="Import Address"
             disabled={!isValidAddress(qrData) || vaultAccountExists(qrData)}
             onClick={() => {
-              const account = addVaultAccount(qrData, vaultAccounts.length + 1);
+              const account = addVaultAccount(qrData, vaultAccounts.length);
               if (account) {
                 addToAccounts([account]);
               }

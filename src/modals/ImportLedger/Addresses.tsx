@@ -22,6 +22,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
     addLedgerAccount,
     removeLedgerAccount,
     setIsExecuting,
+    getLedgerAccount,
     pairDevice,
   } = useLedgerHardware();
   const { appName } = getLedgerApp(network.name);
@@ -48,11 +49,12 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
                 index={index}
                 initial={initialName}
                 badgePrefix={appName}
+                disableEditIfImported
                 existsHandler={ledgerAccountExists}
                 renameHandler={renameLedgerAccount}
                 addHandler={addLedgerAccount}
                 removeHandler={removeLedgerAccount}
-                getHandler
+                getHandler={getLedgerAccount}
               />
             );
           })}
