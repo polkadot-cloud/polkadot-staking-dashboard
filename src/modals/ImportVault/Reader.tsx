@@ -14,7 +14,7 @@ import { QrReader } from 'react-qr-reader';
 import { QRCameraWrapper } from './Wrappers';
 
 export const Reader = () => {
-  const { addToAccounts } = useConnect();
+  const { addToAccounts, formatAccountSs58 } = useConnect();
   const { setStatus: setOverlayStatus } = useOverlay();
   const { addVaultAccount, vaultAccountExists, vaultAccounts } =
     useVaultHardware();
@@ -36,18 +36,23 @@ export const Reader = () => {
     setQrData(undefined);
   }, []);
 
-  // Re-render on QR data received.
   useEffect(() => {
     setFeedback(
       qrData === undefined
         ? 'Waiting for QR Code'
         : isValidAddress(qrData)
-        ? vaultAccountExists(qrData)
+        ? formatAccountSs58(qrData)
+          ? 'Different Network Address'
+          : vaultAccountExists(qrData)
           ? 'Account Already Imported'
           : 'Address Received:'
         : 'Invalid Address'
     );
   }, [qrData]);
+
+  const valid =
+    isValidAddress(qrData) ||
+    (!vaultAccountExists(qrData) && !formatAccountSs58(qrData));
 
   return (
     <QRCameraWrapper>
@@ -74,7 +79,7 @@ export const Reader = () => {
       <div className="foot">
         <h3>{feedback}</h3>
         <h3 className="address">
-          {isValidAddress(qrData) ? (
+          {isValidAddress(qrData) && !formatAccountSs58(qrData) ? (
             <>
               <Identicon value={qrData} size={22} />
               {clipAddress(qrData)}
@@ -87,7 +92,7 @@ export const Reader = () => {
           <ButtonPrimary
             marginRight
             text="Import Address"
-            disabled={!isValidAddress(qrData) || vaultAccountExists(qrData)}
+            disabled={valid}
             onClick={() => {
               const account = addVaultAccount(qrData, vaultAccounts.length);
               if (account) {
