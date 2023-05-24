@@ -221,7 +221,7 @@
     "updatePayoutDestination": "更新收益到账地址",
     "updatePoolCommission": "更新提名池佣金设置",
     "validatorMetrics": "验证人指标",
-    "web": "网络;",
+    "web": "网络",
     "welcomeToReport": "欢迎Bug报告、功能请求和改进",
     "willSurpass": "添加过多收藏夹将超{{maxNominations}}提名数",
     "withdraw": "提取",
