@@ -16,9 +16,9 @@ import { ChooseLanguage } from './ChooseLanguage';
 import { ClaimReward } from './ClaimReward';
 import { Connect } from './Connect';
 import { GoToFeedback } from './GoToFeedback';
+import { ImportLedger } from './ImportLedger';
 import { JoinPool } from './JoinPool';
 import { LeavePool } from './LeavePool';
-import { LedgerImport } from './LedgerImport';
 import { ManageFastUnstake } from './ManageFastUnstake';
 import { ManagePool } from './ManagePool';
 import { Networks } from './Networks';
@@ -166,7 +166,7 @@ export const Modal = () => {
                   {modal === 'Accounts' && <Accounts />}
                   {modal === 'GoToFeedback' && <GoToFeedback />}
                   {modal === 'JoinPool' && <JoinPool />}
-                  {modal === 'LedgerImport' && <LedgerImport />}
+                  {modal === 'ImportLedger' && <ImportLedger />}
                   {modal === 'LeavePool' && <LeavePool />}
                   {modal === 'ManagePool' && <ManagePool />}
                   {modal === 'ManageFastUnstake' && <ManageFastUnstake />}
