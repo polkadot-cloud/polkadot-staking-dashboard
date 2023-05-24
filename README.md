@@ -78,7 +78,7 @@ Please submit an issue for any queries around adding your operator details.
 
 ## URL Variables Support
 
-Polkadot staking dashboard supports URL variables that can be used to direct users to specific configurations of the app, such as landing on a specific language or on a specific network.
+Polkadot Staking Dashboard supports URL variables that can be used to direct users to specific configurations of the app, such as landing on a specific language or on a specific network.
 
 Variables are added at the end of the hash portion of URL:
 
