@@ -337,7 +337,7 @@ export const LedgerHardwareProvider = ({
     setStateWithRef(newStatusCodes, setStatusCodes, statusCodesRef);
   };
 
-  // Check if an address exists in imported addresses.
+  // Check if a Ledger address exists in imported addresses.
   const ledgerAccountExists = (address: string) =>
     !!getLocalLedgerAccounts().find((a) =>
       isLocalNetworkAddress(network.name, a, address)
@@ -386,7 +386,7 @@ export const LedgerHardwareProvider = ({
   const removeLedgerAccount = (address: string) => {
     let newLedgerAccounts = getLocalLedgerAccounts();
 
-    newLedgerAccounts = newLedgerAccounts.filter((a: LedgerAccount) => {
+    newLedgerAccounts = newLedgerAccounts.filter((a) => {
       if (a.address !== address) {
         return true;
       }
@@ -404,9 +404,7 @@ export const LedgerHardwareProvider = ({
       );
     }
     setStateWithRef(
-      newLedgerAccounts.filter(
-        (a: LedgerAccount) => a.network === network.name
-      ),
+      newLedgerAccounts.filter((a) => a.network === network.name),
       setLedgerAccountsState,
       ledgerAccountsRef
     );
@@ -440,9 +438,7 @@ export const LedgerHardwareProvider = ({
 
     localStorage.setItem('ledger_accounts', JSON.stringify(newLedgerAccounts));
     setStateWithRef(
-      newLedgerAccounts.filter(
-        (a: LedgerAccount) => a.network === network.name
-      ),
+      newLedgerAccounts.filter((a) => a.network === network.name),
       setLedgerAccountsState,
       ledgerAccountsRef
     );

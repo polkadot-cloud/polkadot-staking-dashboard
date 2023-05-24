@@ -5,7 +5,7 @@ import { setStateWithRef } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import type { VaultAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
-import { getLocalVaultAccounts } from './Utils';
+import { getLocalVaultAccounts, isLocalNetworkAddress } from './Utils';
 import { defaultVaultrHardwareContext } from './defaults';
 import type { VaultHardwareContextInterface } from './types';
 
@@ -21,30 +21,109 @@ export const VaultHardwareProvider = ({
   );
   const vaultAccountsRef = useRef(vaultAccounts);
 
-  const vaultAccountExists = (address: string) => {
-    // TODO: implement
-    return false;
-  };
+  // Check if a Vault address exists in imported addresses.
+  const vaultAccountExists = (address: string) =>
+    !!getLocalVaultAccounts().find((a) =>
+      isLocalNetworkAddress(network.name, a, address)
+    );
 
-  const addVaultAccount = (address: string, index: number) => {
-    // TODO: implement
+  // Adds a vault account to state and local storage.
+  const addVaultAccount = (address: string, name: string, index: number) => {
+    let newVaultAccounts = getLocalVaultAccounts();
+
+    if (
+      !newVaultAccounts.find((a) =>
+        isLocalNetworkAddress(network.name, a, address)
+      )
+    ) {
+      const account = {
+        address,
+        network: network.name,
+        name,
+        source: 'vault',
+        index,
+      };
+
+      newVaultAccounts = [...newVaultAccounts].concat(account);
+      localStorage.setItem(
+        'polkadot_vault_accounts',
+        JSON.stringify(newVaultAccounts)
+      );
+
+      // store only those accounts on the current network in state.
+      setStateWithRef(
+        newVaultAccounts.filter((a) => a.network === network.name),
+        seVaultAccountsState,
+        vaultAccountsRef
+      );
+      return account;
+    }
     return null;
   };
 
   const removeVaultAccount = (address: string) => {
-    // TODO: implement
+    let newVaultAccounts = getLocalVaultAccounts();
+
+    newVaultAccounts = newVaultAccounts.filter((a) => {
+      if (a.address !== address) {
+        return true;
+      }
+      if (a.network !== network.name) {
+        return true;
+      }
+      return false;
+    });
+
+    if (!newVaultAccounts.length) {
+      localStorage.removeItem('polkadot_vault_accounts');
+    } else {
+      localStorage.setItem(
+        'polkadot_vault_accounts',
+        JSON.stringify(newVaultAccounts)
+      );
+    }
+    setStateWithRef(
+      newVaultAccounts.filter((a) => a.network === network.name),
+      seVaultAccountsState,
+      vaultAccountsRef
+    );
   };
 
   const getVaultAccount = (address: string) => {
-    // TODO: implement
-    return null;
+    const localVaultAccounts = getLocalVaultAccounts();
+    if (!localVaultAccounts) {
+      return null;
+    }
+    return (
+      localVaultAccounts.find((a) =>
+        isLocalNetworkAddress(network.name, a, address)
+      ) ?? null
+    );
   };
 
   const renameVaultAccount = (address: string, newName: string) => {
-    // TODO: implement
+    let newVaultAccounts = getLocalVaultAccounts();
+
+    newVaultAccounts = newVaultAccounts.map((a) =>
+      isLocalNetworkAddress(network.name, a, address)
+        ? {
+            ...a,
+            name: newName,
+          }
+        : a
+    );
+    localStorage.setItem(
+      'polkadot_vault_accounts',
+      JSON.stringify(newVaultAccounts)
+    );
+    setStateWithRef(
+      newVaultAccounts.filter((a) => a.network === network.name),
+      seVaultAccountsState,
+      vaultAccountsRef
+    );
   };
 
-  // Refresh imported ledger accounts on network change.
+  // Refresh imported vault accounts on network change.
   useEffect(() => {
     setStateWithRef(
       getLocalVaultAccounts(network.name),

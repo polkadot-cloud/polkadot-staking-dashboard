@@ -54,7 +54,7 @@ export const defaultVaultrHardwareContext: VaultHardwareContextInterface = {
   // eslint-disable-next-line
   vaultAccountExists: (a) => false,
   // eslint-disable-next-line
-  addVaultAccount: (a, i) => null,
+  addVaultAccount: (a, n, i) => null,
   // eslint-disable-next-line
   removeVaultAccount: (a) => {},
   // eslint-disable-next-line
