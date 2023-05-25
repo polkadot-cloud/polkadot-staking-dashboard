@@ -47,11 +47,7 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
                 <p>{t('updateName')}</p>
               </div>
               <div>
-                <FontAwesomeIcon
-                  transform="shrink-2"
-                  icon={faChevronRight}
-                  className="arrow"
-                />
+                <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
               </div>
             </button>
           )}
@@ -124,28 +120,6 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
                 </div>
               </button>
             </>
-          )}
-          {isMember() && !isDepositor() && active?.isGreaterThan(0) && (
-            <button
-              type="button"
-              className="action-button"
-              onClick={() => {
-                setSection(1);
-                setTask('leave_pool');
-              }}
-            >
-              <div>
-                <h3>{t('leavePool')}</h3>
-                <p>{t('unbondFundsLeavePool')}</p>
-              </div>
-              <div>
-                <FontAwesomeIcon
-                  transform="shrink-2"
-                  icon={faChevronRight}
-                  className="arrow"
-                />
-              </div>
-            </button>
           )}
         </div>
       </div>
