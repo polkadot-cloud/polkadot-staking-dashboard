@@ -61,7 +61,7 @@ export const ImportVault = () => {
             iconLeft={faQrcode}
             text="Import An Account"
             disabled={overlayStatus !== 0}
-            onClick={async () => {
+            onClick={() => {
               openOverlayWith(<Reader />, 'small');
             }}
           />

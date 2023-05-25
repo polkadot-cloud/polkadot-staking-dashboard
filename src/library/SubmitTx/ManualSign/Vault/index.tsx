@@ -9,11 +9,13 @@ import { ButtonHelp, ButtonSubmit } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
+import { useOverlay } from 'contexts/Overlay';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { SubmitProps } from '../types';
+import type { SubmitProps } from '../../types';
+import { SignOverlay } from './SignOverlay';
 
 export const Vault = ({
   uid,
@@ -29,9 +31,10 @@ export const Vault = ({
   const { openHelp } = useHelp();
   const { accountHasSigner } = useConnect();
   const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();
+  const { openOverlayWith, status: overlayStatus } = useOverlay();
 
   // Track whether the Vault signer overlay is currently open.
-  const [isSigning, setIsSigning] = useState<boolean>(false);
+  const [hasSigned, setHasSigned] = useState<boolean>(false);
 
   // TODO: implement
   const getVaultStatus = () => false;
@@ -103,14 +106,17 @@ export const Vault = ({
           />
         ) : (
           <ButtonSubmit
-            text={isSigning ? t('signing') : t('sign')}
+            text={overlayStatus === 0 ? t('sign') : t('signing')}
             iconLeft={faSquarePen}
             iconTransform="grow-2"
             onClick={async () => {
-              // TODO: handle overlay and signing process.
+              openOverlayWith(
+                <SignOverlay setHasSigned={setHasSigned} />,
+                'small'
+              );
             }}
-            disabled={disabled || isSigning}
-            pulse={!(disabled || isSigning)}
+            disabled={disabled || overlayStatus !== 0}
+            pulse={!disabled || overlayStatus === 0}
           />
         )}
       </div>
