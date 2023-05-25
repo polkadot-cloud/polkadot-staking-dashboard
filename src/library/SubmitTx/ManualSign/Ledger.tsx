@@ -17,9 +17,9 @@ import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { SubmitProps } from './types';
+import type { SubmitProps } from '../types';
 
-export const ManualSign = ({
+export const Ledger = ({
   uid,
   onSubmit,
   submitting,
@@ -43,9 +43,10 @@ export const ManualSign = ({
     setFeedback,
     handleUnmount,
   } = useLedgerHardware();
+  const { openHelp } = useHelp();
+  const { setResize } = useModal();
   const { activeAccount, accountHasSigner, getAccount } = useConnect();
   const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();
-  const { setResize } = useModal();
 
   const getAddressIndex = () => {
     return (getAccount(activeAccount) as LedgerAccount)?.index || 0;
@@ -101,13 +102,6 @@ export const ManualSign = ({
     }
   }, [transportResponse]);
 
-  // automatically submit transaction when it is signed
-  useEffect(() => {
-    if (getTxSignature() !== null) {
-      onSubmit();
-    }
-  }, [getTxSignature()]);
-
   // Tidy up context state when this component is no longer mounted.
   useEffect(() => {
     return () => {
@@ -116,11 +110,13 @@ export const ManualSign = ({
     };
   }, []);
 
-  const fallbackMessage = t('submitTransaction');
+  // Get the latest Ledger loop feedback.
   const feedback = getFeedback();
-  const { openHelp } = useHelp();
 
+  // Help key based on Ledger status.
   const helpKey = feedback?.helpKey;
+
+  // The state under which submission is disabled.
   const disabled =
     submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;
 
@@ -130,7 +126,7 @@ export const ManualSign = ({
         <EstimatedTxFee />
         {valid ? (
           <p>
-            {feedback?.message || fallbackMessage}
+            {feedback?.message || t('submitTransaction')}
             {helpKey ? (
               <ButtonHelp
                 marginLeft
