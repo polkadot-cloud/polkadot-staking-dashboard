@@ -7,7 +7,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
-import { useHelp } from 'contexts/Help';
 import { useOverlay } from 'contexts/Overlay';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
@@ -25,7 +24,6 @@ export const Vault = ({
   submitAddress,
 }: SubmitProps & { buttons?: React.ReactNode[] }) => {
   const { t } = useTranslation('library');
-  const { openHelp } = useHelp();
   const { accountHasSigner } = useConnect();
   const { txFeesValid, getTxSignature } = useTxMeta();
   const { openOverlayWith, status: overlayStatus } = useOverlay();
@@ -38,20 +36,7 @@ export const Vault = ({
     <>
       <div>
         <EstimatedTxFee />
-        {valid ? (
-          <p>
-            {t('submitTransaction')}
-            {/* TODO: polkadot vault sign help}
-              // <ButtonHelp
-              //   marginLeft
-              //   onClick={() => openHelp("helpKey")}
-              //   backgroundSecondary
-              // />
-            */}
-          </p>
-        ) : (
-          <p>...</p>
-        )}
+        {valid ? <p>{t('submitTransaction')}</p> : <p>...</p>}
       </div>
       <div>
         {buttons}
