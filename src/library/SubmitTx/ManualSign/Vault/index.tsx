@@ -12,7 +12,7 @@ import { useModal } from 'contexts/Modal';
 import { useOverlay } from 'contexts/Overlay';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { SubmitProps } from '../../types';
 import { SignOverlay } from './SignOverlay';
@@ -32,9 +32,6 @@ export const Vault = ({
   const { accountHasSigner } = useConnect();
   const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();
   const { openOverlayWith, status: overlayStatus } = useOverlay();
-
-  // Track whether the Vault signer overlay is currently open.
-  const [hasSigned, setHasSigned] = useState<boolean>(false);
 
   // TODO: implement
   const getVaultStatus = () => false;
@@ -110,10 +107,7 @@ export const Vault = ({
             iconLeft={faSquarePen}
             iconTransform="grow-2"
             onClick={async () => {
-              openOverlayWith(
-                <SignOverlay setHasSigned={setHasSigned} />,
-                'small'
-              );
+              openOverlayWith(<SignOverlay />, 'small');
             }}
             disabled={disabled || overlayStatus !== 0}
             pulse={!disabled || overlayStatus === 0}
