@@ -308,3 +308,51 @@ export const ConfirmWrapper = styled.div`
     }
   }
 `;
+
+export const QRVieweraWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem 1rem;
+
+  .title {
+    color: var(--network-color-primary);
+    font-family: 'Unbounded';
+    margin-bottom: 1rem;
+  }
+
+  .viewer {
+    border-radius: 1.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+
+    &.withBorder {
+      border: 3.75px solid var(--network-color-pending);
+      padding: 0.95rem;
+    }
+  }
+  .foot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1.75rem;
+
+    .address {
+      display: flex;
+      margin-top: 0.5rem;
+      margin-bottom: 1.25rem;
+
+      svg {
+        margin-right: 0.6rem;
+      }
+    }
+    > div {
+      display: flex;
+    }
+  }
+`;

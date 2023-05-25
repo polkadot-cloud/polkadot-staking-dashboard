@@ -1,17 +1,15 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faCamera } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { QrScanSignature } from '@polkadot/react-qr';
 import { ButtonPrimary, ButtonSecondary } from '@polkadotcloud/core-ui';
 import { clipAddress, isValidAddress } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
+import { QRVieweraWrapper } from 'library/Import/Wrappers';
 import { useEffect, useState } from 'react';
-import { QrReader } from 'react-qr-reader';
-import { QRCameraWrapper } from './Wrappers';
 
 export const Reader = () => {
   const { addToAccounts, formatAccountSs58 } = useConnect();
@@ -25,10 +23,8 @@ export const Reader = () => {
   // Store QR data feedback.
   const [feedback, setFeedback] = useState<string>('');
 
-  const handleQrData = (data: any) => {
-    const text = data?.text || '';
-    const address = text.split(':')?.[1] || '';
-    setQrData(address);
+  const handleQrData = (signature: string) => {
+    setQrData(signature.split(':')?.[1] || '');
   };
 
   // Reset QR data on open.
@@ -56,24 +52,13 @@ export const Reader = () => {
     !formatAccountSs58(qrData);
 
   return (
-    <QRCameraWrapper>
+    <QRVieweraWrapper>
       <h3 className="title">Import From Polkadot Vault</h3>
       <div className="viewer">
-        <FontAwesomeIcon icon={faCamera} className="ph" />
-        <QrReader
-          onResult={(result, error) => {
-            if (result) {
-              handleQrData(result);
-            }
-            if (error) {
-              // console.info(error);
-            }
-          }}
-          constraints={{ facingMode: 'user' }}
-          className="reader"
-          containerStyle={{
-            paddingTop: '75% !important',
-            top: 0,
+        <QrScanSignature
+          size={300}
+          onScan={({ signature }) => {
+            handleQrData(signature);
           }}
         />
       </div>
@@ -105,6 +90,6 @@ export const Reader = () => {
           <ButtonSecondary text="Cancel" onClick={() => setOverlayStatus(0)} />
         </div>
       </div>
-    </QRCameraWrapper>
+    </QRVieweraWrapper>
   );
 };
