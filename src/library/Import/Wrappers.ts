@@ -323,6 +323,23 @@ export const QRVieweraWrapper = styled.div`
     margin-bottom: 1rem;
   }
 
+  .progress {
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+    background: var(--background-menu);
+    padding: 0.45rem 1.5rem 0.75rem 1.5rem;
+
+    span {
+      opacity: 0.4;
+      &.active {
+        opacity: 1;
+      }
+    }
+    .arrow {
+      margin: 0 0.85rem;
+    }
+  }
+
   .viewer {
     border-radius: 1.25rem;
     display: flex;
@@ -332,8 +349,8 @@ export const QRVieweraWrapper = styled.div`
     overflow: hidden;
 
     &.withBorder {
-      border: 3.75px solid var(--network-color-pending);
       padding: 0.95rem;
+      border: 3.75px solid var(--network-color-pending);
     }
   }
   .foot {
@@ -341,6 +358,8 @@ export const QRVieweraWrapper = styled.div`
     flex-direction: column;
     align-items: center;
     margin-top: 1.75rem;
+    padding: 0 1rem;
+    width: 100%;
 
     .address {
       display: flex;
@@ -353,6 +372,8 @@ export const QRVieweraWrapper = styled.div`
     }
     > div {
       display: flex;
+      width: 100%;
+      justify-content: center;
     }
   }
 `;

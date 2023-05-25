@@ -76,6 +76,7 @@ export const Reader = () => {
         </h3>
         <div>
           <ButtonPrimary
+            lg
             marginRight
             text="Import Address"
             disabled={!valid}
@@ -87,7 +88,11 @@ export const Reader = () => {
               setOverlayStatus(0);
             }}
           />
-          <ButtonSecondary text="Cancel" onClick={() => setOverlayStatus(0)} />
+          <ButtonSecondary
+            lg
+            text="Cancel"
+            onClick={() => setOverlayStatus(0)}
+          />
         </div>
       </div>
     </QRVieweraWrapper>
