@@ -18,6 +18,7 @@
     "asThePoolDepositor": "as the pool depositor.",
     "atLeast": "Bond amount must be at least",
     "available": "Available",
+    "backToScan": "Back to Scan",
     "blockedNominations": "Blocked Nominations",
     "blockingNominations": "Blocking Nominations",
     "bond": "Bond",
@@ -71,6 +72,7 @@
     "fromFavoritesSubtitle": "Gets a set of your favorite validators.",
     "graphInactive": "Inactive",
     "highCommission": "High Commission",
+    "iHaveScanned": "I Have Scanned",
     "import": "Import",
     "importing": "Importing",
     "inBlock": "In Block",
@@ -135,10 +137,12 @@
     "remove": "Remove",
     "removeSelected": "Remove Selected",
     "reset": "Reset",
+    "scanPolkadotVault": "Scan on Polkadot Vault",
     "search": "Search Pool ID, Name or Address",
     "searchAddress": "Search Address or Identity",
     "select": "Select",
     "sign": "Sign",
+    "signPolkadotVault": "Sign From Polkadot Vault",
     "signedByController": "Signed by Controller",
     "signedByProxy": "Signed by Proxy",
     "signer": "Signer",
@@ -168,10 +172,6 @@
     "waiting": "Waiting",
     "walletNotFound": "wallet not found",
     "whenActivelyNominating": "when actively nominating.",
-    "wrongTransaction": "Wrong transaction, please sign again.",
-    "scanPolkadotVault":"Scan on Polkadot Vault",
-    "signPolkadotVault":"Sign From Polkadot Vault",
-    "backToScan":"Back to Scan",
-    "iHaveScanned":"I Have Scanned"
+    "wrongTransaction": "Wrong transaction, please sign again."
   }
 }

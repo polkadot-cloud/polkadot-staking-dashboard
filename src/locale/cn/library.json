@@ -18,6 +18,7 @@
     "asThePoolDepositor": "作为提名池存款人",
     "atLeast": "质押金最低为",
     "available": "可用",
+    "backToScan": "回到扫描",
     "blockedNominations": "己冻结提名",
     "blockingNominations": "冻结提名中",
     "bond": "质押",
@@ -69,6 +70,7 @@
     "fromFavoritesSubtitle": "获取一组您喜欢的验证人",
     "graphInactive": "不活跃",
     "highCommission": "高佣金",
+    "iHaveScanned": "己扫描",
     "import": "导入",
     "importing": "导入中",
     "inBlock": "己在区块中",
@@ -133,10 +135,12 @@
     "remove": "删除",
     "removeSelected": "移除选定项",
     "reset": "重设",
+    "scanPolkadotVault": "请在Polkadot Vault上扫描",
     "search": "搜索池ID、名称或地址",
     "searchAddress": "搜索地址或身份",
     "select": "选择",
     "sign": "签署",
+    "signPolkadotVault": "请在Polkadot Vault上签名",
     "signedByController": "由Controller签署",
     "signedByProxy": "代理账户己签名",
     "signer": "签名账户",
@@ -166,10 +170,6 @@
     "waiting": "等待中",
     "walletNotFound": "未找到钱包",
     "whenActivelyNominating": "当活跃提名时",
-    "wrongTransaction": "错误交易，请重新签名",
-    "scanPolkadotVault":"请在Polkadot Vault上扫描",
-    "signPolkadotVault":"请在Polkadot Vault上签名",
-    "backToScan":"回到扫描",
-    "iHaveScanned":"己扫描"
+    "wrongTransaction": "错误交易，请重新签名"
   }
 }
