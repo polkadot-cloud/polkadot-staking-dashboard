@@ -168,6 +168,10 @@
     "waiting": "Waiting",
     "walletNotFound": "wallet not found",
     "whenActivelyNominating": "when actively nominating.",
-    "wrongTransaction": "Wrong transaction, please sign again."
+    "wrongTransaction": "Wrong transaction, please sign again.",
+    "scanPolkadotVault":"Scan on Polkadot Vault",
+    "signPolkadotVault":"Sign From Polkadot Vault",
+    "backToScan":"Back to Scan",
+    "iHaveScanned":"I Have Scanned"
   }
 }

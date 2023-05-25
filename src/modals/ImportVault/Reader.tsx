@@ -10,8 +10,10 @@ import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
 import { QRVieweraWrapper } from 'library/Import/Wrappers';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const Reader = () => {
+  const { t } = useTranslation('modals');
   const { addToAccounts, formatAccountSs58 } = useConnect();
   const { setStatus: setOverlayStatus } = useOverlay();
   const { addVaultAccount, vaultAccountExists, vaultAccounts } =
@@ -35,14 +37,14 @@ export const Reader = () => {
   useEffect(() => {
     setFeedback(
       qrData === undefined
-        ? 'Waiting for QR Code'
+        ? `${t('waitingForQRCode')}`
         : isValidAddress(qrData)
         ? formatAccountSs58(qrData)
-          ? 'Different Network Address'
+          ? `${t('differentNetworkAddress')}`
           : vaultAccountExists(qrData)
-          ? 'Account Already Imported'
-          : 'Address Received:'
-        : 'Invalid Address'
+          ? `${t('accountAlreadyImported')}`
+          : `${t('addressReceived')}`
+        : `${t('invalidAddress')}`
     );
   }, [qrData]);
 
@@ -53,7 +55,7 @@ export const Reader = () => {
 
   return (
     <QRVieweraWrapper>
-      <h3 className="title">Scan From Polkadot Vault</h3>
+      <h3 className="title">{t('scanFromPolkadotVault')}</h3>
       <div className="viewer">
         <QrScanSignature
           size={300}
@@ -78,7 +80,7 @@ export const Reader = () => {
           <ButtonPrimary
             lg
             marginRight
-            text="Import Address"
+            text={t('importAddress')}
             disabled={!valid}
             onClick={() => {
               const account = addVaultAccount(qrData, vaultAccounts.length);
@@ -90,7 +92,7 @@ export const Reader = () => {
           />
           <ButtonSecondary
             lg
-            text="Cancel"
+            text={t('cancel')}
             onClick={() => setOverlayStatus(0)}
           />
         </div>

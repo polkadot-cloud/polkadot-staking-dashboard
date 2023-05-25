@@ -166,6 +166,10 @@
     "waiting": "等待中",
     "walletNotFound": "未找到钱包",
     "whenActivelyNominating": "当活跃提名时",
-    "wrongTransaction": "错误交易，请重新签名"
+    "wrongTransaction": "错误交易，请重新签名",
+    "scanPolkadotVault":"请在Polkadot Vault上扫描",
+    "signPolkadotVault":"请在Polkadot Vault上签名",
+    "backToScan":"回到扫描",
+    "iHaveScanned":"己扫描"
   }
 }

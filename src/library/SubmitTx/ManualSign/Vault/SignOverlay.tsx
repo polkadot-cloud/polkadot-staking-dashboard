@@ -13,9 +13,11 @@ import { useTxMeta } from 'contexts/TxMeta';
 import { QRVieweraWrapper } from 'library/Import/Wrappers';
 import type { SignerOverlayProps } from 'library/SubmitTx/types';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 
 export const SignOverlay = ({ submitAddress }: SignerOverlayProps) => {
+  const { t } = useTranslation('library');
   const { getTxPayload, setTxSignature } = useTxMeta();
   const payload = getTxPayload();
   const payloadU8a = payload?.toU8a();
@@ -26,8 +28,8 @@ export const SignOverlay = ({ submitAddress }: SignerOverlayProps) => {
 
   return (
     <QRVieweraWrapper>
-      {stage === 1 && <h3 className="title">Scan on Polkadot Vault</h3>}
-      {stage === 2 && <h3 className="title">Sign From Polkadot Vault</h3>}
+      {stage === 1 && <h3 className="title">{t('scanPolkadotVault')}</h3>}
+      {stage === 2 && <h3 className="title">{t('signPolkadotVault')}</h3>}
 
       <div className="progress">
         <span className={stage === 1 ? 'active' : undefined}>Scan</span>
@@ -64,7 +66,7 @@ export const SignOverlay = ({ submitAddress }: SignerOverlayProps) => {
         <div>
           {stage === 2 && (
             <ButtonSecondary
-              text="Back to Scan"
+              text={t('backToScan')}
               lg
               onClick={() => setStage(1)}
               iconLeft={faChevronLeft}
@@ -73,7 +75,7 @@ export const SignOverlay = ({ submitAddress }: SignerOverlayProps) => {
           )}
           {stage === 1 && (
             <ButtonPrimary
-              text="I Have Scanned"
+              text={t('iHaveScanned')}
               lg
               onClick={() => {
                 setStage(2);
@@ -83,7 +85,7 @@ export const SignOverlay = ({ submitAddress }: SignerOverlayProps) => {
             />
           )}
           <ButtonSecondary
-            text="Cancel"
+            text={t('cancel')}
             lg
             marginLeft
             onClick={() => setOverlayStatus(0)}

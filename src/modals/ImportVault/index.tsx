@@ -15,10 +15,12 @@ import { NoAccounts } from 'library/Import/NoAccounts';
 import { StatusBar } from 'library/Import/StatusBar';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 import { Reader } from './Reader';
 
 export const ImportVault = () => {
+  const { t } = useTranslation('modals');
   const { network } = useApi();
   const { openOverlayWith, status: overlayStatus } = useOverlay();
   const {
@@ -39,15 +41,12 @@ export const ImportVault = () => {
     <>
       <Heading title={vaultAccounts.length ? 'Polkadot Vault' : ''} />
       {vaultAccounts.length === 0 ? (
-        <NoAccounts
-          Icon={Icon}
-          text="No Polkadot Vault accounts have been imported."
-        >
+        <NoAccounts Icon={Icon} text={t('noVaultAccountsImported')}>
           <div>
             <ButtonPrimary
               lg
               iconLeft={faQrcode}
-              text="Import Account"
+              text={t('importAccount')}
               disabled={overlayStatus !== 0}
               onClick={() => {
                 openOverlayWith(<Reader />, 'small');
@@ -77,7 +76,7 @@ export const ImportVault = () => {
             <div className="more">
               <ButtonText
                 iconLeft={faQrcode}
-                text="Import Another Account"
+                text={t('importAnotherAccount')}
                 disabled={overlayStatus !== 0}
                 onClick={() => {
                   openOverlayWith(<Reader />, 'small');
@@ -87,9 +86,9 @@ export const ImportVault = () => {
           </AddressesWrapper>
           <StatusBar
             StatusBarIcon={Icon}
-            text={`${vaultAccounts.length} Account${
-              vaultAccounts.length === 1 ? '' : 's'
-            } Imported`}
+            text={t('vaultAccounts', {
+              count: vaultAccounts.length,
+            })}
             inProgress={false}
           />
         </>

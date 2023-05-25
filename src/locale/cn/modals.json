@@ -227,6 +227,17 @@
     "withdraw": "提取",
     "withdrawMemberFunds": "取出会员资金",
     "withdrawSubtitle": "资金将在取款后立即转作可用余额",
-    "withdrawUnlocked": "取出己解锁"
+    "withdrawUnlocked": "取出己解锁",
+    "waitingForQRCode":"请扫描二维码",
+    "differentNetworkAddress":"不同的网络地址",
+    "accountAlreadyImported":"帐户已导入",
+    "addressReceived":"己收到地址:",
+    "invalidAddress":"无效地址",
+    "scanFromPolkadotVault":"从Polkadot Vault中扫描",
+    "importAddress":"导入地址",
+    "noVaultAccountsImported":"尚未导入任何Polkadot Vault帐户.",
+    "importAnotherAccount":"导入另一个帐户",
+    "vaultAccounts": "{{count}} 个帐户己被导入",
+    "vaultAccounts_zero": "无帐户导入"
   }
 }

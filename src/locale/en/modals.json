@@ -237,6 +237,18 @@
     "withdraw": "Withdraw",
     "withdrawMemberFunds": "Withdraw Member Funds",
     "withdrawSubtitle": "Funds will be immediately available as free balance after withdrawing.",
-    "withdrawUnlocked": "Withdraw Unlocked"
+    "withdrawUnlocked": "Withdraw Unlocked",
+    "waitingForQRCode":"Waiting for QR Code",
+    "differentNetworkAddress":"Different Network Address",
+    "accountAlreadyImported":"Account Already Imported",
+    "addressReceived":"Address Received:",
+    "invalidAddress":"Invalid Address",
+    "scanFromPolkadotVault":"Scan From Polkadot Vault",
+    "importAddress":"Import Address",
+    "noVaultAccountsImported":"No Polkadot Vault accounts have been imported.",
+    "importAnotherAccount":"Import Another Account",
+    "vaultAccounts_one": "{{count}} Account Imported",
+    "vaultAccounts_other": "{{count}} Accounts Imported",
+    "vaultAccounts_zero": "No Accounts Imported"
   }
 }

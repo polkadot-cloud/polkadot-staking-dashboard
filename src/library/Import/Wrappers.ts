@@ -259,7 +259,7 @@ export const AddressesWrapper = styled.div`
         }
       }
       > .action {
-        flex: 0;
+        flex-basis: auto;
       }
     }
   }
