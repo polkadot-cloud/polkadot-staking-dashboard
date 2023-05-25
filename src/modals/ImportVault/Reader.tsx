@@ -56,7 +56,7 @@ export const Reader = () => {
       <h3 className="title">Scan From Polkadot Vault</h3>
       <div className="viewer">
         <QrScanSignature
-          size={300}
+          size={279}
           onScan={({ signature }) => {
             handleQrData(signature);
           }}
