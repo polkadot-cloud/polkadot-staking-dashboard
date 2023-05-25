@@ -73,7 +73,7 @@ export const SignOverlay = ({ submitAddress }: SignerOverlayProps) => {
           )}
           {stage === 1 && (
             <ButtonPrimary
-              text="I have Scanned"
+              text="I Have Scanned"
               lg
               onClick={() => {
                 setStage(2);
