@@ -59,12 +59,12 @@ export const SubmitTx = ({
         : t('submit', { ns: 'modals' })
     }`;
 
-  // Set resize on not enough funds
+  // Set resize on not enough funds.
   useEffect(() => {
     setResize();
   }, [notEnoughFunds, fromController]);
 
-  // Reset tx metadata on unmount
+  // Reset tx metadata on unmount.
   useEffect(() => {
     return () => {
       setTxSignature(null);
