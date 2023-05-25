@@ -29,7 +29,6 @@ export const Ledger = ({
   submitAddress,
 }: SubmitProps & { buttons?: React.ReactNode[] }) => {
   const { t } = useTranslation('library');
-
   const {
     pairDevice,
     transportResponse,

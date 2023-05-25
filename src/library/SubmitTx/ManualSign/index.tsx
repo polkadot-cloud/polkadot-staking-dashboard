@@ -1,15 +1,20 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useConnect } from 'contexts/Connect';
 import { useTxMeta } from 'contexts/TxMeta';
 import React, { useEffect } from 'react';
 import type { SubmitProps } from '../types';
 import { Ledger } from './Ledger';
+import { Vault } from './Vault';
 
 export const ManualSign = (
   props: SubmitProps & { buttons?: React.ReactNode[] }
 ) => {
+  const { activeAccount, getAccount } = useConnect();
   const { getTxSignature } = useTxMeta();
+  const accountMeta = getAccount(activeAccount);
+  const source = accountMeta?.source;
 
   const { onSubmit } = props;
 
@@ -22,7 +27,8 @@ export const ManualSign = (
 
   return (
     <>
-      <Ledger {...props} />
+      {source === 'ledger' && <Ledger {...props} />}
+      {source === 'vault' && <Vault {...props} />}
     </>
   );
 };

@@ -573,7 +573,7 @@ export const ConnectProvider = ({
   // extensions.
   const requiresManualSign = (address: MaybeAccount) =>
     accountsRef.current.find(
-      (a) => a.address === address && a.source === 'ledger'
+      (a) => a.address === address && ['ledger', 'vault'].includes(a.source)
     ) !== undefined;
 
   const isReadOnlyAccount = (address: MaybeAccount) => {
