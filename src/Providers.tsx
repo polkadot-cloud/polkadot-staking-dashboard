@@ -47,7 +47,11 @@ export const ThemedRouter = () => {
 
   return (
     <ThemeProvider theme={{ mode, network: `${network.name}-${mode}` }}>
-      <Entry mode={mode} network={network.name}>
+      {
+        // FIXME: the @polkadotcloud/core-ui package only includes polkadot, westend, and kusama
+        // we'll have to figure out a way to theme it for other networks
+      }
+      <Entry mode={mode} network="polkadot">
         <Router />
       </Entry>
     </ThemeProvider>
