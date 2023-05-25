@@ -377,3 +377,20 @@ export const QRVieweraWrapper = styled.div`
     }
   }
 `;
+
+export const NoAccountsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0 3rem 0;
+
+  .icon {
+    width: 6rem;
+    height: 6rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    margin-bottom: 1rem;
+  }
+`;
