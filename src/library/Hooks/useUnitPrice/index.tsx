@@ -1,41 +1,42 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { NetworkList } from 'config/networks';
-import { ApiEndpoints } from 'consts';
-import { useApi } from 'contexts/Api';
+// import { NetworkList } from 'config/networks';
+// import { ApiEndpoints } from 'consts';
+// import { useApi } from 'contexts/Api';
 
+// FIXME: we could maybe make this work with gluwa's api or something
 export const useUnitPrice = () => {
-  const { network } = useApi();
-
-  const fetchUnitPrice = async () => {
-    const urls = [
-      `${ApiEndpoints.priceChange}${NetworkList[network.name].api.priceTicker}`,
-    ];
-
-    const responses = await Promise.all(
-      urls.map((u) => fetch(u, { method: 'GET' }))
-    );
-    const texts = await Promise.all(responses.map((res) => res.json()));
-    const newPrice = texts[0];
-
-    if (
-      newPrice.lastPrice !== undefined &&
-      newPrice.priceChangePercent !== undefined
-    ) {
-      const price: string = (Math.ceil(newPrice.lastPrice * 100) / 100).toFixed(
-        2
-      );
-
-      return {
-        lastPrice: price,
-        change: (Math.round(newPrice.priceChangePercent * 100) / 100).toFixed(
-          2
-        ),
-      };
-    }
-    return null;
+  // const { network } = useApi();
+  // const fetchUnitPrice = async () => {
+  //   const urls = [
+  //     `${ApiEndpoints.priceChange}${NetworkList[network.name].api.priceTicker}`,
+  //   ];
+  //   const responses = await Promise.all(
+  //     urls.map((u) => fetch(u, { method: 'GET' }))
+  //   );
+  //   const texts = await Promise.all(responses.map((res) => res.json()));
+  //   const newPrice = texts[0];
+  //   if (
+  //     newPrice.lastPrice !== undefined &&
+  //     newPrice.priceChangePercent !== undefined
+  //   ) {
+  //     const price: string = (Math.ceil(newPrice.lastPrice * 100) / 100).toFixed(
+  //       2
+  //     );
+  //     return {
+  //       lastPrice: price,
+  //       change: (Math.round(newPrice.priceChangePercent * 100) / 100).toFixed(
+  //         2
+  //       ),
+  //     };
+  //   }
+  //   return null;
+  // };
+  return async () => {
+    return {
+      lastPrice: '0',
+      change: '0',
+    };
   };
-
-  return fetchUnitPrice;
 };
