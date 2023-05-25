@@ -8,15 +8,14 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { QrDisplayPayload, QrScanSignature } from '@polkadot/react-qr';
 import { ButtonPrimary, ButtonSecondary } from '@polkadotcloud/core-ui';
-import { useConnect } from 'contexts/Connect';
 import { useOverlay } from 'contexts/Overlay';
 import { useTxMeta } from 'contexts/TxMeta';
 import { QRVieweraWrapper } from 'library/Import/Wrappers';
+import type { SignerOverlayProps } from 'library/SubmitTx/types';
 import { useState } from 'react';
 import type { AnyJson } from 'types';
 
-export const SignOverlay = () => {
-  const { activeAccount } = useConnect();
+export const SignOverlay = ({ submitAddress }: SignerOverlayProps) => {
   const { getTxPayload, setTxSignature } = useTxMeta();
   const payload = getTxPayload();
   const payloadU8a = payload?.toU8a();
@@ -25,29 +24,24 @@ export const SignOverlay = () => {
   // Whether user is on sign or submit stage.
   const [stage, setStage] = useState(1);
 
-  // TODO: set signature on successful scan.
-  //  setTxSignature(body.sig);
-
   return (
     <QRVieweraWrapper>
-      {stage === 1 && <h3 className="title">Sign in Polkadot Vault</h3>}
-      {stage === 2 && (
-        <h3 className="title">Scan Signature From Polkadot Vault</h3>
-      )}
+      {stage === 1 && <h3 className="title">Scan to Polkadot Vault</h3>}
+      {stage === 2 && <h3 className="title">Sign From From Polkadot Vault</h3>}
 
       <div className="progress">
-        <span className={stage === 1 ? 'active' : undefined}>Sign</span>
+        <span className={stage === 1 ? 'active' : undefined}>Scan</span>
         <FontAwesomeIcon
           icon={faChevronRight}
           transform="shrink-4"
           className="arrow"
         />
-        <span className={stage === 2 ? 'active' : undefined}>Scan</span>
+        <span className={stage === 2 ? 'active' : undefined}>Sign</span>
       </div>
       {stage === 1 && (
         <div className="viewer withBorder">
           <QrDisplayPayload
-            address={activeAccount || ''}
+            address={submitAddress || ''}
             cmd={2}
             genesisHash={payload?.genesisHash}
             payload={payloadU8a}
@@ -59,9 +53,9 @@ export const SignOverlay = () => {
         <div className="viewer">
           <QrScanSignature
             size={279}
-            onScan={(signature: AnyJson) => {
-              console.log(signature);
-              // setTxSignature(signature);
+            onScan={({ signature }: AnyJson) => {
+              setOverlayStatus(0);
+              setTxSignature(signature);
             }}
           />
         </div>
@@ -70,7 +64,7 @@ export const SignOverlay = () => {
         <div>
           {stage === 2 && (
             <ButtonSecondary
-              text="Back to Sign"
+              text="Back to Scan"
               lg
               onClick={() => setStage(1)}
               iconLeft={faChevronLeft}
@@ -79,7 +73,7 @@ export const SignOverlay = () => {
           )}
           {stage === 1 && (
             <ButtonPrimary
-              text="I have Signed"
+              text="I have Scanned"
               lg
               onClick={() => {
                 setStage(2);

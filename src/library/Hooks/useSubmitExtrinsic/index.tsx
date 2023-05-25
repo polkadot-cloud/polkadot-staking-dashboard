@@ -238,7 +238,7 @@ export const useSubmitExtrinsic = ({
     const { source } = account;
 
     // if `activeAccount` is imported from an extension, ensure it is enabled.
-    if (source !== 'ledger') {
+    if (!['ledger', 'vault'].includes(source)) {
       const extension = extensions.find((e) => e.id === source);
       if (extension === undefined) {
         throw new Error(`${t('walletNotFound')}`);
@@ -299,7 +299,7 @@ export const useSubmitExtrinsic = ({
       resetLedgerTx();
     };
 
-    const onError = (type?: 'default' | 'ledger') => {
+    const onError = (type?: string) => {
       resetTx();
       if (type === 'ledger') {
         resetLedgerTx();
@@ -344,7 +344,7 @@ export const useSubmitExtrinsic = ({
           }
         });
       } catch (e) {
-        onError('ledger');
+        onError(['ledger', 'vault'].includes(source) ? source : 'default');
       }
     } else {
       // handle unsigned transaction.

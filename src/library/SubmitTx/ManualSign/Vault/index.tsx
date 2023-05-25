@@ -54,7 +54,10 @@ export const Vault = ({
             iconLeft={faSquarePen}
             iconTransform="grow-2"
             onClick={async () => {
-              openOverlayWith(<SignOverlay />, 'small');
+              openOverlayWith(
+                <SignOverlay submitAddress={submitAddress} />,
+                'small'
+              );
             }}
             disabled={disabled || overlayStatus !== 0}
             pulse={!disabled || overlayStatus === 0}
