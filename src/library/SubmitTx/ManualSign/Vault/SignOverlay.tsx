@@ -26,8 +26,8 @@ export const SignOverlay = ({ submitAddress }: SignerOverlayProps) => {
 
   return (
     <QRVieweraWrapper>
-      {stage === 1 && <h3 className="title">Scan to Polkadot Vault</h3>}
-      {stage === 2 && <h3 className="title">Sign From From Polkadot Vault</h3>}
+      {stage === 1 && <h3 className="title">Scan on Polkadot Vault</h3>}
+      {stage === 2 && <h3 className="title">Sign From Polkadot Vault</h3>}
 
       <div className="progress">
         <span className={stage === 1 ? 'active' : undefined}>Scan</span>
