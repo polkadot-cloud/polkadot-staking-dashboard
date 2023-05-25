@@ -25,10 +25,10 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          '@substrate/connect': ['@substrate/connect']
-        }
-      }
-    }
+          '@substrate/connect': ['@substrate/connect'],
+        },
+      },
+    },
   },
   server: {
     fs: {

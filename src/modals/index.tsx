@@ -17,6 +17,7 @@ import { ClaimReward } from './ClaimReward';
 import { Connect } from './Connect';
 import { GoToFeedback } from './GoToFeedback';
 import { ImportLedger } from './ImportLedger';
+import { ImportVault } from './ImportVault';
 import { JoinPool } from './JoinPool';
 import { LeavePool } from './LeavePool';
 import { ManageFastUnstake } from './ManageFastUnstake';
@@ -167,6 +168,7 @@ export const Modal = () => {
                   {modal === 'GoToFeedback' && <GoToFeedback />}
                   {modal === 'JoinPool' && <JoinPool />}
                   {modal === 'ImportLedger' && <ImportLedger />}
+                  {modal === 'ImportVault' && <ImportVault />}
                   {modal === 'LeavePool' && <LeavePool />}
                   {modal === 'ManagePool' && <ManagePool />}
                   {modal === 'ManageFastUnstake' && <ManageFastUnstake />}

@@ -158,11 +158,11 @@ export const ActivePoolsProvider = ({
     const addresses: PoolAddresses = createAccounts(poolId);
 
     // new active pool subscription
-    const subscribeActivePool = async (_poolId: number) => {
+    const subscribeActivePool = async (id: number) => {
       const unsub: () => void = await api.queryMulti<AnyApi>(
         [
-          [api.query.nominationPools.bondedPools, _poolId],
-          [api.query.nominationPools.rewardPools, _poolId],
+          [api.query.nominationPools.bondedPools, id],
+          [api.query.nominationPools.rewardPools, id],
           [api.query.system.account, addresses.reward],
         ],
         async ([bondedPool, rewardPool, accountData]): Promise<void> => {
@@ -175,7 +175,7 @@ export const ActivePoolsProvider = ({
             const pendingRewards = await fetchPendingRewards();
 
             const pool = {
-              id: _poolId,
+              id,
               addresses,
               bondedPool,
               rewardPool,
@@ -185,7 +185,7 @@ export const ActivePoolsProvider = ({
 
             // remove pool if it already exists
             const _activePools = activePoolsRef.current.filter(
-              (a: ActivePool) => a.id !== pool.id
+              (a) => a.id !== pool.id
             );
             // set active pool state
             setStateWithRef(
@@ -195,26 +195,26 @@ export const ActivePoolsProvider = ({
             );
 
             // get pool target nominations and set in state
-            const _targets = localStorageOrDefault(
+            const newTargets = localStorageOrDefault(
               `${addresses.stash}_pool_targets`,
               defaults.targets,
               true
             );
 
             // add or replace current pool targets in targetsRef
-            const _poolTargets = { ...targetsRef.current };
-            _poolTargets[poolId] = _targets;
+            const newPoolTargets = { ...targetsRef.current };
+            newPoolTargets[poolId] = newTargets;
 
             // set pool staking targets
-            setStateWithRef(_poolTargets, _setTargets, targetsRef);
+            setStateWithRef(newPoolTargets, _setTargets, targetsRef);
 
             // subscribe to pool nominations
             subscribeToPoolNominations(poolId, addresses.stash);
           } else {
             // set default targets for pool
-            const _poolTargets = { ...targetsRef.current };
-            _poolTargets[poolId] = defaults.targets;
-            setStateWithRef(_poolTargets, _setTargets, targetsRef);
+            const newPoolTargets = { ...targetsRef.current };
+            newPoolTargets[poolId] = defaults.targets;
+            setStateWithRef(newPoolTargets, _setTargets, targetsRef);
           }
         }
       );
@@ -232,28 +232,28 @@ export const ActivePoolsProvider = ({
     poolBondAddress: string
   ) => {
     if (!api) return;
-    const subscribePoolNominations = async (_poolBondAddress: string) => {
+    const subscribePoolNominations = async (bondedAddress: string) => {
       const unsub = await api.query.staking.nominators(
-        _poolBondAddress,
+        bondedAddress,
         (nominations: AnyApi) => {
           // set pool nominations
-          let _nominations = nominations.unwrapOr(null);
-          if (_nominations === null) {
-            _nominations = defaults.poolNominations;
+          let newNominations = nominations.unwrapOr(null);
+          if (newNominations === null) {
+            newNominations = defaults.poolNominations;
           } else {
-            _nominations = {
-              targets: _nominations.targets.toHuman(),
-              submittedIn: _nominations.submittedIn.toHuman(),
+            newNominations = {
+              targets: newNominations.targets.toHuman(),
+              submittedIn: newNominations.submittedIn.toHuman(),
             };
           }
 
           // add or replace current pool nominations in poolNominations
-          const _poolNominations = { ...poolNominationsRef.current };
-          _poolNominations[poolId] = _nominations;
+          const newPoolNominations = { ...poolNominationsRef.current };
+          newPoolNominations[poolId] = newNominations;
 
           // set pool nominations state
           setStateWithRef(
-            _poolNominations,
+            newPoolNominations,
             setPoolNominations,
             poolNominationsRef
           );
@@ -298,7 +298,7 @@ export const ActivePoolsProvider = ({
    * setTargets
    * Sets currently selected pool's target validators in storage.
    */
-  const setTargets = (_targets: any) => {
+  const setTargets = (newTargets: any) => {
     if (!selectedPoolId) {
       return;
     }
@@ -307,13 +307,13 @@ export const ActivePoolsProvider = ({
     if (stashAddress) {
       localStorage.setItem(
         `${stashAddress}_pool_targets`,
-        JSON.stringify(_targets)
+        JSON.stringify(newTargets)
       );
       // inject targets into targets object
-      const _poolTargets = { ...targetsRef.current };
-      _poolTargets[Number(selectedPoolId)] = _targets;
+      const newPoolTargets = { ...targetsRef.current };
+      newPoolTargets[Number(selectedPoolId)] = newTargets;
 
-      setStateWithRef(_poolTargets, _setTargets, targetsRef);
+      setStateWithRef(newPoolTargets, _setTargets, targetsRef);
     }
   };
 
@@ -347,8 +347,7 @@ export const ActivePoolsProvider = ({
     if (!activeAccount || !roles) {
       return false;
     }
-    const result = activeAccount === roles?.root;
-    return result;
+    return activeAccount === roles?.root;
   };
 
   /*
@@ -372,8 +371,7 @@ export const ActivePoolsProvider = ({
     if (!activeAccount || !roles) {
       return false;
     }
-    const result = activeAccount === roles?.depositor;
-    return result;
+    return activeAccount === roles?.depositor;
   };
 
   /*
@@ -386,8 +384,7 @@ export const ActivePoolsProvider = ({
     if (!activeAccount || !roles) {
       return false;
     }
-    const result = activeAccount === roles?.stateToggler;
-    return result;
+    return activeAccount === roles?.stateToggler;
   };
 
   /*
@@ -430,11 +427,7 @@ export const ActivePoolsProvider = ({
    * Returns the active pool's roles or a default roles object.
    */
   const getPoolRoles = () => {
-    const roles = getSelectedActivePool()?.bondedPool?.roles ?? null;
-    if (!roles) {
-      return defaults.poolRoles;
-    }
-    return roles;
+    return getSelectedActivePool()?.bondedPool?.roles || defaults.poolRoles;
   };
 
   const getPoolUnlocking = () => {

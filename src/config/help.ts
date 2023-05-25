@@ -5,6 +5,10 @@ import type { HelpItems } from 'contexts/Help/types';
 
 export const HelpConfig: HelpItems = [
   {
+    key: 'vault',
+    definitions: ['Polkadot Vault'],
+  },
+  {
     key: 'ledger',
     definitions: [
       'Ledger Hardware Wallets',

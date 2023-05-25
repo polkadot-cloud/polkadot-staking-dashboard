@@ -4,7 +4,6 @@
 import { setStateWithRef } from '@polkadotcloud/utils';
 import { Extensions } from 'config/extensions';
 import type {
-  ExtensionConfig,
   ExtensionInjected,
   ExtensionsContextInterface,
   ExtensionsStatus,
@@ -88,7 +87,7 @@ export const ExtensionsProvider = ({
   const getInstalledExtensions = () => {
     const { injectedWeb3 }: AnyApi = window;
     const installed: ExtensionInjected[] = [];
-    Extensions.forEach((e: ExtensionConfig) => {
+    Extensions.forEach((e) => {
       if (injectedWeb3[e.id] !== undefined) {
         installed.push({
           ...e,
