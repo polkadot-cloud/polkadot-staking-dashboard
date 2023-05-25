@@ -64,11 +64,6 @@ export const ConnectProvider = ({
   const [activeAccount, setActiveAccountState] = useState<MaybeAccount>(null);
   const activeAccountRef = useRef<string | null>(activeAccount);
 
-  // store the currently active account metadata
-  const [activeAccountMeta, setActiveAccountMeta] =
-    useState<ImportedAccount | null>(null);
-  const activeAccountMetaRef = useRef(activeAccountMeta);
-
   // store the active proxy account
   const [activeProxy, setActiveProxyState] = useState<MaybeAccount>(null);
   const activeProxyRef = useRef(activeProxy);
@@ -107,7 +102,6 @@ export const ConnectProvider = ({
       unsubscribeAll();
       setStateWithRef(null, setActiveAccountState, activeAccountRef);
       setStateWithRef([], setAccounts, accountsRef);
-      setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
       setStateWithRef([], setExtensionsInitialised, extensionsInitialisedRef);
       setExtensionsFetched(false);
 
@@ -184,7 +178,6 @@ export const ConnectProvider = ({
     if (activeAccountUnsub !== undefined) {
       localStorage.removeItem(`${network.name}_active_account`);
       setStateWithRef(null, setActiveAccount, activeAccountRef);
-      setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
     }
 
     // get any external accounts and remove from localStorage
@@ -497,13 +490,11 @@ export const ConnectProvider = ({
 
   const connectToAccount = (account: ImportedAccount | null) => {
     setActiveAccount(account?.address ?? null);
-    setStateWithRef(account, setActiveAccountMeta, activeAccountMetaRef);
   };
 
   const disconnectFromAccount = () => {
     localStorage.removeItem(`${network.name}_active_account`);
     setActiveAccount(null);
-    setStateWithRef(null, setActiveAccountMeta, activeAccountMetaRef);
   };
 
   const getAccount = (who: MaybeAccount) =>
@@ -658,7 +649,6 @@ export const ConnectProvider = ({
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
         activeProxy: activeProxyRef.current,
-        activeAccountMeta: activeAccountMetaRef.current,
       }}
     >
       {children}
