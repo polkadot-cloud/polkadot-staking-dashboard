@@ -50,7 +50,7 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
       margin: 0;
       height: 2.4rem;
       font-size: 1.4rem;
-      font-variation-settings: 'wght' 625;
+      font-variation-settings: 'wght' 600;
       width: auto;
       max-width: 100%;
       text-align: left;
