@@ -240,7 +240,7 @@ export const CustomHeaderWrapper = styled.div`
         color: var(--text-color-primary);
         font-size: 1.4rem;
         font-family: 'Unbounded', 'sans-serif', sans-serif;
-        padding: 0.5rem 0.5rem 0 0.5rem;
+        padding: 0rem 0.5rem 0 0.5rem;
         display: flex;
         align-items: center;
         > button {
