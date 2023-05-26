@@ -62,54 +62,69 @@ export const PoolMembershipsProvider = ({
   const subscribeToPoolMembership = async (address: string) => {
     if (!api) return;
 
-    const unsub = await api.queryMulti<AnyApi>(
-      [
-        [api.query.nominationPools.poolMembers, address],
-        [api.query.nominationPools.claimPermissions, address],
-      ],
-      async ([poolMember, claimPermission]) => {
-        let membership = poolMember?.unwrapOr(undefined)?.toHuman();
-
-        if (membership) {
-          // format pool's unlocking chunks
-          const unbondingEras: AnyApi = membership.unbondingEras;
-          const unlocking = [];
-          for (const [e, v] of Object.entries(unbondingEras || {})) {
-            unlocking.push({
-              era: Number(rmCommas(e as string)),
-              value: new BigNumber(rmCommas(v as string)),
-            });
-          }
-          membership.points = membership.points
-            ? rmCommas(membership.points)
-            : '0';
-          membership = {
-            ...membership,
-            address,
-            unlocking,
-            claimPermission: claimPermission.toString(),
-          };
-
-          // remove stale membership if it's already in list, and add to memberships.
-          setStateWithRef(
-            Object.values(poolMembershipsRef.current)
-              .filter((m) => m.address !== address)
-              .concat(membership),
-            setPoolMemberships,
-            poolMembershipsRef
-          );
-        } else {
-          // no membership: remove account membership if present.
-          setStateWithRef(
-            Object.values(poolMembershipsRef.current).filter(
-              (m) => m.address !== address
-            ),
-            setPoolMemberships,
-            poolMembershipsRef
-          );
+    // Westend only: include claimPermissions.
+    let unsub;
+    if (network.name === 'westend') {
+      unsub = await api.queryMulti<AnyApi>(
+        [
+          [api.query.nominationPools.poolMembers, address],
+          [api.query.nominationPools.claimPermissions, address],
+        ],
+        async ([poolMember, claimPermission]) => {
+          handleMembership(poolMember, claimPermission);
         }
+      );
+    } else {
+      unsub = await api.query.nominationPools.poolMembers(
+        address,
+        async ([poolMember]: AnyApi) => {
+          handleMembership(poolMember, undefined);
+        }
+      );
+    }
+
+    const handleMembership = (poolMember: AnyApi, claimPermission?: AnyApi) => {
+      let membership = poolMember?.unwrapOr(undefined)?.toHuman();
+
+      if (membership) {
+        // format pool's unlocking chunks
+        const unbondingEras: AnyApi = membership.unbondingEras;
+        const unlocking = [];
+        for (const [e, v] of Object.entries(unbondingEras || {})) {
+          unlocking.push({
+            era: Number(rmCommas(e as string)),
+            value: new BigNumber(rmCommas(v as string)),
+          });
+        }
+        membership.points = membership.points
+          ? rmCommas(membership.points)
+          : '0';
+        membership = {
+          ...membership,
+          address,
+          unlocking,
+          claimPermission: claimPermission?.toString() || 'Permissioned',
+        };
+
+        // remove stale membership if it's already in list, and add to memberships.
+        setStateWithRef(
+          Object.values(poolMembershipsRef.current)
+            .filter((m) => m.address !== address)
+            .concat(membership),
+          setPoolMemberships,
+          poolMembershipsRef
+        );
+      } else {
+        // no membership: remove account membership if present.
+        setStateWithRef(
+          Object.values(poolMembershipsRef.current).filter(
+            (m) => m.address !== address
+          ),
+          setPoolMemberships,
+          poolMembershipsRef
+        );
       }
-    );
+    };
 
     poolMembershipUnsubs.current = poolMembershipUnsubs.current.concat(unsub);
     return unsub;

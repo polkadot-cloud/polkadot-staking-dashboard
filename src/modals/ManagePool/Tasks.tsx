@@ -29,47 +29,49 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
           style={{ paddingBottom: '1.5rem', paddingTop: '1.5rem' }}
         >
           {name === 'westend' && (
-            <button
-              type="button"
-              className="action-button"
-              onClick={() => {
-                setSection(1);
-                setTask('manage_commission');
-              }}
-            >
-              <div>
-                <h3>{t('manageCommission')}</h3>
-                <p>{t('updatePoolCommission')}</p>
-              </div>
-              <div>
-                <FontAwesomeIcon
-                  transform="shrink-2"
-                  icon={faChevronRight}
-                  className="arrow"
-                />
-              </div>
-            </button>
+            <>
+              <button
+                type="button"
+                className="action-button"
+                onClick={() => {
+                  setSection(1);
+                  setTask('manage_commission');
+                }}
+              >
+                <div>
+                  <h3>{t('manageCommission')}</h3>
+                  <p>{t('updatePoolCommission')}</p>
+                </div>
+                <div>
+                  <FontAwesomeIcon
+                    transform="shrink-2"
+                    icon={faChevronRight}
+                    className="arrow"
+                  />
+                </div>
+              </button>
+              <button
+                type="button"
+                className="action-button"
+                onClick={() => {
+                  setSection(1);
+                  setTask('set_claim_permission');
+                }}
+              >
+                <div>
+                  <h3>Update Claim Permission</h3>
+                  <p>Update who can claim rewards on your behalf.</p>
+                </div>
+                <div>
+                  <FontAwesomeIcon
+                    transform="shrink-2"
+                    icon={faChevronRight}
+                    className="arrow"
+                  />
+                </div>
+              </button>
+            </>
           )}
-          <button
-            type="button"
-            className="action-button"
-            onClick={() => {
-              setSection(1);
-              setTask('set_claim_permission');
-            }}
-          >
-            <div>
-              <h3>Update Claim Permission</h3>
-              <p>Update who can claim rewards on your behalf.</p>
-            </div>
-            <div>
-              <FontAwesomeIcon
-                transform="shrink-2"
-                icon={faChevronRight}
-                className="arrow"
-              />
-            </div>
-          </button>
           {isOwner() && (
             <button
               type="button"
