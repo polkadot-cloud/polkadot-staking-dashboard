@@ -72,41 +72,39 @@ export const PoolMembershipsProvider = ({
           const unbondingEras: AnyApi = membership.unbondingEras;
           const unlocking = [];
           for (const [e, v] of Object.entries(unbondingEras || {})) {
-            const era = rmCommas(e as string);
-            const value = rmCommas(v as string);
             unlocking.push({
-              era: Number(era),
-              value: new BigNumber(value),
+              era: Number(rmCommas(e as string)),
+              value: new BigNumber(rmCommas(v as string)),
             });
           }
           membership.points = membership.points
             ? rmCommas(membership.points)
             : '0';
           membership = {
-            address,
             ...membership,
+            address,
             unlocking,
           };
 
           // remove stale membership if it's already in list
-          let _poolMemberships = Object.values(poolMembershipsRef.current);
-          _poolMemberships = _poolMemberships
-            .filter((m: PoolMembership) => m.address !== address)
+          let newPoolMemberships = Object.values(poolMembershipsRef.current);
+          newPoolMemberships = newPoolMemberships
+            .filter((m) => m.address !== address)
             .concat(membership);
 
           setStateWithRef(
-            _poolMemberships,
+            newPoolMemberships,
             setPoolMemberships,
             poolMembershipsRef
           );
         } else {
           // no membership: remove account membership if present
-          let _poolMemberships = Object.values(poolMembershipsRef.current);
-          _poolMemberships = _poolMemberships.filter(
-            (m: PoolMembership) => m.address !== address
+          let newPoolMemberships = Object.values(poolMembershipsRef.current);
+          newPoolMemberships = newPoolMemberships.filter(
+            (m) => m.address !== address
           );
           setStateWithRef(
-            _poolMemberships,
+            newPoolMemberships,
             setPoolMemberships,
             poolMembershipsRef
           );
