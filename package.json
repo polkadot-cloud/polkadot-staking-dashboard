@@ -36,7 +36,6 @@
     "@polkadotcloud/react-odometer": "0.1.16",
     "@polkadotcloud/utils": "^0.2.21",
     "@substrate/connect": "^0.7.26",
-    "@types/lodash.throttle": "^4.1.7",
     "@zondax/ledger-substrate": "^0.40.7",
     "bignumber.js": "^9.1.1",
     "bn.js": "^5.2.1",
