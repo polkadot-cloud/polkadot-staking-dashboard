@@ -86,7 +86,7 @@
     "prettier-plugin-organize-imports": "^3.2.2",
     "sass": "^1.62.1",
     "typescript": "^5.0.4",
-    "vite": "^4.3.8",
+    "vite": "^4.3.9",
     "vite-bundle-visualizer": "^0.7.0",
     "vite-plugin-checker": "^0.6.0",
     "vite-plugin-eslint": "^1.8.1",
