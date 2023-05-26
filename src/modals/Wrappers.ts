@@ -1,45 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
-
-// blurred background wrapper
-export const ModalBlurWrapper = styled(motion.div)`
-  background: var(--overlay-modal-color);
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: 9;
-  backdrop-filter: blur(4px);
-`;
-
-/* modal content wrapper */
-export const ModalWrapper = styled(motion.div)`
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: 9;
-  backdrop-filter: blur(4px);
-
-  > div {
-    height: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem 2rem;
-
-    /* click anywhere behind modal content to close */
-    .close {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: 8;
-      cursor: default;
-    }
-  }
-`;
 
 export const HeightWrapper = styled.div<{ size: string }>`
   box-shadow: 0px 2px 16px 1px var(--card-shadow-color);
