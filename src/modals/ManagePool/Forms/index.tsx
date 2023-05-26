@@ -4,6 +4,7 @@
 import { forwardRef } from 'react';
 import { ContentWrapper } from '../Wrappers';
 import { Commission } from './Commission';
+import { SetClaimPermission } from './SetClaimPermission';
 import { SetMetadata } from './SetMetadata';
 import { SetState } from './SetState';
 
@@ -21,6 +22,8 @@ export const Forms = forwardRef(
                 section={section}
                 incrementCalculateHeight={incrementCalculateHeight}
               />
+            ) : task === 'set_claim_permission' ? (
+              <SetClaimPermission setSection={setSection} section={section} />
             ) : (
               <SetState setSection={setSection} task={task} />
             )}

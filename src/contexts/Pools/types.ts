@@ -18,6 +18,12 @@ export interface PoolConfigState {
   unsub: AnyApi;
 }
 
+export type ClaimPermission =
+  | 'Permissioned'
+  | 'PermissionlessCompound'
+  | 'PermissionlessWithdraw'
+  | 'PermissionlessAll';
+
 export interface PoolStats {
   counterForPoolMembers: BigNumber;
   counterForBondedPools: BigNumber;
