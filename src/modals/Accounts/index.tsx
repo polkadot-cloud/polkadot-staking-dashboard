@@ -6,6 +6,7 @@ import {
   ActionItem,
   ButtonPrimaryInvert,
   ButtonText,
+  ModalCustomHeader,
 } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -17,7 +18,7 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CustomHeaderWrapper, PaddingWrapper } from '../Wrappers';
+import { PaddingWrapper } from '../Wrappers';
 import { AccountButton } from './Account';
 import { Delegates } from './Delegates';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
@@ -140,7 +141,7 @@ export const Accounts = () => {
 
   return (
     <PaddingWrapper>
-      <CustomHeaderWrapper>
+      <ModalCustomHeader>
         <div className="first">
           <h1>{t('accounts')}</h1>
           <ButtonPrimaryInvert
@@ -168,7 +169,7 @@ export const Accounts = () => {
             />
           )}
         </div>
-      </CustomHeaderWrapper>
+      </ModalCustomHeader>
       {!activeAccount && !accounts.length && (
         <AccountWrapper style={{ marginTop: '1.5rem' }}>
           <div>

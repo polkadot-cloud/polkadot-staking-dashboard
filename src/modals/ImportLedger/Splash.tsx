@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonSecondary } from '@polkadotcloud/core-ui';
+import {
+  ButtonHelp,
+  ButtonSecondary,
+  ModalCustomHeader,
+} from '@polkadotcloud/core-ui';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
@@ -10,7 +14,6 @@ import { useTheme } from 'contexts/Themes';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
 import { ReactComponent as LogoSVG } from 'img/ledgerLogo.svg';
 import { Title } from 'library/Modal/Title';
-import { CustomHeaderWrapper } from 'modals/Wrappers';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyFunction } from 'types';
@@ -64,7 +67,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
 
   return (
     <>
-      <CustomHeaderWrapper>
+      <ModalCustomHeader>
         <h1 style={{ paddingLeft: '1rem' }}>
           <ButtonSecondary
             text={t('back')}
@@ -78,11 +81,11 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
         <button
           type="button"
           onClick={() => setStatus(2)}
-          className="closeModal"
+          className="close-modal"
         >
           <CrossSVG style={{ width: '1.25rem', height: '1.25rem' }} />
         </button>
-      </CustomHeaderWrapper>
+      </ModalCustomHeader>
       <Title title="" />
       <SplashWrapper>
         <div className="icon">

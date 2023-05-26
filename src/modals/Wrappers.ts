@@ -223,47 +223,6 @@ export const WarningsWrapper = styled.div<{ noMargin?: boolean }>`
   width: 100%;
 `;
 
-export const CustomHeaderWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  flex-flow: row wrap;
-  align-items: center;
-  margin-top: 0.5rem;
-  position: relative;
-
-  > div {
-    &.first {
-      display: flex;
-      flex-grow: 1;
-
-      h1 {
-        color: var(--text-color-primary);
-        font-size: 1.4rem;
-        font-family: 'Unbounded', 'sans-serif', sans-serif;
-        padding: 0 0.5rem;
-        display: flex;
-        align-items: center;
-        > button {
-          margin-left: 1.25rem;
-        }
-      }
-    }
-    &.last {
-      display: flex;
-    }
-  }
-
-  .closeModal {
-    position: absolute;
-    top: 0rem;
-    right: 1.5rem;
-    opacity: 0.25;
-    &:hover {
-      opacity: 1;
-    }
-  }
-`;
-
 export const FixedTitleWrapper = styled.div<{ isStyled?: boolean }>`
   background: ${(props) =>
     props.isStyled ? 'var(--background-default)' : 'transparent'};

@@ -6,6 +6,7 @@ import {
   ActionItem,
   ButtonPrimaryInvert,
   ButtonTab,
+  ModalCustomHeader,
   ModalMotionThreeSection,
   ModalSection,
 } from '@polkadotcloud/core-ui';
@@ -14,11 +15,7 @@ import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
 import { Close } from 'library/Modal/Close';
 import { SelectItems } from 'library/SelectItems';
-import {
-  CustomHeaderWrapper,
-  FixedTitleWrapper,
-  PaddingWrapper,
-} from 'modals/Wrappers';
+import { FixedTitleWrapper, PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyFunction } from 'types';
@@ -83,7 +80,7 @@ export const Connect = () => {
       <ModalSection type="carousel">
         <Close />
         <FixedTitleWrapper ref={headerRef} isStyled>
-          <CustomHeaderWrapper>
+          <ModalCustomHeader>
             <div className="first">
               <h1>{t('connect')}</h1>
               <ButtonPrimaryInvert
@@ -111,7 +108,7 @@ export const Connect = () => {
                 active={section === 2}
               />
             </ModalSection>
-          </CustomHeaderWrapper>
+          </ModalCustomHeader>
         </FixedTitleWrapper>
 
         <ModalMotionThreeSection
