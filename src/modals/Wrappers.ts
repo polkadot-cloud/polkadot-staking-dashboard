@@ -3,22 +3,6 @@
 
 import styled from 'styled-components';
 
-export const HeightWrapper = styled.div<{ size: string }>`
-  box-shadow: 0px 2px 16px 1px var(--card-shadow-color);
-  transition: height 0.5s cubic-bezier(0.1, 1, 0.2, 1);
-  width: 100%;
-  max-width: ${(props) =>
-    props.size === 'xl'
-      ? '1250px'
-      : props.size === 'large'
-      ? '800px'
-      : '600px'};
-  max-height: 100%;
-  border-radius: 1.5rem;
-  z-index: 9;
-  position: relative;
-`;
-
 // Modal content wrapper
 export const ContentWrapper = styled.div`
   background: var(--background-modal);
