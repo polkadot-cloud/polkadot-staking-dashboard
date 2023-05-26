@@ -70,14 +70,14 @@ export const PoolMembershipsProvider = ({
           [api.query.nominationPools.poolMembers, address],
           [api.query.nominationPools.claimPermissions, address],
         ],
-        async ([poolMember, claimPermission]) => {
+        ([poolMember, claimPermission]) => {
           handleMembership(poolMember, claimPermission);
         }
       );
     } else {
       unsub = await api.query.nominationPools.poolMembers(
         address,
-        async ([poolMember]: AnyApi) => {
+        (poolMember: AnyApi) => {
           handleMembership(poolMember, undefined);
         }
       );
