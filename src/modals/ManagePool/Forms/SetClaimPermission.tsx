@@ -84,7 +84,7 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
     {
       label: 'Allow Compound',
       value: 'PermissionlessCompound',
-      description: 'Allow anyone to Compound rewards on your behalf.',
+      description: 'Allow anyone to compound rewards on your behalf.',
     },
     {
       label: 'Allow Withdraw',
@@ -94,7 +94,8 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
     {
       label: 'Allow All',
       value: 'PermissionlessAll',
-      description: 'Allow anyone to bond and withdraw rewards on your behalf.',
+      description:
+        'Allow anyone to compound or withdraw rewards on your behalf.',
     },
   ];
 
