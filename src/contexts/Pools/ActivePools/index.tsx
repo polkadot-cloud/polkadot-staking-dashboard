@@ -159,7 +159,7 @@ export const ActivePoolsProvider = ({
 
     // new active pool subscription
     const subscribeActivePool = async (id: number) => {
-      const unsub: () => void = await api.queryMulti<AnyApi>(
+      const unsub = await api.queryMulti<AnyApi>(
         [
           [api.query.nominationPools.bondedPools, id],
           [api.query.nominationPools.rewardPools, id],
