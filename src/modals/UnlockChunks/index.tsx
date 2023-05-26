@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ModalSection } from '@polkadotcloud/core-ui';
+import { ModalMotionTwoSection, ModalSection } from '@polkadotcloud/core-ui';
 import { setStateWithRef } from '@polkadotcloud/utils';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -10,7 +10,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FixedTitleWrapper, TwoSectionsWrapper } from '../Wrappers';
+import { FixedTitleWrapper } from '../Wrappers';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
 
@@ -90,7 +90,7 @@ export const UnlockChunks = () => {
       <FixedTitleWrapper ref={headerRef}>
         <Title title={t('unlocks')} fixed />
       </FixedTitleWrapper>
-      <TwoSectionsWrapper
+      <ModalMotionTwoSection
         animate={sectionRef.current === 0 ? 'home' : 'next'}
         transition={{
           duration: 0.5,
@@ -120,7 +120,7 @@ export const UnlockChunks = () => {
           task={task}
           ref={formsRef}
         />
-      </TwoSectionsWrapper>
+      </ModalMotionTwoSection>
     </ModalSection>
   );
 };

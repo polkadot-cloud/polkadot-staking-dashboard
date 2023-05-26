@@ -271,11 +271,3 @@ export const FixedTitleWrapper = styled.div<{ isStyled?: boolean }>`
     props.isStyled ? '1rem 1rem 0rem 1rem' : ' 1rem 0 0 0'};
   width: 100%;
 `;
-
-export const TwoSectionsWrapper = styled(motion.div)`
-  width: 200%;
-  height: auto;
-  display: flex;
-  overflow: auto;
-  position: relative;
-`;
