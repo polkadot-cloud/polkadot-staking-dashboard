@@ -15,23 +15,3 @@ export const ListWrapper = styled.div`
     width: 100%;
   }
 `;
-
-// export const FooterWrapper = styled.div`
-//   position: relative;
-//   bottom: 0px;
-//   left: 0px;
-//   margin: 1rem 0;
-//   width: 100%;
-//   display: flex;
-//   flex-flow: row wrap;
-
-//   button {
-//     font-size: 1.2rem;
-//     color: var(--network-color-primary);
-
-//     &:disabled {
-//       color: var(--text-color-secondary);
-//       opacity: var(--opacity-disabled);
-//     }
-//   }
-// `;

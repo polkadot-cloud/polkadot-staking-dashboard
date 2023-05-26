@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ModalWarnings } from '@polkadotcloud/core-ui';
+import { ModalFooter, ModalWarnings } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -17,7 +17,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { ValidatorList } from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FooterWrapper, PaddingWrapper } from '../Wrappers';
+import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {
@@ -160,7 +160,7 @@ export const NominateFromFavorites = () => {
             <h3>{t('noFavoritesAvailable')}</h3>
           )}
         </ListWrapper>
-        <FooterWrapper>
+        <ModalFooter>
           <h3
             className={
               selectedFavorites.length === 0 ||
@@ -179,7 +179,7 @@ export const NominateFromFavorites = () => {
                   })}`
               : `${t('noFavoritesSelected')}`}
           </h3>
-        </FooterWrapper>
+        </ModalFooter>
       </PaddingWrapper>
       <SubmitTx
         fromController={bondFor === 'nominator'}
