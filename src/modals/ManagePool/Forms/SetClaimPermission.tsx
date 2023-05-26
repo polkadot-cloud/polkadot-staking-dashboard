@@ -40,18 +40,15 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
   }, [section]);
 
   useEffect(() => {
-    setValid(isOwner() || isMember());
+    setValid(isOwner() || (isMember() && claimPermission !== undefined));
   }, [isOwner(), isMember()]);
 
-  // tx to submit
+  // tx to submit.
   const getTx = () => {
     if (!valid || !api) {
       return null;
     }
-
-    // TODO: dynamically insert claim permission:
-    // Permissioned, PermissionlessCompound, PermissionlessWithdraw, PermissionlessAll
-    return api.tx.nominationPools.setClaimPermission('PermissionlessAll');
+    return api.tx.nominationPools.setClaimPermission(claimPermission);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
