@@ -6,6 +6,7 @@ import {
   ActionItem,
   ButtonPrimaryInvert,
   ButtonTab,
+  ModalMotionThreeSection,
   ModalSection,
 } from '@polkadotcloud/core-ui';
 import { Extensions } from 'config/extensions';
@@ -17,8 +18,6 @@ import {
   CustomHeaderWrapper,
   FixedTitleWrapper,
   PaddingWrapper,
-  ThreeSectionWrapper,
-  ThreeSectionsWrapper,
 } from 'modals/Wrappers';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -115,7 +114,7 @@ export const Connect = () => {
           </CustomHeaderWrapper>
         </FixedTitleWrapper>
 
-        <ThreeSectionsWrapper
+        <ModalMotionThreeSection
           style={{
             maxHeight:
               modalMaxHeight() - (headerRef.current?.clientHeight || 0),
@@ -140,7 +139,7 @@ export const Connect = () => {
             },
           }}
         >
-          <ThreeSectionWrapper>
+          <div className="section">
             <PaddingWrapper horizontalOnly ref={homeRef}>
               <ActionItem text={t('hardware')} />
               <ExtensionsWrapper>
@@ -160,24 +159,24 @@ export const Connect = () => {
                 </SelectItems>
               </ExtensionsWrapper>
             </PaddingWrapper>
-          </ThreeSectionWrapper>
-          <ThreeSectionWrapper>
+          </div>
+          <div className="section">
             <PaddingWrapper horizontalOnly ref={readOnlyRef}>
               <ReadOnly
                 setInputOpen={setReadOnlyOpen}
                 inputOpen={readOnlyOpen}
               />
             </PaddingWrapper>
-          </ThreeSectionWrapper>
-          <ThreeSectionWrapper>
+          </div>
+          <div className="section">
             <PaddingWrapper horizontalOnly ref={proxiesRef}>
               <Proxies
                 setInputOpen={setNewProxyOpen}
                 inputOpen={newProxyOpen}
               />
             </PaddingWrapper>
-          </ThreeSectionWrapper>
-        </ThreeSectionsWrapper>
+          </div>
+        </ModalMotionThreeSection>
       </ModalSection>
     </>
   );
