@@ -6,6 +6,7 @@ import {
   ActionItem,
   ButtonPrimaryInvert,
   ButtonTab,
+  ModalSection,
 } from '@polkadotcloud/core-ui';
 import { Extensions } from 'config/extensions';
 import { useExtensions } from 'contexts/Extensions';
@@ -17,7 +18,6 @@ import {
   FixedTitleWrapper,
   MultiSectionWrapper,
   PaddingWrapper,
-  TabsWrapper,
   ThreeSectionWrapper,
   ThreeSectionsWrapper,
 } from 'modals/Wrappers';
@@ -96,7 +96,7 @@ export const Connect = () => {
                 marginLeft
               />
             </div>
-            <TabsWrapper>
+            <ModalSection type="tab">
               <ButtonTab
                 title={t('extensions')}
                 onClick={() => setSection(0)}
@@ -112,7 +112,7 @@ export const Connect = () => {
                 onClick={() => setSection(2)}
                 active={section === 2}
               />
-            </TabsWrapper>
+            </ModalSection>
           </CustomHeaderWrapper>
         </FixedTitleWrapper>
 

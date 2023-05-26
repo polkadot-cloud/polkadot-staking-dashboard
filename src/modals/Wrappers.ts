@@ -307,9 +307,3 @@ export const ThreeSectionWrapper = styled.div`
   overflow: auto;
   flex-grow: 1;
 `;
-
-export const TabsWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  margin: 1.25rem 0 0.25rem 0;
-`;
