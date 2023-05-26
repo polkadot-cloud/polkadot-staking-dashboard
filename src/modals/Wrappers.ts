@@ -297,17 +297,6 @@ export const ThreeSectionsWrapper = styled(motion.div)`
   position: relative;
 `;
 
-export const TwoSectionWrapper = styled.div`
-  border-radius: 1rem;
-  display: flex;
-  flex-flow: column nowrap;
-  flex-basis: 50%;
-  min-width: 50%;
-  height: auto;
-  overflow: auto;
-  flex-grow: 1;
-`;
-
 export const ThreeSectionWrapper = styled.div`
   border-radius: 1rem;
   display: flex;
