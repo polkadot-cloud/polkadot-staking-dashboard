@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ModalWarnings } from '@polkadotcloud/core-ui';
 import { isValidAddress } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
@@ -20,7 +21,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { MaybeAccount } from 'types';
-import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
+import { PaddingWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals');
@@ -129,11 +130,11 @@ export const UpdatePayee = () => {
       />
       <PaddingWrapper style={{ paddingBottom: 0 }}>
         {warnings.length > 0 ? (
-          <WarningsWrapper>
+          <ModalWarnings withMargin>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </WarningsWrapper>
+          </ModalWarnings>
         ) : null}
         <div style={{ width: '100%', padding: '0 0.5rem' }}>
           <PayeeInput

@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ModalWarnings } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -13,7 +14,7 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper, Separator, WarningsWrapper } from '../Wrappers';
+import { PaddingWrapper, Separator } from '../Wrappers';
 
 export const ChangeNominations = () => {
   const { t } = useTranslation('modals');
@@ -131,11 +132,11 @@ export const ChangeNominations = () => {
         </h2>
         <Separator />
         {warnings.length ? (
-          <WarningsWrapper noMargin>
+          <ModalWarnings>
             {warnings.map((text, i) => (
               <Warning key={`warning_${i}`} text={text} />
             ))}
-          </WarningsWrapper>
+          </ModalWarnings>
         ) : null}
         <p>{t('changeNomination')}</p>
       </PaddingWrapper>

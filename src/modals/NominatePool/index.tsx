@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ActionItem } from '@polkadotcloud/core-ui';
+import { ActionItem, ModalWarnings } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -13,7 +13,7 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
+import { PaddingWrapper } from '../Wrappers';
 
 export const NominatePool = () => {
   const { t } = useTranslation('modals');
@@ -79,11 +79,11 @@ export const NominatePool = () => {
       <PaddingWrapper>
         <h2 className="title unbounded">{t('nominate')}</h2>
         {warnings.length ? (
-          <WarningsWrapper>
+          <ModalWarnings withMargin>
             {warnings.map((text, i) => (
               <Warning key={`warning_${i}`} text={text} />
             ))}
-          </WarningsWrapper>
+          </ModalWarnings>
         ) : null}
         <ActionItem text={t('haveNomination', { count: nominations.length })} />
         <p>{t('onceSubmitted')}</p>

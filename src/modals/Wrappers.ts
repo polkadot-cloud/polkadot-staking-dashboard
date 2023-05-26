@@ -218,11 +218,6 @@ export const NotesWrapper = styled.div<{
   }
 `;
 
-export const WarningsWrapper = styled.div<{ noMargin?: boolean }>`
-  margin-top: ${(props) => (props.noMargin ? '0' : '0.75rem')};
-  width: 100%;
-`;
-
 export const FixedTitleWrapper = styled.div<{ isStyled?: boolean }>`
   background: ${(props) =>
     props.isStyled ? 'var(--background-default)' : 'transparent'};

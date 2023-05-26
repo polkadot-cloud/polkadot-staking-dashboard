@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ModalWarnings } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -16,7 +17,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { ValidatorList } from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FooterWrapper, PaddingWrapper, WarningsWrapper } from '../Wrappers';
+import { FooterWrapper, PaddingWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {
@@ -132,11 +133,11 @@ export const NominateFromFavorites = () => {
       <PaddingWrapper>
         <div style={{ marginBottom: '1rem', width: '100%' }}>
           {warnings.length ? (
-            <WarningsWrapper>
+            <ModalWarnings withMargin>
               {warnings.map((text, i) => (
                 <Warning key={`warning_${i}`} text={text} />
               ))}
-            </WarningsWrapper>
+            </ModalWarnings>
           ) : null}
         </div>
         <ListWrapper>
