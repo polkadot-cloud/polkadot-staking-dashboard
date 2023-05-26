@@ -264,15 +264,6 @@ export const CustomHeaderWrapper = styled.div`
   }
 `;
 
-// Fixed content wrappers for modals that have multiple sections.
-
-export const MultiSectionWrapper = styled.div`
-  display: flex;
-  flex-flow: column wrap;
-  padding: 0;
-  position: relative;
-`;
-
 export const FixedTitleWrapper = styled.div<{ isStyled?: boolean }>`
   background: ${(props) =>
     props.isStyled ? 'var(--background-default)' : 'transparent'};

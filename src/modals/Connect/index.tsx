@@ -16,7 +16,6 @@ import { SelectItems } from 'library/SelectItems';
 import {
   CustomHeaderWrapper,
   FixedTitleWrapper,
-  MultiSectionWrapper,
   PaddingWrapper,
   ThreeSectionWrapper,
   ThreeSectionsWrapper,
@@ -82,7 +81,7 @@ export const Connect = () => {
 
   return (
     <>
-      <MultiSectionWrapper>
+      <ModalSection type="carousel">
         <Close />
         <FixedTitleWrapper ref={headerRef} isStyled>
           <CustomHeaderWrapper>
@@ -179,7 +178,7 @@ export const Connect = () => {
             </PaddingWrapper>
           </ThreeSectionWrapper>
         </ThreeSectionsWrapper>
-      </MultiSectionWrapper>
+      </ModalSection>
     </>
   );
 };
