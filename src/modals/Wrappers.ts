@@ -201,13 +201,6 @@ export const FooterWrapper = styled.div`
   }
 `;
 
-export const Separator = styled.div`
-  border-top: 1px solid var(--text-color-secondary);
-  width: 100%;
-  opacity: 0.1;
-  margin: 0.8rem 0rem 0.8rem 0;
-`;
-
 export const FixedTitleWrapper = styled.div<{ isStyled?: boolean }>`
   background: ${(props) =>
     props.isStyled ? 'var(--background-default)' : 'transparent'};
