@@ -19,7 +19,6 @@ import { GoToFeedback } from './GoToFeedback';
 import { ImportLedger } from './ImportLedger';
 import { ImportVault } from './ImportVault';
 import { JoinPool } from './JoinPool';
-import { LeavePool } from './LeavePool';
 import { ManageFastUnstake } from './ManageFastUnstake';
 import { ManagePool } from './ManagePool';
 import { Networks } from './Networks';
@@ -169,7 +168,6 @@ export const Modal = () => {
                   {modal === 'JoinPool' && <JoinPool />}
                   {modal === 'ImportLedger' && <ImportLedger />}
                   {modal === 'ImportVault' && <ImportVault />}
-                  {modal === 'LeavePool' && <LeavePool />}
                   {modal === 'ManagePool' && <ManagePool />}
                   {modal === 'ManageFastUnstake' && <ManageFastUnstake />}
                   {modal === 'Networks' && <Networks />}
