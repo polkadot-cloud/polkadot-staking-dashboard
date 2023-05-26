@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmitInvert } from '@polkadotcloud/core-ui';
+import { ActionItem, ButtonSubmitInvert } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { ClaimPermission } from 'contexts/Pools/types';
+import { TabWrapper, TabsWrapper } from 'library/Filter/Wrappers';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -34,14 +35,18 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
     ClaimPermission | undefined
   >(membership?.claimPermission);
 
+  // Max commission enabled.
+  const [claimPermissionEnabled, setClaimPermissionEnabled] =
+    useState<boolean>(false);
+
   // Determine current pool metadata and set in state.
   useEffect(() => {
-    // TODO: set real claim permission.
-    const currentClaimPermission = null;
-    if (currentClaimPermission) {
-      setClaimPermission(currentClaimPermission);
+    const current = membership?.claimPermission;
+    if (current) {
+      setClaimPermission(current);
+      setClaimPermissionEnabled(current !== 'Permissioned');
     }
-  }, [section]);
+  }, [section, membership]);
 
   useEffect(() => {
     setValid(isOwner() || (isMember() && claimPermission !== undefined));
@@ -65,18 +70,35 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
     callbackInBlock: () => {},
   });
 
-  // TODO: handle claim permission change.
-  // const handleClaimPermissionChange = (
-  //   e: React.FormEvent<HTMLInputElement>
-  // ) => {
-  //   setValid(true);
-  // };
-
   const warnings = getSignerWarnings(
     activeAccount,
     false,
     submitExtrinsic.proxySupported
   );
+
+  const tabsConfig: {
+    label: string;
+    value: ClaimPermission;
+    description: string;
+  }[] = [
+    {
+      label: 'Allow Compound',
+      value: 'PermissionlessCompound',
+      description: 'Allow anyone to Compound rewards on your behalf.',
+    },
+    {
+      label: 'Allow Withdraw',
+      value: 'PermissionlessWithdraw',
+      description: 'Allow anyone to withdraw rewards on your behalf.',
+    },
+    {
+      label: 'Allow All',
+      value: 'PermissionlessAll',
+      description: 'Allow anyone to bond and withdraw rewards on your behalf.',
+    },
+  ];
+
+  const activeTab = tabsConfig.find(({ value }) => value === claimPermission);
 
   return (
     <>
@@ -88,22 +110,55 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
             ))}
           </WarningsWrapper>
         ) : null}
-        {/* <input
-          className="textbox"
-          style={{ width: '100%' }}
-          placeholder={`${t('poolName')}`}
-          type="text"
-          onChange={(e: React.FormEvent<HTMLInputElement>) =>
-            handleMetadataChange(e)
-          }
-          value={metadata ?? ''}
-        /> */}
-        <p>
-          Updating your claim permissions will take effect immediately on chain.
-        </p>
+
+        <ActionItem
+          style={{
+            marginTop: '1rem',
+          }}
+          text="Enable Permissionless Claiming"
+          toggled={claimPermissionEnabled}
+          onToggle={(val) => {
+            // toggle enable claim permission.
+            setClaimPermissionEnabled(val);
+
+            if (!claimPermissionEnabled) {
+              // if current val is not Permissioned, slot in the current value.
+              setClaimPermission(
+                membership?.claimPermission === 'Permissioned'
+                  ? tabsConfig[0].value
+                  : membership?.claimPermission || tabsConfig[0].value
+              );
+            } else {
+              setClaimPermission('Permissioned');
+            }
+          }}
+        />
+
+        <TabsWrapper
+          style={{
+            margin: '1rem 0',
+            opacity: claimPermissionEnabled ? 1 : 0.5,
+          }}
+        >
+          {tabsConfig.map(({ label, value }: any, i) => (
+            <TabWrapper
+              key={`pools_tab_filter_${i}`}
+              active={value === claimPermission && claimPermissionEnabled}
+              disabled={value === claimPermission || !claimPermissionEnabled}
+              onClick={() => setClaimPermission(value)}
+            >
+              {label}
+            </TabWrapper>
+          ))}
+        </TabsWrapper>
+        {activeTab ? (
+          <p>{activeTab.description}</p>
+        ) : (
+          <p>Permissionless claiming is turned off.</p>
+        )}
       </div>
       <SubmitTx
-        valid={valid}
+        valid={valid && claimPermission !== membership?.claimPermission}
         buttons={[
           <ButtonSubmitInvert
             key="button_back"
