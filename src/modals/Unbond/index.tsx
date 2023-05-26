@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ModalWarnings } from '@polkadotcloud/core-ui';
+import { ModalNotes, ModalWarnings } from '@polkadotcloud/core-ui';
 import { isNotZero, planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -23,7 +23,7 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import { NotesWrapper, PaddingWrapper } from 'modals/Wrappers';
+import { PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -193,7 +193,7 @@ export const Unbond = () => {
           ]}
           txFees={txFees}
         />
-        <NotesWrapper>
+        <ModalNotes withPadding>
           {bondFor === 'pool' ? (
             <>
               {isDepositor() ? (
@@ -221,7 +221,7 @@ export const Unbond = () => {
             valueKey="bondDurationFormatted"
             deps={[bondDuration]}
           />
-        </NotesWrapper>
+        </ModalNotes>
       </PaddingWrapper>
       <SubmitTx
         fromController={isStaking}

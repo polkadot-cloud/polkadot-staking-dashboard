@@ -208,16 +208,6 @@ export const Separator = styled.div`
   margin: 0.8rem 0rem 0.8rem 0;
 `;
 
-export const NotesWrapper = styled.div<{
-  noPadding?: boolean;
-}>`
-  width: 100%;
-  padding: ${(props) => (props.noPadding ? '0' : '0.75rem 0')};
-  > p {
-    color: var(--text-color-secondary);
-  }
-`;
-
 export const FixedTitleWrapper = styled.div<{ isStyled?: boolean }>`
   background: ${(props) =>
     props.isStyled ? 'var(--background-default)' : 'transparent'};

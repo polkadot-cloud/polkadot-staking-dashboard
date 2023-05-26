@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ActionItem, ModalWarnings } from '@polkadotcloud/core-ui';
+import { ActionItem, ModalNotes, ModalWarnings } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -19,7 +19,7 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NotesWrapper, PaddingWrapper } from '../Wrappers';
+import { PaddingWrapper } from '../Wrappers';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
@@ -145,7 +145,7 @@ export const ManageFastUnstake = () => {
                 count: lastExposedAgo.toNumber(),
               })}
             />
-            <NotesWrapper noPadding>
+            <ModalNotes>
               <p>
                 {t('fastUnstakeNote1', {
                   bondDuration: bondDuration.toString(),
@@ -154,14 +154,14 @@ export const ManageFastUnstake = () => {
               <p>
                 {t('fastUnstakeNote2', { count: erasRemaining.toNumber() })}
               </p>
-            </NotesWrapper>
+            </ModalNotes>
           </>
         ) : (
           <>
             {!isFastUnstaking ? (
               <>
                 <ActionItem text={t('fastUnstake', { context: 'register' })} />
-                <NotesWrapper noPadding>
+                <ModalNotes>
                   <p>
                     <>
                       {t('registerFastUnstake')}{' '}
@@ -175,17 +175,17 @@ export const ManageFastUnstake = () => {
                   <p>
                     {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
                   </p>
-                </NotesWrapper>
+                </ModalNotes>
               </>
             ) : (
               <>
                 <ActionItem text={t('fastUnstakeRegistered')} />
-                <NotesWrapper noPadding>
+                <ModalNotes>
                   <p>
                     {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
                   </p>
                   <p>{t('fastUnstakeUnorderedNote')}</p>
-                </NotesWrapper>
+                </ModalNotes>
               </>
             )}
           </>
