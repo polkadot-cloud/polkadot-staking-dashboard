@@ -62,9 +62,9 @@ export const PoolMembershipsProvider = ({
   const subscribeToPoolMembership = async (address: string) => {
     if (!api) return;
 
-    const unsub = await api.query.nominationPools.poolMembers(
-      address,
-      async (result: AnyApi) => {
+    const unsub = await api.queryMulti<AnyApi>(
+      [[api.query.nominationPools.poolMembers, address]],
+      async ([result]) => {
         let membership = result?.unwrapOr(undefined)?.toHuman();
 
         if (membership) {
@@ -86,25 +86,20 @@ export const PoolMembershipsProvider = ({
             unlocking,
           };
 
-          // remove stale membership if it's already in list
-          let newPoolMemberships = Object.values(poolMembershipsRef.current);
-          newPoolMemberships = newPoolMemberships
-            .filter((m) => m.address !== address)
-            .concat(membership);
-
+          // remove stale membership if it's already in list, and add to memberships.
           setStateWithRef(
-            newPoolMemberships,
+            Object.values(poolMembershipsRef.current)
+              .filter((m) => m.address !== address)
+              .concat(membership),
             setPoolMemberships,
             poolMembershipsRef
           );
         } else {
-          // no membership: remove account membership if present
-          let newPoolMemberships = Object.values(poolMembershipsRef.current);
-          newPoolMemberships = newPoolMemberships.filter(
-            (m) => m.address !== address
-          );
+          // no membership: remove account membership if present.
           setStateWithRef(
-            newPoolMemberships,
+            Object.values(poolMembershipsRef.current).filter(
+              (m) => m.address !== address
+            ),
             setPoolMemberships,
             poolMembershipsRef
           );
