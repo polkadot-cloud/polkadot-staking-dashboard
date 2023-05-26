@@ -13,7 +13,6 @@ import { useModal } from 'contexts/Modal';
 import { useTheme } from 'contexts/Themes';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
 import { ReactComponent as LogoSVG } from 'img/ledgerLogo.svg';
-import { Title } from 'library/Modal/Title';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyFunction } from 'types';
@@ -86,7 +85,6 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
           <CrossSVG style={{ width: '1.25rem', height: '1.25rem' }} />
         </button>
       </ModalCustomHeader>
-      <Title title="" />
       <SplashWrapper>
         <div className="icon">
           <LogoSVG
