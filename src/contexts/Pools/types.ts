@@ -48,6 +48,7 @@ export interface PoolMembership {
   points: string;
   lastRecordedRewardCounter: string;
   unbondingEras: Record<number, string>;
+  claimPermission: ClaimPermission;
   unlocking: {
     era: number;
     value: BigNumber;

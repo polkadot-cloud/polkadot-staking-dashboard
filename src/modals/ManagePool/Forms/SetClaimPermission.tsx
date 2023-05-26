@@ -7,6 +7,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { ClaimPermission } from 'contexts/Pools/types';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -23,12 +24,15 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
   const { activeAccount } = useConnect();
   const { isOwner, isMember } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
+  const { membership } = usePoolMemberships();
 
   // Valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
 
   // Updated claim permission value
-  const [claimPermission, setClaimPermission] = useState<ClaimPermission>();
+  const [claimPermission, setClaimPermission] = useState<
+    ClaimPermission | undefined
+  >(membership?.claimPermission);
 
   // Determine current pool metadata and set in state.
   useEffect(() => {

@@ -63,9 +63,12 @@ export const PoolMembershipsProvider = ({
     if (!api) return;
 
     const unsub = await api.queryMulti<AnyApi>(
-      [[api.query.nominationPools.poolMembers, address]],
-      async ([result]) => {
-        let membership = result?.unwrapOr(undefined)?.toHuman();
+      [
+        [api.query.nominationPools.poolMembers, address],
+        [api.query.nominationPools.claimPermissions, address],
+      ],
+      async ([poolMember, claimPermission]) => {
+        let membership = poolMember?.unwrapOr(undefined)?.toHuman();
 
         if (membership) {
           // format pool's unlocking chunks
@@ -84,6 +87,7 @@ export const PoolMembershipsProvider = ({
             ...membership,
             address,
             unlocking,
+            claimPermission: claimPermission.toString(),
           };
 
           // remove stale membership if it's already in list, and add to memberships.
