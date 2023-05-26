@@ -200,11 +200,3 @@ export const FooterWrapper = styled.div`
     }
   }
 `;
-
-export const FixedTitleWrapper = styled.div<{ isStyled?: boolean }>`
-  background: ${(props) =>
-    props.isStyled ? 'var(--background-default)' : 'transparent'};
-  padding: ${(props) =>
-    props.isStyled ? '1rem 1rem 0rem 1rem' : ' 1rem 0 0 0'};
-  width: 100%;
-`;
