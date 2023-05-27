@@ -6,10 +6,12 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import type { ClaimPermission } from 'contexts/Pools/types';
 import { useSetup } from 'contexts/Setup';
 import { defaultPoolProgress } from 'contexts/Setup/defaults';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
+import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
 import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -39,6 +41,11 @@ export const JoinPool = () => {
     bond: planckToUnit(totalPossibleBond, units).toString(),
   });
 
+  // Updated claim permission value
+  const [claimPermission, setClaimPermission] = useState<
+    ClaimPermission | undefined
+  >('Permissioned');
+
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(false);
 
@@ -49,15 +56,24 @@ export const JoinPool = () => {
 
   // tx to submit
   const getTx = () => {
-    let tx = null;
+    const tx = null;
     if (!api) {
       return tx;
     }
 
     const bondToSubmit = unitToPlanck(!bondValid ? '0' : bond.bond, units);
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
-    tx = api.tx.nominationPools.join(bondAsString, poolId);
-    return tx;
+    const txs = [api.tx.nominationPools.join(bondAsString, poolId)];
+
+    if (![undefined, 'Permissioned'].includes(claimPermission)) {
+      txs.push(api.tx.nominationPools.setClaimPermission(claimPermission));
+    }
+
+    if (txs.length === 1) {
+      return txs[0];
+    }
+
+    return api.tx.utility.batch(txs);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
@@ -103,7 +119,16 @@ export const JoinPool = () => {
           parentErrors={warnings}
           txFees={largestTxFee}
         />
+
+        <ClaimPermissionInput
+          current={undefined}
+          permissioned={false}
+          onChange={(val: ClaimPermission | undefined) => {
+            setClaimPermission(val);
+          }}
+        />
       </PaddingWrapper>
+
       <SubmitTx valid={bondValid} {...submitExtrinsic} />
     </>
   );
