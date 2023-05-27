@@ -972,10 +972,10 @@
     tslib "^2.5.0"
     ws "^8.13.0"
 
-"@polkadotcloud/core-ui@^0.2.60":
-  version "0.2.60"
-  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.2.60.tgz#78e10b160e7794bf6e46ff9d278e6e5ed036a7e3"
-  integrity sha512-drdC1bcfHb0dVXOZX8xt1s5nDompUKvZLK3xu86FQjkis6O3Y7/os+Mqx7OntqJ6LItQ/RuykW7SO9KzbtZtdw==
+"@polkadotcloud/core-ui@^0.2.62":
+  version "0.2.62"
+  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.2.62.tgz#245b11676354e7fccbb6d9e3dbc7681e4efc880e"
+  integrity sha512-1cmMZ2gklG/0QBPNG1tRigGi2P7UQ4pjOrmBXGQP72HWwUC8cTgpu+lKKAXkcmupKcxTPawuwkAc61asNKbOfQ==
 
 "@polkadotcloud/react-odometer@^0.1.17":
   version "0.1.17"
