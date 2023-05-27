@@ -4,6 +4,7 @@
 import { rmCommas, setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import type {
+  ClaimPermissionConfig,
   PoolMembership,
   PoolMembershipsContextState,
 } from 'contexts/Pools/types';
@@ -144,11 +145,31 @@ export const PoolMembershipsProvider = ({
     return poolMembership;
   };
 
+  const claimPermissionConfig: ClaimPermissionConfig[] = [
+    {
+      label: 'Allow Compound',
+      value: 'PermissionlessCompound',
+      description: 'Allow anyone to compound rewards on your behalf.',
+    },
+    {
+      label: 'Allow Withdraw',
+      value: 'PermissionlessWithdraw',
+      description: 'Allow anyone to withdraw rewards on your behalf.',
+    },
+    {
+      label: 'Allow All',
+      value: 'PermissionlessAll',
+      description:
+        'Allow anyone to compound or withdraw rewards on your behalf.',
+    },
+  ];
+
   return (
     <PoolMembershipsContext.Provider
       value={{
         membership: getActiveAccountPoolMembership(),
         memberships: poolMembershipsRef.current,
+        claimPermissionConfig,
       }}
     >
       {children}

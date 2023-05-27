@@ -25,7 +25,7 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
   const { activeAccount } = useConnect();
   const { isOwner, isMember } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
-  const { membership } = usePoolMemberships();
+  const { membership, claimPermissionConfig } = usePoolMemberships();
 
   // Valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
@@ -76,30 +76,9 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
     submitExtrinsic.proxySupported
   );
 
-  const tabsConfig: {
-    label: string;
-    value: ClaimPermission;
-    description: string;
-  }[] = [
-    {
-      label: 'Allow Compound',
-      value: 'PermissionlessCompound',
-      description: 'Allow anyone to compound rewards on your behalf.',
-    },
-    {
-      label: 'Allow Withdraw',
-      value: 'PermissionlessWithdraw',
-      description: 'Allow anyone to withdraw rewards on your behalf.',
-    },
-    {
-      label: 'Allow All',
-      value: 'PermissionlessAll',
-      description:
-        'Allow anyone to compound or withdraw rewards on your behalf.',
-    },
-  ];
-
-  const activeTab = tabsConfig.find(({ value }) => value === claimPermission);
+  const activeTab = claimPermissionConfig.find(
+    ({ value }) => value === claimPermission
+  );
 
   return (
     <>
@@ -126,8 +105,9 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
               // if current val is not Permissioned, slot in the current value.
               setClaimPermission(
                 membership?.claimPermission === 'Permissioned'
-                  ? tabsConfig[0].value
-                  : membership?.claimPermission || tabsConfig[0].value
+                  ? claimPermissionConfig[0].value
+                  : membership?.claimPermission ||
+                      claimPermissionConfig[0].value
               );
             } else {
               setClaimPermission('Permissioned');
@@ -141,7 +121,7 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
             opacity: claimPermissionEnabled ? 1 : 0.5,
           }}
         >
-          {tabsConfig.map(({ label, value }: any, i) => (
+          {claimPermissionConfig.map(({ label, value }: any, i) => (
             <TabWrapper
               key={`pools_tab_filter_${i}`}
               active={value === claimPermission && claimPermissionEnabled}

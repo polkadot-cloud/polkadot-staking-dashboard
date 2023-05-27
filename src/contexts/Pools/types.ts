@@ -40,6 +40,7 @@ export interface PoolStats {
 export interface PoolMembershipsContextState {
   memberships: PoolMembership[];
   membership: PoolMembership | null;
+  claimPermissionConfig: ClaimPermissionConfig[];
 }
 
 export interface PoolMembership {
@@ -151,3 +152,9 @@ export interface PoolAddresses {
 export type MaybePool = number | null;
 
 export type PoolState = 'Open' | 'Blocked' | 'Destroying';
+
+export interface ClaimPermissionConfig {
+  label: string;
+  value: ClaimPermission;
+  description: string;
+}
