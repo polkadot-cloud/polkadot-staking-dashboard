@@ -38,6 +38,10 @@ export const ContentWrapper = styled.div`
     h4 {
       margin: 0.2rem 0;
     }
+
+    .arrow {
+      color: var(--text-color-primary);
+    }
   }
 `;
 

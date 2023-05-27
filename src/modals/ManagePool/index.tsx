@@ -7,6 +7,7 @@ import {
   ModalSection,
 } from '@polkadotcloud/core-ui';
 import { useModal } from 'contexts/Modal';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,6 +17,7 @@ import { Tasks } from './Tasks';
 export const ManagePool = () => {
   const { t } = useTranslation('modals');
   const { setModalHeight } = useModal();
+  const { isOwner } = useActivePools();
 
   // modal task
   const [task, setTask] = useState<string>();
@@ -47,7 +49,10 @@ export const ManagePool = () => {
   return (
     <ModalSection type="carousel">
       <ModalFixedTitle ref={headerRef}>
-        <Title title={t('managePool')} fixed />
+        <Title
+          title={`${t('managePool')}${!isOwner() ? ` Membership` : ``}`}
+          fixed
+        />
       </ModalFixedTitle>
       <ModalMotionTwoSection
         animate={section === 0 ? 'home' : 'next'}

@@ -51,7 +51,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   // Store the current commission value.
   const [commission, setCommission] = useState<number>(initialCommission);
 
-  // Max commission enabled
+  // Max commission enabled.
   const [maxCommissionEnabled, setMaxCommissionEnabled] = useState<boolean>(
     !!maxCommissionSet
   );

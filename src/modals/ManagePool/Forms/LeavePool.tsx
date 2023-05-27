@@ -1,9 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import {
   ActionItem,
-  ModalPadding,
+  ButtonSubmitInvert,
   ModalWarnings,
 } from '@polkadotcloud/core-ui';
 import {
@@ -23,13 +24,12 @@ import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
-import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const LeavePool = () => {
+export const LeavePool = ({ setSection }: any) => {
   const { t } = useTranslation('modals');
   const { api, network, consts } = useApi();
   const { activeAccount } = useConnect();
@@ -117,9 +117,7 @@ export const LeavePool = () => {
 
   return (
     <>
-      <Close />
-      <ModalPadding>
-        <h2 className="title unbounded">{t('leavePool')}</h2>
+      <div className="padding">
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (
@@ -134,8 +132,20 @@ export const LeavePool = () => {
           valueKey="bondDurationFormatted"
           deps={[bondDuration]}
         />
-      </ModalPadding>
-      <SubmitTx valid={bondValid} {...submitExtrinsic} />
+      </div>
+      <SubmitTx
+        valid={bondValid}
+        buttons={[
+          <ButtonSubmitInvert
+            key="button_back"
+            text={t('back')}
+            iconLeft={faChevronLeft}
+            iconTransform="shrink-1"
+            onClick={() => setSection(0)}
+          />,
+        ]}
+        {...submitExtrinsic}
+      />
     </>
   );
 };

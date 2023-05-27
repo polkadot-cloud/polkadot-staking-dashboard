@@ -141,6 +141,7 @@
       "bondedFunds": "己质押金额",
       "cancel": "取消",
       "closePool": "可提取己解锁金额并关闭池",
+      "compound": "复利",
       "create": "创建",
       "createAPool": "创建提名池",
       "createPool": "创建提名池",

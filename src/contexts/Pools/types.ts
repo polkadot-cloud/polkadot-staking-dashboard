@@ -18,6 +18,12 @@ export interface PoolConfigState {
   unsub: AnyApi;
 }
 
+export type ClaimPermission =
+  | 'Permissioned'
+  | 'PermissionlessCompound'
+  | 'PermissionlessWithdraw'
+  | 'PermissionlessAll';
+
 export interface PoolStats {
   counterForPoolMembers: BigNumber;
   counterForBondedPools: BigNumber;
@@ -34,6 +40,7 @@ export interface PoolStats {
 export interface PoolMembershipsContextState {
   memberships: PoolMembership[];
   membership: PoolMembership | null;
+  claimPermissionConfig: ClaimPermissionConfig[];
 }
 
 export interface PoolMembership {
@@ -42,6 +49,7 @@ export interface PoolMembership {
   points: string;
   lastRecordedRewardCounter: string;
   unbondingEras: Record<number, string>;
+  claimPermission: ClaimPermission;
   unlocking: {
     era: number;
     value: BigNumber;
@@ -144,3 +152,9 @@ export interface PoolAddresses {
 export type MaybePool = number | null;
 
 export type PoolState = 'Open' | 'Blocked' | 'Destroying';
+
+export interface ClaimPermissionConfig {
+  label: string;
+  value: ClaimPermission;
+  description: string;
+}
