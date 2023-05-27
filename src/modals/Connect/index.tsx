@@ -9,6 +9,7 @@ import {
   ModalCustomHeader,
   ModalFixedTitle,
   ModalMotionThreeSection,
+  ModalPadding,
   ModalSection,
 } from '@polkadotcloud/core-ui';
 import { Extensions } from 'config/extensions';
@@ -16,7 +17,6 @@ import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
 import { Close } from 'library/Modal/Close';
 import { SelectItems } from 'library/SelectItems';
-import { PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyFunction } from 'types';
@@ -138,7 +138,7 @@ export const Connect = () => {
           }}
         >
           <div className="section">
-            <PaddingWrapper horizontalOnly ref={homeRef}>
+            <ModalPadding horizontalOnly ref={homeRef}>
               <ActionItem text={t('hardware')} />
               <ExtensionsWrapper>
                 <SelectItems layout="two-col">
@@ -156,23 +156,23 @@ export const Connect = () => {
                   ))}
                 </SelectItems>
               </ExtensionsWrapper>
-            </PaddingWrapper>
+            </ModalPadding>
           </div>
           <div className="section">
-            <PaddingWrapper horizontalOnly ref={readOnlyRef}>
+            <ModalPadding horizontalOnly ref={readOnlyRef}>
               <ReadOnly
                 setInputOpen={setReadOnlyOpen}
                 inputOpen={readOnlyOpen}
               />
-            </PaddingWrapper>
+            </ModalPadding>
           </div>
           <div className="section">
-            <PaddingWrapper horizontalOnly ref={proxiesRef}>
+            <ModalPadding horizontalOnly ref={proxiesRef}>
               <Proxies
                 setInputOpen={setNewProxyOpen}
                 inputOpen={newProxyOpen}
               />
-            </PaddingWrapper>
+            </ModalPadding>
           </div>
         </ModalMotionThreeSection>
       </ModalSection>

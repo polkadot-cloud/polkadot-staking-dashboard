@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ModalPadding } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
@@ -9,7 +10,6 @@ import { Title } from 'library/Modal/Title';
 import { ValidatorList } from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper } from '../Wrappers';
 import { FooterWrapper, ListWrapper } from './Wrappers';
 
 export const SelectFavorites = () => {
@@ -63,7 +63,7 @@ export const SelectFavorites = () => {
   return (
     <>
       <Title title={t('addFromFavorites')} />
-      <PaddingWrapper>
+      <ModalPadding>
         <ListWrapper>
           {availableFavorites.length > 0 ? (
             <ValidatorList
@@ -101,7 +101,7 @@ export const SelectFavorites = () => {
               : `${t('noFavoritesSelected')}`}
           </button>
         </FooterWrapper>
-      </PaddingWrapper>
+      </ModalPadding>
     </>
   );
 };

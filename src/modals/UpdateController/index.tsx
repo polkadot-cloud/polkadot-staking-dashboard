@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ModalWarnings } from '@polkadotcloud/core-ui';
+import { ModalPadding, ModalWarnings } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -11,7 +11,6 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { PaddingWrapper } from 'modals/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { Switch } from './Switch';
 import { Wrapper } from './Wrapper';
@@ -60,7 +59,7 @@ export const UpdateController = () => {
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">{t('changeControllerAccount')}</h2>
         <Wrapper>
           <div style={{ width: '100%' }}>
@@ -76,7 +75,7 @@ export const UpdateController = () => {
             <Switch current={account} to={activeAccount} />
           </div>
         </Wrapper>
-      </PaddingWrapper>
+      </ModalPadding>
       <SubmitTx valid={activeAccount !== null} {...submitExtrinsic} />
     </>
   );

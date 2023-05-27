@@ -1,7 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ActionItem, ModalWarnings } from '@polkadotcloud/core-ui';
+import {
+  ActionItem,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import {
   greaterThanZero,
   planckToUnit,
@@ -22,7 +26,6 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import { PaddingWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -115,7 +118,7 @@ export const LeavePool = () => {
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">{t('leavePool')}</h2>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
@@ -131,7 +134,7 @@ export const LeavePool = () => {
           valueKey="bondDurationFormatted"
           deps={[bondDuration]}
         />
-      </PaddingWrapper>
+      </ModalPadding>
       <SubmitTx valid={bondValid} {...submitExtrinsic} />
     </>
   );

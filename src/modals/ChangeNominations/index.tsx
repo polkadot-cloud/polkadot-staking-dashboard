@@ -1,7 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ModalSeparator, ModalWarnings } from '@polkadotcloud/core-ui';
+import {
+  ModalPadding,
+  ModalSeparator,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -14,7 +18,6 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper } from '../Wrappers';
 
 export const ChangeNominations = () => {
   const { t } = useTranslation('modals');
@@ -123,7 +126,7 @@ export const ChangeNominations = () => {
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">
           {t('stop')}{' '}
           {!remaining
@@ -139,7 +142,7 @@ export const ChangeNominations = () => {
           </ModalWarnings>
         ) : null}
         <p>{t('changeNomination')}</p>
-      </PaddingWrapper>
+      </ModalPadding>
       <SubmitTx fromController={isStaking} valid={valid} {...submitExtrinsic} />
     </>
   );

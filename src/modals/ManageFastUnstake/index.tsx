@@ -1,7 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ActionItem, ModalNotes, ModalWarnings } from '@polkadotcloud/core-ui';
+import {
+  ActionItem,
+  ModalNotes,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -19,7 +24,6 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper } from '../Wrappers';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
@@ -126,7 +130,7 @@ export const ManageFastUnstake = () => {
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">
           {t('fastUnstake', { context: 'title' })}
         </h2>
@@ -190,7 +194,7 @@ export const ManageFastUnstake = () => {
             )}
           </>
         )}
-      </PaddingWrapper>
+      </ModalPadding>
       {!isExposed ? (
         <SubmitTx
           fromController

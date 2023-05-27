@@ -1,7 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ActionItem, ModalWarnings } from '@polkadotcloud/core-ui';
+import {
+  ActionItem,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -16,7 +20,6 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper } from '../Wrappers';
 
 export const Nominate = () => {
   const { t } = useTranslation('modals');
@@ -94,7 +97,7 @@ export const Nominate = () => {
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">{t('nominate')}</h2>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
@@ -105,7 +108,7 @@ export const Nominate = () => {
         ) : null}
         <ActionItem text={t('haveNomination', { count: nominations.length })} />
         <p>{t('onceSubmitted')}</p>
-      </PaddingWrapper>
+      </ModalPadding>
       <SubmitTx
         fromController
         valid={valid && warnings.length === 0}
