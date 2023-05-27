@@ -12,12 +12,14 @@ export interface ClaimPermissionInputProps {
   current: ClaimPermission | undefined;
   permissioned: boolean;
   onChange: (value: ClaimPermission | undefined) => void;
+  disabled?: boolean;
 }
 
 export const ClaimPermissionInput = ({
   current,
   permissioned,
   onChange,
+  disabled = false,
 }: ClaimPermissionInputProps) => {
   const { t } = useTranslation('library');
   const { claimPermissionConfig } = usePoolMemberships();
@@ -60,18 +62,20 @@ export const ClaimPermissionInput = ({
           setSelected(newClaimPermission);
           onChange(newClaimPermission);
         }}
+        disabled={disabled}
+        inactive={disabled}
       />
       <TabsWrapper
         style={{
           margin: '1rem 0',
-          opacity: enabled ? 1 : 0.5,
+          opacity: enabled && !disabled ? 1 : 'var(--opacity-disabled)',
         }}
       >
         {claimPermissionConfig.map(({ label, value }: any, i) => (
           <TabWrapper
             key={`pools_tab_filter_${i}`}
             active={value === selected && enabled}
-            disabled={value === selected || !enabled}
+            disabled={value === selected || !enabled || disabled}
             onClick={() => {
               setSelected(value);
               onChange(value);
@@ -81,11 +85,17 @@ export const ClaimPermissionInput = ({
           </TabWrapper>
         ))}
       </TabsWrapper>
-      {activeTab ? (
-        <p>{activeTab.description}</p>
-      ) : (
-        <p>{t('permissionlessClaimingTurnedOff')}</p>
-      )}
+      <div
+        style={{
+          opacity: enabled && !disabled ? 1 : 'var(--opacity-disabled)',
+        }}
+      >
+        {activeTab ? (
+          <p>{activeTab.description}</p>
+        ) : (
+          <p>{t('permissionlessClaimingTurnedOff')}</p>
+        )}
+      </div>
     </>
   );
 };
