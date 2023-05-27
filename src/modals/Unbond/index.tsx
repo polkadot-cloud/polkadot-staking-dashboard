@@ -1,6 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  ModalNotes,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import { isNotZero, planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -22,7 +27,6 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import { NotesWrapper, PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -172,14 +176,14 @@ export const Unbond = () => {
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">{`${t('removeBond')}`}</h2>
         {warnings.length > 0 ? (
-          <WarningsWrapper>
+          <ModalWarnings withMargin>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </WarningsWrapper>
+          </ModalWarnings>
         ) : null}
         <UnbondFeedback
           bondFor={bondFor}
@@ -192,7 +196,7 @@ export const Unbond = () => {
           ]}
           txFees={txFees}
         />
-        <NotesWrapper>
+        <ModalNotes withPadding>
           {bondFor === 'pool' ? (
             <>
               {isDepositor() ? (
@@ -220,8 +224,8 @@ export const Unbond = () => {
             valueKey="bondDurationFormatted"
             deps={[bondDuration]}
           />
-        </NotesWrapper>
-      </PaddingWrapper>
+        </ModalNotes>
+      </ModalPadding>
       <SubmitTx
         fromController={isStaking}
         valid={bondValid}

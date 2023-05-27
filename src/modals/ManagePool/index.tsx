@@ -1,15 +1,15 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  ModalFixedTitle,
+  ModalMotionTwoSection,
+  ModalSection,
+} from '@polkadotcloud/core-ui';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  FixedTitleWrapper,
-  MultiSectionWrapper,
-  TwoSectionsWrapper,
-} from '../Wrappers';
 import { Forms } from './Forms';
 import { Tasks } from './Tasks';
 
@@ -45,11 +45,11 @@ export const ManagePool = () => {
   }, [section, task, calculateHeight]);
 
   return (
-    <MultiSectionWrapper>
-      <FixedTitleWrapper ref={headerRef}>
+    <ModalSection type="carousel">
+      <ModalFixedTitle ref={headerRef}>
         <Title title={t('managePool')} fixed />
-      </FixedTitleWrapper>
-      <TwoSectionsWrapper
+      </ModalFixedTitle>
+      <ModalMotionTwoSection
         animate={section === 0 ? 'home' : 'next'}
         transition={{
           duration: 0.5,
@@ -73,7 +73,7 @@ export const ManagePool = () => {
           ref={formsRef}
           incrementCalculateHeight={incrementCalculateHeight}
         />
-      </TwoSectionsWrapper>
-    </MultiSectionWrapper>
+      </ModalMotionTwoSection>
+    </ModalSection>
   );
 };

@@ -1,6 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  ModalBackground,
+  ModalContainer,
+  ModalHeight,
+} from '@polkadotcloud/core-ui';
 import { useModal } from 'contexts/Modal';
 import { useAnimation } from 'framer-motion';
 import { ErrorFallbackModal } from 'library/ErrorBoundary';
@@ -38,12 +43,7 @@ import { UpdateController } from './UpdateController';
 import { UpdatePayee } from './UpdatePayee';
 import { ValidatorMetrics } from './ValidatorMetrics';
 import { WithdrawPoolMember } from './WithdrawPoolMember';
-import {
-  ContentWrapper,
-  HeightWrapper,
-  ModalBlurWrapper,
-  ModalWrapper,
-} from './Wrappers';
+import { ContentWrapper } from './Wrappers';
 
 export const Modal = () => {
   const {
@@ -130,21 +130,21 @@ export const Modal = () => {
 
   return (
     <>
-      <ModalBlurWrapper
+      <ModalBackground
         initial={initial}
         animate={controls}
         transition={transition}
         variants={variants}
       />
       {status !== 3 ? (
-        <ModalWrapper
+        <ModalContainer
           initial={initial}
           animate={controls}
           transition={transition}
           variants={variants}
         >
           <div>
-            <HeightWrapper
+            <ModalHeight
               size={size}
               style={{
                 height,
@@ -192,7 +192,7 @@ export const Modal = () => {
                   {modal === 'WithdrawPoolMember' && <WithdrawPoolMember />}
                 </ErrorBoundary>
               </ContentWrapper>
-            </HeightWrapper>
+            </ModalHeight>
             <button
               type="button"
               className="close"
@@ -203,7 +203,7 @@ export const Modal = () => {
               &nbsp;
             </button>
           </div>
-        </ModalWrapper>
+        </ModalContainer>
       ) : null}
     </>
   );

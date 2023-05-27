@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ModalPadding } from '@polkadotcloud/core-ui';
 import { planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -17,7 +18,6 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper } from '../Wrappers';
 
 export const JoinPool = () => {
   const { t } = useTranslation('modals');
@@ -87,7 +87,7 @@ export const JoinPool = () => {
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">{t('joinPool')}</h2>
         <BondFeedback
           syncing={largestTxFee.isZero()}
@@ -103,7 +103,7 @@ export const JoinPool = () => {
           parentErrors={warnings}
           txFees={largestTxFee}
         />
-      </PaddingWrapper>
+      </ModalPadding>
       <SubmitTx valid={bondValid} {...submitExtrinsic} />
     </>
   );

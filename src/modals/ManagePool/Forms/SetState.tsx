@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ActionItem, ButtonSubmitInvert } from '@polkadotcloud/core-ui';
+import {
+  ActionItem,
+  ButtonSubmitInvert,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -12,7 +16,6 @@ import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
-import { WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -128,11 +131,11 @@ export const SetState = ({ setSection, task }: any) => {
     <>
       <div className="padding">
         {warnings.length > 0 ? (
-          <WarningsWrapper>
+          <ModalWarnings withMargin>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </WarningsWrapper>
+          </ModalWarnings>
         ) : null}
         {content.title}
         {content.message}

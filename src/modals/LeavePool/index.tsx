@@ -1,7 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ActionItem } from '@polkadotcloud/core-ui';
+import {
+  ActionItem,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import {
   greaterThanZero,
   planckToUnit,
@@ -22,7 +26,6 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -115,14 +118,14 @@ export const LeavePool = () => {
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">{t('leavePool')}</h2>
         {warnings.length > 0 ? (
-          <WarningsWrapper>
+          <ModalWarnings withMargin>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </WarningsWrapper>
+          </ModalWarnings>
         ) : null}
         <ActionItem text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
         <StaticNote
@@ -131,7 +134,7 @@ export const LeavePool = () => {
           valueKey="bondDurationFormatted"
           deps={[bondDuration]}
         />
-      </PaddingWrapper>
+      </ModalPadding>
       <SubmitTx valid={bondValid} {...submitExtrinsic} />
     </>
   );
