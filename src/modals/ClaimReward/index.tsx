@@ -82,7 +82,7 @@ export const ClaimReward = () => {
       <Close />
       <PaddingWrapper>
         <h2 className="title unbounded">
-          {claimType === 'bond' ? t('bond') : t('withdraw')} {t('rewards')}
+          {claimType === 'bond' ? t('compound') : t('withdraw')} {t('rewards')}
         </h2>
         {warnings.length > 0 ? (
           <WarningsWrapper>

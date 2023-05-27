@@ -42,6 +42,7 @@
     "claimReward2": "提取收益将立即将其作为余额转入帐户",
     "commissionRate": "佣金率",
     "commissionUpdated": "佣金值最新值",
+    "compound": "复利",
     "confirmReset": "确认重设",
     "connect": "连接",
     "connectLedgerToContinue": "连接您的Ledger 设备继续",

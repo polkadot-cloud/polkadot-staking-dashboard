@@ -44,6 +44,7 @@
     "claimReward2": "Withdrawing rewards will immediately transfer them to your account as free balance.",
     "commissionRate": "Commission Rate",
     "commissionUpdated": "Commission Updated",
+    "compound": "Compound",
     "confirmReset": "Confirm Reset",
     "connect": "Connect",
     "connectLedgerToContinue": "Connect your Ledger device to continue.",
