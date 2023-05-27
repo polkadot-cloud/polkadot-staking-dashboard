@@ -205,6 +205,7 @@
     "unbondAll": "解除所有质押",
     "unbondErrorBelowMinimum": "无法取消质押.您的债券资金低于{{bond}} {{unit}}",
     "unbondErrorNoFunds": "您无{{unit}}可解除质押",
+    "unbondFundsLeavePool": "解除质押并退出提名池",
     "unbondMemberFunds": "解除会员质押金",
     "unbondSomeOfYour": "解除部分质押",
     "unbondToMaintain": "存款人解除质押到{{minJoinBondUnit}} {{unit}}最小值，以保持池成员身份",
@@ -225,9 +226,11 @@
     "unstake": "解除抵押",
     "unstakeStopNominating": "停止提名 {{count}} 个验证人",
     "unstakeUnbond": "解除质押 {{bond}} {{unit}}",
+    "updateClaimPermission": "更新申领权限",
     "updateName": "更改名称",
     "updatePayoutDestination": "更新收益到账地址",
     "updatePoolCommission": "更新提名池佣金设置",
+    "updateWhoClaimRewards": "更改代表申领奖励地址",
     "validatorMetrics": "验证人指标",
     "vaultAccounts": "{{count}} 个帐户己被导入",
     "vaultAccounts_zero": "无帐户导入",
@@ -238,9 +241,6 @@
     "withdraw": "提取",
     "withdrawMemberFunds": "取出会员资金",
     "withdrawSubtitle": "资金将在取款后立即转作可用余额",
-    "withdrawUnlocked": "取出己解锁",
-    "updateClaimPermission":"更新申领权限",
-    "updateWhoClaimRewards":"更改代表申领奖励地址",
-    "unbondFundsLeavePool":"解除质押并退出提名池"
+    "withdrawUnlocked": "取出己解锁"
   }
 }

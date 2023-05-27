@@ -1,6 +1,12 @@
 {
   "base": {
     "active": "Active",
+    "allowAll": "Allow All",
+    "allowAnyoneCompound": "Allow anyone to compound rewards on your behalf",
+    "allowAnyoneCompoundWithdraw": "Allow anyone to compound or withdraw rewards on your behalf.",
+    "allowAnyoneWithdraw": "Allow anyone to withdraw rewards on your behalf.",
+    "allowCompound": "Allow Compound",
+    "allowWithdraw": "Allow Withdraw",
     "community": "Community",
     "feedback": "Feedback",
     "help": "Help",
@@ -50,12 +56,6 @@
     "title_kusama": "Kusama Staking Dashboard",
     "title_polkadot": "Polkadot Staking Dashboard",
     "title_westend": "Westend Staking Dashboard",
-    "validators": "Validators",
-    "allowCompound":"Allow Compound",
-    "allowAnyoneCompound":"Allow anyone to compound rewards on your behalf",
-    "allowWithdraw":"Allow Withdraw",
-    "allowAnyoneWithdraw":"Allow anyone to withdraw rewards on your behalf.",
-    "allowAll":"Allow All",
-    "allowAnyoneCompoundWithdraw":"Allow anyone to compound or withdraw rewards on your behalf."
+    "validators": "Validators"
   }
 }

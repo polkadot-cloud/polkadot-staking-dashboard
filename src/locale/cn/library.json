@@ -48,6 +48,7 @@
     "disconnected": "已断开",
     "displayingValidators": "正在显示 {{count}} 个验证人",
     "done": "完成",
+    "enablePermissionlessClaiming": "启用己许可申领",
     "eraPoints": "Era 点数",
     "errorUnknown": "抱歉，页面出现点小问题哦",
     "errorWithTransaction": "交易出错",
@@ -122,6 +123,7 @@
     "payoutAccount": "收益到账账户",
     "payoutAddress": "收益到账地址",
     "pending": "待定中",
+    "permissionlessClaimingTurnedOff": "己许可申领己关闭",
     "points": "点数",
     "pool": "提名池",
     "poolClaim": "提名池申领",
@@ -170,8 +172,6 @@
     "waiting": "等待中",
     "walletNotFound": "未找到钱包",
     "whenActivelyNominating": "当活跃提名时",
-    "wrongTransaction": "错误交易，请重新签名",
-    "enablePermissionlessClaiming":"启用己许可申领",
-    "permissionlessClaimingTurnedOff":"己许可申领己关闭"
+    "wrongTransaction": "错误交易，请重新签名"
   }
 }

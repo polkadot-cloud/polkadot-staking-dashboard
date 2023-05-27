@@ -49,6 +49,7 @@
     "displayingValidators_one": "Displaying {{count}} Validator",
     "displayingValidators_other": "Displaying {{count}} Validators",
     "done": "Done",
+    "enablePermissionlessClaiming": "Enable Permissionless Claiming",
     "eraPoints": "Era Points",
     "errorUnknown": "Oops, Something Went Wrong",
     "errorWithTransaction": "Error with transaction",
@@ -124,6 +125,7 @@
     "payoutAccount": "Payout Account",
     "payoutAddress": "Payout Adddress",
     "pending": "Pending",
+    "permissionlessClaimingTurnedOff": "Permissionless claiming is turned off.",
     "points": "Points",
     "pool": "Pool",
     "poolClaim": "Pool Claim",
@@ -172,8 +174,6 @@
     "waiting": "Waiting",
     "walletNotFound": "wallet not found",
     "whenActivelyNominating": "when actively nominating.",
-    "wrongTransaction": "Wrong transaction, please sign again.",
-    "enablePermissionlessClaiming":"Enable Permissionless Claiming",
-    "permissionlessClaimingTurnedOff":"Permissionless claiming is turned off."
+    "wrongTransaction": "Wrong transaction, please sign again."
   }
 }
