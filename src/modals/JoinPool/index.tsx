@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -10,6 +11,7 @@ import type { ClaimPermission } from 'contexts/Pools/types';
 import { useSetup } from 'contexts/Setup';
 import { defaultPoolProgress } from 'contexts/Setup/defaults';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useTxMeta } from 'contexts/TxMeta';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
 import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
@@ -32,9 +34,15 @@ export const JoinPool = () => {
   const { setActiveAccountSetup } = useSetup();
   const { getTransferOptions } = useTransferOptions();
   const { getSignerWarnings } = useSignerWarnings();
+  const { txFees } = useTxMeta();
 
-  const { totalPossibleBond } = getTransferOptions(activeAccount).pool;
+  const { totalPossibleBond, totalAdditionalBond } =
+    getTransferOptions(activeAccount).pool;
+
   const largestTxFee = useBondGreatestFee({ bondFor: 'pool' });
+
+  // if we are bonding, subtract tx fees from bond amount
+  const freeBondAmount = BigNumber.max(totalAdditionalBond.minus(txFees), 0);
 
   // local bond value
   const [bond, setBond] = useState<{ bond: string }>({
@@ -129,6 +137,7 @@ export const JoinPool = () => {
             onChange={(val: ClaimPermission | undefined) => {
               setClaimPermission(val);
             }}
+            disabled={freeBondAmount.isZero()}
           />
         )}
       </PaddingWrapper>
