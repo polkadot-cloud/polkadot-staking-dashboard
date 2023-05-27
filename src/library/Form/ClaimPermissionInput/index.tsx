@@ -1,0 +1,89 @@
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
+import { ActionItem } from '@polkadotcloud/core-ui';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import type { ClaimPermission } from 'contexts/Pools/types';
+import { TabWrapper, TabsWrapper } from 'library/Filter/Wrappers';
+import { useEffect, useState } from 'react';
+
+export interface ClaimPermissionInputProps {
+  current: ClaimPermission | undefined;
+  permissioned: boolean;
+  onChange: (value: ClaimPermission | undefined) => void;
+}
+
+export const ClaimPermissionInput = ({
+  current,
+  permissioned,
+  onChange,
+}: ClaimPermissionInputProps) => {
+  const { claimPermissionConfig } = usePoolMemberships();
+
+  // Updated claim permission value
+  const [selected, setSelected] = useState<ClaimPermission | undefined>(
+    current
+  );
+
+  // Permissionless claim enabled.
+  const [enabled, setEnabled] = useState<boolean>(permissioned);
+
+  const activeTab = claimPermissionConfig.find(
+    ({ value }) => value === selected
+  );
+
+  // Update selected value when current changes.
+  useEffect(() => {
+    setSelected(current);
+  }, [current]);
+
+  return (
+    <>
+      <ActionItem
+        style={{
+          marginTop: '2rem',
+        }}
+        text="Enable Permissionless Claiming"
+        toggled={enabled}
+        onToggle={(val) => {
+          // toggle enable claim permission.
+          setEnabled(val);
+
+          const newClaimPermission = val
+            ? claimPermissionConfig[0].value
+            : current === undefined
+            ? undefined
+            : 'Permissioned';
+
+          setSelected(newClaimPermission);
+          onChange(newClaimPermission);
+        }}
+      />
+      <TabsWrapper
+        style={{
+          margin: '1rem 0',
+          opacity: enabled ? 1 : 0.5,
+        }}
+      >
+        {claimPermissionConfig.map(({ label, value }: any, i) => (
+          <TabWrapper
+            key={`pools_tab_filter_${i}`}
+            active={value === selected && enabled}
+            disabled={value === selected || !enabled}
+            onClick={() => {
+              setSelected(value);
+              onChange(value);
+            }}
+          >
+            {label}
+          </TabWrapper>
+        ))}
+      </TabsWrapper>
+      {activeTab ? (
+        <p>{activeTab.description}</p>
+      ) : (
+        <p>Permissionless claiming is turned off.</p>
+      )}
+    </>
+  );
+};
