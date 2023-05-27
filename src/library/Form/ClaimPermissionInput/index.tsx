@@ -61,11 +61,12 @@ export const ClaimPermissionInput = ({
           onChange(newClaimPermission);
         }}
         disabled={disabled}
+        inactive={disabled}
       />
       <TabsWrapper
         style={{
           margin: '1rem 0',
-          opacity: enabled && !disabled ? 1 : 0.5,
+          opacity: enabled && !disabled ? 1 : 'var(--opacity-disabled)',
         }}
       >
         {claimPermissionConfig.map(({ label, value }: any, i) => (
@@ -82,7 +83,11 @@ export const ClaimPermissionInput = ({
           </TabWrapper>
         ))}
       </TabsWrapper>
-      <div style={{ opacity: enabled && !disabled ? 1 : 0.5 }}>
+      <div
+        style={{
+          opacity: enabled && !disabled ? 1 : 'var(--opacity-disabled)',
+        }}
+      >
         {activeTab ? (
           <p>{activeTab.description}</p>
         ) : (
