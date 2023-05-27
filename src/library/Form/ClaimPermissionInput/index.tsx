@@ -6,6 +6,7 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { ClaimPermission } from 'contexts/Pools/types';
 import { TabWrapper, TabsWrapper } from 'library/Filter/Wrappers';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export interface ClaimPermissionInputProps {
   current: ClaimPermission | undefined;
@@ -18,6 +19,7 @@ export const ClaimPermissionInput = ({
   permissioned,
   onChange,
 }: ClaimPermissionInputProps) => {
+  const { t } = useTranslation('library');
   const { claimPermissionConfig } = usePoolMemberships();
 
   // Updated claim permission value
@@ -43,7 +45,7 @@ export const ClaimPermissionInput = ({
         style={{
           marginTop: '2rem',
         }}
-        text="Enable Permissionless Claiming"
+        text={t('enablePermissionlessClaiming')}
         toggled={enabled}
         onToggle={(val) => {
           // toggle enable claim permission.
@@ -82,7 +84,7 @@ export const ClaimPermissionInput = ({
       {activeTab ? (
         <p>{activeTab.description}</p>
       ) : (
-        <p>Permissionless claiming is turned off.</p>
+        <p>{t('permissionlessClaimingTurnedOff')}</p>
       )}
     </>
   );

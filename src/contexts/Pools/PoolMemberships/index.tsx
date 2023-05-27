@@ -9,6 +9,7 @@ import type {
   PoolMembershipsContextState,
 } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AnyApi, Fn } from 'types';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
@@ -19,6 +20,7 @@ export const PoolMembershipsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { t } = useTranslation('base');
   const { api, network, isReady } = useApi();
   const { accounts: connectAccounts, activeAccount } = useConnect();
 
@@ -147,20 +149,19 @@ export const PoolMembershipsProvider = ({
 
   const claimPermissionConfig: ClaimPermissionConfig[] = [
     {
-      label: 'Allow Compound',
+      label: t('allowCompound'),
       value: 'PermissionlessCompound',
-      description: 'Allow anyone to compound rewards on your behalf.',
+      description: t('allowAnyoneCompound'),
     },
     {
-      label: 'Allow Withdraw',
+      label: t('allowWithdraw'),
       value: 'PermissionlessWithdraw',
-      description: 'Allow anyone to withdraw rewards on your behalf.',
+      description: t('allowAnyoneWithdraw'),
     },
     {
-      label: 'Allow All',
+      label: t('allowAll'),
       value: 'PermissionlessAll',
-      description:
-        'Allow anyone to compound or withdraw rewards on your behalf.',
+      description: t('allowAnyoneCompoundWithdraw'),
     },
   ];
 

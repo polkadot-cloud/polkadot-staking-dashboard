@@ -50,6 +50,12 @@
     "title_kusama": "Kusama Staking Dashboard",
     "title_polkadot": "Polkadot Staking Dashboard",
     "title_westend": "Westend Staking Dashboard",
-    "validators": "Validators"
+    "validators": "Validators",
+    "allowCompound":"Allow Compound",
+    "allowAnyoneCompound":"Allow anyone to compound rewards on your behalf",
+    "allowWithdraw":"Allow Withdraw",
+    "allowAnyoneWithdraw":"Allow anyone to withdraw rewards on your behalf.",
+    "allowAll":"Allow All",
+    "allowAnyoneCompoundWithdraw":"Allow anyone to compound or withdraw rewards on your behalf."
   }
 }

@@ -67,8 +67,8 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
                 }}
               >
                 <div>
-                  <h3>Update Claim Permission</h3>
-                  <p>Update who can claim rewards on your behalf.</p>
+                  <h3>{t('updateClaimPermission')}</h3>
+                  <p>{t('updateWhoClaimRewards')}</p>
                 </div>
                 <div>
                   <FontAwesomeIcon
@@ -184,7 +184,7 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
             >
               <div>
                 <h3>{t('leavePool')}</h3>
-                <p>Unbond your funds and leave the nomination pool.</p>
+                <p>{t('unbondFundsLeavePool')}</p>
               </div>
               <div>
                 <FontAwesomeIcon

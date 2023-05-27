@@ -238,6 +238,9 @@
     "withdraw": "提取",
     "withdrawMemberFunds": "取出会员资金",
     "withdrawSubtitle": "资金将在取款后立即转作可用余额",
-    "withdrawUnlocked": "取出己解锁"
+    "withdrawUnlocked": "取出己解锁",
+    "updateClaimPermission":"更新申领权限",
+    "updateWhoClaimRewards":"更改代表申领奖励地址",
+    "unbondFundsLeavePool":"解除质押并退出提名池"
   }
 }

@@ -172,6 +172,8 @@
     "waiting": "Waiting",
     "walletNotFound": "wallet not found",
     "whenActivelyNominating": "when actively nominating.",
-    "wrongTransaction": "Wrong transaction, please sign again."
+    "wrongTransaction": "Wrong transaction, please sign again.",
+    "enablePermissionlessClaiming":"Enable Permissionless Claiming",
+    "permissionlessClaimingTurnedOff":"Permissionless claiming is turned off."
   }
 }

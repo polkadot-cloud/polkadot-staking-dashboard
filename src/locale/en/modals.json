@@ -249,6 +249,9 @@
     "withdraw": "Withdraw",
     "withdrawMemberFunds": "Withdraw Member Funds",
     "withdrawSubtitle": "Funds will be immediately available as free balance after withdrawing.",
-    "withdrawUnlocked": "Withdraw Unlocked"
+    "withdrawUnlocked": "Withdraw Unlocked",
+    "updateClaimPermission":"Update Claim Permission",
+    "updateWhoClaimRewards":"Update who can claim rewards on your behalf.",
+    "unbondFundsLeavePool":"Unbond your funds and leave the nomination pool."
   }
 }

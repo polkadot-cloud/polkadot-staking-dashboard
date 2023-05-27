@@ -44,6 +44,12 @@
     "title_kusama": "Kusama抵押平台",
     "title_polkadot": "Polkadot抵押平台",
     "title_westend": "Westend抵押平台",
-    "validators": "验证人"
+    "validators": "验证人",
+    "allowCompound":"允许复利",
+    "allowAnyoneCompound":"允许任何人代表您复利收益",
+    "allowWithdraw":"允许取出收益",
+    "allowAnyoneWithdraw":"允许任何人代表您取出收益",
+    "allowAll":"允许所有",
+    "allowAnyoneCompoundWithdraw":"允许任何人代表您复利或取出收益"
   }
 }
