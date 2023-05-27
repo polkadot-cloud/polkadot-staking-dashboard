@@ -3,17 +3,17 @@
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ModalPadding } from '@polkadotcloud/core-ui';
 import { ReactComponent as ForumSVG } from 'img/forum.svg';
 import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper } from '../Wrappers';
 
 export const GoToFeedback = () => {
   const { t } = useTranslation('modals');
   return (
     <>
       <Title title={t('feedback')} Svg={ForumSVG} />
-      <PaddingWrapper verticalOnly>
+      <ModalPadding verticalOnly>
         <div
           style={{
             padding: '0 1.75rem',
@@ -38,7 +38,7 @@ export const GoToFeedback = () => {
             </a>
           </h2>
         </div>
-      </PaddingWrapper>
+      </ModalPadding>
     </>
   );
 };

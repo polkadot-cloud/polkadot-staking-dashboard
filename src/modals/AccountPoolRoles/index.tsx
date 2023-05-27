@@ -3,6 +3,7 @@
 
 import { faBars, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ModalPadding } from '@polkadotcloud/core-ui';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -11,7 +12,6 @@ import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper } from '../Wrappers';
 import { ContentWrapper, StyledButton } from './Wrappers';
 
 export const AccountPoolRoles = () => {
@@ -27,7 +27,7 @@ export const AccountPoolRoles = () => {
   return (
     <>
       <Title title={t('allPoolRoles')} icon={faBars} />
-      <PaddingWrapper>
+      <ModalPadding>
         <ContentWrapper>
           {membership && (
             <>
@@ -48,7 +48,7 @@ export const AccountPoolRoles = () => {
             ))}
           </div>
         </ContentWrapper>
-      </PaddingWrapper>
+      </ModalPadding>
     </>
   );
 };

@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ActionItem, ButtonSubmitInvert } from '@polkadotcloud/core-ui';
+import {
+  ActionItem,
+  ButtonSubmitInvert,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import {
   greaterThanZero,
   planckToUnit,
@@ -22,7 +26,6 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import { WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -116,11 +119,11 @@ export const LeavePool = ({ setSection }: any) => {
     <>
       <div className="padding">
         {warnings.length > 0 ? (
-          <WarningsWrapper>
+          <ModalWarnings withMargin>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </WarningsWrapper>
+          </ModalWarnings>
         ) : null}
         <ActionItem text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
         <StaticNote

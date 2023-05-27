@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp } from '@polkadotcloud/core-ui';
+import { ButtonHelp, ModalPadding } from '@polkadotcloud/core-ui';
 import { clipAddress, planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -19,7 +19,6 @@ import { Title } from 'library/Modal/Title';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
-import { PaddingWrapper } from 'modals/Wrappers';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -90,7 +89,7 @@ export const ValidatorMetrics = () => {
         </h2>
       </div>
 
-      <PaddingWrapper horizontalOnly>
+      <ModalPadding horizontalOnly>
         <StatsWrapper>
           {stats.map((s, i) => (
             <StatWrapper key={`metrics_stat_${i}`}>
@@ -104,7 +103,7 @@ export const ValidatorMetrics = () => {
             </StatWrapper>
           ))}
         </StatsWrapper>
-      </PaddingWrapper>
+      </ModalPadding>
       <div
         className="body"
         style={{ position: 'relative', marginTop: '0.5rem' }}
