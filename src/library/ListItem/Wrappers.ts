@@ -157,6 +157,7 @@ export const IdentityWrapper = styled(motion.div)`
   }
   h4 {
     color: var(--text-color-secondary);
+    font-family: InterSemiBold, sans-serif;
     position: absolute;
     top: 0;
     width: 100%;
@@ -167,7 +168,6 @@ export const IdentityWrapper = styled(motion.div)`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-variation-settings: 'wght' 600;
     font-size: 1rem;
 
     > span {

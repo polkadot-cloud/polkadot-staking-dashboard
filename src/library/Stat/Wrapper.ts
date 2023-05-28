@@ -42,6 +42,7 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
 
     .text {
       padding-left: ${(props) => (props.isAddress ? '3rem' : 0)};
+      font-family: InterSemiBold, sans-serif;
       color: var(--text-color-primary);
       padding-top: 0.1rem;
       position: absolute;
@@ -50,7 +51,6 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
       margin: 0;
       height: 2.4rem;
       font-size: 1.4rem;
-      font-variation-settings: 'wght' 600;
       width: auto;
       max-width: 100%;
       text-align: left;

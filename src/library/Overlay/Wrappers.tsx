@@ -138,7 +138,6 @@ export const FilterListButton = styled.button<{ active: boolean }>`
       props.active
         ? 'var(--network-color-stroke)'
         : 'var(--text-color-secondary)'};
-    font-variation-settings: 'wght' 500;
     transition: color var(--transition-duration);
   }
 
