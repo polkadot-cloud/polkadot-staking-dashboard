@@ -39,7 +39,7 @@ export const StatBoxWrapper = styled(motion.div)`
 
   /* responsive screen sizing */
   h3 {
-    font-variation-settings: 'wght' 600;
+    font-family: InterSemiBold, sans-serif;
     font-size: 1.2rem;
   }
   @media (min-width: 950px) {
@@ -158,7 +158,7 @@ export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
     props.primary === true
       ? 'var(--network-color-primary)'
       : 'var(--text-color-primary)'};
-  font-variation-settings: 'wght' 600;
+  font-family: InterSemiBold, sans-serif;
   display: flex;
   flex-flow: row wrap;
   margin-bottom: 0.45rem;
@@ -187,7 +187,7 @@ export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
     props.primary === true
       ? 'var(--network-color-primary)'
       : 'var(--text-color-primary)'};
-  font-variation-settings: 'wght' 600;
+  font-family: InterSemiBold, sans-serif;
   display: flex;
   flex-flow: row wrap;
   font-size: 1.2rem;
@@ -199,7 +199,7 @@ export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
 
   span {
     color: var(--text-color-secondary);
-    font-variation-settings: 'wght' 600;
+    font-family: InterSemiBold, sans-serif;
     font-size: 0.95rem;
     margin-left: 0.3rem;
     margin-top: 0.1rem;

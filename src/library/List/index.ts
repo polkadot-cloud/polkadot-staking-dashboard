@@ -126,7 +126,6 @@ export const List = styled.div<ListProps>`
       border-radius: 1.75rem;
       padding: 0.75rem 1.25rem;
       font-size: 1.15rem;
-      font-variation-settings: 'wght' 500;
       &:focus {
         border-width: 1.75px;
       }

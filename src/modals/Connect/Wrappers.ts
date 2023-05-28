@@ -90,8 +90,8 @@ export const ExtensionInner = styled.div`
   position: relative;
 
   h3 {
+    font-family: InterSemiBold, sans-serif;
     margin: 1rem 0 0 0;
-    font-variation-settings: 'wght' 600;
     > svg {
       margin-right: 0.5rem;
     }
@@ -193,13 +193,13 @@ export const ActionWithButton = styled.div`
       display: flex;
       align-items: center;
       flex-grow: 1;
-      font-variation-settings: 'wght' 650;
+      font-family: InterSemiBold, sans-serif;
       > svg {
         margin-right: 0.5rem;
       }
     }
     &:last-child {
-      font-variation-settings: 'wght' 650;
+      font-family: InterSemiBold, sans-serif;
     }
   }
 `;
@@ -264,7 +264,7 @@ export const ManualAccount = styled.div`
         h4 {
           margin: 0;
           &.title {
-            font-variation-settings: 'wght' 600;
+            font-family: InterSemiBold, sans-serif;
             > svg {
               margin: 0 0.6rem;
             }

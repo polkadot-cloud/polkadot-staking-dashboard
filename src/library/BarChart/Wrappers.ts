@@ -48,10 +48,10 @@ export const Legend = styled.div`
   display: flex;
 
   > h4 {
+    font-family: InterSemiBold, sans-serif;
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
-    font-variation-settings: 'wght' 600;
     font-size: 1.1rem;
     margin: 0;
 
@@ -83,12 +83,12 @@ export const Bar = styled.div`
     transition: width 1.5s cubic-bezier(0, 1, 0, 1);
 
     > span {
+      font-family: InterSemiBold, sans-serif;
       position: absolute;
       left: 0;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-      font-variation-settings: 'wght' 600;
       padding: 0 0.8rem;
       width: 100%;
       font-size: 1rem;
