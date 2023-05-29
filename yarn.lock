@@ -732,7 +732,7 @@
     rxjs "^7.8.1"
     tslib "^2.5.2"
 
-"@polkadot/rpc-provider@10.7.2", "@polkadot/rpc-provider@^10.7.2":
+"@polkadot/rpc-provider@10.7.2":
   version "10.7.2"
   resolved "https://registry.yarnpkg.com/@polkadot/rpc-provider/-/rpc-provider-10.7.2.tgz#8d1bb9d4ffaf769f83b53e6b785eec7151130b76"
   integrity sha512-gJFsuATdz5qNNUDUdslESn8xaEf8tFz7JbtuXRb08dkCcqX6I/X+2fq07d8uOVlsIdVT2ghzuFun4STzP4wAwA==
@@ -740,6 +740,26 @@
     "@polkadot/keyring" "^12.2.1"
     "@polkadot/types" "10.7.2"
     "@polkadot/types-support" "10.7.2"
+    "@polkadot/util" "^12.2.1"
+    "@polkadot/util-crypto" "^12.2.1"
+    "@polkadot/x-fetch" "^12.2.1"
+    "@polkadot/x-global" "^12.2.1"
+    "@polkadot/x-ws" "^12.2.1"
+    eventemitter3 "^5.0.1"
+    mock-socket "^9.2.1"
+    nock "^13.3.1"
+    tslib "^2.5.2"
+  optionalDependencies:
+    "@substrate/connect" "0.7.26"
+
+"@polkadot/rpc-provider@^10.7.3":
+  version "10.7.3"
+  resolved "https://registry.yarnpkg.com/@polkadot/rpc-provider/-/rpc-provider-10.7.3.tgz#091ae2a441a0c0e37e27e3e06e8f2cd9de064e60"
+  integrity sha512-A87O8UH3erxV8G8LFxDVYvWy9DPx30sPPPaPoDju2vtd7b9yyGMIdazJwhx1rXwD2PYsu7gEMdUNo8oVtDQf4A==
+  dependencies:
+    "@polkadot/keyring" "^12.2.1"
+    "@polkadot/types" "10.7.3"
+    "@polkadot/types-support" "10.7.3"
     "@polkadot/util" "^12.2.1"
     "@polkadot/util-crypto" "^12.2.1"
     "@polkadot/x-fetch" "^12.2.1"
@@ -762,10 +782,29 @@
     "@polkadot/util" "^12.2.1"
     tslib "^2.5.2"
 
+"@polkadot/types-augment@10.7.3":
+  version "10.7.3"
+  resolved "https://registry.yarnpkg.com/@polkadot/types-augment/-/types-augment-10.7.3.tgz#8369e6325e722653710748dcaff783facf59efcd"
+  integrity sha512-iWw0Qfqko/D2XDKKjI3syPMZol24k0BEJWsk8HX4waqFDNa+DIGz729J5cj1NopHg7re6BkGhYloMAaH0r2Q7g==
+  dependencies:
+    "@polkadot/types" "10.7.3"
+    "@polkadot/types-codec" "10.7.3"
+    "@polkadot/util" "^12.2.1"
+    tslib "^2.5.2"
+
 "@polkadot/types-codec@10.7.2":
   version "10.7.2"
   resolved "https://registry.yarnpkg.com/@polkadot/types-codec/-/types-codec-10.7.2.tgz#b7270250ef2f3e4c3dea6c754b573258fac8cb54"
   integrity sha512-Sy3RM+gT1lZ6WHL694swxkSoqMvAGwnNX5S2oxoGlQ5bncYIMRg+pker4dDBD+EncyrBISLwxM7smOJpiVKOAg==
+  dependencies:
+    "@polkadot/util" "^12.2.1"
+    "@polkadot/x-bigint" "^12.2.1"
+    tslib "^2.5.2"
+
+"@polkadot/types-codec@10.7.3":
+  version "10.7.3"
+  resolved "https://registry.yarnpkg.com/@polkadot/types-codec/-/types-codec-10.7.3.tgz#d7b855b9f0ce936f2734081e4e4b85a77e3ce169"
+  integrity sha512-/9C50FZFSL4qGIOXYUDkNUt1YJSsEGbo2aSxJLMwki7U3UuBdbBqolsbKQRM4g6dtAS0FSM8lFYaKXFiz4VxNw==
   dependencies:
     "@polkadot/util" "^12.2.1"
     "@polkadot/x-bigint" "^12.2.1"
@@ -777,6 +816,15 @@
   integrity sha512-jBYX365SkoQJ7bJafxl3886z4JouZYLzXXHhroz32hfpzovC/3xAbyVYK7GgyyRRUNRp9Qww9nzn7yTAuDVawg==
   dependencies:
     "@polkadot/types-codec" "10.7.2"
+    "@polkadot/util" "^12.2.1"
+    tslib "^2.5.2"
+
+"@polkadot/types-create@10.7.3":
+  version "10.7.3"
+  resolved "https://registry.yarnpkg.com/@polkadot/types-create/-/types-create-10.7.3.tgz#34884e2ef86eff84386832a1c3d99f759cc6e4f6"
+  integrity sha512-xFJqssVGICLoclc3nTBhoZG74Z/yltMUYQmmiqm0ByE5W6451rf76IMNcWpoNe7EuWmA4Ccjy0jG1yEhOTtRuQ==
+  dependencies:
+    "@polkadot/types-codec" "10.7.3"
     "@polkadot/util" "^12.2.1"
     tslib "^2.5.2"
 
@@ -800,6 +848,14 @@
     "@polkadot/util" "^12.2.1"
     tslib "^2.5.2"
 
+"@polkadot/types-support@10.7.3":
+  version "10.7.3"
+  resolved "https://registry.yarnpkg.com/@polkadot/types-support/-/types-support-10.7.3.tgz#2afee70105a6bc70708c0a590546bbd537e766e2"
+  integrity sha512-3RYIveHUyIysC21YR0XEuTL0ijQQQjFHUbmI3bdjbKgIaQKmgEkRGhFCutkvr9HgB/jUDOpmdxW0t0OJe1etmg==
+  dependencies:
+    "@polkadot/util" "^12.2.1"
+    tslib "^2.5.2"
+
 "@polkadot/types@10.7.2":
   version "10.7.2"
   resolved "https://registry.yarnpkg.com/@polkadot/types/-/types-10.7.2.tgz#270bb743d4136461ec575cb533ab4982bb1b739c"
@@ -809,6 +865,20 @@
     "@polkadot/types-augment" "10.7.2"
     "@polkadot/types-codec" "10.7.2"
     "@polkadot/types-create" "10.7.2"
+    "@polkadot/util" "^12.2.1"
+    "@polkadot/util-crypto" "^12.2.1"
+    rxjs "^7.8.1"
+    tslib "^2.5.2"
+
+"@polkadot/types@10.7.3":
+  version "10.7.3"
+  resolved "https://registry.yarnpkg.com/@polkadot/types/-/types-10.7.3.tgz#73f559e16aa93a4e4874b81a377ee349609ee850"
+  integrity sha512-F+h8tvlvMgwF+oVLu/bTV1WtsqMoosoGKL96a/6LY1a1ykKhK1HiB11Lodu3VkRTQa3oie5ftjg/iCQ2pilgDA==
+  dependencies:
+    "@polkadot/keyring" "^12.2.1"
+    "@polkadot/types-augment" "10.7.3"
+    "@polkadot/types-codec" "10.7.3"
+    "@polkadot/types-create" "10.7.3"
     "@polkadot/util" "^12.2.1"
     "@polkadot/util-crypto" "^12.2.1"
     rxjs "^7.8.1"
