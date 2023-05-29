@@ -44,6 +44,8 @@ export const ContentWrapper = styled.div`
   }
   .action-button {
     background: var(--button-primary-background);
+    transition: all var(--transition-duration);
+    font-family: InterSemiBold, sans-serif;
     padding: 1rem;
     cursor: pointer;
     margin-bottom: 1rem;
@@ -51,7 +53,6 @@ export const ContentWrapper = styled.div`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    transition: all var(--transition-duration);
     width: 100%;
 
     &:last-child {
