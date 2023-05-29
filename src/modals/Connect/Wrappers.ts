@@ -157,7 +157,7 @@ export const ConnectItemFoot = styled.div`
   width: 100%;
   padding: 0.85rem 0.85rem;
 
-  > a {
+  .link {
     color: var(--text-color-secondary);
     transition: color var(--transition-duration);
     display: flex;

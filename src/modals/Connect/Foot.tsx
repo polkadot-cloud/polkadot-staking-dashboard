@@ -7,7 +7,12 @@ import { ConnectItemFoot } from './Wrappers';
 
 export const Foot = ({ url }: any) => (
   <ConnectItemFoot>
-    <a href={`https://${url}`} target="_blank" rel="noreferrer">
+    <a
+      className="link"
+      href={`https://${url}`}
+      target="_blank"
+      rel="noreferrer"
+    >
       {url}
       <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
     </a>
