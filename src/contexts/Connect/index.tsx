@@ -519,7 +519,6 @@ export const ConnectProvider = ({
   };
 
   const handleWalletConnectSessionDelete = (id: string) => {
-    localStorage.removeItem('WalletConnectSession');
     setWalletConnectSession(null);
     setWalletConnectChainInfo(null);
     setWalletConnectClient(null);
@@ -544,12 +543,19 @@ export const ConnectProvider = ({
     setExtensionStatus(id, 'disconnected');
 
     // remove active account if from wallet connect
-    if (
-      activeAccountRef.current &&
-      activeAccountRef.current === 'wallet-connect'
-    ) {
-      setActiveAccount(null);
-      setStateWithRef(null, setActiveAccount, activeAccountRef);
+    const walletConnectAccounts = localStorage.getItem(
+      'wallet-connect-addresses'
+    );
+    if (walletConnectAccounts) {
+      const wcAddresses: string[] = JSON.parse(walletConnectAccounts);
+      for (const localWcAccount of wcAddresses) {
+        const localWcAddress = localWcAccount.split(':')[1];
+        if (localWcAddress === activeAccountRef.current) {
+          setActiveAccount(null);
+          localStorage.removeItem('wallet-connect-addresses');
+          break;
+        }
+      }
     }
   };
 
@@ -668,17 +674,24 @@ export const ConnectProvider = ({
 
       // get accounts
       wcAccounts = WalletConnect.getAccounts(wcSession as SessionTypes.Struct);
+      const walletConnectAddresses: string[] = [];
       const walletConnectAccountAddresses = wcAccounts.map(
         (walletAccount: string) => {
+          const walletName = `Wallet Connect:${walletAccount}`;
+          walletConnectAddresses.push(walletName);
           return {
             source: '',
             addedBy: '',
             address: walletAccount,
             meta: provider.client.metadata,
-            name: `Wallet Connect:${walletAccount}`,
+            name: walletName,
             signer: provider.client,
           };
         }
+      );
+      localStorage.setItem(
+        'wallet-connect-addresses',
+        JSON.stringify(walletConnectAddresses)
       );
       const walletConnectAccountsSub = {
         // eslint-disable-next-line
