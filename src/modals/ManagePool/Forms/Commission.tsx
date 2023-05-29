@@ -57,7 +57,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
           minDelay: raw.minDelay,
         }
       : {
-          maxIncrease: 5, // 5%
+          maxIncrease: 100,
           minDelay: 432000, // 30 days
         };
   })();
@@ -109,12 +109,15 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
 
   const maxCommissionUpdated =
     (!maxCommissionSet && maxCommission === initialMaxCommission) ||
-    maxCommission !== initialMaxCommission;
+    maxCommission !== initialMaxCommission ||
+    (!maxCommissionSet && maxCommissionEnabled);
 
   const changeRateUpdated =
     (!changeRateSet &&
       JSON.stringify(changeRate) !== JSON.stringify(initialChangeRate)) ||
-    JSON.stringify(changeRate) !== JSON.stringify(initialChangeRate);
+    (changeRateSet &&
+      JSON.stringify(changeRate) !== JSON.stringify(initialChangeRate)) ||
+    (!changeRateSet && changeRateEnabled);
 
   // Global form change.
   const noChange =
@@ -123,11 +126,15 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   // Monitor when input items are invalid.
   const commissionAboveMax = commission > maxCommission;
 
+  const commissionAboveMaxIncrease =
+    changeRateSet && commission - initialCommission > changeRate.maxIncrease;
+
   const invalidCurrentCommission =
     commissionUpdated &&
     ((commission === 0 && payee !== null) ||
       (commission !== 0 && payee === null) ||
-      commissionAboveMax);
+      commissionAboveMax ||
+      commissionAboveMaxIncrease);
 
   const invalidMaxCommission =
     maxCommissionUpdated && maxCommission > initialMaxCommission;
@@ -332,7 +339,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
             <div className="slider">
               <Slider
                 value={commission}
-                step={0.25}
+                step={0.1}
                 onChange={(val) => {
                   if (typeof val === 'number') {
                     setCommission(val);
@@ -383,7 +390,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
               <div className="slider">
                 <Slider
                   value={maxCommission}
-                  step={0.25}
+                  step={0.1}
                   onChange={(val) => {
                     if (typeof val === 'number') {
                       setMaxCommission(val);
@@ -412,10 +419,27 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
 
         {changeRateEnabled && (
           <CommissionWrapper>
-            <h5>Change Rate</h5>
+            <h5>Maximum Commission Increase Per Update</h5>
             <div>
-              <p>Change Rate UI</p>
+              <h4 className="current">{changeRate.maxIncrease}% </h4>
+              <div className="slider">
+                <Slider
+                  value={changeRate.maxIncrease}
+                  step={0.1}
+                  onChange={(val) => {
+                    if (typeof val === 'number') {
+                      setChangeRate({
+                        ...changeRate,
+                        maxIncrease: val,
+                      });
+                    }
+                  }}
+                  {...sliderProps}
+                />
+              </div>
             </div>
+            <h5>Minimum Delay Between Updates</h5>
+            <div>...</div>
           </CommissionWrapper>
         )}
       </div>
