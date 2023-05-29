@@ -439,7 +439,24 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
               </div>
             </div>
             <h5>Minimum Delay Between Updates</h5>
-            <div>...</div>
+            <div className="changeRate">
+              <section>
+                <input type="text" placeholder="0" />
+                Months
+              </section>
+              <section>
+                <input type="text" placeholder="0" />
+                Days
+              </section>
+              <section>
+                <input type="text" placeholder="0" />
+                Hours
+              </section>
+              <section>
+                <input type="text" placeholder="0" />
+                Minutes
+              </section>
+            </div>
           </CommissionWrapper>
         )}
       </div>
