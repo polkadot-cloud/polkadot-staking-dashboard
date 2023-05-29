@@ -13,6 +13,7 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { intervalToDuration } from 'date-fns';
 import { AccountInput } from 'library/AccountInput';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -24,6 +25,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { MaybeAccount } from 'types';
 import { CommissionWrapper } from '../Wrappers';
+import type { ChangeRateInput } from './types';
 
 export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   const { t } = useTranslation('modals');
@@ -88,6 +90,31 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     maxIncrease: number;
     minDelay: number;
   }>(initialChangeRate);
+
+  // Convert a block number into an estimated change rate duration.
+  const minDelayToInput = (delay: number) => {
+    const milliseconds = expectedBlockTime.multipliedBy(delay);
+    const seconds = !milliseconds.isZero()
+      ? 0
+      : milliseconds.dividedBy(1000).integerValue().toNumber();
+
+    const { years, months, days, hours, minutes } = intervalToDuration({
+      start: 0,
+      end: seconds,
+    });
+
+    return {
+      years: years || 0,
+      months: months || 0,
+      days: days || 0,
+      hours: hours || 0,
+      minutes: minutes || 0,
+    };
+  };
+
+  const [changeRateInput, setChangeRateInput] = useState<ChangeRateInput>(
+    minDelayToInput(changeRate.minDelay)
+  );
 
   // Valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
@@ -324,9 +351,14 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     },
   };
 
-  // TODO: convert min delay in blocks to seconds and then interval on initial.
-  // const duration = formatDuration(interval(0, seconds)).
-  // extract years, months, days etc and plug into input state.
+  const handleChangeRateInput = (key: string, value: string) => {
+    if (!new BigNumber(value).isNaN() || value === '') {
+      setChangeRateInput({
+        ...changeRateInput,
+        [key]: new BigNumber(value || 0).toNumber(),
+      });
+    }
+  };
 
   // TODO: convert min delay in inputs to blocks on update.
   // const seconds: BigNumber = years to seconds, months to seconds, ...
@@ -458,23 +490,58 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
             <h5>Minimum Delay Between Updates</h5>
             <div className="changeRate">
               <section>
-                <input type="text" placeholder="0" />
+                <input
+                  type="text"
+                  placeholder="0"
+                  value={changeRateInput.years}
+                  onChange={({ target: { value } }) =>
+                    handleChangeRateInput('years', value)
+                  }
+                />
                 Years
               </section>
               <section>
-                <input type="text" placeholder="0" />
+                <input
+                  type="text"
+                  placeholder="0"
+                  value={changeRateInput.months}
+                  onChange={({ target: { value } }) =>
+                    handleChangeRateInput('months', value)
+                  }
+                />
                 Months
               </section>
               <section>
-                <input type="text" placeholder="0" />
+                <input
+                  type="text"
+                  placeholder="0"
+                  value={changeRateInput.days}
+                  onChange={({ target: { value } }) =>
+                    handleChangeRateInput('days', value)
+                  }
+                />
                 Days
               </section>
               <section>
-                <input type="text" placeholder="0" />
+                <input
+                  type="text"
+                  placeholder="0"
+                  value={changeRateInput.hours}
+                  onChange={({ target: { value } }) =>
+                    handleChangeRateInput('hours', value)
+                  }
+                />
                 Hours
               </section>
               <section>
-                <input type="text" placeholder="0" />
+                <input
+                  type="text"
+                  placeholder="0"
+                  value={changeRateInput.minutes}
+                  onChange={({ target: { value } }) =>
+                    handleChangeRateInput('minutes', value)
+                  }
+                />
                 Minutes
               </section>
             </div>
