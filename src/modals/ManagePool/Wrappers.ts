@@ -88,7 +88,7 @@ export const CommissionWrapper = styled.div`
       }
 
       input {
-        width: 40px;
+        width: 30px;
         margin: 0 0.6rem 0 0;
         padding-left: 1rem;
       }

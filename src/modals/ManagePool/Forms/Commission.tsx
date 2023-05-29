@@ -449,6 +449,10 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
             <div className="changeRate">
               <section>
                 <input type="text" placeholder="0" />
+                Years
+              </section>
+              <section>
+                <input type="text" placeholder="0" />
                 Months
               </section>
               <section>
