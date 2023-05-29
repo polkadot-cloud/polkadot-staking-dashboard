@@ -27,7 +27,6 @@ export interface APIConstants {
 }
 
 export interface APIContextInterface {
-  connect: (n: NetworkName) => Promise<void>;
   switchNetwork: (n: NetworkName, l: boolean) => Promise<void>;
   api: ApiPromise | null;
   consts: APIConstants;

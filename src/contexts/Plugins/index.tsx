@@ -36,15 +36,13 @@ export const PluginsProvider = ({
   const [plugins, setPlugins] = useState(getAvailablePlugins());
   const pluginsRef = useRef(plugins);
 
-  /*
-   * Plugin toggling
-   */
+  // plugin toggling
   const togglePlugin = (key: string) => {
     let localPlugins = [...plugins];
     const found = localPlugins.find((item) => item === key);
 
     if (found) {
-      localPlugins = localPlugins.filter((_s) => _s !== key);
+      localPlugins = localPlugins.filter((s) => s !== key);
     } else {
       localPlugins.push(key);
     }

@@ -2,9 +2,9 @@
   "tips": {
     "connectExtensions": [
       "连接扩展",
-      "连接您的帐户,开始使用Polkadot staking dashboard.",
+      "连接您的帐户,开始使用Polkadot Staking Dashboard.",
       [
-        "连接您的帐户,开始使用Polkadot staking dashboard.",
+        "连接您的帐户,开始使用Polkadot Staking Dashboard.",
         "通过充当钱包的网络扩展访问账户。您的钱包用于签署在应用中提交的交易.",
         "从应用中右上角的“连接”按钮连接您的钱包，然后选择您希望用于抵押的帐户继续.",
         "该应用支持一系列扩展和钱包."

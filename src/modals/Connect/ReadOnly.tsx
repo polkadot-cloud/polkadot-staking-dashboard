@@ -34,12 +34,12 @@ export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
 
   // get all external accounts
   const externalAccountsOnly = accounts.filter(
-    (a) => a.source === 'external'
+    ({ source }) => source === 'external'
   ) as ExternalAccount[];
 
   // get external accounts added by user
   const externalAccounts = externalAccountsOnly.filter(
-    (a) => a.addedBy === 'user'
+    ({ addedBy }) => addedBy === 'user'
   );
 
   // forget account

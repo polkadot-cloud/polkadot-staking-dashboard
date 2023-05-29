@@ -3,34 +3,33 @@
 
 import { ButtonMono, ButtonMonoInvert } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
-import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
+import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { useTranslation } from 'react-i18next';
-import { ConfirmWrapper } from './Wrappers';
-import type { ConfirmProps } from './types';
+import type { RemoveProps } from './types';
 
-export const Confirm = ({ address, index }: ConfirmProps) => {
+export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
   const { t } = useTranslation('modals');
-  const { addToAccounts } = useConnect();
+  const { forgetAccounts } = useConnect();
   const { setStatus } = useOverlay();
-  const { addLedgerAccount } = useLedgerHardware();
 
   return (
     <ConfirmWrapper>
       <Identicon value={address} size={60} />
-      <h3>{t('importAccount')}</h3>
+      <h3>{t('removeAccount')}</h3>
       <h5>{address}</h5>
       <div className="footer">
         <ButtonMonoInvert text={t('cancel')} onClick={() => setStatus(0)} />
         <ButtonMono
-          text={t('importAccount')}
+          text={t('removeAccount')}
           onClick={() => {
-            const account = addLedgerAccount(address, index);
+            const account = getHandler(address);
             if (account) {
-              addToAccounts([account]);
+              removeHandler(address);
+              forgetAccounts([account]);
+              setStatus(0);
             }
-            setStatus(0);
           }}
         />
       </div>

@@ -27,6 +27,7 @@ export const AccountWrapper = styled.div`
     background: var(--button-primary-background);
     border: 1px solid var(--transparent-color);
     color: var(--text-color-primary);
+    font-family: InterSemiBold, sans-serif;
     width: 100%;
     border-radius: 0.75rem;
     font-size: 1rem;

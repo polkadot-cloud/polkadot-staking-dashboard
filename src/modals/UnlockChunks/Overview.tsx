@@ -3,7 +3,7 @@
 
 import { faCheckCircle, faClock } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSubmit } from '@polkadotcloud/core-ui';
+import { ButtonSubmit, ModalNotes } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -17,7 +17,6 @@ import { StaticNote } from 'modals/Utils/StaticNote';
 import { forwardRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
-import { NotesWrapper } from '../Wrappers';
 import { Chunk } from './Chunk';
 import { ContentWrapper } from './Wrappers';
 
@@ -128,7 +127,7 @@ export const Overview = forwardRef(
               onRebond={onRebondHandler}
             />
           ))}
-          <NotesWrapper>
+          <ModalNotes withPadding>
             <StaticNote
               value={bondDurationFormatted}
               tKey="unlockTake"
@@ -137,7 +136,7 @@ export const Overview = forwardRef(
             />
             <p> {isStaking ? ` ${t('rebondUnlock')}` : null}</p>
             {!isStaking ? <p>{t('unlockChunk')}</p> : null}
-          </NotesWrapper>
+          </ModalNotes>
         </div>
       </ContentWrapper>
     );

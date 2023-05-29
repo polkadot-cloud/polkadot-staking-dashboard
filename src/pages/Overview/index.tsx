@@ -59,7 +59,6 @@ export const Overview = () => {
       locale: locales[i18n.resolvedLanguage ?? DefaultLocale],
     };
   }
-
   return (
     <>
       <PageTitle title={`${t('overview.overview')}`} />

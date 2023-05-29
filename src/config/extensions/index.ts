@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { ExtensionConfig } from 'contexts/Extensions/types';
+import { ReactComponent as WalletConnectSVG } from '../../img/walletConnect.svg';
 import { ReactComponent as EnkryptSVG } from './icons/enkrypt.svg';
 import { ReactComponent as FearlessSVG } from './icons/fearless.svg';
 import { ReactComponent as NovaWalletSVG } from './icons/novawallet.svg';
@@ -9,7 +10,6 @@ import { ReactComponent as PolkadotJSSVG } from './icons/polkadotjs.svg';
 import { ReactComponent as PolkaGateSVG } from './icons/polkagate.svg';
 import { ReactComponent as SubwalletSVG } from './icons/subwallet.svg';
 import { ReactComponent as TalismanSVG } from './icons/talisman.svg';
-import { ReactComponent as WalletConnectSVG } from './icons/walletconnect.svg';
 
 export const Extensions: ExtensionConfig[] = [
   {

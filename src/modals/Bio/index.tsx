@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ModalPadding } from '@polkadotcloud/core-ui';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
-import { PaddingWrapper } from '../Wrappers';
 import { Wrapper } from './Wrapper';
 
 export const Bio = () => {
@@ -13,9 +13,9 @@ export const Bio = () => {
   return (
     <>
       <Title title={name} />
-      <PaddingWrapper>
+      <ModalPadding>
         <Wrapper>{bio !== undefined && <h4>{bio}</h4>}</Wrapper>
-      </PaddingWrapper>
+      </ModalPadding>
     </>
   );
 };

@@ -27,10 +27,10 @@ export interface ConnectContextInterface {
   addToAccounts: (a: ImportedAccount[]) => void;
   forgetAccounts: (a: ImportedAccount[]) => void;
   setActiveProxy: (p: MaybeAccount, l?: boolean) => void;
+  renameImportedAccount: (a: MaybeAccount, n: string) => void;
   accounts: ExtensionAccount[];
   activeAccount: MaybeAccount;
   activeProxy: MaybeAccount;
-  activeAccountMeta: ImportedAccount | null;
 }
 
 export type ImportedAccount =
@@ -47,6 +47,14 @@ export interface ExternalAccount {
 }
 
 export interface LedgerAccount {
+  address: string;
+  network: string;
+  name: string;
+  source: string;
+  index: number;
+}
+
+export interface VaultAccount {
   address: string;
   network: string;
   name: string;

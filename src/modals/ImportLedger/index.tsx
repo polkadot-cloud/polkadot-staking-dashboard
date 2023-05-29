@@ -8,7 +8,6 @@ import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import type { LedgerAddress, LedgerResponse } from 'contexts/Hardware/types';
 import { useModal } from 'contexts/Modal';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
-import { PaddingWrapper } from 'modals/Wrappers';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyJson } from 'types';
 import { Manage } from './Manage';
@@ -157,7 +156,7 @@ export const ImportLedger: React.FC = () => {
   }, []);
 
   return (
-    <PaddingWrapper verticalOnly>
+    <>
       {!addressesRef.current.length ? (
         <Splash handleLedgerLoop={handleLedgerLoop} />
       ) : (
@@ -167,6 +166,6 @@ export const ImportLedger: React.FC = () => {
           handleLedgerLoop={handleLedgerLoop}
         />
       )}
-    </PaddingWrapper>
+    </>
   );
 };

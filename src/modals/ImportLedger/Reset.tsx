@@ -9,16 +9,16 @@ import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import type { LedgerAddress } from 'contexts/Hardware/types';
 import { useModal } from 'contexts/Modal';
 import { useOverlay } from 'contexts/Overlay';
+import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
-import { ConfirmWrapper } from './Wrappers';
 
 export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
-  const { setStatus } = useOverlay();
   const { forgetAccounts } = useConnect();
-  const { ledgerAccounts, removeLedgerAccount } = useLedgerHardware();
+  const { setStatus } = useOverlay();
   const { replaceModalWith } = useModal();
+  const { ledgerAccounts, removeLedgerAccount } = useLedgerHardware();
 
   const removeAccounts = () => {
     // Remove imported Ledger accounts.

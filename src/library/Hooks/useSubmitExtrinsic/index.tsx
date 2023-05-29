@@ -13,6 +13,7 @@ import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
+import { manualSigners } from 'contexts/Connect/Utils';
 import { useExtensions } from 'contexts/Extensions';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
@@ -251,7 +252,7 @@ export const useSubmitExtrinsic = ({
     const { source } = account;
 
     // if `activeAccount` is imported from an extension, ensure it is enabled.
-    if (source !== 'ledger') {
+    if (!manualSigners.includes(source)) {
       const extension = extensions.find((e) => e.id === source);
       if (extension === undefined) {
         throw new Error(`${t('walletNotFound')}`);
@@ -312,7 +313,7 @@ export const useSubmitExtrinsic = ({
       resetLedgerTx();
     };
 
-    const onError = (type?: 'default' | 'ledger') => {
+    const onError = (type?: string) => {
       resetTx();
       if (type === 'ledger') {
         resetLedgerTx();
@@ -414,7 +415,7 @@ export const useSubmitExtrinsic = ({
           }
         });
       } catch (e) {
-        onError('ledger');
+        onError(manualSigners.includes(source) ? source : 'default');
       }
     } else if (source === 'wallet-connect') {
       const wcSignClient: SignClient | null = getWalletConnectClient();

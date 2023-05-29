@@ -6,23 +6,17 @@ import {
   ActionItem,
   ButtonPrimaryInvert,
   ButtonTab,
+  ModalCustomHeader,
+  ModalFixedTitle,
+  ModalMotionThreeSection,
+  ModalPadding,
+  ModalSection,
 } from '@polkadotcloud/core-ui';
 import { Extensions } from 'config/extensions';
-import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
-import type { ExtensionConfig } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
 import { Close } from 'library/Modal/Close';
 import { SelectItems } from 'library/SelectItems';
-import {
-  CustomHeaderWrapper,
-  FixedTitleWrapper,
-  MultiSectionWrapper,
-  PaddingWrapper,
-  TabsWrapper,
-  ThreeSectionWrapper,
-  ThreeSectionsWrapper,
-} from 'modals/Wrappers';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyFunction } from 'types';
@@ -30,21 +24,19 @@ import { Extension } from './Extension';
 import { Ledger } from './Ledger';
 import { Proxies } from './Proxies';
 import { ReadOnly } from './ReadOnly';
+import { Vault } from './Vault';
 import { ExtensionsWrapper } from './Wrappers';
 
 export const Connect = () => {
   const { t } = useTranslation('modals');
-  const { network } = useApi();
   const { extensions } = useExtensions();
   const { replaceModalWith, setModalHeight, modalMaxHeight } = useModal();
 
-  const installed = Extensions.filter((a: ExtensionConfig) =>
+  const installed = Extensions.filter((a) =>
     extensions.find((b) => b.id === a.id)
   );
 
-  const other = Extensions.filter(
-    (a: ExtensionConfig) => !installed.find((b) => b.id === a.id)
-  );
+  const other = Extensions.filter((a) => !installed.find((b) => b.id === a.id));
 
   // toggle read only management
   const [readOnlyOpen, setReadOnlyOpen] = useState(false);
@@ -86,10 +78,10 @@ export const Connect = () => {
 
   return (
     <>
-      <MultiSectionWrapper>
+      <ModalSection type="carousel">
         <Close />
-        <FixedTitleWrapper ref={headerRef} isStyled>
-          <CustomHeaderWrapper>
+        <ModalFixedTitle ref={headerRef} withStyle>
+          <ModalCustomHeader>
             <div className="first">
               <h1>{t('connect')}</h1>
               <ButtonPrimaryInvert
@@ -100,7 +92,7 @@ export const Connect = () => {
                 marginLeft
               />
             </div>
-            <TabsWrapper>
+            <ModalSection type="tab">
               <ButtonTab
                 title={t('extensions')}
                 onClick={() => setSection(0)}
@@ -116,11 +108,11 @@ export const Connect = () => {
                 onClick={() => setSection(2)}
                 active={section === 2}
               />
-            </TabsWrapper>
-          </CustomHeaderWrapper>
-        </FixedTitleWrapper>
+            </ModalSection>
+          </ModalCustomHeader>
+        </ModalFixedTitle>
 
-        <ThreeSectionsWrapper
+        <ModalMotionThreeSection
           style={{
             maxHeight:
               modalMaxHeight() - (headerRef.current?.clientHeight || 0),
@@ -145,20 +137,16 @@ export const Connect = () => {
             },
           }}
         >
-          <ThreeSectionWrapper>
-            <PaddingWrapper horizontalOnly ref={homeRef}>
-              {['polkadot', 'kusama'].includes(network.name) ? (
-                <>
-                  <ActionItem text={t('hardware')} />
-                  <ExtensionsWrapper>
-                    <SelectItems layout="two-col">
-                      {[Ledger].map((Item: AnyFunction, i: number) => (
-                        <Item key={`hardware_item_${i}`} />
-                      ))}
-                    </SelectItems>
-                  </ExtensionsWrapper>
-                </>
-              ) : null}
+          <div className="section">
+            <ModalPadding horizontalOnly ref={homeRef}>
+              <ActionItem text={t('hardware')} />
+              <ExtensionsWrapper>
+                <SelectItems layout="two-col">
+                  {[Vault, Ledger].map((Item: AnyFunction, i: number) => (
+                    <Item key={`hardware_item_${i}`} />
+                  ))}
+                </SelectItems>
+              </ExtensionsWrapper>
 
               <ActionItem text={t('web')} />
               <ExtensionsWrapper>
@@ -168,26 +156,26 @@ export const Connect = () => {
                   ))}
                 </SelectItems>
               </ExtensionsWrapper>
-            </PaddingWrapper>
-          </ThreeSectionWrapper>
-          <ThreeSectionWrapper>
-            <PaddingWrapper horizontalOnly ref={readOnlyRef}>
+            </ModalPadding>
+          </div>
+          <div className="section">
+            <ModalPadding horizontalOnly ref={readOnlyRef}>
               <ReadOnly
                 setInputOpen={setReadOnlyOpen}
                 inputOpen={readOnlyOpen}
               />
-            </PaddingWrapper>
-          </ThreeSectionWrapper>
-          <ThreeSectionWrapper>
-            <PaddingWrapper horizontalOnly ref={proxiesRef}>
+            </ModalPadding>
+          </div>
+          <div className="section">
+            <ModalPadding horizontalOnly ref={proxiesRef}>
               <Proxies
                 setInputOpen={setNewProxyOpen}
                 inputOpen={newProxyOpen}
               />
-            </PaddingWrapper>
-          </ThreeSectionWrapper>
-        </ThreeSectionsWrapper>
-      </MultiSectionWrapper>
+            </ModalPadding>
+          </div>
+        </ModalMotionThreeSection>
+      </ModalSection>
     </>
   );
 };
