@@ -57,11 +57,11 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     return raw
       ? {
           maxIncrease: Number(raw.maxIncrease.slice(0, -1)),
-          minDelay: raw.minDelay,
+          minDelay: Number(raw.minDelay),
         }
       : {
           maxIncrease: 100,
-          minDelay: 432000, // 30 days
+          minDelay: 0,
         };
   })();
 
@@ -94,13 +94,13 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   // Convert a block number into an estimated change rate duration.
   const minDelayToInput = (delay: number) => {
     const milliseconds = expectedBlockTime.multipliedBy(delay);
-    const seconds = !milliseconds.isZero()
+    const end = milliseconds.isZero()
       ? 0
-      : milliseconds.dividedBy(1000).integerValue().toNumber();
+      : milliseconds.integerValue().toNumber();
 
     const { years, months, days, hours, minutes } = intervalToDuration({
       start: 0,
-      end: seconds,
+      end,
     });
 
     return {
@@ -112,12 +112,47 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     };
   };
 
+  const inputToMinDelay = (input: ChangeRateInput) => {
+    const { years, months, days, hours, minutes } = input;
+
+    // calculate number of seconds from changeRateInput
+    const yearsSeconds = new BigNumber(years).multipliedBy(31536000);
+    const monthsSeconds = new BigNumber(months).multipliedBy(2628288);
+    const daysSeconds = new BigNumber(days).multipliedBy(86400);
+    const hoursSeconds = new BigNumber(hours).multipliedBy(3600);
+    const minutesSeconds = new BigNumber(minutes).multipliedBy(60);
+
+    return yearsSeconds
+      .plus(monthsSeconds)
+      .plus(daysSeconds)
+      .plus(hoursSeconds)
+      .plus(minutesSeconds)
+      .dividedBy(expectedBlockTime.dividedBy(1000))
+      .integerValue()
+      .toNumber();
+  };
+
+  // Store the change rate value in input format.
   const [changeRateInput, setChangeRateInput] = useState<ChangeRateInput>(
     minDelayToInput(changeRate.minDelay)
   );
 
   // Valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
+
+  const handleChangeRateInput = (key: string, value: string) => {
+    if (!new BigNumber(value).isNaN() || value === '') {
+      const newChangeRateInput = {
+        ...changeRateInput,
+        [key]: new BigNumber(value || 0).toNumber(),
+      };
+      setChangeRateInput(newChangeRateInput);
+      setChangeRate({
+        ...changeRate,
+        minDelay: inputToMinDelay(newChangeRateInput),
+      });
+    }
+  };
 
   const resetToDefault = () => {
     setCommission(initialCommission);
@@ -274,7 +309,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
               changeRate: changeRateUpdated
                 ? {
                     maxIncrease: `${changeRate.maxIncrease.toFixed(2)}%`,
-                    minDelay: changeRate.minDelay,
+                    minDelay: String(changeRate.minDelay),
                   }
                 : pool.commission?.changeRate || null,
             },
@@ -350,21 +385,6 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
       backgroundColor: 'var(--background-primary)',
     },
   };
-
-  const handleChangeRateInput = (key: string, value: string) => {
-    if (!new BigNumber(value).isNaN() || value === '') {
-      setChangeRateInput({
-        ...changeRateInput,
-        [key]: new BigNumber(value || 0).toNumber(),
-      });
-    }
-  };
-
-  // TODO: convert min delay in inputs to blocks on update.
-  // const seconds: BigNumber = years to seconds, months to seconds, ...
-  // const blocks: BN = (seconds * 1000) / expectedBlockTime.
-
-  // input live input to block value in min delay message.
 
   return (
     <>
@@ -547,8 +567,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
             </div>
             <p>
               This minimum delay is the approximate equivalent of{' '}
-              {new BigNumber(6000).dividedBy(expectedBlockTime).toString()}{' '}
-              block.
+              {changeRate.minDelay} block{changeRate.minDelay === 1 ? '' : 's'}.
             </p>
           </CommissionWrapper>
         )}
