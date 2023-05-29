@@ -30,6 +30,7 @@ export const AccountWrapper = styled.div`
     width: 100%;
     border-radius: 0.75rem;
     font-size: 1rem;
+    font-weight: 500;
     display: flex;
     align-items: center;
     min-height: 3.5rem;
