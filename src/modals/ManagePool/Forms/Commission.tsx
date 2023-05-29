@@ -269,6 +269,12 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
         label: 'neutral',
       };
     }
+    if (commissionAboveMaxIncrease) {
+      return {
+        text: 'Beyond Max Allowed Increase',
+        label: 'danger',
+      };
+    }
     if (commissionAboveMax) {
       return {
         text: t('cannotBeAboveMax'),
