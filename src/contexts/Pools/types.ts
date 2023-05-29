@@ -96,10 +96,13 @@ export interface BondedPool {
   };
   state: PoolState;
   commission?: {
-    current?: AnyJson;
-    max?: AnyJson;
-    changeRate?: AnyJson;
-    throttleFrom?: AnyJson;
+    current?: AnyJson | null;
+    max?: AnyJson | null;
+    changeRate: {
+      maxIncrease: AnyJson;
+      minDelay: AnyJson;
+    } | null;
+    throttleFrom?: AnyJson | null;
   };
 }
 
