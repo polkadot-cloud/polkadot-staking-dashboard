@@ -34,7 +34,7 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
           ref={ref}
           style={{ paddingBottom: '1.5rem', paddingTop: '1.5rem' }}
         >
-          {name === 'westend' && (
+          {['kusama', 'westend'].includes(name) && (
             <>
               {isOwner() && (
                 <button
