@@ -27,12 +27,13 @@ import { CommissionWrapper } from '../Wrappers';
 
 export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
+  const { api, consts } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount } = useConnect();
   const { getBondedPool, updateBondedPools } = useBondedPools();
   const { isOwner, selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
+  const { expectedBlockTime } = consts;
 
   const poolId = selectedActivePool?.id || 0;
   const bondedPool = getBondedPool(poolId);
@@ -463,6 +464,11 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
                 Minutes
               </section>
             </div>
+            <p>
+              This minimum delay is the approximate equivalent of{' '}
+              {new BigNumber(6000).dividedBy(expectedBlockTime).toString()}{' '}
+              block.
+            </p>
           </CommissionWrapper>
         )}
       </div>

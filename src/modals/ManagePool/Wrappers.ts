@@ -68,6 +68,7 @@ export const CommissionWrapper = styled.div`
   .changeRate {
     display: flex;
     flex-wrap: wrap;
+    margin: 0.25rem 0;
 
     > section {
       color: var(--text-color-secondary);
