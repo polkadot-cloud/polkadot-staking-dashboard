@@ -324,6 +324,16 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     },
   };
 
+  // TODO: convert min delay in blocks to seconds and then interval on initial.
+  // const duration = formatDuration(interval(0, seconds)).
+  // extract years, months, days etc and plug into input state.
+
+  // TODO: convert min delay in inputs to blocks on update.
+  // const seconds: BigNumber = years to seconds, months to seconds, ...
+  // const blocks: BN = (seconds * 1000) / expectedBlockTime.
+
+  // input live input to block value in min delay message.
+
   return (
     <>
       <div className="padding">
