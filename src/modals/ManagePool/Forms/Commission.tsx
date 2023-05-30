@@ -441,7 +441,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
       backgroundColor: 'var(--background-primary)',
     },
   };
-  const minDelay = changeRate.minDelay;
+
   return (
     <>
       <div className="padding">
@@ -605,37 +605,37 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
               <MinDelayInput
                 initial={changeRateInput.years}
                 field="years"
-                label="Years"
+                label={t('years')}
                 handleChange={handleChangeRateInput}
               />
               <MinDelayInput
                 initial={changeRateInput.months}
                 field="months"
-                label="Months"
+                label={t('months')}
                 handleChange={handleChangeRateInput}
               />
               <MinDelayInput
                 initial={changeRateInput.days}
                 field="days"
-                label="Days"
+                label={t('days')}
                 handleChange={handleChangeRateInput}
               />
               <MinDelayInput
                 initial={changeRateInput.hours}
                 field="hours"
-                label="Hours"
+                label={t('hours')}
                 handleChange={handleChangeRateInput}
               />
               <MinDelayInput
                 initial={changeRateInput.minutes}
                 field="minutes"
-                label="Minutes"
+                label={t('minutes')}
                 handleChange={handleChangeRateInput}
               />
             </div>
             <p>
               {t('thisMinimumDelay', {
-                count: minDelay,
+                count: changeRate.minDelay,
               })}
             </p>
           </CommissionWrapper>
