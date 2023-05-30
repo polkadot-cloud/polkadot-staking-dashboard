@@ -1,5 +1,8 @@
 {
   "modals": {
+    "aboveExisting": "高于现有",
+    "aboveGlobalMax": "高于总体最大值",
+    "aboveMax": "高于最大值",
     "account": "账户",
     "accountAlreadyImported": "帐户已导入",
     "accounts": "账户",
@@ -20,6 +23,8 @@
     "becomeNominator": "成为提名人",
     "becomeNominatorSubtitle": "对提名的人选有完全控制权",
     "beingDestroyed": "正在销毁此池。没有可用的管理选项",
+    "belowExisting": "低于现有",
+    "beyondMaxIncrease": "超出最大增量",
     "binanceApi": "币安API",
     "bond": "质押",
     "bondAll": "质押所有",
@@ -48,6 +53,7 @@
     "continue": "继续",
     "controllerImported": "您必须导入您的Controller帐户才能签署此交易",
     "dashboardTips": "提示消息",
+    "days": "天",
     "declare": "添加",
     "declared": "己添加",
     "destroyIrreversible": "销毁池是不可逆转的",
@@ -87,6 +93,7 @@
     "hardware": "硬件",
     "haveNomination": "您有{{count}} 个提名",
     "hide": "隐藏",
+    "hours": "小时",
     "import": "导入",
     "importAccount": "导入帐户",
     "importAddress": "导入地址",
@@ -111,7 +118,11 @@
     "manageCommission": "管理佣金值",
     "managePool": "管理池",
     "maxCommission": "最高佣金值",
+    "maxIncreasePerUpdate": "每次更新的最大增量",
     "maximumCommissionUpdated": "最高佣金值最新值",
+    "minDelayBetweenUpdates": "更新之间的最小延迟",
+    "minutes": "分钟",
+    "months": "月",
     "networks": "网络",
     "newTotalBond": "新质押总额:",
     "newlyBondedFunds": "新质押金将从下一个Era开始归回到活跃的提名中",
@@ -174,6 +185,7 @@
     "selectNetwork": "网络选择",
     "selected": "己选",
     "selfStake": "自我抵押",
+    "setChangeRate": "设置更改率",
     "setCommission": "设置佣金值",
     "setMaxCommission": "设置最高佣金值",
     "setToDestroying": "销毁",
@@ -193,6 +205,7 @@
     "submitting": "提交中",
     "subscanDisabled": "Subscan己断开",
     "successfullyFetchedAddress": "成功获取地址",
+    "thisMinimumDelay": "这个最小延迟近似等于{{count}}个块",
     "titleExtensionConnected": "{{title}} 扩展已连接",
     "toggleFeatures": "功能切换",
     "togglePlugins": "切换插件",
@@ -229,6 +242,7 @@
     "updatePayoutDestination": "更新收益到账地址",
     "updatePoolCommission": "更新提名池佣金设置",
     "updateWhoClaimRewards": "更改代表申领奖励地址",
+    "updated": "己更新",
     "validatorMetrics": "验证人指标",
     "vaultAccounts": "{{count}} 个帐户己被导入",
     "vaultAccounts_zero": "无帐户导入",
@@ -239,6 +253,7 @@
     "withdraw": "提取",
     "withdrawMemberFunds": "取出会员资金",
     "withdrawSubtitle": "资金将在取款后立即转作可用余额",
-    "withdrawUnlocked": "取出己解锁"
+    "withdrawUnlocked": "取出己解锁",
+    "years": "年"
   }
 }
