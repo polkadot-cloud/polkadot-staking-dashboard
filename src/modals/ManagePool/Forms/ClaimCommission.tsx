@@ -75,7 +75,7 @@ export const ClaimCommission = ({ setSection }: any) => {
           </ModalWarnings>
         ) : null}
         <ActionItem
-          text={`${t('claim"')} ${planckToUnit(
+          text={`${t('claim')} ${planckToUnit(
             pendingCommission,
             network.units
           )} ${network.unit} `}
