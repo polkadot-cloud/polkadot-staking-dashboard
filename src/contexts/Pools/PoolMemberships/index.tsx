@@ -66,25 +66,15 @@ export const PoolMembershipsProvider = ({
     if (!api) return;
 
     // Westend only: include claimPermissions.
-    let unsub;
-    if (network.name === 'westend') {
-      unsub = await api.queryMulti<AnyApi>(
-        [
-          [api.query.nominationPools.poolMembers, address],
-          [api.query.nominationPools.claimPermissions, address],
-        ],
-        ([poolMember, claimPermission]) => {
-          handleMembership(poolMember, claimPermission);
-        }
-      );
-    } else {
-      unsub = await api.query.nominationPools.poolMembers(
-        address,
-        (poolMember: AnyApi) => {
-          handleMembership(poolMember, undefined);
-        }
-      );
-    }
+    const unsub = await api.queryMulti<AnyApi>(
+      [
+        [api.query.nominationPools.poolMembers, address],
+        [api.query.nominationPools.claimPermissions, address],
+      ],
+      ([poolMember, claimPermission]) => {
+        handleMembership(poolMember, claimPermission);
+      }
+    );
 
     const handleMembership = (poolMember: AnyApi, claimPermission?: AnyApi) => {
       let membership = poolMember?.unwrapOr(undefined)?.toHuman();
