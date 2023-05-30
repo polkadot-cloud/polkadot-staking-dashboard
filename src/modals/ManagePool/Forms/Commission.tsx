@@ -347,24 +347,24 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     }
     if (commissionAboveMaxIncrease) {
       return {
-        text: 'Beyond Max Increase',
+        text: t('beyondMaxIncrease'),
         label: 'danger',
       };
     }
     if (commissionAboveGlobal) {
       return {
-        text: 'Above Global Max',
+        text: t('aboveGlobalMax'),
         label: 'danger',
       };
     }
     if (commissionAboveMax) {
       return {
-        text: 'Above Max',
+        text: t('aboveMax'),
         label: 'danger',
       };
     }
     return {
-      text: 'Updated',
+      text: t('updated'),
       label: 'neutral',
     };
   })();
@@ -375,18 +375,18 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     }
     if (invalidMaxCommission) {
       return {
-        text: 'Above Existing',
+        text: t('aboveExisting'),
         label: 'danger',
       };
     }
     if (maxCommissionAboveGlobal) {
       return {
-        text: 'Above Global Max',
+        text: t('aboveGlobalMax'),
         label: 'danger',
       };
     }
     return {
-      text: 'Updated',
+      text: t('updated'),
       label: 'neutral',
     };
   })();
@@ -397,12 +397,12 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     }
     if (invalidMaxIncrease) {
       return {
-        text: 'Above Existing',
+        text: t('aboveExisting'),
         label: 'danger',
       };
     }
     return {
-      text: 'Updated',
+      text: t('updated'),
       label: 'neutral',
     };
   })();
@@ -413,12 +413,12 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     }
     if (invalidMinDelay) {
       return {
-        text: 'Below Existing',
+        text: t('belowExisting'),
         label: 'danger',
       };
     }
     return {
-      text: 'Updated',
+      text: t('updated'),
       label: 'neutral',
     };
   })();
@@ -439,7 +439,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
       backgroundColor: 'var(--background-primary)',
     },
   };
-
+  const minDelay = changeRate.minDelay;
   return (
     <>
       <div className="padding">
@@ -544,7 +544,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
             marginTop: '2rem',
             borderBottomWidth: changeRateEnabled ? '1px' : 0,
           }}
-          text="Set Change Rate"
+          text={t('setChangeRate')}
           toggled={changeRateEnabled}
           onToggle={(val) => setChangeRateEnabled(val)}
           disabled={!!changeRateSet}
@@ -553,7 +553,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
         {changeRateEnabled && (
           <CommissionWrapper>
             <h5>
-              Max Increase Per Update
+              {t('maxIncreasePerUpdate')}
               {maxIncreaseFeedback && (
                 <span className={maxIncreaseFeedback?.label || 'neutral'}>
                   {maxIncreaseFeedback.text}
@@ -579,7 +579,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
               </div>
             </div>
             <h5>
-              Min Delay Between Updates
+              {t('minDelayBetweenUpdates')}
               {minDelayFeedback && (
                 <span className={minDelayFeedback?.label || 'neutral'}>
                   {minDelayFeedback.text}
@@ -596,7 +596,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
                     handleChangeRateInput('years', value)
                   }
                 />
-                Years
+                {t('years')}
               </section>
               <section>
                 <input
@@ -607,7 +607,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
                     handleChangeRateInput('months', value)
                   }
                 />
-                Months
+                {t('months')}
               </section>
               <section>
                 <input
@@ -618,7 +618,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
                     handleChangeRateInput('days', value)
                   }
                 />
-                Days
+                {t('days')}
               </section>
               <section>
                 <input
@@ -629,7 +629,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
                     handleChangeRateInput('hours', value)
                   }
                 />
-                Hours
+                {t('hours')}
               </section>
               <section>
                 <input
@@ -640,12 +640,13 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
                     handleChangeRateInput('minutes', value)
                   }
                 />
-                Minutes
+                {t('minutes')}
               </section>
             </div>
             <p>
-              This minimum delay is the approximate equivalent of{' '}
-              {changeRate.minDelay} block{changeRate.minDelay === 1 ? '' : 's'}.
+              {t('thisMinimumDelay', {
+                count: minDelay,
+              })}
             </p>
           </CommissionWrapper>
         )}
