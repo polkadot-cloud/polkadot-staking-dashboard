@@ -37,26 +37,51 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
           {['kusama', 'westend'].includes(name) && (
             <>
               {isOwner() && (
-                <button
-                  type="button"
-                  className="action-button"
-                  onClick={() => {
-                    setSection(1);
-                    setTask('manage_commission');
-                  }}
-                >
-                  <div>
-                    <h3>{t('manageCommission')}</h3>
-                    <p>{t('updatePoolCommission')}</p>
-                  </div>
-                  <div>
-                    <FontAwesomeIcon
-                      transform="shrink-2"
-                      icon={faChevronRight}
-                      className="arrow"
-                    />
-                  </div>
-                </button>
+                <>
+                  <button
+                    type="button"
+                    className="action-button"
+                    onClick={() => {
+                      setSection(1);
+                      setTask('claim_commission');
+                    }}
+                  >
+                    <div>
+                      <h3>Claim Commission</h3>
+                      <p>
+                        Claim any outstanding commission in the pool reward
+                        account.
+                      </p>
+                    </div>
+                    <div>
+                      <FontAwesomeIcon
+                        transform="shrink-2"
+                        icon={faChevronRight}
+                        className="arrow"
+                      />
+                    </div>
+                  </button>
+                  <button
+                    type="button"
+                    className="action-button"
+                    onClick={() => {
+                      setSection(1);
+                      setTask('manage_commission');
+                    }}
+                  >
+                    <div>
+                      <h3>{t('manageCommission')}</h3>
+                      <p>{t('updatePoolCommission')}</p>
+                    </div>
+                    <div>
+                      <FontAwesomeIcon
+                        transform="shrink-2"
+                        icon={faChevronRight}
+                        className="arrow"
+                      />
+                    </div>
+                  </button>
+                </>
               )}
               <button
                 type="button"
