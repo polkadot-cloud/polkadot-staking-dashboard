@@ -63,6 +63,51 @@ export const CommissionWrapper = styled.div`
     &.success {
       color: var(--status-success-color);
     }
+
+    > span {
+      font-family: InterSemiBold, sans-serif;
+      margin-left: 0.5rem;
+
+      &.neutral {
+        color: var(--network-color-primary);
+      }
+      &.danger {
+        color: var(--status-danger-color);
+      }
+      &.success {
+        color: var(--status-success-color);
+      }
+    }
+  }
+
+  .changeRate {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0.25rem 0;
+
+    > section {
+      color: var(--text-color-secondary);
+      flex: 0 1 auto;
+      display: flex;
+      align-items: center;
+      margin: 0.5rem 1rem 0 0;
+      border: 1px solid var(--border-primary-color);
+      border-radius: 0.75rem;
+      padding-right: 0.75rem;
+
+      &:first-child {
+        margin-left: 0;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+
+      input {
+        width: 30px;
+        margin: 0 0.6rem 0 0;
+        padding-left: 1rem;
+      }
+    }
   }
 
   > div {

@@ -7,6 +7,7 @@ import { ButtonSecondary } from '@polkadotcloud/core-ui';
 import { isValidAddress } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { Identicon } from 'library/Identicon';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AccountInputWrapper } from './Wrapper';
@@ -157,13 +158,24 @@ export const AccountInput = ({
       </h5>
       <div className={`input${successLock ? ` disabled` : ``}`}>
         <section>
-          <input
-            placeholder={`${t('address')}`}
-            type="text"
-            onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
-            value={value}
-            disabled={successLock}
-          />
+          <div>
+            {isValidAddress(value) ? (
+              <Identicon value={value} size={22} />
+            ) : (
+              <div className="ph" />
+            )}
+          </div>
+          <div>
+            <input
+              placeholder={`${t('address')}`}
+              type="text"
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                handleChange(e)
+              }
+              value={value}
+              disabled={successLock}
+            />
+          </div>
         </section>
         <section>
           {successLock ? (
