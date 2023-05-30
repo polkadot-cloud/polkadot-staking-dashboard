@@ -16,6 +16,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { intervalToDuration } from 'date-fns';
 import { AccountInput } from 'library/AccountInput';
+import { MinDelayInput } from 'library/Form/MinDelayInput';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -142,18 +143,16 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   // Valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
 
-  const handleChangeRateInput = (key: string, value: string) => {
-    if (!new BigNumber(value).isNaN() || value === '') {
-      const newChangeRateInput = {
-        ...changeRateInput,
-        [key]: new BigNumber(value || 0).toNumber(),
-      };
-      setChangeRateInput(newChangeRateInput);
-      setChangeRate({
-        ...changeRate,
-        minDelay: inputToMinDelay(newChangeRateInput),
-      });
-    }
+  const handleChangeRateInput = (field: string, value: number) => {
+    const newChangeRateInput = {
+      ...changeRateInput,
+      [field]: value,
+    };
+    setChangeRateInput(newChangeRateInput);
+    setChangeRate({
+      ...changeRate,
+      minDelay: inputToMinDelay(newChangeRateInput),
+    });
   };
 
   const resetToDefault = () => {
@@ -587,61 +586,36 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
               )}
             </h5>
             <div className="changeRate">
-              <section>
-                <input
-                  type="text"
-                  placeholder="0"
-                  value={changeRateInput.years}
-                  onChange={({ target: { value } }) =>
-                    handleChangeRateInput('years', value)
-                  }
-                />
-                {t('years')}
-              </section>
-              <section>
-                <input
-                  type="text"
-                  placeholder="0"
-                  value={changeRateInput.months}
-                  onChange={({ target: { value } }) =>
-                    handleChangeRateInput('months', value)
-                  }
-                />
-                {t('months')}
-              </section>
-              <section>
-                <input
-                  type="text"
-                  placeholder="0"
-                  value={changeRateInput.days}
-                  onChange={({ target: { value } }) =>
-                    handleChangeRateInput('days', value)
-                  }
-                />
-                {t('days')}
-              </section>
-              <section>
-                <input
-                  type="text"
-                  placeholder="0"
-                  value={changeRateInput.hours}
-                  onChange={({ target: { value } }) =>
-                    handleChangeRateInput('hours', value)
-                  }
-                />
-                {t('hours')}
-              </section>
-              <section>
-                <input
-                  type="text"
-                  placeholder="0"
-                  value={changeRateInput.minutes}
-                  onChange={({ target: { value } }) =>
-                    handleChangeRateInput('minutes', value)
-                  }
-                />
-                {t('minutes')}
-              </section>
+              <MinDelayInput
+                initial={changeRateInput.years}
+                field="years"
+                label="Years"
+                handleChange={handleChangeRateInput}
+              />
+              <MinDelayInput
+                initial={changeRateInput.months}
+                field="months"
+                label="Months"
+                handleChange={handleChangeRateInput}
+              />
+              <MinDelayInput
+                initial={changeRateInput.days}
+                field="days"
+                label="Days"
+                handleChange={handleChangeRateInput}
+              />
+              <MinDelayInput
+                initial={changeRateInput.hours}
+                field="hours"
+                label="Hours"
+                handleChange={handleChangeRateInput}
+              />
+              <MinDelayInput
+                initial={changeRateInput.minutes}
+                field="minutes"
+                label="Minutes"
+                handleChange={handleChangeRateInput}
+              />
             </div>
             <p>
               {t('thisMinimumDelay', {
