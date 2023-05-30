@@ -180,7 +180,7 @@ export const AccountInput = ({
         <section>
           {successLock ? (
             <>
-              <ButtonSecondary onClick={() => resetInput()} text="Reset" />
+              <ButtonSecondary onClick={() => resetInput()} text={t('reset')} />
             </>
           ) : (
             <>
