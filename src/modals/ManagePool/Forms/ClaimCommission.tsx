@@ -21,7 +21,7 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const ClaimCommission = ({ setSection, task }: any) => {
+export const ClaimCommission = ({ setSection }: any) => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
   const { setStatus: setModalStatus } = useModal();
