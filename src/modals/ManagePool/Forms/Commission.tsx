@@ -4,12 +4,14 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import {
   ActionItem,
+  ButtonHelp,
   ButtonSubmitInvert,
   ModalWarnings,
 } from '@polkadotcloud/core-ui';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -37,8 +39,9 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   const { getBondedPool, updateBondedPools } = useBondedPools();
   const { isOwner, selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
-  const { expectedBlockTime } = consts;
   const { globalMaxCommission } = usePoolsConfig();
+  const { openHelp } = useHelp();
+  const { expectedBlockTime } = consts;
 
   const poolId = selectedActivePool?.id || 0;
   const bondedPool = getBondedPool(poolId);
@@ -450,7 +453,12 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
           </ModalWarnings>
         ) : null}
 
-        <ActionItem text={t('setCommission')} />
+        <ActionItem
+          text={t('setCommission')}
+          inlineButton={
+            <ButtonHelp onClick={() => openHelp('Pool Commission Rate')} />
+          }
+        />
 
         <CommissionWrapper>
           <h5 className={commissionFeedback?.label || 'neutral'}>
@@ -505,6 +513,9 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
           toggled={maxCommissionEnabled}
           onToggle={(val) => setMaxCommissionEnabled(val)}
           disabled={!!maxCommissionSet}
+          inlineButton={
+            <ButtonHelp onClick={() => openHelp('Pool Max Commission')} />
+          }
         />
 
         {maxCommissionEnabled && (
@@ -547,6 +558,11 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
           toggled={changeRateEnabled}
           onToggle={(val) => setChangeRateEnabled(val)}
           disabled={!!changeRateSet}
+          inlineButton={
+            <ButtonHelp
+              onClick={() => openHelp('Pool Commission Change Rate')}
+            />
+          }
         />
 
         {changeRateEnabled && (
