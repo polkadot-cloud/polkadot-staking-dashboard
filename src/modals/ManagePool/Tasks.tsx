@@ -47,11 +47,8 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
                     }}
                   >
                     <div>
-                      <h3>Claim Commission</h3>
-                      <p>
-                        Claim any outstanding commission in the pool reward
-                        account.
-                      </p>
+                      <h3>{t('claimCommission')}</h3>
+                      <p>{t('claimOutstandingCommission')}</p>
                     </div>
                     <div>
                       <FontAwesomeIcon

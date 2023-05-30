@@ -75,15 +75,13 @@ export const ClaimCommission = ({ setSection, task }: any) => {
           </ModalWarnings>
         ) : null}
         <ActionItem
-          text={`Claim ${planckToUnit(pendingCommission, network.units)} ${
-            network.unit
-          } `}
+          text={`${t('claim"')} ${planckToUnit(
+            pendingCommission,
+            network.units
+          )} ${network.unit} `}
         />
         <ModalNotes>
-          <p>
-            This amount will be sent to the commission payee account configured
-            for this pool.
-          </p>
+          <p>{t('sentToCommissionPayee')}</p>
         </ModalNotes>
       </div>
       <SubmitTx
