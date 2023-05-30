@@ -9,17 +9,6 @@ export const HelpConfig: HelpItems = [
     definitions: ['Polkadot Vault'],
   },
   {
-    key: 'ledger',
-    definitions: [
-      'Ledger Hardware Wallets',
-      'Ledger Rejected Transaction',
-      'Ledger Request Timeout',
-      'Open App On Ledger',
-      'Wrong Transaction',
-    ],
-    external: [],
-  },
-  {
     key: 'overview',
     definitions: [
       'Total Nominators',
@@ -111,6 +100,9 @@ export const HelpConfig: HelpItems = [
       'Bonded in Pool',
       'Pool Rewards',
       'Pool Roles',
+      'Pool Commission Rate',
+      'Pool Max Commission',
+      'Pool Commission Change Rate',
     ],
     external: [
       [
@@ -156,6 +148,17 @@ export const HelpConfig: HelpItems = [
   {
     key: 'community',
     definitions: [],
+    external: [],
+  },
+  {
+    key: 'ledger',
+    definitions: [
+      'Ledger Hardware Wallets',
+      'Ledger Rejected Transaction',
+      'Ledger Request Timeout',
+      'Open App On Ledger',
+      'Wrong Transaction',
+    ],
     external: [],
   },
 ];
