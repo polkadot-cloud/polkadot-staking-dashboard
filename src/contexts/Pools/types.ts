@@ -11,6 +11,7 @@ export interface PoolsConfigContextState {
   createAccounts: (p: number) => PoolAddresses;
   favorites: string[];
   stats: PoolStats;
+  globalMaxCommission: number;
 }
 
 export interface PoolConfigState {

@@ -26,6 +26,7 @@ export const defaultPoolsConfigContext: PoolsConfigContextState = {
   createAccounts: () => poolAddresses,
   favorites: [],
   stats,
+  globalMaxCommission: 0,
 };
 
 export const poolAddresses: PoolAddresses = {
