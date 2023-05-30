@@ -177,10 +177,14 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
 
   const changeRateUpdated =
     (!changeRateSet &&
-      JSON.stringify(changeRate) !== JSON.stringify(initialChangeRate)) ||
+      JSON.stringify(changeRate) === JSON.stringify(initialChangeRate)) ||
     (changeRateSet &&
       JSON.stringify(changeRate) !== JSON.stringify(initialChangeRate)) ||
     (!changeRateSet && changeRateEnabled);
+
+  const maxIncreaseUpdated =
+    changeRate.maxIncrease !== initialChangeRate.maxIncrease;
+  const minDelayUpdated = changeRate.minDelay !== initialChangeRate.minDelay;
 
   // Global form change.
   const noChange =
@@ -203,10 +207,13 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     maxCommissionUpdated && maxCommission > initialMaxCommission;
 
   // Change rate is invalid if updated is not more restrictive than current.
-  const invalidChangeRate =
-    changeRateUpdated &&
-    (changeRate.maxIncrease > initialChangeRate.maxIncrease ||
-      changeRate.minDelay < initialChangeRate.minDelay);
+  const invalidMaxIncrease =
+    changeRateUpdated && changeRate.maxIncrease > initialChangeRate.maxIncrease;
+
+  const invalidMinDelay =
+    changeRateUpdated && changeRate.minDelay < initialChangeRate.minDelay;
+
+  const invalidChangeRate = invalidMaxIncrease || invalidMinDelay;
 
   // Check there are txs to submit.
   const txsToSubmit =
@@ -363,6 +370,38 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     };
   })();
 
+  const maxIncreaseFeedback = (() => {
+    if (!maxIncreaseUpdated) {
+      return undefined;
+    }
+    if (invalidMaxIncrease) {
+      return {
+        text: 'Above Existing',
+        label: 'danger',
+      };
+    }
+    return {
+      text: 'Updated',
+      label: 'neutral',
+    };
+  })();
+
+  const minDelayFeedback = (() => {
+    if (!minDelayUpdated) {
+      return undefined;
+    }
+    if (invalidMinDelay) {
+      return {
+        text: 'Below Existing',
+        label: 'danger',
+      };
+    }
+    return {
+      text: 'Updated',
+      label: 'neutral',
+    };
+  })();
+
   const sliderProps = {
     trackStyle: {
       backgroundColor: 'var(--network-color-primary)',
@@ -492,7 +531,14 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
 
         {changeRateEnabled && (
           <CommissionWrapper>
-            <h5>Max Commission Increase Per Update</h5>
+            <h5>
+              Max Increase Per Update
+              {maxIncreaseFeedback && (
+                <span className={maxIncreaseFeedback?.label || 'neutral'}>
+                  {maxIncreaseFeedback.text}
+                </span>
+              )}
+            </h5>
             <div>
               <h4 className="current">{changeRate.maxIncrease}% </h4>
               <div className="slider">
@@ -511,7 +557,14 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
                 />
               </div>
             </div>
-            <h5>Min Delay Between Updates</h5>
+            <h5>
+              Min Delay Between Updates
+              {minDelayFeedback && (
+                <span className={minDelayFeedback?.label || 'neutral'}>
+                  {minDelayFeedback.text}
+                </span>
+              )}
+            </h5>
             <div className="changeRate">
               <section>
                 <input
