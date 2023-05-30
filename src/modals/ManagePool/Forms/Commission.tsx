@@ -327,44 +327,38 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
 
   const commissionFeedback = (() => {
     if (!commissionUpdated) {
-      return {
-        text: t('commissionRate'),
-        label: 'neutral',
-      };
+      return undefined;
     }
     if (commissionAboveMaxIncrease) {
       return {
-        text: 'Beyond Max Allowed Increase',
+        text: 'Beyond Max Increase',
         label: 'danger',
       };
     }
     if (commissionAboveMax) {
       return {
-        text: t('cannotBeAboveMax'),
+        text: 'Above Max',
         label: 'danger',
       };
     }
     return {
-      text: t('commissionUpdated'),
+      text: 'Updated',
       label: 'neutral',
     };
   })();
 
   const maxCommissionFeedback = (() => {
     if (!maxCommissionUpdated) {
-      return {
-        text: t('maxCommission'),
-        label: 'neutral',
-      };
+      return undefined;
     }
     if (invalidMaxCommission) {
       return {
-        text: t('cannotBeAboveExisting'),
+        text: 'Above Existing',
         label: 'danger',
       };
     }
     return {
-      text: t('maximumCommissionUpdated'),
+      text: 'Updated',
       label: 'neutral',
     };
   })();
@@ -400,8 +394,13 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
         <ActionItem text={t('setCommission')} />
 
         <CommissionWrapper>
-          <h5 className={commissionFeedback.label}>
-            {commissionFeedback.text}
+          <h5 className={commissionFeedback?.label || 'neutral'}>
+            {t('commissionRate')}
+            {commissionFeedback && (
+              <span className={commissionFeedback?.label || 'neutral'}>
+                {commissionFeedback.text}
+              </span>
+            )}
           </h5>
           <div>
             <h4 className="current">{commission}% </h4>
@@ -451,8 +450,13 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
 
         {maxCommissionEnabled && (
           <CommissionWrapper>
-            <h5 className={maxCommissionFeedback.label}>
-              {maxCommissionFeedback.text}
+            <h5 className={maxCommissionFeedback?.label || 'neutral'}>
+              {t('maxCommission')}
+              {maxCommissionFeedback && (
+                <span className={maxCommissionFeedback?.label || 'neutral'}>
+                  {maxCommissionFeedback.text}
+                </span>
+              )}
             </h5>
             <div>
               <h4 className="current">{maxCommission}% </h4>
@@ -488,7 +492,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
 
         {changeRateEnabled && (
           <CommissionWrapper>
-            <h5>Maximum Commission Increase Per Update</h5>
+            <h5>Max Commission Increase Per Update</h5>
             <div>
               <h4 className="current">{changeRate.maxIncrease}% </h4>
               <div className="slider">
@@ -507,7 +511,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
                 />
               </div>
             </div>
-            <h5>Minimum Delay Between Updates</h5>
+            <h5>Min Delay Between Updates</h5>
             <div className="changeRate">
               <section>
                 <input
