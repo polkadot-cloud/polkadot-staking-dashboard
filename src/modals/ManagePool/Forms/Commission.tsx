@@ -13,6 +13,7 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { intervalToDuration } from 'date-fns';
 import { AccountInput } from 'library/AccountInput';
 import { Warning } from 'library/Form/Warning';
@@ -36,6 +37,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   const { isOwner, selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
   const { expectedBlockTime } = consts;
+  const { globalMaxCommission } = usePoolsConfig();
 
   const poolId = selectedActivePool?.id || 0;
   const bondedPool = getBondedPool(poolId);
@@ -192,6 +194,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
 
   // Monitor when input items are invalid.
   const commissionAboveMax = commission > maxCommission;
+  const commissionAboveGlobal = commission > globalMaxCommission;
 
   const commissionAboveMaxIncrease =
     changeRateSet && commission - initialCommission > changeRate.maxIncrease;
@@ -201,10 +204,12 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     ((commission === 0 && payee !== null) ||
       (commission !== 0 && payee === null) ||
       commissionAboveMax ||
-      commissionAboveMaxIncrease);
+      commissionAboveMaxIncrease ||
+      commission > globalMaxCommission);
 
   const invalidMaxCommission =
     maxCommissionUpdated && maxCommission > initialMaxCommission;
+  const maxCommissionAboveGlobal = maxCommission > globalMaxCommission;
 
   // Change rate is invalid if updated is not more restrictive than current.
   const invalidMaxIncrease =
@@ -225,7 +230,9 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     setValid(
       isOwner() &&
         !invalidCurrentCommission &&
+        !commissionAboveGlobal &&
         !invalidMaxCommission &&
+        !maxCommissionAboveGlobal &&
         !invalidChangeRate &&
         !noChange &&
         txsToSubmit
@@ -234,6 +241,8 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     isOwner(),
     invalidCurrentCommission,
     invalidMaxCommission,
+    commissionAboveGlobal,
+    maxCommissionAboveGlobal,
     invalidChangeRate,
     bondedPool,
     noChange,
@@ -342,6 +351,12 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
         label: 'danger',
       };
     }
+    if (commissionAboveGlobal) {
+      return {
+        text: 'Above Global Max',
+        label: 'danger',
+      };
+    }
     if (commissionAboveMax) {
       return {
         text: 'Above Max',
@@ -361,6 +376,12 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     if (invalidMaxCommission) {
       return {
         text: 'Above Existing',
+        label: 'danger',
+      };
+    }
+    if (maxCommissionAboveGlobal) {
+      return {
+        text: 'Above Global Max',
         label: 'danger',
       };
     }
