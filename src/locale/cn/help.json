@@ -258,27 +258,27 @@
         ]
       ],
       "poolCommissionChangeRate": [
-        "Pool Commission Change Rate",
+        "提名池佣金变化率",
         [
-          "The commission change rate is set by the pool Root, and dictates by how much and how often commission can be increased.",
-          "The maximum increase of the change rate dictates how much the commission rate can be increaesd in a single update. The minimum delay dictates how many blocks must pass before the commission rate can be increased again.",
-          "Once an initial change rate is set, only more restrictive values can be set thereafter. More restrictive values comprise of a smaller max increase and larger minimum delay."
+          "佣金变化率由池提名主理人设置,并决定佣金可以增加多少以及多久增加一次.",
+          "最大增加率决定了在一次更新中可以增加多少佣金率. 最小延迟决定了在佣金率可被再次提高之前必须通过多少区块.",
+          "一旦设置了初始变化率，此后只能设置更限制的值。更限制的值包括更小的最大增加和更大的最小延迟."
         ]
       ],
       "poolCommissionRate": [
-        "Pool Commission Rate",
+        "提名池佣金率",
         [
-          "The commission rate of the pool. This value is set by the pool Root, and is the percentage of rewards the pool will take from its members.",
-          "A payee account must also be provided to receive the commission.",
-          "The commission rate is taken from the pool's rewards before they are distributed to its members."
+          "提名池的佣金率.该值由提名池主理人设置，是提名池将从其成员那里获得的奖励的百分比",
+          "必须提供收款人账户才能收取佣金.",
+          "佣金率在从提名池分配给会员之前的奖励中提取."
         ]
       ],
       "poolMaxCommission": [
-        "Pool Max Commission",
+        "提名池最大佣金率",
         [
-          "The maximum commission rate a pool owner can set for the pool.",
-          "This value is set by the pool Root, and is the maximum percentage of rewards the pool will take from its members.",
-          "Once an initial maximum commission is set, only more restrictive values can be set thereafter."
+          "最高佣金率可被提名池所有者设置.",
+          "此值由提名池主理人设置, 是提名池从其成员处获得的奖励的最大百分比.",
+          "一旦设定了初始最大佣金, 此后只能设定更限制的值."
         ]
       ],
       "poolMembership": [
