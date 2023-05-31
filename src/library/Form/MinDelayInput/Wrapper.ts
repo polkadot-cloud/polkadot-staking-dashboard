@@ -1,0 +1,64 @@
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
+import styled from 'styled-components';
+
+export const MinDelayInputWrapper = styled.div`
+  color: var(--text-color-secondary);
+  flex: 0 1 auto;
+  display: flex;
+  height: 3rem;
+  align-items: center;
+  margin: 0.5rem 1rem 0 0;
+  border: 1px solid var(--border-primary-color);
+  border-radius: 0.75rem;
+  overflow: hidden;
+
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+
+  > .input {
+    flex-grow: 1;
+    padding-right: 0.75rem;
+
+    input {
+      width: 30px;
+      margin: 0 0.6rem 0 0;
+      padding-left: 1rem;
+    }
+  }
+
+  > .toggle {
+    background: var(--button-primary-background);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 1.75rem;
+
+    > button {
+      color: var(--text-color-secondary);
+      height: 1.5rem;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:first-child {
+        padding-top: 0.3rem;
+      }
+      &:last-child {
+        padding-bottom: 0.3rem;
+      }
+
+      &:hover {
+        background: var(--button-secondary-background);
+      }
+    }
+  }
+`;
