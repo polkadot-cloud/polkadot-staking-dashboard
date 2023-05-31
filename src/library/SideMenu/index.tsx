@@ -131,7 +131,7 @@ export const SideMenu = () => {
           type="button"
           onClick={() =>
             window.open(
-              'https://github.com/paritytech/polkadot-staking-dashboard',
+              'https://github.com/gluwa/creditcoin-staking-dashboard',
               '_blank'
             )
           }
