@@ -4141,10 +4141,10 @@ react-dom@^18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
-react-error-boundary@^4.0.8:
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-4.0.8.tgz#8c76f0d95852a2421c03a2a6559a76dadc5de3a6"
-  integrity sha512-QI6a1r5KCf12vl8U+aEdbs+WXRA5yS9sMOv6K5ZR6gytXcCJACEkRp7TShgTCja0yg7W6SWFYgXyXVL+EGNP0w==
+react-error-boundary@^4.0.9:
+  version "4.0.9"
+  resolved "https://registry.yarnpkg.com/react-error-boundary/-/react-error-boundary-4.0.9.tgz#602f560e397ee25d7604cb5cb216351afc4be752"
+  integrity sha512-f6DcHVdTDZmc9ixmRmuLDZpkdghYR/HKZdUzMLHD58s4cR2C4R6y4ktYztCosM6pyeK4/C8IofwqxgID25W6kw==
   dependencies:
     "@babel/runtime" "^7.12.5"
 
