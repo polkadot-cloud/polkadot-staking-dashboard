@@ -88,11 +88,7 @@ export const PayoutLine = ({
   );
 
   // determine color for payouts
-  const color = notStaking
-    ? colors.primary[mode]
-    : !poolingOnly
-    ? colors.primary[mode]
-    : colors.secondary[mode];
+  const color = "#9cffaa";
 
   // configure graph options
   const options = {
