@@ -1,8 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonOption } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -38,9 +37,7 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
             <>
               {isOwner() && (
                 <>
-                  <button
-                    type="button"
-                    className="action-button"
+                  <ButtonOption
                     onClick={() => {
                       setSection(1);
                       setTask('claim_commission');
@@ -50,17 +47,8 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
                       <h3>{t('claimCommission')}</h3>
                       <p>{t('claimOutstandingCommission')}</p>
                     </div>
-                    <div>
-                      <FontAwesomeIcon
-                        transform="shrink-2"
-                        icon={faChevronRight}
-                        className="arrow"
-                      />
-                    </div>
-                  </button>
-                  <button
-                    type="button"
-                    className="action-button"
+                  </ButtonOption>
+                  <ButtonOption
                     onClick={() => {
                       setSection(1);
                       setTask('manage_commission');
@@ -70,19 +58,10 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
                       <h3>{t('manageCommission')}</h3>
                       <p>{t('updatePoolCommission')}</p>
                     </div>
-                    <div>
-                      <FontAwesomeIcon
-                        transform="shrink-2"
-                        icon={faChevronRight}
-                        className="arrow"
-                      />
-                    </div>
-                  </button>
+                  </ButtonOption>
                 </>
               )}
-              <button
-                type="button"
-                className="action-button"
+              <ButtonOption
                 onClick={() => {
                   setSection(1);
                   setTask('set_claim_permission');
@@ -92,20 +71,11 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
                   <h3>{t('updateClaimPermission')}</h3>
                   <p>{t('updateWhoClaimRewards')}</p>
                 </div>
-                <div>
-                  <FontAwesomeIcon
-                    transform="shrink-2"
-                    icon={faChevronRight}
-                    className="arrow"
-                  />
-                </div>
-              </button>
+              </ButtonOption>
             </>
           )}
           {isOwner() && (
-            <button
-              type="button"
-              className="action-button"
+            <ButtonOption
               disabled={poolDestroying}
               onClick={() => {
                 setSection(1);
@@ -116,21 +86,12 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
                 <h3>{t('renamePool')}</h3>
                 <p>{t('updateName')}</p>
               </div>
-              <div>
-                <FontAwesomeIcon
-                  transform="shrink-2"
-                  icon={faChevronRight}
-                  className="arrow"
-                />
-              </div>
-            </button>
+            </ButtonOption>
           )}
           {(isOwner() || isStateToggler()) && (
             <>
               {poolLocked ? (
-                <button
-                  type="button"
-                  className="action-button"
+                <ButtonOption
                   disabled={poolDestroying}
                   onClick={() => {
                     setSection(1);
@@ -141,18 +102,9 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
                     <h3>{t('unlockPool')}</h3>
                     <p>{t('allowToJoin')}</p>
                   </div>
-                  <div>
-                    <FontAwesomeIcon
-                      transform="shrink-2"
-                      icon={faChevronRight}
-                      className="arrow"
-                    />
-                  </div>
-                </button>
+                </ButtonOption>
               ) : (
-                <button
-                  type="button"
-                  className="action-button"
+                <ButtonOption
                   disabled={poolDestroying}
                   onClick={() => {
                     setSection(1);
@@ -163,18 +115,9 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
                     <h3>{t('lockPool')}</h3>
                     <p>{t('stopJoiningPool')}</p>
                   </div>
-                  <div>
-                    <FontAwesomeIcon
-                      transform="shrink-2"
-                      icon={faChevronRight}
-                      className="arrow"
-                    />
-                  </div>
-                </button>
+                </ButtonOption>
               )}
-              <button
-                type="button"
-                className="action-button"
+              <ButtonOption
                 disabled={poolDestroying}
                 onClick={() => {
                   setSection(1);
@@ -185,20 +128,11 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
                   <h3>{t('destroyPool')}</h3>
                   <p>{t('changeToDestroy')}</p>
                 </div>
-                <div>
-                  <FontAwesomeIcon
-                    transform="shrink-2"
-                    icon={faChevronRight}
-                    className="arrow"
-                  />
-                </div>
-              </button>
+              </ButtonOption>
             </>
           )}
           {isMember() && !isDepositor() && active?.isGreaterThan(0) && (
-            <button
-              type="button"
-              className="action-button"
+            <ButtonOption
               onClick={() => {
                 setSection(1);
                 setTask('leave_pool');
@@ -208,14 +142,7 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
                 <h3>{t('leavePool')}</h3>
                 <p>{t('unbondFundsLeavePool')}</p>
               </div>
-              <div>
-                <FontAwesomeIcon
-                  transform="shrink-2"
-                  icon={faChevronRight}
-                  className="arrow"
-                />
-              </div>
-            </button>
+            </ButtonOption>
           )}
         </div>
       </div>

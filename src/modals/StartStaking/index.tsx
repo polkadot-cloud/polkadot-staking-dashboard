@@ -1,9 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ModalPadding } from '@polkadotcloud/core-ui';
+import { ButtonOption, ModalPadding } from '@polkadotcloud/core-ui';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
@@ -18,9 +16,7 @@ export const StartStaking = () => {
     <>
       <Title title={t('startStaking')} />
       <ModalPadding>
-        <button
-          type="button"
-          className="action-button"
+        <ButtonOption
           disabled={false}
           onClick={() => {
             navigate('/nominate');
@@ -31,13 +27,8 @@ export const StartStaking = () => {
             <h3>{t('becomeNominator')}</h3>
             <p>{t('becomeNominatorSubtitle')}</p>
           </div>
-          <div>
-            <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
-          </div>
-        </button>
-        <button
-          type="button"
-          className="action-button"
+        </ButtonOption>
+        <ButtonOption
           disabled={false}
           onClick={() => {
             navigate('/pools?t=2');
@@ -48,10 +39,7 @@ export const StartStaking = () => {
             <h3>{t('joinNominationPool')}</h3>
             <p>{t('joinNominationPoolSubtitle')}</p>
           </div>
-          <div>
-            <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
-          </div>
-        </button>
+        </ButtonOption>
       </ModalPadding>
     </>
   );
