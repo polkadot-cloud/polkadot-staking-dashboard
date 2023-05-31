@@ -140,7 +140,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       const { promise: ScPromise, cancel } = makeCancelable(
         import('@substrate/connect')
       );
-      ScPromise.then((Sc: AnyApi) => {
+      ScPromise.then((Sc) => {
         handleLightClientConnection(Sc);
       });
       return () => {
