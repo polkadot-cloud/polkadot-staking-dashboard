@@ -1,8 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
+import { MinDelayInputWrapper } from './Wrapper';
 import type { MinDelayProps } from './types';
 
 export const MinDelayInput = ({
@@ -25,15 +28,35 @@ export const MinDelayInput = ({
     }
   };
 
+  const onIncrement = () => {
+    const newValue = current + 1;
+    onChange(String(newValue));
+  };
+
+  const onDecrement = () => {
+    const newValue = Math.max(current - 1, 0);
+    onChange(String(newValue));
+  };
+
   return (
-    <section>
-      <input
-        type="text"
-        placeholder="0"
-        value={current}
-        onChange={({ target: { value } }) => onChange(value)}
-      />
-      {label}
-    </section>
+    <MinDelayInputWrapper>
+      <div className="input">
+        <input
+          type="text"
+          placeholder="0"
+          value={current}
+          onChange={({ target: { value } }) => onChange(value)}
+        />
+        {label}
+      </div>
+      <div className="toggle">
+        <button type="button" onClick={() => onIncrement()}>
+          <FontAwesomeIcon icon={faCaretUp} transform="shrink-5" />
+        </button>
+        <button type="button" onClick={() => onDecrement()}>
+          <FontAwesomeIcon icon={faCaretDown} transform="shrink-5" />
+        </button>
+      </div>
+    </MinDelayInputWrapper>
   );
 };

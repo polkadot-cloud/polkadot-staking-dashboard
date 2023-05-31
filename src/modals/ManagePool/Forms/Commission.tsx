@@ -567,7 +567,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
 
         {changeRateEnabled && (
           <CommissionWrapper>
-            <h5>
+            <h5 className={maxIncreaseFeedback?.label || 'neutral'}>
               {t('maxIncreasePerUpdate')}
               {maxIncreaseFeedback && (
                 <span className={maxIncreaseFeedback?.label || 'neutral'}>
@@ -593,7 +593,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
                 />
               </div>
             </div>
-            <h5>
+            <h5 className={minDelayFeedback?.label || 'neutral'}>
               {t('minDelayBetweenUpdates')}
               {minDelayFeedback && (
                 <span className={minDelayFeedback?.label || 'neutral'}>
