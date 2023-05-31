@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { DefaultParams } from 'consts';
-import { ReactComponent as CreditcoinLogoSVG } from 'img/creditcoin_logo.svg';
-import { ReactComponent as PolkadotIconSVG } from 'img/polkadot_icon.svg';
-import { ReactComponent as PolkadotInlineSVG } from 'img/polkadot_inline.svg';
+import { ReactComponent as CreditcoinIconSVG } from 'img/ic_creditcoin.svg';
+import { ReactComponent as CreditcoinLogoSVG } from 'img/logo_creditcoin.svg';
+
 import type { Networks } from 'types';
 
 export const NetworkList: Networks = {
@@ -26,13 +26,13 @@ export const NetworkList: Networks = {
     unit: 'CTC',
     units: 18,
     brand: {
-      icon: PolkadotIconSVG,
+      icon: CreditcoinIconSVG,
       logo: {
         svg: CreditcoinLogoSVG,
         width: '7.2em',
       },
       inline: {
-        svg: PolkadotInlineSVG,
+        svg: CreditcoinLogoSVG,
         size: '1.05em',
       },
     },

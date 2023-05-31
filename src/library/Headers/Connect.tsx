@@ -7,6 +7,7 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useTranslation } from 'react-i18next';
 import { HeadingWrapper, Item } from './Wrappers';
+import { ReactComponent as WalletIcon } from '../../img/ic_wallet.svg';
 
 export const Connect = () => {
   const { t } = useTranslation('library');
@@ -20,11 +21,7 @@ export const Connect = () => {
           openModalWith(accounts.length ? 'Accounts' : 'Connect', {}, 'large');
         }}
       >
-        <FontAwesomeIcon
-          icon={faWallet}
-          className="icon"
-          transform="shrink-2"
-        />
+        <WalletIcon className="icon" height={'16'} width={'auto'}/>
         <span>{activeAccount ? t('accounts') : t('connect')}</span>
       </Item>
     </HeadingWrapper>

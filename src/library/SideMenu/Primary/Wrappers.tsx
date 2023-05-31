@@ -37,9 +37,6 @@ export const Wrapper = styled(motion.div)`
     margin-right: 0.65rem;
     width: 1.35rem;
     height: 1.35rem;
-    .fa-icon {
-      margin: 0 0.15rem;
-    }
     &.minimised {
       margin: 0;
       width: 1.5rem;

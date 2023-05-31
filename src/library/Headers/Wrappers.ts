@@ -85,12 +85,12 @@ export const Item = styled.button`
   &.connect {
     background: var(--network-color-primary);
     > span {
-      color: white;
+      color: black;
     }
     .icon {
       margin-right: 0.6rem;
       path {
-        fill: white;
+        fill: black;
       }
     }
   }

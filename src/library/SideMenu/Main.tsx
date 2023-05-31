@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageCategories, PagesConfig } from 'config/pages';
-import { BaseURL, PolkadotUrl } from 'consts';
+import { BaseURL, CreditcoinUrl } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -138,7 +138,7 @@ export const Main = () => {
     <>
       <LogoWrapper
         onClick={() => {
-          window.open(PolkadotUrl, '_blank');
+          window.open(CreditcoinUrl, '_blank');
         }}
         minimised={sideMenuMinimised}
       >
@@ -167,14 +167,14 @@ export const Main = () => {
 
             {/* display category links */}
             {pagesToDisplay.map(
-              ({ category, hash, key, lottie, action }: PageItem) => (
+              ({ category, hash, key, icon, action }: PageItem) => (
                 <React.Fragment key={`sidemenu_page_${categoryId}_${key}`}>
                   {category === categoryId && (
                     <Primary
                       name={t(key)}
                       to={hash}
                       active={hash === pathname}
-                      lottie={lottie}
+                      icon={icon}
                       action={action}
                       minimised={sideMenuMinimised}
                     />

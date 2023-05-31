@@ -12,8 +12,9 @@ import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import type { UIContextInterface } from 'contexts/UI/types';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
-import { ReactComponent as ForumSVG } from 'img/forum.svg';
-import { ReactComponent as InfoSVG } from 'img/info.svg';
+import { ReactComponent as FeedbackSVG } from '../../img/ic_feedback.svg';
+import { ReactComponent as ResourcesSVG } from '../../img/ic_resources.svg';
+import { ReactComponent as CreditcoinSVG } from '../../img/ic_creditcoin.svg';
 import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
@@ -82,7 +83,7 @@ export const SideMenu = () => {
           name={t('resources')}
           minimised={sideMenuMinimised}
           icon={{
-            Svg: InfoSVG,
+            Svg: ResourcesSVG,
             size: sideMenuMinimised ? '1.4em' : '1.2em',
           }}
         />
@@ -91,7 +92,7 @@ export const SideMenu = () => {
           name={t('feedback')}
           minimised={sideMenuMinimised}
           icon={{
-            Svg: ForumSVG,
+            Svg: FeedbackSVG,
             size: sideMenuMinimised ? '1.4em' : '1.2em',
           }}
         />
@@ -102,7 +103,7 @@ export const SideMenu = () => {
           name={capitalizeFirstLetter(network.name)}
           onClick={() => openModalWith('Networks')}
           icon={{
-            Svg: network.brand.inline.svg,
+            Svg: CreditcoinSVG,
             size: network.brand.inline.size,
           }}
           minimised={sideMenuMinimised}
