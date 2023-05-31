@@ -10,10 +10,10 @@ export const TipsConfig = [
     id: 'recommendedNominator',
     s: 2,
   },
-  {
-    id: 'recommendedJoinPool',
-    s: 3,
-  },
+  // {
+  //   id: 'recommendedJoinPool',
+  //   s: 3,
+  // },
   {
     id: 'howToStake',
     s: 4,

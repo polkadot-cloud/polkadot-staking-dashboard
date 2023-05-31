@@ -46,7 +46,7 @@ export const ThemedRouter = () => {
   const { network } = useApi();
 
   return (
-    <ThemeProvider theme={{ mode, network: `${network.name}-${mode}` }}>
+    <ThemeProvider theme={{ mode, network: `polkadot-dark` }}>
       {
         // FIXME: the @polkadotcloud/core-ui package only includes polkadot, westend, and kusama
         // we'll have to figure out a way to theme it for other networks
