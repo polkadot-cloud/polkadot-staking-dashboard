@@ -42,46 +42,4 @@ export const ContentWrapper = styled.div`
       color: var(--text-color-secondary);
     }
   }
-  .action-button {
-    background: var(--button-primary-background);
-    transition: all var(--transition-duration);
-    font-family: InterSemiBold, sans-serif;
-    padding: 1rem;
-    cursor: pointer;
-    margin-bottom: 1rem;
-    border-radius: 0.75rem;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    width: 100%;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-
-    h3,
-    p {
-      text-align: left;
-      margin: 0;
-    }
-    h3 {
-      margin-bottom: 0.5rem;
-    }
-    > *:last-child {
-      flex: 1;
-      display: flex;
-      flex-flow: row wrap;
-      justify-content: flex-end;
-    }
-    &:hover {
-      background: var(--button-hover-background);
-    }
-    .icon {
-      margin-right: 0.5rem;
-    }
-    p {
-      color: var(--text-color-primary);
-      font-size: 1rem;
-    }
-  }
 `;
