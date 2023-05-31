@@ -41,14 +41,15 @@ export const PagesConfig: PagesConfigItems = [
     Entry: Overview,
     icon: () => (<OverviewIcon height={'20'} width={'auto'}/>)
   },
-  {
-    category: 2,
-    key: 'pools',
-    uri: `${BaseURL}/pools`,
-    hash: '/pools',
-    Entry: Pools,
-    icon: () => (<PoolsIcon height={'20'} width={'auto'}/>)
-  },
+  // Removed temporarily until there is a demand pools
+  // {
+  //   category: 2,
+  //   key: 'pools',
+  //   uri: `${BaseURL}/pools`,
+  //   hash: '/pools',
+  //   Entry: Pools,
+  //   icon: () => (<PoolsIcon height={'20'} width={'auto'}/>)
+  // },
   {
     category: 2,
     key: 'nominate',

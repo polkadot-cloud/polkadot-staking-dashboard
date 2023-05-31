@@ -21,11 +21,11 @@ export const StatPie = ({ value, value2 }: StatPieProps) => {
   }
   const borderColor = isZero
     ? graphColors.inactive[mode]
-    : [colors.primary[mode], graphColors.border[mode]];
+    : "#2F3032";
 
   const backgroundColor = isZero
     ? graphColors.inactive[mode]
-    : colors.primary[mode];
+    : "#9CFFAA";
 
   const options = {
     borderColor,
