@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
+import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -16,10 +17,12 @@ export const TransferOptionsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { consts } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { getStashLedger, getBalance, getLocks } = useBalances();
   const { getAccount } = useBonded();
   const { membership } = usePoolMemberships();
+  const { existentialDeposit } = consts;
 
   // get the bond and unbond amounts available to the user
   const getTransferOptions = (address: MaybeAccount): TransferOptions => {
@@ -31,7 +34,10 @@ export const TransferOptionsProvider = ({
     const ledger = getStashLedger(address);
     const locks = getLocks(address);
 
-    const { freeAfterReserve } = balance;
+    const freeAfterReserve = BigNumber.max(
+      0,
+      balance.free.minus(existentialDeposit)
+    );
     const { active, total, unlocking } = ledger;
 
     // calculate total balance locked
