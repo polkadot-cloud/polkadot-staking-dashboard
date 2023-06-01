@@ -34,53 +34,6 @@ export const ConnectItem = styled.div`
   }
 `;
 
-// Styling for a hardware item, which can reflect the status of the hardware connection.
-export const HardwareInner = styled.div`
-  background: var(--button-primary-background);
-  width: 100%;
-  border-radius: 1rem;
-  overflow: hidden;
-  position: relative;
-
-  .body {
-    width: 100%;
-    padding: 1.35rem 0.85rem 0.75rem 0.85rem;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    .row {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-
-      p {
-        margin-bottom: 0;
-      }
-
-      &.margin {
-        margin-top: 0.75rem;
-      }
-      .logo {
-        height: 3rem;
-        margin: 0.5rem;
-
-        &.ledger {
-          path {
-            fill: var(--text-color-secondary);
-          }
-        }
-      }
-    }
-    .status {
-      position: absolute;
-      top: 0.9rem;
-      right: 0.9rem;
-    }
-  }
-`;
-
 // Styling for an extension item, which can reflect the status of the extension connection.
 export const ExtensionInner = styled.div`
   background: var(--button-primary-background);

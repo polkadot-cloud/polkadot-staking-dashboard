@@ -6,6 +6,7 @@ import {
   ButtonHelp,
   ButtonPrimaryInvert,
   ButtonText,
+  ModalHardwareItem,
 } from '@polkadotcloud/core-ui';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
@@ -13,7 +14,7 @@ import { ReactComponent as VaultSVG } from 'img/polkadotVault.svg';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Foot } from './Foot';
-import { ConnectItem, HardwareInner } from './Wrappers';
+import { ConnectItem } from './Wrappers';
 
 export const Vault = (): React.ReactElement => {
   const { t } = useTranslation('modals');
@@ -22,7 +23,7 @@ export const Vault = (): React.ReactElement => {
 
   return (
     <ConnectItem>
-      <HardwareInner>
+      <ModalHardwareItem>
         <div className="body">
           <div className="status">
             <ButtonHelp onClick={() => openHelp('Polkadot Vault')} />
@@ -54,7 +55,7 @@ export const Vault = (): React.ReactElement => {
           </div>
         </div>
         <Foot url="signer.parity.io" />
-      </HardwareInner>
+      </ModalHardwareItem>
     </ConnectItem>
   );
 };

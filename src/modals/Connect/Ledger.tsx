@@ -7,6 +7,7 @@ import {
   ButtonHelp,
   ButtonPrimaryInvert,
   ButtonText,
+  ModalHardwareItem,
 } from '@polkadotcloud/core-ui';
 import { inChrome } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
@@ -15,7 +16,7 @@ import { useModal } from 'contexts/Modal';
 import { ReactComponent as LedgerLogoSVG } from 'img/ledgerLogo.svg';
 import React from 'react';
 import { Foot } from './Foot';
-import { ConnectItem, HardwareInner } from './Wrappers';
+import { ConnectItem } from './Wrappers';
 
 export const Ledger = (): React.ReactElement => {
   const { openHelp } = useHelp();
@@ -29,13 +30,13 @@ export const Ledger = (): React.ReactElement => {
 
   return (
     <ConnectItem>
-      <HardwareInner>
+      <ModalHardwareItem>
         <div className="body">
           <div className="status">
             <ButtonHelp onClick={() => openHelp('Ledger Hardware Wallets')} />
           </div>
           <div className="row">
-            <LedgerLogoSVG className="logo ledger" />
+            <LedgerLogoSVG className="logo mono" />
           </div>
           <div className="row margin">
             <ButtonText
@@ -65,7 +66,7 @@ export const Ledger = (): React.ReactElement => {
           </div>
         </div>
         <Foot url="ledger.com" />
-      </HardwareInner>
+      </ModalHardwareItem>
     </ConnectItem>
   );
 };
