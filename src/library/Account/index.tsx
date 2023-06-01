@@ -3,7 +3,7 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress } from '@polkadotcloud/utils';
+import { clipAddress, remToUnit } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -74,7 +74,7 @@ export const Account = ({
         <>
           {format !== 'text' && (
             <span className="identicon">
-              <Identicon value={value} size={18} />
+              <Identicon value={value} size={remToUnit(fontSize) * 1.4} />
             </span>
           )}
           <span className="title">{displayValue}</span>
