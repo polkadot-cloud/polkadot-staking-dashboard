@@ -39,36 +39,21 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const ConnectedAccount = styled.div`
+export const ConnectedAccount = styled(motion.div)`
   background: var(--network-color-primary);
   border-radius: 1.5rem;
   display: flex;
+  transition: transform var(--transition-duration);
+  padding: 0.15rem 0.5rem;
 
   &:hover {
-    transform: scale(1.03);
+    transform: scale(1.015);
   }
 
-  button {
-    padding: 0.05rem 1rem;
-    font-size: 1.05rem;
-    color: white;
-
-    > span {
-      color: white;
-      line-height: 2.2rem;
-      .icon {
-        color: var(--text-color-secondary);
-        cursor: pointer;
-      }
-    }
-
-    &:hover {
-      box-shadow: 5px 5px 5px var(--network-color-primary);
-    }
-  }
-
-  .account-label {
-    border-right: 1px solid white;
+  > span {
+    border-right: 1px solid var(--text-color-invert);
+    opacity: 0.2;
+    margin: 0 0.4rem;
   }
 `;
 

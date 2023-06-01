@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { clipAddress, remToUnit } from '@polkadotcloud/utils';
+import { clipAddress } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -18,7 +18,7 @@ export const PoolAccount = ({
   onClick,
   canClick,
   filled = false,
-  fontSize = '1.05rem',
+  fontSize = 'var(--button-font-size-small)',
 }: PoolAccountProps) => {
   const { t } = useTranslation('library');
   const { isReady } = useApi();
@@ -80,10 +80,7 @@ export const PoolAccount = ({
       {label !== undefined && <div className="account-label">{label}</div>}
 
       <span className="identicon">
-        <Identicon
-          value={pool.addresses.stash}
-          size={remToUnit(fontSize) * 1.45}
-        />
+        <Identicon value={pool.addresses.stash} size={18} />
       </span>
       <span className={`title${syncing === true ? ` syncing` : ``}`}>
         {display}

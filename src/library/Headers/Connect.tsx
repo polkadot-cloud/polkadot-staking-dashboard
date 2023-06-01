@@ -1,8 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faWallet } from '@fortawesome/free-solid-svg-icons';
+import { faPlug, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonText } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useTranslation } from 'react-i18next';
@@ -11,40 +12,29 @@ import { ConnectedAccount, HeadingWrapper, Item } from './Wrappers';
 export const Connect = () => {
   const { t } = useTranslation('library');
   const { openModalWith } = useModal();
-  const { activeAccount, accounts } = useConnect();
+  const { accounts } = useConnect();
   return (
     <HeadingWrapper>
-      {activeAccount ? (
+      {accounts.length ? (
         <ConnectedAccount>
-          <button
-            type="button"
-            className="connect"
+          <ButtonText
+            text={t('accounts')}
+            iconLeft={faWallet}
             onClick={() => {
               openModalWith('Accounts', {}, 'large');
             }}
-          >
-            <FontAwesomeIcon
-              icon={faWallet}
-              className="icon"
-              transform="shrink-2"
-            />
-            <span>{t('accounts')}</span>
-          </button>
-          <div className="account-label" />
-          <button
-            type="button"
-            className="connect"
+            style={{ color: 'var(--text-color-invert' }}
+          />
+          <span />
+          <ButtonText
+            text=""
+            iconRight={faPlug}
+            iconTransform="grow-1"
             onClick={() => {
               openModalWith('Connect', {}, 'large');
             }}
-          >
-            <FontAwesomeIcon
-              icon={faWallet}
-              className="icon"
-              transform="shrink-2"
-            />
-            <span>Extensions</span>
-          </button>
+            style={{ color: 'var(--text-color-invert' }}
+          />
         </ConnectedAccount>
       ) : (
         <Item
