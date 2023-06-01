@@ -39,6 +39,39 @@ export const Wrapper = styled.div`
   }
 `;
 
+export const ConnectedAccount = styled.div`
+  background: var(--network-color-primary);
+  border-radius: 1.5rem;
+  display: flex;
+
+  &:hover {
+    transform: scale(1.03);
+  }
+
+  button {
+    padding: 0.05rem 1rem;
+    font-size: 1.05rem;
+    color: white;
+
+    > span {
+      color: white;
+      line-height: 2.2rem;
+      .icon {
+        color: var(--text-color-secondary);
+        cursor: pointer;
+      }
+    }
+
+    &:hover {
+      box-shadow: 5px 5px 5px var(--network-color-primary);
+    }
+  }
+
+  .account-label {
+    border-right: 1px solid white;
+  }
+`;
+
 export const HeadingWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;

@@ -1,10 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faChevronLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
+import { faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import {
   ActionItem,
-  ButtonPrimaryInvert,
   ButtonText,
   ModalCustomHeader,
   ModalPadding,
@@ -144,15 +143,6 @@ export const Accounts = () => {
       <ModalCustomHeader>
         <div className="first">
           <h1>{t('accounts')}</h1>
-          <ButtonPrimaryInvert
-            text={t('goToConnect')}
-            iconLeft={faChevronLeft}
-            iconTransform="shrink-3"
-            onClick={() =>
-              replaceModalWith('Connect', { disableScroll: true }, 'large')
-            }
-            marginLeft
-          />
         </div>
         <div>
           {activeAccount && (
