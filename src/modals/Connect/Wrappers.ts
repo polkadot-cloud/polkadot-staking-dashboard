@@ -15,24 +15,6 @@ export const ExtensionsWrapper = styled.div`
     padding: 0;
   }
 `;
-export const ConnectItem = styled.div`
-  padding: 0.5rem;
-  flex-grow: 0;
-  width: 50%;
-
-  @media (max-width: ${TwoThreshold}px) {
-    width: 100%;
-  }
-
-  &.canConnect {
-    > .inner {
-      transition: transform var(--transition-duration);
-      &:hover {
-        transform: scale(1.015);
-      }
-    }
-  }
-`;
 
 // Styling for an extension item, which can reflect the status of the extension connection.
 export const ExtensionInner = styled.div`
@@ -100,28 +82,6 @@ export const ExtensionInner = styled.div`
     }
     .dark {
       fill: var(--text-color-secondary);
-    }
-  }
-`;
-
-// Footer for a connect item, that holds a URL to the item's webpage.
-export const ConnectItemFoot = styled.div`
-  border-top: 1px solid var(--border-primary-color);
-  width: 100%;
-  padding: 0.85rem 0.85rem;
-
-  .link {
-    color: var(--text-color-secondary);
-    transition: color var(--transition-duration);
-    display: flex;
-    align-items: center;
-    font-size: 0.92rem;
-    &:hover {
-      color: var(--network-color-primary);
-    }
-    > svg {
-      margin-left: 0.3rem;
-      margin-top: 0.1rem;
     }
   }
 `;

@@ -2,11 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChrome, faUsb } from '@fortawesome/free-brands-svg-icons';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import {
+  faExclamationTriangle,
+  faExternalLinkAlt,
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   ButtonHelp,
   ButtonPrimaryInvert,
   ButtonText,
+  ModalConnectItem,
   ModalHardwareItem,
 } from '@polkadotcloud/core-ui';
 import { inChrome } from '@polkadotcloud/utils';
@@ -15,13 +20,12 @@ import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as LedgerLogoSVG } from 'img/ledgerLogo.svg';
 import React from 'react';
-import { Foot } from './Foot';
-import { ConnectItem } from './Wrappers';
 
 export const Ledger = (): React.ReactElement => {
   const { openHelp } = useHelp();
   const { replaceModalWith } = useModal();
   const { name } = useApi().network;
+  const url = 'ledger.com';
 
   // Only render on Polkadot and Kusama networks.
   if (!['polkadot', 'kusama'].includes(name)) {
@@ -29,7 +33,7 @@ export const Ledger = (): React.ReactElement => {
   }
 
   return (
-    <ConnectItem>
+    <ModalConnectItem>
       <ModalHardwareItem>
         <div className="body">
           <div className="status">
@@ -65,8 +69,18 @@ export const Ledger = (): React.ReactElement => {
             />
           </div>
         </div>
-        <Foot url="ledger.com" />
+        <div className="foot">
+          <a
+            className="link"
+            href={`https://${url}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {url}
+            <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
+          </a>
+        </div>
       </ModalHardwareItem>
-    </ConnectItem>
+    </ModalConnectItem>
   );
 };
