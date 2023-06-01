@@ -39,6 +39,24 @@ export const Wrapper = styled.div`
   }
 `;
 
+export const ConnectedAccount = styled(motion.div)`
+  background: var(--network-color-primary);
+  border-radius: 1.5rem;
+  display: flex;
+  transition: transform var(--transition-duration);
+  padding: 0.1rem 0.75rem;
+
+  &:hover {
+    transform: scale(1.015);
+  }
+
+  > span {
+    border-right: 1px solid var(--text-color-invert);
+    opacity: 0.2;
+    margin: 0 0.4rem;
+  }
+`;
+
 export const HeadingWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
