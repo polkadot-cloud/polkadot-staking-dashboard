@@ -972,19 +972,19 @@
     tslib "^2.5.0"
     ws "^8.13.0"
 
-"@polkadotcloud/core-ui@^0.2.72":
+"@polkadotcloud/core-ui@0.2.72":
   version "0.2.72"
-  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.2.72.tgz#4585ed522a0e6e07da94e29c773a04daa4cb166d"
+  resolved "https://registry.yarnpkg.com/@polkadotcloud/core-ui/-/core-ui-0.2.72.tgz#4585ed522a0e6e07da94e29c773a04daa4cb166d"
   integrity sha512-iDd8bqDyMW6iMrE693iwOlgzq/GjwIg1sacOMXUI0DApgd2ai84K9ooWKnrWvQLCD4Gb85t/WYODRbrQ6OLVXg==
 
-"@polkadotcloud/react-odometer@^0.1.17":
+"@polkadotcloud/react-odometer@0.1.17":
   version "0.1.17"
-  resolved "https://registry.npmjs.org/@polkadotcloud/react-odometer/-/react-odometer-0.1.17.tgz#0c4465581c4155ee45b2a99a7b8cbacc36d485b0"
+  resolved "https://registry.yarnpkg.com/@polkadotcloud/react-odometer/-/react-odometer-0.1.17.tgz#0c4465581c4155ee45b2a99a7b8cbacc36d485b0"
   integrity sha512-60VSsLJva6oSGidtem2oF43i04zNqg2Hxm3OT/UvUamuIIoY0QJKI+hnWl643mGTk5Ooz13hDLxpt5Sf9IXmfw==
 
-"@polkadotcloud/utils@^0.2.22":
+"@polkadotcloud/utils@0.2.22":
   version "0.2.22"
-  resolved "https://registry.npmjs.org/@polkadotcloud/utils/-/utils-0.2.22.tgz#959b7de19352ce3cf75ba32b6c5bde19b3caee07"
+  resolved "https://registry.yarnpkg.com/@polkadotcloud/utils/-/utils-0.2.22.tgz#959b7de19352ce3cf75ba32b6c5bde19b3caee07"
   integrity sha512-FtGOwEt1oiP1beC1y1VjeiYcVg0vmMts1qMkluHsptdsz7uPXPau4t2SxZvqVM9sKsJbaWmGe6Z+EfzV4I9Cow==
 
 "@remix-run/router@1.6.2":

@@ -5,7 +5,7 @@ import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
-import { PaddingWrapper } from 'modals/Wrappers';
+import { ModalPadding } from '@polkadotcloud/core-ui';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,7 +17,7 @@ export const StartStaking = () => {
   return (
     <>
       <Title title={t('startStaking')} />
-      <PaddingWrapper>
+      <ModalPadding>
         <button
           type="button"
           className="action-button"
@@ -53,7 +53,7 @@ export const StartStaking = () => {
         {/*    <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />*/}
         {/*  </div>*/}
         {/*</button>*/}
-      </PaddingWrapper>
+      </ModalPadding>
     </>
   );
 };
