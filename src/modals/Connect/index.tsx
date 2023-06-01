@@ -28,7 +28,7 @@ import { ExtensionsWrapper } from './Wrappers';
 export const Connect = () => {
   const { t } = useTranslation('modals');
   const { extensions } = useExtensions();
-  const { replaceModalWith, setModalHeight, modalMaxHeight } = useModal();
+  const { setModalHeight, modalMaxHeight } = useModal();
 
   const installed = Extensions.filter((a) =>
     extensions.find((b) => b.id === a.id)
