@@ -1,8 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import {
   ActionItem,
+  ButtonPrimaryInvert,
   ButtonTab,
   ModalCustomHeader,
   ModalFixedTitle,
@@ -28,7 +30,7 @@ import { ExtensionsWrapper } from './Wrappers';
 export const Connect = () => {
   const { t } = useTranslation('modals');
   const { extensions } = useExtensions();
-  const { setModalHeight, modalMaxHeight } = useModal();
+  const { replaceModalWith, setModalHeight, modalMaxHeight } = useModal();
 
   const installed = Extensions.filter((a) =>
     extensions.find((b) => b.id === a.id)
@@ -82,6 +84,13 @@ export const Connect = () => {
           <ModalCustomHeader>
             <div className="first">
               <h1>{t('connect')}</h1>
+              <ButtonPrimaryInvert
+                text={t('goToAccounts')}
+                iconRight={faChevronRight}
+                iconTransform="shrink-3"
+                onClick={() => replaceModalWith('Accounts', {}, 'large')}
+                marginLeft
+              />
             </div>
             <ModalSection type="tab">
               <ButtonTab
