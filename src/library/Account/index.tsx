@@ -13,7 +13,7 @@ import type { AccountProps } from './types';
 
 export const Account = ({
   filled = false,
-  fontSize = 'var(--button-font-size-small)',
+  fontSize = '1.05rem',
   format,
   value,
   label,

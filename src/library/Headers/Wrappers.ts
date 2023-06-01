@@ -44,7 +44,7 @@ export const ConnectedAccount = styled(motion.div)`
   border-radius: 1.5rem;
   display: flex;
   transition: transform var(--transition-duration);
-  padding: 0.15rem 0.5rem;
+  padding: 0.1rem 0.75rem;
 
   &:hover {
     transform: scale(1.015);

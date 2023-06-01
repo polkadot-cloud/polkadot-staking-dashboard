@@ -18,7 +18,7 @@ export const PoolAccount = ({
   onClick,
   canClick,
   filled = false,
-  fontSize = 'var(--button-font-size-small)',
+  fontSize = '1.05rem',
 }: PoolAccountProps) => {
   const { t } = useTranslation('library');
   const { isReady } = useApi();
