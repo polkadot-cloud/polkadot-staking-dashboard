@@ -23,7 +23,7 @@ export const Connect = () => {
               onClick={() => {
                 openModalWith('Accounts', {}, 'large');
               }}
-              style={{ color: 'var(--text-color-invert', fontSize: '1.05rem' }}
+              style={{ color: 'white', fontSize: '1.05rem' }}
             />
             <span />
             <ButtonText
@@ -33,7 +33,7 @@ export const Connect = () => {
               onClick={() => {
                 openModalWith('Connect', {}, 'large');
               }}
-              style={{ color: 'var(--text-color-invert', fontSize: '1.05rem' }}
+              style={{ color: 'white', fontSize: '1.05rem' }}
             />
           </>
         ) : (
@@ -48,7 +48,7 @@ export const Connect = () => {
                 'large'
               );
             }}
-            style={{ color: 'var(--text-color-invert', fontSize: '1.05rem' }}
+            style={{ color: 'white', fontSize: '1.05rem' }}
           />
         )}
       </ConnectedAccount>
