@@ -71,7 +71,7 @@ export const BondFeedback = ({
   const [bondDisabled, setBondDisabled] = useState(false);
 
   // bond minus tx fees if too much
-  const enoughToCoverTxFees: boolean = freeBondAmount
+  const enoughToCoverTxFees = freeBondAmount
     .minus(bondBn)
     .isGreaterThan(txFees);
 
