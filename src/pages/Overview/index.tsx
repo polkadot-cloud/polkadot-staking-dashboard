@@ -90,18 +90,15 @@ export const Overview = () => {
                 transform="shrink-3"
                 className="icon"
               />
-              Announcement
+              {t('overview.announcement')}
             </h5>
             <div>
-              <h3>
-                OpenGov is now live on Polkadot. Delegate your token voting
-                power to an expert.{' '}
-              </h3>
+              <h3>{t('overview.openGovBanner')}</h3>
               <VisitButton
                 style={{
                   width: '9rem',
                 }}
-                text="Go to App"
+                text={t('overview.goToApp')}
                 onClick={() =>
                   window.open(
                     'https://paritytech.github.io/governance-ui/',
@@ -114,7 +111,7 @@ export const Overview = () => {
             </div>
           </BannerWrapper>
           <ButtonText
-            text="Dismiss"
+            text={t('overview.dismiss')}
             style={{
               color:
                 mode === 'light'
