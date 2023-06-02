@@ -101,7 +101,9 @@ export const Overview = () => {
                 text={t('overview.goToApp')}
                 onClick={() =>
                   window.open(
-                    'https://paritytech.github.io/governance-ui/',
+                    import.meta.env.PROD
+                      ? 'https://delegation.polkadot.network/'
+                      : 'https://paritytech.github.io/governance-ui/',
                     '_blank'
                   )
                 }
