@@ -6,22 +6,19 @@ import {
   ButtonMonoInvert,
   ButtonPrimaryInvert,
 } from '@polkadotcloud/core-ui';
-import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
-import { useTranslation } from 'react-i18next';
 import { StatusBarWrapper } from './Wrappers';
 import type { StatusBarProps } from './types';
 
 export const StatusBar = ({
   StatusBarIcon,
   text,
-  helpKey,
+  help,
   inProgress,
   handleCancel,
+  handleDone,
+  t: { tDone, tCancel },
 }: StatusBarProps) => {
-  const { t } = useTranslation('library');
-  const { openHelp } = useHelp();
-  const { replaceModalWith } = useModal();
+  const { helpKey, handleHelp } = help || {};
 
   return (
     <StatusBarWrapper
@@ -48,29 +45,35 @@ export const StatusBar = ({
           <div className="text">
             <h3>
               {text}
-              {helpKey ? (
+              {helpKey && (
                 <ButtonHelp
                   marginLeft
-                  onClick={() => openHelp(helpKey)}
+                  onClick={() => {
+                    if (typeof handleHelp === 'function') {
+                      handleHelp(helpKey);
+                    }
+                  }}
                   backgroundSecondary
                 />
-              ) : null}
+              )}
             </h3>
           </div>
         </div>
         <div>
           {inProgress ? (
             <ButtonMonoInvert
-              text={t('cancel')}
+              text={tCancel}
               onClick={() =>
                 typeof handleCancel === 'function' && handleCancel()
               }
             />
           ) : (
             <ButtonPrimaryInvert
-              text={t('done')}
+              text={tDone}
               onClick={() => {
-                replaceModalWith('Connect', { disableScroll: true }, 'large');
+                if (typeof handleDone === 'function') {
+                  handleDone();
+                }
               }}
             />
           )}

@@ -20,9 +20,11 @@ import type { AnyJson } from 'types';
 import { Reader } from './Reader';
 
 export const ImportVault = () => {
-  const { t } = useTranslation('modals');
+  const { t } = useTranslation();
   const { network } = useApi();
   const { openOverlayWith, status: overlayStatus } = useOverlay();
+  const { replaceModalWith } = useModal();
+
   const {
     vaultAccounts,
     vaultAccountExists,
@@ -41,12 +43,15 @@ export const ImportVault = () => {
     <>
       <Heading title={vaultAccounts.length ? 'Polkadot Vault' : ''} />
       {vaultAccounts.length === 0 ? (
-        <NoAccounts Icon={Icon} text={t('noVaultAccountsImported')}>
+        <NoAccounts
+          Icon={Icon}
+          text={t('noVaultAccountsImported', { ns: 'modals' })}
+        >
           <div>
             <ButtonPrimary
               lg
               iconLeft={faQrcode}
-              text={t('importAccount')}
+              text={t('importAccount', { ns: 'modals' })}
               disabled={overlayStatus !== 0}
               onClick={() => {
                 openOverlayWith(<Reader />, 'small');
@@ -76,7 +81,7 @@ export const ImportVault = () => {
             <div className="more">
               <ButtonText
                 iconLeft={faQrcode}
-                text={t('importAnotherAccount')}
+                text={t('importAnotherAccount', { ns: 'modals' })}
                 disabled={overlayStatus !== 0}
                 onClick={() => {
                   openOverlayWith(<Reader />, 'small');
@@ -87,9 +92,17 @@ export const ImportVault = () => {
           <StatusBar
             StatusBarIcon={Icon}
             text={t('vaultAccounts', {
+              ns: 'modals',
               count: vaultAccounts.length,
             })}
             inProgress={false}
+            handleDone={() =>
+              replaceModalWith('Connect', { disableScroll: true }, 'large')
+            }
+            t={{
+              tDone: t('done', { ns: 'library' }),
+              tCancel: t('cancel', { ns: 'library' }),
+            }}
           />
         </>
       )}
