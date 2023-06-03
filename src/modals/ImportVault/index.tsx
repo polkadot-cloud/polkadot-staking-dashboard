@@ -9,6 +9,7 @@ import {
 } from '@polkadotcloud/core-ui';
 import { capitalizeFirstLetter } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { useModal } from 'contexts/Modal';
 import { useOverlay } from 'contexts/Overlay';
@@ -25,8 +26,9 @@ import { Reader } from './Reader';
 export const ImportVault = () => {
   const { t } = useTranslation();
   const { network } = useApi();
-  const { openOverlayWith, status: overlayStatus } = useOverlay();
   const { replaceModalWith } = useModal();
+  const { renameImportedAccount } = useConnect();
+  const { openOverlayWith, status: overlayStatus } = useOverlay();
 
   const {
     vaultAccounts,
@@ -37,6 +39,11 @@ export const ImportVault = () => {
     getVaultAccount,
   } = useVaultHardware();
   const { setResize } = useModal();
+
+  const renameHandler = (address: string, newName: string) => {
+    renameVaultAccount(address, newName);
+    renameImportedAccount(address, newName);
+  };
 
   useEffect(() => {
     setResize();
@@ -74,7 +81,7 @@ export const ImportVault = () => {
                   initial={name}
                   badgePrefix={capitalizeFirstLetter(network.name)}
                   existsHandler={vaultAccountExists}
-                  renameHandler={renameVaultAccount}
+                  renameHandler={renameHandler}
                   addHandler={addVaultAccount}
                   removeHandler={removeVaultAccount}
                   getHandler={getVaultAccount}

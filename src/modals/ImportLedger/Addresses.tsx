@@ -5,6 +5,7 @@ import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText } from '@polkadotcloud/core-ui';
 import { clipAddress, unescape } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp, getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import { Address } from 'library/Import/Address';
@@ -25,8 +26,14 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
     getLedgerAccount,
     pairDevice,
   } = useLedgerHardware();
+  const { renameImportedAccount } = useConnect();
   const { appName } = getLedgerApp(network.name);
   const isExecuting = getIsExecuting();
+
+  const renameHandler = (address: string, newName: string) => {
+    renameLedgerAccount(address, newName);
+    renameImportedAccount(address, newName);
+  };
 
   return (
     <>
@@ -50,7 +57,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
                 initial={initialName}
                 badgePrefix={appName}
                 existsHandler={ledgerAccountExists}
-                renameHandler={renameLedgerAccount}
+                renameHandler={renameHandler}
                 addHandler={addLedgerAccount}
                 removeHandler={removeLedgerAccount}
                 getHandler={getLedgerAccount}
