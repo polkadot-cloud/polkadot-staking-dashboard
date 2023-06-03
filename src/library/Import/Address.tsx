@@ -8,14 +8,10 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonMono, ButtonText } from '@polkadotcloud/core-ui';
+import { ButtonText } from '@polkadotcloud/core-ui';
 import { clipAddress, unescape } from '@polkadotcloud/utils';
-import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Confirm } from './Confirm';
-import { Remove } from './Remove';
 import type { AddressProps } from './types';
 
 export const Address = ({
@@ -26,13 +22,10 @@ export const Address = ({
   disableEditIfImported = false,
   existsHandler,
   renameHandler,
-  addHandler,
-  removeHandler,
-  getHandler,
+  openConfirmHandler,
+  openRemoveHandler,
+  t: { tAccount, tImport, tRemove },
 }: AddressProps) => {
-  const { t } = useTranslation('modals');
-  const { openOverlayWith } = useOverlay();
-
   // store whether this address is being edited.
   const [editing, setEditing] = useState<boolean>(false);
 
@@ -51,10 +44,12 @@ export const Address = ({
     if (editName === '') {
       newName = clipAddress(address);
     }
-    setName(newName);
-    setEditName(newName);
+    if (newName !== name) {
+      setName(newName);
+      setEditName(newName);
+      renameHandler(address, newName);
+    }
     setEditing(false);
-    renameHandler(address, newName);
   };
   const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
     let val = e.currentTarget.value || '';
@@ -69,7 +64,7 @@ export const Address = ({
       <div className="content">
         <div className="head">
           <h5>
-            {badgePrefix} {t('account')} {index + 1}
+            {badgePrefix} {tAccount} {index + 1}
           </h5>
         </div>
         <div className="inner">
@@ -93,7 +88,7 @@ export const Address = ({
                 }}
               />
 
-              {editing ? (
+              {editing && (
                 <div style={{ display: 'flex' }}>
                   &nbsp;
                   <button
@@ -116,9 +111,9 @@ export const Address = ({
                     <FontAwesomeIcon icon={faXmark} transform="grow-1" />
                   </button>
                 </div>
-              ) : null}
+              )}
             </section>
-            <h5 className="addressFull">
+            <h5 className="full">
               <span>{address}</span>
             </h5>
           </div>
@@ -127,35 +122,17 @@ export const Address = ({
       <div className="action">
         {isImported ? (
           <>
-            <ButtonMono
+            <ButtonText
               iconLeft={faTimes}
-              text={t('remove')}
-              onClick={() => {
-                openOverlayWith(
-                  <Remove
-                    address={address}
-                    removeHandler={removeHandler}
-                    getHandler={getHandler}
-                  />,
-                  'small'
-                );
-              }}
+              text={tRemove}
+              onClick={() => openRemoveHandler(address)}
             />
           </>
         ) : (
           <ButtonText
             iconLeft={faPlus}
-            text={t('import')}
-            onClick={() => {
-              openOverlayWith(
-                <Confirm
-                  address={address}
-                  index={index}
-                  addHandler={addHandler}
-                />,
-                'small'
-              );
-            }}
+            text={tImport}
+            onClick={() => openConfirmHandler(address, index)}
           />
         )}
       </div>

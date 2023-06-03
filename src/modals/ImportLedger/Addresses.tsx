@@ -8,7 +8,10 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp, getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
+import { useOverlay } from 'contexts/Overlay';
 import { Address } from 'library/Import/Address';
+import { Confirm } from 'library/Import/Confirm';
+import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
@@ -26,6 +29,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
     getLedgerAccount,
     pairDevice,
   } = useLedgerHardware();
+  const { openOverlayWith } = useOverlay();
   const { renameImportedAccount } = useConnect();
   const { appName } = getLedgerApp(network.name);
   const isExecuting = getIsExecuting();
@@ -33,6 +37,24 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const renameHandler = (address: string, newName: string) => {
     renameLedgerAccount(address, newName);
     renameImportedAccount(address, newName);
+  };
+
+  const openConfirmHandler = (address: string, index: number) => {
+    openOverlayWith(
+      <Confirm address={address} index={index} addHandler={addLedgerAccount} />,
+      'small'
+    );
+  };
+
+  const openRemoveHandler = (address: string) => {
+    openOverlayWith(
+      <Remove
+        address={address}
+        removeHandler={removeLedgerAccount}
+        getHandler={getLedgerAccount}
+      />,
+      'small'
+    );
   };
 
   return (
@@ -58,9 +80,13 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
                 badgePrefix={appName}
                 existsHandler={ledgerAccountExists}
                 renameHandler={renameHandler}
-                addHandler={addLedgerAccount}
-                removeHandler={removeLedgerAccount}
-                getHandler={getLedgerAccount}
+                openRemoveHandler={openRemoveHandler}
+                openConfirmHandler={openConfirmHandler}
+                t={{
+                  tAccount: t('account'),
+                  tRemove: t('remove'),
+                  tImport: t('import'),
+                }}
               />
             );
           })}

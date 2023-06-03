@@ -17,9 +17,13 @@ export interface AddressProps {
   disableEditIfImported?: boolean;
   renameHandler: AnyFunction;
   existsHandler: AnyFunction;
-  addHandler: AnyFunction;
-  removeHandler: AnyFunction;
-  getHandler: AnyFunction;
+  openRemoveHandler: AnyFunction;
+  openConfirmHandler: AnyFunction;
+  t: {
+    tAccount: string;
+    tImport: string;
+    tRemove: string;
+  };
 }
 
 export interface ConfirmProps {

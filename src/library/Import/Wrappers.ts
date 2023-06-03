@@ -59,10 +59,9 @@ export const AddressesWrapper = styled.div`
     flex-direction: column;
 
     .item {
-      background: var(--background-default);
+      border-bottom: 1px solid var(--border-primary-color);
       display: flex;
       align-items: center;
-      border-radius: 1rem;
       margin-top: 1rem;
       padding: 1rem;
 
@@ -118,46 +117,7 @@ export const AddressesWrapper = styled.div`
                 margin-bottom: 0.85rem;
               }
             }
-            .addressFull {
-              opacity: 0.8;
-              margin-top: 1rem;
-              margin-bottom: 0.5rem;
-              position: relative;
-              width: 100%;
-              height: 1rem;
-
-              > span {
-                position: absolute;
-                top: 0;
-                left: 0;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
-                width: 100%;
-                max-width: 100%;
-                padding-left: 1.2rem;
-              }
-            }
-            section {
-              width: 100%;
-              display: flex;
-              padding-left: 1rem;
-              &.row {
-                align-items: center;
-              }
-            }
-
-            h5,
-            button {
-              font-size: 0.9rem;
-              &.label {
-                display: flex;
-                align-items: flex-end;
-                margin-right: 0.5rem;
-                margin-bottom: 0.85rem;
-              }
-            }
-            .addressFull {
+            .full {
               opacity: 0.8;
               margin-top: 1rem;
               margin-bottom: 0.5rem;
@@ -179,21 +139,22 @@ export const AddressesWrapper = styled.div`
             }
 
             input {
-              background: var(--background-menu);
-              border-radius: 0.75rem;
+              background: var(--background-list-item);
               color: var(--text-color-primary);
+              border-radius: 0.75rem;
               padding: 0.75rem 0.75rem;
               letter-spacing: 0.04rem;
               font-size: 1rem;
-              transition: background 0.2s, width 0.2s, padding 0.2s;
               text-overflow: ellipsis;
               white-space: nowrap;
               overflow: hidden;
-              width: 145px;
+              width: 100%;
+              max-width: 175px;
+              transition: background 0.2s, max-width 0.2s, padding 0.2s;
 
               &:focus {
-                background: var(--button-secondary-background);
-                width: 300px;
+                background: var(--background-menu);
+                max-width: 300px;
               }
 
               &:disabled {
