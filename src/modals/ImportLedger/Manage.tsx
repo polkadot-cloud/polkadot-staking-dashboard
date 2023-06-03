@@ -4,6 +4,8 @@
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
+import { useHelp } from 'contexts/Help';
+import { useModal } from 'contexts/Modal';
 import { useOverlay } from 'contexts/Overlay';
 import { ReactComponent as StatusBarIcon } from 'img/ledgerIcon.svg';
 import { Heading } from 'library/Import/Heading';
@@ -18,15 +20,21 @@ export const Manage = ({
   handleLedgerLoop,
   removeLedgerAddress,
 }: AnyJson) => {
-  const { t } = useTranslation('modals');
+  const { t } = useTranslation();
   const { name } = useApi().network;
   const { setIsExecuting, getIsExecuting, resetStatusCodes, getFeedback } =
     useLedgerHardware();
   const { openOverlayWith } = useOverlay();
+  const { replaceModalWith } = useModal();
+  const { openHelp } = useHelp();
+
   const { appName, Icon } = getLedgerApp(name);
   const isExecuting = getIsExecuting();
 
-  const fallbackMessage = `${t('ledgerAccounts', { count: addresses.length })}`;
+  const fallbackMessage = `${t('ledgerAccounts', {
+    ns: 'modals',
+    count: addresses.length,
+  })}`;
   const feedback = getFeedback();
   const helpKey = feedback?.helpKey;
 
@@ -52,11 +60,25 @@ export const Manage = ({
       <StatusBar
         StatusBarIcon={StatusBarIcon}
         text={feedback?.message || fallbackMessage}
-        helpKey={helpKey}
+        help={
+          helpKey
+            ? {
+                helpKey,
+                handleHelp: openHelp,
+              }
+            : undefined
+        }
         inProgress={isExecuting}
         handleCancel={() => {
           setIsExecuting(false);
           resetStatusCodes();
+        }}
+        handleDone={() =>
+          replaceModalWith('Connect', { disableScroll: true }, 'large')
+        }
+        t={{
+          tDone: t('done', { ns: 'library' }),
+          tCancel: t('cancel', { ns: 'library' }),
         }}
       />
     </>
