@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary, ButtonText } from '@polkadotcloud/core-ui';
+import {
+  ButtonPrimary,
+  ButtonText,
+  HardwareStatusBar,
+} from '@polkadotcloud/core-ui';
 import { capitalizeFirstLetter } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
@@ -12,7 +16,6 @@ import { ReactComponent as Icon } from 'img/polkadotVault.svg';
 import { Address } from 'library/Import/Address';
 import { Heading } from 'library/Import/Heading';
 import { NoAccounts } from 'library/Import/NoAccounts';
-import { StatusBar } from 'library/Import/StatusBar';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -89,8 +92,8 @@ export const ImportVault = () => {
               />
             </div>
           </AddressesWrapper>
-          <StatusBar
-            StatusBarIcon={Icon}
+          <HardwareStatusBar
+            Icon={Icon}
             text={t('vaultAccounts', {
               ns: 'modals',
               count: vaultAccounts.length,

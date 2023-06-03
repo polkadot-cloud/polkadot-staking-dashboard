@@ -1,22 +1,5 @@
 import type { FunctionComponent, SVGProps } from 'react';
-import type { AnyFunction, MaybeString } from 'types';
-
-export interface StatusBarProps {
-  helpKey?: MaybeString;
-  help?: {
-    helpKey: string;
-    handleHelp: (key: string) => void;
-  };
-  inProgress: boolean;
-  text: string;
-  StatusBarIcon: FunctionComponent<SVGProps<SVGSVGElement>>;
-  handleCancel?: () => void;
-  handleDone?: () => void;
-  t: {
-    tDone: string;
-    tCancel: string;
-  };
-}
+import type { AnyFunction } from 'types';
 
 export interface HeadingProps {
   connectTo?: string;

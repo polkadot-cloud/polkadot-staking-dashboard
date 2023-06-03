@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-live authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 export const HeadingWrapper = styled.div`
@@ -42,59 +41,6 @@ export const HeadingWrapper = styled.div`
     &:last-child {
       display: flex;
       justify-content: flex-end;
-    }
-  }
-`;
-
-export const StatusBarWrapper = styled(motion.div)`
-  padding: 0 0.5rem 0.5rem 0.5rem;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  z-index: 10;
-
-  > .inner {
-    background: var(--background-list-item);
-    border-radius: 1rem;
-    display: flex;
-    align-items: center;
-    padding: 0.7rem 1rem;
-
-    > div {
-      display: flex;
-      align-items: center;
-
-      &:first-child {
-        flex-grow: 1;
-        .text {
-          flex: 1;
-          flex-direction: column;
-        }
-      }
-      &:last-child {
-        flex-shrink: 1;
-        justify-content: flex-end;
-        button {
-          margin-left: 0.75rem;
-        }
-      }
-    }
-
-    .icon {
-      margin: 0 1rem 0 0.25rem;
-      path {
-        fill: var(--text-color-primary);
-      }
-    }
-    h3,
-    h5 {
-      display: flex;
-      align-items: center;
-      flex: 1;
-    }
-    h5 {
-      margin-top: 0.25rem;
     }
   }
 `;
