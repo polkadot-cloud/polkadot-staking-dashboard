@@ -15,8 +15,10 @@ import { useModal } from 'contexts/Modal';
 import { useOverlay } from 'contexts/Overlay';
 import { ReactComponent as Icon } from 'img/polkadotVault.svg';
 import { Address } from 'library/Import/Address';
+import { Confirm } from 'library/Import/Confirm';
 import { Heading } from 'library/Import/Heading';
 import { NoAccounts } from 'library/Import/NoAccounts';
+import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -43,6 +45,24 @@ export const ImportVault = () => {
   const renameHandler = (address: string, newName: string) => {
     renameVaultAccount(address, newName);
     renameImportedAccount(address, newName);
+  };
+
+  const openConfirmHandler = (address: string, index: number) => {
+    openOverlayWith(
+      <Confirm address={address} index={index} addHandler={addVaultAccount} />,
+      'small'
+    );
+  };
+
+  const openRemoveHandler = (address: string) => {
+    openOverlayWith(
+      <Remove
+        address={address}
+        removeHandler={removeVaultAccount}
+        getHandler={getVaultAccount}
+      />,
+      'small'
+    );
   };
 
   useEffect(() => {
@@ -82,9 +102,13 @@ export const ImportVault = () => {
                   badgePrefix={capitalizeFirstLetter(network.name)}
                   existsHandler={vaultAccountExists}
                   renameHandler={renameHandler}
-                  addHandler={addVaultAccount}
-                  removeHandler={removeVaultAccount}
-                  getHandler={getVaultAccount}
+                  openRemoveHandler={openRemoveHandler}
+                  openConfirmHandler={openConfirmHandler}
+                  t={{
+                    tAccount: t('account', { ns: 'modals' }),
+                    tRemove: t('remove', { ns: 'modals' }),
+                    tImport: t('import', { ns: 'modals' }),
+                  }}
                 />
               ))}
             </div>
