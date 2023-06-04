@@ -6,26 +6,27 @@ import styled from 'styled-components';
 import type { MinimisedProps } from '../types';
 
 export const Wrapper = styled(motion.button)<MinimisedProps>`
-  width: 100%;
   border: 1px solid var(--border-primary-color);
   border-radius: 0.7rem;
+  height: 3.2rem;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
+  position: relative;
   padding: 0.75rem 0rem 0.75rem 0.5rem;
   margin: 0.8rem 0.2rem 0.8rem 0;
-  position: relative;
-  height: 3.2rem;
+  width: 100%;
+
   .name {
-    color: var(--text-color-secondary);
+    color: var(--text-color-primary);
     font-size: 1.1rem;
   }
   .light {
-    color: var(--text-color-secondary);
+    color: var(--text-color-primary);
     margin-left: 0.2rem;
   }
   .action {
-    color: var(--text-color-secondary);
+    color: var(--text-color-primary);
     flex: 1;
     display: flex;
     flex-flow: row wrap;
@@ -33,10 +34,10 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
   }
 
   &.active {
-    background: var(--gradient-highlight-primary);
+    background: var(--highlight-primary);
   }
   &.inactive:hover {
-    background: var(--gradient-highlight-secondary);
+    background: var(--highlight-secondary);
   }
   &.success {
     border: 1px solid var(--status-success-color-transparent);
@@ -51,22 +52,22 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
 
 export const MinimisedWrapper = styled(motion.button)`
   border: 1px solid var(--border-primary-color);
-  width: 100%;
   border-radius: 0.5rem;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
+  position: relative;
   padding: 0rem 0rem;
   margin: 0.6rem 0 0.6rem 0;
-  position: relative;
   min-height: 2.8rem;
+  width: 100%;
 
   &.active {
-    background: var(--gradient-highlight-primary);
+    background: var(--highlight-primary);
   }
   &.inactive:hover {
-    background: var(--gradient-highlight-secondary);
+    background: var(--highlight-secondary);
   }
   .icon {
     margin: 0;
@@ -96,7 +97,7 @@ export const IconWrapper = styled.div<{ minimised: boolean }>`
 
   svg {
     .primary {
-      fill: var(--text-color-secondary);
+      fill: var(--text-color-primary);
     }
   }
 `;
