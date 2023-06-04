@@ -19,6 +19,7 @@ export const Wrapper = styled(motion.button)<MinimisedProps>`
 
   .name {
     color: var(--text-color-primary);
+    font-family: InterSemiBold, sans-serif;
     font-size: 1.1rem;
   }
   .light {

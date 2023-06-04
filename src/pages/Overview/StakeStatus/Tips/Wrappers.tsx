@@ -75,6 +75,8 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
 
         h4 {
           color: var(--text-color-secondary);
+          transition: color var(--transition-duration);
+          font-family: InterSemiBold, sans-serif;
           position: absolute;
           top: 0;
           left: 0;
@@ -87,7 +89,6 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
-          transition: color var(--transition-duration);
         }
         .more {
           color: var(--text-color-secondary);
