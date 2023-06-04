@@ -65,7 +65,7 @@ export const HeadingWrapper = styled.div`
 `;
 
 export const Item = styled.button`
-  background: var(--button-secondary-background);
+  background: var(--button-tab-background);
   border: 1px solid var(--border-primary-color);
   flex-grow: 1;
   padding: 0.05rem 1rem;
