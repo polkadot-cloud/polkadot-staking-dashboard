@@ -97,3 +97,7 @@ export const BannerWrapper = styled.div`
     }
   }
 `;
+
+export const ButtonWrapper = styled.div`
+  margin-left: 0.5rem;
+`;

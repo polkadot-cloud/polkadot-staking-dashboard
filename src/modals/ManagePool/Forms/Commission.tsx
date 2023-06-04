@@ -429,17 +429,17 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     trackStyle: {
       backgroundColor: 'var(--network-color-primary)',
     },
-    railStyle: {
-      backgroundColor: 'var(--button-secondary-background)',
-    },
+    // railStyle: {
+    //   backgroundColor: 'var(--button-secondary-background)',
+    // },
     handleStyle: {
       backgroundColor: 'var(--background-primary)',
       borderColor: 'var(--network-color-primary)',
       opacity: 1,
     },
-    activeDotStyle: {
-      backgroundColor: 'var(--background-primary)',
-    },
+    // activeDotStyle: {
+    //   backgroundColor: 'var(--background-primary)',
+    // },
   };
 
   return (

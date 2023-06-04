@@ -5,9 +5,10 @@ import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
+import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import type { MaybeAccount } from 'types';
 import * as defaults from './defaults';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
@@ -23,6 +24,18 @@ export const TransferOptionsProvider = ({
   const { getAccount } = useBonded();
   const { membership } = usePoolMemberships();
   const { existentialDeposit } = consts;
+  const { activeAccount } = useConnect();
+  const { network } = useApi();
+
+  const [reserve, setReserve] = useState(new BigNumber(0));
+
+  useEffect(() => {
+    setReserve(
+      new BigNumber(
+        localStorage.getItem(`${network.name}_${activeAccount}_reserve`) || 0
+      )
+    );
+  }, [activeAccount, network]);
 
   // get the bond and unbond amounts available to the user
   const getTransferOptions = (address: MaybeAccount): TransferOptions => {
@@ -142,6 +155,8 @@ export const TransferOptionsProvider = ({
     <TransferOptionsContext.Provider
       value={{
         getTransferOptions,
+        setReserve,
+        reserve,
       }}
     >
       {children}

@@ -41,6 +41,7 @@ import { UnlockChunks } from './UnlockChunks';
 import { Unstake } from './Unstake';
 import { UpdateController } from './UpdateController';
 import { UpdatePayee } from './UpdatePayee';
+import { UpdateReserve } from './UpdateReserve';
 import { ValidatorMetrics } from './ValidatorMetrics';
 import { WithdrawPoolMember } from './WithdrawPoolMember';
 
@@ -188,6 +189,7 @@ export const Modal = () => {
                   {modal === 'Unbond' && <Unbond />}
                   {modal === 'UpdatePayee' && <UpdatePayee />}
                   {modal === 'WithdrawPoolMember' && <WithdrawPoolMember />}
+                  {modal === 'UpdateReserve' && <UpdateReserve />}
                 </ErrorBoundary>
               </ModalContent>
             </ModalHeight>
