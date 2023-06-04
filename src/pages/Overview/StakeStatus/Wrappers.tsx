@@ -67,7 +67,7 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
       width: auto;
       max-width: 100%;
       padding: ${(props) =>
-        props.leftIcon ? '0.18rem 0 0 1.9rem' : '0.18rem 0 0 0'};
+        props.leftIcon ? '0.18rem 0 0 2rem' : '0.18rem 0 0 0'};
       text-align: left;
       text-overflow: ellipsis;
       white-space: nowrap;
