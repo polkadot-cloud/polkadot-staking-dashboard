@@ -7,7 +7,7 @@ import { clipAddress, unescape } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
-import { getLedgerApp, getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
+import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import { useOverlay } from 'contexts/Overlay';
 import { Address } from 'library/Import/Address';
 import { Confirm } from 'library/Import/Confirm';
@@ -31,7 +31,6 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   } = useLedgerHardware();
   const { openOverlayWith } = useOverlay();
   const { renameImportedAccount } = useConnect();
-  const { appName } = getLedgerApp(network.name);
   const isExecuting = getIsExecuting();
 
   const renameHandler = (address: string, newName: string) => {
