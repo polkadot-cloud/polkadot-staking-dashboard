@@ -7,10 +7,11 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
   width: 100%;
   padding: 0.15rem 0.25rem;
   h4 {
+    font-family: InterSemiBold, sans-serif;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    margin: 0 0 0.2rem 0;
+    margin: 0 0 0.15rem 0;
 
     > .btn {
       color: var(--text-color-secondary);
@@ -42,7 +43,7 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
 
     .text {
       padding-left: ${(props) => (props.isAddress ? '3rem' : 0)};
-      font-family: InterSemiBold, sans-serif;
+      font-family: InterBold, sans-serif;
       color: var(--text-color-primary);
       padding-top: 0.25rem;
       position: absolute;

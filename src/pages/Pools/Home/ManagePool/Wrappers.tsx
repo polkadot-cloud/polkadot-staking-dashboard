@@ -43,6 +43,7 @@ export const RolesWrapper = styled.div`
       }
 
       > h4 {
+        font-family: InterSemiBold, sans-serif;
         display: flex;
         align-items: center;
         margin-top: 1.25rem;

@@ -20,6 +20,7 @@ export const Header = styled.div`
 
   h4 {
     color: var(--text-color-secondary);
+    font-family: InterSemiBold, sans-serif;
   }
 
   > div {

@@ -21,6 +21,9 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
   width: 100%;
   padding: ${(props) => (props.padded ? '0.5rem 1.2rem' : '0.25rem')};
 
+  h2 {
+    font-family: InterBold, sans-serif;
+  }
   h2,
   h3 {
     margin-bottom: 1rem;
@@ -33,9 +36,13 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     align-items: center;
     flex-grow: ${(props) => (props.withAction ? 1 : 0)};
   }
+  h3,
+  h4 {
+    font-family: InterSemiBold, sans-serif;
+  }
   h4 {
     margin-top: 0;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.55rem;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -174,6 +181,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   }
 
   h2 {
+    font-family: InterBold, sans-serif;
     margin-bottom: 1rem;
 
     .amount {
@@ -186,7 +194,6 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
   h2,
   h4 {
     margin: 0;
-    padding: 0.25rem 0 0.5rem 0;
     display: flex;
     flex-flow: row wrap;
     align-content: flex-end;
@@ -194,6 +201,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
 
     .fiat {
       color: var(--text-color-secondary);
+      font-family: InterSemiBold, sans-serif;
       font-size: 1.1rem;
       margin-top: 0.2rem;
       margin-left: 0.3rem;
@@ -203,13 +211,16 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
+    padding: 0.25rem 0 0.5rem 0;
   }
   p {
     margin: 0.25rem 0 0;
   }
   h4 {
+    font-family: InterSemiBold, sans-serif;
     align-items: center;
     margin-top: 0.4rem;
+    padding: 0.25rem 0 0.2rem 0;
   }
 
   h5 {
