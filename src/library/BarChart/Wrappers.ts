@@ -72,7 +72,7 @@ export const Bar = styled.div`
   display: flex;
   width: 100%;
   height: 3.5rem;
-  border-radius: 0.55rem;
+  border-radius: 0.65rem;
   overflow: hidden;
 
   > div {

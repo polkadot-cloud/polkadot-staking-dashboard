@@ -34,7 +34,7 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-    height: 2.4rem;
+    height: 2.6rem;
     position: relative;
     width: auto;
     max-width: 100%;
@@ -44,12 +44,13 @@ export const Wrapper = styled.div<{ isAddress?: boolean }>`
       padding-left: ${(props) => (props.isAddress ? '3rem' : 0)};
       font-family: InterSemiBold, sans-serif;
       color: var(--text-color-primary);
-      padding-top: 0.1rem;
+      padding-top: 0.25rem;
       position: absolute;
       left: 0;
       top: 0;
       margin: 0;
-      height: 2.4rem;
+      height: 2.6rem;
+      height: 2.6rem;
       font-size: 1.4rem;
       width: auto;
       max-width: 100%;
