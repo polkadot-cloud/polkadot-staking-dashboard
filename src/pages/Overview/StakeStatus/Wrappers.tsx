@@ -67,7 +67,7 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
       width: auto;
       max-width: 100%;
       padding: ${(props) =>
-        props.leftIcon ? '0.18rem 0 0 2rem' : '0.18rem 0 0 0'};
+        props.leftIcon ? '0.18rem 0 0 1.9rem' : '0.18rem 0 0 0'};
       text-align: left;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -76,23 +76,22 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
     .bull {
       position: absolute;
       left: 0rem;
-      top: 0.32rem;
-      margin-right: 1rem;
+      top: 0.36rem;
 
       &.off {
         opacity: 0.1;
       }
       &.active {
-        color: var(--status-success-color);
+        color: var(--network-color-primary);
       }
       &.inactive {
-        color: var(--status-warning-color);
+        color: var(--button-secondary-background);
       }
     }
     .cta {
       position: absolute;
       right: 0.2rem;
-      top: -0.15rem;
+      top: -0.18rem;
     }
   }
 `;

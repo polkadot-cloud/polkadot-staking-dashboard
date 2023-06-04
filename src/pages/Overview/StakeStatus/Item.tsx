@@ -37,7 +37,7 @@ export const Item = ({ text, ctaText, onClick, leftIcon }: ItemProps) => {
               leftIcon.show ? (
                 <FontAwesomeIcon
                   icon={faCircle}
-                  transform="shrink-6"
+                  transform="shrink-8"
                   className={`bull ${leftIcon.status}`}
                 />
               ) : null
