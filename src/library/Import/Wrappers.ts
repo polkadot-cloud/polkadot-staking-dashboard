@@ -191,13 +191,12 @@ export const AddressesWrapper = styled.div`
         flex-basis: auto;
         display: flex;
         flex-direction: column;
+        padding-left: 1rem;
 
         button {
-          background: var(--background-list-item);
           width: 8rem;
-          flex-basis: 100%;
+          flex-basis: 50%;
           flex-grow: 1;
-          border: none;
         }
       }
     }

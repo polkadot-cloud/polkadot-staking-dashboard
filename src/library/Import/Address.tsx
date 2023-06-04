@@ -8,7 +8,7 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSecondary } from '@polkadotcloud/core-ui';
+import { ButtonText } from '@polkadotcloud/core-ui';
 import { clipAddress, unescape } from '@polkadotcloud/utils';
 import { Identicon } from 'library/Identicon';
 import React, { useState } from 'react';
@@ -117,14 +117,14 @@ export const Address = ({
       <div className="action">
         {isImported ? (
           <>
-            <ButtonSecondary
+            <ButtonText
               iconLeft={faTimes}
               text={tRemove}
               onClick={() => openRemoveHandler(address)}
             />
           </>
         ) : (
-          <ButtonSecondary
+          <ButtonText
             iconLeft={faPlus}
             text={tImport}
             onClick={() => openConfirmHandler(address, index)}
