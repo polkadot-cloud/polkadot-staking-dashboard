@@ -22,7 +22,7 @@ import { ReserveWrapper } from './Wrapper';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');
-  const { reserve, getTransferOptions } = useTransferOptions();
+  const { reserve, setReserve, getTransferOptions } = useTransferOptions();
   const { units } = useApi().network;
   const { activeAccount, accountHasSigner } = useConnect();
   const { getLocks, getBalance } = useBalances();
@@ -76,11 +76,12 @@ export const UpdateReserve = () => {
           <h4 className="current">{reserve.toString()} </h4>
           <div className="slider">
             <Slider
-              value={100}
+              max={1}
+              value={reserve.toNumber()}
               step={0.1}
               onChange={(val) => {
                 if (typeof val === 'number') {
-                  console.log();
+                  setReserve(new BigNumber(val));
                 }
               }}
               {...sliderProps}
@@ -97,7 +98,11 @@ export const UpdateReserve = () => {
                 reserve.toString()
               );
             }}
-            disabled={!accountHasSigner(activeAccount)}
+            disabled={
+              !accountHasSigner(activeAccount) ||
+              reserve.toString() ===
+                localStorage.getItem(`${network.name}_${activeAccount}_reserve`)
+            }
           />
         </div>
       </ReserveWrapper>
