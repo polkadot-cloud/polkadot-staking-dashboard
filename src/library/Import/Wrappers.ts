@@ -18,6 +18,7 @@ export const HeadingWrapper = styled.div`
       display: flex;
       flex-grow: 1;
       > h4 {
+        font-family: InterSemiBold, sans-serif;
         padding: 0;
         display: flex;
         align-items: center;
@@ -46,6 +47,8 @@ export const HeadingWrapper = styled.div`
 `;
 
 export const AddressesWrapper = styled.div`
+  --address-item-height: 7rem;
+
   display: flex;
   flex-direction: column;
   padding: 0rem 0rem 7rem 0rem;
@@ -59,34 +62,51 @@ export const AddressesWrapper = styled.div`
     flex-direction: column;
 
     .item {
+      height: var(--address-item-height);
       border-bottom: 1px solid var(--border-primary-color);
       display: flex;
       align-items: center;
       margin-top: 1rem;
-      padding: 1rem;
+      padding: 1rem 0.5rem;
 
       > .content {
         display: flex;
         flex-direction: column;
         flex-grow: 1;
-
-        .head {
-          display: flex;
-          margin-bottom: 1.1rem;
-
-          h5 {
-            color: var(--text-color-secondary);
-            opacity: 0.8;
-          }
-        }
+        height: 100%;
 
         > .inner {
           display: flex;
-          align-items: center;
+          align-items: flex-start;
 
           > .identicon {
             flex-shrink: 1;
             flex-grow: 0;
+            position: relative;
+
+            .indexIcon {
+              background: var(--background-primary);
+              border: 1px solid var(--border-primary-color);
+              color: var(--text-color-secondary);
+              border-radius: 50%;
+              position: absolute;
+              bottom: -0.25rem;
+              right: -0.6rem;
+              width: auto;
+              height: 1.75rem;
+              min-width: 1.75rem;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              padding: 0 0.35rem;
+              font-family: InterSemiBold, sans-serif;
+
+              svg {
+                width: 60%;
+                height: 60%;
+                color: var(--text-color-primary);
+              }
+            }
           }
 
           > div:last-child {
@@ -101,7 +121,7 @@ export const AddressesWrapper = styled.div`
             section {
               width: 100%;
               display: flex;
-              padding-left: 1rem;
+              padding-left: 1.5rem;
               &.row {
                 align-items: center;
               }
@@ -117,32 +137,12 @@ export const AddressesWrapper = styled.div`
                 margin-bottom: 0.85rem;
               }
             }
-            .full {
-              opacity: 0.8;
-              margin-top: 1rem;
-              margin-bottom: 0.5rem;
-              position: relative;
-              width: 100%;
-              height: 1rem;
-
-              > span {
-                position: absolute;
-                top: 0;
-                left: 0;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
-                width: 100%;
-                max-width: 100%;
-                padding-left: 1.2rem;
-              }
-            }
 
             input {
               background: var(--background-list-item);
               color: var(--text-color-primary);
               border-radius: 0.75rem;
-              padding: 0.75rem 0.75rem;
+              padding: 0.85rem 0.75rem;
               letter-spacing: 0.04rem;
               font-size: 1rem;
               text-overflow: ellipsis;
@@ -162,11 +162,43 @@ export const AddressesWrapper = styled.div`
                 background: none;
               }
             }
+
+            .full {
+              opacity: 0.8;
+              margin-top: 0.75rem;
+              margin-bottom: 0.5rem;
+              position: relative;
+              width: 100%;
+              height: 1rem;
+
+              > span {
+                position: absolute;
+                top: 0;
+                left: 0;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                width: 100%;
+                max-width: 100%;
+                padding-left: 1.5rem;
+              }
+            }
           }
         }
       }
       > .action {
+        height: 100%;
         flex-basis: auto;
+        display: flex;
+        flex-direction: column;
+
+        button {
+          background: var(--background-list-item);
+          width: 8rem;
+          flex-basis: 100%;
+          flex-grow: 1;
+          border: none;
+        }
       }
     }
   }

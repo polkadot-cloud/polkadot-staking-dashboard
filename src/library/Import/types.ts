@@ -13,14 +13,12 @@ export interface AddressProps {
   address: string;
   index: number;
   initial: string;
-  badgePrefix: string;
   disableEditIfImported?: boolean;
   renameHandler: AnyFunction;
   existsHandler: AnyFunction;
   openRemoveHandler: AnyFunction;
   openConfirmHandler: AnyFunction;
   t: {
-    tAccount: string;
     tImport: string;
     tRemove: string;
   };

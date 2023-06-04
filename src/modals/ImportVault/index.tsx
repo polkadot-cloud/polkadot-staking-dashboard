@@ -7,7 +7,6 @@ import {
   ButtonText,
   HardwareStatusBar,
 } from '@polkadotcloud/core-ui';
-import { capitalizeFirstLetter } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
@@ -99,13 +98,11 @@ export const ImportVault = () => {
                   address={address}
                   index={index}
                   initial={name}
-                  badgePrefix={capitalizeFirstLetter(network.name)}
                   existsHandler={vaultAccountExists}
                   renameHandler={renameHandler}
                   openRemoveHandler={openRemoveHandler}
                   openConfirmHandler={openConfirmHandler}
                   t={{
-                    tAccount: t('account', { ns: 'modals' }),
                     tRemove: t('remove', { ns: 'modals' }),
                     tImport: t('import', { ns: 'modals' }),
                   }}

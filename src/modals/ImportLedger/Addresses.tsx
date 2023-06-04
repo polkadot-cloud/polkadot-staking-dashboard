@@ -77,13 +77,11 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
                 address={address}
                 index={index}
                 initial={initialName}
-                badgePrefix={appName}
                 existsHandler={ledgerAccountExists}
                 renameHandler={renameHandler}
                 openRemoveHandler={openRemoveHandler}
                 openConfirmHandler={openConfirmHandler}
                 t={{
-                  tAccount: t('account'),
                   tRemove: t('remove'),
                   tImport: t('import'),
                 }}

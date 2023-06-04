@@ -8,7 +8,7 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonText } from '@polkadotcloud/core-ui';
+import { ButtonSecondary } from '@polkadotcloud/core-ui';
 import { clipAddress, unescape } from '@polkadotcloud/utils';
 import { Identicon } from 'library/Identicon';
 import React, { useState } from 'react';
@@ -18,13 +18,12 @@ export const Address = ({
   address,
   index,
   initial,
-  badgePrefix,
   disableEditIfImported = false,
   existsHandler,
   renameHandler,
   openConfirmHandler,
   openRemoveHandler,
-  t: { tAccount, tImport, tRemove },
+  t: { tImport, tRemove },
 }: AddressProps) => {
   // store whether this address is being edited.
   const [editing, setEditing] = useState<boolean>(false);
@@ -62,14 +61,10 @@ export const Address = ({
   return (
     <div className="item">
       <div className="content">
-        <div className="head">
-          <h5>
-            {badgePrefix} {tAccount} {index + 1}
-          </h5>
-        </div>
         <div className="inner">
           <div className="identicon">
-            <Identicon value={address} size={38} />
+            <Identicon value={address} size={40} />
+            <div className="indexIcon">{index + 1}</div>
           </div>
           <div>
             <section className="row">
@@ -122,14 +117,14 @@ export const Address = ({
       <div className="action">
         {isImported ? (
           <>
-            <ButtonText
+            <ButtonSecondary
               iconLeft={faTimes}
               text={tRemove}
               onClick={() => openRemoveHandler(address)}
             />
           </>
         ) : (
-          <ButtonText
+          <ButtonSecondary
             iconLeft={faPlus}
             text={tImport}
             onClick={() => openConfirmHandler(address, index)}
