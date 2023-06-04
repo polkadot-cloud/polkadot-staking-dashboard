@@ -26,7 +26,7 @@ export const BalanceChart = () => {
   const prices = usePrices();
   const { plugins } = usePlugins();
   const { openHelp } = useHelp();
-  const { activeAccount } = useConnect();
+  const { activeAccount, accountHasSigner } = useConnect();
   const { getBalance, getLocks } = useBalances();
   const { getTransferOptions } = useTransferOptions();
   const balance = getBalance(activeAccount);
@@ -140,7 +140,7 @@ export const BalanceChart = () => {
           </span>
           <ButtonWrapper>
             <ButtonPrimary
-              disabled={!activeAccount}
+              disabled={!activeAccount || !accountHasSigner(activeAccount)}
               marginRight
               onClick={() => openModalWith('UpdateReserve')}
               text="Update Reserve"

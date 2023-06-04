@@ -6,33 +6,46 @@ import {
   ModalPadding,
   ModalWarnings,
 } from '@polkadotcloud/core-ui';
-// import BigNumber from 'bignumber.js';
+import { planckToUnit } from '@polkadotcloud/utils';
+import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
-// import { useBalances } from 'contexts/Balances';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { Warning } from 'library/Form/Warning';
-// import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { Warning } from 'library/Form/Warning';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ConfirmButton } from './Wrapper';
+import { ReserveWrapper } from './Wrapper';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');
-  const { reserve } = useTransferOptions();
-  //   const { units } = useApi().network;
+  const { reserve, getTransferOptions } = useTransferOptions();
+  const { units } = useApi().network;
   const { activeAccount, accountHasSigner } = useConnect();
-  //   const { getLocks, getBalance } = useBalances();
-  //   const balance = getBalance(activeAccount);
+  const { getLocks, getBalance } = useBalances();
+  const balance = getBalance(activeAccount);
   const { network } = useApi();
   const { setStatus } = useModal();
+  const allTransferOptions = getTransferOptions(activeAccount);
+  const { frozen } = balance;
+
+  // check account non-staking locks
+  const locks = getLocks(activeAccount);
+  const locksStaking = locks.find(({ id }) => id === 'staking');
+  const lockStakingAmount = locksStaking
+    ? locksStaking.amount
+    : new BigNumber(0);
+  const fundsFree = planckToUnit(
+    allTransferOptions.freeBalance.minus(frozen.minus(lockStakingAmount)),
+    units
+  );
 
   const warnings = [];
-  if (!accountHasSigner(activeAccount)) {
-    warnings.push(<Warning text={t('readOnlyCannotSign')} />);
+  if (fundsFree.isZero()) {
+    warnings.push(<Warning text={t('reserveLimit')} />);
   }
 
   const sliderProps = {
@@ -48,7 +61,9 @@ export const UpdateReserve = () => {
 
   return (
     <ModalPadding>
-      <h2 className="title unbounded">Update Reserve</h2>
+      <h2 className="title unbounded" style={{ margin: '0.5rem' }}>
+        Update Reserve
+      </h2>
       {warnings.length ? (
         <ModalWarnings>
           {warnings.map((warning, index) => (
@@ -56,31 +71,36 @@ export const UpdateReserve = () => {
           ))}
         </ModalWarnings>
       ) : null}
-      {reserve.toString()}
-      <Slider
-        value={100}
-        step={0.1}
-        onChange={(val) => {
-          if (typeof val === 'number') {
-            console.log();
-          }
-        }}
-        {...sliderProps}
-      />
-
-      <ConfirmButton>
-        <ButtonPrimaryInvert
-          text={t('confirm')}
-          onClick={() => {
-            setStatus(0);
-            localStorage.setItem(
-              `${network.name}_${activeAccount}_reserve`,
-              reserve.toString()
-            );
-          }}
-          disabled={!accountHasSigner(activeAccount)}
-        />
-      </ConfirmButton>
+      <ReserveWrapper>
+        <div>
+          <h4 className="current">{reserve.toString()} </h4>
+          <div className="slider">
+            <Slider
+              value={100}
+              step={0.1}
+              onChange={(val) => {
+                if (typeof val === 'number') {
+                  console.log();
+                }
+              }}
+              {...sliderProps}
+            />
+          </div>
+        </div>
+        <div className="confirm">
+          <ButtonPrimaryInvert
+            text={t('confirm')}
+            onClick={() => {
+              setStatus(0);
+              localStorage.setItem(
+                `${network.name}_${activeAccount}_reserve`,
+                reserve.toString()
+              );
+            }}
+            disabled={!accountHasSigner(activeAccount)}
+          />
+        </div>
+      </ReserveWrapper>
     </ModalPadding>
   );
 };
