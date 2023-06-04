@@ -45,6 +45,7 @@ export const Wrapper = styled.button<WrapperProps>`
   }
 
   .title {
+    font-family: InterSemiBold, sans-serif;
     color: var(--text-color-secondary);
     margin-left: 0.25rem;
     text-overflow: ellipsis;
