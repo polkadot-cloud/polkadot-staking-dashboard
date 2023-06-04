@@ -22,9 +22,9 @@ export const U32Opts = { bitLength: 32, isLe: true };
 
 export const SideMenuMaximisedWidth = 185;
 export const SideMenuMinimisedWidth = 75;
-export const SideMenuStickyThreshold = 1175;
-export const SectionFullWidthThreshold = 1050;
-export const ShowAccountsButtonWidthThreshold = 850;
+export const SideMenuStickyThreshold = 1150;
+export const SectionFullWidthThreshold = 1000;
+export const ShowAccountsButtonWidthThreshold = 825;
 export const FloatingMenuWidth = 250;
 export const SmallFontSizeMaxWidth = 600;
 export const TipsThresholdSmall = 750;
