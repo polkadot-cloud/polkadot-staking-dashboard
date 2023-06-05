@@ -3,8 +3,6 @@
 
 import type React from 'react';
 import type { FunctionComponent, SVGProps } from 'react';
-import type { AnyJson } from 'types';
-import {AnyStyledComponent} from "styled-components";
 
 export interface MinimisedProps {
   minimised: boolean;

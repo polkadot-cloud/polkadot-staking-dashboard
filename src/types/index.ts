@@ -6,7 +6,7 @@ import type { PageProps } from 'pages/types';
 import type React from 'react';
 import type { FunctionComponent, SVGProps } from 'react';
 
-export type NetworkName = 'creditcoin';
+export type NetworkName = 'creditcoin' | 'creditcoinDev' | 'creditcoinTest';
 
 export type Networks = Record<string, Network>;
 

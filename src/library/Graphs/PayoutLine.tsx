@@ -13,11 +13,8 @@ import {
   Tooltip,
 } from 'chart.js';
 import { useApi } from 'contexts/Api';
-import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
-import { useUi } from 'contexts/UI';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
 import { graphColors } from 'styles/graphs';
@@ -47,14 +44,15 @@ export const PayoutLine = ({
 }: PayoutLineProps) => {
   const { t } = useTranslation('library');
   const { mode } = useTheme();
-  const { unit, units, colors } = useApi().network;
-  const { isSyncing } = useUi();
-  const { inSetup } = useStaking();
-  const { membership: poolMembership } = usePoolMemberships();
+  const { unit, units } = useApi().network;
   const { payouts, poolClaims } = useSubscan();
 
-  const notStaking = !isSyncing && inSetup() && !poolMembership;
-  const poolingOnly = !isSyncing && inSetup() && poolMembership !== null;
+  // Unneeded until Pools are officially supported
+  // const { isSyncing } = useUi();
+  // const { inSetup } = useStaking();
+  // const { membership: poolMembership } = usePoolMemberships();
+  // const notStaking = !isSyncing && inSetup() && !poolMembership;
+  // const poolingOnly = !isSyncing && inSetup() && poolMembership !== null;
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts.filter(
@@ -88,7 +86,7 @@ export const PayoutLine = ({
   );
 
   // determine color for payouts
-  const color = "#9cffaa";
+  const color = '#9cffaa';
 
   // configure graph options
   const options = {

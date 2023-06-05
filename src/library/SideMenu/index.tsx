@@ -8,21 +8,17 @@ import { SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
-import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import type { UIContextInterface } from 'contexts/UI/types';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
-import { ReactComponent as FeedbackSVG } from '../../img/ic_feedback.svg';
-import { ReactComponent as ResourcesSVG } from '../../img/ic_resources.svg';
-import { ReactComponent as CreditcoinSVG } from '../../img/ic_creditcoin.svg';
-import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
-import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
-import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
 import { useOutsideAlerter } from 'library/Hooks';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ReactComponent as CreditcoinSVG } from '../../img/ic_creditcoin.svg';
+import { ReactComponent as FeedbackSVG } from '../../img/ic_feedback.svg';
+import { ReactComponent as ResourcesSVG } from '../../img/ic_resources.svg';
 import { Heading } from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
@@ -31,7 +27,6 @@ import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
 export const SideMenu = () => {
   const { t } = useTranslation('base');
   const { network, apiStatus } = useApi();
-  const { mode, toggleTheme } = useTheme();
   const { openModalWith } = useModal();
   const {
     setSideMenu,

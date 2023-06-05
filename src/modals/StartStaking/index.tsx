@@ -3,9 +3,9 @@
 
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ModalPadding } from '@polkadotcloud/core-ui';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
-import { ModalPadding } from '@polkadotcloud/core-ui';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -36,23 +36,23 @@ export const StartStaking = () => {
           </div>
         </button>
         {/* TODO */}
-        {/*<button*/}
-        {/*  type="button"*/}
-        {/*  className="action-button"*/}
-        {/*  disabled={true}*/}
-        {/*  onClick={() => {*/}
-        {/*    navigate('/pools?t=2');*/}
-        {/*    setStatus(2);*/}
-        {/*  }}*/}
-        {/*>*/}
-        {/*  <div>*/}
-        {/*    <h3>{t('joinNominationPool')}</h3>*/}
-        {/*    <p>{t('joinNominationPoolSubtitle')}</p>*/}
-        {/*  </div>*/}
-        {/*  <div>*/}
-        {/*    <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />*/}
-        {/*  </div>*/}
-        {/*</button>*/}
+        {/* <button */}
+        {/*  type="button" */}
+        {/*  className="action-button" */}
+        {/*  disabled={true} */}
+        {/*  onClick={() => { */}
+        {/*    navigate('/pools?t=2'); */}
+        {/*    setStatus(2); */}
+        {/*  }} */}
+        {/* > */}
+        {/*  <div> */}
+        {/*    <h3>{t('joinNominationPool')}</h3> */}
+        {/*    <p>{t('joinNominationPoolSubtitle')}</p> */}
+        {/*  </div> */}
+        {/*  <div> */}
+        {/*    <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} /> */}
+        {/*  </div> */}
+        {/* </button> */}
       </ModalPadding>
     </>
   );

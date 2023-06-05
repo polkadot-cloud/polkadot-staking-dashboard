@@ -3,7 +3,7 @@
 
 import { Entry } from '@polkadotcloud/core-ui';
 import { Router } from 'Router';
-import { APIProvider, useApi } from 'contexts/Api';
+import { APIProvider } from 'contexts/Api';
 import { BalancesProvider } from 'contexts/Balances';
 import { BondedProvider } from 'contexts/Bonded';
 import { ConnectProvider } from 'contexts/Connect';
@@ -43,7 +43,6 @@ import { ThemeProvider } from 'styled-components';
 // App theme classes and `@polkadotcloud/core-ui` theme classes are inserted here.
 export const ThemedRouter = () => {
   const { mode } = useTheme();
-  const { network } = useApi();
 
   return (
     <ThemeProvider theme={{ mode, network: `polkadot-dark` }}>
