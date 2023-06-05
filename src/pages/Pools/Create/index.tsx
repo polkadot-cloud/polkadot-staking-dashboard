@@ -31,7 +31,6 @@ export const Create = () => {
         <PageHeading>
           <span>
             <ButtonSecondary
-              lg
               text={t('pools.back')}
               iconLeft={faChevronLeft}
               iconTransform="shrink-3"
@@ -40,7 +39,6 @@ export const Create = () => {
           </span>
           <span>
             <ButtonSecondary
-              lg
               text={t('pools.cancel')}
               onClick={() => {
                 setOnPoolSetup(false);
