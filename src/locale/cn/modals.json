@@ -257,6 +257,9 @@
     "withdrawMemberFunds": "取出会员资金",
     "withdrawSubtitle": "资金将在取款后立即转作可用余额",
     "withdrawUnlocked": "取出己解锁",
-    "years": "年"
+    "years": "年",
+    "updateReserve": "更新储备",
+    "reserveLimit": "已达到余额上限，将只充值到可用余额上限",
+    "confirm":"确认"
   }
 }

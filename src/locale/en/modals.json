@@ -269,6 +269,9 @@
     "withdrawMemberFunds": "Withdraw Member Funds",
     "withdrawSubtitle": "Funds will be immediately available as free balance after withdrawing.",
     "withdrawUnlocked": "Withdraw Unlocked",
-    "years": "Years"
+    "years": "Years",
+    "updateReserve": "Update Reserve",
+    "reserveLimit": "The top of balance has been reached, will only top up to the limit of the balance.",
+    "confirm":"Confirm"
   }
 }

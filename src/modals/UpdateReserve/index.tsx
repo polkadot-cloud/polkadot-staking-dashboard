@@ -45,9 +45,7 @@ export const UpdateReserve = () => {
 
   const warnings = [];
   if (fundsFree.isZero()) {
-    warnings.push(
-      <Warning text="You have reach the limit of your free balance" />
-    );
+    warnings.push(<Warning text={t('reserveLimit')} />);
   }
 
   const sliderProps = {
@@ -64,7 +62,7 @@ export const UpdateReserve = () => {
   return (
     <ModalPadding>
       <h2 className="title unbounded" style={{ margin: '0.5rem' }}>
-        Update Reserve
+        {t('updateReserve')}
       </h2>
       {warnings.length ? (
         <ModalWarnings>
