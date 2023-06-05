@@ -49,161 +49,17 @@ export const HeadingWrapper = styled.div`
 export const AddressesWrapper = styled.div`
   --address-item-height: 7rem;
 
+  box-sizing: content-box;
+  overflow: auto;
+  height: auto;
   display: flex;
   flex-direction: column;
   padding: 0rem 0rem 7rem 0rem;
-  height: auto;
-  box-sizing: content-box;
-  overflow: auto;
 
   .items {
-    padding: 0 1rem;
     display: flex;
     flex-direction: column;
-
-    .item {
-      height: var(--address-item-height);
-      border-bottom: 1px solid var(--border-primary-color);
-      display: flex;
-      align-items: center;
-      margin-top: 1rem;
-      padding: 1rem 0.5rem;
-
-      > .content {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        height: 100%;
-
-        > .inner {
-          display: flex;
-          align-items: flex-start;
-
-          > .identicon {
-            flex-shrink: 1;
-            flex-grow: 0;
-            position: relative;
-
-            .indexIcon {
-              background: var(--background-primary);
-              border: 1px solid var(--border-primary-color);
-              color: var(--text-color-secondary);
-              border-radius: 50%;
-              position: absolute;
-              bottom: -0.25rem;
-              right: -0.6rem;
-              width: auto;
-              height: 1.75rem;
-              min-width: 1.75rem;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              padding: 0 0.35rem;
-              font-family: InterSemiBold, sans-serif;
-
-              svg {
-                width: 60%;
-                height: 60%;
-                color: var(--text-color-primary);
-              }
-            }
-          }
-
-          > div:last-child {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            flex-grow: 1;
-            button {
-              margin-left: 0.5rem;
-            }
-
-            section {
-              width: 100%;
-              display: flex;
-              padding-left: 1.5rem;
-              &.row {
-                align-items: center;
-              }
-            }
-
-            h5,
-            button {
-              font-size: 0.9rem;
-              &.label {
-                display: flex;
-                align-items: flex-end;
-                margin-right: 0.5rem;
-                margin-bottom: 0.85rem;
-              }
-            }
-
-            input {
-              background: var(--background-list-item);
-              color: var(--text-color-primary);
-              border-radius: 0.75rem;
-              padding: 0.85rem 0.75rem;
-              letter-spacing: 0.04rem;
-              font-size: 1rem;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-              overflow: hidden;
-              width: 100%;
-              max-width: 175px;
-              transition: background 0.2s, max-width 0.2s, padding 0.2s;
-
-              &:focus {
-                background: var(--background-menu);
-                max-width: 300px;
-              }
-
-              &:disabled {
-                border: 1px solid var(--background-menu);
-                background: none;
-              }
-            }
-
-            .full {
-              opacity: 0.8;
-              margin-top: 0.75rem;
-              margin-bottom: 0.5rem;
-              position: relative;
-              width: 100%;
-              height: 1rem;
-
-              > span {
-                position: absolute;
-                top: 0;
-                left: 0;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
-                width: 100%;
-                max-width: 100%;
-                padding-left: 1.5rem;
-              }
-            }
-          }
-        }
-      }
-      > .action {
-        height: 100%;
-        flex-basis: auto;
-        display: flex;
-        flex-direction: column;
-        padding-left: 1rem;
-
-        button {
-          width: 8rem;
-          flex-basis: 50%;
-          flex-grow: 1;
-        }
-      }
-    }
-  }
-
-  .edit {
-    margin-left: 0.75rem;
+    padding: 0 1rem;
   }
 
   .more {

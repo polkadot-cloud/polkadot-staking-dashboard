@@ -9,7 +9,7 @@ export const TipsWrapper = styled.div`
   width: 100%;
   display: flex;
   position: relative;
-  padding: 0.5rem 0.75rem 0.5rem 1rem;
+  padding: 0.5rem 1rem 0.5rem 1.25rem;
   margin-bottom: 0.5rem;
 
   @media (max-width: ${SideMenuStickyThreshold}px) {

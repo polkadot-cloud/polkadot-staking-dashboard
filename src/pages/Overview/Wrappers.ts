@@ -12,20 +12,20 @@ export const Separator = styled.div`
 `;
 
 export const MoreWrapper = styled.div`
-  padding: 0 1.25rem;
+  padding: 0 1.5rem;
   padding-bottom: 1rem;
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 3.5rem;
+  margin-top: 3rem;
 
   @media (max-width: ${SectionFullWidthThreshold}px) {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     margin-bottom: 0.5rem;
   }
   h4 {
     margin-top: 0.25rem;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
   }
   section {
     width: 100%;
@@ -58,8 +58,8 @@ export const BannerWrapper = styled.div`
   }
   box-shadow: var(--card-shadow-secondary);
   border-radius: 1.25rem;
-  padding: 1.25rem 1.25rem;
-  margin-top: 6rem;
+  padding: 1.25rem 1.5rem;
+  margin-top: 5rem;
   width: 100%;
 
   .label {

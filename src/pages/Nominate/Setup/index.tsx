@@ -33,7 +33,6 @@ export const Setup = () => {
         <PageHeading>
           <span>
             <ButtonSecondary
-              lg
               text={t('nominate.back')}
               iconLeft={faChevronLeft}
               iconTransform="shrink-3"
@@ -49,7 +48,6 @@ export const Setup = () => {
           </span>
           <span>
             <ButtonSecondary
-              lg
               text={t('nominate.cancel')}
               iconLeft={faTimes}
               onClick={() => {
