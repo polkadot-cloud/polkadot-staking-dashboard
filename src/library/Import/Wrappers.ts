@@ -49,17 +49,17 @@ export const HeadingWrapper = styled.div`
 export const AddressesWrapper = styled.div`
   --address-item-height: 7rem;
 
+  box-sizing: content-box;
+  overflow: auto;
+  height: auto;
   display: flex;
   flex-direction: column;
   padding: 0rem 0rem 7rem 0rem;
-  height: auto;
-  box-sizing: content-box;
-  overflow: auto;
 
   .items {
-    padding: 0 1rem;
     display: flex;
     flex-direction: column;
+    padding: 0 1rem;
 
     .item {
       height: var(--address-item-height);
@@ -84,27 +84,27 @@ export const AddressesWrapper = styled.div`
             flex-grow: 0;
             position: relative;
 
-            .indexIcon {
+            .index-icon {
               background: var(--background-primary);
               border: 1px solid var(--border-primary-color);
               color: var(--text-color-secondary);
+              font-family: InterSemiBold, sans-serif;
               border-radius: 50%;
               position: absolute;
               bottom: -0.25rem;
               right: -0.6rem;
-              width: auto;
-              height: 1.75rem;
               min-width: 1.75rem;
               display: flex;
               align-items: center;
               justify-content: center;
               padding: 0 0.35rem;
-              font-family: InterSemiBold, sans-serif;
+              height: 1.75rem;
+              width: auto;
 
               svg {
+                color: var(--text-color-primary);
                 width: 60%;
                 height: 60%;
-                color: var(--text-color-primary);
               }
             }
           }
@@ -124,6 +124,10 @@ export const AddressesWrapper = styled.div`
               padding-left: 1.5rem;
               &.row {
                 align-items: center;
+
+                .edit {
+                  margin-left: 0.75rem;
+                }
               }
             }
 
@@ -164,12 +168,12 @@ export const AddressesWrapper = styled.div`
             }
 
             .full {
-              opacity: 0.8;
               margin-top: 0.75rem;
               margin-bottom: 0.5rem;
+              opacity: 0.8;
               position: relative;
-              width: 100%;
               height: 1rem;
+              width: 100%;
 
               > span {
                 position: absolute;
@@ -178,9 +182,9 @@ export const AddressesWrapper = styled.div`
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
+                padding-left: 1.5rem;
                 width: 100%;
                 max-width: 100%;
-                padding-left: 1.5rem;
               }
             }
           }
@@ -193,17 +197,13 @@ export const AddressesWrapper = styled.div`
         flex-direction: column;
         padding-left: 1rem;
 
-        button {
-          width: 8rem;
+        > button {
           flex-basis: 50%;
           flex-grow: 1;
+          width: 8rem;
         }
       }
     }
-  }
-
-  .edit {
-    margin-left: 0.75rem;
   }
 
   .more {

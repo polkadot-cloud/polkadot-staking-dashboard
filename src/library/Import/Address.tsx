@@ -64,7 +64,7 @@ export const Address = ({
         <div className="inner">
           <div className="identicon">
             <Identicon value={address} size={40} />
-            <div className="indexIcon">{index + 1}</div>
+            <div className="index-icon ">{index + 1}</div>
           </div>
           <div>
             <section className="row">
