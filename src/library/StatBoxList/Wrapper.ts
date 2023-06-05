@@ -4,11 +4,6 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-`;
-
 export const ListWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
