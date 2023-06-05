@@ -710,18 +710,18 @@
     styled-components "^5.3.11"
     tslib "^2.5.3"
 
-"@polkadot/react-qr@^3.4.1":
-  version "3.4.1"
-  resolved "https://registry.npmjs.org/@polkadot/react-qr/-/react-qr-3.4.1.tgz#1a997a892e0e4f74488c592939a547a147d3c207"
-  integrity sha512-cP8dLoAfBHuVjnZyBwHGHbUZyQQX25dN7IMuQPojrgHsNGVs7QfwycnQpFFZD8C3B/GBED6HiTHagcShnc0CvQ==
+"@polkadot/react-qr@^3.4.2":
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/@polkadot/react-qr/-/react-qr-3.4.2.tgz#8f34253a9987ed71fcc048a122a4dcb9a61a1c08"
+  integrity sha512-Fc655CCMJuAt9l66SO7XBJOjiyMdIEtP8iVRv2Ns2F+0Y9xC1Z2t250gnpTXz6ihJ0UBUL87XhE/wn5vd7Ru8w==
   dependencies:
-    "@polkadot/ui-settings" "3.4.1"
-    "@polkadot/util" "^12.2.1"
-    "@polkadot/util-crypto" "^12.2.1"
+    "@polkadot/ui-settings" "3.4.2"
+    "@polkadot/util" "^12.2.2"
+    "@polkadot/util-crypto" "^12.2.2"
     qrcode-generator "^1.4.4"
     react-qr-reader "^2.2.1"
-    styled-components "^5.3.10"
-    tslib "^2.5.0"
+    styled-components "^5.3.11"
+    tslib "^2.5.3"
 
 "@polkadot/rpc-augment@10.7.3":
   version "10.7.3"
@@ -897,17 +897,6 @@
     "@polkadot/util-crypto" "^12.2.2"
     rxjs "^7.8.1"
     tslib "^2.5.3"
-
-"@polkadot/ui-settings@3.4.1":
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/@polkadot/ui-settings/-/ui-settings-3.4.1.tgz#0a74f154b8173c449826bad9bfdafefcb30225cc"
-  integrity sha512-2ym8ipRl14dedExABx/+NBLxh/8W8yMukY72db+weguJBC8/AAgNAzSX4tub9IGivArSTgi2T2/zLNXEKYtA+Q==
-  dependencies:
-    "@polkadot/networks" "^12.2.1"
-    "@polkadot/util" "^12.2.1"
-    eventemitter3 "^5.0.1"
-    store "^2.0.12"
-    tslib "^2.5.0"
 
 "@polkadot/ui-settings@3.4.2":
   version "3.4.2"
@@ -4774,7 +4763,7 @@ strip-outer@^1.0.1:
   dependencies:
     escape-string-regexp "^1.0.2"
 
-styled-components@^5.3.10, styled-components@^5.3.11:
+styled-components@^5.3.11:
   version "5.3.11"
   resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-5.3.11.tgz#9fda7bf1108e39bf3f3e612fcc18170dedcd57a8"
   integrity sha512-uuzIIfnVkagcVHv9nE0VPlHPSCmXIUGKfJ42LNjxCCTDTL5sgnJ8Z7GZBq0EnLYGln77tPpEpExt2+qa+cZqSw==
