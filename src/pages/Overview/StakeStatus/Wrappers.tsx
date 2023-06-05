@@ -59,7 +59,6 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
 
     .text {
       color: var(--text-color-primary);
-      font-family: InterSemiBold, sans-serif;
       font-size: 1.25rem;
       position: absolute;
       top: 0;
