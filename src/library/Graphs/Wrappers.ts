@@ -24,6 +24,9 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
   h2 {
     font-family: InterBold, sans-serif;
   }
+  h3 {
+    margin-top: 0.25rem;
+  }
   h2,
   h3 {
     margin-bottom: 1rem;
