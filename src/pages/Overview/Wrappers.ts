@@ -58,8 +58,8 @@ export const BannerWrapper = styled.div`
   }
   box-shadow: var(--card-shadow-secondary);
   border-radius: 1.25rem;
-  padding: 1.25rem 1.25rem;
-  margin-top: 6rem;
+  padding: 1.25rem 1.5rem;
+  margin-top: 5rem;
   width: 100%;
 
   .label {

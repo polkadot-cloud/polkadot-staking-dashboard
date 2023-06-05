@@ -82,7 +82,7 @@ export const Overview = () => {
   return (
     <>
       {showBanner && (
-        <PageRow style={{ position: 'relative', top: '2rem' }}>
+        <PageRow style={{ position: 'relative', top: '3rem' }}>
           <BannerWrapper className={mode}>
             <h5 className="label">
               <FontAwesomeIcon
@@ -108,7 +108,7 @@ export const Overview = () => {
                   )
                 }
                 iconRight={faAngleRight}
-                iconTransform="shrink-4"
+                iconTransform="shrink-2"
               />
             </div>
           </BannerWrapper>
