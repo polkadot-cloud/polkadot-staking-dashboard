@@ -73,7 +73,9 @@ export const UpdateReserve = () => {
       ) : null}
       <ReserveWrapper>
         <div>
-          <h4 className="current">{reserve.toString()} </h4>
+          <h4 className="current">
+            {planckToUnit(reserve, units).toString()}{' '}
+          </h4>
           <div className="slider">
             <Slider
               max={1}
