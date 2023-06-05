@@ -72,7 +72,7 @@ export const PoolStats = () => {
   );
 
   return (
-    <CardWrapper>
+    <CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
       <CardHeaderWrapper>
         <h3>{t('pools.poolStats')}</h3>
       </CardHeaderWrapper>

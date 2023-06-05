@@ -52,7 +52,7 @@ export const NetworkStats = () => {
   ];
 
   return (
-    <CardWrapper>
+    <CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
       <CardHeaderWrapper>
         <h3>
           {t('overview.networkStats')}
