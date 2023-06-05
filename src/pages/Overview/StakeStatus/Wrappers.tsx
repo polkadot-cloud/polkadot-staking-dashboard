@@ -33,7 +33,7 @@ export const StatusRowWrapper = styled.div<{ leftIcon?: boolean }>`
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 1.15rem 1rem;
+  padding: 1.1rem 1.15rem;
 
   > div {
     display: flex;

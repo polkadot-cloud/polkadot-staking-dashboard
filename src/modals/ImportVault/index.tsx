@@ -5,6 +5,7 @@ import { faQrcode } from '@fortawesome/free-solid-svg-icons';
 import {
   ButtonPrimary,
   ButtonText,
+  HardwareAddress,
   HardwareStatusBar,
 } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
@@ -12,7 +13,7 @@ import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { useModal } from 'contexts/Modal';
 import { useOverlay } from 'contexts/Overlay';
 import { ReactComponent as Icon } from 'img/polkadotVault.svg';
-import { Address } from 'library/Import/Address';
+import { Identicon } from 'library/Identicon';
 import { Confirm } from 'library/Import/Confirm';
 import { Heading } from 'library/Import/Heading';
 import { NoAccounts } from 'library/Import/NoAccounts';
@@ -91,11 +92,12 @@ export const ImportVault = () => {
           <AddressesWrapper>
             <div className="items">
               {vaultAccounts.map(({ address, name, index }: AnyJson, i) => (
-                <Address
+                <HardwareAddress
                   key={i}
                   address={address}
                   index={index}
                   initial={name}
+                  Identicon={<Identicon value={address} size={40} />}
                   existsHandler={vaultAccountExists}
                   renameHandler={renameHandler}
                   openRemoveHandler={openRemoveHandler}

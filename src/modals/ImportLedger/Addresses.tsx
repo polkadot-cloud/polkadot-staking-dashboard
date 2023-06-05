@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
-import { ButtonText } from '@polkadotcloud/core-ui';
+import { ButtonText, HardwareAddress } from '@polkadotcloud/core-ui';
 import { clipAddress, unescape } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import { useOverlay } from 'contexts/Overlay';
-import { Address } from 'library/Import/Address';
+import { Identicon } from 'library/Identicon';
 import { Confirm } from 'library/Import/Confirm';
 import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
@@ -71,11 +71,12 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
             })();
 
             return (
-              <Address
+              <HardwareAddress
                 key={i}
                 address={address}
                 index={index}
                 initial={initialName}
+                Identicon={<Identicon value={address} size={40} />}
                 existsHandler={ledgerAccountExists}
                 renameHandler={renameHandler}
                 openRemoveHandler={openRemoveHandler}

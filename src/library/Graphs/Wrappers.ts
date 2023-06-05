@@ -19,7 +19,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
   display: flex;
   flex-flow: ${(props) => (props.withAction ? 'row' : 'column')} wrap;
   width: 100%;
-  padding: ${(props) => (props.padded ? '0.5rem 1.2rem' : '0.25rem')};
+  padding: ${(props) => (props.padded ? '0.5rem 1.2rem' : '0rem 0.25rem')};
 
   h2 {
     font-family: InterBold, sans-serif;
@@ -63,7 +63,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   box-shadow: var(--card-shadow);
   background: var(--background-primary);
   padding: ${(props) =>
-    props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1.2rem'};
+    props.noPadding ? '0rem' : props.transparent ? '0rem 0rem' : '1.5rem'};
   border-radius: 1.1rem;
   display: flex;
   flex-flow: column nowrap;
@@ -177,7 +177,7 @@ export const GraphWrapper = styled.div<GraphWrapperProps>`
     opacity: 0.8;
   }
   .head {
-    padding: 0.5rem 1.2rem;
+    padding: 1rem 1.75rem;
   }
 
   h2 {

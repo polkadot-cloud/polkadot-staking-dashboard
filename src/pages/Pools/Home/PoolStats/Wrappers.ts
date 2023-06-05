@@ -112,6 +112,7 @@ export const HeaderWrapper = styled.div`
           }
           h4 {
             color: var(--text-color-secondary);
+            font-family: InterSemiBold, sans-serif;
             display: flex;
             flex-flow: row wrap;
             margin-top: 0.45rem;
