@@ -7,6 +7,9 @@ import type { TransferOptions, TransferOptionsContextInterface } from './types';
 export const defaultBondedContext: TransferOptionsContextInterface = {
   // eslint-disable-next-line
   getTransferOptions: (a) => transferOptions,
+  // eslint-disable-next-line
+   setReserve: (r) => {},
+  reserve: new BigNumber(0),
 };
 
 export const transferOptions: TransferOptions = {

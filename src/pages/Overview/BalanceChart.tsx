@@ -1,13 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp } from '@polkadotcloud/core-ui';
+import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/core-ui';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
+import { useModal } from 'contexts/Modal';
 import { usePlugins } from 'contexts/Plugins';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { BarSegment } from 'library/BarChart/BarSegment';
@@ -15,6 +16,7 @@ import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useTranslation } from 'react-i18next';
+import { ButtonWrapper } from './Wrappers';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
@@ -24,9 +26,9 @@ export const BalanceChart = () => {
   const prices = usePrices();
   const { plugins } = usePlugins();
   const { openHelp } = useHelp();
-  const { activeAccount } = useConnect();
+  const { activeAccount, accountHasSigner } = useConnect();
   const { getBalance, getLocks } = useBalances();
-  const { getTransferOptions } = useTransferOptions();
+  const { reserve, getTransferOptions } = useTransferOptions();
   const balance = getBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
   const { forceReserved } = allTransferOptions;
@@ -34,6 +36,7 @@ export const BalanceChart = () => {
   const unlockingPools = poolBondOpions.totalUnlocking.plus(
     poolBondOpions.totalUnlocked
   );
+  const { openModalWith } = useModal();
 
   // user's total balance
   const { free, frozen } = balance;
@@ -89,9 +92,9 @@ export const BalanceChart = () => {
   // available balance data
   const fundsLocked = planckToUnit(frozen.minus(lockStakingAmount), units);
   let fundsReserved = planckToUnit(forceReserved, units);
-  const fundsFree = planckToUnit(allTransferOptions.freeBalance, units).minus(
-    fundsLocked
-  );
+  const fundsFree = planckToUnit(allTransferOptions.freeBalance, units)
+    .minus(fundsLocked)
+    .minus(reserve);
 
   // available balance percentages
   const graphLocked = greaterThanZero(fundsLocked)
@@ -135,9 +138,16 @@ export const BalanceChart = () => {
               <>&nbsp;{usdFormatter.format(freeFiat.toNumber())}</>
             ) : null}
           </span>
+          <ButtonWrapper>
+            <ButtonPrimary
+              disabled={!activeAccount || !accountHasSigner(activeAccount)}
+              marginRight
+              onClick={() => openModalWith('UpdateReserve')}
+              text="Update Reserve"
+            />
+          </ButtonWrapper>
         </h2>
       </div>
-
       <BarChartWrapper>
         <Legend>
           {isNominating ? (
