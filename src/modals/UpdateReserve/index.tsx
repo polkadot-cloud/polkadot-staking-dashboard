@@ -6,7 +6,7 @@ import {
   ModalPadding,
   ModalWarnings,
 } from '@polkadotcloud/core-ui';
-import { planckToUnit } from '@polkadotcloud/utils';
+import { planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -45,7 +45,9 @@ export const UpdateReserve = () => {
 
   const warnings = [];
   if (fundsFree.isZero()) {
-    warnings.push(<Warning text={t('reserveLimit')} />);
+    warnings.push(
+      <Warning text="You have reach the limit of your free balance" />
+    );
   }
 
   const sliderProps = {
@@ -77,11 +79,13 @@ export const UpdateReserve = () => {
           <div className="slider">
             <Slider
               max={1}
-              value={reserve.toNumber()}
+              value={planckToUnit(reserve, units).toNumber()}
               step={0.1}
               onChange={(val) => {
                 if (typeof val === 'number') {
-                  setReserve(new BigNumber(val));
+                  setReserve(
+                    new BigNumber(unitToPlanck(val.toString(), units))
+                  );
                 }
               }}
               {...sliderProps}
@@ -95,12 +99,12 @@ export const UpdateReserve = () => {
               setStatus(0);
               localStorage.setItem(
                 `${network.name}_${activeAccount}_reserve`,
-                reserve.toString()
+                planckToUnit(reserve, units).toString()
               );
             }}
             disabled={
               !accountHasSigner(activeAccount) ||
-              reserve.toString() ===
+              planckToUnit(reserve, units).toString() ===
                 localStorage.getItem(`${network.name}_${activeAccount}_reserve`)
             }
           />

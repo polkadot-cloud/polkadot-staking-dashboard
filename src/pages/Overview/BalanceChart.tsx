@@ -28,7 +28,7 @@ export const BalanceChart = () => {
   const { openHelp } = useHelp();
   const { activeAccount, accountHasSigner } = useConnect();
   const { getBalance, getLocks } = useBalances();
-  const { reserve, getTransferOptions } = useTransferOptions();
+  const { getTransferOptions } = useTransferOptions();
   const balance = getBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
   const { forceReserved } = allTransferOptions;
@@ -92,10 +92,9 @@ export const BalanceChart = () => {
   // available balance data
   const fundsLocked = planckToUnit(frozen.minus(lockStakingAmount), units);
   let fundsReserved = planckToUnit(forceReserved, units);
-  const fundsFree = planckToUnit(allTransferOptions.freeBalance, units)
-    .minus(fundsLocked)
-    .minus(reserve);
-
+  const fundsFree = planckToUnit(allTransferOptions.freeBalance, units).minus(
+    fundsLocked
+  );
   // available balance percentages
   const graphLocked = greaterThanZero(fundsLocked)
     ? fundsLocked.dividedBy(graphAvailable.multipliedBy(0.01))

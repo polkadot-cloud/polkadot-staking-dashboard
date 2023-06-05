@@ -32,7 +32,7 @@ export const BondFeedback = ({
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { staking } = useStaking();
-  const { reserve, getTransferOptions } = useTransferOptions();
+  const { getTransferOptions } = useTransferOptions();
   const { isDepositor } = useActivePools();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
@@ -73,7 +73,6 @@ export const BondFeedback = ({
   // bond minus tx fees if too much
   const enoughToCoverTxFees = freeBondAmount
     .minus(bondBn)
-    .minus(reserve)
     .isGreaterThan(txFees);
 
   const bondAfterTxFees = enoughToCoverTxFees

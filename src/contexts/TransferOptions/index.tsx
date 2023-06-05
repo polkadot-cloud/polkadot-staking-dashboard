@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -31,8 +32,11 @@ export const TransferOptionsProvider = ({
 
   useEffect(() => {
     setReserve(
-      new BigNumber(
-        localStorage.getItem(`${network.name}_${activeAccount}_reserve`) || 0
+      unitToPlanck(
+        localStorage
+          .getItem(`${network.name}_${activeAccount}_reserve`)
+          ?.toString() || '0',
+        network.units
       )
     );
   }, [activeAccount, network]);
@@ -49,14 +53,7 @@ export const TransferOptionsProvider = ({
 
     const { free } = balance;
     const { active, total, unlocking } = ledger;
-    const totalLocked =
-      locks?.reduce(
-        (prev, { amount }) => prev.plus(amount),
-        new BigNumber(0)
-      ) || new BigNumber(0);
 
-    // Calculate a forced amount of free balance that needs to be reserved to keep the account
-    // alive. Deducts `locks` from free balance reserve needed.
     const forceReserved = existentialDeposit.plus(reserve);
 
     // Total free balance after `forceReserved` is subtracted.
