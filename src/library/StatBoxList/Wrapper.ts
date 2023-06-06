@@ -196,7 +196,7 @@ export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
 
   span {
     color: var(--text-color-primary);
-    font-family: InterBold, sans-serif;
+    font-family: InterSemiBold, sans-serif;
     font-size: 0.95rem;
     margin-left: 0.3rem;
     margin-top: 0.1rem;

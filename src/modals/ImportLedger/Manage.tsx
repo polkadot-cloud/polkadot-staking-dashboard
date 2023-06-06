@@ -58,6 +58,7 @@ export const Manage = ({
         removeLedgerAddress={removeLedgerAddress}
       />
       <HardwareStatusBar
+        show
         Icon={StatusBarIcon}
         text={feedback?.message || fallbackMessage}
         help={

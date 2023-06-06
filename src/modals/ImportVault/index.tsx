@@ -121,6 +121,7 @@ export const ImportVault = () => {
             </div>
           </AddressesWrapper>
           <HardwareStatusBar
+            show
             Icon={Icon}
             text={t('vaultAccounts', {
               ns: 'modals',
