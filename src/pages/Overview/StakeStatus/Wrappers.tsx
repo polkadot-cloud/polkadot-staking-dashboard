@@ -35,8 +35,11 @@ export const StatusWrapper = styled.div`
       @media (max-width: ${SideMenuStickyThreshold}px) {
         padding-bottom: 0.5rem;
       }
-
       border-radius: 0;
+
+      > div {
+        padding-top: 0;
+      }
     }
   }
 `;
