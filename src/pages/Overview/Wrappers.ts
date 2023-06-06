@@ -12,7 +12,7 @@ export const Separator = styled.div`
 `;
 
 export const MoreWrapper = styled.div`
-  padding: 0 1.5rem;
+  padding: 0 0.75rem;
   padding-bottom: 1rem;
   width: 100%;
   display: flex;
@@ -20,7 +20,7 @@ export const MoreWrapper = styled.div`
   margin-top: 3rem;
 
   @media (max-width: ${SectionFullWidthThreshold}px) {
-    margin-top: 0.5rem;
+    margin-top: 1.5rem;
     margin-bottom: 0.5rem;
   }
   h4 {

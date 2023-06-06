@@ -53,7 +53,7 @@ export const Overview = () => {
     unclaimedPayouts
   );
 
-  const PAYOUTS_HEIGHT = 390;
+  const PAYOUTS_HEIGHT = 380;
 
   let formatFrom = new Date();
   let formatTo = new Date();

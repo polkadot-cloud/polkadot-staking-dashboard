@@ -23,7 +23,7 @@ export const Payouts = () => {
   const ref = React.useRef<HTMLDivElement>(null);
 
   const size = useSize(ref.current);
-  const { width, height, minHeight } = formatSize(size, 276);
+  const { width, height, minHeight } = formatSize(size, 260);
 
   return (
     <div className="inner" ref={ref} style={{ minHeight }}>
@@ -49,10 +49,9 @@ export const Payouts = () => {
           position: 'absolute',
           opacity: notStaking ? 0.75 : 1,
           transition: 'opacity 0.5s',
-          marginTop: '1.5rem',
         }}
       >
-        <PayoutBar days={19} height="155px" />
+        <PayoutBar days={19} height="150px" />
         <div style={{ marginTop: '3rem' }}>
           <PayoutLine days={19} average={10} height="65px" />
         </div>
