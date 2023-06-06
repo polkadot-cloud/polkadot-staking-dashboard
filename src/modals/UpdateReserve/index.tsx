@@ -133,6 +133,7 @@ export const UpdateReserve = () => {
               />
             </div>
           </div>
+          <p>{t('reserveText')}</p>
           <div className="confirm">
             <ButtonPrimaryInvert
               text={t('confirm')}
