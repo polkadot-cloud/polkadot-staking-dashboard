@@ -6,7 +6,6 @@ import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { BarSegment } from 'library/BarChart/BarSegment';
@@ -23,7 +22,6 @@ export const BalanceChart = () => {
   } = useApi();
   const prices = usePrices();
   const { plugins } = usePlugins();
-  const { openHelp } = useHelp();
   const { activeAccount } = useConnect();
   const { getBalance, getLocks } = useBalances();
   const { getTransferOptions } = useTransferOptions();

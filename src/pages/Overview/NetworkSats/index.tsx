@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import { useHelp } from 'contexts/Help';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
@@ -15,7 +14,6 @@ import { Wrapper } from './Wrappers';
 
 export const NetworkStats = () => {
   const { t } = useTranslation('pages');
-  const { openHelp } = useHelp();
   const { bondedPools } = useBondedPools();
   const { inflation } = useInflation();
   const { metrics } = useNetworkMetrics();
