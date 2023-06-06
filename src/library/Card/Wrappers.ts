@@ -41,7 +41,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
   }
   h4 {
     margin-top: 0;
-    margin-bottom: 0.55rem;
+    margin-bottom: 0.4rem;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
