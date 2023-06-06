@@ -1,5 +1,6 @@
 {
   "base": {
+    "goTo": "查看",
     "active": "激活",
     "allowAll": "允许所有",
     "allowAnyoneCompound": "允许任何人代表您复利收益",

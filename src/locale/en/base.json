@@ -1,5 +1,6 @@
 {
   "base": {
+    "goTo": "Go To",
     "active": "Active",
     "allowAll": "Allow All",
     "allowAnyoneCompound": "Allow anyone to compound rewards on your behalf.",
