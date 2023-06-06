@@ -12,7 +12,11 @@ import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints';
 import { formatSize } from 'library/Graphs/Utils';
-import { GraphWrapper } from 'library/Graphs/Wrappers';
+import {
+  CardHeaderWrapper,
+  CardWrapper,
+  GraphInnerWrapper,
+} from 'library/Graphs/Wrappers';
 import { useSize } from 'library/Hooks/useSize';
 import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
@@ -109,9 +113,9 @@ export const ValidatorMetrics = () => {
         style={{ position: 'relative', marginTop: '0.5rem' }}
       >
         <SubscanButton />
-        <GraphWrapper
+        <CardWrapper
           style={{
-            margin: '0 1.5rem 0 0.5rem',
+            margin: '0 0 0 0.5rem',
             height: 350,
             border: 'none',
             boxShadow: 'none',
@@ -119,29 +123,28 @@ export const ValidatorMetrics = () => {
           flex
           transparent
         >
-          <h4>
-            {t('recentEraPoints')}{' '}
-            <ButtonHelp marginLeft onClick={() => openHelp('Era Points')} />
-          </h4>
-          <div className="inner" ref={ref} style={{ minHeight }}>
+          <CardHeaderWrapper>
+            <h4>
+              {t('recentEraPoints')}{' '}
+              <ButtonHelp marginLeft onClick={() => openHelp('Era Points')} />
+            </h4>
+          </CardHeaderWrapper>
+          <div ref={ref} style={{ minHeight }}>
             <StatusLabel
               status="active_service"
               statusFor="subscan"
               title={t('subscanDisabled')}
             />
-            <div
-              className="graph"
+            <GraphInnerWrapper
               style={{
                 height: `${height}px`,
                 width: `${width}px`,
-                position: 'absolute',
-                left: '-1rem',
               }}
             >
               <EraPointsGraph items={list} height={250} />
-            </div>
+            </GraphInnerWrapper>
           </div>
-        </GraphWrapper>
+        </CardWrapper>
       </div>
     </>
   );

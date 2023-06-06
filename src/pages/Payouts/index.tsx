@@ -14,7 +14,7 @@ import { formatSize, sortNonZeroPayouts } from 'library/Graphs/Utils';
 import {
   CardHeaderWrapper,
   CardWrapper,
-  GraphWrapper,
+  GraphInnerWrapper,
 } from 'library/Graphs/Wrappers';
 import { useSize } from 'library/Hooks/useSize';
 import { StatBoxList } from 'library/StatBoxList';
@@ -42,7 +42,7 @@ export const Payouts = ({ page }: PageProps) => {
 
   const ref = useRef<HTMLDivElement>(null);
   const size = useSize(ref.current);
-  const { width, height, minHeight } = formatSize(size, 300);
+  const { width, height, minHeight } = formatSize(size, 280);
 
   useEffect(() => {
     // filter zero rewards and order via block timestamp, most recent first.
@@ -56,9 +56,9 @@ export const Payouts = ({ page }: PageProps) => {
         <LastEraPayoutStat />
       </StatBoxList>
       <PageRow>
-        <GraphWrapper>
+        <CardWrapper>
           <SubscanButton />
-          <CardHeaderWrapper padded>
+          <CardHeaderWrapper>
             <h4>
               {t('payouts.payoutHistory', { ns: 'pages' })}
               <ButtonHelp
@@ -95,8 +95,7 @@ export const Payouts = ({ page }: PageProps) => {
               />
             )}
 
-            <div
-              className="graph"
+            <GraphInnerWrapper
               style={{
                 height: `${height}px`,
                 width: `${width}px`,
@@ -107,9 +106,9 @@ export const Payouts = ({ page }: PageProps) => {
             >
               <PayoutBar days={MaxPayoutDays} height="165px" />
               <PayoutLine days={MaxPayoutDays} average={10} height="65px" />
-            </div>
+            </GraphInnerWrapper>
           </div>
-        </GraphWrapper>
+        </CardWrapper>
       </PageRow>
       {!payoutsList?.length ? (
         <></>

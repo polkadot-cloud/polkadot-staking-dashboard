@@ -13,6 +13,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { BarSegment } from 'library/BarChart/BarSegment';
 import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
+import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useTranslation } from 'react-i18next';
 
@@ -122,7 +123,7 @@ export const BalanceChart = () => {
 
   return (
     <>
-      <div className="head">
+      <CardHeaderWrapper>
         <h4>
           {t('overview.balance')}
           <ButtonHelp marginLeft onClick={() => openHelp('Your Balance')} />
@@ -136,7 +137,7 @@ export const BalanceChart = () => {
             ) : null}
           </span>
         </h2>
-      </div>
+      </CardHeaderWrapper>
 
       <BarChartWrapper>
         <Legend>
