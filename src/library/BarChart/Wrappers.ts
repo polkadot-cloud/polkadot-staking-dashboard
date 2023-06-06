@@ -26,15 +26,15 @@ export const BarChartWrapper = styled.div<{ lessPadding?: boolean }>`
   }
   .d1 {
     background: var(--network-color-primary);
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
   }
   .d2 {
     background: var(--network-color-secondary);
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
   }
   .d3 {
     background: var(--text-color-secondary);
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
   }
   .d4 {
     background: var(--button-tertiary-background);
@@ -71,7 +71,7 @@ export const Bar = styled.div`
   background: var(--button-secondary-background);
   display: flex;
   width: 100%;
-  height: 3.5rem;
+  height: 3.75rem;
   border-radius: 0.65rem;
   overflow: hidden;
 
@@ -91,7 +91,7 @@ export const Bar = styled.div`
       overflow: hidden;
       padding: 0 0.8rem;
       width: 100%;
-      font-size: 1rem;
+      font-size: 1.05rem;
     }
   }
 `;
