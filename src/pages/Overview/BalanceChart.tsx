@@ -13,7 +13,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { BarSegment } from 'library/BarChart/BarSegment';
 import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
-import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useTranslation } from 'react-i18next';
 
@@ -131,7 +131,7 @@ export const BalanceChart = () => {
         <h2>
           <span className="amount">{totalBalance.toFormat()}</span>&nbsp;
           {unit}
-          <span className="fiat">
+          <span className="note">
             {plugins.includes('binance_spot') ? (
               <>&nbsp;{usdFormatter.format(freeFiat.toNumber())}</>
             ) : null}

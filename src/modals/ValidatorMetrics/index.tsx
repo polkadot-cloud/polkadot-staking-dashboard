@@ -10,13 +10,10 @@ import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
+import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints';
 import { formatSize } from 'library/Graphs/Utils';
-import {
-  CardHeaderWrapper,
-  CardWrapper,
-  GraphInnerWrapper,
-} from 'library/Graphs/Wrappers';
+import { GraphWrapper } from 'library/Graphs/Wrapper';
 import { useSize } from 'library/Hooks/useSize';
 import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
@@ -135,14 +132,14 @@ export const ValidatorMetrics = () => {
               statusFor="subscan"
               title={t('subscanDisabled')}
             />
-            <GraphInnerWrapper
+            <GraphWrapper
               style={{
                 height: `${height}px`,
                 width: `${width}px`,
               }}
             >
               <EraPointsGraph items={list} height={250} />
-            </GraphInnerWrapper>
+            </GraphWrapper>
           </div>
         </CardWrapper>
       </div>

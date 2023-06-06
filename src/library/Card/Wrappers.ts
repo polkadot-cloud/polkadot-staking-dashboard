@@ -3,7 +3,7 @@
 
 import { SideMenuStickyThreshold } from 'consts';
 import styled from 'styled-components';
-import type { CardHeaderWrapperProps, CardWrapperProps } from './types';
+import type { CardHeaderWrapperProps, CardWrapperProps } from '../Graphs/types';
 
 /* CardHeaderWrapper
  *
@@ -134,11 +134,4 @@ export const CardWrapper = styled.div<CardWrapperProps>`
       margin: 0.5rem 0;
     }
   }
-`;
-
-export const GraphInnerWrapper = styled.div`
-  position: relative;
-  flex: 0;
-  padding: 1rem 2rem 1rem 0;
-  width: 100%;
 `;

@@ -8,14 +8,11 @@ import { usePlugins } from 'contexts/Plugins';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useUi } from 'contexts/UI';
+import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { formatSize, sortNonZeroPayouts } from 'library/Graphs/Utils';
-import {
-  CardHeaderWrapper,
-  CardWrapper,
-  GraphInnerWrapper,
-} from 'library/Graphs/Wrappers';
+import { GraphWrapper } from 'library/Graphs/Wrapper';
 import { useSize } from 'library/Hooks/useSize';
 import { StatBoxList } from 'library/StatBoxList';
 import { StatusLabel } from 'library/StatusLabel';
@@ -95,7 +92,7 @@ export const Payouts = ({ page }: PageProps) => {
               />
             )}
 
-            <GraphInnerWrapper
+            <GraphWrapper
               style={{
                 height: `${height}px`,
                 width: `${width}px`,
@@ -106,7 +103,7 @@ export const Payouts = ({ page }: PageProps) => {
             >
               <PayoutBar days={MaxPayoutDays} height="165px" />
               <PayoutLine days={MaxPayoutDays} average={10} height="65px" />
-            </GraphInnerWrapper>
+            </GraphWrapper>
           </div>
         </CardWrapper>
       </PageRow>

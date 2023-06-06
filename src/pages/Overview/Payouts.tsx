@@ -7,7 +7,7 @@ import { useUi } from 'contexts/UI';
 import { PayoutBar } from 'library/Graphs/PayoutBar';
 import { PayoutLine } from 'library/Graphs/PayoutLine';
 import { formatSize } from 'library/Graphs/Utils';
-import { GraphInnerWrapper } from 'library/Graphs/Wrappers';
+import { GraphWrapper } from 'library/Graphs/Wrapper';
 import { useSize } from 'library/Hooks/useSize';
 import { StatusLabel } from 'library/StatusLabel';
 import React from 'react';
@@ -42,7 +42,7 @@ export const Payouts = () => {
         />
       )}
 
-      <GraphInnerWrapper
+      <GraphWrapper
         style={{
           height: `${height}px`,
           width: `${width}px`,
@@ -56,7 +56,7 @@ export const Payouts = () => {
         <div style={{ marginTop: '3rem' }}>
           <PayoutLine days={19} average={10} height="65px" />
         </div>
-      </GraphInnerWrapper>
+      </GraphWrapper>
     </div>
   );
 };

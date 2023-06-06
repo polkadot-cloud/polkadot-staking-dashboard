@@ -12,7 +12,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { BondedChart } from 'library/BarChart/BondedChart';
-import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useTranslation } from 'react-i18next';
 
 export const ManageBond = () => {
