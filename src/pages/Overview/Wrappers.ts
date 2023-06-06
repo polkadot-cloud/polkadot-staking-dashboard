@@ -28,8 +28,13 @@ export const MoreWrapper = styled.div`
     margin-bottom: 0.5rem;
   }
   section {
+    display: flex;
+    align-items: center;
     width: 100%;
     margin-top: 0.1rem;
+    div {
+      margin-left: 0.5rem;
+    }
   }
 `;
 
@@ -96,8 +101,4 @@ export const BannerWrapper = styled.div`
       }
     }
   }
-`;
-
-export const ButtonWrapper = styled.div`
-  margin-left: 0.5rem;
 `;
