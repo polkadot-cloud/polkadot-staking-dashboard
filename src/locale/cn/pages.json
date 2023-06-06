@@ -113,7 +113,7 @@
       "totalValidators": "所有验证人",
       "unitSupplyStaked": "{{unit}} 抵押比例",
       "unlocking": "正在解锁",
-      "updateReserve": "更新储备"
+      "updateReserve": "更新预存"
     },
     "payouts": {
       "deductedFromBond": "从质押里扣除",
