@@ -1,6 +1,5 @@
 {
   "base": {
-    "goTo": "查看",
     "active": "激活",
     "allowAll": "允许所有",
     "allowAnyoneCompound": "允许任何人代表您复利收益",
@@ -10,6 +9,7 @@
     "allowWithdraw": "允许取出收益",
     "community": "社区",
     "feedback": "反馈",
+    "goTo": "查看",
     "help": "帮助",
     "inactive": "未激活",
     "network": "网络",
