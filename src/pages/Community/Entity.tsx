@@ -57,7 +57,6 @@ export const Entity = () => {
     <PageRow>
       <PageHeading>
         <ButtonSecondary
-          lg
           text={t('community.goBack')}
           iconLeft={faChevronLeft}
           iconTransform="shrink-3"

@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp } from '@polkadotcloud/core-ui';
 import BigNumber from 'bignumber.js';
 import { useHelp } from 'contexts/Help';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -54,10 +53,7 @@ export const NetworkStats = () => {
   return (
     <CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
       <CardHeaderWrapper>
-        <h3>
-          {t('overview.networkStats')}
-          <ButtonHelp marginLeft onClick={() => openHelp('Network Stats')} />
-        </h3>
+        <h3>{t('overview.networkStats')}</h3>
       </CardHeaderWrapper>
       <Wrapper>
         <StatsHead items={items} />

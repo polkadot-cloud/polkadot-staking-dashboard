@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp } from '@polkadotcloud/core-ui';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -124,10 +123,7 @@ export const BalanceChart = () => {
   return (
     <>
       <CardHeaderWrapper>
-        <h4>
-          {t('overview.balance')}
-          <ButtonHelp marginLeft onClick={() => openHelp('Your Balance')} />
-        </h4>
+        <h4>{t('overview.balance')}</h4>
         <h2>
           <span className="amount">{totalBalance.toFormat()}</span>&nbsp;
           {unit}
