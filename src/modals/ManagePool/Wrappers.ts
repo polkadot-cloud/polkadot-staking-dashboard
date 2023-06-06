@@ -45,7 +45,7 @@ export const ContentWrapper = styled.div`
   }
 `;
 
-export const CommissionWrapper = styled.div`
+export const WithSliderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 0.5rem 0 0.5rem;
@@ -102,5 +102,12 @@ export const CommissionWrapper = styled.div`
         box-shadow: 0 0 0 5px var(--network-color-transparent) !important;
       }
     }
+  }
+
+  .confirm {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-end;
+    margin-top: 2.5rem;
   }
 `;

@@ -18,11 +18,11 @@ import { useModal } from 'contexts/Modal';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { Close } from 'library/Modal/Close';
+import { WithSliderWrapper } from 'modals/ManagePool/Wrappers';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ReserveWrapper } from './Wrapper';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');
@@ -88,7 +88,11 @@ export const UpdateReserve = () => {
           }
         />
 
-        <ReserveWrapper>
+        <WithSliderWrapper>
+          <h5 className="neutral">
+            Reserve
+            <span className="neutral">updated</span>
+          </h5>
           <div>
             <h4 className="current">
               {planckToUnit(reserve, units).toString()}{' '}
@@ -128,7 +132,7 @@ export const UpdateReserve = () => {
               }
             />
           </div>
-        </ReserveWrapper>
+        </WithSliderWrapper>
       </ModalPadding>
     </>
   );
