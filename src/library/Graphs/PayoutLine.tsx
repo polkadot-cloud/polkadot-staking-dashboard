@@ -170,10 +170,11 @@ export const PayoutLine = ({
         {average > 1 ? `${average} ${t('dayAverage')}` : null}
       </h5>
       <div
-        className="graph_line"
         style={{
           height: height || 'auto',
           background: background || 'none',
+          marginTop: '0.6rem',
+          padding: '0 0 0.5rem 1.5rem',
         }}
       >
         <Line options={options} data={data} />

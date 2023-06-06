@@ -55,7 +55,7 @@ export const StatPie = ({ value, value2 }: StatPieProps) => {
   };
 
   return (
-    <div className="graph" style={{ width: 36, height: 36 }}>
+    <div style={{ width: 36, height: 36 }}>
       <Pie options={options} data={data} />
     </div>
   );

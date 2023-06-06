@@ -10,9 +10,10 @@ import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
+import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints';
 import { formatSize } from 'library/Graphs/Utils';
-import { GraphWrapper } from 'library/Graphs/Wrappers';
+import { GraphWrapper } from 'library/Graphs/Wrapper';
 import { useSize } from 'library/Hooks/useSize';
 import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
@@ -109,9 +110,9 @@ export const ValidatorMetrics = () => {
         style={{ position: 'relative', marginTop: '0.5rem' }}
       >
         <SubscanButton />
-        <GraphWrapper
+        <CardWrapper
           style={{
-            margin: '0 1.5rem 0 0.5rem',
+            margin: '0 0 0 0.5rem',
             height: 350,
             border: 'none',
             boxShadow: 'none',
@@ -119,29 +120,28 @@ export const ValidatorMetrics = () => {
           flex
           transparent
         >
-          <h4>
-            {t('recentEraPoints')}{' '}
-            <ButtonHelp marginLeft onClick={() => openHelp('Era Points')} />
-          </h4>
-          <div className="inner" ref={ref} style={{ minHeight }}>
+          <CardHeaderWrapper>
+            <h4>
+              {t('recentEraPoints')}{' '}
+              <ButtonHelp marginLeft onClick={() => openHelp('Era Points')} />
+            </h4>
+          </CardHeaderWrapper>
+          <div ref={ref} style={{ minHeight }}>
             <StatusLabel
               status="active_service"
               statusFor="subscan"
               title={t('subscanDisabled')}
             />
-            <div
-              className="graph"
+            <GraphWrapper
               style={{
                 height: `${height}px`,
                 width: `${width}px`,
-                position: 'absolute',
-                left: '-1rem',
               }}
             >
               <EraPointsGraph items={list} height={250} />
-            </div>
+            </GraphWrapper>
           </div>
-        </GraphWrapper>
+        </CardWrapper>
       </div>
     </>
   );
