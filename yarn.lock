@@ -210,10 +210,10 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@dotlottie/player-component@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@dotlottie/player-component/-/player-component-1.4.0.tgz#ae359063d2d89d165c377936dec071730bf0b32d"
-  integrity sha512-In4acH7PjGq6wbUqyUPqxIaFg3w7/A9JASWjoSa3uiGpyNtzw0xgWMW2+4LGq4mvPyFrGQhF8R9di0N+/duFig==
+"@dotlottie/player-component@^1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@dotlottie/player-component/-/player-component-1.4.1.tgz#defdaf0966351014716aac7c0839057672ca6a56"
+  integrity sha512-KRq0kbNudYrlKZp4v1FCSTwDCpkrTZf70QVQ+4ASpCR+IPry1ncuRt8xsfD4lMC66WozZE9zz29lxs6Balurmg==
   dependencies:
     "@rollup/plugin-json" "^6.0.0"
     fflate "^0.7.3"
