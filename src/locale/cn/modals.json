@@ -180,6 +180,7 @@
     "removeAccount": "删除帐户",
     "removeBond": "解除质押",
     "renamePool": "重命名",
+    "reserve": "预存",
     "reserveLimit": "已达到余额上限，将只充值到可用余额上限",
     "resetLedgerAccounts": "重设Ledger帐户",
     "rewards": "收益",

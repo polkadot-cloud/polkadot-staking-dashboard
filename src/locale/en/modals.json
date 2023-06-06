@@ -189,6 +189,7 @@
     "removeAccount": "Remove Account",
     "removeBond": "Remove Bond",
     "renamePool": "Rename Pool",
+    "reserve": "Reserve",
     "reserveLimit": "The top of balance has been reached, will only top up to the limit of the balance.",
     "resetLedgerAccounts": "Reset Ledger Accounts",
     "rewards": "Rewards",

@@ -53,6 +53,20 @@ export const UpdateReserve = () => {
   if (fundsFree.isZero()) {
     warnings.push(<Warning text={t('reserveLimit')} />);
   }
+  const ReserveUpdated = !(
+    planckToUnit(reserve, units).toString() ===
+    localStorage.getItem(`${network.name}_${activeAccount}_reserve`)
+  );
+
+  const ReserveFeedback = (() => {
+    if (!ReserveUpdated) {
+      return undefined;
+    }
+    return {
+      text: t('updated'),
+      label: 'neutral',
+    };
+  })();
 
   const sliderProps = {
     trackStyle: {
@@ -90,8 +104,10 @@ export const UpdateReserve = () => {
 
         <WithSliderWrapper>
           <h5 className="neutral">
-            Reserve
-            <span className="neutral">updated</span>
+            {t('reserve')}
+            {ReserveFeedback && (
+              <span className="neutral">{ReserveFeedback.text}</span>
+            )}
           </h5>
           <div>
             <h4 className="current">
