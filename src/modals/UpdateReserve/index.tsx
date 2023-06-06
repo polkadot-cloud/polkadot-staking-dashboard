@@ -21,7 +21,7 @@ import { Close } from 'library/Modal/Close';
 import { WithSliderWrapper } from 'modals/ManagePool/Wrappers';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const UpdateReserve = () => {
@@ -32,7 +32,7 @@ export const UpdateReserve = () => {
   const { getLocks, getBalance } = useBalances();
   const balance = getBalance(activeAccount);
   const { network } = useApi();
-  const { setStatus } = useModal();
+  const { setStatus, setResize } = useModal();
   const allTransferOptions = getTransferOptions(activeAccount);
   const { frozen } = balance;
   const { openHelp } = useHelp();
@@ -79,6 +79,10 @@ export const UpdateReserve = () => {
     },
   };
 
+  useEffect(() => {
+    setResize();
+  }, [reserve]);
+
   return (
     <>
       <Close />
@@ -117,7 +121,7 @@ export const UpdateReserve = () => {
               <Slider
                 max={['polkadot', 'westend'].includes(network.name) ? 3 : 1}
                 value={planckToUnit(reserve, units).toNumber()}
-                step={0.1}
+                step={0.01}
                 onChange={(val) => {
                   if (typeof val === 'number') {
                     setReserve(
