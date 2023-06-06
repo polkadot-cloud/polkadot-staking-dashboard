@@ -35,16 +35,34 @@ export const AccountInputWrapper = styled.div`
 
     > section {
       display: flex;
-      flex-flow: column wrap;
+      flex-flow: row wrap;
+      align-items: center;
 
-      > input {
-        width: 100%;
-        border: none;
-        margin: 0;
-        padding-right: 1rem;
+      > div {
+        &:first-child {
+          padding-right: 0.5rem;
+          .ph {
+            background: var(--background-default);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+          }
+        }
+        &:last-child {
+          display: flex;
+          flex-flow: column wrap;
+          flex-grow: 1;
 
-        &:disabled {
-          opacity: 0.75;
+          > input {
+            width: 100%;
+            border: none;
+            margin: 0;
+            padding-right: 1rem;
+
+            &:disabled {
+              opacity: 0.75;
+            }
+          }
         }
       }
 

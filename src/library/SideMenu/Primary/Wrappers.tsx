@@ -47,6 +47,7 @@ export const Wrapper = styled(motion.div)`
     }
   }
   .name {
+    font-family: InterSemiBold, sans-serif;
     margin: 0;
     padding: 0;
     line-height: 1.35rem;
@@ -95,12 +96,9 @@ export const Wrapper = styled(motion.div)`
   }
 
   &.active {
-    background: var(--gradient-highlight-primary);
+    background: var(--highlight-primary);
   }
   &.inactive:hover {
-    background: var(--gradient-highlight-secondary);
-  }
-  &.inactive:hover {
-    background: var(--gradient-highlight-secondary);
+    background: var(--highlight-secondary);
   }
 `;

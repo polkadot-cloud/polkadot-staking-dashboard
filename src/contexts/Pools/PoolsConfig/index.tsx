@@ -11,7 +11,7 @@ import type {
   PoolsConfigContextState,
 } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
-import type { AnyApi } from 'types';
+import type { AnyApi, AnyJson } from 'types';
 import { useApi } from '../../Api';
 import * as defaults from './defaults';
 
@@ -28,6 +28,13 @@ export const PoolsConfigProvider = ({
     stats: defaults.stats,
     unsub: null,
   });
+
+  // store global max commission.
+  // NOTE: on Polkadot runtime upgrade this can be moved to `poolsConfig`.
+  const [globalMaxCommission, setGlobalMaxCommission] = useState<AnyJson>(0);
+  const globalMaxCommissionRef = useRef(globalMaxCommission);
+  const unsub2 = useRef<AnyApi>();
+
   const poolsConfigRef = useRef(poolsConfig);
 
   // get favorite pools from local storage.
@@ -44,6 +51,11 @@ export const PoolsConfigProvider = ({
   useEffect(() => {
     if (isReady) {
       subscribeToPoolConfig();
+      if (['kusama', 'westend'].includes(network.name)) {
+        subscribeToGlobalMaxCommission();
+      } else {
+        setStateWithRef(0, setGlobalMaxCommission, globalMaxCommissionRef);
+      }
     }
     return () => {
       unsubscribe();
@@ -53,6 +65,9 @@ export const PoolsConfigProvider = ({
   const unsubscribe = () => {
     if (poolsConfigRef.current.unsub !== null) {
       poolsConfigRef.current.unsub();
+    }
+    if (unsub2.current) {
+      unsub2.current();
     }
   };
 
@@ -136,6 +151,23 @@ export const PoolsConfigProvider = ({
     );
   };
 
+  // subscribe to global max commission.
+  const subscribeToGlobalMaxCommission = async () => {
+    if (!api) return;
+
+    const unsub = await api.query.nominationPools.globalMaxCommission(
+      (result: AnyApi) => {
+        // remove % and convert to number before store to state.
+        setStateWithRef(
+          Number(result.toHuman().slice(0, -1)),
+          setGlobalMaxCommission,
+          globalMaxCommissionRef
+        );
+      }
+    );
+    unsub2.current = unsub;
+  };
+
   /*
    * Adds a favorite validator.
    */
@@ -200,6 +232,7 @@ export const PoolsConfigProvider = ({
         createAccounts,
         favorites,
         stats: poolsConfigRef.current.stats,
+        globalMaxCommission: globalMaxCommissionRef.current,
       }}
     >
       {children}

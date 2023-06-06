@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 export const BarChartWrapper = styled.div<{ lessPadding?: boolean }>`
   width: 100%;
-  padding: ${(props) => (props.lessPadding ? '0 0.5rem' : '0 1.75rem')};
+  padding: ${(props) => (props.lessPadding ? '0 0.5rem' : '0 2rem')};
   margin-top: 1rem;
 
   .available {
@@ -72,7 +72,7 @@ export const Bar = styled.div`
   display: flex;
   width: 100%;
   height: 3.5rem;
-  border-radius: 0.55rem;
+  border-radius: 0.65rem;
   overflow: hidden;
 
   > div {
@@ -83,7 +83,7 @@ export const Bar = styled.div`
     transition: width 1.5s cubic-bezier(0, 1, 0, 1);
 
     > span {
-      font-family: InterSemiBold, sans-serif;
+      font-family: InterBold, sans-serif;
       position: absolute;
       left: 0;
       text-overflow: ellipsis;

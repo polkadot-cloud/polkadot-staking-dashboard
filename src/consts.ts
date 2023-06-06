@@ -20,15 +20,13 @@ export const EmptyH256 = new Uint8Array(32);
 export const ModPrefix = stringToU8a('modl');
 export const U32Opts = { bitLength: 32, isLe: true };
 
-export const InterfaceMaximumWidth = 1500;
 export const SideMenuMaximisedWidth = 185;
 export const SideMenuMinimisedWidth = 75;
-export const SideMenuStickyThreshold = 1175;
-export const SectionFullWidthThreshold = 1050;
-export const ShowAccountsButtonWidthThreshold = 850;
+export const SideMenuStickyThreshold = 1150;
+export const SectionFullWidthThreshold = 1000;
+export const ShowAccountsButtonWidthThreshold = 825;
 export const FloatingMenuWidth = 250;
 export const SmallFontSizeMaxWidth = 600;
-export const MediumFontSizeMaxWidth = 1600;
 export const TipsThresholdSmall = 750;
 export const TipsThresholdMedium = 1200;
 

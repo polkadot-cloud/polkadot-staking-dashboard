@@ -272,6 +272,30 @@
           "It is more of a key-chain tool that will enable you the create, manage, and restore accounts."
         ]
       ],
+      "poolCommissionChangeRate": [
+        "Pool Commission Change Rate",
+        [
+          "The commission change rate is set by the pool Root, and dictates by how much and how often commission can be increased.",
+          "The maximum increase of the change rate dictates how much the commission rate can be increaesd in a single update. The minimum delay dictates how many blocks must pass before the commission rate can be increased again.",
+          "Once an initial change rate is set, only more restrictive values can be set thereafter. More restrictive values comprise of a smaller max increase and larger minimum delay."
+        ]
+      ],
+      "poolCommissionRate": [
+        "Pool Commission Rate",
+        [
+          "The commission rate of the pool. This value is set by the pool Root, and is the percentage of rewards the pool will take from its members.",
+          "A payee account must also be provided to receive the commission.",
+          "The commission rate is taken from the pool's rewards before they are distributed to its members."
+        ]
+      ],
+      "poolMaxCommission": [
+        "Pool Max Commission",
+        [
+          "The maximum commission rate a pool owner can set for the pool.",
+          "This value is set by the pool Root, and is the maximum percentage of rewards the pool will take from its members.",
+          "Once an initial maximum commission is set, only more restrictive values can be set thereafter."
+        ]
+      ],
       "poolMembership": [
         "Pool Membership",
         [

@@ -12,7 +12,6 @@ export const ItemWrapper = styled(motion.div)`
     background: var(--background-list-item);
     padding: 0 0.75rem;
     flex: 1;
-    box-shadow: 0px 1.75px 0px 1.25px var(--card-shadow-color-secondary);
     border-radius: 1rem;
     display: flex;
     flex-flow: column wrap;

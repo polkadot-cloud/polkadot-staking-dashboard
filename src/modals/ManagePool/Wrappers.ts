@@ -63,6 +63,27 @@ export const CommissionWrapper = styled.div`
     &.success {
       color: var(--status-success-color);
     }
+
+    > span {
+      font-family: InterSemiBold, sans-serif;
+      margin-left: 0.5rem;
+
+      &.neutral {
+        color: var(--network-color-primary);
+      }
+      &.danger {
+        color: var(--status-danger-color);
+      }
+      &.success {
+        color: var(--status-success-color);
+      }
+    }
+  }
+
+  .changeRate {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0.25rem 0;
   }
 
   > div {

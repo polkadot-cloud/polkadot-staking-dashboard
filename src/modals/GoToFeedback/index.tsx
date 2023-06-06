@@ -20,13 +20,13 @@ export const GoToFeedback = () => {
             width: '100%',
           }}
         >
-          <p style={{ paddingBottom: '0.5rem' }}>
+          <h4 style={{ paddingBottom: '0.75rem' }}>
             {t('feedbackPage')}{' '}
             <a href="https://canny.io/" target="_blank" rel="noreferrer">
               Canny.io
             </a>
             . {t('welcomeToReport')}
-          </p>
+          </h4>
           <h2 style={{ marginTop: 0 }}>
             <a
               href="https://polkadot-staking-dashboard.canny.io/feedback"

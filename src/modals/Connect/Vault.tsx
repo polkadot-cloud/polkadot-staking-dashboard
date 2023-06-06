@@ -1,28 +1,30 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faQrcode } from '@fortawesome/free-solid-svg-icons';
+import { faExternalLinkAlt, faQrcode } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   ButtonHelp,
   ButtonPrimaryInvert,
   ButtonText,
+  ModalConnectItem,
+  ModalHardwareItem,
 } from '@polkadotcloud/core-ui';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as VaultSVG } from 'img/polkadotVault.svg';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Foot } from './Foot';
-import { ConnectItem, HardwareInner } from './Wrappers';
 
 export const Vault = (): React.ReactElement => {
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
   const { replaceModalWith } = useModal();
+  const url = 'signer.parity.io';
 
   return (
-    <ConnectItem>
-      <HardwareInner>
+    <ModalConnectItem>
+      <ModalHardwareItem>
         <div className="body">
           <div className="status">
             <ButtonHelp onClick={() => openHelp('Polkadot Vault')} />
@@ -53,8 +55,18 @@ export const Vault = (): React.ReactElement => {
             />
           </div>
         </div>
-        <Foot url="signer.parity.io" />
-      </HardwareInner>
-    </ConnectItem>
+        <div className="foot">
+          <a
+            className="link"
+            href={`https://${url}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {url}
+            <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
+          </a>
+        </div>
+      </ModalHardwareItem>
+    </ModalConnectItem>
   );
 };

@@ -858,7 +858,7 @@ export const ConnectProvider = ({
     return false;
   };
 
-  // check an account balance exists on-chain
+  // formats an address into the currently active network's ss58 format.
   const formatAccountSs58 = (address: string) => {
     try {
       const keyring = new Keyring();

@@ -11,6 +11,7 @@ export interface PoolsConfigContextState {
   createAccounts: (p: number) => PoolAddresses;
   favorites: string[];
   stats: PoolStats;
+  globalMaxCommission: number;
 }
 
 export interface PoolConfigState {
@@ -96,10 +97,13 @@ export interface BondedPool {
   };
   state: PoolState;
   commission?: {
-    current?: AnyJson;
-    max?: AnyJson;
-    changeRate?: AnyJson;
-    throttleFrom?: AnyJson;
+    current?: AnyJson | null;
+    max?: AnyJson | null;
+    changeRate: {
+      maxIncrease: AnyJson;
+      minDelay: AnyJson;
+    } | null;
+    throttleFrom?: AnyJson | null;
   };
 }
 

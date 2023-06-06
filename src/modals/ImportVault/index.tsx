@@ -2,17 +2,22 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faQrcode } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary, ButtonText } from '@polkadotcloud/core-ui';
-import { capitalizeFirstLetter } from '@polkadotcloud/utils';
-import { useApi } from 'contexts/Api';
+import {
+  ButtonPrimary,
+  ButtonText,
+  HardwareAddress,
+  HardwareStatusBar,
+} from '@polkadotcloud/core-ui';
+import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { useModal } from 'contexts/Modal';
 import { useOverlay } from 'contexts/Overlay';
 import { ReactComponent as Icon } from 'img/polkadotVault.svg';
-import { Address } from 'library/Import/Address';
+import { Identicon } from 'library/Identicon';
+import { Confirm } from 'library/Import/Confirm';
 import { Heading } from 'library/Import/Heading';
 import { NoAccounts } from 'library/Import/NoAccounts';
-import { StatusBar } from 'library/Import/StatusBar';
+import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -20,9 +25,11 @@ import type { AnyJson } from 'types';
 import { Reader } from './Reader';
 
 export const ImportVault = () => {
-  const { t } = useTranslation('modals');
-  const { network } = useApi();
+  const { t } = useTranslation();
+  const { replaceModalWith } = useModal();
+  const { renameImportedAccount } = useConnect();
   const { openOverlayWith, status: overlayStatus } = useOverlay();
+
   const {
     vaultAccounts,
     vaultAccountExists,
@@ -33,6 +40,29 @@ export const ImportVault = () => {
   } = useVaultHardware();
   const { setResize } = useModal();
 
+  const renameHandler = (address: string, newName: string) => {
+    renameVaultAccount(address, newName);
+    renameImportedAccount(address, newName);
+  };
+
+  const openConfirmHandler = (address: string, index: number) => {
+    openOverlayWith(
+      <Confirm address={address} index={index} addHandler={addVaultAccount} />,
+      'small'
+    );
+  };
+
+  const openRemoveHandler = (address: string) => {
+    openOverlayWith(
+      <Remove
+        address={address}
+        removeHandler={removeVaultAccount}
+        getHandler={getVaultAccount}
+      />,
+      'small'
+    );
+  };
+
   useEffect(() => {
     setResize();
   }, [vaultAccounts]);
@@ -41,12 +71,15 @@ export const ImportVault = () => {
     <>
       <Heading title={vaultAccounts.length ? 'Polkadot Vault' : ''} />
       {vaultAccounts.length === 0 ? (
-        <NoAccounts Icon={Icon} text={t('noVaultAccountsImported')}>
+        <NoAccounts
+          Icon={Icon}
+          text={t('noVaultAccountsImported', { ns: 'modals' })}
+        >
           <div>
             <ButtonPrimary
               lg
               iconLeft={faQrcode}
-              text={t('importAccount')}
+              text={t('importAccount', { ns: 'modals' })}
               disabled={overlayStatus !== 0}
               onClick={() => {
                 openOverlayWith(<Reader />, 'small');
@@ -59,24 +92,27 @@ export const ImportVault = () => {
           <AddressesWrapper>
             <div className="items">
               {vaultAccounts.map(({ address, name, index }: AnyJson, i) => (
-                <Address
+                <HardwareAddress
                   key={i}
                   address={address}
                   index={index}
                   initial={name}
-                  badgePrefix={capitalizeFirstLetter(network.name)}
+                  Identicon={<Identicon value={address} size={40} />}
                   existsHandler={vaultAccountExists}
-                  renameHandler={renameVaultAccount}
-                  addHandler={addVaultAccount}
-                  removeHandler={removeVaultAccount}
-                  getHandler={getVaultAccount}
+                  renameHandler={renameHandler}
+                  openRemoveHandler={openRemoveHandler}
+                  openConfirmHandler={openConfirmHandler}
+                  t={{
+                    tRemove: t('remove', { ns: 'modals' }),
+                    tImport: t('import', { ns: 'modals' }),
+                  }}
                 />
               ))}
             </div>
             <div className="more">
               <ButtonText
                 iconLeft={faQrcode}
-                text={t('importAnotherAccount')}
+                text={t('importAnotherAccount', { ns: 'modals' })}
                 disabled={overlayStatus !== 0}
                 onClick={() => {
                   openOverlayWith(<Reader />, 'small');
@@ -84,12 +120,21 @@ export const ImportVault = () => {
               />
             </div>
           </AddressesWrapper>
-          <StatusBar
-            StatusBarIcon={Icon}
+          <HardwareStatusBar
+            show
+            Icon={Icon}
             text={t('vaultAccounts', {
+              ns: 'modals',
               count: vaultAccounts.length,
             })}
             inProgress={false}
+            handleDone={() =>
+              replaceModalWith('Connect', { disableScroll: true }, 'large')
+            }
+            t={{
+              tDone: t('done', { ns: 'library' }),
+              tCancel: t('cancel', { ns: 'library' }),
+            }}
           />
         </>
       )}

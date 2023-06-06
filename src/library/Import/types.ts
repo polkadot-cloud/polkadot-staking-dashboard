@@ -1,13 +1,5 @@
 import type { FunctionComponent, SVGProps } from 'react';
-import type { AnyFunction, MaybeString } from 'types';
-
-export interface StatusBarProps {
-  handleCancel?: () => void;
-  helpKey?: MaybeString;
-  inProgress: boolean;
-  text: string;
-  StatusBarIcon: FunctionComponent<SVGProps<SVGSVGElement>>;
-}
+import type { AnyFunction } from 'types';
 
 export interface HeadingProps {
   connectTo?: string;
@@ -21,13 +13,15 @@ export interface AddressProps {
   address: string;
   index: number;
   initial: string;
-  badgePrefix: string;
   disableEditIfImported?: boolean;
   renameHandler: AnyFunction;
   existsHandler: AnyFunction;
-  addHandler: AnyFunction;
-  removeHandler: AnyFunction;
-  getHandler: AnyFunction;
+  openRemoveHandler: AnyFunction;
+  openConfirmHandler: AnyFunction;
+  t: {
+    tImport: string;
+    tRemove: string;
+  };
 }
 
 export interface ConfirmProps {
