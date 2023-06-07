@@ -47,7 +47,6 @@ export const UpdateReserve = () => {
     setResize();
   }, [reserve]);
 
-  // test
   return (
     <>
       <Close />
