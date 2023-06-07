@@ -22,14 +22,18 @@ export const GoToFeedback = () => {
         >
           <h4 style={{ paddingBottom: '0.75rem' }}>
             {t('feedbackPage')}{' '}
-            <a href="https://canny.io/" target="_blank" rel="noreferrer">
-              Canny.io
+            <a
+              href="https://community.creditcoin.org/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              here
             </a>
             . {t('welcomeToReport')}
           </h4>
           <h2 style={{ marginTop: '0.75rem' }}>
             <a
-              href="https://polkadot-staking-dashboard.canny.io/feedback"
+              href="https://community.creditcoin.org/"
               target="_blank"
               rel="noreferrer"
               style={{ color: 'var(--accent-color-primary' }}
