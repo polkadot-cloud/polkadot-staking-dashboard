@@ -95,7 +95,7 @@ export const WithSliderWrapper = styled.div`
     }
 
     > .slider {
-      padding: 0 0.25rem 0 2rem;
+      padding: 0 0.25rem 0 2.5rem;
       flex-grow: 1;
 
       .rc-slider-handle-dragging {
