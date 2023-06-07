@@ -103,7 +103,7 @@ export const ConfirmWrapper = styled.div`
   }
 `;
 
-export const QRVieweraWrapper = styled.div`
+export const QRViewerWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;

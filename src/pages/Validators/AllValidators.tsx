@@ -4,7 +4,7 @@
 import { PageRow } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
-import { CardWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Card/Wrappers';
 import { StatBoxList } from 'library/StatBoxList';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';

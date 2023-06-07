@@ -12,15 +12,16 @@ export const Separator = styled.div`
 `;
 
 export const MoreWrapper = styled.div`
-  padding: 0 1.5rem;
+  padding: 0 0.5rem;
   padding-bottom: 1rem;
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 3rem;
+  margin-top: 2.5rem;
 
   @media (max-width: ${SectionFullWidthThreshold}px) {
-    margin-top: 0.5rem;
+    margin-top: 1.5rem;
+    padding: 0 0.75rem;
     margin-bottom: 0.5rem;
   }
   h4 {

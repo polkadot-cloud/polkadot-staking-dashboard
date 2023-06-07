@@ -1,13 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp } from '@polkadotcloud/core-ui';
 import BigNumber from 'bignumber.js';
-import { useHelp } from 'contexts/Help';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
-import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
+import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { useInflation } from 'library/Hooks/useInflation';
 import { StatsHead } from 'library/StatsHead';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +14,6 @@ import { Wrapper } from './Wrappers';
 
 export const NetworkStats = () => {
   const { t } = useTranslation('pages');
-  const { openHelp } = useHelp();
   const { bondedPools } = useBondedPools();
   const { inflation } = useInflation();
   const { metrics } = useNetworkMetrics();
@@ -54,10 +51,7 @@ export const NetworkStats = () => {
   return (
     <CardWrapper style={{ boxShadow: 'var(--card-shadow-secondary)' }}>
       <CardHeaderWrapper>
-        <h3>
-          {t('overview.networkStats')}
-          <ButtonHelp marginLeft onClick={() => openHelp('Network Stats')} />
-        </h3>
+        <h3>{t('overview.networkStats')}</h3>
       </CardHeaderWrapper>
       <Wrapper>
         <StatsHead items={items} />

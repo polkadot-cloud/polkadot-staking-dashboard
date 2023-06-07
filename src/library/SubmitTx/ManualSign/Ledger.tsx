@@ -1,10 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  faArrowAltCircleUp,
-  faSquarePen,
-} from '@fortawesome/free-solid-svg-icons';
+import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonSubmit } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import type { LedgerAccount } from 'contexts/Connect/types';
@@ -143,10 +140,11 @@ export const Ledger = ({
         {getTxSignature() !== null || submitting ? (
           <ButtonSubmit
             text={`${submitText}`}
-            iconLeft={faArrowAltCircleUp}
+            iconLeft={faSquarePen}
             iconTransform="grow-2"
             onClick={() => onSubmit()}
             disabled={disabled}
+            pulse={!(disabled || getIsExecuting())}
           />
         ) : (
           <ButtonSubmit

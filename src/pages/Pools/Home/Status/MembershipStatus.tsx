@@ -14,7 +14,13 @@ import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
 import { useStatusButtons } from './useStatusButtons';
 
-export const MembershipStatus = () => {
+export const MembershipStatus = ({
+  showButtons = true,
+  buttonType = 'primary',
+}: {
+  showButtons?: boolean;
+  buttonType?: string;
+}) => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { isPoolSyncing } = useUi();
@@ -74,7 +80,7 @@ export const MembershipStatus = () => {
               address: selectedActivePool?.addresses?.stash ?? '',
               display: membershipDisplay,
             }}
-            buttons={membershipButtons}
+            buttons={showButtons ? membershipButtons : []}
           />
         </>
       ) : (
@@ -82,7 +88,8 @@ export const MembershipStatus = () => {
           label={t('pools.poolMembership')}
           helpKey="Pool Membership"
           stat={`${t('pools.notInPool')}`}
-          buttons={isPoolSyncing ? [] : buttons}
+          buttons={!showButtons || isPoolSyncing ? [] : buttons}
+          buttonType={buttonType}
         />
       )}
     </>

@@ -123,6 +123,7 @@ export const StatBoxWrapper = styled(motion.div)`
         font-family: InterBold, sans-serif;
         display: flex;
         flex-flow: row wrap;
+        margin-top: 0.1rem;
         margin-bottom: 0.1rem;
 
         &.text {

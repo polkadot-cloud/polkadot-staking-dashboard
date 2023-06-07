@@ -3,7 +3,11 @@
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/core-ui';
+import {
+  ButtonHelp,
+  ButtonPrimary,
+  ButtonSecondary,
+} from '@polkadotcloud/core-ui';
 import { applyWidthAsPadding } from '@polkadotcloud/utils';
 import { useHelp } from 'contexts/Help';
 import { useNotifications } from 'contexts/Notifications';
@@ -19,6 +23,7 @@ export const Stat = ({
   helpKey,
   icon,
   copy,
+  buttonType = 'primary',
 }: StatProps) => {
   const { addNotification } = useNotifications();
   const { openHelp } = useHelp();
@@ -40,6 +45,8 @@ export const Stat = ({
       window.removeEventListener('resize', handleAdjustLayout);
     };
   }, []);
+
+  const Button = buttonType === 'primary' ? ButtonPrimary : ButtonSecondary;
 
   let display;
   let isAddress;
@@ -92,7 +99,7 @@ export const Stat = ({
             <span ref={subjectRef}>
               {buttons.map((btn: any, index: number) => (
                 <React.Fragment key={`stat_${index}`}>
-                  <ButtonPrimary
+                  <Button
                     key={`btn_${index}_${Math.random()}`}
                     text={btn.title}
                     lg={btn.large ?? undefined}
