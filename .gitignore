@@ -7,7 +7,9 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+env.docker.compose
 node_modules
+.yarn
 dist
 build
 dist-ssr
