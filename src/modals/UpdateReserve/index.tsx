@@ -115,7 +115,7 @@ export const UpdateReserve = () => {
           </h5>
           <div>
             <h4 className="current">
-              {planckToUnit(reserve, units).toString()}
+              {planckToUnit(reserve, units).toString()}&nbsp;
               {network.unit}
             </h4>
             <div className="slider">
