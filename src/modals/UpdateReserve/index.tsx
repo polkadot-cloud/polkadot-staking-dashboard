@@ -88,7 +88,7 @@ export const UpdateReserve = () => {
       <Close />
       <ModalPadding>
         <h2 className="title unbounded" style={{ margin: '0.5rem' }}>
-          {t('updateReserve')}
+          {t('reserve')}
         </h2>
         {warnings.length ? (
           <ModalWarnings>
@@ -115,7 +115,8 @@ export const UpdateReserve = () => {
           </h5>
           <div>
             <h4 className="current">
-              {planckToUnit(reserve, units).toString()}{' '}
+              {planckToUnit(reserve, units).toString()}
+              {network.unit}
             </h4>
             <div className="slider">
               <Slider
@@ -136,7 +137,7 @@ export const UpdateReserve = () => {
           <p>{t('reserveText')}</p>
           <div className="confirm">
             <ButtonPrimaryInvert
-              text={t('confirm')}
+              text={t('done')}
               onClick={() => {
                 setStatus(0);
                 localStorage.setItem(

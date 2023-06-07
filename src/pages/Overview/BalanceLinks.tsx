@@ -1,15 +1,15 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import {
-  ButtonPrimary,
-  ButtonPrimaryInvert,
-  Separator,
-} from '@polkadotcloud/core-ui';
+  faCheckCircle,
+  faExternalLinkAlt,
+} from '@fortawesome/free-solid-svg-icons';
+import { ButtonPrimaryInvert, Separator } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTranslation } from 'react-i18next';
 import { MoreWrapper } from './Wrappers';
 
@@ -18,6 +18,7 @@ export const BalanceLinks = () => {
   const { name } = useApi().network;
   const { activeAccount, accountHasSigner } = useConnect();
   const { openModalWith } = useModal();
+  const { reserve } = useTransferOptions();
 
   return (
     <MoreWrapper>
@@ -41,10 +42,12 @@ export const BalanceLinks = () => {
         </div>
         <div>
           {' '}
-          <ButtonPrimary
+          <ButtonPrimaryInvert
             disabled={!activeAccount || !accountHasSigner(activeAccount)}
-            marginRight
+            lg
+            iconTransform="shrink-2"
             onClick={() => openModalWith('UpdateReserve')}
+            iconRight={reserve.toNumber() !== 0 ? faCheckCircle : undefined}
             text={t('overview.updateReserve')}
           />
         </div>

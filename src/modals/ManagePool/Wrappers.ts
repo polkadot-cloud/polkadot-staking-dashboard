@@ -66,7 +66,7 @@ export const WithSliderWrapper = styled.div`
 
     > span {
       font-family: InterSemiBold, sans-serif;
-      margin-left: 0.5rem;
+      margin-left: 1.5rem;
 
       &.neutral {
         color: var(--network-color-primary);
@@ -95,7 +95,7 @@ export const WithSliderWrapper = styled.div`
     }
 
     > .slider {
-      padding: 0 0.25rem 0 1.25rem;
+      padding: 0 0.25rem 0 2rem;
       flex-grow: 1;
 
       .rc-slider-handle-dragging {
