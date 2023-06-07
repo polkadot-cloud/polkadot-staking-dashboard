@@ -53,29 +53,32 @@ export const InputWrapper = styled.div`
         padding: 0 0.25rem 0 1.25rem;
       }
       .input {
-        width: 100%;
-        max-width: 100%;
         border: 1px solid var(--border-primary-color);
         padding: 1rem;
         border-radius: 0.75rem;
         display: flex;
         flex-flow: row wrap;
         align-items: center;
+        width: 100%;
+        max-width: 100%;
 
         > div {
           &:first-child {
             flex-grow: 1;
           }
           &:last-child {
-            @media (max-width: ${SmallFontSizeMaxWidth}px) {
-              display: none;
-            }
             color: var(--text-color-secondary);
             padding-left: 0.5rem;
             justify-content: flex-end;
             opacity: 0.5;
             position: relative;
+
+            @media (max-width: ${SmallFontSizeMaxWidth}px) {
+              display: none;
+            }
+
             p {
+              font-family: InterSemiBold, sans-serif;
               position: absolute;
               top: 0;
               left: 0;
@@ -89,6 +92,7 @@ export const InputWrapper = styled.div`
             }
           }
           > input {
+            font-family: InterBold, sans-serif;
             border: none;
             padding: 0;
             width: 100%;

@@ -20,6 +20,7 @@ export const ContentWrapper = styled.div`
     }
 
     input {
+      font-family: InterBold, sans-serif;
       margin-top: 0.5rem;
     }
   }
