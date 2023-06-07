@@ -25,32 +25,28 @@ export const BalanceLinks = () => {
       <Separator />
       <h4>{t('overview.moreResources')}</h4>
       <section>
-        <div>
-          <ButtonPrimaryInvert
-            onClick={() =>
-              window.open(
-                `https://${name}.subscan.io/account/${activeAccount}`,
-                '_blank'
-              )
-            }
-            lg
-            iconRight={faExternalLinkAlt}
-            iconTransform="shrink-2"
-            text="Subscan"
-            disabled={!activeAccount}
-          />
-        </div>
-        <div>
-          {' '}
-          <ButtonPrimaryInvert
-            disabled={!activeAccount || !accountHasSigner(activeAccount)}
-            lg
-            iconTransform="shrink-2"
-            onClick={() => openModalWith('UpdateReserve')}
-            iconRight={reserve.toNumber() !== 0 ? faCheckCircle : undefined}
-            text={t('overview.updateReserve')}
-          />
-        </div>
+        <ButtonPrimaryInvert
+          lg
+          onClick={() =>
+            window.open(
+              `https://${name}.subscan.io/account/${activeAccount}`,
+              '_blank'
+            )
+          }
+          iconRight={faExternalLinkAlt}
+          iconTransform="shrink-2"
+          text="Subscan"
+          disabled={!activeAccount}
+        />
+        <ButtonPrimaryInvert
+          lg
+          marginLeft
+          disabled={!activeAccount || !accountHasSigner(activeAccount)}
+          iconTransform="grow-2"
+          onClick={() => openModalWith('UpdateReserve', {}, 'small')}
+          iconRight={reserve.toNumber() !== 0 ? faCheckCircle : undefined}
+          text={t('overview.updateReserve')}
+        />
       </section>
     </MoreWrapper>
   );

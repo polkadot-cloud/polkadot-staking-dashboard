@@ -184,7 +184,6 @@
     "removeAccount": "Remove Account",
     "removeBond": "Remove Bond",
     "renamePool": "Rename Pool",
-    "reserve": "Reserve",
     "reserveLimit": "The top of balance has been reached, will only top up to the limit of the balance.",
     "reserveText": "Reserve is preventing user accounts from lacking of transaction fee to process transaction by adding reserve value from the free balance.",
     "resetLedgerAccounts": "Reset Ledger Accounts",
