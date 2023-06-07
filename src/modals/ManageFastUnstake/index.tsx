@@ -33,7 +33,7 @@ export const ManageFastUnstake = () => {
   const { activeEra, metrics } = useNetworkMetrics();
   const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
   const { setResize, setStatus } = useModal();
-  const { getTransferOptions } = useTransferOptions();
+  const { reserve, getTransferOptions } = useTransferOptions();
   const { isFastUnstaking } = useUnstaking();
   const { getSignerWarnings } = useSignerWarnings();
 
@@ -52,7 +52,9 @@ export const ManageFastUnstake = () => {
     setValid(
       fastUnstakeErasToCheckPerBlock > 0 &&
         ((!isFastUnstaking &&
-          freeBalance.isGreaterThanOrEqualTo(fastUnstakeDeposit) &&
+          freeBalance
+            .minus(reserve)
+            .isGreaterThanOrEqualTo(fastUnstakeDeposit) &&
           isExposed === false &&
           totalUnlockChuncks === 0) ||
           isFastUnstaking)
@@ -102,7 +104,7 @@ export const ManageFastUnstake = () => {
   );
 
   if (!isFastUnstaking) {
-    if (freeBalance.isLessThan(fastUnstakeDeposit)) {
+    if (freeBalance.minus(reserve).isLessThan(fastUnstakeDeposit)) {
       warnings.push(
         `${t('noEnough')} ${planckToUnit(
           fastUnstakeDeposit,

@@ -15,7 +15,7 @@ interface Props {
 export const useBondGreatestFee = ({ bondFor }: Props) => {
   const { api } = useApi();
   const { activeAccount } = useConnect();
-  const { getTransferOptions } = useTransferOptions();
+  const { reserve, getTransferOptions } = useTransferOptions();
   const transferOptions = useMemo(
     () => getTransferOptions(activeAccount),
     [activeAccount]
@@ -38,7 +38,7 @@ export const useBondGreatestFee = ({ bondFor }: Props) => {
 
   // estimate the largest possible tx fee based on users free balance.
   const txLargestFee = async () => {
-    const bond = freeBalance.toString();
+    const bond = freeBalance.minus(reserve).toString();
 
     let tx = null;
     if (!api) {

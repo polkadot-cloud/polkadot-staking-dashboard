@@ -32,7 +32,7 @@ export const BondFeedback = ({
   const { network } = useApi();
   const { activeAccount } = useConnect();
   const { staking } = useStaking();
-  const { getTransferOptions } = useTransferOptions();
+  const { reserve, getTransferOptions } = useTransferOptions();
   const { isDepositor } = useActivePools();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
@@ -50,8 +50,8 @@ export const BondFeedback = ({
 
   // if we are bonding, subtract tx fees from bond amount
   const freeBondAmount = !disableTxFeeUpdate
-    ? BigNumber.max(freeBalanceBn.minus(txFees), 0)
-    : freeBalanceBn;
+    ? BigNumber.max(freeBalanceBn.minus(txFees).minus(reserve), 0)
+    : BigNumber.max(freeBalanceBn.minus(reserve), 0);
 
   // the default bond balance
   const freeBalance = planckToUnit(freeBondAmount, units);

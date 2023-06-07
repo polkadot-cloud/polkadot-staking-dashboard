@@ -45,12 +45,14 @@ export const UpdateReserve = () => {
     : new BigNumber(0);
   // available balance data
   const fundsFree = planckToUnit(
-    allTransferOptions.freeBalance.minus(frozen.minus(lockStakingAmount)),
+    allTransferOptions.freeBalance
+      .minus(reserve)
+      .minus(frozen.minus(lockStakingAmount)),
     units
   );
 
   const warnings = [];
-  if (fundsFree.isZero()) {
+  if (fundsFree.isLessThan(0)) {
     warnings.push(<Warning text={t('reserveLimit')} />);
   }
   const ReserveUpdated = !(

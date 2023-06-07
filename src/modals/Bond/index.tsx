@@ -25,7 +25,7 @@ export const Bond = () => {
   const { units } = network;
   const { setStatus: setModalStatus, config, setResize } = useModal();
   const { activeAccount } = useConnect();
-  const { getTransferOptions } = useTransferOptions();
+  const { reserve, getTransferOptions } = useTransferOptions();
   const { selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
   const { bondFor } = config;
@@ -38,7 +38,7 @@ export const Bond = () => {
       ? nominate.totalAdditionalBond
       : pool.totalAdditionalBond;
 
-  const freeBalance = planckToUnit(freeBalanceBn, units);
+  const freeBalance = planckToUnit(freeBalanceBn.minus(reserve), units);
   const largestTxFee = useBondGreatestFee({ bondFor });
 
   // calculate any unclaimed pool rewards.

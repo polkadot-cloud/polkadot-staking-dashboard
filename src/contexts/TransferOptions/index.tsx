@@ -54,7 +54,7 @@ export const TransferOptionsProvider = ({
     const { free } = balance;
     const { active, total, unlocking } = ledger;
 
-    const forceReserved = existentialDeposit.plus(reserve);
+    const forceReserved = existentialDeposit; // .plus(reserve)
 
     // Total free balance after `forceReserved` is subtracted.
     const freeMinusReserve = BigNumber.max(free.minus(forceReserved), 0);
@@ -89,7 +89,10 @@ export const TransferOptionsProvider = ({
     const nominateOptions = () => {
       // total possible balance that can be bonded
       const totalPossibleBond = BigNumber.max(
-        freeMinusReserve.minus(totalUnlocking).minus(totalUnlocked),
+        freeMinusReserve
+          .minus(totalUnlocking)
+          .minus(totalUnlocked)
+          .minus(reserve),
         0
       );
 
@@ -111,7 +114,7 @@ export const TransferOptionsProvider = ({
 
       // total possible balance that can be bonded
       const totalPossibleBondPool = BigNumber.max(
-        freeMinusReserve.minus(maxLockBalance),
+        freeMinusReserve.minus(maxLockBalance).minus(reserve),
         new BigNumber(0)
       );
 
