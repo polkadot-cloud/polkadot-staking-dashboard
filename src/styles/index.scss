@@ -11,9 +11,15 @@ html * {
   --text-color-primary: #ffffff;
   --text-color-secondary: #777777;
   --button-tertiary-background: #464849;
-  --background-default: #0a0c0e;
+  --background-default: black;
   --background-primary: #181a1c;
   font-size: 10.5px;
+
+  .core-page-title h1 {
+    font-family: 'NeueBit', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+  }
 
   .core-entry {
     background: black;
