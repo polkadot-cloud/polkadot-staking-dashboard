@@ -89,7 +89,6 @@ export const BalanceChart = () => {
   let fundsReserved = planckToUnit(forceReserved.plus(reserve), units);
   const fundsFree = planckToUnit(
     BigNumber.max(allTransferOptions.freeBalance.minus(reserve), 0),
-
     units
   ).minus(fundsLocked);
   // available balance percentages
@@ -102,7 +101,7 @@ export const BalanceChart = () => {
     : new BigNumber(0);
 
   // get total available balance, including reserve and locks
-  if (graphAvailable < fundsReserved) {
+  if (graphAvailable.isLessThan(fundsReserved)) {
     fundsReserved = graphAvailable;
   }
 
