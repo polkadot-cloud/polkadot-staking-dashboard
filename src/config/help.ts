@@ -5,10 +5,6 @@ import type { HelpItems } from 'contexts/Help/types';
 
 export const HelpConfig: HelpItems = [
   {
-    key: 'vault',
-    definitions: ['Polkadot Vault'],
-  },
-  {
     key: 'overview',
     definitions: [
       'Total Nominators',
@@ -26,21 +22,9 @@ export const HelpConfig: HelpItems = [
       'Proxy Accounts',
     ],
     external: [
-      [
-        'connectAccounts',
-        'https://support.polkadot.network/support/solutions/articles/65000182121-how-to-use-the-staking-dashboard-connecting-your-account',
-        'polkadot.network',
-      ],
-      [
-        'howToUse',
-        'https://support.polkadot.network/support/solutions/articles/65000182104-how-to-use-the-staking-dashboard-overview',
-        'polkadot.network',
-      ],
-      [
-        'stakeDot',
-        'https://support.polkadot.network/support/solutions/articles/65000182104-how-to-use-the-staking-dashboard-overview',
-        'polkadot.network',
-      ],
+      ['connectAccounts', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
+      ['howToUse', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
+      ['stakeDot', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
     ],
   },
   {
@@ -59,33 +43,17 @@ export const HelpConfig: HelpItems = [
     external: [
       [
         'changeDestination',
-        'https://support.polkadot.network/support/solutions/articles/65000182220-how-to-use-the-staking-dashboard-changing-reward-destination',
-        'polkadot.network',
+        'https://docs.creditcoin.org',
+        'docs.creditcoin.org',
       ],
-      [
-        'bondMore',
-        'https://support.polkadot.network/support/solutions/articles/65000182207-how-to-use-the-staking-dashboard-bond-more-tokens-to-your-existing-stake',
-        'polkadot.network',
-      ],
-      [
-        'unbondingTokens',
-        'https://support.polkadot.network/support/solutions/articles/65000182201-how-to-use-the-staking-dashboard-unbonding-your-tokens',
-        'polkadot.network',
-      ],
-      [
-        'rebonding',
-        'https://support.polkadot.network/support/solutions/articles/65000182221-how-to-use-the-staking-dashboard-rebonding',
-        'polkadot.network',
-      ],
-      [
-        'changeAccount',
-        'https://support.polkadot.network/support/solutions/articles/65000182218-how-to-use-the-staking-dashboard-changing-your-controller-account',
-        'polkadot.network',
-      ],
+      ['bondMore', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
+      ['unbondingTokens', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
+      ['rebonding', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
+      ['changeAccount', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
       [
         'changeNominations',
-        'https://support.polkadot.network/support/solutions/articles/65000182518-how-to-use-the-staking-dashboard-changing-your-nominations',
-        'polkadot.network',
+        'https://docs.creditcoin.org',
+        'docs.creditcoin.org',
       ],
     ],
   },
@@ -105,16 +73,8 @@ export const HelpConfig: HelpItems = [
       'Pool Commission Change Rate',
     ],
     external: [
-      [
-        'createPools',
-        'https://support.polkadot.network/support/solutions/articles/65000182388-how-to-use-the-staking-dashboard-creating-nomination-pools',
-        'polkadot.network',
-      ],
-      [
-        'claimRewards',
-        'https://support.polkadot.network/support/solutions/articles/65000182399-how-to-use-staking-dashboard-claiming-nomination-pool-rewards',
-        'polkadot.network',
-      ],
+      ['createPools', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
+      ['claimRewards', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
     ],
   },
   {
@@ -135,8 +95,8 @@ export const HelpConfig: HelpItems = [
     external: [
       [
         'chooseValidators',
-        'https://support.polkadot.network/support/solutions/articles/65000150130-how-do-i-know-which-validators-to-choose-',
-        'polkadot.network',
+        'https://docs.creditcoin.org',
+        'docs.creditcoin.org',
       ],
     ],
   },
@@ -160,5 +120,9 @@ export const HelpConfig: HelpItems = [
       'Wrong Transaction',
     ],
     external: [],
+  },
+  {
+    key: 'vault',
+    definitions: ['Polkadot Vault'],
   },
 ];

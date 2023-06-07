@@ -86,15 +86,15 @@
       "epoch": [
         "Epoch",
         [
-          "An epoch is another name for a session in {NETWORK_NAME}. Each era is divided into 6 epochs during which validators are assigned as block producers to specific time frames or slots.",
-          "1 epoch is currently 4 hours in Polkadot."
+          "An epoch is another name for a session in {NETWORK_NAME}. Each era is divided into 2 epochs during which validators are assigned as block producers to specific time frames or slots.",
+          "1 epoch is currently 12 hours in Creditcoin."
         ]
       ],
       "era": [
         "Era",
         [
           "At the end of each era, validators are rewarded {NETWORK_UNIT} based on how many era points they accumulated in that era. This {NETWORK_UNIT} reward is then distributed amongst the nominators of the validator via a payout.",
-          "1 era is currently 24 hours in Polkadot."
+          "1 era is currently 24 hours in Creditcoin."
         ]
       ],
       "eraPoints": [
