@@ -1,0 +1,45 @@
+<svg width="168" height="168" viewBox="0 0 168 168" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="12" height="12" transform="matrix(-1 0 0 1 114 72)" fill="white"/>
+<rect width="12" height="12" transform="matrix(-1 0 0 1 126 60)" fill="white"/>
+<rect x="42" y="84" width="12" height="12" fill="white"/>
+<rect width="12" height="12" transform="matrix(-1 0 0 1 102 84)" fill="white"/>
+<rect x="54" y="96" width="12" height="12" fill="white"/>
+<rect width="12" height="12" transform="matrix(-1 0 0 1 90 96)" fill="white"/>
+<rect width="12" height="12" transform="matrix(-1 0 0 1 78 108)" fill="white"/>
+<path d="M84 0H72V12H84V0Z" fill="white"/>
+<path d="M72 0H60V12H72V0Z" fill="white"/>
+<path d="M96 0H84V12H96V0Z" fill="white"/>
+<path d="M108 0H96V12H108V0Z" fill="white"/>
+<path d="M0 96L0 108H12V96H0Z" fill="white"/>
+<path d="M0 84L0 96H12V84H0Z" fill="white"/>
+<path d="M0 72L0 84H12V72H0Z" fill="white"/>
+<path d="M0 60L0 72H12V60H0Z" fill="white"/>
+<path d="M156 96V108H168V96H156Z" fill="white"/>
+<path d="M156 84V96H168V84H156Z" fill="white"/>
+<path d="M156 72V84H168V72H156Z" fill="white"/>
+<path d="M156 60V72H168V60H156Z" fill="white"/>
+<path d="M120 12H108V24H120V12Z" fill="white"/>
+<path d="M132 12H120V24H132V12Z" fill="white"/>
+<path d="M48 12H36V24H48V12Z" fill="white"/>
+<path d="M36 24H24V36H36V24Z" fill="white"/>
+<path d="M24 36H12V48H24V36Z" fill="white"/>
+<path d="M24 48H12V60H24V48Z" fill="white"/>
+<path d="M156 36H144V48H156V36Z" fill="white"/>
+<path d="M156 48H144V60H156V48Z" fill="white"/>
+<path d="M144 24H132V36H144V24Z" fill="white"/>
+<path d="M60 12H48V24H60V12Z" fill="white"/>
+<path d="M96 168H108V156H96V168Z" fill="white"/>
+<path d="M84 168H96V156H84V168Z" fill="white"/>
+<path d="M72 168H84V156H72V168Z" fill="white"/>
+<path d="M60 168H72V156H60V168Z" fill="white"/>
+<path d="M48 156H60V144H48V156Z" fill="white"/>
+<path d="M36 156H48V144H36V156Z" fill="white"/>
+<path d="M120 156H132V144H120V156Z" fill="white"/>
+<path d="M132 144H144V132H132V144Z" fill="white"/>
+<path d="M144 132H156V120H144V132Z" fill="white"/>
+<path d="M144 120H156V108H144V120Z" fill="white"/>
+<path d="M12 132H24V120H12L12 132Z" fill="white"/>
+<path d="M12 120H24V108H12L12 120Z" fill="white"/>
+<path d="M24 144H36V132H24V144Z" fill="white"/>
+<path d="M108 156H120V144H108V156Z" fill="white"/>
+</svg>

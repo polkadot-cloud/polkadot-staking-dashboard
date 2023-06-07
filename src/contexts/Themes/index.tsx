@@ -1,51 +1,22 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { setStateWithRef } from '@polkadotcloud/utils';
 import React, { useRef } from 'react';
 import { defaultThemeContext } from './defaults';
 import type { Theme, ThemeContextInterface } from './types';
 
 export const ThemesProvider = ({ children }: { children: React.ReactNode }) => {
-  let initialTheme: Theme = 'light';
+  const initialTheme: Theme = 'dark';
 
   // get the current theme
-  const localThemeRaw = localStorage.getItem('theme') || '';
-
-  // Provide system theme if raw theme is not valid.
-  if (!['light', 'dark'].includes(localThemeRaw)) {
-    const systemTheme =
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'light';
-
-    initialTheme = systemTheme;
-    localStorage.setItem('theme', systemTheme);
-  } else {
-    // `localThemeRaw` is a valid theme.
-    initialTheme = localThemeRaw as Theme;
-  }
+  localStorage.setItem('theme', 'dark');
 
   // the theme mode
-  const [theme, setTheme] = React.useState<Theme>(initialTheme);
+  const [theme] = React.useState<Theme>(initialTheme);
   const themeRef = useRef(theme);
 
-  // Automatically change theme on system change.
-  window
-    .matchMedia('(prefers-color-scheme: dark)')
-    .addEventListener('change', (event) => {
-      const newTheme = event.matches ? 'dark' : 'light';
-      localStorage.setItem('theme', newTheme);
-      setStateWithRef(newTheme, setTheme, themeRef);
-    });
-
-  const toggleTheme = (maybeTheme: Theme | null = null): void => {
-    const newTheme =
-      maybeTheme || (themeRef.current === 'dark' ? 'light' : 'dark');
-
-    localStorage.setItem('theme', newTheme);
-    setStateWithRef(newTheme, setTheme, themeRef);
+  const toggleTheme = (): void => {
+    // Do nothing
   };
 
   return (

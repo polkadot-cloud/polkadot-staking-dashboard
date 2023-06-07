@@ -9,8 +9,8 @@ import BigNumber from 'bignumber.js';
  */
 export const AppVersion = '1.0.8';
 export const BaseURL = '';
-export const DappName = 'Polkadot Staking Dashboard';
-export const PolkadotUrl = 'https://polkadot.network/staking/';
+export const DappName = 'Creditcoin Staking Dashboard';
+export const CreditcoinUrl = 'https://creditcoin.org';
 export const DefaultNetwork = 'creditcoin';
 
 /*
@@ -21,7 +21,7 @@ export const ModPrefix = stringToU8a('modl');
 export const U32Opts = { bitLength: 32, isLe: true };
 
 export const InterfaceMaximumWidth = 1500;
-export const SideMenuMaximisedWidth = 185;
+export const SideMenuMaximisedWidth = 200;
 export const SideMenuMinimisedWidth = 75;
 export const SideMenuStickyThreshold = 1175;
 export const SectionFullWidthThreshold = 1050;

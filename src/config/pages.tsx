@@ -6,9 +6,13 @@ import { Community } from 'pages/Community';
 import { Nominate } from 'pages/Nominate';
 import { Overview } from 'pages/Overview';
 import { Payouts } from 'pages/Payouts';
-import { Pools } from 'pages/Pools';
 import { Validators } from 'pages/Validators';
 import type { PageCategoryItems, PagesConfigItems } from 'types';
+import { ReactComponent as CommunityIcon } from '../img/ic_community.svg';
+import { ReactComponent as NominateIcon } from '../img/ic_nominate.svg';
+import { ReactComponent as OverviewIcon } from '../img/ic_overview.svg';
+import { ReactComponent as PayoutsIcon } from '../img/ic_payouts.svg';
+import { ReactComponent as ValidatorsIcon } from '../img/ic_validators.svg';
 
 export const PageCategories: PageCategoryItems = [
   {
@@ -32,23 +36,24 @@ export const PagesConfig: PagesConfigItems = [
     uri: `${BaseURL}/`,
     hash: '/overview',
     Entry: Overview,
-    lottie: 'globe',
+    icon: () => <OverviewIcon height="20" width="auto" />,
   },
-  {
-    category: 2,
-    key: 'pools',
-    uri: `${BaseURL}/pools`,
-    hash: '/pools',
-    Entry: Pools,
-    lottie: 'groups',
-  },
+  // Removed temporarily until there is a demand pools
+  // {
+  //   category: 2,
+  //   key: 'pools',
+  //   uri: `${BaseURL}/pools`,
+  //   hash: '/pools',
+  //   Entry: Pools,
+  //   icon: () => (<PoolsIcon height={'20'} width={'auto'}/>)
+  // },
   {
     category: 2,
     key: 'nominate',
     uri: `${BaseURL}/nominate`,
     hash: '/nominate',
     Entry: Nominate,
-    lottie: 'trending',
+    icon: () => <NominateIcon height="20" width="auto" />,
   },
   {
     category: 2,
@@ -56,7 +61,7 @@ export const PagesConfig: PagesConfigItems = [
     uri: `${BaseURL}/payouts`,
     hash: '/payouts',
     Entry: Payouts,
-    lottie: 'analytics',
+    icon: () => <PayoutsIcon height="20" width="auto" />,
   },
   {
     category: 3,
@@ -64,7 +69,7 @@ export const PagesConfig: PagesConfigItems = [
     uri: `${BaseURL}/validators`,
     hash: '/validators',
     Entry: Validators,
-    lottie: 'view',
+    icon: () => <ValidatorsIcon height="20" width="auto" />,
   },
   {
     category: 3,
@@ -72,6 +77,6 @@ export const PagesConfig: PagesConfigItems = [
     uri: `${BaseURL}/community`,
     hash: '/community',
     Entry: Community,
-    lottie: 'label',
+    icon: () => <CommunityIcon height="20" width="auto" />,
   },
 ];

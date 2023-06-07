@@ -8,20 +8,17 @@ import { SideMenuStickyThreshold } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
-import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import type { UIContextInterface } from 'contexts/UI/types';
 import { ReactComponent as CogOutlineSVG } from 'img/cog-outline.svg';
-import { ReactComponent as ForumSVG } from 'img/forum.svg';
-import { ReactComponent as InfoSVG } from 'img/info.svg';
-import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
-import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
-import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
 import { useOutsideAlerter } from 'library/Hooks';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ReactComponent as CreditcoinSVG } from '../../img/ic_creditcoin.svg';
+import { ReactComponent as FeedbackSVG } from '../../img/ic_feedback.svg';
+import { ReactComponent as ResourcesSVG } from '../../img/ic_resources.svg';
 import { Heading } from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
@@ -30,7 +27,6 @@ import { ConnectionSymbol, Separator, Wrapper } from './Wrapper';
 export const SideMenu = () => {
   const { t } = useTranslation('base');
   const { network, apiStatus } = useApi();
-  const { mode, toggleTheme } = useTheme();
   const { openModalWith } = useModal();
   const {
     setSideMenu,
@@ -82,7 +78,7 @@ export const SideMenu = () => {
           name={t('resources')}
           minimised={sideMenuMinimised}
           icon={{
-            Svg: InfoSVG,
+            Svg: ResourcesSVG,
             size: sideMenuMinimised ? '1.4em' : '1.2em',
           }}
         />
@@ -91,7 +87,7 @@ export const SideMenu = () => {
           name={t('feedback')}
           minimised={sideMenuMinimised}
           icon={{
-            Svg: ForumSVG,
+            Svg: FeedbackSVG,
             size: sideMenuMinimised ? '1.4em' : '1.2em',
           }}
         />
@@ -102,7 +98,7 @@ export const SideMenu = () => {
           name={capitalizeFirstLetter(network.name)}
           onClick={() => openModalWith('Networks')}
           icon={{
-            Svg: network.brand.inline.svg,
+            Svg: CreditcoinSVG,
             size: network.brand.inline.size,
           }}
           minimised={sideMenuMinimised}
@@ -128,7 +124,7 @@ export const SideMenu = () => {
           type="button"
           onClick={() =>
             window.open(
-              'https://github.com/paritytech/polkadot-staking-dashboard',
+              'https://github.com/gluwa/creditcoin-staking-dashboard',
               '_blank'
             )
           }
@@ -141,21 +137,6 @@ export const SideMenu = () => {
         >
           <CogOutlineSVG width="1.3em" height="1.3em" />
         </button>
-        <button
-          type="button"
-          onClick={() => openModalWith('ChooseLanguage', {}, 'small')}
-        >
-          <LanguageSVG width="1.25em" height="1.25em" />
-        </button>
-        {mode === 'light' ? (
-          <button type="button" onClick={() => toggleTheme()}>
-            <SunnyOutlineSVG width="1.25em" height="1.25em" />
-          </button>
-        ) : (
-          <button type="button" onClick={() => toggleTheme()}>
-            <MoonOutlineSVG width="1.1em" height="1.1em" />
-          </button>
-        )}
       </section>
     </Wrapper>
   );

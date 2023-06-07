@@ -23,7 +23,7 @@ export const locales: Record<string, AnyJson> = {
 // available languages as an array of strings.
 export const availableLanguages: Array<string[]> = [
   ['en', 'English'],
-  ['cn', '中文'],
+  // ['cn', '中文'],
 ];
 
 // the supported namespaces.

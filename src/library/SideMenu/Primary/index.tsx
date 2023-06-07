@@ -4,7 +4,6 @@
 import { faCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useUi } from 'contexts/UI';
-import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
 import { Link } from 'react-router-dom';
 import type { PrimaryProps } from '../types';
 import { Wrapper } from './Wrappers';
@@ -15,11 +14,9 @@ export const Primary = ({
   to,
   action,
   minimised,
-  lottie,
+  icon,
 }: PrimaryProps) => {
   const { setSideMenu } = useUi();
-
-  const { icon, play } = useDotLottieButton(lottie);
 
   let Action = null;
   const actionStatus = action?.status ?? null;
@@ -48,7 +45,6 @@ export const Primary = ({
       to={to}
       onClick={() => {
         if (!active) {
-          play();
           setSideMenu(false);
         }
       }}
@@ -64,7 +60,7 @@ export const Primary = ({
         }}
       >
         <div className={`dotlottie${minimised ? ` minimised` : ``}`}>
-          {icon}
+          {icon()}
         </div>
         {!minimised && (
           <>

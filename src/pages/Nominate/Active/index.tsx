@@ -40,7 +40,7 @@ export const Active = () => {
   const nominations = getAccountNominations(activeAccount);
   const { openHelp } = useHelp();
 
-  const ROW_HEIGHT = 210;
+  const ROW_HEIGHT = 300;
 
   return (
     <>

@@ -1,11 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faWallet } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useTranslation } from 'react-i18next';
+import { ReactComponent as WalletIcon } from '../../img/ic_wallet.svg';
 import { HeadingWrapper, Item } from './Wrappers';
 
 export const Connect = () => {
@@ -20,11 +19,7 @@ export const Connect = () => {
           openModalWith(accounts.length ? 'Accounts' : 'Connect', {}, 'large');
         }}
       >
-        <FontAwesomeIcon
-          icon={faWallet}
-          className="icon"
-          transform="shrink-2"
-        />
+        <WalletIcon className="icon" height="16" width="auto" />
         <span>{activeAccount ? t('accounts') : t('connect')}</span>
       </Item>
     </HeadingWrapper>

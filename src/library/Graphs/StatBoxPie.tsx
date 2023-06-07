@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ArcElement, Chart as ChartJS, Tooltip } from 'chart.js';
-import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 import { Pie } from 'react-chartjs-2';
 import { graphColors } from 'styles/graphs';
@@ -11,7 +10,6 @@ import type { StatPieProps } from './types';
 ChartJS.register(ArcElement, Tooltip);
 
 export const StatPie = ({ value, value2 }: StatPieProps) => {
-  const { colors } = useApi().network;
   const { mode } = useTheme();
 
   const isZero = !value && !value;
@@ -19,13 +17,9 @@ export const StatPie = ({ value, value2 }: StatPieProps) => {
     value = 1;
     value2 = 0;
   }
-  const borderColor = isZero
-    ? graphColors.inactive[mode]
-    : [colors.primary[mode], graphColors.border[mode]];
+  const borderColor = isZero ? graphColors.inactive[mode] : '#2F3032';
 
-  const backgroundColor = isZero
-    ? graphColors.inactive[mode]
-    : colors.primary[mode];
+  const backgroundColor = isZero ? graphColors.inactive[mode] : '#9CFFAA';
 
   const options = {
     borderColor,

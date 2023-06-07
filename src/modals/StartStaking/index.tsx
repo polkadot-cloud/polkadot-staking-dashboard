@@ -35,23 +35,24 @@ export const StartStaking = () => {
             <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
           </div>
         </button>
-        <button
-          type="button"
-          className="action-button"
-          disabled={false}
-          onClick={() => {
-            navigate('/pools?t=2');
-            setStatus(2);
-          }}
-        >
-          <div>
-            <h3>{t('joinNominationPool')}</h3>
-            <p>{t('joinNominationPoolSubtitle')}</p>
-          </div>
-          <div>
-            <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
-          </div>
-        </button>
+        {/* TODO */}
+        {/* <button */}
+        {/*  type="button" */}
+        {/*  className="action-button" */}
+        {/*  disabled={true} */}
+        {/*  onClick={() => { */}
+        {/*    navigate('/pools?t=2'); */}
+        {/*    setStatus(2); */}
+        {/*  }} */}
+        {/* > */}
+        {/*  <div> */}
+        {/*    <h3>{t('joinNominationPool')}</h3> */}
+        {/*    <p>{t('joinNominationPoolSubtitle')}</p> */}
+        {/*  </div> */}
+        {/*  <div> */}
+        {/*    <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} /> */}
+        {/*  </div> */}
+        {/* </button> */}
       </ModalPadding>
     </>
   );

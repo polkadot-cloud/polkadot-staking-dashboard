@@ -19,12 +19,9 @@ import { Close } from 'library/Modal/Close';
 import { SelectItems } from 'library/SelectItems';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyFunction } from 'types';
 import { Extension } from './Extension';
-import { Ledger } from './Ledger';
 import { Proxies } from './Proxies';
 import { ReadOnly } from './ReadOnly';
-import { Vault } from './Vault';
 import { ExtensionsWrapper } from './Wrappers';
 
 export const Connect = () => {
@@ -139,14 +136,15 @@ export const Connect = () => {
         >
           <div className="section">
             <ModalPadding horizontalOnly ref={homeRef}>
-              <ActionItem text={t('hardware')} />
-              <ExtensionsWrapper>
-                <SelectItems layout="two-col">
-                  {[Vault, Ledger].map((Item: AnyFunction, i: number) => (
-                    <Item key={`hardware_item_${i}`} />
-                  ))}
-                </SelectItems>
-              </ExtensionsWrapper>
+              {/* Hide Hardware Options until they've been tested */}
+              {/* <ActionItem text={t('hardware')} /> */}
+              {/* <ExtensionsWrapper> */}
+              {/*   <SelectItems layout="two-col"> */}
+              {/*     {[Vault, Ledger].map((Item: AnyFunction, i: number) => ( */}
+              {/*       <Item key={`hardware_item_${i}`} /> */}
+              {/*     ))} */}
+              {/*   </SelectItems> */}
+              {/* </ExtensionsWrapper> */}
 
               <ActionItem text={t('web')} />
               <ExtensionsWrapper>

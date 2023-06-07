@@ -89,9 +89,7 @@ export const RouterInner = () => {
                       element={
                         <Page>
                           <Helmet>
-                            <title>{`${t(key)} : ${t('title', {
-                              context: `${network.name}`,
-                            })}`}</title>
+                            <title>{`${t(key)} : Creditcoin`}</title>
                           </Helmet>
                           <Entry page={page} />
                         </Page>
