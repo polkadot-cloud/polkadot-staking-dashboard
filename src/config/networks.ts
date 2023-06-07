@@ -110,7 +110,7 @@ export const NetworkList: Networks = {
         dark: 'rgb(211, 48, 121, 0.33)',
       },
     },
-    subscanEndpoint: 'http://127.0.0.1:4399',
+    subscanEndpoint: 'https://subscan-testnet.creditcoin.network/',
   },
   creditcoinDev: {
     name: 'creditcoinDev',
