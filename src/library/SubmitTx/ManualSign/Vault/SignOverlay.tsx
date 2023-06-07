@@ -10,7 +10,7 @@ import { QrDisplayPayload, QrScanSignature } from '@polkadot/react-qr';
 import { ButtonPrimary, ButtonSecondary } from '@polkadotcloud/core-ui';
 import { useOverlay } from 'contexts/Overlay';
 import { useTxMeta } from 'contexts/TxMeta';
-import { QRVieweraWrapper } from 'library/Import/Wrappers';
+import { QRViewerWrapper } from 'library/Import/Wrappers';
 import type { SignerOverlayProps } from 'library/SubmitTx/types';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +27,7 @@ export const SignOverlay = ({ submitAddress }: SignerOverlayProps) => {
   const [stage, setStage] = useState(1);
 
   return (
-    <QRVieweraWrapper>
+    <QRViewerWrapper>
       {stage === 1 && <h3 className="title">{t('scanPolkadotVault')}</h3>}
       {stage === 2 && <h3 className="title">{t('signPolkadotVault')}</h3>}
 
@@ -92,6 +92,6 @@ export const SignOverlay = ({ submitAddress }: SignerOverlayProps) => {
           />
         </div>
       </div>
-    </QRVieweraWrapper>
+    </QRViewerWrapper>
   );
 };

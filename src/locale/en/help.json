@@ -181,13 +181,6 @@
           "This amount is different from the bond needed to create a pool."
         ]
       ],
-      "networkStats": [
-        "Network Stats",
-        [
-          "Real time network statistics that may affect your staking positions.",
-          "Keep up to date on the state of the network from your overview."
-        ]
-      ],
       "nominating": [
         "Nominating",
         [
@@ -392,7 +385,7 @@
       "yourBalance": [
         "Your Balance",
         [
-          "Your balance represents the total {NETWORK_UNIT} you have available in addition to your total staked amount, that includes the amount you have bonded in a Pool.",
+          "Your balance represents the total {NETWORK_UNIT} you have available in addition to your total staked amount, that includes the amount you have bonded in a pool.",
           "Unlike your staked balance, your bonded pool balance is held and locked in the pool itself."
         ]
       ]

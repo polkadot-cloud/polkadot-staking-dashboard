@@ -1,18 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp } from '@polkadotcloud/core-ui';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { BarSegment } from 'library/BarChart/BarSegment';
 import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
+import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useTranslation } from 'react-i18next';
 
@@ -23,7 +22,6 @@ export const BalanceChart = () => {
   } = useApi();
   const prices = usePrices();
   const { plugins } = usePlugins();
-  const { openHelp } = useHelp();
   const { activeAccount } = useConnect();
   const { getBalance, getLocks } = useBalances();
   const { getTransferOptions } = useTransferOptions();
@@ -122,21 +120,18 @@ export const BalanceChart = () => {
 
   return (
     <>
-      <div className="head">
-        <h4>
-          {t('overview.balance')}
-          <ButtonHelp marginLeft onClick={() => openHelp('Your Balance')} />
-        </h4>
+      <CardHeaderWrapper>
+        <h4>{t('overview.balance')}</h4>
         <h2>
           <span className="amount">{totalBalance.toFormat()}</span>&nbsp;
           {unit}
-          <span className="fiat">
+          <span className="note">
             {plugins.includes('binance_spot') ? (
               <>&nbsp;{usdFormatter.format(freeFiat.toNumber())}</>
             ) : null}
           </span>
         </h2>
-      </div>
+      </CardHeaderWrapper>
 
       <BarChartWrapper>
         <Legend>

@@ -18,7 +18,7 @@
     "visualizer": "vite-bundle-visualizer"
   },
   "dependencies": {
-    "@dotlottie/player-component": "^1.4.0",
+    "@dotlottie/player-component": "^1.4.1",
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
@@ -32,7 +32,7 @@
     "@polkadot/react-qr": "^3.4.2",
     "@polkadot/rpc-provider": "^10.8.1",
     "@polkadot/util": "^12.1.1",
-    "@polkadotcloud/core-ui": "^0.3.26",
+    "@polkadotcloud/core-ui": "^0.3.30",
     "@polkadotcloud/react-odometer": "^0.1.17",
     "@polkadotcloud/utils": "^0.2.22",
     "@substrate/connect": "^0.7.26",
@@ -51,7 +51,7 @@
     "chart.js": "^4.3.0",
     "date-fns": "^2.29.3",
     "framer-motion": "^10.12.16",
-    "i18next": "^22.5.0",
+    "i18next": "^22.5.1",
     "i18next-browser-languagedetector": "^7.0.2",
     "lodash.throttle": "^4.1.1",
     "rc-slider": "^10.2.0",
@@ -61,7 +61,7 @@
     "react-error-boundary": "^4.0.9",
     "react-helmet": "^6.1.0",
     "react-i18next": "^12.3.1",
-    "react-router-dom": "^6.11.2",
+    "react-router-dom": "^6.12.0",
     "react-scroll": "^1.8.9",
     "styled-components": "^5.3.11"
   },
@@ -99,6 +99,6 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^3.2.0",
     "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^0.31.4"
+    "vitest": "^0.32.0"
   }
 }

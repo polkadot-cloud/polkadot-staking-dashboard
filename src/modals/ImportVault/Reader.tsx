@@ -8,7 +8,7 @@ import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
-import { QRVieweraWrapper } from 'library/Import/Wrappers';
+import { QRViewerWrapper } from 'library/Import/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -54,7 +54,7 @@ export const Reader = () => {
     !formatAccountSs58(qrData);
 
   return (
-    <QRVieweraWrapper>
+    <QRViewerWrapper>
       <h3 className="title">{t('scanFromPolkadotVault')}</h3>
       <div className="viewer">
         <QrScanSignature
@@ -97,6 +97,6 @@ export const Reader = () => {
           />
         </div>
       </div>
-    </QRVieweraWrapper>
+    </QRViewerWrapper>
   );
 };

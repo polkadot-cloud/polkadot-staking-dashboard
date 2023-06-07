@@ -60,6 +60,7 @@ const Item = ({
   index,
   controls,
   initial,
+  page,
 }: any) => {
   const { openOverlayWith } = useOverlay();
   const [isStopped, setIsStopped] = useState(true);
@@ -102,7 +103,7 @@ const Item = ({
             <button
               onClick={() =>
                 openOverlayWith(
-                  <Tip title={title} description={description} />,
+                  <Tip title={title} description={description} page={page} />,
                   'large'
                 )
               }

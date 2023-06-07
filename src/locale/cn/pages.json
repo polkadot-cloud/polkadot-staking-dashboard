@@ -46,7 +46,7 @@
       "readOnly": "只读帐户无法签署交易",
       "setNewController": "设置新Controller帐户",
       "startNominating": "开始提名",
-      "status": "状态",
+      "status": "提名人状态",
       "stop": "停止",
       "stopNominatingSelected": "停止指定选定验证人",
       "summary": "总结",

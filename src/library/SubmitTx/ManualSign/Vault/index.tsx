@@ -1,10 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  faArrowAltCircleUp,
-  faSquarePen,
-} from '@fortawesome/free-solid-svg-icons';
+import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import { useOverlay } from 'contexts/Overlay';
@@ -43,10 +40,11 @@ export const Vault = ({
         {getTxSignature() !== null || submitting ? (
           <ButtonSubmit
             text={`${submitText}`}
-            iconLeft={faArrowAltCircleUp}
+            iconLeft={faSquarePen}
             iconTransform="grow-2"
             onClick={() => onSubmit()}
             disabled={disabled}
+            pulse={!(!valid || overlayStatus !== 0)}
           />
         ) : (
           <ButtonSubmit
