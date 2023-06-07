@@ -122,6 +122,7 @@ export const TabsWrapper = styled.div`
 `;
 
 export const TabWrapper = styled.button<{ active?: boolean }>`
+  font-family: InterSemiBold, sans-serif;
   border: 1px solid
     ${(props) =>
       props.active
