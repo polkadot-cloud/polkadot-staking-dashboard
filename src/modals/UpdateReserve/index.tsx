@@ -82,7 +82,7 @@ export const UpdateReserve = () => {
                 min={0}
                 max={maxReserve.toNumber()}
                 value={sliderReserve}
-                step={0.001}
+                step={0.01}
                 onChange={(val) => {
                   if (typeof val === 'number' && val >= minReserve.toNumber()) {
                     handleChange(new BigNumber(val));
