@@ -67,15 +67,11 @@ export const UpdateReserve = () => {
       <Close />
       <ModalPadding>
         <h2 className="title unbounded" style={{ padding: '0 0.5rem' }}>
-          Reserve Balance
+          {t('reserveBalance')}
         </h2>
 
         <WithSliderWrapper>
-          <p>
-            Control how much {unit} is reserved to pay for transaction fees.
-            This amount is added on top of any funds needed to cover the
-            existential deposit to your account.
-          </p>
+          <p>{t('reserveText', { unit })}</p>
           <div>
             <div className="slider no-value">
               <Slider
@@ -95,14 +91,14 @@ export const UpdateReserve = () => {
 
           <div className="stats">
             <CardHeaderWrapper>
-              <h4>Reserve for Existential Deposit</h4>
+              <h4>{t('reserveForExistentialDeposit')}</h4>
               <h2>
                 {minReserve.decimalPlaces(4).toString()} {unit}
               </h2>
             </CardHeaderWrapper>
 
             <CardHeaderWrapper>
-              <h4>Reserve for Tx Fees</h4>
+              <h4>{t('reserveForTxFees')}</h4>
               <h2>
                 {BigNumber.max(
                   new BigNumber(sliderReserve)
