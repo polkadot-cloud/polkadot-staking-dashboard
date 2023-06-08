@@ -23,6 +23,7 @@ export const HelpConfig: HelpItems = [
       'Supply Staked',
       'Read Only Accounts',
       'Proxy Accounts',
+      'Reserve Balance For Existential Deposit',
     ],
     external: [
       [

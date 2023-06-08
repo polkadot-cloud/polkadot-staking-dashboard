@@ -3,11 +3,16 @@
 
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonPrimaryInvert, ModalPadding } from '@polkadotcloud/core-ui';
+import {
+  ButtonHelp,
+  ButtonPrimaryInvert,
+  ModalPadding,
+} from '@polkadotcloud/core-ui';
 import { planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
@@ -25,6 +30,7 @@ export const UpdateReserve = () => {
   } = useApi();
   const { network } = useApi();
   const { setStatus } = useModal();
+  const { openHelp } = useHelp();
   const { feeReserve, setFeeReserveBalance, getTransferOptions } =
     useTransferOptions();
   const { activeAccount, accountHasSigner } = useConnect();
@@ -97,7 +103,15 @@ export const UpdateReserve = () => {
                 />
               </h4>
               <h2>
-                {minReserve.decimalPlaces(4).toString()} {unit}
+                {minReserve.isZero()
+                  ? 'None'
+                  : `${minReserve.decimalPlaces(4).toString()} ${unit}`}
+                <ButtonHelp
+                  onClick={() =>
+                    openHelp('Reserve Balance For Existential Deposit')
+                  }
+                  style={{ marginLeft: '0.5rem' }}
+                />
               </h2>
             </CardHeaderWrapper>
 

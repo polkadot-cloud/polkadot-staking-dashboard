@@ -325,6 +325,13 @@
           "该应用确保账户永远不会低于这个数额."
         ]
       ],
+      "reserveBalanceForExistentialDeposit": [
+        "Reserve Balance for Existential Deposit",
+        [
+          "If your account already has locked balance that covers your account's existential deposit, such as balance locked for nominating, then staking dashboard will not lock any additional free balance.",
+          "In this scenario, \"None\" is displayed under the \"Reserve for Existential Deposit\" section in your Reserve Balance settings."
+        ]
+      ],
       "selfStake": [
         "自我抵押",
         [
