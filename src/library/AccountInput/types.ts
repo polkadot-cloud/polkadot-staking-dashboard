@@ -13,4 +13,5 @@ export interface AccountInputProps {
   inactive?: boolean;
   disallowAlreadyImported?: boolean;
   initialValue?: MaybeAccount;
+  border?: boolean;
 }
