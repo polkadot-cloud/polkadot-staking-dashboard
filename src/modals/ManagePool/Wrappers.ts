@@ -59,11 +59,11 @@ export const SliderWrapper = styled.div`
     h2 {
       margin: 0;
       font-family: InterBold, sans-serif;
-      min-width: 5rem;
     }
     h5 {
       font-family: InterSemiBold, sans-serif;
       margin: 0;
+      margin-left: 0.75rem;
 
       &.neutral {
         color: var(--network-color-primary);
