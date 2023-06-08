@@ -27,9 +27,9 @@ export const MinDelayInputWrapper = styled.div`
 
     input {
       font-family: InterSemiBold, sans-serif;
-      width: 26px;
+      width: 32px;
       margin: 0 0.6rem 0 0;
-      padding: 0.5rem 0.75rem;
+      padding: 0.5rem 0.2rem 0.5rem 0.75rem;
     }
   }
 
@@ -40,7 +40,7 @@ export const MinDelayInputWrapper = styled.div`
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 1.75rem;
+    width: 1.5rem;
 
     > button {
       color: var(--text-color-secondary);

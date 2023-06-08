@@ -51,6 +51,29 @@ export const SliderWrapper = styled.div`
   flex-direction: column;
   padding: 0 0.5rem 0 0.5rem;
 
+  h5 {
+    font-family: InterSemiBold, sans-serif;
+    margin: 0;
+    margin-left: 0.75rem;
+
+    > span {
+      margin-left: 0.75rem;
+    }
+    &.neutral,
+    .neutral {
+      color: var(--network-color-primary);
+      opacity: 0.8;
+    }
+    &.danger,
+    .danger {
+      color: var(--status-danger-color);
+    }
+    &.success,
+    .success {
+      color: var(--status-success-color);
+    }
+  }
+
   > div:first-child {
     display: flex;
     align-items: center;
@@ -59,22 +82,6 @@ export const SliderWrapper = styled.div`
     h2 {
       margin: 0;
       font-family: InterBold, sans-serif;
-    }
-    h5 {
-      font-family: InterSemiBold, sans-serif;
-      margin: 0;
-      margin-left: 0.75rem;
-
-      &.neutral {
-        color: var(--network-color-primary);
-        opacity: 0.8;
-      }
-      &.danger {
-        color: var(--status-danger-color);
-      }
-      &.success {
-        color: var(--status-success-color);
-      }
     }
   }
 
@@ -110,7 +117,7 @@ export const SliderWrapper = styled.div`
       border-bottom: 1px solid var(--border-primary-color);
       font-family: InterBold, sans-serif;
       margin-top: 0rem;
-      padding-bottom: 0.75rem;
+      padding-bottom: 1rem;
     }
   }
 

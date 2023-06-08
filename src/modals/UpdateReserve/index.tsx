@@ -73,7 +73,7 @@ export const UpdateReserve = () => {
           {t('reserveBalance')}
         </h2>
 
-        <SliderWrapper>
+        <SliderWrapper style={{ marginTop: '1rem' }}>
           <p>{t('reserveText', { unit })}</p>
           <div>
             <div className="slider no-value">
