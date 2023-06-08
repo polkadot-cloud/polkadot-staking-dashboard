@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 
+import { ModalPadding } from '@polkadotcloud/core-ui';
 import { Title } from 'library/Overlay/Title';
-import { PaddingWrapper } from 'modals/Wrappers';
 
 export const Disclaimer = () => (
   <>
     <Title title="Disclaimer" />
-    <PaddingWrapper>
+    <ModalPadding>
       <p>
         This Polkadot Staking Dashboard (“Dashboard”) is made available free of
         charge by Web 3.0 Technologies Foundation, Parity Technologies Limited
@@ -73,6 +73,6 @@ export const Disclaimer = () => (
         loss or damage as a result of the dashboard, content or third party acts
         is to cease using the dashboard.
       </p>
-    </PaddingWrapper>
+    </ModalPadding>
   </>
 );
