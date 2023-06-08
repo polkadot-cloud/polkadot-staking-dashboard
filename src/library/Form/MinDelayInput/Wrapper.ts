@@ -29,7 +29,7 @@ export const MinDelayInputWrapper = styled.div`
       font-family: InterSemiBold, sans-serif;
       width: 26px;
       margin: 0 0.6rem 0 0;
-      padding: 0.75rem;
+      padding: 0.5rem 0.75rem;
     }
   }
 
