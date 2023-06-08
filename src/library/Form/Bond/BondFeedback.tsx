@@ -51,7 +51,7 @@ export const BondFeedback = ({
   // if we are bonding, subtract tx fees from bond amount
   const freeBondAmount = !disableTxFeeUpdate
     ? BigNumber.max(freeBalanceBn.minus(txFees), 0)
-    : BigNumber.max(freeBalanceBn, 0);
+    : freeBalanceBn;
 
   // the default bond balance
   const freeBalance = planckToUnit(freeBondAmount, units);
