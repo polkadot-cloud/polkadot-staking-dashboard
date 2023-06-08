@@ -1,6 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faLock } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonPrimaryInvert, ModalPadding } from '@polkadotcloud/core-ui';
 import { planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
@@ -91,7 +93,14 @@ export const UpdateReserve = () => {
 
           <div className="stats">
             <CardHeaderWrapper>
-              <h4>{t('reserveForExistentialDeposit')}</h4>
+              <h4>
+                {t('reserveForExistentialDeposit')}
+                <FontAwesomeIcon
+                  icon={faLock}
+                  transform="shrink-3"
+                  style={{ marginLeft: '0.5rem' }}
+                />
+              </h4>
               <h2>
                 {minReserve.decimalPlaces(4).toString()} {unit}
               </h2>
