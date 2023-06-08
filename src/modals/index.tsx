@@ -186,8 +186,8 @@ export const Modal = () => {
                   {modal === 'UpdateController' && <UpdateController />}
                   {modal === 'Unbond' && <Unbond />}
                   {modal === 'UpdatePayee' && <UpdatePayee />}
-                  {modal === 'WithdrawPoolMember' && <WithdrawPoolMember />}
                   {modal === 'UpdateReserve' && <UpdateReserve />}
+                  {modal === 'WithdrawPoolMember' && <WithdrawPoolMember />}
                 </ErrorBoundary>
               </ModalContent>
             </ModalHeight>
