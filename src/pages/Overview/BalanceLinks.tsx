@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
-  faCheckCircle,
+  faCheck,
+  faCheckDouble,
   faExternalLinkAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimaryInvert, Separator } from '@polkadotcloud/core-ui';
@@ -18,7 +19,8 @@ export const BalanceLinks = () => {
   const { name } = useApi().network;
   const { activeAccount, accountHasSigner } = useConnect();
   const { openModalWith } = useModal();
-  const { reserve } = useTransferOptions();
+  const { reserve, getTransferOptions } = useTransferOptions();
+  const { forceReserved } = getTransferOptions(activeAccount);
 
   return (
     <MoreWrapper>
@@ -42,9 +44,15 @@ export const BalanceLinks = () => {
           lg
           marginLeft
           disabled={!activeAccount || !accountHasSigner(activeAccount)}
-          iconTransform="grow-2"
+          iconTransform="grow-1"
           onClick={() => openModalWith('UpdateReserve', {}, 'small')}
-          iconRight={reserve.toNumber() !== 0 ? faCheckCircle : undefined}
+          iconRight={
+            !reserve.isZero() && !forceReserved.isZero()
+              ? faCheckDouble
+              : reserve.isZero() && forceReserved.isZero()
+              ? undefined
+              : faCheck
+          }
           text={t('overview.updateReserve')}
         />
       </section>
