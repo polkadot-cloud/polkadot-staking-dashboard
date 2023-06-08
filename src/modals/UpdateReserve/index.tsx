@@ -25,7 +25,7 @@ export const UpdateReserve = () => {
   } = useApi();
   const { network } = useApi();
   const { setStatus } = useModal();
-  const { reserve, setReserveBalance, getTransferOptions } =
+  const { feeReserve, setFeeReserveBalance, getTransferOptions } =
     useTransferOptions();
   const { activeAccount, accountHasSigner } = useConnect();
   const { edReserved } = getTransferOptions(activeAccount);
@@ -36,7 +36,7 @@ export const UpdateReserve = () => {
   );
 
   const [sliderReserve, setSliderReserve] = useState<number>(
-    planckToUnit(reserve, units).plus(minReserve).decimalPlaces(3).toNumber()
+    planckToUnit(feeReserve, units).plus(minReserve).decimalPlaces(3).toNumber()
   );
 
   const sliderProps = {
@@ -56,7 +56,7 @@ export const UpdateReserve = () => {
     const actualReserve = BigNumber.max(val.minus(minReserve), 0).toNumber();
     const actualReservePlanck = unitToPlanck(actualReserve.toString(), units);
     setSliderReserve(val.decimalPlaces(3).toNumber());
-    setReserveBalance(actualReservePlanck);
+    setFeeReserveBalance(actualReservePlanck);
   };
 
   return (

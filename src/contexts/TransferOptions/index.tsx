@@ -27,7 +27,7 @@ export const TransferOptionsProvider = ({
   const { activeAccount } = useConnect();
 
   // Get the local storage rcord for an account reserve balance.
-  const getReserveLocalStorage = (address: MaybeAccount) => {
+  const getFeeReserveLocalStorage = (address: MaybeAccount) => {
     const reserves = JSON.parse(
       localStorage.getItem('reserve_balances') ?? '{}'
     );
@@ -35,13 +35,13 @@ export const TransferOptionsProvider = ({
   };
 
   // A user-configurable reserve amount to be used to pay for transaction fees.
-  const [reserve, setReserve] = useState<BigNumber>(
-    getReserveLocalStorage(activeAccount)
+  const [feeReserve, setFeeReserve] = useState<BigNumber>(
+    getFeeReserveLocalStorage(activeAccount)
   );
 
   // Update an account's reserve amount on account or network change.
   useEffect(() => {
-    setReserve(getReserveLocalStorage(activeAccount));
+    setFeeReserve(getFeeReserveLocalStorage(activeAccount));
   }, [activeAccount, network]);
 
   // Get the bond and unbond amounts available to the user
@@ -103,7 +103,7 @@ export const TransferOptionsProvider = ({
         freeMinusReserve
           .minus(totalUnlocking)
           .minus(totalUnlocked)
-          .minus(reserve),
+          .minus(feeReserve),
         0
       );
 
@@ -125,7 +125,7 @@ export const TransferOptionsProvider = ({
 
       // total possible balance that can be bonded
       const totalPossibleBondPool = BigNumber.max(
-        freeMinusReserve.minus(maxLockBalance).minus(reserve),
+        freeMinusReserve.minus(maxLockBalance).minus(feeReserve),
         new BigNumber(0)
       );
 
@@ -161,14 +161,14 @@ export const TransferOptionsProvider = ({
   };
 
   // Updates account's reserve amount in state and in local storage.
-  const setReserveBalance = (amount: BigNumber) => {
+  const setFeeReserveBalance = (amount: BigNumber) => {
     if (!activeAccount) return;
-    setReserveLocalStorage(amount);
-    setReserve(amount);
+    setFeeReserveLocalStorage(amount);
+    setFeeReserve(amount);
   };
 
   // Update the local storage record for account reserve balances.
-  const setReserveLocalStorage = (amount: BigNumber) => {
+  const setFeeReserveLocalStorage = (amount: BigNumber) => {
     if (!activeAccount) return;
 
     try {
@@ -195,8 +195,8 @@ export const TransferOptionsProvider = ({
     <TransferOptionsContext.Provider
       value={{
         getTransferOptions,
-        setReserveBalance,
-        reserve,
+        setFeeReserveBalance,
+        feeReserve,
       }}
     >
       {children}

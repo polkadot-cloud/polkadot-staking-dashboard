@@ -21,7 +21,7 @@ export const BalanceLinks = () => {
   const { openModalWith } = useModal();
   const { isNetworkSyncing } = useUi();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { reserve, getTransferOptions } = useTransferOptions();
+  const { feeReserve, getTransferOptions } = useTransferOptions();
   const { edReserved } = getTransferOptions(activeAccount);
 
   return (
@@ -55,9 +55,9 @@ export const BalanceLinks = () => {
           iconRight={
             isNetworkSyncing
               ? undefined
-              : !reserve.isZero() && !edReserved.isZero()
+              : !feeReserve.isZero() && !edReserved.isZero()
               ? faCheckDouble
-              : reserve.isZero() && edReserved.isZero()
+              : feeReserve.isZero() && edReserved.isZero()
               ? undefined
               : faCheck
           }

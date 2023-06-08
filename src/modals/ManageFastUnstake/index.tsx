@@ -33,7 +33,7 @@ export const ManageFastUnstake = () => {
   const { activeEra, metrics } = useNetworkMetrics();
   const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
   const { setResize, setStatus } = useModal();
-  const { reserve, getTransferOptions } = useTransferOptions();
+  const { feeReserve, getTransferOptions } = useTransferOptions();
   const { isFastUnstaking } = useUnstaking();
   const { getSignerWarnings } = useSignerWarnings();
 
@@ -46,7 +46,7 @@ export const ManageFastUnstake = () => {
   const { totalUnlockChuncks } = nominate;
 
   const enoughForDeposit = freeBalance
-    .minus(reserve)
+    .minus(feeReserve)
     .isGreaterThanOrEqualTo(fastUnstakeDeposit);
 
   // valid to submit transaction
@@ -68,7 +68,7 @@ export const ManageFastUnstake = () => {
     isFastUnstaking,
     fastUnstakeDeposit,
     freeBalance,
-    reserve,
+    feeReserve,
   ]);
 
   useEffect(() => {
