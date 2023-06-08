@@ -11,14 +11,16 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useUi } from 'contexts/UI';
 import { useTranslation } from 'react-i18next';
 import { MoreWrapper } from './Wrappers';
 
 export const BalanceLinks = () => {
   const { t } = useTranslation('pages');
   const { name } = useApi().network;
-  const { activeAccount, accountHasSigner } = useConnect();
   const { openModalWith } = useModal();
+  const { isNetworkSyncing } = useUi();
+  const { activeAccount, accountHasSigner } = useConnect();
   const { reserve, getTransferOptions } = useTransferOptions();
   const { forceReserved } = getTransferOptions(activeAccount);
 
@@ -43,11 +45,17 @@ export const BalanceLinks = () => {
         <ButtonPrimaryInvert
           lg
           marginLeft
-          disabled={!activeAccount || !accountHasSigner(activeAccount)}
+          disabled={
+            isNetworkSyncing ||
+            !activeAccount ||
+            !accountHasSigner(activeAccount)
+          }
           iconTransform="grow-1"
           onClick={() => openModalWith('UpdateReserve', {}, 'small')}
           iconRight={
-            !reserve.isZero() && !forceReserved.isZero()
+            isNetworkSyncing
+              ? undefined
+              : !reserve.isZero() && !forceReserved.isZero()
               ? faCheckDouble
               : reserve.isZero() && forceReserved.isZero()
               ? undefined
