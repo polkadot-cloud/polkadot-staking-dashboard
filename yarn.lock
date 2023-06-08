@@ -210,24 +210,10 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-<<<<<<< HEAD
-"@cspotcode/source-map-support@^0.8.0":
-  version "0.8.1"
-  resolved "https://registry.npmjs.org/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz#00629c35a688e05a88b1cda684fb9d5e73f000a1"
-  integrity sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==
-  dependencies:
-    "@jridgewell/trace-mapping" "0.3.9"
-
-"@dotlottie/player-component@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@dotlottie/player-component/-/player-component-1.4.0.tgz#ae359063d2d89d165c377936dec071730bf0b32d"
-  integrity sha512-In4acH7PjGq6wbUqyUPqxIaFg3w7/A9JASWjoSa3uiGpyNtzw0xgWMW2+4LGq4mvPyFrGQhF8R9di0N+/duFig==
-=======
 "@dotlottie/player-component@^1.4.1":
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@dotlottie/player-component/-/player-component-1.4.1.tgz#defdaf0966351014716aac7c0839057672ca6a56"
   integrity sha512-KRq0kbNudYrlKZp4v1FCSTwDCpkrTZf70QVQ+4ASpCR+IPry1ncuRt8xsfD4lMC66WozZE9zz29lxs6Balurmg==
->>>>>>> main
   dependencies:
     "@rollup/plugin-json" "^6.0.0"
     fflate "^0.7.3"
