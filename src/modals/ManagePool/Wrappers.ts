@@ -50,13 +50,9 @@ export const SliderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 0.5rem 0 0.5rem;
-  margin-top: 1.5rem;
 
-  > p {
-    margin-top: 0;
-  }
-  > h5 {
-    margin: 1rem 0 0.5rem 0;
+  h5 {
+    margin: 0.6rem 0 0.5rem 0;
 
     &.neutral {
       color: var(--text-color-primary);
@@ -95,12 +91,7 @@ export const SliderWrapper = styled.div`
     display: flex;
     align-items: center;
 
-    > .current {
-      width: 3rem;
-    }
-
     > .slider {
-      padding: 0 0.25rem 0 3rem;
       flex-grow: 1;
 
       &.no-value {
