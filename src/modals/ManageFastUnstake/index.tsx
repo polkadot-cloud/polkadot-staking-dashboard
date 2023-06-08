@@ -45,6 +45,10 @@ export const ManageFastUnstake = () => {
   const { nominate, freeBalance } = allTransferOptions;
   const { totalUnlockChuncks } = nominate;
 
+  const enoughForDeposit = freeBalance
+    .minus(reserve)
+    .isGreaterThanOrEqualTo(fastUnstakeDeposit);
+
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
 
@@ -52,9 +56,7 @@ export const ManageFastUnstake = () => {
     setValid(
       fastUnstakeErasToCheckPerBlock > 0 &&
         ((!isFastUnstaking &&
-          freeBalance
-            .minus(reserve)
-            .isGreaterThanOrEqualTo(fastUnstakeDeposit) &&
+          enoughForDeposit &&
           isExposed === false &&
           totalUnlockChuncks === 0) ||
           isFastUnstaking)
@@ -66,6 +68,7 @@ export const ManageFastUnstake = () => {
     isFastUnstaking,
     fastUnstakeDeposit,
     freeBalance,
+    reserve,
   ]);
 
   useEffect(() => {
@@ -104,7 +107,7 @@ export const ManageFastUnstake = () => {
   );
 
   if (!isFastUnstaking) {
-    if (freeBalance.minus(reserve).isLessThan(fastUnstakeDeposit)) {
+    if (!enoughForDeposit) {
       warnings.push(
         `${t('noEnough')} ${planckToUnit(
           fastUnstakeDeposit,
