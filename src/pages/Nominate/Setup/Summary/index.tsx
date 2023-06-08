@@ -54,7 +54,9 @@ export const Summary = ({ section }: SetupStepProps) => {
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
     const txs = [
-      api.tx.staking.bond(controllerToSubmit, bondAsString, payeeToSubmit),
+      ['westend'].includes(network.name)
+        ? api.tx.staking.bond(bondAsString, payeeToSubmit)
+        : api.tx.staking.bond(controllerToSubmit, bondAsString, payeeToSubmit),
       api.tx.staking.nominate(targetsToSubmit),
     ];
     return api.tx.utility.batch(txs);

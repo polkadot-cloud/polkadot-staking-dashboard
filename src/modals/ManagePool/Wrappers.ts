@@ -16,7 +16,7 @@ export const ContentWrapper = styled.div`
     padding: 0 1rem 1rem 1rem;
 
     h2 {
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     input {
@@ -46,38 +46,42 @@ export const ContentWrapper = styled.div`
   }
 `;
 
-export const CommissionWrapper = styled.div`
+export const SliderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 0.5rem 0 0.5rem;
 
-  > h5 {
-    margin: 1rem 0 0.5rem 0;
-
-    &.neutral {
-      color: var(--text-color-primary);
-      opacity: 0.8;
-    }
-    &.danger {
-      color: var(--status-danger-color);
-    }
-    &.success {
-      color: var(--status-success-color);
-    }
+  h5 {
+    font-family: InterSemiBold, sans-serif;
+    margin: 0;
+    margin-left: 0.75rem;
 
     > span {
-      font-family: InterSemiBold, sans-serif;
-      margin-left: 0.5rem;
+      margin-left: 0.75rem;
+    }
+    &.neutral,
+    .neutral {
+      color: var(--network-color-primary);
+      opacity: 0.8;
+    }
+    &.danger,
+    .danger {
+      color: var(--status-danger-color);
+    }
+    &.success,
+    .success {
+      color: var(--status-success-color);
+    }
+  }
 
-      &.neutral {
-        color: var(--network-color-primary);
-      }
-      &.danger {
-        color: var(--status-danger-color);
-      }
-      &.success {
-        color: var(--status-success-color);
-      }
+  > div:first-child {
+    display: flex;
+    align-items: center;
+    margin: 1.25rem 0 0.5rem 0;
+
+    h2 {
+      margin: 0;
+      font-family: InterBold, sans-serif;
     }
   }
 
@@ -91,17 +95,42 @@ export const CommissionWrapper = styled.div`
     display: flex;
     align-items: center;
 
-    > .current {
-      width: 3rem;
-    }
-
     > .slider {
-      padding: 0 0.25rem 0 1.25rem;
       flex-grow: 1;
+
+      &.no-value {
+        padding-left: 0;
+      }
 
       .rc-slider-handle-dragging {
         box-shadow: 0 0 0 5px var(--network-color-transparent) !important;
       }
     }
+  }
+
+  .stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 1rem;
+    h2 {
+      border-bottom: 1px solid var(--border-primary-color);
+      font-family: InterBold, sans-serif;
+      margin-top: 0rem;
+      padding-bottom: 1rem;
+    }
+  }
+
+  .done {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+  }
+
+  .confirm {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: flex-end;
+    margin-top: 2.5rem;
   }
 `;

@@ -17,7 +17,7 @@ import { Wrapper } from './Wrapper';
 
 export const UpdateController = () => {
   const { t } = useTranslation('modals');
-  const { api } = useApi();
+  const { api, network } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount, getAccount } = useConnect();
   const { getBondedAccount } = useBonded();
@@ -35,7 +35,9 @@ export const UpdateController = () => {
     const controllerToSubmit = {
       Id: activeAccount ?? '',
     };
-    tx = api.tx.staking.setController(controllerToSubmit);
+    tx = ['westend'].includes(network.name)
+      ? api.tx.staking.setController()
+      : api.tx.staking.setController(controllerToSubmit);
     return tx;
   };
 

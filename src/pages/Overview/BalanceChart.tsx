@@ -24,10 +24,10 @@ export const BalanceChart = () => {
   const { plugins } = usePlugins();
   const { activeAccount } = useConnect();
   const { getBalance, getLocks } = useBalances();
-  const { getTransferOptions } = useTransferOptions();
+  const { feeReserve, getTransferOptions } = useTransferOptions();
   const balance = getBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
-  const { forceReserved } = allTransferOptions;
+  const { edReserved } = allTransferOptions;
   const poolBondOpions = allTransferOptions.pool;
   const unlockingPools = poolBondOpions.totalUnlocking.plus(
     poolBondOpions.totalUnlocked
@@ -86,11 +86,11 @@ export const BalanceChart = () => {
 
   // available balance data
   const fundsLocked = planckToUnit(frozen.minus(lockStakingAmount), units);
-  let fundsReserved = planckToUnit(forceReserved, units);
-  const fundsFree = planckToUnit(allTransferOptions.freeBalance, units).minus(
-    fundsLocked
-  );
-
+  let fundsReserved = planckToUnit(edReserved.plus(feeReserve), units);
+  const fundsFree = planckToUnit(
+    BigNumber.max(allTransferOptions.freeBalance.minus(feeReserve), 0),
+    units
+  ).minus(fundsLocked);
   // available balance percentages
   const graphLocked = greaterThanZero(fundsLocked)
     ? fundsLocked.dividedBy(graphAvailable.multipliedBy(0.01))
@@ -101,7 +101,7 @@ export const BalanceChart = () => {
     : new BigNumber(0);
 
   // get total available balance, including reserve and locks
-  if (graphAvailable < fundsReserved) {
+  if (graphAvailable.isLessThan(fundsReserved)) {
     fundsReserved = graphAvailable;
   }
 

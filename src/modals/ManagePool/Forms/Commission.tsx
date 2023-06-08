@@ -28,7 +28,7 @@ import 'rc-slider/assets/index.css';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { MaybeAccount } from 'types';
-import { CommissionWrapper } from '../Wrappers';
+import { SliderWrapper } from '../Wrappers';
 import type { ChangeRateInput } from './types';
 
 export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
@@ -454,40 +454,36 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
         ) : null}
 
         <ActionItem
-          text={t('setCommission')}
+          text={t('commissionRate')}
           inlineButton={
             <ButtonHelp onClick={() => openHelp('Pool Commission Rate')} />
           }
         />
 
-        <CommissionWrapper>
-          <h5 className={commissionFeedback?.label || 'neutral'}>
-            {t('commissionRate')}
-            {commissionFeedback && (
-              <span className={commissionFeedback?.label || 'neutral'}>
-                {commissionFeedback.text}
-              </span>
-            )}
-          </h5>
+        <SliderWrapper>
           <div>
-            <h4 className="current">{commission}% </h4>
-            <div className="slider">
-              <Slider
-                value={commission}
-                step={0.1}
-                onChange={(val) => {
-                  if (typeof val === 'number') {
-                    setCommission(val);
-                    if (val > maxCommission && maxCommissionEnabled) {
-                      setMaxCommission(Math.min(initialMaxCommission, val));
-                    }
-                  }
-                }}
-                {...sliderProps}
-              />
-            </div>
+            <h2>{commission}% </h2>
+            <h5 className={commissionFeedback?.label || 'neutral'}>
+              {!!commissionFeedback && commissionFeedback.text}
+            </h5>
           </div>
-        </CommissionWrapper>
+
+          <div className="slider">
+            <Slider
+              value={commission}
+              step={0.1}
+              onChange={(val) => {
+                if (typeof val === 'number') {
+                  setCommission(val);
+                  if (val > maxCommission && maxCommissionEnabled) {
+                    setMaxCommission(Math.min(initialMaxCommission, val));
+                  }
+                }
+              }}
+              {...sliderProps}
+            />
+          </div>
+        </SliderWrapper>
 
         <AccountInput
           defaultLabel={t('inputPayeeAccount')}
@@ -502,6 +498,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
           disallowAlreadyImported={false}
           initialValue={payee}
           inactive={commission === 0}
+          border={payee === null}
         />
 
         <ActionItem
@@ -509,7 +506,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
             marginTop: '2rem',
             borderBottomWidth: maxCommissionEnabled ? '1px' : 0,
           }}
-          text={t('setMaxCommission')}
+          text={t('maxCommission')}
           toggled={maxCommissionEnabled}
           onToggle={(val) => setMaxCommissionEnabled(val)}
           disabled={!!maxCommissionSet}
@@ -519,34 +516,30 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
         />
 
         {maxCommissionEnabled && (
-          <CommissionWrapper>
-            <h5 className={maxCommissionFeedback?.label || 'neutral'}>
-              {t('maxCommission')}
-              {maxCommissionFeedback && (
-                <span className={maxCommissionFeedback?.label || 'neutral'}>
-                  {maxCommissionFeedback.text}
-                </span>
-              )}
-            </h5>
+          <SliderWrapper>
             <div>
-              <h4 className="current">{maxCommission}% </h4>
-              <div className="slider">
-                <Slider
-                  value={maxCommission}
-                  step={0.1}
-                  onChange={(val) => {
-                    if (typeof val === 'number') {
-                      setMaxCommission(val);
-                      if (val < commission) {
-                        setCommission(val);
-                      }
-                    }
-                  }}
-                  {...sliderProps}
-                />
-              </div>
+              <h2>{maxCommission}% </h2>
+              <h5 className={maxCommissionFeedback?.label || 'neutral'}>
+                {!!maxCommissionFeedback && maxCommissionFeedback.text}
+              </h5>
             </div>
-          </CommissionWrapper>
+
+            <div className="slider">
+              <Slider
+                value={maxCommission}
+                step={0.1}
+                onChange={(val) => {
+                  if (typeof val === 'number') {
+                    setMaxCommission(val);
+                    if (val < commission) {
+                      setCommission(val);
+                    }
+                  }
+                }}
+                {...sliderProps}
+              />
+            </div>
+          </SliderWrapper>
         )}
 
         <ActionItem
@@ -554,7 +547,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
             marginTop: '2rem',
             borderBottomWidth: changeRateEnabled ? '1px' : 0,
           }}
-          text={t('setChangeRate')}
+          text={t('changeRate')}
           toggled={changeRateEnabled}
           onToggle={(val) => setChangeRateEnabled(val)}
           disabled={!!changeRateSet}
@@ -566,34 +559,31 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
         />
 
         {changeRateEnabled && (
-          <CommissionWrapper>
-            <h5 className={maxIncreaseFeedback?.label || 'neutral'}>
-              {t('maxIncreasePerUpdate')}
-              {maxIncreaseFeedback && (
-                <span className={maxIncreaseFeedback?.label || 'neutral'}>
-                  {maxIncreaseFeedback.text}
-                </span>
-              )}
-            </h5>
+          <SliderWrapper>
             <div>
-              <h4 className="current">{changeRate.maxIncrease}% </h4>
-              <div className="slider">
-                <Slider
-                  value={changeRate.maxIncrease}
-                  step={0.1}
-                  onChange={(val) => {
-                    if (typeof val === 'number') {
-                      setChangeRate({
-                        ...changeRate,
-                        maxIncrease: val,
-                      });
-                    }
-                  }}
-                  {...sliderProps}
-                />
-              </div>
+              <h2>{changeRate.maxIncrease}% </h2>
+              <h5 className={maxIncreaseFeedback?.label || 'neutral'}>
+                {!!maxIncreaseFeedback && maxIncreaseFeedback.text}
+              </h5>
             </div>
-            <h5 className={minDelayFeedback?.label || 'neutral'}>
+
+            <div className="slider">
+              <Slider
+                value={changeRate.maxIncrease}
+                step={0.1}
+                onChange={(val) => {
+                  if (typeof val === 'number') {
+                    setChangeRate({
+                      ...changeRate,
+                      maxIncrease: val,
+                    });
+                  }
+                }}
+                {...sliderProps}
+              />
+            </div>
+
+            <h5 style={{ marginTop: '1rem' }}>
               {t('minDelayBetweenUpdates')}
               {minDelayFeedback && (
                 <span className={minDelayFeedback?.label || 'neutral'}>
@@ -638,7 +628,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
                 count: changeRate.minDelay,
               })}
             </p>
-          </CommissionWrapper>
+          </SliderWrapper>
         )}
       </div>
       <SubmitTx

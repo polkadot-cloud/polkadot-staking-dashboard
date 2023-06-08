@@ -5,12 +5,12 @@ import styled from 'styled-components';
 
 export const MinDelayInputWrapper = styled.div`
   color: var(--text-color-secondary);
+  border: 1px solid var(--border-primary-color);
   flex: 0 1 auto;
   display: flex;
   height: 3rem;
   align-items: center;
   margin: 0.5rem 1rem 0 0;
-  border: 1px solid var(--border-primary-color);
   border-radius: 0.75rem;
   overflow: hidden;
 
@@ -26,9 +26,10 @@ export const MinDelayInputWrapper = styled.div`
     padding-right: 0.75rem;
 
     input {
-      width: 30px;
+      font-family: InterSemiBold, sans-serif;
+      width: 32px;
       margin: 0 0.6rem 0 0;
-      padding-left: 1rem;
+      padding: 0.5rem 0.2rem 0.5rem 0.75rem;
     }
   }
 
@@ -39,7 +40,7 @@ export const MinDelayInputWrapper = styled.div`
     justify-content: center;
     align-items: center;
     height: 100%;
-    width: 1.75rem;
+    width: 1.5rem;
 
     > button {
       color: var(--text-color-secondary);
