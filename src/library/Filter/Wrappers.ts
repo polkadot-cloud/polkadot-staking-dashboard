@@ -39,6 +39,7 @@ export const Wrapper = styled.div`
 
 export const ItemWrapper = styled.div`
   border: 1px solid var(--border-primary-color);
+  font-family: InterSemiBold, sans-serif;
   border-radius: 1.5rem;
   display: flex;
   position: relative;
