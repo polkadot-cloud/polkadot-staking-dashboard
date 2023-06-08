@@ -23,6 +23,7 @@ export const AccountInput = ({
   inactive = false,
   disallowAlreadyImported = true,
   initialValue = null,
+  border = true,
 }: AccountInputProps) => {
   const { t } = useTranslation('library');
 
@@ -144,8 +145,14 @@ export const AccountInput = ({
     }
   };
 
+  const className = [];
+  if (inactive) className.push('inactive');
+  if (border) className.push('border');
+
   return (
-    <AccountInputWrapper className={inactive ? 'inactive' : undefined}>
+    <AccountInputWrapper
+      className={className.length ? className.join(' ') : undefined}
+    >
       {inactive && <div className="inactive-block" />}
       <h5 className={labelClass}>
         {successLock && (

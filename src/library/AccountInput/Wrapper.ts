@@ -21,18 +21,22 @@ export const AccountInputWrapper = styled.div`
     height: 100%;
   }
 
+  &.border {
+    > .input {
+      border: 1px solid var(--border-primary-color);
+    }
+  }
+
   .input {
-    border: 1px solid var(--border-primary-color);
     border-radius: 1rem;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    padding: 0.25rem 0.5rem 0.25rem 1rem;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
 
     &.disabled {
       background: var(--background-default);
     }
-
     > section {
       display: flex;
       flex-flow: row wrap;

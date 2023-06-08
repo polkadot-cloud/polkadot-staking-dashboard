@@ -464,11 +464,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
           <div>
             <h2>{commission}% </h2>
             <h5 className={commissionFeedback?.label || 'neutral'}>
-              {commissionFeedback && (
-                <span className={commissionFeedback?.label || 'neutral'}>
-                  {commissionFeedback.text}
-                </span>
-              )}
+              {!!commissionFeedback && commissionFeedback.text}
             </h5>
           </div>
 
@@ -502,6 +498,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
           disallowAlreadyImported={false}
           initialValue={payee}
           inactive={commission === 0}
+          border={false}
         />
 
         <ActionItem
@@ -523,11 +520,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
             <div>
               <h2>{maxCommission}% </h2>
               <h5 className={maxCommissionFeedback?.label || 'neutral'}>
-                {maxCommissionFeedback && (
-                  <span className={maxCommissionFeedback?.label || 'neutral'}>
-                    {maxCommissionFeedback.text}
-                  </span>
-                )}
+                {!!maxCommissionFeedback && maxCommissionFeedback.text}
               </h5>
             </div>
 
@@ -570,11 +563,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
             <div>
               <h2>{changeRate.maxIncrease}% </h2>
               <h5 className={maxIncreaseFeedback?.label || 'neutral'}>
-                {maxIncreaseFeedback && (
-                  <span className={maxIncreaseFeedback?.label || 'neutral'}>
-                    {maxIncreaseFeedback.text}
-                  </span>
-                )}
+                {!!maxIncreaseFeedback && maxIncreaseFeedback.text}
               </h5>
             </div>
 
@@ -594,7 +583,10 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
               />
             </div>
 
-            <h5 className={minDelayFeedback?.label || 'neutral'}>
+            <h5
+              className={minDelayFeedback?.label || 'neutral'}
+              style={{ marginTop: '1rem' }}
+            >
               {t('minDelayBetweenUpdates')}
               {minDelayFeedback && (
                 <span className={minDelayFeedback?.label || 'neutral'}>

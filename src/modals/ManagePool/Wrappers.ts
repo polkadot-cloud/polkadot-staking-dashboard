@@ -16,7 +16,7 @@ export const ContentWrapper = styled.div`
     padding: 0 1rem 1rem 1rem;
 
     h2 {
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
 
     input {
@@ -51,26 +51,23 @@ export const SliderWrapper = styled.div`
   flex-direction: column;
   padding: 0 0.5rem 0 0.5rem;
 
-  h5 {
-    margin: 0.6rem 0 0.5rem 0;
+  > div:first-child {
+    display: flex;
+    align-items: center;
+    margin: 1.25rem 0 0.5rem 0;
 
-    &.neutral {
-      color: var(--text-color-primary);
-      opacity: 0.8;
+    h2 {
+      margin: 0;
+      font-family: InterBold, sans-serif;
+      min-width: 5rem;
     }
-    &.danger {
-      color: var(--status-danger-color);
-    }
-    &.success {
-      color: var(--status-success-color);
-    }
-
-    > span {
+    h5 {
       font-family: InterSemiBold, sans-serif;
-      margin-left: 1.5rem;
+      margin: 0;
 
       &.neutral {
         color: var(--network-color-primary);
+        opacity: 0.8;
       }
       &.danger {
         color: var(--status-danger-color);
