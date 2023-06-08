@@ -27,7 +27,7 @@ export const BalanceChart = () => {
   const { reserve, getTransferOptions } = useTransferOptions();
   const balance = getBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
-  const { forceReserved } = allTransferOptions;
+  const { edReserved } = allTransferOptions;
   const poolBondOpions = allTransferOptions.pool;
   const unlockingPools = poolBondOpions.totalUnlocking.plus(
     poolBondOpions.totalUnlocked
@@ -86,7 +86,7 @@ export const BalanceChart = () => {
 
   // available balance data
   const fundsLocked = planckToUnit(frozen.minus(lockStakingAmount), units);
-  let fundsReserved = planckToUnit(forceReserved.plus(reserve), units);
+  let fundsReserved = planckToUnit(edReserved.plus(reserve), units);
   const fundsFree = planckToUnit(
     BigNumber.max(allTransferOptions.freeBalance.minus(reserve), 0),
     units

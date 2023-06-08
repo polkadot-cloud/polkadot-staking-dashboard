@@ -12,7 +12,7 @@ export interface TransferOptionsContextInterface {
 
 export interface TransferOptions {
   freeBalance: BigNumber;
-  forceReserved: BigNumber;
+  edReserved: BigNumber;
   nominate: {
     active: BigNumber;
     totalUnlocking: BigNumber;

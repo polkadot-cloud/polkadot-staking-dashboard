@@ -22,7 +22,7 @@ export const BalanceLinks = () => {
   const { isNetworkSyncing } = useUi();
   const { activeAccount, accountHasSigner } = useConnect();
   const { reserve, getTransferOptions } = useTransferOptions();
-  const { forceReserved } = getTransferOptions(activeAccount);
+  const { edReserved } = getTransferOptions(activeAccount);
 
   return (
     <MoreWrapper>
@@ -55,9 +55,9 @@ export const BalanceLinks = () => {
           iconRight={
             isNetworkSyncing
               ? undefined
-              : !reserve.isZero() && !forceReserved.isZero()
+              : !reserve.isZero() && !edReserved.isZero()
               ? faCheckDouble
-              : reserve.isZero() && forceReserved.isZero()
+              : reserve.isZero() && edReserved.isZero()
               ? undefined
               : faCheck
           }

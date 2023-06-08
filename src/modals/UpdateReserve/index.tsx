@@ -28,9 +28,9 @@ export const UpdateReserve = () => {
   const { reserve, setReserveBalance, getTransferOptions } =
     useTransferOptions();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { forceReserved } = getTransferOptions(activeAccount);
+  const { edReserved } = getTransferOptions(activeAccount);
 
-  const minReserve = planckToUnit(forceReserved, units);
+  const minReserve = planckToUnit(edReserved, units);
   const maxReserve = minReserve.plus(
     ['polkadot', 'westend'].includes(network.name) ? 3 : 1
   );

@@ -65,13 +65,10 @@ export const TransferOptionsProvider = ({
 
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
     // alive. Deducts `locks` from free balance reserve needed.
-    const forceReserved = BigNumber.max(
-      existentialDeposit.minus(totalLocked),
-      0
-    );
+    const edReserved = BigNumber.max(existentialDeposit.minus(totalLocked), 0);
 
-    // Total free balance after `forceReserved` is subtracted.
-    const freeMinusReserve = BigNumber.max(free.minus(forceReserved), 0);
+    // Total free balance after `edReserved` is subtracted.
+    const freeMinusReserve = BigNumber.max(free.minus(edReserved), 0);
 
     // calculate total balance locked
     const maxLockBalance =
@@ -157,7 +154,7 @@ export const TransferOptionsProvider = ({
 
     return {
       freeBalance,
-      forceReserved,
+      edReserved,
       nominate: nominateOptions(),
       pool: poolOptions(),
     };

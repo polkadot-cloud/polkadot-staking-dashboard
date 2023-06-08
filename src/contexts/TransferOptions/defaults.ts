@@ -14,7 +14,7 @@ export const defaultBondedContext: TransferOptionsContextInterface = {
 
 export const transferOptions: TransferOptions = {
   freeBalance: new BigNumber(0),
-  forceReserved: new BigNumber(0),
+  edReserved: new BigNumber(0),
   nominate: {
     active: new BigNumber(0),
     totalUnlocking: new BigNumber(0),
