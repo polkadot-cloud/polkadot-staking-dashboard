@@ -498,7 +498,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
           disallowAlreadyImported={false}
           initialValue={payee}
           inactive={commission === 0}
-          border={false}
+          border={payee === null}
         />
 
         <ActionItem
