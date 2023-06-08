@@ -67,7 +67,7 @@ export const UpdateReserve = () => {
       <Close />
       <ModalPadding>
         <h2 className="title unbounded" style={{ padding: '0 0.5rem' }}>
-          {t('updateReserve')}
+          Reserve Balance
         </h2>
 
         <WithSliderWrapper>
