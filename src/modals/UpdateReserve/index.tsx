@@ -20,15 +20,14 @@ export const UpdateReserve = () => {
   const { t } = useTranslation('modals');
   const {
     network: { units, unit },
-    consts,
   } = useApi();
   const { network } = useApi();
   const { setStatus } = useModal();
-  const { reserve, setReserve } = useTransferOptions();
+  const { reserve, setReserve, getTransferOptions } = useTransferOptions();
   const { activeAccount, accountHasSigner } = useConnect();
-  const { existentialDeposit } = consts;
+  const { forceReserved } = getTransferOptions(activeAccount);
 
-  const minReserve = planckToUnit(existentialDeposit, units);
+  const minReserve = planckToUnit(forceReserved, units);
   const maxReserve = minReserve.plus(
     ['polkadot', 'westend'].includes(network.name) ? 3 : 1
   );
@@ -74,8 +73,8 @@ export const UpdateReserve = () => {
         <WithSliderWrapper>
           <p>
             Control how much {unit} is reserved to pay for transaction fees.
-            This amount is added on top of the existential deposit to ensure
-            your account stays alive.
+            This amount is added on top of any funds needed to cover the
+            existential deposit to your account.
           </p>
           <div>
             <div className="slider no-value">
@@ -96,7 +95,7 @@ export const UpdateReserve = () => {
 
           <div className="stats">
             <CardHeaderWrapper>
-              <h4>Existential Deposit</h4>
+              <h4>Reserve for Existential Deposit</h4>
               <h2>
                 {minReserve.decimalPlaces(4).toString()} {unit}
               </h2>
