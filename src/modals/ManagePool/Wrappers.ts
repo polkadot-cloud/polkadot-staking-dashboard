@@ -51,6 +51,9 @@ export const WithSliderWrapper = styled.div`
   flex-direction: column;
   padding: 0 0.5rem 0 0.5rem;
 
+  > p {
+    margin-top: 0;
+  }
   > h5 {
     margin: 1rem 0 0.5rem 0;
 
@@ -96,13 +99,36 @@ export const WithSliderWrapper = styled.div`
     }
 
     > .slider {
-      padding: 0 0.25rem 0 2.5rem;
+      padding: 0 0.25rem 0 3rem;
       flex-grow: 1;
+
+      &.no-value {
+        padding-left: 0;
+      }
 
       .rc-slider-handle-dragging {
         box-shadow: 0 0 0 5px var(--network-color-transparent) !important;
       }
     }
+  }
+
+  .stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 1rem;
+    h2 {
+      border-bottom: 1px solid var(--border-primary-color);
+      font-family: InterBold, sans-serif;
+      margin-top: 0rem;
+      padding-bottom: 0.75rem;
+    }
+  }
+
+  .done {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
   }
 
   .confirm {

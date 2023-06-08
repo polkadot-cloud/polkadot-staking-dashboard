@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -19,26 +18,30 @@ export const TransferOptionsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { consts } = useApi();
+  const { consts, network } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { getStashLedger, getBalance, getLocks } = useBalances();
   const { getAccount } = useBonded();
   const { membership } = usePoolMemberships();
   const { existentialDeposit } = consts;
   const { activeAccount } = useConnect();
-  const { network } = useApi();
 
   // A user-configurable reserve amount to be used to pay for transaction fees.
-  const [reserve, setReserve] = useState(new BigNumber(0));
+  const [reserve, setReserve] = useState(
+    new BigNumber(
+      localStorage
+        .getItem(`${network.name}_${activeAccount}_reserve`)
+        ?.toString() || '0'
+    )
+  );
 
   // Update an account's reserve amount on account or network change.
   useEffect(() => {
     setReserve(
-      unitToPlanck(
+      new BigNumber(
         localStorage
           .getItem(`${network.name}_${activeAccount}_reserve`)
-          ?.toString() || '0',
-        network.units
+          ?.toString() || '0'
       )
     );
   }, [activeAccount, network]);
