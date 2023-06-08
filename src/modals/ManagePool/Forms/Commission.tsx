@@ -454,7 +454,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
         ) : null}
 
         <ActionItem
-          text={t('setCommission')}
+          text={t('commissionRate')}
           inlineButton={
             <ButtonHelp onClick={() => openHelp('Pool Commission Rate')} />
           }
@@ -506,7 +506,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
             marginTop: '2rem',
             borderBottomWidth: maxCommissionEnabled ? '1px' : 0,
           }}
-          text={t('setMaxCommission')}
+          text={t('maxCommission')}
           toggled={maxCommissionEnabled}
           onToggle={(val) => setMaxCommissionEnabled(val)}
           disabled={!!maxCommissionSet}
@@ -547,7 +547,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
             marginTop: '2rem',
             borderBottomWidth: changeRateEnabled ? '1px' : 0,
           }}
-          text={t('setChangeRate')}
+          text={t('changeRate')}
           toggled={changeRateEnabled}
           onToggle={(val) => setChangeRateEnabled(val)}
           disabled={!!changeRateSet}
