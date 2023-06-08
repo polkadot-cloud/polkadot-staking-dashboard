@@ -6,7 +6,7 @@ import type { MaybeAccount } from 'types';
 
 export interface TransferOptionsContextInterface {
   getTransferOptions: (a: MaybeAccount) => TransferOptions;
-  setReserve: (r: BigNumber) => void;
+  setReserveAmount: (r: BigNumber) => void;
   reserve: BigNumber;
 }
 

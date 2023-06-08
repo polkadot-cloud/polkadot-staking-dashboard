@@ -165,11 +165,20 @@ export const TransferOptionsProvider = ({
     };
   };
 
+  // Updates account's reserve amount in state and in local storage.
+  const setReserveAmount = (amount: BigNumber) => {
+    setReserve(amount);
+    localStorage.setItem(
+      `${network.name}_${activeAccount}_reserve`,
+      amount.toString()
+    );
+  };
+
   return (
     <TransferOptionsContext.Provider
       value={{
         getTransferOptions,
-        setReserve,
+        setReserveAmount,
         reserve,
       }}
     >
