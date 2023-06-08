@@ -583,10 +583,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
               />
             </div>
 
-            <h5
-              className={minDelayFeedback?.label || 'neutral'}
-              style={{ marginTop: '1rem' }}
-            >
+            <h5 style={{ marginTop: '1rem' }}>
               {t('minDelayBetweenUpdates')}
               {minDelayFeedback && (
                 <span className={minDelayFeedback?.label || 'neutral'}>
