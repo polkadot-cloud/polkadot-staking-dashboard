@@ -1,16 +1,15 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faExternalLinkAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ModalConnectItem } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useNotifications } from 'contexts/Notifications';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Foot } from './Foot';
-import { ConnectItem, ExtensionInner } from './Wrappers';
+import { ExtensionInner } from './Wrappers';
 import type { ExtensionProps } from './types';
 
 export const Extension = ({ meta, size, flag }: ExtensionProps) => {
@@ -21,7 +20,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { title, icon: Icon, url } = meta;
 
   const { id } = meta;
-  const extension = extensions.find((e: ExtensionInjected) => e.id === id);
+  const extension = extensions.find((e) => e.id === id);
   const status = !extension ? 'not_found' : extensionsStatus[id];
   const disabled = status === 'connected' || !extension;
 
@@ -50,22 +49,22 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const handleClick = async () => {
     if (status !== 'connected' && extension) {
       (async () => {
-        await connectExtensionAccounts(extension);
+        const connected = await connectExtensionAccounts(extension);
         // force re-render to display error messages
         setIncrement(increment + 1);
 
-        addNotification({
-          title: t('extensionConnected'),
-          subtitle: `${t('titleExtensionConnected', { title })}`,
-        });
+        if (connected) {
+          addNotification({
+            title: t('extensionConnected'),
+            subtitle: `${t('titleExtensionConnected', { title })}`,
+          });
+        }
       })();
     }
   };
 
   return (
-    <ConnectItem
-      className={status !== 'connected' && extension ? 'canConnect' : undefined}
-    >
+    <ModalConnectItem canConnect={!!(extension && status !== 'connected')}>
       <ExtensionInner>
         <div>
           <div className="body">
@@ -95,9 +94,19 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
               <h3>{title}</h3>
             </div>
           </div>
-          <Foot url={url} />
+          <div className="foot">
+            <a
+              className="link"
+              href={`https://${url}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {url}
+              <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
+            </a>
+          </div>
         </div>
       </ExtensionInner>
-    </ConnectItem>
+    </ModalConnectItem>
   );
 };

@@ -1,15 +1,18 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { registerSaEvent } from 'Utils';
 import BigNumber from 'bignumber.js';
-import { isSupportedProxyCall } from 'config/proxies';
+import {
+  isSupportedProxyCall,
+  UnsupportedIfUniqueController,
+} from 'config/proxies';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
+import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
+import { manualSigners } from 'contexts/Connect/Utils';
 import { useExtensions } from 'contexts/Extensions';
-import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useNotifications } from 'contexts/Notifications';
@@ -18,6 +21,7 @@ import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyApi, AnyJson } from 'types';
+import { registerSaEvent } from 'Utils';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = ({
@@ -29,14 +33,15 @@ export const useSubmitExtrinsic = ({
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
   const { api, network } = useApi();
-  const { getAccount, requiresManualSign, activeAccount, activeProxy } =
-    useConnect();
+  const { getAccount, requiresManualSign, activeProxy } = useConnect();
   const networkName = network.name;
   const { addNotification } = useNotifications();
   const { extensions } = useExtensions();
   const { addPending, removePending } = useExtrinsics();
   const { getNonce } = useBalances();
   const { getProxyDelegate } = useProxies();
+  const { getBondedAccount } = useBonded();
+  const controller = getBondedAccount(from);
   const {
     setTxFees,
     incrementPayloadUid,
@@ -74,11 +79,16 @@ export const useSubmitExtrinsic = ({
       return false;
     }
 
-    const proxyDelegate = getProxyDelegate(activeAccount, activeProxy);
+    const proxyDelegate = getProxyDelegate(from, activeProxy);
     const proxyType = proxyDelegate?.proxyType || '';
     const pallet = tx?.method.toHuman().section;
     const method = tx?.method.toHuman().method;
     const call = `${pallet}.${method}`;
+
+    // If call is from controller, & controller is different from stash, then proxy is not
+    // supported.
+    const controllerNotSupported = (c: string) =>
+      UnsupportedIfUniqueController.includes(c) && controller !== from;
 
     // If a batch call, test if every inner call is a supported proxy call.
     if (call === 'utility.batch') {
@@ -87,13 +97,18 @@ export const useSubmitExtrinsic = ({
           pallet: c.section,
           method: c.method,
         }))
-        .every((c: AnyJson) =>
-          isSupportedProxyCall(proxyType, c.pallet, c.method)
+        .every(
+          (c: AnyJson) =>
+            isSupportedProxyCall(proxyType, c.pallet, c.method) &&
+            !controllerNotSupported(`${pallet}.${method}`)
         );
     }
 
     // Check if the current call is a supported proxy call.
-    return isSupportedProxyCall(proxyType, pallet, method);
+    return (
+      isSupportedProxyCall(proxyType, pallet, method) &&
+      !controllerNotSupported(call)
+    );
   };
 
   const [proxySupported, setProxySupported] = useState<boolean>(
@@ -226,10 +241,8 @@ export const useSubmitExtrinsic = ({
     const { source } = account;
 
     // if `activeAccount` is imported from an extension, ensure it is enabled.
-    if (source !== 'ledger') {
-      const extension = extensions.find(
-        (e: ExtensionInjected) => e.id === source
-      );
+    if (!manualSigners.includes(source)) {
+      const extension = extensions.find((e) => e.id === source);
       if (extension === undefined) {
         throw new Error(`${t('walletNotFound')}`);
       } else {
@@ -289,7 +302,7 @@ export const useSubmitExtrinsic = ({
       resetLedgerTx();
     };
 
-    const onError = (type?: 'default' | 'ledger') => {
+    const onError = (type?: string) => {
       resetTx();
       if (type === 'ledger') {
         resetLedgerTx();
@@ -345,7 +358,7 @@ export const useSubmitExtrinsic = ({
           }
         });
       } catch (e) {
-        onError('ledger');
+        onError(manualSigners.includes(source) ? source : 'default');
       }
     } else {
       // handle unsigned transaction.
@@ -379,6 +392,7 @@ export const useSubmitExtrinsic = ({
     uid,
     onSubmit,
     submitting,
+    submitAddress,
     proxySupported,
   };
 };

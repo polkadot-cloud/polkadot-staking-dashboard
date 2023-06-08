@@ -11,7 +11,7 @@ import {
 import { extractUrlValue, removeVarFromUrlHash } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
-import { CardWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Card/Wrappers';
 import { Nominate } from 'library/SetupSteps/Nominate';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -33,7 +33,6 @@ export const Setup = () => {
         <PageHeading>
           <span>
             <ButtonSecondary
-              lg
               text={t('nominate.back')}
               iconLeft={faChevronLeft}
               iconTransform="shrink-3"
@@ -49,7 +48,6 @@ export const Setup = () => {
           </span>
           <span>
             <ButtonSecondary
-              lg
               text={t('nominate.cancel')}
               iconLeft={faTimes}
               onClick={() => {

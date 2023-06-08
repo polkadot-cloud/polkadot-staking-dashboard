@@ -15,7 +15,7 @@ export interface ExtensionInjected extends ExtensionConfig {
 export interface ExtensionInterface {
   accounts: {
     subscribe: {
-      (a: { (a: Array<ExtensionAccount>): void }): void;
+      (a: { (a: ExtensionAccount[]): void }): void;
     };
   };
   provider: AnyApi;
@@ -51,11 +51,13 @@ export interface ExtensionMetadata {
 
 // dashboard specific: extensions context interface.
 export interface ExtensionsContextInterface {
-  extensions: Array<ExtensionInjected>;
-  extensionsStatus: { [key: string]: string };
+  extensions: ExtensionInjected[];
+  extensionsStatus: ExtensionsStatus;
   extensionsFetched: boolean;
   checkingInjectedWeb3: boolean;
   setExtensionStatus: (id: string, s: string) => void;
   setExtensionsFetched: (s: boolean) => void;
-  setExtensions: (s: Array<ExtensionInjected>) => void;
+  setExtensions: (s: ExtensionInjected[]) => void;
 }
+
+export type ExtensionsStatus = Record<string, string>;

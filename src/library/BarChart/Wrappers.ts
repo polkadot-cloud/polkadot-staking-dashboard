@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 export const BarChartWrapper = styled.div<{ lessPadding?: boolean }>`
   width: 100%;
-  padding: ${(props) => (props.lessPadding ? '0 0.5rem' : '0 1.75rem')};
+  padding: ${(props) => (props.lessPadding ? '0' : '0 0.5rem')};
   margin-top: 1rem;
 
   .available {
@@ -26,15 +26,15 @@ export const BarChartWrapper = styled.div<{ lessPadding?: boolean }>`
   }
   .d1 {
     background: var(--network-color-primary);
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
   }
   .d2 {
     background: var(--network-color-secondary);
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
   }
   .d3 {
     background: var(--text-color-secondary);
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
   }
   .d4 {
     background: var(--button-tertiary-background);
@@ -48,10 +48,10 @@ export const Legend = styled.div`
   display: flex;
 
   > h4 {
+    font-family: InterSemiBold, sans-serif;
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
-    font-variation-settings: 'wght' 600;
     font-size: 1.1rem;
     margin: 0;
 
@@ -71,8 +71,8 @@ export const Bar = styled.div`
   background: var(--button-secondary-background);
   display: flex;
   width: 100%;
-  height: 3.3rem;
-  border-radius: 0.55rem;
+  height: 3.75rem;
+  border-radius: 0.65rem;
   overflow: hidden;
 
   > div {
@@ -83,15 +83,15 @@ export const Bar = styled.div`
     transition: width 1.5s cubic-bezier(0, 1, 0, 1);
 
     > span {
+      font-family: InterBold, sans-serif;
       position: absolute;
       left: 0;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-      font-variation-settings: 'wght' 600;
       padding: 0 0.8rem;
       width: 100%;
-      font-size: 1rem;
+      font-size: 1.05rem;
     }
   }
 `;

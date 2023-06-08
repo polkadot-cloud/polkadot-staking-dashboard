@@ -3,12 +3,13 @@
 
 import { rmCommas, setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import type { ImportedAccount } from 'contexts/Connect/types';
 import type {
+  ClaimPermissionConfig,
   PoolMembership,
   PoolMembershipsContextState,
 } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { AnyApi, Fn } from 'types';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
@@ -19,13 +20,12 @@ export const PoolMembershipsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { t } = useTranslation('base');
   const { api, network, isReady } = useApi();
   const { accounts: connectAccounts, activeAccount } = useConnect();
 
   // stores pool membership
-  const [poolMemberships, setPoolMemberships] = useState<Array<PoolMembership>>(
-    []
-  );
+  const [poolMemberships, setPoolMemberships] = useState<PoolMembership[]>([]);
   const poolMembershipsRef = useRef(poolMemberships);
 
   // stores pool subscription objects
@@ -44,9 +44,7 @@ export const PoolMembershipsProvider = ({
   // subscribe to account pool memberships
   const getPoolMemberships = async () => {
     Promise.all(
-      connectAccounts.map((a: ImportedAccount) =>
-        subscribeToPoolMembership(a.address)
-      )
+      connectAccounts.map((a) => subscribeToPoolMembership(a.address))
     );
   };
 
@@ -67,57 +65,69 @@ export const PoolMembershipsProvider = ({
   const subscribeToPoolMembership = async (address: string) => {
     if (!api) return;
 
-    const unsub = await api.query.nominationPools.poolMembers(
-      address,
-      async (result: AnyApi) => {
-        let membership = result?.unwrapOr(undefined)?.toHuman();
-
-        if (membership) {
-          // format pool's unlocking chunks
-          const unbondingEras: AnyApi = membership.unbondingEras;
-          const unlocking = [];
-          for (const [e, v] of Object.entries(unbondingEras || {})) {
-            const era = rmCommas(e as string);
-            const value = rmCommas(v as string);
-            unlocking.push({
-              era: Number(era),
-              value: new BigNumber(value),
-            });
-          }
-          membership.points = membership.points
-            ? rmCommas(membership.points)
-            : '0';
-          membership = {
-            address,
-            ...membership,
-            unlocking,
-          };
-
-          // remove stale membership if it's already in list
-          let _poolMemberships = Object.values(poolMembershipsRef.current);
-          _poolMemberships = _poolMemberships
-            .filter((m: PoolMembership) => m.address !== address)
-            .concat(membership);
-
-          setStateWithRef(
-            _poolMemberships,
-            setPoolMemberships,
-            poolMembershipsRef
-          );
-        } else {
-          // no membership: remove account membership if present
-          let _poolMemberships = Object.values(poolMembershipsRef.current);
-          _poolMemberships = _poolMemberships.filter(
-            (m: PoolMembership) => m.address !== address
-          );
-          setStateWithRef(
-            _poolMemberships,
-            setPoolMemberships,
-            poolMembershipsRef
-          );
+    // Westend only: include claimPermissions.
+    let unsub;
+    if (network.name === 'westend') {
+      unsub = await api.queryMulti<AnyApi>(
+        [
+          [api.query.nominationPools.poolMembers, address],
+          [api.query.nominationPools.claimPermissions, address],
+        ],
+        ([poolMember, claimPermission]) => {
+          handleMembership(poolMember, claimPermission);
         }
+      );
+    } else {
+      unsub = await api.query.nominationPools.poolMembers(
+        address,
+        (poolMember: AnyApi) => {
+          handleMembership(poolMember, undefined);
+        }
+      );
+    }
+
+    const handleMembership = (poolMember: AnyApi, claimPermission?: AnyApi) => {
+      let membership = poolMember?.unwrapOr(undefined)?.toHuman();
+
+      if (membership) {
+        // format pool's unlocking chunks
+        const unbondingEras: AnyApi = membership.unbondingEras;
+        const unlocking = [];
+        for (const [e, v] of Object.entries(unbondingEras || {})) {
+          unlocking.push({
+            era: Number(rmCommas(e as string)),
+            value: new BigNumber(rmCommas(v as string)),
+          });
+        }
+        membership.points = membership.points
+          ? rmCommas(membership.points)
+          : '0';
+        membership = {
+          ...membership,
+          address,
+          unlocking,
+          claimPermission: claimPermission?.toString() || 'Permissioned',
+        };
+
+        // remove stale membership if it's already in list, and add to memberships.
+        setStateWithRef(
+          Object.values(poolMembershipsRef.current)
+            .filter((m) => m.address !== address)
+            .concat(membership),
+          setPoolMemberships,
+          poolMembershipsRef
+        );
+      } else {
+        // no membership: remove account membership if present.
+        setStateWithRef(
+          Object.values(poolMembershipsRef.current).filter(
+            (m) => m.address !== address
+          ),
+          setPoolMemberships,
+          poolMembershipsRef
+        );
       }
-    );
+    };
 
     poolMembershipUnsubs.current = poolMembershipUnsubs.current.concat(unsub);
     return unsub;
@@ -129,7 +139,7 @@ export const PoolMembershipsProvider = ({
       return defaults.poolMembership;
     }
     const poolMembership = poolMembershipsRef.current.find(
-      (m: PoolMembership) => m.address === activeAccount
+      (m) => m.address === activeAccount
     );
     if (poolMembership === undefined) {
       return defaults.poolMembership;
@@ -137,11 +147,30 @@ export const PoolMembershipsProvider = ({
     return poolMembership;
   };
 
+  const claimPermissionConfig: ClaimPermissionConfig[] = [
+    {
+      label: t('allowCompound'),
+      value: 'PermissionlessCompound',
+      description: t('allowAnyoneCompound'),
+    },
+    {
+      label: t('allowWithdraw'),
+      value: 'PermissionlessWithdraw',
+      description: t('allowAnyoneWithdraw'),
+    },
+    {
+      label: t('allowAll'),
+      value: 'PermissionlessAll',
+      description: t('allowAnyoneCompoundWithdraw'),
+    },
+  ];
+
   return (
     <PoolMembershipsContext.Provider
       value={{
         membership: getActiveAccountPoolMembership(),
         memberships: poolMembershipsRef.current,
+        claimPermissionConfig,
       }}
     >
       {children}

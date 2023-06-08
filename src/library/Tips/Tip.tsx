@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import {
   ButtonPrimary,
   ButtonPrimaryInvert,
@@ -11,9 +12,11 @@ import { usePlugins } from 'contexts/Plugins';
 import { Title } from 'library/Overlay/Title';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
-export const Tip = ({ title, description }: any) => {
+export const Tip = ({ title, description, page }: any) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { togglePlugin } = usePlugins();
   const { closeOverlay } = useOverlay();
 
@@ -54,7 +57,21 @@ export const Tip = ({ title, description }: any) => {
                 {item}
               </h4>
             ))}
-            <div style={{ marginTop: '1.75rem' }}>
+            <div style={{ marginTop: '1.75rem', display: 'flex' }}>
+              {!!page && (
+                <ButtonPrimary
+                  marginRight
+                  text={`${t('goTo', { ns: 'base' })} ${t(page, {
+                    ns: 'base',
+                  })}`}
+                  onClick={() => {
+                    closeOverlay();
+                    navigate(`/${page}`);
+                  }}
+                  iconRight={faAngleRight}
+                  iconTransform="shrink-1"
+                />
+              )}
               <ButtonSecondary
                 marginRight
                 text={t('module.disableTips', { ns: 'tips' })}

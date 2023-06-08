@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSubmitInvert } from '@polkadotcloud/core-ui';
+import {
+  ActionItem,
+  ButtonSubmitInvert,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import { planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -15,10 +19,9 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Action } from 'library/Modal/Action';
 import { SubmitTx } from 'library/SubmitTx';
-import { WarningsWrapper } from 'modals/Wrappers';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ContentWrapper } from './Wrappers';
@@ -27,7 +30,7 @@ export const Forms = forwardRef(
   ({ setSection, unlock, task }: any, ref: any) => {
     const { t } = useTranslation('modals');
     const { api, network, consts } = useApi();
-    const { activeAccount, accountHasSigner } = useConnect();
+    const { activeAccount } = useConnect();
     const { removeFavorite: removeFavoritePool } = usePoolsConfig();
     const { membership } = usePoolMemberships();
     const { selectedActivePool } = useActivePools();
@@ -35,6 +38,7 @@ export const Forms = forwardRef(
     const { removePoolMember } = usePoolMembers();
     const { setStatus: setModalStatus, config } = useModal();
     const { getBondedAccount } = useBonded();
+    const { getSignerWarnings } = useSignerWarnings();
 
     const { bondFor, poolClosure } = config || {};
     const { historyDepth } = consts;
@@ -101,20 +105,27 @@ export const Forms = forwardRef(
 
     const value = unlock?.value ?? new BigNumber(0);
 
+    const warnings = getSignerWarnings(
+      activeAccount,
+      isStaking,
+      submitExtrinsic.proxySupported
+    );
+
     return (
       <ContentWrapper>
         <div ref={ref}>
           <div className="padding">
-            {!accountHasSigner(signingAccount) ? (
-              <WarningsWrapper>
-                <Warning text={t('readOnlyCannotSign')} />
-              </WarningsWrapper>
+            {warnings.length > 0 ? (
+              <ModalWarnings withMargin>
+                {warnings.map((text, i) => (
+                  <Warning key={`warning${i}`} text={text} />
+                ))}
+              </ModalWarnings>
             ) : null}
-
             <div style={{ marginBottom: '2rem' }}>
               {task === 'rebond' && (
                 <>
-                  <Action
+                  <ActionItem
                     text={`${t('rebond')} ${planckToUnit(value, units)} ${
                       network.unit
                     }`}
@@ -124,7 +135,7 @@ export const Forms = forwardRef(
               )}
               {task === 'withdraw' && (
                 <>
-                  <Action
+                  <ActionItem
                     text={`${t('withdraw')} ${planckToUnit(value, units)} ${
                       network.unit
                     }`}

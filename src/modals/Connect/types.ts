@@ -22,9 +22,9 @@ export interface ExtensionMetaProps {
   url: string;
 }
 
-export interface ReadOnlyProps {
-  setReadOnlyOpen: (k: boolean) => void;
-  readOnlyOpen: boolean;
+export interface ListWithInputProps {
+  setInputOpen: (k: boolean) => void;
+  inputOpen: boolean;
 }
 
 export interface forwardRefProps {

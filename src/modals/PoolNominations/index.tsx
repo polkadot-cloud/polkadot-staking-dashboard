@@ -1,11 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ModalPadding } from '@polkadotcloud/core-ui';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
 export const PoolNominations = () => {
@@ -17,7 +17,7 @@ export const PoolNominations = () => {
   return (
     <>
       <Title title={t('poolNominations')} />
-      <PaddingWrapper>
+      <ModalPadding>
         <ListWrapper>
           {targets.length > 0 ? (
             <ValidatorList
@@ -35,7 +35,7 @@ export const PoolNominations = () => {
             <h3>{t('poolIsNotNominating')}</h3>
           )}
         </ListWrapper>
-      </PaddingWrapper>
+      </ModalPadding>
     </>
   );
 };

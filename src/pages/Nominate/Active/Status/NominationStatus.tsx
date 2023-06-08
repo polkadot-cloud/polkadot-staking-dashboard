@@ -21,7 +21,13 @@ import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
 import { registerSaEvent } from 'Utils';
 
-export const NominationStatus = () => {
+export const NominationStatus = ({
+  showButtons = true,
+  buttonType = 'primary',
+}: {
+  showButtons?: boolean;
+  buttonType?: string;
+}) => {
   const { t } = useTranslation('pages');
   const { isReady, network } = useApi();
   const { inSetup } = useStaking();
@@ -75,7 +81,9 @@ export const NominationStatus = () => {
       helpKey="Nomination Status"
       stat={nominationStatus.message}
       buttons={
-        !inSetup()
+        !showButtons
+          ? []
+          : !inSetup()
           ? !isUnstaking && !isReadOnlyAccount(controller)
             ? [unstakeButton]
             : []
@@ -99,6 +107,7 @@ export const NominationStatus = () => {
               },
             ]
       }
+      buttonType={buttonType}
     />
   );
 };

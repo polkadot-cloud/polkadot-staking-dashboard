@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Separator } from '@polkadotcloud/core-ui';
-import { CardWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Card/Wrappers';
 import { ControllerStatus } from './ControllerStatus';
 import { NominationStatus } from './NominationStatus';
 import { PayoutDestinationStatus } from './PayoutDestinationStatus';

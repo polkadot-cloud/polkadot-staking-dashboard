@@ -16,7 +16,7 @@ export const ListProvider = ({
   children,
 }: any) => {
   // store the currently selected validators from the list
-  const [selected, setSelected] = useState<Array<any>>([]);
+  const [selected, setSelected] = useState<any[]>([]);
 
   // store whether validator selection is active
   const [selectActive, setSelectActiveState] = useState(
@@ -30,7 +30,7 @@ export const ListProvider = ({
     setSelected([...selected].concat(_item));
   };
 
-  const removeFromSelected = (items: Array<any>) => {
+  const removeFromSelected = (items: any[]) => {
     setSelected([...selected].filter((item) => !items.includes(item)));
   };
 

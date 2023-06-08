@@ -1,6 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  ModalNotes,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import { isNotZero, planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -16,12 +21,12 @@ import { getUnixTime } from 'date-fns';
 import { UnbondFeedback } from 'library/Form/Unbond/UnbondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import { NotesWrapper, PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -30,8 +35,8 @@ export const Unbond = () => {
   const { api, network, consts } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize, config } = useModal();
-  const { activeAccount, accountHasSigner } = useConnect();
-  const { staking, getControllerNotImported } = useStaking();
+  const { activeAccount } = useConnect();
+  const { staking } = useStaking();
   const { getBondedAccount } = useBonded();
   const { bondFor } = config;
   const { stats } = usePoolsConfig();
@@ -39,9 +44,9 @@ export const Unbond = () => {
   const { txFees } = useTxMeta();
   const { getTransferOptions } = useTransferOptions();
   const { erasToSeconds } = useErasToTimeLeft();
+  const { getSignerWarnings } = useSignerWarnings();
 
   const controller = getBondedAccount(activeAccount);
-  const controllerNotImported = getControllerNotImported(controller);
   const { minNominatorBond: minNominatorBondBn } = staking;
   const { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn } = stats;
   const { bondDuration } = consts;
@@ -86,14 +91,10 @@ export const Unbond = () => {
       : BigNumber.max(freeToUnbond.minus(minJoinBond), 0)
     : BigNumber.max(freeToUnbond.minus(minNominatorBond), 0);
 
-  // unbond some validation
-  const isValid = isPooling ? true : !controllerNotImported;
-
   // update bond value on task change
   useEffect(() => {
     setBond({ bond: unbondToMin.toString() });
-    setBondValid(isValid);
-  }, [freeToUnbond.toString(), isValid]);
+  }, [freeToUnbond.toString()]);
 
   // modal resize on form update
   useEffect(() => {
@@ -103,15 +104,11 @@ export const Unbond = () => {
   // tx to submit
   const getTx = () => {
     let tx = null;
-    if (!bondValid || !api || !activeAccount) {
-      return tx;
-    }
-    // stake unbond: controller must be imported
-    if (isStaking && controllerNotImported) {
+    if (!api || !activeAccount) {
       return tx;
     }
 
-    const bondToSubmit = unitToPlanck(bond.bond, units);
+    const bondToSubmit = unitToPlanck(!bondValid ? '0' : bond.bond, units);
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
     // determine tx
@@ -144,10 +141,12 @@ export const Unbond = () => {
   const poolActiveBelowMin =
     bondFor === 'pool' && activeBn.isLessThan(poolToMinBn);
 
-  const warnings = [];
-  if (!accountHasSigner(activeAccount)) {
-    warnings.push(t('readOnlyCannotSign'));
-  }
+  // accumulate warnings.
+  const warnings = getSignerWarnings(
+    activeAccount,
+    isStaking,
+    submitExtrinsic.proxySupported
+  );
 
   if (pendingRewards > 0 && bondFor === 'pool') {
     warnings.push(
@@ -177,14 +176,14 @@ export const Unbond = () => {
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">{`${t('removeBond')}`}</h2>
         {warnings.length > 0 ? (
-          <WarningsWrapper>
-            {warnings.map((err: string, i: number) => (
-              <Warning key={`unbond_error_${i}`} text={err} />
+          <ModalWarnings withMargin>
+            {warnings.map((text, i) => (
+              <Warning key={`warning${i}`} text={text} />
             ))}
-          </WarningsWrapper>
+          </ModalWarnings>
         ) : null}
         <UnbondFeedback
           bondFor={bondFor}
@@ -197,7 +196,7 @@ export const Unbond = () => {
           ]}
           txFees={txFees}
         />
-        <NotesWrapper>
+        <ModalNotes withPadding>
           {bondFor === 'pool' ? (
             <>
               {isDepositor() ? (
@@ -225,8 +224,8 @@ export const Unbond = () => {
             valueKey="bondDurationFormatted"
             deps={[bondDuration]}
           />
-        </NotesWrapper>
-      </PaddingWrapper>
+        </ModalNotes>
+      </ModalPadding>
       <SubmitTx
         fromController={isStaking}
         valid={bondValid}

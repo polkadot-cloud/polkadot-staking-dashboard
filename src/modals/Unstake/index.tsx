@@ -2,6 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
+  ActionItem,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
+import {
   greaterThanZero,
   planckToUnit,
   unitToPlanck,
@@ -10,19 +15,17 @@ import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { getUnixTime } from 'date-fns';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
-import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const Unstake = () => {
@@ -30,15 +33,14 @@ export const Unstake = () => {
   const { api, network, consts } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, setResize } = useModal();
-  const { activeAccount, accountHasSigner } = useConnect();
-  const { getControllerNotImported } = useStaking();
+  const { activeAccount } = useConnect();
   const { getBondedAccount, getAccountNominations } = useBonded();
   const { getTransferOptions } = useTransferOptions();
   const { erasToSeconds } = useErasToTimeLeft();
+  const { getSignerWarnings } = useSignerWarnings();
 
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
-  const controllerNotImported = getControllerNotImported(controller);
   const { bondDuration } = consts;
   const allTransferOptions = getTransferOptions(activeAccount);
   const { active } = allTransferOptions.nominate;
@@ -62,8 +64,7 @@ export const Unstake = () => {
   const [bondValid, setBondValid] = useState(false);
 
   // unbond all validation
-  const isValid = (() =>
-    greaterThanZero(freeToUnbond) && !controllerNotImported)();
+  const isValid = (() => greaterThanZero(freeToUnbond))();
 
   // update bond value on task change
   useEffect(() => {
@@ -79,15 +80,14 @@ export const Unstake = () => {
   // tx to submit
   const getTx = () => {
     const tx = null;
-    if (!bondValid || !api || !activeAccount) {
-      return tx;
-    }
-    // controller must be imported to unstake
-    if (controllerNotImported) {
+    if (!api || !activeAccount) {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanck(String(bond.bond), units);
+    const bondToSubmit = unitToPlanck(
+      String(!bondValid ? '0' : bond.bond),
+      units
+    );
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
     if (!bondAsString) {
@@ -107,30 +107,26 @@ export const Unstake = () => {
     callbackInBlock: () => {},
   });
 
-  const warnings = [];
-  if (!accountHasSigner(controller)) {
-    warnings.push(<Warning text={t('readOnlyCannotSign')} />);
-  }
-  if (controllerNotImported) {
-    warnings.push(<Warning text={t('controllerImported')} />);
-  }
+  const warnings = getSignerWarnings(
+    activeAccount,
+    true,
+    submitExtrinsic.proxySupported
+  );
 
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">{t('unstake')} </h2>
-        {warnings.length ? (
-          <WarningsWrapper>
-            {warnings.map((warning: React.ReactNode, index: number) => (
-              <React.Fragment key={`warning_${index}`}>
-                {warning}
-              </React.Fragment>
+        {warnings.length > 0 ? (
+          <ModalWarnings withMargin>
+            {warnings.map((text, i) => (
+              <Warning key={`warning${i}`} text={text} />
             ))}
-          </WarningsWrapper>
+          </ModalWarnings>
         ) : null}
         {greaterThanZero(freeToUnbond) ? (
-          <Action
+          <ActionItem
             text={t('unstakeUnbond', {
               bond: freeToUnbond.toFormat(),
               unit: network.unit,
@@ -138,7 +134,7 @@ export const Unstake = () => {
           />
         ) : null}
         {nominations.length > 0 && (
-          <Action
+          <ActionItem
             text={t('unstakeStopNominating', { count: nominations.length })}
           />
         )}
@@ -148,7 +144,7 @@ export const Unstake = () => {
           valueKey="bondDurationFormatted"
           deps={[bondDuration]}
         />
-      </PaddingWrapper>
+      </ModalPadding>
       <SubmitTx fromController valid={bondValid} {...submitExtrinsic} />
     </>
   );

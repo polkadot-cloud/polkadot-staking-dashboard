@@ -3,30 +3,30 @@
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ModalPadding } from '@polkadotcloud/core-ui';
 import { ReactComponent as ForumSVG } from 'img/forum.svg';
 import { Title } from 'library/Modal/Title';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper } from '../Wrappers';
 
 export const GoToFeedback = () => {
   const { t } = useTranslation('modals');
   return (
     <>
       <Title title={t('feedback')} Svg={ForumSVG} />
-      <PaddingWrapper verticalOnly>
+      <ModalPadding verticalOnly>
         <div
           style={{
             padding: '0 1.75rem',
             width: '100%',
           }}
         >
-          <p style={{ paddingBottom: '0.5rem' }}>
+          <h4 style={{ paddingBottom: '0.75rem' }}>
             {t('feedbackPage')}{' '}
             <a href="https://canny.io/" target="_blank" rel="noreferrer">
               Canny.io
             </a>
             . {t('welcomeToReport')}
-          </p>
+          </h4>
           <h2 style={{ marginTop: 0 }}>
             <a
               href="https://polkadot-staking-dashboard.canny.io/feedback"
@@ -38,7 +38,7 @@ export const GoToFeedback = () => {
             </a>
           </h2>
         </div>
-      </PaddingWrapper>
+      </ModalPadding>
     </>
   );
 };

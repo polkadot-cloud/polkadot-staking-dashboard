@@ -7,7 +7,7 @@ import type { AnyJson, MaybeAccount } from 'types';
 
 export interface SelectItemsProps {
   layout?: 'two-col' | 'three-col';
-  children?: Array<React.ReactNode>;
+  children?: React.ReactNode[];
 }
 
 export interface SelectItemProps {

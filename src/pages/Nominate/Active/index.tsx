@@ -15,8 +15,8 @@ import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
+import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { GenerateNominations } from 'library/GenerateNominations';
-import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatBoxList } from 'library/StatBoxList';
 import { useTranslation } from 'react-i18next';
@@ -40,7 +40,7 @@ export const Active = () => {
   const nominations = getAccountNominations(activeAccount);
   const { openHelp } = useHelp();
 
-  const ROW_HEIGHT = 210;
+  const ROW_HEIGHT = 220;
 
   return (
     <>

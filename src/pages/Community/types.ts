@@ -12,5 +12,5 @@ export interface Item {
   twitter: string;
   website: string;
   thumbnail: string;
-  validators: { [key: string]: string };
+  validators: Record<string, string>;
 }

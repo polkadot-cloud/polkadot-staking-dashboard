@@ -3,14 +3,18 @@
 
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import { u8aToBuffer } from '@polkadot/util';
-import { setStateWithRef } from '@polkadotcloud/utils';
+import { localStorageOrDefault, setStateWithRef } from '@polkadotcloud/utils';
 import { newSubstrateApp } from '@zondax/ledger-substrate';
 import { useApi } from 'contexts/Api';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyFunction, AnyJson, MaybeString } from 'types';
-import { getLocalLedgerAccounts, getLocalLedgerAddresses } from './Utils';
+import {
+  getLocalLedgerAccounts,
+  getLocalLedgerAddresses,
+  isLocalNetworkAddress,
+} from './Utils';
 import {
   LEDGER_DEFAULT_ACCOUNT,
   LEDGER_DEFAULT_CHANGE,
@@ -37,9 +41,9 @@ export const LedgerHardwareProvider = ({
   const { t } = useTranslation('modals');
   const { network } = useApi();
 
-  const [ledgerAccounts, setLedgerAccountsState] = useState<
-    Array<LedgerAccount>
-  >(getLocalLedgerAccounts(network.name));
+  const [ledgerAccounts, setLedgerAccountsState] = useState<LedgerAccount[]>(
+    getLocalLedgerAccounts(network.name)
+  );
   const ledgerAccountsRef = useRef(ledgerAccounts);
 
   // Store whether the device has been paired.
@@ -51,7 +55,7 @@ export const LedgerHardwareProvider = ({
   const isExecutingRef = useRef(isExecuting);
 
   // Store status codes received from Ledger device.
-  const [statusCodes, setStatusCodes] = useState<Array<LedgerResponse>>([]);
+  const [statusCodes, setStatusCodes] = useState<LedgerResponse[]>([]);
   const statusCodesRef = useRef(statusCodes);
 
   // Get the default message to display, set when a failed loop has happened.
@@ -79,7 +83,7 @@ export const LedgerHardwareProvider = ({
       setLedgerAccountsState,
       ledgerAccountsRef
     );
-  }, [network]);
+  }, [network.name]);
 
   // Handles errors that occur during `executeLedgerLoop` and `pairDevice` calls.
   const handleErrors = (appName: string, err: AnyJson) => {
@@ -185,7 +189,7 @@ export const LedgerHardwareProvider = ({
   // all Ledger tasks, along with errors that occur during the process.
   const executeLedgerLoop = async (
     appName: string,
-    tasks: Array<LedgerTask>,
+    tasks: LedgerTask[],
     options?: AnyJson
   ) => {
     try {
@@ -334,22 +338,24 @@ export const LedgerHardwareProvider = ({
     setStateWithRef(newStatusCodes, setStatusCodes, statusCodesRef);
   };
 
-  // Check if an address exists in imported addresses.
+  // Check if a Ledger address exists in imported addresses.
   const ledgerAccountExists = (address: string) =>
-    !!getLocalLedgerAccounts().find((a: LedgerAccount) =>
-      isLocalAddress(a, address)
+    !!getLocalLedgerAccounts().find((a) =>
+      isLocalNetworkAddress(network.name, a, address)
     );
 
   const addLedgerAccount = (address: string, index: number) => {
     let newLedgerAccounts = getLocalLedgerAccounts();
 
-    const ledgerAddress = getLocalLedgerAddresses().find((a: LedgerAddress) =>
-      isLocalAddress(a, address)
+    const ledgerAddress = getLocalLedgerAddresses().find((a) =>
+      isLocalNetworkAddress(network.name, a, address)
     );
 
     if (
       ledgerAddress &&
-      !newLedgerAccounts.find((a: LedgerAccount) => isLocalAddress(a, address))
+      !newLedgerAccounts.find((a) =>
+        isLocalNetworkAddress(network.name, a, address)
+      )
     ) {
       const account = {
         address,
@@ -368,9 +374,7 @@ export const LedgerHardwareProvider = ({
 
       // store only those accounts on the current network in state.
       setStateWithRef(
-        newLedgerAccounts.filter(
-          (a: LedgerAccount) => a.network === network.name
-        ),
+        newLedgerAccounts.filter((a) => a.network === network.name),
         setLedgerAccountsState,
         ledgerAccountsRef
       );
@@ -383,7 +387,7 @@ export const LedgerHardwareProvider = ({
   const removeLedgerAccount = (address: string) => {
     let newLedgerAccounts = getLocalLedgerAccounts();
 
-    newLedgerAccounts = newLedgerAccounts.filter((a: LedgerAccount) => {
+    newLedgerAccounts = newLedgerAccounts.filter((a) => {
       if (a.address !== address) {
         return true;
       }
@@ -401,9 +405,7 @@ export const LedgerHardwareProvider = ({
       );
     }
     setStateWithRef(
-      newLedgerAccounts.filter(
-        (a: LedgerAccount) => a.network === network.name
-      ),
+      newLedgerAccounts.filter((a) => a.network === network.name),
       setLedgerAccountsState,
       ledgerAccountsRef
     );
@@ -417,39 +419,49 @@ export const LedgerHardwareProvider = ({
       return null;
     }
     return (
-      localLedgerAccounts.find((a: LedgerAccount) =>
-        isLocalAddress(a, address)
+      localLedgerAccounts.find((a) =>
+        isLocalNetworkAddress(network.name, a, address)
       ) ?? null
     );
   };
 
+  // Renames an imported ledger account.
   const renameLedgerAccount = (address: string, newName: string) => {
     let newLedgerAccounts = getLocalLedgerAccounts();
 
-    newLedgerAccounts = newLedgerAccounts.map((a: LedgerAccount) =>
-      isLocalAddress(a, address)
+    newLedgerAccounts = newLedgerAccounts.map((a) =>
+      isLocalNetworkAddress(network.name, a, address)
         ? {
             ...a,
             name: newName,
           }
         : a
     );
-
+    renameLocalLedgerAddress(address, newName);
     localStorage.setItem('ledger_accounts', JSON.stringify(newLedgerAccounts));
     setStateWithRef(
-      newLedgerAccounts.filter(
-        (a: LedgerAccount) => a.network === network.name
-      ),
+      newLedgerAccounts.filter((a) => a.network === network.name),
       setLedgerAccountsState,
       ledgerAccountsRef
     );
   };
 
-  const isLocalAddress = (
-    a: LedgerAccount | LedgerAddress,
-    address: string
-  ) => {
-    return a.address === address && a.network === network.name;
+  // Renames a record from local ledger addresses.
+  const renameLocalLedgerAddress = (address: string, name: string) => {
+    const localLedger = (
+      localStorageOrDefault('ledger_addresses', [], true) as LedgerAddress[]
+    )?.map((i) =>
+      !(i.address === address && i.network === network.name)
+        ? i
+        : {
+            ...i,
+            name,
+          }
+    );
+
+    if (localLedger) {
+      localStorage.setItem('ledger_addresses', JSON.stringify(localLedger));
+    }
   };
 
   const getTransport = () => {

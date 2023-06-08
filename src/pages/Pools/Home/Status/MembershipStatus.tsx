@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faCog, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { determinePoolDisplay } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -14,7 +14,13 @@ import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
 import { useStatusButtons } from './useStatusButtons';
 
-export const MembershipStatus = () => {
+export const MembershipStatus = ({
+  showButtons = true,
+  buttonType = 'primary',
+}: {
+  showButtons?: boolean;
+  buttonType?: string;
+}) => {
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { isPoolSyncing } = useUi();
@@ -23,7 +29,7 @@ export const MembershipStatus = () => {
   const { bondedPools, meta } = useBondedPools();
   const { getTransferOptions } = useTransferOptions();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { selectedActivePool, isOwner, isStateToggler, isMember, isDepositor } =
+  const { selectedActivePool, isOwner, isStateToggler, isMember } =
     useActivePools();
 
   const { active } = getTransferOptions(activeAccount).pool;
@@ -47,24 +53,18 @@ export const MembershipStatus = () => {
     }
 
     // Display manage button if active account is pool owner or state toggler.
-    if (poolState !== 'Destroying' && (isOwner() || isStateToggler())) {
+    // Or display manage button if active account is a pool member.
+    if (
+      (poolState !== 'Destroying' && (isOwner() || isStateToggler())) ||
+      (isMember() && active?.isGreaterThan(0))
+    ) {
       membershipButtons.push({
         title: t('pools.manage'),
         icon: faCog,
         disabled: !isReady || isReadOnlyAccount(activeAccount),
         small: true,
-        onClick: () => openModalWith('ManagePool', {}, 'small'),
-      });
-    }
-
-    // Display leave button if active account is a pool member, but not the depositor.
-    if (isMember() && !isDepositor() && active?.isGreaterThan(0)) {
-      membershipButtons.push({
-        title: t('pools.leave'),
-        icon: faSignOutAlt,
-        disabled: !isReady || isReadOnlyAccount(activeAccount),
-        small: true,
-        onClick: () => openModalWith('LeavePool', { bondFor: 'pool' }, 'small'),
+        onClick: () =>
+          openModalWith('ManagePool', { disableWindowResize: true }, 'small'),
       });
     }
   }
@@ -80,7 +80,7 @@ export const MembershipStatus = () => {
               address: selectedActivePool?.addresses?.stash ?? '',
               display: membershipDisplay,
             }}
-            buttons={membershipButtons}
+            buttons={showButtons ? membershipButtons : []}
           />
         </>
       ) : (
@@ -88,7 +88,8 @@ export const MembershipStatus = () => {
           label={t('pools.poolMembership')}
           helpKey="Pool Membership"
           stat={`${t('pools.notInPool')}`}
-          buttons={isPoolSyncing ? [] : buttons}
+          buttons={!showButtons || isPoolSyncing ? [] : buttons}
+          buttonType={buttonType}
         />
       )}
     </>

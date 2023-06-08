@@ -1,6 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  ActionItem,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import { isNotZero, planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -9,21 +14,21 @@ import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const WithdrawPoolMember = () => {
   const { t } = useTranslation('modals');
   const { api, network, consts } = useApi();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { activeAccount } = useConnect();
   const { setStatus: setModalStatus, config } = useModal();
   const { activeEra } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
+  const { getSignerWarnings } = useSignerWarnings();
 
   const { member, who } = config;
   const { historyDepth } = consts;
@@ -75,18 +80,28 @@ export const WithdrawPoolMember = () => {
     },
   });
 
+  const warnings = getSignerWarnings(
+    activeAccount,
+    false,
+    submitExtrinsic.proxySupported
+  );
+
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title">{t('withdrawMemberFunds')}</h2>
-        <Action text={`${t('withdraw')} ${totalWithdraw} ${network.unit}`} />
-        {!accountHasSigner(activeAccount) ? (
-          <WarningsWrapper>
-            <Warning text={t('readOnlyCannotSign')} />
-          </WarningsWrapper>
+        <ActionItem
+          text={`${t('withdraw')} ${totalWithdraw} ${network.unit}`}
+        />
+        {warnings.length > 0 ? (
+          <ModalWarnings withMargin>
+            {warnings.map((text, i) => (
+              <Warning key={`warning${i}`} text={text} />
+            ))}
+          </ModalWarnings>
         ) : null}
-      </PaddingWrapper>
+      </ModalPadding>
       <SubmitTx valid={valid} {...submitExtrinsic} />
     </>
   );

@@ -48,13 +48,6 @@ export interface CardWrapperProps {
   warning?: boolean;
 }
 
-export interface GraphWrapperProps {
-  minHeight?: number;
-  transparent?: boolean;
-  noMargin?: boolean;
-  flex?: boolean;
-}
-
 export interface PayoutDayCursor {
   amount: BigNumber;
   event_id: string;

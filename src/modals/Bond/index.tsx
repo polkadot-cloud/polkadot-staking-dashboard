@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ModalPadding, ModalWarnings } from '@polkadotcloud/core-ui';
 import { planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -11,10 +12,10 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { Warning } from 'library/Form/Warning';
 import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -23,9 +24,10 @@ export const Bond = () => {
   const { api, network } = useApi();
   const { units } = network;
   const { setStatus: setModalStatus, config, setResize } = useModal();
-  const { activeAccount, accountHasSigner } = useConnect();
-  const { getTransferOptions } = useTransferOptions();
+  const { activeAccount } = useConnect();
+  const { feeReserve, getTransferOptions } = useTransferOptions();
   const { selectedActivePool } = useActivePools();
+  const { getSignerWarnings } = useSignerWarnings();
   const { bondFor } = config;
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
@@ -36,7 +38,7 @@ export const Bond = () => {
       ? nominate.totalAdditionalBond
       : pool.totalAdditionalBond;
 
-  const freeBalance = planckToUnit(freeBalanceBn, units);
+  const freeBalance = planckToUnit(freeBalanceBn.minus(feeReserve), units);
   const largestTxFee = useBondGreatestFee({ bondFor });
 
   // calculate any unclaimed pool rewards.
@@ -86,7 +88,11 @@ export const Bond = () => {
       return tx;
     }
 
-    const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
+    const bondAsString = !bondValid
+      ? '0'
+      : bondToSubmit.isNaN()
+      ? '0'
+      : bondToSubmit.toString();
 
     if (isPooling) {
       tx = api.tx.nominationPools.bondExtra({
@@ -100,7 +106,7 @@ export const Bond = () => {
 
   // the actual bond tx to submit
   const getTx = (bondToSubmit: BigNumber) => {
-    if (!bondValid || !activeAccount) {
+    if (!api || !activeAccount) {
       return null;
     }
     return determineTx(bondToSubmit);
@@ -116,24 +122,25 @@ export const Bond = () => {
     callbackInBlock: () => {},
   });
 
-  const errors = [];
-  if (!accountHasSigner(activeAccount)) {
-    errors.push(t('readOnlyCannotSign'));
-  }
+  const warnings = getSignerWarnings(
+    activeAccount,
+    false,
+    submitExtrinsic.proxySupported
+  );
 
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">{t('addToBond')}</h2>
         {pendingRewards > 0 && bondFor === 'pool' ? (
-          <WarningsWrapper>
+          <ModalWarnings withMargin>
             <Warning
               text={`${t('bondingWithdraw')} ${pendingRewards} ${
                 network.unit
               }.`}
             />
-          </WarningsWrapper>
+          </ModalWarnings>
         ) : null}
         <BondFeedback
           syncing={largestTxFee.isZero()}
@@ -146,11 +153,11 @@ export const Bond = () => {
               current: bond,
             },
           ]}
-          parentErrors={errors}
+          parentErrors={warnings}
           txFees={largestTxFee}
         />
         <p>{t('newlyBondedFunds')}</p>
-      </PaddingWrapper>
+      </ModalPadding>
       <SubmitTx valid={bondValid} {...submitExtrinsic} />
     </>
   );

@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp } from '@polkadotcloud/core-ui';
+import { ButtonHelp, ModalPadding } from '@polkadotcloud/core-ui';
 import { clipAddress, planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -10,16 +10,16 @@ import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
+import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { EraPoints as EraPointsGraph } from 'library/Graphs/EraPoints';
 import { formatSize } from 'library/Graphs/Utils';
-import { GraphWrapper } from 'library/Graphs/Wrappers';
+import { GraphWrapper } from 'library/Graphs/Wrapper';
 import { useSize } from 'library/Hooks/useSize';
 import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
-import { PaddingWrapper } from 'modals/Wrappers';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -90,31 +90,29 @@ export const ValidatorMetrics = () => {
         </h2>
       </div>
 
-      <PaddingWrapper horizontalOnly>
+      <ModalPadding horizontalOnly>
         <StatsWrapper>
-          {stats.map(
-            (s: { label: string; value: string; help: string }, i: number) => (
-              <StatWrapper key={`metrics_stat_${i}`}>
-                <div className="inner">
-                  <h4>
-                    {s.label}{' '}
-                    <ButtonHelp marginLeft onClick={() => openHelp(s.help)} />
-                  </h4>
-                  <h2>{s.value}</h2>
-                </div>
-              </StatWrapper>
-            )
-          )}
+          {stats.map((s, i) => (
+            <StatWrapper key={`metrics_stat_${i}`}>
+              <div className="inner">
+                <h4>
+                  {s.label}{' '}
+                  <ButtonHelp marginLeft onClick={() => openHelp(s.help)} />
+                </h4>
+                <h2>{s.value}</h2>
+              </div>
+            </StatWrapper>
+          ))}
         </StatsWrapper>
-      </PaddingWrapper>
+      </ModalPadding>
       <div
         className="body"
         style={{ position: 'relative', marginTop: '0.5rem' }}
       >
         <SubscanButton />
-        <GraphWrapper
+        <CardWrapper
           style={{
-            margin: '0 1.5rem 0 0.5rem',
+            margin: '0 0 0 0.5rem',
             height: 350,
             border: 'none',
             boxShadow: 'none',
@@ -122,29 +120,28 @@ export const ValidatorMetrics = () => {
           flex
           transparent
         >
-          <h4>
-            {t('recentEraPoints')}{' '}
-            <ButtonHelp marginLeft onClick={() => openHelp('Era Points')} />
-          </h4>
-          <div className="inner" ref={ref} style={{ minHeight }}>
+          <CardHeaderWrapper>
+            <h4>
+              {t('recentEraPoints')}{' '}
+              <ButtonHelp marginLeft onClick={() => openHelp('Era Points')} />
+            </h4>
+          </CardHeaderWrapper>
+          <div ref={ref} style={{ minHeight }}>
             <StatusLabel
               status="active_service"
               statusFor="subscan"
               title={t('subscanDisabled')}
             />
-            <div
-              className="graph"
+            <GraphWrapper
               style={{
                 height: `${height}px`,
                 width: `${width}px`,
-                position: 'absolute',
-                left: '-1rem',
               }}
             >
               <EraPointsGraph items={list} height={250} />
-            </div>
+            </GraphWrapper>
           </div>
-        </GraphWrapper>
+        </CardWrapper>
       </div>
     </>
   );

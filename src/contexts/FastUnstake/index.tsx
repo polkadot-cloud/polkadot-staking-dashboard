@@ -62,7 +62,7 @@ export const FastUnstakeProvider = ({
   const counterForQueueRef = useRef(counterForQueue);
 
   // store fastUnstake subscription unsub.
-  const unsubs = useRef<Array<AnyApi>>([]);
+  const unsubs = useRef<AnyApi[]>([]);
 
   // localStorage key to fetch local metadata.
   const getLocalkey = (a: MaybeAccount) => `${network.name}_fast_unstake_${a}`;

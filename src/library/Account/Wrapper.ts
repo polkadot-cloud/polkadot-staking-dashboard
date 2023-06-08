@@ -8,7 +8,7 @@ export const Wrapper = styled.button<WrapperProps>`
   border: 1px solid var(--border-primary-color);
   cursor: ${(props) => (props.canClick ? 'pointer' : 'default')};
   background: ${(props) =>
-    props.filled ? 'var(--button-secondary-background)' : 'none'};
+    props.filled ? 'var(--button-tab-background)' : 'none'};
   font-size: ${(props) => props.fontSize};
   border-radius: 1.25rem;
   box-shadow: none;
@@ -45,6 +45,7 @@ export const Wrapper = styled.button<WrapperProps>`
   }
 
   .title {
+    font-family: InterSemiBold, sans-serif;
     color: var(--text-color-secondary);
     margin-left: 0.25rem;
     text-overflow: ellipsis;

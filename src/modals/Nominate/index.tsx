@@ -1,6 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  ActionItem,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -9,22 +14,23 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const Nominate = () => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
   const { activeAccount } = useConnect();
-  const { targets, staking, getControllerNotImported } = useStaking();
+  const { targets, staking } = useStaking();
   const { getBondedAccount } = useBonded();
   const { getStashLedger } = useBalances();
   const { setStatus: setModalStatus } = useModal();
+  const { getSignerWarnings } = useSignerWarnings();
+
   const { units, unit } = network;
   const { minNominatorBond } = staking;
   const controller = getBondedAccount(activeAccount);
@@ -70,10 +76,11 @@ export const Nominate = () => {
   });
 
   // warnings
-  const warnings = [];
-  if (getControllerNotImported(controller)) {
-    warnings.push(t('mustHaveController'));
-  }
+  const warnings = getSignerWarnings(
+    activeAccount,
+    true,
+    submitExtrinsic.proxySupported
+  );
   if (!nominations.length) {
     warnings.push(`${t('noNominationsSet')}`);
   }
@@ -90,18 +97,18 @@ export const Nominate = () => {
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">{t('nominate')}</h2>
         {warnings.length > 0 ? (
-          <WarningsWrapper>
-            {warnings.map((text: any, index: number) => (
-              <Warning key={index} text={text} />
+          <ModalWarnings withMargin>
+            {warnings.map((text, i) => (
+              <Warning key={`warning_${i}`} text={text} />
             ))}
-          </WarningsWrapper>
+          </ModalWarnings>
         ) : null}
-        <Action text={t('haveNomination', { count: nominations.length })} />
+        <ActionItem text={t('haveNomination', { count: nominations.length })} />
         <p>{t('onceSubmitted')}</p>
-      </PaddingWrapper>
+      </ModalPadding>
       <SubmitTx
         fromController
         valid={valid && warnings.length === 0}

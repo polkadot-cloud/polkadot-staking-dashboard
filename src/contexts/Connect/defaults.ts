@@ -7,7 +7,8 @@ export const defaultConnectContext: ConnectContextInterface = {
   // eslint-disable-next-line
   formatAccountSs58: (a: string) => null,
   // eslint-disable-next-line
-  connectExtensionAccounts: async (e) => new Promise((resolve) => resolve()),
+  connectExtensionAccounts: async (e) =>
+    new Promise((resolve) => resolve(false)),
   // eslint-disable-next-line
   getAccount: (a) => null,
   // eslint-disable-next-line
@@ -28,10 +29,11 @@ export const defaultConnectContext: ConnectContextInterface = {
   forgetAccounts: (a) => {},
   // eslint-disable-next-line
   setActiveProxy: (p, l) => {},
+  // eslint-disable-next-line
+  renameImportedAccount: (a, n) => {},
   accounts: [],
   activeAccount: null,
   activeProxy: null,
-  activeAccountMeta: null,
 };
 
 export const defaultHandleImportExtension = {

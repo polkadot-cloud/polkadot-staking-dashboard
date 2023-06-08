@@ -7,10 +7,14 @@ import type { TransferOptions, TransferOptionsContextInterface } from './types';
 export const defaultBondedContext: TransferOptionsContextInterface = {
   // eslint-disable-next-line
   getTransferOptions: (a) => transferOptions,
+  // eslint-disable-next-line
+  setFeeReserveBalance: (r) => {},
+  feeReserve: new BigNumber(0),
 };
 
 export const transferOptions: TransferOptions = {
   freeBalance: new BigNumber(0),
+  edReserved: new BigNumber(0),
   nominate: {
     active: new BigNumber(0),
     totalUnlocking: new BigNumber(0),

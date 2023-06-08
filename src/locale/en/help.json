@@ -181,13 +181,6 @@
           "This amount is different from the bond needed to create a pool."
         ]
       ],
-      "networkStats": [
-        "Network Stats",
-        [
-          "Real time network statistics that may affect your staking positions.",
-          "Keep up to date on the state of the network from your overview."
-        ]
-      ],
       "nominating": [
         "Nominating",
         [
@@ -264,6 +257,38 @@
           "This does not mean that you were not nominating or generating rewards in that period - only that the payout for that period was not yet made."
         ]
       ],
+      "polkadotVault": [
+        "Polkadot Vault",
+        [
+          "Polkadot Vault (formerly Parity Signer) is a cold storage solution that allows you to use a phone in airplane mode as an air-gapped wallet.",
+          "The Vault app is not technically a wallet, as it does not allow to transfer funds.",
+          "It is more of a key-chain tool that will enable you the create, manage, and restore accounts."
+        ]
+      ],
+      "poolCommissionChangeRate": [
+        "Pool Commission Change Rate",
+        [
+          "The commission change rate is set by the pool Root, and dictates by how much and how often commission can be increased.",
+          "The maximum increase of the change rate dictates how much the commission rate can be increaesd in a single update. The minimum delay dictates how many blocks must pass before the commission rate can be increased again.",
+          "Once an initial change rate is set, only more restrictive values can be set thereafter. More restrictive values comprise of a smaller max increase and larger minimum delay."
+        ]
+      ],
+      "poolCommissionRate": [
+        "Pool Commission Rate",
+        [
+          "The commission rate of the pool. This value is set by the pool Root, and is the percentage of rewards the pool will take from its members.",
+          "A payee account must also be provided to receive the commission.",
+          "The commission rate is taken from the pool's rewards before they are distributed to its members."
+        ]
+      ],
+      "poolMaxCommission": [
+        "Pool Max Commission",
+        [
+          "The maximum commission rate a pool owner can set for the pool.",
+          "This value is set by the pool Root, and is the maximum percentage of rewards the pool will take from its members.",
+          "Once an initial maximum commission is set, only more restrictive values can be set thereafter."
+        ]
+      ],
       "poolMembership": [
         "Pool Membership",
         [
@@ -291,11 +316,32 @@
           "State-Toggler: Can change the pool's state and kick (permissionlessly unbond/withdraw) members if the pool is blocked."
         ]
       ],
+      "proxyAccounts": [
+        "Proxy Accounts",
+        [
+          "Proxy accounts are accounts that act on behalf of another account.",
+          "In proxy account terms, the proxy account is called the delegate account, and the proxied account it is acting on behalf of is called the delegator account.",
+          "Staking dashboard allows delegates to sign transactions on behalf of a delegator. If a delegate exists in the dashboard without its delegator, the delegator is imported as a read only account automatically."
+        ]
+      ],
+      "readOnlyAccounts": [
+        "Read Only Accounts",
+        [
+          "Read Only accounts are accounts that can be imported, but are not able to sign transactions. This means that you can view the account's balance and staking information, but you cannot perform any staking actions with it."
+        ]
+      ],
       "reserveBalance": [
         "Reserve Balance",
         [
           "In {NETWORK_NAME}, you must have a balance above a certain amount for your account to exist on-chain. This amount is called your 'existential deposit'.",
           "Staking dashboard ensures that this amount of {NETWORK_UNIT} is never touched."
+        ]
+      ],
+      "reserveBalanceForExistentialDeposit": [
+        "Reserve Balance for Existential Deposit",
+        [
+          "If your account already has locked balance that covers your account's existential deposit, such as balance locked for nominating, then staking dashboard will not lock any additional free balance.",
+          "In this scenario, \"None\" is displayed under the \"Reserve For Existential Deposit\" section in your Reserve Balance settings."
         ]
       ],
       "selfStake": [
@@ -346,7 +392,7 @@
       "yourBalance": [
         "Your Balance",
         [
-          "Your balance represents the total {NETWORK_UNIT} you have available in addition to your total staked amount, that includes the amount you have bonded in a Pool.",
+          "Your balance represents the total {NETWORK_UNIT} you have available in addition to your total staked amount, that includes the amount you have bonded in a pool.",
           "Unlike your staked balance, your bonded pool balance is held and locked in the pool itself."
         ]
       ]

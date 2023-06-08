@@ -10,7 +10,7 @@ import type {
   StakingTargets,
 } from 'contexts/Staking/types';
 
-export const stakingMetrics: StakingMetrics = {
+export const defaultStakingMetrics: StakingMetrics = {
   totalNominators: new BigNumber(0),
   totalValidators: new BigNumber(0),
   lastReward: new BigNumber(0),
@@ -25,7 +25,7 @@ export const stakingMetrics: StakingMetrics = {
   totalStaked: new BigNumber(0),
 };
 
-export const eraStakers: EraStakers = {
+export const defaultEraStakers: EraStakers = {
   stakers: [],
   nominators: undefined,
   totalActiveNominators: 0,
@@ -33,16 +33,16 @@ export const eraStakers: EraStakers = {
   activeAccountOwnStake: [],
 };
 
-export const targets: StakingTargets = {
+export const defaultTargets: StakingTargets = {
   nominations: [],
 };
 
-export const nominationStatus: NominationStatuses = {};
+export const defaultNominationStatus: NominationStatuses = {};
 
 export const defaultStakingContext: StakingContextInterface = {
-  getNominationsStatus: () => nominationStatus,
+  getNominationsStatus: () => defaultNominationStatus,
   // eslint-disable-next-line
-  getNominationsStatusFromTargets: (w, t) => nominationStatus,
+  getNominationsStatusFromTargets: (w, t) => defaultNominationStatus,
   // eslint-disable-next-line
   setTargets: (t) => {},
   hasController: () => false,
@@ -53,8 +53,8 @@ export const defaultStakingContext: StakingContextInterface = {
   isBonding: () => false,
   isNominating: () => false,
   inSetup: () => true,
-  staking: stakingMetrics,
-  eraStakers,
-  targets,
+  staking: defaultStakingMetrics,
+  eraStakers: defaultEraStakers,
+  targets: defaultTargets,
   erasStakersSyncing: true,
 };

@@ -57,7 +57,7 @@ export const BondFeedback = ({
   const freeBalance = planckToUnit(freeBondAmount, units);
 
   // store errors
-  const [errors, setErrors] = useState<Array<string>>([]);
+  const [errors, setErrors] = useState<string[]>([]);
 
   // local bond state
   const [bond, setBond] = useState<{ bond: string }>({
@@ -71,7 +71,7 @@ export const BondFeedback = ({
   const [bondDisabled, setBondDisabled] = useState(false);
 
   // bond minus tx fees if too much
-  const enoughToCoverTxFees: boolean = freeBondAmount
+  const enoughToCoverTxFees = freeBondAmount
     .minus(bondBn)
     .isGreaterThan(txFees);
 
@@ -166,7 +166,7 @@ export const BondFeedback = ({
 
   return (
     <>
-      {errors.map((err: string, i: number) => (
+      {errors.map((err, i) => (
         <Warning key={`setup_error_${i}`} text={err} />
       ))}
       <Spacer />

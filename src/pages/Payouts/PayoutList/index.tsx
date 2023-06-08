@@ -5,15 +5,13 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { clipAddress, isNotZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
+import { DefaultLocale, ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import type { BondedPool } from 'contexts/Pools/types';
 import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useValidators } from 'contexts/Validators';
-import type { Validator } from 'contexts/Validators/types';
 import { formatDistance, fromUnixTime } from 'date-fns';
 import { motion } from 'framer-motion';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
@@ -159,12 +157,12 @@ export const PayoutListInner = ({
 
             // get validator if it exists
             const validator = validators.find(
-              (v: Validator) => v.address === p.validator_stash
+              (v) => v.address === p.validator_stash
             );
 
             // get pool if it exists
             const pool = bondedPools.find(
-              (_p: BondedPool) => String(_p.id) === String(p.pool_id)
+              ({ id }) => String(id) === String(p.pool_id)
             );
 
             const batchIndex = validator
@@ -251,7 +249,10 @@ export const PayoutListInner = ({
                               new Date(),
                               {
                                 addSuffix: true,
-                                locale: locales[i18n.resolvedLanguage],
+                                locale:
+                                  locales[
+                                    i18n.resolvedLanguage ?? DefaultLocale
+                                  ],
                               }
                             )}
                           </h5>

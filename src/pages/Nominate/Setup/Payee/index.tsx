@@ -5,7 +5,6 @@ import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { Spacer } from 'library/Form/Wrappers';
-import type { PayeeItem } from 'library/Hooks/usePayeeConfig';
 import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { PayeeInput } from 'library/PayeeInput';
 import { SelectItems } from 'library/SelectItems';
@@ -79,12 +78,12 @@ export const Payee = ({ section }: SetupStepProps) => {
         bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <h4 style={{ marginTop: '0.5rem' }}>
+        <h4 className="withMargin">
           {t('nominate.payoutDestinationSubtitle')}
         </h4>
 
         <SelectItems layout="three-col">
-          {getPayeeItems().map((item: PayeeItem) => (
+          {getPayeeItems().map((item) => (
             <SelectItem
               key={`payee_option_${item.value}`}
               account={account}

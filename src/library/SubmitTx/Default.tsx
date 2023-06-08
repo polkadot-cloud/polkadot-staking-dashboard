@@ -16,11 +16,13 @@ export const Default = ({
   submitText,
   buttons,
   customEvent,
-}: SubmitProps & { buttons?: Array<React.ReactNode> }) => {
+  submitAddress,
+}: SubmitProps & { buttons?: React.ReactNode[] }) => {
   const { txFeesValid } = useTxMeta();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { accountHasSigner } = useConnect();
+
   const disabled =
-    submitting || !valid || !accountHasSigner(activeAccount) || !txFeesValid;
+    submitting || !valid || !accountHasSigner(submitAddress) || !txFeesValid;
 
   return (
     <>
