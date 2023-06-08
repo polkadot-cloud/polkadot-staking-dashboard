@@ -50,7 +50,7 @@ export const UpdateReserve = () => {
   const handleChange = (val: BigNumber) => {
     // deduct ED from reserve amount.
     val = val.decimalPlaces(3);
-    const actualReserve = val.minus(minReserve).toNumber();
+    const actualReserve = BigNumber.max(val.minus(minReserve), 0).toNumber();
     const actualReservePlanck = unitToPlanck(actualReserve.toString(), units);
 
     setSliderReserve(val.decimalPlaces(3).toNumber());
@@ -82,7 +82,7 @@ export const UpdateReserve = () => {
                 min={0}
                 max={maxReserve.toNumber()}
                 value={sliderReserve}
-                step={0.01}
+                step={0.001}
                 onChange={(val) => {
                   if (typeof val === 'number' && val >= minReserve.toNumber()) {
                     handleChange(new BigNumber(val));
@@ -104,10 +104,13 @@ export const UpdateReserve = () => {
             <CardHeaderWrapper>
               <h4>Reserve for Tx Fees</h4>
               <h2>
-                {new BigNumber(sliderReserve)
-                  .minus(minReserve)
-                  .decimalPlaces(4)
-                  .toString()}
+                {BigNumber.max(
+                  new BigNumber(sliderReserve)
+                    .minus(minReserve)
+                    .decimalPlaces(4)
+                    .toString(),
+                  0
+                ).toString()}
                 &nbsp;
                 {unit}
               </h2>
