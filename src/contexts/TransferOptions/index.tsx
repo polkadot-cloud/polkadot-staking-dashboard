@@ -28,8 +28,10 @@ export const TransferOptionsProvider = ({
   const { activeAccount } = useConnect();
   const { network } = useApi();
 
+  // A user-configurable reserve amount to be used to pay for transaction fees.
   const [reserve, setReserve] = useState(new BigNumber(0));
 
+  // Update an account's reserve amount on account or network change.
   useEffect(() => {
     setReserve(
       unitToPlanck(
@@ -41,7 +43,7 @@ export const TransferOptionsProvider = ({
     );
   }, [activeAccount, network]);
 
-  // get the bond and unbond amounts available to the user
+  // Get the bond and unbond amounts available to the user
   const getTransferOptions = (address: MaybeAccount): TransferOptions => {
     const account = getAccount(address);
     if (account === null) {
