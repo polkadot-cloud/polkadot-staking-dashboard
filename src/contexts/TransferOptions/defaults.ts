@@ -8,7 +8,7 @@ export const defaultBondedContext: TransferOptionsContextInterface = {
   // eslint-disable-next-line
   getTransferOptions: (a) => transferOptions,
   // eslint-disable-next-line
-  setReserveAmount: (r) => {},
+  setReserveBalance: (r) => {},
   reserve: new BigNumber(0),
 };
 

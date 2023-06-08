@@ -26,24 +26,22 @@ export const TransferOptionsProvider = ({
   const { existentialDeposit } = consts;
   const { activeAccount } = useConnect();
 
+  // Get the local storage rcord for an account reserve balance.
+  const getReserveLocalStorage = (address: MaybeAccount) => {
+    const reserves = JSON.parse(
+      localStorage.getItem('reserve_balances') ?? '{}'
+    );
+    return new BigNumber(reserves?.[network.name]?.[address || ''] ?? '0');
+  };
+
   // A user-configurable reserve amount to be used to pay for transaction fees.
-  const [reserve, setReserve] = useState(
-    new BigNumber(
-      localStorage
-        .getItem(`${network.name}_${activeAccount}_reserve`)
-        ?.toString() || '0'
-    )
+  const [reserve, setReserve] = useState<BigNumber>(
+    getReserveLocalStorage(activeAccount)
   );
 
   // Update an account's reserve amount on account or network change.
   useEffect(() => {
-    setReserve(
-      new BigNumber(
-        localStorage
-          .getItem(`${network.name}_${activeAccount}_reserve`)
-          ?.toString() || '0'
-      )
-    );
+    setReserve(getReserveLocalStorage(activeAccount));
   }, [activeAccount, network]);
 
   // Get the bond and unbond amounts available to the user
@@ -166,19 +164,41 @@ export const TransferOptionsProvider = ({
   };
 
   // Updates account's reserve amount in state and in local storage.
-  const setReserveAmount = (amount: BigNumber) => {
+  const setReserveBalance = (amount: BigNumber) => {
+    if (!activeAccount) return;
+    setReserveLocalStorage(amount);
     setReserve(amount);
-    localStorage.setItem(
-      `${network.name}_${activeAccount}_reserve`,
-      amount.toString()
-    );
+  };
+
+  // Update the local storage record for account reserve balances.
+  const setReserveLocalStorage = (amount: BigNumber) => {
+    if (!activeAccount) return;
+
+    try {
+      const newReserves = JSON.parse(
+        localStorage.getItem('reserve_balances') ?? '{}'
+      );
+      const newReservesNetwork = newReserves?.[network.name] ?? {};
+
+      if (amount.isZero()) {
+        delete newReservesNetwork[activeAccount];
+      } else {
+        newReservesNetwork[activeAccount] = amount.toString();
+      }
+
+      newReserves[network.name] = newReservesNetwork;
+      localStorage.setItem('reserve_balances', JSON.stringify(newReserves));
+    } catch (e) {
+      // corrupted local storage record - remove it.
+      localStorage.removeItem('reserve_balances');
+    }
   };
 
   return (
     <TransferOptionsContext.Provider
       value={{
         getTransferOptions,
-        setReserveAmount,
+        setReserveBalance,
         reserve,
       }}
     >

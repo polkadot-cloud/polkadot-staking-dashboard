@@ -25,7 +25,7 @@ export const UpdateReserve = () => {
   } = useApi();
   const { network } = useApi();
   const { setStatus } = useModal();
-  const { reserve, setReserveAmount, getTransferOptions } =
+  const { reserve, setReserveBalance, getTransferOptions } =
     useTransferOptions();
   const { activeAccount, accountHasSigner } = useConnect();
   const { forceReserved } = getTransferOptions(activeAccount);
@@ -56,7 +56,7 @@ export const UpdateReserve = () => {
     const actualReserve = BigNumber.max(val.minus(minReserve), 0).toNumber();
     const actualReservePlanck = unitToPlanck(actualReserve.toString(), units);
     setSliderReserve(val.decimalPlaces(3).toNumber());
-    setReserveAmount(actualReservePlanck);
+    setReserveBalance(actualReservePlanck);
   };
 
   return (
