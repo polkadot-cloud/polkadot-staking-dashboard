@@ -50,6 +50,7 @@ export const WithSliderWrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 0.5rem 0 0.5rem;
+  margin-top: 1.5rem;
 
   > p {
     margin-top: 0;

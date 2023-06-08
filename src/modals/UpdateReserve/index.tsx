@@ -66,7 +66,7 @@ export const UpdateReserve = () => {
     <>
       <Close />
       <ModalPadding>
-        <h2 className="title unbounded" style={{ margin: '0.5rem 0 2rem 0' }}>
+        <h2 className="title unbounded" style={{ padding: '0 0.5rem' }}>
           {t('updateReserve')}
         </h2>
 
