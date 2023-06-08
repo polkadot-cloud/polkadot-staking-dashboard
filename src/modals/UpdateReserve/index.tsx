@@ -110,7 +110,7 @@ export const UpdateReserve = () => {
                   onClick={() =>
                     openHelp('Reserve Balance For Existential Deposit')
                   }
-                  style={{ marginLeft: '0.5rem' }}
+                  style={{ marginLeft: '0.65rem' }}
                 />
               </h2>
             </CardHeaderWrapper>
