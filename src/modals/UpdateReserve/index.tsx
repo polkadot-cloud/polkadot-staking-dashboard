@@ -12,7 +12,7 @@ import { useModal } from 'contexts/Modal';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { Close } from 'library/Modal/Close';
-import { WithSliderWrapper } from 'modals/ManagePool/Wrappers';
+import { SliderWrapper } from 'modals/ManagePool/Wrappers';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import { useState } from 'react';
@@ -67,7 +67,7 @@ export const UpdateReserve = () => {
           {t('reserveBalance')}
         </h2>
 
-        <WithSliderWrapper>
+        <SliderWrapper>
           <p>{t('reserveText', { unit })}</p>
           <div>
             <div className="slider no-value">
@@ -126,7 +126,7 @@ export const UpdateReserve = () => {
               disabled={!accountHasSigner(activeAccount)}
             />
           </div>
-        </WithSliderWrapper>
+        </SliderWrapper>
       </ModalPadding>
     </>
   );

@@ -28,7 +28,7 @@ import 'rc-slider/assets/index.css';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { MaybeAccount } from 'types';
-import { WithSliderWrapper } from '../Wrappers';
+import { SliderWrapper } from '../Wrappers';
 import type { ChangeRateInput } from './types';
 
 export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
@@ -460,7 +460,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
           }
         />
 
-        <WithSliderWrapper>
+        <SliderWrapper>
           <h5 className={commissionFeedback?.label || 'neutral'}>
             {t('commissionRate')}
             {commissionFeedback && (
@@ -487,7 +487,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
               />
             </div>
           </div>
-        </WithSliderWrapper>
+        </SliderWrapper>
 
         <AccountInput
           defaultLabel={t('inputPayeeAccount')}
@@ -519,7 +519,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
         />
 
         {maxCommissionEnabled && (
-          <WithSliderWrapper>
+          <SliderWrapper>
             <h5 className={maxCommissionFeedback?.label || 'neutral'}>
               {t('maxCommission')}
               {maxCommissionFeedback && (
@@ -546,7 +546,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
                 />
               </div>
             </div>
-          </WithSliderWrapper>
+          </SliderWrapper>
         )}
 
         <ActionItem
@@ -566,7 +566,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
         />
 
         {changeRateEnabled && (
-          <WithSliderWrapper>
+          <SliderWrapper>
             <h5 className={maxIncreaseFeedback?.label || 'neutral'}>
               {t('maxIncreasePerUpdate')}
               {maxIncreaseFeedback && (
@@ -638,7 +638,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
                 count: changeRate.minDelay,
               })}
             </p>
-          </WithSliderWrapper>
+          </SliderWrapper>
         )}
       </div>
       <SubmitTx
