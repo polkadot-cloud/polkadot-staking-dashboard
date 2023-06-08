@@ -326,10 +326,10 @@
         ]
       ],
       "reserveBalanceForExistentialDeposit": [
-        "Reserve Balance for Existential Deposit",
+        "为最低存款存储",
         [
-          "If your account already has locked balance that covers your account's existential deposit, such as balance locked for nominating, then staking dashboard will not lock any additional free balance.",
-          "In this scenario, \"None\" is displayed under the \"Reserve for Existential Deposit\" section in your Reserve Balance settings."
+          "如果您的账户已经锁定了足够涵盖最低存款的金额, 例如为提名而锁定的金额, Staking Dashboard则不会另外锁定任何额外的可用金额.",
+          "在这种情况下, \"无\" 会显示在存储下的 \"为最低存款存储\"部分."
         ]
       ],
       "selfStake": [

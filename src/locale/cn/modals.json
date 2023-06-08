@@ -143,6 +143,7 @@
     "nomination": "{{count}} 个提名",
     "nominator": "提名人",
     "nominatorStake": "提名人抵押",
+    "none": "无",
     "notAuthenticated": "未验证",
     "notInstalled": "未安装",
     "notMeetMinimum": "未达到{{minNominatorBondUnit}} {{unit}}的提名人最低额.请在提名前质押一些资金",

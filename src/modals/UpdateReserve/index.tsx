@@ -104,7 +104,7 @@ export const UpdateReserve = () => {
               </h4>
               <h2>
                 {minReserve.isZero()
-                  ? 'None'
+                  ? t('none')
                   : `${minReserve.decimalPlaces(4).toString()} ${unit}`}
                 <ButtonHelp
                   onClick={() =>
