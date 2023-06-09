@@ -977,10 +977,10 @@
     tslib "^2.5.3"
     ws "^8.13.0"
 
-"@polkadotcloud/core-ui@^0.3.34":
-  version "0.3.34"
-  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.3.34.tgz#d6740b4612f484ba84b585b60dec774a65d07764"
-  integrity sha512-gjIrcjP16/IyzyfVnViBm3gm9VjQ4gIj+M99LoiuOGQOtZfQnCevHUxpEQ7S6I+ou5cjcgLo+fcXywVvDv6ngw==
+"@polkadotcloud/core-ui@^0.3.37":
+  version "0.3.37"
+  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.3.37.tgz#15b39e7702e75bfde78edfc0c69d568725d421be"
+  integrity sha512-ICMJbjD7SMfWgsfe7Ua1RT1U+t7WnuS/Q75FR5xY/LaFj4B52lySan7/nZMY2Od/pr32B6RIIl5YhdR8ZJCDVQ==
 
 "@polkadotcloud/react-odometer@^0.1.17":
   version "0.1.17"
@@ -4195,18 +4195,18 @@ react-qr-reader@^2.2.1:
     prop-types "^15.7.2"
     webrtc-adapter "^7.2.1"
 
-react-router-dom@^6.12.0:
-  version "6.12.0"
-  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.12.0.tgz#372279caaaa1ffb0204926c83e93a139b112d861"
-  integrity sha512-UzLwZ3ZVaDr6YV0HdjwxuwtDKgwpJx9o1ea9fU0HV4tTvzdB8WPHzlLFMo5orchpIS84e8G4Erlhu7Rl84XDFQ==
+react-router-dom@^6.12.1:
+  version "6.12.1"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-6.12.1.tgz#601fe7eb493071a33dc7573a20b920324a834606"
+  integrity sha512-POIZN9UDKWwEDga054LvYr2KnK8V+0HR4Ny4Bwv8V7/FZCPxJgsCjYxXGxqxzHs7VBxMKZfgvtKhafuJkJSPGA==
   dependencies:
     "@remix-run/router" "1.6.3"
-    react-router "6.12.0"
+    react-router "6.12.1"
 
-react-router@6.12.0:
-  version "6.12.0"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.12.0.tgz#1afae9219c24c8611809469d7a386c8023ade39a"
-  integrity sha512-/tCGtLq9umxRvbYeIx3j94CmpQfue0E3qnetVm9luKhu58cR4t+3O4ZrQXBdXfJrBATOAj+wF/1ihJJQI8AoTw==
+react-router@6.12.1:
+  version "6.12.1"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-6.12.1.tgz#9e4126aa1139ec6b5d347e19576d5e940cd46362"
+  integrity sha512-evd/GrKJOeOypD0JB9e1r7pQh2gWCsTbUfq059Wm1AFT/K2MNZuDo19lFtAgIhlBrp0MmpgpqtvZC7LPAs7vSw==
   dependencies:
     "@remix-run/router" "1.6.3"
 
@@ -4379,10 +4379,10 @@ safe-regex-test@^1.0.0:
     get-intrinsic "^1.1.3"
     is-regex "^1.1.4"
 
-sass@^1.63.0:
-  version "1.63.0"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.63.0.tgz#76b2a27282836b3343a4a669dbafb71fd93b1927"
-  integrity sha512-YIkMh4jvWB0R43XxjEr+GG26G1X40y4tDRoBhbOD4KkfXrwJgD8elAqU4mUqC5kP2nTrf7v77ZgYPZVFebHmyw==
+sass@^1.63.2:
+  version "1.63.2"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.63.2.tgz#75f7d9a8e67d1d5b98a989507f4d98b6067b1f75"
+  integrity sha512-u56TU0AIFqMtauKl/OJ1AeFsXqRHkgO7nCWmHaDwfxDo9GUMSqBA4NEh6GMuh1CYVM7zuROYtZrHzPc2ixK+ww==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"
