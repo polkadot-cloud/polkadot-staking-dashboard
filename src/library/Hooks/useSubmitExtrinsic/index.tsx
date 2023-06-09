@@ -104,7 +104,7 @@ export const useSubmitExtrinsic = ({
     }
   };
 
-  // Refresh tx state upon tx updates.
+  // Refresh state upon `tx` updates.
   useEffect(() => {
     // update txRef to latest tx.
     txRef.current = tx;
