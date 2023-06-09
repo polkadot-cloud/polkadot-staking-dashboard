@@ -12,7 +12,7 @@ export const useBatchCall = () => {
   const { isProxySupported } = useProxySupported();
 
   const newBatchCall = (txs: AnyApi[], from: MaybeAccount) => {
-    if (!api) return null;
+    if (!api) return undefined;
 
     from = from || '';
 
