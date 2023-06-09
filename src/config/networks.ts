@@ -67,6 +67,7 @@ export const NetworkList: Networks = {
       ...DefaultParams,
       stakeTarget: 0.75,
     },
+    defaultFeeReserve: 0.1,
   },
   kusama: {
     name: 'kusama',
@@ -122,6 +123,7 @@ export const NetworkList: Networks = {
       auctionMax: 60,
       stakeTarget: 0.75,
     },
+    defaultFeeReserve: 0.05,
   },
   westend: {
     name: 'westend',
@@ -175,5 +177,6 @@ export const NetworkList: Networks = {
       ...DefaultParams,
       stakeTarget: 0.75,
     },
+    defaultFeeReserve: 0.1,
   },
 };
