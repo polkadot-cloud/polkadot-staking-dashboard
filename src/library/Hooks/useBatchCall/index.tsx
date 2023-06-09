@@ -14,6 +14,8 @@ export const useBatchCall = () => {
   const newBatchCall = (txs: AnyApi[], from: MaybeAccount) => {
     if (!api) return null;
 
+    from = from || '';
+
     if (activeProxy && isProxySupported(api.tx.utility.batch(txs), from)) {
       return api?.tx.utility.batch(
         txs.map((tx) =>

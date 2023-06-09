@@ -125,12 +125,12 @@ export const useSubmitExtrinsic = ({
     txRef.current = tx;
     // update submit address to latest from.
     fromRef.current = from || '';
-    // ensure sender is up to date.
-    setSender(fromRef.current);
     // update proxy supported status.
     setProxySupported(isProxySupported(txRef.current, fromRef.current));
     // wrap tx in proxy call if active proxy & proxy supported.
     wrapTxIfActiveProxy();
+    // ensure sender is up to date.
+    setSender(fromRef.current);
     // re-calculate estimated tx fee.
     calculateEstimatedFee();
     // rebuild tx payload.

@@ -11,9 +11,9 @@ import { Vault } from './Vault';
 export const ManualSign = (
   props: SubmitProps & { buttons?: React.ReactNode[] }
 ) => {
-  const { activeAccount, getAccount } = useConnect();
-  const { getTxSignature } = useTxMeta();
-  const accountMeta = getAccount(activeAccount);
+  const { getAccount } = useConnect();
+  const { getTxSignature, sender } = useTxMeta();
+  const accountMeta = getAccount(sender);
   const source = accountMeta?.source;
 
   const { onSubmit } = props;

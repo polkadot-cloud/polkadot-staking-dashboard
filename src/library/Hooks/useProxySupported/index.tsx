@@ -11,7 +11,7 @@ import { useProxies } from 'contexts/Proxies';
 import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 
 export const useProxySupported = () => {
-  const { getAccount, activeProxy } = useConnect();
+  const { activeProxy } = useConnect();
   const { getBondedAccount } = useBonded();
   const { getProxyDelegate } = useProxies();
 
@@ -28,10 +28,6 @@ export const useProxySupported = () => {
       tx?.method.toHuman().method === 'proxy'
     ) {
       return true;
-    }
-    // Ledger devices do not support nesting on `proxy.proxy` calls.
-    if (getAccount(activeProxy)?.source === 'ledger') {
-      return false;
     }
 
     const proxyDelegate = getProxyDelegate(delegator, activeProxy);
