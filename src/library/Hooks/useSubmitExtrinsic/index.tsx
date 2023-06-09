@@ -89,6 +89,21 @@ export const useSubmitExtrinsic = ({
     }
   };
 
+  // Calculate the estimated tx fee of the transaction.
+  const calculateEstimatedFee = async () => {
+    if (txRef.current === null) {
+      return;
+    }
+    // get payment info
+    const { partialFee } = await txRef.current.paymentInfo(submitAddress);
+    const partialFeeBn = new BigNumber(partialFee.toString());
+
+    // give tx fees to global useTxMeta context
+    if (partialFeeBn.toString() !== txFees.toString()) {
+      setTxFees(partialFeeBn);
+    }
+  };
+
   // Refresh tx state upon tx updates.
   useEffect(() => {
     // update txRef to latest tx.
@@ -106,20 +121,6 @@ export const useSubmitExtrinsic = ({
     // rebuild tx payload.
     buildPayload(txRef.current, submitAddress, uid);
   }, [tx?.toString(), tx?.method?.args?.calls?.toString(), from]);
-
-  const calculateEstimatedFee = async () => {
-    if (txRef.current === null) {
-      return;
-    }
-    // get payment info
-    const { partialFee } = await txRef.current.paymentInfo(submitAddress);
-    const partialFeeBn = new BigNumber(partialFee.toString());
-
-    // give tx fees to global useTxMeta context
-    if (partialFeeBn.toString() !== txFees.toString()) {
-      setTxFees(partialFeeBn);
-    }
-  };
 
   // Extrinsic submission handler.
   const onSubmit = async () => {
