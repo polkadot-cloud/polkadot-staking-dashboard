@@ -80,6 +80,7 @@ export const NetworkMetricsProvider = ({
             {
               index: new BigNumber(newActiveEra.index),
               start: new BigNumber(newActiveEra.start),
+              isPlaceholder: false,
             },
             setActiveEra,
             activeEraRef
