@@ -19,7 +19,7 @@ export const useBatchCall = () => {
         txs.map((tx) =>
           api.tx.proxy.proxy(
             {
-              id: activeProxy,
+              id: from,
             },
             null,
             tx
