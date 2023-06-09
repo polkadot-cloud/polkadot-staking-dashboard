@@ -80,8 +80,7 @@ export const useSubmitExtrinsic = ({
     if (api && activeProxy && txRef.current && proxySupported) {
       // update submit address to active proxy account.
       submitAddress = activeProxy;
-
-      // TODO: If batch transaction, wrap each call in proxy. Else, just wrap in proxy.
+      // wrap tx in proxy call.
       txRef.current = api.tx.proxy.proxy(
         {
           id: from,
