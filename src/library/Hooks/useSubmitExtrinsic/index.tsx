@@ -76,9 +76,12 @@ export const useSubmitExtrinsic = ({
       return;
     }
 
-    // If batch transaction, wrap each call in proxy. Else, just wrap in proxy.
+    // Handle proxy supported.
     if (api && activeProxy && txRef.current && proxySupported) {
+      // update submit address to active proxy account.
       submitAddress = activeProxy;
+
+      // TODO: If batch transaction, wrap each call in proxy. Else, just wrap in proxy.
       txRef.current = api.tx.proxy.proxy(
         {
           id: from,
@@ -111,8 +114,6 @@ export const useSubmitExtrinsic = ({
     // ensure sender is up to date.
     setSender(submitAddress);
     // update proxy supported status.
-    setProxySupported(isProxySupported(txRef.current));
-    // update whether tx is proxy supported.
     setProxySupported(isProxySupported(txRef.current));
     // wrap tx in proxy call if active proxy & proxy supported.
     wrapTxIfActiveProxy();
