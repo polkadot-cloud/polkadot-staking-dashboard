@@ -103,15 +103,19 @@ export const UpdateReserve = () => {
                 />
               </h4>
               <h2>
-                {minReserve.isZero()
-                  ? t('none')
-                  : `${minReserve.decimalPlaces(4).toString()} ${unit}`}
-                <ButtonHelp
-                  onClick={() =>
-                    openHelp('Reserve Balance For Existential Deposit')
-                  }
-                  style={{ marginLeft: '0.65rem' }}
-                />
+                {minReserve.isZero() ? (
+                  <>
+                    {t('none')}
+                    <ButtonHelp
+                      onClick={() =>
+                        openHelp('Reserve Balance For Existential Deposit')
+                      }
+                      style={{ marginLeft: '0.65rem' }}
+                    />
+                  </>
+                ) : (
+                  `${minReserve.decimalPlaces(4).toString()} ${unit}`
+                )}
               </h2>
             </CardHeaderWrapper>
 
