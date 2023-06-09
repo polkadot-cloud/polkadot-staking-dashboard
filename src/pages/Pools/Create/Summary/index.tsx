@@ -12,6 +12,7 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useSetup } from 'contexts/Setup';
 import { Warning } from 'library/Form/Warning';
+import { useBatchCall } from 'library/Hooks/useBatchCall';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
@@ -22,13 +23,16 @@ import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
-  const { api, network } = useApi();
-  const { units } = network;
-  const { activeAccount, activeProxy, accountHasSigner } = useConnect();
-  const { getSetupProgress, removeSetupProgress } = useSetup();
+  const {
+    api,
+    network: { units, unit },
+  } = useApi();
   const { stats } = usePoolsConfig();
+  const { newBatchCall } = useBatchCall();
+  const { getSetupProgress, removeSetupProgress } = useSetup();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
+  const { activeAccount, activeProxy, accountHasSigner } = useConnect();
 
   const { lastPoolId } = stats;
   const poolId = lastPoolId.plus(1);
@@ -58,7 +62,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       api.tx.nominationPools.nominate(poolId.toString(), targetsToSubmit),
       api.tx.nominationPools.setMetadata(poolId.toString(), metadata),
     ];
-    return api.tx.utility.batch(txs);
+    return newBatchCall(txs);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
@@ -106,7 +110,7 @@ export const Summary = ({ section }: SetupStepProps) => {
               {t('pools.bondAmount')}:
             </div>
             <div>
-              {new BigNumber(bond).toFormat()} {network.unit}
+              {new BigNumber(bond).toFormat()} {unit}
             </div>
           </section>
           <section>

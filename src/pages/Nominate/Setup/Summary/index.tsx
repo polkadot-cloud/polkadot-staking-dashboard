@@ -9,6 +9,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { Warning } from 'library/Form/Warning';
+import { useBatchCall } from 'library/Hooks/useBatchCall';
 import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
@@ -20,11 +21,14 @@ import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
-  const { api, network } = useApi();
-  const { activeAccount, activeProxy, accountHasSigner } = useConnect();
-  const { getSetupProgress, removeSetupProgress } = useSetup();
+  const {
+    api,
+    network: { units, unit, name },
+  } = useApi();
+  const { newBatchCall } = useBatchCall();
   const { getPayeeItems } = usePayeeConfig();
-  const { units } = network;
+  const { getSetupProgress, removeSetupProgress } = useSetup();
+  const { activeAccount, activeProxy, accountHasSigner } = useConnect();
 
   const setup = getSetupProgress('nominator', activeAccount);
   const { progress } = setup;
@@ -54,12 +58,12 @@ export const Summary = ({ section }: SetupStepProps) => {
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
     const txs = [
-      ['westend'].includes(network.name)
+      ['westend'].includes(name)
         ? api.tx.staking.bond(bondAsString, payeeToSubmit)
         : api.tx.staking.bond(controllerToSubmit, bondAsString, payeeToSubmit),
       api.tx.staking.nominate(targetsToSubmit),
     ];
-    return api.tx.utility.batch(txs);
+    return newBatchCall(txs);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
@@ -113,7 +117,7 @@ export const Summary = ({ section }: SetupStepProps) => {
               {t('nominate.bondAmount')}:
             </div>
             <div>
-              {new BigNumber(bond).toFormat()} {network.unit}
+              {new BigNumber(bond).toFormat()} {unit}
             </div>
           </section>
         </SummaryWrapper>

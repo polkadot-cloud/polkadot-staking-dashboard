@@ -18,6 +18,7 @@ import { useModal } from 'contexts/Modal';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { getUnixTime } from 'date-fns';
 import { Warning } from 'library/Form/Warning';
+import { useBatchCall } from 'library/Hooks/useBatchCall';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -30,14 +31,15 @@ import { useTranslation } from 'react-i18next';
 
 export const Unstake = () => {
   const { t } = useTranslation('modals');
+  const { newBatchCall } = useBatchCall();
   const { api, network, consts } = useApi();
-  const { units } = network;
-  const { setStatus: setModalStatus, setResize } = useModal();
   const { activeAccount } = useConnect();
-  const { getBondedAccount, getAccountNominations } = useBonded();
-  const { getTransferOptions } = useTransferOptions();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
+  const { getTransferOptions } = useTransferOptions();
+  const { setStatus: setModalStatus, setResize } = useModal();
+  const { getBondedAccount, getAccountNominations } = useBonded();
+  const { units } = network;
 
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
@@ -94,7 +96,7 @@ export const Unstake = () => {
       return api.tx.staking.chill();
     }
     const txs = [api.tx.staking.chill(), api.tx.staking.unbond(bondAsString)];
-    return api.tx.utility.batch(txs);
+    return newBatchCall(txs);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({

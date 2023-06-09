@@ -15,6 +15,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useTxMeta } from 'contexts/TxMeta';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
 import { ClaimPermissionInput } from 'library/Form/ClaimPermissionInput';
+import { useBatchCall } from 'library/Hooks/useBatchCall';
 import { useBondGreatestFee } from 'library/Hooks/useBondGreatestFee';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -26,15 +27,16 @@ import { useTranslation } from 'react-i18next';
 export const JoinPool = () => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
-  const { units } = network;
+  const { txFees } = useTxMeta();
+  const { activeAccount } = useConnect();
+  const { newBatchCall } = useBatchCall();
+  const { setActiveAccountSetup } = useSetup();
+  const { getSignerWarnings } = useSignerWarnings();
+  const { getTransferOptions } = useTransferOptions();
+  const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { setStatus: setModalStatus, config, setResize } = useModal();
   const { id: poolId, setActiveTab } = config;
-  const { activeAccount } = useConnect();
-  const { queryPoolMember, addToPoolMembers } = usePoolMembers();
-  const { setActiveAccountSetup } = useSetup();
-  const { getTransferOptions } = useTransferOptions();
-  const { getSignerWarnings } = useSignerWarnings();
-  const { txFees } = useTxMeta();
+  const { units } = network;
 
   const { totalPossibleBond, totalAdditionalBond } =
     getTransferOptions(activeAccount).pool;
@@ -84,7 +86,7 @@ export const JoinPool = () => {
       return txs[0];
     }
 
-    return api.tx.utility.batch(txs);
+    return newBatchCall(txs);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({

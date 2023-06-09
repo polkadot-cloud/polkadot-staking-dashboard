@@ -20,6 +20,7 @@ import { intervalToDuration } from 'date-fns';
 import { AccountInput } from 'library/AccountInput';
 import { MinDelayInput } from 'library/Form/MinDelayInput';
 import { Warning } from 'library/Form/Warning';
+import { useBatchCall } from 'library/Hooks/useBatchCall';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
@@ -33,14 +34,15 @@ import type { ChangeRateInput } from './types';
 
 export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   const { t } = useTranslation('modals');
-  const { api, consts } = useApi();
-  const { setStatus: setModalStatus } = useModal();
-  const { activeAccount } = useConnect();
-  const { getBondedPool, updateBondedPools } = useBondedPools();
-  const { isOwner, selectedActivePool } = useActivePools();
-  const { getSignerWarnings } = useSignerWarnings();
-  const { globalMaxCommission } = usePoolsConfig();
   const { openHelp } = useHelp();
+  const { api, consts } = useApi();
+  const { activeAccount } = useConnect();
+  const { newBatchCall } = useBatchCall();
+  const { globalMaxCommission } = usePoolsConfig();
+  const { setStatus: setModalStatus } = useModal();
+  const { getSignerWarnings } = useSignerWarnings();
+  const { isOwner, selectedActivePool } = useActivePools();
+  const { getBondedPool, updateBondedPools } = useBondedPools();
   const { expectedBlockTime } = consts;
 
   const poolId = selectedActivePool?.id || 0;
@@ -302,7 +304,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     if (txs.length === 1) {
       return txs[0];
     }
-    return api.tx.utility.batch(txs);
+    return newBatchCall(txs);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
