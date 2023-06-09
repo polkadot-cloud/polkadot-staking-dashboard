@@ -119,9 +119,11 @@ export const useSubmitExtrinsic = ({
     }
   };
 
-  // submit extrinsic
+  // Extrinsic submission handler.
   const onSubmit = async () => {
+    const account = getAccount(submitAddress);
     if (
+      account === null ||
       submitting ||
       !shouldSubmit ||
       !api ||
@@ -130,12 +132,7 @@ export const useSubmitExtrinsic = ({
       return;
     }
 
-    const account = getAccount(submitAddress);
-    if (account === null) {
-      return;
-    }
-
-    const accountNonce = (
+    const nonce = (
       await api.rpc.system.accountNextIndex(submitAddress)
     ).toHuman();
 
@@ -153,7 +150,7 @@ export const useSubmitExtrinsic = ({
     }
 
     const onReady = () => {
-      addPending(accountNonce);
+      addPending(nonce);
       addNotification({
         title: t('pending'),
         subtitle: t('transactionInitiated'),
@@ -163,7 +160,7 @@ export const useSubmitExtrinsic = ({
 
     const onInBlock = () => {
       setSubmitting(false);
-      removePending(accountNonce);
+      removePending(nonce);
       addNotification({
         title: t('inBlock'),
         subtitle: t('transactionInBlock'),
@@ -183,7 +180,7 @@ export const useSubmitExtrinsic = ({
           subtitle: t('errorWithTransaction'),
         });
         setSubmitting(false);
-        removePending(accountNonce);
+        removePending(nonce);
       }
     };
 
@@ -208,7 +205,7 @@ export const useSubmitExtrinsic = ({
       if (type === 'ledger') {
         resetLedgerTx();
       }
-      removePending(accountNonce);
+      removePending(nonce);
       addNotification({
         title: t('cancelled'),
         subtitle: t('transactionCancelled'),
