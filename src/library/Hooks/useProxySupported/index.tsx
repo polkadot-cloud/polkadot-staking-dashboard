@@ -21,7 +21,7 @@ export const useProxySupported = (from: MaybeAccount) => {
   const controllerNotSupported = (c: string) =>
     UnsupportedIfUniqueController.includes(c) && controller !== from;
 
-  // Determine whether the provided tx is proxy sypported.
+  // Determine whether the provided tx is proxy supported.
   const isProxySupported = (tx: AnyApi) => {
     // if already wrapped, return.
     if (
