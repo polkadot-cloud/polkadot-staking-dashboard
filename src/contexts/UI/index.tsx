@@ -140,7 +140,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     // era has synced from Network
-    if (activeEra.index.isZero()) {
+    if (activeEra.isPlaceholder) {
       syncing = true;
       networkSyncing = true;
       poolSyncing = true;

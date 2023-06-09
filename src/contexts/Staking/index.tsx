@@ -225,7 +225,7 @@ export const StakingProvider = ({
    * the minimum nominator bond is calculated by summing a particular bond of a nominator.
    */
   const fetchEraStakers = async () => {
-    if (!isReady || activeEra.index.isZero() || !api) {
+    if (!isReady || activeEra.isPlaceholder || !api) {
       return;
     }
     const exposuresRaw = await api.query.staking.erasStakers.entries(

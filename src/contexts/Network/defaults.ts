@@ -11,6 +11,7 @@ import type {
 export const activeEra: ActiveEra = {
   index: new BigNumber(0),
   start: new BigNumber(0),
+  isPlaceholder: true,
 };
 export const metrics: NetworkMetrics = {
   totalIssuance: new BigNumber(0),

@@ -34,8 +34,8 @@ export const ActiveEraStat = () => {
     label: t('overview.timeRemainingThisEra'),
     timeleft: timeleft.formatted,
     graph: {
-      value1: activeEra.index.isZero() ? 0 : percentSurpassed.toNumber(),
-      value2: activeEra.index.isZero() ? 100 : percentRemaining.toNumber(),
+      value1: activeEra.isPlaceholder ? 0 : percentSurpassed.toNumber(),
+      value2: activeEra.isPlaceholder ? 100 : percentRemaining.toNumber(),
     },
     tooltip: `Era ${new BigNumber(activeEra.index).toFormat()}` ?? undefined,
     helpKey: 'Era',
