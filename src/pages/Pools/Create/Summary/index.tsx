@@ -25,7 +25,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const {
     api,
-    network: { units, unit },
+    network: { units, unit, name },
   } = useApi();
   const { stats } = usePoolsConfig();
   const { newBatchCall } = useBatchCall();
@@ -143,7 +143,7 @@ export const Summary = ({ section }: SetupStepProps) => {
             submitText={`${t('pools.createPool')}`}
             valid
             noMargin
-            customEvent={`${network.name.toLowerCase()}_user_created_pool`}
+            customEvent={`${name.toLowerCase()}_user_created_pool`}
             {...submitExtrinsic}
           />
         </div>

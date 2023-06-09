@@ -133,7 +133,7 @@ export const Summary = ({ section }: SetupStepProps) => {
             submitText={`${t('nominate.startNominating')}`}
             valid
             noMargin
-            customEvent={`${network.name.toLowerCase()}_user_started_nominating`}
+            customEvent={`${name.toLowerCase()}_user_started_nominating`}
             {...submitExtrinsic}
           />
         </div>
