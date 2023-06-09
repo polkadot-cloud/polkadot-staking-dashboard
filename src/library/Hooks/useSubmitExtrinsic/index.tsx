@@ -2,25 +2,20 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
-import {
-  isSupportedProxyCall,
-  UnsupportedIfUniqueController,
-} from 'config/proxies';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
-import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { manualSigners } from 'contexts/Connect/Utils';
 import { useExtensions } from 'contexts/Extensions';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useNotifications } from 'contexts/Notifications';
-import { useProxies } from 'contexts/Proxies';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyApi, AnyJson } from 'types';
+import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = ({
@@ -32,14 +27,12 @@ export const useSubmitExtrinsic = ({
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
   const { api } = useApi();
-  const { getAccount, requiresManualSign, activeProxy } = useConnect();
-  const { addNotification } = useNotifications();
-  const { extensions } = useExtensions();
-  const { addPending, removePending } = useExtrinsics();
   const { getNonce } = useBalances();
-  const { getProxyDelegate } = useProxies();
-  const { getBondedAccount } = useBonded();
-  const controller = getBondedAccount(from);
+  const { extensions } = useExtensions();
+  const { addNotification } = useNotifications();
+  const { isProxySupported } = useProxySupported(from);
+  const { addPending, removePending } = useExtrinsics();
+  const { getAccount, requiresManualSign, activeProxy } = useConnect();
   const {
     setTxFees,
     incrementPayloadUid,
@@ -63,58 +56,9 @@ export const useSubmitExtrinsic = ({
   // store the uid of the extrinsic
   const [uid] = useState<number>(incrementPayloadUid());
 
-  // store whether this call is proxy sypported.
-  const getProxySupported = () => {
-    // if already wrapped, return.
-    if (
-      tx?.method.toHuman().section === 'proxy' &&
-      tx?.method.toHuman().method === 'proxy'
-    ) {
-      return true;
-    }
-    // Ledger devices do not support nesting on `proxy.proxy` calls.
-    if (getAccount(activeProxy)?.source === 'ledger') {
-      return false;
-    }
-
-    const proxyDelegate = getProxyDelegate(from, activeProxy);
-    const proxyType = proxyDelegate?.proxyType || '';
-    const pallet = tx?.method.toHuman().section;
-    const method = tx?.method.toHuman().method;
-    const call = `${pallet}.${method}`;
-
-    // If call is from controller, & controller is different from stash, then proxy is not
-    // supported.
-    const controllerNotSupported = (c: string) =>
-      UnsupportedIfUniqueController.includes(c) && controller !== from;
-
-    // If a batch call, test if every inner call is a supported proxy call.
-    if (call === 'utility.batch') {
-      return (tx?.method?.toHuman()?.args?.calls || [])
-        .map((c: AnyJson) => ({
-          pallet: c.section,
-          method: c.method,
-        }))
-        .every(
-          (c: AnyJson) =>
-            isSupportedProxyCall(proxyType, c.pallet, c.method) &&
-            !controllerNotSupported(`${pallet}.${method}`)
-        );
-    }
-
-    // Check if the current call is a supported proxy call.
-    return (
-      isSupportedProxyCall(proxyType, pallet, method) &&
-      !controllerNotSupported(call)
-    );
-  };
-
   const [proxySupported, setProxySupported] = useState<boolean>(
-    getProxySupported()
+    isProxySupported(tx)
   );
-  useEffect(() => {
-    setProxySupported(getProxySupported());
-  }, [tx?.toString()]);
 
   // track for one-shot transaction reset after submission.
   const didTxReset = useRef<boolean>(false);
@@ -128,6 +72,8 @@ export const useSubmitExtrinsic = ({
     ) {
       return;
     }
+
+    // If batch transaction, wrap each call in proxy. Else, just wrap in proxy.
     if (activeProxy && tx && proxySupported) {
       submitAddress = activeProxy;
       tx = api?.tx.proxy.proxy(
@@ -140,8 +86,13 @@ export const useSubmitExtrinsic = ({
     }
   };
 
-  // Wrap tx with proxy on component mount.
+  // Wrap tx with proxy on component render.
   wrapTxInProxy();
+
+  // check if tx is proxy supported on tx change.
+  useEffect(() => {
+    setProxySupported(isProxySupported(tx));
+  }, [tx?.toString()]);
 
   // calculate fee upon setup changes and initial render
   useEffect(() => {
@@ -151,7 +102,6 @@ export const useSubmitExtrinsic = ({
 
   // recalculate transaction payload on tx change
   useEffect(() => {
-    wrapTxInProxy();
     buildPayload();
   }, [tx?.toString(), tx?.method?.args?.calls?.toString()]);
 
