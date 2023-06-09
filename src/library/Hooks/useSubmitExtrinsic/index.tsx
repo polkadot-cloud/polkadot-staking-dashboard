@@ -46,6 +46,9 @@ export const useSubmitExtrinsic = ({
   const { setIsExecuting, resetStatusCodes, resetFeedback } =
     useLedgerHardware();
 
+  // Store given tx in a ref.
+  const txRef = useRef<AnyApi>(tx);
+
   // If no account is provided, fallback to empty string
   let submitAddress: string = from || '';
 
@@ -57,60 +60,59 @@ export const useSubmitExtrinsic = ({
 
   // Store whether this tx is proxy supported.
   const [proxySupported, setProxySupported] = useState<boolean>(
-    isProxySupported(tx)
+    isProxySupported(txRef.current)
   );
 
   // Track for one-shot transaction reset after submission.
   const didTxReset = useRef<boolean>(false);
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account.
-  const wrapTxInProxy = () => {
+  const wrapTxIfActiveProxy = () => {
     // if already wrapped, return.
     if (
-      tx?.method.toHuman().section === 'proxy' &&
-      tx?.method.toHuman().method === 'proxy'
+      txRef.current?.method.toHuman().section === 'proxy' &&
+      txRef.current?.method.toHuman().method === 'proxy'
     ) {
       return;
     }
 
     // If batch transaction, wrap each call in proxy. Else, just wrap in proxy.
-    if (activeProxy && tx && proxySupported) {
+    if (api && activeProxy && txRef.current && proxySupported) {
       submitAddress = activeProxy;
-      tx = api?.tx.proxy.proxy(
+      txRef.current = api.tx.proxy.proxy(
         {
           id: from,
         },
         null,
-        tx
+        txRef.current
       );
     }
   };
 
-  // Wrap tx with proxy on component render.
-  wrapTxInProxy();
-
-  // check if tx is proxy supported on tx change.
+  // Refresh tx state upon tx updates.
   useEffect(() => {
-    setProxySupported(isProxySupported(tx));
-  }, [tx?.toString()]);
-
-  // calculate fee upon setup changes and initial render
-  useEffect(() => {
+    // update txRef to latest tx.
+    txRef.current = tx;
+    // ensure sender is up to date.
     setSender(submitAddress);
+    // update proxy supported status.
+    setProxySupported(isProxySupported(txRef.current));
+    // update whether tx is proxy supported.
+    setProxySupported(isProxySupported(txRef.current));
+    // wrap tx in proxy call if active proxy & proxy supported.
+    wrapTxIfActiveProxy();
+    // re-calculate estimated tx fee.
     calculateEstimatedFee();
-  }, [tx?.toString(), getTxSignature(), tx?.signature.toString()]);
-
-  // recalculate transaction payload on tx change
-  useEffect(() => {
-    buildPayload(tx, submitAddress, uid);
-  }, [tx?.toString(), tx?.method?.args?.calls?.toString()]);
+    // rebuild tx payload.
+    buildPayload(txRef.current, submitAddress, uid);
+  }, [tx?.toString(), tx?.method?.args?.calls?.toString(), from]);
 
   const calculateEstimatedFee = async () => {
-    if (tx === null) {
+    if (txRef.current === null) {
       return;
     }
     // get payment info
-    const { partialFee } = await tx.paymentInfo(submitAddress);
+    const { partialFee } = await txRef.current.paymentInfo(submitAddress);
     const partialFeeBn = new BigNumber(partialFee.toString());
 
     // give tx fees to global useTxMeta context
@@ -228,22 +230,24 @@ export const useSubmitExtrinsic = ({
     // handle signed transaction.
     if (getTxSignature()) {
       try {
-        tx.addSignature(submitAddress, txSignature, txPayload);
+        txRef.current.addSignature(submitAddress, txSignature, txPayload);
 
-        const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
-          if (!didTxReset.current) {
-            didTxReset.current = true;
-            resetManualTx();
-          }
+        const unsub = await txRef.current.send(
+          ({ status, events = [] }: AnyApi) => {
+            if (!didTxReset.current) {
+              didTxReset.current = true;
+              resetManualTx();
+            }
 
-          handleStatus(status);
-          if (status.isFinalized) {
-            events.forEach(({ event: { method } }: AnyApi) => {
-              onFinalizedEvent(method);
-              if (unsubEvents?.includes(method)) unsub();
-            });
+            handleStatus(status);
+            if (status.isFinalized) {
+              events.forEach(({ event: { method } }: AnyApi) => {
+                onFinalizedEvent(method);
+                if (unsubEvents?.includes(method)) unsub();
+              });
+            }
           }
-        });
+        );
       } catch (e) {
         onError(manualSigners.includes(source) ? source : 'default');
       }
@@ -251,7 +255,7 @@ export const useSubmitExtrinsic = ({
       // handle unsigned transaction.
       const { signer } = account;
       try {
-        const unsub = await tx.signAndSend(
+        const unsub = await txRef.current.signAndSend(
           submitAddress,
           { signer },
           ({ status, events = [] }: AnyApi) => {
