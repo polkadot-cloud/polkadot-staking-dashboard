@@ -46,11 +46,11 @@ export const useSubmitExtrinsic = ({
   const { setIsExecuting, resetStatusCodes, resetFeedback } =
     useLedgerHardware();
 
-  // Store given tx in a ref.
+  // Store given tx as a ref.
   const txRef = useRef<AnyApi>(tx);
 
-  // If no account is provided, fallback to empty string
-  let submitAddress: string = from || '';
+  // Store given submit address as a ref.
+  const fromRef = useRef<string>(from || '');
 
   // Store whether the transaction is in progress.
   const [submitting, setSubmitting] = useState(false);
@@ -60,7 +60,7 @@ export const useSubmitExtrinsic = ({
 
   // Store whether this tx is proxy supported.
   const [proxySupported, setProxySupported] = useState<boolean>(
-    isProxySupported(txRef.current, submitAddress)
+    isProxySupported(txRef.current, fromRef.current)
   );
 
   // Track for one-shot transaction reset after submission.
@@ -79,7 +79,7 @@ export const useSubmitExtrinsic = ({
     // Handle proxy supported.
     if (api && activeProxy && txRef.current && proxySupported) {
       // update submit address to active proxy account.
-      submitAddress = activeProxy;
+      fromRef.current = activeProxy;
       // wrap tx in proxy call.
       txRef.current = api.tx.proxy.proxy(
         {
@@ -97,7 +97,7 @@ export const useSubmitExtrinsic = ({
       return;
     }
     // get payment info
-    const { partialFee } = await txRef.current.paymentInfo(submitAddress);
+    const { partialFee } = await txRef.current.paymentInfo(fromRef.current);
     const partialFeeBn = new BigNumber(partialFee.toString());
 
     // give tx fees to global useTxMeta context
@@ -110,33 +110,35 @@ export const useSubmitExtrinsic = ({
   useEffect(() => {
     // update txRef to latest tx.
     txRef.current = tx;
+    // update submit address to latest from.
+    fromRef.current = from || '';
     // ensure sender is up to date.
-    setSender(submitAddress);
+    setSender(fromRef.current);
     // update proxy supported status.
-    setProxySupported(isProxySupported(txRef.current, submitAddress));
+    setProxySupported(isProxySupported(txRef.current, fromRef.current));
     // wrap tx in proxy call if active proxy & proxy supported.
     wrapTxIfActiveProxy();
     // re-calculate estimated tx fee.
     calculateEstimatedFee();
     // rebuild tx payload.
-    buildPayload(txRef.current, submitAddress, uid);
+    buildPayload(txRef.current, fromRef.current, uid);
   }, [tx?.toString(), tx?.method?.args?.calls?.toString(), from]);
 
   // Extrinsic submission handler.
   const onSubmit = async () => {
-    const account = getAccount(submitAddress);
+    const account = getAccount(fromRef.current);
     if (
       account === null ||
       submitting ||
       !shouldSubmit ||
       !api ||
-      (requiresManualSign(submitAddress) && !getTxSignature())
+      (requiresManualSign(fromRef.current) && !getTxSignature())
     ) {
       return;
     }
 
     const nonce = (
-      await api.rpc.system.accountNextIndex(submitAddress)
+      await api.rpc.system.accountNextIndex(fromRef.current)
     ).toHuman();
 
     const { source } = account;
@@ -231,7 +233,7 @@ export const useSubmitExtrinsic = ({
     // handle signed transaction.
     if (getTxSignature()) {
       try {
-        txRef.current.addSignature(submitAddress, txSignature, txPayload);
+        txRef.current.addSignature(fromRef.current, txSignature, txPayload);
 
         const unsub = await txRef.current.send(
           ({ status, events = [] }: AnyApi) => {
@@ -257,7 +259,7 @@ export const useSubmitExtrinsic = ({
       const { signer } = account;
       try {
         const unsub = await txRef.current.signAndSend(
-          submitAddress,
+          fromRef.current,
           { signer },
           ({ status, events = [] }: AnyApi) => {
             if (!didTxReset.current) {
@@ -284,7 +286,7 @@ export const useSubmitExtrinsic = ({
     uid,
     onSubmit,
     submitting,
-    submitAddress,
+    submitAddress: fromRef.current,
     proxySupported,
   };
 };
