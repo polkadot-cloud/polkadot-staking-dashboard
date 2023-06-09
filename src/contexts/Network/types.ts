@@ -17,4 +17,5 @@ export interface NetworkMetrics {
 export interface ActiveEra {
   index: BigNumber;
   start: BigNumber;
+  isPlaceholder?: boolean;
 }
