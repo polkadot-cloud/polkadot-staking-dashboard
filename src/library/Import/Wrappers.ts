@@ -155,19 +155,11 @@ export const QRViewerWrapper = styled.div`
     padding: 0 1rem;
     width: 100%;
 
-    .address {
-      display: flex;
-      margin-top: 0.5rem;
-      margin-bottom: 1.25rem;
-
-      svg {
-        margin-right: 0.6rem;
-      }
-    }
     > div {
       display: flex;
-      width: 100%;
       justify-content: center;
+      margin-top: 1rem;
+      width: 100%;
     }
   }
 `;

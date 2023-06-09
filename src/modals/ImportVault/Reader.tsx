@@ -2,12 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { QrScanSignature } from '@polkadot/react-qr';
-import { ButtonPrimary, ButtonSecondary } from '@polkadotcloud/core-ui';
-import { clipAddress, isValidAddress } from '@polkadotcloud/utils';
+import { ButtonSecondary } from '@polkadotcloud/core-ui';
+import { isValidAddress } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { useOverlay } from 'contexts/Overlay';
-import { Identicon } from 'library/Identicon';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -29,12 +28,27 @@ export const Reader = () => {
     setQrData(signature.split(':')?.[1] || '');
   };
 
+  const valid =
+    isValidAddress(qrData) &&
+    !vaultAccountExists(qrData) &&
+    !formatAccountSs58(qrData);
+
   // Reset QR data on open.
   useEffect(() => {
     setQrData(undefined);
   }, []);
 
   useEffect(() => {
+    // Add account and close overlay if valid.
+    if (valid) {
+      const account = addVaultAccount(qrData, vaultAccounts.length);
+      if (account) {
+        addToAccounts([account]);
+      }
+      setOverlayStatus(0);
+    }
+
+    // Display feedback.
     setFeedback(
       qrData === undefined
         ? `${t('waitingForQRCode')}`
@@ -47,11 +61,6 @@ export const Reader = () => {
         : `${t('invalidAddress')}`
     );
   }, [qrData]);
-
-  const valid =
-    isValidAddress(qrData) &&
-    !vaultAccountExists(qrData) &&
-    !formatAccountSs58(qrData);
 
   return (
     <QRViewerWrapper>
@@ -66,30 +75,7 @@ export const Reader = () => {
       </div>
       <div className="foot">
         <h3>{feedback}</h3>
-        <h3 className="address">
-          {isValidAddress(qrData) && !formatAccountSs58(qrData) ? (
-            <>
-              <Identicon value={qrData} size={22} />
-              {clipAddress(qrData)}
-            </>
-          ) : (
-            '...'
-          )}
-        </h3>
         <div>
-          <ButtonPrimary
-            lg
-            marginRight
-            text={t('importAddress')}
-            disabled={!valid}
-            onClick={() => {
-              const account = addVaultAccount(qrData, vaultAccounts.length);
-              if (account) {
-                addToAccounts([account]);
-              }
-              setOverlayStatus(0);
-            }}
-          />
           <ButtonSecondary
             lg
             text={t('cancel')}
