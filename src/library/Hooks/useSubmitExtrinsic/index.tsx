@@ -29,7 +29,7 @@ export const useSubmitExtrinsic = ({
   const { api } = useApi();
   const { extensions } = useExtensions();
   const { addNotification } = useNotifications();
-  const { isProxySupported } = useProxySupported(from);
+  const { isProxySupported } = useProxySupported();
   const { addPending, removePending } = useExtrinsics();
   const { buildPayload } = useBuildPayload();
   const { getAccount, requiresManualSign, activeProxy } = useConnect();
@@ -60,7 +60,7 @@ export const useSubmitExtrinsic = ({
 
   // Store whether this tx is proxy supported.
   const [proxySupported, setProxySupported] = useState<boolean>(
-    isProxySupported(txRef.current)
+    isProxySupported(txRef.current, submitAddress)
   );
 
   // Track for one-shot transaction reset after submission.
@@ -113,7 +113,7 @@ export const useSubmitExtrinsic = ({
     // ensure sender is up to date.
     setSender(submitAddress);
     // update proxy supported status.
-    setProxySupported(isProxySupported(txRef.current));
+    setProxySupported(isProxySupported(txRef.current, submitAddress));
     // wrap tx in proxy call if active proxy & proxy supported.
     wrapTxIfActiveProxy();
     // re-calculate estimated tx fee.

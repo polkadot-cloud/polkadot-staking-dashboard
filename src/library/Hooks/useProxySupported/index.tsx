@@ -10,19 +10,18 @@ import { useConnect } from 'contexts/Connect';
 import { useProxies } from 'contexts/Proxies';
 import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 
-export const useProxySupported = (from: MaybeAccount) => {
+export const useProxySupported = () => {
   const { getAccount, activeProxy } = useConnect();
   const { getBondedAccount } = useBonded();
   const { getProxyDelegate } = useProxies();
-  const controller = getBondedAccount(from);
 
   // If call is from controller, & controller is different from stash, then proxy is not
   // supported.
-  const controllerNotSupported = (c: string) =>
-    UnsupportedIfUniqueController.includes(c) && controller !== from;
+  const controllerNotSupported = (c: string, f: MaybeAccount) =>
+    UnsupportedIfUniqueController.includes(c) && getBondedAccount(f) !== f;
 
   // Determine whether the provided tx is proxy supported.
-  const isProxySupported = (tx: AnyApi) => {
+  const isProxySupported = (tx: AnyApi, from: MaybeAccount) => {
     // if already wrapped, return.
     if (
       tx?.method.toHuman().section === 'proxy' &&
@@ -51,14 +50,14 @@ export const useProxySupported = (from: MaybeAccount) => {
         .every(
           (c: AnyJson) =>
             isSupportedProxyCall(proxyType, c.pallet, c.method) &&
-            !controllerNotSupported(`${pallet}.${method}`)
+            !controllerNotSupported(`${pallet}.${method}`, from)
         );
     }
 
     // Check if the current call is a supported proxy call.
     return (
       isSupportedProxyCall(proxyType, pallet, method) &&
-      !controllerNotSupported(call)
+      !controllerNotSupported(call, from)
     );
   };
 
