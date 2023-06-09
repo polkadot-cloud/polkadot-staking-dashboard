@@ -49,7 +49,8 @@ export const useProxySupported = () => {
         }))
         .every(
           (c: AnyJson) =>
-            isSupportedProxyCall(proxyType, c.pallet, c.method) &&
+            (isSupportedProxyCall(proxyType, c.pallet, c.method) ||
+              (c.pallet === 'proxy' && c.method === 'proxy')) &&
             !controllerNotSupported(`${pallet}.${method}`, delegator)
         );
     }
