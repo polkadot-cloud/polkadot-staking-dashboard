@@ -304,7 +304,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     if (txs.length === 1) {
       return txs[0];
     }
-    return newBatchCall(txs);
+    return newBatchCall(txs, activeAccount);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({

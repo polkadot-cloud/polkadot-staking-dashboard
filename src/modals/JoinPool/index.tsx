@@ -86,7 +86,7 @@ export const JoinPool = () => {
       return txs[0];
     }
 
-    return newBatchCall(txs);
+    return newBatchCall(txs, activeAccount);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({

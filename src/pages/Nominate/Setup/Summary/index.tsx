@@ -63,7 +63,7 @@ export const Summary = ({ section }: SetupStepProps) => {
         : api.tx.staking.bond(controllerToSubmit, bondAsString, payeeToSubmit),
       api.tx.staking.nominate(targetsToSubmit),
     ];
-    return newBatchCall(txs);
+    return newBatchCall(txs, activeAccount);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({

@@ -2,18 +2,31 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useApi } from 'contexts/Api';
-import type { AnyApi } from 'types';
+import { useConnect } from 'contexts/Connect';
+import type { AnyApi, MaybeAccount } from 'types';
+import { useProxySupported } from '../useProxySupported';
 
 export const useBatchCall = () => {
   const { api } = useApi();
-  // TODO: wrap calls in proxy.proxy if there is an active proxy and proxy is supported.
+  const { activeProxy } = useConnect();
+  const { isProxySupported } = useProxySupported();
 
-  // const { activeProxy } = useConnect();
-  // const { isProxySupported } = useProxySupported();
-
-  const newBatchCall = (txs: AnyApi[]) => {
+  const newBatchCall = (txs: AnyApi[], from: MaybeAccount) => {
     if (!api) return null;
 
+    if (activeProxy && isProxySupported(api.tx.utility.batch(txs), from)) {
+      return api?.tx.utility.batch(
+        txs.map((tx) =>
+          api.tx.proxy.proxy(
+            {
+              id: activeProxy,
+            },
+            null,
+            tx
+          )
+        )
+      );
+    }
     return api?.tx.utility.batch(txs);
   };
 

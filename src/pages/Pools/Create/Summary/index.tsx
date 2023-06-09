@@ -62,7 +62,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       api.tx.nominationPools.nominate(poolId.toString(), targetsToSubmit),
       api.tx.nominationPools.setMetadata(poolId.toString(), metadata),
     ];
-    return newBatchCall(txs);
+    return newBatchCall(txs, activeAccount);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({

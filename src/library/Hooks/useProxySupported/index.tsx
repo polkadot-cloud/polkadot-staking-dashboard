@@ -21,7 +21,7 @@ export const useProxySupported = () => {
     UnsupportedIfUniqueController.includes(c) && getBondedAccount(f) !== f;
 
   // Determine whether the provided tx is proxy supported.
-  const isProxySupported = (tx: AnyApi, from: MaybeAccount) => {
+  const isProxySupported = (tx: AnyApi, delegator: MaybeAccount) => {
     // if already wrapped, return.
     if (
       tx?.method.toHuman().section === 'proxy' &&
@@ -34,7 +34,7 @@ export const useProxySupported = () => {
       return false;
     }
 
-    const proxyDelegate = getProxyDelegate(from, activeProxy);
+    const proxyDelegate = getProxyDelegate(delegator, activeProxy);
     const proxyType = proxyDelegate?.proxyType || '';
     const pallet = tx?.method.toHuman().section;
     const method = tx?.method.toHuman().method;
@@ -50,14 +50,14 @@ export const useProxySupported = () => {
         .every(
           (c: AnyJson) =>
             isSupportedProxyCall(proxyType, c.pallet, c.method) &&
-            !controllerNotSupported(`${pallet}.${method}`, from)
+            !controllerNotSupported(`${pallet}.${method}`, delegator)
         );
     }
 
     // Check if the current call is a supported proxy call.
     return (
       isSupportedProxyCall(proxyType, pallet, method) &&
-      !controllerNotSupported(call, from)
+      !controllerNotSupported(call, delegator)
     );
   };
 
