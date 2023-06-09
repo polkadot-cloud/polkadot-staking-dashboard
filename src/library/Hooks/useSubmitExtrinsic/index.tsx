@@ -4,7 +4,6 @@
 import BigNumber from 'bignumber.js';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { manualSigners } from 'contexts/Connect/Utils';
 import { useExtensions } from 'contexts/Extensions';
@@ -15,6 +14,7 @@ import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyApi, AnyJson } from 'types';
+import { useBuildPayload } from '../useBuildPayload';
 import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
@@ -27,17 +27,16 @@ export const useSubmitExtrinsic = ({
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
   const { api } = useApi();
-  const { getNonce } = useBalances();
   const { extensions } = useExtensions();
   const { addNotification } = useNotifications();
   const { isProxySupported } = useProxySupported(from);
   const { addPending, removePending } = useExtrinsics();
+  const { buildPayload } = useBuildPayload();
   const { getAccount, requiresManualSign, activeProxy } = useConnect();
   const {
     setTxFees,
     incrementPayloadUid,
     getTxPayload,
-    setTxPayload,
     resetTxPayloads,
     setSender,
     txFees,
@@ -47,20 +46,21 @@ export const useSubmitExtrinsic = ({
   const { setIsExecuting, resetStatusCodes, resetFeedback } =
     useLedgerHardware();
 
-  // if null account is provided, fallback to empty string
+  // If no account is provided, fallback to empty string
   let submitAddress: string = from || '';
 
-  // whether the transaction is in progress
+  // Store whether the transaction is in progress.
   const [submitting, setSubmitting] = useState(false);
 
-  // store the uid of the extrinsic
+  // Store the uid of the extrinsic.
   const [uid] = useState<number>(incrementPayloadUid());
 
+  // Store whether this tx is proxy supported.
   const [proxySupported, setProxySupported] = useState<boolean>(
     isProxySupported(tx)
   );
 
-  // track for one-shot transaction reset after submission.
+  // Track for one-shot transaction reset after submission.
   const didTxReset = useRef<boolean>(false);
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account.
@@ -102,7 +102,7 @@ export const useSubmitExtrinsic = ({
 
   // recalculate transaction payload on tx change
   useEffect(() => {
-    buildPayload();
+    buildPayload(tx, submitAddress, uid);
   }, [tx?.toString(), tx?.method?.args?.calls?.toString()]);
 
   const calculateEstimatedFee = async () => {
@@ -116,53 +116,6 @@ export const useSubmitExtrinsic = ({
     // give tx fees to global useTxMeta context
     if (partialFeeBn.toString() !== txFees.toString()) {
       setTxFees(partialFeeBn);
-    }
-  };
-
-  // build and set payload of the transaction and store it in TxMetaContext.
-  const buildPayload = async () => {
-    if (api && tx) {
-      const lastHeader = await api.rpc.chain.getHeader();
-      const blockNumber = api.registry.createType(
-        'BlockNumber',
-        lastHeader.number.toNumber()
-      );
-      const method = api.createType('Call', tx);
-      const era = api.registry.createType('ExtrinsicEra', {
-        current: lastHeader.number.toNumber(),
-        period: 64,
-      });
-
-      const accountNonce = getNonce(submitAddress);
-      const nonce = api.registry.createType('Compact<Index>', accountNonce);
-
-      const payload = {
-        specVersion: api.runtimeVersion.specVersion.toHex(),
-        transactionVersion: api.runtimeVersion.transactionVersion.toHex(),
-        address: submitAddress,
-        blockHash: lastHeader.hash.toHex(),
-        blockNumber: blockNumber.toHex(),
-        era: era.toHex(),
-        genesisHash: api.genesisHash.toHex(),
-        method: method.toHex(),
-        nonce: nonce.toHex(),
-        signedExtensions: [
-          'CheckNonZeroSender',
-          'CheckSpecVersion',
-          'CheckTxVersion',
-          'CheckGenesis',
-          'CheckMortality',
-          'CheckNonce',
-          'CheckWeight',
-          'ChargeTransactionPayment',
-        ],
-        tip: api.registry.createType('Compact<Balance>', 0).toHex(),
-        version: tx.version,
-      };
-      const raw = api.registry.createType('ExtrinsicPayload', payload, {
-        version: payload.version,
-      });
-      setTxPayload(raw, uid);
     }
   };
 
