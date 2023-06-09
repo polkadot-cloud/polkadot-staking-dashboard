@@ -68,11 +68,14 @@ export const useSubmitExtrinsic = ({
 
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account.
   const wrapTxIfActiveProxy = () => {
-    // if already wrapped, return.
+    // if already wrapped, update fromRef and return.
     if (
       txRef.current?.method.toHuman().section === 'proxy' &&
       txRef.current?.method.toHuman().method === 'proxy'
     ) {
+      if (activeProxy) {
+        fromRef.current = activeProxy;
+      }
       return;
     }
 
@@ -80,7 +83,17 @@ export const useSubmitExtrinsic = ({
     if (api && activeProxy && txRef.current && proxySupported) {
       // update submit address to active proxy account.
       fromRef.current = activeProxy;
-      // wrap tx in proxy call.
+
+      // Do not wrap batch transactions. Proxy calls should already be wrapping each tx within the
+      // batch via `useBatchCall`.
+      if (
+        txRef.current?.method.toHuman().section === 'utility' &&
+        txRef.current?.method.toHuman().method === 'batch'
+      ) {
+        return;
+      }
+
+      // Not a batch transaction: wrap tx in proxy call.
       txRef.current = api.tx.proxy.proxy(
         {
           id: from,
