@@ -80,7 +80,6 @@ export const Overview = () => {
         <RowSection secondary>
           <GraphWrapper minHeight={PAYOUTS_HEIGHT} flex>
             <BalanceChart />
-            <BalanceLinks />
           </GraphWrapper>
         </RowSection>
         <RowSection hLast vLast>
