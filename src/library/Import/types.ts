@@ -1,4 +1,3 @@
-import type { ImportedAccount } from '@polkadot-cloud/react/types';
 import type { FunctionComponent, SVGProps } from 'react';
 import type { AnyFunction } from 'types';
 
@@ -28,17 +27,13 @@ export interface AddressProps {
 export interface ConfirmProps {
   address: string;
   index: number;
+  addHandler: AnyFunction;
   source: string;
-  addHandler: (
-    address: string,
-    index: number,
-    callback?: () => void
-  ) => ImportedAccount | null;
 }
 
 export interface RemoveProps {
   address: string;
+  getHandler: AnyFunction;
+  removeHandler: AnyFunction;
   source: string;
-  getHandler: (address: string) => ImportedAccount | null;
-  removeHandler: (address: string, callback?: () => void) => void;
 }

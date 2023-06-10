@@ -1,16 +1,15 @@
-// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: GPL-3.0-only
+// Copyright 2023 @paritytech/polkadot-live authors & contributors
+// SPDX-License-Identifier: Apache-2.0
 
+import { ButtonMono, ButtonMonoInvert } from '@polkadotcloud/core-ui';
 import { registerSaEvent } from 'Utils';
-import { ButtonMono, ButtonMonoInvert, Polkicon } from '@polkadot-cloud/react';
-import { useTranslation } from 'react-i18next';
-import { usePrompt } from 'contexts/Prompt';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { useOverlay } from 'contexts/Overlay';
+import { Identicon } from 'library/Identicon';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
-import { useOtherAccounts } from 'contexts/Connect/OtherAccounts';
-import { useNetwork } from 'contexts/Network';
+import { useTranslation } from 'react-i18next';
 import type { ConfirmProps } from './types';
-import { NotificationsController } from 'static/NotificationsController';
-import { ellipsisFn } from '@polkadot-cloud/utils';
 
 export const Confirm = ({
   address,
@@ -19,22 +18,13 @@ export const Confirm = ({
   source,
 }: ConfirmProps) => {
   const { t } = useTranslation('modals');
-  const { network } = useNetwork();
-  const { setStatus } = usePrompt();
-  const { addOtherAccounts } = useOtherAccounts();
-
-  const addAccountCallback = () => {
-    NotificationsController.emit({
-      title: t('ledgerAccountImported'),
-      subtitle: t('ledgerImportedAccount', {
-        account: ellipsisFn(address),
-      }),
-    });
-  };
+  const { network } = useApi();
+  const { addToAccounts } = useConnect();
+  const { setStatus } = useOverlay();
 
   return (
     <ConfirmWrapper>
-      <Polkicon address={address} size="3rem" />
+      <Identicon value={address} size={60} />
       <h3>{t('importAccount')}</h3>
       <h5>{address}</h5>
       <div className="footer">
@@ -42,11 +32,11 @@ export const Confirm = ({
         <ButtonMono
           text={t('importAccount')}
           onClick={() => {
-            const account = addHandler(address, index, addAccountCallback);
+            const account = addHandler(address, index);
             if (account) {
-              addOtherAccounts([account]);
+              addToAccounts([account]);
               registerSaEvent(
-                `${network.toLowerCase()}_${source}_account_import`
+                `${network.name.toLowerCase()}_${source}_account_import`
               );
             }
             setStatus(0);
