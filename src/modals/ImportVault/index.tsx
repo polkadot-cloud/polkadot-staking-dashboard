@@ -76,7 +76,6 @@ export const ImportVault = () => {
 
   return (
     <>
-      <Heading title={vaultAccounts.length ? 'Polkadot Vault' : ''} />
       {vaultAccounts.length === 0 ? (
         <NoAccounts
           Icon={Icon}
@@ -96,6 +95,7 @@ export const ImportVault = () => {
         </NoAccounts>
       ) : (
         <>
+          <Heading title={vaultAccounts.length ? 'Polkadot Vault' : ''} />
           <AddressesWrapper>
             <div className="items">
               {vaultAccounts.map(({ address, name, index }: AnyJson, i) => (
