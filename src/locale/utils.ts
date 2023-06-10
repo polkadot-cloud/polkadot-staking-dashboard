@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: Apache-2.0
 
+import { extractUrlValue, varToUrlHash } from '@polkadotcloud/utils';
 import { registerSaEvent } from 'Utils';
-import { extractUrlValue, varToUrlHash } from '@polkadot-cloud/utils';
 import { DefaultLocale } from 'consts';
 import type { AnyApi, AnyJson } from 'types';
 import { availableLanguages, fallbackResources, lngNamespaces } from '.';
@@ -15,16 +15,16 @@ import { availableLanguages, fallbackResources, lngNamespaces } from '.';
 export const getInitialLanguage = () => {
   // get language from url if present
   const urlLng = extractUrlValue('l');
-
-  if (availableLanguages.find((n) => n[0] === urlLng) && urlLng) {
+  if (availableLanguages.find((n: any) => n[0] === urlLng) && urlLng) {
     registerSaEvent(`locale_from_url_${urlLng}`);
+
     localStorage.setItem('lng', urlLng);
     return urlLng;
   }
 
   // fall back to localStorage if present.
   const localLng = localStorage.getItem('lng');
-  if (availableLanguages.find((n) => n[0] === localLng) && localLng) {
+  if (availableLanguages.find((n: any) => n[0] === localLng) && localLng) {
     return localLng;
   }
 
@@ -130,7 +130,7 @@ export const loadLngAsync = async (l: string) => {
 // Handles a dynamic import
 //
 // Once imports have been loaded, they are added to i18next as resources.
-// Finally, the active language is changed to the imported language.
+// Finally, the active langauge is changed to the imported language.
 export const doDynamicImport = async (lng: string, i18next: AnyApi) => {
   const { l, r } = await loadLngAsync(lng);
   localStorage.setItem('lng_resources', JSON.stringify({ l: lng, r }));
