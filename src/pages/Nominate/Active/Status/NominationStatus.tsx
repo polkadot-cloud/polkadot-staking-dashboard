@@ -52,7 +52,7 @@ export const NominationStatus = ({
     !nominationStatus.activeNominees.length &&
     (checking || !isExposed)
       ? {
-          disabled: checking,
+          disabled: checking || isReadOnlyAccount(controller),
           title: fastUnstakeText,
           icon: faBolt,
           onClick: () => {
@@ -84,7 +84,7 @@ export const NominationStatus = ({
         !showButtons
           ? []
           : !inSetup()
-          ? !isUnstaking && !isReadOnlyAccount(controller)
+          ? !isUnstaking
             ? [unstakeButton]
             : []
           : isNetworkSyncing
