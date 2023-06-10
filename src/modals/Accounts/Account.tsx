@@ -7,7 +7,6 @@ import { clipAddress } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
-import { useProxies } from 'contexts/Proxies';
 import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
 import { ReactComponent as PolkadotVaultIconSVG } from 'img/polkadotVault.svg';
 import { Identicon } from 'library/Identicon';
@@ -20,6 +19,7 @@ export const AccountButton = ({
   label,
   delegator,
   noBorder = false,
+  proxyType,
 }: AccountItemProps) => {
   const { t } = useTranslation('modals');
   const { setStatus } = useModal();
@@ -31,7 +31,6 @@ export const AccountButton = ({
     activeProxy,
     setActiveProxy,
   } = useConnect();
-  const { getProxyDelegate } = useProxies();
 
   const meta = getAccount(address || '');
 
@@ -45,8 +44,6 @@ export const AccountButton = ({
   const imported = !!meta;
   const connectTo = delegator || address || '';
   const connectProxy = delegator ? address || null : '';
-
-  const proxyDelegate = getProxyDelegate(connectTo, connectProxy);
 
   const isActive =
     (connectTo === activeAccount &&
@@ -62,7 +59,9 @@ export const AccountButton = ({
         onClick={() => {
           if (imported) {
             connectToAccount(getAccount(connectTo));
-            setActiveProxy(connectProxy);
+            if (proxyType) {
+              setActiveProxy({ address: connectProxy, proxyType });
+            }
             setStatus(2);
           }
         }}
@@ -81,7 +80,7 @@ export const AccountButton = ({
             {delegator && (
               <>
                 <span>
-                  {proxyDelegate?.proxyType} {t('proxy')}
+                  {proxyType} {t('proxy')}
                 </span>
               </>
             )}

@@ -188,17 +188,24 @@ export const ProxiesProvider = ({
       !activeProxy &&
       activeAccount
     ) {
-      // Add `activePrroxy` as external account if not imported.
-      if (!accounts.find(({ address }) => address === localActiveProxy)) {
-        addExternalAccount(localActiveProxy, 'system');
-      }
+      try {
+        const { address, proxyType } = JSON.parse(localActiveProxy);
+        // Add proxy address as external account if not imported.
+        if (!accounts.find((a) => a.address === address)) {
+          addExternalAccount(address, 'system');
+        }
 
-      const isActive = (
-        proxiesRef.current.find(({ delegator }) => delegator === activeAccount)
-          ?.delegates || []
-      ).find(({ delegate }) => delegate === localActiveProxy);
-      if (isActive) {
-        setActiveProxy(localActiveProxy);
+        const isActive = (
+          proxiesRef.current.find(
+            ({ delegator }) => delegator === activeAccount
+          )?.delegates || []
+        ).find((d) => d.delegate === address && d.proxyType === proxyType);
+        if (isActive) {
+          setActiveProxy({ address, proxyType });
+        }
+      } catch (e) {
+        // Corrupt local active proxy record. Remove it.
+        localStorage.removeItem(`${network.name}_active_proxy`);
       }
     }
   }, [accounts, activeAccount, proxiesRef.current, network]);
