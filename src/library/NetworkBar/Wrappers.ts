@@ -2,25 +2,32 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { SideMenuStickyThreshold } from 'consts';
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Wrapper = styled(motion.div)`
+export const Wrapper = styled.div`
   background: var(--background-app-footer);
-  width: 100%;
+  color: var(--text-color-secondary);
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: row nowrap;
   align-items: center;
-  font-size: 0.85rem;
-  color: #444;
   bottom: 0px;
   left: 0px;
   overflow: hidden;
   z-index: 6;
   backdrop-filter: blur(4px);
   position: relative;
+  padding-top: 0.15rem;
+  font-size: 0.85rem;
+  width: 100%;
+
   @media (min-width: ${SideMenuStickyThreshold + 1}px) {
     position: fixed;
+  }
+
+  .network_icon {
+    margin: 0 0 0 1rem;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 `;
 
@@ -45,8 +52,11 @@ export const Summary = styled.div`
     opacity: 0.75;
   }
   p {
-    margin: 0 0.25rem;
+    border-left: 1px solid var(--network-color-transparent);
+    margin: 0.25rem 0.5rem 0.25rem 0.15rem;
     font-size: 0.85rem;
+    padding-left: 1rem;
+    line-height: 1.2rem;
   }
   .stat {
     margin: 0 0.25rem;
@@ -57,7 +67,7 @@ export const Summary = styled.div`
   /* left and right sections for each row*/
   > section {
     color: var(--text-color-secondary);
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem 0;
 
     /* left section */
     &:nth-child(1) {
@@ -65,11 +75,6 @@ export const Summary = styled.div`
       flex-flow: row wrap;
       align-items: center;
       flex-grow: 1;
-      .network_icon {
-        margin-right: 0.5rem;
-        width: 1.5rem;
-        height: 1.5rem;
-      }
     }
 
     /* right section */
@@ -78,6 +83,8 @@ export const Summary = styled.div`
       display: flex;
       align-items: center;
       flex-flow: row-reverse wrap;
+      padding-right: 0.5rem;
+
       button {
         color: var(--text-color-secondary);
         border-radius: 0.4rem;
@@ -93,63 +100,6 @@ export const Summary = styled.div`
         }
       }
     }
-  }
-`;
-
-export const NetworkInfo = styled(motion.div)`
-  width: 100%;
-  background: var(--network-color-primary);
-  flex: 1;
-  display: flex;
-  flex-flow: column nowrap;
-  align-content: flex-end;
-  padding: 0.25rem 1rem 1rem 1rem;
-  overflow: auto;
-
-  > .row {
-    display: flex;
-    justify-content: flex-end;
-
-    h2 {
-      color: #eee;
-      font-size: 1.1rem;
-      line-height: 2rem;
-      padding: 0 0.25rem;
-      margin: 1rem 0;
-    }
-
-    > div,
-    > button {
-      background: rgba(0, 0, 0, 0.1);
-      margin-right: 1rem;
-      border-radius: 0.5rem;
-      padding: 0.5rem 1.25rem;
-      display: flex;
-      flex-flow: column nowrap;
-
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-    > div,
-    > span {
-      padding: 1rem;
-    }
-    h3 {
-      margin: 0.25rem 0;
-      color: #f1f1f1;
-      padding: 0.2rem 0;
-
-      &.val {
-        font-size: 0.85rem;
-        color: #e6e6e6;
-      }
-    }
-  }
-
-  > .row:first-child > h3 {
-    margin-top: 0.5rem;
-    border-top: 0;
   }
 `;
 
