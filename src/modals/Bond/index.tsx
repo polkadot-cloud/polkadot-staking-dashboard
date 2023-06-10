@@ -126,7 +126,7 @@ export const Bond = () => {
   // modal resize on form update
   useEffect(() => {
     setResize();
-  }, [bond, warnings]);
+  }, [bond, warnings.length]);
 
   return (
     <>
