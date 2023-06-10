@@ -21,7 +21,7 @@ export const ManageBond = () => {
   const { network } = useApi();
   const { units } = network;
   const { openModalWith } = useModal();
-  const { activeAccount } = useConnect();
+  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { isPoolSyncing } = useUi();
   const { isBonding, isMember, selectedActivePool } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
@@ -52,6 +52,7 @@ export const ManageBond = () => {
               isPoolSyncing ||
               !isBonding() ||
               !isMember() ||
+              isReadOnlyAccount(activeAccount) ||
               state === 'Destroying'
             }
             marginRight
@@ -63,6 +64,7 @@ export const ManageBond = () => {
               isPoolSyncing ||
               !isBonding() ||
               !isMember() ||
+              isReadOnlyAccount(activeAccount) ||
               state === 'Destroying'
             }
             marginRight
@@ -72,7 +74,12 @@ export const ManageBond = () => {
             text="-"
           />
           <ButtonPrimary
-            disabled={isPoolSyncing || !isMember() || state === 'Destroying'}
+            disabled={
+              isPoolSyncing ||
+              !isMember() ||
+              isReadOnlyAccount(activeAccount) ||
+              state === 'Destroying'
+            }
             iconLeft={faLockOpen}
             onClick={() =>
               openModalWith(
