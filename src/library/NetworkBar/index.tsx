@@ -5,13 +5,12 @@ import { capitalizeFirstLetter } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useOverlay } from 'contexts/Overlay';
 import { usePlugins } from 'contexts/Plugins';
-import { useOutsideAlerter } from 'library/Hooks';
 import { usePrices } from 'library/Hooks/usePrices';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Disclaimer } from './Disclaimer';
 import { Status } from './Status';
-import { NetworkInfo, Separator, Summary, Wrapper } from './Wrappers';
+import { Summary, Wrapper } from './Wrappers';
 
 export const NetworkBar = () => {
   const { t } = useTranslation('library');
@@ -19,22 +18,6 @@ export const NetworkBar = () => {
   const { network, isLightClient } = useApi();
   const prices = usePrices();
   const { openOverlayWith } = useOverlay();
-
-  // currently not in use
-  const [open, setOpen] = useState(false);
-
-  // handle expand transitions
-  const variants = {
-    minimised: {
-      height: '2.5rem',
-    },
-    maximised: {
-      height: '155px',
-    },
-  };
-
-  const animate = open ? 'maximised' : 'minimised';
-  const ref = useRef(null);
 
   const PRIVACY_URL = import.meta.env.VITE_PRIVACY_URL;
   const DISCLAIMER_URL = import.meta.env.VITE_DISCLAIMER_URL;
@@ -45,14 +28,6 @@ export const NetworkBar = () => {
     capitalizeFirstLetter(network.name)
   );
 
-  useOutsideAlerter(
-    ref,
-    () => {
-      setOpen(false);
-    },
-    ['igignore-network-info-toggle']
-  );
-
   useEffect(() => {
     setNetworkName(
       `${capitalizeFirstLetter(network.name)}${isLightClient ? ` Light` : ``}`
@@ -60,22 +35,11 @@ export const NetworkBar = () => {
   }, [network.name, isLightClient]);
 
   return (
-    <Wrapper
-      ref={ref}
-      initial={false}
-      animate={animate}
-      transition={{
-        duration: 0.4,
-        type: 'spring',
-        bounce: 0.25,
-      }}
-      variants={variants}
-    >
+    <Wrapper>
+      <network.brand.icon className="network_icon" />
       <Summary>
         <section>
-          <network.brand.icon className="network_icon" />
           <p>{ORGANISATION === undefined ? networkName : ORGANISATION}</p>
-          <Separator />
           {PRIVACY_URL !== undefined ? (
             <p>
               <a href={PRIVACY_URL} target="_blank" rel="noreferrer">
@@ -87,7 +51,6 @@ export const NetworkBar = () => {
           )}
           {DISCLAIMER_URL !== undefined && (
             <>
-              <Separator />
               <p>
                 <a href={DISCLAIMER_URL} target="_blank" rel="noreferrer">
                   {t('disclaimer')}
@@ -95,10 +58,8 @@ export const NetworkBar = () => {
               </p>
             </>
           )}
-          <Separator />
           {LEGAL_DISCLOSURES_URL !== undefined && (
             <>
-              <Separator />
               <p>
                 <a
                   href={LEGAL_DISCLOSURES_URL}
@@ -110,7 +71,6 @@ export const NetworkBar = () => {
               </p>
             </>
           )}
-          <Separator />
           <p>
             <button
               type="button"
@@ -148,8 +108,6 @@ export const NetworkBar = () => {
           </div>
         </section>
       </Summary>
-
-      <NetworkInfo />
     </Wrapper>
   );
 };
