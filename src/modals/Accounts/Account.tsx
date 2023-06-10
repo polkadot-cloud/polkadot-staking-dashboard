@@ -57,9 +57,11 @@ export const AccountButton = ({
         type="button"
         disabled={!imported}
         onClick={() => {
-          if (imported && proxyType) {
+          if (imported) {
             connectToAccount(getAccount(connectTo));
-            setActiveProxy({ address: connectProxy, proxyType });
+            if (proxyType) {
+              setActiveProxy({ address: connectProxy, proxyType });
+            }
             setStatus(2);
           }
         }}
