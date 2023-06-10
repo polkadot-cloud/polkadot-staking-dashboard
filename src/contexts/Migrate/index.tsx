@@ -40,7 +40,7 @@ export const MigrateProvider = ({
   // Removes the previous active proxies from local storage.
   const removeDeprecatedActiveProxies = () =>
     Object.values(NetworkList).forEach((n: any) => {
-      localStorage.removeItem(`${n.name}active_proxy`);
+      localStorage.removeItem(`${n.name}_active_proxy`);
     });
 
   useEffect(() => {

@@ -190,7 +190,7 @@ export const ProxiesProvider = ({
     ) {
       try {
         const { address, proxyType } = JSON.parse(localActiveProxy);
-        // Add `activePrroxy` as external account if not imported.
+        // Add proxy address as external account if not imported.
         if (!accounts.find((a) => a.address === address)) {
           addExternalAccount(address, 'system');
         }
@@ -204,7 +204,7 @@ export const ProxiesProvider = ({
           setActiveProxy({ address, proxyType });
         }
       } catch (e) {
-        // Corrupt local active_proxy record. Remove it.
+        // Corrupt local active proxy record. Remove it.
         localStorage.removeItem(`${network.name}_active_proxy`);
       }
     }

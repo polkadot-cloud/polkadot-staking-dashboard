@@ -25,7 +25,6 @@ export interface ConnectContextInterface {
   accounts: ExtensionAccount[];
   activeAccount: MaybeAccount;
   activeProxy: MaybeAccount;
-  activeProxyType: string | null;
 }
 
 export type ImportedAccount =
