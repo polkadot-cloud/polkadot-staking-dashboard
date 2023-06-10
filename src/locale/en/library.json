@@ -45,6 +45,7 @@
     "destroying": "Destroying",
     "destroyingPools": "Destroying Pools",
     "disclaimer": "Disclaimer",
+    "legalDisclosures": "Legal Disclosures",
     "dashboardDisclaimer": "Dashboard Disclaimer",
     "disconnected": "Disconnected",
     "displayingValidators_one": "Displaying {{count}} Validator",

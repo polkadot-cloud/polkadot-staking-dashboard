@@ -39,6 +39,7 @@ export const NetworkBar = () => {
   const PRIVACY_URL = import.meta.env.VITE_PRIVACY_URL;
   const DISCLAIMER_URL = import.meta.env.VITE_DISCLAIMER_URL;
   const ORGANISATION = import.meta.env.VITE_ORGANISATION;
+  const LEGAL_DISCLOSURES_URL = import.meta.env.VITE_LEGAL_DISCLOSURES_URL;
 
   const [networkName, setNetworkName] = useState<string>(
     capitalizeFirstLetter(network.name)
@@ -90,6 +91,21 @@ export const NetworkBar = () => {
               <p>
                 <a href={DISCLAIMER_URL} target="_blank" rel="noreferrer">
                   {t('disclaimer')}
+                </a>
+              </p>
+            </>
+          )}
+          <Separator />
+          {LEGAL_DISCLOSURES_URL !== undefined && (
+            <>
+              <Separator />
+              <p>
+                <a
+                  href={LEGAL_DISCLOSURES_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {t('legalDisclosures')}
                 </a>
               </p>
             </>
