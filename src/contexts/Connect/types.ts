@@ -20,11 +20,12 @@ export interface ConnectContextInterface {
   isReadOnlyAccount: (a: MaybeAccount) => boolean;
   addToAccounts: (a: ImportedAccount[]) => void;
   forgetAccounts: (a: ImportedAccount[]) => void;
-  setActiveProxy: (p: MaybeAccount, l?: boolean) => void;
+  setActiveProxy: (p: ActiveProxy, l?: boolean) => void;
   renameImportedAccount: (a: MaybeAccount, n: string) => void;
   accounts: ExtensionAccount[];
   activeAccount: MaybeAccount;
   activeProxy: MaybeAccount;
+  activeProxyType: string | null;
 }
 
 export type ImportedAccount =
@@ -62,3 +63,8 @@ export interface HandleImportExtension {
     removedActiveAccount: MaybeAccount;
   };
 }
+
+export type ActiveProxy = {
+  address: MaybeAccount;
+  proxyType: string;
+} | null;

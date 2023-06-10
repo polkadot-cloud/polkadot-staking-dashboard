@@ -24,11 +24,12 @@ export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
     <>
       {delegatesList.length ? (
         <AccountGroupWrapper>
-          {delegatesList.map(({ delegate }) => (
+          {delegatesList.map(({ delegate, proxyType }) => (
             <AccountButton
               key={`_del_${delegator}_${delegate}`}
               address={delegate}
               delegator={delegator}
+              proxyType={proxyType}
             />
           ))}
         </AccountGroupWrapper>

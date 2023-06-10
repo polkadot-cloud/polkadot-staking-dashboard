@@ -37,6 +37,12 @@ export const MigrateProvider = ({
         localStorage.removeItem(`${n.name}_pool_setup_${a.address}`);
     });
 
+  // Removes the previous active proxies from local storage.
+  const removeDeprecatedActiveProxies = () =>
+    Object.values(NetworkList).forEach((n: any) => {
+      localStorage.removeItem(`${n.name}active_proxy`);
+    });
+
   useEffect(() => {
     if (isReady && !isNetworkSyncing && !done) {
       // Carry out migrations if local version is different to current version.
@@ -51,6 +57,11 @@ export const MigrateProvider = ({
         // Remove legacy local nominator setup and pool setup items.
         removeDeprecatedNominatorSetups();
         removeDeprecatedPoolSetups();
+
+        // Added in 1.0.8.
+        //
+        // Remove legacy local active proxy records.
+        removeDeprecatedActiveProxies();
 
         // Finally,
         //
