@@ -11,6 +11,7 @@ export interface AccountItemProps {
   asElement?: boolean;
   delegator?: string;
   noBorder?: boolean;
+  proxyType?: string;
 }
 
 export interface DelegatesProps {

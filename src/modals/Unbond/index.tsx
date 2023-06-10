@@ -96,11 +96,6 @@ export const Unbond = () => {
     setBond({ bond: unbondToMin.toString() });
   }, [freeToUnbond.toString()]);
 
-  // modal resize on form update
-  useEffect(() => {
-    setResize();
-  }, [bond]);
-
   // tx to submit
   const getTx = () => {
     let tx = null;
@@ -172,6 +167,11 @@ export const Unbond = () => {
   if (activeBn.isZero()) {
     warnings.push(t('unbondErrorNoFunds', { unit: network.unit }));
   }
+
+  // modal resize on form update
+  useEffect(() => {
+    setResize();
+  }, [bond, warnings.length]);
 
   return (
     <>

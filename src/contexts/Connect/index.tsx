@@ -12,6 +12,7 @@ import { registerSaEvent } from 'Utils';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import type {
+  ActiveProxy,
   ConnectContextInterface,
   ExternalAccount,
   ImportedAccount,
@@ -66,18 +67,21 @@ export const ConnectProvider = ({
   const activeAccountRef = useRef<string | null>(activeAccount);
 
   // store the active proxy account
-  const [activeProxy, setActiveProxyState] = useState<MaybeAccount>(null);
+  const [activeProxy, setActiveProxyState] = useState<ActiveProxy>(null);
   const activeProxyRef = useRef(activeProxy);
 
-  const setActiveProxy = (proxy: MaybeAccount, updateLocal = true) => {
+  const setActiveProxy = (newActiveProxy: ActiveProxy, updateLocal = true) => {
     if (updateLocal) {
-      if (proxy) {
-        localStorage.setItem(`${network.name}_active_proxy`, proxy);
+      if (newActiveProxy) {
+        localStorage.setItem(
+          `${network.name}_active_proxy`,
+          JSON.stringify(newActiveProxy)
+        );
       } else {
         localStorage.removeItem(`${network.name}_active_proxy`);
       }
     }
-    setStateWithRef(proxy, setActiveProxyState, activeProxyRef);
+    setStateWithRef(newActiveProxy, setActiveProxyState, activeProxyRef);
   };
 
   // store unsubscribe handlers for connected extensions.
@@ -654,7 +658,7 @@ export const ConnectProvider = ({
         renameImportedAccount,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
-        activeProxy: activeProxyRef.current,
+        activeProxy: activeProxyRef.current?.address ?? null,
       }}
     >
       {children}
