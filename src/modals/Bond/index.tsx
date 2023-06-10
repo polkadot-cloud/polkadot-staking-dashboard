@@ -76,11 +76,6 @@ export const Bond = () => {
     setBond({ bond: freeBalance.toString() });
   }, [freeBalance.toString()]);
 
-  // modal resize on form update
-  useEffect(() => {
-    setResize();
-  }, [bond]);
-
   // determine whether this is a pool or staking transaction.
   const determineTx = (bondToSubmit: BigNumber) => {
     let tx = null;
@@ -127,6 +122,11 @@ export const Bond = () => {
     false,
     submitExtrinsic.proxySupported
   );
+
+  // modal resize on form update
+  useEffect(() => {
+    setResize();
+  }, [bond, warnings]);
 
   return (
     <>
