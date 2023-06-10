@@ -25,7 +25,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   } = useLedgerHardware();
   const { mode } = useTheme();
   const { openHelp } = useHelp();
-  const { replaceModalWith, setStatus, setResize } = useModal();
+  const { replaceModalWith, setResize } = useModal();
 
   const statusCodes = getStatusCodes();
 
