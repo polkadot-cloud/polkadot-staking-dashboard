@@ -13,6 +13,7 @@ import {
   RowSection,
 } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
+import { registerSaEvent } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { DefaultLocale } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -73,6 +74,7 @@ export const Overview = () => {
   const [isDismissed, setIsDismissed] = useState(dismissed);
 
   const handleDismiss = () => {
+    registerSaEvent(`delegate_banner_dismissed`);
     localStorage.setItem('delegate_banner_dismissed', '1');
     setIsDismissed(true);
   };

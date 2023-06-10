@@ -32,6 +32,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   const { openOverlayWith } = useOverlay();
   const { renameImportedAccount } = useConnect();
   const isExecuting = getIsExecuting();
+  const source = 'ledger';
 
   const renameHandler = (address: string, newName: string) => {
     renameLedgerAccount(address, newName);
@@ -40,7 +41,12 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
 
   const openConfirmHandler = (address: string, index: number) => {
     openOverlayWith(
-      <Confirm address={address} index={index} addHandler={addLedgerAccount} />,
+      <Confirm
+        address={address}
+        index={index}
+        addHandler={addLedgerAccount}
+        source={source}
+      />,
       'small'
     );
   };
@@ -51,6 +57,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
         address={address}
         removeHandler={removeLedgerAccount}
         getHandler={getLedgerAccount}
+        source={source}
       />,
       'small'
     );

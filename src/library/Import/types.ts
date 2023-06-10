@@ -28,10 +28,12 @@ export interface ConfirmProps {
   address: string;
   index: number;
   addHandler: AnyFunction;
+  source: string;
 }
 
 export interface RemoveProps {
   address: string;
   getHandler: AnyFunction;
   removeHandler: AnyFunction;
+  source: string;
 }

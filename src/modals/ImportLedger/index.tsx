@@ -133,7 +133,6 @@ export const ImportLedger: React.FC = () => {
         addressesRef
       );
       resetStatusCodes();
-
       registerSaEvent(`${network.name.toLowerCase()}_ledger_account_fetched`);
     }
   };

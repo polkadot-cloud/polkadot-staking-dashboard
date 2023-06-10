@@ -11,7 +11,12 @@ import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { useTranslation } from 'react-i18next';
 import type { ConfirmProps } from './types';
 
-export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
+export const Confirm = ({
+  address,
+  index,
+  addHandler,
+  source,
+}: ConfirmProps) => {
   const { t } = useTranslation('modals');
   const { network } = useApi();
   const { addToAccounts } = useConnect();
@@ -31,7 +36,7 @@ export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
             if (account) {
               addToAccounts([account]);
               registerSaEvent(
-                `${network.name.toLowerCase()}_ledger_account_import`
+                `${network.name.toLowerCase()}_${source}_account_import`
               );
             }
             setStatus(0);

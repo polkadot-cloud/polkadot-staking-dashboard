@@ -11,7 +11,12 @@ import { ConfirmWrapper } from 'library/Import/Wrappers';
 import { useTranslation } from 'react-i18next';
 import type { RemoveProps } from './types';
 
-export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
+export const Remove = ({
+  address,
+  getHandler,
+  removeHandler,
+  source,
+}: RemoveProps) => {
   const { t } = useTranslation('modals');
   const { network } = useApi();
   const { forgetAccounts } = useConnect();
@@ -32,7 +37,7 @@ export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {
               removeHandler(address);
               forgetAccounts([account]);
               registerSaEvent(
-                `${network.name.toLowerCase()}_ledger_account_removal`
+                `${network.name.toLowerCase()}_${source}_account_removal`
               );
               setStatus(0);
             }

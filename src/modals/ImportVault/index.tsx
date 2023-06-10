@@ -39,6 +39,7 @@ export const ImportVault = () => {
     getVaultAccount,
   } = useVaultHardware();
   const { setResize } = useModal();
+  const source = 'vault';
 
   const renameHandler = (address: string, newName: string) => {
     renameVaultAccount(address, newName);
@@ -47,7 +48,12 @@ export const ImportVault = () => {
 
   const openConfirmHandler = (address: string, index: number) => {
     openOverlayWith(
-      <Confirm address={address} index={index} addHandler={addVaultAccount} />,
+      <Confirm
+        address={address}
+        index={index}
+        addHandler={addVaultAccount}
+        source={source}
+      />,
       'small'
     );
   };
@@ -58,6 +64,7 @@ export const ImportVault = () => {
         address={address}
         removeHandler={removeVaultAccount}
         getHandler={getVaultAccount}
+        source={source}
       />,
       'small'
     );

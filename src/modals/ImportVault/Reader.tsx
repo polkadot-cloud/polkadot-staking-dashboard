@@ -4,6 +4,8 @@
 import { QrScanSignature } from '@polkadot/react-qr';
 import { ButtonSecondary } from '@polkadotcloud/core-ui';
 import { isValidAddress } from '@polkadotcloud/utils';
+import { registerSaEvent } from 'Utils';
+import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { useOverlay } from 'contexts/Overlay';
@@ -13,6 +15,9 @@ import { useTranslation } from 'react-i18next';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');
+  const {
+    network: { name },
+  } = useApi();
   const { addToAccounts, formatAccountSs58 } = useConnect();
   const { setStatus: setOverlayStatus } = useOverlay();
   const { addVaultAccount, vaultAccountExists, vaultAccounts } =
@@ -43,6 +48,7 @@ export const Reader = () => {
     if (valid) {
       const account = addVaultAccount(qrData, vaultAccounts.length);
       if (account) {
+        registerSaEvent(`${name.toLowerCase()}_vault_account_import`);
         addToAccounts([account]);
       }
       setOverlayStatus(0);
