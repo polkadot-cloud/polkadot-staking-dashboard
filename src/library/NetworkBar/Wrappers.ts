@@ -48,14 +48,17 @@ export const Summary = styled.div`
     }
   }
 
-  a {
+  a,
+  button {
+    color: var(--text-color-secondary);
+    font-size: 0.85rem;
     opacity: 0.75;
   }
   p {
     border-left: 1px solid var(--network-color-transparent);
     margin: 0.25rem 0.5rem 0.25rem 0.15rem;
     font-size: 0.85rem;
-    padding-left: 1rem;
+    padding-left: 0.5rem;
     line-height: 1.2rem;
   }
   .stat {
