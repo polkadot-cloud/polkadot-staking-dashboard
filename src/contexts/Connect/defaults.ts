@@ -35,6 +35,7 @@ export const defaultConnectContext: ConnectContextInterface = {
   activeAccount: null,
   activeProxy: null,
   activeProxyType: null,
+  accountsInitialised: false,
 };
 
 export const defaultHandleImportExtension = {

@@ -6,6 +6,8 @@ import { extractUrlValue } from '@polkadotcloud/utils';
 import { registerLastVisited, registerSaEvent } from 'Utils';
 import { PagesConfig } from 'config/pages';
 import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { useNotifications } from 'contexts/Notifications';
 import { useOverlay } from 'contexts/Overlay';
 import { useUi } from 'contexts/UI';
 import { AnimatePresence } from 'framer-motion';
@@ -33,9 +35,12 @@ import {
 } from 'react-router-dom';
 
 export const RouterInner = () => {
-  const { t } = useTranslation('base');
-  const { pathname, search } = useLocation();
+  const { t } = useTranslation();
   const { network } = useApi();
+  const { pathname, search } = useLocation();
+  const { addNotification } = useNotifications();
+  const { accountsInitialised, accounts, activeAccount, connectToAccount } =
+    useConnect();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
   const { openOverlayWith } = useOverlay();
 
@@ -54,7 +59,6 @@ export const RouterInner = () => {
     registerLastVisited(utmSource);
   }, []);
 
-  // scroll to top of the window on every page change or network change
   // scroll to top of the window on every page change or network change.
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -66,6 +70,25 @@ export const RouterInner = () => {
       mainInterface: mainInterfaceRef,
     });
   }, []);
+
+  // open default account modal if url var present and accounts initialised.
+  useEffect(() => {
+    if (accountsInitialised) {
+      const aUrl = extractUrlValue('a');
+      if (aUrl) {
+        const account = accounts.find((a) => a.address === aUrl);
+        if (account && aUrl !== activeAccount) {
+          connectToAccount(account);
+          addNotification({
+            title: t('accountConnected', { ns: 'library' }),
+            subtitle: `${t('connectedTo', { ns: 'library' })} ${
+              account?.name || aUrl
+            }.`,
+          });
+        }
+      }
+    }
+  }, [accountsInitialised]);
 
   // references to outer containers
   const mainInterfaceRef = useRef<HTMLDivElement>(null);
@@ -112,6 +135,7 @@ export const RouterInner = () => {
                           <Helmet>
                             <title>{`${t(key)} : ${t('title', {
                               context: `${network.name}`,
+                              ns: 'base',
                             })}`}</title>
                           </Helmet>
                           <Entry page={page} />

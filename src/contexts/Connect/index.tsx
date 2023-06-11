@@ -93,6 +93,12 @@ export const ConnectProvider = ({
   );
   const extensionsInitialisedRef = useRef(extensionsInitialised);
 
+  // store whether hardwaree accounts have been initialised.
+  const hardwareInitialisedRef = useRef<boolean>(false);
+
+  // store whether all accounts have been initialised.
+  const accountsInitialisedRef = useRef<boolean>(false);
+
   /* re-sync extensions accounts on network switch
    * do this if activeAccount is present.
    * if activeAccount is present, and extensions have for some
@@ -112,7 +118,8 @@ export const ConnectProvider = ({
 
       // if extensions have been fetched, get accounts if extensions exist and
       // local extensions exist (previously connected).
-      if (extensions) {
+
+      if (extensions.length) {
         // get active extensions
         const localExtensions = localStorageOrDefault(
           `active_extensions`,
@@ -135,12 +142,11 @@ export const ConnectProvider = ({
   // `injectedWeb3`, mark extensions as fetched
   useEffect(() => {
     if (!checkingInjectedWeb3) {
-      const countExtensions = extensions?.length ?? 0;
-      if (extensionsInitialisedRef.current.length === countExtensions) {
+      if (extensionsInitialisedRef.current.length === extensions?.length || 0) {
         setExtensionsFetched(true);
       }
     }
-  }, [extensionsInitialisedRef.current, checkingInjectedWeb3]);
+  }, [checkingInjectedWeb3, extensionsInitialisedRef.current]);
 
   // once extensions are fully initialised, fetch any external accounts present
   // in localStorage.
@@ -149,8 +155,17 @@ export const ConnectProvider = ({
       importVaultAccounts();
       importLedgerAccounts();
       importExternalAccounts();
+      // Finally, signal that initial accounts have finished being fetched.
+      hardwareInitialisedRef.current = true;
     }
   }, [extensionsFetched]);
+
+  // account fetching complete, mark accounts as initialised.
+  useEffect(() => {
+    if (extensionsFetched && hardwareInitialisedRef.current === true) {
+      accountsInitialisedRef.current = true;
+    }
+  }, [extensionsFetched, hardwareInitialisedRef.current]);
 
   /*
    * Unsubscrbe all account subscriptions
@@ -660,6 +675,7 @@ export const ConnectProvider = ({
         activeAccount: activeAccountRef.current,
         activeProxy: activeProxyRef.current?.address ?? null,
         activeProxyType: activeProxyRef.current?.proxyType ?? null,
+        accountsInitialised: accountsInitialisedRef.current,
       }}
     >
       {children}
