@@ -32,11 +32,11 @@ import {
 } from 'react-router-dom';
 
 export const RouterInner = () => {
-  const { t } = useTranslation('base');
+  const { t } = useTranslation();
   const { network } = useApi();
   const { pathname } = useLocation();
   const { addNotification } = useNotifications();
-  const { accountsInitialised, accounts, getAccount, connectToAccount } =
+  const { accountsInitialised, accounts, activeAccount, connectToAccount } =
     useConnect();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
 
@@ -58,11 +58,13 @@ export const RouterInner = () => {
       const aUrl = extractUrlValue('a');
       if (aUrl) {
         const account = accounts.find((a) => a.address === aUrl);
-        if (account) {
+        if (account && aUrl !== activeAccount) {
           connectToAccount(account);
           addNotification({
-            title: 'Account Connected',
-            subtitle: `Connected to ${account?.name || aUrl}.`,
+            title: t('accountConnected', { ns: 'library' }),
+            subtitle: `${t('connectedTo', { ns: 'library' })} ${
+              account?.name || aUrl
+            }.`,
           });
         }
       }
@@ -114,6 +116,7 @@ export const RouterInner = () => {
                           <Helmet>
                             <title>{`${t(key)} : ${t('title', {
                               context: `${network.name}`,
+                              ns: 'base',
                             })}`}</title>
                           </Helmet>
                           <Entry page={page} />

@@ -1,6 +1,7 @@
 {
   "library": {
     "100Commission": "100% 佣金",
+    "accountConnected": "帐户已连接",
     "accounts": "账户",
     "active": "活跃",
     "activeLowCommission": "活跃低佣金",
@@ -35,6 +36,7 @@
     "confirm": "确认",
     "confirmReformat": "地址已重新格式化。请确认",
     "connect": "连接",
+    "connectedTo": "连接到",
     "connectedToNetwork": "已连接网络",
     "connecting": "连接中",
     "continue": "继续",
