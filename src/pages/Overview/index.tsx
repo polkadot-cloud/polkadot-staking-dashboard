@@ -22,7 +22,6 @@ import { ControllerNotStash } from 'pages/Nominate/Active/ControllerNotStash';
 import { useTranslation } from 'react-i18next';
 import { ActiveAccounts } from './ActiveAccounts';
 import { BalanceChart } from './BalanceChart';
-import { BalanceLinks } from './BalanceLinks';
 import { NetworkStats } from './NetworkSats';
 import { Payouts } from './Payouts';
 import { StakeStatus } from './StakeStatus';
