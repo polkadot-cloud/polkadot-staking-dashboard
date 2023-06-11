@@ -133,7 +133,7 @@ export const RouterInner = () => {
                       element={
                         <Page>
                           <Helmet>
-                            <title>{`${t(key)} : ${t('title', {
+                            <title>{`${t(key, { ns: 'base' })} : ${t('title', {
                               context: `${network.name}`,
                               ns: 'base',
                             })}`}</title>
