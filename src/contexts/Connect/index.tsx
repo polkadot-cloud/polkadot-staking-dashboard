@@ -659,6 +659,7 @@ export const ConnectProvider = ({
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
         activeProxy: activeProxyRef.current?.address ?? null,
+        activeProxyType: activeProxyRef.current?.proxyType ?? null,
       }}
     >
       {children}
