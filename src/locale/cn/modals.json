@@ -120,6 +120,7 @@
     "maximumCommissionUpdated": "最高佣金值最新值",
     "minDelayBetweenUpdates": "更新之间的最小延迟",
     "minutes": "分钟",
+    "missingNesting": "Call missing nesting support, cannot sign.",
     "months": "月",
     "networks": "网络",
     "newTotalBond": "新质押总额:",
