@@ -37,6 +37,7 @@ export interface BondFeedbackProps {
   bondFor: BondFor;
   defaultBond: number | null;
   inSetup?: boolean;
+  joiningPool?: boolean;
   listenIsValid: { (v: boolean): void } | { (): void };
   parentErrors?: string[];
   disableTxFeeUpdate?: boolean;

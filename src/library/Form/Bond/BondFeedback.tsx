@@ -19,6 +19,7 @@ import { BondInput } from './BondInput';
 export const BondFeedback = ({
   bondFor,
   inSetup = false,
+  joiningPool = false,
   parentErrors = [],
   setters = [],
   listenIsValid = () => {},
@@ -106,7 +107,7 @@ export const BondFeedback = ({
     current: bond,
   });
 
-  // bond amount to minimum threshold
+  // bond amount to minimum threshold.
   const minBondBn =
     bondFor === 'pool'
       ? inSetup || isDepositor()
@@ -147,7 +148,7 @@ export const BondFeedback = ({
       newErrors.push(`${t('bondDecimalsError', { units })}`);
     }
 
-    if (inSetup) {
+    if (inSetup || joiningPool) {
       if (freeBondAmount.isLessThan(minBondBn)) {
         disabled = true;
         newErrors.push(`${t('notMeet')} ${minBondUnit} ${unit}.`);

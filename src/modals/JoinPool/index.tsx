@@ -120,6 +120,7 @@ export const JoinPool = () => {
         <h2 className="title unbounded">{t('joinPool')}</h2>
         <BondFeedback
           syncing={largestTxFee.isZero()}
+          joiningPool
           bondFor="pool"
           listenIsValid={setBondValid}
           defaultBond={null}
