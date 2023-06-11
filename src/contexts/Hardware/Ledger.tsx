@@ -105,6 +105,9 @@ export const LedgerHardwareProvider = ({
       // only set default message here - maintain previous status code.
       setFeedback(t('ledgerRequestTimeout'), 'Ledger Request Timeout');
       handleNewStatusCode('failure', 'DeviceTimeout');
+    } else if (err.startsWith('Error: Call nesting not supported')) {
+      setFeedback(t('missingNesting'));
+      handleNewStatusCode('failure', 'NestingNotSupported');
     } else if (
       err.startsWith('Error: TransportError: Invalid channel') ||
       err.startsWith('Error: InvalidStateError')

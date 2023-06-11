@@ -128,6 +128,7 @@
     "maximumCommissionUpdated": "Maximum Commission Updated",
     "minDelayBetweenUpdates": "Min Delay Between Updates",
     "minutes": "Minutes",
+    "missingNesting": "Call missing nesting support, cannot sign.",
     "months": "Months",
     "networks": "Networks",
     "newTotalBond": "New total bond:",
