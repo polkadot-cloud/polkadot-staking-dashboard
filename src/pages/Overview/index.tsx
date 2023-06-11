@@ -23,7 +23,6 @@ import { PluginLabel } from 'library/PluginLabel';
 import { useNetwork } from 'contexts/Network';
 import { ActiveAccounts } from './ActiveAccounts';
 import { BalanceChart } from './BalanceChart';
-import { BalanceLinks } from './BalanceLinks';
 import { NetworkStats } from './NetworkSats';
 import { Payouts } from './Payouts';
 import { StakeStatus } from './StakeStatus';
