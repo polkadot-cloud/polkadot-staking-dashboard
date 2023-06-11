@@ -29,6 +29,7 @@ export const AccountButton = ({
     connectToAccount,
     getAccount,
     activeProxy,
+    activeProxyType,
     setActiveProxy,
   } = useConnect();
 
@@ -49,7 +50,9 @@ export const AccountButton = ({
     (connectTo === activeAccount &&
       address === activeAccount &&
       !activeProxy) ||
-    (connectProxy === activeProxy && activeProxy);
+    (connectProxy === activeProxy &&
+      proxyType === activeProxyType &&
+      activeProxy);
 
   return (
     <AccountWrapper className={isActive ? 'active' : undefined}>
