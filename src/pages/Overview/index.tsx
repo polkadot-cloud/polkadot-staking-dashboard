@@ -78,7 +78,9 @@ export const Overview = () => {
     localStorage.setItem('delegate_banner_dismissed', '1');
     setIsDismissed(true);
   };
-  const showBanner = network.name === 'polkadot' && !isDismissed;
+
+  // `NOTE: banner currently hidden.
+  const showBanner = network.name === 'polkadot' && !isDismissed && false;
   const VisitButton = mode === 'light' ? ButtonPrimary : ButtonMonoInvert;
 
   return (
