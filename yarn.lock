@@ -710,14 +710,14 @@
     styled-components "^5.3.11"
     tslib "^2.5.3"
 
-"@polkadot/react-qr@^3.4.2":
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/@polkadot/react-qr/-/react-qr-3.4.2.tgz#8f34253a9987ed71fcc048a122a4dcb9a61a1c08"
-  integrity sha512-Fc655CCMJuAt9l66SO7XBJOjiyMdIEtP8iVRv2Ns2F+0Y9xC1Z2t250gnpTXz6ihJ0UBUL87XhE/wn5vd7Ru8w==
+"@polkadot/react-qr@^3.5.1":
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/@polkadot/react-qr/-/react-qr-3.5.1.tgz#b9690b653779d2aed6c0ce773e842a8d5ad42d11"
+  integrity sha512-3TP0U6LEzousfioZtarGDfqIpZ+sCUsRII1nzgTfpGM7VJwmAKOzBFORqoYW1Lm1mbaZ0x1m3sypfXaE5tqqJg==
   dependencies:
-    "@polkadot/ui-settings" "3.4.2"
-    "@polkadot/util" "^12.2.2"
-    "@polkadot/util-crypto" "^12.2.2"
+    "@polkadot/ui-settings" "3.5.1"
+    "@polkadot/util" "^12.3.1"
+    "@polkadot/util-crypto" "^12.3.1"
     qrcode-generator "^1.4.4"
     react-qr-reader "^2.2.1"
     styled-components "^5.3.11"
@@ -896,17 +896,6 @@
     "@polkadot/util" "^12.3.1"
     "@polkadot/util-crypto" "^12.3.1"
     rxjs "^7.8.1"
-    tslib "^2.5.3"
-
-"@polkadot/ui-settings@3.4.2":
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/@polkadot/ui-settings/-/ui-settings-3.4.2.tgz#7f9872d339e38a05dce99477d5c634b0e62e94d5"
-  integrity sha512-vnWfMcn+kT+TvF5vxnwZjsMEekklAflZcj5HNvQByeoHx6K4+MGw3dW56CZirMJcIqMqsTiUxSbmmgR5I9fvVw==
-  dependencies:
-    "@polkadot/networks" "^12.2.2"
-    "@polkadot/util" "^12.2.2"
-    eventemitter3 "^5.0.1"
-    store "^2.0.12"
     tslib "^2.5.3"
 
 "@polkadot/ui-settings@3.5.1":
