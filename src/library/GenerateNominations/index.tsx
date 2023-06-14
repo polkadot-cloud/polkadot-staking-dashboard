@@ -185,9 +185,10 @@ export const GenerateNominations = ({
   };
 
   const disabledMaxNominations = () =>
-    maxNominations.isLessThan(nominations.length);
+    maxNominations.isLessThanOrEqualTo(nominations.length);
   const disabledAddFavorites = () =>
-    !favoritesList?.length || maxNominations.isLessThan(nominations.length);
+    !favoritesList?.length ||
+    maxNominations.isLessThanOrEqualTo(nominations.length);
 
   // accumulate generation methods
   const methods = [
