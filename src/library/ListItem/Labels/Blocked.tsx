@@ -4,26 +4,16 @@
 import { faUserSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTooltip } from 'contexts/Tooltip';
-import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
-import { useRef } from 'react';
+import { TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
 import type { BlockedProps } from '../types';
 
 export const Blocked = ({ prefs }: BlockedProps) => {
   const { t } = useTranslation('library');
   const blocked = prefs?.blocked ?? null;
-  const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
-
-  const posRef = useRef(null);
+  const { setTooltipTextAndOpen } = useTooltip();
 
   const tooltipText = t('blockingNominations');
-
-  const toggleTooltip = () => {
-    if (!open) {
-      setTooltipMeta(tooltipText);
-      setTooltipPosition(posRef);
-    }
-  };
 
   return (
     <>
@@ -33,9 +23,8 @@ export const Blocked = ({ prefs }: BlockedProps) => {
             <TooltipTrigger
               className="tooltip-trigger-element"
               data-tooltip-text={tooltipText}
-              onMouseMove={() => toggleTooltip()}
+              onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
             />
-            <TooltipPosition ref={posRef} />
             <FontAwesomeIcon
               icon={faUserSlash}
               color="#d2545d"
