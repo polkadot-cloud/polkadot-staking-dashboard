@@ -11,7 +11,7 @@ export const AppVersion = '1.0.8';
 export const BaseURL = '';
 export const DappName = 'Creditcoin Staking Dashboard';
 export const CreditcoinUrl = 'https://creditcoin.org';
-export const DefaultNetwork = 'creditcoin';
+export const DefaultNetwork = 'creditcoinTest';
 
 /*
  * Data Structure Helpers
