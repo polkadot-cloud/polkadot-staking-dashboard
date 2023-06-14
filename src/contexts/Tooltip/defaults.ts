@@ -7,11 +7,11 @@ export const defaultTooltipContext: TooltipContextInterface = {
   openTooltip: () => {},
   closeTooltip: () => {},
   // eslint-disable-next-line
-  setTooltipPosition: (r) => {},
+  setTooltipPosition: (x, y) => {},
   // eslint-disable-next-line
-  checkTooltipPosition: (r) => {},
+  showTooltip: () => {},
   // eslint-disable-next-line
-  setTooltipMeta: (t) => {},
+  setTooltipTextAndOpen: (t) => {},
   open: 0,
   show: 0,
   position: [0, 0],
