@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonOption } from '@polkadotcloud/core-ui';
-import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
@@ -14,7 +13,6 @@ import { ContentWrapper } from './Wrappers';
 export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
   const { t } = useTranslation('modals');
   const { activeAccount } = useConnect();
-  const { name } = useApi().network;
   const { selectedActivePool, isOwner, isBouncer, isMember, isDepositor } =
     useActivePools();
   const { getTransferOptions } = useTransferOptions();
