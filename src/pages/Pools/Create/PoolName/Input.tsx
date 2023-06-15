@@ -42,7 +42,7 @@ export const Input = ({
       <div style={{ margin: '1rem 0' }}>
         <input
           className="textbox"
-          style={{ width: '100%' }}
+          style={{ width: '100%', fontFamily: 'InterSemiBold, sans-serif' }}
           placeholder={`${t('pools.poolName')}`}
           type="text"
           onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}

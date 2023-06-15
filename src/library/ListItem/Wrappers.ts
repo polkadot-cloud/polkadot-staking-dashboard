@@ -14,7 +14,6 @@ export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
   margin: 0.5rem;
 
   > .inner {
-    box-shadow: 0px 1.75px 0px 1.25px var(--card-shadow-color-secondary);
     background: ${(props) =>
       props.inModal
         ? 'var(--background-modal-item)'
@@ -157,6 +156,7 @@ export const IdentityWrapper = styled(motion.div)`
   }
   h4 {
     color: var(--text-color-secondary);
+    font-family: InterSemiBold, sans-serif;
     position: absolute;
     top: 0;
     width: 100%;
@@ -167,7 +167,6 @@ export const IdentityWrapper = styled(motion.div)`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-variation-settings: 'wght' 600;
     font-size: 1rem;
 
     > span {
@@ -187,7 +186,9 @@ export const ValidatorStatusWrapper = styled.div<{ status: string }>`
 
   h5 {
     color: ${(props) =>
-      props.status === 'active' ? 'green' : 'var(--text-color-secondary)'};
+      props.status === 'active'
+        ? 'var(--status-success-color)'
+        : 'var(--text-color-secondary)'};
     opacity: ${(props) => (props.status === 'active' ? 0.8 : 0.5)};
     display: flex;
     overflow: hidden;
@@ -242,15 +243,6 @@ export const MenuPosition = styled.div`
   position: absolute;
   top: -10px;
   right: 10px;
-  width: 0;
-  height: 0;
-  opacity: 0;
-`;
-
-export const TooltipPosition = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0.75rem;
   width: 0;
   height: 0;
   opacity: 0;

@@ -20,6 +20,7 @@ export const Header = styled.div`
 
   h4 {
     color: var(--text-color-secondary);
+    font-family: InterSemiBold, sans-serif;
   }
 
   > div {
@@ -123,10 +124,11 @@ export const List = styled.div<ListProps>`
 
     > input {
       border: 1.75px solid var(--border-primary-color);
+      color: var(--text-color-secondary);
+      font-family: InterBold, sans-serif;
       border-radius: 1.75rem;
       padding: 0.75rem 1.25rem;
       font-size: 1.15rem;
-      font-variation-settings: 'wght' 525;
       &:focus {
         border-width: 1.75px;
       }

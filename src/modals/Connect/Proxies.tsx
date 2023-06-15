@@ -15,10 +15,10 @@ import {
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useProxies } from 'contexts/Proxies';
+import { AccountInput } from 'library/AccountInput';
 import { Identicon } from 'library/Identicon';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { AccountInput } from './AccountInput';
 import {
   ActionWithButton,
   ManualAccount,
@@ -61,6 +61,7 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
           {inputOpen && (
             <>
               <AccountInput
+                resetOnSuccess
                 defaultLabel={t('inputDelegatorAddress')}
                 successCallback={async (delegator) => {
                   const result = await handleDeclareDelegate(delegator);
@@ -82,16 +83,20 @@ export const Proxies = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
                           </span>
                           <div className="text">
                             <h4 className="title">
-                              <span>{proxyType} Proxy</span>
+                              <span>
+                                {proxyType} {t('proxy')}
+                              </span>
                               {getAccount(delegate)?.name || delegate}
                             </h4>
                             <h4 className="subtitle">
-                              for {getAccount(delegator)?.name || delegator}
+                              {t('for', {
+                                who: getAccount(delegator)?.name || delegator,
+                              })}
                             </h4>
                           </div>
                         </div>
                         <div />
-                        <ButtonSecondary text="Declared" disabled />
+                        <ButtonSecondary text={t('declared')} disabled />
                       </ManualAccount>
                     ))}
                   </React.Fragment>

@@ -2,8 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Body, Main, Page, Side } from '@polkadotcloud/core-ui';
+import { extractUrlValue } from '@polkadotcloud/utils';
 import { PagesConfig } from 'config/pages';
 import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { useNotifications } from 'contexts/Notifications';
 import { useUi } from 'contexts/UI';
 import { AnimatePresence } from 'framer-motion';
 import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
@@ -29,9 +32,12 @@ import {
 } from 'react-router-dom';
 
 export const RouterInner = () => {
-  const { t } = useTranslation('base');
-  const { pathname } = useLocation();
+  const { t } = useTranslation();
   const { network } = useApi();
+  const { pathname } = useLocation();
+  const { addNotification } = useNotifications();
+  const { accountsInitialised, accounts, activeAccount, connectToAccount } =
+    useConnect();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
 
   // scroll to top of the window on every page change or network change.
@@ -45,6 +51,25 @@ export const RouterInner = () => {
       mainInterface: mainInterfaceRef,
     });
   }, []);
+
+  // open default account modal if url var present and accounts initialised.
+  useEffect(() => {
+    if (accountsInitialised) {
+      const aUrl = extractUrlValue('a');
+      if (aUrl) {
+        const account = accounts.find((a) => a.address === aUrl);
+        if (account && aUrl !== activeAccount) {
+          connectToAccount(account);
+          addNotification({
+            title: t('accountConnected', { ns: 'library' }),
+            subtitle: `${t('connectedTo', { ns: 'library' })} ${
+              account?.name || aUrl
+            }.`,
+          });
+        }
+      }
+    }
+  }, [accountsInitialised]);
 
   // references to outer containers
   const mainInterfaceRef = useRef<HTMLDivElement>(null);
@@ -89,8 +114,9 @@ export const RouterInner = () => {
                       element={
                         <Page>
                           <Helmet>
-                            <title>{`${t(key)} : ${t('title', {
+                            <title>{`${t(key, { ns: 'base' })} : ${t('title', {
                               context: `${network.name}`,
+                              ns: 'base',
                             })}`}</title>
                           </Helmet>
                           <Entry page={page} />

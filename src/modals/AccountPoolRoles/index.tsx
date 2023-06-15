@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faBars, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { ButtonOption, ModalPadding } from '@polkadotcloud/core-ui';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -11,8 +11,7 @@ import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper } from '../Wrappers';
-import { ContentWrapper, StyledButton } from './Wrappers';
+import { ContentWrapper } from './Wrappers';
 
 export const AccountPoolRoles = () => {
   const { t } = useTranslation('modals');
@@ -27,7 +26,7 @@ export const AccountPoolRoles = () => {
   return (
     <>
       <Title title={t('allPoolRoles')} icon={faBars} />
-      <PaddingWrapper>
+      <ModalPadding>
         <ContentWrapper>
           {membership && (
             <>
@@ -48,7 +47,7 @@ export const AccountPoolRoles = () => {
             ))}
           </div>
         </ContentWrapper>
-      </PaddingWrapper>
+      </ModalPadding>
     </>
   );
 };
@@ -62,10 +61,9 @@ const Button = ({ item, poolId }: { item: string[]; poolId: string }) => {
   const stash = pool?.addresses?.stash || '';
 
   return (
-    <StyledButton
+    <ButtonOption
+      content
       disabled={false}
-      type="button"
-      className="action-button"
       onClick={() => {
         setSelectedPoolId(poolId);
         setStatus(2);
@@ -85,9 +83,6 @@ const Button = ({ item, poolId }: { item: string[]; poolId: string }) => {
           {item.includes('bouncer') ? <span>{t('bouncer')}</span> : null}
         </h4>
       </div>
-      <div>
-        <FontAwesomeIcon transform="shrink-2" icon={faChevronRight} />
-      </div>
-    </StyledButton>
+    </ButtonOption>
   );
 };

@@ -17,20 +17,18 @@ export const OverlayProvider = ({
   });
 
   const setOverlay = (Overlay: any) => {
-    const _state = {
+    setState({
       ...state,
       Overlay,
-    };
-    setState(_state);
+    });
   };
 
-  const setStatus = (newStatus: number) => {
-    const _state = {
+  const setStatus = (status: number) => {
+    setState({
       ...state,
-      status: newStatus,
-      dismissOpen: newStatus !== 0,
-    };
-    setState(_state);
+      status,
+      dismissOpen: status !== 0,
+    });
   };
 
   const openOverlayWith = (Overlay: any, size = 'small') => {

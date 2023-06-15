@@ -68,7 +68,6 @@ export const Account = ({
           )}
         </div>
       )}
-
       {unassigned ? (
         <span className="title unassigned">{t('notStaking')}</span>
       ) : (

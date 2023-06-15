@@ -137,9 +137,7 @@ export const Main = () => {
   return (
     <>
       <LogoWrapper
-        onClick={() => {
-          window.open(PolkadotUrl, '_blank');
-        }}
+        onClick={() => window.open(PolkadotUrl, '_blank')}
         minimised={sideMenuMinimised}
       >
         {sideMenuMinimised ? (

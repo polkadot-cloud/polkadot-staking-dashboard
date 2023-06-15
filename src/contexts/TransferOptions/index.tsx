@@ -1,13 +1,15 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
+import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import type { MaybeAccount } from 'types';
 import * as defaults from './defaults';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
@@ -17,14 +19,39 @@ export const TransferOptionsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { consts } = useApi();
+  const {
+    consts,
+    network: { name, units, defaultFeeReserve },
+  } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { getStashLedger, getBalance, getLocks } = useBalances();
   const { getAccount } = useBonded();
   const { membership } = usePoolMemberships();
   const { existentialDeposit } = consts;
+  const { activeAccount } = useConnect();
 
-  // get the bond and unbond amounts available to the user
+  // Get the local storage rcord for an account reserve balance.
+  const getFeeReserveLocalStorage = (address: MaybeAccount) => {
+    const reserves = JSON.parse(
+      localStorage.getItem('reserve_balances') ?? '{}'
+    );
+    return new BigNumber(
+      reserves?.[name]?.[address || ''] ??
+        unitToPlanck(String(defaultFeeReserve), units)
+    );
+  };
+
+  // A user-configurable reserve amount to be used to pay for transaction fees.
+  const [feeReserve, setFeeReserve] = useState<BigNumber>(
+    getFeeReserveLocalStorage(activeAccount)
+  );
+
+  // Update an account's reserve amount on account or network change.
+  useEffect(() => {
+    setFeeReserve(getFeeReserveLocalStorage(activeAccount));
+  }, [activeAccount, name]);
+
+  // Get the bond and unbond amounts available to the user
   const getTransferOptions = (address: MaybeAccount): TransferOptions => {
     const account = getAccount(address);
     if (account === null) {
@@ -36,6 +63,7 @@ export const TransferOptionsProvider = ({
 
     const { free } = balance;
     const { active, total, unlocking } = ledger;
+
     const totalLocked =
       locks?.reduce(
         (prev, { amount }) => prev.plus(amount),
@@ -44,12 +72,10 @@ export const TransferOptionsProvider = ({
 
     // Calculate a forced amount of free balance that needs to be reserved to keep the account
     // alive. Deducts `locks` from free balance reserve needed.
-    const forceReserved = BigNumber.max(
-      existentialDeposit.minus(totalLocked),
-      0
-    );
-    // Total free balance after `forceReserved` is subtracted.
-    const freeMinusReserve = BigNumber.max(free.minus(forceReserved), 0);
+    const edReserved = BigNumber.max(existentialDeposit.minus(totalLocked), 0);
+
+    // Total free balance after `edReserved` is subtracted.
+    const freeMinusReserve = BigNumber.max(free.minus(edReserved), 0);
 
     // calculate total balance locked
     const maxLockBalance =
@@ -81,7 +107,10 @@ export const TransferOptionsProvider = ({
     const nominateOptions = () => {
       // total possible balance that can be bonded
       const totalPossibleBond = BigNumber.max(
-        freeMinusReserve.minus(totalUnlocking).minus(totalUnlocked),
+        freeMinusReserve
+          .minus(totalUnlocking)
+          .minus(totalUnlocked)
+          .minus(feeReserve),
         0
       );
 
@@ -103,7 +132,7 @@ export const TransferOptionsProvider = ({
 
       // total possible balance that can be bonded
       const totalPossibleBondPool = BigNumber.max(
-        freeMinusReserve.minus(maxLockBalance),
+        freeMinusReserve.minus(maxLockBalance).minus(feeReserve),
         new BigNumber(0)
       );
 
@@ -132,16 +161,44 @@ export const TransferOptionsProvider = ({
 
     return {
       freeBalance,
-      forceReserved,
+      edReserved,
       nominate: nominateOptions(),
       pool: poolOptions(),
     };
+  };
+
+  // Updates account's reserve amount in state and in local storage.
+  const setFeeReserveBalance = (amount: BigNumber) => {
+    if (!activeAccount) return;
+    setFeeReserveLocalStorage(amount);
+    setFeeReserve(amount);
+  };
+
+  // Update the local storage record for account reserve balances.
+  const setFeeReserveLocalStorage = (amount: BigNumber) => {
+    if (!activeAccount) return;
+
+    try {
+      const newReserves = JSON.parse(
+        localStorage.getItem('reserve_balances') ?? '{}'
+      );
+      const newReservesNetwork = newReserves?.[name] ?? {};
+      newReservesNetwork[activeAccount] = amount.toString();
+
+      newReserves[name] = newReservesNetwork;
+      localStorage.setItem('reserve_balances', JSON.stringify(newReserves));
+    } catch (e) {
+      // corrupted local storage record - remove it.
+      localStorage.removeItem('reserve_balances');
+    }
   };
 
   return (
     <TransferOptionsContext.Provider
       value={{
         getTransferOptions,
+        setFeeReserveBalance,
+        feeReserve,
       }}
     >
       {children}

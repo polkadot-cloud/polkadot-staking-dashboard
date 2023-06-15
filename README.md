@@ -78,7 +78,7 @@ Please submit an issue for any queries around adding your operator details.
 
 ## URL Variables Support
 
-Polkadot staking dashboard supports URL variables that can be used to direct users to specific configurations of the app, such as landing on a specific language or on a specific network.
+Polkadot Staking Dashboard supports URL variables that can be used to direct users to specific configurations of the app, such as landing on a specific language or on a specific network.
 
 Variables are added at the end of the hash portion of URL:
 
@@ -90,6 +90,7 @@ The currently supported URL variables are as follows:
 
 - `n`: Controls the network to default to upon visiting the dashboard. Supported values are `polkadot`, `kusama` and `westend`.
 - `l`: Controls the language to default to upon visiting the dashboard. Supported values are `en` and `cn`.
+- `a`: Controls the account to connect to upon visiting the dashboard. Ignored if the account is not present in the initial imported accounts.
 
 URL variables take precedence over saved values in local storage, and will overwrite current configurations. URL variables will update (if present) as a user switches configurations in-app, such as changing the network or language.
 

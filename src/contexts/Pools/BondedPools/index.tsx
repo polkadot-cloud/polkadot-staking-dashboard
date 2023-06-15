@@ -270,12 +270,12 @@ export const BondedPoolsProvider = ({
    * Helper: to add mataBatch unsubs by key.
    */
   const addMetaBatchUnsubs = (key: string, unsubs: Fn[]) => {
-    const _unsubs = poolSubs.current;
-    const _keyUnsubs = _unsubs[key] ?? [];
+    const newUnsubs = poolSubs.current;
+    const newUnsubItem = newUnsubs[key] ?? [];
 
-    _keyUnsubs.push(...unsubs);
-    _unsubs[key] = _keyUnsubs;
-    poolSubs.current = _unsubs;
+    newUnsubItem.push(...unsubs);
+    newUnsubs[key] = newUnsubItem;
+    poolSubs.current = newUnsubs;
   };
 
   /*
@@ -287,10 +287,8 @@ export const BondedPoolsProvider = ({
     addresses: createAccounts(id),
   });
 
-  const getBondedPool = (poolId: MaybePool) => {
-    const pool = bondedPools.find((p) => p.id === poolId) ?? null;
-    return pool;
-  };
+  const getBondedPool = (poolId: MaybePool) =>
+    bondedPools.find((p) => p.id === String(poolId)) ?? null;
 
   /*
    * poolSearchFilter

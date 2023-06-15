@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ModalPadding } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -8,7 +9,6 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { PaddingWrapper } from 'modals/Wrappers';
 import { useTranslation } from 'react-i18next';
 import { RoleChange } from './RoleChange';
 import { Wrapper } from './Wrapper';
@@ -56,7 +56,7 @@ export const ChangePoolRoles = () => {
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">{t('changePoolRoles')}</h2>
         <Wrapper>
           <RoleChange
@@ -75,7 +75,7 @@ export const ChangePoolRoles = () => {
             newAddress={roleEdits?.bouncer?.newAddress}
           />
         </Wrapper>
-      </PaddingWrapper>
+      </ModalPadding>
       <SubmitTx {...submitExtrinsic} valid />
     </>
   );

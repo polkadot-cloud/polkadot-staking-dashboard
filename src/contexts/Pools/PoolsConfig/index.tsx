@@ -11,7 +11,7 @@ import type {
   PoolsConfigContextState,
 } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
-import type { AnyApi } from 'types';
+import type { AnyApi, AnyJson } from 'types';
 import { useApi } from '../../Api';
 import * as defaults from './defaults';
 
@@ -28,6 +28,13 @@ export const PoolsConfigProvider = ({
     stats: defaults.stats,
     unsub: null,
   });
+
+  // store global max commission.
+  // NOTE: on Polkadot runtime upgrade this can be moved to `poolsConfig`.
+  const [globalMaxCommission, setGlobalMaxCommission] = useState<AnyJson>(0);
+  const globalMaxCommissionRef = useRef(globalMaxCommission);
+  const unsub2 = useRef<AnyApi>();
+
   const poolsConfigRef = useRef(poolsConfig);
 
   // get favorite pools from local storage.
@@ -44,6 +51,11 @@ export const PoolsConfigProvider = ({
   useEffect(() => {
     if (isReady) {
       subscribeToPoolConfig();
+      if (['kusama', 'westend'].includes(network.name)) {
+        subscribeToGlobalMaxCommission();
+      } else {
+        setStateWithRef(0, setGlobalMaxCommission, globalMaxCommissionRef);
+      }
     }
     return () => {
       unsubscribe();
@@ -53,6 +65,9 @@ export const PoolsConfigProvider = ({
   const unsubscribe = () => {
     if (poolsConfigRef.current.unsub !== null) {
       poolsConfigRef.current.unsub();
+    }
+    if (unsub2.current) {
+      unsub2.current();
     }
   };
 
@@ -73,30 +88,30 @@ export const PoolsConfigProvider = ({
         api.query.nominationPools.minJoinBond,
       ],
       ([
-        _counterForPoolMembers,
-        _counterForBondedPools,
-        _counterForRewardPools,
-        _lastPoolId,
-        _maxPoolMembers,
-        _maxPoolMembersPerPool,
-        _maxPools,
-        _minCreateBond,
-        _minJoinBond,
+        counterForPoolMembers,
+        counterForBondedPools,
+        counterForRewardPools,
+        lastPoolId,
+        maxPoolMembers,
+        maxPoolMembersPerPool,
+        maxPools,
+        minCreateBond,
+        minJoinBond,
       ]) => {
         // format optional configs to BigNumber or null
-        _maxPoolMembers = _maxPoolMembers.toHuman();
-        if (_maxPoolMembers !== null) {
-          _maxPoolMembers = new BigNumber(rmCommas(_maxPoolMembers));
+        maxPoolMembers = maxPoolMembers.toHuman();
+        if (maxPoolMembers !== null) {
+          maxPoolMembers = new BigNumber(rmCommas(maxPoolMembers));
         }
-        _maxPoolMembersPerPool = _maxPoolMembersPerPool.toHuman();
-        if (_maxPoolMembersPerPool !== null) {
-          _maxPoolMembersPerPool = new BigNumber(
-            rmCommas(_maxPoolMembersPerPool)
+        maxPoolMembersPerPool = maxPoolMembersPerPool.toHuman();
+        if (maxPoolMembersPerPool !== null) {
+          maxPoolMembersPerPool = new BigNumber(
+            rmCommas(maxPoolMembersPerPool)
           );
         }
-        _maxPools = _maxPools.toHuman();
-        if (_maxPools !== null) {
-          _maxPools = new BigNumber(rmCommas(_maxPools));
+        maxPools = maxPools.toHuman();
+        if (maxPools !== null) {
+          maxPools = new BigNumber(rmCommas(maxPools));
         }
 
         setStateWithRef(
@@ -104,20 +119,20 @@ export const PoolsConfigProvider = ({
             ...poolsConfigRef.current,
             stats: {
               counterForPoolMembers: new BigNumber(
-                _counterForPoolMembers.toString()
+                counterForPoolMembers.toString()
               ),
               counterForBondedPools: new BigNumber(
-                _counterForBondedPools.toString()
+                counterForBondedPools.toString()
               ),
               counterForRewardPools: new BigNumber(
-                _counterForRewardPools.toString()
+                counterForRewardPools.toString()
               ),
-              lastPoolId: new BigNumber(_lastPoolId.toString()),
-              maxPoolMembers: _maxPoolMembers,
-              maxPoolMembersPerPool: _maxPoolMembersPerPool,
-              maxPools: _maxPools,
-              minCreateBond: new BigNumber(_minCreateBond.toString()),
-              minJoinBond: new BigNumber(_minJoinBond.toString()),
+              lastPoolId: new BigNumber(lastPoolId.toString()),
+              maxPoolMembers,
+              maxPoolMembersPerPool,
+              maxPools,
+              minCreateBond: new BigNumber(minCreateBond.toString()),
+              minJoinBond: new BigNumber(minJoinBond.toString()),
             },
           },
           setPoolsConfig,
@@ -134,6 +149,23 @@ export const PoolsConfigProvider = ({
       setPoolsConfig,
       poolsConfigRef
     );
+  };
+
+  // subscribe to global max commission.
+  const subscribeToGlobalMaxCommission = async () => {
+    if (!api) return;
+
+    const unsub = await api.query.nominationPools.globalMaxCommission(
+      (result: AnyApi) => {
+        // remove % and convert to number before store to state.
+        setStateWithRef(
+          Number(result.toHuman().slice(0, -1)),
+          setGlobalMaxCommission,
+          globalMaxCommissionRef
+        );
+      }
+    );
+    unsub2.current = unsub;
   };
 
   /*
@@ -200,6 +232,7 @@ export const PoolsConfigProvider = ({
         createAccounts,
         favorites,
         stats: poolsConfigRef.current.stats,
+        globalMaxCommission: globalMaxCommissionRef.current,
       }}
     >
       {children}

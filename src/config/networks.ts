@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import * as Sc from '@substrate/connect';
+import { WellKnownChain } from '@substrate/connect';
 import { DefaultParams } from 'consts';
 import { ReactComponent as KusamaIconSVG } from 'img/kusama_icon.svg';
 import { ReactComponent as KusamaInlineSVG } from 'img/kusama_inline.svg';
@@ -19,7 +19,7 @@ export const NetworkList: Networks = {
     name: 'polkadot',
     endpoints: {
       rpc: 'wss://apps-rpc.polkadot.io',
-      lightClient: Sc.WellKnownChain.polkadot,
+      lightClient: WellKnownChain.polkadot,
     },
     namespace: '91b171bb158e2d3848fa23a9f1c25182',
     colors: {
@@ -67,12 +67,13 @@ export const NetworkList: Networks = {
       ...DefaultParams,
       stakeTarget: 0.75,
     },
+    defaultFeeReserve: 0.1,
   },
   kusama: {
     name: 'kusama',
     endpoints: {
       rpc: 'wss://kusama-rpc.polkadot.io',
-      lightClient: Sc.WellKnownChain.ksmcc3,
+      lightClient: WellKnownChain.ksmcc3,
     },
     namespace: 'b0a8d493285c2df73290dfb7e61f870f',
     colors: {
@@ -122,12 +123,13 @@ export const NetworkList: Networks = {
       auctionMax: 60,
       stakeTarget: 0.75,
     },
+    defaultFeeReserve: 0.05,
   },
   westend: {
     name: 'westend',
     endpoints: {
       rpc: 'wss://westend-rpc.polkadot.io',
-      lightClient: Sc.WellKnownChain.westend2,
+      lightClient: WellKnownChain.westend2,
     },
     namespace: 'e143f23803ac50e8f6f8e62695d1ce9e',
     colors: {
@@ -175,5 +177,6 @@ export const NetworkList: Networks = {
       ...DefaultParams,
       stakeTarget: 0.75,
     },
+    defaultFeeReserve: 0.1,
   },
 };

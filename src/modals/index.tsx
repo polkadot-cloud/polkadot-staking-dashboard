@@ -1,6 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  ModalBackground,
+  ModalContainer,
+  ModalContent,
+  ModalHeight,
+} from '@polkadotcloud/core-ui';
 import { useModal } from 'contexts/Modal';
 import { useAnimation } from 'framer-motion';
 import { ErrorFallbackModal } from 'library/ErrorBoundary';
@@ -16,9 +22,9 @@ import { ChooseLanguage } from './ChooseLanguage';
 import { ClaimReward } from './ClaimReward';
 import { Connect } from './Connect';
 import { GoToFeedback } from './GoToFeedback';
+import { ImportLedger } from './ImportLedger';
+import { ImportVault } from './ImportVault';
 import { JoinPool } from './JoinPool';
-import { LeavePool } from './LeavePool';
-import { LedgerImport } from './LedgerImport';
 import { ManageFastUnstake } from './ManageFastUnstake';
 import { ManagePool } from './ManagePool';
 import { Networks } from './Networks';
@@ -28,21 +34,15 @@ import { NominatePool } from './NominatePool';
 import { PoolNominations } from './PoolNominations';
 import { SelectFavorites } from './SelectFavorites';
 import { Settings } from './Settings';
-import { StartStaking } from './StartStaking';
 import { Unbond } from './Unbond';
 import { UnbondPoolMember } from './UnbondPoolMember';
 import { UnlockChunks } from './UnlockChunks';
 import { Unstake } from './Unstake';
 import { UpdateController } from './UpdateController';
 import { UpdatePayee } from './UpdatePayee';
+import { UpdateReserve } from './UpdateReserve';
 import { ValidatorMetrics } from './ValidatorMetrics';
 import { WithdrawPoolMember } from './WithdrawPoolMember';
-import {
-  ContentWrapper,
-  HeightWrapper,
-  ModalBlurWrapper,
-  ModalWrapper,
-} from './Wrappers';
 
 export const Modal = () => {
   const {
@@ -129,21 +129,21 @@ export const Modal = () => {
 
   return (
     <>
-      <ModalBlurWrapper
+      <ModalBackground
         initial={initial}
         animate={controls}
         transition={transition}
         variants={variants}
       />
       {status !== 3 ? (
-        <ModalWrapper
+        <ModalContainer
           initial={initial}
           animate={controls}
           transition={transition}
           variants={variants}
         >
           <div>
-            <HeightWrapper
+            <ModalHeight
               size={size}
               style={{
                 height,
@@ -153,7 +153,7 @@ export const Modal = () => {
                     : 'hidden',
               }}
             >
-              <ContentWrapper ref={modalRef}>
+              <ModalContent ref={modalRef}>
                 <ErrorBoundary FallbackComponent={ErrorFallbackModal}>
                   {modal === 'AccountPoolRoles' && <AccountPoolRoles />}
                   {modal === 'Bio' && <Bio />}
@@ -166,8 +166,8 @@ export const Modal = () => {
                   {modal === 'Accounts' && <Accounts />}
                   {modal === 'GoToFeedback' && <GoToFeedback />}
                   {modal === 'JoinPool' && <JoinPool />}
-                  {modal === 'LedgerImport' && <LedgerImport />}
-                  {modal === 'LeavePool' && <LeavePool />}
+                  {modal === 'ImportLedger' && <ImportLedger />}
+                  {modal === 'ImportVault' && <ImportVault />}
                   {modal === 'ManagePool' && <ManagePool />}
                   {modal === 'ManageFastUnstake' && <ManageFastUnstake />}
                   {modal === 'Networks' && <Networks />}
@@ -179,7 +179,6 @@ export const Modal = () => {
                   {modal === 'PoolNominations' && <PoolNominations />}
                   {modal === 'SelectFavorites' && <SelectFavorites />}
                   {modal === 'Settings' && <Settings />}
-                  {modal === 'StartStaking' && <StartStaking />}
                   {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
                   {modal === 'UnbondPoolMember' && <UnbondPoolMember />}
                   {modal === 'UnlockChunks' && <UnlockChunks />}
@@ -187,10 +186,11 @@ export const Modal = () => {
                   {modal === 'UpdateController' && <UpdateController />}
                   {modal === 'Unbond' && <Unbond />}
                   {modal === 'UpdatePayee' && <UpdatePayee />}
+                  {modal === 'UpdateReserve' && <UpdateReserve />}
                   {modal === 'WithdrawPoolMember' && <WithdrawPoolMember />}
                 </ErrorBoundary>
-              </ContentWrapper>
-            </HeightWrapper>
+              </ModalContent>
+            </ModalHeight>
             <button
               type="button"
               className="close"
@@ -201,7 +201,7 @@ export const Modal = () => {
               &nbsp;
             </button>
           </div>
-        </ModalWrapper>
+        </ModalContainer>
       ) : null}
     </>
   );
