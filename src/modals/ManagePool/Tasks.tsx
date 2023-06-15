@@ -4,6 +4,7 @@
 import { ButtonOption } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { forwardRef } from 'react';
@@ -16,6 +17,8 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
   const { selectedActivePool, isOwner, isBouncer, isMember, isDepositor } =
     useActivePools();
   const { getTransferOptions } = useTransferOptions();
+  const { stats } = usePoolsConfig();
+  const { globalMaxCommission } = stats;
   const { active } = getTransferOptions(activeAccount).pool;
 
   const poolLocked = selectedActivePool?.bondedPool?.state === 'Blocked';
@@ -33,28 +36,32 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
         >
           {isOwner() && (
             <>
-              <ButtonOption
-                onClick={() => {
-                  setSection(1);
-                  setTask('claim_commission');
-                }}
-              >
-                <div>
-                  <h3>{t('claimCommission')}</h3>
-                  <p>{t('claimOutstandingCommission')}</p>
-                </div>
-              </ButtonOption>
-              <ButtonOption
-                onClick={() => {
-                  setSection(1);
-                  setTask('manage_commission');
-                }}
-              >
-                <div>
-                  <h3>{t('manageCommission')}</h3>
-                  <p>{t('updatePoolCommission')}</p>
-                </div>
-              </ButtonOption>
+              {globalMaxCommission > 0 && (
+                <>
+                  <ButtonOption
+                    onClick={() => {
+                      setSection(1);
+                      setTask('claim_commission');
+                    }}
+                  >
+                    <div>
+                      <h3>{t('claimCommission')}</h3>
+                      <p>{t('claimOutstandingCommission')}</p>
+                    </div>
+                  </ButtonOption>
+                  <ButtonOption
+                    onClick={() => {
+                      setSection(1);
+                      setTask('manage_commission');
+                    }}
+                  >
+                    <div>
+                      <h3>{t('manageCommission')}</h3>
+                      <p>{t('updatePoolCommission')}</p>
+                    </div>
+                  </ButtonOption>
+                </>
+              )}
             </>
           )}
           <ButtonOption
