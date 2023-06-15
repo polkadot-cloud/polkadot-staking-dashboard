@@ -18,6 +18,7 @@ export const stats: PoolStats = {
   maxPools: new BigNumber(0),
   minCreateBond: new BigNumber(0),
   minJoinBond: new BigNumber(0),
+  globalMaxCommission: 0,
 };
 
 export const defaultPoolsConfigContext: PoolsConfigContextState = {
@@ -26,7 +27,6 @@ export const defaultPoolsConfigContext: PoolsConfigContextState = {
   createAccounts: () => poolAddresses,
   favorites: [],
   stats,
-  globalMaxCommission: 0,
 };
 
 export const poolAddresses: PoolAddresses = {

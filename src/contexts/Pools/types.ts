@@ -11,7 +11,6 @@ export interface PoolsConfigContextState {
   createAccounts: (p: number) => PoolAddresses;
   favorites: string[];
   stats: PoolStats;
-  globalMaxCommission: number;
 }
 
 export interface PoolConfigState {
@@ -35,6 +34,7 @@ export interface PoolStats {
   maxPools: BigNumber;
   minCreateBond: BigNumber;
   minJoinBond: BigNumber;
+  globalMaxCommission: number;
 }
 
 // PoolMemberships types
