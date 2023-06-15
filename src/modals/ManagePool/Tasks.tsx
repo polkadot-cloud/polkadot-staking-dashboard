@@ -33,47 +33,44 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
           ref={ref}
           style={{ paddingBottom: '1.5rem', paddingTop: '1.5rem' }}
         >
-          {['kusama', 'westend'].includes(name) && (
+          {isOwner() && (
             <>
-              {isOwner() && (
-                <>
-                  <ButtonOption
-                    onClick={() => {
-                      setSection(1);
-                      setTask('claim_commission');
-                    }}
-                  >
-                    <div>
-                      <h3>{t('claimCommission')}</h3>
-                      <p>{t('claimOutstandingCommission')}</p>
-                    </div>
-                  </ButtonOption>
-                  <ButtonOption
-                    onClick={() => {
-                      setSection(1);
-                      setTask('manage_commission');
-                    }}
-                  >
-                    <div>
-                      <h3>{t('manageCommission')}</h3>
-                      <p>{t('updatePoolCommission')}</p>
-                    </div>
-                  </ButtonOption>
-                </>
-              )}
               <ButtonOption
                 onClick={() => {
                   setSection(1);
-                  setTask('set_claim_permission');
+                  setTask('claim_commission');
                 }}
               >
                 <div>
-                  <h3>{t('updateClaimPermission')}</h3>
-                  <p>{t('updateWhoClaimRewards')}</p>
+                  <h3>{t('claimCommission')}</h3>
+                  <p>{t('claimOutstandingCommission')}</p>
+                </div>
+              </ButtonOption>
+              <ButtonOption
+                onClick={() => {
+                  setSection(1);
+                  setTask('manage_commission');
+                }}
+              >
+                <div>
+                  <h3>{t('manageCommission')}</h3>
+                  <p>{t('updatePoolCommission')}</p>
                 </div>
               </ButtonOption>
             </>
           )}
+          <ButtonOption
+            onClick={() => {
+              setSection(1);
+              setTask('set_claim_permission');
+            }}
+          >
+            <div>
+              <h3>{t('updateClaimPermission')}</h3>
+              <p>{t('updateWhoClaimRewards')}</p>
+            </div>
+          </ButtonOption>
+
           {isOwner() && (
             <ButtonOption
               disabled={poolDestroying}

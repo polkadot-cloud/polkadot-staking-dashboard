@@ -51,11 +51,7 @@ export const PoolsConfigProvider = ({
   useEffect(() => {
     if (isReady) {
       subscribeToPoolConfig();
-      if (['kusama', 'westend'].includes(network.name)) {
-        subscribeToGlobalMaxCommission();
-      } else {
-        setStateWithRef(0, setGlobalMaxCommission, globalMaxCommissionRef);
-      }
+      subscribeToGlobalMaxCommission();
     }
     return () => {
       unsubscribe();
