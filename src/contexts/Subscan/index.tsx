@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { isNotZero } from '@polkadotcloud/utils';
-import { ApiEndpoints, ApiSubscanKey } from 'consts';
+import { ApiEndpoints, ApiSubscanKey, DefaultLocale } from 'consts';
 import { useNetworkMetrics } from 'contexts/Network';
 import { format, fromUnixTime } from 'date-fns';
 import { sortNonZeroPayouts } from 'library/Graphs/Utils';
@@ -97,7 +97,7 @@ export const SubscanProvider = ({
           ),
           'do MMM',
           {
-            locale: locales[i18n.resolvedLanguage],
+            locale: locales[i18n.resolvedLanguage ?? DefaultLocale],
           }
         )
       );
@@ -105,7 +105,7 @@ export const SubscanProvider = ({
       // latest payout date
       setPayoutsToDate(
         format(fromUnixTime(filteredPayouts[0].block_timestamp), 'do MMM', {
-          locale: locales[i18n.resolvedLanguage],
+          locale: locales[i18n.resolvedLanguage ?? DefaultLocale],
         })
       );
     }
@@ -119,8 +119,8 @@ export const SubscanProvider = ({
    * Stores resulting payouts in context state.
    */
   const fetchPayouts = async () => {
-    let newClaimedPayouts: Array<AnySubscan> = [];
-    let newUnclaimedPayouts: Array<AnySubscan> = [];
+    let newClaimedPayouts: AnySubscan[] = [];
+    let newUnclaimedPayouts: AnySubscan[] = [];
 
     // fetch results if subscan is enabled
     if (activeAccount && getPlugins().includes('subscan')) {
@@ -175,7 +175,7 @@ export const SubscanProvider = ({
    * Stores resulting claims in context state.
    */
   const fetchPoolClaims = async () => {
-    let newPoolClaims: Array<AnySubscan> = [];
+    let newPoolClaims: AnySubscan[] = [];
 
     // fetch results if subscan is enabled
     if (activeAccount && getPlugins().includes('subscan')) {

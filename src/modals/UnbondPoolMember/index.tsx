@@ -2,6 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
+  ActionItem,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
+import {
   greaterThanZero,
   planckToUnit,
   rmCommas,
@@ -14,13 +19,12 @@ import { useModal } from 'contexts/Modal';
 import { getUnixTime } from 'date-fns';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
-import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
-import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -28,8 +32,9 @@ export const UnbondPoolMember = () => {
   const { t } = useTranslation('modals');
   const { api, network, consts } = useApi();
   const { setStatus: setModalStatus, setResize, config } = useModal();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { activeAccount } = useConnect();
   const { erasToSeconds } = useErasToTimeLeft();
+  const { getSignerWarnings } = useSignerWarnings();
 
   const { units } = network;
   const { bondDuration } = consts;
@@ -69,11 +74,11 @@ export const UnbondPoolMember = () => {
   // tx to submit
   const getTx = () => {
     let tx = null;
-    if (!bondValid || !api || !activeAccount) {
+    if (!api || !activeAccount) {
       return tx;
     }
     // remove decimal errors
-    const bondToSubmit = unitToPlanck(bond.bond, units);
+    const bondToSubmit = unitToPlanck(!bondValid ? '0' : bond.bond, units);
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
     tx = api.tx.nominationPools.unbond(who, bondAsString);
     return tx;
@@ -89,24 +94,32 @@ export const UnbondPoolMember = () => {
     callbackInBlock: () => {},
   });
 
+  const warnings = getSignerWarnings(
+    activeAccount,
+    false,
+    submitExtrinsic.proxySupported
+  );
+
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">{t('unbondMemberFunds')}</h2>
-        {!accountHasSigner(activeAccount) ? (
-          <WarningsWrapper>
-            <Warning text={t('readOnlyCannotSign')} />
-          </WarningsWrapper>
+        {warnings.length > 0 ? (
+          <ModalWarnings withMargin>
+            {warnings.map((text, i) => (
+              <Warning key={`warning${i}`} text={text} />
+            ))}
+          </ModalWarnings>
         ) : null}
-        <Action text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
+        <ActionItem text={`${t('unbond')} ${freeToUnbond} ${network.unit}`} />
         <StaticNote
           value={bondDurationFormatted}
           tKey="onceUnbonding"
           valueKey="bondDurationFormatted"
           deps={[bondDuration]}
         />
-      </PaddingWrapper>
+      </ModalPadding>
       <SubmitTx valid={bondValid} {...submitExtrinsic} />
     </>
   );

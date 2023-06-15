@@ -3,7 +3,7 @@
 
 import { Separator } from '@polkadotcloud/core-ui';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { CardWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Card/Wrappers';
 import { MembershipStatus } from './MembershipStatus';
 import { PoolStatus } from './PoolStatus';
 import { RewardsStatus } from './RewardsStatus';

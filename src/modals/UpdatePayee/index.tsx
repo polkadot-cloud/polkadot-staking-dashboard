@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ModalPadding, ModalWarnings } from '@polkadotcloud/core-ui';
 import { isValidAddress } from '@polkadotcloud/utils';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
@@ -9,8 +10,8 @@ import { useModal } from 'contexts/Modal';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { Warning } from 'library/Form/Warning';
-import type { PayeeItem } from 'library/Hooks/usePayeeConfig';
 import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { PayeeInput } from 'library/PayeeInput';
@@ -20,7 +21,6 @@ import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { MaybeAccount } from 'types';
-import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals');
@@ -29,8 +29,9 @@ export const UpdatePayee = () => {
   const { getBondedAccount } = useBonded();
   const { setStatus: setModalStatus } = useModal();
   const controller = getBondedAccount(activeAccount);
-  const { staking, getControllerNotImported } = useStaking();
+  const { staking } = useStaking();
   const { getPayeeItems } = usePayeeConfig();
+  const { getSignerWarnings } = useSignerWarnings();
   const { payee } = staking;
 
   const DefaultSelected: PayeeConfig = {
@@ -69,15 +70,16 @@ export const UpdatePayee = () => {
   const getTx = () => {
     let tx = null;
 
-    if (!api || !isComplete()) {
+    if (!api) {
       return tx;
     }
-    const payeeToSubmit =
-      selected.destination === 'Account'
-        ? {
-            Account: selected.account,
-          }
-        : selected.destination;
+    const payeeToSubmit = !isComplete()
+      ? 'Staked'
+      : selected.destination === 'Account'
+      ? {
+          Account: selected.account,
+        }
+      : selected.destination;
 
     tx = api.tx.staking.setPayee(payeeToSubmit);
     return tx;
@@ -113,18 +115,26 @@ export const UpdatePayee = () => {
     );
   }, []);
 
+  const warnings = getSignerWarnings(
+    activeAccount,
+    true,
+    submitExtrinsic.proxySupported
+  );
+
   return (
     <>
       <Title
         title={t('updatePayoutDestination')}
         helpKey="Payout Destination"
       />
-      <PaddingWrapper style={{ paddingBottom: 0 }}>
-        {getControllerNotImported(controller) && (
-          <WarningsWrapper noMargin>
-            <Warning text={t('mustHaveControllerUpdate')} />
-          </WarningsWrapper>
-        )}
+      <ModalPadding style={{ paddingBottom: 0 }}>
+        {warnings.length > 0 ? (
+          <ModalWarnings withMargin>
+            {warnings.map((text, i) => (
+              <Warning key={`warning${i}`} text={text} />
+            ))}
+          </ModalWarnings>
+        ) : null}
         <div style={{ width: '100%', padding: '0 0.5rem' }}>
           <PayeeInput
             payee={selected}
@@ -134,7 +144,7 @@ export const UpdatePayee = () => {
           />
         </div>
         <SelectItems>
-          {getPayeeItems(true).map((item: PayeeItem) => (
+          {getPayeeItems(true).map((item) => (
             <SelectItem
               key={`payee_option_${item.value}`}
               account={account}
@@ -145,7 +155,7 @@ export const UpdatePayee = () => {
             />
           ))}
         </SelectItems>
-      </PaddingWrapper>
+      </ModalPadding>
       <SubmitTx fromController valid={isComplete()} {...submitExtrinsic} />
     </>
   );

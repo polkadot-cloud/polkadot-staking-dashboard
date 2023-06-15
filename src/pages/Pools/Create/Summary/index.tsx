@@ -12,6 +12,7 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useSetup } from 'contexts/Setup';
 import { Warning } from 'library/Form/Warning';
+import { useBatchCall } from 'library/Hooks/useBatchCall';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
@@ -22,13 +23,17 @@ import { SummaryWrapper } from './Wrapper';
 
 export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
-  const { api, network } = useApi();
-  const { units } = network;
-  const { activeAccount, accountHasSigner } = useConnect();
-  const { getSetupProgress, removeSetupProgress } = useSetup();
+  const {
+    api,
+    network: { units, unit, name },
+  } = useApi();
   const { stats } = usePoolsConfig();
+  const { newBatchCall } = useBatchCall();
+  const { getSetupProgress, removeSetupProgress } = useSetup();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { queryBondedPool, addToBondedPools } = useBondedPools();
+  const { activeAccount, activeProxy, accountHasSigner } = useConnect();
+
   const { lastPoolId } = stats;
   const poolId = lastPoolId.plus(1);
 
@@ -57,7 +62,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       api.tx.nominationPools.nominate(poolId.toString(), targetsToSubmit),
       api.tx.nominationPools.setMetadata(poolId.toString(), metadata),
     ];
-    return api.tx.utility.batch(txs);
+    return newBatchCall(txs, activeAccount);
   };
 
   const submitExtrinsic = useSubmitExtrinsic({
@@ -88,9 +93,9 @@ export const Summary = ({ section }: SetupStepProps) => {
         bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        {!accountHasSigner(activeAccount) && (
-          <Warning text={t('pools.readOnly')} />
-        )}
+        {!(
+          accountHasSigner(activeAccount) || accountHasSigner(activeProxy)
+        ) && <Warning text={t('pools.readOnly')} />}
         <SummaryWrapper>
           <section>
             <div>
@@ -105,7 +110,7 @@ export const Summary = ({ section }: SetupStepProps) => {
               {t('pools.bondAmount')}:
             </div>
             <div>
-              {new BigNumber(bond).toFormat()} {network.unit}
+              {new BigNumber(bond).toFormat()} {unit}
             </div>
           </section>
           <section>
@@ -138,7 +143,7 @@ export const Summary = ({ section }: SetupStepProps) => {
             submitText={`${t('pools.createPool')}`}
             valid
             noMargin
-            customEvent={`${network.name.toLowerCase()}_user_created_pool`}
+            customEvent={`${name.toLowerCase()}_user_created_pool`}
             {...submitExtrinsic}
           />
         </div>

@@ -1,6 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  ModalFooter,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -9,44 +14,41 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useValidators } from 'contexts/Validators';
 import type { Validator } from 'contexts/Validators/types';
 import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { SubmitTx } from 'library/SubmitTx';
 import { ValidatorList } from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FooterWrapper, PaddingWrapper, WarningsWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {
   const { t } = useTranslation('modals');
   const { consts, api } = useApi();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { activeAccount } = useConnect();
   const { getBondedAccount } = useBonded();
   const { config, setStatus: setModalStatus, setResize } = useModal();
   const { favoritesList } = useValidators();
   const { selectedActivePool, isNominator, isOwner } = useActivePools();
   const controller = getBondedAccount(activeAccount);
+  const { getSignerWarnings } = useSignerWarnings();
 
   const { maxNominations } = consts;
   const { bondFor, nominations } = config;
   const signingAccount = bondFor === 'pool' ? activeAccount : controller;
 
   // store filtered favorites
-  const [availableFavorites, setAvailableFavorites] = useState<
-    Array<Validator>
-  >([]);
+  const [availableFavorites, setAvailableFavorites] = useState<Validator[]>([]);
 
   // store selected favorites in local state
-  const [selectedFavorites, setSelectedFavorites] = useState<Array<Validator>>(
-    []
-  );
+  const [selectedFavorites, setSelectedFavorites] = useState<Validator[]>([]);
 
   // store filtered favorites
   useEffect(() => {
     if (favoritesList) {
       const _availableFavorites = favoritesList.filter(
-        (favorite: Validator) =>
+        (favorite) =>
           !nominations.find(
             (nomination: string) => nomination === favorite.address
           ) && !favorite.prefs.blocked
@@ -57,7 +59,7 @@ export const NominateFromFavorites = () => {
 
   // calculate active + selected favorites
   const nominationsToSubmit = nominations.concat(
-    selectedFavorites.map((favorite: Validator) => favorite.address)
+    selectedFavorites.map((favorite) => favorite.address)
   );
 
   // valid to submit transaction
@@ -122,21 +124,23 @@ export const NominateFromFavorites = () => {
     callbackInBlock: () => {},
   });
 
+  const warnings = getSignerWarnings(
+    activeAccount,
+    bondFor === 'nominator',
+    submitExtrinsic.proxySupported
+  );
+
   return (
     <>
       <Title title={t('nominateFavorites')} />
-      <PaddingWrapper>
+      <ModalPadding>
         <div style={{ marginBottom: '1rem', width: '100%' }}>
-          {!accountHasSigner(signingAccount) ? (
-            <WarningsWrapper>
-              <Warning
-                text={`${
-                  bondFor === 'nominator'
-                    ? t('youMust', { context: 'controller' })
-                    : t('youMust', { context: 'account' })
-                }`}
-              />
-            </WarningsWrapper>
+          {warnings.length ? (
+            <ModalWarnings withMargin>
+              {warnings.map((text, i) => (
+                <Warning key={`warning_${i}`} text={text} />
+              ))}
+            </ModalWarnings>
           ) : null}
         </div>
         <ListWrapper>
@@ -159,7 +163,7 @@ export const NominateFromFavorites = () => {
             <h3>{t('noFavoritesAvailable')}</h3>
           )}
         </ListWrapper>
-        <FooterWrapper>
+        <ModalFooter>
           <h3
             className={
               selectedFavorites.length === 0 ||
@@ -178,8 +182,8 @@ export const NominateFromFavorites = () => {
                   })}`
               : `${t('noFavoritesSelected')}`}
           </h3>
-        </FooterWrapper>
-      </PaddingWrapper>
+        </ModalFooter>
+      </ModalPadding>
       <SubmitTx
         fromController={bondFor === 'nominator'}
         valid={valid && !(bondFor === 'pool' && !isNominator() && !isOwner())}

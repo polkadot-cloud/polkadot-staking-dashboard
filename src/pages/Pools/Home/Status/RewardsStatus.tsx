@@ -45,7 +45,7 @@ export const RewardsStatus = () => {
             openModalWith('ClaimReward', { claimType: 'withdraw' }, 'small'),
         },
         {
-          title: t('pools.bond'),
+          title: t('pools.compound'),
           icon: faPlus,
           disabled:
             !isReady ||

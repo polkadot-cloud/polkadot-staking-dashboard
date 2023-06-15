@@ -10,6 +10,7 @@ export interface StatProps {
   buttons?: any;
   helpKey: string;
   icon?: IconProp;
+  buttonType?: string;
   copy?: {
     content: string;
     notification: {

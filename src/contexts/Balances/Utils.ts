@@ -17,4 +17,4 @@ export const getLedger = (
   ledgers: Ledger[],
   key: 'stash' | 'address',
   address: MaybeAccount
-): Ledger => ledgers.find((l: Ledger) => l[key] === address) || defaultLedger;
+): Ledger => ledgers.find((l) => l[key] === address) || defaultLedger;

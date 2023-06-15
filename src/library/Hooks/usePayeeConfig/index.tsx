@@ -21,8 +21,8 @@ export interface PayeeItem {
 
 export const usePayeeConfig = () => {
   const { t } = useTranslation('base');
-  const getPayeeItems = (extended?: boolean): Array<PayeeItem> => {
-    let items: Array<PayeeItem> = [
+  const getPayeeItems = (extended?: boolean): PayeeItem[] => {
+    let items: PayeeItem[] = [
       {
         value: 'Staked',
         title: t('payee.staked.title', { context: 'default' }),

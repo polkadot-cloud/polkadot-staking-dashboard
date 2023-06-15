@@ -1,6 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  ActionItem,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -8,20 +13,21 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
+import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
-import { Action } from 'library/Modal/Action';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
+  const { activeAccount } = useConnect();
   const { setStatus: setModalStatus, config } = useModal();
   const { selectedActivePool } = useActivePools();
-  const { activeAccount, accountHasSigner } = useConnect();
+  const { getSignerWarnings } = useSignerWarnings();
+
   const { units, unit } = network;
   let { pendingRewards } = selectedActivePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);
@@ -64,31 +70,31 @@ export const ClaimReward = () => {
     callbackInBlock: () => {},
   });
 
-  const warnings = [];
-  if (!accountHasSigner(activeAccount)) {
-    warnings.push(<Warning text={t('readOnlyCannotSign')} />);
-  }
+  const warnings = getSignerWarnings(
+    activeAccount,
+    false,
+    submitExtrinsic.proxySupported
+  );
+
   if (!greaterThanZero(pendingRewards)) {
-    warnings.push(<Warning text={t('noRewards')} />);
+    warnings.push(`${t('noRewards')}`);
   }
 
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">
-          {claimType === 'bond' ? t('bond') : t('withdraw')} {t('rewards')}
+          {claimType === 'bond' ? t('compound') : t('withdraw')} {t('rewards')}
         </h2>
-        {warnings.length ? (
-          <WarningsWrapper>
-            {warnings.map((warning: React.ReactNode, index: number) => (
-              <React.Fragment key={`warning_${index}`}>
-                {warning}
-              </React.Fragment>
+        {warnings.length > 0 ? (
+          <ModalWarnings withMargin>
+            {warnings.map((text, i) => (
+              <Warning key={`warning${i}`} text={text} />
             ))}
-          </WarningsWrapper>
+          </ModalWarnings>
         ) : null}
-        <Action
+        <ActionItem
           text={`${t('claim')} ${`${planckToUnit(
             pendingRewards,
             units
@@ -99,7 +105,7 @@ export const ClaimReward = () => {
         ) : (
           <p>{t('claimReward2')}</p>
         )}
-      </PaddingWrapper>
+      </ModalPadding>
       <SubmitTx valid={valid} {...submitExtrinsic} />
     </>
   );

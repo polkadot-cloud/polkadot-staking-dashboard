@@ -16,4 +16,5 @@ export interface UseSubmitExtrinsic {
   onSubmit: { (customEventInBlock?: string): void };
   submitting: boolean;
   proxySupported: boolean;
+  submitAddress: MaybeAccount;
 }

@@ -1,15 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
-
-export const CardsWrapper = styled(motion.div)`
-  width: 200%;
-  display: flex;
-  overflow: hidden;
-  position: relative;
-`;
 
 export const AccountWrapper = styled.div`
   width: 100%;
@@ -35,6 +27,7 @@ export const AccountWrapper = styled.div`
     background: var(--button-primary-background);
     border: 1px solid var(--transparent-color);
     color: var(--text-color-primary);
+    font-family: InterSemiBold, sans-serif;
     width: 100%;
     border-radius: 0.75rem;
     font-size: 1rem;
@@ -68,7 +61,7 @@ export const AccountWrapper = styled.div`
 
           > span {
             opacity: 0.7;
-            margin-right: 0.5rem;
+            margin-right: 0.6rem;
             > svg {
               margin-left: 0.5rem;
             }

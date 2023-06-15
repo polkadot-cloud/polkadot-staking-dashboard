@@ -11,12 +11,19 @@ export interface PoolsConfigContextState {
   createAccounts: (p: number) => PoolAddresses;
   favorites: string[];
   stats: PoolStats;
+  globalMaxCommission: number;
 }
 
 export interface PoolConfigState {
   stats: PoolStats;
   unsub: AnyApi;
 }
+
+export type ClaimPermission =
+  | 'Permissioned'
+  | 'PermissionlessCompound'
+  | 'PermissionlessWithdraw'
+  | 'PermissionlessAll';
 
 export interface PoolStats {
   counterForPoolMembers: BigNumber;
@@ -32,8 +39,9 @@ export interface PoolStats {
 
 // PoolMemberships types
 export interface PoolMembershipsContextState {
-  memberships: Array<PoolMembership>;
+  memberships: PoolMembership[];
   membership: PoolMembership | null;
+  claimPermissionConfig: ClaimPermissionConfig[];
 }
 
 export interface PoolMembership {
@@ -41,11 +49,12 @@ export interface PoolMembership {
   poolId: number;
   points: string;
   lastRecordedRewardCounter: string;
-  unbondingEras: { [key: number]: string };
-  unlocking: Array<{
+  unbondingEras: Record<number, string>;
+  claimPermission: ClaimPermission;
+  unlocking: {
     era: number;
     value: BigNumber;
-  }>;
+  }[];
 }
 
 // BondedPool types
@@ -53,7 +62,7 @@ export interface BondedPoolsContextState {
   fetchPoolsMetaBatch: (k: string, v: [], r?: boolean) => void;
   queryBondedPool: (p: number) => any;
   getBondedPool: (p: number) => BondedPool | null;
-  updateBondedPools: (p: Array<BondedPool>) => void;
+  updateBondedPools: (p: BondedPool[]) => void;
   addToBondedPools: (p: BondedPool) => void;
   removeFromBondedPools: (p: number) => void;
   getPoolNominationStatus: (n: MaybeAccount, o: MaybeAccount) => any;
@@ -62,7 +71,7 @@ export interface BondedPoolsContextState {
   getAccountPools: (w: MaybeAccount) => any;
   replacePoolRoles: (poolId: number, roleEdits: AnyJson) => void;
   poolSearchFilter: (l: any, k: string, v: string) => void;
-  bondedPools: Array<BondedPool>;
+  bondedPools: BondedPool[];
   meta: AnyMetaBatch;
 }
 
@@ -87,9 +96,18 @@ export interface BondedPool {
     stateToggler: string;
   };
   state: PoolState;
+  commission?: {
+    current?: AnyJson | null;
+    max?: AnyJson | null;
+    changeRate: {
+      maxIncrease: AnyJson;
+      minDelay: AnyJson;
+    } | null;
+    throttleFrom?: AnyJson | null;
+  };
 }
 
-export type NominationStatuses = { [key: string]: string };
+export type NominationStatuses = Record<string, string>;
 
 export interface ActivePoolsContextState {
   isBonding: () => boolean;
@@ -138,3 +156,9 @@ export interface PoolAddresses {
 export type MaybePool = number | null;
 
 export type PoolState = 'Open' | 'Blocked' | 'Destroying';
+
+export interface ClaimPermissionConfig {
+  label: string;
+  value: ClaimPermission;
+  description: string;
+}

@@ -3,12 +3,12 @@
 
 import type { ValidatorsContextInterface } from 'contexts/Validators/types';
 
-export const sessionValidators = {
+export const defaultSessionValidators = {
   list: [],
   unsub: null,
 };
 
-export const sessionParachainValidators = {
+export const defaultSessionParachainValidators = {
   list: [],
   unsub: null,
 };
@@ -27,7 +27,7 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   validators: [],
   avgCommission: 0,
   meta: {},
-  session: sessionValidators,
+  session: defaultSessionValidators,
   sessionParachain: [],
   favorites: [],
   nominated: null,

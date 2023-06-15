@@ -5,15 +5,8 @@ import type { HelpItems } from 'contexts/Help/types';
 
 export const HelpConfig: HelpItems = [
   {
-    key: 'ledger',
-    definitions: [
-      'Ledger Hardware Wallets',
-      'Ledger Rejected Transaction',
-      'Ledger Request Timeout',
-      'Open App On Ledger',
-      'Wrong Transaction',
-    ],
-    external: [],
+    key: 'vault',
+    definitions: ['Polkadot Vault'],
   },
   {
     key: 'overview',
@@ -23,12 +16,14 @@ export const HelpConfig: HelpItems = [
       'Your Balance',
       'Reserve Balance',
       'Locked Balance',
-      'Network Stats',
       'Historical Rewards Rate',
       'Adjusted Rewards Rate',
       'Inflation',
       'Ideal Staked',
       'Supply Staked',
+      'Read Only Accounts',
+      'Proxy Accounts',
+      'Reserve Balance For Existential Deposit',
     ],
     external: [
       [
@@ -105,6 +100,9 @@ export const HelpConfig: HelpItems = [
       'Bonded in Pool',
       'Pool Rewards',
       'Pool Roles',
+      'Pool Commission Rate',
+      'Pool Max Commission',
+      'Pool Commission Change Rate',
     ],
     external: [
       [
@@ -150,6 +148,17 @@ export const HelpConfig: HelpItems = [
   {
     key: 'community',
     definitions: [],
+    external: [],
+  },
+  {
+    key: 'ledger',
+    definitions: [
+      'Ledger Hardware Wallets',
+      'Ledger Rejected Transaction',
+      'Ledger Request Timeout',
+      'Open App On Ledger',
+      'Wrong Transaction',
+    ],
     external: [],
   },
 ];

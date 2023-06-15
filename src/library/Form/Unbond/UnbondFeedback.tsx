@@ -4,7 +4,6 @@
 import { isNotZero, planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
-import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
@@ -30,14 +29,12 @@ export const UnbondFeedback = ({
   const { t } = useTranslation('library');
   const { network } = useApi();
   const { activeAccount } = useConnect();
-  const { staking, getControllerNotImported } = useStaking();
-  const { getBondedAccount } = useBonded();
+  const { staking } = useStaking();
   const { getTransferOptions } = useTransferOptions();
   const { isDepositor } = useActivePools();
   const { stats } = usePoolsConfig();
   const { minJoinBond, minCreateBond } = stats;
   const { units, unit } = network;
-  const controller = getBondedAccount(activeAccount);
   const { minNominatorBond } = staking;
   const allTransferOptions = getTransferOptions(activeAccount);
 
@@ -49,7 +46,7 @@ export const UnbondFeedback = ({
   const { active } = transferOptions;
 
   // store errors
-  const [errors, setErrors] = useState<Array<string>>([]);
+  const [errors, setErrors] = useState<string[]>([]);
 
   // local bond state
   const [bond, setBond] = useState<{ bond: string }>({
@@ -114,15 +111,9 @@ export const UnbondFeedback = ({
     const _bond = bond.bond;
     const _decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
 
-    // unbond errors
     if (bondBn.isGreaterThan(active)) {
       newErrors.push(t('unbondAmount'));
     }
-
-    // unbond errors for staking only
-    if (bondFor === 'nominator')
-      if (getControllerNotImported(controller))
-        newErrors.push(t('importedToUnbond'));
 
     if (bond.bond !== '' && bondBn.isLessThan(1)) {
       newErrors.push(t('valueTooSmall'));
@@ -155,7 +146,7 @@ export const UnbondFeedback = ({
 
   return (
     <>
-      {errors.map((err: string, i: number) => (
+      {errors.map((err, i) => (
         <Warning key={`unbond_error_${i}`} text={err} />
       ))}
       <Spacer />

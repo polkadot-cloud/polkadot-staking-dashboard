@@ -19,6 +19,7 @@ import { BondInput } from './BondInput';
 export const BondFeedback = ({
   bondFor,
   inSetup = false,
+  joiningPool = false,
   parentErrors = [],
   setters = [],
   listenIsValid = () => {},
@@ -57,7 +58,7 @@ export const BondFeedback = ({
   const freeBalance = planckToUnit(freeBondAmount, units);
 
   // store errors
-  const [errors, setErrors] = useState<Array<string>>([]);
+  const [errors, setErrors] = useState<string[]>([]);
 
   // local bond state
   const [bond, setBond] = useState<{ bond: string }>({
@@ -71,7 +72,7 @@ export const BondFeedback = ({
   const [bondDisabled, setBondDisabled] = useState(false);
 
   // bond minus tx fees if too much
-  const enoughToCoverTxFees: boolean = freeBondAmount
+  const enoughToCoverTxFees = freeBondAmount
     .minus(bondBn)
     .isGreaterThan(txFees);
 
@@ -106,7 +107,7 @@ export const BondFeedback = ({
     current: bond,
   });
 
-  // bond amount to minimum threshold
+  // bond amount to minimum threshold.
   const minBondBn =
     bondFor === 'pool'
       ? inSetup || isDepositor()
@@ -147,7 +148,7 @@ export const BondFeedback = ({
       newErrors.push(`${t('bondDecimalsError', { units })}`);
     }
 
-    if (inSetup) {
+    if (inSetup || joiningPool) {
       if (freeBondAmount.isLessThan(minBondBn)) {
         disabled = true;
         newErrors.push(`${t('notMeet')} ${minBondUnit} ${unit}.`);
@@ -166,7 +167,7 @@ export const BondFeedback = ({
 
   return (
     <>
-      {errors.map((err: string, i: number) => (
+      {errors.map((err, i) => (
         <Warning key={`setup_error_${i}`} text={err} />
       ))}
       <Spacer />

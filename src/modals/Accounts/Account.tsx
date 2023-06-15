@@ -1,15 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faArrowLeft, faGlasses } from '@fortawesome/free-solid-svg-icons';
+import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { clipAddress } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import type { ExtensionInjected } from 'contexts/Extensions/types';
 import { useModal } from 'contexts/Modal';
-import { useProxies } from 'contexts/Proxies';
 import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
+import { ReactComponent as PolkadotVaultIconSVG } from 'img/polkadotVault.svg';
 import { Identicon } from 'library/Identicon';
 import { useTranslation } from 'react-i18next';
 import { AccountWrapper } from './Wrappers';
@@ -18,9 +17,9 @@ import type { AccountItemProps } from './types';
 export const AccountButton = ({
   address,
   label,
-  disconnect = false,
   delegator,
   noBorder = false,
+  proxyType,
 }: AccountItemProps) => {
   const { t } = useTranslation('modals');
   const { setStatus } = useModal();
@@ -28,48 +27,45 @@ export const AccountButton = ({
   const {
     activeAccount,
     connectToAccount,
-    disconnectFromAccount,
     getAccount,
     activeProxy,
+    activeProxyType,
     setActiveProxy,
   } = useConnect();
-  const { getProxyDelegate } = useProxies();
 
   const meta = getAccount(address || '');
+
   const Icon =
     meta?.source === 'ledger'
       ? LedgerIconSVG
-      : extensions.find((e: ExtensionInjected) => e.id === meta?.source)
-          ?.icon ?? undefined;
+      : meta?.source === 'vault'
+      ? PolkadotVaultIconSVG
+      : extensions.find(({ id }) => id === meta?.source)?.icon ?? undefined;
 
-  const imported = meta !== undefined;
-
+  const imported = !!meta;
   const connectTo = delegator || address || '';
   const connectProxy = delegator ? address || null : '';
-
-  const proxyDelegate = getProxyDelegate(connectTo, connectProxy);
 
   const isActive =
     (connectTo === activeAccount &&
       address === activeAccount &&
       !activeProxy) ||
-    (connectProxy === activeProxy && activeProxy);
+    (connectProxy === activeProxy &&
+      proxyType === activeProxyType &&
+      activeProxy);
 
   return (
     <AccountWrapper className={isActive ? 'active' : undefined}>
       <button
         type="button"
-        disabled={!disconnect && !imported}
+        disabled={!imported}
         onClick={() => {
-          if (imported && meta) {
-            if (disconnect) {
-              disconnectFromAccount();
-              setActiveProxy(null);
-            } else {
-              connectToAccount(getAccount(connectTo));
-              setActiveProxy(connectProxy);
-              setStatus(2);
-            }
+          if (imported) {
+            connectToAccount(getAccount(connectTo));
+            setActiveProxy(
+              proxyType ? { address: connectProxy, proxyType } : null
+            );
+            setStatus(2);
           }
         }}
         style={noBorder ? { border: 'none' } : undefined}
@@ -87,8 +83,7 @@ export const AccountButton = ({
             {delegator && (
               <>
                 <span>
-                  {proxyDelegate?.proxyType} {t('proxy')}
-                  <FontAwesomeIcon icon={faArrowLeft} transform="shrink-2" />
+                  {proxyType} {t('proxy')}
                 </span>
               </>
             )}

@@ -25,6 +25,7 @@ export const ContentWrapper = styled.div`
 export const LocaleButton = styled.button<any>`
   color: var(--text-color-primary);
   background: var(--button-primary-background);
+  font-family: InterSemiBold, sans-serif;
   box-sizing: border-box;
   padding: 1rem;
   cursor: pointer;

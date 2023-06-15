@@ -12,6 +12,7 @@ import { ExtrinsicsProvider } from 'contexts/Extrinsics';
 import { FastUnstakeProvider } from 'contexts/FastUnstake';
 import { FiltersProvider } from 'contexts/Filters';
 import { LedgerHardwareProvider } from 'contexts/Hardware/Ledger';
+import { VaultHardwareProvider } from 'contexts/Hardware/Vault';
 import { HelpProvider } from 'contexts/Help';
 import { IdentitiesProvider } from 'contexts/Identities';
 import { MenuProvider } from 'contexts/Menu';
@@ -55,7 +56,9 @@ export const ThemedRouter = () => {
 
 export const Providers = withProviders(
   FiltersProvider,
+  NotificationsProvider,
   APIProvider,
+  VaultHardwareProvider,
   LedgerHardwareProvider,
   ExtensionsProvider,
   ConnectProvider,
@@ -80,7 +83,6 @@ export const Providers = withProviders(
   SubscanProvider,
   MenuProvider,
   TooltipProvider,
-  NotificationsProvider,
   TxMetaProvider,
   ExtrinsicsProvider,
   ModalProvider,

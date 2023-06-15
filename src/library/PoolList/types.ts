@@ -11,7 +11,7 @@ export interface PoolListProps {
   pools?: any;
   title?: string;
   defaultFilters?: {
-    includes: Array<string> | null;
-    excludes: Array<string> | null;
+    includes: string[] | null;
+    excludes: string[] | null;
   };
 }

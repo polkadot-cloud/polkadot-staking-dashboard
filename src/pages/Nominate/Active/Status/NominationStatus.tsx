@@ -21,7 +21,13 @@ import { Stat } from 'library/Stat';
 import { useTranslation } from 'react-i18next';
 import { registerSaEvent } from 'Utils';
 
-export const NominationStatus = () => {
+export const NominationStatus = ({
+  showButtons = true,
+  buttonType = 'primary',
+}: {
+  showButtons?: boolean;
+  buttonType?: string;
+}) => {
   const { t } = useTranslation('pages');
   const { isReady, network } = useApi();
   const { inSetup } = useStaking();
@@ -46,7 +52,7 @@ export const NominationStatus = () => {
     !nominationStatus.activeNominees.length &&
     (checking || !isExposed)
       ? {
-          disabled: checking,
+          disabled: checking || isReadOnlyAccount(controller),
           title: fastUnstakeText,
           icon: faBolt,
           onClick: () => {
@@ -75,8 +81,10 @@ export const NominationStatus = () => {
       helpKey="Nomination Status"
       stat={nominationStatus.message}
       buttons={
-        !inSetup()
-          ? !isUnstaking && !isReadOnlyAccount(controller)
+        !showButtons
+          ? []
+          : !inSetup()
+          ? !isUnstaking
             ? [unstakeButton]
             : []
           : isNetworkSyncing
@@ -99,6 +107,7 @@ export const NominationStatus = () => {
               },
             ]
       }
+      buttonType={buttonType}
     />
   );
 };

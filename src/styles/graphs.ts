@@ -6,7 +6,7 @@ import type { AnyJson } from 'types';
 export const graphColors: Record<string, AnyJson> = {
   border: {
     light: '#ccc',
-    dark: '#444',
+    dark: '#555',
   },
   inactive: {
     light: '#f2f1f0',
@@ -22,6 +22,6 @@ export const graphColors: Record<string, AnyJson> = {
   },
   grid: {
     light: '#e8e8e8',
-    dark: 'rgb(58,50,58)',
+    dark: 'rgb(64,55,64)',
   },
 };

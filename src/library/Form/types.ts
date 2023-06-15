@@ -37,8 +37,9 @@ export interface BondFeedbackProps {
   bondFor: BondFor;
   defaultBond: number | null;
   inSetup?: boolean;
+  joiningPool?: boolean;
   listenIsValid: { (v: boolean): void } | { (): void };
-  parentErrors?: Array<string>;
+  parentErrors?: string[];
   disableTxFeeUpdate?: boolean;
   setLocalResize?: () => void;
   txFees: BigNumber;
@@ -61,7 +62,7 @@ export interface UnbondFeedbackProps {
   defaultBond?: number;
   inSetup?: boolean;
   listenIsValid: { (v: boolean): void } | { (): void };
-  parentErrors?: Array<string>;
+  parentErrors?: string[];
   setLocalResize?: () => void;
   txFees: BigNumber;
 }
@@ -80,7 +81,7 @@ export interface NominateStatusBarProps {
 }
 
 export interface DropdownProps {
-  items: Array<DropdownInput>;
+  items: DropdownInput[];
   onChange: (o: any) => void;
   label?: string;
   placeholder: string;

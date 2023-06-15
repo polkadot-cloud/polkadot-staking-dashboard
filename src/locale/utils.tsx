@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { extractUrlValue, varToUrlHash } from '@polkadotcloud/utils';
+import { registerSaEvent } from 'Utils';
 import { DefaultLocale } from 'consts';
 import type { AnyApi, AnyJson } from 'types';
 import { availableLanguages, fallbackResources, lngNamespaces } from '.';
@@ -15,6 +16,8 @@ export const getInitialLanguage = () => {
   // get language from url if present
   const urlLng = extractUrlValue('l');
   if (availableLanguages.find((n: any) => n[0] === urlLng) && urlLng) {
+    registerSaEvent(`locale_from_url_${urlLng}`);
+
     localStorage.setItem('lng', urlLng);
     return urlLng;
   }
@@ -82,6 +85,8 @@ export const getResources = (lng: string) => {
 //
 // On click handler for changing language in-app.
 export const changeLanguage = async (lng: string, i18next: AnyApi) => {
+  registerSaEvent(`locale_from_modal_${lng}`);
+
   // check whether resources exist and need to by dynamically loaded.
   const { resources, dynamicLoad } = getResources(lng);
 
@@ -105,7 +110,7 @@ export const changeLanguage = async (lng: string, i18next: AnyApi) => {
 // Bootstraps i18next with additional language resources.
 export const loadLngAsync = async (l: string) => {
   const resources: AnyJson = await Promise.all(
-    lngNamespaces.map(async (u: string) => {
+    lngNamespaces.map(async (u) => {
       const mod = await import(`./${l}/${u}.json`);
       return mod;
     })

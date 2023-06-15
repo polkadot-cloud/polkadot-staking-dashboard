@@ -32,14 +32,13 @@ export const BalancesProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, isReady, network, consts } = useApi();
-  const { existentialDeposit } = consts;
+  const { api, isReady, network } = useApi();
   const { accounts, addExternalAccount, getAccount } = useConnect();
 
   const [balances, setBalances] = useState<Balances[]>([]);
   const balancesRef = useRef(balances);
 
-  const [ledgers, setLedgers] = useState<Array<Ledger>>([]);
+  const [ledgers, setLedgers] = useState<Ledger[]>([]);
   const ledgersRef = useRef(ledgers);
 
   const unsubs = useRef<Record<string, VoidFn>>({});
@@ -141,7 +140,7 @@ export const BalancesProvider = ({
               free,
               reserved: new BigNumber(accountData.reserved.toString()),
               frozen: new BigNumber(
-                ['kusama', 'westend'].includes(network.name) // this can be removed once system.account is upgraded on Polkadot
+                ['kusama', 'westend'].includes(network.name) // this can be removed once system.account is upgraded on Polkadot and Kusama
                   ? accountData.frozen.toString()
                   : accountData.miscFrozen.toString()
               ),
