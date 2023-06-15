@@ -17,7 +17,7 @@ export const Members = () => {
   const { colors } = useApi().network;
   const { mode } = useTheme();
   const { getMembersOfPool } = usePoolMembers();
-  const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
+  const { selectedActivePool, isOwner, isBouncer } = useActivePools();
 
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
   const poolMembersTitle = `${t('pools.poolMember', {
@@ -27,11 +27,11 @@ export const Members = () => {
 
   const showBlockedPrompt =
     selectedActivePool?.bondedPool?.state === 'Blocked' &&
-    (isOwner() || isStateToggler());
+    (isOwner() || isBouncer());
 
   return (
     <>
-      {/* Pool in Blocked state: allow root & stage toggler to unbond & withdraw members */}
+      {/* Pool in Blocked state: allow root & bouncer to unbond & withdraw members */}
       {showBlockedPrompt && (
         <PageRow>
           <CardWrapper

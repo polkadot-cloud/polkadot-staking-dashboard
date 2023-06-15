@@ -29,8 +29,7 @@ export const MembershipStatus = ({
   const { bondedPools, meta } = useBondedPools();
   const { getTransferOptions } = useTransferOptions();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { selectedActivePool, isOwner, isStateToggler, isMember } =
-    useActivePools();
+  const { selectedActivePool, isOwner, isBouncer, isMember } = useActivePools();
 
   const { active } = getTransferOptions(activeAccount).pool;
   const poolState = selectedActivePool?.bondedPool?.state ?? null;
@@ -52,10 +51,10 @@ export const MembershipStatus = ({
       );
     }
 
-    // Display manage button if active account is pool owner or state toggler.
+    // Display manage button if active account is pool owner or bouncer.
     // Or display manage button if active account is a pool member.
     if (
-      (poolState !== 'Destroying' && (isOwner() || isStateToggler())) ||
+      (poolState !== 'Destroying' && (isOwner() || isBouncer())) ||
       (isMember() && active?.isGreaterThan(0))
     ) {
       membershipButtons.push({

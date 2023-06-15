@@ -24,7 +24,7 @@ export const SetState = ({ setSection, task }: any) => {
   const { api } = useApi();
   const { setStatus: setModalStatus } = useModal();
   const { activeAccount } = useConnect();
-  const { isOwner, isStateToggler, selectedActivePool } = useActivePools();
+  const { isOwner, isBouncer, selectedActivePool } = useActivePools();
   const { updateBondedPools, getBondedPool } = useBondedPools();
   const { getSignerWarnings } = useSignerWarnings();
 
@@ -35,7 +35,7 @@ export const SetState = ({ setSection, task }: any) => {
 
   // ensure account has relevant roles for task
   const canToggle =
-    (isOwner() || isStateToggler()) &&
+    (isOwner() || isBouncer()) &&
     ['destroy_pool', 'unlock_pool', 'lock_pool'].includes(task);
 
   useEffect(() => {
