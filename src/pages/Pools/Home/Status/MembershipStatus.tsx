@@ -51,7 +51,7 @@ export const MembershipStatus = ({
       );
     }
 
-    // Display manage button if active account is pool owner or state toggler.
+    // Display manage button if active account is pool owner or bouncer.
     // Or display manage button if active account is a pool member.
     if (
       (poolState !== 'Destroying' && (isOwner() || isBouncer())) ||
