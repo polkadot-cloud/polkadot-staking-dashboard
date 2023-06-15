@@ -79,7 +79,6 @@ export const Overview = () => {
     setIsDismissed(true);
   };
 
-  // `NOTE: banner currently hidden.
   const showBanner = network.name === 'polkadot' && !isDismissed;
   const VisitButton = mode === 'light' ? ButtonPrimary : ButtonMonoInvert;
 
