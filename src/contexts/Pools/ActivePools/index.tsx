@@ -372,16 +372,16 @@ export const ActivePoolsProvider = ({
   };
 
   /*
-   * isStateToggler
+   * isBouncer
    * Returns whether the active account is
    * the depositor of the active pool.
    */
-  const isStateToggler = () => {
+  const isBouncer = () => {
     const roles = getSelectedActivePool()?.bondedPool?.roles;
     if (!activeAccount || !roles) {
       return false;
     }
-    return activeAccount === roles?.stateToggler;
+    return activeAccount === roles?.bouncer;
   };
 
   /*
@@ -497,7 +497,7 @@ export const ActivePoolsProvider = ({
         isOwner,
         isMember,
         isDepositor,
-        isStateToggler,
+        isBouncer,
         isBonding,
         getPoolBondedAccount,
         getPoolUnlocking,

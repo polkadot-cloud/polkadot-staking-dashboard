@@ -248,15 +248,6 @@ export const MenuPosition = styled.div`
   opacity: 0;
 `;
 
-export const TooltipPosition = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0.75rem;
-  width: 0;
-  height: 0;
-  opacity: 0;
-`;
-
 export const TooltipTrigger = styled.div`
   z-index: 1;
   width: 130%;

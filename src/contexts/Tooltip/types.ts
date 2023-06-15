@@ -1,14 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { RefObject } from 'react';
-
 export interface TooltipContextInterface {
   openTooltip: () => void;
   closeTooltip: () => void;
-  setTooltipPosition: (ref: RefObject<HTMLDivElement>) => void;
-  checkTooltipPosition: (ref: RefObject<HTMLDivElement>) => void;
-  setTooltipMeta: (t: string) => void;
+  setTooltipPosition: (x: number, y: number) => void;
+  showTooltip: () => void;
+  setTooltipTextAndOpen: (t: string) => void;
   open: number;
   show: number;
   position: [number, number];

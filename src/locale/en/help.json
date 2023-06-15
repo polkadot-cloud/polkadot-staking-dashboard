@@ -310,10 +310,10 @@
         "Pool Roles",
         [
           "A pool consists of 4 roles, each of which having different responsibilities in managing the running of the pool.",
-          "Root: Can change the nominator, state-toggler, or itself. Further, it can perform any of the actions the nominator or state-toggler can.",
+          "Root: Can change the nominator, bouncer, or itself. Further, it can perform any of the actions the nominator or bouncer can.",
           "Depositor: Creates the pool and is the initial member. The depositor can only leave the pool once all other members have left. Once they leave by withdrawing, the pool is fully removed from the system.",
           "Nominator: Can select the validators the pool nominates.",
-          "State-Toggler: Can change the pool's state and kick (permissionlessly unbond/withdraw) members if the pool is blocked."
+          "Bouncer: Can change the pool's state and kick (permissionlessly unbond/withdraw) members if the pool is blocked."
         ]
       ],
       "proxyAccounts": [

@@ -5,26 +5,16 @@ import { faCubes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTooltip } from 'contexts/Tooltip';
 import { useValidators } from 'contexts/Validators';
-import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
-import { useRef } from 'react';
+import { TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
 import type { ParaValidatorProps } from '../types';
 
 export const ParaValidator = ({ address }: ParaValidatorProps) => {
   const { t } = useTranslation('library');
   const { sessionParachain } = useValidators();
-  const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
-
-  const posRef = useRef(null);
+  const { setTooltipTextAndOpen } = useTooltip();
 
   const tooltipText = t('validatingParachainBlocks');
-
-  const toggleTooltip = () => {
-    if (!open) {
-      setTooltipMeta(tooltipText);
-      setTooltipPosition(posRef);
-    }
-  };
 
   if (!sessionParachain?.includes(address || '')) {
     return <></>;
@@ -35,9 +25,8 @@ export const ParaValidator = ({ address }: ParaValidatorProps) => {
       <TooltipTrigger
         className="tooltip-trigger-element"
         data-tooltip-text={tooltipText}
-        onMouseMove={() => toggleTooltip()}
+        onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
-      <TooltipPosition ref={posRef} />
       <FontAwesomeIcon icon={faCubes} transform="shrink-1" />
     </div>
   );
