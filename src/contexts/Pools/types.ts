@@ -11,7 +11,6 @@ export interface PoolsConfigContextState {
   createAccounts: (p: number) => PoolAddresses;
   favorites: string[];
   stats: PoolStats;
-  globalMaxCommission: number;
 }
 
 export interface PoolConfigState {
@@ -35,6 +34,7 @@ export interface PoolStats {
   maxPools: BigNumber;
   minCreateBond: BigNumber;
   minJoinBond: BigNumber;
+  globalMaxCommission: number;
 }
 
 // PoolMemberships types
@@ -93,7 +93,7 @@ export interface BondedPool {
     depositor: string;
     nominator: string;
     root: string;
-    stateToggler: string;
+    bouncer: string;
   };
   state: PoolState;
   commission?: {
@@ -115,7 +115,7 @@ export interface ActivePoolsContextState {
   isOwner: () => boolean;
   isMember: () => boolean;
   isDepositor: () => boolean;
-  isStateToggler: () => boolean;
+  isBouncer: () => boolean;
   getPoolBondedAccount: () => MaybeAccount;
   getPoolUnlocking: () => any;
   getPoolRoles: () => PoolRoles;
@@ -145,7 +145,7 @@ export interface PoolRoles {
   depositor: string;
   nominator: string;
   root: string;
-  stateToggler: string;
+  bouncer: string;
 }
 
 export interface PoolAddresses {

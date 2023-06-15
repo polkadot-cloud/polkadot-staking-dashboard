@@ -31,16 +31,11 @@ export const ChangePoolRoles = () => {
     const nominator = roleEdits?.nominator?.newAddress
       ? { Set: roleEdits?.nominator?.newAddress }
       : 'Remove';
-    const stateToggler = roleEdits?.stateToggler?.newAddress
-      ? { Set: roleEdits?.stateToggler?.newAddress }
+    const bouncer = roleEdits?.bouncer?.newAddress
+      ? { Set: roleEdits?.bouncer?.newAddress }
       : 'Remove';
 
-    tx = api?.tx.nominationPools?.updateRoles(
-      poolId,
-      root,
-      nominator,
-      stateToggler
-    );
+    tx = api?.tx.nominationPools?.updateRoles(poolId, root, nominator, bouncer);
     return tx;
   };
 
@@ -75,9 +70,9 @@ export const ChangePoolRoles = () => {
             newAddress={roleEdits?.nominator?.newAddress}
           />
           <RoleChange
-            roleName={t('stateToggler')}
-            oldAddress={roleEdits?.stateToggler?.oldAddress}
-            newAddress={roleEdits?.stateToggler?.newAddress}
+            roleName={t('bouncer')}
+            oldAddress={roleEdits?.bouncer?.oldAddress}
+            newAddress={roleEdits?.bouncer?.newAddress}
           />
         </Wrapper>
       </ModalPadding>

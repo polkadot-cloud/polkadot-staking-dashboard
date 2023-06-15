@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonOption } from '@polkadotcloud/core-ui';
-import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { forwardRef } from 'react';
@@ -14,10 +14,11 @@ import { ContentWrapper } from './Wrappers';
 export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
   const { t } = useTranslation('modals');
   const { activeAccount } = useConnect();
-  const { name } = useApi().network;
-  const { selectedActivePool, isOwner, isStateToggler, isMember, isDepositor } =
+  const { selectedActivePool, isOwner, isBouncer, isMember, isDepositor } =
     useActivePools();
   const { getTransferOptions } = useTransferOptions();
+  const { stats } = usePoolsConfig();
+  const { globalMaxCommission } = stats;
   const { active } = getTransferOptions(activeAccount).pool;
 
   const poolLocked = selectedActivePool?.bondedPool?.state === 'Blocked';
@@ -33,9 +34,9 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
           ref={ref}
           style={{ paddingBottom: '1.5rem', paddingTop: '1.5rem' }}
         >
-          {['kusama', 'westend'].includes(name) && (
+          {isOwner() && (
             <>
-              {isOwner() && (
+              {globalMaxCommission > 0 && (
                 <>
                   <ButtonOption
                     onClick={() => {
@@ -61,19 +62,20 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
                   </ButtonOption>
                 </>
               )}
-              <ButtonOption
-                onClick={() => {
-                  setSection(1);
-                  setTask('set_claim_permission');
-                }}
-              >
-                <div>
-                  <h3>{t('updateClaimPermission')}</h3>
-                  <p>{t('updateWhoClaimRewards')}</p>
-                </div>
-              </ButtonOption>
             </>
           )}
+          <ButtonOption
+            onClick={() => {
+              setSection(1);
+              setTask('set_claim_permission');
+            }}
+          >
+            <div>
+              <h3>{t('updateClaimPermission')}</h3>
+              <p>{t('updateWhoClaimRewards')}</p>
+            </div>
+          </ButtonOption>
+
           {isOwner() && (
             <ButtonOption
               disabled={poolDestroying}
@@ -88,7 +90,7 @@ export const Tasks = forwardRef(({ setSection, setTask }: any, ref: any) => {
               </div>
             </ButtonOption>
           )}
-          {(isOwner() || isStateToggler()) && (
+          {(isOwner() || isBouncer()) && (
             <>
               {poolLocked ? (
                 <ButtonOption

@@ -38,12 +38,13 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
   const { api, consts } = useApi();
   const { activeAccount } = useConnect();
   const { newBatchCall } = useBatchCall();
-  const { globalMaxCommission } = usePoolsConfig();
+  const { stats } = usePoolsConfig();
   const { setStatus: setModalStatus } = useModal();
   const { getSignerWarnings } = useSignerWarnings();
   const { isOwner, selectedActivePool } = useActivePools();
   const { getBondedPool, updateBondedPools } = useBondedPools();
   const { expectedBlockTime } = consts;
+  const { globalMaxCommission } = stats;
 
   const poolId = selectedActivePool?.id || 0;
   const bondedPool = getBondedPool(poolId);

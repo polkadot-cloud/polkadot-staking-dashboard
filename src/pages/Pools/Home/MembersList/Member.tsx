@@ -31,15 +31,15 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
   const { openModalWith } = useModal();
   const { selectActive } = useList();
   const { activeEra } = useNetworkMetrics();
-  const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
+  const { selectedActivePool, isOwner, isBouncer } = useActivePools();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { state, roles } = selectedActivePool?.bondedPool || {};
-  const { stateToggler, root, depositor } = roles || {};
+  const { bouncer, root, depositor } = roles || {};
 
   const canUnbondBlocked =
     state === 'Blocked' &&
-    (isOwner() || isStateToggler()) &&
-    ![root, stateToggler].includes(who);
+    (isOwner() || isBouncer()) &&
+    ![root, bouncer].includes(who);
 
   const canUnbondDestroying = state === 'Destroying' && who !== depositor;
 
