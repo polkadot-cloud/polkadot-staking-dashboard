@@ -69,12 +69,7 @@ export const useFetchMehods = () => {
     let _nominations = Object.assign(validators);
 
     // filter validators to find active candidates
-    _nominations = applyFilter(
-      ['active'],
-      ['all_commission', 'blocked_nominations', 'missing_identity'],
-      _nominations,
-      rawBatchKey
-    );
+    _nominations = applyFilter(['active'], [], _nominations, rawBatchKey);
 
     // order validators to find profitable candidates
     _nominations = applyOrder('low_commission', _nominations);
@@ -95,12 +90,7 @@ export const useFetchMehods = () => {
     // filter validators to find waiting candidates
     _nominationsWaiting = applyFilter(
       null,
-      [
-        'all_commission',
-        'blocked_nominations',
-        'missing_identity',
-        'in_session',
-      ],
+      [],
       _nominationsWaiting,
       rawBatchKey
     );
@@ -108,7 +98,7 @@ export const useFetchMehods = () => {
     // filter validators to find active candidates
     _nominationsActive = applyFilter(
       ['active'],
-      ['all_commission', 'blocked_nominations', 'missing_identity'],
+      [],
       _nominationsActive,
       rawBatchKey
     );
@@ -130,12 +120,7 @@ export const useFetchMehods = () => {
 
     const _parachainValidators = applyFilter(
       ['active'],
-      [
-        'all_commission',
-        'blocked_nominations',
-        'missing_identity',
-        'not_parachain_validator',
-      ],
+      ['not_parachain_validator'],
       _nominations,
       rawBatchKey
     ).filter(
@@ -144,7 +129,7 @@ export const useFetchMehods = () => {
 
     const _activeValidators = applyFilter(
       ['active'],
-      ['all_commission', 'blocked_nominations', 'missing_identity'],
+      [],
       _nominations,
       rawBatchKey
     )
@@ -155,7 +140,7 @@ export const useFetchMehods = () => {
 
     const _randomValidator = applyFilter(
       null,
-      ['all_commission', 'blocked_nominations', 'missing_identity'],
+      [],
       _nominations,
       rawBatchKey
     ).filter(
