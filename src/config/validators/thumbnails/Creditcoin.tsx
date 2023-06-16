@@ -1,5 +1,9 @@
 const Creditcoin = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xmlSpace="preserve" >
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 512 512"
+    xmlSpace="preserve"
+  >
     <path d="M120.107 78.0021H108.107V90.0021H120.107V78.0021Z" fill="white" />
     <path d="M132.003 78.0021H120.003V90.0021H132.003V78.0021Z" fill="white" />
     <path d="M144.001 78.0021H132.001V90.0021H144.001V78.0021Z" fill="white" />
