@@ -38,24 +38,24 @@ export const NetworkList: Networks = {
   //   },
   //   colors: {
   //     primary: {
-  //       light: 'rgb(211, 48, 121)',
-  //       dark: 'rgb(211, 48, 121)',
+  //       light: '#9fccaa',
+  //       dark: '#9fccaa',
   //     },
   //     secondary: {
-  //       light: '#552bbf',
-  //       dark: '#6d39ee',
+  //       light: '#9fccaa',
+  //       dark: '#9fccaa',
   //     },
   //     stroke: {
-  //       light: 'rgb(211, 48, 121)',
-  //       dark: 'rgb(211, 48, 121)',
+  //       light: '#9fccaa',
+  //       dark: '#9fccaa',
   //     },
   //     transparent: {
   //       light: 'rgb(211, 48, 121, 0.05)',
   //       dark: 'rgb(211, 48, 121, 0.05)',
   //     },
   //     pending: {
-  //       light: 'rgb(211, 48, 121, 0.33)',
-  //       dark: 'rgb(211, 48, 121, 0.33)',
+  //       light: '#9fccaa',
+  //       dark: '#9fccaa',
   //     },
   //   },
   //   subscanEndpoint: 'http://127.0.0.1:4399',
@@ -90,24 +90,24 @@ export const NetworkList: Networks = {
     },
     colors: {
       primary: {
-        light: 'rgb(211, 48, 121)',
-        dark: 'rgb(211, 48, 121)',
+        light: '#9fccaa',
+        dark: '#9fccaa',
       },
       secondary: {
-        light: '#552bbf',
-        dark: '#6d39ee',
+        light: '#9fccaa',
+        dark: '#9fccaa',
       },
       stroke: {
-        light: 'rgb(211, 48, 121)',
-        dark: 'rgb(211, 48, 121)',
+        light: '#9fccaa',
+        dark: '#9fccaa',
       },
       transparent: {
         light: 'rgb(211, 48, 121, 0.05)',
         dark: 'rgb(211, 48, 121, 0.05)',
       },
       pending: {
-        light: 'rgb(211, 48, 121, 0.33)',
-        dark: 'rgb(211, 48, 121, 0.33)',
+        light: '#9fccaa',
+        dark: '#9fccaa',
       },
     },
     subscanEndpoint: 'https://subscan-testnet.creditcoin.network/',
@@ -142,24 +142,24 @@ export const NetworkList: Networks = {
     },
     colors: {
       primary: {
-        light: 'rgb(211, 48, 121)',
-        dark: 'rgb(211, 48, 121)',
+        light: '#9fccaa',
+        dark: '#9fccaa',
       },
       secondary: {
-        light: '#552bbf',
-        dark: '#6d39ee',
+        light: '#9fccaa',
+        dark: '#9fccaa',
       },
       stroke: {
-        light: 'rgb(211, 48, 121)',
-        dark: 'rgb(211, 48, 121)',
+        light: '#9fccaa',
+        dark: '#9fccaa',
       },
       transparent: {
         light: 'rgb(211, 48, 121, 0.05)',
         dark: 'rgb(211, 48, 121, 0.05)',
       },
       pending: {
-        light: 'rgb(211, 48, 121, 0.33)',
-        dark: 'rgb(211, 48, 121, 0.33)',
+        light: '#9fccaa',
+        dark: '#9fccaa',
       },
     },
     subscanEndpoint: 'http://127.0.0.1:4399',
