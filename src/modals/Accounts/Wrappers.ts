@@ -27,7 +27,7 @@ export const AccountWrapper = styled.div`
     background: var(--button-primary-background);
     border: 1px solid var(--transparent-color);
     color: var(--text-color-primary);
-    font-family: InterSemiBold, sans-serif;
+    font-family: 'SF-Pro-SB', sans-serif;
     width: 100%;
     border-radius: 0.75rem;
     font-size: 1rem;
@@ -58,6 +58,7 @@ export const AccountWrapper = styled.div`
           overflow: hidden;
           transition: color var(--transition-duration);
           margin: 0 0.5rem;
+          color: #fff;
 
           > span {
             opacity: 0.7;

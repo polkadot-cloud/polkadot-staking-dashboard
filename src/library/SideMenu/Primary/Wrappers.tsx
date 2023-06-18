@@ -35,18 +35,18 @@ export const Wrapper = styled(motion.div)`
     color: var(--text-color-primary);
     margin-left: 0.25rem;
     margin-right: 0.65rem;
-    width: 1.35rem;
-    height: 1.35rem;
-    &.minimised {
-      margin: 0;
-      width: 1.5rem;
-      height: 1.5rem;
-    }
+    width: 18px;
+    height: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .name {
+    font-family: 'SF-Pro-M';
     margin: 0;
     padding: 0;
     line-height: 1.35rem;
+    color: #fff;
   }
   .action {
     color: var(--status-success-color);

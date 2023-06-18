@@ -19,7 +19,7 @@ export const Connect = () => {
           openModalWith(accounts.length ? 'Accounts' : 'Connect', {}, 'large');
         }}
       >
-        <WalletIcon className="icon" height="16" width="auto" />
+        <WalletIcon className="icon" width="13.5" height="11.7" />
         <span>{activeAccount ? t('accounts') : t('connect')}</span>
       </Item>
     </HeadingWrapper>

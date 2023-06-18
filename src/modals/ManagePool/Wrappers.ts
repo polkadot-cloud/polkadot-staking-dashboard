@@ -65,7 +65,7 @@ export const CommissionWrapper = styled.div`
     }
 
     > span {
-      font-family: InterSemiBold, sans-serif;
+      font-family: 'SF-Pro-SB', sans-serif;
       margin-left: 0.5rem;
 
       &.neutral {

@@ -93,7 +93,7 @@ export const TitleWrapper = styled.div`
       > h2 {
         display: flex;
         align-items: center;
-        font-family: 'Unbounded', 'sans-serif', sans-serif;
+        font-family: 'NeueBit-R', 'sans-serif', sans-serif;
         font-size: 1.3rem;
 
         > button {

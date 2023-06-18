@@ -33,7 +33,6 @@ export const ItemWrapper = styled(motion.div)`
   > .inner {
     color: var(--text-color-secondary);
     background: var(--background-primary);
-    box-shadow: var(--card-shadow);
     border-radius: 0.75rem;
     width: 100%;
     height: 100%;

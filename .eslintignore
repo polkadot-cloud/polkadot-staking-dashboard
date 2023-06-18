@@ -7,6 +7,10 @@
 *.md
 *.ico
 *.ttf
+*.woff
+*.woff2
+*.eot
+*.otf
 *.xml
 *.txt
 *.html

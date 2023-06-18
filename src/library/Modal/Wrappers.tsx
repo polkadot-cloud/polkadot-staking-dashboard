@@ -32,8 +32,8 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
       > h2 {
         display: flex;
         align-items: center;
-        font-family: 'Unbounded', 'sans-serif', sans-serif;
-        font-size: 1.3rem;
+        font-family: 'NeueBit-R', 'sans-serif', sans-serif;
+        font-size: 2.3rem;
         margin: 0;
 
         > button {
@@ -42,6 +42,7 @@ export const TitleWrapper = styled.div<{ fixed: boolean }>`
       }
       > svg {
         margin-right: 0.9rem;
+        margin-top: -0.3rem;
       }
     }
 
