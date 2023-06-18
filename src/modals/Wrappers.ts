@@ -15,7 +15,7 @@ export const ContentWrapper = styled.div`
     margin: 1rem 0;
 
     &.unbounded {
-      font-family: 'Unbounded';
+      font-family: 'NeueBit-R';
     }
     &.title {
       font-size: 1.35rem;
@@ -45,7 +45,7 @@ export const ContentWrapper = styled.div`
   .action-button {
     background: var(--button-primary-background);
     transition: all var(--transition-duration);
-    font-family: InterSemiBold, sans-serif;
+    font-family: 'SF-Pro-SB', sans-serif;
     padding: 1rem;
     cursor: pointer;
     margin-bottom: 1rem;

@@ -79,7 +79,7 @@ export const SideMenu = () => {
           minimised={sideMenuMinimised}
           icon={{
             Svg: ResourcesSVG,
-            size: sideMenuMinimised ? '1.4em' : '1.2em',
+            size: sideMenuMinimised ? '11.55' : '11.55',
           }}
         />
         <Secondary
@@ -88,7 +88,7 @@ export const SideMenu = () => {
           minimised={sideMenuMinimised}
           icon={{
             Svg: FeedbackSVG,
-            size: sideMenuMinimised ? '1.4em' : '1.2em',
+            size: sideMenuMinimised ? '12.6' : '12.6',
           }}
         />
         <Separator />
@@ -99,7 +99,7 @@ export const SideMenu = () => {
           onClick={() => openModalWith('Networks')}
           icon={{
             Svg: CreditcoinSVG,
-            size: network.brand.inline.size,
+            size: '12.6',
           }}
           minimised={sideMenuMinimised}
           action={

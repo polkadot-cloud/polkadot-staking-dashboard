@@ -48,7 +48,7 @@ export const Legend = styled.div`
   display: flex;
 
   > h4 {
-    font-family: InterSemiBold, sans-serif;
+    font-family: 'SF-Pro-SB', sans-serif;
     display: flex;
     align-items: center;
     padding: 0.5rem 1rem;
@@ -83,7 +83,7 @@ export const Bar = styled.div`
     transition: width 1.5s cubic-bezier(0, 1, 0, 1);
 
     > span {
-      font-family: InterSemiBold, sans-serif;
+      font-family: 'SF-Pro-SB', sans-serif;
       position: absolute;
       left: 0;
       text-overflow: ellipsis;

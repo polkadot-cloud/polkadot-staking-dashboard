@@ -1,6 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+@import "./common/font.scss";
+
 html * {
   --network-color-primary: #9cffaa;
   --network-color-primary-dark: #9cffaa;
@@ -10,35 +12,80 @@ html * {
   --network-color-stroke-dark: #9cffaa;
   --text-color-primary: #ffffff;
   --text-color-secondary: #777777;
-  --button-tertiary-background: #464849;
-  --background-default: black;
+  --button-tertiary-background: #242628;
+  --background-default: #0d0f10;
   --background-primary: #181a1c;
-  font-size: 10.5px;
-
-  .core-page-title h1 {
-    font-family: 'NeueBit', sans-serif;
-    font-style: normal;
-    font-weight: 700;
-  }
+  --gradient-highlight-primary: linear-gradient(90deg,#181a1c,#181a1c);
+  --gradient-side-menu: linear-gradient(180deg,#0d0f10,#0d0f10);
+  --border-primary-color: #2a2c2e;
+  --border-secondary-color: #222426;
+  --status-success-color-transparent: #446d4c;
+  --status-success-color: #a5fba5;
 
   .core-entry {
-    background: black;
-  }
-
-  .graph {
+    background: #0a0c0e;
   }
 
   .btn-primary {
-    color: black;
+    color: #0a0c0e;
+  }
+}
+
+html, body {
+  background-color: #0d0f10;
+}
+
+html {
+  body {
+    font-family: "SF-Pro-M", sans-serif;
+  }
+
+  h1,
+  h2 {
+    font-family: "SF-Pro-SB", sans-serif;
   }
 
   button {
-    span {
-      color: black;
-    }
+    font-family: "SF-Pro-SB", sans-serif;
   }
 
-  @media (min-width: 600px) {
+  input {
+    font-family: "SF-Pro-R", sans-serif;
+  }
+}
+
+html {
+  font-size: 10.5px;
+}
+
+@media (min-width: 600px) {
+  html {
     font-size: 11px;
   }
+}
+
+// Patch
+.core-page-title {
+  margin-bottom: 1rem;
+}
+
+.core-page-heading {
+  padding-top: 0;
+}
+
+.core-page-title h1,
+.modal-custom-header > div.first h1 {
+  font-family: "NeueBit-B" !important;
+}
+
+.core-page-title h1 {
+  font-size: 40px !important;
+}
+
+.modal-custom-header > div.first h1 {
+  font-size: 40px !important;
+}
+
+.core-entry h4 {
+  color: var(--text-color-primary);
 }

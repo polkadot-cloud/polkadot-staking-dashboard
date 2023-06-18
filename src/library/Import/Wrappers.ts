@@ -319,7 +319,7 @@ export const QRVieweraWrapper = styled.div`
 
   .title {
     color: var(--network-color-primary);
-    font-family: 'Unbounded';
+    font-family: 'NeueBit-R';
     margin-bottom: 1rem;
   }
 
