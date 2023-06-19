@@ -197,7 +197,7 @@ export const ValidatorListInner = ({
     if (allowFilters && fetched) {
       handleValidatorsFilterUpdate();
     }
-  }, [order, isSyncing, includes, excludes]);
+  }, [order, isSyncing, includes?.length, excludes?.length]);
 
   // handle modal resize on list format change
   useEffect(() => {
