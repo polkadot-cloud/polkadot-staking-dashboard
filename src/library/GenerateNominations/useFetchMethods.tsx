@@ -112,7 +112,9 @@ export const useFetchMehods = () => {
       _nominationsActive = shuffle(_nominationsActive).slice(0, 12);
     }
 
-    return shuffle(_nominationsWaiting.concat(_nominationsActive));
+    return shuffle([
+      ...new Set(_nominationsWaiting.concat(_nominationsActive)),
+    ]);
   };
 
   const available = (nominations: any) => {
