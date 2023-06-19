@@ -1,6 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import type { ForwardRefComponent, HTMLMotionProps } from 'framer-motion';
+import type { IStyledComponent } from 'styled-components';
 import type { SecondaryProps } from '../types';
 import { IconWrapper, MinimisedWrapper, Wrapper } from './Wrappers';
 
@@ -14,7 +16,12 @@ export const Secondary = ({
 }: SecondaryProps) => {
   const { Svg, size } = icon || {};
 
-  const StyledWrapper = minimised ? MinimisedWrapper : Wrapper;
+  const StyledWrapper: IStyledComponent<
+    'web',
+    ForwardRefComponent<HTMLButtonElement, HTMLMotionProps<'button'>>,
+    object,
+    never
+  > = minimised ? MinimisedWrapper : Wrapper;
 
   return (
     <StyledWrapper
