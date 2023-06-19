@@ -383,7 +383,7 @@ export const BondedPoolsProvider = ({
         depositor: [],
         root: [],
         nominator: [],
-        stateToggler: [],
+        bouncer: [],
       };
     }
 
@@ -399,15 +399,15 @@ export const BondedPoolsProvider = ({
       .filter((b) => b.roles.nominator === who)
       .map((b) => b.id);
 
-    const stateToggler = bondedPools
-      .filter((b) => b.roles.stateToggler === who)
+    const bouncer = bondedPools
+      .filter((b) => b.roles.bouncer === who)
       .map((b) => b.id);
 
     return {
       depositor,
       root,
       nominator,
-      stateToggler,
+      bouncer,
     };
   };
 
@@ -436,12 +436,12 @@ export const BondedPoolsProvider = ({
   const toReplace = (roleEdits: any) => {
     const root = roleEdits?.root?.newAddress ?? '';
     const nominator = roleEdits?.nominator?.newAddress ?? '';
-    const stateToggler = roleEdits?.stateToggler?.newAddress ?? '';
+    const bouncer = roleEdits?.bouncer?.newAddress ?? '';
 
     return {
       root,
       nominator,
-      stateToggler,
+      bouncer,
     };
   };
 

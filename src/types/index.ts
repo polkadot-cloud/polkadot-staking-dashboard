@@ -50,6 +50,7 @@ export interface Network {
     priceTicker: string;
   };
   params: Record<string, number>;
+  defaultFeeReserve: number;
 }
 
 export interface PageCategory {

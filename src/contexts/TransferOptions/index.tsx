@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -18,7 +19,10 @@ export const TransferOptionsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { consts, network } = useApi();
+  const {
+    consts,
+    network: { name, units, defaultFeeReserve },
+  } = useApi();
   const { activeEra } = useNetworkMetrics();
   const { getStashLedger, getBalance, getLocks } = useBalances();
   const { getAccount } = useBonded();
@@ -31,7 +35,10 @@ export const TransferOptionsProvider = ({
     const reserves = JSON.parse(
       localStorage.getItem('reserve_balances') ?? '{}'
     );
-    return new BigNumber(reserves?.[network.name]?.[address || ''] ?? '0');
+    return new BigNumber(
+      reserves?.[name]?.[address || ''] ??
+        unitToPlanck(String(defaultFeeReserve), units)
+    );
   };
 
   // A user-configurable reserve amount to be used to pay for transaction fees.
@@ -42,7 +49,7 @@ export const TransferOptionsProvider = ({
   // Update an account's reserve amount on account or network change.
   useEffect(() => {
     setFeeReserve(getFeeReserveLocalStorage(activeAccount));
-  }, [activeAccount, network]);
+  }, [activeAccount, name]);
 
   // Get the bond and unbond amounts available to the user
   const getTransferOptions = (address: MaybeAccount): TransferOptions => {
@@ -175,15 +182,10 @@ export const TransferOptionsProvider = ({
       const newReserves = JSON.parse(
         localStorage.getItem('reserve_balances') ?? '{}'
       );
-      const newReservesNetwork = newReserves?.[network.name] ?? {};
+      const newReservesNetwork = newReserves?.[name] ?? {};
+      newReservesNetwork[activeAccount] = amount.toString();
 
-      if (amount.isZero()) {
-        delete newReservesNetwork[activeAccount];
-      } else {
-        newReservesNetwork[activeAccount] = amount.toString();
-      }
-
-      newReserves[network.name] = newReservesNetwork;
+      newReserves[name] = newReservesNetwork;
       localStorage.setItem('reserve_balances', JSON.stringify(newReserves));
     } catch (e) {
       // corrupted local storage record - remove it.

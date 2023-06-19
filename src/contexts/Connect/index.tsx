@@ -14,6 +14,7 @@ import { Web3Modal } from '@web3modal/standalone';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import type {
+  ActiveProxy,
   ConnectContextInterface,
   ExternalAccount,
   ImportedAccount,
@@ -70,18 +71,21 @@ export const ConnectProvider = ({
   const activeAccountRef = useRef<string | null>(activeAccount);
 
   // store the active proxy account
-  const [activeProxy, setActiveProxyState] = useState<MaybeAccount>(null);
+  const [activeProxy, setActiveProxyState] = useState<ActiveProxy>(null);
   const activeProxyRef = useRef(activeProxy);
 
-  const setActiveProxy = (proxy: MaybeAccount, updateLocal = true) => {
+  const setActiveProxy = (newActiveProxy: ActiveProxy, updateLocal = true) => {
     if (updateLocal) {
-      if (proxy) {
-        localStorage.setItem(`${network.name}_active_proxy`, proxy);
+      if (newActiveProxy) {
+        localStorage.setItem(
+          `${network.name}_active_proxy`,
+          JSON.stringify(newActiveProxy)
+        );
       } else {
         localStorage.removeItem(`${network.name}_active_proxy`);
       }
     }
-    setStateWithRef(proxy, setActiveProxyState, activeProxyRef);
+    setStateWithRef(newActiveProxy, setActiveProxyState, activeProxyRef);
   };
 
   // store unsubscribe handlers for connected extensions.
@@ -92,6 +96,12 @@ export const ConnectProvider = ({
     []
   );
   const extensionsInitialisedRef = useRef(extensionsInitialised);
+
+  // store whether hardwaree accounts have been initialised.
+  const hardwareInitialisedRef = useRef<boolean>(false);
+
+  // store whether all accounts have been initialised.
+  const accountsInitialisedRef = useRef<boolean>(false);
 
   const [client, setWalletConnectClient] = useState<SignClient | null>(null);
   const [session, setWalletConnectSession] =
@@ -131,7 +141,8 @@ export const ConnectProvider = ({
 
       // if extensions have been fetched, get accounts if extensions exist and
       // local extensions exist (previously connected).
-      if (extensions) {
+
+      if (extensions.length) {
         // get active extensions
         const localExtensions = localStorageOrDefault(
           `active_extensions`,
@@ -154,12 +165,11 @@ export const ConnectProvider = ({
   // as fetched.
   useEffect(() => {
     if (!checkingInjectedWeb3) {
-      const countExtensions = extensions?.length ?? 0;
-      if (extensionsInitialisedRef.current.length === countExtensions) {
+      if (extensionsInitialisedRef.current.length === extensions?.length || 0) {
         setExtensionsFetched(true);
       }
     }
-  }, [extensionsInitialisedRef.current, checkingInjectedWeb3]);
+  }, [checkingInjectedWeb3, extensionsInitialisedRef.current]);
 
   // once extensions are fully initialised, fetch any ledger accounts and external accounts present
   // in localStorage.
@@ -168,8 +178,17 @@ export const ConnectProvider = ({
       importVaultAccounts();
       importLedgerAccounts();
       importExternalAccounts();
+      // Finally, signal that initial accounts have finished being fetched.
+      hardwareInitialisedRef.current = true;
     }
   }, [extensionsFetched]);
+
+  // account fetching complete, mark accounts as initialised.
+  useEffect(() => {
+    if (extensionsFetched && hardwareInitialisedRef.current === true) {
+      accountsInitialisedRef.current = true;
+    }
+  }, [extensionsFetched, hardwareInitialisedRef.current]);
 
   /*
    * Unsubscrbe all account subscriptions
@@ -552,6 +571,8 @@ export const ConnectProvider = ({
         const localWcAddress = localWcAccount.split(':')[1];
         if (localWcAddress === activeAccountRef.current) {
           setActiveAccount(null);
+          disconnectFromAccount();
+          localStorage.removeItem('WalletConnectSession');
           localStorage.removeItem('wallet-connect-addresses');
           break;
         }
@@ -932,7 +953,9 @@ export const ConnectProvider = ({
         renameImportedAccount,
         accounts: accountsRef.current,
         activeAccount: activeAccountRef.current,
-        activeProxy: activeProxyRef.current,
+        activeProxy: activeProxyRef.current?.address ?? null,
+        activeProxyType: activeProxyRef.current?.proxyType ?? null,
+        accountsInitialised: accountsInitialisedRef.current,
       }}
     >
       {children}

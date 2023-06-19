@@ -27,7 +27,7 @@ export const Wrapper = styled.button<WrapperProps>`
   }
   .account-label {
     border-right: 1px solid var(--border-secondary-color);
-    color: var(--text-color-secondary);
+    color: var(--text-color-primary);
     font-size: 0.8em;
     display: flex;
     align-items: center;
@@ -40,13 +40,13 @@ export const Wrapper = styled.button<WrapperProps>`
     flex-shrink: 1;
 
     > svg {
-      color: var(--text-color-secondary);
+      color: var(--text-color-primary);
     }
   }
 
   .title {
     font-family: InterSemiBold, sans-serif;
-    color: var(--text-color-secondary);
+    color: var(--text-color-primary);
     margin-left: 0.25rem;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -67,7 +67,7 @@ export const Wrapper = styled.button<WrapperProps>`
     opacity: 0.8;
 
     path {
-      fill: var(--text-color-secondary);
+      fill: var(--text-color-primary);
     }
   }
 `;

@@ -1,6 +1,7 @@
 {
   "library": {
     "100Commission": "100% commission",
+    "accountConnected": "Account Connected",
     "accounts": "Accounts",
     "active": "Active",
     "activeLowCommission": "Active Low Commission",
@@ -35,6 +36,7 @@
     "confirm": "Confirm",
     "confirmReformat": "Address was reformatted. Please confirm.",
     "connect": "Connect",
+    "connectedTo": "Connected To",
     "connectedToNetwork": "Connected to Network",
     "connecting": "Connecting",
     "continue": "Continue",
@@ -83,6 +85,7 @@
     "insertPayoutAddress": "Insert a payout address",
     "invalid": "Address Invalid",
     "join": "Join",
+    "legalDisclosures": "Legal Disclosures",
     "listItemActive": "Active",
     "locked": "Locked",
     "lockedPools": "Locked Pools",

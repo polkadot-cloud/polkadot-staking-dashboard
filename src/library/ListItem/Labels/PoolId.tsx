@@ -4,32 +4,22 @@
 import { faHashtag } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTooltip } from 'contexts/Tooltip';
-import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
-import { useRef } from 'react';
+import { TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
 
 export const PoolId = ({ id }: { id: number }) => {
   const { t } = useTranslation('library');
-  const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
+  const { setTooltipTextAndOpen } = useTooltip();
 
-  const posRef = useRef<HTMLDivElement>(null);
   const tooltipText = t('poolId');
-
-  const toggleTooltip = () => {
-    if (!open) {
-      setTooltipMeta(tooltipText);
-      setTooltipPosition(posRef);
-    }
-  };
 
   return (
     <div className="label pool">
       <TooltipTrigger
         className="tooltip-trigger-element"
         data-tooltip-text={tooltipText}
-        onMouseMove={() => toggleTooltip()}
+        onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
-      <TooltipPosition ref={posRef} />
       <FontAwesomeIcon icon={faHashtag} />
       &nbsp;{id}
     </div>

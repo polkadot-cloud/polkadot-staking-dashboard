@@ -4,25 +4,20 @@
 import type { SignClient } from '@walletconnect/sign-client/dist/types/client';
 import type { SessionTypes } from '@walletconnect/types';
 import BigNumber from 'bignumber.js';
-import {
-  isSupportedProxyCall,
-  UnsupportedIfUniqueController,
-} from 'config/proxies';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
-import { useBalances } from 'contexts/Balances';
-import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { manualSigners } from 'contexts/Connect/Utils';
 import { useExtensions } from 'contexts/Extensions';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useNotifications } from 'contexts/Notifications';
-import { useProxies } from 'contexts/Proxies';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyApi, AnyJson } from 'types';
+import { useBuildPayload } from '../useBuildPayload';
+import { useProxySupported } from '../useProxySupported';
 import type { UseSubmitExtrinsic, UseSubmitExtrinsicProps } from './types';
 
 export const useSubmitExtrinsic = ({
@@ -34,6 +29,11 @@ export const useSubmitExtrinsic = ({
 }: UseSubmitExtrinsicProps): UseSubmitExtrinsic => {
   const { t } = useTranslation('library');
   const { api } = useApi();
+  const { extensions } = useExtensions();
+  const { addNotification } = useNotifications();
+  const { isProxySupported } = useProxySupported();
+  const { addPending, removePending } = useExtrinsics();
+  const { buildPayload } = useBuildPayload();
   const {
     getAccount,
     requiresManualSign,
@@ -42,136 +42,85 @@ export const useSubmitExtrinsic = ({
     getWalletConnectChainInfo,
     activeProxy,
   } = useConnect();
-  const { addNotification } = useNotifications();
-  const { extensions } = useExtensions();
-  const { addPending, removePending } = useExtrinsics();
-  const { getNonce } = useBalances();
-  const { getProxyDelegate } = useProxies();
-  const { getBondedAccount } = useBonded();
-  const controller = getBondedAccount(from);
   const {
     setTxFees,
     incrementPayloadUid,
     getTxPayload,
-    setTxPayload,
     resetTxPayloads,
     setSender,
     txFees,
     getTxSignature,
     setTxSignature,
+    getUnsignedPayload,
   } = useTxMeta();
   const { setIsExecuting, resetStatusCodes, resetFeedback } =
     useLedgerHardware();
 
-  // if null account is provided, fallback to empty string
-  let submitAddress: string = from || '';
+  // Store given tx as a ref.
+  const txRef = useRef<AnyApi>(tx);
 
-  // whether the transaction is in progress
+  // Store given submit address as a ref.
+  const fromRef = useRef<string>(from || '');
+
+  // Store whether the transaction is in progress.
   const [submitting, setSubmitting] = useState(false);
 
-  // store the uid of the extrinsic
+  // Store the uid of the extrinsic.
   const [uid] = useState<number>(incrementPayloadUid());
 
-  // store whether this call is proxy sypported.
-  const getProxySupported = () => {
-    // if already wrapped, return.
-    if (
-      tx?.method.toHuman().section === 'proxy' &&
-      tx?.method.toHuman().method === 'proxy'
-    ) {
-      return true;
-    }
-    // Ledger devices do not support nesting on `proxy.proxy` calls.
-    if (getAccount(activeProxy)?.source === 'ledger') {
-      return false;
-    }
-
-    const proxyDelegate = getProxyDelegate(from, activeProxy);
-    const proxyType = proxyDelegate?.proxyType || '';
-    const pallet = tx?.method.toHuman().section;
-    const method = tx?.method.toHuman().method;
-    const call = `${pallet}.${method}`;
-
-    // If call is from controller, & controller is different from stash, then proxy is not
-    // supported.
-    const controllerNotSupported = (c: string) =>
-      UnsupportedIfUniqueController.includes(c) && controller !== from;
-
-    // If a batch call, test if every inner call is a supported proxy call.
-    if (call === 'utility.batch') {
-      return (tx?.method?.toHuman()?.args?.calls || [])
-        .map((c: AnyJson) => ({
-          pallet: c.section,
-          method: c.method,
-        }))
-        .every(
-          (c: AnyJson) =>
-            isSupportedProxyCall(proxyType, c.pallet, c.method) &&
-            !controllerNotSupported(`${pallet}.${method}`)
-        );
-    }
-
-    // Check if the current call is a supported proxy call.
-    return (
-      isSupportedProxyCall(proxyType, pallet, method) &&
-      !controllerNotSupported(call)
-    );
-  };
-
+  // Store whether this tx is proxy supported.
   const [proxySupported, setProxySupported] = useState<boolean>(
-    getProxySupported()
+    isProxySupported(txRef.current, fromRef.current)
   );
-  useEffect(() => {
-    setProxySupported(getProxySupported());
-  }, [tx?.toString()]);
 
-  // track for one-shot transaction reset after submission.
+  // Track for one-shot transaction reset after submission.
   const didTxReset = useRef<boolean>(false);
 
-  // the unsigned payload used when signing with wallet-connect
-  const [unsignedPayload, setUnsignedPayload] = useState<AnyJson | null>(null);
   // If proxy account is active, wrap tx in a proxy call and set the sender to the proxy account.
-  const wrapTxInProxy = () => {
-    // if already wrapped, return.
+  const wrapTxIfActiveProxy = () => {
+    // if already wrapped, update fromRef and return.
     if (
-      tx?.method.toHuman().section === 'proxy' &&
-      tx?.method.toHuman().method === 'proxy'
+      txRef.current?.method.toHuman().section === 'proxy' &&
+      txRef.current?.method.toHuman().method === 'proxy'
     ) {
+      if (activeProxy) {
+        fromRef.current = activeProxy;
+      }
       return;
     }
-    if (activeProxy && tx && proxySupported) {
-      submitAddress = activeProxy;
-      tx = api?.tx.proxy.proxy(
+
+    // Handle proxy supported.
+    if (api && activeProxy && txRef.current && proxySupported) {
+      // update submit address to active proxy account.
+      fromRef.current = activeProxy;
+
+      // Do not wrap batch transactions. Proxy calls should already be wrapping each tx within the
+      // batch via `useBatchCall`.
+      if (
+        txRef.current?.method.toHuman().section === 'utility' &&
+        txRef.current?.method.toHuman().method === 'batch'
+      ) {
+        return;
+      }
+
+      // Not a batch transaction: wrap tx in proxy call.
+      txRef.current = api.tx.proxy.proxy(
         {
           id: from,
         },
         null,
-        tx
+        txRef.current
       );
     }
   };
 
-  // Wrap tx with proxy on component mount.
-  wrapTxInProxy();
-
-  // calculate fee upon setup changes and initial render
-  useEffect(() => {
-    setSender(submitAddress);
-    calculateEstimatedFee();
-  }, [tx?.toString(), getTxSignature(), tx?.signature.toString()]);
-
-  // recalculate transaction payload on tx change
-  useEffect(() => {
-    wrapTxInProxy();
-    buildPayload();
-  }, [tx?.toString(), tx?.method?.args?.calls?.toString()]);
-
+  // Calculate the estimated tx fee of the transaction.
   const calculateEstimatedFee = async () => {
-    if (tx === null) {
+    if (txRef.current === null) {
       return;
     }
     // get payment info
-    const { partialFee } = await tx.paymentInfo(submitAddress);
+    const { partialFee } = await txRef.current.paymentInfo(fromRef.current);
     const partialFeeBn = new BigNumber(partialFee.toString());
 
     // give tx fees to global useTxMeta context
@@ -180,73 +129,39 @@ export const useSubmitExtrinsic = ({
     }
   };
 
-  // build and set payload of the transaction and store it in TxMetaContext.
-  const buildPayload = async () => {
-    if (api && tx) {
-      const lastHeader = await api.rpc.chain.getHeader();
-      const blockNumber = api.registry.createType(
-        'BlockNumber',
-        lastHeader.number.toNumber()
-      );
-      const method = api.createType('Call', tx);
-      const era = api.registry.createType('ExtrinsicEra', {
-        current: lastHeader.number.toNumber(),
-        period: 64,
-      });
+  // Refresh state upon `tx` updates.
+  useEffect(() => {
+    // update txRef to latest tx.
+    txRef.current = tx;
+    // update submit address to latest from.
+    fromRef.current = from || '';
+    // update proxy supported status.
+    setProxySupported(isProxySupported(txRef.current, fromRef.current));
+    // wrap tx in proxy call if active proxy & proxy supported.
+    wrapTxIfActiveProxy();
+    // ensure sender is up to date.
+    setSender(fromRef.current);
+    // re-calculate estimated tx fee.
+    calculateEstimatedFee();
+    // rebuild tx payload.
+    buildPayload(txRef.current, fromRef.current, uid);
+  }, [tx?.toString(), tx?.method?.args?.calls?.toString(), from]);
 
-      const accountNonce = getNonce(submitAddress);
-      const nonce = api.registry.createType('Compact<Index>', accountNonce);
-
-      const payload = {
-        specVersion: api.runtimeVersion.specVersion.toHex(),
-        transactionVersion: api.runtimeVersion.transactionVersion.toHex(),
-        address: submitAddress,
-        blockHash: lastHeader.hash.toHex(),
-        blockNumber: blockNumber.toHex(),
-        era: era.toHex(),
-        genesisHash: api.genesisHash.toHex(),
-        method: method.toHex(),
-        nonce: nonce.toHex(),
-        signedExtensions: [
-          'CheckNonZeroSender',
-          'CheckSpecVersion',
-          'CheckTxVersion',
-          'CheckGenesis',
-          'CheckMortality',
-          'CheckNonce',
-          'CheckWeight',
-          'ChargeTransactionPayment',
-        ],
-        tip: api.registry.createType('Compact<Balance>', 0).toHex(),
-        version: tx.version,
-      };
-      setUnsignedPayload(payload);
-
-      const raw = api.registry.createType('ExtrinsicPayload', payload, {
-        version: payload.version,
-      });
-      setTxPayload(raw, uid);
-    }
-  };
-
-  // submit extrinsic
+  // Extrinsic submission handler.
   const onSubmit = async () => {
+    const account = getAccount(fromRef.current);
     if (
+      account === null ||
       submitting ||
       !shouldSubmit ||
       !api ||
-      (requiresManualSign(submitAddress) && !getTxSignature())
+      (requiresManualSign(fromRef.current) && !getTxSignature())
     ) {
       return;
     }
 
-    const account = getAccount(submitAddress);
-    if (account === null) {
-      return;
-    }
-
-    const accountNonce = (
-      await api.rpc.system.accountNextIndex(submitAddress)
+    const nonce = (
+      await api.rpc.system.accountNextIndex(fromRef.current)
     ).toHuman();
 
     const { source } = account;
@@ -263,7 +178,7 @@ export const useSubmitExtrinsic = ({
     }
 
     const onReady = () => {
-      addPending(accountNonce);
+      addPending(nonce);
       addNotification({
         title: t('pending'),
         subtitle: t('transactionInitiated'),
@@ -273,7 +188,7 @@ export const useSubmitExtrinsic = ({
 
     const onInBlock = () => {
       setSubmitting(false);
-      removePending(accountNonce);
+      removePending(nonce);
       addNotification({
         title: t('inBlock'),
         subtitle: t('transactionInBlock'),
@@ -293,7 +208,7 @@ export const useSubmitExtrinsic = ({
           subtitle: t('errorWithTransaction'),
         });
         setSubmitting(false);
-        removePending(accountNonce);
+        removePending(nonce);
       }
     };
 
@@ -318,7 +233,7 @@ export const useSubmitExtrinsic = ({
       if (type === 'ledger') {
         resetLedgerTx();
       }
-      removePending(accountNonce);
+      removePending(nonce);
       addNotification({
         title: t('cancelled'),
         subtitle: t('transactionCancelled'),
@@ -337,6 +252,7 @@ export const useSubmitExtrinsic = ({
 
     const txPayload: AnyJson = getTxPayload();
     const txSignature: AnyJson = getTxSignature();
+    const unsignedPayload: AnyJson = getUnsignedPayload();
 
     interface IFormattedRpcResponse {
       method?: string;
@@ -353,7 +269,7 @@ export const useSubmitExtrinsic = ({
       payload: AnyJson
     ): Promise<IFormattedRpcResponse> => {
       setSubmitting(true);
-      addPending(accountNonce);
+      addPending(nonce);
       addNotification({
         title: t('pending'),
         subtitle: t('transactionInitiated'),
@@ -381,7 +297,7 @@ export const useSubmitExtrinsic = ({
         };
       } catch (error: any) {
         setSubmitting(false);
-        removePending(accountNonce);
+        removePending(nonce);
         addNotification({
           title: t('cancelled'),
           subtitle: t('transactionCancelled'),
@@ -398,22 +314,24 @@ export const useSubmitExtrinsic = ({
     // handle signed transaction.
     if (getTxSignature()) {
       try {
-        tx.addSignature(submitAddress, txSignature, txPayload);
+        txRef.current.addSignature(fromRef.current, txSignature, txPayload);
 
-        const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
-          if (!didTxReset.current) {
-            didTxReset.current = true;
-            resetManualTx();
-          }
+        const unsub = await txRef.current.send(
+          ({ status, events = [] }: AnyApi) => {
+            if (!didTxReset.current) {
+              didTxReset.current = true;
+              resetManualTx();
+            }
 
-          handleStatus(status);
-          if (status.isFinalized) {
-            events.forEach(({ event: { method } }: AnyApi) => {
-              onFinalizedEvent(method);
-              if (unsubEvents?.includes(method)) unsub();
-            });
+            handleStatus(status);
+            if (status.isFinalized) {
+              events.forEach(({ event: { method } }: AnyApi) => {
+                onFinalizedEvent(method);
+                if (unsubEvents?.includes(method)) unsub();
+              });
+            }
           }
-        });
+        );
       } catch (e) {
         onError(manualSigners.includes(source) ? source : 'default');
       }
@@ -425,27 +343,33 @@ export const useSubmitExtrinsic = ({
       try {
         const result = await sendWalletConnectTx(
           wcChainInfo as string,
-          submitAddress,
+          fromRef.current,
           wcSignClient as SignClient,
           wcSession as SessionTypes.Struct,
           unsignedPayload as AnyJson
         );
-        tx.addSignature(submitAddress, result.signature, getTxPayload());
+        txRef.current.addSignature(
+          fromRef.current,
+          result.signature,
+          txPayload
+        );
 
-        const unsub = await tx.send(({ status, events = [] }: AnyApi) => {
-          if (!didTxReset.current) {
-            didTxReset.current = true;
-            resetTx();
-          }
+        const unsub = await txRef.current.send(
+          ({ status, events = [] }: AnyApi) => {
+            if (!didTxReset.current) {
+              didTxReset.current = true;
+              resetTx();
+            }
 
-          handleStatus(status);
-          if (status.isFinalized) {
-            events.forEach(({ event: { method } }: AnyApi) => {
-              onFinalizedEvent(method);
-              if (unsubEvents?.includes(method)) unsub();
-            });
+            handleStatus(status);
+            if (status.isFinalized) {
+              events.forEach(({ event: { method } }: AnyApi) => {
+                onFinalizedEvent(method);
+                if (unsubEvents?.includes(method)) unsub();
+              });
+            }
           }
-        });
+        );
       } catch (e) {
         onError('default');
       }
@@ -453,8 +377,8 @@ export const useSubmitExtrinsic = ({
       // handle unsigned transaction.
       const { signer } = account;
       try {
-        const unsub = await tx.signAndSend(
-          submitAddress,
+        const unsub = await txRef.current.signAndSend(
+          fromRef.current,
           { signer },
           ({ status, events = [] }: AnyApi) => {
             if (!didTxReset.current) {
@@ -481,7 +405,7 @@ export const useSubmitExtrinsic = ({
     uid,
     onSubmit,
     submitting,
-    submitAddress,
+    submitAddress: fromRef.current,
     proxySupported,
   };
 };

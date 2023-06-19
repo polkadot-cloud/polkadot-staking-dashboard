@@ -14,6 +14,7 @@ import type { ExternalAccount } from 'contexts/Connect/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type {
   EraStakers,
+  Exposure,
   NominationStatuses,
   StakingContextInterface,
   StakingMetrics,
@@ -22,6 +23,7 @@ import type {
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
+import type { ResponseInitialiseExposures } from 'workers/types';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
@@ -125,7 +127,7 @@ export const StakingProvider = ({
 
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
-      const { data } = message;
+      const { data }: { data: ResponseInitialiseExposures } = message;
       const { task } = data;
       if (task !== 'initialise_exposures') {
         return;
@@ -236,7 +238,7 @@ export const StakingProvider = ({
     setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
 
     // humanise exposures to send to worker
-    const exposures = exposuresRaw.map(([keys, val]: AnyApi) => ({
+    const exposures: Exposure[] = exposuresRaw.map(([keys, val]: AnyApi) => ({
       keys: keys.toHuman(),
       val: val.toHuman(),
     }));

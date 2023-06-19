@@ -11,10 +11,8 @@ import { useValidators } from 'contexts/Validators';
 import { motion } from 'framer-motion';
 import {
   OverSubscribedWrapper,
-  TooltipPosition,
   TooltipTrigger,
 } from 'library/ListItem/Wrappers';
-import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { OversubscribedProps } from '../types';
 
@@ -25,7 +23,7 @@ export const Oversubscribed = ({
   const { t } = useTranslation('library');
   const { consts, network } = useApi();
   const { meta } = useValidators();
-  const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
+  const { setTooltipTextAndOpen } = useTooltip();
 
   const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
@@ -48,8 +46,6 @@ export const Oversubscribed = ({
   const displayOversubscribed =
     synced.stake && totalNominations >= consts.maxNominatorRewardedPerValidator;
 
-  const posRef = useRef(null);
-
   const lowestRewardFormatted = new BigNumber(lowestReward)
     .decimalPlaces(MinBondPrecision)
     .toFormat();
@@ -57,13 +53,6 @@ export const Oversubscribed = ({
   const tooltipText = `${t(
     'overSubscribedMinReward'
   )} ${lowestRewardFormatted} ${network.unit}`;
-
-  const toggleTooltip = () => {
-    if (!open) {
-      setTooltipMeta(tooltipText);
-      setTooltipPosition(posRef);
-    }
-  };
 
   return (
     <>
@@ -77,9 +66,8 @@ export const Oversubscribed = ({
             <TooltipTrigger
               className="tooltip-trigger-element"
               data-tooltip-text={tooltipText}
-              onMouseMove={() => toggleTooltip()}
+              onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
             />
-            <TooltipPosition ref={posRef} />
             <OverSubscribedWrapper>
               <span className="warning">
                 <FontAwesomeIcon

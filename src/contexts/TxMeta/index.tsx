@@ -41,6 +41,9 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const [txSignature, setTxSignatureState] = useState<AnyJson>(null);
   const txSignatureRef = React.useRef(txSignature);
 
+  // the unsigned payload used when signing with wallet-connect
+  const [unsignedPayload, setUnsignedPayload] = useState<AnyJson | null>(null);
+
   useEffect(() => {
     const { freeBalance } = getTransferOptions(sender);
     setNotEnoughFunds(freeBalance.minus(txFees).isLessThan(0));
@@ -114,6 +117,10 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
     return 'ok';
   };
 
+  const getUnsignedPayload = () => {
+    return unsignedPayload;
+  };
+
   return (
     <TxMetaContext.Provider
       value={{
@@ -132,6 +139,8 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
         resetTxPayloads,
         getTxSignature,
         setTxSignature,
+        getUnsignedPayload,
+        setUnsignedPayload,
       }}
     >
       {children}

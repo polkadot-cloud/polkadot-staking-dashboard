@@ -186,7 +186,9 @@ export const ValidatorStatusWrapper = styled.div<{ status: string }>`
 
   h5 {
     color: ${(props) =>
-      props.status === 'active' ? 'green' : 'var(--text-color-secondary)'};
+      props.status === 'active'
+        ? 'var(--status-success-color)'
+        : 'var(--text-color-secondary)'};
     opacity: ${(props) => (props.status === 'active' ? 0.8 : 0.5)};
     display: flex;
     overflow: hidden;
@@ -241,15 +243,6 @@ export const MenuPosition = styled.div`
   position: absolute;
   top: -10px;
   right: 10px;
-  width: 0;
-  height: 0;
-  opacity: 0;
-`;
-
-export const TooltipPosition = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0.75rem;
   width: 0;
   height: 0;
   opacity: 0;

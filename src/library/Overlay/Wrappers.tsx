@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 
 export const OverlayWrapper = styled.div`
-  background: var(--overlay-modal-color);
+  background: var(--overlay-background-color);
   position: fixed;
   width: 100%;
   height: 100%;
