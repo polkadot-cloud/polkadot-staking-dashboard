@@ -6,7 +6,7 @@ export const ValidatorCommunity = [
     name: 'Gluwa Creditcoin Test Validators',
     thumbnail: 'Creditcoin',
     bio: "Gluwa's Testnet validators",
-    email: 'ada.anderson@gluwa.com',
+    email: 'support@gluwa.com',
     twitter: '@gluwa',
     website: 'https://www.gluwa.com/',
     validators: {
