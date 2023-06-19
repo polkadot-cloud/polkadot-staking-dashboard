@@ -14,7 +14,7 @@ export const Secondary = ({
 }: SecondaryProps) => {
   const { Svg, size } = icon || {};
 
-  const StyledWrapper = minimised ? MinimisedWrapper : Wrapper;
+  const StyledWrapper: any = minimised ? MinimisedWrapper : Wrapper;
 
   return (
     <StyledWrapper
