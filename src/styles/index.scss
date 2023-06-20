@@ -21,6 +21,9 @@ html * {
   --border-secondary-color: #222426;
   --status-success-color-transparent: #446d4c;
   --status-success-color: #a5fba5;
+  --network-color-pending-light: rgba(156,255,170,.5);
+  --network-color-pending-dark: rgba(156,255,170,.5);
+  --network-color-pending: var(--network-color-pending-dark);
 
   .core-entry {
     background: #0a0c0e;
@@ -28,6 +31,10 @@ html * {
 
   .btn-primary {
     color: #0a0c0e;
+  }
+
+  .btn-submit {
+    color: #0A0C0E;
   }
 }
 
