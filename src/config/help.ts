@@ -58,26 +58,6 @@ export const HelpConfig: HelpItems = [
     ],
   },
   {
-    key: 'pools',
-    definitions: [
-      'Nomination Pools',
-      'Active Pools',
-      'Minimum To Join Pool',
-      'Minimum To Create Pool',
-      'Pool Membership',
-      'Bonded in Pool',
-      'Pool Rewards',
-      'Pool Roles',
-      'Pool Commission Rate',
-      'Pool Max Commission',
-      'Pool Commission Change Rate',
-    ],
-    external: [
-      ['createPools', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
-      ['claimRewards', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
-    ],
-  },
-  {
     key: 'validators',
     definitions: [
       'Validator',
@@ -109,20 +89,5 @@ export const HelpConfig: HelpItems = [
     key: 'community',
     definitions: [],
     external: [],
-  },
-  {
-    key: 'ledger',
-    definitions: [
-      'Ledger Hardware Wallets',
-      'Ledger Rejected Transaction',
-      'Ledger Request Timeout',
-      'Open App On Ledger',
-      'Wrong Transaction',
-    ],
-    external: [],
-  },
-  {
-    key: 'vault',
-    definitions: ['Polkadot Vault'],
   },
 ];
