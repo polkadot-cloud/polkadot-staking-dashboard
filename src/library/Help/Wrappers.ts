@@ -78,6 +78,7 @@ export const ContentWrapper = styled.div`
   h1 {
     font-family: 'NeueBit-R', 'sans-serif', sans-serif;
     margin-bottom: 1.75rem;
+    font-size: 29px;
   }
 
   h3 {
