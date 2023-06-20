@@ -251,15 +251,6 @@ export const GenerateNominations = ({
       isDisabled: () => false,
     },
     {
-      title: t('parachainValidator'),
-      onClick: () => addNominationByType('Parachain Validator'),
-      onSelected: false,
-      icon: faPlus,
-      isDisabled: () =>
-        disabledMaxNominations() ||
-        !availableToNominate(nominations).parachainValidators.length,
-    },
-    {
       title: t('activeValidator'),
       onClick: () => addNominationByType('Active Validator'),
       onSelected: false,
