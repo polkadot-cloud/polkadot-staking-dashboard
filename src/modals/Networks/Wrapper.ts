@@ -60,7 +60,7 @@ export const NetworkButton = styled.button<NetworkButtonProps>`
   align-items: center;
   width: 100%;
   ${(props) =>
-    props.connected !== true &&
+    props.$connected !== true &&
     `
     border: 1px solid rgba(0,0,0,0);
   `}
@@ -148,7 +148,7 @@ export const ConnectionButton = styled.button<NetworkButtonProps>`
   margin-right: 0.5rem;
   border-radius: 0.5rem;
   ${(props) =>
-    props.connected !== true &&
+    props.$connected !== true &&
     `
     border: 1px solid rgba(0,0,0,0);
   `}

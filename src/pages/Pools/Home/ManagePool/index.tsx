@@ -41,7 +41,7 @@ export const ManagePool = () => {
           <Nominations bondFor="pool" nominator={activeAccount} />
         ) : canNominate && !isNominating && state !== 'Destroying' ? (
           <>
-            <CardHeaderWrapper withAction>
+            <CardHeaderWrapper $withaction>
               <h3>
                 {t('pools.generateNominations')}
                 <ButtonHelp

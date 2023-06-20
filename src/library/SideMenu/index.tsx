@@ -71,7 +71,7 @@ export const SideMenu = () => {
       : 'danger';
 
   return (
-    <Wrapper ref={ref} minimised={sideMenuMinimised}>
+    <Wrapper ref={ref} $minimised={sideMenuMinimised}>
       <section>
         <Main />
         <Heading title={t('support')} minimised={sideMenuMinimised} />

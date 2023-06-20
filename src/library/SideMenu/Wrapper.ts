@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import type { MinimisedProps } from './types';
 
 export const Wrapper = styled.div<MinimisedProps>`
-  border-radius: ${(props) => (props.minimised ? '0.7rem' : 0)};
+  border-radius: ${(props) => (props.$minimised ? '0.7rem' : 0)};
   background: none;
   padding: 1rem 1rem 1rem 1.25rem;
   overflow: auto;
@@ -20,7 +20,7 @@ export const Wrapper = styled.div<MinimisedProps>`
   flex-flow: column nowrap;
   backdrop-filter: blur(4px);
   width: ${(props) =>
-    props.minimised
+    props.$minimised
       ? `${SideMenuMinimisedWidth}px`
       : `${SideMenuMaximisedWidth}px`};
 
@@ -43,7 +43,7 @@ export const Wrapper = styled.div<MinimisedProps>`
     /* Footer */
     &:last-child {
       display: flex;
-      flex-flow: ${(props) => (props.minimised ? 'column wrap' : 'row wrap')};
+      flex-flow: ${(props) => (props.$minimised ? 'column wrap' : 'row wrap')};
       align-items: center;
       padding-top: 0.5rem;
 
@@ -51,8 +51,8 @@ export const Wrapper = styled.div<MinimisedProps>`
         color: var(--text-color-secondary);
         position: relative;
         transition: color var(--transition-duration);
-        margin-top: ${(props) => (props.minimised ? '1rem' : 0)};
-        margin-right: ${(props) => (props.minimised ? 0 : '0.9rem')};
+        margin-top: ${(props) => (props.$minimised ? '1rem' : 0)};
+        margin-right: ${(props) => (props.$minimised ? 0 : '0.9rem')};
         opacity: 0.75;
         padding: 0.1rem;
 
@@ -70,11 +70,11 @@ export const Wrapper = styled.div<MinimisedProps>`
 export const LogoWrapper = styled.button<MinimisedProps>`
   display: flex;
   flex-flow: row wrap;
-  justify-content: ${(props) => (props.minimised ? 'center' : 'flex-start')};
+  justify-content: ${(props) => (props.$minimised ? 'center' : 'flex-start')};
   width: 100%;
   height: 2.8rem;
-  padding: ${(props) => (props.minimised ? '0' : '0.4rem 0.5rem')};
-  margin-bottom: ${(props) => (props.minimised ? '1.5rem' : '1rem')};
+  padding: ${(props) => (props.$minimised ? '0' : '0.4rem 0.5rem')};
+  margin-bottom: ${(props) => (props.$minimised ? '1.5rem' : '1rem')};
   position: relative;
 
   ellipse {
@@ -91,7 +91,6 @@ export const Separator = styled.div`
 export const ConnectionSymbol = styled.div`
   width: 0.6rem;
   height: 0.6rem;
-  background: ${(props) => props.color};
   border-radius: 50%;
   margin: 0 0.7rem;
 

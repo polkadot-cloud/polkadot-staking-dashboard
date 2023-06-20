@@ -135,7 +135,7 @@ export const PayoutListInner = ({
           </button>
         </div>
       </Header>
-      <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
+      <List $flexbasislarge={allowMoreCols ? '33.33%' : '50%'}>
         {pagination && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}

@@ -36,13 +36,13 @@ export const PoolMemberBonded = ({ meta, batchKey, batchIndex }: any) => {
   return (
     <>
       {!poolMember ? (
-        <ValidatorStatusWrapper status="inactive">
+        <ValidatorStatusWrapper $status="inactive">
           <h5>{t('syncing')}...</h5>
         </ValidatorStatusWrapper>
       ) : (
         <>
           {greaterThanZero(bonded) && (
-            <ValidatorStatusWrapper status={status}>
+            <ValidatorStatusWrapper $status={status}>
               <h5>
                 {t('bonded')}: {bonded.decimalPlaces(3).toFormat()} {unit}
               </h5>
@@ -52,7 +52,7 @@ export const PoolMemberBonded = ({ meta, batchKey, batchIndex }: any) => {
       )}
 
       {poolMember && greaterThanZero(totalUnbonding) && (
-        <ValidatorStatusWrapper status="inactive">
+        <ValidatorStatusWrapper $status="inactive">
           <h5>
             {t('unbonding')} {totalUnbonding.decimalPlaces(3).toFormat()} {unit}
           </h5>

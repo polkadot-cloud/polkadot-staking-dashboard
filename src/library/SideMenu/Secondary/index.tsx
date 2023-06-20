@@ -36,7 +36,7 @@ export const Secondary = ({
       }}
     >
       <IconWrapper
-        minimised={minimised}
+        $minimised={minimised}
         className="icon"
         style={{ width: size, height: size }}
       >

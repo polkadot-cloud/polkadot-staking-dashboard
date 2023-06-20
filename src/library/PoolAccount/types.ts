@@ -13,7 +13,7 @@ export interface PoolAccountProps {
 }
 
 export interface WrapperProps {
-  filled: boolean;
-  canClick: boolean;
-  fontSize: string;
+  $filled: boolean;
+  $canclick: boolean;
+  $fontSize: string;
 }

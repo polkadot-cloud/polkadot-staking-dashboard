@@ -12,7 +12,7 @@ export const Status = ({ height }: { height: number }) => {
   const { selectedActivePool } = useActivePools();
 
   return (
-    <CardWrapper height={height}>
+    <CardWrapper $height={height}>
       <MembershipStatus />
       <Separator />
       <RewardsStatus />

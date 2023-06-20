@@ -14,7 +14,7 @@ export const StakeStatus = () => {
   const showTips = plugins.includes('tips');
 
   return (
-    <CardWrapper noPadding>
+    <CardWrapper $nopadding>
       <StatusWrapper>
         <RowSection secondary>
           <section>

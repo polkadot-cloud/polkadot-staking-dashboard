@@ -73,9 +73,9 @@ export const PoolAccount = ({
   return (
     <Wrapper
       onClick={onClick}
-      canClick={canClick}
-      filled={filled}
-      fontSize={fontSize}
+      $canclick={canClick}
+      $filled={filled}
+      $fontSize={fontSize}
     >
       {label !== undefined && <div className="account-label">{label}</div>}
 

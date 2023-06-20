@@ -3,14 +3,14 @@
 
 import styled from 'styled-components';
 
-export const Wrapper = styled.div<{ activeInput?: boolean }>`
+export const Wrapper = styled.div<{ $activeinput?: boolean }>`
   > .inner {
     width: 100%;
     display: flex;
     flex-flow: column nowrap;
     border-bottom: 1.5px solid
       ${(props) =>
-        props.activeInput
+        props.$activeinput
           ? 'var(--network-color-primary)'
           : 'var(--border-primary-color)'};
     padding: 0rem 0 0.4rem 0;

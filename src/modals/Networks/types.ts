@@ -2,5 +2,5 @@
 // SPDX-License-Identifier: Apache-2.0
 
 export interface NetworkButtonProps {
-  connected?: boolean;
+  $connected?: boolean;
 }

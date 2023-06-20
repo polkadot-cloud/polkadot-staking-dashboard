@@ -40,7 +40,7 @@ export const BondedChart = ({
   return (
     <>
       <BarChartWrapper
-        lessPadding
+        $lesspadding
         style={{ marginTop: '2rem', marginBottom: '2rem' }}
       >
         <Legend>

@@ -22,9 +22,9 @@ export const SelectItem = ({
   containerRef,
 }: SelectItemProps) => (
   <Wrapper
-    selected={selected}
-    grow={grow}
-    hoverBorder={hoverBorder}
+    $selected={selected}
+    $grow={grow}
+    $hoverBorder={hoverBorder}
     className={layout}
   >
     <div className="inner" ref={containerRef}>

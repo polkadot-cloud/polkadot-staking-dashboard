@@ -104,7 +104,7 @@ export const Default = ({
   };
 
   return (
-    <Wrapper format="nomination" inModal={inModal}>
+    <Wrapper $format="nomination" $inmodal={inModal}>
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">

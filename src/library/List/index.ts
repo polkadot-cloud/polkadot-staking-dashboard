@@ -66,19 +66,19 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
       margin-left: 0.5rem;
       &.next {
         color: ${(props) =>
-          props.next
+          props.$next
             ? 'var(--network-color-primary)'
             : 'var(--text-color-secondary)'};
-        cursor: ${(props) => (props.next ? 'pointer' : 'default')};
-        opacity: ${(props) => (props.next ? 1 : 0.4)};
+        cursor: ${(props) => (props.$next ? 'pointer' : 'default')};
+        opacity: ${(props) => (props.$next ? 1 : 0.4)};
       }
       &.prev {
         color: ${(props) =>
-          props.prev
+          props.$prev
             ? 'var(--network-color-primary)'
             : 'var(--text-color-secondary)'};
-        cursor: ${(props) => (props.prev ? 'pointer' : 'default')};
-        opacity: ${(props) => (props.prev ? 1 : 0.4)};
+        cursor: ${(props) => (props.$prev ? 'pointer' : 'default')};
+        opacity: ${(props) => (props.$prev ? 1 : 0.4)};
       }
     }
   }
@@ -156,8 +156,8 @@ export const List = styled.div<ListProps>`
           max-width: 50%;
         }
         @media (min-width: 1500px) {
-          flex-basis: ${(props) => props.flexBasisLarge};
-          max-width: ${(props) => props.flexBasisLarge};
+          flex-basis: ${(props) => props.$flexbasislarge};
+          max-width: ${(props) => props.$flexbasislarge};
         }
       }
     }

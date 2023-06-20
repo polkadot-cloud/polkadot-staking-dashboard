@@ -138,7 +138,7 @@ export const Roles = ({
 
   return (
     <>
-      <CardHeaderWrapper withAction>
+      <CardHeaderWrapper $withaction>
         <h3>
           {t('pools.roles')}{' '}
           <ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />
@@ -236,7 +236,6 @@ export const Roles = ({
                 address={roles.bouncer ?? null}
                 batchIndex={accounts.indexOf(roles.bouncer ?? '-1')}
                 batchKey={batchKey}
-                last
               />
             )}
           </div>
