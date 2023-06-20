@@ -22,9 +22,7 @@ export const HelpConfig: HelpItems = [
       'Proxy Accounts',
     ],
     external: [
-      ['connectAccounts', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
-      ['howToUse', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
-      ['stakeDot', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
+      ['creditcoinDocs', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
     ],
   },
   {
@@ -40,22 +38,7 @@ export const HelpConfig: HelpItems = [
       'Nominations',
       'Inactive Nominations',
     ],
-    external: [
-      [
-        'changeDestination',
-        'https://docs.creditcoin.org',
-        'docs.creditcoin.org',
-      ],
-      ['bondMore', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
-      ['unbondingTokens', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
-      ['rebonding', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
-      ['changeAccount', 'https://docs.creditcoin.org', 'docs.creditcoin.org'],
-      [
-        'changeNominations',
-        'https://docs.creditcoin.org',
-        'docs.creditcoin.org',
-      ],
-    ],
+    external: [],
   },
   {
     key: 'validators',
@@ -72,13 +55,7 @@ export const HelpConfig: HelpItems = [
       'Over Subscribed',
       'Blocked Nominations',
     ],
-    external: [
-      [
-        'chooseValidators',
-        'https://docs.creditcoin.org',
-        'docs.creditcoin.org',
-      ],
-    ],
+    external: [],
   },
   {
     key: 'payouts',

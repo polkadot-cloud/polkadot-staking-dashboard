@@ -205,7 +205,7 @@ export const Help = () => {
 
             {activeExternals.length > 0 && (
               <>
-                <h3>{t('modal.articles')}</h3>
+                <h3>{t('modal.docs')}</h3>
                 {activeExternals.map((item, index: number) => (
                   <External
                     key={`ext_${index}`}
