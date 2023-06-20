@@ -20,7 +20,6 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Graphs/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatBoxList } from 'library/StatBoxList';
 import { useTranslation } from 'react-i18next';
-import { ControllerNotStash } from './ControllerNotStash';
 import { ManageBond } from './ManageBond';
 import { Nominations } from './Nominations';
 import { ActiveNominatorsStat } from './Stats/ActiveNominators';
@@ -50,7 +49,6 @@ export const Active = () => {
         <MinimumNominatorBondStat />
         <MinimumActiveStakeStat />
       </StatBoxList>
-      <ControllerNotStash />
       <UnstakePrompts />
       <PageRow>
         <RowSection hLast>
