@@ -205,10 +205,10 @@
     "@babel/helper-validator-identifier" "^7.22.5"
     to-fast-properties "^2.0.0"
 
-"@dotlottie/player-component@^1.4.1":
-  version "1.4.1"
-  resolved "https://registry.npmjs.org/@dotlottie/player-component/-/player-component-1.4.1.tgz#defdaf0966351014716aac7c0839057672ca6a56"
-  integrity sha512-KRq0kbNudYrlKZp4v1FCSTwDCpkrTZf70QVQ+4ASpCR+IPry1ncuRt8xsfD4lMC66WozZE9zz29lxs6Balurmg==
+"@dotlottie/player-component@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@dotlottie/player-component/-/player-component-1.4.2.tgz#3d64cb99a936e287211bf88638407ed2b731b6ca"
+  integrity sha512-cLGsZVEg+i8dpkT8CB0BTHziL9Bq1p/zJV8wIgUO8LAKUHFB6sGssInVNph9iceH6CUFe1w8p8CQi3FOtIFlpQ==
   dependencies:
     "@rollup/plugin-json" "^6.0.0"
     fflate "^0.7.3"
