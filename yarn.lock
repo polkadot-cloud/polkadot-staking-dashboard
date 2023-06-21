@@ -1074,10 +1074,10 @@
     "@babel/helper-validator-identifier" "^7.22.5"
     to-fast-properties "^2.0.0"
 
-"@dotlottie/player-component@^1.4.1":
-  version "1.4.1"
-  resolved "https://registry.npmjs.org/@dotlottie/player-component/-/player-component-1.4.1.tgz#defdaf0966351014716aac7c0839057672ca6a56"
-  integrity sha512-KRq0kbNudYrlKZp4v1FCSTwDCpkrTZf70QVQ+4ASpCR+IPry1ncuRt8xsfD4lMC66WozZE9zz29lxs6Balurmg==
+"@dotlottie/player-component@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@dotlottie/player-component/-/player-component-1.4.2.tgz#3d64cb99a936e287211bf88638407ed2b731b6ca"
+  integrity sha512-cLGsZVEg+i8dpkT8CB0BTHziL9Bq1p/zJV8wIgUO8LAKUHFB6sGssInVNph9iceH6CUFe1w8p8CQi3FOtIFlpQ==
   dependencies:
     "@rollup/plugin-json" "^6.0.0"
     fflate "^0.7.3"
@@ -2315,18 +2315,17 @@
     loupe "^2.3.6"
     pretty-format "^27.5.1"
 
-"@zondax/ledger-substrate@^0.40.7":
-  version "0.40.7"
-  resolved "https://registry.npmjs.org/@zondax/ledger-substrate/-/ledger-substrate-0.40.7.tgz#e2909de326a43fa17649c177daef8244acd048e5"
-  integrity sha512-2Yttb5YydgpS2ZRu+mPE23SZCTnK8VPchd9vo1Neukv0YCQghJB5Ou+X69AN4elKs0VUc2FJd/j8SDmtuPEu9Q==
+"@zondax/ledger-substrate@^0.41.1":
+  version "0.41.1"
+  resolved "https://registry.yarnpkg.com/@zondax/ledger-substrate/-/ledger-substrate-0.41.1.tgz#6b79aceb61c042263ab1751a4cf28bb73e7cf774"
+  integrity sha512-EcHM0HpCElkd8jI9i2ei/TenIG5rvKFynjDE1i+gCfSc5CWgdWxhcpyokK3CAiR/pm4qcLpNSA9ZZYo9wBN1uA==
   dependencies:
     "@ledgerhq/hw-transport" "^6.27.1"
     bip32 "^4.0.0"
-    bip32-ed25519 "https://github.com/Zondax/bip32-ed25519"
+    bip32-ed25519 "git+https://github.com/Zondax/bip32-ed25519.git"
     bip39 "^3.0.4"
     blakejs "^1.2.1"
     bs58 "^5.0.0"
-    chalk "^4.1.0"
     hash.js "^1.1.7"
 
 acorn-jsx@^5.3.2:
@@ -2586,9 +2585,10 @@ binary-extensions@^2.0.0:
   resolved "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
 
-"bip32-ed25519@https://github.com/Zondax/bip32-ed25519":
+"bip32-ed25519@git+https://github.com/Zondax/bip32-ed25519.git":
   version "0.0.4"
-  resolved "https://github.com/Zondax/bip32-ed25519#0949df01b5c93885339bc28116690292088f6134"
+  uid "0949df01b5c93885339bc28116690292088f6134"
+  resolved "git+https://github.com/Zondax/bip32-ed25519.git#0949df01b5c93885339bc28116690292088f6134"
   dependencies:
     bn.js "^5.1.1"
     elliptic "^6.4.1"
@@ -2775,7 +2775,7 @@ chalk@^2.0.0:
     escape-string-regexp "^1.0.5"
     supports-color "^5.3.0"
 
-chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1:
+chalk@^4.0.0, chalk@^4.1.1:
   version "4.1.2"
   resolved "https://registry.npmjs.org/chalk/-/chalk-4.1.2.tgz#aac4e2b7734a740867aeb16bf02aad556a1e7a01"
   integrity sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA==
@@ -4038,10 +4038,10 @@ i18next-browser-languagedetector@^7.0.2:
   dependencies:
     "@babel/runtime" "^7.19.4"
 
-i18next@^23.2.0:
-  version "23.2.0"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-23.2.0.tgz#954736c04b461b38cfcc4584a3d5eb3a8fe6914f"
-  integrity sha512-fAJHauzKpsHNP66ThBcexsrPJ9FoIuFgj2c0y9LmL9936XQL10ijfLe/fGm1r7GlmO7jhMdWt78oUi8jM3UCKQ==
+i18next@^23.2.1:
+  version "23.2.1"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-23.2.1.tgz#1117d0fdeb10e5db68f5f404d31e68b11e1196cf"
+  integrity sha512-BAWWqXYM1OtgA2hkGvnXWTs9wg0g3qx0SoiJoVTiL5Ia2EDZK0Veyuq4m2YtZeSs9D/9cwrNFxCKJi2/gdjZ4A==
   dependencies:
     "@babel/runtime" "^7.22.5"
 
