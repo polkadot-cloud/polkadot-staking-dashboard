@@ -163,8 +163,8 @@ export const DefinitionWrapper = styled(motion.div)`
 
 export const ItemWrapper = styled(motion.div)<any>`
   display: flex;
-  width: ${(props) => props.width};
-  height: ${(props) => (props.height === undefined ? '160px' : props.height)};
+  width: ${(props) => props.$width};
+  height: ${(props) => (props.$height === undefined ? '160px' : props.$height)};
   overflow: hidden;
   flex-flow: row wrap;
 

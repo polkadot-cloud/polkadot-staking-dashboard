@@ -20,7 +20,7 @@ export const External = ({
   }, [url]);
 
   return (
-    <ItemWrapper width={`${width}`} height={height || 'auto'}>
+    <ItemWrapper $width={`${width}`} $height={height || 'auto'}>
       <motion.button
         className="item"
         whileHover={{ scale: 1.004 }}
