@@ -92,3 +92,7 @@ html {
 .modal-custom-header > div.first h1 {
   font-size: 40px !important;
 }
+
+.inner > .row:last-child > div > div > div {
+  color: var(--text-color-secondary);
+}
