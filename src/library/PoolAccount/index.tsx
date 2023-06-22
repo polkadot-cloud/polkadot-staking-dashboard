@@ -75,7 +75,7 @@ export const PoolAccount = ({
       onClick={onClick}
       $canclick={canClick}
       $filled={filled}
-      $fontSize={fontSize}
+      $fontsize={fontSize}
     >
       {label !== undefined && <div className="account-label">{label}</div>}
 

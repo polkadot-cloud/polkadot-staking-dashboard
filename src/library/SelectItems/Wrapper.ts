@@ -54,7 +54,7 @@ export const SelectItemsWrapper = styled.div`
 export const Wrapper = styled.div<{
   $selected?: boolean;
   $grow: boolean;
-  $hoverBorder: boolean;
+  $hoverborder: boolean;
 }>`
   padding: 0.6rem;
   width: 100%;
@@ -94,7 +94,7 @@ export const Wrapper = styled.div<{
 
     &:hover {
       border-color: ${(props) =>
-        props.$hoverBorder
+        props.$hoverborder
           ? 'var(--network-color-primary)'
           : props.$selected
           ? 'var(--network-color-primary)'

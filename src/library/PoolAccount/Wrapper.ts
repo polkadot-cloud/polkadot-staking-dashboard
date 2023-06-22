@@ -8,7 +8,7 @@ export const Wrapper = styled.button<WrapperProps>`
   cursor: ${(props) => (props.$canclick ? 'pointer' : 'default')};
   background: ${(props) =>
     props.$filled ? 'var(--button-tab-background)' : 'none'};
-  font-size: ${(props) => props.$fontSize};
+  font-size: ${(props) => props.$fontsize};
   border-radius: 1rem;
   box-shadow: none;
   display: flex;
