@@ -27,6 +27,9 @@ export const BarChartWrapper = styled.div<{ lessPadding?: boolean }>`
   .d1 {
     background: var(--network-color-primary);
     color: rgba(255, 255, 255, 0.9);
+    span {
+      color: var(--text-color-secondary);
+    }
   }
   .d2 {
     background: var(--network-color-secondary);
