@@ -3,12 +3,6 @@
 
 @import './common/font.scss';
 
-body {
-  span, p, div {
-    color: #777777;
-  }
-}
-
 html * {
   --network-color-primary: #9cffaa;
   --network-color-primary-dark: #9cffaa;
