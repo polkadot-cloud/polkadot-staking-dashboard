@@ -3,8 +3,13 @@
 
 @import "./common/font.scss";
 
+body {
+  span, p, div {
+    color: #777777;
+  }
+}
+
 html * {
-  color: #777777;
   --network-color-primary: #9cffaa;
   --network-color-primary-dark: #9cffaa;
   --network-color-secondary: #9cffaa;
