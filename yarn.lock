@@ -967,10 +967,10 @@
     tslib "^2.5.3"
     ws "^8.13.0"
 
-"@polkadotcloud/core-ui@^0.3.39":
-  version "0.3.39"
-  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.3.39.tgz#0b988766164d0b9b5617a03c2e30951b1672d804"
-  integrity sha512-+YpwV/vGpPA4HZMQvROaOE5zDuH6zqt+BP/6YHUocJ+KbRO6WIL8vcTIRLzGlfEv3tGvtwqpGhJE7Z84yiBrXQ==
+"@polkadotcloud/core-ui@^0.3.40":
+  version "0.3.40"
+  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.3.40.tgz#bf62b2461bc5f344259ac4192afea7b2d6395be2"
+  integrity sha512-PaDg0u9KzJWQ4T9OuDC0ESL7IjdPAiaoh7T8J5YYYDtFq4Sd9aqfkQP3l4QYpNnhj2UAvv2pBZ+WonSvPg9z/g==
 
 "@polkadotcloud/react-odometer@^0.1.17":
   version "0.1.17"
@@ -1460,7 +1460,7 @@
   dependencies:
     "@ledgerhq/hw-transport" "^6.27.1"
     bip32 "^4.0.0"
-    bip32-ed25519 "git+https://github.com/Zondax/bip32-ed25519.git"
+    bip32-ed25519 "https://github.com/Zondax/bip32-ed25519"
     bip39 "^3.0.4"
     blakejs "^1.2.1"
     bs58 "^5.0.0"
@@ -1701,7 +1701,6 @@ binary-extensions@^2.0.0:
 
 "bip32-ed25519@git+https://github.com/Zondax/bip32-ed25519.git":
   version "0.0.4"
-  uid "0949df01b5c93885339bc28116690292088f6134"
   resolved "git+https://github.com/Zondax/bip32-ed25519.git#0949df01b5c93885339bc28116690292088f6134"
   dependencies:
     bn.js "^5.1.1"
