@@ -182,8 +182,8 @@ export const PoolMembershipsProvider = ({
   return (
     <PoolMembershipsContext.Provider
       value={{
-        activeAccountMembership: getActiveAccountPoolMembership,
-        accountMembership: getAccountPoolMembership,
+        getActiveAccountPoolMembership,
+        getAccountPoolMembership,
         memberships: poolMembershipsRef.current,
         claimPermissionConfig,
       }}

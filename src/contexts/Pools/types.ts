@@ -39,9 +39,9 @@ export interface PoolStats {
 
 // PoolMemberships types
 export interface PoolMembershipsContextState {
+  getActiveAccountPoolMembership: () => PoolMembership | null;
+  getAccountPoolMembership: (a: MaybeAccount) => PoolMembership | null;
   memberships: PoolMembership[];
-  activeAccountMembership: PoolMembership | null;
-  accountMembership: PoolMembership | null;
   claimPermissionConfig: ClaimPermissionConfig[];
 }
 
