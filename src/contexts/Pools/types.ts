@@ -40,7 +40,8 @@ export interface PoolStats {
 // PoolMemberships types
 export interface PoolMembershipsContextState {
   memberships: PoolMembership[];
-  membership: PoolMembership | null;
+  activeAccountMembership: PoolMembership | null;
+  accountMembership: PoolMembership | null;
   claimPermissionConfig: ClaimPermissionConfig[];
 }
 

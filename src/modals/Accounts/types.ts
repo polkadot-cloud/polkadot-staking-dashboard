@@ -6,7 +6,7 @@ import type { Proxy } from 'contexts/Proxies/type';
 import type { MaybeAccount } from 'types';
 
 export interface AccountItemProps {
-  address?: MaybeAccount;
+  address: MaybeAccount;
   label?: string[];
   asElement?: boolean;
   delegator?: string;

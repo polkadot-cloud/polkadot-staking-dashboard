@@ -10,7 +10,7 @@ import type {
 } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { AnyApi, Fn } from 'types';
+import type { AnyApi, Fn, MaybeAccount } from 'types';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import * as defaults from './defaults';
@@ -133,13 +133,27 @@ export const PoolMembershipsProvider = ({
     return unsub;
   };
 
-  // gets the membership of the active account
+  // gets the membership of the active account.
   const getActiveAccountPoolMembership = () => {
     if (!activeAccount) {
       return defaults.poolMembership;
     }
     const poolMembership = poolMembershipsRef.current.find(
       (m) => m.address === activeAccount
+    );
+    if (poolMembership === undefined) {
+      return defaults.poolMembership;
+    }
+    return poolMembership;
+  };
+
+  // gets the membership of the account.
+  const getAccountPoolMembership = (address: MaybeAccount) => {
+    if (!address) {
+      return defaults.poolMembership;
+    }
+    const poolMembership = poolMembershipsRef.current.find(
+      (m) => m.address === address
     );
     if (poolMembership === undefined) {
       return defaults.poolMembership;
@@ -168,7 +182,8 @@ export const PoolMembershipsProvider = ({
   return (
     <PoolMembershipsContext.Provider
       value={{
-        membership: getActiveAccountPoolMembership(),
+        activeAccountMembership: getActiveAccountPoolMembership,
+        accountMembership: getAccountPoolMembership,
         memberships: poolMembershipsRef.current,
         claimPermissionConfig,
       }}

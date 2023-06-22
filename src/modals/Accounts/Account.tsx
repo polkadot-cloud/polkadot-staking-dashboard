@@ -3,10 +3,13 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress } from '@polkadotcloud/utils';
+import { clipAddress, planckToUnit } from '@polkadotcloud/utils';
+import { useApi } from 'contexts/Api';
+import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
+import { useTransferOptions } from 'contexts/TransferOptions';
 import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
 import { ReactComponent as PolkadotVaultIconSVG } from 'img/polkadotVault.svg';
 import { Identicon } from 'library/Identicon';
@@ -32,6 +35,24 @@ export const AccountButton = ({
     activeProxyType,
     setActiveProxy,
   } = useConnect();
+  const {
+    network: { units, unit },
+  } = useApi();
+  const { getBalance } = useBalances();
+  const balance = getBalance(address);
+  const { getTransferOptions } = useTransferOptions();
+  const allTransferOptions = getTransferOptions(address);
+  const poolBondOpions = allTransferOptions.pool;
+  const unlockingPools = poolBondOpions.totalUnlocking.plus(
+    poolBondOpions.totalUnlocked
+  );
+
+  // user's total balance
+  const { free } = balance;
+  const totalBalance = planckToUnit(
+    free.plus(poolBondOpions.active).plus(unlockingPools),
+    units
+  );
 
   const meta = getAccount(address || '');
 
@@ -98,6 +119,10 @@ export const AccountButton = ({
             {t('readOnly')}
           </div>
         )}
+        <div style={{ color: '#a17703' }}>
+          {totalBalance.toFixed(2)}&nbsp;
+          {unit}
+        </div>
         <div className={label === undefined ? `` : label[0]}>
           {label !== undefined ? <h5>{label[1]}</h5> : null}
           {Icon !== undefined ? <Icon className="icon" /> : null}
