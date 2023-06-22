@@ -87,7 +87,7 @@ export const TransferOptionsProvider = ({
       )?.amount || new BigNumber(0);
 
     const points = getAccountPoolMembership(address)?.points;
-    const activePool = points ? new BigNumber(points) : new BigNumber(0);
+    const poolPoints = points ? new BigNumber(points) : new BigNumber(0);
 
     // total amount actively unlocking
     let totalUnlocking = new BigNumber(0);
@@ -150,7 +150,7 @@ export const TransferOptionsProvider = ({
         }
       }
       return {
-        active: activePool,
+        active: poolPoints,
         totalUnlocking: totalUnlockingPool,
         totalUnlocked: totalUnlockedPool,
         totalPossibleBond: totalPossibleBondPool,
