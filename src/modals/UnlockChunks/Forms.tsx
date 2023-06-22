@@ -32,7 +32,7 @@ export const Forms = forwardRef(
     const { api, network, consts } = useApi();
     const { activeAccount } = useConnect();
     const { removeFavorite: removeFavoritePool } = usePoolsConfig();
-    const { membership } = usePoolMemberships();
+    const { getActiveAccountPoolMembership } = usePoolMemberships();
     const { selectedActivePool } = useActivePools();
     const { removeFromBondedPools } = useBondedPools();
     const { removePoolMember } = usePoolMembers();
@@ -94,7 +94,9 @@ export const Forms = forwardRef(
 
         // if no more bonded funds from pool, remove from poolMembers list
         if (bondFor === 'pool') {
-          const points = membership?.points ? rmCommas(membership.points) : 0;
+          const points = getActiveAccountPoolMembership()?.points
+            ? rmCommas(`${getActiveAccountPoolMembership()?.points}`)
+            : 0;
           const bonded = planckToUnit(new BigNumber(points), network.units);
           if (bonded.isZero()) {
             removePoolMember(activeAccount);

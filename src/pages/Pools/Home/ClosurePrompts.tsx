@@ -20,7 +20,7 @@ export const ClosurePrompts = () => {
   const { activeAccount } = useConnect();
   const { mode } = useTheme();
   const { openModalWith } = useModal();
-  const { membership } = usePoolMemberships();
+  const { getActiveAccountPoolMembership } = usePoolMemberships();
   const { isPoolSyncing } = useUi();
   const { isBonding, selectedActivePool, isDepositor, poolNominations } =
     useActivePools();
@@ -75,7 +75,10 @@ export const ClosurePrompts = () => {
                   onClick={() =>
                     openModalWith(
                       'UnbondPoolMember',
-                      { who: activeAccount, member: membership },
+                      {
+                        who: activeAccount,
+                        member: getActiveAccountPoolMembership(),
+                      },
                       'small'
                     )
                   }

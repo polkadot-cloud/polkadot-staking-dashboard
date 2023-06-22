@@ -26,7 +26,7 @@ export const TransferOptionsProvider = ({
   const { activeEra } = useNetworkMetrics();
   const { getStashLedger, getBalance, getLocks } = useBalances();
   const { getAccount } = useBonded();
-  const { membership } = usePoolMemberships();
+  const { getActiveAccountPoolMembership } = usePoolMemberships();
   const { existentialDeposit } = consts;
   const { activeAccount } = useConnect();
 
@@ -86,7 +86,7 @@ export const TransferOptionsProvider = ({
         { amount: new BigNumber(0) }
       )?.amount || new BigNumber(0);
 
-    const points = membership?.points;
+    const points = getActiveAccountPoolMembership()?.points;
     const activePool = points ? new BigNumber(points) : new BigNumber(0);
 
     // total amount actively unlocking
@@ -128,7 +128,7 @@ export const TransferOptionsProvider = ({
     };
 
     const poolOptions = () => {
-      const unlockingPool = membership?.unlocking || [];
+      const unlockingPool = getActiveAccountPoolMembership()?.unlocking || [];
 
       // total possible balance that can be bonded
       const totalPossibleBondPool = BigNumber.max(

@@ -19,7 +19,7 @@ export const useStatusButtons = () => {
   const { setOnPoolSetup, getPoolSetupPercent } = useSetup();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { stats } = usePoolsConfig();
-  const { membership } = usePoolMemberships();
+  const { getActiveAccountPoolMembership } = usePoolMemberships();
   const { setActiveTab } = usePoolsTabs();
   const { bondedPools } = useBondedPools();
   const { isOwner } = useActivePools();
@@ -59,15 +59,21 @@ export const useStatusButtons = () => {
     onClick: () => setActiveTab(2),
   };
 
-  if (!membership) {
+  if (!getActiveAccountPoolMembership()) {
     _label = t('pools.poolMembership');
     _buttons = [createBtn, joinPoolBtn];
   } else if (isOwner()) {
-    _label = `${t('pools.ownerOfPool')} ${membership.poolId}`;
+    _label = `${t('pools.ownerOfPool')} ${
+      getActiveAccountPoolMembership()?.poolId
+    }`;
   } else if (active?.isGreaterThan(0)) {
-    _label = `${t('pools.memberOfPool')} ${membership.poolId}`;
+    _label = `${t('pools.memberOfPool')} ${
+      getActiveAccountPoolMembership()?.poolId
+    }`;
   } else {
-    _label = `${t('pools.leavingPool')} ${membership.poolId}`;
+    _label = `${t('pools.leavingPool')} ${
+      getActiveAccountPoolMembership()?.poolId
+    }`;
   }
   return { label: _label, buttons: _buttons };
 };

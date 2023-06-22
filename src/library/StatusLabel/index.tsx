@@ -23,12 +23,12 @@ export const StatusLabel = ({
   const { isSyncing } = useUi();
   const { plugins } = usePlugins();
   const { inSetup } = useStaking();
-  const { membership } = usePoolMemberships();
+  const { getActiveAccountPoolMembership } = usePoolMemberships();
   const { openHelp } = useHelp();
 
   // syncing or not staking
   if (status === 'sync_or_setup') {
-    if (isSyncing || !inSetup() || membership !== null) {
+    if (isSyncing || !inSetup() || getActiveAccountPoolMembership() !== null) {
       return <></>;
     }
   }

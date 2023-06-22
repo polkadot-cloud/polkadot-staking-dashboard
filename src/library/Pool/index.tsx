@@ -38,7 +38,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { meta, getBondedPool } = useBondedPools();
-  const { membership } = usePoolMemberships();
+  const { getActiveAccountPoolMembership } = usePoolMemberships();
   const { addNotification } = useNotifications();
   const { validators } = useValidators();
   const { isPoolSyncing } = useUi();
@@ -148,7 +148,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
           <PoolBonded pool={pool} batchIndex={batchIndex} batchKey={batchKey} />
           {!isPoolSyncing &&
             state === 'Open' &&
-            !membership &&
+            !getActiveAccountPoolMembership() &&
             !isReadOnlyAccount(activeAccount) &&
             activeAccount && (
               <Labels>

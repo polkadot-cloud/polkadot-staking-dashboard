@@ -27,7 +27,7 @@ export const Tips = () => {
   const { activeAccount } = useConnect();
   const { isNetworkSyncing } = useUi();
   const { fillVariables } = useFillVariables();
-  const { membership } = usePoolMemberships();
+  const { getActiveAccountPoolMembership } = usePoolMemberships();
   const { isNominating, staking } = useStaking();
   const { isOwner } = useActivePools();
   const { feeReserve, getTransferOptions } = useTransferOptions();
@@ -110,7 +110,7 @@ export const Tips = () => {
   const segments: AnyJson = [];
   if (!activeAccount) {
     segments.push(1);
-  } else if (!isNominating() && !membership) {
+  } else if (!isNominating() && !getActiveAccountPoolMembership()) {
     if (
       transferOptions.freeBalance
         .minus(feeReserve)
@@ -125,7 +125,7 @@ export const Tips = () => {
     if (isNominating()) {
       segments.push(5);
     }
-    if (membership) {
+    if (getActiveAccountPoolMembership()) {
       if (!isOwner()) {
         segments.push(6);
       } else {

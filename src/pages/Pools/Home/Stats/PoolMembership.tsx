@@ -8,17 +8,19 @@ import { useTranslation } from 'react-i18next';
 
 export const PoolMembershipStat = () => {
   const { t } = useTranslation('pages');
-  const { membership } = usePoolMemberships();
+  const { getActiveAccountPoolMembership } = usePoolMemberships();
   const { isOwner } = useActivePools();
 
   const params = {
     label: t('pools.poolMembership'),
     value:
-      membership === null
+      getActiveAccountPoolMembership() === null
         ? t('pools.notInPool')
         : isOwner()
-        ? `${t('pools.ownerOfPool')} ${membership.poolId}`
-        : `${t('pools.inPool')} ${membership.poolId}`,
+        ? `${t('pools.ownerOfPool')} ${
+            getActiveAccountPoolMembership()?.poolId
+          }`
+        : `${t('pools.inPool')} ${getActiveAccountPoolMembership()?.poolId}`,
     unit: '',
     helpKey: 'Pool Membership',
   };

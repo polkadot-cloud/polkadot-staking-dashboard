@@ -50,7 +50,8 @@ export const PayoutLine = ({
   const { unit, units, colors } = useApi().network;
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
-  const { membership: poolMembership } = usePoolMemberships();
+  const { getActiveAccountPoolMembership: poolMembership } =
+    usePoolMemberships();
   const { payouts, poolClaims } = useSubscan();
 
   const notStaking = !isSyncing && inSetup() && !poolMembership;

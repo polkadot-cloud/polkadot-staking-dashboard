@@ -24,7 +24,7 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
   const { activeAccount } = useConnect();
   const { isOwner, isMember } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
-  const { membership } = usePoolMemberships();
+  const { getActiveAccountPoolMembership } = usePoolMemberships();
 
   // Valid to submit transaction.
   const [valid, setValid] = useState<boolean>(false);
@@ -32,15 +32,15 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
   // Updated claim permission value.
   const [claimPermission, setClaimPermission] = useState<
     ClaimPermission | undefined
-  >(membership?.claimPermission);
+  >(getActiveAccountPoolMembership()?.claimPermission);
 
   // Determine current pool metadata and set in state.
   useEffect(() => {
-    const current = membership?.claimPermission;
+    const current = getActiveAccountPoolMembership()?.claimPermission;
     if (current) {
-      setClaimPermission(membership?.claimPermission);
+      setClaimPermission(getActiveAccountPoolMembership()?.claimPermission);
     }
-  }, [section, membership]);
+  }, [section, getActiveAccountPoolMembership()]);
 
   useEffect(() => {
     setValid(isOwner() || (isMember() && claimPermission !== undefined));
@@ -82,9 +82,11 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
         ) : null}
 
         <ClaimPermissionInput
-          current={membership?.claimPermission}
+          current={getActiveAccountPoolMembership()?.claimPermission}
           permissioned={
-            ![undefined, 'Permissioned'].includes(membership?.claimPermission)
+            ![undefined, 'Permissioned'].includes(
+              getActiveAccountPoolMembership()?.claimPermission
+            )
           }
           onChange={(val: ClaimPermission | undefined) => {
             setClaimPermission(val);
@@ -92,7 +94,10 @@ export const SetClaimPermission = ({ setSection, section }: any) => {
         />
       </div>
       <SubmitTx
-        valid={valid && claimPermission !== membership?.claimPermission}
+        valid={
+          valid &&
+          claimPermission !== getActiveAccountPoolMembership()?.claimPermission
+        }
         buttons={[
           <ButtonSubmitInvert
             key="button_back"

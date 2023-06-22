@@ -17,7 +17,7 @@ export const AccountPoolRoles = () => {
   const { t } = useTranslation('modals');
   const { config } = useModal();
   const { getAccountPools } = useBondedPools();
-  const { membership } = usePoolMemberships();
+  const { getActiveAccountPoolMembership } = usePoolMemberships();
   const { who } = config;
   const accountPools = getAccountPools(who);
   const totalAccountPools = Object.entries(accountPools).length;
@@ -28,11 +28,14 @@ export const AccountPoolRoles = () => {
       <Title title={t('allPoolRoles')} icon={faBars} />
       <ModalPadding>
         <ContentWrapper>
-          {membership && (
+          {getActiveAccountPoolMembership() && (
             <>
               <h4>{label}</h4>
               <div className="items">
-                <Button item={['member']} poolId={String(membership.poolId)} />
+                <Button
+                  item={['member']}
+                  poolId={String(getActiveAccountPoolMembership()?.poolId)}
+                />
               </div>
             </>
           )}

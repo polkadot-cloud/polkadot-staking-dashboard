@@ -27,7 +27,7 @@ export const Main = () => {
   const { pathname } = useLocation();
   const { getBondedAccount } = useBonded();
   const { inSetup: inNominatorSetup, addressDifferentToStash } = useStaking();
-  const { membership } = usePoolMemberships();
+  const { getActiveAccountPoolMembership } = usePoolMemberships();
   const controller = getBondedAccount(activeAccount);
   const {
     onNominatorSetup,
@@ -93,7 +93,7 @@ export const Main = () => {
 
       if (uri === `${BaseURL}/pools`) {
         // configure Pools action
-        const inPool = membership;
+        const inPool = getActiveAccountPoolMembership();
         const setupPercent = getPoolSetupPercent(activeAccount);
 
         if (inPool) {
@@ -122,7 +122,7 @@ export const Main = () => {
     accounts,
     controllerDifferentToStash,
     isSyncing,
-    membership,
+    getActiveAccountPoolMembership,
     inNominatorSetup(),
     getNominatorSetupPercent(activeAccount),
     getPoolSetupPercent(activeAccount),

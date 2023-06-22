@@ -31,7 +31,8 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   const { network } = useApi();
   const { inSetup } = useStaking();
   const { accounts, activeAccount } = useConnect();
-  const { membership: poolMembership } = usePoolMemberships();
+  const { getActiveAccountPoolMembership: poolMembership } =
+    usePoolMemberships();
 
   // is the user actively on the setup page
   const [onNominatorSetup, setOnNominatorSetup] = useState<boolean>(false);
@@ -210,7 +211,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     if (!inSetup()) {
       setOnNominatorSetup(false);
     }
-    if (poolMembership) {
+    if (poolMembership()) {
       setOnPoolSetup(false);
     }
   }, [inSetup(), network, poolMembership]);

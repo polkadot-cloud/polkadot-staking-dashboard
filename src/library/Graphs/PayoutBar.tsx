@@ -46,9 +46,10 @@ export const PayoutBar = ({ days, height }: PayoutBarProps) => {
   const { unit, units, colors } = useApi().network;
   const { isSyncing } = useUi();
   const { inSetup } = useStaking();
-  const { membership } = usePoolMemberships();
+  const { getActiveAccountPoolMembership } = usePoolMemberships();
   const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
-  const notStaking = !isSyncing && inSetup() && !membership;
+  const notStaking =
+    !isSyncing && inSetup() && !getActiveAccountPoolMembership();
 
   // remove slashes from payouts (graph does not support negative values).
   const payoutsNoSlash = payouts.filter(

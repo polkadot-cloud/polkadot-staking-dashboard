@@ -37,7 +37,7 @@ export const Accounts = () => {
   const { bondedAccounts } = useBonded();
   const { balances } = useBalances();
   const { ledgers, getLocks } = useBalances();
-  const { activeAccountMembership } = usePoolMemberships();
+  const { memberships } = usePoolMemberships();
   const { replaceModalWith, setResize } = useModal();
   const { extensions } = useExtensions();
   const { getDelegates } = useProxies();
@@ -78,8 +78,7 @@ export const Accounts = () => {
       const isStash = stashes[stashes.indexOf(address)] ?? null;
       const delegates = getDelegates(address);
 
-      const poolMember =
-        activeAccountMembership.find((m) => m.address === address) ?? null;
+      const poolMember = memberships.find((m) => m.address === address) ?? null;
 
       // If stash exists, add address to nominating list.
       if (
@@ -134,14 +133,7 @@ export const Accounts = () => {
 
   useEffect(() => {
     getAccountsStatus();
-  }, [
-    localAccounts,
-    bondedAccounts,
-    balances,
-    ledgers,
-    accounts,
-    activeAccountMembership,
-  ]);
+  }, [localAccounts, bondedAccounts, balances, ledgers, accounts, memberships]);
 
   useEffect(() => {
     setResize();
