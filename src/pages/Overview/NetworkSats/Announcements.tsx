@@ -6,14 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   capitalizeFirstLetter,
   planckToUnit,
-  rmCommas,
+  // rmCommas,
   sortWithNull,
 } from '@polkadotcloud/utils';
-import BigNumber from 'bignumber.js';
+// import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
-import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
-import type { BondedPool } from 'contexts/Pools/types';
+// import { useBondedPools } from 'contexts/Pools/BondedPools';
+// import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+// import type { BondedPool } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
@@ -23,19 +23,19 @@ import { Item } from './Wrappers';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');
-  const { isPoolSyncing, isSyncing } = useUi();
+  const { isSyncing } = useUi(); // isPoolSyncing,
   const { network } = useApi();
   const { staking } = useStaking();
   const { units } = network;
-  const { poolMembers } = usePoolMembers();
-  const { bondedPools } = useBondedPools();
+  // const { poolMembers } = usePoolMembers();
+  // const { bondedPools } = useBondedPools();
   const { totalStaked } = staking;
 
-  let totalPoolPoints = new BigNumber(0);
-  bondedPools.forEach((b: BondedPool) => {
-    totalPoolPoints = totalPoolPoints.plus(rmCommas(b.points));
-  });
-  const totalPoolPointsUnit = planckToUnit(totalPoolPoints, units);
+  // let totalPoolPoints = new BigNumber(0);
+  // bondedPools.forEach((b: BondedPool) => {
+  //   totalPoolPoints = totalPoolPoints.plus(rmCommas(b.points));
+  // });
+  // const totalPoolPointsUnit = planckToUnit(totalPoolPoints, units);
 
   const container = {
     hidden: { opacity: 0 },
@@ -77,31 +77,31 @@ export const Announcements = () => {
     announcements.push(null);
   }
 
-  // total locked in pools
-  if (bondedPools.length) {
-    announcements.push({
-      class: 'neutral',
-      title: `${totalPoolPointsUnit.integerValue().toFormat()} ${
-        network.unit
-      } ${t('overview.inPools')}`,
-      subtitle: `${t('overview.bondedInPools', { networkUnit })}`,
-    });
-  } else {
-    announcements.push(null);
-  }
-
-  if (bondedPools.length && poolMembers.length > 0 && !isPoolSyncing) {
-    // total locked in pols
-    announcements.push({
-      class: 'neutral',
-      title: `${new BigNumber(poolMembers.length).toFormat()} ${t(
-        'overview.poolMembersBonding'
-      )}`,
-      subtitle: `${t('overview.totalNumAccounts')}`,
-    });
-  } else {
-    announcements.push(null);
-  }
+  // // total locked in pools
+  // if (bondedPools.length) {
+  //   announcements.push({
+  //     class: 'neutral',
+  //     title: `${totalPoolPointsUnit.integerValue().toFormat()} ${
+  //       network.unit
+  //     } ${t('overview.inPools')}`,
+  //     subtitle: `${t('overview.bondedInPools', { networkUnit })}`,
+  //   });
+  // } else {
+  //   announcements.push(null);
+  // }
+  //
+  // if (bondedPools.length && poolMembers.length > 0 && !isPoolSyncing) {
+  //   // total locked in pols
+  //   announcements.push({
+  //     class: 'neutral',
+  //     title: `${new BigNumber(poolMembers.length).toFormat()} ${t(
+  //       'overview.poolMembersBonding'
+  //     )}`,
+  //     subtitle: `${t('overview.totalNumAccounts')}`,
+  //   });
+  // } else {
+  //   announcements.push(null);
+  // }
 
   announcements.sort(sortWithNull(true));
 
