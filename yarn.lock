@@ -1034,6 +1034,7 @@
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
 "@babel/runtime@^7.10.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.18.3", "@babel/runtime@^7.19.4", "@babel/runtime@^7.20.6", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.22.5", "@babel/runtime@^7.8.4":
+"@babel/runtime@^7.10.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.18.3", "@babel/runtime@^7.19.4", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.22.5":
   version "7.22.5"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.22.5.tgz#8564dd588182ce0047d55d7a75e93921107b57ec"
   integrity sha512-ecjvYlnAaZ/KVneE/OdKYBYfgXV3Ptu6zQWmgEF7vwKhQnvVS6bjMD2XYgj+SNvQ1GfK/pjgokfPkC/2CO8CuA==
@@ -1846,10 +1847,10 @@
     tslib "^2.5.3"
     ws "^8.13.0"
 
-"@polkadotcloud/core-ui@^0.3.39":
-  version "0.3.39"
-  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.3.39.tgz#0b988766164d0b9b5617a03c2e30951b1672d804"
-  integrity sha512-+YpwV/vGpPA4HZMQvROaOE5zDuH6zqt+BP/6YHUocJ+KbRO6WIL8vcTIRLzGlfEv3tGvtwqpGhJE7Z84yiBrXQ==
+"@polkadotcloud/core-ui@^0.3.40":
+  version "0.3.40"
+  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.3.40.tgz#bf62b2461bc5f344259ac4192afea7b2d6395be2"
+  integrity sha512-PaDg0u9KzJWQ4T9OuDC0ESL7IjdPAiaoh7T8J5YYYDtFq4Sd9aqfkQP3l4QYpNnhj2UAvv2pBZ+WonSvPg9z/g==
 
 "@polkadotcloud/react-odometer@^0.1.17":
   version "0.1.17"
@@ -2156,9 +2157,9 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.2.12":
+"@types/react@*", "@types/react@^18.2.13":
   version "18.2.13"
-  resolved "https://registry.npmjs.org/@types/react/-/react-18.2.13.tgz#a98c09bde8b18f80021935b11d2d29ef5f4dcb2f"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.13.tgz#a98c09bde8b18f80021935b11d2d29ef5f4dcb2f"
   integrity sha512-vJ+zElvi/Zn9cVXB5slX2xL8PZodPCwPRDpittQdw43JR2AJ5k3vKdgJJyneV/cYgIbLQUwXa9JVDvUZXGba+Q==
   dependencies:
     "@types/prop-types" "*"
@@ -2322,7 +2323,7 @@
   dependencies:
     "@ledgerhq/hw-transport" "^6.27.1"
     bip32 "^4.0.0"
-    bip32-ed25519 "git+https://github.com/Zondax/bip32-ed25519.git"
+    bip32-ed25519 "https://github.com/Zondax/bip32-ed25519"
     bip39 "^3.0.4"
     blakejs "^1.2.1"
     bs58 "^5.0.0"
@@ -2585,10 +2586,10 @@ binary-extensions@^2.0.0:
   resolved "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
 
-"bip32-ed25519@git+https://github.com/Zondax/bip32-ed25519.git":
+"bip32-ed25519@https://github.com/Zondax/bip32-ed25519":
   version "0.0.4"
   uid "0949df01b5c93885339bc28116690292088f6134"
-  resolved "git+https://github.com/Zondax/bip32-ed25519.git#0949df01b5c93885339bc28116690292088f6134"
+  resolved "https://github.com/Zondax/bip32-ed25519#0949df01b5c93885339bc28116690292088f6134"
   dependencies:
     bn.js "^5.1.1"
     elliptic "^6.4.1"
@@ -4038,10 +4039,10 @@ i18next-browser-languagedetector@^7.0.2:
   dependencies:
     "@babel/runtime" "^7.19.4"
 
-i18next@^23.2.1:
-  version "23.2.1"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-23.2.1.tgz#1117d0fdeb10e5db68f5f404d31e68b11e1196cf"
-  integrity sha512-BAWWqXYM1OtgA2hkGvnXWTs9wg0g3qx0SoiJoVTiL5Ia2EDZK0Veyuq4m2YtZeSs9D/9cwrNFxCKJi2/gdjZ4A==
+i18next@^23.2.3:
+  version "23.2.3"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-23.2.3.tgz#d89930f0ce343fad2bee0d3c2188f42171a91cdd"
+  integrity sha512-5spO7L0rNmW0jFuNhz+gfirlFt1anle4mTy4+gFkgsH0+T3R5++4oncBrzeKa7v8pweRyGBoGmOpboqlxovg6A==
   dependencies:
     "@babel/runtime" "^7.22.5"
 
@@ -5121,12 +5122,12 @@ react-helmet@^6.1.0:
     react-fast-compare "^3.1.1"
     react-side-effect "^2.1.0"
 
-react-i18next@^12.3.1:
-  version "12.3.1"
-  resolved "https://registry.npmjs.org/react-i18next/-/react-i18next-12.3.1.tgz#30134a41a2a71c61dc69c6383504929aed1c99e7"
-  integrity sha512-5v8E2XjZDFzK7K87eSwC7AJcAkcLt5xYZ4+yTPDAW1i7C93oOY1dnr4BaQM7un4Hm+GmghuiPvevWwlca5PwDA==
+react-i18next@^13.0.0:
+  version "13.0.0"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-13.0.0.tgz#358a3ed93206fd2d5b78507bccce89a6f7d73e17"
+  integrity sha512-qRFbrSgynsBSjfnSTb/Um3mw9uPjOfDi4Iq2rMCuzfsRsYGdkEdyCr0i+T0bR0bG6xwULvK4k1oRVLLd7ZDBVw==
   dependencies:
-    "@babel/runtime" "^7.20.6"
+    "@babel/runtime" "^7.22.5"
     html-parse-stringify "^3.0.1"
 
 react-is@^16.12.0, react-is@^16.13.1, react-is@^16.7.0:
@@ -5382,10 +5383,10 @@ safe-regex-test@^1.0.0:
     get-intrinsic "^1.1.3"
     is-regex "^1.1.4"
 
-sass@^1.63.4:
-  version "1.63.4"
-  resolved "https://registry.npmjs.org/sass/-/sass-1.63.4.tgz#caf60643321044c61f6a0fe638a07abbd31cfb5d"
-  integrity sha512-Sx/+weUmK+oiIlI+9sdD0wZHsqpbgQg8wSwSnGBjwb5GwqFhYNwwnI+UWZtLjKvKyFlKkatRK235qQ3mokyPoQ==
+sass@^1.63.6:
+  version "1.63.6"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.63.6.tgz#481610e612902e0c31c46b46cf2dad66943283ea"
+  integrity sha512-MJuxGMHzaOW7ipp+1KdELtqKbfAWbH7OLIdoSMnVe3EXPMTmxTmlaZDCTsgIpPCs3w99lLo9/zDKkOrJuT5byw==
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"
@@ -5973,10 +5974,10 @@ util-deprecate@^1.0.1:
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
-vite-bundle-visualizer@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.npmjs.org/vite-bundle-visualizer/-/vite-bundle-visualizer-0.7.0.tgz#126ea401230e668272b6b299bcba71835a772a88"
-  integrity sha512-2qHi7aXMnM9hGe7Nr4Jg4D6TZLaNzr+qbw7XKvnpIPiTF/8c90n9sSl/Q6oc7FV5bkiSCLvyNRTzHLVyv53zQA==
+vite-bundle-visualizer@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/vite-bundle-visualizer/-/vite-bundle-visualizer-0.8.0.tgz#9642f80aa7fcd5aba0db043c2cb91c16315308ae"
+  integrity sha512-Z3RHuiqgxtNrCof1uINFel7VzESRYp3s9HK8Tg5JHXvcyVjIVIz6keUntna7CWtoNUIWUjaBwhmMCML9GM5qiw==
   dependencies:
     cac "^6.7.14"
     rollup-plugin-visualizer "^5.9.0"
