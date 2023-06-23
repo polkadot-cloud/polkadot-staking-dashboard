@@ -5,7 +5,7 @@ import { SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Wrapper = styled.div<{ $format?: string; $inmodal?: boolean }>`
+export const Wrapper = styled.div<{ $format?: string; $inModal?: boolean }>`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
@@ -15,12 +15,12 @@ export const Wrapper = styled.div<{ $format?: string; $inmodal?: boolean }>`
 
   > .inner {
     background: ${(props) =>
-      props.$inmodal
+      props.$inModal
         ? 'var(--background-modal-item)'
         : 'var(--background-list-item)'};
 
     ${(props) =>
-      props.$inmodal &&
+      props.$inModal &&
       `
       box-shadow: none;
       border: none;`}

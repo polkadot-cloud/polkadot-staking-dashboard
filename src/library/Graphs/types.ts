@@ -35,12 +35,12 @@ export interface StatPieProps {
 }
 
 export interface CardHeaderWrapperProps {
-  $withaction?: boolean;
+  $withAction?: boolean;
   $padded?: boolean;
 }
 
 export interface CardWrapperProps {
-  $nopadding?: boolean;
+  $noPadding?: boolean;
   $transparent?: boolean;
   $height?: string | number;
   $flex?: boolean;

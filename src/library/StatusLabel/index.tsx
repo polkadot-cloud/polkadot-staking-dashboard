@@ -40,7 +40,7 @@ export const StatusLabel = ({
   }
 
   return (
-    <Wrapper $topoffset={topOffset}>
+    <Wrapper $topOffset={topOffset}>
       <div>
         {hideIcon !== true && <FontAwesomeIcon icon={faExclamationTriangle} />}
         <h2>

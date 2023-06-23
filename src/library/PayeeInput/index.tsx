@@ -89,7 +89,7 @@ export const PayeeInput = ({
 
   return (
     <>
-      <Wrapper $activeinput={inputActive}>
+      <Wrapper $activeInput={inputActive}>
         <div className="inner">
           <h4>{t('payoutAccount')}:</h4>
           <div className="account">

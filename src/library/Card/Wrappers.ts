@@ -13,7 +13,7 @@ import type { CardHeaderWrapperProps, CardWrapperProps } from '../Graphs/types';
  */
 export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
   display: flex;
-  flex-flow: ${(props) => (props.$withaction ? 'row' : 'column')} wrap;
+  flex-flow: ${(props) => (props.$withAction ? 'row' : 'column')} wrap;
   width: 100%;
   padding: ${(props) => (props.$padded ? '0.5rem 1.2rem' : '0rem 0.25rem')};
 
@@ -33,7 +33,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    flex-grow: ${(props) => (props.$withaction ? 1 : 0)};
+    flex-grow: ${(props) => (props.$withAction ? 1 : 0)};
   }
   h3,
   h4 {
@@ -45,7 +45,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    flex-grow: ${(props) => (props.$withaction ? 1 : 0)};
+    flex-grow: ${(props) => (props.$withAction ? 1 : 0)};
   }
   .note {
     color: var(--text-color-secondary);
@@ -76,7 +76,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   overflow: hidden;
   margin-top: ${(props) => (props.$transparent ? '0rem' : '1.4rem')};
   padding: ${(props) =>
-    props.$nopadding ? 0 : props.$transparent ? 0 : '1.5rem'};
+    props.$noPadding ? 0 : props.$transparent ? 0 : '1.5rem'};
   ${(props) =>
     props.$transparent &&
     `
@@ -88,7 +88,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
 
   @media (max-width: ${SideMenuStickyThreshold}px) {
     padding: ${(props) =>
-      props.$nopadding
+      props.$noPadding
         ? '0rem'
         : props.$transparent
         ? '0rem 0rem'

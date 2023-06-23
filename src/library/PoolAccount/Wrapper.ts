@@ -5,10 +5,10 @@ import styled from 'styled-components';
 import type { WrapperProps } from './types';
 
 export const Wrapper = styled.button<WrapperProps>`
-  cursor: ${(props) => (props.$canclick ? 'pointer' : 'default')};
+  cursor: ${(props) => (props.$canClick ? 'pointer' : 'default')};
   background: ${(props) =>
     props.$filled ? 'var(--button-tab-background)' : 'none'};
-  font-size: ${(props) => props.$fontsize};
+  font-size: ${(props) => props.$fontSize};
   border-radius: 1rem;
   box-shadow: none;
   display: flex;

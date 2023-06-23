@@ -138,7 +138,7 @@ export const Roles = ({
 
   return (
     <>
-      <CardHeaderWrapper $withaction>
+      <CardHeaderWrapper $withAction>
         <h3>
           {t('pools.roles')}{' '}
           <ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />

@@ -53,9 +53,9 @@ export const Account = ({
   return (
     <Wrapper
       onClick={onClick}
-      $canclick={canClick}
+      $canClick={canClick}
       $filled={filled}
-      $fontsize={fontSize}
+      $fontSize={fontSize}
     >
       {label !== undefined && (
         <div className="account-label">

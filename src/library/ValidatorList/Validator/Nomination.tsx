@@ -35,7 +35,7 @@ export const Nomination = ({
   const commission = prefs?.commission ?? null;
 
   return (
-    <Wrapper $format="nomination" $inmodal={inModal}>
+    <Wrapper $format="nomination" $inModal={inModal}>
       <div className="inner">
         <div className="row">
           {selectActive && <Select item={validator} />}
