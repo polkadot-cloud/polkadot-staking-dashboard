@@ -6,7 +6,7 @@ import type { FunctionComponent, SVGProps } from 'react';
 import type { AnyJson } from 'types';
 
 export interface MinimisedProps {
-  minimised: boolean;
+  $minimised: boolean;
 }
 
 export interface HeadingProps {

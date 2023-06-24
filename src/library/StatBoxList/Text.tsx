@@ -20,7 +20,7 @@ export const Text = ({
     <StatBox>
       <div className="content chart">
         <div className="labels">
-          <TextTitleWrapper primary={primary === true}>
+          <TextTitleWrapper $primary={primary === true}>
             {value}
             {secondaryValue ? <span>{secondaryValue}</span> : null}
           </TextTitleWrapper>
