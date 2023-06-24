@@ -6,10 +6,10 @@ import type { WrapperProps } from './types';
 
 export const Wrapper = styled.button<WrapperProps>`
   border: 1px solid var(--border-primary-color);
-  cursor: ${(props) => (props.canClick ? 'pointer' : 'default')};
+  cursor: ${(props) => (props.$canClick ? 'pointer' : 'default')};
   background: ${(props) =>
-    props.filled ? 'var(--button-tab-background)' : 'none'};
-  font-size: ${(props) => props.fontSize};
+    props.$filled ? 'var(--button-tab-background)' : 'none'};
+  font-size: ${(props) => props.$fontSize};
   border-radius: 1.25rem;
   box-shadow: none;
   display: flex;

@@ -3,9 +3,9 @@
 
 import styled from 'styled-components';
 
-export const TitleWrapper = styled.div<{ fixed: boolean }>`
+export const TitleWrapper = styled.div<{ $fixed: boolean }>`
   padding: ${(props) =>
-    props.fixed ? '0.6rem 1rem 0rem 1rem' : '2rem 1rem 0 1rem'};
+    props.$fixed ? '0.6rem 1rem 0rem 1rem' : '2rem 1rem 0 1rem'};
   display: flex;
   flex-flow: row wrap;
   align-items: center;

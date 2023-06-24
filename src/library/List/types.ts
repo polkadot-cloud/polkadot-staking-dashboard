@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 export interface PaginationWrapperProps {
-  next: boolean;
-  prev: boolean;
+  $next: boolean;
+  $prev: boolean;
 }
 
 export interface ListProps {

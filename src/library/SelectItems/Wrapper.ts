@@ -52,13 +52,13 @@ export const SelectItemsWrapper = styled.div`
 
 // Item and surrounding padded area.
 export const Wrapper = styled.div<{
-  selected?: boolean;
-  grow: boolean;
-  hoverBorder: boolean;
+  $selected?: boolean;
+  $grow: boolean;
+  $hoverBorder: boolean;
 }>`
   padding: 0.6rem;
   width: 100%;
-  flex-grow: ${(props) => (props.grow ? 1 : 0)};
+  flex-grow: ${(props) => (props.$grow ? 1 : 0)};
 
   &.two-col {
     width: 50%;
@@ -83,7 +83,7 @@ export const Wrapper = styled.div<{
   > .inner {
     border: 1.75px solid
       ${(props) =>
-        props.selected
+        props.$selected
           ? 'var(--network-color-primary)'
           : 'var(--border-primary-color)'};
     border-radius: 1rem;
@@ -94,9 +94,9 @@ export const Wrapper = styled.div<{
 
     &:hover {
       border-color: ${(props) =>
-        props.hoverBorder
+        props.$hoverBorder
           ? 'var(--network-color-primary)'
-          : props.selected
+          : props.$selected
           ? 'var(--network-color-primary)'
           : 'var(--border-primary-color)'};
     }
@@ -143,10 +143,10 @@ export const Wrapper = styled.div<{
 
       > .toggle {
         color: ${(props) =>
-          props.selected
+          props.$selected
             ? 'var(--network-color-primary)'
             : 'var(--text-color-secondary)'};
-        opacity: ${(props) => (props.selected ? 1 : 0.5)};
+        opacity: ${(props) => (props.$selected ? 1 : 0.5)};
         width: 4rem;
         display: flex;
         align-items: center;

@@ -3,9 +3,9 @@
 
 import styled from 'styled-components';
 
-export const BarChartWrapper = styled.div<{ lessPadding?: boolean }>`
+export const BarChartWrapper = styled.div<{ $lessPadding?: boolean }>`
   width: 100%;
-  padding: ${(props) => (props.lessPadding ? '0' : '0 0.5rem')};
+  padding: ${(props) => (props.$lessPadding ? '0' : '0 0.5rem')};
   margin-top: 1rem;
 
   .available {
