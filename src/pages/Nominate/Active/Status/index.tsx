@@ -8,7 +8,7 @@ import { NominationStatus } from './NominationStatus';
 import { PayoutDestinationStatus } from './PayoutDestinationStatus';
 
 export const Status = ({ height }: { height: number }) => (
-  <CardWrapper $height={height}>
+  <CardWrapper height={height}>
     <NominationStatus />
     <Separator />
     <PayoutDestinationStatus />

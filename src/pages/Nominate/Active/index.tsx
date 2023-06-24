@@ -57,7 +57,7 @@ export const Active = () => {
           <Status height={ROW_HEIGHT} />
         </RowSection>
         <RowSection secondary>
-          <CardWrapper $height={ROW_HEIGHT}>
+          <CardWrapper height={ROW_HEIGHT}>
             <ManageBond />
           </CardWrapper>
         </RowSection>
