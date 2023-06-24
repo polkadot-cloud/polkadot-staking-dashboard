@@ -22,10 +22,10 @@ export const SelectItem = ({
   containerRef,
 }: SelectItemProps) => (
   <Wrapper
-    $selected={selected}
+    className={layout}
     $grow={grow}
     $hoverBorder={hoverBorder}
-    className={layout}
+    $selected={selected}
   >
     <div className="inner" ref={containerRef}>
       <button type="button" onClick={() => onClick()} disabled={disabled}>
