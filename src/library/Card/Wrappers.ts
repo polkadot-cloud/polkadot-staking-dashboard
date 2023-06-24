@@ -99,7 +99,7 @@ export const CardWrapper = styled.div<CardWrapperProps>`
     props.$warning ? 'border: 1px solid var(--status-warning-color);' : ''}
 
   @media (min-width: ${SideMenuStickyThreshold + 1}px) {
-    height: ${(props) => (props.$height ? `${props.$height}px` : 'inherit')};
+    height: ${(props) => (props.height ? `${props.height}px` : 'inherit')};
   }
 
   .content {
