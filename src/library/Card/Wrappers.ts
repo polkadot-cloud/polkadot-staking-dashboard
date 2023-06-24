@@ -15,7 +15,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
   display: flex;
   flex-flow: ${(props) => (props.$withAction ? 'row' : 'column')} wrap;
   width: 100%;
-  padding: ${(props) => (props.$padded ? '0.5rem 1.2rem' : '0rem 0.25rem')};
+  padding: 0rem 0.25rem;
 
   h2 {
     font-family: InterBold, sans-serif;

@@ -117,10 +117,10 @@ export const FilterListWrapper = styled.div`
   }
 `;
 
-export const FilterListButton = styled.button<{ active: boolean }>`
+export const FilterListButton = styled.button<{ $active: boolean }>`
   border: 1px solid
     ${(props) =>
-      props.active
+      props.$active
         ? 'var(--network-color-stroke)'
         : 'var(--button-primary-background)'};
   background: var(--button-primary-background);
@@ -135,7 +135,7 @@ export const FilterListButton = styled.button<{ active: boolean }>`
 
   h4 {
     color: ${(props) =>
-      props.active
+      props.$active
         ? 'var(--network-color-stroke)'
         : 'var(--text-color-secondary)'};
     transition: color var(--transition-duration);
@@ -143,10 +143,10 @@ export const FilterListButton = styled.button<{ active: boolean }>`
 
   svg {
     color: ${(props) =>
-      props.active
+      props.$active
         ? 'var(--network-color-stroke)'
         : 'var(--text-color-secondary)'};
-    opacity: ${(props) => (props.active ? 1 : 0.7)};
+    opacity: ${(props) => (props.$active ? 1 : 0.7)};
     transition: color var(--transition-duration);
     margin-left: 0.2rem;
     margin-right: 0.9rem;

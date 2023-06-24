@@ -142,7 +142,7 @@ export const Overview = () => {
       </PageRow>
       <PageRow>
         <RowSection secondary>
-          <CardWrapper $height={PAYOUTS_HEIGHT} $flex>
+          <CardWrapper height={PAYOUTS_HEIGHT} $flex>
             <BalanceChart />
             <BalanceLinks />
           </CardWrapper>

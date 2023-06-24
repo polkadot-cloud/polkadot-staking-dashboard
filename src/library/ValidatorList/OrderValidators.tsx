@@ -22,7 +22,7 @@ export const OrderValidators = () => {
       <div className="body">
         {Object.entries(ordersToLabels).map(([o, l]: any, i: number) => (
           <FilterListButton
-            active={order === o ?? false}
+            $active={order === o ?? false}
             key={`validator_filter_${i}`}
             type="button"
             onClick={() => {
