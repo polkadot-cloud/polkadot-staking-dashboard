@@ -22,7 +22,7 @@ export const ContentWrapper = styled.div`
   }
 `;
 
-export const LocaleButton = styled.button<any>`
+export const LocaleButton = styled.button<{ $connected: boolean }>`
   color: var(--text-color-primary);
   background: var(--button-primary-background);
   font-family: InterSemiBold, sans-serif;

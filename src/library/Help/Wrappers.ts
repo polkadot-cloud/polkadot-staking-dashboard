@@ -161,7 +161,10 @@ export const DefinitionWrapper = styled(motion.div)`
   }
 `;
 
-export const ItemWrapper = styled(motion.div)<any>`
+export const ItemWrapper = styled(motion.div)<{
+  $width?: string;
+  $height?: string;
+}>`
   display: flex;
   width: ${(props) => props.$width};
   height: ${(props) => (props.$height === undefined ? '160px' : props.$height)};
