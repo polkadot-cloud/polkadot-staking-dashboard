@@ -32,7 +32,7 @@
     "@polkadot/react-qr": "^3.5.1",
     "@polkadot/rpc-provider": "^10.9.1",
     "@polkadot/util": "^12.1.1",
-    "@polkadotcloud/core-ui": "^0.3.40",
+    "@polkadotcloud/core-ui": "^0.3.41",
     "@polkadotcloud/react-odometer": "^0.1.17",
     "@polkadotcloud/utils": "^0.2.22",
     "@substrate/connect": "^0.7.29",
