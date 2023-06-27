@@ -186,7 +186,7 @@ export const Accounts = () => {
           <AccountSeparator />
           <ActionItem text={t('nominatingAndInPool')} />
           {nominatingAndPool.map(({ address, delegates }, i) => (
-            <React.Fragment key={`acc_nominating_${i}`}>
+            <React.Fragment key={`acc_nominating_and_pool_${i}`}>
               <AccountButton address={address} />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
