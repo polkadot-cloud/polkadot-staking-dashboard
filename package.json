@@ -44,7 +44,7 @@
     "date-fns": "^2.29.3",
     "framer-motion": "^10.12.17",
     "i18next": "^23.2.3",
-    "i18next-browser-languagedetector": "^7.0.2",
+    "i18next-browser-languagedetector": "^7.1.0",
     "lodash.throttle": "^4.1.1",
     "rc-slider": "^10.2.1",
     "react": "^18.2.0",
