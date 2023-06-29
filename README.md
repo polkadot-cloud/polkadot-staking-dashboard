@@ -2,10 +2,6 @@
 
 # Creditcoin Staking Dashboard
 
-#### Staging (Latest Version):
-
-https://staking-dashboard-test-app.azurewebsites.net
-
 #### Production:
 
 https://staking.creditcoin.org
