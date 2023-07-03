@@ -58,7 +58,7 @@ export const Summary = ({ section }: SetupStepProps) => {
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
     const txs = [
-      ['westend'].includes(name)
+      ['westend', 'kusama'].includes(name)
         ? api.tx.staking.bond(bondAsString, payeeToSubmit)
         : api.tx.staking.bond(controllerToSubmit, bondAsString, payeeToSubmit),
       api.tx.staking.nominate(targetsToSubmit),

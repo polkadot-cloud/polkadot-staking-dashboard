@@ -35,7 +35,7 @@ export const UpdateController = () => {
     const controllerToSubmit = {
       Id: activeAccount ?? '',
     };
-    tx = ['westend'].includes(network.name)
+    tx = ['westend', 'kusama'].includes(network.name)
       ? api.tx.staking.setController()
       : api.tx.staking.setController(controllerToSubmit);
     return tx;
