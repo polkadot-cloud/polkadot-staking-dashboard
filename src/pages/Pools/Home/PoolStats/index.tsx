@@ -55,7 +55,7 @@ export const PoolStats = () => {
 
   if (currentCommission) {
     items.push({
-      label: 'Pool Commission',
+      label: t('pools.poolCommission'),
       value: currentCommission,
     });
   }
