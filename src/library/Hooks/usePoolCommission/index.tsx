@@ -16,7 +16,9 @@ export const usePoolCommission = (id: number) => {
       globalMaxCommission
     );
 
-    return `${currentCommission}%`;
+    if (currentCommission) {
+      return `${currentCommission}%`;
+    }
   };
   return { getCommission };
 };
