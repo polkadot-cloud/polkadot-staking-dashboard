@@ -44,9 +44,9 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const { isPoolSyncing } = useUi();
   const { setActiveTab } = usePoolsTabs();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
-  const { getCommission } = usePoolCommission(id);
+  const { getCurrentCommission } = usePoolCommission(id);
 
-  const currentCommission = getCommission();
+  const currentCommission = getCurrentCommission() || 0;
 
   // get metadata from pools metabatch
   const nominations = meta[batchKey]?.nominations ?? [];
@@ -125,7 +125,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
           <div>
             <Labels>
               {currentCommission && (
-                <PoolCommission commission={currentCommission} />
+                <PoolCommission commission={`${currentCommission}%`} />
               )}
               <PoolId id={id} />
               <Members members={memberCounter} />

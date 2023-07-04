@@ -18,12 +18,14 @@ export const PoolStats = () => {
   const { network } = useApi();
   const { selectedActivePool } = useActivePools();
   const { getMembersOfPool } = usePoolMembers();
-  const { getCommission } = usePoolCommission(selectedActivePool?.id ?? 0);
+  const { getCurrentCommission } = usePoolCommission(
+    selectedActivePool?.id ?? 0
+  );
 
   const { state, points } = selectedActivePool?.bondedPool || {};
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
 
-  const currentCommission = getCommission();
+  const currentCommission = getCurrentCommission() || 0;
 
   const bonded = planckToUnit(
     new BigNumber(points ? rmCommas(points) : 0),
@@ -55,7 +57,7 @@ export const PoolStats = () => {
   if (currentCommission) {
     items.push({
       label: t('pools.poolCommission'),
-      value: currentCommission,
+      value: `${currentCommission}%`,
     });
   }
 
