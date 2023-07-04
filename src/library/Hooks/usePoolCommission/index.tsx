@@ -10,15 +10,13 @@ export const usePoolCommission = (id: number) => {
   const { stats } = usePoolsConfig();
   const { globalMaxCommission } = stats;
 
-  const getCurrentCommission = (): number | undefined => {
+  const getCurrentCommission = (): number => {
     const currentCommission = Math.min(
-      Number(bondedPool?.commission?.current?.[0].slice(0, -1) || 0),
+      Number(bondedPool?.commission?.current?.[0]?.slice(0, -1) || 0),
       globalMaxCommission
     );
 
-    if (currentCommission) {
-      return currentCommission;
-    }
+    return currentCommission || 0;
   };
   return { getCurrentCommission };
 };

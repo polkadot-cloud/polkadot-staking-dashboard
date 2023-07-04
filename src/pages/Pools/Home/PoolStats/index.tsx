@@ -25,7 +25,7 @@ export const PoolStats = () => {
   const { state, points } = selectedActivePool?.bondedPool || {};
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
 
-  const currentCommission = getCurrentCommission() || 0;
+  const currentCommission = getCurrentCommission();
 
   const bonded = planckToUnit(
     new BigNumber(points ? rmCommas(points) : 0),
