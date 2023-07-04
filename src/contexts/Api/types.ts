@@ -24,12 +24,19 @@ export interface APIConstants {
   existentialDeposit: BigNumber;
   fastUnstakeDeposit: BigNumber;
   poolsPalletId: U8aLike;
+  ss58Prefix: BigNumber;
+}
+
+export interface APIMeta {
+  chain: string;
+  version: string;
 }
 
 export interface APIContextInterface {
   switchNetwork: (n: NetworkName, l: boolean) => Promise<void>;
   api: ApiPromise | null;
   consts: APIConstants;
+  meta: APIMeta;
   isReady: boolean;
   isLightClient: boolean;
   apiStatus: ApiStatus;

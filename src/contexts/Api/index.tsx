@@ -24,6 +24,7 @@ import {
 import type {
   APIConstants,
   APIContextInterface,
+  APIMeta,
   ApiStatus,
   NetworkState,
 } from 'contexts/Api/types';
@@ -114,6 +115,9 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // Store network constants.
   const [consts, setConsts] = useState<APIConstants>(defaults.consts);
 
+  // Store network meta data.
+  const [meta, setMeta] = useState<APIMeta>(defaults.meta);
+
   // Store API connection status.
   const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
 
@@ -168,6 +172,14 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     const newApi = await ApiPromise.create({ provider: newProvider });
     setApiStatus('connected');
 
+    const metaData = await Promise.all([
+      newApi.rpc.system.chain(),
+      newApi.rpc.system.version(),
+    ]);
+    const chain = metaData[0].toHuman();
+    const version = metaData[1].toHuman();
+    setMeta({ chain, version });
+
     // store active network in localStorage.
     localStorage.setItem('network', String(network.name));
 
@@ -184,6 +196,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       newApi.consts.staking.historyDepth,
       newApi.consts.fastUnstake.deposit,
       newApi.consts.nominationPools.palletId,
+      newApi.consts.system.ss58Prefix,
     ]);
 
     // format constants.
@@ -229,6 +242,10 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
     const poolsPalletId = result[10] ? result[10].toU8a() : new Uint8Array(0);
 
+    const ss58Prefix = result[11]
+      ? new BigNumber(result[11].toString())
+      : new BigNumber(0);
+
     setApi(newApi);
     setConsts({
       bondDuration,
@@ -242,6 +259,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       poolsPalletId,
       existentialDeposit,
       fastUnstakeDeposit,
+      ss58Prefix,
     });
   };
 
@@ -262,6 +280,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
         switchNetwork,
         api,
         consts,
+        meta,
         isReady: apiStatus === 'connected' && api !== null,
         network: network.meta,
         apiStatus,
