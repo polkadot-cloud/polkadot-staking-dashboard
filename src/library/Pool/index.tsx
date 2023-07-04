@@ -13,6 +13,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
+import { usePoolCommission } from 'library/Hooks/usePoolCommission';
 import { FavoritePool } from 'library/ListItem/Labels/FavoritePool';
 import { PoolBonded } from 'library/ListItem/Labels/PoolBonded';
 import { PoolCommission } from 'library/ListItem/Labels/PoolCommission';
@@ -34,22 +35,18 @@ import type { PoolProps } from './types';
 export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const { t } = useTranslation('library');
   const { memberCounter, addresses, id, state } = pool;
-
   const { openModalWith } = useModal();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { meta, getBondedPool } = useBondedPools();
+  const { meta } = useBondedPools();
   const { membership } = usePoolMemberships();
   const { addNotification } = useNotifications();
   const { validators } = useValidators();
   const { isPoolSyncing } = useUi();
   const { setActiveTab } = usePoolsTabs();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
-  const bondedPool = getBondedPool(id);
+  const { getCurrentCommission } = usePoolCommission();
 
-  let currentCommission = bondedPool?.commission?.current?.[0];
-  if (currentCommission) {
-    currentCommission = `${Number(currentCommission.slice(0, -1))}%`;
-  }
+  const currentCommission = getCurrentCommission(id);
 
   // get metadata from pools metabatch
   const nominations = meta[batchKey]?.nominations ?? [];
@@ -128,7 +125,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
           <div>
             <Labels>
               {currentCommission && (
-                <PoolCommission commission={currentCommission} />
+                <PoolCommission commission={`${currentCommission}%`} />
               )}
               <PoolId id={id} />
               <Members members={memberCounter} />

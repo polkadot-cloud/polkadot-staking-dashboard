@@ -188,6 +188,7 @@
       "overview": "Overview",
       "ownerOfPool": "Owner of Pool",
       "permissionToUnbond": "You have permission to unbond and withdraw funds of any pool member. Use a member's's menu",
+      "poolCommission": "Pool Commission",
       "poolCreator": " As the pool creator, you will consume your pool's <b>Depositor</b> role.",
       "poolCurrentlyLocked": "Pool Currently Locked",
       "poolInDestroyingState": "Pool in Destroying State",

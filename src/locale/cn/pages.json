@@ -186,6 +186,7 @@
       "overview": "概述",
       "ownerOfPool": "提名池所有者",
       "permissionToUnbond": "您有权解除和取出提名池里任何成员的资金。使用成员菜单",
+      "poolCommission": "提名池佣金",
       "poolCreator": " 作为提名池创建者，您可使用提名池的<b>存款人</b>角色",
       "poolCurrentlyLocked": "该提名池当前正处于锁定状态",
       "poolInDestroyingState": "该提名池正处于销毁状态",
