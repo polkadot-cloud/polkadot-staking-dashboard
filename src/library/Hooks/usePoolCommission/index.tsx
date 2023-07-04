@@ -4,19 +4,16 @@
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 
-export const usePoolCommission = (id: number) => {
+export const usePoolCommission = () => {
   const { getBondedPool } = useBondedPools();
-  const bondedPool = getBondedPool(id);
   const { stats } = usePoolsConfig();
   const { globalMaxCommission } = stats;
 
-  const getCurrentCommission = (): number => {
-    const currentCommission = Math.min(
-      Number(bondedPool?.commission?.current?.[0]?.slice(0, -1) || 0),
+  const getCurrentCommission = (id: number): number =>
+    Math.min(
+      Number(getBondedPool(id)?.commission?.current?.[0]?.slice(0, -1) || 0),
       globalMaxCommission
     );
 
-    return currentCommission || 0;
-  };
   return { getCurrentCommission };
 };

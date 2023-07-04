@@ -44,9 +44,9 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const { isPoolSyncing } = useUi();
   const { setActiveTab } = usePoolsTabs();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
-  const { getCurrentCommission } = usePoolCommission(id);
+  const { getCurrentCommission } = usePoolCommission();
 
-  const currentCommission = getCurrentCommission();
+  const currentCommission = getCurrentCommission(id);
 
   // get metadata from pools metabatch
   const nominations = meta[batchKey]?.nominations ?? [];
