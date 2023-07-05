@@ -75,9 +75,7 @@ export const ManageBond = () => {
             text="-"
           />
           <ButtonPrimary
-            disabled={
-              inSetup() || isSyncing || isReadOnlyAccount(activeAccount)
-            }
+            disabled={inSetup() || isReadOnlyAccount(activeAccount)}
             iconLeft={faLockOpen}
             marginRight
             onClick={() =>

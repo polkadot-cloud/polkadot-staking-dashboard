@@ -74,9 +74,7 @@ export const ManageBond = () => {
             text="-"
           />
           <ButtonPrimary
-            disabled={
-              isPoolSyncing || !isMember() || isReadOnlyAccount(activeAccount)
-            }
+            disabled={!isMember() || isReadOnlyAccount(activeAccount)}
             iconLeft={faLockOpen}
             onClick={() =>
               openModalWith(
