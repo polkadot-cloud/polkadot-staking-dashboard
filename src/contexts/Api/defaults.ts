@@ -5,9 +5,9 @@ import { stringToU8a } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 import { NetworkList } from 'config/networks';
 import type {
+  APIChainState,
   APIConstants,
   APIContextInterface,
-  APIMeta,
 } from 'contexts/Api/types';
 
 export const consts: APIConstants = {
@@ -25,7 +25,7 @@ export const consts: APIConstants = {
   ss58Prefix: new BigNumber(0),
 };
 
-export const meta: APIMeta = {
+export const chainState: APIChainState = {
   chain: '',
   version: '',
 };
@@ -37,7 +37,7 @@ export const defaultApiContext: APIContextInterface = {
   },
   api: null,
   consts,
-  meta,
+  chainState,
   isLightClient: false,
   isReady: false,
   apiStatus: 'disconnected',

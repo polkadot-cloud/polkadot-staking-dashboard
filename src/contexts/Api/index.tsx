@@ -22,9 +22,9 @@ import {
   FallbackSessionsPerEra,
 } from 'consts';
 import type {
+  APIChainState,
   APIConstants,
   APIContextInterface,
-  APIMeta,
   ApiStatus,
   NetworkState,
 } from 'contexts/Api/types';
@@ -115,8 +115,10 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // Store network constants.
   const [consts, setConsts] = useState<APIConstants>(defaults.consts);
 
-  // Store network meta data.
-  const [meta, setMeta] = useState<APIMeta>(defaults.meta);
+  // Store chain state.
+  const [chainState, setchainState] = useState<APIChainState>(
+    defaults.chainState
+  );
 
   // Store API connection status.
   const [apiStatus, setApiStatus] = useState<ApiStatus>('disconnected');
@@ -162,23 +164,35 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       provider.on('error', () => {
         setApiStatus('disconnected');
       });
-      connectedCallback(provider);
+      connectedChainStateCallback(provider);
+      connectedConstsCallback(provider);
     }
   }, [provider]);
 
-  // connection callback.
-  const connectedCallback = async (newProvider: WsProvider | ScProvider) => {
+  const connectedChainStateCallback = async (
+    newProvider: WsProvider | ScProvider
+  ) => {
     // initiate new api and set connected.
     const newApi = await ApiPromise.create({ provider: newProvider });
-    setApiStatus('connected');
 
     const metaData = await Promise.all([
       newApi.rpc.system.chain(),
       newApi.rpc.system.version(),
     ]);
+
     const chain = metaData[0].toHuman();
     const version = metaData[1].toHuman();
-    setMeta({ chain, version });
+
+    setchainState({ chain, version });
+  };
+
+  // connection callback.
+  const connectedConstsCallback = async (
+    newProvider: WsProvider | ScProvider
+  ) => {
+    // initiate new api and set connected.
+    const newApi = await ApiPromise.create({ provider: newProvider });
+    setApiStatus('connected');
 
     // store active network in localStorage.
     localStorage.setItem('network', String(network.name));
@@ -280,7 +294,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
         switchNetwork,
         api,
         consts,
-        meta,
+        chainState,
         isReady: apiStatus === 'connected' && api !== null,
         network: network.meta,
         apiStatus,

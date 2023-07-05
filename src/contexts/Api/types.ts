@@ -27,7 +27,7 @@ export interface APIConstants {
   ss58Prefix: BigNumber;
 }
 
-export interface APIMeta {
+export interface APIChainState {
   chain: string;
   version: string;
 }
@@ -36,7 +36,7 @@ export interface APIContextInterface {
   switchNetwork: (n: NetworkName, l: boolean) => Promise<void>;
   api: ApiPromise | null;
   consts: APIConstants;
-  meta: APIMeta;
+  chainState: APIChainState;
   isReady: boolean;
   isLightClient: boolean;
   apiStatus: ApiStatus;
