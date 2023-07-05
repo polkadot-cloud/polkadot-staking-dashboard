@@ -3,11 +3,13 @@
 
 import { useTooltip } from 'contexts/Tooltip';
 import { TooltipTrigger } from 'library/ListItem/Wrappers';
+import { useTranslation } from 'react-i18next';
 
 export const PoolCommission = ({ commission }: { commission: string }) => {
+  const { t } = useTranslation('library');
   const { setTooltipTextAndOpen } = useTooltip();
 
-  const tooltipText = 'Pool Commission';
+  const tooltipText = t('poolCommission');
 
   if (!commission) {
     return null;
