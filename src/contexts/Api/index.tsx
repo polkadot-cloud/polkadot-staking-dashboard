@@ -165,9 +165,14 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
         setApiStatus('disconnected');
       });
       connectedChainStateCallback(provider);
-      connectedConstsCallback(provider);
     }
   }, [provider]);
+
+  useEffect(() => {
+    if (provider) {
+      connectedConstsCallback(provider);
+    }
+  }, [chainState]);
 
   const connectedChainStateCallback = async (
     newProvider: WsProvider | ScProvider
