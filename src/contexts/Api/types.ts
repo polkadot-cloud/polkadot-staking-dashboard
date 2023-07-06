@@ -28,8 +28,8 @@ export interface APIConstants {
 }
 
 export interface APIChainState {
-  chain: string;
-  version: string;
+  chain: string | undefined;
+  version: string | undefined;
 }
 
 export interface APIContextInterface {
