@@ -7,6 +7,7 @@ import {
   extractUrlValue,
   makeCancelable,
   rmCommas,
+  setStateWithRef,
   varToUrlHash,
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
@@ -28,8 +29,8 @@ import type {
   ApiStatus,
   NetworkState,
 } from 'contexts/Api/types';
-import React, { useEffect, useState } from 'react';
-import type { AnyApi, NetworkName } from 'types';
+import React, { useEffect, useRef, useState } from 'react';
+import type { AnyApi, NetworkName, Sync } from 'types';
 import * as defaults from './defaults';
 
 export const APIProvider = ({ children }: { children: React.ReactNode }) => {
@@ -115,6 +116,9 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   // Store network constants.
   const [consts, setConsts] = useState<APIConstants>(defaults.consts);
 
+  const [synced, setSynced] = useState<Sync>('unsynced');
+  const syncedRef = useRef(synced);
+
   // Store chain state.
   const [chainState, setchainState] = useState<APIChainState>(
     defaults.chainState
@@ -165,14 +169,17 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
         setApiStatus('disconnected');
       });
       connectedChainStateCallback(provider);
+      setStateWithRef('syncing', setSynced, syncedRef);
     }
   }, [provider]);
 
   useEffect(() => {
-    if (provider) {
+    // if the const not being fetched and if the chain state been connected
+    if (provider && syncedRef.current === 'syncing') {
       connectedConstsCallback(provider);
+      setStateWithRef('synced', setSynced, syncedRef);
     }
-  }, [chainState]);
+  }, [syncedRef.current]);
 
   const connectedChainStateCallback = async (
     newProvider: WsProvider | ScProvider
