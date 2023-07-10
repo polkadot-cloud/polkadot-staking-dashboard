@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import classNames from 'classnames';
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import type { Circle } from './circles';
@@ -16,11 +15,22 @@ export interface IdenticonProps {
   value: string;
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{
+  $disableCursorCopy?: boolean;
+  $disableClipboardCopy?: boolean;
+}>`
   svg > circle:first-child {
     fill: var(--border-primary-color);
   }
+
+  > div .cursor-copy {
+    cursor: ${(props) =>
+      props.$disableCursorCopy || props.$disableClipboardCopy
+        ? 'copy'
+        : 'default'};
+  }
 `;
+
 export const Identicon = ({
   size,
   value,
@@ -45,13 +55,14 @@ export const Identicon = ({
   }, [value]);
 
   return (
-    <Wrapper>
+    <Wrapper
+      $disableCursorCopy={disableCursorCopy}
+      $disableClipboardCopy={disableClipboardCopy}
+    >
       <div
         aria-hidden="true"
         onClick={() => copyToClipboard}
-        className={classNames({
-          'cursor-copy': !(disableCursorCopy || disableClipboardCopy),
-        })}
+        className="cursor-copy"
       >
         <svg
           height={size}

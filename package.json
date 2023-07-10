@@ -42,7 +42,6 @@
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
     "chart.js": "^4.3.0",
-    "classnames": "^2.3.2",
     "date-fns": "^2.29.3",
     "framer-motion": "^10.12.18",
     "i18next": "^23.2.8",
