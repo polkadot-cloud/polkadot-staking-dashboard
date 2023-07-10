@@ -40,6 +40,7 @@ export const Identicon = ({
 
   return (
     <div
+      aria-hidden="true"
       onClick={() => copyToClipboard}
       className={classNames({
         'cursor-copy': !(disableCursorCopy || disableClipboardCopy),
