@@ -3,11 +3,23 @@
 
 import React, { useState } from 'react';
 
-export const PoolListContext: React.Context<any> = React.createContext({
+type ListFormat = 'row' | 'col';
+
+interface PoolListContextProps {
+  setListFormat: (v: ListFormat) => void;
+  listFormat: ListFormat;
+}
+
+const defaultListFormat = 'col';
+
+const defaultPoolList: PoolListContextProps = {
   // eslint-disable-next-line
-  setListFormat: (v: string) => {},
-  listFormat: 'col',
-});
+  setListFormat: (v) => {},
+  listFormat: defaultListFormat,
+};
+
+export const PoolListContext: React.Context<PoolListContextProps> =
+  React.createContext(defaultPoolList);
 
 export const usePoolList = () => React.useContext(PoolListContext);
 
@@ -16,11 +28,10 @@ export const PoolListProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [listFormat, _setListFormat] = useState('col');
+  const [listFormat, setListFormatState] =
+    useState<ListFormat>(defaultListFormat);
 
-  const setListFormat = (v: string) => {
-    _setListFormat(v);
-  };
+  const setListFormat = (v: ListFormat) => setListFormatState(v);
 
   return (
     <PoolListContext.Provider
