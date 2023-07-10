@@ -85,19 +85,14 @@ export const PoolList = ({
     ListItemsPerPage
   );
 
-  // refetch list when pool list changes
-  useEffect(() => {
-    if (pools !== poolsDefault) {
-      setFetched(false);
-    }
-  }, [pools]);
-
-  // configure pool list when network is ready to fetch
-  useEffect(() => {
-    if (isReady && isNotZero(activeEra.index) && !fetched) {
-      setupPoolList();
-    }
-  }, [isReady, fetched, activeEra.index]);
+  // get pools to render
+  let poolsToDisplay = [];
+  // get throttled subset or entire list
+  if (!disableThrottle) {
+    poolsToDisplay = listPools.slice(pageStart).slice(0, ListItemsPerPage);
+  } else {
+    poolsToDisplay = listPools;
+  }
 
   // handle pool list bootstrapping
   const setupPoolList = () => {
@@ -106,38 +101,6 @@ export const PoolList = ({
     setFetched(true);
     fetchPoolsMetaBatch(batchKey, pools, true);
   };
-
-  // render throttle
-  useEffect(() => {
-    if (!(batchEnd >= pageEnd || disableThrottle)) {
-      setTimeout(() => {
-        setRenderIteration(renderIterationRef.current + 1);
-      }, 500);
-    }
-  }, [renderIterationRef.current]);
-
-  // list ui changes / validator changes trigger re-render of list
-  useEffect(() => {
-    // only filter when pool nominations have been synced.
-    if (!isSyncing && meta[batchKey]?.nominations) {
-      handlePoolsFilterUpdate();
-    }
-  }, [isSyncing, includes, excludes, meta]);
-
-  // scroll to top of the window on every filter.
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [includes, excludes]);
-
-  // set default filters
-  useEffect(() => {
-    if (defaultFilters?.includes?.length) {
-      setMultiFilters('include', 'pools', defaultFilters?.includes, false);
-    }
-    if (defaultFilters?.excludes?.length) {
-      setMultiFilters('exclude', 'pools', defaultFilters?.excludes, false);
-    }
-  }, []);
 
   // handle filter / order update
   const handlePoolsFilterUpdate = (
@@ -152,15 +115,6 @@ export const PoolList = ({
     setRenderIteration(1);
   };
 
-  // get pools to render
-  let poolsToDisplay = [];
-  // get throttled subset or entire list
-  if (!disableThrottle) {
-    poolsToDisplay = listPools.slice(pageStart).slice(0, ListItemsPerPage);
-  } else {
-    poolsToDisplay = listPools;
-  }
-
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
     const newValue = e.currentTarget.value;
     let filteredPools = Object.assign(poolsDefault);
@@ -169,38 +123,60 @@ export const PoolList = ({
 
     // ensure no duplicates
     filteredPools = filteredPools.filter(
-      (value: any, index: any, self: any) =>
+      (value: any, index: number, self: any) =>
         index === self.findIndex((i: any) => i.id === value.id)
     );
-
     setPage(1);
     setRenderIteration(1);
     setListPools(filteredPools);
     setSearchTerm('pools', newValue);
   };
 
-  const filterTabsConfig = [
-    {
-      label: t('all'),
-      includes: [],
-      excludes: [],
-    },
-    {
-      label: t('active'),
-      includes: ['active'],
-      excludes: ['locked', 'destroying'],
-    },
-    {
-      label: t('locked'),
-      includes: ['locked'],
-      excludes: [],
-    },
-    {
-      label: t('destroying'),
-      includes: ['destroying'],
-      excludes: [],
-    },
-  ];
+  // Refetch list when pool list changes.
+  useEffect(() => {
+    if (pools !== poolsDefault) {
+      setFetched(false);
+    }
+  }, [pools]);
+
+  // Configure pool list when network is ready to fetch.
+  useEffect(() => {
+    if (isReady && isNotZero(activeEra.index) && !fetched) {
+      setupPoolList();
+    }
+  }, [isReady, fetched, activeEra.index]);
+
+  // Render throttling. Only render a batch of pools at a time.
+  useEffect(() => {
+    if (!(batchEnd >= pageEnd || disableThrottle)) {
+      setTimeout(() => {
+        setRenderIteration(renderIterationRef.current + 1);
+      }, 500);
+    }
+  }, [renderIterationRef.current]);
+
+  // List ui changes / validator changes trigger re-render of list.
+  useEffect(() => {
+    // only filter when pool nominations have been synced.
+    if (!isSyncing && meta[batchKey]?.nominations) {
+      handlePoolsFilterUpdate();
+    }
+  }, [isSyncing, includes, excludes, meta]);
+
+  // Scroll to top of the window on every filter.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [includes, excludes]);
+
+  // Set default filters.
+  useEffect(() => {
+    if (defaultFilters?.includes?.length) {
+      setMultiFilters('include', 'pools', defaultFilters?.includes, false);
+    }
+    if (defaultFilters?.excludes?.length) {
+      setMultiFilters('exclude', 'pools', defaultFilters?.excludes, false);
+    }
+  }, []);
 
   return (
     <ListWrapper>
@@ -230,40 +206,59 @@ export const PoolList = ({
             placeholder={t('search')}
           />
         )}
-        <Tabs config={filterTabsConfig} activeIndex={1} />
+        <Tabs
+          config={[
+            {
+              label: t('all'),
+              includes: [],
+              excludes: [],
+            },
+            {
+              label: t('active'),
+              includes: ['active'],
+              excludes: ['locked', 'destroying'],
+            },
+            {
+              label: t('locked'),
+              includes: ['locked'],
+              excludes: [],
+            },
+            {
+              label: t('destroying'),
+              includes: ['destroying'],
+              excludes: [],
+            },
+          ]}
+          activeIndex={1}
+        />
         {pagination && poolsToDisplay.length > 0 && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
         <MotionContainer>
           {poolsToDisplay.length ? (
             <>
-              {poolsToDisplay.map((pool: any, index: number) => {
-                // fetch batch data by referring to default list index.
-                const batchIndex = poolsDefault.indexOf(pool);
-
-                return (
-                  <motion.div
-                    className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-                    key={`nomination_${index}`}
-                    variants={{
-                      hidden: {
-                        y: 15,
-                        opacity: 0,
-                      },
-                      show: {
-                        y: 0,
-                        opacity: 1,
-                      },
-                    }}
-                  >
-                    <Pool
-                      pool={pool}
-                      batchKey={batchKey}
-                      batchIndex={batchIndex}
-                    />
-                  </motion.div>
-                );
-              })}
+              {poolsToDisplay.map((pool: any, index: number) => (
+                <motion.div
+                  className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
+                  key={`nomination_${index}`}
+                  variants={{
+                    hidden: {
+                      y: 15,
+                      opacity: 0,
+                    },
+                    show: {
+                      y: 0,
+                      opacity: 1,
+                    },
+                  }}
+                >
+                  <Pool
+                    pool={pool}
+                    batchKey={batchKey}
+                    batchIndex={poolsDefault.indexOf(pool)}
+                  />
+                </motion.div>
+              ))}
             </>
           ) : (
             <h4 style={{ padding: '1rem 1rem 0 1rem' }}>
