@@ -26,11 +26,13 @@ export interface APIConstants {
   poolsPalletId: U8aLike;
 }
 
-export interface APIChainState {
-  chain: string | undefined;
-  version: string | undefined;
-  ss58Prefix: number | undefined;
-}
+export type APIChainState =
+  | {
+      chain: string;
+      version: string;
+      ss58Prefix: number;
+    }
+  | undefined;
 
 export interface APIContextInterface {
   switchNetwork: (n: NetworkName, l: boolean) => Promise<void>;

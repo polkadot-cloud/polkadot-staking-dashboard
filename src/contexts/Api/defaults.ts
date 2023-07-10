@@ -24,11 +24,7 @@ export const consts: APIConstants = {
   poolsPalletId: stringToU8a('0'),
 };
 
-export const chainState: APIChainState = {
-  chain: undefined,
-  version: undefined,
-  ss58Prefix: undefined,
-};
+export const chainState: APIChainState = undefined;
 
 export const defaultApiContext: APIContextInterface = {
   // eslint-disable-next-line
