@@ -85,14 +85,10 @@ export const PoolList = ({
     ListItemsPerPage
   );
 
-  // get pools to render
-  let poolsToDisplay = [];
   // get throttled subset or entire list
-  if (!disableThrottle) {
-    poolsToDisplay = listPools.slice(pageStart).slice(0, ListItemsPerPage);
-  } else {
-    poolsToDisplay = listPools;
-  }
+  const poolsToDisplay = disableThrottle
+    ? listPools
+    : listPools.slice(pageStart).slice(0, ListItemsPerPage);
 
   // handle pool list bootstrapping
   const setupPoolList = () => {
