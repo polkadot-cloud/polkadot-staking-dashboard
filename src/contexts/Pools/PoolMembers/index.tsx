@@ -52,7 +52,7 @@ export const PoolMembersProvider = ({
     return () => {
       unsubscribe();
     };
-  }, [network, isReady, getPlugins()]);
+  }, [network, isReady, getPlugins().includes('subscan')]);
 
   const unsubscribe = () => {
     unsubscribeAndResetMeta();
