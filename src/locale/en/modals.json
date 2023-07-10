@@ -22,7 +22,7 @@
     "amountToBond": "Amount to bond:",
     "approveTransactionLedger": "Approve transaction on Ledger",
     "back": "Back",
-    "beingDestroyed": "This pool is being destroyed. There are no management options available.",
+    "beingDestroyed": "This pool is being destroyed.",
     "belowExisting": "Below Existing",
     "beyondMaxIncrease": "Beyond Max Increase",
     "binanceApi": "Binance Spot API",

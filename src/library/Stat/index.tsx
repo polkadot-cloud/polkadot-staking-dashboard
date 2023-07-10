@@ -59,7 +59,7 @@ export const Stat = ({
   }
 
   return (
-    <Wrapper isAddress={isAddress}>
+    <Wrapper $isAddress={isAddress}>
       <h4>
         {label}
         {helpKey !== undefined ? (

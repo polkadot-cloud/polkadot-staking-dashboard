@@ -16,7 +16,6 @@ import { Wrapper } from './Wrapper';
 
 export const PoolAccount = ({
   address,
-  last,
   batchKey,
   batchIndex,
 }: PoolAccountProps) => {
@@ -45,7 +44,7 @@ export const PoolAccount = ({
   }
 
   return (
-    <Wrapper last={last}>
+    <Wrapper>
       <motion.div
         className="account"
         initial={{ opacity: 0.5 }}

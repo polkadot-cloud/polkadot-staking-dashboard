@@ -75,10 +75,7 @@ export const ManageBond = () => {
           />
           <ButtonPrimary
             disabled={
-              isPoolSyncing ||
-              !isMember() ||
-              isReadOnlyAccount(activeAccount) ||
-              state === 'Destroying'
+              isPoolSyncing || !isMember() || isReadOnlyAccount(activeAccount)
             }
             iconLeft={faLockOpen}
             onClick={() =>

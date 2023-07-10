@@ -7,6 +7,7 @@ import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
+import { usePoolCommission } from 'library/Hooks/usePoolCommission';
 import { StatsHead } from 'library/StatsHead';
 import { useTranslation } from 'react-i18next';
 import { Announcements } from './Announcements';
@@ -17,14 +18,12 @@ export const PoolStats = () => {
   const { network } = useApi();
   const { selectedActivePool } = useActivePools();
   const { getMembersOfPool } = usePoolMembers();
+  const { getCurrentCommission } = usePoolCommission();
 
-  const { state, points, commission } = selectedActivePool?.bondedPool || {};
+  const { state, points } = selectedActivePool?.bondedPool || {};
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
 
-  let currentCommission = commission?.current?.[0];
-  if (currentCommission) {
-    currentCommission = `${Number(currentCommission.slice(0, -1))}%`;
-  }
+  const currentCommission = getCurrentCommission(selectedActivePool?.id ?? 0);
 
   const bonded = planckToUnit(
     new BigNumber(points ? rmCommas(points) : 0),
@@ -55,8 +54,8 @@ export const PoolStats = () => {
 
   if (currentCommission) {
     items.push({
-      label: 'Pool Commission',
-      value: currentCommission,
+      label: t('pools.poolCommission'),
+      value: `${currentCommission}%`,
     });
   }
 

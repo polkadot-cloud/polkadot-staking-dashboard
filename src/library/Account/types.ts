@@ -14,7 +14,7 @@ export interface AccountProps {
 }
 
 export interface WrapperProps {
-  canClick: boolean;
-  filled: boolean;
-  fontSize: string;
+  $canClick: boolean;
+  $filled: boolean;
+  $fontSize: string;
 }

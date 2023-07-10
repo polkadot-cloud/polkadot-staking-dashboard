@@ -13,9 +13,9 @@ import type { CardHeaderWrapperProps, CardWrapperProps } from '../Graphs/types';
  */
 export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
   display: flex;
-  flex-flow: ${(props) => (props.withAction ? 'row' : 'column')} wrap;
+  flex-flow: ${(props) => (props.$withAction ? 'row' : 'column')} wrap;
   width: 100%;
-  padding: ${(props) => (props.padded ? '0.5rem 1.2rem' : '0rem 0.25rem')};
+  padding: 0rem 0.25rem;
 
   h2 {
     font-family: InterBold, sans-serif;
@@ -33,7 +33,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    flex-grow: ${(props) => (props.withAction ? 1 : 0)};
+    flex-grow: ${(props) => (props.$withAction ? 1 : 0)};
   }
   h3,
   h4 {
@@ -45,7 +45,7 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    flex-grow: ${(props) => (props.withAction ? 1 : 0)};
+    flex-grow: ${(props) => (props.$withAction ? 1 : 0)};
   }
   .note {
     color: var(--text-color-secondary);
@@ -74,11 +74,11 @@ export const CardWrapper = styled.div<CardWrapperProps>`
   flex: 1;
   position: relative;
   overflow: hidden;
-  margin-top: ${(props) => (props.transparent ? '0rem' : '1.4rem')};
+  margin-top: ${(props) => (props.$transparent ? '0rem' : '1.4rem')};
   padding: ${(props) =>
-    props.noPadding ? 0 : props.transparent ? 0 : '1.5rem'};
+    props.$noPadding ? 0 : props.$transparent ? 0 : '1.5rem'};
   ${(props) =>
-    props.transparent &&
+    props.$transparent &&
     `
       border: none;
       box-shadow: none;
@@ -88,15 +88,15 @@ export const CardWrapper = styled.div<CardWrapperProps>`
 
   @media (max-width: ${SideMenuStickyThreshold}px) {
     padding: ${(props) =>
-      props.noPadding
+      props.$noPadding
         ? '0rem'
-        : props.transparent
+        : props.$transparent
         ? '0rem 0rem'
         : '1rem 0.75rem'};
   }
 
   ${(props) =>
-    props.warning ? 'border: 1px solid var(--status-warning-color);' : ''}
+    props.$warning ? 'border: 1px solid var(--status-warning-color);' : ''}
 
   @media (min-width: ${SideMenuStickyThreshold + 1}px) {
     height: ${(props) => (props.height ? `${props.height}px` : 'inherit')};
