@@ -2,21 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
-
-type ListFormat = 'row' | 'col';
-
-interface PoolListContextProps {
-  setListFormat: (v: ListFormat) => void;
-  listFormat: ListFormat;
-}
-
-const defaultListFormat = 'col';
-
-const defaultPoolList: PoolListContextProps = {
-  // eslint-disable-next-line
-  setListFormat: (v) => {},
-  listFormat: defaultListFormat,
-};
+import { defaultListFormat, defaultPoolList } from './defaults';
+import type { ListFormat, PoolListContextProps } from './types';
 
 export const PoolListContext: React.Context<PoolListContextProps> =
   React.createContext(defaultPoolList);
