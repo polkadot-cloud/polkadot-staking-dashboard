@@ -116,28 +116,9 @@ export const List = styled.div<ListProps>`
   margin-top: 1rem;
   width: 100%;
 
-  .search {
-    width: 100%;
-    margin: 0.25rem 0 0.75rem 0;
-    display: flex;
-    flex-flow: row wrap;
-
-    > input {
-      border: 1.75px solid var(--border-primary-color);
-      color: var(--text-color-secondary);
-      font-family: InterBold, sans-serif;
-      border-radius: 1.75rem;
-      padding: 0.75rem 1.25rem;
-      font-size: 1.15rem;
-      &:focus {
-        border-width: 1.75px;
-      }
-    }
-  }
-
   > div {
     display: flex;
-    flex-flow: row wrap;
+    flex-wrap: wrap;
 
     h4 {
       &.none {
@@ -166,6 +147,26 @@ export const List = styled.div<ListProps>`
           max-width: ${(props) => props.flexBasisLarge};
         }
       }
+    }
+  }
+`;
+
+export const SearchInputWrapper = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  margin: 0.25rem 0 0.75rem 0;
+  width: 100%;
+
+  > input {
+    border: 1.75px solid var(--border-primary-color);
+    color: var(--text-color-secondary);
+    font-family: InterBold, sans-serif;
+    border-radius: 1.75rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 1.15rem;
+
+    &:focus {
+      border-width: 1.75px;
     }
   }
 `;
