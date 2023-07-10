@@ -126,7 +126,8 @@ export const SubscanProvider = ({
     if (activeAccount && getPlugins().includes('subscan')) {
       // fetch 1 page of results
       const results = await Promise.all([
-        handleFetch(activeAccount, 0, ApiEndpoints.subscanRewardSlash, {
+        handleFetch(0, ApiEndpoints.subscanRewardSlash, 100, {
+          address: activeAccount,
           is_stash: true,
         }),
       ]);
@@ -181,7 +182,9 @@ export const SubscanProvider = ({
     if (activeAccount && getPlugins().includes('subscan')) {
       // fetch 1 page of results
       const results = await Promise.all([
-        handleFetch(activeAccount, 0, ApiEndpoints.subscanPoolRewards),
+        handleFetch(0, ApiEndpoints.subscanPoolRewards, 100, {
+          address: activeAccount,
+        }),
       ]);
 
       // user may have turned off service while results were fetching.
@@ -218,7 +221,9 @@ export const SubscanProvider = ({
       return [];
     }
 
-    const res = await handleFetch(address, 0, ApiEndpoints.subscanEraStat);
+    const res = await handleFetch(0, ApiEndpoints.subscanEraStat, 100, {
+      address,
+    });
 
     if (res.message === 'Success') {
       if (getPlugins().includes('subscan')) {
@@ -246,15 +251,14 @@ export const SubscanProvider = ({
    * returns resulting JSON.
    */
   const handleFetch = async (
-    address: string,
     page: number,
     endpoint: string,
+    row: number,
     body: AnyApi = {}
   ): Promise<AnySubscan> => {
     const bodyJson = {
-      row: 100,
+      row,
       page,
-      address,
       ...body,
     };
     const res: Response = await fetch(network.subscanEndpoint + endpoint, {
