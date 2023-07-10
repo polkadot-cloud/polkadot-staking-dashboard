@@ -34,6 +34,8 @@ export const Headers = () => {
 
   // keep syncing if on pools page and still fetching bonded pools or pool members
   const onPoolsSyncing = () => {
+    // TODO: if subscan is being used for pool members, do not factor `poolMembers` in this
+    // conditional.
     if (pageFromUri(pathname, 'overview') === 'pools') {
       if (!bondedPools.length || !poolMembers.length) {
         return true;
