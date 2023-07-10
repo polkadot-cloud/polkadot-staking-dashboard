@@ -9,7 +9,6 @@ import { useApi } from 'contexts/Api';
 import { useFilters } from 'contexts/Filters';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { motion } from 'framer-motion';
@@ -22,10 +21,10 @@ import { SearchInput } from 'library/List/SearchInput';
 import { Pool } from 'library/Pool';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PoolListProvider, usePoolList } from './context';
+import { usePoolList } from './context';
 import type { PoolListProps } from './types';
 
-export const PoolListInner = ({
+export const PoolList = ({
   allowMoreCols,
   pagination,
   batchKey = '',
@@ -277,21 +276,3 @@ export const PoolListInner = ({
     </ListWrapper>
   );
 };
-
-export const PoolList = (props: any) => (
-  <PoolListProvider>
-    <PoolListShouldUpdate {...props} />
-  </PoolListProvider>
-);
-
-export class PoolListShouldUpdate extends React.Component<any, any> {
-  static contextType = StakingContext;
-
-  shouldComponentUpdate(nextProps: PoolListProps) {
-    return this.props.pools !== nextProps.pools;
-  }
-
-  render() {
-    return <PoolListInner {...this.props} />;
-  }
-}

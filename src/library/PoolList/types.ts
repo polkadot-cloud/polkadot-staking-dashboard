@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 export interface PoolListProps {
-  allowMoreCols?: string;
+  allowMoreCols?: boolean;
   allowSearch?: boolean;
-  pagination?: number;
+  pagination?: boolean;
   batchKey?: string;
   disableThrottle?: boolean;
   refetchOnListUpdate?: string;
