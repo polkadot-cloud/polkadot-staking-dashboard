@@ -19,10 +19,8 @@ export const Members = ({ poolMembersCount }: { poolMembersCount: number }) => {
   const { colors } = useApi().network;
   const { mode } = useTheme();
   const { getPlugins } = usePlugins();
-  const { getMembersOfPool } = usePoolMembers();
+  const { getMembersOfPoolFromNode } = usePoolMembers();
   const { selectedActivePool, isOwner, isBouncer } = useActivePools();
-
-  const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
 
   const listTitle = `${t('pools.poolMember', {
     count: poolMembersCount,
@@ -36,7 +34,6 @@ export const Members = ({ poolMembersCount }: { poolMembersCount: number }) => {
   const membersListProps = {
     title: listTitle,
     batchKey: 'active_pool_members',
-    members: poolMembers,
     pagination: true,
     selectToggleable: false,
     allowMoreCols: true,
@@ -85,7 +82,10 @@ export const Members = ({ poolMembersCount }: { poolMembersCount: number }) => {
           {getPlugins().includes('subscan') ? (
             <FetchPageMemberList {...membersListProps} />
           ) : (
-            <DefaultMemberList {...membersListProps} />
+            <DefaultMemberList
+              {...membersListProps}
+              members={getMembersOfPoolFromNode(selectedActivePool?.id ?? 0)}
+            />
           )}
         </CardWrapper>
       </PageRow>

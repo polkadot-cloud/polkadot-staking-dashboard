@@ -3,6 +3,7 @@
 
 import { setStateWithRef } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
+import { usePlugins } from 'contexts/Plugins';
 import type { PoolMemberContext } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, AnyJson, AnyMetaBatch, Fn, MaybeAccount } from 'types';
@@ -14,8 +15,9 @@ export const PoolMembersProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, network, isReady } = useApi();
+  const { getPlugins } = usePlugins();
   const { activeAccount } = useConnect();
+  const { api, network, isReady } = useApi();
 
   // Store pool members from node.
   const [poolMembers, setPoolMembers] = useState<AnyJson[]>([]);
@@ -30,9 +32,7 @@ export const PoolMembersProvider = ({
 
   // Clear existing state for network refresh
   useEffect(() => {
-    // TODO: also set `poolMembers` list state from Subscan to [].
     setPoolMembers([]);
-
     unsubscribeAndResetMeta();
   }, [network]);
 
@@ -41,22 +41,21 @@ export const PoolMembersProvider = ({
     unsubscribeAndResetMeta();
   }, [activeAccount]);
 
-  // Initial setup for fetching members
+  // Initial setup for fetching members if Subscan is not enabled. Ensure poolMembers are reset if
+  // subscan is disabled.
   useEffect(() => {
-    if (isReady) {
-      // fetch pool members.
-      //
-      // TODO: if Subscan active, fetch pool members from there, otherwise call the below function.
-      fetchPoolMembers();
+    if (!getPlugins().includes('subscan')) {
+      if (isReady) fetchPoolMembers();
+    } else {
+      setPoolMembers([]);
     }
     return () => {
       unsubscribe();
     };
-  }, [network, isReady]);
+  }, [network, isReady, getPlugins()]);
 
   const unsubscribe = () => {
     unsubscribeAndResetMeta();
-    // TODO: also set `poolMembers` from Subscan to [].
     setPoolMembers([]);
   };
 
@@ -83,13 +82,10 @@ export const PoolMembersProvider = ({
     setPoolMembers(newMembers);
   };
 
-  // TODO: poolMembers should be a function that fetches pool members from Subscan or
-  // poolMembers from node.
-  const getMembersOfPool = (poolId: number) =>
+  const getMembersOfPoolFromNode = (poolId: number) =>
     poolMembers.filter((p: any) => p.poolId === String(poolId)) ?? null;
 
-  // TODO: poolMembers should be a function that fetches either Subscan result or poolMembers from
-  // node.
+  // TODO: refactor alongside `isMember` into state object of poolMembers(account).
   const getPoolMember = (who: MaybeAccount) =>
     poolMembers.find((p: any) => p.who === who) ?? null;
 
@@ -110,12 +106,9 @@ export const PoolMembersProvider = ({
     };
   };
 
-  // Gets the count of members in a pool.
-  //
-  // TODO: use Subscan `pool_detail` to get total members from Subscan if turned on.
-  // https://support.subscan.io/#pool-detail.
+  // Gets the count of members in a pool from node data.
   const getPoolMemberCount = (poolId: number) =>
-    getMembersOfPool(poolId ?? 0).length;
+    getMembersOfPoolFromNode(poolId ?? 0).length;
 
   /*
     Fetches a new batch of pool member metadata.
@@ -327,13 +320,11 @@ export const PoolMembersProvider = ({
       value={{
         fetchPoolMembersMetaBatch,
         queryPoolMember,
-        getMembersOfPool,
+        getMembersOfPoolFromNode,
         addToPoolMembers,
         getPoolMember,
         removePoolMember,
         getPoolMemberCount,
-        // TODO: poolMembers should be a function that fetches either Subscan result or poolMembers
-        // from node.
         poolMembers,
         meta: poolMembersMetaBatchesRef.current,
       }}

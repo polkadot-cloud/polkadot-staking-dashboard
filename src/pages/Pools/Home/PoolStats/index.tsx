@@ -5,7 +5,6 @@ import { planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { usePoolCommission } from 'library/Hooks/usePoolCommission';
 import { StatsHead } from 'library/StatsHead';
@@ -13,16 +12,17 @@ import { useTranslation } from 'react-i18next';
 import { Announcements } from './Announcements';
 import { Wrapper } from './Wrappers';
 
-export const PoolStats = () => {
+export const PoolStats = ({
+  poolMembersCount,
+}: {
+  poolMembersCount: number;
+}) => {
   const { t } = useTranslation('pages');
   const { network } = useApi();
   const { selectedActivePool } = useActivePools();
-  const { getPoolMemberCount } = usePoolMembers();
   const { getCurrentCommission } = usePoolCommission();
 
   const { state, points } = selectedActivePool?.bondedPool || {};
-  const poolMembersCount = getPoolMemberCount(selectedActivePool?.id ?? 0);
-
   const currentCommission = getCurrentCommission(selectedActivePool?.id ?? 0);
 
   const bonded = planckToUnit(

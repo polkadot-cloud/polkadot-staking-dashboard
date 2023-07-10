@@ -9,7 +9,7 @@ export const defaultPoolMembers: PoolMemberContext = {
   // eslint-disable-next-line
   queryPoolMember: (w) => {},
   // eslint-disable-next-line
-  getMembersOfPool: (p) => {},
+  getMembersOfPoolFromNode: (p) => {},
   // eslint-disable-next-line
   addToPoolMembers: (m) => {},
   // eslint-disable-next-line

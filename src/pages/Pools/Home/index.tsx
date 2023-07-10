@@ -34,7 +34,7 @@ export const HomeInner = () => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { fetchPoolDetails } = useSubscan();
-  const { getMembersOfPool } = usePoolMembers();
+  const { getMembersOfPoolFromNode } = usePoolMembers();
   const { activeTab, setActiveTab } = usePoolsTabs();
   const { bondedPools, getAccountPools } = useBondedPools();
   const { getPoolRoles, selectedActivePool } = useActivePools();
@@ -51,7 +51,7 @@ export const HomeInner = () => {
       const poolDetails = await fetchPoolDetails(selectedActivePool.id);
       return setMemberCount(poolDetails?.member_count || 0);
     }
-    setMemberCount(getMembersOfPool(selectedActivePool?.id ?? 0));
+    setMemberCount(getMembersOfPoolFromNode(selectedActivePool?.id ?? 0));
   };
 
   let tabs = [
@@ -147,7 +147,7 @@ export const HomeInner = () => {
                 </CardWrapper>
               </PageRow>
               <PageRow>
-                <PoolStats />
+                <PoolStats poolMembersCount={memberCount} />
               </PageRow>
             </>
           )}
