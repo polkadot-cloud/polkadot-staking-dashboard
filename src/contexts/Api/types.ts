@@ -29,6 +29,7 @@ export interface APIConstants {
 export interface APIChainState {
   chain: string | undefined;
   version: string | undefined;
+  ss58Prefix: number | undefined;
 }
 
 export interface APIContextInterface {

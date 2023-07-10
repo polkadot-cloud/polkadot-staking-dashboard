@@ -179,19 +179,29 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     setApiStatus('connected');
 
     const newChainState = await Promise.all([
-      newApi.rpc.system.chain(),
-      newApi.rpc.system.version(),
+      newApi.query.system.chain(),
+      newApi.query.system.version(),
+      newApi.query.system.ss58Prefix(),
     ]);
 
-    const chain = newChainState[0].toHuman();
-    const version = newChainState[1].toHuman();
+    // check that chain values have been fetched before committing to state.
+    // could be expanded to check supported chains.
+    if (
+      newChainState.every((c) => {
+        return !!c?.toHuman();
+      })
+    ) {
+      const chain = newChainState[0]?.toString();
+      const version = newChainState[1]?.toString();
+      const ss58Prefix = Number(newChainState[1]?.toString());
+
+      // set fetched chain state in storage.
+      setchainState({ chain, version, ss58Prefix });
+    }
 
     // store active network in localStorage.
     // NOTE: this should ideally refer to above `chain` value.
     localStorage.setItem('network', String(network.name));
-
-    // set fetched chain state in storage.
-    setchainState({ chain, version });
 
     // Assume chain state is correct and bootstrap network consts.
     connectedCallback(newApi);

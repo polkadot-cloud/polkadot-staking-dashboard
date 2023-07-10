@@ -27,6 +27,7 @@ export const consts: APIConstants = {
 export const chainState: APIChainState = {
   chain: undefined,
   version: undefined,
+  ss58Prefix: undefined,
 };
 
 export const defaultApiContext: APIContextInterface = {
