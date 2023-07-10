@@ -1,8 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import Keyring from '@polkadot/keyring';
-import { blake2AsU8a } from '@polkadot/util-crypto';
+import { blake2AsU8a, decodeAddress } from '@polkadot/util-crypto';
 import { SCHEMA, findScheme } from './scheme';
 
 /*
@@ -10,25 +9,14 @@ import { SCHEMA, findScheme } from './scheme';
   https://github.com/polkadot-js/ui/tree/master/packages/react-identicon
 */
 
-// const blake2512 = new Blake2Hasher(512, false);
-
 let zeroHash: Uint8Array = new Uint8Array();
 
 const addressToId = (address: string): Uint8Array => {
   if (!zeroHash.length) {
-    // zeroHash = blake2512.hash(new Uint8Array(32));
-    zeroHash = blake2AsU8a(new Uint8Array(32));
+    zeroHash = blake2AsU8a(new Uint8Array(32), 512);
   }
 
-  const keyring = new Keyring();
-  const pubKey = keyring.decodeAddress(address);
-
-  // const [, pubKey] = ss58.decode(address) as [
-  //   prefix: number,
-  //   pubKey: Uint8Array
-  // ];
-
-  const capi = blake2AsU8a(pubKey).map(
+  const capi = blake2AsU8a(decodeAddress(address), 512).map(
     (x: any, i: any) => (x + 256 - zeroHash[i]) % 256
   );
   return capi;
