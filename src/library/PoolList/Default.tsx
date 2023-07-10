@@ -40,14 +40,14 @@ export const PoolList = ({
     isReady,
     network: { colors },
   } = useApi();
-  const { activeEra } = useNetworkMetrics();
-  const { fetchPoolsMetaBatch, poolSearchFilter, meta } = useBondedPools();
-  const { listFormat, setListFormat } = usePoolList();
   const { isSyncing } = useUi();
-
+  const { applyFilter } = usePoolFilters();
+  const { activeEra } = useNetworkMetrics();
+  const { listFormat, setListFormat } = usePoolList();
   const { getFilters, setMultiFilters, getSearchTerm, setSearchTerm } =
     useFilters();
-  const { applyFilter } = usePoolFilters();
+  const { fetchPoolsMetaBatch, poolSearchFilter, meta } = useBondedPools();
+
   const includes = getFilters('include', 'pools');
   const excludes = getFilters('exclude', 'pools');
   const searchTerm = getSearchTerm('pools');
@@ -56,13 +56,13 @@ export const PoolList = ({
   const [page, setPage] = useState<number>(1);
 
   // current render iteration
-  const [renderIteration, _setRenderIteration] = useState<number>(1);
+  const [renderIteration, setRenderIterationState] = useState<number>(1);
 
   // default list of pools
   const [poolsDefault, setPoolsDefault] = useState(pools);
 
   // manipulated list (ordering, filtering) of pools
-  const [_pools, _setPools] = useState(pools);
+  const [listPools, setListPools] = useState(pools);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState<boolean>(false);
@@ -71,11 +71,11 @@ export const PoolList = ({
   const renderIterationRef = useRef(renderIteration);
   const setRenderIteration = (iter: number) => {
     renderIterationRef.current = iter;
-    _setRenderIteration(iter);
+    setRenderIterationState(iter);
   };
 
   // pagination
-  const totalPages = Math.ceil(_pools.length / ListItemsPerPage);
+  const totalPages = Math.ceil(listPools.length / ListItemsPerPage);
   const pageEnd = page * ListItemsPerPage - 1;
   const pageStart = pageEnd - (ListItemsPerPage - 1);
 
@@ -102,7 +102,7 @@ export const PoolList = ({
   // handle pool list bootstrapping
   const setupPoolList = () => {
     setPoolsDefault(pools);
-    _setPools(pools);
+    setListPools(pools);
     setFetched(true);
     fetchPoolsMetaBatch(batchKey, pools, true);
   };
@@ -147,19 +147,18 @@ export const PoolList = ({
     if (searchTerm) {
       filteredPools = poolSearchFilter(filteredPools, batchKey, searchTerm);
     }
-    _setPools(filteredPools);
+    setListPools(filteredPools);
     setPage(1);
     setRenderIteration(1);
   };
 
   // get pools to render
-  let listPools = [];
-
+  let poolsToDisplay = [];
   // get throttled subset or entire list
   if (!disableThrottle) {
-    listPools = _pools.slice(pageStart).slice(0, ListItemsPerPage);
+    poolsToDisplay = listPools.slice(pageStart).slice(0, ListItemsPerPage);
   } else {
-    listPools = _pools;
+    poolsToDisplay = listPools;
   }
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -176,7 +175,7 @@ export const PoolList = ({
 
     setPage(1);
     setRenderIteration(1);
-    _setPools(filteredPools);
+    setListPools(filteredPools);
     setSearchTerm('pools', newValue);
   };
 
@@ -232,13 +231,13 @@ export const PoolList = ({
           />
         )}
         <Tabs config={filterTabsConfig} activeIndex={1} />
-        {pagination && listPools.length > 0 && (
+        {pagination && poolsToDisplay.length > 0 && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
         <MotionContainer>
-          {listPools.length ? (
+          {poolsToDisplay.length ? (
             <>
-              {listPools.map((pool: any, index: number) => {
+              {poolsToDisplay.map((pool: any, index: number) => {
                 // fetch batch data by referring to default list index.
                 const batchIndex = poolsDefault.indexOf(pool);
 
