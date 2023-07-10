@@ -273,11 +273,11 @@ export const SubscanProvider = ({
         if (res.data?.list !== null) {
           const result = res.data?.list || [];
           const list: AnySubscan = [];
-          for (let i = 0; i < ListItemsPerPage; i++) {
+          for (const item of result) {
             list.push({
-              address: result[i].account_display.address,
-              poolId: result[i].pool_id,
-              bonded: result[i].bonded,
+              address: item.account_display.address,
+              poolId: item.pool_id,
+              bonded: item.bonded,
             });
           }
           // removes last zero item and returns
