@@ -25,7 +25,7 @@ const Wrapper = styled.div<{
 
   .cursor-copy {
     cursor: ${(props) =>
-      props.$disableCursorCopy || props.$disableClipboardCopy
+      !(props.$disableCursorCopy || props.$disableClipboardCopy)
         ? 'copy'
         : 'default'};
   }
@@ -34,8 +34,8 @@ const Wrapper = styled.div<{
 export const Identicon = ({
   size,
   value,
-  disableCursorCopy = false,
-  disableClipboardCopy = false,
+  disableCursorCopy = true,
+  disableClipboardCopy = true,
   colors: initialColors,
 }: IdenticonProps) => {
   const xy = getCircleXY();
