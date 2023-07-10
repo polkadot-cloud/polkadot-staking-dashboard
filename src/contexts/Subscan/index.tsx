@@ -250,10 +250,34 @@ export const SubscanProvider = ({
     return [];
   };
 
+  /* fetchPoolDetails
+   * Also checks if subscan service is active *after* the fetch has resolved
+   * as the user could have turned off the service while payouts were fetching.
+   */
+  const fetchPoolDetails = async (poolId: number) => {
+    if (!plugins.includes('subscan')) {
+      return [];
+    }
+    const res: Response = await fetch(
+      network.subscanEndpoint + ApiEndpoints.subscanPoolDetails,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-Key': ApiSubscanKey,
+        },
+        body: JSON.stringify({
+          pool_id: poolId,
+        }),
+        method: 'POST',
+      }
+    );
+    const json: AnySubscan = await res.json();
+    return json?.data || undefined;
+  };
+
   /* fetchPoolMembers
    * Also checks if subscan service is active *after* the fetch has resolved
    * as the user could have turned off the service while payouts were fetching.
-   * returns eraPoints
    */
   const fetchPoolMembers = async (poolId: number, page: number) => {
     if (!plugins.includes('subscan')) {
@@ -324,6 +348,7 @@ export const SubscanProvider = ({
         unclaimedPayouts,
         payoutsFromDate,
         payoutsToDate,
+        fetchPoolDetails,
         fetchPoolMembers,
       }}
     >

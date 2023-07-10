@@ -65,6 +65,7 @@ export const ApiEndpoints = {
   subscanPoolRewards: '/api/scan/nomination_pool/rewards',
   subscanEraStat: '/api/scan/staking/era_stat',
   subscanPoolMembers: '/api/scan/nomination_pool/pool/members',
+  subscanPoolDetails: '/api/scan/nomination_pool/pool',
 };
 
 /*

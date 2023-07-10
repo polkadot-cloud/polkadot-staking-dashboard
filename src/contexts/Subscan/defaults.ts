@@ -12,5 +12,7 @@ export const defaultSubscanContext: SubscanContextInterface = {
   payoutsFromDate: undefined,
   payoutsToDate: undefined,
   // eslint-disable-next-line
+  fetchPoolDetails: (poolId) => new Promise((resolve) => resolve({})),
+  // eslint-disable-next-line
   fetchPoolMembers: (poolId, page) => new Promise((resolve) => resolve([])),
 };
