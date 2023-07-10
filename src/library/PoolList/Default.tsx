@@ -235,7 +235,7 @@ export const PoolList = ({
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
         <MotionContainer>
-          {poolsToDisplay.length ? (
+          {!poolsToDisplay.length ? (
             <>
               {poolsToDisplay.map((pool: any, index: number) => (
                 <motion.div
@@ -261,7 +261,7 @@ export const PoolList = ({
               ))}
             </>
           ) : (
-            <h4 style={{ padding: '1rem 1rem 0 1rem' }}>
+            <h4 className="none">
               {isSyncing ? `${t('syncingPoolList')}...` : t('noMatch')}
             </h4>
           )}

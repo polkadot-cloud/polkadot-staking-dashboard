@@ -139,6 +139,12 @@ export const List = styled.div<ListProps>`
     display: flex;
     flex-flow: row wrap;
 
+    h4 {
+      &.none {
+        padding: 0.5rem;
+      }
+    }
+
     > .item {
       display: flex;
       align-items: center;
