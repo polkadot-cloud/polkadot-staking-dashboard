@@ -20,7 +20,7 @@ services:
       --validator
       --name creditcoin-miner
       --prometheus-external
-      --telemetry-url "wss://telemetry.polkadot.io/submit/ 0"
+      --telemetry-url "wss://telemetry.creditcoin.network/submit/ 0"
       --bootnodes "/dns4/bootnode.creditcoin.network/tcp/30333/p2p/12D3KooWAEgDL126EUFxFfdQKiUhmx3BJPdszQHu9PsYsLCuavhb" "/dns4/bootnode2.creditcoin.network/tcp/30333/p2p/12D3KooWSQye3uN3bZQRRC4oZbpiAZXkP2o5UZh6S8pqyh24bF3k" "/dns4/bootnode3.creditcoin.network/tcp/30333/p2p/12D3KooWFrsEZ2aSfiigAxs6ir2kU6en4BewotyCXPhrJ7T1AzjN"
       --public-addr "/dns4/${IP_ADDRESS}/tcp/${PORT}"
       --chain mainnet
