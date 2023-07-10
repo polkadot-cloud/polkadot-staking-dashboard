@@ -5,17 +5,20 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PageRow } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
+import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTheme } from 'contexts/Themes';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { useTranslation } from 'react-i18next';
-import { MembersList } from './MembersList/Default';
+import { MembersList as DefaultMemberList } from './MembersList/Default';
+import { MembersList as FetchPageMemberList } from './MembersList/FetchPage';
 
 export const Members = () => {
   const { t } = useTranslation('pages');
   const { colors } = useApi().network;
   const { mode } = useTheme();
+  const { getPlugins } = usePlugins();
   const { getMembersOfPool } = usePoolMembers();
   const { selectedActivePool, isOwner, isBouncer } = useActivePools();
 
@@ -28,6 +31,15 @@ export const Members = () => {
   const showBlockedPrompt =
     selectedActivePool?.bondedPool?.state === 'Blocked' &&
     (isOwner() || isBouncer());
+
+  const membersListProps = {
+    title: poolMembersTitle,
+    batchKey: 'active_pool_members',
+    members: poolMembers,
+    pagination: true,
+    selectToggleable: false,
+    allowMoreCols: true,
+  };
 
   return (
     <>
@@ -69,14 +81,11 @@ export const Members = () => {
 
       <PageRow>
         <CardWrapper>
-          <MembersList
-            title={poolMembersTitle}
-            batchKey="active_pool_members"
-            members={poolMembers}
-            pagination
-            selectToggleable={false}
-            allowMoreCols
-          />
+          {getPlugins().includes('subscan') ? (
+            <FetchPageMemberList {...membersListProps} />
+          ) : (
+            <DefaultMemberList {...membersListProps} />
+          )}
         </CardWrapper>
       </PageRow>
     </>
