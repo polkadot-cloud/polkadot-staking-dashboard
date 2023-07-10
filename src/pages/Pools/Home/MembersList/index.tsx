@@ -13,7 +13,6 @@ import { motion } from 'framer-motion';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
-import { Selectable } from 'library/List/Selectable';
 import { ListProvider, useList } from 'library/List/context';
 import { useEffect, useRef, useState } from 'react';
 import type { AnyApi, Sync } from 'types';
@@ -22,37 +21,29 @@ import { Member } from './Member';
 export const MembersListInner = ({
   allowMoreCols,
   pagination,
-  selectable,
   batchKey,
   onSelected,
   title,
   members: initialMembers,
   disableThrottle = false,
-  actions = [],
 }: any) => {
-  const { mode } = useTheme();
-  const provider = useList();
   const {
     isReady,
     network: { colors },
   } = useApi();
+  const provider = useList();
+  const { mode } = useTheme();
   const { activeEra } = useNetworkMetrics();
   const { fetchPoolMembersMetaBatch } = usePoolMembers();
 
   // get list provider properties.
   const { selected, listFormat, setListFormat } = provider;
 
-  // get actions
-  const actionsAll = [...actions].filter((action) => !action.onSelected);
-  const actionsSelected = [...actions].filter(
-    (action: any) => action.onSelected
-  );
-
   // current page
   const [page, setPage] = useState<number>(1);
 
   // current render iteration
-  const [renderIteration, _setRenderIteration] = useState<number>(1);
+  const [renderIteration, setRenderIterationState] = useState<number>(1);
 
   // default list of validators
   const [membersDefault, setMembersDefault] = useState(initialMembers);
@@ -67,7 +58,7 @@ export const MembersListInner = ({
   const renderIterationRef = useRef(renderIteration);
   const setRenderIteration = (iter: number) => {
     renderIterationRef.current = iter;
-    _setRenderIteration(iter);
+    setRenderIterationState(iter);
   };
 
   // pagination
@@ -80,6 +71,19 @@ export const MembersListInner = ({
     renderIteration * ListItemsPerBatch - 1,
     ListItemsPerPage
   );
+
+  // get throttled subset or entire list
+  const listMembers = disableThrottle
+    ? members
+    : members.slice(pageStart).slice(0, ListItemsPerPage);
+
+  // handle validator list bootstrapping
+  const setupMembersList = () => {
+    setMembersDefault(initialMembers);
+    setMembers(initialMembers);
+    fetchPoolMembersMetaBatch(batchKey, initialMembers, false);
+    setFetched('synced');
+  };
 
   // refetch list when list changes
   useEffect(() => {
@@ -111,101 +115,80 @@ export const MembersListInner = ({
     }
   }, [selected]);
 
-  // handle validator list bootstrapping
-  const setupMembersList = () => {
-    setMembersDefault(initialMembers);
-    setMembers(initialMembers);
-    fetchPoolMembersMetaBatch(batchKey, initialMembers, false);
-    setFetched('synced');
-  };
-
-  // get list items to render
-  let listMembers = [];
-
-  // get throttled subset or entire list
-  if (!disableThrottle) {
-    listMembers = members.slice(pageStart).slice(0, ListItemsPerPage);
-  } else {
-    listMembers = members;
-  }
-
-  if (!members.length) {
-    return <></>;
-  }
-
   return (
-    <ListWrapper>
-      <Header>
-        <div>
-          <h4>{title}</h4>
-        </div>
-        <div>
-          <button type="button" onClick={() => setListFormat('row')}>
-            <FontAwesomeIcon
-              icon={faBars}
-              color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
-            />
-          </button>
-          <button type="button" onClick={() => setListFormat('col')}>
-            <FontAwesomeIcon
-              icon={faGripVertical}
-              color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
-            />
-          </button>
-        </div>
-      </Header>
-      <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
-        {listMembers.length > 0 && pagination && (
-          <Pagination page={page} total={totalPages} setter={setPage} />
-        )}
-        {selectable && (
-          <Selectable
-            actionsAll={actionsAll}
-            actionsSelected={actionsSelected}
-          />
-        )}
-        <MotionContainer>
-          {listMembers.map((member: AnyApi, index: number) => {
-            // fetch batch data by referring to default list index.
-            const batchIndex = membersDefault.indexOf(member);
-
-            return (
-              <motion.div
-                className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-                key={`nomination_${index}`}
-                variants={{
-                  hidden: {
-                    y: 15,
-                    opacity: 0,
-                  },
-                  show: {
-                    y: 0,
-                    opacity: 1,
-                  },
-                }}
-              >
-                <Member
-                  who={member.who}
-                  batchKey={batchKey}
-                  batchIndex={batchIndex}
+    <>
+      {!members.length ? (
+        <></>
+      ) : (
+        <ListWrapper>
+          <Header>
+            <div>
+              <h4>{title}</h4>
+            </div>
+            <div>
+              <button type="button" onClick={() => setListFormat('row')}>
+                <FontAwesomeIcon
+                  icon={faBars}
+                  color={
+                    listFormat === 'row' ? colors.primary[mode] : 'inherit'
+                  }
                 />
-              </motion.div>
-            );
-          })}
-        </MotionContainer>
-      </List>
-    </ListWrapper>
+              </button>
+              <button type="button" onClick={() => setListFormat('col')}>
+                <FontAwesomeIcon
+                  icon={faGripVertical}
+                  color={
+                    listFormat === 'col' ? colors.primary[mode] : 'inherit'
+                  }
+                />
+              </button>
+            </div>
+          </Header>
+          <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
+            {listMembers.length > 0 && pagination && (
+              <Pagination page={page} total={totalPages} setter={setPage} />
+            )}
+            <MotionContainer>
+              {listMembers.map((member: AnyApi, index: number) => {
+                // fetch batch data by referring to default list index.
+                const batchIndex = membersDefault.indexOf(member);
+
+                return (
+                  <motion.div
+                    className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
+                    key={`nomination_${index}`}
+                    variants={{
+                      hidden: {
+                        y: 15,
+                        opacity: 0,
+                      },
+                      show: {
+                        y: 0,
+                        opacity: 1,
+                      },
+                    }}
+                  >
+                    <Member
+                      who={member.who}
+                      batchKey={batchKey}
+                      batchIndex={batchIndex}
+                    />
+                  </motion.div>
+                );
+              })}
+            </MotionContainer>
+          </List>
+        </ListWrapper>
+      )}
+    </>
   );
 };
 
 export const MembersList = (props: any) => {
-  const { selectActive, selectToggleable } = props;
+  const { selectToggleable } = props;
 
   return (
-    <ListProvider
-      selectActive={selectActive}
-      selectToggleable={selectToggleable}
-    >
+    <ListProvider selectToggleable={selectToggleable}>
       <MembersListInner {...props} />
     </ListProvider>
   );
