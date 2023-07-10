@@ -12,7 +12,7 @@ import {
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import type { BondedPool } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
@@ -23,13 +23,15 @@ import { Item } from './Wrappers';
 
 export const Announcements = () => {
   const { t } = useTranslation('pages');
-  const { isPoolSyncing, isSyncing } = useUi();
   const { network } = useApi();
+  const { isSyncing } = useUi();
   const { staking } = useStaking();
-  const { units } = network;
-  const { poolMembers } = usePoolMembers();
+  const { stats } = usePoolsConfig();
   const { bondedPools } = useBondedPools();
+
+  const { units } = network;
   const { totalStaked } = staking;
+  const { counterForPoolMembers } = stats;
 
   let totalPoolPoints = new BigNumber(0);
   bondedPools.forEach((b: BondedPool) => {
@@ -90,11 +92,11 @@ export const Announcements = () => {
     announcements.push(null);
   }
 
-  if (bondedPools.length && poolMembers.length > 0 && !isPoolSyncing) {
-    // total locked in pols
+  if (counterForPoolMembers.isGreaterThan(0)) {
+    // total locked in pools
     announcements.push({
       class: 'neutral',
-      title: `${new BigNumber(poolMembers.length).toFormat()} ${t(
+      title: `${counterForPoolMembers.toFormat()} ${t(
         'overview.poolMembersBonding'
       )}`,
       subtitle: `${t('overview.totalNumAccounts')}`,
