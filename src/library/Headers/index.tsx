@@ -3,6 +3,7 @@
 
 import { pageFromUri } from '@polkadotcloud/utils';
 import { useExtrinsics } from 'contexts/Extrinsics';
+import { usePlugins } from 'contexts/Plugins';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useUi } from 'contexts/UI';
@@ -18,6 +19,7 @@ export const Headers = () => {
   const { pathname } = useLocation();
   const { validators } = useValidators();
   const { bondedPools } = useBondedPools();
+  const { getPlugins } = usePlugins();
   const { poolMembers } = usePoolMembers();
   const { pending } = useExtrinsics();
   const { isSyncing } = useUi();
@@ -32,12 +34,14 @@ export const Headers = () => {
     return false;
   };
 
-  // keep syncing if on pools page and still fetching bonded pools or pool members
+  // keep syncing if on pools page and still fetching bonded pools or pool members. Ignore pool
+  // member sync if Subscan is enabled.
   const onPoolsSyncing = () => {
-    // TODO: if subscan is being used for pool members, do not factor `poolMembers` in this
-    // conditional.
     if (pageFromUri(pathname, 'overview') === 'pools') {
-      if (!bondedPools.length || !poolMembers.length) {
+      if (
+        !bondedPools.length ||
+        (!poolMembers.length && !getPlugins().includes('subscan'))
+      ) {
         return true;
       }
     }
