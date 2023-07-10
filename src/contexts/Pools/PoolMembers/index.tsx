@@ -83,8 +83,8 @@ export const PoolMembersProvider = ({
     setPoolMembers(newMembers);
   };
 
-  // TODO: poolMembers should be a function that fetches either Subscan result or poolMembers from
-  // node.
+  // TODO: poolMembers should be a function that fetches pool members from Subscan or
+  // poolMembers from node.
   const getMembersOfPool = (poolId: number) =>
     poolMembers.filter((p: any) => p.poolId === String(poolId)) ?? null;
 
@@ -109,6 +109,13 @@ export const PoolMembersProvider = ({
       poolId: poolMember.poolId,
     };
   };
+
+  // Gets the count of members in a pool.
+  //
+  // TODO: use Subscan `pool_detail` to get total members from Subscan if turned on.
+  // https://support.subscan.io/#pool-detail.
+  const getPoolMemberCount = (poolId: number) =>
+    getMembersOfPool(poolId ?? 0).length;
 
   /*
     Fetches a new batch of pool member metadata.
@@ -324,6 +331,7 @@ export const PoolMembersProvider = ({
         addToPoolMembers,
         getPoolMember,
         removePoolMember,
+        getPoolMemberCount,
         // TODO: poolMembers should be a function that fetches either Subscan result or poolMembers
         // from node.
         poolMembers,

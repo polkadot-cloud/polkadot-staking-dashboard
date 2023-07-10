@@ -136,6 +136,7 @@ export interface PoolMemberContext {
   addToPoolMembers: (m: any) => void;
   getPoolMember: (w: MaybeAccount) => any | null;
   removePoolMember: (w: MaybeAccount) => void;
+  getPoolMemberCount: (p: number) => number;
   poolMembers: any;
   meta: AnyMetaBatch;
 }

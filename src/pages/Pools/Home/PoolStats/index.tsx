@@ -17,11 +17,11 @@ export const PoolStats = () => {
   const { t } = useTranslation('pages');
   const { network } = useApi();
   const { selectedActivePool } = useActivePools();
-  const { getMembersOfPool } = usePoolMembers();
+  const { getPoolMemberCount } = usePoolMembers();
   const { getCurrentCommission } = usePoolCommission();
 
   const { state, points } = selectedActivePool?.bondedPool || {};
-  const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
+  const poolMembersCount = getPoolMemberCount(selectedActivePool?.id ?? 0);
 
   const currentCommission = getCurrentCommission(selectedActivePool?.id ?? 0);
 
@@ -62,7 +62,7 @@ export const PoolStats = () => {
   items.push(
     {
       label: t('pools.poolMembers'),
-      value: poolMembers.length,
+      value: `${poolMembersCount}`,
     },
     {
       label: t('pools.totalBonded'),
