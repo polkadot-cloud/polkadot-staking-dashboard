@@ -22,6 +22,7 @@ import {
   FallbackSessionsPerEra,
 } from 'consts';
 import type {
+  APIChainState,
   APIConstants,
   APIContextInterface,
   ApiStatus,
@@ -96,6 +97,11 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     null
   );
 
+  // Store chain state.
+  const [chainState, setchainState] = useState<APIChainState>(
+    defaults.chainState
+  );
+
   // Store whether in light client mode.
   const [isLightClient, setIsLightClient] = useState<boolean>(
     !!localStorage.getItem('light_client')
@@ -149,7 +155,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [isLightClient, network.name]);
 
-  // Provider event handlers
+  // Initialise provider event handlers when provider is set.
   useEffect(() => {
     if (provider) {
       provider.on('connected', () => {
@@ -158,19 +164,41 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       provider.on('error', () => {
         setApiStatus('disconnected');
       });
-      connectedCallback(provider);
+      getChainState();
     }
   }, [provider]);
 
-  // connection callback.
-  const connectedCallback = async (newProvider: WsProvider | ScProvider) => {
+  // Fetch chain state. Called once `provider` has been initialised.
+  const getChainState = async () => {
+    if (!provider) return;
+
     // initiate new api and set connected.
-    const newApi = await ApiPromise.create({ provider: newProvider });
+    const newApi = await ApiPromise.create({ provider });
+
+    // set connected here in case event listeners have not yet initialised.
     setApiStatus('connected');
 
+    const newChainState = await Promise.all([
+      newApi.rpc.system.chain(),
+      newApi.rpc.system.version(),
+    ]);
+
+    const chain = newChainState[0].toHuman();
+    const version = newChainState[1].toHuman();
+
     // store active network in localStorage.
+    // NOTE: this should ideally refer to above `chain` value.
     localStorage.setItem('network', String(network.name));
 
+    // set fetched chain state in storage.
+    setchainState({ chain, version });
+
+    // Assume chain state is correct and bootstrap network consts.
+    connectedCallback(newApi);
+  };
+
+  // connection callback. Called once `provider` and `api` have been initialised.
+  const connectedCallback = async (newApi: ApiPromise) => {
     // fetch constants.
     const result = await Promise.all([
       newApi.consts.staking.bondingDuration,
@@ -229,7 +257,6 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
 
     const poolsPalletId = result[10] ? result[10].toU8a() : new Uint8Array(0);
 
-    setApi(newApi);
     setConsts({
       bondDuration,
       maxNominations,
@@ -243,12 +270,12 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
       existentialDeposit,
       fastUnstakeDeposit,
     });
+    setApi(newApi);
   };
 
   // connect function sets provider and updates active network.
   const connectProvider = async (name: NetworkName, lc?: ScProvider) => {
     const { endpoints } = NetworkList[name];
-
     const newProvider = lc || new WsProvider(endpoints.rpc);
     if (lc) {
       await newProvider.connect({ forceEmbeddedNode: true });
@@ -262,6 +289,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
         switchNetwork,
         api,
         consts,
+        chainState,
         isReady: apiStatus === 'connected' && api !== null,
         network: network.meta,
         apiStatus,
