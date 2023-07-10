@@ -2,7 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { isNotZero } from '@polkadotcloud/utils';
-import { ApiEndpoints, ApiSubscanKey, DefaultLocale } from 'consts';
+import {
+  ApiEndpoints,
+  ApiSubscanKey,
+  DefaultLocale,
+  ListItemsPerPage,
+} from 'consts';
 import { useNetworkMetrics } from 'contexts/Network';
 import { format, fromUnixTime } from 'date-fns';
 import { sortNonZeroPayouts } from 'library/Graphs/Utils';
@@ -220,7 +225,6 @@ export const SubscanProvider = ({
     if (address === '' || !plugins.includes('subscan')) {
       return [];
     }
-
     const res = await handleFetch(0, ApiEndpoints.subscanEraStat, 100, {
       address,
     });
@@ -242,6 +246,45 @@ export const SubscanProvider = ({
         }
         return [];
       }
+    }
+    return [];
+  };
+
+  /* fetchPoolMembers
+   * Also checks if subscan service is active *after* the fetch has resolved
+   * as the user could have turned off the service while payouts were fetching.
+   * returns eraPoints
+   */
+  const fetchPoolMembers = async (poolId: number, page: number) => {
+    if (!plugins.includes('subscan')) {
+      return [];
+    }
+    const res = await handleFetch(
+      page - 1,
+      ApiEndpoints.subscanPoolMembers,
+      ListItemsPerPage,
+      {
+        pool_id: poolId,
+      }
+    );
+
+    if (res.message === 'Success') {
+      if (getPlugins().includes('subscan')) {
+        if (res.data?.list !== null) {
+          const result = res.data?.list || [];
+          const list: AnySubscan = [];
+          for (let i = 0; i < ListItemsPerPage; i++) {
+            list.push({
+              address: result[i].account_display.address,
+              poolId: result[i].pool_id,
+              bonded: result[i].bonded,
+            });
+          }
+          // removes last zero item and returns
+          return list.reverse().splice(0, list.length - 1);
+        }
+      }
+      return [];
     }
     return [];
   };
@@ -282,6 +325,7 @@ export const SubscanProvider = ({
         unclaimedPayouts,
         payoutsFromDate,
         payoutsToDate,
+        fetchPoolMembers,
       }}
     >
       {children}

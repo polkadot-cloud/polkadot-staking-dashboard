@@ -5,7 +5,9 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { useSubscan } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
 import { motion } from 'framer-motion';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
@@ -29,7 +31,9 @@ export const MembersListInner = ({
   } = useApi();
   const provider = useList();
   const { mode } = useTheme();
+  const { fetchPoolMembers } = useSubscan();
   const { fetchPoolMembersMetaBatch } = usePoolMembers();
+  const { selectedActivePool } = useActivePools();
 
   // get list provider properties.
   const { listFormat, setListFormat } = provider;
@@ -71,12 +75,13 @@ export const MembersListInner = ({
 
   // handle validator list bootstrapping
   const setupMembersList = async () => {
-    // TODO: fetch members from Subscan contexxt.
-    const newMembers: any = [];
-
-    setMembers(newMembers);
-    fetchPoolMembersMetaBatch(batchKey, newMembers, true);
-    setFetched('synced');
+    const poolId = selectedActivePool?.id || 0;
+    if (poolId > 0) {
+      const newMembers: any = await fetchPoolMembers(poolId, page);
+      setMembers(newMembers);
+      fetchPoolMembersMetaBatch(batchKey, newMembers, true);
+      setFetched('synced');
+    }
   };
 
   // Refetch list when page changes.
@@ -97,7 +102,7 @@ export const MembersListInner = ({
     if (fetched === 'unsynced') {
       setupMembersList();
     }
-  }, [fetched]);
+  }, [fetched, selectedActivePool]);
 
   // Render throttle.
   useEffect(() => {

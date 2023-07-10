@@ -11,4 +11,6 @@ export const defaultSubscanContext: SubscanContextInterface = {
   unclaimedPayouts: [],
   payoutsFromDate: undefined,
   payoutsToDate: undefined,
+  // eslint-disable-next-line
+  fetchPoolMembers: (poolId, page) => new Promise((resolve) => resolve([])),
 };
