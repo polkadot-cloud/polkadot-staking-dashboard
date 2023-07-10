@@ -235,7 +235,7 @@ export const PoolList = ({
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
         <MotionContainer>
-          {!poolsToDisplay.length ? (
+          {poolsToDisplay.length ? (
             <>
               {poolsToDisplay.map((pool: any, index: number) => (
                 <motion.div
