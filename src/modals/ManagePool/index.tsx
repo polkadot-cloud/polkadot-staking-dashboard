@@ -17,7 +17,7 @@ import { Tasks } from './Tasks';
 export const ManagePool = () => {
   const { t } = useTranslation('modals');
   const { setModalHeight } = useModal();
-  const { isOwner } = useActivePools();
+  const { isOwner, selectedActivePool } = useActivePools();
 
   // modal task
   const [task, setTask] = useState<string>();
@@ -44,7 +44,7 @@ export const ManagePool = () => {
       height += formsRef.current?.clientHeight || 0;
     }
     setModalHeight(height);
-  }, [section, task, calculateHeight]);
+  }, [section, task, calculateHeight, selectedActivePool?.bondedPool?.state]);
 
   return (
     <ModalSection type="carousel">
