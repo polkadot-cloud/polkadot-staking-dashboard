@@ -30,7 +30,7 @@ export const PoolMembersProvider = ({
 
   // Clear existing state for network refresh
   useEffect(() => {
-    // TODO: also set `poolMembers` state from Subscan to [].
+    // TODO: also set `poolMembers` list state from Subscan to [].
     setPoolMembers([]);
 
     unsubscribeAndResetMeta();
