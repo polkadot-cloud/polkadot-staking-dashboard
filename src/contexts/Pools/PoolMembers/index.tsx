@@ -17,32 +17,36 @@ export const PoolMembersProvider = ({
   const { api, network, isReady } = useApi();
   const { activeAccount } = useConnect();
 
-  // store pool members
+  // Store pool members from node.
   const [poolMembers, setPoolMembers] = useState<AnyJson[]>([]);
 
-  // stores the meta data batches for pool member lists
+  // Stores the meta data batches for pool member lists
   const [poolMembersMetaBatches, setPoolMembersMetaBatch]: AnyMetaBatch =
     useState({});
   const poolMembersMetaBatchesRef = useRef(poolMembersMetaBatches);
 
-  // stores the meta batch subscriptions for pool lists
+  // Stores the meta batch subscriptions for pool lists
   const poolMembersSubs = useRef<Record<string, Fn[]>>({});
 
-  // clear existing state for network refresh
+  // Clear existing state for network refresh
   useEffect(() => {
+    // TODO: also set `poolMembers` state from Subscan to [].
     setPoolMembers([]);
+
     unsubscribeAndResetMeta();
   }, [network]);
 
-  // clear meta state when activeAccount changes
+  // Clear meta state when activeAccount changes
   useEffect(() => {
     unsubscribeAndResetMeta();
   }, [activeAccount]);
 
-  // initial setup for fetching members
+  // Initial setup for fetching members
   useEffect(() => {
     if (isReady) {
-      // fetch bonded pools
+      // fetch pool members.
+      //
+      // TODO: if Subscan active, fetch pool members from there, otherwise call the below function.
       fetchPoolMembers();
     }
     return () => {
@@ -52,6 +56,7 @@ export const PoolMembersProvider = ({
 
   const unsubscribe = () => {
     unsubscribeAndResetMeta();
+    // TODO: also set `poolMembers` from Subscan to [].
     setPoolMembers([]);
   };
 
@@ -62,32 +67,33 @@ export const PoolMembersProvider = ({
     setStateWithRef({}, setPoolMembersMetaBatch, poolMembersMetaBatchesRef);
   };
 
-  // fetch all pool members entries
+  // Fetch all pool members entries from node.
   const fetchPoolMembers = async () => {
     if (!api) return;
 
-    const _exposures = await api.query.nominationPools.poolMembers.entries();
-    const exposures = _exposures.map(([_keys, _val]: AnyApi) => {
-      const who = _keys.toHuman()[0];
-      const membership = _val.toHuman();
-      const { poolId } = membership;
-
+    const result = await api.query.nominationPools.poolMembers.entries();
+    const newMembers = result.map(([keys, val]: AnyApi) => {
+      const who = keys.toHuman()[0];
+      const { poolId } = val.toHuman();
       return {
         who,
         poolId,
       };
     });
-
-    setPoolMembers(exposures);
+    setPoolMembers(newMembers);
   };
 
+  // TODO: poolMembers should be a function that fetches either Subscan result or poolMembers from
+  // node.
   const getMembersOfPool = (poolId: number) =>
     poolMembers.filter((p: any) => p.poolId === String(poolId)) ?? null;
 
+  // TODO: poolMembers should be a function that fetches either Subscan result or poolMembers from
+  // node.
   const getPoolMember = (who: MaybeAccount) =>
     poolMembers.find((p: any) => p.who === who) ?? null;
 
-  // queries a  pool member and formats to `poolMembers`.
+  // queries a  pool member and formats to `PoolMember`.
   const queryPoolMember = async (who: MaybeAccount) => {
     if (!api) return null;
 
@@ -124,9 +130,6 @@ export const PoolMembersProvider = ({
     refetch = false
   ) => {
     if (!isReady || !api) {
-      return;
-    }
-    if (!poolMembers.length) {
       return;
     }
     if (!p.length) {
@@ -273,9 +276,12 @@ export const PoolMembersProvider = ({
     });
   };
 
-  /*
-   * Removes a member from the member list and updates state.
-   */
+  // Removes a member from the member list and updates state.
+  //
+  // TODO: poolMembers should be a function that fetches either Subscan result or poolMembers from
+  // node.
+  //
+  // TODO: setPoolMembers should be a function that sets either Subscan state or this context state.
   const removePoolMember = (who: MaybeAccount) => {
     const newMembers = poolMembers.filter((p: any) => p.who !== who);
     setPoolMembers(newMembers ?? []);
@@ -285,15 +291,20 @@ export const PoolMembersProvider = ({
    * Helper: to add mataBatch unsubs by key.
    */
   const addMetaBatchUnsubs = (key: string, unsubs: Fn[]) => {
-    const _unsubs = poolMembersSubs.current;
-    const _keyUnsubs = _unsubs[key] ?? [];
-    _keyUnsubs.push(...unsubs);
-    _unsubs[key] = _keyUnsubs;
-    poolMembersSubs.current = _unsubs;
+    const subs = poolMembersSubs.current;
+    const sub = subs[key] ?? [];
+    sub.push(...unsubs);
+    subs[key] = sub;
+    poolMembersSubs.current = subs;
   };
 
-  // adds a record to poolMembers.
-  // currently only used when an account joins or creates a pool.
+  // Adds a record to poolMembers.
+  // Currently only used when an account joins or creates a pool.
+  //
+  // TODO: poolMembers should be a function that fetches either Subscan result or poolMembers from
+  // node.
+  //
+  // TODO: setPoolMembers should be a function that sets either Subscan state or this context state.
   const addToPoolMembers = (member: any) => {
     if (!member) return;
 
@@ -313,6 +324,8 @@ export const PoolMembersProvider = ({
         addToPoolMembers,
         getPoolMember,
         removePoolMember,
+        // TODO: poolMembers should be a function that fetches either Subscan result or poolMembers
+        // from node.
         poolMembers,
         meta: poolMembersMetaBatchesRef.current,
       }}
