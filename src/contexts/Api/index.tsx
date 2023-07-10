@@ -98,9 +98,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   );
 
   // Store chain state.
-  const [chainState, setchainState] = useState<APIChainState>(
-    defaults.chainState
-  );
+  const [chainState, setchainState] = useState<APIChainState>(undefined);
 
   // Store whether in light client mode.
   const [isLightClient, setIsLightClient] = useState<boolean>(
