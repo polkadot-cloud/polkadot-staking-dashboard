@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { MembersList as DefaultMemberList } from './MembersList/Default';
 import { MembersList as FetchPageMemberList } from './MembersList/FetchPage';
 
-export const Members = () => {
+export const Members = ({ poolMembersCount }: { poolMembersCount: number }) => {
   const { t } = useTranslation('pages');
   const { colors } = useApi().network;
   const { mode } = useTheme();
@@ -23,8 +23,9 @@ export const Members = () => {
   const { selectedActivePool, isOwner, isBouncer } = useActivePools();
 
   const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
-  const poolMembersTitle = `${t('pools.poolMember', {
-    count: poolMembers.length,
+
+  const listTitle = `${t('pools.poolMember', {
+    count: poolMembersCount,
   })}`;
   const annuncementBorderColor = colors.secondary[mode];
 
@@ -33,7 +34,7 @@ export const Members = () => {
     (isOwner() || isBouncer());
 
   const membersListProps = {
-    title: poolMembersTitle,
+    title: listTitle,
     batchKey: 'active_pool_members',
     members: poolMembers,
     pagination: true,

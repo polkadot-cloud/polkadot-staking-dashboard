@@ -5,6 +5,7 @@ import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useSubscan } from 'contexts/Subscan';
@@ -31,6 +32,7 @@ export const MembersListInner = ({
   } = useApi();
   const provider = useList();
   const { mode } = useTheme();
+  const { activeAccount } = useConnect();
   const { fetchPoolMembers } = useSubscan();
   const { fetchPoolMembersMetaBatch } = usePoolMembers();
   const { selectedActivePool } = useActivePools();
@@ -88,7 +90,7 @@ export const MembersListInner = ({
   useEffect(() => {
     setFetched('unsynced');
     setMembers([]);
-  }, [page]);
+  }, [page, activeAccount]);
 
   // Refetch list when network changes.
   useEffect(() => {

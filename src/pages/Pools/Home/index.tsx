@@ -6,6 +6,7 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
 import { StatBoxList } from 'library/StatBoxList';
@@ -27,23 +28,16 @@ import { PoolsTabsProvider, usePoolsTabs } from './context';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
+  const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
+  const { getMembersOfPool } = usePoolMembers();
+  const { activeTab, setActiveTab } = usePoolsTabs();
   const { bondedPools, getAccountPools } = useBondedPools();
   const { getPoolRoles, selectedActivePool } = useActivePools();
-  const { activeTab, setActiveTab } = usePoolsTabs();
-  const { openModalWith } = useModal();
 
+  const poolMembersCount = getMembersOfPool(selectedActivePool?.id ?? 0);
   const accountPools = getAccountPools(activeAccount);
   const totalAccountPools = Object.entries(accountPools).length;
-
-  // back to tab 0 if not in a pool & on members tab
-  useEffect(() => {
-    if (!selectedActivePool && [1].includes(activeTab)) {
-      setActiveTab(0);
-    }
-  }, [selectedActivePool]);
-
-  const ROW_HEIGHT = 220;
 
   let tabs = [
     {
@@ -73,6 +67,20 @@ export const HomeInner = () => {
       onClick: () => setActiveTab(3),
     }
   );
+
+  // Back to tab 0 if not in a pool & on members tab.
+  useEffect(() => {
+    if (!selectedActivePool && [1].includes(activeTab)) {
+      setActiveTab(0);
+    }
+  }, [selectedActivePool]);
+
+  // Fetch pool stats from Subscan if it is enabled.
+  useEffect(() => {
+    // TODO: fetch pool stats from Subscan.
+  }, [activeAccount, selectedActivePool]);
+
+  const ROW_HEIGHT = 220;
 
   return (
     <>
@@ -127,7 +135,7 @@ export const HomeInner = () => {
           )}
         </>
       )}
-      {activeTab === 1 && <Members />}
+      {activeTab === 1 && <Members poolMembersCount={poolMembersCount} />}
       {activeTab === 2 && (
         <>
           <StatBoxList>
