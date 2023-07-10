@@ -15,9 +15,9 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { ListProvider, useList } from 'library/List/context';
 import { useEffect, useRef, useState } from 'react';
-import type { AnyApi, Sync } from 'types';
+import type { Sync } from 'types';
 import { Member } from './Member';
-import type { DefaultMembersListProps } from './types';
+import type { DefaultMembersListProps, PoolMember } from './types';
 
 export const MembersListInner = ({
   allowMoreCols,
@@ -46,10 +46,11 @@ export const MembersListInner = ({
   const [renderIteration, setRenderIterationState] = useState<number>(1);
 
   // default list of validators
-  const [membersDefault, setMembersDefault] = useState(initialMembers);
+  const [membersDefault, setMembersDefault] =
+    useState<PoolMember[]>(initialMembers);
 
   // manipulated list (ordering, filtering) of payouts
-  const [members, setMembers] = useState(initialMembers);
+  const [members, setMembers] = useState<PoolMember[]>(initialMembers);
 
   // is this the initial fetch
   const [fetched, setFetched] = useState<Sync>('unsynced');
@@ -142,7 +143,7 @@ export const MembersListInner = ({
               <Pagination page={page} total={totalPages} setter={setPage} />
             )}
             <MotionContainer>
-              {listMembers.map((member: AnyApi, index: number) => {
+              {listMembers.map((member: PoolMember, index: number) => {
                 // fetch batch data by referring to default list index.
                 const batchIndex = membersDefault.indexOf(member);
 
@@ -177,9 +178,8 @@ export const MembersListInner = ({
   );
 };
 
-export const MembersList = (props: any) => {
+export const MembersList = (props: DefaultMembersListProps) => {
   const { selectToggleable } = props;
-
   return (
     <ListProvider selectToggleable={selectToggleable}>
       <MembersListInner {...props} />

@@ -15,9 +15,9 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { ListProvider, useList } from 'library/List/context';
 import { useEffect, useRef, useState } from 'react';
-import type { AnyApi, Sync } from 'types';
+import type { Sync } from 'types';
 import { Member } from './Member';
-import type { MembersListProps } from './types';
+import type { MembersListProps, PoolMember } from './types';
 
 export const MembersListInner = ({
   allowMoreCols,
@@ -42,7 +42,7 @@ export const MembersListInner = ({
   const [page, setPage] = useState<number>(1);
 
   // fetched member list for page.
-  const [members, setMembers] = useState<any[]>([]);
+  const [members, setMembers] = useState<PoolMember[]>([]);
 
   // current render iteration.
   const [renderIteration, setRenderIterationState] = useState<number>(1);
@@ -69,7 +69,7 @@ export const MembersListInner = ({
   );
 
   // get throttled subset or entire list
-  const listMembers: any[] = disableThrottle
+  const listMembers = disableThrottle
     ? members
     : members.slice(pageStart).slice(0, ListItemsPerPage);
 
@@ -77,7 +77,7 @@ export const MembersListInner = ({
   const setupMembersList = async () => {
     const poolId = selectedActivePool?.id || 0;
     if (poolId > 0) {
-      const newMembers: any = await fetchPoolMembers(poolId, page);
+      const newMembers: PoolMember[] = await fetchPoolMembers(poolId, page);
       setMembers(newMembers);
       fetchPoolMembersMetaBatch(batchKey, newMembers, true);
       setFetched('synced');
@@ -147,7 +147,7 @@ export const MembersListInner = ({
               <Pagination page={page} total={totalPages} setter={setPage} />
             )}
             <MotionContainer>
-              {listMembers.map((member: AnyApi, index: number) => {
+              {listMembers.map((member: PoolMember, index: number) => {
                 // fetch batch data by referring to default list index.
                 const batchIndex = members.indexOf(member);
 
@@ -182,7 +182,7 @@ export const MembersListInner = ({
   );
 };
 
-export const MembersList = (props: any) => {
+export const MembersList = (props: MembersListProps) => {
   const { selectToggleable } = props;
 
   return (

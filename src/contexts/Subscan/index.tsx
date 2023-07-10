@@ -275,9 +275,8 @@ export const SubscanProvider = ({
           const list: AnySubscan = [];
           for (const item of result) {
             list.push({
-              address: item.account_display.address,
+              who: item.account_display.address,
               poolId: item.pool_id,
-              bonded: item.bonded,
             });
           }
           // removes last zero item and returns

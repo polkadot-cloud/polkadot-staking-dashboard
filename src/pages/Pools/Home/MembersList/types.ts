@@ -6,9 +6,15 @@ export interface MembersListProps {
   pagination: boolean;
   batchKey: string;
   title: string;
-  disableThrottle: boolean;
+  disableThrottle?: boolean;
+  selectToggleable?: boolean;
 }
 
 export type DefaultMembersListProps = MembersListProps & {
   members: any;
 };
+
+export interface PoolMember {
+  poolId: number;
+  who: string;
+}
