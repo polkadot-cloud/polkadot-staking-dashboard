@@ -179,9 +179,9 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     setApiStatus('connected');
 
     const newChainState = await Promise.all([
-      newApi.query.system.chain(),
-      newApi.query.system.version(),
-      newApi.query.system.ss58Prefix(),
+      newApi.rpc.system.chain(),
+      newApi.rpc.system.version(),
+      newApi.consts.system.ss58Prefix,
     ]);
 
     // check that chain values have been fetched before committing to state.
@@ -193,7 +193,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     ) {
       const chain = newChainState[0]?.toString();
       const version = newChainState[1]?.toString();
-      const ss58Prefix = Number(newChainState[1]?.toString());
+      const ss58Prefix = Number(newChainState[2]?.toString());
 
       // set fetched chain state in storage.
       setchainState({ chain, version, ss58Prefix });
