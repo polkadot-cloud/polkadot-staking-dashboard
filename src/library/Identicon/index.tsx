@@ -23,7 +23,7 @@ const Wrapper = styled.div<{
     fill: var(--border-primary-color);
   }
 
-  > div .cursor-copy {
+  .cursor-copy {
     cursor: ${(props) =>
       props.$disableCursorCopy || props.$disableClipboardCopy
         ? 'copy'
