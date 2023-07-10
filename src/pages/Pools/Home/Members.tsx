@@ -10,7 +10,7 @@ import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTheme } from 'contexts/Themes';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { useTranslation } from 'react-i18next';
-import { MembersList } from './MembersList';
+import { MembersList } from './MembersList/Default';
 
 export const Members = () => {
   const { t } = useTranslation('pages');

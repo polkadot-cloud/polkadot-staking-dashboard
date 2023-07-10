@@ -17,16 +17,16 @@ import { ListProvider, useList } from 'library/List/context';
 import { useEffect, useRef, useState } from 'react';
 import type { AnyApi, Sync } from 'types';
 import { Member } from './Member';
+import type { DefaultMembersListProps } from './types';
 
 export const MembersListInner = ({
   allowMoreCols,
   pagination,
   batchKey,
-  onSelected,
   title,
   members: initialMembers,
   disableThrottle = false,
-}: any) => {
+}: DefaultMembersListProps) => {
   const {
     isReady,
     network: { colors },
@@ -37,7 +37,7 @@ export const MembersListInner = ({
   const { fetchPoolMembersMetaBatch } = usePoolMembers();
 
   // get list provider properties.
-  const { selected, listFormat, setListFormat } = provider;
+  const { listFormat, setListFormat } = provider;
 
   // current page
   const [page, setPage] = useState<number>(1);
@@ -85,21 +85,21 @@ export const MembersListInner = ({
     setFetched('synced');
   };
 
-  // refetch list when list changes
+  // Refetch list when list changes.
   useEffect(() => {
     if (initialMembers !== membersDefault) {
       setFetched('unsynced');
     }
   }, [initialMembers]);
 
-  // configure list when network is ready to fetch
+  // Configure list when network is ready to fetch.
   useEffect(() => {
     if (isReady && isNotZero(activeEra.index) && fetched === 'unsynced') {
       setupMembersList();
     }
   }, [isReady, fetched, activeEra.index]);
 
-  // render throttle
+  // Render throttle.
   useEffect(() => {
     if (!(batchEnd >= pageEnd || disableThrottle)) {
       setTimeout(() => {
@@ -107,13 +107,6 @@ export const MembersListInner = ({
       }, 500);
     }
   }, [renderIterationRef.current]);
-
-  // trigger onSelected when selection changes
-  useEffect(() => {
-    if (onSelected) {
-      onSelected(provider);
-    }
-  }, [selected]);
 
   return (
     <>
