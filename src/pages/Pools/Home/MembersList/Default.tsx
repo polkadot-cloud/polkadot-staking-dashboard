@@ -8,6 +8,7 @@ import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import type { PoolMember } from 'contexts/Pools/types';
 import { useTheme } from 'contexts/Themes';
 import { motion } from 'framer-motion';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
@@ -17,7 +18,7 @@ import { ListProvider, useList } from 'library/List/context';
 import { useEffect, useRef, useState } from 'react';
 import type { Sync } from 'types';
 import { Member } from './Member';
-import type { DefaultMembersListProps, PoolMember } from './types';
+import type { DefaultMembersListProps } from './types';
 
 export const MembersListInner = ({
   allowMoreCols,

@@ -6,8 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
+import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import type { PoolMember } from 'contexts/Pools/types';
 import { useSubscan } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
 import { motion } from 'framer-motion';
@@ -18,7 +20,7 @@ import { ListProvider, useList } from 'library/List/context';
 import { useEffect, useRef, useState } from 'react';
 import type { Sync } from 'types';
 import { Member } from './Member';
-import type { MembersListProps, PoolMember } from './types';
+import type { FetchpageMembersListProps } from './types';
 
 export const MembersListInner = ({
   allowMoreCols,
@@ -26,25 +28,25 @@ export const MembersListInner = ({
   batchKey,
   title,
   disableThrottle = false,
-}: MembersListProps) => {
+  memberCount,
+}: FetchpageMembersListProps) => {
   const {
     network: { colors, name },
   } = useApi();
   const provider = useList();
   const { mode } = useTheme();
+  const { getPlugins } = usePlugins();
   const { activeAccount } = useConnect();
   const { fetchPoolMembers } = useSubscan();
   const { selectedActivePool } = useActivePools();
-  const { fetchPoolMembersMetaBatch } = usePoolMembers();
+  const { poolMembersApi, setPoolMembersApi, fetchPoolMembersMetaBatch } =
+    usePoolMembers();
 
   // get list provider properties.
   const { listFormat, setListFormat } = provider;
 
   // current page.
   const [page, setPage] = useState<number>(1);
-
-  // fetched member list for page.
-  const [members, setMembers] = useState<PoolMember[]>([]);
 
   // current render iteration.
   const [renderIteration, setRenderIterationState] = useState<number>(1);
@@ -60,8 +62,8 @@ export const MembersListInner = ({
   };
 
   // pagination
-  const totalPages = Math.ceil(members.length / ListItemsPerPage);
-  const pageEnd = page * ListItemsPerPage - 1;
+  const totalPages = Math.ceil(memberCount / ListItemsPerPage);
+  const pageEnd = ListItemsPerPage - 1;
   const pageStart = pageEnd - (ListItemsPerPage - 1);
 
   // render batch
@@ -70,41 +72,39 @@ export const MembersListInner = ({
     ListItemsPerPage
   );
 
-  // get throttled subset or entire list
-  const listMembers = disableThrottle
-    ? members
-    : members.slice(pageStart).slice(0, ListItemsPerPage);
-
   // handle validator list bootstrapping
   const fetchingMemberList = useRef<boolean>(false);
 
   const setupMembersList = async () => {
     const poolId = selectedActivePool?.id || 0;
-    if (
-      !members.length &&
-      fetched === 'unsynced' &&
-      poolId > 0 &&
-      !fetchingMemberList.current
-    ) {
+
+    if (fetched === 'unsynced' && poolId > 0 && !fetchingMemberList.current) {
       fetchingMemberList.current = true;
       const newMembers: PoolMember[] = await fetchPoolMembers(poolId, page);
       fetchingMemberList.current = false;
-      setMembers(newMembers);
+      setPoolMembersApi([...newMembers]);
       fetchPoolMembersMetaBatch(batchKey, newMembers, true);
       setFetched('synced');
     }
   };
 
+  // get throttled subset or entire list
+  const listMembers = disableThrottle
+    ? poolMembersApi
+    : poolMembersApi.slice(pageStart).slice(0, ListItemsPerPage);
+
   // Refetch list when page changes.
   useEffect(() => {
-    setFetched('unsynced');
-    setMembers([]);
-  }, [page, activeAccount]);
+    if (getPlugins().includes('subscan')) {
+      setFetched('unsynced');
+      setPoolMembersApi([]);
+    }
+  }, [page, activeAccount, getPlugins().includes('subscan')]);
 
   // Refetch list when network changes.
   useEffect(() => {
     setFetched('unsynced');
-    setMembers([]);
+    setPoolMembersApi([]);
     setPage(1);
   }, [name]);
 
@@ -126,78 +126,65 @@ export const MembersListInner = ({
 
   return (
     <>
-      {!members.length ? (
-        <>
-          {fetchingMemberList.current === true && (
-            <h4 className="none">Fetching member list...</h4>
+      <ListWrapper>
+        <Header>
+          <div>
+            <h4>{title}</h4>
+          </div>
+          <div>
+            <button type="button" onClick={() => setListFormat('row')}>
+              <FontAwesomeIcon
+                icon={faBars}
+                color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
+              />
+            </button>
+            <button type="button" onClick={() => setListFormat('col')}>
+              <FontAwesomeIcon
+                icon={faGripVertical}
+                color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
+              />
+            </button>
+          </div>
+        </Header>
+        <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
+          {listMembers.length > 0 && pagination && (
+            <Pagination page={page} total={totalPages} setter={setPage} />
           )}
-        </>
-      ) : (
-        <ListWrapper>
-          <Header>
-            <div>
-              <h4>{title}</h4>
-            </div>
-            <div>
-              <button type="button" onClick={() => setListFormat('row')}>
-                <FontAwesomeIcon
-                  icon={faBars}
-                  color={
-                    listFormat === 'row' ? colors.primary[mode] : 'inherit'
-                  }
-                />
-              </button>
-              <button type="button" onClick={() => setListFormat('col')}>
-                <FontAwesomeIcon
-                  icon={faGripVertical}
-                  color={
-                    listFormat === 'col' ? colors.primary[mode] : 'inherit'
-                  }
-                />
-              </button>
-            </div>
-          </Header>
-          <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
-            {listMembers.length > 0 && pagination && (
-              <Pagination page={page} total={totalPages} setter={setPage} />
-            )}
+          {fetched !== 'synced' ? (
+            <h4 className="none">Fetching member list...</h4>
+          ) : (
             <MotionContainer>
-              {listMembers.map((member: PoolMember, index: number) => {
-                // fetch batch data by referring to default list index.
-                const batchIndex = members.indexOf(member);
-
-                return (
-                  <motion.div
-                    className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-                    key={`nomination_${index}`}
-                    variants={{
-                      hidden: {
-                        y: 15,
-                        opacity: 0,
-                      },
-                      show: {
-                        y: 0,
-                        opacity: 1,
-                      },
-                    }}
-                  >
-                    <Member
-                      who={member.who}
-                      batchKey={batchKey}
-                      batchIndex={batchIndex}
-                    />
-                  </motion.div>
-                );
-              })}
+              {listMembers.map((member: PoolMember, index: number) => (
+                <motion.div
+                  className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
+                  key={`nomination_${index}`}
+                  variants={{
+                    hidden: {
+                      y: 15,
+                      opacity: 0,
+                    },
+                    show: {
+                      y: 0,
+                      opacity: 1,
+                    },
+                  }}
+                >
+                  <Member
+                    who={member.who}
+                    batchKey={batchKey}
+                    batchIndex={poolMembersApi.indexOf(member)}
+                  />
+                </motion.div>
+              ))}
             </MotionContainer>
-          </List>
-        </ListWrapper>
-      )}
+          )}
+        </List>
+      </ListWrapper>
     </>
   );
 };
 
-export const MembersList = (props: MembersListProps) => {
+export const MembersList = (props: FetchpageMembersListProps) => {
   const { selectToggleable } = props;
 
   return (

@@ -40,7 +40,6 @@ export const HomeInner = () => {
   const { getMembersOfPoolFromNode } = usePoolMembers();
   const { bondedPools, getAccountPools } = useBondedPools();
   const { getPoolRoles, selectedActivePool } = useActivePools();
-
   const accountPools = getAccountPools(activeAccount);
   const totalAccountPools = Object.entries(accountPools).length;
 

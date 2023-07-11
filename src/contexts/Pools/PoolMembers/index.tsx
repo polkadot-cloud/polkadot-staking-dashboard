@@ -4,9 +4,9 @@
 import { setStateWithRef } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { usePlugins } from 'contexts/Plugins';
-import type { PoolMemberContext } from 'contexts/Pools/types';
+import type { PoolMember, PoolMemberContext } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
-import type { AnyApi, AnyJson, AnyMetaBatch, Fn, MaybeAccount } from 'types';
+import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
 
@@ -20,7 +20,10 @@ export const PoolMembersProvider = ({
   const { api, network, isReady } = useApi();
 
   // Store pool members from node.
-  const [poolMembersNode, setPoolMembersNode] = useState<AnyJson[]>([]);
+  const [poolMembersNode, setPoolMembersNode] = useState<PoolMember[]>([]);
+
+  // Store pool memberes from api.
+  const [poolMembersApi, setPoolMembersApi] = useState<PoolMember[]>([]);
 
   // Stores the meta data batches for pool member lists
   const [poolMembersMetaBatches, setPoolMembersMetaBatch]: AnyMetaBatch =
@@ -312,6 +315,8 @@ export const PoolMembersProvider = ({
         removePoolMember,
         getPoolMemberCount,
         poolMembersNode,
+        poolMembersApi,
+        setPoolMembersApi,
         meta: poolMembersMetaBatchesRef.current,
       }}
     >

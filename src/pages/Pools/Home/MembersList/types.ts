@@ -14,7 +14,6 @@ export type DefaultMembersListProps = MembersListProps & {
   members: any;
 };
 
-export interface PoolMember {
-  poolId: number;
-  who: string;
-}
+export type FetchpageMembersListProps = MembersListProps & {
+  memberCount: number;
+};

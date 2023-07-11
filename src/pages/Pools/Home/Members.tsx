@@ -80,7 +80,10 @@ export const Members = ({ poolMembersCount }: { poolMembersCount: number }) => {
       <PageRow>
         <CardWrapper>
           {getPlugins().includes('subscan') ? (
-            <FetchPageMemberList {...membersListProps} />
+            <FetchPageMemberList
+              {...membersListProps}
+              memberCount={poolMembersCount}
+            />
           ) : (
             <DefaultMemberList
               {...membersListProps}

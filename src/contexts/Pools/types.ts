@@ -138,6 +138,8 @@ export interface PoolMemberContext {
   getPoolMemberCount: (p: number) => number;
   poolMembersNode: any;
   meta: AnyMetaBatch;
+  poolMembersApi: PoolMember[];
+  setPoolMembersApi: (p: PoolMember[]) => void;
 }
 
 // Misc types
@@ -161,4 +163,9 @@ export interface ClaimPermissionConfig {
   label: string;
   value: ClaimPermission;
   description: string;
+}
+
+export interface PoolMember {
+  poolId: number;
+  who: string;
 }

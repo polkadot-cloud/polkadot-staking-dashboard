@@ -49,7 +49,7 @@ export const FallbackEpochDuration = new BigNumber(2400);
 /*
  * Misc values
  */
-export const ListItemsPerPage = 50;
+export const ListItemsPerPage = 20;
 export const ListItemsPerBatch = 30;
 export const MinBondPrecision = 3;
 export const MaxPayoutDays = 60;
