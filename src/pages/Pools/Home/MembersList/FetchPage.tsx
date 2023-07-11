@@ -81,11 +81,7 @@ export const MembersListInner = ({
   const setupMembersList = async () => {
     const poolId = selectedActivePool?.id || 0;
 
-    if (
-      fetchedPoolMembersApi === 'unsynced' &&
-      poolId > 0 &&
-      !fetchingMemberList.current
-    ) {
+    if (poolId > 0 && !fetchingMemberList.current) {
       fetchingMemberList.current = true;
       const newMembers: PoolMember[] = await fetchPoolMembers(poolId, page);
       fetchingMemberList.current = false;
