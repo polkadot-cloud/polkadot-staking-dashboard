@@ -6006,7 +6006,7 @@ __metadata:
     typescript: ^5.1.6
     vite: ^4.3.9
     vite-bundle-visualizer: ^0.8.0
-    vite-plugin-checker: ^0.6.0
+    vite-plugin-checker: ^0.6.1
     vite-plugin-eslint: ^1.8.1
     vite-plugin-svgr: ^3.2.0
     vite-tsconfig-paths: ^4.2.0
@@ -7448,9 +7448,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-checker@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "vite-plugin-checker@npm:0.6.0"
+"vite-plugin-checker@npm:^0.6.1":
+  version: 0.6.1
+  resolution: "vite-plugin-checker@npm:0.6.1"
   dependencies:
     "@babel/code-frame": ^7.12.13
     ansi-escapes: ^4.3.0
@@ -7496,7 +7496,7 @@ __metadata:
       optional: true
     vue-tsc:
       optional: true
-  checksum: 4ca01fed07c4bb5c8b341d1f0b29931bf53db834e9ff8c554e5f9b2effd35559d1661914b7897f01edcebf1360ce9af933328df5b8332f540da9bc8c7525ef47
+  checksum: f2b2e0a4695e0f91d5a9e7591dcf6e6202edaa7fa70f60525c534f2a908983b2d44086851f9bd30b9be08f5f4f2e3f524a4ea13184bc4fc4fb9bbeefe17396e7
   languageName: node
   linkType: hard
 
