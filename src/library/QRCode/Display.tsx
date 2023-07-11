@@ -83,7 +83,7 @@ const Display = ({
         // when we overflow, skip to the first and slightly increase the delay between frames
         if (frameIdx === state.frames.length) {
           frameIdx = 0;
-          timerRef.current.timerDelay = timerRef.current.timerDelay + TIMER_INC;
+          timerRef.current.timerDelay += TIMER_INC;
         }
 
         // only encode the frames on demand, not above as part of the
@@ -108,11 +108,7 @@ const Display = ({
       timerRef.current.timerDelay
     );
 
-    return (): void => {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      timerRef.current.timerId && clearTimeout(timerRef.current.timerId);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => clearTimeout(timerRef.current.timerId || 0);
   }, []);
 
   useEffect((): void => {
@@ -142,7 +138,7 @@ const Display = ({
   return (
     <StyledDiv className={className} style={containerStyle}>
       <div className="ui--qr-Display" style={style}>
-        <img src={image} />
+        <img src={image} alt="img" />
       </div>
     </StyledDiv>
   );

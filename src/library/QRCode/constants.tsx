@@ -1,5 +1,5 @@
-// Copyright 2017-2023 @polkadot/react-qr authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+/* @license Copyright 2023 @paritytech/polkadot-dashboard-ui authors & contributors
+SPDX-License-Identifier: Apache-2.0 */
 
 export const ADDRESS_PREFIX = 'substrate';
 export const SEED_PREFIX = 'secret';

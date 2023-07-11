@@ -8,7 +8,8 @@ import { CRYPTO_SR25519, FRAME_SIZE, SUBSTRATE_ID } from './constants';
 const MULTIPART = new Uint8Array([0]);
 
 export const encodeNumber = (value: number): Uint8Array =>
-  new Uint8Array([value >> 8, value & 0xff]);
+  // eslint-disable-next-line no-bitwise
+  new Uint8Array([value >> 8, value && 0xff]);
 
 export const createSignPayload = (
   address: string,
