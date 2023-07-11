@@ -130,14 +130,18 @@ export interface ActivePoolsContextState {
 
 // PoolMembers types
 export interface PoolMemberContext {
-  fetchPoolMembersMetaBatch: (k: string, v: [], r: boolean) => void;
+  fetchPoolMembersMetaBatch: (k: string, v: AnyMetaBatch[], r: boolean) => void;
   queryPoolMember: (w: MaybeAccount) => any;
-  getMembersOfPool: (p: number) => any;
+  getMembersOfPoolFromNode: (p: number) => any;
   addToPoolMembers: (m: any) => void;
-  getPoolMember: (w: MaybeAccount) => any | null;
   removePoolMember: (w: MaybeAccount) => void;
-  poolMembers: any;
+  getPoolMemberCount: (p: number) => number;
+  poolMembersNode: any;
   meta: AnyMetaBatch;
+  poolMembersApi: PoolMember[];
+  setPoolMembersApi: (p: PoolMember[]) => void;
+  fetchedPoolMembersApi: Sync;
+  setFetchedPoolMembersApi: (s: Sync) => void;
 }
 
 // Misc types
@@ -161,4 +165,9 @@ export interface ClaimPermissionConfig {
   label: string;
   value: ClaimPermission;
   description: string;
+}
+
+export interface PoolMember {
+  poolId: number;
+  who: string;
 }

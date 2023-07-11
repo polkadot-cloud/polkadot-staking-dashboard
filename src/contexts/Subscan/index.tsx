@@ -2,7 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { isNotZero } from '@polkadotcloud/utils';
-import { ApiEndpoints, ApiSubscanKey, DefaultLocale } from 'consts';
+import {
+  ApiEndpoints,
+  ApiSubscanKey,
+  DefaultLocale,
+  ListItemsPerPage,
+} from 'consts';
 import { useNetworkMetrics } from 'contexts/Network';
 import { format, fromUnixTime } from 'date-fns';
 import { sortNonZeroPayouts } from 'library/Graphs/Utils';
@@ -22,12 +27,12 @@ export const SubscanProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { i18n } = useTranslation();
   const { network, isReady } = useApi();
-  const { plugins, getPlugins } = usePlugins();
   const { activeAccount } = useConnect();
   const { activeEra } = useNetworkMetrics();
   const { erasToSeconds } = useErasToTimeLeft();
-  const { i18n } = useTranslation();
+  const { plugins, pluginEnabled } = usePlugins();
 
   // store fetched payouts from Subscan
   const [payouts, setPayouts] = useState<AnySubscan>([]);
@@ -123,17 +128,18 @@ export const SubscanProvider = ({
     let newUnclaimedPayouts: AnySubscan[] = [];
 
     // fetch results if subscan is enabled
-    if (activeAccount && getPlugins().includes('subscan')) {
+    if (activeAccount && pluginEnabled('subscan')) {
       // fetch 1 page of results
       const results = await Promise.all([
-        handleFetch(activeAccount, 0, ApiEndpoints.subscanRewardSlash, {
+        handleFetch(0, ApiEndpoints.subscanRewardSlash, 100, {
+          address: activeAccount,
           is_stash: true,
         }),
       ]);
 
       // user may have turned off service while results were fetching.
       // test again whether subscan service is still active.
-      if (getPlugins().includes('subscan')) {
+      if (pluginEnabled('subscan')) {
         for (const result of results) {
           if (!result?.data?.list) {
             break;
@@ -178,15 +184,17 @@ export const SubscanProvider = ({
     let newPoolClaims: AnySubscan[] = [];
 
     // fetch results if subscan is enabled
-    if (activeAccount && getPlugins().includes('subscan')) {
+    if (activeAccount && pluginEnabled('subscan')) {
       // fetch 1 page of results
       const results = await Promise.all([
-        handleFetch(activeAccount, 0, ApiEndpoints.subscanPoolRewards),
+        handleFetch(0, ApiEndpoints.subscanPoolRewards, 100, {
+          address: activeAccount,
+        }),
       ]);
 
       // user may have turned off service while results were fetching.
       // test again whether subscan service is still active.
-      if (getPlugins().includes('subscan')) {
+      if (pluginEnabled('subscan')) {
         for (const result of results) {
           // check incorrectly formatted result object
           if (!result?.data?.list) {
@@ -217,11 +225,12 @@ export const SubscanProvider = ({
     if (address === '' || !plugins.includes('subscan')) {
       return [];
     }
-
-    const res = await handleFetch(address, 0, ApiEndpoints.subscanEraStat);
+    const res = await handleFetch(0, ApiEndpoints.subscanEraStat, 100, {
+      address,
+    });
 
     if (res.message === 'Success') {
-      if (getPlugins().includes('subscan')) {
+      if (pluginEnabled('subscan')) {
         if (res.data?.list !== null) {
           const list = [];
           for (let i = era; i > era - 100; i--) {
@@ -241,20 +250,81 @@ export const SubscanProvider = ({
     return [];
   };
 
+  /* fetchPoolDetails
+   * Also checks if subscan service is active *after* the fetch has resolved
+   * as the user could have turned off the service while payouts were fetching.
+   */
+  const fetchPoolDetails = async (poolId: number) => {
+    if (!plugins.includes('subscan')) {
+      return [];
+    }
+    const res: Response = await fetch(
+      network.subscanEndpoint + ApiEndpoints.subscanPoolDetails,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-Key': ApiSubscanKey,
+        },
+        body: JSON.stringify({
+          pool_id: poolId,
+        }),
+        method: 'POST',
+      }
+    );
+    const json: AnySubscan = await res.json();
+    return json?.data || undefined;
+  };
+
+  /* fetchPoolMembers
+   * Also checks if subscan service is active *after* the fetch has resolved
+   * as the user could have turned off the service while payouts were fetching.
+   */
+  const fetchPoolMembers = async (poolId: number, page: number) => {
+    if (!plugins.includes('subscan')) {
+      return [];
+    }
+    const res = await handleFetch(
+      page - 1,
+      ApiEndpoints.subscanPoolMembers,
+      ListItemsPerPage,
+      {
+        pool_id: poolId,
+      }
+    );
+
+    if (res.message === 'Success') {
+      if (pluginEnabled('subscan')) {
+        if (res.data?.list !== null) {
+          const result = res.data?.list || [];
+          const list: AnySubscan = [];
+          for (const item of result) {
+            list.push({
+              who: item.account_display.address,
+              poolId: item.pool_id,
+            });
+          }
+          // removes last zero item and returns
+          return list.reverse().splice(0, list.length - 1);
+        }
+      }
+      return [];
+    }
+    return [];
+  };
+
   /* handleFetch
    * utility to handle a fetch request to Subscan
    * returns resulting JSON.
    */
   const handleFetch = async (
-    address: string,
     page: number,
     endpoint: string,
+    row: number,
     body: AnyApi = {}
   ): Promise<AnySubscan> => {
     const bodyJson = {
-      row: 100,
+      row,
       page,
-      address,
       ...body,
     };
     const res: Response = await fetch(network.subscanEndpoint + endpoint, {
@@ -278,6 +348,8 @@ export const SubscanProvider = ({
         unclaimedPayouts,
         payoutsFromDate,
         payoutsToDate,
+        fetchPoolDetails,
+        fetchPoolMembers,
       }}
     >
       {children}
