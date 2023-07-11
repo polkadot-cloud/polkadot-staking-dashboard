@@ -16,6 +16,7 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { ListProvider, useList } from 'library/List/context';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Sync } from 'types';
 import { Member } from './Member';
 import type { DefaultMembersListProps } from './types';
@@ -28,6 +29,7 @@ export const MembersListInner = ({
   members: initialMembers,
   disableThrottle = false,
 }: DefaultMembersListProps) => {
+  const { t } = useTranslation('pages');
   const {
     isReady,
     network: { colors },
@@ -143,12 +145,11 @@ export const MembersListInner = ({
             {listMembers.length > 0 && pagination && (
               <Pagination page={page} total={totalPages} setter={setPage} />
             )}
-            <MotionContainer>
-              {listMembers.map((member: PoolMember, index: number) => {
-                // fetch batch data by referring to default list index.
-                const batchIndex = membersDefault.indexOf(member);
-
-                return (
+            {fetched !== 'synced' ? (
+              <h4 className="none">{t('pools.fetchingMemberList')}...</h4>
+            ) : (
+              <MotionContainer>
+                {listMembers.map((member: PoolMember, index: number) => (
                   <motion.div
                     className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
                     key={`nomination_${index}`}
@@ -166,12 +167,12 @@ export const MembersListInner = ({
                     <Member
                       who={member.who}
                       batchKey={batchKey}
-                      batchIndex={batchIndex}
+                      batchIndex={membersDefault.indexOf(member)}
                     />
                   </motion.div>
-                );
-              })}
-            </MotionContainer>
+                ))}
+              </MotionContainer>
+            )}
           </List>
         </ListWrapper>
       )}

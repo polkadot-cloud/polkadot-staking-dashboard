@@ -18,6 +18,7 @@ import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { ListProvider, useList } from 'library/List/context';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Sync } from 'types';
 import { Member } from './Member';
 import type { FetchpageMembersListProps } from './types';
@@ -30,6 +31,7 @@ export const MembersListInner = ({
   disableThrottle = false,
   memberCount,
 }: FetchpageMembersListProps) => {
+  const { t } = useTranslation('pages');
   const {
     network: { colors, name },
   } = useApi();
@@ -125,62 +127,60 @@ export const MembersListInner = ({
   }, [renderIterationRef.current]);
 
   return (
-    <>
-      <ListWrapper>
-        <Header>
-          <div>
-            <h4>{title}</h4>
-          </div>
-          <div>
-            <button type="button" onClick={() => setListFormat('row')}>
-              <FontAwesomeIcon
-                icon={faBars}
-                color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
-              />
-            </button>
-            <button type="button" onClick={() => setListFormat('col')}>
-              <FontAwesomeIcon
-                icon={faGripVertical}
-                color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
-              />
-            </button>
-          </div>
-        </Header>
-        <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
-          {listMembers.length > 0 && pagination && (
-            <Pagination page={page} total={totalPages} setter={setPage} />
-          )}
-          {fetched !== 'synced' ? (
-            <h4 className="none">Fetching member list...</h4>
-          ) : (
-            <MotionContainer>
-              {listMembers.map((member: PoolMember, index: number) => (
-                <motion.div
-                  className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-                  key={`nomination_${index}`}
-                  variants={{
-                    hidden: {
-                      y: 15,
-                      opacity: 0,
-                    },
-                    show: {
-                      y: 0,
-                      opacity: 1,
-                    },
-                  }}
-                >
-                  <Member
-                    who={member.who}
-                    batchKey={batchKey}
-                    batchIndex={poolMembersApi.indexOf(member)}
-                  />
-                </motion.div>
-              ))}
-            </MotionContainer>
-          )}
-        </List>
-      </ListWrapper>
-    </>
+    <ListWrapper>
+      <Header>
+        <div>
+          <h4>{title}</h4>
+        </div>
+        <div>
+          <button type="button" onClick={() => setListFormat('row')}>
+            <FontAwesomeIcon
+              icon={faBars}
+              color={listFormat === 'row' ? colors.primary[mode] : 'inherit'}
+            />
+          </button>
+          <button type="button" onClick={() => setListFormat('col')}>
+            <FontAwesomeIcon
+              icon={faGripVertical}
+              color={listFormat === 'col' ? colors.primary[mode] : 'inherit'}
+            />
+          </button>
+        </div>
+      </Header>
+      <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
+        {listMembers.length > 0 && pagination && (
+          <Pagination page={page} total={totalPages} setter={setPage} />
+        )}
+        {fetched !== 'synced' ? (
+          <h4 className="none">{t('pools.fetchingMemberList')}....</h4>
+        ) : (
+          <MotionContainer>
+            {listMembers.map((member: PoolMember, index: number) => (
+              <motion.div
+                className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
+                key={`nomination_${index}`}
+                variants={{
+                  hidden: {
+                    y: 15,
+                    opacity: 0,
+                  },
+                  show: {
+                    y: 0,
+                    opacity: 1,
+                  },
+                }}
+              >
+                <Member
+                  who={member.who}
+                  batchKey={batchKey}
+                  batchIndex={poolMembersApi.indexOf(member)}
+                />
+              </motion.div>
+            ))}
+          </MotionContainer>
+        )}
+      </List>
+    </ListWrapper>
   );
 };
 

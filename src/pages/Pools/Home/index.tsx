@@ -37,7 +37,7 @@ export const HomeInner = () => {
   const { fetchPoolDetails } = useSubscan();
   const { membership } = usePoolMemberships();
   const { activeTab, setActiveTab } = usePoolsTabs();
-  const { getMembersOfPoolFromNode } = usePoolMembers();
+  const { getMembersOfPoolFromNode, poolMembersNode } = usePoolMembers();
   const { bondedPools, getAccountPools } = useBondedPools();
   const { getPoolRoles, selectedActivePool } = useActivePools();
   const accountPools = getAccountPools(activeAccount);
@@ -104,7 +104,7 @@ export const HomeInner = () => {
   // in the UI when active account's membership changes.
   useEffect(() => {
     getMemberCount();
-  }, [activeAccount, selectedActivePool, membership]);
+  }, [activeAccount, selectedActivePool, membership, poolMembersNode]);
 
   const ROW_HEIGHT = 220;
 
