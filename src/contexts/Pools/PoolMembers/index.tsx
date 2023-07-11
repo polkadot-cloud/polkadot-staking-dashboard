@@ -85,10 +85,6 @@ export const PoolMembersProvider = ({
   const getMembersOfPoolFromNode = (poolId: number) =>
     poolMembers.filter((p: any) => p.poolId === String(poolId)) ?? null;
 
-  // TODO: refactor alongside `isMember` into state object of poolMembers(account).
-  const getPoolMember = (who: MaybeAccount) =>
-    poolMembers.find((p: any) => p.who === who) ?? null;
-
   // queries a  pool member and formats to `PoolMember`.
   const queryPoolMember = async (who: MaybeAccount) => {
     if (!api) return null;
@@ -322,7 +318,6 @@ export const PoolMembersProvider = ({
         queryPoolMember,
         getMembersOfPoolFromNode,
         addToPoolMembers,
-        getPoolMember,
         removePoolMember,
         getPoolMemberCount,
         poolMembers,

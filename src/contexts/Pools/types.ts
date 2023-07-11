@@ -134,7 +134,6 @@ export interface PoolMemberContext {
   queryPoolMember: (w: MaybeAccount) => any;
   getMembersOfPoolFromNode: (p: number) => any;
   addToPoolMembers: (m: any) => void;
-  getPoolMember: (w: MaybeAccount) => any | null;
   removePoolMember: (w: MaybeAccount) => void;
   getPoolMemberCount: (p: number) => number;
   poolMembers: any;
