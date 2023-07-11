@@ -30,7 +30,7 @@
     "@polkadot/react-identicon": "^3.4.1",
     "@polkadot/react-qr": "^3.4.1",
     "@polkadot/rpc-provider": "^10.7.3",
-    "@polkadot/util": "^12.1.1",
+    "@polkadot/util": "^12.3.2",
     "@polkadotcloud/core-ui": "0.2.72",
     "@polkadotcloud/react-odometer": "0.1.17",
     "@polkadotcloud/utils": "0.2.22",
