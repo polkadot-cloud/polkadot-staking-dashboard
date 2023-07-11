@@ -1409,7 +1409,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@substrate/connect@npm:0.7.26, @substrate/connect@npm:^0.7.26":
+"@substrate/connect@npm:0.7.26":
   version: 0.7.26
   resolution: "@substrate/connect@npm:0.7.26"
   dependencies:
@@ -1417,6 +1417,16 @@ __metadata:
     eventemitter3: ^4.0.7
     smoldot: 1.0.4
   checksum: 3179d241f073318d5973deb61c9c8d9b89ae28909a594b6b9fbcdfffd030a70ba58e8428eaa9d72484810bad10c93de1ad9c440b878d0fcfaaf4559d2e6f4502
+  languageName: node
+  linkType: hard
+
+"@substrate/connect@npm:^0.7.30":
+  version: 0.7.30
+  resolution: "@substrate/connect@npm:0.7.30"
+  dependencies:
+    "@substrate/connect-extension-protocol": ^1.0.1
+    smoldot: 1.0.11
+  checksum: 5fdaf0cb6b4e4dcee53382c6796edf4ec5d14c9a183270ce67b1dfd50b2a5bbaae2ab843ee6c594b29c08b2ac117ff8d7f711ac36c159b37dbabdab9f8bf5526
   languageName: node
   linkType: hard
 
@@ -5957,7 +5967,7 @@ __metadata:
     "@polkadotcloud/core-ui": 0.2.72
     "@polkadotcloud/react-odometer": 0.1.17
     "@polkadotcloud/utils": 0.2.22
-    "@substrate/connect": ^0.7.26
+    "@substrate/connect": ^0.7.30
     "@types/lodash.throttle": ^4.1.7
     "@types/react": ^18.2.7
     "@types/react-dom": ^18.2.4
@@ -6741,6 +6751,15 @@ __metadata:
   version: 4.2.0
   resolution: "smart-buffer@npm:4.2.0"
   checksum: b5167a7142c1da704c0e3af85c402002b597081dd9575031a90b4f229ca5678e9a36e8a374f1814c8156a725d17008ae3bde63b92f9cfd132526379e580bec8b
+  languageName: node
+  linkType: hard
+
+"smoldot@npm:1.0.11":
+  version: 1.0.11
+  resolution: "smoldot@npm:1.0.11"
+  dependencies:
+    ws: ^8.8.1
+  checksum: 53c60eb8ae3c7d083285115f5094a538c0c1ffeff9d1a20b178a272807d24880f8724eabda0956c1f2d1df11de46b61d30d3821140d98910140e9d01f69e89c9
   languageName: node
   linkType: hard
 
