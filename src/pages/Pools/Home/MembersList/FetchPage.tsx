@@ -19,7 +19,6 @@ import { Pagination } from 'library/List/Pagination';
 import { ListProvider, useList } from 'library/List/context';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Sync } from 'types';
 import { Member } from './Member';
 import type { FetchpageMembersListProps } from './types';
 
@@ -41,8 +40,13 @@ export const MembersListInner = ({
   const { pluginEnabled } = usePlugins();
   const { fetchPoolMembers } = useSubscan();
   const { selectedActivePool } = useActivePools();
-  const { poolMembersApi, setPoolMembersApi, fetchPoolMembersMetaBatch } =
-    usePoolMembers();
+  const {
+    poolMembersApi,
+    setPoolMembersApi,
+    fetchedPoolMembersApi,
+    setFetchedPoolMembersApi,
+    fetchPoolMembersMetaBatch,
+  } = usePoolMembers();
 
   // get list provider properties.
   const { listFormat, setListFormat } = provider;
@@ -52,9 +56,6 @@ export const MembersListInner = ({
 
   // current render iteration.
   const [renderIteration, setRenderIterationState] = useState<number>(1);
-
-  // whether the page list has been fetched.
-  const [fetched, setFetched] = useState<Sync>('unsynced');
 
   // render throttle iteration.
   const renderIterationRef = useRef(renderIteration);
@@ -80,13 +81,17 @@ export const MembersListInner = ({
   const setupMembersList = async () => {
     const poolId = selectedActivePool?.id || 0;
 
-    if (fetched === 'unsynced' && poolId > 0 && !fetchingMemberList.current) {
+    if (
+      fetchedPoolMembersApi === 'unsynced' &&
+      poolId > 0 &&
+      !fetchingMemberList.current
+    ) {
       fetchingMemberList.current = true;
       const newMembers: PoolMember[] = await fetchPoolMembers(poolId, page);
       fetchingMemberList.current = false;
       setPoolMembersApi([...newMembers]);
       fetchPoolMembersMetaBatch(batchKey, newMembers, true);
-      setFetched('synced');
+      setFetchedPoolMembersApi('synced');
     }
   };
 
@@ -98,24 +103,24 @@ export const MembersListInner = ({
   // Refetch list when page changes.
   useEffect(() => {
     if (pluginEnabled('subscan')) {
-      setFetched('unsynced');
+      setFetchedPoolMembersApi('unsynced');
       setPoolMembersApi([]);
     }
   }, [page, activeAccount, pluginEnabled('subscan')]);
 
   // Refetch list when network changes.
   useEffect(() => {
-    setFetched('unsynced');
+    setFetchedPoolMembersApi('unsynced');
     setPoolMembersApi([]);
     setPage(1);
   }, [name]);
 
   // Configure list when network is ready to fetch.
   useEffect(() => {
-    if (fetched === 'unsynced') {
+    if (fetchedPoolMembersApi === 'unsynced') {
       setupMembersList();
     }
-  }, [fetched, selectedActivePool]);
+  }, [fetchedPoolMembersApi, selectedActivePool]);
 
   // Render throttle.
   useEffect(() => {
@@ -151,7 +156,7 @@ export const MembersListInner = ({
         {listMembers.length > 0 && pagination && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}
-        {fetched !== 'synced' ? (
+        {fetchedPoolMembersApi !== 'synced' ? (
           <h4 className="none">{t('pools.fetchingMemberList')}....</h4>
         ) : (
           <MotionContainer>

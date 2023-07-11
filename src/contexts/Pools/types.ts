@@ -140,6 +140,8 @@ export interface PoolMemberContext {
   meta: AnyMetaBatch;
   poolMembersApi: PoolMember[];
   setPoolMembersApi: (p: PoolMember[]) => void;
+  fetchedPoolMembersApi: Sync;
+  setFetchedPoolMembersApi: (s: Sync) => void;
 }
 
 // Misc types

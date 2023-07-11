@@ -21,4 +21,7 @@ export const defaultPoolMembers: PoolMemberContext = {
   setPoolMembersApi: (p) => {},
   poolMembersNode: [],
   meta: {},
+  fetchedPoolMembersApi: 'unsynced',
+  // eslint-disable-next-line
+  setFetchedPoolMembersApi: (s) => {},
 };

@@ -6,7 +6,7 @@ import { useConnect } from 'contexts/Connect';
 import { usePlugins } from 'contexts/Plugins';
 import type { PoolMember, PoolMemberContext } from 'contexts/Pools/types';
 import React, { useEffect, useRef, useState } from 'react';
-import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
+import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount, Sync } from 'types';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
 
@@ -22,16 +22,24 @@ export const PoolMembersProvider = ({
   // Store pool members from node.
   const [poolMembersNode, setPoolMembersNode] = useState<PoolMember[]>([]);
 
-  // Store pool memberes from api.
+  // Store pool members from api.
   const [poolMembersApi, setPoolMembersApi] = useState<PoolMember[]>([]);
 
-  // Stores the meta data batches for pool member lists
+  // Store whether pool members from api have been fetched.
+  const fetchedPoolMembersApi = useRef<Sync>('unsynced');
+
+  // Stores the meta data batches for pool member lists.
   const [poolMembersMetaBatches, setPoolMembersMetaBatch]: AnyMetaBatch =
     useState({});
   const poolMembersMetaBatchesRef = useRef(poolMembersMetaBatches);
 
-  // Stores the meta batch subscriptions for pool lists
+  // Stores the meta batch subscriptions for pool lists.
   const poolMembersSubs = useRef<Record<string, Fn[]>>({});
+
+  // Update poolMembersApi fetched status.
+  const setFetchedPoolMembersApi = (status: Sync) => {
+    fetchedPoolMembersApi.current = status;
+  };
 
   // Clear existing state for network refresh
   useEffect(() => {
@@ -317,7 +325,9 @@ export const PoolMembersProvider = ({
         poolMembersNode,
         poolMembersApi,
         setPoolMembersApi,
+        fetchedPoolMembersApi: fetchedPoolMembersApi.current,
         meta: poolMembersMetaBatchesRef.current,
+        setFetchedPoolMembersApi,
       }}
     >
       {children}
