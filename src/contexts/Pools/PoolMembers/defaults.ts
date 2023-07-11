@@ -16,6 +16,6 @@ export const defaultPoolMembers: PoolMemberContext = {
   removePoolMember: (w) => {},
   // eslint-disable-next-line
   getPoolMemberCount: (p) => 0,
-  poolMembers: [],
+  poolMembersNode: [],
   meta: {},
 };

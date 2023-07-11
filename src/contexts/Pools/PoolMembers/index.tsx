@@ -20,7 +20,7 @@ export const PoolMembersProvider = ({
   const { api, network, isReady } = useApi();
 
   // Store pool members from node.
-  const [poolMembers, setPoolMembers] = useState<AnyJson[]>([]);
+  const [poolMembersNode, setPoolMembersNode] = useState<AnyJson[]>([]);
 
   // Stores the meta data batches for pool member lists
   const [poolMembersMetaBatches, setPoolMembersMetaBatch]: AnyMetaBatch =
@@ -32,7 +32,7 @@ export const PoolMembersProvider = ({
 
   // Clear existing state for network refresh
   useEffect(() => {
-    setPoolMembers([]);
+    setPoolMembersNode([]);
     unsubscribeAndResetMeta();
   }, [network]);
 
@@ -47,7 +47,7 @@ export const PoolMembersProvider = ({
     if (!getPlugins().includes('subscan')) {
       if (isReady) fetchPoolMembers();
     } else {
-      setPoolMembers([]);
+      setPoolMembersNode([]);
     }
     return () => {
       unsubscribe();
@@ -56,7 +56,7 @@ export const PoolMembersProvider = ({
 
   const unsubscribe = () => {
     unsubscribeAndResetMeta();
-    setPoolMembers([]);
+    setPoolMembersNode([]);
   };
 
   const unsubscribeAndResetMeta = () => {
@@ -79,11 +79,11 @@ export const PoolMembersProvider = ({
         poolId,
       };
     });
-    setPoolMembers(newMembers);
+    setPoolMembersNode(newMembers);
   };
 
   const getMembersOfPoolFromNode = (poolId: number) =>
-    poolMembers.filter((p: any) => p.poolId === String(poolId)) ?? null;
+    poolMembersNode.filter((p: any) => p.poolId === String(poolId)) ?? null;
 
   // queries a  pool member and formats to `PoolMember`.
   const queryPoolMember = async (who: MaybeAccount) => {
@@ -276,8 +276,8 @@ export const PoolMembersProvider = ({
   const removePoolMember = (who: MaybeAccount) => {
     if (!getPlugins().includes('subscan')) return;
 
-    const newMembers = poolMembers.filter((p: any) => p.who !== who);
-    setPoolMembers(newMembers ?? []);
+    const newMembers = poolMembersNode.filter((p: any) => p.who !== who);
+    setPoolMembersNode(newMembers ?? []);
   };
 
   // Adds a record to poolMembers.
@@ -285,10 +285,9 @@ export const PoolMembersProvider = ({
   const addToPoolMembers = (member: any) => {
     if (!member || getPlugins().includes('subscan')) return;
 
-    const exists = poolMembers.find((m: any) => m.who === member.who);
+    const exists = poolMembersNode.find((m: any) => m.who === member.who);
     if (!exists) {
-      const _poolMembers = poolMembers.concat(member);
-      setPoolMembers(_poolMembers);
+      setPoolMembersNode(poolMembersNode.concat(member));
     }
   };
 
@@ -312,7 +311,7 @@ export const PoolMembersProvider = ({
         addToPoolMembers,
         removePoolMember,
         getPoolMemberCount,
-        poolMembers,
+        poolMembersNode,
         meta: poolMembersMetaBatchesRef.current,
       }}
     >

@@ -20,7 +20,7 @@ export const Headers = () => {
   const { validators } = useValidators();
   const { bondedPools } = useBondedPools();
   const { getPlugins } = usePlugins();
-  const { poolMembers } = usePoolMembers();
+  const { poolMembersNode } = usePoolMembers();
   const { pending } = useExtrinsics();
   const { isSyncing } = useUi();
 
@@ -40,7 +40,7 @@ export const Headers = () => {
     if (pageFromUri(pathname, 'overview') === 'pools') {
       if (
         !bondedPools.length ||
-        (!poolMembers.length && !getPlugins().includes('subscan'))
+        (!poolMembersNode.length && !getPlugins().includes('subscan'))
       ) {
         return true;
       }

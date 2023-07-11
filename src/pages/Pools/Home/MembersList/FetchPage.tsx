@@ -34,8 +34,8 @@ export const MembersListInner = ({
   const { mode } = useTheme();
   const { activeAccount } = useConnect();
   const { fetchPoolMembers } = useSubscan();
-  const { fetchPoolMembersMetaBatch } = usePoolMembers();
   const { selectedActivePool } = useActivePools();
+  const { fetchPoolMembersMetaBatch } = usePoolMembers();
 
   // get list provider properties.
   const { listFormat, setListFormat } = provider;
@@ -76,10 +76,19 @@ export const MembersListInner = ({
     : members.slice(pageStart).slice(0, ListItemsPerPage);
 
   // handle validator list bootstrapping
+  const fetchingMemberList = useRef<boolean>(false);
+
   const setupMembersList = async () => {
     const poolId = selectedActivePool?.id || 0;
-    if (poolId > 0) {
+    if (
+      !members.length &&
+      fetched === 'unsynced' &&
+      poolId > 0 &&
+      !fetchingMemberList.current
+    ) {
+      fetchingMemberList.current = true;
       const newMembers: PoolMember[] = await fetchPoolMembers(poolId, page);
+      fetchingMemberList.current = false;
       setMembers(newMembers);
       fetchPoolMembersMetaBatch(batchKey, newMembers, true);
       setFetched('synced');
@@ -118,7 +127,11 @@ export const MembersListInner = ({
   return (
     <>
       {!members.length ? (
-        <></>
+        <>
+          {fetchingMemberList.current === true && (
+            <h4 className="none">Fetching member list...</h4>
+          )}
+        </>
       ) : (
         <ListWrapper>
           <Header>
