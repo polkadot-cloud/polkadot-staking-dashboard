@@ -6005,7 +6005,7 @@ __metadata:
     styled-components: ^5.3.11
     typescript: ^5.1.6
     vite: ^4.3.9
-    vite-bundle-visualizer: ^0.7.0
+    vite-bundle-visualizer: ^0.8.0
     vite-plugin-checker: ^0.6.0
     vite-plugin-eslint: ^1.8.1
     vite-plugin-svgr: ^3.2.0
@@ -7420,15 +7420,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-bundle-visualizer@npm:^0.7.0":
-  version: 0.7.0
-  resolution: "vite-bundle-visualizer@npm:0.7.0"
+"vite-bundle-visualizer@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "vite-bundle-visualizer@npm:0.8.0"
   dependencies:
     cac: ^6.7.14
     rollup-plugin-visualizer: ^5.9.0
   bin:
     vite-bundle-visualizer: bin.js
-  checksum: d07ea971a68b4297be06ab6385851a6caf7c8d82688b4d80ef338df7100ea7cac9455678e2fc9541285fa4eceb774958540879b111657d26be61e323c86b7647
+  checksum: a5c7e8555534c30b92ea737b10dad7ec737c7d6d0135381ce0b321ff82645ff8ee6b83b90289fc5dbcf76b89d952d077ad5aca642553aab9eaf719184a99d339
   languageName: node
   linkType: hard
 
