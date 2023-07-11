@@ -12,11 +12,7 @@ import { useTranslation } from 'react-i18next';
 import { Announcements } from './Announcements';
 import { Wrapper } from './Wrappers';
 
-export const PoolStats = ({
-  poolMembersCount,
-}: {
-  poolMembersCount: number;
-}) => {
+export const PoolStats = ({ memberCount }: { memberCount: number }) => {
   const { t } = useTranslation('pages');
   const { network } = useApi();
   const { selectedActivePool } = useActivePools();
@@ -62,7 +58,7 @@ export const PoolStats = ({
   items.push(
     {
       label: t('pools.poolMembers'),
-      value: `${poolMembersCount}`,
+      value: `${memberCount}`,
     },
     {
       label: t('pools.totalBonded'),

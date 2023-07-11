@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 import { MembersList as DefaultMemberList } from './MembersList/Default';
 import { MembersList as FetchPageMemberList } from './MembersList/FetchPage';
 
-export const Members = ({ poolMembersCount }: { poolMembersCount: number }) => {
+export const Members = ({ memberCount }: { memberCount: number }) => {
   const { t } = useTranslation('pages');
   const { mode } = useTheme();
   const { pluginEnabled } = usePlugins();
@@ -23,7 +23,7 @@ export const Members = ({ poolMembersCount }: { poolMembersCount: number }) => {
   const { colors } = useApi().network;
 
   const listTitle = `${t('pools.poolMember', {
-    count: poolMembersCount,
+    count: memberCount,
   })}`;
   const annuncementBorderColor = colors.secondary[mode];
 
@@ -82,7 +82,7 @@ export const Members = ({ poolMembersCount }: { poolMembersCount: number }) => {
           {pluginEnabled('subscan') ? (
             <FetchPageMemberList
               {...membersListProps}
-              memberCount={poolMembersCount}
+              memberCount={memberCount}
             />
           ) : (
             <DefaultMemberList

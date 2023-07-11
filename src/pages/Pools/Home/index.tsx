@@ -155,13 +155,13 @@ export const HomeInner = () => {
                 </CardWrapper>
               </PageRow>
               <PageRow>
-                <PoolStats poolMembersCount={memberCount} />
+                <PoolStats memberCount={memberCount} />
               </PageRow>
             </>
           )}
         </>
       )}
-      {activeTab === 1 && <Members poolMembersCount={memberCount} />}
+      {activeTab === 1 && <Members memberCount={memberCount} />}
       {activeTab === 2 && (
         <>
           <StatBoxList>
