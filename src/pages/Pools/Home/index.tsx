@@ -56,7 +56,9 @@ export const HomeInner = () => {
       fetchingMemberCount.current = false;
       return setMemberCount(poolDetails?.member_count || 0);
     }
-    setMemberCount(getMembersOfPoolFromNode(selectedActivePool?.id ?? 0));
+    setMemberCount(
+      getMembersOfPoolFromNode(selectedActivePool?.id ?? 0).length
+    );
   };
 
   let tabs = [
