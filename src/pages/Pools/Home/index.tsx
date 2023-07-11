@@ -37,9 +37,9 @@ export const HomeInner = () => {
   const { fetchPoolDetails } = useSubscan();
   const { membership } = usePoolMemberships();
   const { activeTab, setActiveTab } = usePoolsTabs();
-  const { getMembersOfPoolFromNode, poolMembersNode } = usePoolMembers();
   const { bondedPools, getAccountPools } = useBondedPools();
   const { getPoolRoles, selectedActivePool } = useActivePools();
+  const { getMembersOfPoolFromNode, poolMembersNode } = usePoolMembers();
   const accountPools = getAccountPools(activeAccount);
   const totalAccountPools = Object.entries(accountPools).length;
 
