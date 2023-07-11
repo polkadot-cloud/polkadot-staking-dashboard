@@ -15,7 +15,7 @@ export const PoolMembersProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { getPlugins } = usePlugins();
+  const { pluginEnabled } = usePlugins();
   const { activeAccount } = useConnect();
   const { api, network, isReady } = useApi();
 
@@ -47,7 +47,7 @@ export const PoolMembersProvider = ({
   // Initial setup for fetching members if Subscan is not enabled. Ensure poolMembers are reset if
   // subscan is disabled.
   useEffect(() => {
-    if (!getPlugins().includes('subscan')) {
+    if (!pluginEnabled('subscan')) {
       if (isReady) fetchPoolMembers();
     } else {
       setPoolMembersNode([]);
@@ -55,7 +55,7 @@ export const PoolMembersProvider = ({
     return () => {
       unsubscribe();
     };
-  }, [network, isReady, getPlugins().includes('subscan')]);
+  }, [network, isReady, pluginEnabled('subscan')]);
 
   const unsubscribe = () => {
     unsubscribeAndResetMeta();
@@ -277,7 +277,7 @@ export const PoolMembersProvider = ({
 
   // Removes a member from the member list and updates state.
   const removePoolMember = (who: MaybeAccount) => {
-    if (!getPlugins().includes('subscan')) return;
+    if (!pluginEnabled('subscan')) return;
 
     const newMembers = poolMembersNode.filter((p: any) => p.who !== who);
     setPoolMembersNode(newMembers ?? []);
@@ -286,7 +286,7 @@ export const PoolMembersProvider = ({
   // Adds a record to poolMembers.
   // Currently only used when an account joins or creates a pool.
   const addToPoolMembers = (member: any) => {
-    if (!member || getPlugins().includes('subscan')) return;
+    if (!member || pluginEnabled('subscan')) return;
 
     const exists = poolMembersNode.find((m: any) => m.who === member.who);
     if (!exists) {

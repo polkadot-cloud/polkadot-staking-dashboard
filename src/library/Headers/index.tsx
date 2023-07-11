@@ -16,13 +16,13 @@ import { Spinner } from './Spinner';
 import { LargeScreensOnly, Wrapper } from './Wrappers';
 
 export const Headers = () => {
+  const { isSyncing } = useUi();
   const { pathname } = useLocation();
+  const { pending } = useExtrinsics();
+  const { pluginEnabled } = usePlugins();
   const { validators } = useValidators();
   const { bondedPools } = useBondedPools();
-  const { getPlugins } = usePlugins();
   const { poolMembersNode } = usePoolMembers();
-  const { pending } = useExtrinsics();
-  const { isSyncing } = useUi();
 
   // keep syncing if on validators page and still fetching
   const onValidatorsSyncing = () => {
@@ -40,7 +40,7 @@ export const Headers = () => {
     if (pageFromUri(pathname, 'overview') === 'pools') {
       if (
         !bondedPools.length ||
-        (!poolMembersNode.length && !getPlugins().includes('subscan'))
+        (!poolMembersNode.length && !pluginEnabled('subscan'))
       ) {
         return true;
       }

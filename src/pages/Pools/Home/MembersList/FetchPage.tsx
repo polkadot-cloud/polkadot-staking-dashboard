@@ -35,8 +35,8 @@ export const MembersListInner = ({
   } = useApi();
   const provider = useList();
   const { mode } = useTheme();
-  const { getPlugins } = usePlugins();
   const { activeAccount } = useConnect();
+  const { pluginEnabled } = usePlugins();
   const { fetchPoolMembers } = useSubscan();
   const { selectedActivePool } = useActivePools();
   const { poolMembersApi, setPoolMembersApi, fetchPoolMembersMetaBatch } =
@@ -95,11 +95,11 @@ export const MembersListInner = ({
 
   // Refetch list when page changes.
   useEffect(() => {
-    if (getPlugins().includes('subscan')) {
+    if (pluginEnabled('subscan')) {
       setFetched('unsynced');
       setPoolMembersApi([]);
     }
-  }, [page, activeAccount, getPlugins().includes('subscan')]);
+  }, [page, activeAccount, pluginEnabled('subscan')]);
 
   // Refetch list when network changes.
   useEffect(() => {

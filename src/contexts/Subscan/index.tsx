@@ -27,12 +27,12 @@ export const SubscanProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const { i18n } = useTranslation();
   const { network, isReady } = useApi();
-  const { plugins, getPlugins } = usePlugins();
   const { activeAccount } = useConnect();
   const { activeEra } = useNetworkMetrics();
   const { erasToSeconds } = useErasToTimeLeft();
-  const { i18n } = useTranslation();
+  const { plugins, pluginEnabled } = usePlugins();
 
   // store fetched payouts from Subscan
   const [payouts, setPayouts] = useState<AnySubscan>([]);
@@ -128,7 +128,7 @@ export const SubscanProvider = ({
     let newUnclaimedPayouts: AnySubscan[] = [];
 
     // fetch results if subscan is enabled
-    if (activeAccount && getPlugins().includes('subscan')) {
+    if (activeAccount && pluginEnabled('subscan')) {
       // fetch 1 page of results
       const results = await Promise.all([
         handleFetch(0, ApiEndpoints.subscanRewardSlash, 100, {
@@ -139,7 +139,7 @@ export const SubscanProvider = ({
 
       // user may have turned off service while results were fetching.
       // test again whether subscan service is still active.
-      if (getPlugins().includes('subscan')) {
+      if (pluginEnabled('subscan')) {
         for (const result of results) {
           if (!result?.data?.list) {
             break;
@@ -184,7 +184,7 @@ export const SubscanProvider = ({
     let newPoolClaims: AnySubscan[] = [];
 
     // fetch results if subscan is enabled
-    if (activeAccount && getPlugins().includes('subscan')) {
+    if (activeAccount && pluginEnabled('subscan')) {
       // fetch 1 page of results
       const results = await Promise.all([
         handleFetch(0, ApiEndpoints.subscanPoolRewards, 100, {
@@ -194,7 +194,7 @@ export const SubscanProvider = ({
 
       // user may have turned off service while results were fetching.
       // test again whether subscan service is still active.
-      if (getPlugins().includes('subscan')) {
+      if (pluginEnabled('subscan')) {
         for (const result of results) {
           // check incorrectly formatted result object
           if (!result?.data?.list) {
@@ -230,7 +230,7 @@ export const SubscanProvider = ({
     });
 
     if (res.message === 'Success') {
-      if (getPlugins().includes('subscan')) {
+      if (pluginEnabled('subscan')) {
         if (res.data?.list !== null) {
           const list = [];
           for (let i = era; i > era - 100; i--) {
@@ -293,7 +293,7 @@ export const SubscanProvider = ({
     );
 
     if (res.message === 'Success') {
-      if (getPlugins().includes('subscan')) {
+      if (pluginEnabled('subscan')) {
         if (res.data?.list !== null) {
           const result = res.data?.list || [];
           const list: AnySubscan = [];

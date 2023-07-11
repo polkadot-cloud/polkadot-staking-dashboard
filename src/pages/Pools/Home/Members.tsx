@@ -16,11 +16,11 @@ import { MembersList as FetchPageMemberList } from './MembersList/FetchPage';
 
 export const Members = ({ poolMembersCount }: { poolMembersCount: number }) => {
   const { t } = useTranslation('pages');
-  const { colors } = useApi().network;
   const { mode } = useTheme();
-  const { getPlugins } = usePlugins();
+  const { pluginEnabled } = usePlugins();
   const { getMembersOfPoolFromNode } = usePoolMembers();
   const { selectedActivePool, isOwner, isBouncer } = useActivePools();
+  const { colors } = useApi().network;
 
   const listTitle = `${t('pools.poolMember', {
     count: poolMembersCount,
@@ -79,7 +79,7 @@ export const Members = ({ poolMembersCount }: { poolMembersCount: number }) => {
 
       <PageRow>
         <CardWrapper>
-          {getPlugins().includes('subscan') ? (
+          {pluginEnabled('subscan') ? (
             <FetchPageMemberList
               {...membersListProps}
               memberCount={poolMembersCount}

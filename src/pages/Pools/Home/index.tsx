@@ -31,7 +31,7 @@ import { PoolsTabsProvider, usePoolsTabs } from './context';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
-  const { getPlugins } = usePlugins();
+  const { pluginEnabled } = usePlugins();
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { fetchPoolDetails } = useSubscan();
@@ -50,7 +50,7 @@ export const HomeInner = () => {
       setMemberCount(0);
       return;
     }
-    if (getPlugins().includes('subscan') && !fetchingMemberCount.current) {
+    if (pluginEnabled('subscan') && !fetchingMemberCount.current) {
       fetchingMemberCount.current = true;
       const poolDetails = await fetchPoolDetails(selectedActivePool.id);
       fetchingMemberCount.current = false;
