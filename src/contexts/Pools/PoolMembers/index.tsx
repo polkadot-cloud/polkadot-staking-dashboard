@@ -273,14 +273,23 @@ export const PoolMembersProvider = ({
   };
 
   // Removes a member from the member list and updates state.
-  //
-  // TODO: poolMembers should be a function that fetches either Subscan result or poolMembers from
-  // node.
-  //
-  // TODO: setPoolMembers should be a function that sets either Subscan state or this context state.
   const removePoolMember = (who: MaybeAccount) => {
+    if (!getPlugins().includes('subscan')) return;
+
     const newMembers = poolMembers.filter((p: any) => p.who !== who);
     setPoolMembers(newMembers ?? []);
+  };
+
+  // Adds a record to poolMembers.
+  // Currently only used when an account joins or creates a pool.
+  const addToPoolMembers = (member: any) => {
+    if (!member || getPlugins().includes('subscan')) return;
+
+    const exists = poolMembers.find((m: any) => m.who === member.who);
+    if (!exists) {
+      const _poolMembers = poolMembers.concat(member);
+      setPoolMembers(_poolMembers);
+    }
   };
 
   /*
@@ -292,23 +301,6 @@ export const PoolMembersProvider = ({
     sub.push(...unsubs);
     subs[key] = sub;
     poolMembersSubs.current = subs;
-  };
-
-  // Adds a record to poolMembers.
-  // Currently only used when an account joins or creates a pool.
-  //
-  // TODO: poolMembers should be a function that fetches either Subscan result or poolMembers from
-  // node.
-  //
-  // TODO: setPoolMembers should be a function that sets either Subscan state or this context state.
-  const addToPoolMembers = (member: any) => {
-    if (!member) return;
-
-    const exists = poolMembers.find((m: any) => m.who === member.who);
-    if (!exists) {
-      const _poolMembers = poolMembers.concat(member);
-      setPoolMembers(_poolMembers);
-    }
   };
 
   return (

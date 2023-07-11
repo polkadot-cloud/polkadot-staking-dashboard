@@ -8,11 +8,12 @@ import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useSubscan } from 'contexts/Subscan';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
 import { StatBoxList } from 'library/StatBoxList';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
@@ -34,21 +35,26 @@ export const HomeInner = () => {
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
   const { fetchPoolDetails } = useSubscan();
-  const { getMembersOfPoolFromNode } = usePoolMembers();
+  const { membership } = usePoolMemberships();
   const { activeTab, setActiveTab } = usePoolsTabs();
+  const { getMembersOfPoolFromNode } = usePoolMembers();
   const { bondedPools, getAccountPools } = useBondedPools();
   const { getPoolRoles, selectedActivePool } = useActivePools();
 
   const accountPools = getAccountPools(activeAccount);
   const totalAccountPools = Object.entries(accountPools).length;
 
+  const fetchingMemberCount = useRef<boolean>(false);
+
   const getMemberCount = async () => {
     if (!selectedActivePool?.id) {
       setMemberCount(0);
       return;
     }
-    if (getPlugins().includes('subscan')) {
+    if (getPlugins().includes('subscan') && !fetchingMemberCount.current) {
+      fetchingMemberCount.current = true;
       const poolDetails = await fetchPoolDetails(selectedActivePool.id);
+      fetchingMemberCount.current = false;
       return setMemberCount(poolDetails?.member_count || 0);
     }
     setMemberCount(getMembersOfPoolFromNode(selectedActivePool?.id ?? 0));
@@ -93,10 +99,11 @@ export const HomeInner = () => {
     }
   }, [selectedActivePool]);
 
-  // Fetch pool member count.
+  // Fetch pool member count. We use `membership` as a dependency as the member count could change
+  // in the UI when active account's membership changes.
   useEffect(() => {
     getMemberCount();
-  }, [activeAccount, selectedActivePool]);
+  }, [activeAccount, selectedActivePool, membership]);
 
   const ROW_HEIGHT = 220;
 
