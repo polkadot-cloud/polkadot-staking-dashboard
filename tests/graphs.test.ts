@@ -11,7 +11,7 @@ import {
 import { expect, test } from 'vitest';
 
 // payouts that were made 2, 3 and 4 days ago.
-const mockPayouts: any = [
+const mockPayouts = [
   {
     amount: '10000000000',
     block_timestamp: getUnixTime(subDays(new Date(), 2)),

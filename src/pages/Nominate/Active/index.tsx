@@ -68,7 +68,7 @@ export const Active = () => {
             <Nominations bondFor="nominator" nominator={activeAccount} />
           ) : (
             <>
-              <CardHeaderWrapper withAction>
+              <CardHeaderWrapper $withAction>
                 <h3>
                   {t('nominate.nominate')}
                   <ButtonHelp

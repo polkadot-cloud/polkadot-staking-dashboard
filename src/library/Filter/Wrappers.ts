@@ -122,15 +122,15 @@ export const TabsWrapper = styled.div`
   }
 `;
 
-export const TabWrapper = styled.button<{ active?: boolean }>`
+export const TabWrapper = styled.button<{ $active?: boolean }>`
   font-family: InterSemiBold, sans-serif;
   border: 1px solid
     ${(props) =>
-      props.active
+      props.$active
         ? 'var(--network-color-primary)'
         : 'var(--border-primary-color)'};
   color: ${(props) =>
-    props.active
+    props.$active
       ? 'var(--network-color-primary)'
       : 'var(--text-color-secondary)'};
   font-size: 0.9rem;

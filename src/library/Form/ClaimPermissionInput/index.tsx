@@ -74,7 +74,7 @@ export const ClaimPermissionInput = ({
         {claimPermissionConfig.map(({ label, value }: any, i) => (
           <TabWrapper
             key={`pools_tab_filter_${i}`}
-            active={value === selected && enabled}
+            $active={value === selected && enabled}
             disabled={value === selected || !enabled || disabled}
             onClick={() => {
               setSelected(value);

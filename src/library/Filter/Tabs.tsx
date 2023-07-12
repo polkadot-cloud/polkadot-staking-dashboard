@@ -15,7 +15,7 @@ export const Tabs = ({ config, activeIndex }: any) => {
       {config.map((c: any, i: number) => (
         <TabWrapper
           key={`pools_tab_filter_${i}`}
-          active={i === active}
+          $active={i === active}
           disabled={i === active}
           onClick={() => {
             if (c.includes?.length) {

@@ -66,19 +66,19 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
       margin-left: 0.5rem;
       &.next {
         color: ${(props) =>
-          props.next
+          props.$next
             ? 'var(--network-color-primary)'
             : 'var(--text-color-secondary)'};
-        cursor: ${(props) => (props.next ? 'pointer' : 'default')};
-        opacity: ${(props) => (props.next ? 1 : 0.4)};
+        cursor: ${(props) => (props.$next ? 'pointer' : 'default')};
+        opacity: ${(props) => (props.$next ? 1 : 0.4)};
       }
       &.prev {
         color: ${(props) =>
-          props.prev
+          props.$prev
             ? 'var(--network-color-primary)'
             : 'var(--text-color-secondary)'};
-        cursor: ${(props) => (props.prev ? 'pointer' : 'default')};
-        opacity: ${(props) => (props.prev ? 1 : 0.4)};
+        cursor: ${(props) => (props.$prev ? 'pointer' : 'default')};
+        opacity: ${(props) => (props.$prev ? 1 : 0.4)};
       }
     }
   }
@@ -116,28 +116,15 @@ export const List = styled.div<ListProps>`
   margin-top: 1rem;
   width: 100%;
 
-  .search {
-    width: 100%;
-    margin: 0.25rem 0 0.75rem 0;
-    display: flex;
-    flex-flow: row wrap;
-
-    > input {
-      border: 1.75px solid var(--border-primary-color);
-      color: var(--text-color-secondary);
-      font-family: InterBold, sans-serif;
-      border-radius: 1.75rem;
-      padding: 0.75rem 1.25rem;
-      font-size: 1.15rem;
-      &:focus {
-        border-width: 1.75px;
-      }
-    }
-  }
-
   > div {
     display: flex;
-    flex-flow: row wrap;
+    flex-wrap: wrap;
+
+    h4 {
+      &.none {
+        padding: 0.5rem;
+      }
+    }
 
     > .item {
       display: flex;
@@ -160,6 +147,26 @@ export const List = styled.div<ListProps>`
           max-width: ${(props) => props.flexBasisLarge};
         }
       }
+    }
+  }
+`;
+
+export const SearchInputWrapper = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  margin: 0.25rem 0 0.75rem 0;
+  width: 100%;
+
+  > input {
+    border: 1.75px solid var(--border-primary-color);
+    color: var(--text-color-secondary);
+    font-family: InterBold, sans-serif;
+    border-radius: 1.75rem;
+    padding: 0.75rem 1.25rem;
+    font-size: 1.15rem;
+
+    &:focus {
+      border-width: 1.75px;
     }
   }
 `;
