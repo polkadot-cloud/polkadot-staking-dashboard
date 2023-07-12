@@ -25,11 +25,23 @@ export const useStatusButtons = () => {
   const { isOwner } = useActivePools();
   const { getTransferOptions } = useTransferOptions();
 
+  const { maxPools } = stats;
   const { active } = getTransferOptions(activeAccount).pool;
   const poolSetupPercent = getPoolSetupPercent(activeAccount);
 
-  let _label;
-  let _buttons;
+  const disableCreate = () => {
+    if (!isReady || isReadOnlyAccount(activeAccount) || !activeAccount)
+      return true;
+    if (
+      maxPools &&
+      (maxPools.isZero() || bondedPools.length === stats.maxPools?.toNumber())
+    )
+      return true;
+    return false;
+  };
+
+  let label;
+  let buttons;
   const createBtn = {
     title: `${t('pools.create')}${
       poolSetupPercent > 0 ? `: ${poolSetupPercent}%` : ``
@@ -37,12 +49,7 @@ export const useStatusButtons = () => {
     icon: faPlusCircle,
     large: false,
     transform: 'grow-1',
-    disabled:
-      !isReady ||
-      isReadOnlyAccount(activeAccount) ||
-      !activeAccount ||
-      stats.maxPools.toNumber() === 0 ||
-      bondedPools.length === stats.maxPools.toNumber(),
+    disabled: disableCreate(),
     onClick: () => setOnPoolSetup(true),
   };
 
@@ -60,14 +67,14 @@ export const useStatusButtons = () => {
   };
 
   if (!membership) {
-    _label = t('pools.poolMembership');
-    _buttons = [createBtn, joinPoolBtn];
+    label = t('pools.poolMembership');
+    buttons = [createBtn, joinPoolBtn];
   } else if (isOwner()) {
-    _label = `${t('pools.ownerOfPool')} ${membership.poolId}`;
+    label = `${t('pools.ownerOfPool')} ${membership.poolId}`;
   } else if (active?.isGreaterThan(0)) {
-    _label = `${t('pools.memberOfPool')} ${membership.poolId}`;
+    label = `${t('pools.memberOfPool')} ${membership.poolId}`;
   } else {
-    _label = `${t('pools.leavingPool')} ${membership.poolId}`;
+    label = `${t('pools.leavingPool')} ${membership.poolId}`;
   }
-  return { label: _label, buttons: _buttons };
+  return { label, buttons };
 };

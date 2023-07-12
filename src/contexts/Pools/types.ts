@@ -29,9 +29,9 @@ export interface PoolStats {
   counterForBondedPools: BigNumber;
   counterForRewardPools: BigNumber;
   lastPoolId: BigNumber;
-  maxPoolMembers: BigNumber;
-  maxPoolMembersPerPool: BigNumber;
-  maxPools: BigNumber;
+  maxPoolMembers: BigNumber | null;
+  maxPoolMembersPerPool: BigNumber | null;
+  maxPools: BigNumber | null;
   minCreateBond: BigNumber;
   minJoinBond: BigNumber;
   globalMaxCommission: number;
