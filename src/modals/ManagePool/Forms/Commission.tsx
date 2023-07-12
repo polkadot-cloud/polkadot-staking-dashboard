@@ -8,6 +8,7 @@ import {
   ButtonSubmitInvert,
   ModalWarnings,
 } from '@polkadotcloud/core-ui';
+import { rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -66,7 +67,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     return raw
       ? {
           maxIncrease: Number(raw.maxIncrease.slice(0, -1)),
-          minDelay: Number(raw.minDelay),
+          minDelay: Number(rmCommas(raw.minDelay)),
         }
       : {
           maxIncrease: 100,
