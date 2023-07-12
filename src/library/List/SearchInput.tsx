@@ -2,14 +2,19 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
+import { SearchInputWrapper } from '.';
+import type { SearchInputProps } from './types';
 
-export const SearchInput = ({ handleChange, placeholder }: any) => (
-  <div className="search">
+export const SearchInput = ({
+  handleChange,
+  placeholder,
+}: SearchInputProps) => (
+  <SearchInputWrapper>
     <input
       type="text"
       className="search searchbox"
       placeholder={placeholder}
       onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
     />
-  </div>
+  </SearchInputWrapper>
 );

@@ -12,15 +12,13 @@ export const PluginsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  // get initial plugins
+  // Get initial plugins from local storage.
   const getAvailablePlugins = () => {
-    // get plugins config from local storage
     const localPlugins: any = localStorageOrDefault(
       'plugins',
       PluginsList,
       true
     );
-
     // if fiat is disabled, remove binance_spot service
     const DISABLE_FIAT = Number(import.meta.env.VITE_DISABLE_FIAT ?? 0);
     if (DISABLE_FIAT && localPlugins.includes('binance_spot')) {
@@ -32,11 +30,11 @@ export const PluginsProvider = ({
     return localPlugins;
   };
 
-  // plugins
-  const [plugins, setPlugins] = useState(getAvailablePlugins());
+  // Store the currently active plugins.
+  const [plugins, setPlugins] = useState<string[]>(getAvailablePlugins());
   const pluginsRef = useRef(plugins);
 
-  // plugin toggling
+  // Toggle a plugin.
   const togglePlugin = (key: string) => {
     let localPlugins = [...plugins];
     const found = localPlugins.find((item) => item === key);
@@ -51,13 +49,16 @@ export const PluginsProvider = ({
     setStateWithRef(localPlugins, setPlugins, pluginsRef);
   };
 
-  const getPlugins = () => pluginsRef.current;
+  // Check if a plugin is currently enabled.
+  const pluginEnabled = (key: string) => {
+    return pluginsRef.current.includes(key);
+  };
 
   return (
     <PluginsContext.Provider
       value={{
         togglePlugin,
-        getPlugins,
+        pluginEnabled,
         plugins: pluginsRef.current,
       }}
     >

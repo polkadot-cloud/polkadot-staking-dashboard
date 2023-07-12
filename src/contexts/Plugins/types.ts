@@ -3,6 +3,6 @@
 
 export interface PluginsContextInterface {
   togglePlugin: (k: string) => void;
-  getPlugins: () => string[];
+  pluginEnabled: (key: string) => boolean;
   plugins: string[];
 }
