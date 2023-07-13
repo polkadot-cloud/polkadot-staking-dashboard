@@ -154,7 +154,7 @@ export const List = styled.div<ListProps>`
 export const SearchInputWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
-  margin: 0.25rem 0 0.75rem 0;
+  margin: 0.5rem 0 1.5rem 0;
   width: 100%;
 
   > input {
@@ -164,6 +164,7 @@ export const SearchInputWrapper = styled.div`
     border-radius: 1.75rem;
     padding: 0.75rem 1.25rem;
     font-size: 1.15rem;
+    width: 100%;
 
     &:focus {
       border-width: 1.75px;
