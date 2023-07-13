@@ -27,6 +27,7 @@ export const defaultApiContext: APIContextInterface = {
   },
   api: null,
   consts,
+  chainState: undefined,
   isLightClient: false,
   isReady: false,
   apiStatus: 'disconnected',

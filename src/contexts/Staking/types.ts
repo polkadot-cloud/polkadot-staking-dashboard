@@ -31,6 +31,34 @@ export interface StakingTargets {
   nominations: string[];
 }
 
+export interface Exposure {
+  keys: string[];
+  val: ExposureValue;
+}
+
+export interface ExposureValue {
+  others: {
+    value: string;
+    who: string;
+  }[];
+  own: string;
+  total: string;
+}
+
+export type Staker = ExposureValue & {
+  address: string;
+};
+
+export interface ActiveAccountStaker {
+  address: string;
+  value: string;
+}
+
+export interface ExposureOther {
+  who: string;
+  value: string;
+}
+
 export interface StakingContextInterface {
   getNominationsStatus: () => any;
   getNominationsStatusFromTargets: (w: MaybeAccount, t: any[]) => any;

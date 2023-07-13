@@ -42,7 +42,7 @@ export const ControllerNotStash = () => {
         ? !isSyncing &&
           !isReadOnlyAccount(activeAccount) && (
             <PageRow>
-              <CardWrapper warning>
+              <CardWrapper $warning>
                 <CardHeaderWrapper>
                   <h3>
                     <FontAwesomeIcon icon={faExclamationTriangle} />

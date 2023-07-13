@@ -3,7 +3,13 @@
 
 import { planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import type {
+  ActiveAccountStaker,
+  ExposureOther,
+  Staker,
+} from 'contexts/Staking/types';
 import type { AnyJson } from 'types';
+import type { DataInitialiseExposures } from './types';
 
 // eslint-disable-next-line no-restricted-globals
 export const ctx: Worker = self as any;
@@ -15,7 +21,7 @@ ctx.addEventListener('message', (event: AnyJson) => {
   let message: AnyJson = {};
   switch (task) {
     case 'initialise_exposures':
-      message = processExposures(data);
+      message = processExposures(data as DataInitialiseExposures);
       break;
     case 'process_fast_unstake_era':
       message = processFastUnstakeEra(data);
@@ -61,15 +67,15 @@ const processFastUnstakeEra = (data: AnyJson) => {
 // process exposures.
 //
 // abstracts active nominators erasStakers.
-const processExposures = (data: AnyJson) => {
+const processExposures = (data: DataInitialiseExposures) => {
   const { units, exposures, activeAccount } = data;
 
-  const stakers: any = [];
+  const stakers: Staker[] = [];
   let activeValidators = 0;
-  const activeAccountOwnStake: any[] = [];
-  const nominators: any = [];
+  const activeAccountOwnStake: ActiveAccountStaker[] = [];
+  const nominators: ExposureOther[] = [];
 
-  exposures.forEach(({ keys, val }: any) => {
+  exposures.forEach(({ keys, val }) => {
     const address = keys[1];
     activeValidators++;
     stakers.push({
@@ -77,28 +83,28 @@ const processExposures = (data: AnyJson) => {
       ...val,
     });
 
-    // sort `others` by value bonded, largest first
     let others = val?.others ?? [];
-    others = others.sort((a: any, b: any) => {
-      const x = new BigNumber(rmCommas(a.value));
-      const y = new BigNumber(rmCommas(b.value));
-      return y.minus(x);
-    });
 
-    // accumulate active nominators and min active stake threshold.
+    // Accumulate active nominators and min active stake threshold.
     if (others.length) {
-      // accumulate active stake for all nominators
+      // Sort `others` by value bonded, largest first.
+      others = others.sort((a, b) => {
+        const r = new BigNumber(rmCommas(b.value)).minus(rmCommas(a.value));
+        return r.isZero() ? 0 : r.isLessThan(0) ? -1 : 1;
+      });
+
+      // Accumulate active stake for all nominators.
       for (const o of others) {
         const value = new BigNumber(rmCommas(o.value));
 
-        // check nominator already exists
-        const index = nominators.findIndex((_o: any) => _o.who === o.who);
+        // Check nominator already exists.
+        const index = nominators.findIndex(({ who }) => who === o.who);
 
-        // add value to nominator, otherwise add new entry
+        // Add value to nominator, otherwise add new entry.
         if (index === -1) {
           nominators.push({
             who: o.who,
-            value,
+            value: value.toString(),
           });
         } else {
           nominators[index].value = new BigNumber(nominators[index].value)
@@ -108,7 +114,7 @@ const processExposures = (data: AnyJson) => {
       }
 
       // get own stake if present
-      const own = others.find((_o: any) => _o.who === activeAccount);
+      const own = others.find(({ who }) => who === activeAccount);
       if (own !== undefined) {
         activeAccountOwnStake.push({
           address,

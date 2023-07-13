@@ -117,8 +117,8 @@ export const ValidatorMetrics = () => {
             border: 'none',
             boxShadow: 'none',
           }}
-          flex
-          transparent
+          $flex
+          $transparent
         >
           <CardHeaderWrapper>
             <h4>

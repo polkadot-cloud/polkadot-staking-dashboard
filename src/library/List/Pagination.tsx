@@ -17,7 +17,7 @@ export const Pagination = ({ page, total, setter }: PaginationProps) => {
   }, [page, total]);
 
   return (
-    <PaginationWrapper prev={page !== 1} next={page !== total}>
+    <PaginationWrapper $prev={page !== 1} $next={page !== total}>
       <div>
         <h4>{t('page', { page, total })}</h4>
       </div>

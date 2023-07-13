@@ -1,24 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faAngleRight, faBullhorn } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  ButtonMonoInvert,
-  ButtonPrimary,
-  ButtonText,
   PageHeading,
   PageRow,
   PageTitle,
   RowSection,
 } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
-import { registerSaEvent } from 'Utils';
 import BigNumber from 'bignumber.js';
 import { DefaultLocale } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useSubscan } from 'contexts/Subscan';
-import { useTheme } from 'contexts/Themes';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
@@ -26,7 +19,6 @@ import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
 import { ControllerNotStash } from 'pages/Nominate/Active/ControllerNotStash';
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActiveAccounts } from './ActiveAccounts';
 import { BalanceChart } from './BalanceChart';
@@ -37,13 +29,11 @@ import { StakeStatus } from './StakeStatus';
 import { ActiveEraStat } from './Stats/ActiveEraTimeLeft';
 import { HistoricalRewardsRateStat } from './Stats/HistoricalRewardsRate';
 import { SupplyStakedStat } from './Stats/SupplyStaked';
-import { BannerWrapper } from './Wrappers';
 
 export const Overview = () => {
   const { i18n, t } = useTranslation('pages');
   const { network } = useApi();
   const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
-  const { mode } = useTheme();
   const { units } = network;
   const { lastReward } = formatRewardsForGraphs(
     new Date(),
@@ -70,64 +60,8 @@ export const Overview = () => {
     };
   }
 
-  const dismissed = localStorage.getItem('delegate_banner_dismissed') || false;
-  const [isDismissed, setIsDismissed] = useState(dismissed);
-
-  const handleDismiss = () => {
-    registerSaEvent(`delegate_banner_dismissed`);
-    localStorage.setItem('delegate_banner_dismissed', '1');
-    setIsDismissed(true);
-  };
-
-  const showBanner = network.name === 'polkadot' && !isDismissed;
-  const VisitButton = mode === 'light' ? ButtonPrimary : ButtonMonoInvert;
-
   return (
     <>
-      {showBanner && (
-        <PageRow style={{ position: 'relative', top: '3rem' }}>
-          <BannerWrapper className={mode}>
-            <h5 className="label">
-              <FontAwesomeIcon
-                icon={faBullhorn}
-                transform="shrink-3"
-                className="icon"
-              />
-              {t('overview.announcement')}
-            </h5>
-            <div>
-              <h3>{t('overview.openGovBanner')}</h3>
-              <VisitButton
-                style={{
-                  width: '9rem',
-                }}
-                text={t('overview.goToApp')}
-                onClick={() =>
-                  window.open(
-                    import.meta.env.PROD
-                      ? 'https://delegation.polkadot.network/'
-                      : 'https://paritytech.github.io/governance-ui/',
-                    '_blank'
-                  )
-                }
-                iconRight={faAngleRight}
-                iconTransform="shrink-2"
-              />
-            </div>
-          </BannerWrapper>
-          <ButtonText
-            text={t('overview.dismiss')}
-            style={{
-              color:
-                mode === 'light'
-                  ? 'var(--network-color-primary)'
-                  : 'var(--text-color-primary)',
-              marginTop: '0.5rem',
-            }}
-            onClick={() => handleDismiss()}
-          />
-        </PageRow>
-      )}
       <PageTitle title={`${t('overview.overview')}`} />
       <PageRow>
         <PageHeading>
@@ -145,13 +79,13 @@ export const Overview = () => {
       </PageRow>
       <PageRow>
         <RowSection secondary>
-          <CardWrapper height={PAYOUTS_HEIGHT} flex>
+          <CardWrapper height={PAYOUTS_HEIGHT} $flex>
             <BalanceChart />
             <BalanceLinks />
           </CardWrapper>
         </RowSection>
         <RowSection hLast vLast>
-          <CardWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
+          <CardWrapper style={{ minHeight: PAYOUTS_HEIGHT }} $flex>
             <SubscanButton />
             <CardHeaderWrapper>
               <h4>{t('overview.recentPayouts')}</h4>

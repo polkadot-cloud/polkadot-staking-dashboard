@@ -9,13 +9,19 @@ export const defaultPoolMembers: PoolMemberContext = {
   // eslint-disable-next-line
   queryPoolMember: (w) => {},
   // eslint-disable-next-line
-  getMembersOfPool: (p) => {},
+  getMembersOfPoolFromNode: (p) => {},
   // eslint-disable-next-line
   addToPoolMembers: (m) => {},
   // eslint-disable-next-line
-  getPoolMember: (w) => null,
-  // eslint-disable-next-line
   removePoolMember: (w) => {},
-  poolMembers: [],
+  // eslint-disable-next-line
+  getPoolMemberCount: (p) => 0,
+  poolMembersApi: [],
+  // eslint-disable-next-line
+  setPoolMembersApi: (p) => {},
+  poolMembersNode: [],
   meta: {},
+  fetchedPoolMembersApi: 'unsynced',
+  // eslint-disable-next-line
+  setFetchedPoolMembersApi: (s) => {},
 };

@@ -2,15 +2,7 @@
 
 # Polkadot Staking Dashboard
 
-#### Staging (Latest Version):
-
-https://paritytech.github.io/polkadot-staking-dashboard
-
-#### Production:
-
-https://staking.polkadot.network
-
-<img width="1740" alt="Screenshot 2023-03-29 at 12 50 29" src="https://user-images.githubusercontent.com/13929023/228438730-e8a31b63-230a-49a7-806b-2c2e8642b409.png">
+<img width="1739" alt="Screenshot 2023-06-16 at 01 23 08" src="https://github.com/paritytech/polkadot-staking-dashboard/assets/13929023/ed4c11c2-38f5-41bd-a32e-46c27a4fb590">
 
 ## Validator Operator Setup Guide
 
@@ -105,3 +97,16 @@ staking.polkadot.network/#/overview?n=kusama&l=cn
 ## Presentations
 
 - 30/06/2022: [[Video] Polkadot Decoded 2022: Polkadot Staking Dashboard Demo](https://youtu.be/H1WGu6mf1Ls)
+
+## Using containers
+
+You may build a container using:
+```
+./scripts/build-container.sh
+```
+
+then run your container with:
+```
+podman run --d -p 8080:80 localhost/polkadot-staking-dashboard
+```
+and access the **Staking Dashboard** at http://localhost:8080/

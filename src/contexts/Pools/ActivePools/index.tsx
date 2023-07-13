@@ -14,7 +14,6 @@ import type { AnyApi, AnyJson, Sync } from 'types';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import { useBondedPools } from '../BondedPools';
-import { usePoolMembers } from '../PoolMembers';
 import { usePoolMemberships } from '../PoolMemberships';
 import { usePoolsConfig } from '../PoolsConfig';
 import * as defaults from './defaults';
@@ -24,13 +23,12 @@ export const ActivePoolsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, network, isReady } = useApi();
   const { eraStakers } = useStaking();
   const { activeAccount } = useConnect();
-  const { createAccounts } = usePoolsConfig();
+  const { api, network, isReady } = useApi();
   const { membership } = usePoolMemberships();
+  const { createAccounts } = usePoolsConfig();
   const { getAccountPools, bondedPools } = useBondedPools();
-  const { getPoolMember } = usePoolMembers();
 
   // determine active pools to subscribe to.
   const accountPools = useMemo(() => {
@@ -355,7 +353,7 @@ export const ActivePoolsProvider = ({
   const isMember = () => {
     const selectedPool = getSelectedActivePool();
     const p = selectedPool ? String(selectedPool.id) : '-1';
-    return getPoolMember(activeAccount)?.poolId === p;
+    return String(membership?.poolId || '') === p;
   };
 
   /*
