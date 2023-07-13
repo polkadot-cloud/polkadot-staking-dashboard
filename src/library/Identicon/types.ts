@@ -10,8 +10,7 @@ export interface Circle {
 
 export interface IdenticonProps {
   size: number;
-  disableCursorCopy?: boolean;
-  disableClipboardCopy?: boolean;
+  clickToCopy?: boolean;
   colors?: string[];
   value: string;
 }

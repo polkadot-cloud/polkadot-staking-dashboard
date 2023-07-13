@@ -4,17 +4,13 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div<{
-  $disableCursorCopy?: boolean;
-  $disableClipboardCopy?: boolean;
+  $clickToCopy?: boolean;
 }>`
   svg > circle:first-child {
     fill: var(--border-primary-color);
   }
 
   .copy {
-    cursor: ${(props) =>
-      !(props.$disableCursorCopy || props.$disableClipboardCopy)
-        ? 'copy'
-        : 'default'};
+    cursor: ${(props) => (!props.$clickToCopy ? 'copy' : 'default')};
   }
 `;

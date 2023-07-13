@@ -10,8 +10,7 @@ import { Wrapper } from './Wrapper';
 export const Identicon = ({
   size,
   value,
-  disableCursorCopy = true,
-  disableClipboardCopy = true,
+  clickToCopy = true,
   colors: initialColors,
 }: IdenticonProps) => {
   const xy = getCircleXY();
@@ -22,7 +21,7 @@ export const Identicon = ({
   const colors = value ? initialColors || getColors(value) : defaultColors;
 
   const copyToClipboard = useCallback(() => {
-    if (disableClipboardCopy) {
+    if (clickToCopy) {
       return;
     }
     if (navigator) {
@@ -31,10 +30,7 @@ export const Identicon = ({
   }, [value]);
 
   return (
-    <Wrapper
-      $disableCursorCopy={disableCursorCopy}
-      $disableClipboardCopy={disableClipboardCopy}
-    >
+    <Wrapper $clickToCopy={clickToCopy}>
       <div aria-hidden="true" onClick={() => copyToClipboard} className="copy">
         <svg
           height={size}
