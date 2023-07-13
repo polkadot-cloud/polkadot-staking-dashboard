@@ -1,17 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import type { Circle } from './types';
+
 /*
   A generic identity icon, taken from
   https://github.com/polkadot-js/ui/tree/master/packages/react-identicon
 */
-
-export interface Circle {
-  cx: number;
-  cy: number;
-  fill: string;
-  r: number;
-}
 
 const S = 64;
 const C = S / 2;

@@ -16,40 +16,8 @@ const addressToId = (address: string): Uint8Array => {
     zeroHash = blake2AsU8a(new Uint8Array(32), 512);
   }
 
-  const capi = blake2AsU8a(decodeAddress(address), 512).map(
-    (x: any, i: any) => (x + 256 - zeroHash[i]) % 256
-  );
-  return capi;
-};
-
-export const getColorsNew = (address: string): string[] => {
-  const total = Object.values(SCHEMA)
-    .map((s): number => s.freq)
-    .reduce((a, b): number => a + b);
-  const id = addressToId(address);
-  const d = Math.floor((id[30] + id[31] * 256) % total);
-  const rot = (id[28] % 6) * 3;
-  const sat = Math.floor((id[29] * 70) / 256 + 26) % 80;
-  const alignedSat = sat < 40 ? sat + 50 : sat < 70 ? sat + 30 : sat;
-  const scheme = findScheme(d);
-  const palette = Array.from(id).map((x, i): string => {
-    const b = (x + (i % 28) * 58) % 256;
-
-    if (b === 0) {
-      return '#444';
-    }
-    if (b === 255) {
-      return 'transparent';
-    }
-
-    const h = Math.floor(((b % 64) * 360) / 64);
-    const l = [40, 45, 50, 55][Math.floor(b / 64)];
-
-    return `hsl(${h}, ${alignedSat}%, ${l}%)`;
-  });
-
-  return scheme.colors.map(
-    (_, i): string => palette[scheme.colors[i < 18 ? (i + rot) % 18 : 18]]
+  return blake2AsU8a(decodeAddress(address), 512).map(
+    (x: number, i: number) => (x + 256 - zeroHash[i]) % 256
   );
 };
 
@@ -79,6 +47,6 @@ export const getColors = (address: string): string[] => {
   });
 
   return scheme.colors.map(
-    (_, i): string => palette[scheme.colors[i < 18 ? (i + rot) % 18 : 18]]
+    (_, i) => palette[scheme.colors[i < 18 ? (i + rot) % 18 : 18]]
   );
 };

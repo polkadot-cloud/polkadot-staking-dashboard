@@ -1,10 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-interface Scheme {
-  freq: number;
-  colors: number[];
-}
+import type { Scheme } from './types';
 
 /*
     A generic identity icon, taken from
@@ -45,13 +42,10 @@ export const findScheme = (d: number): Scheme => {
   let cum = 0;
   const schema = Object.values(SCHEMA).find((s): boolean => {
     cum += s.freq;
-
     return d < cum;
   });
-
   if (!schema) {
     throw new Error('Unable to find schema');
   }
-
   return schema;
 };
