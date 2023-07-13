@@ -1273,10 +1273,10 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
   integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
 
-"@types/react-dom@^18.2.6":
-  version "18.2.6"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.2.6.tgz#ad621fa71a8db29af7c31b41b2ea3d8a6f4144d1"
-  integrity sha512-2et4PDvg6PVCyS7fuTc4gPoksV58bW0RwSxWKcPRcHZf0PRUGq03TKcD/rUHe3azfV6/5/biUBJw+HhCQjaP0A==
+"@types/react-dom@^18.2.7":
+  version "18.2.7"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.2.7.tgz#67222a08c0a6ae0a0da33c3532348277c70abb63"
+  integrity sha512-GRaAEriuT4zp9N4p1i8BDBYmEyfo+xQ3yHjJU4eiK5NDa1RmUZG+unZABUTK4/Ox/M+GaHwb6Ow8rUITrtjszA==
   dependencies:
     "@types/react" "*"
 
@@ -2466,10 +2466,10 @@ eslint-plugin-react@^7.32.2:
     semver "^6.3.0"
     string.prototype.matchall "^4.0.8"
 
-eslint-plugin-unused-imports@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-unused-imports/-/eslint-plugin-unused-imports-2.0.0.tgz#d8db8c4d0cfa0637a8b51ce3fd7d1b6bc3f08520"
-  integrity sha512-3APeS/tQlTrFa167ThtP0Zm0vctjr4M44HMpeg1P4bK6wItarumq0Ma82xorMKdFsWpphQBlRPzw/pxiVELX1A==
+eslint-plugin-unused-imports@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-unused-imports/-/eslint-plugin-unused-imports-3.0.0.tgz#d25175b0072ff16a91892c3aa72a09ca3a9e69e7"
+  integrity sha512-sduiswLJfZHeeBJ+MQaG+xYzSWdRXoSw61DpU13mzWumCkR0ufD0HmO4kdNokjrkluMHpj/7PJeN35pgbhW3kw==
   dependencies:
     eslint-rule-composer "^0.3.0"
 
@@ -3084,10 +3084,10 @@ i18next-browser-languagedetector@^7.1.0:
   dependencies:
     "@babel/runtime" "^7.19.4"
 
-i18next@^23.2.8:
-  version "23.2.8"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-23.2.8.tgz#dd54fab8f68c1ef2e0408249e042cf9cef683554"
-  integrity sha512-wU0pMlJ91ZbB89i77G3YQ11/pBQrzgWpxJYl7HFyA9aU9v3aHMI/oBKQmAJNURr0A8cLG4EHjgSMK8IqQTp4PQ==
+i18next@^23.2.11:
+  version "23.2.11"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-23.2.11.tgz#0c6f3a637fa87d3243e64b78ad285b7f77d41353"
+  integrity sha512-MA4FsxOjyCaOZtRDB4yuwjCvqYEioD4G4LlXOn7SO3rnQUlxTufyLsOqfL9MKakeLRBkefe8bqcs0D6Z/xFk1w==
   dependencies:
     "@babel/runtime" "^7.22.5"
 

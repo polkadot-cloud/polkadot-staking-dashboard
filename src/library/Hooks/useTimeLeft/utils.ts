@@ -7,7 +7,7 @@ import {
   getUnixTime,
   intervalToDuration,
 } from 'date-fns';
-import type { TFunction } from 'i18next';
+import type { AnyFunction } from 'types';
 import { defaultDuration } from './defaults';
 import type { TimeleftDuration } from './types';
 
@@ -51,7 +51,7 @@ export const getDuration = (toDate: Date | null): TimeleftDuration => {
 
 // format the duration (from seconds) as a string.
 export const timeleftAsString = (
-  t: TFunction,
+  t: AnyFunction,
   start: number,
   duration: number,
   full?: boolean
