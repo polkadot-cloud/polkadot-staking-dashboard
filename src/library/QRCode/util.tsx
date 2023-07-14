@@ -16,8 +16,8 @@ export const createSignPayload = (
   cmd: number,
   payload: string | Uint8Array,
   genesisHash: string | Uint8Array
-): Uint8Array =>
-  u8aConcat(
+): Uint8Array => {
+  return u8aConcat(
     SUBSTRATE_ID,
     CRYPTO_SR25519,
     new Uint8Array([cmd]),
@@ -25,6 +25,7 @@ export const createSignPayload = (
     u8aToU8a(payload),
     u8aToU8a(genesisHash)
   );
+};
 
 export const createFrames = (input: Uint8Array): Uint8Array[] => {
   const frames = [];
