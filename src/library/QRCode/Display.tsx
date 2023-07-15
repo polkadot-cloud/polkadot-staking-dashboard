@@ -1,20 +1,12 @@
-/* @license Copyright 2023 @paritytech/polkadot-dashboard-ui authors & contributors
-SPDX-License-Identifier: Apache-2.0 */
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: Apache-2.0
 
 import { objectSpread } from '@polkadot/util';
 import { xxhashAsHex } from '@polkadot/util-crypto';
-import _qrcode from 'qrcode-generator';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { createFrames, createImgSize } from './util';
-
-// A small hurdle to jump through, just to get the default/default correct (as generated)
-const qrcode: typeof _qrcode = _qrcode;
-
-// HACK The default function take string -> number[], the Uint8array is compatible
-// with that signature and the use thereof
-// eslint-disable-next-line @typescript-eslint/no-explicit-any,@typescript-eslint/no-unsafe-member-access
-(qrcode as any).stringToBytes = (data: Uint8Array): Uint8Array => data;
+import { qrcode } from './qrcode.js';
+import { createFrames, createImgSize } from './util.js';
 
 interface Props {
   className?: string | undefined;
@@ -108,7 +100,9 @@ const Display = ({
       timerRef.current.timerDelay
     );
 
-    return () => clearTimeout(timerRef.current.timerId || 0);
+    return () => {
+      if (timerRef.current.timerId) clearTimeout(timerRef.current.timerId);
+    };
   }, []);
 
   useEffect((): void => {

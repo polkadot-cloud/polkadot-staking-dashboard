@@ -1,10 +1,10 @@
-/* @license Copyright 2023 @paritytech/polkadot-dashboard-ui authors & contributors
-SPDX-License-Identifier: Apache-2.0 */
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: Apache-2.0
 
 import React, { useCallback, useMemo } from 'react';
 import Reader from 'react-qr-reader';
 import styled from 'styled-components';
-import { createImgSize } from './util';
+import { createImgSize } from './util.js';
 
 interface Props {
   className?: string | undefined;
@@ -18,7 +18,7 @@ interface Props {
 const DEFAULT_DELAY = 150;
 
 const DEFAULT_ERROR = (error: Error): void => {
-  console.error('@polkadot/react-qr:Scan', error.message);
+  console.error('react-qr:Scan', error.message);
 };
 
 const Scan = ({

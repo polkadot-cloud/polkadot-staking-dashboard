@@ -716,19 +716,6 @@
     styled-components "^5.3.11"
     tslib "^2.5.3"
 
-"@polkadot/react-qr@^3.5.1":
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/@polkadot/react-qr/-/react-qr-3.5.1.tgz#b9690b653779d2aed6c0ce773e842a8d5ad42d11"
-  integrity sha512-3TP0U6LEzousfioZtarGDfqIpZ+sCUsRII1nzgTfpGM7VJwmAKOzBFORqoYW1Lm1mbaZ0x1m3sypfXaE5tqqJg==
-  dependencies:
-    "@polkadot/ui-settings" "3.5.1"
-    "@polkadot/util" "^12.3.1"
-    "@polkadot/util-crypto" "^12.3.1"
-    qrcode-generator "^1.4.4"
-    react-qr-reader "^2.2.1"
-    styled-components "^5.3.11"
-    tslib "^2.5.3"
-
 "@polkadot/rpc-augment@10.9.1":
   version "10.9.1"
   resolved "https://registry.yarnpkg.com/@polkadot/rpc-augment/-/rpc-augment-10.9.1.tgz#214ec3ee145d20caa61ea204041a3aadb89c6b0f"
@@ -4035,7 +4022,7 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.3.0.tgz#f67fa67c94da8f4d0cfff981aee4118064199b8f"
   integrity sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==
 
-qrcode-generator@1.4.4, qrcode-generator@^1.4.4:
+qrcode-generator@1.4.4:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/qrcode-generator/-/qrcode-generator-1.4.4.tgz#63f771224854759329a99048806a53ed278740e7"
   integrity sha512-HM7yY8O2ilqhmULxGMpcHSF1EhJJ9yBj8gvDEuZ6M+KGJ0YY2hKpnXvRD+hZPLrDVck3ExIGhmPtSdcjC+guuw==

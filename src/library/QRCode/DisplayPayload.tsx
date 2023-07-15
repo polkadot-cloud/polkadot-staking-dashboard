@@ -1,9 +1,9 @@
-/* @license Copyright 2023 @paritytech/polkadot-dashboard-ui authors & contributors
-SPDX-License-Identifier: Apache-2.0 */
+// Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
+// SPDX-License-Identifier: Apache-2.0
 
 import React, { useMemo } from 'react';
-import { QrDisplay } from './Display';
-import { createSignPayload } from './util';
+import { QrDisplay } from './Display.js';
+import { createSignPayload } from './util.js';
 
 interface Props {
   address: string;

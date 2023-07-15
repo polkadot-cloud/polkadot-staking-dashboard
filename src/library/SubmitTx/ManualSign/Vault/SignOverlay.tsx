@@ -11,7 +11,7 @@ import { useOverlay } from 'contexts/Overlay';
 import { useTxMeta } from 'contexts/TxMeta';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
 import { QrDisplayPayload } from 'library/QRCode/DisplayPayload';
-import { QrScanSignature } from 'library/QRCode/ScanSignatures';
+import { QrScanSignature } from 'library/QRCode/ScanSignature';
 import type { SignerOverlayProps } from 'library/SubmitTx/types';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';

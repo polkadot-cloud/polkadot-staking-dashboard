@@ -7,7 +7,7 @@ import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { useOverlay } from 'contexts/Overlay';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
-import { QrScanSignature } from 'library/QRCode/ScanSignatures';
+import { QrScanSignature } from 'library/QRCode/ScanSignature';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
