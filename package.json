@@ -30,6 +30,7 @@
     "@polkadot/keyring": "^12.1.1",
     "@polkadot/rpc-provider": "^10.9.1",
     "@polkadot/util": "^12.1.1",
+    "@polkadot/util-crypto": "12.3.2",
     "@polkadotcloud/core-ui": "^0.3.42",
     "@polkadotcloud/react-odometer": "^0.1.17",
     "@polkadotcloud/utils": "^0.2.22",
@@ -44,6 +45,7 @@
     "i18next": "^23.2.11",
     "i18next-browser-languagedetector": "^7.1.0",
     "lodash.throttle": "^4.1.1",
+    "qrcode-generator": "1.4.4",
     "rc-slider": "^10.2.1",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
@@ -51,12 +53,10 @@
     "react-error-boundary": "^4.0.10",
     "react-helmet": "^6.1.0",
     "react-i18next": "^13.0.2",
+    "react-qr-reader": "^2.2.1",
     "react-router-dom": "^6.14.1",
     "react-scroll": "^1.8.9",
-    "styled-components": "^5.3.11",
-    "qrcode-generator": "1.4.4",
-    "react-qr-reader": "^2.2.1",
-    "@polkadot/util-crypto": "12.3.2"
+    "styled-components": "^6.0.0"
   },
   "devDependencies": {
     "@ledgerhq/logs": "^6.10.1",
@@ -64,8 +64,8 @@
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@types/react-helmet": "^6.1.6",
+    "@types/react-qr-reader": "^2.1.4",
     "@types/react-scroll": "^1.8.6",
-    "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "@vitejs/plugin-react-swc": "^3.3.2",
@@ -92,7 +92,6 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^3.2.0",
     "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^0.33.0",
-    "@types/react-qr-reader": "^2.1.4"
+    "vitest": "^0.33.0"
   }
 }

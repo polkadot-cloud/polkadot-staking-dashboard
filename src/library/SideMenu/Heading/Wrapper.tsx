@@ -3,11 +3,11 @@
 
 import styled from 'styled-components';
 
-export const Wrapper = styled.div<{ minimised: boolean }>`
+export const Wrapper = styled.div<{ $minimised: boolean }>`
   display: flex;
   flex-flow: row wrap;
-  justify-content: ${(props) => (props.minimised ? 'center' : 'flex-start')};
-  opacity: ${(props) => (props.minimised ? 0.5 : 1)};
+  justify-content: ${(props) => (props.$minimised ? 'center' : 'flex-start')};
+  opacity: ${(props) => (props.$minimised ? 0.5 : 1)};
   align-items: center;
 
   h5 {
