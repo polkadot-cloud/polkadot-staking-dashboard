@@ -1167,11 +1167,6 @@
   resolved "https://registry.npmjs.org/@emotion/unitless/-/unitless-0.8.1.tgz#182b5a4704ef8ad91bde93f7a860a88fd92c79a3"
   integrity sha512-KOEGMu6dmJZtpadb476IsZBclKvILjopjUii3V+7MnXIQCYh8W3NgNcgwo21n9LXZX6EDIKvqfjYxXebDwxKmQ==
 
-"@esbuild-plugins/node-globals-polyfill@^0.2.3":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@esbuild-plugins/node-globals-polyfill/-/node-globals-polyfill-0.2.3.tgz#0e4497a2b53c9e9485e149bc92ddb228438d6bcf"
-  integrity sha512-r3MIryXDeXDOZh7ih1l/yE9ZLORCd5e8vWg02azWRGj5SPTuoh69A2AIyn0Z31V/kHBfZ4HgWJ+OK3GTTwLmnw==
-
 "@esbuild/android-arm64@0.18.11":
   version "0.18.11"
   resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.18.11.tgz#fa6f0cc7105367cb79cc0a8bf32bf50cb1673e45"
