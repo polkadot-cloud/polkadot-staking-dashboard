@@ -18,7 +18,7 @@ interface Props {
 const DEFAULT_DELAY = 150;
 
 const DEFAULT_ERROR = (error: Error): void => {
-  console.error('react-qr:Scan', error.message);
+  throw new Error(error.message);
 };
 
 const Scan = ({
