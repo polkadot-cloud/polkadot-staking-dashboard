@@ -3,17 +3,9 @@
 
 import React, { useCallback, useMemo } from 'react';
 import Reader from 'react-qr-reader';
-import styled from 'styled-components';
+import { ScanWrapper } from './Wrappers.js';
+import type { ScanProps } from './types.js';
 import { createImgSize } from './util.js';
-
-interface Props {
-  className?: string | undefined;
-  delay?: number;
-  onError?: undefined | ((error: Error) => void);
-  onScan: (data: string) => void;
-  size?: string | number | undefined;
-  style?: React.CSSProperties | undefined;
-}
 
 const DEFAULT_DELAY = 150;
 
@@ -28,7 +20,7 @@ const Scan = ({
   onScan,
   size,
   style = {},
-}: Props): React.ReactElement<Props> => {
+}: ScanProps): React.ReactElement<ScanProps> => {
   const containerStyle = useMemo(() => createImgSize(size), [size]);
 
   const _onError = useCallback((error: Error) => onError(error), [onError]);
@@ -39,7 +31,7 @@ const Scan = ({
   );
 
   return (
-    <StyledDiv className={className} style={containerStyle}>
+    <ScanWrapper className={className} style={containerStyle}>
       <Reader
         className="ui--qr-Scan"
         delay={delay}
@@ -47,21 +39,8 @@ const Scan = ({
         onScan={_onScan}
         style={style}
       />
-    </StyledDiv>
+    </ScanWrapper>
   );
 };
-
-const StyledDiv = styled.div`
-  .ui--qr-Scan {
-    display: inline-block;
-    height: 100%;
-    transform: matrix(-1, 0, 0, 1, 0, 0);
-    width: 100%;
-
-    video {
-      margin: 0;
-    }
-  }
-`;
 
 export const QrScan = React.memo(Scan);

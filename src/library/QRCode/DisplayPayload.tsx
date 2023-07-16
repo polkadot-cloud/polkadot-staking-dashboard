@@ -3,18 +3,8 @@
 
 import React, { useMemo } from 'react';
 import { QrDisplay } from './Display.js';
+import type { DisplayPayloadProps } from './types.js';
 import { createSignPayload } from './util.js';
-
-interface Props {
-  address: string;
-  className?: string;
-  cmd: number;
-  genesisHash: Uint8Array | string;
-  payload: Uint8Array;
-  size?: string | number;
-  style?: React.CSSProperties;
-  timerDelay?: number;
-}
 
 const DisplayPayload = ({
   address,
@@ -25,7 +15,7 @@ const DisplayPayload = ({
   size,
   style,
   timerDelay,
-}: Props): React.ReactElement<Props> | null => {
+}: DisplayPayloadProps): React.ReactElement<DisplayPayloadProps> | null => {
   const data = useMemo(
     () => createSignPayload(address, cmd, payload, genesisHash),
     [address, cmd, payload, genesisHash]

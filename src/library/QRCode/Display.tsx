@@ -4,30 +4,10 @@
 import { objectSpread } from '@polkadot/util';
 import { xxhashAsHex } from '@polkadot/util-crypto';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import styled from 'styled-components';
+import { DisplayWrapper } from './Wrappers.js';
 import { qrcode } from './qrcode.js';
+import type { DisplayProps, FrameState, TimerState } from './types.js';
 import { createFrames, createImgSize } from './util.js';
-
-interface Props {
-  className?: string | undefined;
-  size?: string | number | undefined;
-  skipEncoding?: boolean;
-  style?: React.CSSProperties | undefined;
-  timerDelay?: number | undefined;
-  value: Uint8Array;
-}
-
-interface FrameState {
-  frames: Uint8Array[];
-  frameIdx: number;
-  image: string | null;
-  valueHash: string | null;
-}
-
-interface TimerState {
-  timerDelay: number;
-  timerId: ReturnType<typeof setTimeout> | null;
-}
 
 const DEFAULT_FRAME_DELAY = 2750;
 const TIMER_INC = 500;
@@ -50,7 +30,7 @@ const Display = ({
   style = {},
   timerDelay = DEFAULT_FRAME_DELAY,
   value,
-}: Props): React.ReactElement<Props> | null => {
+}: DisplayProps): React.ReactElement<DisplayProps> | null => {
   const [{ image }, setFrameState] = useState<FrameState>({
     frameIdx: 0,
     frames: [],
@@ -130,28 +110,12 @@ const Display = ({
   }
 
   return (
-    <StyledDiv className={className} style={containerStyle}>
+    <DisplayWrapper className={className} style={containerStyle}>
       <div className="ui--qr-Display" style={style}>
         <img src={image} alt="img" />
       </div>
-    </StyledDiv>
+    </DisplayWrapper>
   );
 };
-
-const StyledDiv = styled.div`
-  .ui--qr-Display {
-    height: 100%;
-    width: 100%;
-
-    img,
-    svg {
-      background: white;
-      height: auto !important;
-      max-height: 100%;
-      max-width: 100%;
-      width: auto !important;
-    }
-  }
-`;
 
 export const QrDisplay = React.memo(Display);
