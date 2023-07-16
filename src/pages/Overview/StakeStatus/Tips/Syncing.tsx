@@ -21,7 +21,7 @@ export const Syncing = () => {
       }}
     >
       <ItemWrapper>
-        <ItemInnerWrapper inactive>
+        <ItemInnerWrapper>
           <section
             style={{
               marginRight: '0.5rem',
