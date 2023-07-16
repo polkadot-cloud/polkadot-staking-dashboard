@@ -700,19 +700,6 @@
     "@substrate/ss58-registry" "^1.40.0"
     tslib "^2.5.3"
 
-"@polkadot/react-qr@^3.5.1":
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/@polkadot/react-qr/-/react-qr-3.5.1.tgz#b9690b653779d2aed6c0ce773e842a8d5ad42d11"
-  integrity sha512-3TP0U6LEzousfioZtarGDfqIpZ+sCUsRII1nzgTfpGM7VJwmAKOzBFORqoYW1Lm1mbaZ0x1m3sypfXaE5tqqJg==
-  dependencies:
-    "@polkadot/ui-settings" "3.5.1"
-    "@polkadot/util" "^12.3.1"
-    "@polkadot/util-crypto" "^12.3.1"
-    qrcode-generator "^1.4.4"
-    react-qr-reader "^2.2.1"
-    styled-components "^5.3.11"
-    tslib "^2.5.3"
-
 "@polkadot/rpc-augment@10.9.1":
   version "10.9.1"
   resolved "https://registry.yarnpkg.com/@polkadot/rpc-augment/-/rpc-augment-10.9.1.tgz#214ec3ee145d20caa61ea204041a3aadb89c6b0f"
@@ -818,18 +805,7 @@
     rxjs "^7.8.1"
     tslib "^2.5.3"
 
-"@polkadot/ui-settings@3.5.1":
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/@polkadot/ui-settings/-/ui-settings-3.5.1.tgz#53aadb3bc1e8b79c7a7b3b219ab72cf0e37ca612"
-  integrity sha512-3Lhgr9bZZALUuJbpy2zlqRm1sA7YIYnVXGUo0p5YWqWsthGQRL8mR4WhxcAnR+fZumI5fW+nhjosm5SiGzvy/Q==
-  dependencies:
-    "@polkadot/networks" "^12.3.1"
-    "@polkadot/util" "^12.3.1"
-    eventemitter3 "^5.0.1"
-    store "^2.0.12"
-    tslib "^2.5.3"
-
-"@polkadot/util-crypto@12.3.2", "@polkadot/util-crypto@^12.3.1", "@polkadot/util-crypto@^12.3.2":
+"@polkadot/util-crypto@12.3.2", "@polkadot/util-crypto@^12.3.1":
   version "12.3.2"
   resolved "https://registry.yarnpkg.com/@polkadot/util-crypto/-/util-crypto-12.3.2.tgz#42d810886904e06fa6e5db254c15f6ef80f4ab72"
   integrity sha512-pTpx+YxolY0BDT4RcGmgeKbHHD/dI6Ll9xRsqmVdIjpcVVY20uDNTyXs81ZNtfKgyod1y9JQkfNv2Dz9iEpTkQ==
@@ -1273,6 +1249,13 @@
   version "6.1.6"
   resolved "https://registry.yarnpkg.com/@types/react-helmet/-/react-helmet-6.1.6.tgz#7d1afd8cbf099616894e8240e9ef70e3c6d7506d"
   integrity sha512-ZKcoOdW/Tg+kiUbkFCBtvDw0k3nD4HJ/h/B9yWxN4uDO8OkRksWTO+EL+z/Qu3aHTeTll3Ro0Cc/8UhwBCMG5A==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-qr-reader@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/@types/react-qr-reader/-/react-qr-reader-2.1.4.tgz#a36f0b83b4402e26c4217d0e8af6b5e2887fc749"
+  integrity sha512-2Hq+UNfsO2TVqxbFlOE0gGhQr/+C4wdgNDaaLV8K93mK/Z7Vw2D3YbMlnJAaSzM45fUtYJs0vc48wV04+OEkiA==
   dependencies:
     "@types/react" "*"
 
@@ -3964,7 +3947,7 @@ punycode@^2.1.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.3.0.tgz#f67fa67c94da8f4d0cfff981aee4118064199b8f"
   integrity sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==
 
-qrcode-generator@^1.4.4:
+qrcode-generator@1.4.4:
   version "1.4.4"
   resolved "https://registry.yarnpkg.com/qrcode-generator/-/qrcode-generator-1.4.4.tgz#63f771224854759329a99048806a53ed278740e7"
   integrity sha512-HM7yY8O2ilqhmULxGMpcHSF1EhJJ9yBj8gvDEuZ6M+KGJ0YY2hKpnXvRD+hZPLrDVck3ExIGhmPtSdcjC+guuw==
@@ -4365,11 +4348,6 @@ std-env@^3.3.3:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/std-env/-/std-env-3.3.3.tgz#a54f06eb245fdcfef53d56f3c0251f1d5c3d01fe"
   integrity sha512-Rz6yejtVyWnVjC1RFvNmYL10kgjC49EOghxWn0RFqlCHGFpQx+Xe7yW3I4ceK1SGrWIGMjD5Kbue8W/udkbMJg==
-
-store@^2.0.12:
-  version "2.0.12"
-  resolved "https://registry.yarnpkg.com/store/-/store-2.0.12.tgz#8c534e2a0b831f72b75fc5f1119857c44ef5d593"
-  integrity sha512-eO9xlzDpXLiMr9W1nQ3Nfp9EzZieIQc10zPPMP5jsVV7bLOziSFFBP0XoDXACEIFtdI+rIz0NwWVA/QVJ8zJtw==
 
 string-width@^4.1.0, string-width@^4.2.0, string-width@^4.2.3:
   version "4.2.3"

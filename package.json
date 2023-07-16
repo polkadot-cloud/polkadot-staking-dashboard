@@ -28,10 +28,8 @@
     "@ledgerhq/hw-transport-webhid": "^6.27.16",
     "@polkadot/api": "^10.9.1",
     "@polkadot/keyring": "^12.1.1",
-    "@polkadot/react-qr": "^3.5.1",
     "@polkadot/rpc-provider": "^10.9.1",
     "@polkadot/util": "^12.1.1",
-    "@polkadot/util-crypto": "^12.3.2",
     "@polkadotcloud/core-ui": "^0.3.42",
     "@polkadotcloud/react-odometer": "^0.1.17",
     "@polkadotcloud/utils": "^0.2.22",
@@ -55,7 +53,10 @@
     "react-i18next": "^13.0.2",
     "react-router-dom": "^6.14.1",
     "react-scroll": "^1.8.9",
-    "styled-components": "^5.3.11"
+    "styled-components": "^5.3.11",
+    "qrcode-generator": "1.4.4",
+    "react-qr-reader": "^2.2.1",
+    "@polkadot/util-crypto": "12.3.2"
   },
   "devDependencies": {
     "@ledgerhq/logs": "^6.10.1",
@@ -91,6 +92,7 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^3.2.0",
     "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^0.33.0"
+    "vitest": "^0.33.0",
+    "@types/react-qr-reader": "^2.1.4"
   }
 }
