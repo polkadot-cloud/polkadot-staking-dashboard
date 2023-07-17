@@ -75,10 +75,7 @@ export const JoinPool = () => {
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
     const txs = [api.tx.nominationPools.join(bondAsString, poolId)];
 
-    if (
-      ![undefined, 'Permissioned'].includes(claimPermission) &&
-      network.name === 'westend'
-    ) {
+    if (![undefined, 'Permissioned'].includes(claimPermission)) {
       txs.push(api.tx.nominationPools.setClaimPermission(claimPermission));
     }
 
@@ -133,16 +130,14 @@ export const JoinPool = () => {
           parentErrors={warnings}
           txFees={largestTxFee}
         />
-        {network.name === 'westend' && (
-          <ClaimPermissionInput
-            current={undefined}
-            permissioned={false}
-            onChange={(val: ClaimPermission | undefined) => {
-              setClaimPermission(val);
-            }}
-            disabled={freeBondAmount.isZero()}
-          />
-        )}
+        <ClaimPermissionInput
+          current={undefined}
+          permissioned={false}
+          onChange={(val: ClaimPermission | undefined) => {
+            setClaimPermission(val);
+          }}
+          disabled={freeBondAmount.isZero()}
+        />
       </ModalPadding>
       <SubmitTx valid={bondValid} {...submitExtrinsic} />
     </>
