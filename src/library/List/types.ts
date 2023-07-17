@@ -9,7 +9,7 @@ export interface PaginationWrapperProps {
 }
 
 export interface ListProps {
-  flexBasisLarge: string;
+  $flexBasisLarge: string;
 }
 
 export interface PaginationProps {

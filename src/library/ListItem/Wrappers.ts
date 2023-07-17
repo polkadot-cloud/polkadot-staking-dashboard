@@ -5,22 +5,22 @@ import { SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
+export const Wrapper = styled.div<{ $format?: string; $inModal?: boolean }>`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
-  height: ${(props) => (props.format === 'nomination' ? '6rem' : '3rem')};
+  height: ${(props) => (props.$format === 'nomination' ? '6rem' : '3rem')};
   position: relative;
   margin: 0.5rem;
 
   > .inner {
     background: ${(props) =>
-      props.inModal
+      props.$inModal
         ? 'var(--background-modal-item)'
         : 'var(--background-list-item)'};
 
     ${(props) =>
-      props.inModal &&
+      props.$inModal &&
       `
       box-shadow: none;
       border: none;`}
@@ -180,16 +180,16 @@ export const IdentityWrapper = styled(motion.div)`
   }
 `;
 
-export const ValidatorStatusWrapper = styled.div<{ status: string }>`
+export const ValidatorStatusWrapper = styled.div<{ $status: string }>`
   margin-right: 0.35rem;
   padding: 0 0.5rem;
 
   h5 {
     color: ${(props) =>
-      props.status === 'active'
+      props.$status === 'active'
         ? 'var(--status-success-color)'
         : 'var(--text-color-secondary)'};
-    opacity: ${(props) => (props.status === 'active' ? 0.8 : 0.5)};
+    opacity: ${(props) => (props.$status === 'active' ? 0.8 : 0.5)};
     display: flex;
     overflow: hidden;
     text-overflow: ellipsis;

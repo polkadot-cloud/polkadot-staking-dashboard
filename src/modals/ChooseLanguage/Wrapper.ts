@@ -22,7 +22,7 @@ export const ContentWrapper = styled.div`
   }
 `;
 
-export const LocaleButton = styled.button<any>`
+export const LocaleButton = styled.button<{ $connected: boolean }>`
   color: var(--text-color-primary);
   background: var(--button-primary-background);
   font-family: InterSemiBold, sans-serif;
@@ -37,7 +37,7 @@ export const LocaleButton = styled.button<any>`
   border: 1px solid var(--status-success-color-transparent);
   margin: 0.5rem 0;
   ${(props) =>
-    props.connected !== true &&
+    props.$connected !== true &&
     `
   border: 1px solid rgba(0,0,0,0);
 `}

@@ -27,7 +27,7 @@ export const ChooseLanguage = () => {
               return (
                 <h3 key={`${code}_${i}`}>
                   <LocaleButton
-                    connected={i18n.resolvedLanguage === code}
+                    $connected={i18n.resolvedLanguage === code}
                     type="button"
                     onClick={() => {
                       changeLanguage(code, i18n);
