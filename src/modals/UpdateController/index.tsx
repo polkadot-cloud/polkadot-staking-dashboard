@@ -1,32 +1,27 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: GPL-3.0-only
+// SPDX-License-Identifier: Apache-2.0
 
-import { ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
-import { useTranslation } from 'react-i18next';
+import { ModalPadding, ModalWarnings } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
+import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { useTxMeta } from 'contexts/TxMeta';
-import { useEffect } from 'react';
-import { useOverlay } from '@polkadot-cloud/react/hooks';
-import { useActiveAccounts } from 'contexts/ActiveAccounts';
-import { useImportedAccounts } from 'contexts/Connect/ImportedAccounts';
+import { useTranslation } from 'react-i18next';
 import { Switch } from './Switch';
 import { Wrapper } from './Wrapper';
 
 export const UpdateController = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { notEnoughFunds } = useTxMeta();
+  const { setStatus: setModalStatus } = useModal();
+  const { activeAccount, getAccount } = useConnect();
   const { getBondedAccount } = useBonded();
-  const { activeAccount } = useActiveAccounts();
-  const { getAccount } = useImportedAccounts();
   const { getSignerWarnings } = useSignerWarnings();
-  const { setModalStatus, setModalResize } = useOverlay().modal;
 
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
@@ -42,16 +37,15 @@ export const UpdateController = () => {
     return tx;
   };
 
-  useEffect(() => setModalResize(), [notEnoughFunds]);
-
   // handle extrinsic
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
-      setModalStatus('closing');
+      setModalStatus(2);
     },
+    callbackInBlock: () => {},
   });
 
   const warnings = getSignerWarnings(
