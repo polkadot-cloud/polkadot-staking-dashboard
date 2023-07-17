@@ -148,7 +148,7 @@ export const MembersListInner = ({
           </button>
         </div>
       </Header>
-      <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
+      <List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
         {listMembers.length > 0 && pagination && (
           <Pagination page={page} total={totalPages} setter={setPage} />
         )}

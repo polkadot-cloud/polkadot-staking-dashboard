@@ -195,7 +195,7 @@ export const PoolList = ({
           </button>
         </div>
       </Header>
-      <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
+      <List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
         {allowSearch && poolsDefault.length > 0 && (
           <SearchInput
             handleChange={handleSearchChange}

@@ -143,8 +143,8 @@ export const List = styled.div<ListProps>`
           max-width: 50%;
         }
         @media (min-width: 1500px) {
-          flex-basis: ${(props) => props.flexBasisLarge};
-          max-width: ${(props) => props.flexBasisLarge};
+          flex-basis: ${(props) => props.$flexBasisLarge};
+          max-width: ${(props) => props.$flexBasisLarge};
         }
       }
     }
