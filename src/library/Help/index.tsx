@@ -62,8 +62,8 @@ export const Help = () => {
 
   if (definition) {
     // get items for active category
-    meta = Object.values(HelpConfig).find((c) =>
-      c?.definitions?.find((d) => d === definition)
+    meta = Object.values(HelpConfig).find(
+      (c) => c?.definitions?.find((d) => d === definition)
     );
   } else {
     // get all items

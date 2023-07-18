@@ -50,7 +50,7 @@ export const Networks = () => {
 
                 return (
                   <NetworkButton
-                    connected={networkKey === key}
+                    $connected={networkKey === key}
                     disabled={rpcDisabled}
                     key={`network_switch_${index}`}
                     type="button"
@@ -85,7 +85,7 @@ export const Networks = () => {
           <h4>{t('connectionType')}</h4>
           <ConnectionsWrapper>
             <ConnectionButton
-              connected={!isLightClient}
+              $connected={!isLightClient}
               disabled={!isLightClient}
               type="button"
               onClick={() => {
@@ -97,7 +97,7 @@ export const Networks = () => {
               {!isLightClient && <h4 className="selected">{t('selected')}</h4>}
             </ConnectionButton>
             <ConnectionButton
-              connected={isLightClient}
+              $connected={isLightClient}
               className="off"
               type="button"
               onClick={() => {

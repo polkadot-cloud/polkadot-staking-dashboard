@@ -317,7 +317,7 @@ export const ValidatorListInner = ({
           )}
         </div>
       </Header>
-      <List flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
+      <List $flexBasisLarge={allowMoreCols ? '33.33%' : '50%'}>
         {allowSearch && (
           <SearchInput
             handleChange={handleSearchChange}

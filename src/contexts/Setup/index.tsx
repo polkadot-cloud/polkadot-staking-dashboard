@@ -113,7 +113,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   // Utility to update the progress item of either a nominator setup or pool setup,
   const updateSetups = <
     T extends NominatorSetups | PoolSetups,
-    U extends NominatorProgress | PoolProgress
+    U extends NominatorProgress | PoolProgress,
   >(
     all: T,
     newSetup: U,
