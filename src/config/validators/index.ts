@@ -554,6 +554,7 @@ export const ValidatorCommunity = [
         'HhBer1indmu4m1A1fMKRsCEQ8pfWGHUMskWjD2HLpspJTuW',
         'JHamburgTPv9fRKwTPeBEjyVHmbQK2ayRBpBujb4rx2sHzJ',
         'GHd1brgDS29LhSUMYSorgEWFb2n1M3H4EMz6mcpt8TTdHho',
+        'FDAugsNraejDeJHt8n4MSc5Gvn9zuAibNQ9qFQdGNVWYvtx'
       ],
     },
   },
