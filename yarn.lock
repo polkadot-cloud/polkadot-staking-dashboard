@@ -1851,7 +1851,6 @@
 "@polkadotcloud/core-ui@^0.3.48":
   version "0.3.48"
   resolved "https://registry.yarnpkg.com/@polkadotcloud/core-ui/-/core-ui-0.3.48.tgz#1cad1931286aea3ea9d1f7ee74dde6418a446cfb"
-  integrity sha512-hsFkyaqmOGOiya3Y2rHTsX4F9y/LbGyDsqXZFFgrWK2oPGRnnxQkMVT5IXp5XqsSHqqoLkqNjj3Q2XuVofxPDQ==
 
 "@polkadotcloud/react-odometer@^0.1.17":
   version "0.1.17"
