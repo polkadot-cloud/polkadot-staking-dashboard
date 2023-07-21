@@ -10,7 +10,7 @@ import {
 } from '@polkadotcloud/utils';
 import type SignClient from '@walletconnect/sign-client';
 import type { SessionTypes } from '@walletconnect/types/';
-import { Web3Modal } from '@web3modal/standalone';
+import { WalletConnectModal } from '@walletconnect/modal';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import type {
@@ -674,13 +674,12 @@ export const ConnectProvider = ({
     let wcAccounts: string[] = [];
     // Subscribe for pairing URI
     const { uri, approval } = await provider.client.connect(params);
-    const web3modal = new Web3Modal({
+    const walletConnectModal = new WalletConnectModal({
       projectId: 'f75434b01141677e4ee7ddf70fee56b4',
-      walletConnectVersion: 2,
     });
     try {
       if (uri) {
-        web3modal.openModal({ uri });
+        walletConnectModal.openModal({ uri });
       }
       // Await session approval from the wallet.
       const wcSession = await approval();
@@ -758,7 +757,7 @@ export const ConnectProvider = ({
     } catch (err) {
       handleExtensionError(id, String(err));
     } finally {
-      web3modal.closeModal();
+      walletConnectModal.closeModal();
     }
   };
 

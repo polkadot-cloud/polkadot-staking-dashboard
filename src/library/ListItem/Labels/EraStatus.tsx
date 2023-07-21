@@ -48,7 +48,7 @@ export const EraStatus = ({ address }: { address: MaybeAccount }) => {
   const totalStake = planckToUnit(totalStakePlanck, units);
 
   return (
-    <ValidatorStatusWrapper status={validatorStatus}>
+    <ValidatorStatusWrapper $status={validatorStatus}>
       <h5>
         {isSyncing || erasStakersSyncing
           ? t('syncing')

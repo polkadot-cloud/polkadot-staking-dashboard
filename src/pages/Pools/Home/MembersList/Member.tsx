@@ -100,7 +100,7 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
   };
 
   return (
-    <Wrapper format="nomination">
+    <Wrapper $format="nomination">
       <div className="inner">
         <MenuPosition ref={posRef} />
         <div className="row">

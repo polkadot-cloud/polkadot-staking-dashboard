@@ -1,27 +1,58 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Identicon as IdenticonDefault } from '@polkadot/react-identicon';
-import { useApi } from 'contexts/Api';
-import styled from 'styled-components';
-import type { IdenticonProps } from './types';
+import { useCallback } from 'react';
+import { getCircleXY, OUTER_CIRCLE, renderCircle, Z } from './circles';
+import { getColors } from './colors';
+import type { Circle, IdenticonProps } from './types';
+import { Wrapper } from './Wrapper';
 
-const Wrapper = styled.div`
-  svg > circle:first-child {
-    fill: var(--border-primary-color);
-  }
-`;
-export const Identicon = ({ value, size }: IdenticonProps) => {
-  const { ss58 } = useApi().network;
+export const Identicon = ({
+  size,
+  value,
+  clickToCopy = true,
+  colors: initialColors,
+}: IdenticonProps) => {
+  const xy = getCircleXY();
+
+  const defaultColors =
+    initialColors || new Array<string>(xy.length).fill('#ddd');
+
+  const colors = value ? initialColors || getColors(value) : defaultColors;
+
+  const copyToClipboard = useCallback(() => {
+    if (clickToCopy) {
+      return;
+    }
+    if (navigator) {
+      navigator.clipboard.writeText(value);
+    }
+  }, [value]);
+
   return (
-    <Wrapper>
-      <IdenticonDefault
-        value={value}
-        size={size}
-        theme="polkadot"
-        style={{ cursor: 'default' }}
-        prefix={ss58}
-      />
+    <Wrapper $clickToCopy={clickToCopy}>
+      <div aria-hidden="true" onClick={() => copyToClipboard} className="copy">
+        <svg
+          height={size}
+          id={value}
+          name={value}
+          viewBox="0 0 64 64"
+          width={size}
+        >
+          {[OUTER_CIRCLE]
+            .concat(
+              xy.map(
+                ([cx, cy], index): Circle => ({
+                  cx,
+                  cy,
+                  fill: colors[index],
+                  r: Z,
+                })
+              )
+            )
+            .map(renderCircle)}
+        </svg>
+      </div>
     </Wrapper>
   );
 };

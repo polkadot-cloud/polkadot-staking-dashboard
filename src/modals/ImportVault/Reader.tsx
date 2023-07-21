@@ -1,13 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { QrScanSignature } from '@polkadot/react-qr';
 import { ButtonSecondary } from '@polkadotcloud/core-ui';
 import { isValidAddress } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { useOverlay } from 'contexts/Overlay';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
+import { QrScanSignature } from 'library/QRCode/ScanSignature';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

@@ -78,7 +78,7 @@ export const PoolBonded = ({
 
   return (
     <>
-      <ValidatorStatusWrapper status={nominationStatus}>
+      <ValidatorStatusWrapper $status={nominationStatus}>
         <h5>
           {nominationStatus === null || !eraStakers.stakers.length
             ? `${t('syncing')}...`

@@ -23,7 +23,7 @@ export const Summary = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');
   const {
     api,
-    network: { units, unit, name },
+    network: { units, unit },
   } = useApi();
   const { newBatchCall } = useBatchCall();
   const { getPayeeItems } = usePayeeConfig();
@@ -43,10 +43,6 @@ export const Summary = ({ section }: SetupStepProps) => {
       Id: item.address,
     }));
 
-    const controllerToSubmit = {
-      Id: activeAccount,
-    };
-
     const payeeToSubmit =
       payee.destination === 'Account'
         ? {
@@ -58,9 +54,7 @@ export const Summary = ({ section }: SetupStepProps) => {
     const bondAsString = bondToSubmit.isNaN() ? '0' : bondToSubmit.toString();
 
     const txs = [
-      ['westend', 'kusama'].includes(name)
-        ? api.tx.staking.bond(bondAsString, payeeToSubmit)
-        : api.tx.staking.bond(controllerToSubmit, bondAsString, payeeToSubmit),
+      api.tx.staking.bond(bondAsString, payeeToSubmit),
       api.tx.staking.nominate(targetsToSubmit),
     ];
     return newBatchCall(txs, activeAccount);

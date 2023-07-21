@@ -54,7 +54,7 @@ export const NominationStatus = ({
   }
 
   return (
-    <ValidatorStatusWrapper status={nominationStatus}>
+    <ValidatorStatusWrapper $status={nominationStatus}>
       <h5>
         {t(`${nominationStatus}`)}
         {greaterThanZero(stakedAmount)

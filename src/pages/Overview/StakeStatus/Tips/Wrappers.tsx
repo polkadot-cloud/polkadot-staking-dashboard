@@ -32,7 +32,7 @@ export const ItemWrapper = styled(motion.div)`
   }
 `;
 
-export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
+export const ItemInnerWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
