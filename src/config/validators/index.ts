@@ -152,6 +152,21 @@ export const ValidatorCommunity = [
       ],
     },
   },
+    {
+    name: 'DOZENODES',
+    thumbnail: 'DOZENODES',
+    bio: 'Independent Polkadot and Kusama Validator. We are running secure and reliable nodes based in central europe operated by experienced engineers.',
+    email: 'contact@dozenodes.com',
+    website: 'https://dozenodes.com',
+    validators: {
+      polkadot: ['167ShbHu769mP5jbtt7AHayJhzEied6s8M5kN5nBSAQewnRz'],
+      kusama: [
+        'DDhVgn62SE2riWjS6U4AaYtfLNKuFxqTU32EnqAtAuxqM58',
+        'JA9TjkzZzsJnBC8igbnLZ2WYvgsYHd6fu54QJAViqnADoZq',
+        'HnGgDUuyT97UcSpHhPaxY1h2MPFAjE1qiS9oKRMx5md6464',
+      ],
+    },
+  },
   {
     name: 'GATOTECH 😸',
     thumbnail: 'Gatotech',
