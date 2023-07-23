@@ -491,7 +491,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
 
         <AccountInput
           defaultLabel={t('inputPayeeAccount')}
-          successLabel={`${t('payeeAdded')}`}
+          successLabel={t('payeeAdded')}
           locked={payee !== null}
           successCallback={async (input) => {
             setPayee(input);

@@ -191,7 +191,7 @@ export const PayoutListInner = ({
                     <div className="row">
                       <div>
                         <div>
-                          <h4 className={`${labelClass}`}>
+                          <h4 className={labelClass}>
                             <>
                               {p.event_id === 'Slashed' ? '-' : '+'}
                               {planckToUnit(
@@ -203,7 +203,7 @@ export const PayoutListInner = ({
                           </h4>
                         </div>
                         <div>
-                          <h5 className={`${labelClass}`}>{label}</h5>
+                          <h5 className={labelClass}>{label}</h5>
                         </div>
                       </div>
                     </div>

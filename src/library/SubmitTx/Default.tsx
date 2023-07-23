@@ -31,7 +31,7 @@ export const Default = ({
       <div>
         {buttons}
         <ButtonSubmit
-          text={`${submitText}`}
+          text={submitText || ''}
           iconLeft={faArrowAltCircleUp}
           iconTransform="grow-2"
           onClick={() => onSubmit()}

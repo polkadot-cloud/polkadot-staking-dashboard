@@ -47,7 +47,7 @@ export const ThemedRouter = () => {
 
   return (
     <ThemeProvider theme={{ mode, network: `${network.name}-${mode}` }}>
-      <Entry mode={mode} network={network.name}>
+      <Entry mode={mode} chain={`${network.name}-relay`}>
         <Router />
       </Entry>
     </ThemeProvider>

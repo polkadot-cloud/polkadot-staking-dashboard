@@ -73,7 +73,7 @@ export const Filters = () => {
             }
             disabled
           />
-          {!hasFilters && <Item label={`${t('noFilters')}`} disabled />}
+          {!hasFilters && <Item label={t('noFilters')} disabled />}
           {includes?.map((e, i) => (
             <Item
               key={`validator_include_${i}`}

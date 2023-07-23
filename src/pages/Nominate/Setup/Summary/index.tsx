@@ -79,7 +79,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title={`${t('nominate.summary')}`}
+        title={t('nominate.summary')}
         bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
@@ -124,7 +124,7 @@ export const Summary = ({ section }: SetupStepProps) => {
           }}
         >
           <SubmitTx
-            submitText={`${t('nominate.startNominating')}`}
+            submitText={t('nominate.startNominating')}
             valid
             noMargin
             {...submitExtrinsic}
