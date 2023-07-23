@@ -3,9 +3,9 @@
 
 import { isSupportedProxy } from 'config/proxies';
 import { useConnect } from 'contexts/Connect';
-import { AccountButton } from './Account';
-import { AccountGroupWrapper } from './Wrappers';
-import type { DelegatesProps } from './types';
+import { AccountButton } from '../Account';
+import { DelegatesWrapper } from './Wrapper';
+import type { DelegatesProps } from '../types';
 
 export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
   const { getAccount, accounts } = useConnect();
@@ -23,7 +23,7 @@ export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
   return (
     <>
       {delegatesList.length ? (
-        <AccountGroupWrapper>
+        <DelegatesWrapper>
           {delegatesList.map(({ delegate, proxyType }, i) => (
             <AccountButton
               key={`_del_${i}`}
@@ -32,7 +32,7 @@ export const Delegates = ({ delegates, delegator }: DelegatesProps) => {
               proxyType={proxyType}
             />
           ))}
-        </AccountGroupWrapper>
+        </DelegatesWrapper>
       ) : null}
     </>
   );

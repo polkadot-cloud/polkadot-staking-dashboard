@@ -32,26 +32,32 @@ import type {
 export const Accounts = () => {
   const { t } = useTranslation('modals');
   const { isReady } = useApi();
-  const { activeAccount, disconnectFromAccount, setActiveProxy, accounts } =
-    useConnect();
-  const { bondedAccounts } = useBonded();
   const { balances } = useBalances();
+  const { getDelegates } = useProxies();
+  const { extensions } = useExtensions();
+  const { bondedAccounts } = useBonded();
   const { ledgers, getLocks } = useBalances();
   const { memberships } = usePoolMemberships();
   const { replaceModalWith, setResize } = useModal();
-  const { extensions } = useExtensions();
-  const { getDelegates } = useProxies();
+  const { activeAccount, disconnectFromAccount, setActiveProxy, accounts } =
+    useConnect();
 
-  // store local copy of accounts
+  // Store local copy of accounts.
   const [localAccounts, setLocalAccounts] = useState(accounts);
 
-  // store accounts that are actively newNominating.
-  const [nominating, setNominating] = useState<AccountNominating[]>([]);
-  const [inPool, setInPool] = useState<AccountInPool[]>([]);
-  const [notStaking, setNotStaking] = useState<AccountNotStaking[]>([]);
+  // Store accounts that are both nominating and in a pool.
   const [nominatingAndPool, setNominatingAndPool] = useState<
     AccountNominatingAndInPool[]
   >([]);
+
+  // Store accounts that are actively nominating.
+  const [nominating, setNominating] = useState<AccountNominating[]>([]);
+
+  // Store accounts that are in a pool.
+  const [inPool, setInPool] = useState<AccountInPool[]>([]);
+
+  // Store accounts that are not staking.
+  const [notStaking, setNotStaking] = useState<AccountNotStaking[]>([]);
 
   const getAccountsStatus = () => {
     const stashes: string[] = [];
