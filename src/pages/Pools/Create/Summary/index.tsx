@@ -89,7 +89,7 @@ export const Summary = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={null}
-        title={`${t('pools.summary')}`}
+        title={t('pools.summary')}
         bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
@@ -137,7 +137,7 @@ export const Summary = ({ section }: SetupStepProps) => {
           }}
         >
           <SubmitTx
-            submitText={`${t('pools.createPool')}`}
+            submitText={t('pools.createPool')}
             valid
             noMargin
             {...submitExtrinsic}

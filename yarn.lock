@@ -1827,10 +1827,10 @@
     tslib "^2.5.3"
     ws "^8.13.0"
 
-"@polkadotcloud/core-ui@^0.3.51":
-  version "0.3.51"
-  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.3.51.tgz#452fa3d39771d55b7fa8bf25b1996c05d456326c"
-  integrity sha512-oMHwD5M+tb3cfF1BOv/rOlEBjSt05yj7I9MmItI4K2viV3NN6xSK1h+1yBKnW4qNNfmM5BnpwmwRic1ysXqT9A==
+"@polkadotcloud/core-ui@^0.3.52":
+  version "0.3.52"
+  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.3.52.tgz#e46b04860a3ffbd90a5ff85febe88a82930df434"
+  integrity sha512-w0Pvx2WlzUFnrfGki2x3xpAZIRPYNMFbX4bpJf3jh0bnnEMrdcNbT2eU80ktfIPdJcpT2htFnU8oOf5NYr5ePA==
 
 "@polkadotcloud/react-odometer@^0.1.17":
   version "0.1.17"
@@ -3293,10 +3293,10 @@ eslint-plugin-prettier@^5.0.0:
     prettier-linter-helpers "^1.0.0"
     synckit "^0.8.5"
 
-eslint-plugin-react@^7.32.2:
-  version "7.32.2"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.32.2.tgz#e71f21c7c265ebce01bcbc9d0955170c55571f10"
-  integrity sha512-t2fBMa+XzonrrNkyVirzKlvn5RXzzPwRHtMvLAtVZrt8oxgnTQaYbU6SXTOO1mwQgp1y5+toMSKInnzGr0Knqg==
+eslint-plugin-react@^7.33.0:
+  version "7.33.0"
+  resolved "https://registry.npmjs.org/eslint-plugin-react/-/eslint-plugin-react-7.33.0.tgz#6c356fb0862fec2cd1b04426c669ea746e9b6eb3"
+  integrity sha512-qewL/8P34WkY8jAqdQxsiL82pDUeT7nhs8IsuXgfgnsEloKCT4miAV9N9kGtx7/KM9NH/NCGUE7Edt9iGxLXFw==
   dependencies:
     array-includes "^3.1.6"
     array.prototype.flatmap "^1.3.1"
@@ -3311,7 +3311,7 @@ eslint-plugin-react@^7.32.2:
     object.values "^1.1.6"
     prop-types "^15.8.1"
     resolve "^2.0.0-next.4"
-    semver "^6.3.0"
+    semver "^6.3.1"
     string.prototype.matchall "^4.0.8"
 
 eslint-plugin-unused-imports@^3.0.0:

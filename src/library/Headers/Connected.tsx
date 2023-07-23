@@ -51,7 +51,7 @@ export const Connected = () => {
               <PoolAccount
                 value={poolAddress}
                 pool={selectedActivePool}
-                label={`${t('pool')}`}
+                label={t('pool')}
                 canClick={false}
                 onClick={() => {}}
                 filled
@@ -66,7 +66,7 @@ export const Connected = () => {
                 canClick={false}
                 value={activeProxy}
                 readOnly={!accountHasSigner(activeProxy)}
-                label={`${t('proxy')}`}
+                label={t('proxy')}
                 format="name"
                 filled
               />

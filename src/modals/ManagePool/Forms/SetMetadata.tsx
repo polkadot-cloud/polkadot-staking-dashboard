@@ -91,7 +91,7 @@ export const SetMetadata = ({ setSection, section }: any) => {
         <input
           className="textbox"
           style={{ width: '100%' }}
-          placeholder={`${t('poolName')}`}
+          placeholder={t('poolName')}
           type="text"
           onChange={(e: React.FormEvent<HTMLInputElement>) =>
             handleMetadataChange(e)

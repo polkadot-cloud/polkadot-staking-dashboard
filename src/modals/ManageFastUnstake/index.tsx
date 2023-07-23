@@ -204,13 +204,13 @@ export const ManageFastUnstake = () => {
         <SubmitTx
           fromController
           valid={valid}
-          submitText={`${
+          submitText={
             submitExtrinsic.submitting
               ? t('submitting')
               : t('fastUnstakeSubmit', {
                   context: isFastUnstaking ? 'cancel' : 'register',
                 })
-          }`}
+          }
           {...submitExtrinsic}
         />
       ) : null}

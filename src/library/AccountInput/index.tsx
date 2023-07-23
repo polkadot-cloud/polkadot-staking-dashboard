@@ -174,7 +174,7 @@ export const AccountInput = ({
           </div>
           <div>
             <input
-              placeholder={`${t('address')}`}
+              placeholder={t('address')}
               type="text"
               onChange={(e: React.FormEvent<HTMLInputElement>) =>
                 handleChange(e)

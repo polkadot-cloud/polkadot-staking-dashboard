@@ -48,7 +48,7 @@ export const Payouts = ({ page }: PageProps) => {
 
   return (
     <>
-      <PageTitle title={`${t(key, { ns: 'base' })}`} />
+      <PageTitle title={t(key, { ns: 'base' })} />
       <StatBoxList>
         <LastEraPayoutStat />
       </StatBoxList>

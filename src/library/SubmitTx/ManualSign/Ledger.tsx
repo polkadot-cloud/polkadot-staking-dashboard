@@ -139,7 +139,7 @@ export const Ledger = ({
         {buttons}
         {getTxSignature() !== null || submitting ? (
           <ButtonSubmit
-            text={`${submitText}`}
+            text={submitText || ''}
             iconLeft={faSquarePen}
             iconTransform="grow-2"
             onClick={() => onSubmit()}

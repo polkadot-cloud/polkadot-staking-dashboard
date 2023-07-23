@@ -177,7 +177,7 @@ export const Unbond = () => {
     <>
       <Close />
       <ModalPadding>
-        <h2 className="title unbounded">{`${t('removeBond')}`}</h2>
+        <h2 className="title unbounded">{t('removeBond')}</h2>
         {warnings.length > 0 ? (
           <ModalWarnings withMargin>
             {warnings.map((text, i) => (

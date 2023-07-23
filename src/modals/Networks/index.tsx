@@ -115,7 +115,7 @@ export const Networks = () => {
               <BraveIconSVG />
               <div className="brave-text">
                 <Trans
-                  defaults={`${t('braveText')}`}
+                  defaults={t('braveText')}
                   components={{ b: <b />, i: <i /> }}
                 />
               </div>

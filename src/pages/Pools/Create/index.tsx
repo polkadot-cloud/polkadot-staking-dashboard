@@ -26,7 +26,7 @@ export const Create = () => {
 
   return (
     <>
-      <PageTitle title={`${t('pools.createAPool')}`} />
+      <PageTitle title={t('pools.createAPool')} />
       <PageRow>
         <PageHeading>
           <span>

@@ -43,7 +43,7 @@ export const Input = ({
         <input
           className="textbox"
           style={{ width: '100%', fontFamily: 'InterSemiBold, sans-serif' }}
-          placeholder={`${t('pools.poolName')}`}
+          placeholder={t('pools.poolName')}
           type="text"
           onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
           value={metadata ?? ''}

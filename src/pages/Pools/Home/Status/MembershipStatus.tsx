@@ -86,7 +86,7 @@ export const MembershipStatus = ({
         <Stat
           label={t('pools.poolMembership')}
           helpKey="Pool Membership"
-          stat={`${t('pools.notInPool')}`}
+          stat={t('pools.notInPool')}
           buttons={!showButtons || isPoolSyncing ? [] : buttons}
           buttonType={buttonType}
         />
