@@ -1,12 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ApiPromise, Keyring, WsProvider } from '@polkadot/api';
 import type { AnyApi, AnyJson, Sync } from 'types';
 import { getParaMeta } from 'config/paras';
 import { useConnect } from 'contexts/Connect';
 import { useApi } from 'contexts/Api';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import type { ParaSyncContextInterface } from './types';
 import { defaultParaSyncContext } from './defaults';
 
@@ -21,16 +22,14 @@ export const ParaSyncProvider = ({
   const [paraBalances, setParaBalances] = useState<AnyJson>({});
 
   // Reference whether the app has been synced.
-  // TODO: try changing to useRef once `useEffectIgnoreInitial` is in place.
-  const [isSyncing, setIsSyncing] = useState<Sync>('unsynced');
+  const isSyncingRef = useRef<Sync>('unsynced');
 
   // We need to connect to `interlay` parachain and check the user's balances.
   const syncBalances = async () => {
-    if (!activeAccount) return;
-
+    if (!activeAccount || isSyncingRef.current !== 'unsynced') return;
     const { endpoints, ss58 } = getParaMeta('interlay');
 
-    setIsSyncing('syncing');
+    isSyncingRef.current = 'syncing';
     const keyring = new Keyring();
     keyring.setSS58Format(ss58);
 
@@ -40,31 +39,29 @@ export const ParaSyncProvider = ({
     // Connect to interlay via new api instance.
     const wsProvider = new WsProvider(endpoints.rpc);
     const api = await ApiPromise.create({ provider: wsProvider });
+
     const tokens = await api.query.tokens.accounts.keys(activeAccountPara);
 
-    // eslint-disable-next-line
-      tokens.forEach((a: AnyApi) => {
-      // TODO: store in state.
+    const tokenBalances: AnyApi[] = [];
+    tokens.forEach((a: AnyApi) => {
+      tokenBalances.push(a.toHuman()[1]);
+    });
+    setParaBalances({
+      ...paraBalances,
+      interlay: [...tokenBalances],
     });
 
     // Sync complete.
-    setIsSyncing('synced');
-
+    isSyncingRef.current = 'synced';
     // Disconnect from chain.
     await api.disconnect();
   };
 
-  // NOTE: needs useEffectIgnoreInitial.
   // NOTE: could make `syncBalances` cancelable and cancel when this useEffect is triggered.
-  useEffect(() => {
-    setIsSyncing('unsynced');
+  useEffectIgnoreInitial(() => {
+    isSyncingRef.current = 'unsynced';
+    syncBalances();
   }, [activeAccount, network]);
-
-  useEffect(() => {
-    if (isSyncing === 'unsynced') {
-      syncBalances();
-    }
-  }, [isSyncing]);
 
   return (
     <ParaSyncContext.Provider value={{ paraBalances }}>
