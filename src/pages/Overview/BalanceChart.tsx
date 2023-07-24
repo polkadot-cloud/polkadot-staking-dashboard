@@ -1,16 +1,23 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCheck,
+  faCheckDouble,
+  faExternalLinkAlt,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ButtonSecondary } from '@polkadotcloud/core-ui';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
+import { useModal } from 'contexts/Modal';
 import { usePlugins } from 'contexts/Plugins';
 import { useTooltip } from 'contexts/Tooltip';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useUi } from 'contexts/UI';
 import { BarSegment } from 'library/BarChart/BarSegment';
 import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
@@ -26,9 +33,11 @@ export const BalanceChart = () => {
   } = useApi();
   const prices = usePrices();
   const { plugins } = usePlugins();
-  const { activeAccount } = useConnect();
+  const { isNetworkSyncing } = useUi();
+  const { openModalWith } = useModal();
   const { setTooltipTextAndOpen } = useTooltip();
   const { getBalance, getLocks } = useBalances();
+  const { activeAccount, accountHasSigner } = useConnect();
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const balance = getBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
@@ -243,15 +252,36 @@ export const BalanceChart = () => {
             <div
               style={{
                 flex: 0,
-                minWidth: '8.5rem',
-                maxWidth: '8.5rem',
+                minWidth: '13rem',
+                maxWidth: '13rem',
                 flexBasis: '50%',
               }}
             >
               <Legend>
                 <LegendItem
-                  label={t('overview.reserve')}
-                  helpKey="Reserve Balance"
+                  label=""
+                  button={
+                    <ButtonSecondary
+                      text={t('overview.updateReserve')}
+                      onClick={() =>
+                        openModalWith('UpdateReserve', {}, 'small')
+                      }
+                      iconRight={
+                        isNetworkSyncing
+                          ? undefined
+                          : !feeReserve.isZero() && !edReserved.isZero()
+                          ? faCheckDouble
+                          : feeReserve.isZero() && edReserved.isZero()
+                          ? undefined
+                          : faCheck
+                      }
+                      disabled={
+                        !activeAccount ||
+                        isNetworkSyncing ||
+                        !accountHasSigner(activeAccount)
+                      }
+                    />
+                  }
                 />
               </Legend>
               <Bar>

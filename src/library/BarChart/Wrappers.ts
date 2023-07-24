@@ -50,7 +50,7 @@ export const Legend = styled.div`
   > h4 {
     font-family: InterSemiBold, sans-serif;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     padding: 0.5rem 1rem;
     font-size: 1.1rem;
     margin: 0;
