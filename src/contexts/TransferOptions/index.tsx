@@ -9,8 +9,9 @@ import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import type { MaybeAccount } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import * as defaults from './defaults';
 import type { TransferOptions, TransferOptionsContextInterface } from './types';
 
@@ -47,7 +48,7 @@ export const TransferOptionsProvider = ({
   );
 
   // Update an account's reserve amount on account or network change.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     setFeeReserve(getFeeReserveLocalStorage(activeAccount));
   }, [activeAccount, name]);
 

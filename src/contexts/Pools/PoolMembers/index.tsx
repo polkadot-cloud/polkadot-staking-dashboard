@@ -5,8 +5,9 @@ import { setStateWithRef } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { usePlugins } from 'contexts/Plugins';
 import type { PoolMember, PoolMemberContext } from 'contexts/Pools/types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount, Sync } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
 
@@ -42,19 +43,19 @@ export const PoolMembersProvider = ({
   };
 
   // Clear existing state for network refresh
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     setPoolMembersNode([]);
     unsubscribeAndResetMeta();
   }, [network]);
 
   // Clear meta state when activeAccount changes
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     unsubscribeAndResetMeta();
   }, [activeAccount]);
 
   // Initial setup for fetching members if Subscan is not enabled. Ensure poolMembers are reset if
   // subscan is disabled.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (!pluginEnabled('subscan')) {
       if (isReady) fetchPoolMembers();
     } else {

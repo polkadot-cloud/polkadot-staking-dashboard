@@ -27,6 +27,7 @@ import {
 } from 'contexts/Hardware/Utils';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useImportExtension } from './Hooks/useImportExtension';
 import {
   extensionIsLocal,
@@ -139,7 +140,7 @@ export const ConnectProvider = ({
 
   // once initialised extensions equal total extensions present in
   // `injectedWeb3`, mark extensions as fetched
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (!checkingInjectedWeb3) {
       if (extensionsInitialisedRef.current.length === extensions?.length || 0) {
         setExtensionsFetched(true);
@@ -149,7 +150,7 @@ export const ConnectProvider = ({
 
   // once extensions are fully initialised, fetch any external accounts present
   // in localStorage.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (extensionsFetched) {
       importVaultAccounts();
       importLedgerAccounts();
@@ -160,7 +161,7 @@ export const ConnectProvider = ({
   }, [extensionsFetched]);
 
   // account fetching complete, mark accounts as initialised.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (extensionsFetched && hardwareInitialisedRef.current === true) {
       accountsInitialisedRef.current = true;
     }

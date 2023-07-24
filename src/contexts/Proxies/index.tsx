@@ -15,8 +15,9 @@ import BigNumber from 'bignumber.js';
 import { isSupportedProxy } from 'config/proxies';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import * as defaults from './defaults';
 import type {
   Delegates,
@@ -166,7 +167,7 @@ export const ProxiesProvider = ({
       ?.delegates.find((d) => d.delegate === delegate) ?? null;
 
   // Subscribe new accounts to proxies, and remove accounts that are no longer imported.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       handleSyncAccounts();
     }
@@ -174,7 +175,7 @@ export const ProxiesProvider = ({
 
   // If active proxy has not yet been set, check local storage `activeProxy` & set it as active
   // proxy if it is the delegate of `activeAccount`.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     const localActiveProxy = localStorageOrDefault(
       `${network.name}_active_proxy`,
       null
@@ -211,7 +212,7 @@ export const ProxiesProvider = ({
   }, [accounts, activeAccount, proxiesRef.current, network]);
 
   // Reset active proxy state, unsubscribe from subscriptions on network change & unmount.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     setActiveProxy(null, false);
     unsubAll();
     return () => unsubAll();
@@ -225,7 +226,7 @@ export const ProxiesProvider = ({
   };
 
   // Listens to `proxies` state updates and reformats the data into a list of delegates.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     // Reformat proxiesRef.current into a list of delegates.
     const newDelegates: Delegates = {};
     for (const proxy of proxiesRef.current) {

@@ -30,6 +30,7 @@ import type {
 } from 'contexts/Api/types';
 import React, { useEffect, useState } from 'react';
 import type { AnyApi, NetworkName } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import * as defaults from './defaults';
 
 export const APIProvider = ({ children }: { children: React.ReactNode }) => {
@@ -138,7 +139,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Dynamically load `Sc` when user opts to use light client.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isLightClient) {
       setApiStatus('connecting');
       const { promise: ScPromise, cancel } = makeCancelable(
@@ -154,7 +155,7 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
   }, [isLightClient, network.name]);
 
   // Initialise provider event handlers when provider is set.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (provider) {
       provider.on('connected', () => {
         setApiStatus('connected');

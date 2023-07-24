@@ -13,9 +13,10 @@ import { format, fromUnixTime } from 'date-fns';
 import { sortNonZeroPayouts } from 'library/Graphs/Utils';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { locales } from 'locale';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyApi, AnySubscan } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { usePlugins } from '../Plugins';
@@ -73,26 +74,26 @@ export const SubscanProvider = ({
   };
 
   // Fetch payouts on plugins toggle.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isNotZero(activeEra.index)) {
       handleFetchPayouts();
     }
   }, [plugins, activeEra]);
 
   // Reset payouts on network switch.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     resetPayouts();
   }, [network]);
 
   // Fetch payouts as soon as network is ready.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady && isNotZero(activeEra.index)) {
       handleFetchPayouts();
     }
   }, [isReady, network, activeAccount, activeEra]);
 
   // Store start and end date of fetched payouts.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     const filteredPayouts = sortNonZeroPayouts(payouts, poolClaims, true);
     if (filteredPayouts.length) {
       setPayoutsFromDate(

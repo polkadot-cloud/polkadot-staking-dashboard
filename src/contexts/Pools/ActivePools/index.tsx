@@ -72,25 +72,6 @@ export const ActivePoolsProvider = ({
   // Should default to the membership pool (if present).
   const [selectedPoolId, setSelectedPoolId] = useState<string | null>(null);
 
-  // re-sync when number of accountRoles change.
-  // this can happen when bondedPools sync, when roles
-  // are edited within the dashboard, or when pool
-  // membership changes.
-  useEffect(() => {
-    unsubscribeActivePools();
-    unsubscribePoolNominations();
-
-    setStateWithRef('unsynced', setSynced, syncedRef);
-  }, [activeAccount, accountPools.length]);
-
-  // subscribe to pool that the active account is a member of.
-  useEffect(() => {
-    if (isReady && syncedRef.current === 'unsynced') {
-      setStateWithRef('syncing', setSynced, syncedRef);
-      handlePoolSubscriptions();
-    }
-  }, [network, isReady, syncedRef.current]);
-
   const getActivePoolMembership = () =>
     // get the activePool that the active account
     activePoolsRef.current.find((a) => {
@@ -460,6 +441,24 @@ export const ActivePoolsProvider = ({
       getActivePoolMembership()?.id || 0
     );
   };
+
+  // re-sync when number of accountRoles change.
+  // this can happen when bondedPools sync, when roles
+  // are edited within the dashboard, or when pool
+  // membership changes.
+  useEffectIgnoreInitial(() => {
+    unsubscribeActivePools();
+    unsubscribePoolNominations();
+    setStateWithRef('unsynced', setSynced, syncedRef);
+  }, [activeAccount, accountPools.length]);
+
+  // subscribe to pool that the active account is a member of.
+  useEffectIgnoreInitial(() => {
+    if (isReady && syncedRef.current === 'unsynced') {
+      setStateWithRef('syncing', setSynced, syncedRef);
+      handlePoolSubscriptions();
+    }
+  }, [network, isReady, syncedRef.current]);
 
   // unsubscribe all on component unmount
   useEffect(
