@@ -51,6 +51,8 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
       transition: color var(--transition-duration);
       color: var(--text-color-primary);
       margin-left: 0.35rem;
+      position: relative;
+
       &:hover {
         color: var(--network-color-primary);
       }

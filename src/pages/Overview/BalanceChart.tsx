@@ -9,12 +9,14 @@ import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { usePlugins } from 'contexts/Plugins';
+import { useTooltip } from 'contexts/Tooltip';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { BarSegment } from 'library/BarChart/BarSegment';
 import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
+import { TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
 
 export const BalanceChart = () => {
@@ -25,6 +27,7 @@ export const BalanceChart = () => {
   const prices = usePrices();
   const { plugins } = usePlugins();
   const { activeAccount } = useConnect();
+  const { setTooltipTextAndOpen } = useTooltip();
   const { getBalance, getLocks } = useBalances();
   const { feeReserve, getTransferOptions } = useTransferOptions();
   const balance = getBalance(activeAccount);
@@ -136,6 +139,11 @@ export const BalanceChart = () => {
               )
             }
           >
+            <TooltipTrigger
+              className="tooltip-trigger-element"
+              data-tooltip-text="Subscan"
+              onMouseMove={() => setTooltipTextAndOpen('Subscan')}
+            />
             <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-5" />
           </button>
         </h4>
