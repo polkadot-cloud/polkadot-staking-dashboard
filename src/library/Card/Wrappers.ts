@@ -46,6 +46,18 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
     flex-flow: row wrap;
     align-items: center;
     flex-grow: ${(props) => (props.$withAction ? 1 : 0)};
+
+    .icon {
+      transition: color var(--transition-duration);
+      color: var(--text-color-primary);
+      margin-left: 0.35rem;
+      &:hover {
+        color: var(--network-color-primary);
+      }
+      &.disabled {
+        opacity: var(--opacity-disabled);
+      }
+    }
   }
   .note {
     color: var(--text-color-secondary);

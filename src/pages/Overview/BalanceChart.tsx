@@ -1,6 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -18,7 +20,7 @@ import { useTranslation } from 'react-i18next';
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
   const {
-    network: { units, unit },
+    network: { units, unit, name },
   } = useApi();
   const prices = usePrices();
   const { plugins } = usePlugins();
@@ -121,7 +123,22 @@ export const BalanceChart = () => {
   return (
     <>
       <CardHeaderWrapper>
-        <h4>{t('overview.balance')}</h4>
+        <h4>
+          {t('overview.balance')}
+          <button
+            type="button"
+            className="icon"
+            disabled={!activeAccount}
+            onClick={() =>
+              window.open(
+                `https://${name}.subscan.io/account/${activeAccount}`,
+                '_blank'
+              )
+            }
+          >
+            <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-5" />
+          </button>
+        </h4>
         <h2>
           <span className="amount">{totalBalance.toFormat()}</span>&nbsp;
           {unit}
