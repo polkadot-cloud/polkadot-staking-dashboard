@@ -56,8 +56,11 @@ export const CardHeaderWrapper = styled.div<CardHeaderWrapperProps>`
       &:hover {
         color: var(--network-color-primary);
       }
-      &.disabled {
+      &:disabled {
         opacity: var(--opacity-disabled);
+        &:hover {
+          color: var(--text-color-primary);
+        }
       }
     }
   }

@@ -139,11 +139,13 @@ export const BalanceChart = () => {
               )
             }
           >
-            <TooltipTrigger
-              className="tooltip-trigger-element"
-              data-tooltip-text="Subscan"
-              onMouseMove={() => setTooltipTextAndOpen('Subscan')}
-            />
+            {activeAccount && (
+              <TooltipTrigger
+                className="tooltip-trigger-element"
+                data-tooltip-text="Subscan"
+                onMouseMove={() => setTooltipTextAndOpen('Subscan')}
+              />
+            )}
             <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-5" />
           </button>
         </h4>
