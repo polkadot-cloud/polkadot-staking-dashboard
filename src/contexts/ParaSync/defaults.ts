@@ -4,6 +4,5 @@
 import type { ParaSyncContextInterface } from './types';
 
 export const defaultParaSyncContext: ParaSyncContextInterface = {
-  // eslint-disable-next-line
-  value: [],
+  paraBalances: {},
 };

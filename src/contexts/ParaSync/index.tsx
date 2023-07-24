@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ApiPromise, WsProvider } from '@polkadot/api';
-import type { Sync } from 'types';
+import type { AnyApi, AnyJson, Sync } from 'types';
 import type { ParaSyncContextInterface } from './types';
 import { defaultParaSyncContext } from './defaults';
 
@@ -12,6 +12,9 @@ export const ParaSyncProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  // Store para token balances.
+  const [paraBalances, setParaBalances] = useState<AnyJson>({});
+
   // Reference whether the app has been synced.
   const isSyncing = useRef<Sync>('unsynced');
 
@@ -24,12 +27,21 @@ export const ParaSyncProvider = ({
       'wss://interlay.api.onfinality.io/public-ws'
     );
 
-    // eslint-disable-next-line
     const api = await ApiPromise.create({ provider: wsProvider });
-    // TODO: query `tokens.accounts` to get token balances on chain.
+    const tokens = await api.query.tokens.accounts.keys(
+      'wdBZx2yePrrFqtqpoc7Z66gJX9r38DzdHqH66m3AokSxt9NAn'
+    );
+
+    // eslint-disable-next-line
+    tokens.forEach((a: AnyApi) => {
+      // TODO: store in state.
+    });
 
     // Sync complete.
     isSyncing.current = 'synced';
+
+    // Disconnect from chain.
+    await api.disconnect();
   };
 
   useEffect(() => {
@@ -39,7 +51,9 @@ export const ParaSyncProvider = ({
   }, [isSyncing.current]);
 
   return (
-    <ParaSyncContext.Provider value={{}}>{children}</ParaSyncContext.Provider>
+    <ParaSyncContext.Provider value={{ paraBalances }}>
+      {children}
+    </ParaSyncContext.Provider>
   );
 };
 
