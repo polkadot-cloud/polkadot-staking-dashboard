@@ -152,9 +152,9 @@ export const ValidatorCommunity = [
       ],
     },
   },
-    {
-    name: 'DOZENODES',
-    thumbnail: 'DOZENODES',
+  {
+    name: 'Dozenodes',
+    thumbnail: 'Dozenodes',
     bio: 'Independent Polkadot and Kusama Validator. We are running secure and reliable nodes based in central europe operated by experienced engineers.',
     email: 'contact@dozenodes.com',
     website: 'https://dozenodes.com',
