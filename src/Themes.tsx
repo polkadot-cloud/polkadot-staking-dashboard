@@ -9,7 +9,7 @@ import { useTheme } from 'contexts/Themes';
 
 // App-wide theme classes are inserted here.
 //
-// App-specific theming is added to `ThemeProvider.
+// App-specific theming is added to `ThemeProvider`.
 // `@polkadotcloud/core-ui` themes are added to `Entry`.
 export const ThemedRouter = () => {
   const { mode } = useTheme();
