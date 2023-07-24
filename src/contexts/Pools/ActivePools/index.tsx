@@ -11,6 +11,7 @@ import type {
 import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { AnyApi, AnyJson, Sync } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import { useBondedPools } from '../BondedPools';
@@ -470,7 +471,7 @@ export const ActivePoolsProvider = ({
   );
 
   // re-calculate pending rewards when membership changes
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     updatePendingRewards();
   }, [
     network,
@@ -482,7 +483,7 @@ export const ActivePoolsProvider = ({
 
   // when we are subscribed to all active pools, syncing is considered
   // completed.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (unsubNominations.current.length === accountPools.length) {
       setStateWithRef('synced', setSynced, syncedRef);
     }
