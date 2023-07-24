@@ -10,6 +10,8 @@ export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
 export type Networks = Record<string, Network>;
 
+export type Paras = Record<string, Para>;
+
 type NetworkColor =
   | 'primary'
   | 'secondary'
@@ -51,6 +53,15 @@ export interface Network {
   };
   params: Record<string, number>;
   defaultFeeReserve: number;
+}
+
+export interface Para {
+  endpoints: {
+    rpc: string;
+  };
+  unit: string;
+  units: number;
+  ss58: number;
 }
 
 export interface PageCategory {
