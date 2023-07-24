@@ -15,7 +15,7 @@ import { useUi } from 'contexts/UI';
 import { useTranslation } from 'react-i18next';
 import { MoreWrapper } from './Wrappers';
 
-export const BalanceLinks = () => {
+export const BalanceFooter = () => {
   const { t } = useTranslation('pages');
   const { name } = useApi().network;
   const { openModalWith } = useModal();

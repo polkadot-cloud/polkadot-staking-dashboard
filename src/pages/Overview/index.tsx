@@ -22,7 +22,7 @@ import { ControllerNotStash } from 'pages/Nominate/Active/ControllerNotStash';
 import { useTranslation } from 'react-i18next';
 import { ActiveAccounts } from './ActiveAccounts';
 import { BalanceChart } from './BalanceChart';
-import { BalanceLinks } from './BalanceLinks';
+import { BalanceFooter } from './BalanceFooter';
 import { NetworkStats } from './NetworkSats';
 import { Payouts } from './Payouts';
 import { StakeStatus } from './StakeStatus';
@@ -81,7 +81,7 @@ export const Overview = () => {
         <RowSection secondary>
           <CardWrapper height={PAYOUTS_HEIGHT} $flex>
             <BalanceChart />
-            <BalanceLinks />
+            <BalanceFooter />
           </CardWrapper>
         </RowSection>
         <RowSection hLast vLast>
