@@ -10,8 +10,9 @@ import type {
   PoolConfigState,
   PoolsConfigContextState,
 } from 'contexts/Pools/types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type { AnyApi } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../../Api';
 import * as defaults from './defaults';
 
@@ -41,7 +42,7 @@ export const PoolsConfigProvider = ({
   // stores the user's favorite pools
   const [favorites, setFavorites] = useState<string[]>(getLocalFavorites());
 
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       subscribeToPoolConfig();
     }

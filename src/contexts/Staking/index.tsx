@@ -20,10 +20,11 @@ import type {
   StakingMetrics,
   StakingTargets,
 } from 'contexts/Staking/types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
 import type { ResponseInitialiseExposures } from 'workers/types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
@@ -79,7 +80,7 @@ export const StakingProvider = ({
     ) as StakingTargets
   );
 
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (apiStatus === 'connecting') {
       setStateWithRef(defaultEraStakers, setEraStakers, eraStakersRef);
       setStakingMetrics(stakingMetrics);
@@ -87,7 +88,7 @@ export const StakingProvider = ({
   }, [apiStatus]);
 
   // handle staking metrics subscription
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       unsubscribeMetrics();
       subscribeToStakingkMetrics();
@@ -106,13 +107,13 @@ export const StakingProvider = ({
   };
 
   // handle syncing with eraStakers
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       fetchEraStakers();
     }
   }, [isReady, activeEra.index, activeAccount]);
 
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (activeAccount) {
       // set account's targets
       setTargetsState(

@@ -6,7 +6,8 @@ import { AppVersion } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
-import React, { useEffect, useState } from 'react';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import React, { useState } from 'react';
 
 export const MigrateProvider = ({
   children,
@@ -43,7 +44,7 @@ export const MigrateProvider = ({
       localStorage.removeItem(`${n.name}_active_proxy`);
     });
 
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady && !isNetworkSyncing && !done) {
       // Carry out migrations if local version is different to current version.
       if (localAppVersion !== AppVersion) {
