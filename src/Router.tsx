@@ -40,19 +40,19 @@ export const RouterInner = () => {
     useConnect();
   const { sideMenuOpen, sideMenuMinimised, setContainerRefs } = useUi();
 
-  // scroll to top of the window on every page change or network change.
+  // Scroll to top of the window on every page change or network change.
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname, network]);
 
-  // set references to UI context and make available throughout app.
+  // Set references to UI context and make available throughout app.
   useEffect(() => {
     setContainerRefs({
       mainInterface: mainInterfaceRef,
     });
   }, []);
 
-  // open default account modal if url var present and accounts initialised.
+  // Open default account modal if url var present and accounts initialised.
   useEffect(() => {
     if (accountsInitialised) {
       const aUrl = extractUrlValue('a');
@@ -71,7 +71,7 @@ export const RouterInner = () => {
     }
   }, [accountsInitialised]);
 
-  // references to outer containers
+  // References to outer containers
   const mainInterfaceRef = useRef<HTMLDivElement>(null);
 
   return (
