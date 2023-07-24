@@ -7,7 +7,7 @@ import {
   faExternalLinkAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSecondary } from '@polkadotcloud/core-ui';
+import { ButtonTertiary } from '@polkadotcloud/core-ui';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -257,12 +257,12 @@ export const BalanceChart = () => {
                 flexBasis: '50%',
               }}
             >
-              <Legend>
+              <Legend className="end">
                 <LegendItem
                   label=""
                   button={
-                    <ButtonSecondary
-                      text={t('overview.updateReserve')}
+                    <ButtonTertiary
+                      text="Reserve Balance"
                       onClick={() =>
                         openModalWith('UpdateReserve', {}, 'small')
                       }
@@ -275,6 +275,7 @@ export const BalanceChart = () => {
                           ? undefined
                           : faCheck
                       }
+                      iconTransform="shrink-1"
                       disabled={
                         !activeAccount ||
                         isNetworkSyncing ||
