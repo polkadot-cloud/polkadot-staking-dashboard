@@ -7,8 +7,9 @@ import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import type { AnyJson, MaybeAccount } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import * as defaults from './defaults';
 import type { TxMetaContextInterface } from './types';
 
@@ -41,7 +42,7 @@ export const TxMetaProvider = ({ children }: { children: React.ReactNode }) => {
   const [txSignature, setTxSignatureState] = useState<AnyJson>(null);
   const txSignatureRef = React.useRef(txSignature);
 
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     const { freeBalance } = getTransferOptions(sender);
     setNotEnoughFunds(freeBalance.minus(txFees).isLessThan(0));
   }, [txFees, sender]);

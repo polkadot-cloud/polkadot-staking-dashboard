@@ -3,8 +3,9 @@
 
 import { setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type { AnyApi, AnyJson } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../Api';
 import * as defaults from './defaults';
 import type {
@@ -121,7 +122,7 @@ export const NetworkMetricsProvider = ({
   };
 
   // manage unsubscribe
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     initialiseSubscriptions();
     return () => {
       unsubscribe();
@@ -129,7 +130,7 @@ export const NetworkMetricsProvider = ({
   }, [isReady]);
 
   // Reset active era and metrics on network change.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     handleResetMetrics();
   }, [network]);
 

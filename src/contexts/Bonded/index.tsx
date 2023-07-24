@@ -12,6 +12,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import * as defaults from './defaults';
 import type { BondedAccount, BondedContextInterface } from './types';
 
@@ -61,19 +62,20 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Handle accounts sync on connected accounts change.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       handleSyncAccounts();
     }
   }, [accounts, network, isReady]);
 
   // Unsubscribe from subscriptions on unmount.
-  useEffect(() => {
-    return () =>
+  useEffect(
+    () => () =>
       Object.values(unsubs.current).forEach((unsub) => {
         unsub();
-      });
-  }, []);
+      }),
+    []
+  );
 
   // Subscribe to account, get controller and nominations.
   const subscribeToBondedAccount = async (address: string) => {

@@ -11,6 +11,7 @@ import type {
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyApi, Fn } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import * as defaults from './defaults';
@@ -31,7 +32,7 @@ export const PoolMembershipsProvider = ({
   // stores pool subscription objects
   const poolMembershipUnsubs = useRef<AnyApi[]>([]);
 
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       (() => {
         setStateWithRef([], setPoolMemberships, poolMembershipsRef);
