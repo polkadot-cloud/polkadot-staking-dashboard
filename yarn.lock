@@ -1893,13 +1893,13 @@
     eventemitter3 "^4.0.7"
     smoldot "1.0.4"
 
-"@substrate/connect@^0.7.30":
-  version "0.7.30"
-  resolved "https://registry.yarnpkg.com/@substrate/connect/-/connect-0.7.30.tgz#bc633d869e47efb32dc6b7b39f716b5d8d83646c"
-  integrity sha512-njt7lVc3GsoLWfynAh3VhOgjBRQYdT3Cd4N+QPANhHk3GTLQmfxvDUU4zQm1O3pYORY/lZOHlBtR0HoJklte0Q==
+"@substrate/connect@^0.7.31":
+  version "0.7.31"
+  resolved "https://registry.yarnpkg.com/@substrate/connect/-/connect-0.7.31.tgz#a815acdf727e1e49815c7faee5acf049743aa339"
+  integrity sha512-a6D1Yjk5b2D5QJn1HZEN/6J9Kk5YROO0AxfY7apFamkYJCePfKkCsBrergOFAk1ZC3x1FhGdSxUvfYyqPq8knw==
   dependencies:
     "@substrate/connect-extension-protocol" "^1.0.1"
-    smoldot "1.0.11"
+    smoldot "1.0.13"
 
 "@substrate/ss58-registry@^1.40.0":
   version "1.41.0"
@@ -5302,10 +5302,10 @@ slash@^4.0.0:
   resolved "https://registry.yarnpkg.com/slash/-/slash-4.0.0.tgz#2422372176c4c6c5addb5e2ada885af984b396a7"
   integrity sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==
 
-smoldot@1.0.11:
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/smoldot/-/smoldot-1.0.11.tgz#cd3fa68be0c51bd4d312772d4e9b8835d05d759d"
-  integrity sha512-sDp8oo6RWFPId59nuNKxKzBP9wu0czfFDW7WHMqxwopo12ffpijOo3aTL1PVcNFVo6lZhXxOKFCudhQCfhrZ7w==
+smoldot@1.0.13:
+  version "1.0.13"
+  resolved "https://registry.yarnpkg.com/smoldot/-/smoldot-1.0.13.tgz#582276d94159a3ddace3c4979cc3000141852d2c"
+  integrity sha512-IxOBMzsPles/8JlFM7Sm1ckunul3e6mYWBopf+Kg7zHmxtRwpox4nnEfaGxmhhHC8JgQVwsVPHa14AeQxtk6vA==
   dependencies:
     ws "^8.8.1"
 
