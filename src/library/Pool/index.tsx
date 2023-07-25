@@ -124,7 +124,7 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
           />
           <div>
             <Labels>
-              {currentCommission && (
+              {currentCommission > 0 && (
                 <PoolCommission commission={`${currentCommission}%`} />
               )}
               <PoolId id={id} />
