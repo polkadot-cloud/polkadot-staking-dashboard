@@ -34,7 +34,7 @@
     "@polkadotcloud/react-odometer": "^0.1.17",
     "@polkadotcloud/themes": "^0.1.0",
     "@polkadotcloud/utils": "^0.2.22",
-    "@substrate/connect": "^0.7.30",
+    "@substrate/connect": "^0.7.31",
     "@zondax/ledger-substrate": "^0.41.1",
     "bignumber.js": "^9.1.1",
     "bn.js": "^5.2.1",
@@ -61,7 +61,7 @@
   "devDependencies": {
     "@ledgerhq/logs": "^6.10.1",
     "@types/lodash.throttle": "^4.1.7",
-    "@types/react": "^18.2.15",
+    "@types/react": "^18.2.16",
     "@types/react-dom": "^18.2.7",
     "@types/react-helmet": "^6.1.6",
     "@types/react-qr-reader": "^2.1.4",
