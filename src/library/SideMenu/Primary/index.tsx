@@ -28,7 +28,9 @@ export const Primary = ({
     case 'text':
       Action = (
         <div className="action text">
-          <span className={`${actionStatus}`}>{action?.text ?? ''}</span>
+          <span className={actionStatus || undefined}>
+            {action?.text ?? ''}
+          </span>
         </div>
       );
       break;

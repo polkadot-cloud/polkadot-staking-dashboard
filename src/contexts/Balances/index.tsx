@@ -12,8 +12,9 @@ import {
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { getLedger } from './Utils';
 import * as defaults from './defaults';
 import type {
@@ -139,11 +140,7 @@ export const BalancesProvider = ({
             balance: {
               free,
               reserved: new BigNumber(accountData.reserved.toString()),
-              frozen: new BigNumber(
-                network.name === 'westend' // this can be removed once system.account is upgraded on Polkadot and Kusama
-                  ? accountData.frozen.toString()
-                  : accountData.miscFrozen.toString()
-              ),
+              frozen: new BigNumber(accountData.frozen.toString()),
             },
             locks: locks.toHuman().map((l: AnyApi) => ({
               ...l,
@@ -177,14 +174,14 @@ export const BalancesProvider = ({
   };
 
   // fetch account balances & ledgers. Remove or add subscriptions
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       handleSyncAccounts();
     }
   }, [accounts, network, isReady]);
 
   // Unsubscribe from subscriptions on network change & unmount.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     unsubAll();
     return () => unsubAll();
   }, [network]);

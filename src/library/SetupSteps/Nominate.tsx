@@ -32,12 +32,12 @@ export const Nominate = ({ batchKey, bondFor, section }: NominationsProps) => {
       <Header
         thisSection={section}
         complete={progress.nominations.length > 0}
-        title={`${t('nominate')}`}
+        title={t('nominate')}
         helpKey="Nominating"
         bondFor={bondFor}
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <h4 style={{ marginTop: '0.5rem' }}>
+        <h4 className="withMargin">
           {t('chooseValidators', { maxNominations: maxNominations.toString() })}
         </h4>
         <GenerateNominations

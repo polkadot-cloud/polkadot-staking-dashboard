@@ -1,8 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import type { MaybeString } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import * as defaults from './defaults';
 import type {
   HelpContextInterface,
@@ -18,7 +19,7 @@ export const HelpProvider = ({ children }: HelpContextProps) => {
   });
 
   // when fade out completes, reset active definiton
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (state.status === 0) {
       setState({
         ...state,

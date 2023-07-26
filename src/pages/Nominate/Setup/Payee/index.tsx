@@ -73,12 +73,12 @@ export const Payee = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={isComplete()}
-        title={`${t('nominate.payoutDestination')}`}
+        title={t('nominate.payoutDestination')}
         helpKey="Payout Destination"
         bondFor="nominator"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <h4 style={{ marginTop: '0.5rem' }}>
+        <h4 className="withMargin">
           {t('nominate.payoutDestinationSubtitle')}
         </h4>
 

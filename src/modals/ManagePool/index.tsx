@@ -1,21 +1,23 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  ModalFixedTitle,
+  ModalMotionTwoSection,
+  ModalSection,
+} from '@polkadotcloud/core-ui';
 import { useModal } from 'contexts/Modal';
+import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  FixedTitleWrapper,
-  MultiSectionWrapper,
-  TwoSectionsWrapper,
-} from '../Wrappers';
 import { Forms } from './Forms';
 import { Tasks } from './Tasks';
 
 export const ManagePool = () => {
   const { t } = useTranslation('modals');
   const { setModalHeight } = useModal();
+  const { isOwner, selectedActivePool } = useActivePools();
 
   // modal task
   const [task, setTask] = useState<string>();
@@ -42,14 +44,17 @@ export const ManagePool = () => {
       height += formsRef.current?.clientHeight || 0;
     }
     setModalHeight(height);
-  }, [section, task, calculateHeight]);
+  }, [section, task, calculateHeight, selectedActivePool?.bondedPool?.state]);
 
   return (
-    <MultiSectionWrapper>
-      <FixedTitleWrapper ref={headerRef}>
-        <Title title={t('managePool')} fixed />
-      </FixedTitleWrapper>
-      <TwoSectionsWrapper
+    <ModalSection type="carousel">
+      <ModalFixedTitle ref={headerRef}>
+        <Title
+          title={`${t('managePool')}${!isOwner() ? ` Membership` : ``}`}
+          fixed
+        />
+      </ModalFixedTitle>
+      <ModalMotionTwoSection
         animate={section === 0 ? 'home' : 'next'}
         transition={{
           duration: 0.5,
@@ -73,7 +78,7 @@ export const ManagePool = () => {
           ref={formsRef}
           incrementCalculateHeight={incrementCalculateHeight}
         />
-      </TwoSectionsWrapper>
-    </MultiSectionWrapper>
+      </ModalMotionTwoSection>
+    </ModalSection>
   );
 };

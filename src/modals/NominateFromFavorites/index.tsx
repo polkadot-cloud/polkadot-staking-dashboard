@@ -1,6 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import {
+  ModalFooter,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -16,7 +21,6 @@ import { SubmitTx } from 'library/SubmitTx';
 import { ValidatorList } from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FooterWrapper, PaddingWrapper, WarningsWrapper } from '../Wrappers';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {
@@ -129,14 +133,14 @@ export const NominateFromFavorites = () => {
   return (
     <>
       <Title title={t('nominateFavorites')} />
-      <PaddingWrapper>
+      <ModalPadding>
         <div style={{ marginBottom: '1rem', width: '100%' }}>
           {warnings.length ? (
-            <WarningsWrapper>
+            <ModalWarnings withMargin>
               {warnings.map((text, i) => (
                 <Warning key={`warning_${i}`} text={text} />
               ))}
-            </WarningsWrapper>
+            </ModalWarnings>
           ) : null}
         </div>
         <ListWrapper>
@@ -159,7 +163,7 @@ export const NominateFromFavorites = () => {
             <h3>{t('noFavoritesAvailable')}</h3>
           )}
         </ListWrapper>
-        <FooterWrapper>
+        <ModalFooter>
           <h3
             className={
               selectedFavorites.length === 0 ||
@@ -178,8 +182,8 @@ export const NominateFromFavorites = () => {
                   })}`
               : `${t('noFavoritesSelected')}`}
           </h3>
-        </FooterWrapper>
-      </PaddingWrapper>
+        </ModalFooter>
+      </ModalPadding>
       <SubmitTx
         fromController={bondFor === 'nominator'}
         valid={valid && !(bondFor === 'pool' && !isNominator() && !isOwner())}

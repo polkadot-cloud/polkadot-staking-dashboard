@@ -3,12 +3,12 @@
 
 import styled from 'styled-components';
 
-export const Wrapper = styled.div<{ last?: boolean }>`
+export const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column wrap;
   padding-bottom: 0.5rem;
-  margin-top: 1.25rem;
+  margin-top: 1rem;
 
   .account {
     width: 100%;

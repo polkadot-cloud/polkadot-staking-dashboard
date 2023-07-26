@@ -5,33 +5,43 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { PageRow } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
+import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useTheme } from 'contexts/Themes';
-import { CardWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Card/Wrappers';
 import { useTranslation } from 'react-i18next';
-import { MembersList } from './MembersList';
+import { MembersList as DefaultMemberList } from './MembersList/Default';
+import { MembersList as FetchPageMemberList } from './MembersList/FetchPage';
 
-export const Members = () => {
+export const Members = ({ memberCount }: { memberCount: number }) => {
   const { t } = useTranslation('pages');
-  const { colors } = useApi().network;
   const { mode } = useTheme();
-  const { getMembersOfPool } = usePoolMembers();
-  const { selectedActivePool, isOwner, isStateToggler } = useActivePools();
+  const { pluginEnabled } = usePlugins();
+  const { getMembersOfPoolFromNode } = usePoolMembers();
+  const { selectedActivePool, isOwner, isBouncer } = useActivePools();
+  const { colors } = useApi().network;
 
-  const poolMembers = getMembersOfPool(selectedActivePool?.id ?? 0);
-  const poolMembersTitle = `${t('pools.poolMember', {
-    count: poolMembers.length,
+  const listTitle = `${t('pools.poolMember', {
+    count: memberCount,
   })}`;
   const annuncementBorderColor = colors.secondary[mode];
 
   const showBlockedPrompt =
     selectedActivePool?.bondedPool?.state === 'Blocked' &&
-    (isOwner() || isStateToggler());
+    (isOwner() || isBouncer());
+
+  const membersListProps = {
+    title: listTitle,
+    batchKey: 'active_pool_members',
+    pagination: true,
+    selectToggleable: false,
+    allowMoreCols: true,
+  };
 
   return (
     <>
-      {/* Pool in Blocked state: allow root & stage toggler to unbond & withdraw members */}
+      {/* Pool in Blocked state: allow root & bouncer to unbond & withdraw members */}
       {showBlockedPrompt && (
         <PageRow>
           <CardWrapper
@@ -69,14 +79,17 @@ export const Members = () => {
 
       <PageRow>
         <CardWrapper>
-          <MembersList
-            title={poolMembersTitle}
-            batchKey="active_pool_members"
-            members={poolMembers}
-            pagination
-            selectToggleable={false}
-            allowMoreCols
-          />
+          {pluginEnabled('subscan') ? (
+            <FetchPageMemberList
+              {...membersListProps}
+              memberCount={memberCount}
+            />
+          ) : (
+            <DefaultMemberList
+              {...membersListProps}
+              members={getMembersOfPoolFromNode(selectedActivePool?.id ?? 0)}
+            />
+          )}
         </CardWrapper>
       </PageRow>
     </>

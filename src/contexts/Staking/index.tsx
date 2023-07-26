@@ -14,14 +14,17 @@ import type { ExternalAccount } from 'contexts/Connect/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type {
   EraStakers,
+  Exposure,
   NominationStatuses,
   StakingContextInterface,
   StakingMetrics,
   StakingTargets,
 } from 'contexts/Staking/types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
+import type { ResponseInitialiseExposures } from 'workers/types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
@@ -77,7 +80,7 @@ export const StakingProvider = ({
     ) as StakingTargets
   );
 
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (apiStatus === 'connecting') {
       setStateWithRef(defaultEraStakers, setEraStakers, eraStakersRef);
       setStakingMetrics(stakingMetrics);
@@ -85,7 +88,7 @@ export const StakingProvider = ({
   }, [apiStatus]);
 
   // handle staking metrics subscription
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       unsubscribeMetrics();
       subscribeToStakingkMetrics();
@@ -104,13 +107,13 @@ export const StakingProvider = ({
   };
 
   // handle syncing with eraStakers
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       fetchEraStakers();
     }
   }, [isReady, activeEra.index, activeAccount]);
 
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (activeAccount) {
       // set account's targets
       setTargetsState(
@@ -125,7 +128,7 @@ export const StakingProvider = ({
 
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
-      const { data } = message;
+      const { data }: { data: ResponseInitialiseExposures } = message;
       const { task } = data;
       if (task !== 'initialise_exposures') {
         return;
@@ -236,7 +239,7 @@ export const StakingProvider = ({
     setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
 
     // humanise exposures to send to worker
-    const exposures = exposuresRaw.map(([keys, val]: AnyApi) => ({
+    const exposures: Exposure[] = exposuresRaw.map(([keys, val]: AnyApi) => ({
       keys: keys.toHuman(),
       val: val.toHuman(),
     }));

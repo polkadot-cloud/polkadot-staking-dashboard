@@ -1,13 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ModalPadding } from '@polkadotcloud/core-ui';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { Title } from 'library/Modal/Title';
 import { availableLanguages } from 'locale';
 import { changeLanguage } from 'locale/utils';
 import { useTranslation } from 'react-i18next';
-import { PaddingWrapper } from '../Wrappers';
 import { ContentWrapper, LocaleButton } from './Wrapper';
 
 export const ChooseLanguage = () => {
@@ -17,7 +17,7 @@ export const ChooseLanguage = () => {
   return (
     <>
       <Title title={t('chooseLanguage')} Svg={LanguageSVG} />
-      <PaddingWrapper>
+      <ModalPadding>
         <ContentWrapper>
           <div className="item">
             {availableLanguages.map((a, i) => {
@@ -27,7 +27,7 @@ export const ChooseLanguage = () => {
               return (
                 <h3 key={`${code}_${i}`}>
                   <LocaleButton
-                    connected={i18n.resolvedLanguage === code}
+                    $connected={i18n.resolvedLanguage === code}
                     type="button"
                     onClick={() => {
                       changeLanguage(code, i18n);
@@ -44,7 +44,7 @@ export const ChooseLanguage = () => {
             })}
           </div>
         </ContentWrapper>
-      </PaddingWrapper>
+      </ModalPadding>
     </>
   );
 };

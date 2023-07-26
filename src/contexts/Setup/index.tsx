@@ -7,8 +7,9 @@ import {
   unitToPlanck,
 } from '@polkadotcloud/utils';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import type { BondFor, MaybeAccount } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useStaking } from '../Staking';
@@ -113,7 +114,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   // Utility to update the progress item of either a nominator setup or pool setup,
   const updateSetups = <
     T extends NominatorSetups | PoolSetups,
-    U extends NominatorProgress | PoolProgress
+    U extends NominatorProgress | PoolProgress,
   >(
     all: T,
     newSetup: U,
@@ -206,7 +207,7 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   // Move away from setup pages on completion / network change.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (!inSetup()) {
       setOnNominatorSetup(false);
     }
@@ -215,8 +216,8 @@ export const SetupProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [inSetup(), network, poolMembership]);
 
-  // update setup state when activeAccount changes
-  useEffect(() => {
+  // Update setup state when activeAccount changes
+  useEffectIgnoreInitial(() => {
     if (accounts.length) refreshSetups();
   }, [activeAccount, network, accounts]);
 

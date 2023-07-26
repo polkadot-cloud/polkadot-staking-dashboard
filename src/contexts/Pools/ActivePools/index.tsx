@@ -11,10 +11,10 @@ import type {
 import { useStaking } from 'contexts/Staking';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { AnyApi, AnyJson, Sync } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import { useBondedPools } from '../BondedPools';
-import { usePoolMembers } from '../PoolMembers';
 import { usePoolMemberships } from '../PoolMemberships';
 import { usePoolsConfig } from '../PoolsConfig';
 import * as defaults from './defaults';
@@ -24,23 +24,22 @@ export const ActivePoolsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, network, isReady } = useApi();
   const { eraStakers } = useStaking();
   const { activeAccount } = useConnect();
-  const { createAccounts } = usePoolsConfig();
+  const { api, network, isReady } = useApi();
   const { membership } = usePoolMemberships();
+  const { createAccounts } = usePoolsConfig();
   const { getAccountPools, bondedPools } = useBondedPools();
-  const { getPoolMember } = usePoolMembers();
 
   // determine active pools to subscribe to.
   const accountPools = useMemo(() => {
-    const _accountPools = Object.keys(getAccountPools(activeAccount) || {});
+    const newAccountPools = Object.keys(getAccountPools(activeAccount) || {});
     const p = membership?.poolId ? String(membership.poolId) : '-1';
 
-    if (membership?.poolId && !_accountPools.includes(p || '-1')) {
-      _accountPools.push(String(membership.poolId));
+    if (membership?.poolId && !newAccountPools.includes(p || '-1')) {
+      newAccountPools.push(String(membership.poolId));
     }
-    return _accountPools;
+    return newAccountPools;
   }, [activeAccount, bondedPools, membership]);
 
   // stores member's active pools
@@ -60,7 +59,7 @@ export const ActivePoolsProvider = ({
   const unsubNominations = useRef<AnyApi[]>([]);
 
   // store account target validators
-  const [targets, _setTargets] = useState<Record<number, AnyJson>>({});
+  const [targets, setTargetsState] = useState<Record<number, AnyJson>>({});
   const targetsRef = useRef(targets);
 
   // store whether active pool data has been synced.
@@ -72,25 +71,6 @@ export const ActivePoolsProvider = ({
   // store the currently selected active pool for the UI.
   // Should default to the membership pool (if present).
   const [selectedPoolId, setSelectedPoolId] = useState<string | null>(null);
-
-  // re-sync when number of accountRoles change.
-  // this can happen when bondedPools sync, when roles
-  // are edited within the dashboard, or when pool
-  // membership changes.
-  useEffect(() => {
-    unsubscribeActivePools();
-    unsubscribePoolNominations();
-
-    setStateWithRef('unsynced', setSynced, syncedRef);
-  }, [activeAccount, accountPools.length]);
-
-  // subscribe to pool that the active account is a member of.
-  useEffect(() => {
-    if (isReady && syncedRef.current === 'unsynced') {
-      setStateWithRef('syncing', setSynced, syncedRef);
-      handlePoolSubscriptions();
-    }
-  }, [network, isReady, syncedRef.current]);
 
   const getActivePoolMembership = () =>
     // get the activePool that the active account
@@ -158,11 +138,11 @@ export const ActivePoolsProvider = ({
     const addresses: PoolAddresses = createAccounts(poolId);
 
     // new active pool subscription
-    const subscribeActivePool = async (_poolId: number) => {
-      const unsub: () => void = await api.queryMulti<AnyApi>(
+    const subscribeActivePool = async (id: number) => {
+      const unsub = await api.queryMulti<AnyApi>(
         [
-          [api.query.nominationPools.bondedPools, _poolId],
-          [api.query.nominationPools.rewardPools, _poolId],
+          [api.query.nominationPools.bondedPools, id],
+          [api.query.nominationPools.rewardPools, id],
           [api.query.system.account, addresses.reward],
         ],
         async ([bondedPool, rewardPool, accountData]): Promise<void> => {
@@ -175,7 +155,7 @@ export const ActivePoolsProvider = ({
             const pendingRewards = await fetchPendingRewards();
 
             const pool = {
-              id: _poolId,
+              id,
               addresses,
               bondedPool,
               rewardPool,
@@ -183,38 +163,34 @@ export const ActivePoolsProvider = ({
               pendingRewards,
             };
 
-            // remove pool if it already exists
-            const _activePools = activePoolsRef.current.filter(
-              (a: ActivePool) => a.id !== pool.id
-            );
-            // set active pool state
+            // set active pool state, removing the pool if it already exists first.
             setStateWithRef(
-              [..._activePools, pool],
+              [...activePoolsRef.current.filter((a) => a.id !== pool.id), pool],
               setActivePools,
               activePoolsRef
             );
 
             // get pool target nominations and set in state
-            const _targets = localStorageOrDefault(
+            const newTargets = localStorageOrDefault(
               `${addresses.stash}_pool_targets`,
               defaults.targets,
               true
             );
 
             // add or replace current pool targets in targetsRef
-            const _poolTargets = { ...targetsRef.current };
-            _poolTargets[poolId] = _targets;
+            const newPoolTargets = { ...targetsRef.current };
+            newPoolTargets[poolId] = newTargets;
 
             // set pool staking targets
-            setStateWithRef(_poolTargets, _setTargets, targetsRef);
+            setStateWithRef(newPoolTargets, setTargetsState, targetsRef);
 
             // subscribe to pool nominations
             subscribeToPoolNominations(poolId, addresses.stash);
           } else {
             // set default targets for pool
-            const _poolTargets = { ...targetsRef.current };
-            _poolTargets[poolId] = defaults.targets;
-            setStateWithRef(_poolTargets, _setTargets, targetsRef);
+            const newPoolTargets = { ...targetsRef.current };
+            newPoolTargets[poolId] = defaults.targets;
+            setStateWithRef(newPoolTargets, setTargetsState, targetsRef);
           }
         }
       );
@@ -232,28 +208,28 @@ export const ActivePoolsProvider = ({
     poolBondAddress: string
   ) => {
     if (!api) return;
-    const subscribePoolNominations = async (_poolBondAddress: string) => {
+    const subscribePoolNominations = async (bondedAddress: string) => {
       const unsub = await api.query.staking.nominators(
-        _poolBondAddress,
+        bondedAddress,
         (nominations: AnyApi) => {
           // set pool nominations
-          let _nominations = nominations.unwrapOr(null);
-          if (_nominations === null) {
-            _nominations = defaults.poolNominations;
+          let newNominations = nominations.unwrapOr(null);
+          if (newNominations === null) {
+            newNominations = defaults.poolNominations;
           } else {
-            _nominations = {
-              targets: _nominations.targets.toHuman(),
-              submittedIn: _nominations.submittedIn.toHuman(),
+            newNominations = {
+              targets: newNominations.targets.toHuman(),
+              submittedIn: newNominations.submittedIn.toHuman(),
             };
           }
 
           // add or replace current pool nominations in poolNominations
-          const _poolNominations = { ...poolNominationsRef.current };
-          _poolNominations[poolId] = _nominations;
+          const newPoolNominations = { ...poolNominationsRef.current };
+          newPoolNominations[poolId] = newNominations;
 
           // set pool nominations state
           setStateWithRef(
-            _poolNominations,
+            newPoolNominations,
             setPoolNominations,
             poolNominationsRef
           );
@@ -264,7 +240,7 @@ export const ActivePoolsProvider = ({
 
     // initiate subscription, add to unsubs.
     await Promise.all([subscribePoolNominations(poolBondAddress)]).then(
-      (unsubs: any) => {
+      (unsubs) => {
         unsubNominations.current = unsubNominations.current.concat(unsubs);
       }
     );
@@ -276,29 +252,31 @@ export const ActivePoolsProvider = ({
    * A helper function to set the unclaimed rewards of an active pool.
    */
   const updateActivePoolPendingRewards = (
-    amount: BigNumber,
+    pendingRewards: BigNumber,
     poolId: number
   ) => {
     if (!poolId) return;
 
-    // update the active pool the account is a member of
-    const _activePools = [...activePoolsRef.current].map((a) => {
-      if (a.id === poolId) {
-        return {
-          ...a,
-          pendingRewards: amount,
-        };
-      }
-      return a;
-    });
-    setStateWithRef(_activePools, setActivePools, activePoolsRef);
+    // update the active pool the account is a member of.
+    setStateWithRef(
+      [...activePoolsRef.current].map((a) =>
+        a.id === poolId
+          ? {
+              ...a,
+              pendingRewards,
+            }
+          : a
+      ),
+      setActivePools,
+      activePoolsRef
+    );
   };
 
   /*
    * setTargets
    * Sets currently selected pool's target validators in storage.
    */
-  const setTargets = (_targets: any) => {
+  const setTargets = (newTargets: any) => {
     if (!selectedPoolId) {
       return;
     }
@@ -307,13 +285,13 @@ export const ActivePoolsProvider = ({
     if (stashAddress) {
       localStorage.setItem(
         `${stashAddress}_pool_targets`,
-        JSON.stringify(_targets)
+        JSON.stringify(newTargets)
       );
       // inject targets into targets object
-      const _poolTargets = { ...targetsRef.current };
-      _poolTargets[Number(selectedPoolId)] = _targets;
+      const newPoolTargets = { ...targetsRef.current };
+      newPoolTargets[Number(selectedPoolId)] = newTargets;
 
-      setStateWithRef(_poolTargets, _setTargets, targetsRef);
+      setStateWithRef(newPoolTargets, setTargetsState, targetsRef);
     }
   };
 
@@ -333,8 +311,7 @@ export const ActivePoolsProvider = ({
     if (!activeAccount || !roles) {
       return false;
     }
-    const result = activeAccount === roles?.nominator;
-    return result;
+    return activeAccount === roles?.nominator;
   };
 
   /*
@@ -347,8 +324,7 @@ export const ActivePoolsProvider = ({
     if (!activeAccount || !roles) {
       return false;
     }
-    const result = activeAccount === roles?.root;
-    return result;
+    return activeAccount === roles?.root;
   };
 
   /*
@@ -359,7 +335,7 @@ export const ActivePoolsProvider = ({
   const isMember = () => {
     const selectedPool = getSelectedActivePool();
     const p = selectedPool ? String(selectedPool.id) : '-1';
-    return getPoolMember(activeAccount)?.poolId === p;
+    return String(membership?.poolId || '') === p;
   };
 
   /*
@@ -372,22 +348,20 @@ export const ActivePoolsProvider = ({
     if (!activeAccount || !roles) {
       return false;
     }
-    const result = activeAccount === roles?.depositor;
-    return result;
+    return activeAccount === roles?.depositor;
   };
 
   /*
-   * isStateToggler
+   * isBouncer
    * Returns whether the active account is
    * the depositor of the active pool.
    */
-  const isStateToggler = () => {
+  const isBouncer = () => {
     const roles = getSelectedActivePool()?.bondedPool?.roles;
     if (!activeAccount || !roles) {
       return false;
     }
-    const result = activeAccount === roles?.stateToggler;
-    return result;
+    return activeAccount === roles?.bouncer;
   };
 
   /*
@@ -407,14 +381,16 @@ export const ActivePoolsProvider = ({
     const statuses: Record<string, string> = {};
 
     for (const nomination of nominations) {
-      const s = eraStakers.stakers.find((_n: any) => _n.address === nomination);
+      const s = eraStakers.stakers.find(
+        ({ address }) => address === nomination
+      );
 
       if (s === undefined) {
         statuses[nomination] = 'waiting';
         continue;
       }
       const exists = (s.others ?? []).find(
-        (_o: any) => _o.who === activeAccount
+        ({ who }: any) => who === activeAccount
       );
       if (exists === undefined) {
         statuses[nomination] = 'inactive';
@@ -430,11 +406,7 @@ export const ActivePoolsProvider = ({
    * Returns the active pool's roles or a default roles object.
    */
   const getPoolRoles = () => {
-    const roles = getSelectedActivePool()?.bondedPool?.roles ?? null;
-    if (!roles) {
-      return defaults.poolRoles;
-    }
-    return roles;
+    return getSelectedActivePool()?.bondedPool?.roles || defaults.poolRoles;
   };
 
   const getPoolUnlocking = () => {
@@ -470,6 +442,24 @@ export const ActivePoolsProvider = ({
     );
   };
 
+  // re-sync when number of accountRoles change.
+  // this can happen when bondedPools sync, when roles
+  // are edited within the dashboard, or when pool
+  // membership changes.
+  useEffectIgnoreInitial(() => {
+    unsubscribeActivePools();
+    unsubscribePoolNominations();
+    setStateWithRef('unsynced', setSynced, syncedRef);
+  }, [activeAccount, accountPools.length]);
+
+  // subscribe to pool that the active account is a member of.
+  useEffectIgnoreInitial(() => {
+    if (isReady && syncedRef.current === 'unsynced') {
+      setStateWithRef('syncing', setSynced, syncedRef);
+      handlePoolSubscriptions();
+    }
+  }, [network, isReady, syncedRef.current]);
+
   // unsubscribe all on component unmount
   useEffect(
     () => () => {
@@ -480,7 +470,7 @@ export const ActivePoolsProvider = ({
   );
 
   // re-calculate pending rewards when membership changes
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     updatePendingRewards();
   }, [
     network,
@@ -492,7 +482,7 @@ export const ActivePoolsProvider = ({
 
   // when we are subscribed to all active pools, syncing is considered
   // completed.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (unsubNominations.current.length === accountPools.length) {
       setStateWithRef('synced', setSynced, syncedRef);
     }
@@ -505,7 +495,7 @@ export const ActivePoolsProvider = ({
         isOwner,
         isMember,
         isDepositor,
-        isStateToggler,
+        isBouncer,
         isBonding,
         getPoolBondedAccount,
         getPoolUnlocking,

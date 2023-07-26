@@ -1,7 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ActionItem } from '@polkadotcloud/core-ui';
+import {
+  ActionItem,
+  ModalNotes,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -19,7 +24,6 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NotesWrapper, PaddingWrapper, WarningsWrapper } from '../Wrappers';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
@@ -29,7 +33,7 @@ export const ManageFastUnstake = () => {
   const { activeEra, metrics } = useNetworkMetrics();
   const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
   const { setResize, setStatus } = useModal();
-  const { getTransferOptions } = useTransferOptions();
+  const { feeReserve, getTransferOptions } = useTransferOptions();
   const { isFastUnstaking } = useUnstaking();
   const { getSignerWarnings } = useSignerWarnings();
 
@@ -41,6 +45,10 @@ export const ManageFastUnstake = () => {
   const { nominate, freeBalance } = allTransferOptions;
   const { totalUnlockChuncks } = nominate;
 
+  const enoughForDeposit = freeBalance
+    .minus(feeReserve)
+    .isGreaterThanOrEqualTo(fastUnstakeDeposit);
+
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
 
@@ -48,7 +56,7 @@ export const ManageFastUnstake = () => {
     setValid(
       fastUnstakeErasToCheckPerBlock > 0 &&
         ((!isFastUnstaking &&
-          freeBalance.isGreaterThanOrEqualTo(fastUnstakeDeposit) &&
+          enoughForDeposit &&
           isExposed === false &&
           totalUnlockChuncks === 0) ||
           isFastUnstaking)
@@ -60,6 +68,7 @@ export const ManageFastUnstake = () => {
     isFastUnstaking,
     fastUnstakeDeposit,
     freeBalance,
+    feeReserve,
   ]);
 
   useEffect(() => {
@@ -98,7 +107,7 @@ export const ManageFastUnstake = () => {
   );
 
   if (!isFastUnstaking) {
-    if (freeBalance.isLessThan(fastUnstakeDeposit)) {
+    if (!enoughForDeposit) {
       warnings.push(
         `${t('noEnough')} ${planckToUnit(
           fastUnstakeDeposit,
@@ -126,16 +135,16 @@ export const ManageFastUnstake = () => {
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">
           {t('fastUnstake', { context: 'title' })}
         </h2>
         {warnings.length > 0 ? (
-          <WarningsWrapper>
+          <ModalWarnings withMargin>
             {warnings.map((text, i) => (
               <Warning key={`warning_${i}`} text={text} />
             ))}
-          </WarningsWrapper>
+          </ModalWarnings>
         ) : null}
 
         {isExposed ? (
@@ -145,7 +154,7 @@ export const ManageFastUnstake = () => {
                 count: lastExposedAgo.toNumber(),
               })}
             />
-            <NotesWrapper noPadding>
+            <ModalNotes>
               <p>
                 {t('fastUnstakeNote1', {
                   bondDuration: bondDuration.toString(),
@@ -154,14 +163,14 @@ export const ManageFastUnstake = () => {
               <p>
                 {t('fastUnstakeNote2', { count: erasRemaining.toNumber() })}
               </p>
-            </NotesWrapper>
+            </ModalNotes>
           </>
         ) : (
           <>
             {!isFastUnstaking ? (
               <>
                 <ActionItem text={t('fastUnstake', { context: 'register' })} />
-                <NotesWrapper noPadding>
+                <ModalNotes>
                   <p>
                     <>
                       {t('registerFastUnstake')}{' '}
@@ -175,33 +184,33 @@ export const ManageFastUnstake = () => {
                   <p>
                     {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
                   </p>
-                </NotesWrapper>
+                </ModalNotes>
               </>
             ) : (
               <>
                 <ActionItem text={t('fastUnstakeRegistered')} />
-                <NotesWrapper noPadding>
+                <ModalNotes>
                   <p>
                     {t('fastUnstakeCurrentQueue')}: <b>{counterForQueue}</b>
                   </p>
                   <p>{t('fastUnstakeUnorderedNote')}</p>
-                </NotesWrapper>
+                </ModalNotes>
               </>
             )}
           </>
         )}
-      </PaddingWrapper>
+      </ModalPadding>
       {!isExposed ? (
         <SubmitTx
           fromController
           valid={valid}
-          submitText={`${
+          submitText={
             submitExtrinsic.submitting
               ? t('submitting')
               : t('fastUnstakeSubmit', {
                   context: isFastUnstaking ? 'cancel' : 'register',
                 })
-          }`}
+          }
           {...submitExtrinsic}
         />
       ) : null}

@@ -6,7 +6,8 @@ import { AppVersion } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
-import React, { useEffect, useState } from 'react';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import React, { useState } from 'react';
 
 export const MigrateProvider = ({
   children,
@@ -37,7 +38,13 @@ export const MigrateProvider = ({
         localStorage.removeItem(`${n.name}_pool_setup_${a.address}`);
     });
 
-  useEffect(() => {
+  // Removes the previous active proxies from local storage.
+  const removeDeprecatedActiveProxies = () =>
+    Object.values(NetworkList).forEach((n: any) => {
+      localStorage.removeItem(`${n.name}_active_proxy`);
+    });
+
+  useEffectIgnoreInitial(() => {
     if (isReady && !isNetworkSyncing && !done) {
       // Carry out migrations if local version is different to current version.
       if (localAppVersion !== AppVersion) {
@@ -51,6 +58,11 @@ export const MigrateProvider = ({
         // Remove legacy local nominator setup and pool setup items.
         removeDeprecatedNominatorSetups();
         removeDeprecatedPoolSetups();
+
+        // Added in 1.0.8.
+        //
+        // Remove legacy local active proxy records.
+        removeDeprecatedActiveProxies();
 
         // Finally,
         //

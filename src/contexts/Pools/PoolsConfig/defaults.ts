@@ -13,11 +13,12 @@ export const stats: PoolStats = {
   counterForBondedPools: new BigNumber(0),
   counterForRewardPools: new BigNumber(0),
   lastPoolId: new BigNumber(0),
-  maxPoolMembers: new BigNumber(0),
-  maxPoolMembersPerPool: new BigNumber(0),
-  maxPools: new BigNumber(0),
+  maxPoolMembers: null,
+  maxPoolMembersPerPool: null,
+  maxPools: null,
   minCreateBond: new BigNumber(0),
   minJoinBond: new BigNumber(0),
+  globalMaxCommission: 0,
 };
 
 export const defaultPoolsConfigContext: PoolsConfigContextState = {

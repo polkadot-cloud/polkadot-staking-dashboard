@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import type { WrapperProps } from './types';
 
 export const Wrapper = styled.button<WrapperProps>`
-  cursor: ${(props) => (props.canClick ? 'pointer' : 'default')};
+  cursor: ${(props) => (props.$canClick ? 'pointer' : 'default')};
   background: ${(props) =>
-    props.filled ? 'var(--button-secondary-background)' : 'none'};
+    props.$filled ? 'var(--button-tab-background)' : 'none'};
   font-size: ${(props) => props.fontSize};
   border-radius: 1rem;
   box-shadow: none;
@@ -29,7 +29,7 @@ export const Wrapper = styled.button<WrapperProps>`
 
   .account-label {
     border-right: 1px solid var(--border-secondary-color);
-    color: var(--text-color-secondary);
+    color: var(--text-color-primary);
     font-size: 0.8em;
     display: flex;
     align-items: center;
@@ -43,7 +43,8 @@ export const Wrapper = styled.button<WrapperProps>`
   }
 
   .title {
-    color: var(--text-color-secondary);
+    color: var(--text-color-primary);
+    font-family: InterSemiBold, sans-serif;
     margin-left: 0.25rem;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -56,19 +57,8 @@ export const Wrapper = styled.button<WrapperProps>`
     }
 
     &.unassigned {
-      color: var(--text-color-secondary);
+      color: var(--text-color-primary);
       opacity: 0.45;
-    }
-  }
-
-  .wallet {
-    width: 1em;
-    height: 1em;
-    margin-left: 0.8rem;
-    opacity: 0.8;
-
-    path {
-      fill: var(--text-color-secondary);
     }
   }
 `;

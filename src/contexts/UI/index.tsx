@@ -8,6 +8,7 @@ import { useBalances } from 'contexts/Balances';
 import type { ImportedAccount } from 'contexts/Connect/types';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import React, { useEffect, useRef, useState } from 'react';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../Api';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
@@ -117,7 +118,7 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   // re-configure minimised on user change
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     resizeCallback();
   }, [userSideMenuMinimised]);
 

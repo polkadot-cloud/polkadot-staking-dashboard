@@ -6,8 +6,8 @@ import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useUi } from 'contexts/UI';
-import { CardWrapper } from 'library/Graphs/Wrappers';
-import { PoolList } from 'library/PoolList';
+import { CardWrapper } from 'library/Card/Wrappers';
+import { PoolList } from 'library/PoolList/Default';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 

@@ -35,7 +35,7 @@ export const ValidatorsInner = () => {
 
   return (
     <>
-      <PageTitle title={`${t('validators.validators')}`} tabs={tabs} />
+      <PageTitle title={t('validators.validators')} tabs={tabs} />
       {activeTab === 0 && <AllValidators />}
       {activeTab === 1 && <ValidatorFavorites />}
     </>

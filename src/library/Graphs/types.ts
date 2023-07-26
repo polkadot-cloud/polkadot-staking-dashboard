@@ -35,24 +35,16 @@ export interface StatPieProps {
 }
 
 export interface CardHeaderWrapperProps {
-  withAction?: boolean;
-  padded?: boolean;
+  $withAction?: boolean;
 }
 
 export interface CardWrapperProps {
-  noPadding?: boolean;
-  transparent?: boolean;
-  height?: string | number;
-  flex?: boolean;
+  $flex?: boolean;
+  $noPadding?: boolean;
+  $transparent?: boolean;
+  $warning?: boolean;
   border?: string;
-  warning?: boolean;
-}
-
-export interface GraphWrapperProps {
-  minHeight?: number;
-  transparent?: boolean;
-  noMargin?: boolean;
-  flex?: boolean;
+  height?: string | number;
 }
 
 export interface PayoutDayCursor {

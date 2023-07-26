@@ -13,8 +13,8 @@ import { DefaultLocale } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useSubscan } from 'contexts/Subscan';
 import { formatDistance, fromUnixTime, getUnixTime } from 'date-fns';
+import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { formatRewardsForGraphs } from 'library/Graphs/Utils';
-import { GraphWrapper } from 'library/Graphs/Wrappers';
 import { StatBoxList } from 'library/StatBoxList';
 import { SubscanButton } from 'library/SubscanButton';
 import { locales } from 'locale';
@@ -33,8 +33,8 @@ import { SupplyStakedStat } from './Stats/SupplyStaked';
 export const Overview = () => {
   const { i18n, t } = useTranslation('pages');
   const { network } = useApi();
-  const { units } = network;
   const { payouts, poolClaims, unclaimedPayouts } = useSubscan();
+  const { units } = network;
   const { lastReward } = formatRewardsForGraphs(
     new Date(),
     14,
@@ -44,7 +44,7 @@ export const Overview = () => {
     unclaimedPayouts
   );
 
-  const PAYOUTS_HEIGHT = 390;
+  const PAYOUTS_HEIGHT = 380;
 
   let formatFrom = new Date();
   let formatTo = new Date();
@@ -62,7 +62,7 @@ export const Overview = () => {
 
   return (
     <>
-      <PageTitle title={`${t('overview.overview')}`} />
+      <PageTitle title={t('overview.overview')} />
       <PageRow>
         <PageHeading>
           <ActiveAccounts />
@@ -79,15 +79,15 @@ export const Overview = () => {
       </PageRow>
       <PageRow>
         <RowSection secondary>
-          <GraphWrapper minHeight={PAYOUTS_HEIGHT} flex>
+          <CardWrapper height={PAYOUTS_HEIGHT} $flex>
             <BalanceChart />
             <BalanceLinks />
-          </GraphWrapper>
+          </CardWrapper>
         </RowSection>
         <RowSection hLast vLast>
-          <GraphWrapper style={{ minHeight: PAYOUTS_HEIGHT }} flex>
+          <CardWrapper style={{ minHeight: PAYOUTS_HEIGHT }} $flex>
             <SubscanButton />
-            <div className="head">
+            <CardHeaderWrapper>
               <h4>{t('overview.recentPayouts')}</h4>
               <h2>
                 {lastReward === null
@@ -98,15 +98,15 @@ export const Overview = () => {
                     ).toFormat()}
                 &nbsp;{network.unit}
                 &nbsp;
-                <span className="fiat">
+                <span className="note">
                   {lastReward === null
                     ? ''
                     : formatDistance(formatFrom, formatTo, formatOpts)}
                 </span>
               </h2>
-            </div>
+            </CardHeaderWrapper>
             <Payouts />
-          </GraphWrapper>
+          </CardWrapper>
         </RowSection>
       </PageRow>
       <PageRow>

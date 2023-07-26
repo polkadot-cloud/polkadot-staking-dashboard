@@ -29,7 +29,7 @@ export const Title = ({ helpKey, title, icon, fixed, Svg }: TitleProps) => {
   ) : null;
 
   return (
-    <TitleWrapper fixed={fixed || false}>
+    <TitleWrapper $fixed={fixed || false}>
       <div>
         {graphic}
         <h2>

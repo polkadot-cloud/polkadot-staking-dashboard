@@ -137,10 +137,8 @@ export const Main = () => {
   return (
     <>
       <LogoWrapper
-        onClick={() => {
-          window.open(PolkadotUrl, '_blank');
-        }}
-        minimised={sideMenuMinimised}
+        $minimised={sideMenuMinimised}
+        onClick={() => window.open(PolkadotUrl, '_blank')}
       >
         {sideMenuMinimised ? (
           <network.brand.icon style={{ maxHeight: '100%', width: '2rem' }} />

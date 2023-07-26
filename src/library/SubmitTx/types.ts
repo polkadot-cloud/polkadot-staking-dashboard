@@ -20,3 +20,7 @@ export interface SubmitProps {
   submitText?: string;
   submitAddress: MaybeAccount;
 }
+
+export interface SignerOverlayProps {
+  submitAddress: MaybeAccount;
+}

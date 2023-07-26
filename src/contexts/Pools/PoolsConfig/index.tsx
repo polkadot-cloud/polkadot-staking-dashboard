@@ -10,8 +10,9 @@ import type {
   PoolConfigState,
   PoolsConfigContextState,
 } from 'contexts/Pools/types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type { AnyApi } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../../Api';
 import * as defaults from './defaults';
 
@@ -41,7 +42,7 @@ export const PoolsConfigProvider = ({
   // stores the user's favorite pools
   const [favorites, setFavorites] = useState<string[]>(getLocalFavorites());
 
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       subscribeToPoolConfig();
     }
@@ -71,32 +72,34 @@ export const PoolsConfigProvider = ({
         api.query.nominationPools.maxPools,
         api.query.nominationPools.minCreateBond,
         api.query.nominationPools.minJoinBond,
+        api.query.nominationPools.globalMaxCommission,
       ],
       ([
-        _counterForPoolMembers,
-        _counterForBondedPools,
-        _counterForRewardPools,
-        _lastPoolId,
-        _maxPoolMembers,
-        _maxPoolMembersPerPool,
-        _maxPools,
-        _minCreateBond,
-        _minJoinBond,
+        counterForPoolMembers,
+        counterForBondedPools,
+        counterForRewardPools,
+        lastPoolId,
+        maxPoolMembers,
+        maxPoolMembersPerPool,
+        maxPools,
+        minCreateBond,
+        minJoinBond,
+        globalMaxCommission,
       ]) => {
         // format optional configs to BigNumber or null
-        _maxPoolMembers = _maxPoolMembers.toHuman();
-        if (_maxPoolMembers !== null) {
-          _maxPoolMembers = new BigNumber(rmCommas(_maxPoolMembers));
+        maxPoolMembers = maxPoolMembers.toHuman();
+        if (maxPoolMembers !== null) {
+          maxPoolMembers = new BigNumber(rmCommas(maxPoolMembers));
         }
-        _maxPoolMembersPerPool = _maxPoolMembersPerPool.toHuman();
-        if (_maxPoolMembersPerPool !== null) {
-          _maxPoolMembersPerPool = new BigNumber(
-            rmCommas(_maxPoolMembersPerPool)
+        maxPoolMembersPerPool = maxPoolMembersPerPool.toHuman();
+        if (maxPoolMembersPerPool !== null) {
+          maxPoolMembersPerPool = new BigNumber(
+            rmCommas(maxPoolMembersPerPool)
           );
         }
-        _maxPools = _maxPools.toHuman();
-        if (_maxPools !== null) {
-          _maxPools = new BigNumber(rmCommas(_maxPools));
+        maxPools = maxPools.toHuman();
+        if (maxPools !== null) {
+          maxPools = new BigNumber(rmCommas(maxPools));
         }
 
         setStateWithRef(
@@ -104,20 +107,23 @@ export const PoolsConfigProvider = ({
             ...poolsConfigRef.current,
             stats: {
               counterForPoolMembers: new BigNumber(
-                _counterForPoolMembers.toString()
+                counterForPoolMembers.toString()
               ),
               counterForBondedPools: new BigNumber(
-                _counterForBondedPools.toString()
+                counterForBondedPools.toString()
               ),
               counterForRewardPools: new BigNumber(
-                _counterForRewardPools.toString()
+                counterForRewardPools.toString()
               ),
-              lastPoolId: new BigNumber(_lastPoolId.toString()),
-              maxPoolMembers: _maxPoolMembers,
-              maxPoolMembersPerPool: _maxPoolMembersPerPool,
-              maxPools: _maxPools,
-              minCreateBond: new BigNumber(_minCreateBond.toString()),
-              minJoinBond: new BigNumber(_minJoinBond.toString()),
+              lastPoolId: new BigNumber(lastPoolId.toString()),
+              maxPoolMembers,
+              maxPoolMembersPerPool,
+              maxPools,
+              minCreateBond: new BigNumber(minCreateBond.toString()),
+              minJoinBond: new BigNumber(minJoinBond.toString()),
+              globalMaxCommission: Number(
+                globalMaxCommission.toHuman().slice(0, -1)
+              ),
             },
           },
           setPoolsConfig,

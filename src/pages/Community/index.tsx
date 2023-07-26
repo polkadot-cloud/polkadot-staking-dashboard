@@ -17,7 +17,7 @@ export const CommunityInner = ({ page }: PageProps) => {
 
   return (
     <Wrapper>
-      <PageTitle title={`${t(key)}`} />
+      <PageTitle title={t(key)} />
       {activeSection === 0 && <List />}
       {activeSection === 1 && <Entity />}
     </Wrapper>

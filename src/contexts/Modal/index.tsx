@@ -3,7 +3,8 @@
 
 import { setStateWithRef } from '@polkadotcloud/utils';
 import { useTxMeta } from 'contexts/TxMeta';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { defaultModalContext } from './defaults';
 import type { ModalConfig, ModalContextInterface, ModalOptions } from './types';
 
@@ -28,7 +29,7 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   // Store the modal's resize counter.
   const [resize, setModalResize] = useState<number>(0);
 
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     setResize();
   }, [statusRef.current, notEnoughFunds]);
 

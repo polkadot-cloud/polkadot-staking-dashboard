@@ -72,9 +72,9 @@ export const PoolAccount = ({
 
   return (
     <Wrapper
+      $canClick={canClick}
+      $filled={filled}
       onClick={onClick}
-      canClick={canClick}
-      filled={filled}
       fontSize={fontSize}
     >
       {label !== undefined && <div className="account-label">{label}</div>}
@@ -82,7 +82,7 @@ export const PoolAccount = ({
       <span className="identicon">
         <Identicon
           value={pool.addresses.stash}
-          size={remToUnit(fontSize) * 1.45}
+          size={remToUnit(fontSize) * 1.4}
         />
       </span>
       <span className={`title${syncing === true ? ` syncing` : ``}`}>

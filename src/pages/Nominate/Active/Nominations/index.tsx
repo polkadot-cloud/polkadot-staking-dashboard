@@ -11,7 +11,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
-import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTranslation } from 'react-i18next';
@@ -100,7 +100,7 @@ export const Nominations = ({
 
   return (
     <Wrapper>
-      <CardHeaderWrapper withAction>
+      <CardHeaderWrapper $withAction>
         <h3>
           {isPool ? t('nominate.poolNominations') : t('nominate.nominations')}
           <ButtonHelp marginLeft onClick={() => openHelp('Nominations')} />

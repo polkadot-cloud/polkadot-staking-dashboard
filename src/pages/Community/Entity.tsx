@@ -5,7 +5,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary, PageHeading, PageRow } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
-import { CardWrapper } from 'library/Graphs/Wrappers';
+import { CardWrapper } from 'library/Card/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -57,7 +57,6 @@ export const Entity = () => {
     <PageRow>
       <PageHeading>
         <ButtonSecondary
-          lg
           text={t('community.goBack')}
           iconLeft={faChevronLeft}
           iconTransform="shrink-3"

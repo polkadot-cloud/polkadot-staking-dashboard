@@ -3,7 +3,10 @@
 
 import { forwardRef } from 'react';
 import { ContentWrapper } from '../Wrappers';
+import { ClaimCommission } from './ClaimCommission';
 import { Commission } from './Commission';
+import { LeavePool } from './LeavePool';
+import { SetClaimPermission } from './SetClaimPermission';
 import { SetMetadata } from './SetMetadata';
 import { SetState } from './SetState';
 
@@ -21,6 +24,12 @@ export const Forms = forwardRef(
                 section={section}
                 incrementCalculateHeight={incrementCalculateHeight}
               />
+            ) : task === 'set_claim_permission' ? (
+              <SetClaimPermission setSection={setSection} section={section} />
+            ) : task === 'leave_pool' ? (
+              <LeavePool setSection={setSection} />
+            ) : task === 'claim_commission' ? (
+              <ClaimCommission setSection={setSection} />
             ) : (
               <SetState setSection={setSection} task={task} />
             )}

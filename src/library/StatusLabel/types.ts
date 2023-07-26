@@ -11,5 +11,5 @@ export interface StatusLabelProps {
 }
 
 export interface WrapperProps {
-  topOffset?: string;
+  $topOffset?: string;
 }

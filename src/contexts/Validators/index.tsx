@@ -17,8 +17,9 @@ import type {
   ValidatorAddresses,
   ValidatorsContextInterface,
 } from 'contexts/Validators/types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type { AnyApi, AnyMetaBatch, Fn } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
@@ -96,7 +97,7 @@ export const ValidatorsProvider = ({
   const [validatorCommunity] = useState<any>([...shuffle(ValidatorCommunity)]);
 
   // reset validators list on network change
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     setFetchedValidators(0);
     setSessionValidators(defaultSessionValidators);
     setSessionParachainValidators(defaultSessionParachainValidators);
@@ -106,7 +107,7 @@ export const ValidatorsProvider = ({
   }, [network]);
 
   // fetch validators and session validators when activeEra ready
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       fetchValidators();
       subscribeSessionValidators();
@@ -120,22 +121,22 @@ export const ValidatorsProvider = ({
     };
   }, [isReady, activeEra]);
 
-  // fetch parachain session validators when earliestStoredSession ready
-  useEffect(() => {
+  // fetch parachain session validators when `earliestStoredSession` ready
+  useEffectIgnoreInitial(() => {
     if (isReady && greaterThanZero(earliestStoredSession)) {
       subscribeParachainValidators();
     }
   }, [isReady, earliestStoredSession]);
 
   // pre-populating validator meta batches. Needed for generating nominations
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (validators.length > 0) {
       fetchValidatorMetaBatch('validators_browse', validators, true);
     }
   }, [isReady, validators]);
 
   // fetch active account's nominations in validator list format
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady && activeAccount) {
       fetchNominatedList();
     }
@@ -162,7 +163,7 @@ export const ValidatorsProvider = ({
   };
 
   // fetch active account's pool nominations in validator list format
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady && poolNominations) {
       fetchPoolNominatedList();
     }
@@ -183,12 +184,12 @@ export const ValidatorsProvider = ({
   };
 
   // re-fetch favorites on network change
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     setFavorites(getFavorites());
   }, [network]);
 
   // fetch favorites in validator list format
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       fetchFavoriteList();
     }

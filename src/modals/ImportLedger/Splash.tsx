@@ -7,10 +7,7 @@ import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useTheme } from 'contexts/Themes';
-import { ReactComponent as CrossSVG } from 'img/cross.svg';
 import { ReactComponent as LogoSVG } from 'img/ledgerLogo.svg';
-import { Title } from 'library/Modal/Title';
-import { CustomHeaderWrapper } from 'modals/Wrappers';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { AnyFunction } from 'types';
@@ -18,7 +15,6 @@ import { SplashWrapper } from './Wrappers';
 
 export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   const { t } = useTranslation('modals');
-  const { replaceModalWith, setStatus } = useModal();
   const {
     getStatusCodes,
     isPaired,
@@ -28,8 +24,8 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
     getFeedback,
   } = useLedgerHardware();
   const { mode } = useTheme();
-  const { setResize } = useModal();
   const { openHelp } = useHelp();
+  const { replaceModalWith, setResize } = useModal();
 
   const statusCodes = getStatusCodes();
 
@@ -64,8 +60,8 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
 
   return (
     <>
-      <CustomHeaderWrapper>
-        <h1 style={{ paddingLeft: '1rem' }}>
+      <div style={{ display: 'flex', padding: '1rem' }}>
+        <h1>
           <ButtonSecondary
             text={t('back')}
             iconLeft={faChevronLeft}
@@ -75,15 +71,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
             }
           />
         </h1>
-        <button
-          type="button"
-          onClick={() => setStatus(2)}
-          className="closeModal"
-        >
-          <CrossSVG style={{ width: '1.25rem', height: '1.25rem' }} />
-        </button>
-      </CustomHeaderWrapper>
-      <Title title="" />
+      </div>
       <SplashWrapper>
         <div className="icon">
           <LogoSVG

@@ -6,6 +6,8 @@ import {
   ActionItem,
   ButtonPrimaryInvert,
   ButtonText,
+  ModalCustomHeader,
+  ModalPadding,
 } from '@polkadotcloud/core-ui';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
@@ -17,7 +19,6 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { CustomHeaderWrapper, PaddingWrapper } from '../Wrappers';
 import { AccountButton } from './Account';
 import { Delegates } from './Delegates';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
@@ -31,26 +32,32 @@ import type {
 export const Accounts = () => {
   const { t } = useTranslation('modals');
   const { isReady } = useApi();
-  const { activeAccount, disconnectFromAccount, setActiveProxy, accounts } =
-    useConnect();
-  const { bondedAccounts } = useBonded();
   const { balances } = useBalances();
+  const { getDelegates } = useProxies();
+  const { extensions } = useExtensions();
+  const { bondedAccounts } = useBonded();
   const { ledgers, getLocks } = useBalances();
   const { memberships } = usePoolMemberships();
   const { replaceModalWith, setResize } = useModal();
-  const { extensions } = useExtensions();
-  const { getDelegates } = useProxies();
+  const { activeAccount, disconnectFromAccount, setActiveProxy, accounts } =
+    useConnect();
 
-  // store local copy of accounts
+  // Store local copy of accounts.
   const [localAccounts, setLocalAccounts] = useState(accounts);
 
-  // store accounts that are actively newNominating.
-  const [nominating, setNominating] = useState<AccountNominating[]>([]);
-  const [inPool, setInPool] = useState<AccountInPool[]>([]);
-  const [notStaking, setNotStaking] = useState<AccountNotStaking[]>([]);
+  // Store accounts that are both nominating and in a pool.
   const [nominatingAndPool, setNominatingAndPool] = useState<
     AccountNominatingAndInPool[]
   >([]);
+
+  // Store accounts that are actively nominating.
+  const [nominating, setNominating] = useState<AccountNominating[]>([]);
+
+  // Store accounts that are in a pool.
+  const [inPool, setInPool] = useState<AccountInPool[]>([]);
+
+  // Store accounts that are not staking.
+  const [notStaking, setNotStaking] = useState<AccountNotStaking[]>([]);
 
   const getAccountsStatus = () => {
     const stashes: string[] = [];
@@ -139,8 +146,8 @@ export const Accounts = () => {
   }, [activeAccount, accounts, bondedAccounts, balances, ledgers, extensions]);
 
   return (
-    <PaddingWrapper>
-      <CustomHeaderWrapper>
+    <ModalPadding>
+      <ModalCustomHeader>
         <div className="first">
           <h1>{t('accounts')}</h1>
           <ButtonPrimaryInvert
@@ -168,7 +175,7 @@ export const Accounts = () => {
             />
           )}
         </div>
-      </CustomHeaderWrapper>
+      </ModalCustomHeader>
       {!activeAccount && !accounts.length && (
         <AccountWrapper style={{ marginTop: '1.5rem' }}>
           <div>
@@ -185,7 +192,7 @@ export const Accounts = () => {
           <AccountSeparator />
           <ActionItem text={t('nominatingAndInPool')} />
           {nominatingAndPool.map(({ address, delegates }, i) => (
-            <React.Fragment key={`acc_nominating_${i}`}>
+            <React.Fragment key={`acc_nominating_and_pool_${i}`}>
               <AccountButton address={address} />
               {address && (
                 <Delegates delegator={address} delegates={delegates} />
@@ -239,6 +246,6 @@ export const Accounts = () => {
           ))}
         </>
       ) : null}
-    </PaddingWrapper>
+    </ModalPadding>
   );
 };

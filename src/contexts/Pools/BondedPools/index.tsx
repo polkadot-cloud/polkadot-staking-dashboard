@@ -10,8 +10,9 @@ import type {
   NominationStatuses,
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';
@@ -37,13 +38,13 @@ export const BondedPoolsProvider = ({
   const [bondedPools, setBondedPools] = useState<BondedPool[]>([]);
 
   // clear existing state for network refresh
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     setBondedPools([]);
     setStateWithRef({}, setPoolMetaBatch, poolMetaBatchesRef);
   }, [network]);
 
   // initial setup for fetching bonded pools
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (isReady) {
       // fetch bonded pools
       fetchBondedPools();
@@ -54,7 +55,7 @@ export const BondedPoolsProvider = ({
   }, [network, isReady, lastPoolId]);
 
   // after bonded pools have synced, fetch metabatch
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (bondedPools.length) {
       fetchPoolsMetaBatch('bonded_pools', bondedPools, true);
     }
@@ -383,7 +384,7 @@ export const BondedPoolsProvider = ({
         depositor: [],
         root: [],
         nominator: [],
-        stateToggler: [],
+        bouncer: [],
       };
     }
 
@@ -399,15 +400,15 @@ export const BondedPoolsProvider = ({
       .filter((b) => b.roles.nominator === who)
       .map((b) => b.id);
 
-    const stateToggler = bondedPools
-      .filter((b) => b.roles.stateToggler === who)
+    const bouncer = bondedPools
+      .filter((b) => b.roles.bouncer === who)
       .map((b) => b.id);
 
     return {
       depositor,
       root,
       nominator,
-      stateToggler,
+      bouncer,
     };
   };
 
@@ -436,12 +437,12 @@ export const BondedPoolsProvider = ({
   const toReplace = (roleEdits: any) => {
     const root = roleEdits?.root?.newAddress ?? '';
     const nominator = roleEdits?.nominator?.newAddress ?? '';
-    const stateToggler = roleEdits?.stateToggler?.newAddress ?? '';
+    const bouncer = roleEdits?.bouncer?.newAddress ?? '';
 
     return {
       root,
       nominator,
-      stateToggler,
+      bouncer,
     };
   };
 

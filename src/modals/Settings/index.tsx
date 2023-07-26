@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ModalPadding } from '@polkadotcloud/core-ui';
 import { usePlugins } from 'contexts/Plugins';
 import { Title } from 'library/Modal/Title';
 import { StatusButton } from 'library/StatusButton';
 import { useTranslation } from 'react-i18next';
 import { ContentWrapper } from '../Networks/Wrapper';
-import { PaddingWrapper } from '../Wrappers';
 
 export const Settings = () => {
   const { plugins, togglePlugin } = usePlugins();
@@ -18,7 +18,7 @@ export const Settings = () => {
   return (
     <>
       <Title title={t('settings')} />
-      <PaddingWrapper>
+      <ModalPadding>
         <ContentWrapper>
           <h4>{t('togglePlugins')}</h4>
           <StatusButton
@@ -48,7 +48,7 @@ export const Settings = () => {
             }}
           />
         </ContentWrapper>
-      </PaddingWrapper>
+      </ModalPadding>
     </>
   );
 };

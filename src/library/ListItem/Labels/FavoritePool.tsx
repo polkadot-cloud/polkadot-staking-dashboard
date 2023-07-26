@@ -7,8 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNotifications } from 'contexts/Notifications';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useTooltip } from 'contexts/Tooltip';
-import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
-import { useRef } from 'react';
+import { TooltipTrigger } from 'library/ListItem/Wrappers';
 import { useTranslation } from 'react-i18next';
 import type { FavoriteProps } from '../types';
 
@@ -16,7 +15,7 @@ export const FavoritePool = ({ address }: FavoriteProps) => {
   const { t } = useTranslation('library');
   const { addNotification } = useNotifications();
   const { favorites, addFavorite, removeFavorite } = usePoolsConfig();
-  const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
+  const { setTooltipTextAndOpen } = useTooltip();
 
   const isFavorite = favorites.includes(address);
 
@@ -30,25 +29,16 @@ export const FavoritePool = ({ address }: FavoriteProps) => {
         subtitle: address,
       };
 
-  const posRef = useRef<HTMLDivElement>(null);
-
   const tooltipText = `${isFavorite ? `${t('remove')}` : `${t('add')}`} ${t(
     'favorite'
   )}`;
-
-  const toggleTooltip = () => {
-    if (!open) {
-      setTooltipMeta(tooltipText);
-      setTooltipPosition(posRef);
-    }
-  };
 
   return (
     <div className="label">
       <TooltipTrigger
         className="tooltip-trigger-element as-button"
         data-tooltip-text={tooltipText}
-        onMouseMove={() => toggleTooltip()}
+        onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
         onClick={() => {
           if (isFavorite) {
             removeFavorite(address);
@@ -58,7 +48,6 @@ export const FavoritePool = ({ address }: FavoriteProps) => {
           addNotification(notificationFavorite);
         }}
       />
-      <TooltipPosition ref={posRef} />
       <button type="button" className={isFavorite ? 'active' : undefined}>
         <FontAwesomeIcon
           icon={!isFavorite ? faHeartRegular : faHeart}

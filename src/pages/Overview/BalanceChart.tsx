@@ -1,18 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp } from '@polkadotcloud/core-ui';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { useHelp } from 'contexts/Help';
 import { usePlugins } from 'contexts/Plugins';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { BarSegment } from 'library/BarChart/BarSegment';
 import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
+import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
 import { useTranslation } from 'react-i18next';
 
@@ -23,13 +22,12 @@ export const BalanceChart = () => {
   } = useApi();
   const prices = usePrices();
   const { plugins } = usePlugins();
-  const { openHelp } = useHelp();
   const { activeAccount } = useConnect();
   const { getBalance, getLocks } = useBalances();
-  const { getTransferOptions } = useTransferOptions();
+  const { feeReserve, getTransferOptions } = useTransferOptions();
   const balance = getBalance(activeAccount);
   const allTransferOptions = getTransferOptions(activeAccount);
-  const { forceReserved } = allTransferOptions;
+  const { edReserved } = allTransferOptions;
   const poolBondOpions = allTransferOptions.pool;
   const unlockingPools = poolBondOpions.totalUnlocking.plus(
     poolBondOpions.totalUnlocked
@@ -88,11 +86,11 @@ export const BalanceChart = () => {
 
   // available balance data
   const fundsLocked = planckToUnit(frozen.minus(lockStakingAmount), units);
-  let fundsReserved = planckToUnit(forceReserved, units);
-  const fundsFree = planckToUnit(allTransferOptions.freeBalance, units).minus(
-    fundsLocked
-  );
-
+  let fundsReserved = planckToUnit(edReserved.plus(feeReserve), units);
+  const fundsFree = planckToUnit(
+    BigNumber.max(allTransferOptions.freeBalance.minus(feeReserve), 0),
+    units
+  ).minus(fundsLocked);
   // available balance percentages
   const graphLocked = greaterThanZero(fundsLocked)
     ? fundsLocked.dividedBy(graphAvailable.multipliedBy(0.01))
@@ -103,7 +101,7 @@ export const BalanceChart = () => {
     : new BigNumber(0);
 
   // get total available balance, including reserve and locks
-  if (graphAvailable < fundsReserved) {
+  if (graphAvailable.isLessThan(fundsReserved)) {
     fundsReserved = graphAvailable;
   }
 
@@ -122,21 +120,18 @@ export const BalanceChart = () => {
 
   return (
     <>
-      <div className="head">
-        <h4>
-          {t('overview.balance')}
-          <ButtonHelp marginLeft onClick={() => openHelp('Your Balance')} />
-        </h4>
+      <CardHeaderWrapper>
+        <h4>{t('overview.balance')}</h4>
         <h2>
           <span className="amount">{totalBalance.toFormat()}</span>&nbsp;
           {unit}
-          <span className="fiat">
+          <span className="note">
             {plugins.includes('binance_spot') ? (
               <>&nbsp;{usdFormatter.format(freeFiat.toNumber())}</>
             ) : null}
           </span>
         </h2>
-      </div>
+      </CardHeaderWrapper>
 
       <BarChartWrapper>
         <Legend>

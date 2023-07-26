@@ -4,11 +4,6 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-  display: flex;
-  flex-flow: column nowrap;
-`;
-
 export const ListWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
@@ -39,7 +34,6 @@ export const StatBoxWrapper = styled(motion.div)`
 
   /* responsive screen sizing */
   h3 {
-    font-variation-settings: 'wght' 580;
     font-size: 1.2rem;
   }
   @media (min-width: 950px) {
@@ -69,6 +63,7 @@ export const StatBoxWrapper = styled(motion.div)`
     }
 
     h4 {
+      font-family: InterSemiBold, sans-serif;
       flex: 1;
       display: flex;
       flex-flow: row wrap;
@@ -101,6 +96,7 @@ export const StatBoxWrapper = styled(motion.div)`
 
         h3 {
           color: var(--text-color-invert);
+          font-family: InterSemiBold, sans-serif;
           text-align: center;
           margin: 0;
           font-size: 0.9rem;
@@ -124,9 +120,11 @@ export const StatBoxWrapper = styled(motion.div)`
       overflow: hidden;
 
       h3 {
+        font-family: InterBold, sans-serif;
         display: flex;
         flex-flow: row wrap;
-        margin-bottom: 0.25rem;
+        margin-top: 0.1rem;
+        margin-bottom: 0.1rem;
 
         &.text {
           margin-top: 0.15rem;
@@ -153,15 +151,15 @@ export const StatBoxWrapper = styled(motion.div)`
   }
 `;
 
-export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
+export const TextTitleWrapper = styled.div<{ $primary?: boolean }>`
   color: ${(props) =>
-    props.primary === true
+    props.$primary === true
       ? 'var(--network-color-primary)'
       : 'var(--text-color-primary)'};
-  font-variation-settings: 'wght' 580;
+  font-family: InterBold, sans-serif;
   display: flex;
   flex-flow: row wrap;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.35rem;
 
   font-size: 1.2rem;
   @media (min-width: 950px) {
@@ -174,11 +172,11 @@ export const TextTitleWrapper = styled.div<{ primary?: boolean }>`
   }
 
   span {
-    color: var(--text-color-secondary);
+    color: var(--text-color-primary);
+    font-family: InterSemiBold, sans-serif;
     font-size: 0.95rem;
     margin-left: 0.55rem;
     margin-top: 0.1rem;
-    opacity: 0.85;
   }
 `;
 
@@ -187,7 +185,7 @@ export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
     props.primary === true
       ? 'var(--network-color-primary)'
       : 'var(--text-color-primary)'};
-  font-variation-settings: 'wght' 550;
+  font-family: InterBold, sans-serif;
   display: flex;
   flex-flow: row wrap;
   font-size: 1.2rem;
@@ -198,12 +196,11 @@ export const TimeLeftWrapper = styled.div<{ primary?: boolean }>`
   margin-bottom: 0.15rem;
 
   span {
-    color: var(--text-color-secondary);
-    font-variation-settings: 'wght' 500;
+    color: var(--text-color-primary);
+    font-family: InterSemiBold, sans-serif;
     font-size: 0.95rem;
     margin-left: 0.3rem;
     margin-top: 0.1rem;
     margin-right: 0.75rem;
-    opacity: 0.85;
   }
 `;

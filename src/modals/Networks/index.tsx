@@ -3,6 +3,7 @@
 
 import { faChevronRight, faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ModalPadding } from '@polkadotcloud/core-ui';
 import { capitalizeFirstLetter } from '@polkadotcloud/utils';
 import { NetworkList } from 'config/networks';
 import { useApi } from 'contexts/Api';
@@ -12,7 +13,6 @@ import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import type { NetworkName } from 'types';
 import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
-import { PaddingWrapper } from '../Wrappers';
 import {
   BraveWarning,
   ConnectionButton,
@@ -39,7 +39,7 @@ export const Networks = () => {
   return (
     <>
       <Title title={t('networks')} icon={faGlobe} />
-      <PaddingWrapper>
+      <ModalPadding>
         <ContentWrapper>
           <h4>{t('selectNetwork')}</h4>
           <div className="items">
@@ -50,7 +50,7 @@ export const Networks = () => {
 
                 return (
                   <NetworkButton
-                    connected={networkKey === key}
+                    $connected={networkKey === key}
                     disabled={rpcDisabled}
                     key={`network_switch_${index}`}
                     type="button"
@@ -85,7 +85,7 @@ export const Networks = () => {
           <h4>{t('connectionType')}</h4>
           <ConnectionsWrapper>
             <ConnectionButton
-              connected={!isLightClient}
+              $connected={!isLightClient}
               disabled={!isLightClient}
               type="button"
               onClick={() => {
@@ -97,7 +97,7 @@ export const Networks = () => {
               {!isLightClient && <h4 className="selected">{t('selected')}</h4>}
             </ConnectionButton>
             <ConnectionButton
-              connected={isLightClient}
+              $connected={isLightClient}
               className="off"
               type="button"
               onClick={() => {
@@ -115,14 +115,14 @@ export const Networks = () => {
               <BraveIconSVG />
               <div className="brave-text">
                 <Trans
-                  defaults={`${t('braveText')}`}
+                  defaults={t('braveText')}
                   components={{ b: <b />, i: <i /> }}
                 />
               </div>
             </BraveWarning>
           ) : null}
         </ContentWrapper>
-      </PaddingWrapper>
+      </ModalPadding>
     </>
   );
 };

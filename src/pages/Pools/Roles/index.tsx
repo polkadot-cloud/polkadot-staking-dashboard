@@ -14,7 +14,7 @@ import { useIdentities } from 'contexts/Identities';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
-import { CardHeaderWrapper } from 'library/Graphs/Wrappers';
+import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
@@ -138,7 +138,7 @@ export const Roles = ({
 
   return (
     <>
-      <CardHeaderWrapper withAction>
+      <CardHeaderWrapper $withAction>
         <h3>
           {t('pools.roles')}{' '}
           <ButtonHelp marginLeft onClick={() => openHelp('Pool Roles')} />
@@ -224,19 +224,18 @@ export const Roles = ({
         </section>
         <section>
           <div className="inner">
-            <h4>{t('pools.stateToggler')}</h4>
+            <h4>{t('pools.bouncer')}</h4>
             {isEditing ? (
               <RoleEditInput
-                roleKey="stateToggler"
-                roleEdit={roleEdits?.stateToggler}
+                roleKey="bouncer"
+                roleEdit={roleEdits?.bouncer}
                 setRoleEdit={setRoleEditHandler}
               />
             ) : (
               <PoolAccount
-                address={roles.stateToggler ?? null}
-                batchIndex={accounts.indexOf(roles.stateToggler ?? '-1')}
+                address={roles.bouncer ?? null}
+                batchIndex={accounts.indexOf(roles.bouncer ?? '-1')}
                 batchKey={batchKey}
-                last
               />
             )}
           </div>

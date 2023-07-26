@@ -5,23 +5,22 @@ import { SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const Wrapper = styled.div<{ format?: string; inModal?: boolean }>`
+export const Wrapper = styled.div<{ $format?: string; $inModal?: boolean }>`
   display: flex;
   flex-flow: row wrap;
   width: 100%;
-  height: ${(props) => (props.format === 'nomination' ? '6rem' : '3rem')};
+  height: ${(props) => (props.$format === 'nomination' ? '6rem' : '3rem')};
   position: relative;
   margin: 0.5rem;
 
   > .inner {
-    box-shadow: 0px 1.75px 0px 1.25px var(--card-shadow-color-secondary);
     background: ${(props) =>
-      props.inModal
+      props.$inModal
         ? 'var(--background-modal-item)'
         : 'var(--background-list-item)'};
 
     ${(props) =>
-      props.inModal &&
+      props.$inModal &&
       `
       box-shadow: none;
       border: none;`}
@@ -157,6 +156,7 @@ export const IdentityWrapper = styled(motion.div)`
   }
   h4 {
     color: var(--text-color-secondary);
+    font-family: InterSemiBold, sans-serif;
     position: absolute;
     top: 0;
     width: 100%;
@@ -167,7 +167,6 @@ export const IdentityWrapper = styled(motion.div)`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-variation-settings: 'wght' 600;
     font-size: 1rem;
 
     > span {
@@ -181,14 +180,16 @@ export const IdentityWrapper = styled(motion.div)`
   }
 `;
 
-export const ValidatorStatusWrapper = styled.div<{ status: string }>`
+export const ValidatorStatusWrapper = styled.div<{ $status: string }>`
   margin-right: 0.35rem;
   padding: 0 0.5rem;
 
   h5 {
     color: ${(props) =>
-      props.status === 'active' ? 'green' : 'var(--text-color-secondary)'};
-    opacity: ${(props) => (props.status === 'active' ? 0.8 : 0.5)};
+      props.$status === 'active'
+        ? 'var(--status-success-color)'
+        : 'var(--text-color-secondary)'};
+    opacity: ${(props) => (props.$status === 'active' ? 0.8 : 0.5)};
     display: flex;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -242,15 +243,6 @@ export const MenuPosition = styled.div`
   position: absolute;
   top: -10px;
   right: 10px;
-  width: 0;
-  height: 0;
-  opacity: 0;
-`;
-
-export const TooltipPosition = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0.75rem;
   width: 0;
   height: 0;
   opacity: 0;

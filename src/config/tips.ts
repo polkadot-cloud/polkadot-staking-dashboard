@@ -9,10 +9,12 @@ export const TipsConfig = [
   {
     id: 'recommendedNominator',
     s: 2,
+    page: 'nominate',
   },
   {
     id: 'recommendedJoinPool',
     s: 3,
+    page: 'pools',
   },
   {
     id: 'howToStake',
@@ -21,25 +23,31 @@ export const TipsConfig = [
   {
     id: 'managingNominations',
     s: 5,
+    page: 'nominate',
   },
   {
     id: 'monitoringPool',
     s: 6,
+    page: 'pools',
   },
   {
     id: 'joinAnotherPool',
     s: 6,
+    page: 'pools',
   },
   {
     id: 'keepPoolNominating',
     s: 7,
+    page: 'pools',
   },
   {
     id: 'reviewingPayouts',
     s: 8,
+    page: 'payouts',
   },
   {
     id: 'understandingValidatorPerformance',
     s: 8,
+    page: 'validators',
   },
 ];

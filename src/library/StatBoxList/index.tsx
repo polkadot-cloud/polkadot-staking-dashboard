@@ -1,11 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { StatBoxRow } from '@polkadotcloud/core-ui';
 import React from 'react';
-import { ListWrapper, Wrapper } from './Wrapper';
+import { ListWrapper } from './Wrapper';
 
 export const StatBoxList = ({ children }: { children: React.ReactNode }) => (
-  <Wrapper className="page-padding">
+  <StatBoxRow>
     <ListWrapper>{children}</ListWrapper>
-  </Wrapper>
+  </StatBoxRow>
 );

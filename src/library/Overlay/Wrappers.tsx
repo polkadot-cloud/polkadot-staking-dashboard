@@ -4,7 +4,7 @@
 import styled from 'styled-components';
 
 export const OverlayWrapper = styled.div`
-  background: var(--overlay-modal-color);
+  background: var(--overlay-background-color);
   position: fixed;
   width: 100%;
   height: 100%;
@@ -31,7 +31,6 @@ export const OverlayWrapper = styled.div`
 `;
 
 export const HeightWrapper = styled.div<{ size: string }>`
-  box-shadow: var(--card-shadow);
   transition: height 0.5s cubic-bezier(0.1, 1, 0.2, 1);
   width: 100%;
   max-width: ${(props) => (props.size === 'small' ? '500px' : '700px')};
@@ -118,10 +117,10 @@ export const FilterListWrapper = styled.div`
   }
 `;
 
-export const FilterListButton = styled.button<{ active: boolean }>`
+export const FilterListButton = styled.button<{ $active: boolean }>`
   border: 1px solid
     ${(props) =>
-      props.active
+      props.$active
         ? 'var(--network-color-stroke)'
         : 'var(--button-primary-background)'};
   background: var(--button-primary-background);
@@ -136,19 +135,18 @@ export const FilterListButton = styled.button<{ active: boolean }>`
 
   h4 {
     color: ${(props) =>
-      props.active
+      props.$active
         ? 'var(--network-color-stroke)'
         : 'var(--text-color-secondary)'};
-    font-variation-settings: 'wght' 560;
     transition: color var(--transition-duration);
   }
 
   svg {
     color: ${(props) =>
-      props.active
+      props.$active
         ? 'var(--network-color-stroke)'
         : 'var(--text-color-secondary)'};
-    opacity: ${(props) => (props.active ? 1 : 0.7)};
+    opacity: ${(props) => (props.$active ? 1 : 0.7)};
     transition: color var(--transition-duration);
     margin-left: 0.2rem;
     margin-right: 0.9rem;

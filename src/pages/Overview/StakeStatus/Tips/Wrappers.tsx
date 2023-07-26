@@ -9,7 +9,8 @@ export const TipsWrapper = styled.div`
   width: 100%;
   display: flex;
   position: relative;
-  padding: 0.5rem 0.75rem 0.5rem 1rem;
+  padding: 0.15rem 1rem 0.7rem 1.25rem;
+  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 
   @media (max-width: ${SideMenuStickyThreshold}px) {
@@ -31,7 +32,7 @@ export const ItemWrapper = styled(motion.div)`
   }
 `;
 
-export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
+export const ItemInnerWrapper = styled.div`
   display: flex;
   flex-flow: row wrap;
   align-items: center;
@@ -75,6 +76,8 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
 
         h4 {
           color: var(--text-color-secondary);
+          transition: color var(--transition-duration);
+          font-family: InterSemiBold, sans-serif;
           position: absolute;
           top: 0;
           left: 0;
@@ -87,7 +90,6 @@ export const ItemInnerWrapper = styled.div<{ inactive?: boolean }>`
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
-          transition: color var(--transition-duration);
         }
         .more {
           color: var(--text-color-secondary);

@@ -39,6 +39,7 @@ export const Wrapper = styled.div`
 
 export const ItemWrapper = styled.div`
   border: 1px solid var(--border-primary-color);
+  font-family: InterSemiBold, sans-serif;
   border-radius: 1.5rem;
   display: flex;
   position: relative;
@@ -121,14 +122,15 @@ export const TabsWrapper = styled.div`
   }
 `;
 
-export const TabWrapper = styled.button<{ active?: boolean }>`
+export const TabWrapper = styled.button<{ $active?: boolean }>`
+  font-family: InterSemiBold, sans-serif;
   border: 1px solid
     ${(props) =>
-      props.active
+      props.$active
         ? 'var(--network-color-primary)'
         : 'var(--border-primary-color)'};
   color: ${(props) =>
-    props.active
+    props.$active
       ? 'var(--network-color-primary)'
       : 'var(--text-color-secondary)'};
   font-size: 0.9rem;

@@ -7,6 +7,7 @@ import { ButtonSecondary } from '@polkadotcloud/core-ui';
 import { isValidAddress } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { Identicon } from 'library/Identicon';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AccountInputWrapper } from './Wrapper';
@@ -22,6 +23,7 @@ export const AccountInput = ({
   inactive = false,
   disallowAlreadyImported = true,
   initialValue = null,
+  border = true,
 }: AccountInputProps) => {
   const { t } = useTranslation('library');
 
@@ -143,8 +145,14 @@ export const AccountInput = ({
     }
   };
 
+  const className = [];
+  if (inactive) className.push('inactive');
+  if (border) className.push('border');
+
   return (
-    <AccountInputWrapper className={inactive ? 'inactive' : undefined}>
+    <AccountInputWrapper
+      className={className.length ? className.join(' ') : undefined}
+    >
       {inactive && <div className="inactive-block" />}
       <h5 className={labelClass}>
         {successLock && (
@@ -157,18 +165,29 @@ export const AccountInput = ({
       </h5>
       <div className={`input${successLock ? ` disabled` : ``}`}>
         <section>
-          <input
-            placeholder={`${t('address')}`}
-            type="text"
-            onChange={(e: React.FormEvent<HTMLInputElement>) => handleChange(e)}
-            value={value}
-            disabled={successLock}
-          />
+          <div>
+            {isValidAddress(value) ? (
+              <Identicon value={value} size={22} />
+            ) : (
+              <div className="ph" />
+            )}
+          </div>
+          <div>
+            <input
+              placeholder={t('address')}
+              type="text"
+              onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                handleChange(e)
+              }
+              value={value}
+              disabled={successLock}
+            />
+          </div>
         </section>
         <section>
           {successLock ? (
             <>
-              <ButtonSecondary onClick={() => resetInput()} text="Reset" />
+              <ButtonSecondary onClick={() => resetInput()} text={t('reset')} />
             </>
           ) : (
             <>

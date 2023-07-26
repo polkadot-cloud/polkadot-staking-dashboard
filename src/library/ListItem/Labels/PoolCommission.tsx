@@ -2,22 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useTooltip } from 'contexts/Tooltip';
-import { TooltipPosition, TooltipTrigger } from 'library/ListItem/Wrappers';
-import { useRef } from 'react';
+import { TooltipTrigger } from 'library/ListItem/Wrappers';
+import { useTranslation } from 'react-i18next';
 
 export const PoolCommission = ({ commission }: { commission: string }) => {
-  const { setTooltipPosition, setTooltipMeta, open } = useTooltip();
+  const { t } = useTranslation('library');
+  const { setTooltipTextAndOpen } = useTooltip();
 
-  const posRef = useRef<HTMLDivElement>(null);
-
-  const tooltipText = 'Pool Commission';
-
-  const toggleTooltip = () => {
-    if (!open) {
-      setTooltipMeta(tooltipText);
-      setTooltipPosition(posRef);
-    }
-  };
+  const tooltipText = t('poolCommission');
 
   if (!commission) {
     return null;
@@ -28,9 +20,8 @@ export const PoolCommission = ({ commission }: { commission: string }) => {
       <TooltipTrigger
         className="tooltip-trigger-element"
         data-tooltip-text={tooltipText}
-        onMouseMove={() => toggleTooltip()}
+        onMouseMove={() => setTooltipTextAndOpen(tooltipText)}
       />
-      <TooltipPosition ref={posRef} />
       {commission}
     </div>
   );

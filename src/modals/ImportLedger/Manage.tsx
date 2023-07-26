@@ -1,94 +1,87 @@
 // Copyright 2023 @paritytech/polkadot-live authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonHelp, ButtonMonoInvert } from '@polkadotcloud/core-ui';
+import { HardwareStatusBar } from '@polkadotcloud/core-ui';
+import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
+import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
-import { ReactComponent as IconSVG } from 'img/ledgerIcon.svg';
+import { useOverlay } from 'contexts/Overlay';
+import { ReactComponent as StatusBarIcon } from 'img/ledgerIcon.svg';
+import { Heading } from 'library/Import/Heading';
 import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 import { Addresess } from './Addresses';
-import { StatusBarWrapper } from './Wrappers';
+import { Reset } from './Reset';
 
 export const Manage = ({
   addresses,
   handleLedgerLoop,
   removeLedgerAddress,
 }: AnyJson) => {
-  const { t } = useTranslation('modals');
-  const { replaceModalWith } = useModal();
+  const { t } = useTranslation();
+  const { name } = useApi().network;
   const { setIsExecuting, getIsExecuting, resetStatusCodes, getFeedback } =
     useLedgerHardware();
+  const { openOverlayWith } = useOverlay();
+  const { replaceModalWith } = useModal();
   const { openHelp } = useHelp();
 
+  const { appName, Icon } = getLedgerApp(name);
   const isExecuting = getIsExecuting();
 
-  const fallbackMessage = `${t('ledgerAccounts', { count: addresses.length })}`;
+  const fallbackMessage = `${t('ledgerAccounts', {
+    ns: 'modals',
+    count: addresses.length,
+  })}`;
   const feedback = getFeedback();
   const helpKey = feedback?.helpKey;
 
   return (
     <>
+      <Heading
+        connectTo="Ledger"
+        title={appName}
+        Icon={Icon}
+        disabled={!addresses.length}
+        handleReset={() => {
+          openOverlayWith(
+            <Reset removeLedgerAddress={removeLedgerAddress} />,
+            'small'
+          );
+        }}
+      />
       <Addresess
         addresses={addresses}
         handleLedgerLoop={handleLedgerLoop}
         removeLedgerAddress={removeLedgerAddress}
       />
-      <StatusBarWrapper
-        initial="hidden"
-        animate="show"
-        variants={{
-          hidden: { bottom: -50 },
-          show: {
-            bottom: 0,
-            transition: {
-              staggerChildren: 0.01,
-            },
-          },
+      <HardwareStatusBar
+        show
+        Icon={StatusBarIcon}
+        text={feedback?.message || fallbackMessage}
+        help={
+          helpKey
+            ? {
+                helpKey,
+                handleHelp: openHelp,
+              }
+            : undefined
+        }
+        inProgress={isExecuting}
+        handleCancel={() => {
+          setIsExecuting(false);
+          resetStatusCodes();
         }}
-        transition={{
-          duration: 2,
-          type: 'spring',
-          bounce: 0.4,
+        handleDone={() =>
+          replaceModalWith('Connect', { disableScroll: true }, 'large')
+        }
+        t={{
+          tDone: t('done', { ns: 'library' }),
+          tCancel: t('cancel', { ns: 'library' }),
         }}
-      >
-        <div className="inner">
-          <div>
-            <IconSVG width="24" height="24" className="ledgerIcon" />
-            <div className="text">
-              <h3>
-                {feedback?.message || fallbackMessage}
-                {helpKey ? (
-                  <ButtonHelp
-                    marginLeft
-                    onClick={() => openHelp(helpKey)}
-                    backgroundSecondary
-                  />
-                ) : null}
-              </h3>
-            </div>
-          </div>
-          <div>
-            {isExecuting ? (
-              <ButtonMonoInvert
-                text={t('cancel')}
-                onClick={() => {
-                  setIsExecuting(false);
-                  resetStatusCodes();
-                }}
-              />
-            ) : (
-              <ButtonMonoInvert
-                text={t('done')}
-                onClick={() => {
-                  replaceModalWith('Connect', { disableScroll: true }, 'large');
-                }}
-              />
-            )}
-          </div>
-        </div>
-      </StatusBarWrapper>
+      />
     </>
   );
 };

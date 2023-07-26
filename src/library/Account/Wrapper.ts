@@ -6,10 +6,10 @@ import type { WrapperProps } from './types';
 
 export const Wrapper = styled.button<WrapperProps>`
   border: 1px solid var(--border-primary-color);
-  cursor: ${(props) => (props.canClick ? 'pointer' : 'default')};
+  cursor: ${(props) => (props.$canClick ? 'pointer' : 'default')};
   background: ${(props) =>
-    props.filled ? 'var(--button-secondary-background)' : 'none'};
-  font-size: ${(props) => props.fontSize};
+    props.$filled ? 'var(--button-tab-background)' : 'none'};
+  font-size: ${(props) => props.$fontSize};
   border-radius: 1.25rem;
   box-shadow: none;
   display: flex;
@@ -27,7 +27,7 @@ export const Wrapper = styled.button<WrapperProps>`
   }
   .account-label {
     border-right: 1px solid var(--border-secondary-color);
-    color: var(--text-color-secondary);
+    color: var(--text-color-primary);
     font-size: 0.8em;
     display: flex;
     align-items: center;
@@ -40,12 +40,13 @@ export const Wrapper = styled.button<WrapperProps>`
     flex-shrink: 1;
 
     > svg {
-      color: var(--text-color-secondary);
+      color: var(--text-color-primary);
     }
   }
 
   .title {
-    color: var(--text-color-secondary);
+    font-family: InterSemiBold, sans-serif;
+    color: var(--text-color-primary);
     margin-left: 0.25rem;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -66,7 +67,7 @@ export const Wrapper = styled.button<WrapperProps>`
     opacity: 0.8;
 
     path {
-      fill: var(--text-color-secondary);
+      fill: var(--text-color-primary);
     }
   }
 `;

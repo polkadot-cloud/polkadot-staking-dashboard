@@ -56,8 +56,7 @@ export const PoolName = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={progress.metadata !== ''}
-        title={`${t('pools.poolName')}`}
-        // helpKey="Bonding"
+        title={t('pools.poolName')}
         bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>

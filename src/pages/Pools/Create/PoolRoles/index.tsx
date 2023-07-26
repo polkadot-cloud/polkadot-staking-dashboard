@@ -24,7 +24,7 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
     root: activeAccount,
     depositor: activeAccount,
     nominator: activeAccount,
-    stateToggler: activeAccount,
+    bouncer: activeAccount,
   };
 
   // store local pool name for form control
@@ -63,20 +63,17 @@ export const PoolRoles = ({ section }: SetupStepProps) => {
       <Header
         thisSection={section}
         complete={progress.roles !== null}
-        title={`${t('pools.roles')}`}
+        title={t('pools.roles')}
         helpKey="Pool Roles"
         bondFor="pool"
       />
       <MotionContainer thisSection={section} activeSection={setup.section}>
-        <h4 style={{ margin: '0.5rem 0' }}>
-          <Trans
-            defaults={`${t('pools.poolCreator')}`}
-            components={{ b: <b /> }}
-          />
+        <h4 className="withMargin">
+          <Trans defaults={t('pools.poolCreator')} components={{ b: <b /> }} />
         </h4>
-        <h4 style={{ marginTop: 0 }}>
+        <h4 className="withMargin">
           <Trans
-            defaults={`${t('pools.assignedToAnyAccount')}`}
+            defaults={t('pools.assignedToAnyAccount')}
             components={{ b: <b /> }}
           />
         </h4>

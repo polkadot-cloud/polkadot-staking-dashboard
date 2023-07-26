@@ -6,7 +6,7 @@ import type { WrapperProps } from './types';
 
 export const Wrapper = styled.div<WrapperProps>`
   position: absolute;
-  top: ${(props) => (props.topOffset ? props.topOffset : '50%')};
+  top: ${(props) => (props.$topOffset ? props.$topOffset : '50%')};
   left: 0;
   width: 100%;
   display: flex;

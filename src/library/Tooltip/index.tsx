@@ -6,14 +6,21 @@ import { useEffect, useRef } from 'react';
 import { Wrapper } from './Wrapper';
 
 export const Tooltip = () => {
-  const tooltip = useTooltip();
-  const { position } = tooltip;
+  const {
+    open,
+    text,
+    show,
+    position,
+    showTooltip,
+    closeTooltip,
+    setTooltipPosition,
+  } = useTooltip();
 
-  const ref = useRef(null);
+  // Ref for the tooltip element itself.
+  const tooltipRef: any = useRef(null);
 
   useEffect(() => {
-    if (tooltip.open === 1) {
-      tooltip.checkTooltipPosition(ref);
+    if (open === 1) {
       window.addEventListener('mousemove', mouseMoveCallback);
     } else {
       window.removeEventListener('mousemove', mouseMoveCallback);
@@ -21,35 +28,42 @@ export const Tooltip = () => {
     return () => {
       window.removeEventListener('mousemove', mouseMoveCallback);
     };
-  }, [tooltip.open]);
+  }, [open]);
 
   const mouseMoveCallback = (e: any) => {
-    const isTriggerElement = e.target?.classList.contains(
+    const { target, pageX, pageY } = e;
+
+    if (tooltipRef?.current) {
+      setTooltipPosition(pageX, pageY - (tooltipRef.current.offsetHeight || 0));
+      if (!show) showTooltip();
+    }
+
+    const isTriggerElement = target?.classList.contains(
       'tooltip-trigger-element'
     );
-    const dataAttribute = e.target?.getAttribute('data-tooltip-text') ?? false;
+    const dataAttribute = target?.getAttribute('data-tooltip-text') ?? false;
     if (!isTriggerElement) {
-      tooltip.closeTooltip();
-    } else if (dataAttribute !== tooltip.text) {
-      tooltip.closeTooltip();
+      closeTooltip();
+    } else if (dataAttribute !== text) {
+      closeTooltip();
     }
   };
 
   return (
     <>
-      {tooltip.open === 1 && (
+      {open === 1 && (
         <Wrapper
           className="tooltip-trigger-element"
-          ref={ref}
+          ref={tooltipRef}
           style={{
             position: 'absolute',
             left: `${position[0]}px`,
             top: `${position[1]}px`,
             zIndex: 99,
-            opacity: tooltip.show === 1 ? 1 : 0,
+            opacity: show === 1 ? 1 : 0,
           }}
         >
-          <h3 className="tooltip-trigger-element">{tooltip.text}</h3>
+          <h3 className="tooltip-trigger-element">{text}</h3>
         </Wrapper>
       )}
     </>

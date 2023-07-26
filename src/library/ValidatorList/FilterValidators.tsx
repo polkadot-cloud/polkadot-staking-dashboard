@@ -24,7 +24,7 @@ export const FilterValidators = () => {
         <h4>{t('include')}:</h4>
         {Object.entries(includesToLabels).map(([f, l]: any, i) => (
           <FilterListButton
-            active={includes?.includes(f) ?? false}
+            $active={includes?.includes(f) ?? false}
             key={`validator_include_${i}`}
             type="button"
             onClick={() => {
@@ -42,7 +42,7 @@ export const FilterValidators = () => {
         <h4>{t('exclude')}:</h4>
         {Object.entries(excludesToLabels).map(([f, l]: any, i) => (
           <FilterListButton
-            active={excludes?.includes(f) ?? false}
+            $active={excludes?.includes(f) ?? false}
             key={`validator_exclude_${i}`}
             type="button"
             onClick={() => {

@@ -4,12 +4,16 @@
 import { PageRow, PageTitle, RowSection } from '@polkadotcloud/core-ui';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
-import { CardWrapper } from 'library/Graphs/Wrappers';
-import { PoolList } from 'library/PoolList';
+import { usePoolMembers } from 'contexts/Pools/PoolMembers';
+import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
+import { useSubscan } from 'contexts/Subscan';
+import { CardWrapper } from 'library/Card/Wrappers';
+import { PoolList } from 'library/PoolList/Default';
 import { StatBoxList } from 'library/StatBoxList';
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
@@ -27,23 +31,35 @@ import { PoolsTabsProvider, usePoolsTabs } from './context';
 
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
+  const { pluginEnabled } = usePlugins();
+  const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
+  const { fetchPoolDetails } = useSubscan();
+  const { membership } = usePoolMemberships();
+  const { activeTab, setActiveTab } = usePoolsTabs();
   const { bondedPools, getAccountPools } = useBondedPools();
   const { getPoolRoles, selectedActivePool } = useActivePools();
-  const { activeTab, setActiveTab } = usePoolsTabs();
-  const { openModalWith } = useModal();
-
+  const { getMembersOfPoolFromNode, poolMembersNode } = usePoolMembers();
   const accountPools = getAccountPools(activeAccount);
   const totalAccountPools = Object.entries(accountPools).length;
 
-  // back to tab 0 if not in a pool & on members tab
-  useEffect(() => {
-    if (!selectedActivePool && [1].includes(activeTab)) {
-      setActiveTab(0);
-    }
-  }, [selectedActivePool]);
+  const fetchingMemberCount = useRef<boolean>(false);
 
-  const ROW_HEIGHT = 210;
+  const getMemberCount = async () => {
+    if (!selectedActivePool?.id) {
+      setMemberCount(0);
+      return;
+    }
+    if (pluginEnabled('subscan') && !fetchingMemberCount.current) {
+      fetchingMemberCount.current = true;
+      const poolDetails = await fetchPoolDetails(selectedActivePool.id);
+      fetchingMemberCount.current = false;
+      return setMemberCount(poolDetails?.member_count || 0);
+    }
+    setMemberCount(
+      getMembersOfPoolFromNode(selectedActivePool?.id ?? 0).length
+    );
+  };
 
   let tabs = [
     {
@@ -74,10 +90,28 @@ export const HomeInner = () => {
     }
   );
 
+  // Store the pool member count.
+  const [memberCount, setMemberCount] = useState<number>(0);
+
+  // Back to tab 0 if not in a pool & on members tab.
+  useEffect(() => {
+    if (!selectedActivePool && [1].includes(activeTab)) {
+      setActiveTab(0);
+    }
+  }, [selectedActivePool]);
+
+  // Fetch pool member count. We use `membership` as a dependency as the member count could change
+  // in the UI when active account's membership changes.
+  useEffect(() => {
+    getMemberCount();
+  }, [activeAccount, selectedActivePool, membership, poolMembersNode]);
+
+  const ROW_HEIGHT = 220;
+
   return (
     <>
       <PageTitle
-        title={`${t('pools.pools')}`}
+        title={t('pools.pools')}
         tabs={tabs}
         button={
           totalAccountPools
@@ -121,13 +155,13 @@ export const HomeInner = () => {
                 </CardWrapper>
               </PageRow>
               <PageRow>
-                <PoolStats />
+                <PoolStats memberCount={memberCount} />
               </PageRow>
             </>
           )}
         </>
       )}
-      {activeTab === 1 && <Members />}
+      {activeTab === 1 && <Members memberCount={memberCount} />}
       {activeTab === 2 && (
         <>
           <StatBoxList>

@@ -23,6 +23,7 @@ export interface Network {
     lightClient: AnyApi;
   };
   namespace: string;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   colors: Record<NetworkColor, { [key in Theme]: string }>;
   subscanEndpoint: string;
   unit: string;
@@ -50,6 +51,7 @@ export interface Network {
     priceTicker: string;
   };
   params: Record<string, number>;
+  defaultFeeReserve: number;
 }
 
 export interface PageCategory {

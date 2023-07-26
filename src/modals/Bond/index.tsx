@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { ModalPadding, ModalWarnings } from '@polkadotcloud/core-ui';
 import { planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -15,7 +16,6 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -25,7 +25,7 @@ export const Bond = () => {
   const { units } = network;
   const { setStatus: setModalStatus, config, setResize } = useModal();
   const { activeAccount } = useConnect();
-  const { getTransferOptions } = useTransferOptions();
+  const { feeReserve, getTransferOptions } = useTransferOptions();
   const { selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
   const { bondFor } = config;
@@ -38,7 +38,7 @@ export const Bond = () => {
       ? nominate.totalAdditionalBond
       : pool.totalAdditionalBond;
 
-  const freeBalance = planckToUnit(freeBalanceBn, units);
+  const freeBalance = planckToUnit(freeBalanceBn.minus(feeReserve), units);
   const largestTxFee = useBondGreatestFee({ bondFor });
 
   // calculate any unclaimed pool rewards.
@@ -75,11 +75,6 @@ export const Bond = () => {
   useEffect(() => {
     setBond({ bond: freeBalance.toString() });
   }, [freeBalance.toString()]);
-
-  // modal resize on form update
-  useEffect(() => {
-    setResize();
-  }, [bond]);
 
   // determine whether this is a pool or staking transaction.
   const determineTx = (bondToSubmit: BigNumber) => {
@@ -128,19 +123,24 @@ export const Bond = () => {
     submitExtrinsic.proxySupported
   );
 
+  // modal resize on form update
+  useEffect(() => {
+    setResize();
+  }, [bond, warnings.length]);
+
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title unbounded">{t('addToBond')}</h2>
         {pendingRewards > 0 && bondFor === 'pool' ? (
-          <WarningsWrapper>
+          <ModalWarnings withMargin>
             <Warning
               text={`${t('bondingWithdraw')} ${pendingRewards} ${
                 network.unit
               }.`}
             />
-          </WarningsWrapper>
+          </ModalWarnings>
         ) : null}
         <BondFeedback
           syncing={largestTxFee.isZero()}
@@ -157,7 +157,7 @@ export const Bond = () => {
           txFees={largestTxFee}
         />
         <p>{t('newlyBondedFunds')}</p>
-      </PaddingWrapper>
+      </ModalPadding>
       <SubmitTx valid={bondValid} {...submitExtrinsic} />
     </>
   );

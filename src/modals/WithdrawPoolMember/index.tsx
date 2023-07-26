@@ -1,7 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ActionItem } from '@polkadotcloud/core-ui';
+import {
+  ActionItem,
+  ModalPadding,
+  ModalWarnings,
+} from '@polkadotcloud/core-ui';
 import { isNotZero, planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { useApi } from 'contexts/Api';
@@ -14,7 +18,6 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { PaddingWrapper, WarningsWrapper } from 'modals/Wrappers';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -86,19 +89,19 @@ export const WithdrawPoolMember = () => {
   return (
     <>
       <Close />
-      <PaddingWrapper>
+      <ModalPadding>
         <h2 className="title">{t('withdrawMemberFunds')}</h2>
         <ActionItem
           text={`${t('withdraw')} ${totalWithdraw} ${network.unit}`}
         />
         {warnings.length > 0 ? (
-          <WarningsWrapper>
+          <ModalWarnings withMargin>
             {warnings.map((text, i) => (
               <Warning key={`warning${i}`} text={text} />
             ))}
-          </WarningsWrapper>
+          </ModalWarnings>
         ) : null}
-      </PaddingWrapper>
+      </ModalPadding>
       <SubmitTx valid={valid} {...submitExtrinsic} />
     </>
   );

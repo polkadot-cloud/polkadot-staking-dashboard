@@ -12,9 +12,10 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
 import type {
   FastUnstakeContextInterface,
@@ -71,7 +72,7 @@ export const FastUnstakeProvider = ({
   const checkToEra = activeEra.index.minus(bondDuration);
 
   // initiate fast unstake check for accounts that are nominating but not active.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     if (
       isReady &&
       activeAccount &&

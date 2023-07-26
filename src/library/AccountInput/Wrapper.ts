@@ -21,30 +21,54 @@ export const AccountInputWrapper = styled.div`
     height: 100%;
   }
 
+  &.border {
+    > .input {
+      border: 1px solid var(--border-primary-color);
+    }
+  }
+
   .input {
-    border: 1px solid var(--border-primary-color);
+    border: 1px solid var(--transparent-color);
     border-radius: 1rem;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    padding: 0.25rem 0.5rem 0.25rem 1rem;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
 
     &.disabled {
       background: var(--background-default);
     }
-
     > section {
       display: flex;
-      flex-flow: column wrap;
+      flex-flow: row wrap;
+      align-items: center;
 
-      > input {
-        width: 100%;
-        border: none;
-        margin: 0;
-        padding-right: 1rem;
+      > div {
+        &:first-child {
+          padding-right: 0.5rem;
+          .ph {
+            background: var(--background-default);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+          }
+        }
+        &:last-child {
+          display: flex;
+          flex-flow: column wrap;
+          flex-grow: 1;
 
-        &:disabled {
-          opacity: 0.75;
+          > input {
+            font-family: InterSemiBold, sans-serif;
+            width: 100%;
+            border: none;
+            margin: 0;
+            padding-right: 1rem;
+
+            &:disabled {
+              opacity: 0.75;
+            }
+          }
         }
       }
 
