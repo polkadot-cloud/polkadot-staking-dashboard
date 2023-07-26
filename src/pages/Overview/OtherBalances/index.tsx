@@ -48,7 +48,7 @@ export const BalanceFooter = () => {
           lg
           text="Manage"
           iconLeft={faGlobe}
-          disabled={!enabled}
+          disabled={!enabled || paraSyncing !== 'synced'}
         />
       </section>
     </MoreWrapper>
