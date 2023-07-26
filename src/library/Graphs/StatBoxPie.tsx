@@ -19,16 +19,13 @@ export const StatPie = ({ value, value2 }: StatPieProps) => {
     value = 1;
     value2 = 0;
   }
-  const borderColor = isZero
-    ? graphColors.inactive[mode]
-    : [colors.primary[mode], graphColors.border[mode]];
-
   const backgroundColor = isZero
     ? graphColors.inactive[mode]
     : colors.primary[mode];
 
   const options = {
-    borderColor,
+    borderColor: graphColors.inactive[mode],
+    hoverBorderColor: graphColors.inactive[mode],
     backgroundColor,
     hoverBackgroundColor: [backgroundColor, graphColors.inactive[mode]],
     responsive: true,
