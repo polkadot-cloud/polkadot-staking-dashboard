@@ -13,12 +13,14 @@ import { ReactComponent as INTRSVG } from 'config/tokens/intr.svg';
 import { ReactComponent as USDTSVG } from 'config/tokens/usdt.svg';
 import { Tokens } from 'library/Tokens/Wrappers';
 import { useApi } from 'contexts/Api';
+import { useParaSync } from 'contexts/ParaSync';
 import { MoreWrapper } from './Wrappers';
 
 export const BalanceFooter = () => {
   const {
     network: { name },
   } = useApi();
+  const { paraSyncing } = useParaSync();
 
   const enabled = name === 'polkadot';
 
@@ -30,7 +32,7 @@ export const BalanceFooter = () => {
       </h4>
       <section>
         <Tokens>
-          {enabled && (
+          {enabled && paraSyncing === 'synced' && (
             <div className="svgs">
               <div className="token">
                 <USDTSVG style={{ height: '100%' }} />
@@ -51,12 +53,15 @@ export const BalanceFooter = () => {
               <h3>Not Available</h3>
             ) : (
               <>
-                <h3>+ 9 Others</h3>
+                {paraSyncing === 'synced' ? (
+                  <h3>+ 9 Others</h3>
+                ) : (
+                  <h3>Syncing...</h3>
+                )}
               </>
             )}
           </div>
         </Tokens>
-
         <ButtonPrimaryInvert
           lg
           text="Manage"

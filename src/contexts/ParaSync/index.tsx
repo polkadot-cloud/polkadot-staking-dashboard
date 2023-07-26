@@ -64,7 +64,9 @@ export const ParaSyncProvider = ({
   }, [activeAccount, network]);
 
   return (
-    <ParaSyncContext.Provider value={{ paraBalances }}>
+    <ParaSyncContext.Provider
+      value={{ paraBalances, paraSyncing: isSyncingRef.current }}
+    >
       {children}
     </ParaSyncContext.Provider>
   );

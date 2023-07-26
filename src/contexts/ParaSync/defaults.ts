@@ -4,5 +4,6 @@
 import type { ParaSyncContextInterface } from './types';
 
 export const defaultParaSyncContext: ParaSyncContextInterface = {
+  paraSyncing: 'unsynced',
   paraBalances: {},
 };
