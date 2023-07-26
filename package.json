@@ -42,7 +42,7 @@
     "chart.js": "^4.3.2",
     "date-fns": "^2.29.3",
     "framer-motion": "^10.13.1",
-    "i18next": "^23.2.11",
+    "i18next": "^23.3.0",
     "i18next-browser-languagedetector": "^7.1.0",
     "lodash.throttle": "^4.1.1",
     "qrcode-generator": "1.4.4",
