@@ -4,38 +4,35 @@
 import { SectionFullWidthThreshold } from 'consts';
 import styled from 'styled-components';
 
-export const Separator = styled.div`
-  border-bottom: 1px solid var(--border-primary-color);
-  margin-top: 0.8rem;
-  width: 100%;
-  height: 1px;
-`;
-
 export const MoreWrapper = styled.div`
-  padding: 0 0.5rem;
   padding-bottom: 1rem;
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 2.5rem;
+  margin-top: 1.6rem;
+  padding: 0 0.5rem;
 
   @media (max-width: ${SectionFullWidthThreshold}px) {
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
     padding: 0 0.75rem;
     margin-bottom: 0.5rem;
   }
   h4 {
-    margin-top: 0.25rem;
-    margin-bottom: 0.5rem;
+    color: var(--text-color-secondary);
+    font-family: InterSemiBold, sans-serif;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    > button {
+      margin-left: 0.5rem;
+    }
   }
   section {
     display: flex;
     align-items: center;
     width: 100%;
     margin-top: 0.1rem;
-    div {
-      margin-left: 0.5rem;
-    }
   }
 `;
 
