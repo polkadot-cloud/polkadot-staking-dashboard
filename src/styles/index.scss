@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-@import "./common/font.scss";
+@import './common/font.scss';
 
 html * {
   --network-color-primary: #9cffaa;
@@ -15,14 +15,14 @@ html * {
   --button-tertiary-background: #242628;
   --background-default: #0d0f10;
   --background-primary: #181a1c;
-  --gradient-highlight-primary: linear-gradient(90deg,#181a1c,#181a1c);
-  --gradient-side-menu: linear-gradient(180deg,#0d0f10,#0d0f10);
+  --gradient-highlight-primary: linear-gradient(90deg, #181a1c, #181a1c);
+  --gradient-side-menu: linear-gradient(180deg, #0d0f10, #0d0f10);
   --border-primary-color: #2a2c2e;
   --border-secondary-color: #222426;
   --status-success-color-transparent: #446d4c;
   --status-success-color: #a5fba5;
-  --network-color-pending-light: rgba(156,255,170,.5);
-  --network-color-pending-dark: rgba(156,255,170,.5);
+  --network-color-pending-light: rgba(156, 255, 170, 0.5);
+  --network-color-pending-dark: rgba(156, 255, 170, 0.5);
   --network-color-pending: var(--network-color-pending-dark);
 
   .core-entry {
@@ -34,30 +34,31 @@ html * {
   }
 
   .btn-submit {
-    color: #0A0C0E;
+    color: #0a0c0e;
   }
 }
 
-html, body {
+html,
+body {
   background-color: #0d0f10;
 }
 
 html {
   body {
-    font-family: "SF-Pro-M", sans-serif;
+    font-family: 'SF-Pro-M', sans-serif;
   }
 
   h1,
   h2 {
-    font-family: "SF-Pro-SB", sans-serif;
+    font-family: 'SF-Pro-SB', sans-serif;
   }
 
   button {
-    font-family: "SF-Pro-SB", sans-serif;
+    font-family: 'SF-Pro-SB', sans-serif;
   }
 
   input {
-    font-family: "SF-Pro-R", sans-serif;
+    font-family: 'SF-Pro-R', sans-serif;
   }
 }
 
@@ -82,7 +83,7 @@ html {
 
 .core-page-title h1,
 .modal-custom-header > div.first h1 {
-  font-family: "NeueBit-B" !important;
+  font-family: 'NeueBit-B' !important;
 }
 
 .core-page-title h1 {
