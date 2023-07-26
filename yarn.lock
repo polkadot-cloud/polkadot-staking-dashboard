@@ -1829,7 +1829,7 @@
 
 "@polkadotcloud/core-ui@^0.3.55":
   version "0.3.55"
-  resolved "https://registry.yarnpkg.com/@polkadotcloud/core-ui/-/core-ui-0.3.55.tgz#5ac8ed497ea3ba3fdf04f238b2bc06a2269d5eef"
+  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.3.55.tgz#5ac8ed497ea3ba3fdf04f238b2bc06a2269d5eef"
   integrity sha512-rqwIjmmmjHFNITQ+Q2mv/FB0tzj7+uzxgf8ACM8G6vsi0wtv0xr+LFa26cfpp5BXsZQGiQUPQwMuaZp2UcPpnw==
 
 "@polkadotcloud/react-odometer@^0.1.17":
