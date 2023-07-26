@@ -6,7 +6,6 @@
 
 https://staking.creditcoin.org
 
-
 ## Validator Operator Setup Guide
 
 Validator operators can add their contact information, icon, and which validators they operate, to the dashboard’s Community section. The Community feature is designed to give non-biased exposure to validator operators, and to host a fully-featured validator browser just for that operator's validators.
@@ -64,7 +63,7 @@ export const ValidatorCommunity = [
 ### General Requirements
 
 | Requirement | Notes                                                                                                                                                                                             |
-| ----------- |---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Accuracy    | Operator contact details must be working and valid.                                                                                                                                               |
 | Liveness    | All submitted validator addresses must be discoverable as a validator on the network in question - whether Mainnet or Testnet.                                                                    |
 | Ordering    | Please place your operator in alphabetical order within `ValidatorCommunity`. Operators are shuffled before being displayed in the dashboard, removing any bias associated with ordering methods. |
