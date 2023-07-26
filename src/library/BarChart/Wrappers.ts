@@ -11,7 +11,7 @@ export const BarChartWrapper = styled.div<{ $lessPadding?: boolean }>`
   .available {
     width: 100%;
     display: flex;
-    margin-top: 2.7rem;
+    margin-top: 2.2rem;
     > div {
       display: flex;
       flex-flow: row wrap;
