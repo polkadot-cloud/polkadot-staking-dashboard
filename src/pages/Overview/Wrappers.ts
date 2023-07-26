@@ -9,7 +9,7 @@ export const MoreWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-flow: column wrap;
-  margin-top: 1.6rem;
+  margin-top: 1.5rem;
   padding: 0 0.5rem;
 
   @media (max-width: ${SectionFullWidthThreshold}px) {
@@ -20,7 +20,7 @@ export const MoreWrapper = styled.div`
   h4 {
     color: var(--text-color-secondary);
     font-family: InterSemiBold, sans-serif;
-    margin-top: 0.5rem;
+    margin-top: 0.6rem;
     margin-bottom: 0.75rem;
     display: flex;
     align-items: center;

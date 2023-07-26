@@ -6,7 +6,7 @@ import styled from 'styled-components';
 export const Tokens = styled.div`
   --token-size: 2.25rem;
   --clipped-token-size: 1.75rem;
-  --container-width: 9rem; /* 4 * token-size */
+  --container-width: 8.25rem; /* 4 * token-size - 0.75rem  */
   background: var(--button-tertiary-background);
   border-radius: 0.75rem;
   display: flex;
@@ -49,7 +49,7 @@ export const Tokens = styled.div`
       color: var(--text-color-secondary);
       font-family: InterBold, sans-serif;
       font-size: 1.05rem;
-      margin-right: 1.25rem;
+      margin: 0 1.25rem;
     }
   }
 `;

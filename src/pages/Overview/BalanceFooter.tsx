@@ -12,9 +12,16 @@ import { ReactComponent as DOTSVG } from 'config/tokens/dot.svg';
 import { ReactComponent as INTRSVG } from 'config/tokens/intr.svg';
 import { ReactComponent as USDTSVG } from 'config/tokens/usdt.svg';
 import { Tokens } from 'library/Tokens/Wrappers';
+import { useApi } from 'contexts/Api';
 import { MoreWrapper } from './Wrappers';
 
 export const BalanceFooter = () => {
+  const {
+    network: { name },
+  } = useApi();
+
+  const enabled = name === 'polkadot';
+
   return (
     <MoreWrapper>
       <Separator />
@@ -23,29 +30,38 @@ export const BalanceFooter = () => {
       </h4>
       <section>
         <Tokens>
-          <div className="svgs">
-            <div className="token">
-              <USDTSVG style={{ height: '100%' }} />
+          {enabled && (
+            <div className="svgs">
+              <div className="token">
+                <USDTSVG style={{ height: '100%' }} />
+              </div>
+              <div className="token">
+                <INTRSVG style={{ height: '100%' }} />
+              </div>
+              <div className="token">
+                <IBTCSVG style={{ height: '100%' }} />
+              </div>
+              <div className="token">
+                <DOTSVG style={{ height: '100%' }} />
+              </div>
             </div>
-            <div className="token">
-              <INTRSVG style={{ height: '100%' }} />
-            </div>
-            <div className="token">
-              <IBTCSVG style={{ height: '100%' }} />
-            </div>
-            <div className="token">
-              <DOTSVG style={{ height: '100%' }} />
-            </div>
-          </div>
+          )}
           <div className="text">
-            <h3>+ 9 Others</h3>
+            {!enabled ? (
+              <h3>Not Available</h3>
+            ) : (
+              <>
+                <h3>+ 9 Others</h3>
+              </>
+            )}
           </div>
         </Tokens>
+
         <ButtonPrimaryInvert
           lg
           text="Manage"
           iconLeft={faGlobe}
-          disabled={false}
+          disabled={!enabled}
         />
       </section>
     </MoreWrapper>
