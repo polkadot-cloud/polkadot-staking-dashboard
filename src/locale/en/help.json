@@ -228,6 +228,12 @@
           "Open the {NETWORK_NAME} app on the Ledger device and try again."
         ]
       ],
+      "otherBalances": [
+        "Other Balances",
+        [
+          "Staking dashboard will sync your balances from other supported parachains and display them here."
+        ]
+      ],
       "overSubscribed": [
         "Over Subscribed",
         [

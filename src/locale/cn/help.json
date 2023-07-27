@@ -216,6 +216,12 @@
           "请在Ledger设备上打开 {NETWORK_NAME} App 然后重试."
         ]
       ],
+      "otherBalances": [
+        "Other Balances",
+        [
+          "Staking dashboard will sync your balances from other supported parachains and display them here."
+        ]
+      ],
       "overSubscribed": [
         "超额认选",
         [

@@ -16,6 +16,7 @@ export const HelpConfig: HelpItems = [
       'Your Balance',
       'Reserve Balance',
       'Locked Balance',
+      'Other Balances',
       'Historical Rewards Rate',
       'Adjusted Rewards Rate',
       'Inflation',

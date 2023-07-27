@@ -12,6 +12,7 @@ import { useApi } from 'contexts/Api';
 import { useParaSync } from 'contexts/ParaSync';
 import type { AnyJson } from 'types';
 import { LoaderWrapper } from 'library/Loader/Wrapper';
+import { useHelp } from 'contexts/Help';
 import { MoreWrapper } from '../Wrappers';
 import { TokenList } from './TokenList';
 
@@ -19,6 +20,7 @@ export const BalanceFooter = () => {
   const {
     network: { name },
   } = useApi();
+  const { openHelp } = useHelp();
   const { paraSyncing, paraBalances } = useParaSync();
 
   // Other balances are only enabled on Polkadot.
@@ -40,7 +42,7 @@ export const BalanceFooter = () => {
     <MoreWrapper>
       <Separator />
       <h4>
-        Other Balances <ButtonHelp />
+        Other Balances <ButtonHelp onClick={() => openHelp('Other Balances')} />
       </h4>
       <section>
         <Tokens>
