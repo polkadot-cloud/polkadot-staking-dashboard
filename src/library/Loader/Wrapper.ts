@@ -34,3 +34,26 @@ export const LoaderWrapper = styled.div`
     }
   }
 `;
+
+export const RadicalLoaderWrapper = styled.div`
+  background: var(--background-default);
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  animation: pulse 0.85s infinite linear;
+
+  @keyframes pulse {
+    0% {
+      transform: scale(0.15);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
+  }
+`;

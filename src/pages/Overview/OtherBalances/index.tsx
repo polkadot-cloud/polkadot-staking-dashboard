@@ -11,7 +11,7 @@ import { Tokens } from 'library/Tokens/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useParaSync } from 'contexts/ParaSync';
 import type { AnyJson } from 'types';
-import { LoaderWrapper } from 'library/Loader/Wrapper';
+import { RadicalLoaderWrapper } from 'library/Loader/Wrapper';
 import { useHelp } from 'contexts/Help';
 import { MoreWrapper } from '../Wrappers';
 import { TokenList } from './TokenList';
@@ -53,7 +53,7 @@ export const BalanceFooter = () => {
               ) : (
                 <div className="symbols">
                   <div className="token">
-                    <LoaderWrapper className="preload" />{' '}
+                    <RadicalLoaderWrapper className="preload" />{' '}
                   </div>
                 </div>
               )}
