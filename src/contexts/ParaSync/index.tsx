@@ -60,6 +60,7 @@ export const ParaSyncProvider = ({
   // NOTE: could make `syncBalances` cancelable and cancel when this useEffect is triggered.
   useEffectIgnoreInitial(() => {
     isSyncingRef.current = 'unsynced';
+    setParaBalances({});
     syncBalances();
   }, [activeAccount, network]);
 
