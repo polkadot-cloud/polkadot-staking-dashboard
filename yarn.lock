@@ -5099,7 +5099,7 @@ ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
-rollup-plugin-visualizer@^5.9.0:
+rollup-plugin-visualizer@^5.9.2:
   version "5.9.2"
   resolved "https://registry.yarnpkg.com/rollup-plugin-visualizer/-/rollup-plugin-visualizer-5.9.2.tgz#f1aa2d9b1be8ebd6869223c742324897464d8891"
   integrity sha512-waHktD5mlWrYFrhOLbti4YgQCn1uR24nYsNuXxg7LkPH8KdTXVWR9DNY1WU0QqokyMixVXJS4J04HNrVTMP01A==
@@ -5662,13 +5662,13 @@ util-deprecate@^1.0.1:
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
-vite-bundle-visualizer@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/vite-bundle-visualizer/-/vite-bundle-visualizer-0.8.1.tgz#a982f040898808f4f854b271032b6892eed0c623"
-  integrity sha512-CLNRfxjdVi6lMC0/FJCKqJ06LMvizGuoCJRHBPWcVHMhUZ04O3O4ACcaMoOjcJMaB8+QexfmaWKUcmyX3iOwOA==
+vite-bundle-visualizer@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/vite-bundle-visualizer/-/vite-bundle-visualizer-0.10.0.tgz#bdeafe5f8e69eb4c157174ae8d852279272e3010"
+  integrity sha512-11AwKlkhvw6jjiGbTiCZqBSGg/FQDLc0mVcoLWVov2jU/Ban67l+Sk4Fa0Iyctb5sObqg/dA28HkKCEmSRjw9g==
   dependencies:
     cac "^6.7.14"
-    rollup-plugin-visualizer "^5.9.0"
+    rollup-plugin-visualizer "^5.9.2"
 
 vite-node@0.33.0:
   version "0.33.0"
