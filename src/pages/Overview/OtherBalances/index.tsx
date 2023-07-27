@@ -11,7 +11,7 @@ import { Tokens } from 'library/Tokens/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useParaSync } from 'contexts/ParaSync';
 import { MoreWrapper } from '../Wrappers';
-import { TokenSVGs } from './TokenSVGs';
+import { TokenList } from './TokenList';
 
 export const BalanceFooter = () => {
   const {
@@ -29,7 +29,7 @@ export const BalanceFooter = () => {
       </h4>
       <section>
         <Tokens>
-          {enabled && paraSyncing === 'synced' && <TokenSVGs />}
+          {enabled && paraSyncing === 'synced' && <TokenList />}
           <div className="text">
             {!enabled ? (
               <h3>Not Available</h3>
