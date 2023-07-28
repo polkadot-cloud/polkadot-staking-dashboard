@@ -17,7 +17,7 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
   const { extensions, extensionsStatus } = useExtensions();
   const { connectExtensionAccounts } = useConnect();
   const { addNotification } = useNotifications();
-  const { title, icon: Icon, url } = meta;
+  const { title, Icon, website } = meta;
 
   const { id } = meta;
   const extension = extensions.find((e) => e.id === id);
@@ -83,8 +83,8 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
               </button>
             ) : null}
 
-            <div className="row">
-              <Icon width={size} height={size} className="icon" />
+            <div className="row icon">
+              <Icon width={size} height={size} />
             </div>
             <div className="status">
               {flag && flag}
@@ -97,11 +97,11 @@ export const Extension = ({ meta, size, flag }: ExtensionProps) => {
           <div className="foot">
             <a
               className="link"
-              href={`https://${url}`}
+              href={`https://${website}`}
               target="_blank"
               rel="noreferrer"
             >
-              {url}
+              {website}
               <FontAwesomeIcon icon={faExternalLinkAlt} transform="shrink-6" />
             </a>
           </div>

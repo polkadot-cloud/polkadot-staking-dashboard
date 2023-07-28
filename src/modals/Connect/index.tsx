@@ -12,7 +12,7 @@ import {
   ModalPadding,
   ModalSection,
 } from '@polkadotcloud/core-ui';
-import { Extensions } from 'config/extensions';
+import { ExtensionsArray } from '@polkadotcloud/community/extensions';
 import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
 import { Close } from 'library/Modal/Close';
@@ -32,11 +32,13 @@ export const Connect = () => {
   const { extensions } = useExtensions();
   const { replaceModalWith, setModalHeight, modalMaxHeight } = useModal();
 
-  const installed = Extensions.filter((a) =>
+  const installed = ExtensionsArray.filter((a) =>
     extensions.find((b) => b.id === a.id)
   );
 
-  const other = Extensions.filter((a) => !installed.find((b) => b.id === a.id));
+  const other = ExtensionsArray.filter(
+    (a) => !installed.find((b) => b.id === a.id)
+  );
 
   // toggle read only management
   const [readOnlyOpen, setReadOnlyOpen] = useState(false);
