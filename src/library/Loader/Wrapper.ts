@@ -40,9 +40,9 @@ export const RadicalLoaderWrapper = styled.div`
   height: 100%;
   width: 100%;
   border-radius: 50%;
-  animation: pulse 0.85s infinite linear;
+  animation: radical 0.85s infinite linear;
 
-  @keyframes pulse {
+  @keyframes radical {
     0% {
       transform: scale(0.15);
       opacity: 0;
