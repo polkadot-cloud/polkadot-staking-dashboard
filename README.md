@@ -11,21 +11,15 @@ The Polkadot Staking Dashboard is a community-driven project, and we welcome con
 
 * **Validator Operators**: Submit PR to the [Polkadot Cloud repository](https://github.com/paritytech/polkadot-cloud) to add a validator operator. The operator will then be available in the `@polkadotcloud/community` NPM package. Full instructions can be found [here](https://github.com/paritytech/polkadot-cloud/tree/main/packages/community#adding-validator-operators).
 
-## URL Variables Support
+## URL Variable Support
 
-Polkadot Staking Dashboard supports URL variables that can be used to direct users to specific configurations of the app, such as landing on a specific language or on a specific network.
-
-Variables are added at the end of the hash portion of URL:
-
-```
-staking.polkadot.network/#/overview?n=polkadot&l=en
-```
+Polkadot Staking Dashboard supports URL variables that can be used to direct users to specific configurations of the app, such as landing on a specific language or on a specific network. Variables are added at the end of the hash portion of URL.
 
 The currently supported URL variables are as follows:
 
-- `n`: Controls the network to default to upon visiting the dashboard. Supported values are `polkadot`, `kusama` and `westend`.
-- `l`: Controls the language to default to upon visiting the dashboard. Supported values are `en` and `cn`.
-- `a`: Controls the account to connect to upon visiting the dashboard. Ignored if the account is not present in the initial imported accounts.
+- **n**: Controls the default network to connect to upon visiting the dashboard. Supported values are `polkadot`, `kusama` and `westend`.
+- **l**: Controls the default to use upon visiting the dashboard. Supported values are `en` and `cn`.
+- **a**: Controls the account to connect to upon visiting the dashboard. Ignored if the account is not present in the initial imported accounts.
 
 URL variables take precedence over saved values in local storage, and will overwrite current configurations. URL variables will update (if present) as a user switches configurations in-app, such as changing the network or language.
 
@@ -37,7 +31,7 @@ The following URL will load Kusama and use the Chinese localisation resource:
 staking.polkadot.network/#/overview?n=kusama&l=cn
 ```
 
-## Using containers
+## Using Containers
 
 You may build a container using:
 
