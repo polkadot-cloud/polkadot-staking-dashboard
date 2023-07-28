@@ -22,7 +22,7 @@ export const NominationStatus = ({
     network: { unit, units },
   } = useApi();
 
-  const { activeAccountOwnStake, stakers } = eraStakers;
+  const { stakers } = eraStakers;
 
   let nominationStatus;
   if (bondFor === 'pool') {
@@ -37,20 +37,10 @@ export const NominationStatus = ({
 
   // determine staked amount
   let stakedAmount = new BigNumber(0);
-  if (bondFor === 'nominator') {
-    // bonded amount within the validator.
-    stakedAmount =
-      nominationStatus === 'active'
-        ? new BigNumber(
-            activeAccountOwnStake?.find((own: any) => own.address)?.value ?? 0
-          )
-        : new BigNumber(0);
-  } else {
-    const s = stakers?.find((_n: any) => _n.address === address);
-    const exists = (s?.others ?? []).find((_o: any) => _o.who === nominator);
-    if (exists) {
-      stakedAmount = planckToUnit(new BigNumber(rmCommas(exists.value)), units);
-    }
+  const isActive = nominationStatus === 'active';
+  const stake = stakers.find((x) => x.address === address);
+  if (isActive && stake && stake.own) {
+    stakedAmount = planckToUnit(new BigNumber(rmCommas(stake.own)), units);
   }
 
   return (
