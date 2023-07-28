@@ -132,6 +132,11 @@ export const AccountWrapper = styled.div`
               width: 1.25rem;
               height: 1.25rem;
               margin-left: 0.75rem;
+
+              svg {
+                width: inherit;
+                height: inherit;
+              }
             }
           }
         }

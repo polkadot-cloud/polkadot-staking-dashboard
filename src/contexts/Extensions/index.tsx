@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { setStateWithRef } from '@polkadotcloud/utils';
-import { Extensions } from 'config/extensions';
+import { ExtensionsArray } from '@polkadotcloud/community/extensions';
 import type {
   ExtensionInjected,
   ExtensionsContextInterface,
@@ -92,7 +92,7 @@ export const ExtensionsProvider = ({
   const getInstalledExtensions = () => {
     const { injectedWeb3 }: AnyApi = window;
     const installed: ExtensionInjected[] = [];
-    Extensions.forEach((e) => {
+    ExtensionsArray.forEach((e) => {
       if (injectedWeb3[e.id] !== undefined) {
         installed.push({
           ...e,
