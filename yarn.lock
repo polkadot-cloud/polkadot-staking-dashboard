@@ -1827,10 +1827,10 @@
     tslib "^2.5.3"
     ws "^8.13.0"
 
-"@polkadotcloud/community@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.npmjs.org/@polkadotcloud/community/-/community-0.1.1.tgz#c56d9bd79149c05e780c223954dd6feb78ce6703"
-  integrity sha512-MINO9q05syGLPtWOfagfx0WYMDW+/MXmnAi/Wy858HfCOgNyWiMHUyfGdE9Ku8k1QDLyT4REa2TpNseIwirOtA==
+"@polkadotcloud/community@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.npmjs.org/@polkadotcloud/community/-/community-0.1.2.tgz#d693b89d42ba4ac70abf1c61cfb6b0667ad8130f"
+  integrity sha512-vKJXcCTonXolrd3tN8lbta4Qp69XR6yzU/BM1FOMfiA6C2Q2oGDVYBiTL2BOi8XLXWzsu3SaagG4WulO9ZlPSg==
 
 "@polkadotcloud/core-ui@^0.3.59":
   version "0.3.59"
