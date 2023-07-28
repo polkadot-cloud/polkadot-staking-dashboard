@@ -42,7 +42,7 @@
     "buffer": "^6.0.3",
     "chart.js": "^4.3.2",
     "date-fns": "^2.29.3",
-    "framer-motion": "^10.14.0",
+    "framer-motion": "^10.15.0",
     "i18next": "^23.3.0",
     "i18next-browser-languagedetector": "^7.1.0",
     "lodash.throttle": "^4.1.1",
