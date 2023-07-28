@@ -29,6 +29,7 @@
     "unused-imports"
   ],
   "rules": {
+    "import/no-extraneous-dependencies": "off", // NOTE: Remove when ready to merge.
     "react/require-default-props": "off",
     "react/no-access-state-in-setstate": "off",
     "react/destructuring-assignment": "off",

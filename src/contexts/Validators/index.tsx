@@ -9,7 +9,7 @@ import {
   shuffle,
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import { ValidatorCommunity } from 'config/validators';
+import { ValidatorCommunity } from '@polkadotcloud/community/validators';
 import type {
   SessionParachainValidators,
   SessionValidators,

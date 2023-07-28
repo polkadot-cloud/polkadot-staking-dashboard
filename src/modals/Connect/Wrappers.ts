@@ -75,6 +75,11 @@ export const ExtensionInner = styled.div`
   .icon {
     width: 2.6rem;
     height: 2.6rem;
+
+    svg {
+      width: inherit;
+      height: inherit;
+    }
   }
   svg {
     .light {

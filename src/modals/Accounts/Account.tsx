@@ -5,7 +5,6 @@ import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { clipAddress, planckToUnit } from '@polkadotcloud/utils';
 import { useConnect } from 'contexts/Connect';
-import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
 import { ReactComponent as PolkadotVaultIconSVG } from 'img/polkadotVault.svg';
@@ -13,6 +12,7 @@ import { Identicon } from 'library/Identicon';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { Extensions } from '@polkadotcloud/community/extensions';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 
@@ -33,7 +33,6 @@ export const AccountButton = ({
     connectToAccount,
   } = useConnect();
   const { setStatus } = useModal();
-  const { extensions } = useExtensions();
   const { units, unit } = useApi().network;
   const { getTransferOptions } = useTransferOptions();
   const { freeBalance } = getTransferOptions(address || '');
@@ -51,7 +50,7 @@ export const AccountButton = ({
       ? LedgerIconSVG
       : meta?.source === 'vault'
       ? PolkadotVaultIconSVG
-      : extensions.find(({ id }) => id === meta?.source)?.icon ?? undefined;
+      : Extensions[meta?.source || '']?.Icon ?? undefined;
 
   // Determine if this account is active (active account or proxy).
   const isActive =
@@ -107,7 +106,11 @@ export const AccountButton = ({
             )}
             <div className={label === undefined ? `` : label[0]}>
               {label !== undefined ? <h5>{label[1]}</h5> : null}
-              {Icon !== undefined ? <Icon className="icon" /> : null}
+              {Icon !== undefined ? (
+                <span className="icon">
+                  <Icon />
+                </span>
+              ) : null}
 
               {meta?.source === 'external' && (
                 <FontAwesomeIcon

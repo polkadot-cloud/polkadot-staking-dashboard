@@ -1827,6 +1827,11 @@
     tslib "^2.5.3"
     ws "^8.13.0"
 
+"@polkadotcloud/community@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.npmjs.org/@polkadotcloud/community/-/community-0.1.1.tgz#c56d9bd79149c05e780c223954dd6feb78ce6703"
+  integrity sha512-MINO9q05syGLPtWOfagfx0WYMDW+/MXmnAi/Wy858HfCOgNyWiMHUyfGdE9Ku8k1QDLyT4REa2TpNseIwirOtA==
+
 "@polkadotcloud/core-ui@^0.3.59":
   version "0.3.59"
   resolved "https://registry.yarnpkg.com/@polkadotcloud/core-ui/-/core-ui-0.3.59.tgz#3791d0af45326692aa13012543b08e1778235bbb"
