@@ -22,7 +22,7 @@ export const NominationStatus = ({
     network: { unit, units },
   } = useApi();
 
-  const { stakers } = eraStakers;
+  const { stakers, activeAccountOwnStake } = eraStakers;
 
   let nominationStatus;
   if (bondFor === 'pool') {
@@ -37,19 +37,26 @@ export const NominationStatus = ({
 
   // determine staked amount
   let stakedAmount = new BigNumber(0);
-  const isActive = nominationStatus === 'active';
-  const stake = stakers.find((x) => x.address === address);
-  if (isActive && stake && stake.own) {
-    stakedAmount = planckToUnit(new BigNumber(rmCommas(stake.own)), units);
+  if (bondFor === 'nominator') {
+    const isActive = nominationStatus === 'active';
+    const stake = activeAccountOwnStake.find((x) => x.address === address);
+    if (isActive && stake && stake.value) {
+      stakedAmount = new BigNumber(stake.value);
+    }
+  } else {
+    const s = stakers?.find((_n: any) => _n.address === address);
+    const exists = (s?.others ?? []).find((_o: any) => _o.who === nominator);
+    if (exists) {
+      stakedAmount = planckToUnit(new BigNumber(rmCommas(exists.value)), units);
+    }
   }
-
   return (
     <ValidatorStatusWrapper status={nominationStatus}>
       <h5>
         {t(`${nominationStatus}`)}
         {greaterThanZero(stakedAmount)
           ? ` / ${
-              erasStakersSyncing ? '...' : `${stakedAmount.toFormat()} ${unit}`
+              erasStakersSyncing ? '...' : `${stakedAmount.toFormat(3)} ${unit}`
             }`
           : null}
       </h5>
