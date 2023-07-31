@@ -67,7 +67,7 @@
     "@types/react-helmet": "^6.1.6",
     "@types/react-qr-reader": "^2.1.4",
     "@types/react-scroll": "^1.8.6",
-    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/eslint-plugin": "^6.2.1",
     "@typescript-eslint/parser": "^6.2.1",
     "@vitejs/plugin-react-swc": "^3.3.2",
     "eslint": "^8.46.0",
