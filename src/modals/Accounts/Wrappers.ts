@@ -149,8 +149,8 @@ export const AccountWrapper = styled.div`
 
         > .balance {
           color: var(--text-color-secondary);
-          font-size: 1rem;
-          opacity: 0.65;
+          font-size: 0.9rem;
+          opacity: 0.6;
         }
       }
     }
