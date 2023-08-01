@@ -58,7 +58,9 @@ export const TokenWrapper = styled.div`
     width: var(--token-size);
     border-radius: 50%;
   }
+`;
 
+export const TokenSvgWrapper = styled.span`
   svg {
     width: var(--token-size);
     height: var(--token-size);

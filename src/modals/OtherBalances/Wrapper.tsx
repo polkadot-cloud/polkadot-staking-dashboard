@@ -30,6 +30,11 @@ export const ItemWrapper = styled.div`
       width: 3rem;
       height: 3rem;
       margin-right: 1rem;
+
+      > svg {
+        width: inherit;
+        height: inherit;
+      }
     }
 
     > h3 {
@@ -58,7 +63,7 @@ export const ItemWrapper = styled.div`
   }
 `;
 
-export const TokenWrapper = styled.div`
+export const BalanceWrapper = styled.div`
   border-bottom: 1px solid var(--border-primary-color);
   display: flex;
   align-items: center;

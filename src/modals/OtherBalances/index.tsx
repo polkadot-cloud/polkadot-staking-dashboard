@@ -11,7 +11,8 @@ import type { AnyJson } from 'types';
 import { getParaMeta } from 'config/paras';
 import { planckToUnit } from '@polkadotcloud/utils';
 import { Token } from 'library/Token';
-import { Wrapper, ItemWrapper, TokenWrapper } from './Wrapper';
+import { TokenSvgWrapper } from 'library/Token/Wrappers';
+import { Wrapper, ItemWrapper, BalanceWrapper } from './Wrapper';
 
 export const OtherBalances = () => {
   const {
@@ -37,7 +38,9 @@ export const OtherBalances = () => {
           {paraAssetHubAssets.length > 0 && (
             <ItemWrapper>
               <div className="head">
-                <AssetHubSVG className="icon" />
+                <TokenSvgWrapper className="icon">
+                  <AssetHubSVG />
+                </TokenSvgWrapper>
                 <h3>Asset Hub</h3>
                 <p>
                   <ButtonTertiary
@@ -50,7 +53,7 @@ export const OtherBalances = () => {
               <div className="assets">
                 <div className="inner">
                   {paraAssetHubAssets.map((a: AnyJson) => (
-                    <TokenWrapper key={`interlay_asset_${a.symbol}`}>
+                    <BalanceWrapper key={`interlay_asset_${a.symbol}`}>
                       <span className="token">
                         <Token symbol={a.symbol} />
                       </span>
@@ -61,7 +64,7 @@ export const OtherBalances = () => {
                         ).toString()}{' '}
                         <span className="symbol">{a.symbol}</span>
                       </h4>
-                    </TokenWrapper>
+                    </BalanceWrapper>
                   ))}
                 </div>
               </div>
@@ -70,7 +73,9 @@ export const OtherBalances = () => {
           {paraInterlayAssets.length > 0 && (
             <ItemWrapper>
               <div className="head">
-                <InterlaySVG className="icon" />
+                <TokenSvgWrapper className="icon">
+                  <InterlaySVG />
+                </TokenSvgWrapper>
                 <h3>Interlay</h3>
                 <p>
                   <ButtonTertiary
@@ -83,7 +88,7 @@ export const OtherBalances = () => {
               <div className="assets">
                 <div className="inner">
                   {paraInterlayAssets.map((a: AnyJson) => (
-                    <TokenWrapper key={`interlay_asset_${a.symbol}`}>
+                    <BalanceWrapper key={`interlay_asset_${a.symbol}`}>
                       <span className="token">
                         <Token symbol={getInterlaySymbol(a.key, a.symbol)} />
                       </span>
@@ -96,7 +101,7 @@ export const OtherBalances = () => {
                           {getInterlaySymbol(a.key, a.symbol)}
                         </span>
                       </h4>
-                    </TokenWrapper>
+                    </BalanceWrapper>
                   ))}
                 </div>
               </div>
