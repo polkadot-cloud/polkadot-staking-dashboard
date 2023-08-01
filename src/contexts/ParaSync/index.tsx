@@ -8,6 +8,7 @@ import { getParaMeta } from 'config/paras';
 import { useConnect } from 'contexts/Connect';
 import { useApi } from 'contexts/Api';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { rmCommas } from '@polkadotcloud/utils';
 import type { ParaSyncContextInterface } from './types';
 import { defaultParaSyncContext } from './defaults';
 
@@ -34,25 +35,15 @@ export const ParaSyncProvider = ({
 
   // Metadata for the parachains used in this context.
   const paraInterlay = getParaMeta('interlay');
-  // eslint-disable-next-line
   const paraAssetHub = getParaMeta('assethub');
 
   // We need to connect to parachains and check the user's balances.
   const syncBalances = async () => {
     if (!activeAccount || isSyncingRef.current !== 'unsynced') return;
-
     isSyncingRef.current = 'syncing';
 
-    // TODO: sync USDT balance with AssetHub.
-    // `assets.account` to fetch all assets for an account.
-    // `parachainInfo.parachainId` to fetch asset hub para id.
-    // add to `paraBalances` state.
-
-    // TODO: loop through any foreign assets and get ids.
-
-    // TODO: refactor foreign assets to combine with metadata. `tokenBalances` to support types for
-    // both interlay balance and foreign asset balance.
-
+    // Sync chain states to get supported local and foreign assets.
+    const assetHubState = await getAssetHubBalances(activeAccount);
     const interlayState = await getInterlayBalances(activeAccount);
 
     // Format foreign asset metadata.
@@ -69,8 +60,11 @@ export const ParaSyncProvider = ({
 
     // Format token balances.
     const tokenBalances: AnyApi[] = [];
-    interlayState.tokens?.forEach((a: AnyApi) => {
-      tokenBalances.push(a.toHuman()[1]);
+    interlayState.tokens?.forEach(([key, value]: AnyApi) => {
+      tokenBalances.push({
+        assetType: key.toHuman()[1],
+        ...value.toHuman(),
+      });
     });
 
     setParaForeignAssets({
@@ -83,10 +77,42 @@ export const ParaSyncProvider = ({
         paraId: interlayState.paraId,
         tokens: [...tokenBalances],
       },
+      assethub: {
+        paraId: assetHubState.paraId,
+        tokens: [assetHubState.asset],
+      },
     });
 
     // Sync complete.
     isSyncingRef.current = 'synced';
+  };
+
+  // Handler for fetching interlay balances. Connects to the interlay parachain, fetches token
+  // balances and disconnects immediately after.
+  const getAssetHubBalances = async (account: string) => {
+    keyring.setSS58Format(paraAssetHub.ss58);
+
+    // Connect to interlay via new api instance.
+    const wsProvider = new WsProvider(paraAssetHub.endpoints.rpc);
+    const api = await ApiPromise.create({ provider: wsProvider });
+
+    // Fetch needed chain state.
+    const [paraIdRaw, assetRaw]: AnyApi[] = await Promise.all([
+      api.query.parachainInfo.parachainId(),
+      // TODO: Abstract 1984 with USDT token, SupportedTokens.
+      api.query.assets.account(1984, keyring.addFromAddress(account).address),
+    ]);
+    const paraId = paraIdRaw.toString();
+    const assetHuman = assetRaw.toHuman();
+    const asset = {
+      ...assetHuman,
+      id: 1984,
+      symbol: 'USDT',
+      balance: rmCommas(assetHuman.balance),
+    };
+
+    await api.disconnect();
+    return { paraId, asset };
   };
 
   // Handler for fetching interlay balances. Connects to the interlay parachain, fetches token
@@ -101,7 +127,9 @@ export const ParaSyncProvider = ({
     // Fetch needed chain state.
     const [paraIdRaw, tokens, assetRegistry]: AnyApi[] = await Promise.all([
       api.query.parachainInfo.parachainId(),
-      api.query.tokens.accounts.keys(keyring.addFromAddress(account).address),
+      api.query.tokens.accounts.entries(
+        keyring.addFromAddress(account).address
+      ),
       api.query.assetRegistry.metadata.entries(),
     ]);
     const paraId = paraIdRaw.toString();

@@ -9,7 +9,7 @@ export const TokenList = ({ tokens }: any) => {
     <div className="symbols">
       {tokens.map((t: AnyJson, i: number) => (
         <div key={`token_list_${i}`} className="token">
-          <Token token={t.Token} />
+          <Token token={t.assetType.Token} />
         </div>
       ))}
     </div>

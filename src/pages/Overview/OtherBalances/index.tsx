@@ -29,12 +29,12 @@ export const BalanceFooter = () => {
   // Get Interlay tokens
   const interlay = paraBalances?.interlay;
   const localTokens = interlay?.tokens.filter(
-    (t: AnyJson) => t.Token !== undefined
+    (t: AnyJson) => t.assetType.Token !== undefined
   );
   // TODO: discover foreign asset (probably better to do on context level).
   // eslint-disable-next-line
   const foreignAssets = interlay?.tokens?.filter(
-    (t: AnyJson) => t.ForeignAsset === undefined
+    (t: AnyJson) => t.assetType.ForeignAsset === undefined
   );
 
   // Metadata for UI display.
