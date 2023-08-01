@@ -30,7 +30,7 @@ export const ParaList: Paras = {
       },
       {
         key: 'ForeignAsset',
-        symbol: '2',
+        symbol: '2', // USDT
       },
       { key: 'Token', symbol: 'INTR' },
       { key: 'Token', symbol: 'DOT' },
