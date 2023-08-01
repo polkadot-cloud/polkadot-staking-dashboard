@@ -81,6 +81,7 @@ export const ContentWrapper = styled.div`
   }
 
   h3 {
+    font-family: InterBold, sans-serif;
     margin: 2rem 0.5rem 1rem 0.5rem;
   }
 `;
@@ -118,16 +119,17 @@ export const ListWrapper = styled(motion.div)`
 
 export const DefinitionWrapper = styled(motion.div)`
   background: var(--background-floating-card);
-  width: 100%;
-  display: flex;
   border-radius: 1.5rem;
-  margin-bottom: 1.25rem;
-  padding: 1.5rem 1.5rem 0 1.5rem;
+  display: flex;
   flex-flow: row wrap;
   align-items: center;
+  flex: 1;
   position: relative;
   overflow: hidden;
-  flex: 1;
+  margin-bottom: 1.25rem;
+  padding: 1.5rem 1.5rem 0 1.5rem;
+  transition: all 0.2s;
+  width: 100%;
 
   button {
     padding: 0;
@@ -147,7 +149,8 @@ export const DefinitionWrapper = styled(motion.div)`
   }
 
   h4 {
-    margin-bottom: 1.25rem;
+    font-family: InterSemiBold, sans-serif;
+    margin-bottom: 1.15rem;
   }
 
   p {
@@ -178,15 +181,15 @@ export const ItemWrapper = styled(motion.div)<any>`
     margin-bottom: 1.5rem;
     position: relative;
 
+    > h2 {
+      color: var(--text-color-primary);
+      text-align: left;
+    }
     > h4 {
       color: var(--text-color-primary);
       margin: 0.65rem 0;
       text-transform: uppercase;
       font-size: 0.7rem;
-    }
-    > h2 {
-      color: var(--text-color-primary);
-      text-align: left;
     }
 
     > p {
