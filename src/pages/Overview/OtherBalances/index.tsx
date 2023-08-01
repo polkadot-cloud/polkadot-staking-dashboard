@@ -21,24 +21,45 @@ export const BalanceFooter = () => {
     network: { name },
   } = useApi();
   const { openHelp } = useHelp();
-  const { paraSyncing, paraBalances } = useParaSync();
+  const {
+    paraSyncing,
+    paraBalances,
+    paraForeignAssets,
+    getters: { getAssetHubBalance },
+  } = useParaSync();
 
   // Other balances are only enabled on Polkadot.
   const enabled = name === 'polkadot';
 
-  // Get Interlay tokens
+  // Get tokens
   const interlay = paraBalances?.interlay;
-  const localTokens = interlay?.tokens.filter(
-    (t: AnyJson) => t.assetType.Token !== undefined
-  );
-  // TODO: discover foreign asset (probably better to do on context level).
-  // eslint-disable-next-line
-  const foreignAssets = interlay?.tokens?.filter(
-    (t: AnyJson) => t.assetType.ForeignAsset === undefined
-  );
+  const assethub = paraBalances?.assethub;
+
+  const assetHubAssets =
+    assethub?.tokens
+      ?.map((t: AnyJson) => t.symbol)
+      .filter((t: AnyJson) => getAssetHubBalance(t).isGreaterThan(0)) || [];
+
+  const interlayLocalAssets =
+    interlay?.tokens
+      .filter((t: AnyJson) => t.key === 'Token')
+      ?.map((t: AnyJson) => t.symbol) || [];
+
+  const interlayForeignAssets =
+    interlay?.tokens
+      .filter((t: AnyJson) => t.key === 'ForeignAsset')
+      ?.map((t: AnyJson) => paraForeignAssets.interlay[t.symbol]?.symbol)
+      .filter((t: AnyJson) => !!t) || [];
+
+  // Ensure no duplicate symbols are displayed.
+  const uniqueAssets = [
+    ...new Set(
+      assetHubAssets.concat(interlayLocalAssets).concat(interlayForeignAssets)
+    ),
+  ];
 
   // Metadata for UI display.
-  const total = interlay?.tokens?.length || 0;
+  const total = uniqueAssets.length || 0;
   const remaining = Math.max(0, total - 3);
 
   return (
@@ -52,7 +73,7 @@ export const BalanceFooter = () => {
           {enabled && (
             <>
               {paraSyncing === 'synced' ? (
-                <TokenList tokens={localTokens} />
+                <TokenList tokens={uniqueAssets.splice(0, 3)} />
               ) : (
                 <div className="symbols">
                   <div className="token">

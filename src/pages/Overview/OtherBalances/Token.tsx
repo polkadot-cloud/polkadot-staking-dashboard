@@ -3,9 +3,9 @@
 
 import { Suspense, lazy, useMemo } from 'react';
 
-export const Token = ({ token }: { token: string }) => {
+export const Token = ({ symbol }: { symbol: string }) => {
   const Jsx = useMemo(
-    () => lazy(() => import(`../../../config/tokens/jsx/${token}.tsx`)),
+    () => lazy(() => import(`../../../config/tokens/jsx/${symbol}.tsx`)),
     []
   );
 

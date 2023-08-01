@@ -49,31 +49,39 @@ export const ParaSyncProvider = ({
 
     // Format foreign asset metadata.
     const foreignAssetsMetadata: Record<number, AnyJson> = {};
-    interlayState.assetRegistry?.forEach(([id, metadataRaw]: AnyApi) => {
+    interlayState?.assetRegistry?.forEach(([idRaw, metadataRaw]: AnyApi) => {
+      const id = idRaw.toHuman()[0];
       const metadata = metadataRaw.toHuman();
+
       if (
         paraInterlay.supportedAssets.find(
-          ({ symbol }: AnyJson) => symbol === metadata.symbol
+          ({ symbol }: AnyJson) => symbol === id
         )
       ) {
-        foreignAssetsMetadata[id.toHuman()] = metadata;
+        foreignAssetsMetadata[id] = metadata;
       }
     });
-
     setParaForeignAssets({
       ...paraForeignAssets,
       interlay: foreignAssetsMetadata,
     });
-    setParaBalances({
-      ...paraBalances,
-      interlay: {
+
+    const newParaBalances: Record<string, AnyJson> = {};
+    if (interlayState) {
+      newParaBalances.interlay = {
         paraId: interlayState.paraId,
         tokens: interlayState.tokens,
-      },
-      assethub: {
+      };
+    }
+    if (assetHubState) {
+      newParaBalances.assethub = {
         paraId: assetHubState.paraId,
         tokens: assetHubState.assets,
-      },
+      };
+    }
+    setParaBalances({
+      ...paraBalances,
+      ...newParaBalances,
     });
     isSyncingRef.current = 'synced';
   };
@@ -81,6 +89,8 @@ export const ParaSyncProvider = ({
   // Handler for fetching interlay balances. Connects to the interlay parachain, fetches token
   // balances and disconnects immediately after.
   const getAssetHubBalances = async (account: string) => {
+    if (!account) return null;
+
     keyring.setSS58Format(paraAssetHub.ss58);
     const { supportedAssets, endpoints } = paraAssetHub;
 
@@ -89,7 +99,7 @@ export const ParaSyncProvider = ({
     const api = await ApiPromise.create({ provider: wsProvider });
 
     // Fetch needed chain state.
-    const [paraId, accountBalance, assetRaw]: AnyApi[] = await Promise.all([
+    const result: AnyApi[] = await Promise.all([
       api.query.parachainInfo.parachainId(),
       api.query.balances.account(keyring.addFromAddress(account).address),
       ...supportedAssets.map(({ key }) =>
@@ -98,25 +108,35 @@ export const ParaSyncProvider = ({
     ]);
     await api.disconnect();
 
-    const asset = assetRaw.toHuman();
+    const [paraId, accountBalance, ...assetsRaw] = result;
     const nativeBalance = accountBalance.toHuman();
+
+    const assets: AnyJson[] = [];
+    let i = 0;
+    assetsRaw?.forEach((a: AnyJson) => {
+      const asset = a.toHuman();
+      if (!asset) return;
+
+      assets.push({
+        ...asset,
+        key: supportedAssets[i].key,
+        symbol: supportedAssets[i].symbol,
+        balance: rmCommas(asset.balance),
+      });
+      i++;
+    });
 
     return {
       paraId: paraId.toString(),
       assets: [
         {
-          id: 'Native',
+          key: 'Native',
           symbol: 'DOT',
           free: rmCommas(nativeBalance.free),
           frozen: rmCommas(nativeBalance.frozen),
           reserved: rmCommas(nativeBalance.reserved),
         },
-        {
-          ...asset,
-          id: supportedAssets[0].key,
-          symbol: supportedAssets[0].symbol,
-          balance: rmCommas(asset.balance),
-        },
+        ...assets,
       ],
     };
   };
@@ -124,6 +144,8 @@ export const ParaSyncProvider = ({
   // Handler for fetching interlay balances. Connects to the interlay parachain, fetches token
   // balances and disconnects immediately after.
   const getInterlayBalances = async (account: string) => {
+    if (!account) return null;
+
     keyring.setSS58Format(paraInterlay.ss58);
     const { supportedAssets, endpoints } = paraInterlay;
 
@@ -143,12 +165,12 @@ export const ParaSyncProvider = ({
 
     // Format token balances.
     const tokens: AnyApi[] = [];
-    tokensRaw?.forEach(([key, valueRaw]: AnyApi) => {
-      const assetType = Object.keys(key.toHuman()[1])[0];
-      const symbol = Object.values(key.toHuman()[1])[0];
+    tokensRaw?.forEach(([keyRaw, valueRaw]: AnyApi) => {
+      const key = Object.keys(keyRaw.toHuman()[1])[0];
+      const symbol = Object.values(keyRaw.toHuman()[1])[0];
       if (
         supportedAssets.find(
-          (t: AnyJson) => t.key === assetType && t.symbol === symbol
+          (t: AnyJson) => t.key === key && t.symbol === symbol
         )
       ) {
         const value = valueRaw.toHuman();
@@ -157,7 +179,8 @@ export const ParaSyncProvider = ({
           free: rmCommas(value.free),
           frozen: rmCommas(value.frozen),
           reserved: rmCommas(value.reserved),
-          assetType: key.toHuman()[1],
+          key,
+          symbol,
         });
       }
     });
@@ -181,7 +204,7 @@ export const ParaSyncProvider = ({
     );
 
     if (token) {
-      if (token.id === 'Native') {
+      if (token.key === 'Native') {
         return new BigNumber(token.free);
       }
       return new BigNumber(token.balance);
@@ -193,7 +216,7 @@ export const ParaSyncProvider = ({
   // getInterlayBalance('ForeignAsset', '2');
   const getInterlayBalance = (assetType: string, symbol: string) => {
     const token = paraBalances?.interlay?.tokens?.find(
-      (t: AnyJson) => t?.assetType[assetType] === symbol
+      (t: AnyJson) => t.assetType === assetType && t.symbol === symbol
     );
     return !token ? undefined : new BigNumber(token.free);
   };
@@ -201,11 +224,12 @@ export const ParaSyncProvider = ({
   return (
     <ParaSyncContext.Provider
       value={{
-        paraBalances,
         paraSyncing: isSyncingRef.current,
+        paraBalances,
+        paraForeignAssets,
         getters: {
-          assethub: getAssetHubBalance,
-          interlay: getInterlayBalance,
+          getAssetHubBalance,
+          getInterlayBalance,
         },
       }}
     >
