@@ -7,7 +7,7 @@ import { Title } from 'library/Modal/Title';
 import { ReactComponent as InterlaySVG } from 'config/paras/icons/interlay.svg';
 import { ReactComponent as AssetHubSVG } from 'config/paras/icons/assetHub.svg';
 import { useParaSync } from 'contexts/ParaSync';
-import { Wrapper, ItemWrapper } from './Wrapper';
+import { Wrapper, ItemWrapper, TokenWrapper } from './Wrapper';
 
 export const OtherBalances = () => {
   const { paraBalances } = useParaSync();
@@ -38,6 +38,11 @@ export const OtherBalances = () => {
                   />
                 </p>
               </div>
+              <div className="assets">
+                <div className="inner">
+                  <TokenWrapper>token item</TokenWrapper>
+                </div>
+              </div>
             </ItemWrapper>
           )}
           {paraInterlayAssets.length > 0 && (
@@ -52,6 +57,11 @@ export const OtherBalances = () => {
                     }`}
                   />
                 </p>
+              </div>
+              <div className="assets">
+                <div className="inner">
+                  <TokenWrapper>token item</TokenWrapper>
+                </div>
               </div>
             </ItemWrapper>
           )}
