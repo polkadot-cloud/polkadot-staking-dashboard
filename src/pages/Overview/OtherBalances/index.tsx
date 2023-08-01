@@ -75,11 +75,15 @@ export const BalanceFooter = () => {
                         : undefined
                     }
                   >
-                    {remaining > 0 && total > 0
-                      ? `+ ${remaining} Other${remaining === 1 ? '' : 's'}`
-                      : total === 0
-                      ? `No Balances`
-                      : ``}
+                    {remaining > 0 && total > 0 ? (
+                      `+ ${remaining} Other${remaining === 1 ? '' : 's'}`
+                    ) : total === 0 ? (
+                      <>
+                        No Balances <span>4 Available</span>
+                      </>
+                    ) : (
+                      ``
+                    )}
                   </h3>
                 ) : (
                   <h3>Syncing...</h3>

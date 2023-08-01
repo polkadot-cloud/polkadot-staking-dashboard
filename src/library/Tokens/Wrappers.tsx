@@ -64,6 +64,16 @@ export const Tokens = styled.div`
       &.noSymbols {
         margin-left: 0.5rem;
       }
+
+      span {
+        border: 1px solid var(--border-secondary-color);
+        color: var(--text-color-secondary);
+        font-family: InterSemiBold, sans-serif;
+        border-radius: 0.6rem;
+        margin-left: 0.7rem;
+        padding: 0.4rem 0.75rem;
+        opacity: 0.8;
+      }
     }
   }
 `;
