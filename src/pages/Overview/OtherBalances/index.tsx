@@ -13,6 +13,7 @@ import { useParaSync } from 'contexts/ParaSync';
 import type { AnyJson } from 'types';
 import { RadicalLoaderWrapper } from 'library/Loader/Wrapper';
 import { useHelp } from 'contexts/Help';
+import { useModal } from 'contexts/Modal';
 import { MoreWrapper } from '../Wrappers';
 import { TokenList } from './TokenList';
 
@@ -21,6 +22,7 @@ export const BalanceFooter = () => {
     network: { name },
   } = useApi();
   const { openHelp } = useHelp();
+  const { openModalWith } = useModal();
   const {
     paraSyncing,
     paraBalances,
@@ -121,6 +123,7 @@ export const BalanceFooter = () => {
           text="Manage"
           iconLeft={faGlobe}
           disabled={!enabled || paraSyncing !== 'synced'}
+          onClick={() => openModalWith('OtherBalances', {}, 'large')}
         />
       </section>
     </MoreWrapper>

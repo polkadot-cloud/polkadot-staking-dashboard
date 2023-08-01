@@ -43,6 +43,7 @@ import { UpdatePayee } from './UpdatePayee';
 import { UpdateReserve } from './UpdateReserve';
 import { ValidatorMetrics } from './ValidatorMetrics';
 import { WithdrawPoolMember } from './WithdrawPoolMember';
+import { OtherBalances } from './OtherBalances';
 
 export const Modal = () => {
   const {
@@ -176,6 +177,7 @@ export const Modal = () => {
                     <NominateFromFavorites />
                   )}
                   {modal === 'NominatePool' && <NominatePool />}
+                  {modal === 'OtherBalances' && <OtherBalances />}
                   {modal === 'PoolNominations' && <PoolNominations />}
                   {modal === 'SelectFavorites' && <SelectFavorites />}
                   {modal === 'Settings' && <Settings />}
