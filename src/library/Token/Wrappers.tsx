@@ -3,8 +3,7 @@
 
 import styled from 'styled-components';
 
-export const Tokens = styled.div`
-  --token-size: 2.25rem;
+export const TokensWrapper = styled.div`
   --clipped-token-size: 1.75rem;
   background: var(--button-tertiary-background);
   border-radius: 0.75rem;
@@ -17,37 +16,6 @@ export const Tokens = styled.div`
     display: flex;
     flex-direction: row-reverse;
     padding-left: 0.75rem;
-
-    > .token {
-      height: var(--token-size);
-      width: var(--clipped-token-size);
-      position: relative;
-
-      .preload {
-        background-color: var(--background-primary);
-        height: var(--token-size);
-        width: var(--token-size);
-        border-radius: 50%;
-      }
-
-      svg {
-        width: var(--token-size);
-        height: var(--token-size);
-
-        .light-fill {
-          fill: var(--background-primary);
-        }
-        .dark-fill {
-          fill: var(--text-color-primary);
-        }
-        .light-stroke {
-          stroke: var(--background-primary);
-        }
-        .dark-stroke {
-          stroke: var(--text-color-primary);
-        }
-      }
-    }
   }
 
   .text {
@@ -74,6 +42,38 @@ export const Tokens = styled.div`
         padding: 0.4rem 0.75rem;
         opacity: 0.8;
       }
+    }
+  }
+`;
+
+export const TokenWrapper = styled.div`
+  --token-size: 2.25rem;
+  height: var(--token-size);
+  width: var(--clipped-token-size);
+  position: relative;
+
+  .preload {
+    background-color: var(--background-primary);
+    height: var(--token-size);
+    width: var(--token-size);
+    border-radius: 50%;
+  }
+
+  svg {
+    width: var(--token-size);
+    height: var(--token-size);
+
+    .light-fill {
+      fill: var(--background-primary);
+    }
+    .dark-fill {
+      fill: var(--text-color-primary);
+    }
+    .light-stroke {
+      stroke: var(--background-primary);
+    }
+    .dark-stroke {
+      stroke: var(--text-color-primary);
     }
   }
 `;

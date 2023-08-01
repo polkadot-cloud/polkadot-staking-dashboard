@@ -48,17 +48,39 @@ export const ItemWrapper = styled.div`
     border-bottom-left-radius: inherit;
     border-bottom-right-radius: inherit;
     display: flex;
-    padding: 1rem 1rem 1rem 1rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    flex: 1;
 
     > .inner {
-      padding-left: 1rem;
-      border-left: 1px solid var(--border-secondary-color);
+      padding-left: 0.5rem;
+      flex: 1;
     }
   }
 `;
 
 export const TokenWrapper = styled.div`
+  border-bottom: 1px solid var(--border-primary-color);
   display: flex;
+  align-items: center;
   width: 100%;
+  padding: 0.85rem 0;
   margin: 0.25rem 0;
+  width: 100%;
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
+
+  > .token {
+    margin-right: 0.75rem;
+  }
+
+  h4 {
+    font-family: InterSemiBold, sans-serif;
+    > .symbol {
+      opacity: 0.5;
+      margin-left: 0.35rem;
+    }
+  }
 `;

@@ -7,7 +7,7 @@ import {
   ButtonPrimaryInvert,
   Separator,
 } from '@polkadotcloud/core-ui';
-import { Tokens } from 'library/Tokens/Wrappers';
+import { TokensWrapper } from 'library/Token/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useParaSync } from 'contexts/ParaSync';
 import type { AnyJson } from 'types';
@@ -71,7 +71,7 @@ export const BalanceFooter = () => {
         Other Balances <ButtonHelp onClick={() => openHelp('Other Balances')} />
       </h4>
       <section>
-        <Tokens>
+        <TokensWrapper>
           {enabled && (
             <>
               {paraSyncing === 'synced' ? (
@@ -117,7 +117,7 @@ export const BalanceFooter = () => {
               </>
             )}
           </div>
-        </Tokens>
+        </TokensWrapper>
         <ButtonPrimaryInvert
           lg
           text="Manage"

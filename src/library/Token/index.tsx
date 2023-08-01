@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Suspense, lazy, useMemo } from 'react';
+import { TokenWrapper } from './Wrappers';
 
 export const Token = ({ symbol }: { symbol: string }) => {
   const Jsx = useMemo(
@@ -10,10 +11,10 @@ export const Token = ({ symbol }: { symbol: string }) => {
   );
 
   return (
-    <div className="token">
+    <TokenWrapper>
       <Suspense fallback={<div />}>
         <Jsx />
       </Suspense>
-    </div>
+    </TokenWrapper>
   );
 };
