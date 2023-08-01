@@ -214,9 +214,9 @@ export const ParaSyncProvider = ({
 
   // Getter for interlay balance.
   // getInterlayBalance('ForeignAsset', '2');
-  const getInterlayBalance = (assetType: string, symbol: string) => {
+  const getInterlayBalance = (key: string, symbol: string) => {
     const token = paraBalances?.interlay?.tokens?.find(
-      (t: AnyJson) => t.assetType === assetType && t.symbol === symbol
+      (t: AnyJson) => t.key === key && t.symbol === symbol
     );
     return !token ? undefined : new BigNumber(token.free);
   };
