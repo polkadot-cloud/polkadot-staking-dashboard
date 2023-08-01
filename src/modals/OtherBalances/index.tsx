@@ -7,13 +7,21 @@ import { Title } from 'library/Modal/Title';
 import { ReactComponent as InterlaySVG } from 'config/paras/icons/interlay.svg';
 import { ReactComponent as AssetHubSVG } from 'config/paras/icons/assetHub.svg';
 import { useParaSync } from 'contexts/ParaSync';
+import type { AnyJson } from 'types';
+import { getParaMeta } from 'config/paras';
+import { planckToUnit } from '@polkadotcloud/utils';
 import { Wrapper, ItemWrapper, TokenWrapper } from './Wrapper';
 
 export const OtherBalances = () => {
-  const { paraBalances } = useParaSync();
+  const {
+    paraBalances,
+    getters: { getAssetHubBalance, getInterlayBalance, getInterlaySymbol },
+  } = useParaSync();
 
   const paraAssetHubAssets = paraBalances?.assethub?.tokens || [];
+  const assetHubMeta = getParaMeta('assethub');
   const paraInterlayAssets = paraBalances?.interlay?.tokens || [];
+  const interlayMeta = getParaMeta('assethub');
 
   return (
     <>
@@ -40,7 +48,15 @@ export const OtherBalances = () => {
               </div>
               <div className="assets">
                 <div className="inner">
-                  <TokenWrapper>token item</TokenWrapper>
+                  {paraAssetHubAssets.map((a: AnyJson) => (
+                    <TokenWrapper key={`interlay_asset_${a.symbol}`}>
+                      {planckToUnit(
+                        getAssetHubBalance(a.symbol),
+                        assetHubMeta.units
+                      ).toString()}{' '}
+                      {a.symbol}
+                    </TokenWrapper>
+                  ))}
                 </div>
               </div>
             </ItemWrapper>
@@ -60,7 +76,15 @@ export const OtherBalances = () => {
               </div>
               <div className="assets">
                 <div className="inner">
-                  <TokenWrapper>token item</TokenWrapper>
+                  {paraInterlayAssets.map((a: AnyJson) => (
+                    <TokenWrapper key={`interlay_asset_${a.symbol}`}>
+                      {planckToUnit(
+                        getInterlayBalance(a.key, a.symbol),
+                        interlayMeta.units
+                      ).toString()}{' '}
+                      {getInterlaySymbol(a.key, a.symbol)}
+                    </TokenWrapper>
+                  ))}
                 </div>
               </div>
             </ItemWrapper>

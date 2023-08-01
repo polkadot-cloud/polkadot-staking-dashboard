@@ -209,7 +209,7 @@ export const ParaSyncProvider = ({
       }
       return new BigNumber(token.balance);
     }
-    return undefined;
+    return new BigNumber(0);
   };
 
   // Getter for interlay balance.
@@ -218,7 +218,16 @@ export const ParaSyncProvider = ({
     const token = paraBalances?.interlay?.tokens?.find(
       (t: AnyJson) => t.key === key && t.symbol === symbol
     );
-    return !token ? undefined : new BigNumber(token.free);
+    return !token ? new BigNumber(0) : new BigNumber(token.free);
+  };
+
+  // Getter for an interlay symbol.
+  // If `ForeignAsset, assetRegistry needs to be referred to.
+  const getInterlaySymbol = (key: string, symbol: string) => {
+    if (key === 'ForeignAsset') {
+      return paraForeignAssets?.interlay[symbol]?.symbol;
+    }
+    return symbol;
   };
 
   return (
@@ -230,6 +239,7 @@ export const ParaSyncProvider = ({
         getters: {
           getAssetHubBalance,
           getInterlayBalance,
+          getInterlaySymbol,
         },
       }}
     >
