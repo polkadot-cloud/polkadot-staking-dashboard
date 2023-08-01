@@ -101,7 +101,7 @@ export const ParaSyncProvider = ({
     // Fetch needed chain state.
     const result: AnyApi[] = await Promise.all([
       api.query.parachainInfo.parachainId(),
-      api.query.balances.account(keyring.addFromAddress(account).address),
+      api.query.system.account(keyring.addFromAddress(account).address),
       ...supportedAssets.map(({ key }) =>
         api.query.assets.account(key, keyring.addFromAddress(account).address)
       ),
@@ -132,9 +132,9 @@ export const ParaSyncProvider = ({
         {
           key: 'Native',
           symbol: 'DOT',
-          free: rmCommas(nativeBalance.free),
-          frozen: rmCommas(nativeBalance.frozen),
-          reserved: rmCommas(nativeBalance.reserved),
+          free: rmCommas(nativeBalance?.data?.free || '0'),
+          frozen: rmCommas(nativeBalance?.data?.frozen || '0'),
+          reserved: rmCommas(nativeBalance?.data?.reserved || '0'),
         },
         ...assets,
       ],
@@ -176,9 +176,9 @@ export const ParaSyncProvider = ({
         const value = valueRaw.toHuman();
         tokens.push({
           ...value,
-          free: rmCommas(value.free),
-          frozen: rmCommas(value.frozen),
-          reserved: rmCommas(value.reserved),
+          free: rmCommas(value.free || '0'),
+          frozen: rmCommas(value.frozen || '0'),
+          reserved: rmCommas(value.reserved || '0'),
           key,
           symbol,
         });
