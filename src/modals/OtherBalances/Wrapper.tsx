@@ -49,7 +49,7 @@ export const ItemWrapper = styled.div`
     border-bottom-right-radius: inherit;
     flex: 1;
     display: flex;
-    padding: 0.5rem 1rem 0.5rem 1rem;
+    padding: 0.5rem 1rem 0.65rem 1rem;
 
     > .inner {
       padding-left: 0.5rem;
