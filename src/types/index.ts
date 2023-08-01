@@ -62,6 +62,7 @@ export interface Para {
   };
   units: number;
   ss58: number;
+  supportedAssets: { key?: string | number; symbol: string }[];
 }
 
 export interface PageCategory {

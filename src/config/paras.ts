@@ -10,6 +10,12 @@ export const ParaList: Paras = {
     },
     units: 10,
     ss58: 0,
+    supportedAssets: [
+      {
+        key: 1984,
+        symbol: 'USDT',
+      },
+    ],
   },
   interlay: {
     endpoints: {
@@ -17,6 +23,18 @@ export const ParaList: Paras = {
     },
     units: 10,
     ss58: 2032,
+    supportedAssets: [
+      {
+        key: 'Token',
+        symbol: 'IBTC',
+      },
+      {
+        key: 'ForeignAsset',
+        symbol: '2',
+      },
+      { key: 'Token', symbol: 'INTR' },
+      { key: 'Token', symbol: 'DOT' },
+    ],
   },
 };
 

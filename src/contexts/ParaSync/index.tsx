@@ -49,13 +49,14 @@ export const ParaSyncProvider = ({
 
     // Format foreign asset metadata.
     const foreignAssetsMetadata: Record<number, AnyJson> = {};
-    interlayState.assetRegistry?.forEach(([idRaw, metadataRaw]: AnyApi) => {
-      const id = idRaw.toHuman();
+    interlayState.assetRegistry?.forEach(([id, metadataRaw]: AnyApi) => {
       const metadata = metadataRaw.toHuman();
-      const { symbol } = metadata;
-      // NOTE: USDT is the only supported foreign asset for now.
-      if (symbol === 'USDT') {
-        foreignAssetsMetadata[id] = metadata;
+      if (
+        paraInterlay.supportedAssets.find(
+          ({ symbol }: AnyJson) => symbol === metadata.symbol
+        )
+      ) {
+        foreignAssetsMetadata[id.toHuman()] = metadata;
       }
     });
 
@@ -74,8 +75,6 @@ export const ParaSyncProvider = ({
         tokens: [assetHubState.asset],
       },
     });
-
-    // Sync complete.
     isSyncingRef.current = 'synced';
   };
 
@@ -83,37 +82,41 @@ export const ParaSyncProvider = ({
   // balances and disconnects immediately after.
   const getAssetHubBalances = async (account: string) => {
     keyring.setSS58Format(paraAssetHub.ss58);
+    const { supportedAssets, endpoints } = paraAssetHub;
 
     // Connect to interlay via new api instance.
-    const wsProvider = new WsProvider(paraAssetHub.endpoints.rpc);
+    const wsProvider = new WsProvider(endpoints.rpc);
     const api = await ApiPromise.create({ provider: wsProvider });
 
     // Fetch needed chain state.
-    const [paraIdRaw, assetRaw]: AnyApi[] = await Promise.all([
+    const [paraId, assetRaw]: AnyApi[] = await Promise.all([
       api.query.parachainInfo.parachainId(),
-      // TODO: Abstract 1984 with USDT token, SupportedTokens.
-      api.query.assets.account(1984, keyring.addFromAddress(account).address),
+      ...supportedAssets.map(({ key }) =>
+        api.query.assets.account(key, keyring.addFromAddress(account).address)
+      ),
     ]);
-    const paraId = paraIdRaw.toString();
-    const assetHuman = assetRaw.toHuman();
-    const asset = {
-      ...assetHuman,
-      id: 1984,
-      symbol: 'USDT',
-      balance: rmCommas(assetHuman.balance),
-    };
-
     await api.disconnect();
-    return { paraId, asset };
+
+    const asset = assetRaw.toHuman();
+    return {
+      paraId: paraId.toString(),
+      asset: {
+        ...asset,
+        id: supportedAssets[0].key,
+        symbol: supportedAssets[0].symbol,
+        balance: rmCommas(asset.balance),
+      },
+    };
   };
 
   // Handler for fetching interlay balances. Connects to the interlay parachain, fetches token
   // balances and disconnects immediately after.
   const getInterlayBalances = async (account: string) => {
     keyring.setSS58Format(paraInterlay.ss58);
+    const { supportedAssets, endpoints } = paraInterlay;
 
     // Connect to interlay via new api instance.
-    const wsProvider = new WsProvider(paraInterlay.endpoints.rpc);
+    const wsProvider = new WsProvider(endpoints.rpc);
     const api = await ApiPromise.create({ provider: wsProvider });
 
     // Fetch needed chain state.
@@ -129,15 +132,22 @@ export const ParaSyncProvider = ({
     // Format token balances.
     const tokens: AnyApi[] = [];
     tokensRaw?.forEach(([key, valueRaw]: AnyApi) => {
-      const value = valueRaw.toHuman();
-
-      tokens.push({
-        ...value,
-        free: rmCommas(value.free),
-        frozen: rmCommas(value.frozen),
-        reserved: rmCommas(value.reserved),
-        assetType: key.toHuman()[1],
-      });
+      const assetType = Object.keys(key.toHuman()[1])[0];
+      const symbol = Object.values(key.toHuman()[1])[0];
+      if (
+        supportedAssets.find(
+          (t: AnyJson) => t.key === assetType && t.symbol === symbol
+        )
+      ) {
+        const value = valueRaw.toHuman();
+        tokens.push({
+          ...value,
+          free: rmCommas(value.free),
+          frozen: rmCommas(value.frozen),
+          reserved: rmCommas(value.reserved),
+          assetType: key.toHuman()[1],
+        });
+      }
     });
 
     await api.disconnect();
