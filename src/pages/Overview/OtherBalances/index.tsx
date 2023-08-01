@@ -27,15 +27,18 @@ export const BalanceFooter = () => {
   const enabled = name === 'polkadot';
 
   // Get Interlay tokens
-  const interlay = paraBalances?.interlay || [];
-  const tokens = interlay.filter((t: AnyJson) => t.Token !== undefined);
+  const interlay = paraBalances?.interlay;
+  const localTokens = interlay?.tokens.filter(
+    (t: AnyJson) => t.Token !== undefined
+  );
   // TODO: discover foreign asset (probably better to do on context level).
   // eslint-disable-next-line
-  const foreignAssets = interlay.filter(
+  const foreignAssets = interlay?.tokens?.filter(
     (t: AnyJson) => t.ForeignAsset === undefined
   );
 
-  const total = interlay.length;
+  // Metadata for UI display.
+  const total = interlay?.tokens?.length || 0;
   const remaining = Math.max(0, total - 3);
 
   return (
@@ -49,7 +52,7 @@ export const BalanceFooter = () => {
           {enabled && (
             <>
               {paraSyncing === 'synced' ? (
-                <TokenList tokens={tokens} />
+                <TokenList tokens={localTokens} />
               ) : (
                 <div className="symbols">
                   <div className="token">

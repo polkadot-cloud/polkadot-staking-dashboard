@@ -24,55 +24,72 @@ export const ParaSyncProvider = ({
   // Reference whether the app has been synced.
   const isSyncingRef = useRef<Sync>('unsynced');
 
+  // Keyring instance to use for parachain account formatting.
+  const keyring = new Keyring();
+
+  // Metadata for the parachains used in this context.
+  const paraInterlay = getParaMeta('interlay');
+  // eslint-disable-next-line
+  const paraAssetHub = getParaMeta('assethub');
+
   // We need to connect to parachains and check the user's balances.
   const syncBalances = async () => {
     if (!activeAccount || isSyncingRef.current !== 'unsynced') return;
+
+    isSyncingRef.current = 'syncing';
 
     // TODO: sync USDT balance with AssetHub.
     // `assets.account` to fetch all assets for an account.
     // `parachainInfo.parachainId` to fetch asset hub para id.
     // add to `paraBalances` state.
 
-    // Sync balances with interlay.
-    const { endpoints, ss58 } = getParaMeta('interlay');
+    // TODO: loop through any foreign assets and get ids.
 
-    isSyncingRef.current = 'syncing';
-    const keyring = new Keyring();
-    keyring.setSS58Format(ss58);
+    // TODO: refactor foreign assets to combine with metadata. `tokenBalances` to support types for
+    // both interlay balance and foreign asset balance.
 
-    // Reformat active account to be interlay compatible.
-    const activeAccountPara = keyring.addFromAddress(activeAccount).address;
+    const interlayState = await getInterlayBalances(activeAccount);
+
+    const tokenBalances: AnyApi[] = [];
+    interlayState.tokens?.forEach((a: AnyApi) => {
+      tokenBalances.push(a.toHuman()[1]);
+    });
+
+    setParaBalances({
+      ...paraBalances,
+      interlay: {
+        paraId: interlayState.paraId,
+        tokens: [...tokenBalances],
+      },
+    });
+
+    // Sync complete.
+    isSyncingRef.current = 'synced';
+  };
+
+  // Handler for fetching interlay balances. Connects to the interlay parachain, fetches token
+  // balances and disconnects immediately after.
+  const getInterlayBalances = async (account: string) => {
+    keyring.setSS58Format(paraInterlay.ss58);
 
     // Connect to interlay via new api instance.
-    const wsProvider = new WsProvider(endpoints.rpc);
+    const wsProvider = new WsProvider(paraInterlay.endpoints.rpc);
     const api = await ApiPromise.create({ provider: wsProvider });
 
-    // TODO: `parachainInfo.parachainId` to fetch interlay para id.
-
-    const tokens = await api.query.tokens.accounts.keys(activeAccountPara);
-
-    // TODO: loop through any foreign assets and get ids.
+    // Fetch needed chain state.
 
     // TODO: await Promise.all(`assetRegitry.metadata(id)`) to get the foreign assets before moving forward with state updates.
     // (Support V2 location, X3 interior only for now).
     // UI needs to be flagged as unsupported if another `MultiLocation` is found.
 
-    // TODO: refactor foreign assets to combine with metadata. `tokenBalances` to support types for
-    // both interlay balance and foreign asset balance.
+    const [paraIdRaw, tokens]: AnyApi[] = await Promise.all([
+      api.query.parachainInfo.parachainId(),
+      api.query.tokens.accounts.keys(keyring.addFromAddress(account).address),
+    ]);
+    const paraId = paraIdRaw.toString();
 
-    const tokenBalances: AnyApi[] = [];
-    tokens.forEach((a: AnyApi) => {
-      tokenBalances.push(a.toHuman()[1]);
-    });
-    setParaBalances({
-      ...paraBalances,
-      interlay: [...tokenBalances],
-    });
-
-    // Sync complete.
-    isSyncingRef.current = 'synced';
-    // Disconnect from chain.
     await api.disconnect();
+    return { paraId, tokens };
   };
 
   // NOTE: could make `syncBalances` cancelable and cancel when this useEffect is triggered.
