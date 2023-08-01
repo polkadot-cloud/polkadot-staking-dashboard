@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Token } from './Token';
+import { Token } from '../../../library/Token';
 
 export const TokenList = ({ tokens }: any) => {
   return (
