@@ -24,9 +24,16 @@ export const ParaSyncProvider = ({
   // Reference whether the app has been synced.
   const isSyncingRef = useRef<Sync>('unsynced');
 
-  // We need to connect to `interlay` parachain and check the user's balances.
+  // We need to connect to parachains and check the user's balances.
   const syncBalances = async () => {
     if (!activeAccount || isSyncingRef.current !== 'unsynced') return;
+
+    // TODO: sync USDT balance with AssetHub.
+    // `assets.account` to fetch all assets for an account.
+    // `parachainInfo.parachainId` to fetch asset hub para id.
+    // add to `paraBalances` state.
+
+    // Sync balances with interlay.
     const { endpoints, ss58 } = getParaMeta('interlay');
 
     isSyncingRef.current = 'syncing';
@@ -40,7 +47,18 @@ export const ParaSyncProvider = ({
     const wsProvider = new WsProvider(endpoints.rpc);
     const api = await ApiPromise.create({ provider: wsProvider });
 
+    // TODO: `parachainInfo.parachainId` to fetch interlay para id.
+
     const tokens = await api.query.tokens.accounts.keys(activeAccountPara);
+
+    // TODO: loop through any foreign assets and get ids.
+
+    // TODO: await Promise.all(`assetRegitry.metadata(id)`) to get the foreign assets before moving forward with state updates.
+    // (Support V2 location, X3 interior only for now).
+    // UI needs to be flagged as unsupported if another `MultiLocation` is found.
+
+    // TODO: refactor foreign assets to combine with metadata. `tokenBalances` to support types for
+    // both interlay balance and foreign asset balance.
 
     const tokenBalances: AnyApi[] = [];
     tokens.forEach((a: AnyApi) => {
