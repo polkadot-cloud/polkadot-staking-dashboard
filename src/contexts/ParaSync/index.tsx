@@ -19,7 +19,12 @@ export const ParaSyncProvider = ({
   // Store para token balances.
   const { network } = useApi();
   const { activeAccount } = useConnect();
+
+  // Store parachain token balance metadata.
   const [paraBalances, setParaBalances] = useState<AnyJson>({});
+
+  // Store parachain foreign asset registry metadata.
+  const [paraForeignAssets, setParaForeignAssets] = useState<AnyJson>({});
 
   // Reference whether the app has been synced.
   const isSyncingRef = useRef<Sync>('unsynced');
@@ -50,11 +55,28 @@ export const ParaSyncProvider = ({
 
     const interlayState = await getInterlayBalances(activeAccount);
 
+    // Format foreign asset metadata.
+    const foreignAssetsMetadata: Record<number, AnyJson> = {};
+    interlayState.assetRegistry?.forEach(([idRaw, metadataRaw]: AnyApi) => {
+      const id = idRaw.toHuman();
+      const metadata = metadataRaw.toHuman();
+      const { symbol } = metadata;
+      // NOTE: USDT is the only supported foreign asset for now.
+      if (symbol === 'USDT') {
+        foreignAssetsMetadata[id] = metadata;
+      }
+    });
+
+    // Format token balances.
     const tokenBalances: AnyApi[] = [];
     interlayState.tokens?.forEach((a: AnyApi) => {
       tokenBalances.push(a.toHuman()[1]);
     });
 
+    setParaForeignAssets({
+      ...paraForeignAssets,
+      interlay: foreignAssetsMetadata,
+    });
     setParaBalances({
       ...paraBalances,
       interlay: {
@@ -77,19 +99,15 @@ export const ParaSyncProvider = ({
     const api = await ApiPromise.create({ provider: wsProvider });
 
     // Fetch needed chain state.
-
-    // TODO: await Promise.all(`assetRegitry.metadata(id)`) to get the foreign assets before moving forward with state updates.
-    // (Support V2 location, X3 interior only for now).
-    // UI needs to be flagged as unsupported if another `MultiLocation` is found.
-
-    const [paraIdRaw, tokens]: AnyApi[] = await Promise.all([
+    const [paraIdRaw, tokens, assetRegistry]: AnyApi[] = await Promise.all([
       api.query.parachainInfo.parachainId(),
       api.query.tokens.accounts.keys(keyring.addFromAddress(account).address),
+      api.query.assetRegistry.metadata.entries(),
     ]);
     const paraId = paraIdRaw.toString();
 
     await api.disconnect();
-    return { paraId, tokens };
+    return { paraId, tokens, assetRegistry };
   };
 
   // NOTE: could make `syncBalances` cancelable and cancel when this useEffect is triggered.
