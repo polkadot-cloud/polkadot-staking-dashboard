@@ -72,7 +72,7 @@ export const ParaSyncProvider = ({
       },
       assethub: {
         paraId: assetHubState.paraId,
-        tokens: [assetHubState.asset],
+        tokens: assetHubState.assets,
       },
     });
     isSyncingRef.current = 'synced';
@@ -89,8 +89,9 @@ export const ParaSyncProvider = ({
     const api = await ApiPromise.create({ provider: wsProvider });
 
     // Fetch needed chain state.
-    const [paraId, assetRaw]: AnyApi[] = await Promise.all([
+    const [paraId, accountBalance, assetRaw]: AnyApi[] = await Promise.all([
       api.query.parachainInfo.parachainId(),
+      api.query.balances.account(keyring.addFromAddress(account).address),
       ...supportedAssets.map(({ key }) =>
         api.query.assets.account(key, keyring.addFromAddress(account).address)
       ),
@@ -98,14 +99,25 @@ export const ParaSyncProvider = ({
     await api.disconnect();
 
     const asset = assetRaw.toHuman();
+    const nativeBalance = accountBalance.toHuman();
+
     return {
       paraId: paraId.toString(),
-      asset: {
-        ...asset,
-        id: supportedAssets[0].key,
-        symbol: supportedAssets[0].symbol,
-        balance: rmCommas(asset.balance),
-      },
+      assets: [
+        {
+          id: 'Native',
+          symbol: 'DOT',
+          free: rmCommas(nativeBalance.free),
+          frozen: rmCommas(nativeBalance.frozen),
+          reserved: rmCommas(nativeBalance.reserved),
+        },
+        {
+          ...asset,
+          id: supportedAssets[0].key,
+          symbol: supportedAssets[0].symbol,
+          balance: rmCommas(asset.balance),
+        },
+      ],
     };
   };
 
@@ -167,7 +179,14 @@ export const ParaSyncProvider = ({
     const token = paraBalances?.assethub?.tokens.find(
       (t: AnyJson) => t.symbol === symbol
     );
-    return token ? new BigNumber(token.balance) : undefined;
+
+    if (token) {
+      if (token.id === 'Native') {
+        return new BigNumber(token.free);
+      }
+      return new BigNumber(token.balance);
+    }
+    return undefined;
   };
 
   // Getter for interlay balance.
