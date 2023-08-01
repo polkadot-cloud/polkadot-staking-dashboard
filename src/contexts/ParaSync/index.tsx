@@ -9,6 +9,7 @@ import { useConnect } from 'contexts/Connect';
 import { useApi } from 'contexts/Api';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { rmCommas } from '@polkadotcloud/utils';
+import BigNumber from 'bignumber.js';
 import type { ParaSyncContextInterface } from './types';
 import { defaultParaSyncContext } from './defaults';
 
@@ -58,15 +59,6 @@ export const ParaSyncProvider = ({
       }
     });
 
-    // Format token balances.
-    const tokenBalances: AnyApi[] = [];
-    interlayState.tokens?.forEach(([key, value]: AnyApi) => {
-      tokenBalances.push({
-        assetType: key.toHuman()[1],
-        ...value.toHuman(),
-      });
-    });
-
     setParaForeignAssets({
       ...paraForeignAssets,
       interlay: foreignAssetsMetadata,
@@ -75,7 +67,7 @@ export const ParaSyncProvider = ({
       ...paraBalances,
       interlay: {
         paraId: interlayState.paraId,
-        tokens: [...tokenBalances],
+        tokens: interlayState.tokens,
       },
       assethub: {
         paraId: assetHubState.paraId,
@@ -125,7 +117,7 @@ export const ParaSyncProvider = ({
     const api = await ApiPromise.create({ provider: wsProvider });
 
     // Fetch needed chain state.
-    const [paraIdRaw, tokens, assetRegistry]: AnyApi[] = await Promise.all([
+    const [paraIdRaw, tokensRaw, assetRegistry]: AnyApi[] = await Promise.all([
       api.query.parachainInfo.parachainId(),
       api.query.tokens.accounts.entries(
         keyring.addFromAddress(account).address
@@ -133,6 +125,20 @@ export const ParaSyncProvider = ({
       api.query.assetRegistry.metadata.entries(),
     ]);
     const paraId = paraIdRaw.toString();
+
+    // Format token balances.
+    const tokens: AnyApi[] = [];
+    tokensRaw?.forEach(([key, valueRaw]: AnyApi) => {
+      const value = valueRaw.toHuman();
+
+      tokens.push({
+        ...value,
+        free: rmCommas(value.free),
+        frozen: rmCommas(value.frozen),
+        reserved: rmCommas(value.reserved),
+        assetType: key.toHuman()[1],
+      });
+    });
 
     await api.disconnect();
     return { paraId, tokens, assetRegistry };
@@ -145,9 +151,34 @@ export const ParaSyncProvider = ({
     syncBalances();
   }, [activeAccount, network]);
 
+  // Getter for Asset Hub token balance.
+  // getAssetHubBalance('USDT');
+  const getAssetHubBalance = (symbol: string) => {
+    const token = paraBalances?.assethub?.tokens.find(
+      (t: AnyJson) => t.symbol === symbol
+    );
+    return token ? new BigNumber(token.balance) : undefined;
+  };
+
+  // Getter for interlay balance.
+  // getInterlayBalance('ForeignAsset', '2');
+  const getInterlayBalance = (assetType: string, symbol: string) => {
+    const token = paraBalances?.interlay?.tokens?.find(
+      (t: AnyJson) => t?.assetType[assetType] === symbol
+    );
+    return !token ? undefined : new BigNumber(token.free);
+  };
+
   return (
     <ParaSyncContext.Provider
-      value={{ paraBalances, paraSyncing: isSyncingRef.current }}
+      value={{
+        paraBalances,
+        paraSyncing: isSyncingRef.current,
+        getters: {
+          assethub: getAssetHubBalance,
+          interlay: getInterlayBalance,
+        },
+      }}
     >
       {children}
     </ParaSyncContext.Provider>

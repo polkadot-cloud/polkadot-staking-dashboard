@@ -6,4 +6,5 @@ import type { Sync } from 'types';
 export interface ParaSyncContextInterface {
   paraSyncing: Sync;
   paraBalances: Record<string, any>;
+  getters: Record<string, any>;
 }
