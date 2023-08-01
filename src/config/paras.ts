@@ -4,11 +4,17 @@
 import type { Paras } from 'types';
 
 export const ParaList: Paras = {
+  assethub: {
+    endpoints: {
+      rpc: 'wss://polkadot-asset-hub-rpc.polkadot.io',
+    },
+    units: 10,
+    ss58: 0,
+  },
   interlay: {
     endpoints: {
       rpc: 'wss://interlay.api.onfinality.io/public-ws',
     },
-    unit: 'INTR',
     units: 10,
     ss58: 2032,
   },

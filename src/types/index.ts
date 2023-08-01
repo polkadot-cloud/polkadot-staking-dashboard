@@ -60,7 +60,6 @@ export interface Para {
   endpoints: {
     rpc: string;
   };
-  unit: string;
   units: number;
   ss58: number;
 }
