@@ -47,9 +47,9 @@ export const ItemWrapper = styled.div`
   .assets {
     border-bottom-left-radius: inherit;
     border-bottom-right-radius: inherit;
+    flex: 1;
     display: flex;
     padding: 0.5rem 1rem 0.5rem 1rem;
-    flex: 1;
 
     > .inner {
       padding-left: 0.5rem;
@@ -62,7 +62,6 @@ export const TokenWrapper = styled.div`
   border-bottom: 1px solid var(--border-primary-color);
   display: flex;
   align-items: center;
-  width: 100%;
   padding: 0.85rem 0;
   margin: 0.25rem 0;
   width: 100%;
