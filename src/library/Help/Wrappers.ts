@@ -4,87 +4,6 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-// Blurred background modal wrapper
-export const Wrapper = styled(motion.div)`
-  background: var(--modal-background-color);
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  backdrop-filter: blur(14px);
-
-  > div {
-    height: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: center;
-    padding: 0 2rem;
-
-    /* click anywhere behind modal content to close */
-    .close {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: 8;
-      cursor: default;
-    }
-  }
-`;
-
-export const HeightWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  max-width: 800px;
-  z-index: 9;
-  position: relative;
-  overflow: scroll;
-
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-`;
-
-export const ContentWrapper = styled.div`
-  width: 100%;
-  height: auto;
-  overflow: hidden;
-  position: relative;
-  padding: 5rem 0;
-
-  > .buttons {
-    width: 100%;
-    display: flex;
-    flex-flow: row wrap;
-    margin-bottom: 2rem;
-    position: relative;
-
-    > button {
-      > svg {
-        margin-right: 0.5rem;
-      }
-      color: var(--network-color-primary);
-      border: 1px solid var(--network-color-primary);
-      border-radius: 1.5rem;
-      padding: 0.4rem 0.8rem;
-      margin-right: 1.25rem;
-      margin-left: 0;
-    }
-  }
-
-  h1 {
-    font-family: 'Unbounded', 'sans-serif', sans-serif;
-    margin-bottom: 1.75rem;
-  }
-
-  h3 {
-    margin: 2rem 0.5rem 1rem 0.5rem;
-  }
-`;
-
 export const ListWrapper = styled(motion.div)`
   display: flex;
   flex-flow: row wrap;
@@ -118,16 +37,17 @@ export const ListWrapper = styled(motion.div)`
 
 export const DefinitionWrapper = styled(motion.div)`
   background: var(--background-floating-card);
-  width: 100%;
-  display: flex;
   border-radius: 1.5rem;
-  margin-bottom: 1.25rem;
-  padding: 1.5rem 1.5rem 0 1.5rem;
+  display: flex;
   flex-flow: row wrap;
   align-items: center;
+  flex: 1;
   position: relative;
   overflow: hidden;
-  flex: 1;
+  margin-bottom: 1.25rem;
+  padding: 1.5rem 1.5rem 0 1.5rem;
+  transition: all 0.2s;
+  width: 100%;
 
   button {
     padding: 0;
@@ -147,7 +67,8 @@ export const DefinitionWrapper = styled(motion.div)`
   }
 
   h4 {
-    margin-bottom: 1.25rem;
+    font-family: InterSemiBold, sans-serif;
+    margin-bottom: 1.15rem;
   }
 
   p {
@@ -178,15 +99,15 @@ export const ItemWrapper = styled(motion.div)<any>`
     margin-bottom: 1.5rem;
     position: relative;
 
+    > h2 {
+      color: var(--text-color-primary);
+      text-align: left;
+    }
     > h4 {
       color: var(--text-color-primary);
       margin: 0.65rem 0;
       text-transform: uppercase;
       font-size: 0.7rem;
-    }
-    > h2 {
-      color: var(--text-color-primary);
-      text-align: left;
     }
 
     > p {
