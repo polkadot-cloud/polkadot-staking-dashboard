@@ -41,18 +41,14 @@ export const useInterlay = () => {
   };
 
   // Formats token balances
-  const formatTokens = (tokens: AnyJson) => {
+  const formatTokens = (tokens: AnyJson[]) => {
     if (!tokens) return [];
 
     const formatted: AnyApi[] = [];
-    tokens?.forEach(([k, v]: AnyApi) => {
+    tokens?.forEach(([k, v]) => {
       const key = Object.keys(k.toHuman()[1])[0];
       const symbol = Object.values(k.toHuman()[1])[0];
-      if (
-        supportedAssets.find(
-          (t: AnyJson) => t.key === key && t.symbol === symbol
-        )
-      ) {
+      if (supportedAssets.find((t) => t.key === key && t.symbol === symbol)) {
         const value = v.toHuman();
         formatted.push({
           ...value,
@@ -69,7 +65,7 @@ export const useInterlay = () => {
   };
 
   // Formats `ForeignAsset` balances metadata.
-  const formatForeignAssets = (assets: AnyJson) => {
+  const formatForeignAssets = (assets?: AnyJson[]) => {
     if (!assets) return;
 
     const formatted: Record<number, AnyJson> = {};
@@ -77,7 +73,7 @@ export const useInterlay = () => {
       const id = k.toHuman()[0];
       const metadata = v.toHuman();
 
-      if (supportedAssets.find(({ symbol }: AnyJson) => symbol === id)) {
+      if (supportedAssets.find(({ symbol }) => symbol === id)) {
         formatted[id] = metadata;
       }
     });

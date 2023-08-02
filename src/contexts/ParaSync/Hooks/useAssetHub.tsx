@@ -21,7 +21,7 @@ export const useAssetHub = () => {
     const api = await ApiPromise.create({ provider: wsProvider });
 
     // Fetch needed chain state.
-    const result: AnyApi[] = await Promise.all([
+    const result: AnyApi = await Promise.all([
       api.query.parachainInfo.parachainId(),
       api.query.system.account(keyring.addFromAddress(account).address),
       ...supportedAssets

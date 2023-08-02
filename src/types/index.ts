@@ -61,7 +61,13 @@ export interface Para {
     rpc: string;
   };
   ss58: number;
-  supportedAssets: { key?: string | number; symbol: string; units: number }[];
+  supportedAssets: SupportedAsset[];
+}
+
+export interface SupportedAsset {
+  key?: string | number;
+  symbol: string;
+  units: number;
 }
 
 export interface PageCategory {

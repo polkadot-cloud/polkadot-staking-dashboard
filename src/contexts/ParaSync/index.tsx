@@ -8,7 +8,7 @@ import { useConnect } from 'contexts/Connect';
 import { useApi } from 'contexts/Api';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import BigNumber from 'bignumber.js';
-import type { ParaSyncContextInterface } from './types';
+import type { ParaBalances, ParaSyncContextInterface } from './types';
 import { defaultParaSyncContext } from './defaults';
 import { useAssetHub } from './Hooks/useAssetHub';
 import { useInterlay } from './Hooks/useInterlay';
@@ -23,7 +23,7 @@ export const ParaSyncProvider = ({
   const { activeAccount } = useConnect();
 
   // Store parachain token balance metadata.
-  const [paraBalances, setParaBalances] = useState<AnyJson>({});
+  const [paraBalances, setParaBalances] = useState<ParaBalances>({});
 
   // Store parachain foreign asset registry metadata.
   const [paraForeignAssets, setParaForeignAssets] = useState<AnyJson>({});
@@ -51,7 +51,7 @@ export const ParaSyncProvider = ({
       });
     }
 
-    const newParaBalances: Record<string, AnyJson> = {};
+    const newParaBalances: ParaBalances = {};
     if (interlayState) {
       newParaBalances.interlay = {
         paraId: interlayState.paraId,
@@ -83,7 +83,7 @@ export const ParaSyncProvider = ({
   // getAssetHubBalance('USDT');
   const getAssetHubBalance = (symbol: string) => {
     const token = paraBalances?.assethub?.tokens.find(
-      (t: AnyJson) => t.symbol === symbol
+      (t) => t.symbol === symbol
     );
 
     if (token) {
@@ -99,7 +99,7 @@ export const ParaSyncProvider = ({
   // getInterlayBalance('ForeignAsset', '2');
   const getInterlayBalance = (key: string, symbol: string) => {
     const token = paraBalances?.interlay?.tokens?.find(
-      (t: AnyJson) => t.key === key && t.symbol === symbol
+      (t) => t.key === key && t.symbol === symbol
     );
     return !token ? new BigNumber(0) : new BigNumber(token.free);
   };
@@ -117,7 +117,7 @@ export const ParaSyncProvider = ({
   // If `ForeignAsset`, `paraForeignAssets` needs to be referred to.
   const getTokenUnits = (key: string, symbol: string): number => {
     return (
-      getParaMeta(key).supportedAssets.find((a: AnyJson) => a.symbol === symbol)
+      getParaMeta(key).supportedAssets.find((a) => a.symbol === symbol)
         ?.units || 0
     );
   };
