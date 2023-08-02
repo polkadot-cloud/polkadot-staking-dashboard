@@ -38,7 +38,6 @@ export const ParaList: Paras = {
         symbol: '2', // USDT
         units: 6,
       },
-      { key: 'Token', symbol: 'INTR', units: 10 },
       { key: 'Token', symbol: 'DOT', units: 10 },
     ],
   },
