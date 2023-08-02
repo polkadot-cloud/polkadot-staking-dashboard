@@ -76,15 +76,28 @@ export const PinnedBalanceWrapper = styled.div`
   margin-top: 1rem;
   width: 100%;
 
-  > .token {
-    margin-right: 0.75rem;
-  }
+  > div {
+    display: flex;
+    align-items: center;
 
-  h3 {
-    font-family: InterSemiBold, sans-serif;
-    > .symbol {
-      opacity: 0.5;
-      margin-left: 0.35rem;
+    &:first-child {
+      display: flex;
+      flex-grow: 1;
+      > .token {
+        margin-right: 0.75rem;
+      }
+
+      > h3 {
+        font-family: InterSemiBold, sans-serif;
+        > .symbol {
+          opacity: 0.5;
+          margin-left: 0.35rem;
+        }
+      }
+    }
+    &:last-child {
+      display: flex;
+      justify-content: flex-end;
     }
   }
 `;

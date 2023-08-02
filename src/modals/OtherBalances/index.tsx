@@ -3,6 +3,7 @@
 
 import {
   ActionItem,
+  ButtonPrimaryInvert,
   ButtonTertiary,
   ModalPadding,
 } from '@polkadotcloud/core-ui';
@@ -15,6 +16,7 @@ import type { AnyJson } from 'types';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import { Token } from 'library/Token';
 import { TokenSvgWrapper } from 'library/Token/Wrappers';
+import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
 import {
   SectionWrapper,
   ChainWrapper,
@@ -54,16 +56,21 @@ export const OtherBalances = () => {
         <ActionItem text="Pinned Balances" />
         <SectionWrapper>
           <PinnedBalanceWrapper>
-            <span className="token">
-              <Token symbol="IBTC" />
-            </span>
-            <h3>
-              {planckToUnit(
-                getInterlayBalance('Token', 'IBTC'),
-                getTokenUnits('interlay', 'IBTC')
-              ).toString()}{' '}
-              <span className="symbol">IBTC</span>
-            </h3>
+            <div>
+              <span className="token">
+                <Token symbol="IBTC" />
+              </span>
+              <h3>
+                {planckToUnit(
+                  getInterlayBalance('Token', 'IBTC'),
+                  getTokenUnits('interlay', 'IBTC')
+                ).toString()}{' '}
+                <span className="symbol">IBTC</span>
+              </h3>
+            </div>
+            <div>
+              <ButtonPrimaryInvert iconLeft={faRightLeft} text="Swap for DOT" />
+            </div>
           </PinnedBalanceWrapper>
         </SectionWrapper>
 
