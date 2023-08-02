@@ -15,8 +15,8 @@ import '@polkadotcloud/core-ui/index.css';
 
 // Miscellaneous component styles.
 import '@polkadotcloud/react-odometer/index.css';
-import { App } from 'App';
 import { createRoot } from 'react-dom/client';
+import { App } from 'App';
 import 'styles/index.scss';
 
 const rootElement = document.getElementById('root');
