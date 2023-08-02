@@ -4,7 +4,7 @@
 import {
   ModalBackground,
   ModalContainer,
-  ModalContent,
+  ModalCard,
   ModalHeight,
 } from '@polkadotcloud/core-ui';
 import { useModal } from 'contexts/Modal';
@@ -153,7 +153,7 @@ export const Modal = () => {
                     : 'hidden',
               }}
             >
-              <ModalContent ref={modalRef}>
+              <ModalCard ref={modalRef}>
                 <ErrorBoundary FallbackComponent={ErrorFallbackModal}>
                   {modal === 'AccountPoolRoles' && <AccountPoolRoles />}
                   {modal === 'Bio' && <Bio />}
@@ -189,7 +189,7 @@ export const Modal = () => {
                   {modal === 'UpdateReserve' && <UpdateReserve />}
                   {modal === 'WithdrawPoolMember' && <WithdrawPoolMember />}
                 </ErrorBoundary>
-              </ModalContent>
+              </ModalCard>
             </ModalHeight>
             <button
               type="button"

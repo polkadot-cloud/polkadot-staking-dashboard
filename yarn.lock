@@ -1834,7 +1834,7 @@
 
 "@polkadotcloud/core-ui@^0.3.59":
   version "0.3.59"
-  resolved "https://registry.yarnpkg.com/@polkadotcloud/core-ui/-/core-ui-0.3.59.tgz#3791d0af45326692aa13012543b08e1778235bbb"
+  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.3.59.tgz#3791d0af45326692aa13012543b08e1778235bbb"
   integrity sha512-tNaYTRWlKPISpsq51WPvm/DFpgwC1DRPH13U6BTWUC0b13fgepYvO/doBfg3AzmroOe7Q/eytrZAMY+dYuFQ8w==
 
 "@polkadotcloud/react-odometer@^0.1.17":
