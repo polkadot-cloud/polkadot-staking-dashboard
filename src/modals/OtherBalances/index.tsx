@@ -53,7 +53,7 @@ export const OtherBalances = () => {
           helpKey="Other Balances"
           style={{ padding: '0.5rem 0 0 0' }}
         />
-        <ActionItem text="Pinned Balances" />
+        <ActionItem text="Pinned" />
         <SectionWrapper>
           <PinnedBalanceWrapper>
             <div>
