@@ -7,6 +7,8 @@ import {
   faUnlockAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
 import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -22,8 +24,6 @@ import {
   Separator,
   Wrapper,
 } from 'library/ListItem/Wrappers';
-import { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const Member = ({ who, batchKey, batchIndex }: any) => {
   const { t } = useTranslation('pages');

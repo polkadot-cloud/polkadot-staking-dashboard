@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Entry } from '@polkadotcloud/core-ui';
+import { ThemeProvider } from 'styled-components';
 import { Router } from 'Router';
 import { APIProvider, useApi } from 'contexts/Api';
 import { BalancesProvider } from 'contexts/Balances';
@@ -38,7 +39,6 @@ import { TxMetaProvider } from 'contexts/TxMeta';
 import { UIProvider } from 'contexts/UI';
 import { ValidatorsProvider } from 'contexts/Validators';
 import { withProviders } from 'library/Hooks';
-import { ThemeProvider } from 'styled-components';
 
 // App theme classes and `@polkadotcloud/core-ui` theme classes are inserted here.
 export const ThemedRouter = () => {

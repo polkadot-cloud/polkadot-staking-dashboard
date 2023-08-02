@@ -3,8 +3,8 @@
 
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useModal } from 'contexts/Modal';
 import { useTranslation } from 'react-i18next';
+import { useModal } from 'contexts/Modal';
 
 export const JoinPool = ({
   id,

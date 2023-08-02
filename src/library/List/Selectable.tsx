@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { useTranslation } from 'react-i18next';
+import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { SelectableWrapper } from '.';
 import { useList } from './context';
 

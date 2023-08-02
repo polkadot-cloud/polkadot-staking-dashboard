@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ActionItem } from '@polkadotcloud/core-ui';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import type { ClaimPermission } from 'contexts/Pools/types';
 import { TabWrapper, TabsWrapper } from 'library/Filter/Wrappers';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export interface ClaimPermissionInputProps {
   current: ClaimPermission | undefined;

@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { clipAddress } from '@polkadotcloud/utils';
+import { useEffect, useState } from 'react';
 import { useValidators } from 'contexts/Validators';
 import { Identicon } from 'library/Identicon';
 import { IdentityWrapper } from 'library/ListItem/Wrappers';
-import { useEffect, useState } from 'react';
 import { getIdentityDisplay } from '../../ValidatorList/Validator/Utils';
 import type { IdentityProps } from '../types';
 

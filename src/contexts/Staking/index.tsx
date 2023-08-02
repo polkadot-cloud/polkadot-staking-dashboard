@@ -9,6 +9,7 @@ import {
   setStateWithRef,
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import React, { useRef, useState } from 'react';
 import { useBalances } from 'contexts/Balances';
 import type { ExternalAccount } from 'contexts/Connect/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
@@ -20,7 +21,6 @@ import type {
   StakingMetrics,
   StakingTargets,
 } from 'contexts/Staking/types';
-import React, { useRef, useState } from 'react';
 import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
 import type { ResponseInitialiseExposures } from 'workers/types';

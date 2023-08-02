@@ -13,12 +13,12 @@ import {
   ModalSection,
 } from '@polkadotcloud/core-ui';
 import { ExtensionsArray } from '@polkadotcloud/community/extensions';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
 import { Close } from 'library/Modal/Close';
 import { SelectItems } from 'library/SelectItems';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { AnyFunction } from 'types';
 import { Extension } from './Extension';
 import { Ledger } from './Ledger';

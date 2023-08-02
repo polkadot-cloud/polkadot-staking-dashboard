@@ -7,6 +7,8 @@ import {
   ModalWarnings,
 } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
@@ -18,8 +20,6 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const Nominate = () => {
   const { t } = useTranslation('modals');

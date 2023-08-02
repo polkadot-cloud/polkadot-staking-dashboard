@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faPlusCircle, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
@@ -10,7 +11,6 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useSetup } from 'contexts/Setup';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useTranslation } from 'react-i18next';
 import { usePoolsTabs } from '../context';
 
 export const useStatusButtons = () => {

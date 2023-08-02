@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ModalPadding } from '@polkadotcloud/core-ui';
+import { useTranslation } from 'react-i18next';
 import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { ValidatorList } from 'library/ValidatorList';
-import { useTranslation } from 'react-i18next';
 import { ListWrapper } from './Wrappers';
 
 export const PoolNominations = () => {

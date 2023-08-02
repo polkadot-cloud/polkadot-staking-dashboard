@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageRow } from '@polkadotcloud/core-ui';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const PoolFavorites = () => {
   const { t } = useTranslation('pages');

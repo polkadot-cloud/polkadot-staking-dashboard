@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonMono, ButtonMonoInvert } from '@polkadotcloud/core-ui';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
@@ -10,7 +11,6 @@ import type { LedgerAddress } from 'contexts/Hardware/types';
 import { useModal } from 'contexts/Modal';
 import { useOverlay } from 'contexts/Overlay';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
-import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 
 export const Reset = ({ removeLedgerAddress }: AnyJson) => {

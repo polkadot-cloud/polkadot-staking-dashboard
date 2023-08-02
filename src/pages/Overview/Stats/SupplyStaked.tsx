@@ -3,11 +3,11 @@
 
 import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
-import { useTranslation } from 'react-i18next';
 
 export const SupplyStakedStat = () => {
   const { t } = useTranslation('pages');

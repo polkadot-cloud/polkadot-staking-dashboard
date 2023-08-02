@@ -3,8 +3,8 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@polkadotcloud/core-ui';
-import { useModal } from 'contexts/Modal';
 import { useTranslation } from 'react-i18next';
+import { useModal } from 'contexts/Modal';
 import { NoAccountsWrapper } from './Wrappers';
 
 export const NoAccounts = ({ children, text, Icon }: any) => {

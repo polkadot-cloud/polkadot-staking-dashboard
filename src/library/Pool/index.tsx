@@ -4,6 +4,8 @@
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faBars, faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useMenu } from 'contexts/Menu';
 import { useModal } from 'contexts/Modal';
@@ -25,8 +27,6 @@ import {
   Wrapper,
 } from 'library/ListItem/Wrappers';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
-import { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
 import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';

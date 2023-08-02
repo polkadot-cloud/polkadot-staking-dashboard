@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ModalPadding } from '@polkadotcloud/core-ui';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
 import type { Validator } from 'contexts/Validators/types';
 import { Title } from 'library/Modal/Title';
 import { ValidatorList } from 'library/ValidatorList';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { FooterWrapper, ListWrapper } from './Wrappers';
 
 export const SelectFavorites = () => {

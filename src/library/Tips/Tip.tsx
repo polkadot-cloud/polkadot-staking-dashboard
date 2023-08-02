@@ -7,12 +7,12 @@ import {
   ButtonPrimaryInvert,
   ButtonSecondary,
 } from '@polkadotcloud/core-ui';
-import { useOverlay } from 'contexts/Overlay';
-import { usePlugins } from 'contexts/Plugins';
-import { Title } from 'library/Overlay/Title';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { useOverlay } from 'contexts/Overlay';
+import { usePlugins } from 'contexts/Plugins';
+import { Title } from 'library/Overlay/Title';
 
 export const Tip = ({ title, description, page }: any) => {
   const { t } = useTranslation();

@@ -11,6 +11,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { camelize } from '@polkadotcloud/utils';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -21,8 +23,6 @@ import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
 import { ValidatorList } from 'library/ValidatorList';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import type {
   GenerateNominationsInnerProps,
   Nominations,

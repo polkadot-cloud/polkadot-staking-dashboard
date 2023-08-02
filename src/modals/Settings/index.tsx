@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ModalPadding } from '@polkadotcloud/core-ui';
+import { useTranslation } from 'react-i18next';
 import { usePlugins } from 'contexts/Plugins';
 import { Title } from 'library/Modal/Title';
 import { StatusButton } from 'library/StatusButton';
-import { useTranslation } from 'react-i18next';
 import { ContentWrapper } from '../Networks/Wrapper';
 
 export const Settings = () => {

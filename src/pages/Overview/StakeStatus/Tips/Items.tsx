@@ -3,10 +3,10 @@
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useOverlay } from 'contexts/Overlay';
 import { useAnimationControls } from 'framer-motion';
-import { Tip } from 'library/Tips/Tip';
 import React, { useEffect, useState } from 'react';
+import { useOverlay } from 'contexts/Overlay';
+import { Tip } from 'library/Tips/Tip';
 import { ItemInnerWrapper, ItemWrapper, ItemsWrapper } from './Wrappers';
 
 export const ItemsInner = ({ items, page }: any) => {

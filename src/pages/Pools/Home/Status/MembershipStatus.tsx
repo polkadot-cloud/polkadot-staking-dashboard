@@ -3,6 +3,7 @@
 
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 import { determinePoolDisplay } from '@polkadotcloud/utils';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -11,7 +12,6 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
-import { useTranslation } from 'react-i18next';
 import { useStatusButtons } from './useStatusButtons';
 
 export const MembershipStatus = ({

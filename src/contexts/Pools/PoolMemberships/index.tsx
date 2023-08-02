@@ -3,13 +3,13 @@
 
 import { rmCommas, setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type {
   ClaimPermissionConfig,
   PoolMembership,
   PoolMembershipsContextState,
 } from 'contexts/Pools/types';
-import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { AnyApi, Fn } from 'types';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../../Api';

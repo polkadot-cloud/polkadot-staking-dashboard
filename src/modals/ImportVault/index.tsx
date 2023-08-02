@@ -8,6 +8,8 @@ import {
   HardwareAddress,
   HardwareStatusBar,
 } from '@polkadotcloud/core-ui';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { useModal } from 'contexts/Modal';
@@ -19,8 +21,6 @@ import { Heading } from 'library/Import/Heading';
 import { NoAccounts } from 'library/Import/NoAccounts';
 import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 import { Reader } from './Reader';
 

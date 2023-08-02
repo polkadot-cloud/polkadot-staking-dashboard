@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
+import { useEffect, useMemo, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useEffect, useMemo, useState } from 'react';
 import type { BondFor } from 'types';
 
 interface Props {

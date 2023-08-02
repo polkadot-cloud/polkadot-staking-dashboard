@@ -7,13 +7,13 @@ import {
   rmCommas,
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
 import type { Pool } from 'library/Pool/types';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const PoolBonded = ({
   pool,

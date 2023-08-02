@@ -3,12 +3,12 @@
 
 import { setStateWithRef } from '@polkadotcloud/utils';
 import { ExtensionsArray } from '@polkadotcloud/community/extensions';
+import React, { useEffect, useRef, useState } from 'react';
 import type {
   ExtensionInjected,
   ExtensionsContextInterface,
   ExtensionsStatus,
 } from 'contexts/Extensions/types';
-import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi } from 'types';
 import { defaultExtensionsContext } from './defaults';
 

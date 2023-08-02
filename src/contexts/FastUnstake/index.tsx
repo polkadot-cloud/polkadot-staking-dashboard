@@ -8,11 +8,11 @@ import {
   setStateWithRef,
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import React, { useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
-import React, { useRef, useState } from 'react';
 import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';

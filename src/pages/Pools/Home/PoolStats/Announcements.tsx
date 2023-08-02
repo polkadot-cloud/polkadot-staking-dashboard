@@ -5,11 +5,11 @@ import { faBullhorn as faBack } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useActivePools } from 'contexts/Pools/ActivePools';
-import { motion } from 'framer-motion';
 import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
-import { useTranslation } from 'react-i18next';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {

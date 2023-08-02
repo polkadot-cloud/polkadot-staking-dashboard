@@ -4,6 +4,7 @@
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText, HardwareAddress } from '@polkadotcloud/core-ui';
 import { clipAddress, unescape } from '@polkadotcloud/utils';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
@@ -13,7 +14,6 @@ import { Identicon } from 'library/Identicon';
 import { Confirm } from 'library/Import/Confirm';
 import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
-import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 
 export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {

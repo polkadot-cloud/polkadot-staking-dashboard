@@ -3,9 +3,9 @@
 
 import { faPlug, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText } from '@polkadotcloud/core-ui';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
-import { useTranslation } from 'react-i18next';
 import { ConnectedAccount, HeadingWrapper } from './Wrappers';
 
 export const Connect = () => {

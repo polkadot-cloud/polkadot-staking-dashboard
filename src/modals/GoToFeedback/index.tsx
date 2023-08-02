@@ -4,9 +4,9 @@
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalPadding } from '@polkadotcloud/core-ui';
+import { useTranslation } from 'react-i18next';
 import { ReactComponent as ForumSVG } from 'img/forum.svg';
 import { Title } from 'library/Modal/Title';
-import { useTranslation } from 'react-i18next';
 
 export const GoToFeedback = () => {
   const { t } = useTranslation('modals');

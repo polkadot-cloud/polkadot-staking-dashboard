@@ -3,9 +3,9 @@
 
 import { ButtonHelp } from '@polkadotcloud/core-ui';
 import { ReactOdometer } from '@polkadotcloud/react-odometer';
+import { useEffect, useState } from 'react';
 import { useHelp } from 'contexts/Help';
 import { StatPie } from 'library/Graphs/StatBoxPie';
-import { useEffect, useState } from 'react';
 import { StatBox } from './Item';
 import type { PieProps } from './types';
 

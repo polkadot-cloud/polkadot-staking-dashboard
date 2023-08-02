@@ -6,6 +6,8 @@ import {
   ModalPadding,
   ModalWarnings,
 } from '@polkadotcloud/core-ui';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -19,8 +21,6 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { SubmitTx } from 'library/SubmitTx';
 import { ValidatorList } from 'library/ValidatorList';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {

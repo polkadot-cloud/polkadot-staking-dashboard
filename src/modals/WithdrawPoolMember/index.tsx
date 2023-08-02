@@ -8,6 +8,8 @@ import {
 } from '@polkadotcloud/core-ui';
 import { isNotZero, planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
@@ -18,8 +20,6 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const WithdrawPoolMember = () => {
   const { t } = useTranslation('modals');

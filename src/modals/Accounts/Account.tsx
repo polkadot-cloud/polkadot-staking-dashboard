@@ -4,15 +4,15 @@
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { clipAddress, planckToUnit } from '@polkadotcloud/utils';
+import { useTranslation } from 'react-i18next';
+import { Extensions } from '@polkadotcloud/community/extensions';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
 import { ReactComponent as PolkadotVaultIconSVG } from 'img/polkadotVault.svg';
 import { Identicon } from 'library/Identicon';
-import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { Extensions } from '@polkadotcloud/community/extensions';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 

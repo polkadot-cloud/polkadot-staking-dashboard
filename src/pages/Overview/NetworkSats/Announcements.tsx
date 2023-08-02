@@ -10,15 +10,15 @@ import {
   sortWithNull,
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import type { BondedPool } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
-import { motion } from 'framer-motion';
 import { Announcement as AnnouncementLoader } from 'library/Loader/Announcement';
-import { useTranslation } from 'react-i18next';
 import { Item } from './Wrappers';
 
 export const Announcements = () => {

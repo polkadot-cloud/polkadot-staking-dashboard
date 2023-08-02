@@ -3,13 +3,13 @@
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonSecondary } from '@polkadotcloud/core-ui';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { useTheme } from 'contexts/Themes';
 import { ReactComponent as LogoSVG } from 'img/ledgerLogo.svg';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { AnyFunction } from 'types';
 import { SplashWrapper } from './Wrappers';
 

@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonMono, ButtonMonoInvert } from '@polkadotcloud/core-ui';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useOverlay } from 'contexts/Overlay';
 import { Identicon } from 'library/Identicon';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
-import { useTranslation } from 'react-i18next';
 import type { RemoveProps } from './types';
 
 export const Remove = ({ address, getHandler, removeHandler }: RemoveProps) => {

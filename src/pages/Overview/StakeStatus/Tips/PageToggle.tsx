@@ -6,8 +6,8 @@ import {
   faChevronCircleRight,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useUi } from 'contexts/UI';
 import { useTranslation } from 'react-i18next';
+import { useUi } from 'contexts/UI';
 import { PageToggleWrapper } from './Wrappers';
 import type { PageToggleProps } from './types';
 

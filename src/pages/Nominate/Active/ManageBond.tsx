@@ -5,6 +5,7 @@ import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary, ButtonRow } from '@polkadotcloud/core-ui';
 import { planckToUnit } from '@polkadotcloud/utils';
 import type BigNumber from 'bignumber.js';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
@@ -15,7 +16,6 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { useTranslation } from 'react-i18next';
 import { BondedChart } from '../../../library/BarChart/BondedChart';
 
 export const ManageBond = () => {

@@ -3,13 +3,13 @@
 
 import { localStorageOrDefault, setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type {
   ActivePool,
   ActivePoolsContextState,
   PoolAddresses,
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { AnyApi, AnyJson, Sync } from 'types';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../../Api';

@@ -7,13 +7,13 @@ import {
   ModalSection,
 } from '@polkadotcloud/core-ui';
 import { setStateWithRef } from '@polkadotcloud/utils';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
 

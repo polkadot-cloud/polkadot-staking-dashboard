@@ -4,6 +4,8 @@
 import { ButtonHelp, ModalPadding } from '@polkadotcloud/core-ui';
 import { clipAddress, planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
@@ -20,8 +22,6 @@ import { Title } from 'library/Modal/Title';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');

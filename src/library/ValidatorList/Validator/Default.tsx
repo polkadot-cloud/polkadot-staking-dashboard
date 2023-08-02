@@ -4,6 +4,8 @@
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faBars, faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
 import { useModal } from 'contexts/Modal';
 import { useNotifications } from 'contexts/Notifications';
@@ -16,8 +18,6 @@ import {
   Separator,
   Wrapper,
 } from 'library/ListItem/Wrappers';
-import { useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useValidators } from '../../../contexts/Validators';
 import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';

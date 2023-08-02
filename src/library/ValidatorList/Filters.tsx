@@ -8,12 +8,12 @@ import {
   faFilterCircleXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { ButtonPrimaryInvert, ButtonSecondary } from '@polkadotcloud/core-ui';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useFilters } from 'contexts/Filters';
 import { useOverlay } from 'contexts/Overlay';
 import { Container } from 'library/Filter/Container';
 import { Item } from 'library/Filter/Item';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { FilterValidators } from './FilterValidators';
 import { OrderValidators } from './OrderValidators';

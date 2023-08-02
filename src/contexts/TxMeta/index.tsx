@@ -3,11 +3,11 @@
 
 import { setStateWithRef } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import React, { useState } from 'react';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import React, { useState } from 'react';
 import type { AnyJson, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import * as defaults from './defaults';

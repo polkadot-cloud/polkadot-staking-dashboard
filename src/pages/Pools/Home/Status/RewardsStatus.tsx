@@ -4,13 +4,13 @@
 import { faPlus, faShare } from '@fortawesome/free-solid-svg-icons';
 import { planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
-import { useTranslation } from 'react-i18next';
 
 export const RewardsStatus = () => {
   const { t } = useTranslation('pages');
