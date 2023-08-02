@@ -2,7 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
+import {
+  ButtonPrimaryInvert,
+  ModalCanvas,
+  ModalContent,
+  ModalScroll,
+} from '@polkadotcloud/core-ui';
 import { camelize } from '@polkadotcloud/utils';
 import { HelpConfig } from 'config/help';
 import { DefaultLocale } from 'consts';
@@ -18,7 +23,6 @@ import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Definition } from './Items/Definition';
 import { External } from './Items/External';
-import { ContentWrapper, HeightWrapper, Wrapper } from './Wrappers';
 
 export const Help = () => {
   const { t, i18n } = useTranslation('help');
@@ -140,7 +144,7 @@ export const Help = () => {
   });
 
   return (
-    <Wrapper
+    <ModalCanvas
       initial={{
         opacity: 0,
       }}
@@ -150,9 +154,9 @@ export const Help = () => {
       }}
       variants={variants}
     >
-      <div>
-        <HeightWrapper>
-          <ContentWrapper>
+      <div className="inner">
+        <ModalScroll>
+          <ModalContent>
             <div className="buttons">
               {definition && (
                 <ButtonPrimaryInvert
@@ -217,8 +221,8 @@ export const Help = () => {
                 ))}
               </>
             )}
-          </ContentWrapper>
-        </HeightWrapper>
+          </ModalContent>
+        </ModalScroll>
         <button
           type="button"
           className="close"
@@ -229,6 +233,6 @@ export const Help = () => {
           &nbsp;
         </button>
       </div>
-    </Wrapper>
+    </ModalCanvas>
   );
 };

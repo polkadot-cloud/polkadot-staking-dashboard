@@ -31,7 +31,7 @@
     "@polkadot/util": "^12.1.1",
     "@polkadot/util-crypto": "12.3.2",
     "@polkadotcloud/community": "0.1.2",
-    "@polkadotcloud/core-ui": "^0.3.59",
+    "@polkadotcloud/core-ui": "^0.3.60",
     "@polkadotcloud/react-odometer": "^0.1.17",
     "@polkadotcloud/themes": "^0.1.2",
     "@polkadotcloud/utils": "^0.2.22",
@@ -75,7 +75,7 @@
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^8.9.0",
     "eslint-import-resolver-typescript": "^3.5.5",
-    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-import": "^2.28.0",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-prefer-arrow-functions": "^3.1.4",
@@ -85,14 +85,14 @@
     "gh-pages": "^5.0.0",
     "prettier": "^3.0.0",
     "prettier-plugin-organize-imports": "^3.2.3",
-    "sass": "^1.64.1",
+    "sass": "^1.64.2",
     "typescript": "^5.1.6",
-    "vite": "^4.4.7",
+    "vite": "^4.4.8",
     "vite-bundle-visualizer": "^0.10.0",
     "vite-plugin-checker": "^0.6.1",
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^3.2.0",
     "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^0.33.0"
+    "vitest": "^0.34.1"
   }
 }
