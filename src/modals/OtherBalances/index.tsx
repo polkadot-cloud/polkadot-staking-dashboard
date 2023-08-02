@@ -9,7 +9,7 @@ import { ReactComponent as AssetHubSVG } from 'config/paras/icons/assetHub.svg';
 import { useParaSync } from 'contexts/ParaSync';
 import type { AnyJson } from 'types';
 import { getParaMeta } from 'config/paras';
-import { planckToUnit } from '@polkadotcloud/utils';
+import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import { Token } from 'library/Token';
 import { TokenSvgWrapper } from 'library/Token/Wrappers';
 import { Wrapper, ItemWrapper, BalanceWrapper } from './Wrapper';
@@ -20,10 +20,17 @@ export const OtherBalances = () => {
     getters: { getAssetHubBalance, getInterlayBalance, getInterlaySymbol },
   } = useParaSync();
 
-  const paraAssetHubAssets = paraBalances?.assethub?.tokens || [];
   const assetHubMeta = getParaMeta('assethub');
-  const paraInterlayAssets = paraBalances?.interlay?.tokens || [];
   const interlayMeta = getParaMeta('assethub');
+
+  // Interlay assets fetched already ignore zero balances.
+  const paraInterlayAssets = paraBalances?.interlay?.tokens || [];
+
+  let paraAssetHubAssets = paraBalances?.assethub?.tokens || [];
+  // Remove zero balances from `paraAssetHubAssets` native DOT.
+  paraAssetHubAssets = paraAssetHubAssets.filter((a: AnyJson) =>
+    greaterThanZero(getAssetHubBalance(a.symbol))
+  );
 
   return (
     <>

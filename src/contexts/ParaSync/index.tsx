@@ -116,7 +116,6 @@ export const ParaSyncProvider = ({
     assetsRaw?.forEach((a: AnyJson) => {
       const asset = a.toHuman();
       if (!asset) return;
-
       assets.push({
         ...asset,
         key: supportedAssets[i].key,
