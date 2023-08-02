@@ -69,7 +69,11 @@ export const OtherBalances = () => {
               </h3>
             </div>
             <div>
-              <ButtonPrimaryInvert iconLeft={faRightLeft} text="Swap for DOT" />
+              <ButtonPrimaryInvert
+                iconLeft={faRightLeft}
+                disabled={getInterlayBalance('Token', 'IBTC').isZero()}
+                text="Swap for DOT"
+              />
             </div>
           </PinnedBalanceWrapper>
         </SectionWrapper>
