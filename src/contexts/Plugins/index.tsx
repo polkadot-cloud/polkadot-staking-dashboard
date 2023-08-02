@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { localStorageOrDefault, setStateWithRef } from '@polkadotcloud/utils';
-import { PluginsList } from 'consts';
 import React, { useRef, useState } from 'react';
+import { PluginsList } from 'consts';
 import * as defaults from './defaults';
 import type { PluginsContextInterface } from './types';
 

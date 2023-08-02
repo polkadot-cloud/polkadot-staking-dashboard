@@ -3,13 +3,13 @@
 
 import { planckToUnit, rmCommas } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
-import { useTranslation } from 'react-i18next';
 import type { MaybeAccount } from 'types';
 
 export const useNominationStatus = () => {

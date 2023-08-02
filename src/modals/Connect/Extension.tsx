@@ -4,11 +4,11 @@
 import { faExternalLinkAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ModalConnectItem } from '@polkadotcloud/core-ui';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
 import { useNotifications } from 'contexts/Notifications';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { ExtensionInner } from './Wrappers';
 import type { ExtensionProps } from './types';
 

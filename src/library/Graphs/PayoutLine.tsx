@@ -12,14 +12,14 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
-import { Line } from 'react-chartjs-2';
-import { useTranslation } from 'react-i18next';
 import { graphColors } from 'styles/graphs';
 import type { AnySubscan } from 'types';
 import type { PayoutLineProps } from './types';

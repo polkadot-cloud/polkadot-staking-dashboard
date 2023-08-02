@@ -3,8 +3,8 @@
 
 import { faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { usePlugins } from 'contexts/Plugins';
 import styled from 'styled-components';
+import { usePlugins } from 'contexts/Plugins';
 
 const Wrapper = styled.div<{ $active: boolean }>`
   position: absolute;

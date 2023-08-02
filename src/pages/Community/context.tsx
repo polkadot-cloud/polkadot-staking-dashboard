@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useApi } from 'contexts/Api';
 import React, { useEffect, useState } from 'react';
+import { useApi } from 'contexts/Api';
 import * as defaults from './defaults';
 
 export const CommunitySectionsContext: React.Context<any> = React.createContext(

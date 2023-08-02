@@ -4,10 +4,10 @@
 import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { planckToUnit } from '@polkadotcloud/utils';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useUi } from 'contexts/UI';
-import { useTranslation } from 'react-i18next';
 import type { NominateStatusBarProps } from '../types';
 import { Wrapper } from './Wrapper';
 

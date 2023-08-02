@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { Theme } from 'contexts/Themes/types';
-import type { PageProps } from 'pages/types';
 import type React from 'react';
 import type { FunctionComponent, SVGProps } from 'react';
+import type { Theme } from 'contexts/Themes/types';
+import type { PageProps } from 'pages/types';
 
 export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 

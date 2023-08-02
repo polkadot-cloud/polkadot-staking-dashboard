@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Tx } from '@polkadotcloud/core-ui';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Default } from './Default';
 import { ManualSign } from './ManualSign';
 import type { SubmitTxProps } from './types';

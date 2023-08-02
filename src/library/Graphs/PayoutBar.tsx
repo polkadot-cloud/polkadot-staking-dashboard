@@ -13,6 +13,9 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
+import { format, fromUnixTime } from 'date-fns';
+import { Bar } from 'react-chartjs-2';
+import { useTranslation } from 'react-i18next';
 import { DefaultLocale } from 'consts';
 import { useApi } from 'contexts/Api';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
@@ -20,10 +23,7 @@ import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
-import { format, fromUnixTime } from 'date-fns';
 import { locales } from 'locale';
-import { Bar } from 'react-chartjs-2';
-import { useTranslation } from 'react-i18next';
 import { graphColors } from 'styles/graphs';
 import type { AnySubscan } from 'types';
 import type { PayoutBarProps } from './types';

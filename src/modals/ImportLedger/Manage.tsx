@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { HardwareStatusBar } from '@polkadotcloud/core-ui';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
@@ -10,7 +11,6 @@ import { useModal } from 'contexts/Modal';
 import { useOverlay } from 'contexts/Overlay';
 import { ReactComponent as StatusBarIcon } from 'img/ledgerIcon.svg';
 import { Heading } from 'library/Import/Heading';
-import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 import { Addresess } from './Addresses';
 import { Reset } from './Reset';

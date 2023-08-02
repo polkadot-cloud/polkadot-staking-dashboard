@@ -3,6 +3,8 @@
 
 import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonSubmit } from '@polkadotcloud/core-ui';
+import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
@@ -12,8 +14,6 @@ import { useModal } from 'contexts/Modal';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
-import React, { useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { SubmitProps } from '../types';
 
 export const Ledger = ({

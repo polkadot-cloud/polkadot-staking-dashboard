@@ -2,13 +2,13 @@
  * SPDX-License-Identifier: Apache-2.0 */
 
 import { fromUnixTime, getUnixTime, startOfToday, subDays } from 'date-fns';
+import { expect, test } from 'vitest';
 import {
   daysPassed,
   normalisePayouts,
   postFillMissingDays,
   prefillMissingDays,
 } from 'library/Graphs/Utils';
-import { expect, test } from 'vitest';
 
 // payouts that were made 2, 3 and 4 days ago.
 const mockPayouts = [

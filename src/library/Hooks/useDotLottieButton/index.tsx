@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useEffect, useRef, useState } from 'react';
 import { BaseURL } from 'consts';
 import { useTheme } from 'contexts/Themes';
 import type { Theme } from 'contexts/Themes/types';
-import { useEffect, useRef, useState } from 'react';
 import type { AnyJson } from 'types';
 
 export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {

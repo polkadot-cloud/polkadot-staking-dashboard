@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { BondedPool } from 'contexts/Pools/types';
 import type React from 'react';
+import type { BondedPool } from 'contexts/Pools/types';
 import type { BondFor, MaybeAccount } from 'types';
 
 export interface BlockedProps {

@@ -8,9 +8,9 @@ import {
   removedFrom,
   setStateWithRef,
 } from '@polkadotcloud/utils';
+import React, { useEffect, useRef, useState } from 'react';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import * as defaults from './defaults';

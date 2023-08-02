@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ArcElement, Chart as ChartJS, Tooltip } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
 import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
-import { Pie } from 'react-chartjs-2';
 import { graphColors } from 'styles/graphs';
 import type { StatPieProps } from './types';
 

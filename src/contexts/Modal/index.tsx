@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { setStateWithRef } from '@polkadotcloud/utils';
-import { useTxMeta } from 'contexts/TxMeta';
 import React, { useRef, useState } from 'react';
+import { useTxMeta } from 'contexts/TxMeta';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { defaultModalContext } from './defaults';
 import type { ModalConfig, ModalContextInterface, ModalOptions } from './types';

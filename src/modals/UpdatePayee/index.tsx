@@ -3,6 +3,8 @@
 
 import { ModalPadding, ModalWarnings } from '@polkadotcloud/core-ui';
 import { isValidAddress } from '@polkadotcloud/utils';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -18,8 +20,6 @@ import { PayeeInput } from 'library/PayeeInput';
 import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
 import { SubmitTx } from 'library/SubmitTx';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { MaybeAccount } from 'types';
 
 export const UpdatePayee = () => {

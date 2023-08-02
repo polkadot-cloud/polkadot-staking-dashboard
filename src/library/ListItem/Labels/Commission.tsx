@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useTranslation } from 'react-i18next';
 import { useTooltip } from 'contexts/Tooltip';
 import { TooltipTrigger } from 'library/ListItem/Wrappers';
-import { useTranslation } from 'react-i18next';
 
 export const Commission = ({ commission }: { commission: number }) => {
   const { t } = useTranslation('library');

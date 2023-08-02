@@ -10,6 +10,7 @@ import {
   varToUrlHash,
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import React, { useEffect, useState } from 'react';
 import { NetworkList } from 'config/networks';
 import {
   DefaultNetwork,
@@ -28,7 +29,6 @@ import type {
   ApiStatus,
   NetworkState,
 } from 'contexts/Api/types';
-import React, { useEffect, useState } from 'react';
 import type { AnyApi, NetworkName } from 'types';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import * as defaults from './defaults';

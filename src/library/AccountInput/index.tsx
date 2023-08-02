@@ -5,11 +5,11 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonSecondary } from '@polkadotcloud/core-ui';
 import { isValidAddress } from '@polkadotcloud/utils';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { Identicon } from 'library/Identicon';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { AccountInputWrapper } from './Wrapper';
 import type { AccountInputProps } from './types';
 

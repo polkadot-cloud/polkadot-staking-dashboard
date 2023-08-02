@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonPrimary } from '@polkadotcloud/core-ui';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
-import { useTranslation } from 'react-i18next';
 import type { FooterProps } from '../types';
 import { Wrapper } from './Wrapper';
 

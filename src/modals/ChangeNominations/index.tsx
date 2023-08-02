@@ -6,6 +6,8 @@ import {
   ModalSeparator,
   ModalWarnings,
 } from '@polkadotcloud/core-ui';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -16,8 +18,6 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const ChangeNominations = () => {
   const { t } = useTranslation('modals');

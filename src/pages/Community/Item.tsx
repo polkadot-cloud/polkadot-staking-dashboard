@@ -8,10 +8,10 @@ import {
   faServer,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useApi } from 'contexts/Api';
-import { useModal } from 'contexts/Modal';
 import { Suspense, lazy, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
+import { useModal } from 'contexts/Modal';
 import { ItemWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
 import type { ItemProps } from './types';

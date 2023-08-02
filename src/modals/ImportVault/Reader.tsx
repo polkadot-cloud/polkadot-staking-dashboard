@@ -3,13 +3,13 @@
 
 import { ButtonSecondary } from '@polkadotcloud/core-ui';
 import { isValidAddress } from '@polkadotcloud/utils';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { useOverlay } from 'contexts/Overlay';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
 import { QrScanSignature } from 'library/QRCode/ScanSignature';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');

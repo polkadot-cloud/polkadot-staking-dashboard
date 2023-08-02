@@ -15,11 +15,11 @@ import {
   ModalHardwareItem,
 } from '@polkadotcloud/core-ui';
 import { inChrome } from '@polkadotcloud/utils';
+import React from 'react';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as LedgerLogoSVG } from 'img/ledgerLogo.svg';
-import React from 'react';
 
 export const Ledger = (): React.ReactElement => {
   const { openHelp } = useHelp();

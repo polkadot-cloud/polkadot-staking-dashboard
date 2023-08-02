@@ -9,13 +9,13 @@ import {
   PageTitle,
 } from '@polkadotcloud/core-ui';
 import { extractUrlValue, removeVarFromUrlHash } from '@polkadotcloud/utils';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { Element } from 'react-scroll';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { Nominate } from 'library/SetupSteps/Nominate';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
-import { Element } from 'react-scroll';
 import { Bond } from './Bond';
 import { Payee } from './Payee';
 import { Summary } from './Summary';

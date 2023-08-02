@@ -3,6 +3,7 @@
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
 import { setStateWithRef, shuffle } from '@polkadotcloud/utils';
+import React, { useRef, useState } from 'react';
 import type {
   BondedPool,
   BondedPoolsContextState,
@@ -10,7 +11,6 @@ import type {
   NominationStatuses,
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
-import React, { useRef, useState } from 'react';
 import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../../Api';

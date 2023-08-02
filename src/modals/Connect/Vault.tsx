@@ -10,11 +10,11 @@ import {
   ModalConnectItem,
   ModalHardwareItem,
 } from '@polkadotcloud/core-ui';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as VaultSVG } from 'img/polkadotVault.svg';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const Vault = (): React.ReactElement => {
   const { t } = useTranslation('modals');

@@ -11,10 +11,10 @@ import {
   Title,
   Tooltip,
 } from 'chart.js';
-import { useApi } from 'contexts/Api';
-import { useTheme } from 'contexts/Themes';
 import { Line } from 'react-chartjs-2';
 import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
+import { useTheme } from 'contexts/Themes';
 import { graphColors } from 'styles/graphs';
 import type { EraPointsProps } from './types';
 

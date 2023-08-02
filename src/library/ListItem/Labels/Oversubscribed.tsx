@@ -4,16 +4,16 @@
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
+import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { MinBondPrecision } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useTooltip } from 'contexts/Tooltip';
 import { useValidators } from 'contexts/Validators';
-import { motion } from 'framer-motion';
 import {
   OverSubscribedWrapper,
   TooltipTrigger,
 } from 'library/ListItem/Wrappers';
-import { useTranslation } from 'react-i18next';
 import type { OversubscribedProps } from '../types';
 
 export const Oversubscribed = ({

@@ -6,11 +6,11 @@ import {
   ModalMotionTwoSection,
   ModalSection,
 } from '@polkadotcloud/core-ui';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Forms } from './Forms';
 import { Tasks } from './Tasks';
 

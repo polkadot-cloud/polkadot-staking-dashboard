@@ -9,10 +9,10 @@ import {
   ButtonSecondary,
 } from '@polkadotcloud/core-ui';
 import { applyWidthAsPadding } from '@polkadotcloud/utils';
+import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { useHelp } from 'contexts/Help';
 import { useNotifications } from 'contexts/Notifications';
 import { Identicon } from 'library/Identicon';
-import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { Wrapper } from './Wrapper';
 import type { StatAddress, StatProps } from './types';
 

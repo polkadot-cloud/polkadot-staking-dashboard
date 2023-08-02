@@ -8,8 +8,8 @@ import {
   faRedoAlt,
   faStop,
 } from '@fortawesome/free-solid-svg-icons';
-import type { PayeeOptions } from 'contexts/Setup/types';
 import { useTranslation } from 'react-i18next';
+import type { PayeeOptions } from 'contexts/Setup/types';
 
 export interface PayeeItem {
   icon: IconProp;

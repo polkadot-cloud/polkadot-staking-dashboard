@@ -8,6 +8,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { stringUpperFirst } from '@polkadot/util';
 import { ButtonPrimary, PageRow } from '@polkadotcloud/core-ui';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -15,8 +17,6 @@ import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const ControllerNotStash = () => {
   const { t } = useTranslation('pages');

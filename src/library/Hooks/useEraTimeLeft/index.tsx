@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
+import { getUnixTime } from 'date-fns';
 import { useApi } from 'contexts/Api';
 import { useNetworkMetrics } from 'contexts/Network';
-import { getUnixTime } from 'date-fns';
 
 export const useEraTimeLeft = () => {
   const { consts } = useApi();

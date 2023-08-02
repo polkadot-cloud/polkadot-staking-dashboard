@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { setStateWithRef } from '@polkadotcloud/utils';
+import React, { useRef, useState } from 'react';
 import { useConnect } from 'contexts/Connect';
 import { usePlugins } from 'contexts/Plugins';
 import type { PoolMember, PoolMemberContext } from 'contexts/Pools/types';
-import React, { useRef, useState } from 'react';
 import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount, Sync } from 'types';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../../Api';
