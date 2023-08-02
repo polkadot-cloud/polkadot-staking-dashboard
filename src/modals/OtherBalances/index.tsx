@@ -7,16 +7,16 @@ import {
   ButtonTertiary,
   ModalPadding,
 } from '@polkadotcloud/core-ui';
+import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
+import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
 import { Close } from 'library/Modal/Close';
 import { Title } from 'library/Modal/Title';
 import { ReactComponent as InterlaySVG } from 'config/paras/icons/interlay.svg';
 import { ReactComponent as AssetHubSVG } from 'config/paras/icons/assetHub.svg';
 import { useParaSync } from 'contexts/ParaSync';
 import type { AnyJson } from 'types';
-import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import { Token } from 'library/Token';
 import { TokenSvgWrapper } from 'library/Token/Wrappers';
-import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
 import {
   SectionWrapper,
   ChainWrapper,

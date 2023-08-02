@@ -2,12 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useRef, useState } from 'react';
+import BigNumber from 'bignumber.js';
 import type { AnyJson, Sync } from 'types';
 import { getParaMeta } from 'config/paras';
 import { useConnect } from 'contexts/Connect';
 import { useApi } from 'contexts/Api';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
-import BigNumber from 'bignumber.js';
 import type { ParaBalances, ParaSyncContextInterface } from './types';
 import { defaultParaSyncContext } from './defaults';
 import { useAssetHub } from './Hooks/useAssetHub';

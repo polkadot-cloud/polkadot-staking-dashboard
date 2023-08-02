@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Router } from 'Router';
-import { useApi } from 'contexts/Api';
 import { ThemeProvider } from 'styled-components';
 import { Entry } from '@polkadotcloud/core-ui';
+import { Router } from 'Router';
+import { useApi } from 'contexts/Api';
 import { useTheme } from 'contexts/Themes';
 
 // App-wide theme classes are inserted here.
