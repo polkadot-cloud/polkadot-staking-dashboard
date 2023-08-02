@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageRow, PageTitle, RowSection } from '@polkadotcloud/core-ui';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { usePlugins } from 'contexts/Plugins';
@@ -13,8 +15,6 @@ import { useSubscan } from 'contexts/Subscan';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
 import { StatBoxList } from 'library/StatBoxList';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
 import { PoolFavorites } from './Favorites';

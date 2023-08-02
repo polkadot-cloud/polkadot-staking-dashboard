@@ -2,6 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { setStateWithRef } from '@polkadotcloud/utils';
+import throttle from 'lodash.throttle';
+import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TipsConfig } from 'config/tips';
 import { DefaultLocale, TipsThresholdMedium, TipsThresholdSmall } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -12,9 +15,6 @@ import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { useFillVariables } from 'library/Hooks/useFillVariables';
-import throttle from 'lodash.throttle';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 import { Items } from './Items';
 import { PageToggle } from './PageToggle';

@@ -9,6 +9,7 @@ import {
   PageTitle,
   RowSection,
 } from '@polkadotcloud/core-ui';
+import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
@@ -19,7 +20,6 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatBoxList } from 'library/StatBoxList';
-import { useTranslation } from 'react-i18next';
 import { ControllerNotStash } from './ControllerNotStash';
 import { ManageBond } from './ManageBond';
 import { Nominations } from './Nominations';

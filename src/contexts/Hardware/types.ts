@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { LedgerAccount, VaultAccount } from 'contexts/Connect/types';
 import type { FunctionComponent, SVGProps } from 'react';
+import type { LedgerAccount, VaultAccount } from 'contexts/Connect/types';
 import type { AnyJson, MaybeString, NetworkName } from 'types';
 
 export type LedgerHardwareContextInterface = {

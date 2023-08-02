@@ -7,11 +7,11 @@ import {
   rmCommas,
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
-import { useTranslation } from 'react-i18next';
 import type { MaybeAccount } from 'types';
 
 export const EraStatus = ({ address }: { address: MaybeAccount }) => {

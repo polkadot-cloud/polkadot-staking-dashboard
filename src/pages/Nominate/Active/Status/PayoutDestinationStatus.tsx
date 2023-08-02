@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { faGear, faWallet } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
@@ -9,7 +10,6 @@ import { useUi } from 'contexts/UI';
 import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
-import { useTranslation } from 'react-i18next';
 
 export const PayoutDestinationStatus = () => {
   const { t } = useTranslation('pages');

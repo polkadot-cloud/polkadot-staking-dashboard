@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { setStateWithRef } from '@polkadotcloud/utils';
-import { useApi } from 'contexts/Api';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useApi } from 'contexts/Api';
 import type {
   TimeLeftAll,
   TimeLeftFormatted,

@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { PageRow } from '@polkadotcloud/core-ui';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { ValidatorList } from 'library/ValidatorList';
-import { useTranslation } from 'react-i18next';
 
 export const ValidatorFavorites = () => {
   const { t } = useTranslation('pages');

@@ -3,9 +3,9 @@
 
 import { faUserSlash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from 'react-i18next';
 import { useTooltip } from 'contexts/Tooltip';
 import { TooltipTrigger } from 'library/ListItem/Wrappers';
-import { useTranslation } from 'react-i18next';
 import type { BlockedProps } from '../types';
 
 export const Blocked = ({ prefs }: BlockedProps) => {

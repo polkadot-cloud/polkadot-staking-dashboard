@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { pageFromUri } from '@polkadotcloud/utils';
+import { useLocation } from 'react-router-dom';
 import { useExtrinsics } from 'contexts/Extrinsics';
 import { usePlugins } from 'contexts/Plugins';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
-import { useLocation } from 'react-router-dom';
 import { Connect } from './Connect';
 import { Connected } from './Connected';
 import { SideMenuToggle } from './SideMenuToggle';

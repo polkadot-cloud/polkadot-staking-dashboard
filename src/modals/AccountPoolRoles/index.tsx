@@ -3,6 +3,7 @@
 
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { ButtonOption, ModalPadding } from '@polkadotcloud/core-ui';
+import { useTranslation } from 'react-i18next';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -10,7 +11,6 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
-import { useTranslation } from 'react-i18next';
 import { ContentWrapper } from './Wrappers';
 
 export const AccountPoolRoles = () => {

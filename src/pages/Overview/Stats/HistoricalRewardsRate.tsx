@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
+import { useTranslation } from 'react-i18next';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useInflation } from 'library/Hooks/useInflation';
 import { Text } from 'library/StatBoxList/Text';
-import { useTranslation } from 'react-i18next';
 
 export const HistoricalRewardsRateStat = () => {
   const { t } = useTranslation('pages');

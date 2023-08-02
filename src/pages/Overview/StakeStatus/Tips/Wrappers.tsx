@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { SideMenuStickyThreshold, SmallFontSizeMaxWidth } from 'consts';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+import { SideMenuStickyThreshold, SmallFontSizeMaxWidth } from 'consts';
 
 export const TipsWrapper = styled.div`
   width: 100%;

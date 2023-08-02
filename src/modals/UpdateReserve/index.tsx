@@ -10,6 +10,9 @@ import {
 } from '@polkadotcloud/core-ui';
 import { planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
+import Slider from 'rc-slider';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
@@ -18,10 +21,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { Close } from 'library/Modal/Close';
 import { SliderWrapper } from 'modals/ManagePool/Wrappers';
-import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const UpdateReserve = () => {
   const { t } = useTranslation('modals');

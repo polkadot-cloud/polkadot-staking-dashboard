@@ -3,7 +3,6 @@
 
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
-import { MaxPayoutDays } from 'consts';
 import {
   addDays,
   differenceInDays,
@@ -13,6 +12,7 @@ import {
   startOfDay,
   subDays,
 } from 'date-fns';
+import { MaxPayoutDays } from 'consts';
 import type { AnyApi, AnyJson, AnySubscan } from 'types';
 import type { PayoutDayCursor } from './types';
 

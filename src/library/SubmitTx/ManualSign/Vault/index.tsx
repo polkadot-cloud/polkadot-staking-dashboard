@@ -3,12 +3,12 @@
 
 import { faSquarePen } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSubmit } from '@polkadotcloud/core-ui';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useOverlay } from 'contexts/Overlay';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
 import type { SubmitProps } from '../../types';
 import { SignOverlay } from './SignOverlay';
 

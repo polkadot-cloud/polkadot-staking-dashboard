@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import { useEffect, useRef } from 'react';
 import { useMenu } from 'contexts/Menu';
 import { useOutsideAlerter } from 'library/Hooks';
-import { useEffect, useRef } from 'react';
 import { ItemWrapper, Wrapper } from './Wrappers';
 
 export const Menu = () => {

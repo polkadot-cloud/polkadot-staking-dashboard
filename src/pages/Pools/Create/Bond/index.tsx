@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useSetup } from 'contexts/Setup';
 import { useTxMeta } from 'contexts/TxMeta';
@@ -11,8 +13,6 @@ import { Footer } from 'library/SetupSteps/Footer';
 import { Header } from 'library/SetupSteps/Header';
 import { MotionContainer } from 'library/SetupSteps/MotionContainer';
 import type { SetupStepProps } from 'library/SetupSteps/types';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export const Bond = ({ section }: SetupStepProps) => {
   const { t } = useTranslation('pages');

@@ -7,14 +7,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonPrimary, ButtonSecondary } from '@polkadotcloud/core-ui';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useOverlay } from 'contexts/Overlay';
 import { useTxMeta } from 'contexts/TxMeta';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
 import { QrDisplayPayload } from 'library/QRCode/DisplayPayload';
 import { QrScanSignature } from 'library/QRCode/ScanSignature';
 import type { SignerOverlayProps } from 'library/SubmitTx/types';
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import type { AnyJson } from 'types';
 
 export const SignOverlay = ({ submitAddress }: SignerOverlayProps) => {

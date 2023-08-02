@@ -7,11 +7,11 @@ import {
   ModalCard,
   ModalHeight,
 } from '@polkadotcloud/core-ui';
-import { useModal } from 'contexts/Modal';
 import { useAnimation } from 'framer-motion';
-import { ErrorFallbackModal } from 'library/ErrorBoundary';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import { ErrorFallbackModal } from 'library/ErrorBoundary';
+import { useModal } from 'contexts/Modal';
 import { AccountPoolRoles } from './AccountPoolRoles';
 import { Accounts } from './Accounts';
 import { Bio } from './Bio';

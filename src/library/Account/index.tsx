@@ -4,9 +4,9 @@
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { clipAddress, remToUnit } from '@polkadotcloud/utils';
-import { useConnect } from 'contexts/Connect';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useConnect } from 'contexts/Connect';
 import { Identicon } from '../Identicon';
 import { Wrapper } from './Wrapper';
 import type { AccountProps } from './types';

@@ -1,6 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import { PageCategories, PagesConfig } from 'config/pages';
 import { BaseURL, PolkadotUrl } from 'consts';
 import { useApi } from 'contexts/Api';
@@ -12,9 +15,6 @@ import type { SetupContextInterface } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import type { UIContextInterface } from 'contexts/UI/types';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useLocation } from 'react-router-dom';
 import type { PageCategory, PageItem, PagesConfigItems } from 'types';
 import { Heading } from './Heading/Heading';
 import { Primary } from './Primary';

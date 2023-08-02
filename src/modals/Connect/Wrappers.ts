@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { TwoThreshold } from 'library/SelectItems/Wrapper';
 import styled from 'styled-components';
+import { TwoThreshold } from 'library/SelectItems/Wrapper';
 
 // Wraps a list of extensions. `SelectItems` typically follows this wrapper, with the items embedded
 // within it.

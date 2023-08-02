@@ -3,10 +3,10 @@
 
 import { faArrowAltCircleUp } from '@fortawesome/free-regular-svg-icons';
 import { ButtonSubmit } from '@polkadotcloud/core-ui';
+import React from 'react';
 import { useConnect } from 'contexts/Connect';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
-import React from 'react';
 import type { SubmitProps } from './types';
 
 export const Default = ({

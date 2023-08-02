@@ -3,22 +3,7 @@
 
 import { Body, Main, Page, Side } from '@polkadotcloud/core-ui';
 import { extractUrlValue } from '@polkadotcloud/utils';
-import { PagesConfig } from 'config/pages';
-import { useApi } from 'contexts/Api';
-import { useConnect } from 'contexts/Connect';
-import { useNotifications } from 'contexts/Notifications';
-import { useUi } from 'contexts/UI';
 import { AnimatePresence } from 'framer-motion';
-import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
-import { Headers } from 'library/Headers';
-import { Help } from 'library/Help';
-import { Menu } from 'library/Menu';
-import { NetworkBar } from 'library/NetworkBar';
-import { Notifications } from 'library/Notifications';
-import { Overlay } from 'library/Overlay';
-import { SideMenu } from 'library/SideMenu';
-import { Tooltip } from 'library/Tooltip';
-import { Modal } from 'modals';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Helmet } from 'react-helmet';
@@ -30,6 +15,21 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
+import { PagesConfig } from 'config/pages';
+import { useApi } from 'contexts/Api';
+import { useConnect } from 'contexts/Connect';
+import { useNotifications } from 'contexts/Notifications';
+import { useUi } from 'contexts/UI';
+import { ErrorFallbackApp, ErrorFallbackRoutes } from 'library/ErrorBoundary';
+import { Headers } from 'library/Headers';
+import { Help } from 'library/Help';
+import { Menu } from 'library/Menu';
+import { NetworkBar } from 'library/NetworkBar';
+import { Notifications } from 'library/Notifications';
+import { Overlay } from 'library/Overlay';
+import { SideMenu } from 'library/SideMenu';
+import { Tooltip } from 'library/Tooltip';
+import { Modal } from 'modals';
 
 export const RouterInner = () => {
   const { t } = useTranslation();

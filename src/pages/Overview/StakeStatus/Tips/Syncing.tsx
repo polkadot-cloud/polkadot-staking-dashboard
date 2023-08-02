@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
 import { useTranslation } from 'react-i18next';
+import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
 import { ItemInnerWrapper, ItemWrapper, ItemsWrapper } from './Wrappers';
 
 export const Syncing = () => {

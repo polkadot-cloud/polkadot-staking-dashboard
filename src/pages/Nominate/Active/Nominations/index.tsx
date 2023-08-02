@@ -3,6 +3,7 @@
 
 import { faStopCircle } from '@fortawesome/free-solid-svg-icons';
 import { ButtonHelp, ButtonPrimary } from '@polkadotcloud/core-ui';
+import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
@@ -14,7 +15,6 @@ import { useValidators } from 'contexts/Validators';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { ValidatorList } from 'library/ValidatorList';
-import { useTranslation } from 'react-i18next';
 import type { MaybeAccount } from 'types';
 import { Wrapper } from './Wrapper';
 

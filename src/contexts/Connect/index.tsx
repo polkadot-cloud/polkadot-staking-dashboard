@@ -8,6 +8,7 @@ import {
   localStorageOrDefault,
   setStateWithRef,
 } from '@polkadotcloud/utils';
+import React, { useEffect, useRef, useState } from 'react';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';
 import type {
@@ -25,7 +26,6 @@ import {
   getLocalLedgerAccounts,
   getLocalVaultAccounts,
 } from 'contexts/Hardware/Utils';
-import React, { useEffect, useRef, useState } from 'react';
 import type { AnyApi, MaybeAccount } from 'types';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useImportExtension } from './Hooks/useImportExtension';

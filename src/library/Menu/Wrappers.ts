@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { FloatingMenuWidth } from 'consts';
 import styled from 'styled-components';
+import { FloatingMenuWidth } from 'consts';
 
 export const Wrapper = styled.div`
   background: var(--background-default);

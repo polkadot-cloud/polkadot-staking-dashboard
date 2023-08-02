@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
+import { useTranslation } from 'react-i18next';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { useInflation } from 'library/Hooks/useInflation';
 import { StatsHead } from 'library/StatsHead';
-import { useTranslation } from 'react-i18next';
 import { Announcements } from './Announcements';
 import { Wrapper } from './Wrappers';
 

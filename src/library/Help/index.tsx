@@ -9,6 +9,9 @@ import {
   ModalScroll,
 } from '@polkadotcloud/core-ui';
 import { camelize } from '@polkadotcloud/utils';
+import { useAnimation } from 'framer-motion';
+import { useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { HelpConfig } from 'config/help';
 import { DefaultLocale } from 'consts';
 import { useHelp } from 'contexts/Help';
@@ -17,10 +20,7 @@ import type {
   ExternalItems,
   HelpItem,
 } from 'contexts/Help/types';
-import { useAnimation } from 'framer-motion';
 import { useFillVariables } from 'library/Hooks/useFillVariables';
-import { useCallback, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Definition } from './Items/Definition';
 import { External } from './Items/External';
 

@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { capitalizeFirstLetter } from '@polkadotcloud/utils';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { usePlugins } from 'contexts/Plugins';
 import { usePrices } from 'library/Hooks/usePrices';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Status } from './Status';
 import { Summary, Wrapper } from './Wrappers';
 

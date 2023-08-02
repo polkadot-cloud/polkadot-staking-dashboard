@@ -6,6 +6,7 @@ import {
   faChevronCircleRight,
   faSignOutAlt,
 } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -18,7 +19,6 @@ import { useUi } from 'contexts/UI';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
-import { useTranslation } from 'react-i18next';
 
 export const NominationStatus = ({
   showButtons = true,

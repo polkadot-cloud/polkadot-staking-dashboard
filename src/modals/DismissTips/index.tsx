@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { ButtonSubmit, ModalPadding } from '@polkadotcloud/core-ui';
+import { useTranslation } from 'react-i18next';
 import { useModal } from 'contexts/Modal';
 import { usePlugins } from 'contexts/Plugins';
 import { Title } from 'library/Modal/Title';
-import { useTranslation } from 'react-i18next';
 
 export const DismissTips = () => {
   const { t } = useTranslation('tips');

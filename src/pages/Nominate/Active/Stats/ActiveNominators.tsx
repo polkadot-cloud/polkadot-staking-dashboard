@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import BigNumber from 'bignumber.js';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useStaking } from 'contexts/Staking';
 import { Pie } from 'library/StatBoxList/Pie';
-import { useTranslation } from 'react-i18next';
 
 export const ActiveNominatorsStat = () => {
   const { t } = useTranslation('pages');

@@ -9,6 +9,8 @@ import {
   ModalCustomHeader,
   ModalPadding,
 } from '@polkadotcloud/core-ui';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
@@ -17,8 +19,6 @@ import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { AccountButton } from './Account';
 import { Delegates } from './Delegates';
 import { AccountSeparator, AccountWrapper } from './Wrappers';

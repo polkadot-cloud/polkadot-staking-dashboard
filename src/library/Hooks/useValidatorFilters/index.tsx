@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
+import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useValidators } from 'contexts/Validators';
-import { useTranslation } from 'react-i18next';
 import type { AnyFunction, AnyJson } from 'types';
 
 export const useValidatorFilters = () => {

@@ -10,6 +10,7 @@ import {
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { ValidatorCommunity } from '@polkadotcloud/community/validators';
+import React, { useRef, useState } from 'react';
 import type {
   SessionParachainValidators,
   SessionValidators,
@@ -17,7 +18,6 @@ import type {
   ValidatorAddresses,
   ValidatorsContextInterface,
 } from 'contexts/Validators/types';
-import React, { useRef, useState } from 'react';
 import type { AnyApi, AnyMetaBatch, Fn } from 'types';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../Api';
