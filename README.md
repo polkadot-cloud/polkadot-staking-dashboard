@@ -7,9 +7,10 @@
 ## Contributing Community Assets
 
 The Polkadot Staking Dashboard is a community-driven project, and we welcome contributions to bolster the dashboard's functionality and features.
-* **Web Extensions**: Submit PR to the [Polkadot Cloud repository](https://github.com/paritytech/polkadot-cloud) to add a web extension. The extension will then be available in the `@polkadotcloud/community` NPM package. Full instructions can be found [here](https://github.com/paritytech/polkadot-cloud/tree/main/packages/community#adding-web-extension-wallets).
 
-* **Validator Operators**: Submit PR to the [Polkadot Cloud repository](https://github.com/paritytech/polkadot-cloud) to add a validator operator. The operator will then be available in the `@polkadotcloud/community` NPM package. Full instructions can be found [here](https://github.com/paritytech/polkadot-cloud/tree/main/packages/community#adding-validator-operators).
+- **Web Extensions**: Submit PR to the [Polkadot Cloud repository](https://github.com/paritytech/polkadot-cloud) to add a web extension. The extension will then be available in the `@polkadotcloud/community` NPM package. Full instructions can be found [here](https://github.com/paritytech/polkadot-cloud/tree/main/packages/community#adding-web-extension-wallets).
+
+- **Validator Operators**: Submit PR to the [Polkadot Cloud repository](https://github.com/paritytech/polkadot-cloud) to add a validator operator. The operator will then be available in the `@polkadotcloud/community` NPM package. Full instructions can be found [here](https://github.com/paritytech/polkadot-cloud/tree/main/packages/community#adding-validator-operators).
 
 ## URL Variable Support
 
