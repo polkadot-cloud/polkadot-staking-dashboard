@@ -60,9 +60,8 @@ export interface Para {
   endpoints: {
     rpc: string;
   };
-  units: number;
   ss58: number;
-  supportedAssets: { key?: string | number; symbol: string }[];
+  supportedAssets: { key?: string | number; symbol: string; units: number }[];
 }
 
 export interface PageCategory {

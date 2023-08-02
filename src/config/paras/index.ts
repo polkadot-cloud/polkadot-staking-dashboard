@@ -8,12 +8,17 @@ export const ParaList: Paras = {
     endpoints: {
       rpc: 'wss://polkadot-asset-hub-rpc.polkadot.io',
     },
-    units: 10,
     ss58: 0,
     supportedAssets: [
       {
+        key: 'Native',
+        symbol: 'DOT',
+        units: 10,
+      },
+      {
         key: 1984,
         symbol: 'USDT',
+        units: 6,
       },
     ],
   },
@@ -21,19 +26,20 @@ export const ParaList: Paras = {
     endpoints: {
       rpc: 'wss://interlay.api.onfinality.io/public-ws',
     },
-    units: 10,
     ss58: 2032,
     supportedAssets: [
       {
         key: 'Token',
         symbol: 'IBTC',
+        units: 8,
       },
       {
         key: 'ForeignAsset',
         symbol: '2', // USDT
+        units: 6,
       },
-      { key: 'Token', symbol: 'INTR' },
-      { key: 'Token', symbol: 'DOT' },
+      { key: 'Token', symbol: 'INTR', units: 10 },
+      { key: 'Token', symbol: 'DOT', units: 10 },
     ],
   },
 };

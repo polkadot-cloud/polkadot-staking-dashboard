@@ -73,6 +73,7 @@ export const ParaSyncProvider = ({
         tokens: interlayState.tokens,
       };
     }
+
     if (assetHubState) {
       newParaBalances.assethub = {
         paraId: assetHubState.paraId,
@@ -102,9 +103,11 @@ export const ParaSyncProvider = ({
     const result: AnyApi[] = await Promise.all([
       api.query.parachainInfo.parachainId(),
       api.query.system.account(keyring.addFromAddress(account).address),
-      ...supportedAssets.map(({ key }) =>
-        api.query.assets.account(key, keyring.addFromAddress(account).address)
-      ),
+      ...supportedAssets
+        .filter(({ key }) => key !== 'Native')
+        .map(({ key }) =>
+          api.query.assets.account(key, keyring.addFromAddress(account).address)
+        ),
     ]);
     await api.disconnect();
 
@@ -115,11 +118,17 @@ export const ParaSyncProvider = ({
     let i = 0;
     assetsRaw?.forEach((a: AnyJson) => {
       const asset = a.toHuman();
-      if (!asset) return;
+      // index 0 is native asset.
+      const supportedAssetIndex = i + 1;
+      if (!asset) {
+        i++;
+        return;
+      }
+
       assets.push({
         ...asset,
-        key: supportedAssets[i].key,
-        symbol: supportedAssets[i].symbol,
+        key: supportedAssets[supportedAssetIndex].key,
+        symbol: supportedAssets[supportedAssetIndex].symbol,
         balance: rmCommas(asset.balance),
       });
       i++;
@@ -221,12 +230,21 @@ export const ParaSyncProvider = ({
   };
 
   // Getter for an interlay symbol.
-  // If `ForeignAsset, assetRegistry needs to be referred to.
+  // If `ForeignAsset`, `paraForeignAssets` needs to be referred to.
   const getInterlaySymbol = (key: string, symbol: string) => {
     if (key === 'ForeignAsset') {
       return paraForeignAssets?.interlay[symbol]?.symbol;
     }
     return symbol;
+  };
+
+  // Getter for interlay units
+  // If `ForeignAsset`, `paraForeignAssets` needs to be referred to.
+  const getTokenUnits = (key: string, symbol: string): number => {
+    return (
+      getParaMeta(key).supportedAssets.find((a: AnyJson) => a.symbol === symbol)
+        ?.units || 0
+    );
   };
 
   return (
@@ -239,6 +257,7 @@ export const ParaSyncProvider = ({
           getAssetHubBalance,
           getInterlayBalance,
           getInterlaySymbol,
+          getTokenUnits,
         },
       }}
     >
