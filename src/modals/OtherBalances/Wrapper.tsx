@@ -3,12 +3,16 @@
 
 import { styled } from 'styled-components';
 
-export const Wrapper = styled.div`
+export const SectionWrapper = styled.section`
   width: 100%;
   padding: 0rem 0.5rem 1rem 0.5rem;
+
+  &.last {
+    padding-bottom: 0.5rem;
+  }
 `;
 
-export const ItemWrapper = styled.div`
+export const ChainWrapper = styled.div`
   background: var(--button-primary-background);
   border-radius: 0.8rem;
   display: flex;
@@ -54,7 +58,7 @@ export const ItemWrapper = styled.div`
     border-bottom-right-radius: inherit;
     flex: 1;
     display: flex;
-    padding: 0.5rem 1rem 0.65rem 1rem;
+    padding: 0.75rem 1rem 0.65rem 1rem;
 
     > .inner {
       padding-left: 0.5rem;
@@ -63,7 +67,29 @@ export const ItemWrapper = styled.div`
   }
 `;
 
-export const BalanceWrapper = styled.div`
+export const PinnedBalanceWrapper = styled.div`
+  border: 1px solid var(--border-primary-color);
+  border-radius: 0.8rem;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 1rem;
+  width: 100%;
+
+  > .token {
+    margin-right: 0.75rem;
+  }
+
+  h3 {
+    font-family: InterSemiBold, sans-serif;
+    > .symbol {
+      opacity: 0.5;
+      margin-left: 0.35rem;
+    }
+  }
+`;
+
+export const ChainBalanceWrapper = styled.div`
   border-bottom: 1px solid var(--border-primary-color);
   display: flex;
   align-items: center;

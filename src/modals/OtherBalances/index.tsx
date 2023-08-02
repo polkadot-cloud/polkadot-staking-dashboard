@@ -1,7 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ButtonTertiary, ModalPadding } from '@polkadotcloud/core-ui';
+import {
+  ActionItem,
+  ButtonTertiary,
+  ModalPadding,
+} from '@polkadotcloud/core-ui';
 import { Close } from 'library/Modal/Close';
 import { Title } from 'library/Modal/Title';
 import { ReactComponent as InterlaySVG } from 'config/paras/icons/interlay.svg';
@@ -11,7 +15,12 @@ import type { AnyJson } from 'types';
 import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
 import { Token } from 'library/Token';
 import { TokenSvgWrapper } from 'library/Token/Wrappers';
-import { Wrapper, ItemWrapper, BalanceWrapper } from './Wrapper';
+import {
+  SectionWrapper,
+  ChainWrapper,
+  ChainBalanceWrapper,
+  PinnedBalanceWrapper,
+} from './Wrapper';
 
 export const OtherBalances = () => {
   const {
@@ -42,9 +51,26 @@ export const OtherBalances = () => {
           helpKey="Other Balances"
           style={{ padding: '0.5rem 0 0 0' }}
         />
-        <Wrapper>
+        <ActionItem text="Pinned Balances" />
+        <SectionWrapper>
+          <PinnedBalanceWrapper>
+            <span className="token">
+              <Token symbol="IBTC" />
+            </span>
+            <h3>
+              {planckToUnit(
+                getInterlayBalance('Token', 'IBTC'),
+                getTokenUnits('interlay', 'IBTC')
+              ).toString()}{' '}
+              <span className="symbol">IBTC</span>
+            </h3>
+          </PinnedBalanceWrapper>
+        </SectionWrapper>
+
+        <ActionItem text="Balances By Chain" />
+        <SectionWrapper className="last">
           {paraAssetHubAssets.length > 0 && (
-            <ItemWrapper>
+            <ChainWrapper>
               <div className="head">
                 <TokenSvgWrapper className="icon">
                   <AssetHubSVG />
@@ -61,7 +87,7 @@ export const OtherBalances = () => {
               <div className="assets">
                 <div className="inner">
                   {paraAssetHubAssets.map((a: AnyJson) => (
-                    <BalanceWrapper key={`assethub_asset_${a.symbol}`}>
+                    <ChainBalanceWrapper key={`assethub_asset_${a.symbol}`}>
                       <span className="token">
                         <Token symbol={a.symbol} />
                       </span>
@@ -72,14 +98,14 @@ export const OtherBalances = () => {
                         ).toString()}{' '}
                         <span className="symbol">{a.symbol}</span>
                       </h4>
-                    </BalanceWrapper>
+                    </ChainBalanceWrapper>
                   ))}
                 </div>
               </div>
-            </ItemWrapper>
+            </ChainWrapper>
           )}
           {paraInterlayAssets.length > 0 && (
-            <ItemWrapper>
+            <ChainWrapper>
               <div className="head">
                 <TokenSvgWrapper className="icon">
                   <InterlaySVG />
@@ -96,7 +122,7 @@ export const OtherBalances = () => {
               <div className="assets">
                 <div className="inner">
                   {paraInterlayAssets.map((a: AnyJson) => (
-                    <BalanceWrapper key={`interlay_asset_${a.symbol}`}>
+                    <ChainBalanceWrapper key={`interlay_asset_${a.symbol}`}>
                       <span className="token">
                         <Token symbol={getInterlaySymbol(a.key, a.symbol)} />
                       </span>
@@ -109,13 +135,13 @@ export const OtherBalances = () => {
                           {getInterlaySymbol(a.key, a.symbol)}
                         </span>
                       </h4>
-                    </BalanceWrapper>
+                    </ChainBalanceWrapper>
                   ))}
                 </div>
               </div>
-            </ItemWrapper>
+            </ChainWrapper>
           )}
-        </Wrapper>
+        </SectionWrapper>
       </ModalPadding>
     </>
   );
