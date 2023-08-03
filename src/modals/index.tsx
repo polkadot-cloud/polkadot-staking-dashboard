@@ -1,12 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  ModalBackground,
-  ModalContainer,
-  ModalCard,
-  ModalHeight,
-} from '@polkadotcloud/core-ui';
+import { ModalContainer, ModalCard, ModalHeight } from '@polkadotcloud/core-ui';
 import { useAnimation } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -47,59 +42,33 @@ import { OtherBalances } from './OtherBalances';
 
 export const Modal = () => {
   const {
-    setModalHeight,
-    setStatus,
-    status,
-    modal,
     size,
+    modal,
+    status,
     height,
     resize,
     config,
+    setStatus,
     modalMaxHeight,
+    setModalHeight,
   } = useModal();
   const controls = useAnimation();
-
   const maxHeight = modalMaxHeight();
+  const modalRef = useRef<HTMLDivElement>(null);
 
   const onFadeIn = async () => {
     await controls.start('visible');
   };
-
   const onFadeOut = async () => {
     await controls.start('hidden');
     setStatus(0);
   };
-
-  useEffect(() => {
-    windowResize();
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  });
 
   const windowResize = () => {
     if (!config?.disableWindowResize) {
       window.addEventListener('resize', handleResize);
     }
   };
-
-  useEffect(() => {
-    // modal has been opened - fade in
-    if (status === 1) {
-      onFadeIn();
-    }
-    // an external component triggered modal closure - fade out
-    if (status === 2) {
-      onFadeOut();
-    }
-  }, [status]);
-
-  const modalRef = useRef<HTMLDivElement>(null);
-
-  // resize modal on status or resize change
-  useEffect(() => {
-    handleResize();
-  }, [resize]);
 
   const handleResize = () => {
     if (status !== 1 || config?.disableWindowResize) return;
@@ -108,6 +77,29 @@ export const Modal = () => {
     h = h > maxHeight ? maxHeight : h;
     setModalHeight(h);
   };
+
+  useEffect(() => {
+    // modal has been opened - fade in.
+    if (status === 1) {
+      onFadeIn();
+    }
+    // modal closure triggered - fade out.
+    if (status === 2) {
+      onFadeOut();
+    }
+  }, [status]);
+
+  // resize modal on status or resize change
+  useEffect(() => {
+    handleResize();
+  }, [resize]);
+
+  useEffect(() => {
+    windowResize();
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  });
 
   if (status === 0) {
     return <></>;
@@ -130,12 +122,6 @@ export const Modal = () => {
 
   return (
     <>
-      <ModalBackground
-        initial={initial}
-        animate={controls}
-        transition={transition}
-        variants={variants}
-      />
       {status !== 3 ? (
         <ModalContainer
           initial={initial}
@@ -197,7 +183,7 @@ export const Modal = () => {
               type="button"
               className="close"
               onClick={() => {
-                onFadeOut();
+                setStatus(2);
               }}
             >
               &nbsp;

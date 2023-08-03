@@ -9,14 +9,14 @@ import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import type { LedgerAddress } from 'contexts/Hardware/types';
 import { useModal } from 'contexts/Modal';
-import { useOverlay } from 'contexts/Overlay';
+import { usePrompt } from 'contexts/Prompt';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
 
 export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
   const { forgetAccounts } = useConnect();
-  const { setStatus } = useOverlay();
+  const { setStatus } = usePrompt();
   const { replaceModalWith } = useModal();
   const { ledgerAccounts, removeLedgerAccount } = useLedgerHardware();
 

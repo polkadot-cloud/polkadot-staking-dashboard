@@ -19,8 +19,8 @@ import { MigrateProvider } from 'contexts/Migrate';
 import { ModalProvider } from 'contexts/Modal';
 import { NetworkMetricsProvider } from 'contexts/Network';
 import { NotificationsProvider } from 'contexts/Notifications';
-import { OverlayProvider } from 'contexts/Overlay';
 import { ParaSyncProvider } from 'contexts/ParaSync';
+import { PromptProvider } from 'contexts/Prompt';
 import { PluginsProvider } from 'contexts/Plugins';
 import { ActivePoolsProvider } from 'contexts/Pools/ActivePools';
 import { BondedPoolsProvider } from 'contexts/Pools/BondedPools';
@@ -72,6 +72,6 @@ export const Providers = withProviders(
   TxMetaProvider,
   ExtrinsicsProvider,
   ModalProvider,
-  OverlayProvider,
+  PromptProvider,
   MigrateProvider
 )(ThemedRouter);

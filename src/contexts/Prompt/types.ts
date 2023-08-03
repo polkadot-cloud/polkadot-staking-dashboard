@@ -4,12 +4,12 @@
 import type React from 'react';
 import type { MaybeString } from 'types';
 
-export interface OverlayContextInterface {
-  openOverlayWith: (o: React.ReactNode | null, s?: string) => void;
-  closeOverlay: () => void;
+export interface PromptContextInterface {
+  openPromptWith: (o: React.ReactNode | null, s?: string) => void;
+  closePrompt: () => void;
   setStatus: (s: number) => void;
-  setOverlay: (d: MaybeString) => void;
+  setPrompt: (d: MaybeString) => void;
   size: string;
   status: number;
-  Overlay: React.ReactNode | null;
+  Prompt: React.ReactNode | null;
 }

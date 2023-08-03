@@ -15,6 +15,7 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
+import { Prompt } from 'library/Prompt';
 import { PagesConfig } from 'config/pages';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -26,10 +27,10 @@ import { Help } from 'library/Help';
 import { Menu } from 'library/Menu';
 import { NetworkBar } from 'library/NetworkBar';
 import { Notifications } from 'library/Notifications';
-import { Overlay } from 'library/Overlay';
 import { SideMenu } from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
 import { Modal } from 'modals';
+import { Overlay } from 'library/Overlay';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
@@ -77,8 +78,12 @@ export const RouterInner = () => {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
       <Body>
+        {/* Prompting background: closed by default */}
+        <Overlay />
+
         {/* Modal: closed by default */}
         <Modal />
+
         {/* Help: closed by default */}
         <Help />
 
@@ -88,8 +93,8 @@ export const RouterInner = () => {
         {/* Tooltip: invisible by default */}
         <Tooltip />
 
-        {/* Overlay: closed by default */}
-        <Overlay />
+        {/* Prompt: closed by default */}
+        <Prompt />
 
         {/* Left side menu */}
         <Side open={sideMenuOpen} minimised={sideMenuMinimised}>

@@ -11,7 +11,7 @@ import { ButtonPrimaryInvert, ButtonSecondary } from '@polkadotcloud/core-ui';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFilters } from 'contexts/Filters';
-import { useOverlay } from 'contexts/Overlay';
+import { usePrompt } from 'contexts/Prompt';
 import { Container } from 'library/Filter/Container';
 import { Item } from 'library/Filter/Item';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
@@ -20,7 +20,7 @@ import { OrderValidators } from './OrderValidators';
 
 export const Filters = () => {
   const { t } = useTranslation('library');
-  const { openOverlayWith } = useOverlay();
+  const { openPromptWith } = usePrompt();
   const { resetFilters, getFilters, getOrder, toggleFilter } = useFilters();
   const { includesToLabels, excludesToLabels, ordersToLabels } =
     useValidatorFilters();
@@ -43,7 +43,7 @@ export const Filters = () => {
           marginRight
           iconLeft={faArrowDownWideShort}
           onClick={() => {
-            openOverlayWith(<OrderValidators />);
+            openPromptWith(<OrderValidators />);
           }}
         />
         <ButtonPrimaryInvert
@@ -51,7 +51,7 @@ export const Filters = () => {
           marginRight
           iconLeft={faFilterCircleXmark}
           onClick={() => {
-            openOverlayWith(<FilterValidators />);
+            openPromptWith(<FilterValidators />);
           }}
         />
         <ButtonSecondary

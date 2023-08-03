@@ -5,7 +5,7 @@ import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useAnimationControls } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-import { useOverlay } from 'contexts/Overlay';
+import { usePrompt } from 'contexts/Prompt';
 import { Tip } from 'library/Tips/Tip';
 import { ItemInnerWrapper, ItemWrapper, ItemsWrapper } from './Wrappers';
 
@@ -62,7 +62,7 @@ const Item = ({
   initial,
   page,
 }: any) => {
-  const { openOverlayWith } = useOverlay();
+  const { openPromptWith } = usePrompt();
   const [isStopped, setIsStopped] = useState(true);
 
   useEffect(() => {
@@ -102,7 +102,7 @@ const Item = ({
           <div className="desc active">
             <button
               onClick={() =>
-                openOverlayWith(
+                openPromptWith(
                   <Tip title={title} description={description} page={page} />,
                   'large'
                 )

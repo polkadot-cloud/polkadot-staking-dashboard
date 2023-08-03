@@ -31,7 +31,7 @@
     "@polkadot/util": "^12.1.1",
     "@polkadot/util-crypto": "12.3.2",
     "@polkadotcloud/community": "0.1.2",
-    "@polkadotcloud/core-ui": "^0.3.60",
+    "@polkadotcloud/core-ui": "^0.3.66",
     "@polkadotcloud/react-odometer": "^0.1.17",
     "@polkadotcloud/themes": "^0.1.2",
     "@polkadotcloud/utils": "^0.2.22",

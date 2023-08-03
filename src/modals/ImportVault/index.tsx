@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
 import { useModal } from 'contexts/Modal';
-import { useOverlay } from 'contexts/Overlay';
+import { usePrompt } from 'contexts/Prompt';
 import { ReactComponent as Icon } from 'img/polkadotVault.svg';
 import { Identicon } from 'library/Identicon';
 import { Confirm } from 'library/Import/Confirm';
@@ -28,7 +28,7 @@ export const ImportVault = () => {
   const { t } = useTranslation();
   const { replaceModalWith } = useModal();
   const { renameImportedAccount } = useConnect();
-  const { openOverlayWith, status: overlayStatus } = useOverlay();
+  const { openPromptWith, status: promptStatus } = usePrompt();
 
   const {
     vaultAccounts,
@@ -46,14 +46,14 @@ export const ImportVault = () => {
   };
 
   const openConfirmHandler = (address: string, index: number) => {
-    openOverlayWith(
+    openPromptWith(
       <Confirm address={address} index={index} addHandler={addVaultAccount} />,
       'small'
     );
   };
 
   const openRemoveHandler = (address: string) => {
-    openOverlayWith(
+    openPromptWith(
       <Remove
         address={address}
         removeHandler={removeVaultAccount}
@@ -79,9 +79,9 @@ export const ImportVault = () => {
               lg
               iconLeft={faQrcode}
               text={t('importAccount', { ns: 'modals' })}
-              disabled={overlayStatus !== 0}
+              disabled={promptStatus !== 0}
               onClick={() => {
-                openOverlayWith(<Reader />, 'small');
+                openPromptWith(<Reader />, 'small');
               }}
             />
           </div>
@@ -113,9 +113,9 @@ export const ImportVault = () => {
               <ButtonText
                 iconLeft={faQrcode}
                 text={t('importAnotherAccount', { ns: 'modals' })}
-                disabled={overlayStatus !== 0}
+                disabled={promptStatus !== 0}
                 onClick={() => {
-                  openOverlayWith(<Reader />, 'small');
+                  openPromptWith(<Reader />, 'small');
                 }}
               />
             </div>
