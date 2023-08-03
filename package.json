@@ -19,10 +19,10 @@
   },
   "dependencies": {
     "@dotlottie/player-component": "^2.2.0",
-    "@fortawesome/fontawesome-svg-core": "^6.4.0",
-    "@fortawesome/free-brands-svg-icons": "^6.4.0",
-    "@fortawesome/free-regular-svg-icons": "^6.4.0",
-    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-brands-svg-icons": "^6.4.2",
+    "@fortawesome/free-regular-svg-icons": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@ledgerhq/hw-transport-webhid": "^6.27.17",
     "@polkadot/api": "^10.9.1",
@@ -57,7 +57,7 @@
     "react-qr-reader": "^2.2.1",
     "react-router-dom": "^6.14.2",
     "react-scroll": "^1.8.9",
-    "styled-components": "^6.0.5"
+    "styled-components": "^6.0.6"
   },
   "devDependencies": {
     "@ledgerhq/logs": "^6.10.1",
