@@ -39,24 +39,10 @@ export const Help = () => {
     setStatus(0);
   }, []);
 
-  const variants = {
-    hidden: {
-      opacity: 0,
-    },
-    visible: {
-      opacity: 1,
-    },
-  };
-
+  // control canvas fade.
   useEffect(() => {
-    // help has been opened - fade in
-    if (status === 1) {
-      onFadeIn();
-    }
-    // an external component triggered closure - fade out
-    if (status === 2) {
-      onFadeOut();
-    }
+    if (status === 1) onFadeIn();
+    if (status === 2) onFadeOut();
   }, [status]);
 
   // render early if help not open
@@ -152,7 +138,14 @@ export const Help = () => {
       transition={{
         duration: 0.15,
       }}
-      variants={variants}
+      variants={{
+        hidden: {
+          opacity: 0,
+        },
+        visible: {
+          opacity: 1,
+        },
+      }}
     >
       <ModalScroll>
         <ModalContent>
