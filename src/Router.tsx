@@ -30,6 +30,7 @@ import { Overlay } from 'library/Overlay';
 import { SideMenu } from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
 import { Modal } from 'modals';
+import { Background } from 'library/Background';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
@@ -77,8 +78,12 @@ export const RouterInner = () => {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
       <Body>
+        {/* Overlaying background: closed by default */}
+        <Background />
+
         {/* Modal: closed by default */}
         <Modal />
+
         {/* Help: closed by default */}
         <Help />
 
