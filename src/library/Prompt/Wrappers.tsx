@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 
-export const OverlayWrapper = styled.div`
+export const PromptWrapper = styled.div`
   background: var(--overlay-background-color);
   position: fixed;
   width: 100%;

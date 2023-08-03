@@ -7,7 +7,7 @@ import { ButtonHelp, ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
 import type { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
-import { useOverlay } from 'contexts/Overlay';
+import { usePrompt } from 'contexts/Prompt';
 import { TitleWrapper } from './Wrappers';
 
 interface TitleProps {
@@ -20,7 +20,7 @@ interface TitleProps {
 
 export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
   const { t } = useTranslation('library');
-  const { closeOverlay } = useOverlay();
+  const { closePrompt } = usePrompt();
   const { openHelp } = useHelp();
 
   const graphic = Svg ? (
@@ -40,10 +40,7 @@ export const Title = ({ helpKey, title, icon, Svg, hideDone }: TitleProps) => {
       </div>
       {hideDone !== true ? (
         <div>
-          <ButtonPrimaryInvert
-            text={t('done')}
-            onClick={() => closeOverlay()}
-          />
+          <ButtonPrimaryInvert text={t('done')} onClick={() => closePrompt()} />
         </div>
       ) : null}
     </TitleWrapper>

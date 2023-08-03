@@ -21,6 +21,6 @@ export interface SubmitProps {
   submitAddress: MaybeAccount;
 }
 
-export interface SignerOverlayProps {
+export interface SignerPromptProps {
   submitAddress: MaybeAccount;
 }

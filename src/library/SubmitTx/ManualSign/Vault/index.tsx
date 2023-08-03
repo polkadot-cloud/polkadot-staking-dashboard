@@ -6,11 +6,11 @@ import { ButtonSubmit } from '@polkadotcloud/core-ui';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
-import { useOverlay } from 'contexts/Overlay';
+import { usePrompt } from 'contexts/Prompt';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import type { SubmitProps } from '../../types';
-import { SignOverlay } from './SignOverlay';
+import { SignPrompt } from './SignPrompt';
 
 export const Vault = ({
   onSubmit,
@@ -23,7 +23,7 @@ export const Vault = ({
   const { t } = useTranslation('library');
   const { accountHasSigner } = useConnect();
   const { txFeesValid, getTxSignature } = useTxMeta();
-  const { openOverlayWith, status: overlayStatus } = useOverlay();
+  const { openPromptWith, status: promptStatus } = usePrompt();
 
   // The state under which submission is disabled.
   const disabled =
@@ -44,21 +44,21 @@ export const Vault = ({
             iconTransform="grow-2"
             onClick={() => onSubmit()}
             disabled={disabled}
-            pulse={!(!valid || overlayStatus !== 0)}
+            pulse={!(!valid || promptStatus !== 0)}
           />
         ) : (
           <ButtonSubmit
-            text={overlayStatus === 0 ? t('sign') : t('signing')}
+            text={promptStatus === 0 ? t('sign') : t('signing')}
             iconLeft={faSquarePen}
             iconTransform="grow-2"
             onClick={async () => {
-              openOverlayWith(
-                <SignOverlay submitAddress={submitAddress} />,
+              openPromptWith(
+                <SignPrompt submitAddress={submitAddress} />,
                 'small'
               );
             }}
-            disabled={disabled || overlayStatus !== 0}
-            pulse={!disabled || overlayStatus === 0}
+            disabled={disabled || promptStatus !== 0}
+            pulse={!disabled || promptStatus === 0}
           />
         )}
       </div>

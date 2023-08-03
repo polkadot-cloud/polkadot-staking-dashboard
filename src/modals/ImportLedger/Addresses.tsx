@@ -9,7 +9,7 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
-import { useOverlay } from 'contexts/Overlay';
+import { usePrompt } from 'contexts/Prompt';
 import { Identicon } from 'library/Identicon';
 import { Confirm } from 'library/Import/Confirm';
 import { Remove } from 'library/Import/Remove';
@@ -29,7 +29,7 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
     getLedgerAccount,
     pairDevice,
   } = useLedgerHardware();
-  const { openOverlayWith } = useOverlay();
+  const { openPromptWith } = usePrompt();
   const { renameImportedAccount } = useConnect();
   const isExecuting = getIsExecuting();
 
@@ -39,14 +39,14 @@ export const Addresess = ({ addresses, handleLedgerLoop }: AnyJson) => {
   };
 
   const openConfirmHandler = (address: string, index: number) => {
-    openOverlayWith(
+    openPromptWith(
       <Confirm address={address} index={index} addHandler={addLedgerAccount} />,
       'small'
     );
   };
 
   const openRemoveHandler = (address: string) => {
-    openOverlayWith(
+    openPromptWith(
       <Remove
         address={address}
         removeHandler={removeLedgerAccount}

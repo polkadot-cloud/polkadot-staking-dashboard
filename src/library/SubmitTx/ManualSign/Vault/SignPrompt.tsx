@@ -9,20 +9,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonPrimary, ButtonSecondary } from '@polkadotcloud/core-ui';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useOverlay } from 'contexts/Overlay';
+import { usePrompt } from 'contexts/Prompt';
 import { useTxMeta } from 'contexts/TxMeta';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
 import { QrDisplayPayload } from 'library/QRCode/DisplayPayload';
 import { QrScanSignature } from 'library/QRCode/ScanSignature';
-import type { SignerOverlayProps } from 'library/SubmitTx/types';
+import type { SignerPromptProps } from 'library/SubmitTx/types';
 import type { AnyJson } from 'types';
 
-export const SignOverlay = ({ submitAddress }: SignerOverlayProps) => {
+export const SignPrompt = ({ submitAddress }: SignerPromptProps) => {
   const { t } = useTranslation('library');
   const { getTxPayload, setTxSignature } = useTxMeta();
   const payload = getTxPayload();
   const payloadU8a = payload?.toU8a();
-  const { setStatus: setOverlayStatus } = useOverlay();
+  const { setStatus: setPromptStatus } = usePrompt();
 
   // Whether user is on sign or submit stage.
   const [stage, setStage] = useState(1);
@@ -57,7 +57,7 @@ export const SignOverlay = ({ submitAddress }: SignerOverlayProps) => {
           <QrScanSignature
             size={279}
             onScan={({ signature }: AnyJson) => {
-              setOverlayStatus(0);
+              setPromptStatus(0);
               setTxSignature(signature);
             }}
           />
@@ -89,7 +89,7 @@ export const SignOverlay = ({ submitAddress }: SignerOverlayProps) => {
             text={t('cancel')}
             lg
             marginLeft
-            onClick={() => setOverlayStatus(0)}
+            onClick={() => setPromptStatus(0)}
           />
         </div>
       </div>

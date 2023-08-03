@@ -4,7 +4,7 @@
 import { ButtonMono, ButtonMonoInvert } from '@polkadotcloud/core-ui';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
-import { useOverlay } from 'contexts/Overlay';
+import { usePrompt } from 'contexts/Prompt';
 import { Identicon } from 'library/Identicon';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
 import type { ConfirmProps } from './types';
@@ -12,7 +12,7 @@ import type { ConfirmProps } from './types';
 export const Confirm = ({ address, index, addHandler }: ConfirmProps) => {
   const { t } = useTranslation('modals');
   const { addToAccounts } = useConnect();
-  const { setStatus } = useOverlay();
+  const { setStatus } = usePrompt();
 
   return (
     <ConfirmWrapper>
