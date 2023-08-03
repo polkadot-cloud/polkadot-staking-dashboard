@@ -5,9 +5,11 @@ import { ModalBackground } from '@polkadotcloud/core-ui';
 import { useAnimation } from 'framer-motion';
 import { useEffect } from 'react';
 import { useModal } from 'contexts/Modal';
+import { useHelp } from 'contexts/Help';
 
 export const Background = () => {
   const controls = useAnimation();
+  const { status: helpStatus } = useHelp();
   const { status: modalStatus } = useModal();
 
   const onFadeIn = async () => {
@@ -18,17 +20,16 @@ export const Background = () => {
   };
 
   useEffect(() => {
-    // modal has been opened - fade in.
-    if (modalStatus === 1) {
-      onFadeIn();
-    }
-    // modal closure triggered - fade out.
-    if (modalStatus === 2) {
-      onFadeOut();
-    }
+    if (modalStatus === 1) onFadeIn();
+    if (modalStatus === 2) onFadeOut();
   }, [modalStatus]);
 
-  if (modalStatus === 0) {
+  useEffect(() => {
+    if (helpStatus === 1) onFadeIn();
+    if (helpStatus === 2) onFadeOut();
+  }, [helpStatus]);
+
+  if (modalStatus === 0 && helpStatus === 0) {
     return <></>;
   }
 

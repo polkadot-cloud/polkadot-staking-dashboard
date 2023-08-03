@@ -83,6 +83,7 @@ export const RouterInner = () => {
 
         {/* Modal: closed by default */}
         <Modal />
+
         {/* Help: closed by default */}
         <Help />
 
