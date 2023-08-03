@@ -8,7 +8,7 @@ import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
-import { useOverlay } from 'contexts/Overlay';
+import { usePrompt } from 'contexts/Prompt';
 import { ReactComponent as StatusBarIcon } from 'img/ledgerIcon.svg';
 import { Heading } from 'library/Import/Heading';
 import type { AnyJson } from 'types';
@@ -24,7 +24,7 @@ export const Manage = ({
   const { name } = useApi().network;
   const { setIsExecuting, getIsExecuting, resetStatusCodes, getFeedback } =
     useLedgerHardware();
-  const { openOverlayWith } = useOverlay();
+  const { openPromptWith } = usePrompt();
   const { replaceModalWith } = useModal();
   const { openHelp } = useHelp();
 
@@ -46,7 +46,7 @@ export const Manage = ({
         Icon={Icon}
         disabled={!addresses.length}
         handleReset={() => {
-          openOverlayWith(
+          openPromptWith(
             <Reset removeLedgerAddress={removeLedgerAddress} />,
             'small'
           );

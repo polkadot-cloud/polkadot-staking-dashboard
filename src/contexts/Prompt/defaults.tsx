@@ -1,17 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { OverlayContextInterface } from './types';
+import type { PromptContextInterface } from './types';
 
-export const defaultOverlayContext: OverlayContextInterface = {
+export const defaultPromptContext: PromptContextInterface = {
   // eslint-disable-next-line
-  openOverlayWith: (o, s) => {},
-  closeOverlay: () => {},
+  openPromptWith: (o, s) => {},
+  closePrompt: () => {},
   // eslint-disable-next-line
   setStatus: (s) => {},
   // eslint-disable-next-line
-  setOverlay: (d) => {},
+  setPrompt: (d) => {},
   size: 'small',
   status: 0,
-  Overlay: null,
+  Prompt: null,
 };

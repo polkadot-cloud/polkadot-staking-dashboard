@@ -16,7 +16,7 @@ export const GoToFeedback = () => {
       <ModalPadding verticalOnly>
         <div
           style={{
-            padding: '0 1.75rem',
+            padding: '0 1.75rem 0.5rem 1.75rem',
             width: '100%',
           }}
         >
@@ -27,7 +27,7 @@ export const GoToFeedback = () => {
             </a>
             . {t('welcomeToReport')}
           </h4>
-          <h2 style={{ marginTop: 0 }}>
+          <h2 style={{ marginTop: '0.75rem' }}>
             <a
               href="https://polkadot-staking-dashboard.canny.io/feedback"
               target="_blank"

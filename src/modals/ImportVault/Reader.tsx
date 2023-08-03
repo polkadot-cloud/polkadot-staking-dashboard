@@ -7,14 +7,14 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
-import { useOverlay } from 'contexts/Overlay';
+import { usePrompt } from 'contexts/Prompt';
 import { QRViewerWrapper } from 'library/Import/Wrappers';
 import { QrScanSignature } from 'library/QRCode/ScanSignature';
 
 export const Reader = () => {
   const { t } = useTranslation('modals');
   const { addToAccounts, formatAccountSs58 } = useConnect();
-  const { setStatus: setOverlayStatus } = useOverlay();
+  const { setStatus: setPromptStatus } = usePrompt();
   const { addVaultAccount, vaultAccountExists, vaultAccounts } =
     useVaultHardware();
 
@@ -45,7 +45,7 @@ export const Reader = () => {
       if (account) {
         addToAccounts([account]);
       }
-      setOverlayStatus(0);
+      setPromptStatus(0);
     }
 
     // Display feedback.
@@ -79,7 +79,7 @@ export const Reader = () => {
           <ButtonSecondary
             lg
             text={t('cancel')}
-            onClick={() => setOverlayStatus(0)}
+            onClick={() => setPromptStatus(0)}
           />
         </div>
       </div>
