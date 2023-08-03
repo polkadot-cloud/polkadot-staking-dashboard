@@ -1,13 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { ModalBackground } from '@polkadotcloud/core-ui';
+import { ModalOverlay } from '@polkadotcloud/core-ui';
 import { useAnimation } from 'framer-motion';
 import { useEffect } from 'react';
 import { useModal } from 'contexts/Modal';
 import { useHelp } from 'contexts/Help';
 
-export const Background = () => {
+export const Overlay = () => {
   const controls = useAnimation();
   const { status: helpStatus } = useHelp();
   const { status: modalStatus } = useModal();
@@ -34,7 +34,7 @@ export const Background = () => {
   }
 
   return (
-    <ModalBackground
+    <ModalOverlay
       initial={{
         opacity: 0,
       }}

@@ -1832,10 +1832,10 @@
   resolved "https://registry.npmjs.org/@polkadotcloud/community/-/community-0.1.2.tgz#d693b89d42ba4ac70abf1c61cfb6b0667ad8130f"
   integrity sha512-vKJXcCTonXolrd3tN8lbta4Qp69XR6yzU/BM1FOMfiA6C2Q2oGDVYBiTL2BOi8XLXWzsu3SaagG4WulO9ZlPSg==
 
-"@polkadotcloud/core-ui@^0.3.64":
-  version "0.3.64"
-  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.3.64.tgz#b7ad9b279a6902a7b4413ab8487506b23914e0f3"
-  integrity sha512-355N+AulIYOzzwz5vJ6ZEAPjqKgkrQbFXqexwH/RcgX0LmXpwE3xdBxKe1z0lZn/T91Y2SHuLKZXAc2M5bOLMQ==
+"@polkadotcloud/core-ui@^0.3.66":
+  version "0.3.66"
+  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.3.66.tgz#92e76fec47c19d5c9342ba241cf47402db6d036b"
+  integrity sha512-3loXbVgZEfvxLI4eGBbZhVfsUbCie3mFQy7ZjBwAja+t6TgIaeXCFMKjbunvXaHfxyq9kuNJpcOfsT9DcGdA+w==
 
 "@polkadotcloud/react-odometer@^0.1.17":
   version "0.1.17"

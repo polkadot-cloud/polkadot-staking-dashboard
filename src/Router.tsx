@@ -30,7 +30,7 @@ import { Notifications } from 'library/Notifications';
 import { SideMenu } from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
 import { Modal } from 'modals';
-import { Background } from 'library/Background';
+import { Overlay } from 'library/Overlay';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
@@ -79,7 +79,7 @@ export const RouterInner = () => {
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
       <Body>
         {/* Prompting background: closed by default */}
-        <Background />
+        <Overlay />
 
         {/* Modal: closed by default */}
         <Modal />
