@@ -11,7 +11,7 @@ import { CanvasWrapper } from './Wrappers';
 
 export const Canvas = () => {
   const controls = useAnimation();
-  const { status, setStatus, closeCanvas } = useCanvas();
+  const { status, setStatus } = useCanvas();
   const { icon: preloadIcon } = useDotLottieButton('refresh', {
     autoLoop: true,
   });
@@ -83,9 +83,6 @@ export const Canvas = () => {
           </CanvasWrapper>
         </ModalContent>
       </ModalScroll>
-      <button type="button" className="close" onClick={() => closeCanvas()}>
-        &nbsp;
-      </button>
     </ModalCanvas>
   );
 };
