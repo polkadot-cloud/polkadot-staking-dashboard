@@ -46,6 +46,7 @@ export const Overlay = () => {
 
   return (
     <ModalOverlay
+      blur={canvasStatus === 1 || helpStatus === 1 ? '14px' : '4px'}
       initial={{
         opacity: 0,
       }}
