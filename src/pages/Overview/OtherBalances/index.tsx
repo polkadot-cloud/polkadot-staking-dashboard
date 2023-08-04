@@ -115,7 +115,7 @@ export const BalanceFooter = () => {
                     ) : (
                       ``
                     )}
-                    <span>4 Supported</span>
+                    <span>3 Supported</span>
                   </h3>
                 ) : (
                   <h3>Syncing...</h3>
