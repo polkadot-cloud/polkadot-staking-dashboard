@@ -105,7 +105,7 @@ export const BalanceFooter = () => {
                       `+ ${remaining} Other${remaining === 1 ? '' : 's'}`
                     ) : total === 0 ? (
                       <>
-                        No Balances <span>4 Available</span>
+                        No Balances <span>4 Supported</span>
                       </>
                     ) : (
                       ``

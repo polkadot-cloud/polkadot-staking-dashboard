@@ -17,6 +17,7 @@ import { useParaSync } from 'contexts/ParaSync';
 import type { AnyJson } from 'types';
 import { Token } from 'library/Token';
 import { TokenSvgWrapper } from 'library/Token/Wrappers';
+import { PinnedAssets } from 'config/paras';
 import {
   SectionWrapper,
   ChainWrapper,
@@ -44,6 +45,10 @@ export const OtherBalances = () => {
     greaterThanZero(getAssetHubBalance(a.symbol))
   );
 
+  // Get pinned assets per parachain.
+  const pinnedAssetsInterlay = PinnedAssets?.interlay || [];
+  const pinnedAssetsAssetHub = PinnedAssets?.assethub || [];
+
   return (
     <>
       <Close />
@@ -55,27 +60,52 @@ export const OtherBalances = () => {
         />
         <ActionItem text="Pinned" />
         <SectionWrapper>
-          <PinnedBalanceWrapper>
-            <div>
-              <span className="token">
-                <Token symbol="IBTC" />
-              </span>
-              <h3>
-                {planckToUnit(
-                  getInterlayBalance('Token', 'IBTC'),
-                  getTokenUnits('interlay', 'IBTC')
-                ).toString()}{' '}
-                <span className="symbol">IBTC</span>
-              </h3>
-            </div>
-            <div>
-              <ButtonPrimaryInvert
-                iconLeft={faRightLeft}
-                disabled={getInterlayBalance('Token', 'IBTC').isZero()}
-                text="Swap to DOT"
-              />
-            </div>
-          </PinnedBalanceWrapper>
+          {pinnedAssetsInterlay.map((t) => (
+            <PinnedBalanceWrapper>
+              <div>
+                <span className="token">
+                  <Token symbol={t} />
+                </span>
+                <h3>
+                  {planckToUnit(
+                    getInterlayBalance('Token', t),
+                    getTokenUnits('interlay', t)
+                  ).toString()}{' '}
+                  <span className="symbol">{t}</span>
+                </h3>
+              </div>
+              <div>
+                <ButtonPrimaryInvert
+                  iconLeft={faRightLeft}
+                  disabled={getInterlayBalance('Token', t).isZero()}
+                  text="Swap to DOT"
+                />
+              </div>
+            </PinnedBalanceWrapper>
+          ))}
+          {pinnedAssetsAssetHub.map((t) => (
+            <PinnedBalanceWrapper>
+              <div>
+                <span className="token">
+                  <Token symbol={t} />
+                </span>
+                <h3>
+                  {planckToUnit(
+                    getInterlayBalance('Token', t),
+                    getTokenUnits('interlay', t)
+                  ).toString()}{' '}
+                  <span className="symbol">{t}</span>
+                </h3>
+              </div>
+              <div>
+                <ButtonPrimaryInvert
+                  iconLeft={faRightLeft}
+                  disabled={getAssetHubBalance(t).isZero()}
+                  text="Swap to DOT"
+                />
+              </div>
+            </PinnedBalanceWrapper>
+          ))}
         </SectionWrapper>
 
         <ActionItem text="Balances By Chain" />

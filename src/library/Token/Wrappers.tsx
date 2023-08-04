@@ -37,10 +37,11 @@ export const TokensWrapper = styled.div`
         border: 1px solid var(--border-secondary-color);
         color: var(--text-color-secondary);
         font-family: InterSemiBold, sans-serif;
-        border-radius: 0.6rem;
+        border-radius: 1.25rem;
         margin-left: 0.7rem;
-        padding: 0.4rem 0.75rem;
+        padding: 0.38rem 0.75rem;
         opacity: 0.8;
+        font-size: 0.9rem;
       }
     }
   }
