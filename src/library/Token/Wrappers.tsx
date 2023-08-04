@@ -23,7 +23,8 @@ export const TokensWrapper = styled.div`
       color: var(--text-color-secondary);
       font-family: InterBold, sans-serif;
       font-size: 1.05rem;
-      margin: 0 1.25rem;
+      margin: 0 1.25rem 0 1rem;
+      padding-right: 1rem;
 
       &.empty {
         margin-right: 0;

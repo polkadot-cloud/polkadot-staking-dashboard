@@ -44,8 +44,8 @@ export const ParaList: Paras = {
 };
 
 export const PinnedAssets = {
-  interlay: ['IBTC'],
   assethub: ['USDT'],
+  interlay: ['IBTC'],
 };
 
 export const getParaMeta = (paraId: string) => {

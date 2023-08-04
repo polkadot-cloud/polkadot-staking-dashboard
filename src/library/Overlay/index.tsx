@@ -24,7 +24,7 @@ export const Overlay = () => {
     if (modalStatus === 2) onFadeOut();
   }, [modalStatus]);
 
-  // Do not fade in/out if help is open. (help can be opened in a modal).
+  // Do not fade in/out if modal or canvas is open. (help can be opened in a modal).
   useEffect(() => {
     if (helpStatus === 1 && modalStatus !== 1) onFadeIn();
     if (helpStatus === 2 && modalStatus !== 1) onFadeOut();

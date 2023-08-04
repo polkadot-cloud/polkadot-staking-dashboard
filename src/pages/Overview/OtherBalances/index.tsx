@@ -1,12 +1,12 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import {
   ButtonHelp,
   ButtonPrimaryInvert,
   Separator,
 } from '@polkadotcloud/core-ui';
+import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { TokensWrapper } from 'library/Token/Wrappers';
 import { useApi } from 'contexts/Api';
 import { useParaSync } from 'contexts/ParaSync';
@@ -14,6 +14,7 @@ import type { AnyJson } from 'types';
 import { RadicalLoaderWrapper } from 'library/Loader/Wrapper';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
+import { PinnedAssets } from 'config/paras';
 import { MoreWrapper } from '../Wrappers';
 import { TokenList } from './TokenList';
 
@@ -53,10 +54,16 @@ export const BalanceFooter = () => {
       ?.map((t: AnyJson) => paraForeignAssets.interlay[t.symbol]?.symbol)
       .filter((t: AnyJson) => !!t) || [];
 
+  const pinnedAssetsArray: string[] = [];
+  Object.entries(PinnedAssets).forEach(([, t]) => pinnedAssetsArray.push(...t));
+
   // Ensure no duplicate symbols are displayed.
   const uniqueAssets = [
     ...new Set(
-      assetHubAssets.concat(interlayLocalAssets).concat(interlayForeignAssets)
+      assetHubAssets
+        .concat(interlayLocalAssets)
+        .concat(interlayForeignAssets)
+        .concat(pinnedAssetsArray)
     ),
   ];
 
@@ -104,12 +111,11 @@ export const BalanceFooter = () => {
                     {remaining > 0 && total > 0 ? (
                       `+ ${remaining} Other${remaining === 1 ? '' : 's'}`
                     ) : total === 0 ? (
-                      <>
-                        No Balances <span>4 Supported</span>
-                      </>
+                      <>No Balances</>
                     ) : (
                       ``
                     )}
+                    <span>4 Supported</span>
                   </h3>
                 ) : (
                   <h3>Syncing...</h3>

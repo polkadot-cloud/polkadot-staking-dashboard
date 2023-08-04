@@ -82,13 +82,7 @@ export const OtherBalances = () => {
                 <ButtonPrimaryInvert
                   iconLeft={faRightLeft}
                   disabled={getInterlayBalance('Token', t).isZero()}
-                  text="to IBTC"
-                  marginRight
-                />
-                <ButtonPrimaryInvert
-                  iconLeft={faRightLeft}
-                  disabled={getInterlayBalance('Token', t).isZero()}
-                  text="to DOT"
+                  text="Swap"
                 />
               </div>
             </PinnedBalanceWrapper>
@@ -111,13 +105,7 @@ export const OtherBalances = () => {
                 <ButtonPrimaryInvert
                   iconLeft={faRightLeft}
                   disabled={getAssetHubBalance(t).isZero()}
-                  text="to USDT"
-                  marginRight
-                />
-                <ButtonPrimaryInvert
-                  iconLeft={faRightLeft}
-                  disabled={getAssetHubBalance(t).isZero()}
-                  text="to DOT"
+                  text="Swap"
                 />
               </div>
             </PinnedBalanceWrapper>
