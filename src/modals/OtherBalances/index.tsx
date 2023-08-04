@@ -67,7 +67,7 @@ export const OtherBalances = () => {
         <ActionItem text="Pinned" />
         <SectionWrapper>
           {pinnedAssetsInterlay.map((t) => (
-            <PinnedBalanceWrapper>
+            <PinnedBalanceWrapper key={`assethub_pinned_balance_${t}`}>
               <div>
                 <span className="token">
                   <Token symbol={t} />
@@ -91,7 +91,7 @@ export const OtherBalances = () => {
             </PinnedBalanceWrapper>
           ))}
           {pinnedAssetsAssetHub.map((t) => (
-            <PinnedBalanceWrapper>
+            <PinnedBalanceWrapper key={`assethub_pinned_balance_${t}`}>
               <div>
                 <span className="token">
                   <Token symbol={t} />
