@@ -1,20 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useAnimation, motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import {
-  ButtonPrimaryInvert,
-  ModalCanvas,
-  ModalContent,
-  ModalScroll,
-} from '@polkadotcloud/core-ui';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useAnimation } from 'framer-motion';
+import { ModalCanvas, ModalContent, ModalScroll } from '@polkadotcloud/core-ui';
+import { Suspense, lazy, useMemo } from 'react';
 import { useCanvas } from 'contexts/Canvas';
-import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
-import { MotionContainer } from 'library/List/MotionContainer';
-import { CanvasCardWrapper, CanvasWrapper } from './Wrappers';
+import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
+import { CanvasWrapper } from './Wrappers';
 
 export const Canvas = () => {
   const controls = useAnimation();
@@ -22,9 +15,6 @@ export const Canvas = () => {
   const { icon: preloadIcon } = useDotLottieButton('refresh', {
     autoLoop: true,
   });
-
-  // Dummy state to test loaded form.
-  const [loaded, setLoaded] = useState<boolean>(false);
 
   const onFadeIn = async () => {
     await controls.start('visible');
@@ -44,28 +34,13 @@ export const Canvas = () => {
     }
   }, [status]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoaded(true);
-    }, 2000);
-  }, []);
+  // NOTE: loading Forms `index`. In future get form based on canvas context state.
+  const form = 'index';
+  const Jsx = useMemo(() => lazy(() => import(`./Forms/${form}.tsx`)), []);
 
   if (status === 0) {
     return <></>;
   }
-
-  const staggerProps = {
-    variants: {
-      hidden: {
-        y: 15,
-        opacity: 0,
-      },
-      show: {
-        y: 0,
-        opacity: 1,
-      },
-    },
-  };
 
   return (
     <ModalCanvas
@@ -88,44 +63,23 @@ export const Canvas = () => {
       <ModalScroll>
         <ModalContent>
           <CanvasWrapper>
-            {loaded ? (
-              <>
-                <MotionContainer staggerChildren={0.1}>
-                  <motion.div {...staggerProps} className="header">
-                    <div>
-                      <ButtonPrimaryInvert
-                        lg
-                        text="Cancel"
-                        iconLeft={faTimes}
-                        onClick={() => closeCanvas()}
-                      />
-                    </div>
-                    <h1>Swap</h1>
-                  </motion.div>
-                  <CanvasCardWrapper {...staggerProps}>
-                    <h2>Choose Tokens</h2>
-                  </CanvasCardWrapper>
-                  <CanvasCardWrapper {...staggerProps}>
-                    <h2>Swap</h2>
-                  </CanvasCardWrapper>
-                  <CanvasCardWrapper {...staggerProps}>
-                    <h2>Bridge</h2>
-                  </CanvasCardWrapper>
-                </MotionContainer>
-              </>
-            ) : (
-              <>
-                <section
-                  style={{
-                    width: '7rem',
-                    height: '7rem',
-                  }}
-                >
-                  {preloadIcon}
-                </section>
-                <h2 style={{ marginTop: '1rem' }}>Preparing Swap...</h2>
-              </>
-            )}
+            <Suspense
+              fallback={
+                <>
+                  <section
+                    style={{
+                      width: '7rem',
+                      height: '7rem',
+                    }}
+                  >
+                    {preloadIcon}
+                  </section>
+                  <h2 style={{ marginTop: '1rem' }}>Preparing Swap...</h2>
+                </>
+              }
+            >
+              <Jsx />
+            </Suspense>
           </CanvasWrapper>
         </ModalContent>
       </ModalScroll>
