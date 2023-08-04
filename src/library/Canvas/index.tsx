@@ -1,22 +1,30 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { useAnimation } from 'framer-motion';
-import { useEffect } from 'react';
+import { useAnimation, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 import {
   ButtonPrimaryInvert,
   ModalCanvas,
   ModalContent,
   ModalScroll,
 } from '@polkadotcloud/core-ui';
-import { useTranslation } from 'react-i18next';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useCanvas } from 'contexts/Canvas';
+import { useDotLottieButton } from 'library/Hooks/useDotLottieButton';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { MotionContainer } from 'library/List/MotionContainer';
+import { CanvasCardWrapper, CanvasWrapper } from './Wrappers';
 
 export const Canvas = () => {
-  const { t } = useTranslation('help');
   const controls = useAnimation();
   const { status, setStatus, closeCanvas } = useCanvas();
+  const { icon: preloadIcon } = useDotLottieButton('refresh', {
+    autoLoop: true,
+  });
+
+  // Dummy state to test loaded form.
+  const [loaded, setLoaded] = useState<boolean>(false);
 
   const onFadeIn = async () => {
     await controls.start('visible');
@@ -25,7 +33,7 @@ export const Canvas = () => {
     await controls.start('hidden');
     setStatus(0);
   };
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     // canvas has been opened - fade in.
     if (status === 1) {
       onFadeIn();
@@ -36,9 +44,28 @@ export const Canvas = () => {
     }
   }, [status]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoaded(true);
+    }, 2000);
+  }, []);
+
   if (status === 0) {
     return <></>;
   }
+
+  const staggerProps = {
+    variants: {
+      hidden: {
+        y: 15,
+        opacity: 0,
+      },
+      show: {
+        y: 0,
+        opacity: 1,
+      },
+    },
+  };
 
   return (
     <ModalCanvas
@@ -60,15 +87,46 @@ export const Canvas = () => {
     >
       <ModalScroll>
         <ModalContent>
-          <div className="buttons">
-            <ButtonPrimaryInvert
-              lg
-              text={t('modal.close')}
-              iconLeft={faTimes}
-              onClick={() => closeCanvas()}
-            />
-          </div>
-          {/* TODO: plug in canvas preloader and content */}
+          <CanvasWrapper>
+            {loaded ? (
+              <>
+                <MotionContainer staggerChildren={0.1}>
+                  <motion.div {...staggerProps} className="header">
+                    <div>
+                      <ButtonPrimaryInvert
+                        lg
+                        text="Cancel"
+                        iconLeft={faTimes}
+                        onClick={() => closeCanvas()}
+                      />
+                    </div>
+                    <h1>Swap</h1>
+                  </motion.div>
+                  <CanvasCardWrapper {...staggerProps}>
+                    <h2>Choose Tokens</h2>
+                  </CanvasCardWrapper>
+                  <CanvasCardWrapper {...staggerProps}>
+                    <h2>Swap</h2>
+                  </CanvasCardWrapper>
+                  <CanvasCardWrapper {...staggerProps}>
+                    <h2>Bridge</h2>
+                  </CanvasCardWrapper>
+                </MotionContainer>
+              </>
+            ) : (
+              <>
+                <section
+                  style={{
+                    width: '7rem',
+                    height: '7rem',
+                  }}
+                >
+                  {preloadIcon}
+                </section>
+                <h2 style={{ marginTop: '1rem' }}>Preparing Swap...</h2>
+              </>
+            )}
+          </CanvasWrapper>
         </ModalContent>
       </ModalScroll>
       <button type="button" className="close" onClick={() => closeCanvas()}>

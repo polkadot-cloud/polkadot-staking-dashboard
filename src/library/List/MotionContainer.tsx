@@ -6,7 +6,9 @@ import React from 'react';
 
 export const MotionContainer = ({
   children,
+  staggerChildren = 0.01,
 }: {
+  staggerChildren?: number;
   children: React.ReactNode;
 }) => (
   <motion.div
@@ -17,7 +19,7 @@ export const MotionContainer = ({
       show: {
         opacity: 1,
         transition: {
-          staggerChildren: 0.01,
+          staggerChildren,
         },
       },
     }}
