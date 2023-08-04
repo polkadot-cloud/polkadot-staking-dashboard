@@ -1832,10 +1832,10 @@
   resolved "https://registry.npmjs.org/@polkadotcloud/community/-/community-0.1.2.tgz#d693b89d42ba4ac70abf1c61cfb6b0667ad8130f"
   integrity sha512-vKJXcCTonXolrd3tN8lbta4Qp69XR6yzU/BM1FOMfiA6C2Q2oGDVYBiTL2BOi8XLXWzsu3SaagG4WulO9ZlPSg==
 
-"@polkadotcloud/core-ui@^0.3.66":
-  version "0.3.66"
-  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.3.66.tgz#92e76fec47c19d5c9342ba241cf47402db6d036b"
-  integrity sha512-3loXbVgZEfvxLI4eGBbZhVfsUbCie3mFQy7ZjBwAja+t6TgIaeXCFMKjbunvXaHfxyq9kuNJpcOfsT9DcGdA+w==
+"@polkadotcloud/core-ui@^0.3.69":
+  version "0.3.69"
+  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.3.69.tgz#27f2c1b3946a04253decc2601273fb746aaa6ef4"
+  integrity sha512-1GeK3Vzkvpbulqj61DctJNCCJUw4b4OjXncLyRvEcsnbZ286HkdJBcGMgx/X4ts6FycZXVOMqfKH17Tkn2FD9g==
 
 "@polkadotcloud/react-odometer@^0.1.17":
   version "0.1.17"
@@ -2766,10 +2766,10 @@ chalk@^4.0.0, chalk@^4.1.1:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chart.js@^4.3.2:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-4.3.2.tgz#904ebe0376eb368a659a92d2050df47336847e4c"
-  integrity sha512-pvQNyFOY1QmbmIr8oDORL16/FFivfxj8V26VFpFilMo4cNvkV5WXLJetDio365pd9gKUHGdirUTbqJfw8tr+Dg==
+chart.js@^4.3.3:
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-4.3.3.tgz#dcd98afadf9fcfa5219e72ace5912092ea48fd36"
+  integrity sha512-aTk7pBw+x6sQYhon/NR3ikfUJuym/LdgpTlgZRe2PaEhjUMKBKyNaFCMVRAyTEWYFNO7qRu7iQVqOw/OqzxZxQ==
   dependencies:
     "@kurkle/color" "^0.3.0"
 
@@ -3272,10 +3272,10 @@ eslint-config-airbnb@^19.0.4:
     object.assign "^4.1.2"
     object.entries "^1.1.5"
 
-eslint-config-prettier@^8.9.0:
-  version "8.9.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.9.0.tgz#094b6254b2804b0544f7cee535f802b6d29ee10b"
-  integrity sha512-+sbni7NfVXnOpnRadUA8S28AUlsZt9GjgFvABIRL9Hkn8KqNzOp+7Lw4QWtrwn20KzU3wqu1QoOj2m+7rKRqkA==
+eslint-config-prettier@^8.10.0:
+  version "8.10.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.10.0.tgz#3a06a662130807e2502fc3ff8b4143d8a0658e11"
+  integrity sha512-SM8AMJdeQqRYT9O9zguiruQZaN7+z+E4eAP9oiLNGKMtomwaB1E9dcgUD6ZAn/eQAb52USbvezbiljfZUhbJcg==
 
 eslint-import-resolver-node@^0.3.7:
   version "0.3.7"
@@ -4912,10 +4912,10 @@ prettier-plugin-organize-imports@^3.2.3:
   resolved "https://registry.yarnpkg.com/prettier-plugin-organize-imports/-/prettier-plugin-organize-imports-3.2.3.tgz#6b0141ac71f7ee9a673ce83e95456319e3a7cf0d"
   integrity sha512-KFvk8C/zGyvUaE3RvxN2MhCLwzV6OBbFSkwZ2OamCrs9ZY4i5L77jQ/w4UmUr+lqX8qbaqVq6bZZkApn+IgJSg==
 
-prettier@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/prettier/-/prettier-3.0.0.tgz#e7b19f691245a21d618c68bc54dc06122f6105ae"
-  integrity sha512-zBf5eHpwHOGPC47h0zrPyNn+eAEIdEzfywMoYn2XPi0P44Zp0tSq64rq0xAREh4auw2cJZHo9QUob+NqCQky4g==
+prettier@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.0.1.tgz#65271fc9320ce4913c57747a70ce635b30beaa40"
+  integrity sha512-fcOWSnnpCrovBsmFZIGIy9UqK2FaI7Hqax+DIO0A9UxeVoY4iweyaFjS5TavZN97Hfehph0nhsZnjlVKzEQSrQ==
 
 pretty-format@^29.5.0:
   version "29.6.1"
@@ -5503,10 +5503,10 @@ strip-outer@^1.0.1:
   dependencies:
     escape-string-regexp "^1.0.2"
 
-styled-components@^6.0.6:
-  version "6.0.6"
-  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-6.0.6.tgz#cfead4b7d8cab393e0c73f6e3d5d34c8961d1387"
-  integrity sha512-gkToLizJyiaRLGlPzfzvBY4DoC/fAKnRulstNXv/zXyvqKVaIQNHFbufjM1sspwqd77azcpnWuoZBL4O+oqxVw==
+styled-components@^6.0.7:
+  version "6.0.7"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-6.0.7.tgz#1cf4a5e6b6181b29f941934df54af19b7ef05ab0"
+  integrity sha512-xIwWuiRMYR43mskVsW9MGTRjSo7ol4bcVjT595fGUp3OLBJOlOgaiKaxsHdC4a2HqWKqKnh0CmcRbk5ogyDjTg==
   dependencies:
     "@babel/cli" "^7.21.0"
     "@babel/core" "^7.21.0"
