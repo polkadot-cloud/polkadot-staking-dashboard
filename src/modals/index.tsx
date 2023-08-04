@@ -7,6 +7,7 @@ import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorFallbackModal } from 'library/ErrorBoundary';
 import { useModal } from 'contexts/Modal';
+import { useHelp } from 'contexts/Help';
 import { AccountPoolRoles } from './AccountPoolRoles';
 import { Accounts } from './Accounts';
 import { Bio } from './Bio';
@@ -53,6 +54,7 @@ export const Modal = () => {
   } = useModal();
   const controls = useAnimation();
   const maxHeight = modalMaxHeight();
+  const { status: helpStatus } = useHelp();
   const modalRef = useRef<HTMLDivElement>(null);
 
   const onFadeIn = async () => {
@@ -139,7 +141,10 @@ export const Modal = () => {
                     : 'hidden',
               }}
             >
-              <ModalCard ref={modalRef}>
+              <ModalCard
+                ref={modalRef}
+                className={helpStatus === 1 ? 'dimmed' : undefined}
+              >
                 <ErrorBoundary FallbackComponent={ErrorFallbackModal}>
                   {modal === 'AccountPoolRoles' && <AccountPoolRoles />}
                   {modal === 'Bio' && <Bio />}
