@@ -27,8 +27,8 @@ export const Overlay = () => {
   }, [modalStatus]);
 
   useEffect(() => {
-    if (canvasStatus === 1) onFadeIn();
-    if (canvasStatus === 2) onFadeOut();
+    if (canvasStatus === 1 && modalStatus !== 1) onFadeIn();
+    if (canvasStatus === 2 && modalStatus !== 1) onFadeOut();
   }, [canvasStatus]);
 
   // Managing fade is more complex with help, as it can overlay modal and canvas. Do not fade in/out

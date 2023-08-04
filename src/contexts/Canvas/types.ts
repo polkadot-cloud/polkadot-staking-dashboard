@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { ReactNode } from 'react';
-import type { MaybeString } from 'types';
 
 export type CanvasItems = CanvasItem[];
 
@@ -21,7 +20,7 @@ export interface ExternalWithKeys {
 }
 
 export interface CanvasContextInterface {
-  openCanvas: (d: MaybeString) => void;
+  openCanvas: () => void;
   closeCanvas: () => void;
   setStatus: (s: number) => void;
   status: number;

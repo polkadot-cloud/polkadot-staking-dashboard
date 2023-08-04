@@ -5,7 +5,7 @@ import type { CanvasContextInterface } from './types';
 
 export const defaultCanvasContext: CanvasContextInterface = {
   // eslint-disable-next-line
-  openCanvas: (k) => {},
+  openCanvas: () => {},
   closeCanvas: () => {},
   // eslint-disable-next-line
   setStatus: (s) => {},

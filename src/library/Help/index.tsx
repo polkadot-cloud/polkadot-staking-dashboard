@@ -215,13 +215,7 @@ export const Help = () => {
           )}
         </ModalContent>
       </ModalScroll>
-      <button
-        type="button"
-        className="close"
-        onClick={() => {
-          closeHelp();
-        }}
-      >
+      <button type="button" className="close" onClick={() => closeHelp()}>
         &nbsp;
       </button>
     </ModalCanvas>

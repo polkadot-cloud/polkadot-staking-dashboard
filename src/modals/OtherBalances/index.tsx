@@ -18,6 +18,7 @@ import type { AnyJson } from 'types';
 import { Token } from 'library/Token';
 import { TokenSvgWrapper } from 'library/Token/Wrappers';
 import { PinnedAssets } from 'config/paras';
+import { useCanvas } from 'contexts/Canvas';
 import {
   SectionWrapper,
   ChainWrapper,
@@ -35,6 +36,7 @@ export const OtherBalances = () => {
       getTokenUnits,
     },
   } = useParaSync();
+  const { openCanvas } = useCanvas();
 
   // Interlay assets fetched already ignore zero balances.
   const paraInterlayAssets = paraBalances?.interlay?.tokens || [];
@@ -80,9 +82,10 @@ export const OtherBalances = () => {
               </div>
               <div>
                 <ButtonPrimaryInvert
-                  iconLeft={faRightLeft}
-                  disabled={getInterlayBalance('Token', t).isZero()}
                   text="Swap"
+                  iconLeft={faRightLeft}
+                  onClick={() => openCanvas()}
+                  disabled={getInterlayBalance('Token', t).isZero()}
                 />
               </div>
             </PinnedBalanceWrapper>
@@ -104,6 +107,7 @@ export const OtherBalances = () => {
               <div>
                 <ButtonPrimaryInvert
                   iconLeft={faRightLeft}
+                  onClick={() => openCanvas()}
                   disabled={getAssetHubBalance(t).isZero()}
                   text="Swap"
                 />
