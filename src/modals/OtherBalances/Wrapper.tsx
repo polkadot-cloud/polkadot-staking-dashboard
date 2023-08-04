@@ -20,6 +20,10 @@ export const ChainWrapper = styled.div`
   margin-top: 1rem;
   width: 100%;
 
+  &.none {
+    padding: 0.5rem;
+  }
+
   > .head {
     background: var(--button-tertiary-background);
     border-bottom: 1px solid var(--border-primary-color);

@@ -49,6 +49,10 @@ export const OtherBalances = () => {
   const pinnedAssetsInterlay = PinnedAssets?.interlay || [];
   const pinnedAssetsAssetHub = PinnedAssets?.assethub || [];
 
+  // No other balances?
+  const noOtherBalances =
+    !paraInterlayAssets.length && !paraAssetHubAssets.length;
+
   return (
     <>
       <Close />
@@ -78,7 +82,13 @@ export const OtherBalances = () => {
                 <ButtonPrimaryInvert
                   iconLeft={faRightLeft}
                   disabled={getInterlayBalance('Token', t).isZero()}
-                  text="Swap to DOT"
+                  text="to IBTC"
+                  marginRight
+                />
+                <ButtonPrimaryInvert
+                  iconLeft={faRightLeft}
+                  disabled={getInterlayBalance('Token', t).isZero()}
+                  text="to DOT"
                 />
               </div>
             </PinnedBalanceWrapper>
@@ -91,8 +101,8 @@ export const OtherBalances = () => {
                 </span>
                 <h3>
                   {planckToUnit(
-                    getInterlayBalance('Token', t),
-                    getTokenUnits('interlay', t)
+                    getAssetHubBalance('Token', t),
+                    getTokenUnits('assethub', t)
                   ).toString()}{' '}
                   <span className="symbol">{t}</span>
                 </h3>
@@ -101,88 +111,100 @@ export const OtherBalances = () => {
                 <ButtonPrimaryInvert
                   iconLeft={faRightLeft}
                   disabled={getAssetHubBalance(t).isZero()}
-                  text="Swap to DOT"
+                  text="to USDT"
+                  marginRight
+                />
+                <ButtonPrimaryInvert
+                  iconLeft={faRightLeft}
+                  disabled={getAssetHubBalance(t).isZero()}
+                  text="to DOT"
                 />
               </div>
             </PinnedBalanceWrapper>
           ))}
         </SectionWrapper>
 
-        <ActionItem text="Balances By Chain" />
-        <SectionWrapper className="last">
-          {paraAssetHubAssets.length > 0 && (
-            <ChainWrapper>
-              <div className="head">
-                <TokenSvgWrapper className="icon">
-                  <AssetHubSVG />
-                </TokenSvgWrapper>
-                <h3>Asset Hub</h3>
-                <p>
-                  <ButtonTertiary
-                    text={`${paraAssetHubAssets.length} Balance${
-                      paraAssetHubAssets.length === 1 ? '' : 's'
-                    }`}
-                  />
-                </p>
-              </div>
-              <div className="assets">
-                <div className="inner">
-                  {paraAssetHubAssets.map((a: AnyJson) => (
-                    <ChainBalanceWrapper key={`assethub_asset_${a.symbol}`}>
-                      <span className="token">
-                        <Token symbol={a.symbol} />
-                      </span>
-                      <h4>
-                        {planckToUnit(
-                          getAssetHubBalance(a.symbol),
-                          getTokenUnits('assethub', a.symbol)
-                        ).toString()}{' '}
-                        <span className="symbol">{a.symbol}</span>
-                      </h4>
-                    </ChainBalanceWrapper>
-                  ))}
-                </div>
-              </div>
-            </ChainWrapper>
-          )}
-          {paraInterlayAssets.length > 0 && (
-            <ChainWrapper>
-              <div className="head">
-                <TokenSvgWrapper className="icon">
-                  <InterlaySVG />
-                </TokenSvgWrapper>
-                <h3>Interlay</h3>
-                <p>
-                  <ButtonTertiary
-                    text={`${paraInterlayAssets.length} Balance${
-                      paraInterlayAssets.length === 1 ? '' : 's'
-                    }`}
-                  />
-                </p>
-              </div>
-              <div className="assets">
-                <div className="inner">
-                  {paraInterlayAssets.map((a: AnyJson) => (
-                    <ChainBalanceWrapper key={`interlay_asset_${a.symbol}`}>
-                      <span className="token">
-                        <Token symbol={getInterlaySymbol(a.key, a.symbol)} />
-                      </span>
-                      <h4>
-                        {planckToUnit(
-                          getInterlayBalance(a.key, a.symbol),
-                          getTokenUnits('interlay', a.symbol)
-                        ).toString()}{' '}
-                        <span className="symbol">
-                          {getInterlaySymbol(a.key, a.symbol)}
-                        </span>
-                      </h4>
-                    </ChainBalanceWrapper>
-                  ))}
-                </div>
-              </div>
-            </ChainWrapper>
-          )}
-        </SectionWrapper>
+        {!noOtherBalances && (
+          <>
+            <ActionItem text="Balances By Chain" />
+            <SectionWrapper className="last">
+              {paraAssetHubAssets.length > 0 && (
+                <ChainWrapper>
+                  <div className="head">
+                    <TokenSvgWrapper className="icon">
+                      <AssetHubSVG />
+                    </TokenSvgWrapper>
+                    <h3>Asset Hub</h3>
+                    <p>
+                      <ButtonTertiary
+                        text={`${paraAssetHubAssets.length} Balance${
+                          paraAssetHubAssets.length === 1 ? '' : 's'
+                        }`}
+                      />
+                    </p>
+                  </div>
+                  <div className="assets">
+                    <div className="inner">
+                      {paraAssetHubAssets.map((a: AnyJson) => (
+                        <ChainBalanceWrapper key={`assethub_asset_${a.symbol}`}>
+                          <span className="token">
+                            <Token symbol={a.symbol} />
+                          </span>
+                          <h4>
+                            {planckToUnit(
+                              getAssetHubBalance(a.symbol),
+                              getTokenUnits('assethub', a.symbol)
+                            ).toString()}{' '}
+                            <span className="symbol">{a.symbol}</span>
+                          </h4>
+                        </ChainBalanceWrapper>
+                      ))}
+                    </div>
+                  </div>
+                </ChainWrapper>
+              )}
+              {paraInterlayAssets.length > 0 && (
+                <ChainWrapper>
+                  <div className="head">
+                    <TokenSvgWrapper className="icon">
+                      <InterlaySVG />
+                    </TokenSvgWrapper>
+                    <h3>Interlay</h3>
+                    <p>
+                      <ButtonTertiary
+                        text={`${paraInterlayAssets.length} Balance${
+                          paraInterlayAssets.length === 1 ? '' : 's'
+                        }`}
+                      />
+                    </p>
+                  </div>
+                  <div className="assets">
+                    <div className="inner">
+                      {paraInterlayAssets.map((a: AnyJson) => (
+                        <ChainBalanceWrapper key={`interlay_asset_${a.symbol}`}>
+                          <span className="token">
+                            <Token
+                              symbol={getInterlaySymbol(a.key, a.symbol)}
+                            />
+                          </span>
+                          <h4>
+                            {planckToUnit(
+                              getInterlayBalance(a.key, a.symbol),
+                              getTokenUnits('interlay', a.symbol)
+                            ).toString()}{' '}
+                            <span className="symbol">
+                              {getInterlaySymbol(a.key, a.symbol)}
+                            </span>
+                          </h4>
+                        </ChainBalanceWrapper>
+                      ))}
+                    </div>
+                  </div>
+                </ChainWrapper>
+              )}
+            </SectionWrapper>
+          </>
+        )}
       </ModalPadding>
     </>
   );
