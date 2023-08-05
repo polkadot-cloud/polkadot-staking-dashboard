@@ -4,6 +4,7 @@
 import { PageRow, PageTitle, RowSection } from '@polkadotcloud/core-ui';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import type { PageTitleTabProps } from '@polkadotcloud/core-ui/core/types';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { usePlugins } from 'contexts/Plugins';
@@ -15,6 +16,7 @@ import { useSubscan } from 'contexts/Subscan';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
 import { StatBoxList } from 'library/StatBoxList';
+import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
 import { PoolFavorites } from './Favorites';
@@ -25,7 +27,6 @@ import { PoolStats } from './PoolStats';
 import { ActivePoolsStat } from './Stats/ActivePools';
 import { MinCreateBondStat } from './Stats/MinCreateBond';
 import { MinJoinBondStat } from './Stats/MinJoinBond';
-import { PoolMembershipStat } from './Stats/PoolMembership';
 import { Status } from './Status';
 import { PoolsTabsProvider, usePoolsTabs } from './context';
 
@@ -34,6 +35,10 @@ export const HomeInner = () => {
   const { pluginEnabled } = usePlugins();
   const { openModalWith } = useModal();
   const { activeAccount } = useConnect();
+  const {
+    favorites,
+    stats: { counterForBondedPools },
+  } = usePoolsConfig();
   const { fetchPoolDetails } = useSubscan();
   const { membership } = usePoolMemberships();
   const { activeTab, setActiveTab } = usePoolsTabs();
@@ -61,7 +66,10 @@ export const HomeInner = () => {
     );
   };
 
-  let tabs = [
+  // Store the pool member count.
+  const [memberCount, setMemberCount] = useState<number>(0);
+
+  let tabs: PageTitleTabProps[] = [
     {
       title: t('pools.overview'),
       active: activeTab === 0,
@@ -74,6 +82,7 @@ export const HomeInner = () => {
       title: t('pools.members'),
       active: activeTab === 1,
       onClick: () => setActiveTab(1),
+      badge: String(memberCount),
     });
   }
 
@@ -82,16 +91,15 @@ export const HomeInner = () => {
       title: t('pools.allPools'),
       active: activeTab === 2,
       onClick: () => setActiveTab(2),
+      badge: String(counterForBondedPools.toString()),
     },
     {
       title: t('pools.favorites'),
       active: activeTab === 3,
       onClick: () => setActiveTab(3),
+      badge: String(favorites.length),
     }
   );
-
-  // Store the pool member count.
-  const [memberCount, setMemberCount] = useState<number>(0);
 
   // Back to tab 0 if not in a pool & on members tab.
   useEffect(() => {
@@ -164,11 +172,6 @@ export const HomeInner = () => {
       {activeTab === 1 && <Members memberCount={memberCount} />}
       {activeTab === 2 && (
         <>
-          <StatBoxList>
-            <PoolMembershipStat />
-            <ActivePoolsStat />
-            <MinJoinBondStat />
-          </StatBoxList>
           <PageRow>
             <CardWrapper>
               <PoolList
