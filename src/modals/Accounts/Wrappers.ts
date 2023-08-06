@@ -50,7 +50,7 @@ export const AccountWrapper = styled.div`
           align-items: center;
           justify-content: flex-start;
           flex-shrink: 1;
-          padding: 0.4rem 0.75rem;
+          padding: 0.5rem 0.75rem;
           font-size: 1.05rem;
           width: 100%;
           transition: background var(--transition-duration);
@@ -145,13 +145,12 @@ export const AccountWrapper = styled.div`
       /* Bottom half of the button, account metadata */
       &.foot {
         border-top: 1px solid var(--border-primary-color);
-        min-height: 3rem;
-        padding: 0.5rem 1rem;
+        padding: 0.7rem 1rem;
 
         > .balance {
           color: var(--text-color-secondary);
-          font-size: 1rem;
-          opacity: 0.65;
+          font-size: 0.9rem;
+          opacity: 0.6;
         }
       }
     }
