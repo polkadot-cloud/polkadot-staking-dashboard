@@ -55,15 +55,15 @@ export const ItemWrapper = styled.div`
     position: relative;
 
     .name {
+      color: var(--text-color-tertiary);
       position: absolute;
       left: 0;
       bottom: 0;
-      max-width: 100%;
       display: inline;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
-      opacity: 0.75;
+      max-width: 100%;
     }
   }
 
