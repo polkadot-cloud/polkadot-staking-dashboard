@@ -20,6 +20,7 @@ import { useModal } from 'contexts/Modal';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { Close } from 'library/Modal/Close';
+import { Title } from 'library/Modal/Title';
 import { SliderWrapper } from 'modals/ManagePool/Wrappers';
 import 'rc-slider/assets/index.css';
 
@@ -69,10 +70,11 @@ export const UpdateReserve = () => {
     <>
       <Close />
       <ModalPadding>
-        <h2 className="title unbounded" style={{ padding: '0 0.5rem' }}>
-          {t('reserveBalance')}
-        </h2>
-
+        <Title
+          title={t('reserveBalance')}
+          helpKey="Reserve Balance"
+          style={{ padding: '0.5rem 0 0 0' }}
+        />
         <SliderWrapper style={{ marginTop: '1rem' }}>
           <p>{t('reserveText', { unit })}</p>
           <div>

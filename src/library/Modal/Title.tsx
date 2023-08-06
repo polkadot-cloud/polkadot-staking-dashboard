@@ -5,6 +5,7 @@ import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ButtonHelp } from '@polkadotcloud/core-ui';
 import type { FunctionComponent } from 'react';
+import React from 'react';
 import { useHelp } from 'contexts/Help';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
@@ -16,9 +17,17 @@ interface TitleProps {
   Svg?: FunctionComponent<any>;
   fixed?: boolean;
   helpKey?: string;
+  style?: React.CSSProperties;
 }
 
-export const Title = ({ helpKey, title, icon, fixed, Svg }: TitleProps) => {
+export const Title = ({
+  helpKey,
+  title,
+  icon,
+  fixed,
+  Svg,
+  style,
+}: TitleProps) => {
   const { setStatus } = useModal();
   const { openHelp } = useHelp();
 
@@ -29,7 +38,7 @@ export const Title = ({ helpKey, title, icon, fixed, Svg }: TitleProps) => {
   ) : null;
 
   return (
-    <TitleWrapper $fixed={fixed || false}>
+    <TitleWrapper $fixed={fixed || false} style={{ ...style }}>
       <div>
         {graphic}
         <h2>
