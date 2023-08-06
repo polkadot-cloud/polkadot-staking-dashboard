@@ -1,10 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Entry } from '@polkadotcloud/core-ui';
-import { ThemeProvider } from 'styled-components';
-import { Router } from 'Router';
-import { APIProvider, useApi } from 'contexts/Api';
+import { ThemedRouter } from 'Themes';
+import { APIProvider } from 'contexts/Api';
 import { BalancesProvider } from 'contexts/Balances';
 import { BondedProvider } from 'contexts/Bonded';
 import { ConnectProvider } from 'contexts/Connect';
@@ -32,28 +30,15 @@ import { ProxiesProvider } from 'contexts/Proxies';
 import { SetupProvider } from 'contexts/Setup';
 import { StakingProvider } from 'contexts/Staking';
 import { SubscanProvider } from 'contexts/Subscan';
-import { useTheme } from 'contexts/Themes';
 import { TooltipProvider } from 'contexts/Tooltip';
 import { TransferOptionsProvider } from 'contexts/TransferOptions';
 import { TxMetaProvider } from 'contexts/TxMeta';
 import { UIProvider } from 'contexts/UI';
 import { ValidatorsProvider } from 'contexts/Validators';
 import { withProviders } from 'library/Hooks';
+import { CanvasProvider } from 'contexts/Canvas';
 
-// App theme classes and `@polkadotcloud/core-ui` theme classes are inserted here.
-export const ThemedRouter = () => {
-  const { mode } = useTheme();
-  const { network } = useApi();
-
-  return (
-    <ThemeProvider theme={{ mode, network: `${network.name}-${mode}` }}>
-      <Entry mode={mode} chain={`${network.name}-relay`}>
-        <Router />
-      </Entry>
-    </ThemeProvider>
-  );
-};
-
+// !! Provider order matters.
 export const Providers = withProviders(
   FiltersProvider,
   NotificationsProvider,
@@ -86,6 +71,7 @@ export const Providers = withProviders(
   TxMetaProvider,
   ExtrinsicsProvider,
   ModalProvider,
+  CanvasProvider,
   PromptProvider,
   MigrateProvider
 )(ThemedRouter);

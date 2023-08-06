@@ -6,11 +6,13 @@ import { useAnimation } from 'framer-motion';
 import { useEffect } from 'react';
 import { useModal } from 'contexts/Modal';
 import { useHelp } from 'contexts/Help';
+import { useCanvas } from 'contexts/Canvas';
 
 export const Overlay = () => {
   const controls = useAnimation();
   const { status: helpStatus } = useHelp();
   const { status: modalStatus } = useModal();
+  const { status: canvasStatus } = useCanvas();
 
   const onFadeIn = async () => {
     await controls.start('visible');
@@ -24,18 +26,27 @@ export const Overlay = () => {
     if (modalStatus === 2) onFadeOut();
   }, [modalStatus]);
 
-  // Do not fade in/out if help is open. (help can be opened in a modal).
   useEffect(() => {
-    if (helpStatus === 1 && modalStatus !== 1) onFadeIn();
-    if (helpStatus === 2 && modalStatus !== 1) onFadeOut();
+    if (canvasStatus === 1 && modalStatus !== 1) onFadeIn();
+    if (canvasStatus === 2 && modalStatus !== 1) onFadeOut();
+  }, [canvasStatus]);
+
+  // Managing fade is more complex with help, as it can overlay modal and canvas. Do not fade in/out
+  // if modal or canvas is open. (help can be opened in a modal, canvas can be summoned in an open
+  // modal).
+  useEffect(() => {
+    if (helpStatus === 1 && modalStatus !== 1 && canvasStatus !== 1) onFadeIn();
+    if (helpStatus === 2 && modalStatus !== 1 && canvasStatus !== 1)
+      onFadeOut();
   }, [helpStatus]);
 
-  if (modalStatus === 0 && helpStatus === 0) {
+  if (modalStatus === 0 && helpStatus === 0 && canvasStatus === 0) {
     return <></>;
   }
 
   return (
     <ModalOverlay
+      blur={canvasStatus === 1 || helpStatus === 1 ? '14px' : '4px'}
       initial={{
         opacity: 0,
       }}
