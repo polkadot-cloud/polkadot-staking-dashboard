@@ -14,14 +14,14 @@ import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useStaking } from '../Staking';
 import * as defaults from './defaults';
-import type { SyncStart, UIContextInterface } from './types';
+import type { UIContextInterface } from './types';
 
 export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   const { isReady } = useApi();
-  const { accounts: connectAccounts } = useConnect();
+  const { balances } = useBalances();
   const { staking, eraStakers } = useStaking();
   const { activeEra, metrics } = useNetworkMetrics();
-  const { balances } = useBalances();
+  const { accounts: connectAccounts } = useConnect();
   const { synced: activePoolsSynced } = useActivePools();
 
   // set whether the network has been synced.
@@ -30,55 +30,8 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
   // set whether pools are being synced.
   const [isPoolSyncing, setIsPoolSyncing] = useState(false);
 
-  // set whether app is syncing.ncludes workers (active nominations).
+  // set whether app is syncing. Includes workers (active nominations).
   const [isSyncing, setIsSyncing] = useState(false);
-
-  // store sync start times.
-  const [syncStarts, setSyncStarts] = useState<SyncStart[]>([]);
-
-  // gets the id of a sync
-  const getSyncById = (id: string) => {
-    const existing = syncStarts.find((s) => s.id === id);
-    return existing?.start || null;
-  };
-
-  // get a sync start for an id
-  const getSyncStart = (id: string) => {
-    const existing = syncStarts.find((s) => s.id === id);
-    return existing?.start || 0;
-  };
-
-  // set a sync start time for an id.
-  const setSyncStart = (id: string, start: number | null) => {
-    setSyncStarts([
-      {
-        id,
-        start,
-        synced: false,
-      },
-    ]);
-  };
-
-  // get whether a syncStart has been synced. Fall back to true if not existing.
-  const getSyncSynced = (id: string) => {
-    const existing = [...syncStarts].find((s: SyncStart) => s.id === id);
-    return existing?.synced || false;
-  };
-
-  // set whether a syncStart has been synced.
-  const setSyncSynced = (id: string) => {
-    const existing = [...syncStarts].find((s: SyncStart) => s.id === id);
-    if (existing) {
-      setSyncStarts(
-        [...syncStarts]
-          .filter((s: SyncStart) => s.id !== id)
-          .concat({
-            ...existing,
-            synced: true,
-          })
-      );
-    }
-  };
 
   // side menu control
   const [sideMenuOpen, setSideMenuOpen] = useState(false);
@@ -189,11 +142,6 @@ export const UIProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         setSideMenu,
         setUserSideMenuMinimised,
-        getSyncById,
-        getSyncStart,
-        setSyncStart,
-        getSyncSynced,
-        setSyncSynced,
         setContainerRefs,
         sideMenuOpen,
         userSideMenuMinimised: userSideMenuMinimisedRef.current,
