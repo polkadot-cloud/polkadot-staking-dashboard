@@ -1,6 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import type { RefObject } from 'react';
 import type { AnyJson } from 'types';
 
 export type ModalSize = 'small' | 'large' | 'xl';
@@ -15,6 +16,8 @@ export interface ModalContextInterface {
   setModalHeight: (v: number) => void;
   setResize: () => void;
   modalMaxHeight: () => number;
+  setModalRef: (v: RefObject<HTMLDivElement>) => void;
+  setHeightRef: (v: RefObject<HTMLDivElement>) => void;
   status: number;
   modal: string;
   config: AnyJson;

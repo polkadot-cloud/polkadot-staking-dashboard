@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { setStateWithRef } from '@polkadotcloud/utils';
+import type { RefObject } from 'react';
 import React, { useRef, useState } from 'react';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
@@ -29,18 +30,32 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   // Store the modal's resize counter.
   const [resize, setModalResize] = useState<number>(0);
 
+  // Store the ref to the modal height container. Used for controlling whether height is transitionable.
+  const [modalRef, setModalRef] = useState<RefObject<HTMLDivElement>>();
+
+  // Store the ref to the modal height container. Used for controlling whether height is transitionable.
+  const [heightRef, setHeightRef] = useState<RefObject<HTMLDivElement>>();
+
   useEffectIgnoreInitial(() => {
     setResize();
-  }, [statusRef.current, notEnoughFunds]);
+  }, [notEnoughFunds]);
+
+  useEffectIgnoreInitial(() => {
+    const h = modalRef?.current?.clientHeight || 0;
+    if (statusRef.current === 3) {
+      setModalHeight(h, false);
+      if (h > 0) {
+        setStatus(1);
+      }
+    }
+  }, [statusRef.current, modalRef?.current]);
 
   const setOptions = (o: ModalOptions) => {
     setStateWithRef(o, setOptionsState, optionsRef);
   };
 
   const setStatus = (newStatus: number) => {
-    setHeight(newStatus === 0 ? 0 : height);
     setStateWithRef(newStatus, setStatusState, statusRef);
-    setResize();
   };
 
   const openModalWith = (
@@ -48,42 +63,62 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     config: ModalConfig = {},
     size = 'large'
   ) => {
-    setStateWithRef(1, setStatusState, statusRef);
-    setResize();
     setOptions({
       modal,
       config,
       size,
     });
+    setStatus(3);
   };
 
-  const setModalHeight = (h: number) => {
+  const setModalHeight = (h: number, transition: boolean = true) => {
     if (statusRef.current === 0) return;
-    // set maximum height to 80% of window height
+
+    // Ensrue transition class is removed if not transitioning. Otherwise, ensure class exists.
+    if (transition) transitionOn();
+    else transitionOff();
+
+    // If transitioning, ensure the class exists.
+    if (transition) transitionOn();
+
+    // Limit maximum height to 80% of window height, and set.
     const maxHeight = window.innerHeight * 0.8;
     h = h > maxHeight ? maxHeight : h;
     setHeight(h);
+
+    // If transitioning, remove after enough time to finish transition.
+    if (transition) setTimeout(() => transitionOff(), 500);
   };
 
-  // increments resize to trigger a height transition.
+  // Increments resize to trigger a height transition.
   const setResize = () => {
+    transitionOn();
     setModalResize(resize + 1);
+    setTimeout(() => transitionOff(), 500);
   };
 
-  // closes one modal and opens another.
+  // Closes one modal and opens another.
   const replaceModalWith = (
     modal: string,
     config: ModalConfig = {},
     size = 'large'
   ) => {
-    setStatus(3);
-    setHeight(0);
+    setStatus(4);
     setTimeout(() => {
       openModalWith(modal, config, size);
     }, 10);
   };
 
+  // Helper to calculate the maximum height of the modal.
   const modalMaxHeight = () => window.innerHeight * 0.8;
+
+  // helper to set the transition height class of the modal.
+  const transitionOn = () =>
+    heightRef?.current?.classList.add('transition-height');
+
+  // helper to remove the transition height class of the modal.
+  const transitionOff = () =>
+    heightRef?.current?.classList.remove('transition-height');
 
   return (
     <ModalContext.Provider
@@ -97,6 +132,8 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
         height,
         resize,
         modalMaxHeight,
+        setModalRef,
+        setHeightRef,
         modal: optionsRef.current.modal,
         config: optionsRef.current.config,
         size: optionsRef.current.size,

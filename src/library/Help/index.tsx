@@ -133,17 +133,20 @@ export const Help = () => {
     <ModalCanvas
       initial={{
         opacity: 0,
+        scale: 1.05,
       }}
       animate={controls}
       transition={{
-        duration: 0.15,
+        duration: 0.2,
       }}
       variants={{
         hidden: {
           opacity: 0,
+          scale: 1.05,
         },
         visible: {
           opacity: 1,
+          scale: 1,
         },
       }}
     >
