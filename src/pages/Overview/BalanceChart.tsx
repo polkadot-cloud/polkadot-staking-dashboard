@@ -252,8 +252,8 @@ export const BalanceChart = () => {
             <div
               style={{
                 flex: 0,
-                minWidth: '13rem',
-                maxWidth: '13rem',
+                minWidth: '12.5rem',
+                maxWidth: '12.5rem',
                 flexBasis: '50%',
               }}
             >
