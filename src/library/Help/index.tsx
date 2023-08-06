@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import {
   ButtonPrimaryInvert,
   ModalCanvas,
@@ -23,12 +23,13 @@ import type {
 import { useFillVariables } from 'library/Hooks/useFillVariables';
 import { Definition } from './Items/Definition';
 import { External } from './Items/External';
+import { ActiveDefinition } from './Items/ActiveDefinition';
 
 export const Help = () => {
   const { t, i18n } = useTranslation('help');
   const controls = useAnimation();
   const { fillVariables } = useFillVariables();
-  const { setStatus, status, definition, closeHelp, setDefinition } = useHelp();
+  const { setStatus, status, definition, closeHelp } = useHelp();
 
   const onFadeIn = useCallback(async () => {
     await controls.start('visible');
@@ -133,31 +134,26 @@ export const Help = () => {
     <ModalCanvas
       initial={{
         opacity: 0,
+        scale: 1.05,
       }}
       animate={controls}
       transition={{
-        duration: 0.15,
+        duration: 0.2,
       }}
       variants={{
         hidden: {
           opacity: 0,
+          scale: 1.05,
         },
         visible: {
           opacity: 1,
+          scale: 1,
         },
       }}
     >
       <ModalScroll>
         <ModalContent>
           <div className="buttons">
-            {definition && (
-              <ButtonPrimaryInvert
-                lg
-                text={t('modal.allResources')}
-                iconLeft={faChevronLeft}
-                onClick={() => setDefinition(null)}
-              />
-            )}
             <ButtonPrimaryInvert
               lg
               text={t('modal.close')}
@@ -172,14 +168,7 @@ export const Help = () => {
           </h1>
 
           {activeDefinition !== null && (
-            <>
-              <Definition
-                open
-                onClick={() => {}}
-                title={activeDefinition?.title}
-                description={activeDefinition?.description}
-              />
-            </>
+            <ActiveDefinition description={activeDefinition?.description} />
           )}
 
           {definitions.length > 0 && (
@@ -215,13 +204,7 @@ export const Help = () => {
           )}
         </ModalContent>
       </ModalScroll>
-      <button
-        type="button"
-        className="close"
-        onClick={() => {
-          closeHelp();
-        }}
-      >
+      <button type="button" className="close" onClick={() => closeHelp()}>
         &nbsp;
       </button>
     </ModalCanvas>

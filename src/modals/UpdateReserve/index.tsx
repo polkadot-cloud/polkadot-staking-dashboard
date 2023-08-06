@@ -141,7 +141,7 @@ export const UpdateReserve = () => {
             <ButtonPrimaryInvert
               text={t('done')}
               onClick={() => {
-                setStatus(2);
+                setStatus('closing');
               }}
               disabled={!accountHasSigner(activeAccount)}
             />

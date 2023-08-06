@@ -54,7 +54,7 @@ export const SelectFavorites = () => {
     if (!selectedFavorites.length) return;
     const newNominations = [...nominations].concat(...selectedFavorites);
     generateNominationsCallback(newNominations);
-    setStatus(0);
+    setStatus('closing');
   };
 
   const totalAfterSelection = nominations.length + selectedFavorites.length;

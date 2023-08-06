@@ -100,7 +100,7 @@ export const SetState = ({ setSection, task }: any) => {
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
     },
     callbackInBlock: () => {
       // reflect updated state in `bondedPools` list.

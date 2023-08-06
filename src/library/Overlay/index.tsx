@@ -22,25 +22,26 @@ export const Overlay = () => {
   };
 
   useEffect(() => {
-    if (modalStatus === 1) onFadeIn();
-    if (modalStatus === 2) onFadeOut();
+    if (modalStatus === 'open') onFadeIn();
+    if (modalStatus === 'closing') onFadeOut();
   }, [modalStatus]);
 
   useEffect(() => {
-    if (canvasStatus === 1 && modalStatus !== 1) onFadeIn();
-    if (canvasStatus === 2 && modalStatus !== 1) onFadeOut();
+    if (canvasStatus === 1 && modalStatus !== 'open') onFadeIn();
+    if (canvasStatus === 2 && modalStatus !== 'open') onFadeOut();
   }, [canvasStatus]);
 
   // Managing fade is more complex with help, as it can overlay modal and canvas. Do not fade in/out
   // if modal or canvas is open. (help can be opened in a modal, canvas can be summoned in an open
   // modal).
   useEffect(() => {
-    if (helpStatus === 1 && modalStatus !== 1 && canvasStatus !== 1) onFadeIn();
-    if (helpStatus === 2 && modalStatus !== 1 && canvasStatus !== 1)
+    if (helpStatus === 1 && modalStatus !== 'open' && canvasStatus !== 1)
+      onFadeIn();
+    if (helpStatus === 2 && modalStatus !== 'open' && canvasStatus !== 1)
       onFadeOut();
   }, [helpStatus]);
 
-  if (modalStatus === 0 && helpStatus === 0 && canvasStatus === 0) {
+  if (modalStatus === 'closed' && helpStatus === 0 && canvasStatus === 0) {
     return <></>;
   }
 

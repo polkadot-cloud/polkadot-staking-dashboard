@@ -90,7 +90,7 @@ export const UpdatePayee = () => {
     from: controller,
     shouldSubmit: isComplete(),
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
     },
     callbackInBlock: () => {},
   });

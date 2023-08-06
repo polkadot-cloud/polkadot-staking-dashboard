@@ -66,7 +66,7 @@ export const AccountButton = ({
     if (!imported) return;
     connectToAccount(getAccount(connectTo));
     setActiveProxy(proxyType ? { address: connectProxy, proxyType } : null);
-    setStatus(2);
+    setStatus('closing');
   };
 
   return (

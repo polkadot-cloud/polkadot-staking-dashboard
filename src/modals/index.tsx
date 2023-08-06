@@ -50,6 +50,8 @@ export const Modal = () => {
     resize,
     config,
     setStatus,
+    setModalRef,
+    setHeightRef,
     modalMaxHeight,
     setModalHeight,
   } = useModal();
@@ -58,13 +60,17 @@ export const Modal = () => {
   const { status: helpStatus } = useHelp();
   const { status: canvasStatus } = useCanvas();
   const modalRef = useRef<HTMLDivElement>(null);
+  const heightRef = useRef<HTMLDivElement>(null);
 
-  const onFadeIn = async () => {
-    await controls.start('visible');
+  const onOutClose = async () => {
+    await controls.start('out');
+    setStatus('closed');
   };
-  const onFadeOut = async () => {
-    await controls.start('hidden');
-    setStatus(0);
+  const onIn = async () => {
+    await controls.start('in');
+  };
+  const onOut = async () => {
+    await controls.start('out');
   };
 
   const windowResize = () => {
@@ -74,23 +80,30 @@ export const Modal = () => {
   };
 
   const handleResize = () => {
-    if (status !== 1 || config?.disableWindowResize) return;
+    if (status !== 'open' || config?.disableWindowResize) return;
 
     let h = modalRef.current?.clientHeight ?? 0;
     h = h > maxHeight ? maxHeight : h;
     setModalHeight(h);
   };
 
+  // Control on modal status change.
   useEffect(() => {
-    // modal has been opened - fade in.
-    if (status === 1) {
-      onFadeIn();
-    }
-    // modal closure triggered - fade out.
-    if (status === 2) {
-      onFadeOut();
-    }
+    if (status === 'open') onIn();
+    if (status === 'closing') onOutClose();
   }, [status]);
+
+  // Control on canvas status change.
+  useEffect(() => {
+    if (canvasStatus === 1) if (status === 'open') onOut();
+    if (canvasStatus === 2) if (status === 'open') onIn();
+  }, [canvasStatus]);
+
+  // Control dim help status change.
+  useEffect(() => {
+    if (helpStatus === 1) if (status === 'open') onOut();
+    if (helpStatus === 2) if (status === 'open') onIn();
+  }, [helpStatus]);
 
   // resize modal on status or resize change
   useEffect(() => {
@@ -104,36 +117,47 @@ export const Modal = () => {
     };
   });
 
-  if (status === 0) {
+  // store the modal's content ref.
+  useEffect(() => {
+    setModalRef(modalRef);
+    setHeightRef(heightRef);
+  }, [modalRef?.current, heightRef?.current]);
+
+  if (status === 'closed') {
     return <></>;
   }
 
   const variants = {
-    hidden: {
-      opacity: 0,
-    },
-    visible: {
+    in: {
       opacity: 1,
+      scale: 1,
+    },
+    out: {
+      opacity: 0,
+      scale: 0.9,
     },
   };
   const transition = {
-    duration: 0.15,
+    duration: 0.2,
   };
   const initial = {
     opacity: 0,
+    scale: 0.9,
   };
 
   return (
     <>
-      {status !== 3 ? (
+      {status !== 'replacing' ? (
         <ModalContainer
           initial={initial}
           animate={controls}
           transition={transition}
           variants={variants}
+          style={{ opacity: status === 'opening' ? 0 : 1 }}
         >
           <div>
             <ModalHeight
+              ref={heightRef}
               size={size}
               style={{
                 height,
@@ -190,7 +214,7 @@ export const Modal = () => {
               type="button"
               className="close"
               onClick={() => {
-                setStatus(2);
+                setStatus('closing');
               }}
             >
               &nbsp;

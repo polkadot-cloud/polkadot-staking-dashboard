@@ -11,7 +11,6 @@ import {
 } from '@polkadotcloud/core-ui';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -19,6 +18,7 @@ import { useExtensions } from 'contexts/Extensions';
 import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { AccountButton } from './Account';
 import { Delegates } from './Delegates';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
@@ -31,118 +31,93 @@ import type {
 
 export const Accounts = () => {
   const { t } = useTranslation('modals');
-  const { isReady } = useApi();
   const { balances } = useBalances();
   const { getDelegates } = useProxies();
   const { extensions } = useExtensions();
   const { bondedAccounts } = useBonded();
   const { ledgers, getLocks } = useBalances();
   const { memberships } = usePoolMemberships();
-  const { replaceModalWith, setResize } = useModal();
+  const { replaceModalWith, status: modalStatus, setResize } = useModal();
   const { activeAccount, disconnectFromAccount, setActiveProxy, accounts } =
     useConnect();
 
   // Store local copy of accounts.
   const [localAccounts, setLocalAccounts] = useState(accounts);
 
-  // Store accounts that are both nominating and in a pool.
-  const [nominatingAndPool, setNominatingAndPool] = useState<
-    AccountNominatingAndInPool[]
-  >([]);
+  const stashes: string[] = [];
+  // accumulate imported stash accounts
+  for (const { address } of localAccounts) {
+    const locks = getLocks(address);
 
-  // Store accounts that are actively nominating.
-  const [nominating, setNominating] = useState<AccountNominating[]>([]);
+    // account is a stash if they have an active `staking` lock
+    if (locks.find(({ id }) => id === 'staking')) {
+      stashes.push(address);
+    }
+  }
 
-  // Store accounts that are in a pool.
-  const [inPool, setInPool] = useState<AccountInPool[]>([]);
+  // construct account groupings
+  const nominating: AccountNominating[] = [];
+  const inPool: AccountInPool[] = [];
+  const nominatingAndPool: AccountNominatingAndInPool[] = [];
+  const notStaking: AccountNotStaking[] = [];
 
-  // Store accounts that are not staking.
-  const [notStaking, setNotStaking] = useState<AccountNotStaking[]>([]);
+  for (const { address } of localAccounts) {
+    let isNominating = false;
+    let isInPool = false;
+    const isStash = stashes[stashes.indexOf(address)] ?? null;
+    const delegates = getDelegates(address);
 
-  const getAccountsStatus = () => {
-    const stashes: string[] = [];
+    const poolMember = memberships.find((m) => m.address === address) ?? null;
 
-    // accumulate imported stash accounts
-    for (const { address } of localAccounts) {
-      const locks = getLocks(address);
+    // If stash exists, add address to nominating list.
+    if (
+      isStash &&
+      nominating.find((a) => a.address === address) === undefined
+    ) {
+      isNominating = true;
+    }
 
-      // account is a stash if they have an active `staking` lock
-      if (locks.find(({ id }) => id === 'staking')) {
-        stashes.push(address);
+    // if pooling, add address to active pooling.
+    if (poolMember) {
+      if (!inPool.find((n) => n.address === address)) {
+        isInPool = true;
       }
     }
 
-    // construct account groupings
-    const newNominating: AccountNominating[] = [];
-    const newInPool: AccountInPool[] = [];
-    const newNominatingAndInPool: AccountNominatingAndInPool[] = [];
-    const newNotStaking: AccountNotStaking[] = [];
-
-    for (const { address } of localAccounts) {
-      let isNominating = false;
-      let isInPool = false;
-      const isStash = stashes[stashes.indexOf(address)] ?? null;
-      const delegates = getDelegates(address);
-
-      const poolMember = memberships.find((m) => m.address === address) ?? null;
-
-      // If stash exists, add address to nominating list.
-      if (
-        isStash &&
-        newNominating.find((a) => a.address === address) === undefined
-      ) {
-        isNominating = true;
-      }
-
-      // if pooling, add address to active pooling.
-      if (poolMember) {
-        if (!newInPool.find((n) => n.address === address)) {
-          isInPool = true;
-        }
-      }
-
-      // If not doing anything, add address to `notStaking`.
-      if (
-        !isStash &&
-        !poolMember &&
-        !newNotStaking.find((n) => n.address === address)
-      ) {
-        newNotStaking.push({ address, delegates });
-      }
-
-      if (isNominating && isInPool && poolMember) {
-        newNominatingAndInPool.push({
-          ...poolMember,
-          address,
-          stashImported: true,
-          delegates,
-        });
-      }
-
-      if (isNominating && !isInPool) {
-        newNominating.push({ address, stashImported: true, delegates });
-      }
-      if (!isNominating && isInPool && poolMember) {
-        newInPool.push({ ...poolMember, delegates });
-      }
+    // If not doing anything, add address to `notStaking`.
+    if (
+      !isStash &&
+      !poolMember &&
+      !notStaking.find((n) => n.address === address)
+    ) {
+      notStaking.push({ address, delegates });
     }
 
-    setNominatingAndPool(newNominatingAndInPool);
-    setNominating(newNominating);
-    setInPool(newInPool);
-    setNotStaking(newNotStaking);
-  };
+    if (isNominating && isInPool && poolMember) {
+      nominatingAndPool.push({
+        ...poolMember,
+        address,
+        stashImported: true,
+        delegates,
+      });
+    }
+
+    if (isNominating && !isInPool) {
+      nominating.push({ address, stashImported: true, delegates });
+    }
+    if (!isNominating && isInPool && poolMember) {
+      inPool.push({ ...poolMember, delegates });
+    }
+  }
 
   useEffect(() => {
     setLocalAccounts(accounts);
-  }, [isReady, accounts]);
+  }, [accounts]);
 
-  useEffect(() => {
-    getAccountsStatus();
-  }, [localAccounts, bondedAccounts, balances, ledgers, accounts, memberships]);
-
-  useEffect(() => {
-    setResize();
+  useEffectIgnoreInitial(() => {
+    if (modalStatus === 'open') {
+      setResize();
+    }
   }, [activeAccount, accounts, bondedAccounts, balances, ledgers, extensions]);
 
   return (

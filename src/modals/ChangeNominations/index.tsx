@@ -102,7 +102,7 @@ export const ChangeNominations = () => {
     from: signingAccount,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
 
       // if removing a subset of nominations, reset selected list
       if (provider) {
