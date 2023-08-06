@@ -4,7 +4,7 @@
 import type { ModalContextInterface } from './types';
 
 export const defaultModalContext: ModalContextInterface = {
-  status: 0,
+  status: 'closed',
   // eslint-disable-next-line
   setStatus: (status) => {},
   // eslint-disable-next-line

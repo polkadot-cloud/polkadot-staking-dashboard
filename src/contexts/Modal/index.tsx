@@ -7,7 +7,12 @@ import React, { useRef, useState } from 'react';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { defaultModalContext } from './defaults';
-import type { ModalConfig, ModalContextInterface, ModalOptions } from './types';
+import type {
+  ModalConfig,
+  ModalContextInterface,
+  ModalOptions,
+  ModalStatus,
+} from './types';
 
 export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const { notEnoughFunds } = useTxMeta();
@@ -24,7 +29,7 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   const [height, setHeight] = useState<number>(0);
 
   // Store the modal status.
-  const [status, setStatusState] = useState<number>(0);
+  const [status, setStatusState] = useState<ModalStatus>('closed');
   const statusRef = useRef(status);
 
   // Store the modal's resize counter.
@@ -42,10 +47,10 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffectIgnoreInitial(() => {
     const h = modalRef?.current?.clientHeight || 0;
-    if (statusRef.current === 3) {
+    if (statusRef.current === 'opening') {
       setModalHeight(h, false);
       if (h > 0) {
-        setStatus(1);
+        setStatus('open');
       }
     }
   }, [statusRef.current, modalRef?.current]);
@@ -54,7 +59,7 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     setStateWithRef(o, setOptionsState, optionsRef);
   };
 
-  const setStatus = (newStatus: number) => {
+  const setStatus = (newStatus: ModalStatus) => {
     setStateWithRef(newStatus, setStatusState, statusRef);
   };
 
@@ -68,11 +73,11 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
       config,
       size,
     });
-    setStatus(3);
+    setStatus('opening');
   };
 
   const setModalHeight = (h: number, transition: boolean = true) => {
-    if (statusRef.current === 0) return;
+    if (statusRef.current === 'closed') return;
 
     // Ensrue transition class is removed if not transitioning. Otherwise, ensure class exists.
     if (transition) transitionOn();
@@ -103,7 +108,7 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
     config: ModalConfig = {},
     size = 'large'
   ) => {
-    setStatus(4);
+    setStatus('replacing');
     setTimeout(() => {
       openModalWith(modal, config, size);
     }, 10);

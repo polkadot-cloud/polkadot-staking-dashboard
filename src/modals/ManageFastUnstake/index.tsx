@@ -95,7 +95,7 @@ export const ManageFastUnstake = () => {
     shouldSubmit: valid,
     callbackSubmit: () => {},
     callbackInBlock: () => {
-      setStatus(2);
+      setStatus('closing');
     },
   });
 

@@ -64,7 +64,7 @@ export const Modal = () => {
 
   const onOutClose = async () => {
     await controls.start('out');
-    setStatus(0);
+    setStatus('closed');
   };
   const onIn = async () => {
     await controls.start('in');
@@ -80,7 +80,7 @@ export const Modal = () => {
   };
 
   const handleResize = () => {
-    if (status !== 1 || config?.disableWindowResize) return;
+    if (status !== 'open' || config?.disableWindowResize) return;
 
     let h = modalRef.current?.clientHeight ?? 0;
     h = h > maxHeight ? maxHeight : h;
@@ -89,20 +89,20 @@ export const Modal = () => {
 
   // Control on modal status change.
   useEffect(() => {
-    if (status === 1) onIn();
-    if (status === 2) onOutClose();
+    if (status === 'open') onIn();
+    if (status === 'closing') onOutClose();
   }, [status]);
 
   // Control on canvas status change.
   useEffect(() => {
-    if (canvasStatus === 1) if (status === 1) onOut();
-    if (canvasStatus === 2) if (status === 1) onIn();
+    if (canvasStatus === 1) if (status === 'open') onOut();
+    if (canvasStatus === 2) if (status === 'open') onIn();
   }, [canvasStatus]);
 
   // Control dim help status change.
   useEffect(() => {
-    if (helpStatus === 1) if (status === 1) onOut();
-    if (helpStatus === 2) if (status === 1) onIn();
+    if (helpStatus === 1) if (status === 'open') onOut();
+    if (helpStatus === 2) if (status === 'open') onIn();
   }, [helpStatus]);
 
   // resize modal on status or resize change
@@ -123,7 +123,7 @@ export const Modal = () => {
     setHeightRef(heightRef);
   }, [modalRef?.current, heightRef?.current]);
 
-  if (status === 0) {
+  if (status === 'closed') {
     return <></>;
   }
 
@@ -147,13 +147,13 @@ export const Modal = () => {
 
   return (
     <>
-      {status !== 4 ? (
+      {status !== 'replacing' ? (
         <ModalContainer
           initial={initial}
           animate={controls}
           transition={transition}
           variants={variants}
-          style={{ opacity: status === 3 ? 0 : 1 }}
+          style={{ opacity: status === 'opening' ? 0 : 1 }}
         >
           <div>
             <ModalHeight
@@ -214,7 +214,7 @@ export const Modal = () => {
               type="button"
               className="close"
               onClick={() => {
-                setStatus(2);
+                setStatus('closing');
               }}
             >
               &nbsp;

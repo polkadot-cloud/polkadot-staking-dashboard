@@ -70,7 +70,7 @@ export const Nominate = () => {
     from: controller,
     shouldSubmit: valid,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
     },
     callbackInBlock: () => {},
   });

@@ -91,7 +91,7 @@ export const JoinPool = () => {
     from: activeAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
       setActiveTab(0);
     },
     callbackInBlock: async () => {

@@ -49,7 +49,7 @@ export const Title = ({
         </h2>
       </div>
       <div>
-        <button type="button" onClick={() => setStatus(2)}>
+        <button type="button" onClick={() => setStatus('closing')}>
           <CrossSVG style={{ width: '1.25rem', height: '1.25rem' }} />
         </button>
       </div>

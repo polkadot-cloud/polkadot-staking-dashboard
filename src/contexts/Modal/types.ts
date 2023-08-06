@@ -5,8 +5,16 @@ import type { RefObject } from 'react';
 import type { AnyJson } from 'types';
 
 export type ModalSize = 'small' | 'large' | 'xl';
+
+export type ModalStatus =
+  | 'closed'
+  | 'opening'
+  | 'open'
+  | 'closing'
+  | 'replacing';
+
 export interface ModalContextInterface {
-  setStatus: (status: number) => void;
+  setStatus: (status: ModalStatus) => void;
   openModalWith: (modal: string, options?: ModalConfig, size?: string) => void;
   replaceModalWith: (
     modal: string,
@@ -18,7 +26,7 @@ export interface ModalContextInterface {
   modalMaxHeight: () => number;
   setModalRef: (v: RefObject<HTMLDivElement>) => void;
   setHeightRef: (v: RefObject<HTMLDivElement>) => void;
-  status: number;
+  status: ModalStatus;
   modal: string;
   config: AnyJson;
   size: string;

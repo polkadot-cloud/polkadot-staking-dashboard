@@ -57,7 +57,7 @@ export const Networks = () => {
                     onClick={() => {
                       if (networkKey !== key) {
                         switchNetwork(key, isLightClient);
-                        setStatus(0);
+                        setStatus('closing');
                       }
                     }}
                   >
@@ -90,7 +90,7 @@ export const Networks = () => {
               type="button"
               onClick={() => {
                 switchNetwork(networkKey as NetworkName, false);
-                setStatus(0);
+                setStatus('closing');
               }}
             >
               <h3>RPC</h3>
@@ -102,7 +102,7 @@ export const Networks = () => {
               type="button"
               onClick={() => {
                 switchNetwork(networkKey as NetworkName, true);
-                setStatus(0);
+                setStatus('closing');
               }}
             >
               <h3>{t('lightClient')}</h3>

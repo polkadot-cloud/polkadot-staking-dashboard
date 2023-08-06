@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import {
   ButtonPrimaryInvert,
   ModalCanvas,
@@ -28,7 +28,7 @@ export const Help = () => {
   const { t, i18n } = useTranslation('help');
   const controls = useAnimation();
   const { fillVariables } = useFillVariables();
-  const { setStatus, status, definition, closeHelp, setDefinition } = useHelp();
+  const { setStatus, status, definition, closeHelp } = useHelp();
 
   const onFadeIn = useCallback(async () => {
     await controls.start('visible');
@@ -153,14 +153,6 @@ export const Help = () => {
       <ModalScroll>
         <ModalContent>
           <div className="buttons">
-            {definition && (
-              <ButtonPrimaryInvert
-                lg
-                text={t('modal.allResources')}
-                iconLeft={faChevronLeft}
-                onClick={() => setDefinition(null)}
-              />
-            )}
             <ButtonPrimaryInvert
               lg
               text={t('modal.close')}

@@ -115,7 +115,7 @@ export const Accounts = () => {
   }, [accounts]);
 
   useEffectIgnoreInitial(() => {
-    if (modalStatus === 1) {
+    if (modalStatus === 'open') {
       setResize();
     }
   }, [activeAccount, accounts, bondedAccounts, balances, ledgers, extensions]);

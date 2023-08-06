@@ -31,7 +31,7 @@ export const ChooseLanguage = () => {
                     type="button"
                     onClick={() => {
                       changeLanguage(code, i18n);
-                      setStatus(2);
+                      setStatus('closing');
                     }}
                   >
                     {label}
