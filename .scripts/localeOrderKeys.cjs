@@ -16,26 +16,27 @@ for (const lng of languages) {
   fs.readdir(pathToLanguage, (error, files) => {
     if (error) return;
 
-    files.forEach((file) => {
+    files.forEach(async (file) => {
       const pathToFile = path.join(pathToLanguage, file);
       const json = JSON.parse(fs.readFileSync(pathToFile).toString());
 
       // order json object alphabetically.
       const orderedJson = orderJsonByKeys(json);
 
-      fs.writeFile(
-        pathToFile,
-        prettier.format(JSON.stringify(orderedJson), { parser: 'json' }),
-        (err) => {
-          if (err) {
-            console.err(err);
-          } else {
-            console.log(
-              `----------Keys In ${pathToLanguage}/${file} Are Ordered Alphabetically-------------`
-            );
-          }
+      // format json object.
+      const formatted = await prettier.format(JSON.stringify(orderedJson), {
+        parser: 'json',
+      });
+
+      fs.writeFile(pathToFile, formatted, (err) => {
+        if (err) {
+          console.err(err);
+        } else {
+          console.log(
+            `----------Keys In ${pathToLanguage}/${file} Are Ordered Alphabetically-------------`
+          );
         }
-      );
+      });
     });
   });
 }
