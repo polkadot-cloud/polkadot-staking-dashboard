@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { faChevronLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import {
   ButtonPrimaryInvert,
   ModalCanvas,
@@ -158,13 +158,14 @@ export const Help = () => {
                 lg
                 text={t('modal.allResources')}
                 iconLeft={faChevronLeft}
+                iconTransform="shrink-2"
                 onClick={() => setDefinition(null)}
+                marginRight
               />
             )}
             <ButtonPrimaryInvert
               lg
               text={t('modal.close')}
-              iconLeft={faTimes}
               onClick={() => closeHelp()}
             />
           </div>

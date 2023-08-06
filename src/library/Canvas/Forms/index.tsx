@@ -3,7 +3,6 @@
 
 import { motion } from 'framer-motion';
 import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { useCanvas } from 'contexts/Canvas';
 import { CanvasCardWrapper } from '../Wrappers';
@@ -27,12 +26,7 @@ export const Swap = () => {
     <MotionContainer staggerChildren={0.1}>
       <motion.div {...staggerProps} className="header">
         <div>
-          <ButtonPrimaryInvert
-            lg
-            text="Cancel"
-            iconLeft={faTimes}
-            onClick={() => closeCanvas()}
-          />
+          <ButtonPrimaryInvert lg text="Cancel" onClick={() => closeCanvas()} />
         </div>
         <h1>Swap</h1>
       </motion.div>
