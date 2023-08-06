@@ -32,7 +32,6 @@ import { SideMenu } from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
 import { Modal } from 'modals';
 import { Overlay } from 'library/Overlay';
-import { Canvas } from 'library/Canvas';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
