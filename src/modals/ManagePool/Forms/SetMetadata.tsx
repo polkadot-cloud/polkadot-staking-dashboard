@@ -62,7 +62,7 @@ export const SetMetadata = ({ setSection, section }: any) => {
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
     },
     callbackInBlock: () => {},
   });

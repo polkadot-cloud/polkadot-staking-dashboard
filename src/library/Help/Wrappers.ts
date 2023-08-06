@@ -40,45 +40,52 @@ export const DefinitionWrapper = styled(motion.div)`
   border-radius: 1.5rem;
   display: flex;
   flex-flow: row wrap;
-  align-items: center;
   flex: 1;
-  position: relative;
   overflow: hidden;
   margin-bottom: 1.25rem;
   padding: 1.5rem 1.5rem 0 1.5rem;
-  transition: all 0.2s;
   width: 100%;
 
   button {
     padding: 0;
-  }
+    h2 {
+      margin: 0 0 1.5rem 0;
+      display: flex;
+      flex-flow: row wrap;
+      align-items: center;
 
-  h2 {
-    margin: 0 0 1.5rem 0;
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    > span {
-      color: var(--text-color-secondary);
-      margin-left: 0.75rem;
-      opacity: 0.75;
-      font-size: 1.1rem;
+      > span {
+        color: var(--text-color-secondary);
+        margin-left: 0.75rem;
+        opacity: 0.75;
+        font-size: 1.1rem;
+      }
     }
   }
 
-  h4 {
-    font-family: InterSemiBold, sans-serif;
-    margin-bottom: 1.15rem;
-  }
+  > div {
+    position: relative;
+    transition: height 0.4s cubic-bezier(0.1, 1, 0.2, 1);
+    width: 100%;
 
-  p {
-    color: var(--text-color-primary);
-    margin: 0.5rem 0 0 0;
-    text-align: left;
-  }
+    > .content {
+      position: absolute;
+    }
 
-  p.icon {
-    opacity: 0.5;
+    h4 {
+      font-family: InterSemiBold, sans-serif;
+      margin-bottom: 1.15rem;
+    }
+
+    p {
+      color: var(--text-color-primary);
+      margin: 0.5rem 0 0 0;
+      text-align: left;
+    }
+
+    p.icon {
+      opacity: 0.5;
+    }
   }
 `;
 

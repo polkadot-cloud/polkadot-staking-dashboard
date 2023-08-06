@@ -45,7 +45,7 @@ export const ChangePoolRoles = () => {
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
     },
     callbackInBlock: () => {
       // manually update bondedPools with new pool roles

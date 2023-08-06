@@ -32,7 +32,7 @@ export const DismissTips = () => {
               text={t('module.disableTips')}
               onClick={() => {
                 togglePlugin('tips');
-                setStatus(2);
+                setStatus('closing');
               }}
             />
           </div>

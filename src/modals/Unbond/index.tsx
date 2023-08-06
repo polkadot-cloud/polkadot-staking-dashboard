@@ -122,7 +122,7 @@ export const Unbond = () => {
     from: signingAccount,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
     },
     callbackInBlock: () => {},
   });

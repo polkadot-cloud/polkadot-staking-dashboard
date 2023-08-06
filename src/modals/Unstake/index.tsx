@@ -104,7 +104,7 @@ export const Unstake = () => {
     from: controller,
     shouldSubmit: bondValid,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
     },
     callbackInBlock: () => {},
   });

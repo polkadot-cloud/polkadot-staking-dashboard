@@ -66,7 +66,7 @@ const Button = ({ item, poolId }: { item: string[]; poolId: string }) => {
       disabled={false}
       onClick={() => {
         setSelectedPoolId(poolId);
-        setStatus(2);
+        setStatus('closing');
       }}
     >
       <div className="icon">

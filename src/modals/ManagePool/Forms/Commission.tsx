@@ -314,7 +314,7 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
     from: activeAccount,
     shouldSubmit: true,
     callbackSubmit: () => {
-      setModalStatus(2);
+      setModalStatus('closing');
     },
     callbackInBlock: () => {
       const pool = getBondedPool(poolId);
