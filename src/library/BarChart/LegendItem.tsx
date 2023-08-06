@@ -5,7 +5,12 @@ import { ButtonHelp } from '@polkadotcloud/core-ui';
 import { useHelp } from 'contexts/Help';
 import type { LegendItemProps } from './types';
 
-export const LegendItem = ({ dataClass, label, helpKey }: LegendItemProps) => {
+export const LegendItem = ({
+  dataClass,
+  label,
+  helpKey,
+  button,
+}: LegendItemProps) => {
   const { openHelp } = useHelp();
 
   return (
@@ -14,6 +19,7 @@ export const LegendItem = ({ dataClass, label, helpKey }: LegendItemProps) => {
       {helpKey ? (
         <ButtonHelp marginLeft onClick={() => openHelp(helpKey)} />
       ) : null}
+      {button && button}
     </h4>
   );
 };

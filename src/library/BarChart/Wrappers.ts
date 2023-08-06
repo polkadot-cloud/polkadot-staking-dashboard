@@ -46,14 +46,25 @@ export const Legend = styled.div`
   width: 100%;
   margin-bottom: 0.4rem;
   display: flex;
+  align-items: flex-end;
+  height: 2.5rem;
+
+  &.end {
+    > h4 {
+      flex-direction: row;
+      flex-grow: 1;
+      justify-content: flex-end;
+      padding-right: 0;
+    }
+  }
 
   > h4 {
     font-family: InterSemiBold, sans-serif;
     display: flex;
     align-items: center;
-    padding: 0.5rem 1rem;
     font-size: 1.1rem;
     margin: 0;
+    padding: 0.5rem 1rem 0.25rem 1rem;
 
     &:first-child {
       padding-left: 0;
