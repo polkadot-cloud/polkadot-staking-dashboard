@@ -15,6 +15,7 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
+import { Canvas } from 'library/Canvas';
 import { Prompt } from 'library/Prompt';
 import { PagesConfig } from 'config/pages';
 import { useApi } from 'contexts/Api';
