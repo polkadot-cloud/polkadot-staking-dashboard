@@ -40,6 +40,7 @@ import { UpdatePayee } from './UpdatePayee';
 import { UpdateReserve } from './UpdateReserve';
 import { ValidatorMetrics } from './ValidatorMetrics';
 import { WithdrawPoolMember } from './WithdrawPoolMember';
+import { OtherBalances } from './OtherBalances';
 
 export const Modal = () => {
   const {
@@ -50,6 +51,8 @@ export const Modal = () => {
     resize,
     config,
     setStatus,
+    setModalRef,
+    setHeightRef,
     modalMaxHeight,
     setModalHeight,
   } = useModal();
@@ -58,13 +61,17 @@ export const Modal = () => {
   const { status: helpStatus } = useHelp();
   const { status: canvasStatus } = useCanvas();
   const modalRef = useRef<HTMLDivElement>(null);
+  const heightRef = useRef<HTMLDivElement>(null);
 
-  const onFadeIn = async () => {
-    await controls.start('visible');
-  };
-  const onFadeOut = async () => {
-    await controls.start('hidden');
+  const onOutClose = async () => {
+    await controls.start('out');
     setStatus(0);
+  };
+  const onIn = async () => {
+    await controls.start('in');
+  };
+  const onOut = async () => {
+    await controls.start('out');
   };
 
   const windowResize = () => {
@@ -81,16 +88,23 @@ export const Modal = () => {
     setModalHeight(h);
   };
 
+  // Control on modal status change.
   useEffect(() => {
-    // modal has been opened - fade in.
-    if (status === 1) {
-      onFadeIn();
-    }
-    // modal closure triggered - fade out.
-    if (status === 2) {
-      onFadeOut();
-    }
+    if (status === 1) onIn();
+    if (status === 2) onOutClose();
   }, [status]);
+
+  // Control on canvas status change.
+  useEffect(() => {
+    if (canvasStatus === 1) if (status === 1) onOut();
+    if (canvasStatus === 2) if (status === 1) onIn();
+  }, [canvasStatus]);
+
+  // Control dim help status change.
+  useEffect(() => {
+    if (helpStatus === 1) if (status === 1) onOut();
+    if (helpStatus === 2) if (status === 1) onIn();
+  }, [helpStatus]);
 
   // resize modal on status or resize change
   useEffect(() => {
@@ -104,36 +118,47 @@ export const Modal = () => {
     };
   });
 
+  // store the modal's content ref.
+  useEffect(() => {
+    setModalRef(modalRef);
+    setHeightRef(heightRef);
+  }, [modalRef?.current, heightRef?.current]);
+
   if (status === 0) {
     return <></>;
   }
 
   const variants = {
-    hidden: {
-      opacity: 0,
-    },
-    visible: {
+    in: {
       opacity: 1,
+      scale: 1,
+    },
+    out: {
+      opacity: 0,
+      scale: 0.9,
     },
   };
   const transition = {
-    duration: 0.15,
+    duration: 0.2,
   };
   const initial = {
     opacity: 0,
+    scale: 0.9,
   };
 
   return (
     <>
-      {status !== 3 ? (
+      {status !== 4 ? (
         <ModalContainer
           initial={initial}
           animate={controls}
           transition={transition}
           variants={variants}
+          style={{ opacity: status === 3 ? 0 : 1 }}
         >
           <div>
             <ModalHeight
+              ref={heightRef}
               size={size}
               style={{
                 height,
@@ -171,6 +196,7 @@ export const Modal = () => {
                     <NominateFromFavorites />
                   )}
                   {modal === 'NominatePool' && <NominatePool />}
+                  {modal === 'OtherBalances' && <OtherBalances />}
                   {modal === 'PoolNominations' && <PoolNominations />}
                   {modal === 'SelectFavorites' && <SelectFavorites />}
                   {modal === 'Settings' && <Settings />}

@@ -20,6 +20,7 @@ import { useModal } from 'contexts/Modal';
 import { Close } from 'library/Modal/Close';
 import { SelectItems } from 'library/SelectItems';
 import type { AnyFunction } from 'types';
+import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { Extension } from './Extension';
 import { Ledger } from './Ledger';
 import { Proxies } from './Proxies';
@@ -67,7 +68,7 @@ export const Connect = () => {
   };
 
   // Resize modal on state change.
-  useEffect(() => {
+  useEffectIgnoreInitial(() => {
     refreshModalHeight();
   }, [section, readOnlyOpen, newProxyOpen, extensions]);
 

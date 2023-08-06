@@ -13,6 +13,10 @@ export const defaultModalContext: ModalContextInterface = {
   replaceModalWith: (m, c, s) => {},
   // eslint-disable-next-line
   setModalHeight: (v) => {},
+  // eslint-disable-next-line
+  setModalRef: (v) => {},
+  // eslint-disable-next-line
+  setHeightRef: (v) => {},
   setResize: () => {},
   modalMaxHeight: () => 0,
   modal: '',
