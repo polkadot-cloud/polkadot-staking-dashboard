@@ -23,6 +23,7 @@ import type {
 import { useFillVariables } from 'library/Hooks/useFillVariables';
 import { Definition } from './Items/Definition';
 import { External } from './Items/External';
+import { ActiveDefinition } from './Items/ActiveDefinition';
 
 export const Help = () => {
   const { t, i18n } = useTranslation('help');
@@ -167,14 +168,7 @@ export const Help = () => {
           </h1>
 
           {activeDefinition !== null && (
-            <>
-              <Definition
-                open
-                onClick={() => {}}
-                title={activeDefinition?.title}
-                description={activeDefinition?.description}
-              />
-            </>
+            <ActiveDefinition description={activeDefinition?.description} />
           )}
 
           {definitions.length > 0 && (
