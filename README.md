@@ -37,7 +37,7 @@ staking.polkadot.network/#/overview?n=kusama&l=cn
 You may build a container using:
 
 ```
-./scripts/build-container.sh
+./shell/build-container.sh
 ```
 
 Then run your container with:
