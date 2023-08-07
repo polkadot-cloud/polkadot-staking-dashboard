@@ -94,7 +94,7 @@ export const ProxiesProvider = ({
   const delegatesRef = useRef(delegates);
 
   const subscribeToProxies = async (address: string) => {
-    if (!api) return;
+    if (!api) return undefined;
 
     const unsub = await api.queryMulti<AnyApi>(
       [[api.query.proxy.proxies, address]],

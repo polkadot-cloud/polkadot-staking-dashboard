@@ -159,14 +159,15 @@ export const ValidatorListInner = ({
           false
         );
       }
-
-      return () => {
+    }
+    return () => {
+      if (allowFilters) {
         resetFilters('exclude', 'validators');
         resetFilters('include', 'validators');
         resetOrder('validators');
         clearSearchTerm('validators');
-      };
-    }
+      }
+    };
   }, []);
 
   // configure validator list when network is ready to fetch

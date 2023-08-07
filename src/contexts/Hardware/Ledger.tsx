@@ -277,6 +277,7 @@ export const LedgerHardwareProvider = ({
         body: [result],
       };
     }
+    return undefined;
   };
 
   // Signs a payload on device.
@@ -328,6 +329,7 @@ export const LedgerHardwareProvider = ({
         },
       };
     }
+    return undefined;
   };
 
   // Handle an incoming new status code and persist to state.
