@@ -70,7 +70,7 @@ export const Bond = ({ section }: SetupStepProps) => {
           syncing={txFees.isZero()}
           bondFor="nominator"
           inSetup
-          listenIsValid={setBondValid}
+          listenIsValid={(valid) => setBondValid(valid)}
           defaultBond={initialBondValue}
           setters={[
             {

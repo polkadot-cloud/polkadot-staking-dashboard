@@ -139,7 +139,7 @@ export const UnbondFeedback = ({
       newErrors.push(err);
     }
 
-    listenIsValid(!newErrors.length && bond.bond !== '');
+    listenIsValid(!newErrors.length && bond.bond !== '', newErrors);
     setErrors(newErrors);
   };
 
