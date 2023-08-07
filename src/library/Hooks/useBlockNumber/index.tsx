@@ -17,10 +17,9 @@ export const useBlockNumber = () => {
   const unsub = useRef<AnyApi>();
 
   useEffect(() => {
-    if (!isReady) return;
-
-    subscribeBlockNumber();
-
+    if (isReady) {
+      subscribeBlockNumber();
+    }
     return () => {
       if (unsub.current) unsub.current();
     };

@@ -79,7 +79,7 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Subscribe to account, get controller and nominations.
   const subscribeToBondedAccount = async (address: string) => {
-    if (!api) return;
+    if (!api) return undefined;
 
     const unsub = await api.queryMulti<AnyApi>(
       [
