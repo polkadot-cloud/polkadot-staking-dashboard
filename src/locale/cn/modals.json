@@ -131,7 +131,6 @@
     "noEnough": "您没有足够的可使用余额做快速解除抵押。快速解除抵押需要余额",
     "noFavoritesAvailable": "无收藏夹",
     "noFavoritesSelected": "无选中收藏夹",
-    "noFreeToBond": "您没有可用的 {{unit}} 可质押",
     "noNominationsSet": "没有提名任何人",
     "noNominatorRole": "您未参与任何提名池活动",
     "noProxyAccountsDeclared": "尚未添加任何代理帐户",
