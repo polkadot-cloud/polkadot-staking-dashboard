@@ -66,7 +66,7 @@ export const useInterlay = () => {
 
   // Formats `ForeignAsset` balances metadata.
   const formatForeignAssets = (assets?: AnyJson[]) => {
-    if (!assets) return;
+    if (!assets) return undefined;
 
     const formatted: Record<number, AnyJson> = {};
     assets?.forEach(([k, v]: AnyApi) => {
