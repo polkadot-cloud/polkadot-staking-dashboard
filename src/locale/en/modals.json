@@ -139,7 +139,6 @@
     "noEnough": "You do not have enough free balance to register for fast unstake. Fast unstake requires a deposit of",
     "noFavoritesAvailable": "No Favorites Available.",
     "noFavoritesSelected": "No Favorites Selected",
-    "noFreeToBond": "You have no free {{unit}} to bond.",
     "noNominationsSet": "You have no nominations set.",
     "noNominatorRole": "You do not have a nominator role in any pools.",
     "noProxyAccountsDeclared": "No proxy accounts have been declared.",

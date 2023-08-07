@@ -59,10 +59,13 @@ export const JoinPool = () => {
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(false);
 
+  // feedback errors to trigger modal resize
+  const [feedbackErrors, setFeedbackErrors] = useState<string[]>([]);
+
   // modal resize on form update
   useEffect(() => {
     setResize();
-  }, [bond]);
+  }, [bond, feedbackErrors.length]);
 
   // tx to submit
   const getTx = () => {
@@ -119,7 +122,10 @@ export const JoinPool = () => {
           syncing={largestTxFee.isZero()}
           joiningPool
           bondFor="pool"
-          listenIsValid={setBondValid}
+          listenIsValid={(valid, errors) => {
+            setBondValid(valid);
+            setFeedbackErrors(errors);
+          }}
           defaultBond={null}
           setters={[
             {

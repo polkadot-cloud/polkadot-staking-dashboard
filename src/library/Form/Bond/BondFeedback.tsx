@@ -161,7 +161,7 @@ export const BondFeedback = ({
 
     const bondValid = !newErrors.length && bond.bond !== '';
     setBondDisabled(disabled);
-    listenIsValid(bondValid);
+    listenIsValid(bondValid, newErrors);
     setErrors(newErrors);
   };
 

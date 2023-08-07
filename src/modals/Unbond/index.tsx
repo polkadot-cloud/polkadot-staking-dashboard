@@ -84,6 +84,9 @@ export const Unbond = () => {
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(false);
 
+  // feedback errors to trigger modal resize
+  const [feedbackErrors, setFeedbackErrors] = useState<string[]>([]);
+
   // get the max amount available to unbond
   const unbondToMin = isPooling
     ? isDepositor()
@@ -171,7 +174,7 @@ export const Unbond = () => {
   // modal resize on form update
   useEffect(() => {
     setResize();
-  }, [bond, warnings.length]);
+  }, [bond, feedbackErrors.length, warnings.length]);
 
   return (
     <>
@@ -187,7 +190,10 @@ export const Unbond = () => {
         ) : null}
         <UnbondFeedback
           bondFor={bondFor}
-          listenIsValid={setBondValid}
+          listenIsValid={(valid, errors) => {
+            setBondValid(valid);
+            setFeedbackErrors(errors);
+          }}
           setters={[
             {
               set: setBond,

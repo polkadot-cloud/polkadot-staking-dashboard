@@ -54,6 +54,9 @@ export const Bond = () => {
   // bond valid.
   const [bondValid, setBondValid] = useState<boolean>(false);
 
+  // feedback errors to trigger modal resize
+  const [feedbackErrors, setFeedbackErrors] = useState<string[]>([]);
+
   // bond minus tx fees.
   const enoughToCoverTxFees: boolean = freeBalance
     .minus(bond.bond)
@@ -126,7 +129,7 @@ export const Bond = () => {
   // modal resize on form update
   useEffect(() => {
     setResize();
-  }, [bond, warnings.length]);
+  }, [bond, bondValid, feedbackErrors.length, warnings.length]);
 
   return (
     <>
@@ -145,7 +148,10 @@ export const Bond = () => {
         <BondFeedback
           syncing={largestTxFee.isZero()}
           bondFor={bondFor}
-          listenIsValid={setBondValid}
+          listenIsValid={(valid, errors) => {
+            setBondValid(valid);
+            setFeedbackErrors(errors);
+          }}
           defaultBond={null}
           setters={[
             {
