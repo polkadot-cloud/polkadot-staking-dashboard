@@ -10,7 +10,7 @@ import BigNumber from 'bignumber.js';
 export const AppVersion = '1.0.8';
 export const BaseURL = '';
 export const DappName = 'Polkadot Staking Dashboard';
-export const PolkadotUrl = 'https://polkadot.network/staking/';
+export const PolkadotUrl = 'https://polkadot.network/features/staking/';
 export const DefaultNetwork = 'polkadot';
 
 /*

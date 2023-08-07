@@ -5,12 +5,12 @@ import type { HelpContextInterface } from './types';
 
 export const defaultHelpContext: HelpContextInterface = {
   // eslint-disable-next-line
-  openHelp: (k) => {},
+  openHelp: (key) => {},
   closeHelp: () => {},
   // eslint-disable-next-line
-  setStatus: (s) => {},
+  setStatus: (status) => {},
   // eslint-disable-next-line
-  setDefinition: (d) => {},
+  setDefinition: (definition) => {},
   status: 0,
   definition: null,
 };

@@ -4,7 +4,6 @@
 import type React from 'react';
 import type { FunctionComponent, SVGProps } from 'react';
 import type { Theme } from 'contexts/Themes/types';
-import type { PageProps } from 'pages/types';
 
 export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
@@ -76,6 +75,14 @@ export interface PageItem {
 }
 
 export type PagesConfigItems = PageItem[];
+
+export interface PageProps {
+  page: PageProp;
+}
+
+interface PageProp {
+  key: string;
+}
 
 export type MaybeAccount = string | null;
 

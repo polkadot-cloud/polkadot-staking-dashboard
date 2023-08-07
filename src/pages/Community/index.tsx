@@ -3,7 +3,7 @@
 
 import { PageTitle } from '@polkadotcloud/core-ui';
 import { useTranslation } from 'react-i18next';
-import type { PageProps } from '../types';
+import type { PageProps } from 'types';
 import { Entity } from './Entity';
 import { List } from './List';
 import { Wrapper } from './Wrappers';

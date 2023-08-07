@@ -19,8 +19,7 @@ import { useSize } from 'library/Hooks/useSize';
 import { StatBoxList } from 'library/StatBoxList';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
-import type { AnySubscan } from 'types';
-import type { PageProps } from '../types';
+import type { AnySubscan, PageProps } from 'types';
 import { PayoutList } from './PayoutList';
 import { LastEraPayoutStat } from './Stats/LastEraPayout';
 
