@@ -15,7 +15,7 @@ export interface ExtensionInjected extends ExtensionConfig {
 export interface ExtensionInterface {
   accounts: {
     subscribe: {
-      (a: { (a: ExtensionAccount[]): void }): void;
+      (a: { (b: ExtensionAccount[]): void }): void;
     };
   };
   provider: AnyApi;

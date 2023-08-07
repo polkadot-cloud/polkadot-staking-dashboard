@@ -59,8 +59,7 @@ export const ValidatorMetrics = () => {
   const { width, height, minHeight } = formatSize(size, 300);
 
   const handleEraPoints = async () => {
-    const _list = await fetchEraPoints(address, activeEra.index);
-    setList(_list);
+    setList(await fetchEraPoints(address, activeEra.index));
   };
 
   useEffect(() => {

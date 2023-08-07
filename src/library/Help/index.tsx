@@ -58,14 +58,14 @@ export const Help = () => {
     );
   } else {
     // get all items
-    let _definitions: string[] = [];
-    let _external: ExternalItems = [];
+    let definitions: string[] = [];
+    let external: ExternalItems = [];
 
     Object.values(HelpConfig).forEach((c) => {
-      _definitions = _definitions.concat([...(c.definitions || [])]);
-      _external = _external.concat([...(c.external || [])]);
+      definitions = definitions.concat([...(c.definitions || [])]);
+      external = external.concat([...(c.external || [])]);
     });
-    meta = { definitions: _definitions, external: _external };
+    meta = { definitions, external };
   }
 
   let definitions = meta?.definitions ?? [];

@@ -12,7 +12,7 @@ const ScanSignature = ({
   size,
   style,
 }: ScanSignatureProps): React.ReactElement<ScanSignatureProps> => {
-  const _onScan = useCallback(
+  const onScanCallback = useCallback(
     (signature: string | null) =>
       signature && onScan({ signature: `0x${signature}` }),
     [onScan]
@@ -22,7 +22,7 @@ const ScanSignature = ({
     <QrScan
       className={className}
       onError={onError}
-      onScan={_onScan}
+      onScan={onScanCallback}
       size={size}
       style={style}
     />

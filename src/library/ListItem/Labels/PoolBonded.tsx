@@ -43,11 +43,9 @@ export const PoolBonded = ({
   // we cannot add effect dependencies here as this needs to trigger
   // as soon as the component displays. (upon tab change).
   const handleNominationsStatus = () => {
-    const _nominationStatus = getNominationsStatusFromTargets(
-      addresses.stash,
-      targets
+    setNominationsStatus(
+      getNominationsStatusFromTargets(addresses.stash, targets)
     );
-    setNominationsStatus(_nominationStatus);
   };
 
   // recalculate nominations status as app syncs

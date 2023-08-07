@@ -64,7 +64,7 @@ export const PoolMembershipsProvider = ({
 
   // subscribe to an account's pool membership
   const subscribeToPoolMembership = async (address: string) => {
-    if (!api) return;
+    if (!api) return undefined;
 
     const unsub = await api.queryMulti<AnyApi>(
       [

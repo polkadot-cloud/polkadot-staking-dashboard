@@ -80,7 +80,7 @@ export const BalancesProvider = ({
   };
 
   const handleSubscriptions = async (address: string) => {
-    if (!api) return;
+    if (!api) return undefined;
 
     const unsub = await api.queryMulti<AnyApi>(
       [

@@ -63,14 +63,11 @@ export const extensionIsLocal = (id: string) => {
 export const getActiveAccountLocal = (network: Network) => {
   const keyring = new Keyring();
   keyring.setSS58Format(network.ss58);
-  let _activeAccount = localStorageOrDefault(
-    `${network.name}_active_account`,
-    null
-  );
-  if (_activeAccount !== null) {
-    _activeAccount = keyring.addFromAddress(_activeAccount).address;
+  let account = localStorageOrDefault(`${network.name}_active_account`, null);
+  if (account !== null) {
+    account = keyring.addFromAddress(account).address;
   }
-  return _activeAccount;
+  return account;
 };
 
 // gets local external accounts, formatting their addresses

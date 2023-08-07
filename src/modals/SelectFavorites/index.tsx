@@ -29,13 +29,14 @@ export const SelectFavorites = () => {
   // store filtered favorites
   useEffect(() => {
     if (favoritesList) {
-      const _availableFavorites = favoritesList.filter(
-        (favorite) =>
-          !nominations.find(
-            (nomination: Validator) => nomination.address === favorite.address
-          ) && !favorite.prefs.blocked
+      setAvailableFavorites(
+        favoritesList.filter(
+          (favorite) =>
+            !nominations.find(
+              (nomination: Validator) => nomination.address === favorite.address
+            ) && !favorite.prefs.blocked
+        )
       );
-      setAvailableFavorites(_availableFavorites);
     }
   }, []);
 

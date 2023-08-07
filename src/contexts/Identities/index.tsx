@@ -102,12 +102,10 @@ export const IdentitiesProvider = ({
           for (let i = 0; i < _identities.length; i++) {
             identities.push(_identities[i].toHuman());
           }
-          const _batchesUpdated = Object.assign(
-            identitiesMetaBatchesRef.current
-          );
-          _batchesUpdated[key].identities = identities;
+          const updated = Object.assign(identitiesMetaBatchesRef.current);
+          updated[key].identities = identities;
           setStateWithRef(
-            { ..._batchesUpdated },
+            { ...updated },
             setIdentitiesMetaBatch,
             identitiesMetaBatchesRef
           );
@@ -119,15 +117,15 @@ export const IdentitiesProvider = ({
     const subscribeToSuperIdentities = async (addr: string[]) => {
       const unsub = await api.query.identity.superOf.multi<AnyApi>(
         addr,
-        async (_supers) => {
+        async (result) => {
           // determine where supers exist
           const supers: AnyApi = [];
           const supersWithIdentity: AnyApi = [];
 
-          for (let i = 0; i < _supers.length; i++) {
-            const _super = _supers[i].toHuman();
-            supers.push(_super);
-            if (_super !== null) {
+          for (let i = 0; i < result.length; i++) {
+            const item = result[i].toHuman();
+            supers.push(item);
+            if (item !== null) {
               supersWithIdentity.push(i);
             }
           }
@@ -142,20 +140,18 @@ export const IdentitiesProvider = ({
               query,
               (_identities) => {
                 for (let j = 0; j < _identities.length; j++) {
-                  const _identity = _identities[j].toHuman();
+                  const identity = _identities[j].toHuman();
                   // inject identity into super array
-                  supers[supersWithIdentity[j]].identity = _identity;
+                  supers[supersWithIdentity[j]].identity = identity;
                 }
               }
             )
           )();
 
-          const _batchesUpdated = Object.assign(
-            identitiesMetaBatchesRef.current
-          );
-          _batchesUpdated[key].supers = supers;
+          const updated = Object.assign(identitiesMetaBatchesRef.current);
+          updated[key].supers = supers;
           setStateWithRef(
-            { ..._batchesUpdated },
+            { ...updated },
             setIdentitiesMetaBatch,
             identitiesMetaBatchesRef
           );
@@ -176,12 +172,12 @@ export const IdentitiesProvider = ({
    * Helper function to add mataBatch unsubs by key.
    */
   const addMetaBatchUnsubs = (key: string, unsubs: AnyApi) => {
-    const _unsubs = identitiesSubsRef.current;
-    const _keyUnsubs = _unsubs[key] ?? [];
+    const identityUnsubs = identitiesSubsRef.current;
+    const keyUnsubs = identityUnsubs[key] ?? [];
 
-    _keyUnsubs.push(...unsubs);
-    _unsubs[key] = _keyUnsubs;
-    identitiesSubsRef.current = _unsubs;
+    keyUnsubs.push(...unsubs);
+    identityUnsubs[key] = keyUnsubs;
+    identitiesSubsRef.current = identityUnsubs;
   };
 
   return (

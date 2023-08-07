@@ -59,7 +59,7 @@ export const HomeInner = () => {
       fetchingMemberCount.current = true;
       const poolDetails = await fetchPoolDetails(selectedActivePool.id);
       fetchingMemberCount.current = false;
-      return setMemberCount(poolDetails?.member_count || 0);
+      setMemberCount(poolDetails?.member_count || 0);
     }
     setMemberCount(
       getMembersOfPoolFromNode(selectedActivePool?.id ?? 0).length
