@@ -2,7 +2,7 @@
   "name": "polkadot-staking-dashboard",
   "version": "0.1.0",
   "type": "module",
-  "license": "Apache-2.0",
+  "license": "GPL-3.0-only",
   "private": false,
   "homepage": "/",
   "scripts": {
