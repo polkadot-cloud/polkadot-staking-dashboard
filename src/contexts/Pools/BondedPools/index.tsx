@@ -72,8 +72,8 @@ export const BondedPoolsProvider = ({
   const fetchBondedPools = async () => {
     if (!api) return;
 
-    const _exposures = await api.query.nominationPools.bondedPools.entries();
-    let exposures = _exposures.map(([_keys, _val]: AnyApi) => {
+    const result = await api.query.nominationPools.bondedPools.entries();
+    let exposures = result.map(([_keys, _val]: AnyApi) => {
       const id = _keys.toHuman()[0];
       const pool = _val.toHuman();
       return getPoolWithAddresses(id, pool);
@@ -153,11 +153,11 @@ export const BondedPoolsProvider = ({
     // aggregate pool ids and addresses
     const ids = [];
     const addresses = [];
-    for (const _p of p) {
-      ids.push(Number(_p.id));
+    for (const pool of p) {
+      ids.push(Number(pool.id));
 
-      if (_p?.addresses?.stash) {
-        addresses.push(_p.addresses.stash);
+      if (pool?.addresses?.stash) {
+        addresses.push(pool.addresses.stash);
       }
     }
 
@@ -179,14 +179,10 @@ export const BondedPoolsProvider = ({
           for (let i = 0; i < _metadata.length; i++) {
             metadata.push(_metadata[i].toHuman());
           }
-          const _batchesUpdated = Object.assign(poolMetaBatchesRef.current);
-          _batchesUpdated[key].metadata = metadata;
+          const updated = Object.assign(poolMetaBatchesRef.current);
+          updated[key].metadata = metadata;
 
-          setStateWithRef(
-            { ..._batchesUpdated },
-            setPoolMetaBatch,
-            poolMetaBatchesRef
-          );
+          setStateWithRef({ ...updated }, setPoolMetaBatch, poolMetaBatchesRef);
         }
       );
       return unsub;
@@ -200,13 +196,9 @@ export const BondedPoolsProvider = ({
           for (let i = 0; i < _nominations.length; i++) {
             nominations.push(_nominations[i].toHuman());
           }
-          const _batchesUpdated = Object.assign(poolMetaBatchesRef.current);
-          _batchesUpdated[key].nominations = nominations;
-          setStateWithRef(
-            { ..._batchesUpdated },
-            setPoolMetaBatch,
-            poolMetaBatchesRef
-          );
+          const updated = Object.assign(poolMetaBatchesRef.current);
+          updated[key].nominations = nominations;
+          setStateWithRef({ ...updated }, setPoolMetaBatch, poolMetaBatchesRef);
         }
       );
       return unsub;
@@ -254,12 +246,12 @@ export const BondedPoolsProvider = ({
     let status = 'waiting';
 
     if (statuses) {
-      for (const _status of Object.values(statuses)) {
-        if (_status === 'active') {
+      for (const childStatus of Object.values(statuses)) {
+        if (childStatus === 'active') {
           status = 'active';
           break;
         }
-        if (_status === 'inactive') {
+        if (childStatus === 'inactive') {
           status = 'inactive';
         }
       }
@@ -353,16 +345,16 @@ export const BondedPoolsProvider = ({
     if (!updatedPools) {
       return;
     }
-    const _bondedPools = bondedPools.map(
-      (original) =>
-        updatedPools.find((updated) => updated.id === original.id) || original
+    setBondedPools(
+      bondedPools.map(
+        (original) =>
+          updatedPools.find((updated) => updated.id === original.id) || original
+      )
     );
-    setBondedPools(_bondedPools);
   };
 
   const removeFromBondedPools = (id: number) => {
-    const _bondedPools = bondedPools.filter((b: BondedPool) => b.id !== id);
-    setBondedPools(_bondedPools);
+    setBondedPools(bondedPools.filter((b: BondedPool) => b.id !== id));
   };
 
   // adds a record to bondedPools.
@@ -372,8 +364,7 @@ export const BondedPoolsProvider = ({
 
     const exists = bondedPools.find((b) => b.id === pool.id);
     if (!exists) {
-      const _bondedPools = bondedPools.concat(pool);
-      setBondedPools(_bondedPools);
+      setBondedPools(bondedPools.concat(pool));
     }
   };
 

@@ -37,8 +37,7 @@ export const usePrices = () => {
   };
 
   const initiatePriceInterval = async () => {
-    const _prices = await fetchUnitPrice();
-    setPrices(_prices);
+    setPrices(await fetchUnitPrice());
     if (priceHandle === null) {
       setPriceInterval();
     }
@@ -47,8 +46,7 @@ export const usePrices = () => {
   let priceHandle: any = null;
   const setPriceInterval = async () => {
     priceHandle = setInterval(async () => {
-      const _prices = await fetchUnitPrice();
-      setPrices(_prices);
+      setPrices(await fetchUnitPrice());
     }, 1000 * 30);
   };
 

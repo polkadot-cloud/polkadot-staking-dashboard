@@ -41,8 +41,8 @@ export const Overview = forwardRef(
 
     let withdrawAvailable = new BigNumber(0);
     let totalUnbonding = new BigNumber(0);
-    for (const _chunk of unlocking) {
-      const { era, value } = _chunk;
+    for (const c of unlocking) {
+      const { era, value } = c;
       const left = new BigNumber(era).minus(activeEra.index);
 
       totalUnbonding = totalUnbonding.plus(value);

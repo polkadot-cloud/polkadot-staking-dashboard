@@ -73,7 +73,7 @@ export const Tips = () => {
   // resize callback
   const resizeCallback = () => {
     setStateWithRef(getPage(), setPage, pageRef);
-    setStateWithRef(getItemsPerPage(), setItemsPerPage, itemsPerPageRef);
+    setStateWithRef(getItemsPerPage(), setItemsPerPageState, itemsPerPageRef);
   };
 
   // throttle resize callback
@@ -96,15 +96,14 @@ export const Tips = () => {
   }, []);
 
   // store the current amount of allowed items on display
-  const [itemsPerPage, setItemsPerPage] = useState<number>(getItemsPerPage());
+  const [itemsPerPage, setItemsPerPageState] = useState<number>(
+    getItemsPerPage()
+  );
   const itemsPerPageRef = useRef(itemsPerPage);
 
   // store the current page
   const [page, setPage] = useState<number>(1);
   const pageRef = useRef(page);
-
-  const _itemsPerPage = itemsPerPageRef.current;
-  const _page = pageRef.current;
 
   // accumulate segments to include in tips
   const segments: AnyJson = [];
@@ -159,10 +158,10 @@ export const Tips = () => {
   // determine items to be displayed
   const end = isNetworkSyncing
     ? 1
-    : Math.min(_page * _itemsPerPage, items.length);
+    : Math.min(pageRef.current * itemsPerPageRef.current, items.length);
   const start = isNetworkSyncing
     ? 1
-    : _page * _itemsPerPage - (_itemsPerPage - 1);
+    : pageRef.current * itemsPerPageRef.current - (itemsPerPageRef.current - 1);
 
   const itemsDisplay = items.slice(start - 1, end);
 

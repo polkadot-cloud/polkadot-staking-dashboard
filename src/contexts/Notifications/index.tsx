@@ -28,23 +28,23 @@ export const NotificationsProvider = ({
     _setIndex(_index);
   };
 
-  const addNotification = (_n: NotificationItem) => {
-    const _notifications: NotificationInterface[] = [
+  const addNotification = (n: NotificationItem) => {
+    const newNotifications: NotificationInterface[] = [
       ...notificationsRef.current,
     ];
 
     const newIndex: number = indexRef.current + 1;
 
-    _notifications.push({
+    newNotifications.push({
       index: newIndex,
       item: {
-        ..._n,
+        ...n,
         index: newIndex,
       },
     });
 
     setIndex(newIndex);
-    setStateWithRef(_notifications, setNotifications, notificationsRef);
+    setStateWithRef(newNotifications, setNotifications, notificationsRef);
     setTimeout(() => {
       removeNotification(newIndex);
     }, 3000);
@@ -53,10 +53,10 @@ export const NotificationsProvider = ({
   };
 
   const removeNotification = (_index: number) => {
-    const _notifications = notificationsRef.current.filter(
+    const newNotifications = notificationsRef.current.filter(
       (item: NotificationInterface) => item.index !== _index
     );
-    setStateWithRef(_notifications, setNotifications, notificationsRef);
+    setStateWithRef(newNotifications, setNotifications, notificationsRef);
   };
 
   return (

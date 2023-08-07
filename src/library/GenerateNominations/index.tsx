@@ -175,11 +175,11 @@ export const GenerateNominations = ({
     setSelectActive,
   }: any) => {
     removeValidatorMetaBatch(batchKey);
-    const _nominations = [...nominations].filter(
+    const newNominations = [...nominations].filter(
       (n: any) => !selected.map((_s: any) => _s.address).includes(n.address)
     );
-    setNominations([..._nominations]);
-    updateSetters([..._nominations]);
+    setNominations([...newNominations]);
+    updateSetters([...newNominations]);
     setSelectActive(false);
     resetSelected();
   };

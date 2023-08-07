@@ -58,13 +58,12 @@ export const Nominations = ({
   // callback function to stop nominating selected validators
   const cbStopNominatingSelected = (provider: any) => {
     const { selected } = provider;
-    const _nominations = [...nominations].filter(
-      (n) => !selected.map((_s: any) => _s.address).includes(n)
-    );
     openModalWith(
       'ChangeNominations',
       {
-        nominations: _nominations,
+        nominations: [...nominations].filter(
+          (n) => !selected.map((_s: any) => _s.address).includes(n)
+        ),
         provider,
         bondFor,
       },

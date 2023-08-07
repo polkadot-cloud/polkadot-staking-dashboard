@@ -108,8 +108,7 @@ export const UnbondFeedback = ({
   // handle error updates
   const handleErrors = () => {
     const newErrors = parentErrors;
-    const _bond = bond.bond;
-    const _decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
+    const decimals = bond.bond.toString().split('.')[1]?.length ?? 0;
 
     if (bondBn.isGreaterThan(active)) {
       newErrors.push(t('unbondAmount'));
@@ -119,7 +118,7 @@ export const UnbondFeedback = ({
       newErrors.push(t('valueTooSmall'));
     }
 
-    if (_decimals > units) {
+    if (decimals > units) {
       newErrors.push(`${t('bondAmountDecimals', { unit })}`);
     }
 
@@ -140,7 +139,7 @@ export const UnbondFeedback = ({
       newErrors.push(err);
     }
 
-    listenIsValid(!newErrors.length && _bond !== '');
+    listenIsValid(!newErrors.length && bond.bond !== '');
     setErrors(newErrors);
   };
 

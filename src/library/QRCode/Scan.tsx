@@ -23,9 +23,12 @@ const Scan = ({
 }: ScanProps): React.ReactElement<ScanProps> => {
   const containerStyle = useMemo(() => createImgSize(size), [size]);
 
-  const _onError = useCallback((error: Error) => onError(error), [onError]);
+  const onErrorCallback = useCallback(
+    (error: Error) => onError(error),
+    [onError]
+  );
 
-  const _onScan = useCallback(
+  const onScanCallback = useCallback(
     (data: string | null) => data && onScan(data),
     [onScan]
   );
@@ -35,8 +38,8 @@ const Scan = ({
       <Reader
         className="ui--qr-Scan"
         delay={delay}
-        onError={_onError}
-        onScan={_onScan}
+        onError={onErrorCallback}
+        onScan={onScanCallback}
         style={style}
       />
     </ScanWrapper>

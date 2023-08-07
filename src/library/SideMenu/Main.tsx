@@ -47,16 +47,16 @@ export const Main = () => {
     if (!accounts.length) return;
 
     // inject actions into menu items
-    const _pages = Object.assign(pageConfig.pages);
-    for (let i = 0; i < _pages.length; i++) {
-      const { uri } = _pages[i];
+    const pages = Object.assign(pageConfig.pages);
+    for (let i = 0; i < pages.length; i++) {
+      const { uri } = pages[i];
 
       // set undefined action as default
-      _pages[i].action = undefined;
+      pages[i].action = undefined;
       if (uri === `${BaseURL}/`) {
         const warning = !isSyncing && controllerDifferentToStash;
         if (warning) {
-          _pages[i].action = {
+          pages[i].action = {
             type: 'bullet',
             status: 'warning',
           };
@@ -70,20 +70,20 @@ export const Main = () => {
         const setupPercent = getNominatorSetupPercent(activeAccount);
 
         if (staking) {
-          _pages[i].action = {
+          pages[i].action = {
             type: 'text',
             status: 'success',
             text: t('active'),
           };
         }
         if (warning) {
-          _pages[i].action = {
+          pages[i].action = {
             type: 'bullet',
             status: 'warning',
           };
         }
         if (!staking && (onNominatorSetup || setupPercent > 0)) {
-          _pages[i].action = {
+          pages[i].action = {
             type: 'text',
             status: 'warning',
             text: `${setupPercent}%`,
@@ -97,14 +97,14 @@ export const Main = () => {
         const setupPercent = getPoolSetupPercent(activeAccount);
 
         if (inPool) {
-          _pages[i].action = {
+          pages[i].action = {
             type: 'text',
             status: 'success',
             text: t('active'),
           };
         }
         if (!inPool && (setupPercent > 0 || onPoolSetup)) {
-          _pages[i].action = {
+          pages[i].action = {
             type: 'text',
             status: 'warning',
             text: `${setupPercent}%`,
@@ -114,7 +114,7 @@ export const Main = () => {
     }
     setPageConfig({
       categories: pageConfig.categories,
-      pages: _pages,
+      pages,
     });
   }, [
     network,

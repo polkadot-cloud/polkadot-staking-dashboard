@@ -450,9 +450,9 @@ export const ValidatorsProvider = ({
             query,
             (_identities) => {
               for (let j = 0; j < _identities.length; j++) {
-                const _identity = _identities[j].toHuman();
+                const identity = _identities[j].toHuman();
                 // inject identity into super array
-                supers[supersWithIdentity[j]].identity = _identity;
+                supers[supersWithIdentity[j]].identity = identity;
               }
             }
           );
@@ -496,9 +496,9 @@ export const ValidatorsProvider = ({
       (result) => {
         const stake = [];
 
-        for (let _validator of result) {
-          _validator = _validator.toHuman();
-          let others = _validator.others ?? [];
+        for (let validator of result) {
+          validator = validator.toHuman();
+          let others = validator.others ?? [];
 
           // account for yourself being an additional nominator.
           const totalNominations = others.length + 1;
@@ -528,8 +528,8 @@ export const ValidatorsProvider = ({
               : 0;
 
           stake.push({
-            total: _validator.total,
-            own: _validator.own,
+            total: validator.total,
+            own: validator.own,
             total_nominations: totalNominations,
             lowestReward,
           });
