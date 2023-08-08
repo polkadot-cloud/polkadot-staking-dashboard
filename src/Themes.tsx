@@ -16,8 +16,8 @@ export const ThemedRouter = () => {
   const { network } = useApi();
 
   return (
-    <ThemeProvider theme={{ mode, network: `${network.name}-${mode}` }}>
-      <Entry mode={mode} chain={`${network.name}-relay`}>
+    <ThemeProvider theme={{ mode }}>
+      <Entry mode={mode} theme={`${network.name}-relay`}>
         <Router />
       </Entry>
     </ThemeProvider>
