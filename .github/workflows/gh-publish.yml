@@ -27,8 +27,9 @@ jobs:
     needs: npm-publish
     if: needs.npm-publish.outputs.new-version == 'true'
     steps:
+      - uses: actions/checkout@v3.5.0
       - name: Build
-        working-directory: "../"
+        working-directory: "."
         run: yarn build:pages
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
