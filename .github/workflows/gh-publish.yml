@@ -7,6 +7,8 @@ on:
 jobs:
   npm-publish:
     runs-on: ubuntu-latest
+    outputs:
+      new-version: ${{ steps.app_version.outputs.is-new-version }}
     steps:
       - uses: actions/checkout@v3.5.0
       - run: yarn install
@@ -23,7 +25,7 @@ jobs:
   gh-deploy:
     runs-on: ubuntu-latest
     needs: npm-publish
-    if: needs.npm-publish.steps.app_version.outputs.is-new-version == 'true'
+    if: needs.npm-publish.outputs.new-version == 'true'
     steps:
       - name: Build
         working-directory: "."
