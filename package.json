@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "tsc && vite build --base '/'",
     "preview": "vite preview",
-    "deploy": "VITE_BASE_URL=/polkadot-staking-dashboard tsc && vite build --base '/polkadot-staking-dashboard/' && gh-pages -d build",
+    "deploy": "VITE_BASE_URI=/polkadot-staking-dashboard tsc && vite build --base '/polkadot-staking-dashboard/' && gh-pages -d build",
     "lint": "eslint . --fix && npx prettier --write . && npx prettier --write ./.scripts && node ./.scripts/localeOrderKeys.cjs",
     "locale:order": "node ./.scripts/localeOrderKeys.cjs",
     "locale:validate": "node ./.scripts/localeValidate.cjs",
