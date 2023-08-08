@@ -25,7 +25,7 @@ jobs:
         if: steps.app_version.outputs.is-new-version == 'true'
         run: yarn build:pages
       
-      - name: Deploy 🚀
+      - name: Deploy
         if: steps.app_version.outputs.is-new-version == 'true'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
