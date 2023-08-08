@@ -19,14 +19,16 @@ jobs:
         uses: PostHog/check-package-version@v2
         with:
           path: "."
-
+      
+  gh-deploy:
+    runs-on: ubuntu-latest
+    needs: npm-publish
+    if: needs.npm-publish.steps.app_version.outputs.is-new-version == 'true'
+    steps:
       - name: Build
         working-directory: "."
-        if: steps.app_version.outputs.is-new-version == 'true'
         run: yarn build:pages
-      
       - name: Deploy
-        if: steps.app_version.outputs.is-new-version == 'true'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: build
