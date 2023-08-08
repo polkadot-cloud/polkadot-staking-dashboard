@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { BaseURL } from 'consts';
+import { BaseURI } from 'consts';
 import { Community } from 'pages/Community';
 import { Nominate } from 'pages/Nominate';
 import { Overview } from 'pages/Overview';
@@ -29,7 +29,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 1,
     key: 'overview',
-    uri: `${BaseURL}/`,
+    uri: `${BaseURI}/`,
     hash: '/overview',
     Entry: Overview,
     lottie: 'globe',
@@ -37,7 +37,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 2,
     key: 'pools',
-    uri: `${BaseURL}/pools`,
+    uri: `${BaseURI}/pools`,
     hash: '/pools',
     Entry: Pools,
     lottie: 'groups',
@@ -45,7 +45,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 2,
     key: 'nominate',
-    uri: `${BaseURL}/nominate`,
+    uri: `${BaseURI}/nominate`,
     hash: '/nominate',
     Entry: Nominate,
     lottie: 'trending',
@@ -53,7 +53,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 2,
     key: 'payouts',
-    uri: `${BaseURL}/payouts`,
+    uri: `${BaseURI}/payouts`,
     hash: '/payouts',
     Entry: Payouts,
     lottie: 'analytics',
@@ -61,7 +61,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 3,
     key: 'validators',
-    uri: `${BaseURL}/validators`,
+    uri: `${BaseURI}/validators`,
     hash: '/validators',
     Entry: Validators,
     lottie: 'view',
@@ -69,7 +69,7 @@ export const PagesConfig: PagesConfigItems = [
   {
     category: 3,
     key: 'community',
-    uri: `${BaseURL}/community`,
+    uri: `${BaseURI}/community`,
     hash: '/community',
     Entry: Community,
     lottie: 'label',

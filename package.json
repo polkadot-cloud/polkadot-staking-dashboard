@@ -6,7 +6,7 @@
   "private": false,
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "VITE_BASE_URL=/polkadot-staking-dashboard tsc && vite build --base '/polkadot-staking-dashboard/",
     "preview": "vite preview",
     "deploy": "gh-pages -d build",
     "lint": "eslint . --fix && npx prettier --write .",

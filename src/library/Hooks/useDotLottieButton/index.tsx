@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useEffect, useRef, useState } from 'react';
-import { BaseURL } from 'consts';
+import { BaseURI } from 'consts';
 import { useTheme } from 'contexts/Themes';
 import type { Theme } from 'contexts/Themes/types';
 import type { AnyJson } from 'types';
@@ -51,7 +51,7 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
       ref={refLight}
       loop
       autoPlay={autoPlay}
-      src={`${BaseURL}/lottie/${filename}-light.lottie`}
+      src={`${BaseURI}/lottie/${filename}-light.lottie`}
       style={{ height: 'inherit', width: 'inherit' }}
     />
   );
@@ -61,7 +61,7 @@ export const useDotLottieButton = (filename: string, options: AnyJson = {}) => {
       ref={refDark}
       loop
       autoPlay={autoPlay}
-      src={`${BaseURL}/lottie/${filename}-dark.lottie`}
+      src={`${BaseURI}/lottie/${filename}-dark.lottie`}
       style={{ height: 'inherit', width: 'inherit' }}
     />
   );

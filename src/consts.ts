@@ -5,10 +5,14 @@ import { stringToU8a } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
 
 /*
+ * Environment variables and their fallbacks.
+ */
+export const BaseURI = import.meta.env.VITE_BASE_URI || '/';
+
+/*
  * Global Constants
  */
 export const AppVersion = '1.0.8';
-export const BaseURL = '';
 export const DappName = 'Polkadot Staking Dashboard';
 export const PolkadotUrl = 'https://polkadot.network/features/staking/';
 export const DefaultNetwork = 'polkadot';
