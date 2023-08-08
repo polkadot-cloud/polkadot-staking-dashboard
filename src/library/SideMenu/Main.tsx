@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router-dom';
 import { PageCategories, PagesConfig } from 'config/pages';
-import { BaseURI, PolkadotUrl } from 'consts';
+import { PolkadotUrl } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
@@ -53,7 +53,7 @@ export const Main = () => {
 
       // set undefined action as default
       pages[i].action = undefined;
-      if (uri === `${BaseURI}/`) {
+      if (uri === `${import.meta.env.BASE_URL}`) {
         const warning = !isSyncing && controllerDifferentToStash;
         if (warning) {
           pages[i].action = {
@@ -63,7 +63,7 @@ export const Main = () => {
         }
       }
 
-      if (uri === `${BaseURI}/nominate`) {
+      if (uri === `${import.meta.env.BASE_URL}nominate`) {
         // configure Stake action
         const staking = !inNominatorSetup();
         const warning = !isSyncing && controllerDifferentToStash;
@@ -91,7 +91,7 @@ export const Main = () => {
         }
       }
 
-      if (uri === `${BaseURI}/pools`) {
+      if (uri === `${import.meta.env.BASE_URL}pools`) {
         // configure Pools action
         const inPool = membership;
         const setupPercent = getPoolSetupPercent(activeAccount);
