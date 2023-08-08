@@ -1,12 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-// Network classes.
+// Network themes with default template.
 import '@polkadotcloud/themes/theme/polkadot-relay/index.css';
 import '@polkadotcloud/themes/theme/kusama-relay/index.css';
 import '@polkadotcloud/themes/theme/westend-relay/index.css';
 
-// Fonts with light and dark themes.
 import '@polkadotcloud/themes/template/default/fonts/index.css';
 import '@polkadotcloud/themes/template/default/index.css';
 
