@@ -5,10 +5,10 @@ on:
     branches: [auto-gh-deploy] # TODO: change to main before merging.
 
 jobs:
-  npm-publish:
+  check-versions:
     runs-on: ubuntu-latest
     outputs:
-      new-version: ${{ steps.app_version.outputs.is-new-version }}
+      is-new-version: ${{ steps.app_version.outputs.is-new-version }}
     steps:
       - uses: actions/checkout@v3.5.0
       - name: New Version
@@ -19,8 +19,8 @@ jobs:
       
   gh-deploy:
     runs-on: ubuntu-latest
-    needs: npm-publish
-    if: needs.npm-publish.outputs.new-version == 'true'
+    needs: check-versions
+    if: needs.check-versions.outputs.is-new-version == 'true'
     steps:
       - uses: actions/checkout@v3.5.0
       - uses: actions/setup-node@v3
