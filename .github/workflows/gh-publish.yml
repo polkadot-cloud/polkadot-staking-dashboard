@@ -10,12 +10,6 @@ jobs:
     outputs:
       new-version: ${{ steps.app_version.outputs.is-new-version }}
     steps:
-      - uses: actions/checkout@v3.5.0
-      - run: yarn install
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          registry-url: https://registry.npmjs.org
       - name: New Version
         id: app_version
         uses: PostHog/check-package-version@v2
@@ -27,7 +21,12 @@ jobs:
     needs: npm-publish
     if: needs.npm-publish.outputs.new-version == 'true'
     steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: https://registry.npmjs.org
       - uses: actions/checkout@v3.5.0
+      - run: yarn install
       - name: Build
         working-directory: "."
         run: yarn build:pages
