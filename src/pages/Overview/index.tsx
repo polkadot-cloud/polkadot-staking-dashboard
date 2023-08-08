@@ -62,7 +62,7 @@ export const Overview = () => {
 
   return (
     <>
-      <PageTitle title={t('overview.overview')} />
+      <PageTitle title={`🧪${t('overview.overview')}`} />
       <PageRow>
         <PageHeading>
           <ActiveAccounts />
