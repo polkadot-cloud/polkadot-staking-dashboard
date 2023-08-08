@@ -20,9 +20,12 @@ jobs:
         with:
           path: "."
 
-      - name: Publish
+      - name: Build
         if: steps.app_version.outputs.is-new-version == 'true'
         working-directory: "."
-        run: yarn deploy
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: yarn build:pages
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build

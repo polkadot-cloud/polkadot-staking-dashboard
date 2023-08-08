@@ -7,8 +7,9 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build --base '/'",
+    "build:pages": "tsc && vite build --base '/polkadot-staking-dashboard/'",
+    "deploy:pages": "yarn build:pages && gh-pages -d build",
     "preview": "vite preview",
-    "deploy": "tsc && vite build --base '/polkadot-staking-dashboard/' && gh-pages -d build",
     "lint": "eslint . --fix && npx prettier --write . && npx prettier --write ./.scripts && node ./.scripts/localeOrderKeys.cjs",
     "locale:order": "node ./.scripts/localeOrderKeys.cjs",
     "locale:validate": "node ./.scripts/localeValidate.cjs",
