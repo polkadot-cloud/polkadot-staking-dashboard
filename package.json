@@ -61,7 +61,7 @@
   "devDependencies": {
     "@ledgerhq/logs": "^6.10.1",
     "@types/lodash.throttle": "^4.1.7",
-    "@types/react": "^18.2.19",
+    "@types/react": "^18.2.20",
     "@types/react-dom": "^18.2.7",
     "@types/react-helmet": "^6.1.6",
     "@types/react-qr-reader": "^2.1.4",
