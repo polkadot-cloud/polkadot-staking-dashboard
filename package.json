@@ -33,7 +33,7 @@
     "@polkadotcloud/core-ui": "^0.3.81",
     "@polkadotcloud/react-odometer": "^0.1.19",
     "@polkadotcloud/themes": "^0.1.5",
-    "@polkadotcloud/utils": "^0.2.22",
+    "@polkadotcloud/utils": "^0.2.23",
     "@substrate/connect": "^0.7.31",
     "@zondax/ledger-substrate": "^0.41.1",
     "bignumber.js": "^9.1.1",
