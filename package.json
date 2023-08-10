@@ -32,7 +32,7 @@
     "@polkadotcloud/community": "0.1.10",
     "@polkadotcloud/core-ui": "^0.3.87",
     "@polkadotcloud/react-odometer": "^0.1.19",
-    "@polkadotcloud/themes": "^0.1.5",
+    "@polkadotcloud/themes": "^0.1.6",
     "@polkadotcloud/utils": "^0.2.23",
     "@substrate/connect": "^0.7.31",
     "@zondax/ledger-substrate": "^0.41.1",
