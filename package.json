@@ -29,7 +29,7 @@
     "@polkadot/rpc-provider": "^10.9.1",
     "@polkadot/util": "^12.1.1",
     "@polkadot/util-crypto": "12.3.2",
-    "@polkadotcloud/community": "0.1.4",
+    "@polkadotcloud/community": "0.1.10",
     "@polkadotcloud/core-ui": "^0.3.85",
     "@polkadotcloud/react-odometer": "^0.1.19",
     "@polkadotcloud/themes": "^0.1.5",
