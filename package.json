@@ -52,7 +52,7 @@
     "react-dom": "^18.2.0",
     "react-error-boundary": "^4.0.11",
     "react-helmet": "^6.1.0",
-    "react-i18next": "^13.0.3",
+    "react-i18next": "^13.1.1",
     "react-qr-reader": "^2.2.1",
     "react-router-dom": "^6.15.0",
     "react-scroll": "^1.8.9",
