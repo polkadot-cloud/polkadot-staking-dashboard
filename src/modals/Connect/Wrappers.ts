@@ -73,12 +73,12 @@ export const ExtensionInner = styled.div`
     }
   }
   .icon {
-    width: 2.6rem;
-    height: 2.6rem;
+    color: var(--text-color-primary);
+    width: 100%;
 
     svg {
-      width: inherit;
-      height: inherit;
+      max-width: 2.6rem;
+      max-height: 2.6rem;
     }
   }
   svg {
