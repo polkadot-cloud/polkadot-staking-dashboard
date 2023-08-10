@@ -24,7 +24,7 @@ export const ClaimReward = () => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
   const { activeAccount } = useConnect();
-  const { setStatus: setModalStatus, config } = useModal();
+  const { setStatus: setModalStatus, config, setResize } = useModal();
   const { selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
 
@@ -79,6 +79,10 @@ export const ClaimReward = () => {
   if (!greaterThanZero(pendingRewards)) {
     warnings.push(`${t('noRewards')}`);
   }
+
+  useEffect(() => {
+    setResize();
+  }, [warnings.length]);
 
   return (
     <>

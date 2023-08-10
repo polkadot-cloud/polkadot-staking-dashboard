@@ -23,8 +23,8 @@ import {
 
 export const Networks = () => {
   const { t } = useTranslation('modals');
+  const { setStatus, setResize } = useModal();
   const { switchNetwork, network, isLightClient } = useApi();
-  const { setStatus } = useModal();
   const networkKey: string = network.name;
 
   const [braveBrowser, setBraveBrowser] = useState<boolean>(false);
@@ -35,6 +35,10 @@ export const Networks = () => {
       setBraveBrowser(isBrave);
     });
   });
+
+  useEffect(() => {
+    setResize();
+  }, [braveBrowser]);
 
   return (
     <>
