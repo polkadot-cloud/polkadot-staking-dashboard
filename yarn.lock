@@ -1827,10 +1827,10 @@
     tslib "^2.5.3"
     ws "^8.13.0"
 
-"@polkadotcloud/community@0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@polkadotcloud/community/-/community-0.1.4.tgz#8776843627da65ab9bd824f1966de572be49e593"
-  integrity sha512-kA3Q9XZ+uyYUzHQtfnd3ulZERf6Q3HK7/o9L/Yieax0dCdGazBi5MoCWEbOIo3OYC+9Mdb4T+AAJQ5fDf3tHGA==
+"@polkadotcloud/community@0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@polkadotcloud/community/-/community-0.1.10.tgz#8755d448098bfab6ff35e9fc7bad3d5c7a81e641"
+  integrity sha512-NKcm8+ZDnEk8TB27x3JSF7+vSC2wKDMmEFI6SyKIcHTS0WvY5uN8x6U5uwHQh/ESBNa824t+GYPLo7ZGTx3HWA==
 
 "@polkadotcloud/core-ui@^0.3.85":
   version "0.3.85"
