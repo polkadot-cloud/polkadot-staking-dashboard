@@ -1842,10 +1842,10 @@
   resolved "https://registry.yarnpkg.com/@polkadotcloud/react-odometer/-/react-odometer-0.1.19.tgz#3bd476c8d00fa011a14f7bc8b9b5227a26c9299a"
   integrity sha512-s7JJIIP4ZR37J+r478TrE5yCuO2niT1ATscTm/0wVLq/nFvCrJ63JZbCLl13I17ZotId41kRUb3vGxIYn4giMQ==
 
-"@polkadotcloud/themes@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@polkadotcloud/themes/-/themes-0.1.5.tgz#20b68d0ba05c0147ee727754f98b6afa440df54b"
-  integrity sha512-yVCCitWwgph/x80QIAFGz3l/BiNN86cIou5IC9qtj9f2qLPYxcLd7NXzJ5ntoDdwpT+nDk0ewJRrRB34eJlDsA==
+"@polkadotcloud/themes@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@polkadotcloud/themes/-/themes-0.1.6.tgz#53d16a163a412111a43b82a2367f3a065a19eb7c"
+  integrity sha512-mC7tVtGt2iyXih8JsgKG9gr0XqvlkfgmdaoDKvRCxgTF/sbSgMJT32Rjk/H1jU2h6PlPYOhM/uGk6doeSSYEmQ==
 
 "@polkadotcloud/utils@^0.2.23":
   version "0.2.23"
