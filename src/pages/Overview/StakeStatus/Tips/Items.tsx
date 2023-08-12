@@ -114,7 +114,6 @@ const Item = ({
                 <FontAwesomeIcon
                   icon={faExternalLinkAlt}
                   transform="shrink-2"
-                  className="more"
                 />
               </h4>
             </button>
