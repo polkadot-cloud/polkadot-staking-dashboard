@@ -33,7 +33,9 @@ export const Syncing = () => {
           </section>
           <section>
             <div className="desc">
-              <h4>{t('module.oneMoment')}...</h4>
+              <button type="button" disabled>
+                <h4>{t('module.oneMoment')}...</h4>
+              </button>
             </div>
           </section>
         </ItemInnerWrapper>
