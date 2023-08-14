@@ -41,7 +41,7 @@
     "buffer": "^6.0.3",
     "chart.js": "^4.3.3",
     "date-fns": "^2.29.3",
-    "framer-motion": "^10.15.1",
+    "framer-motion": "^10.15.2",
     "i18next": "^23.4.4",
     "i18next-browser-languagedetector": "^7.1.0",
     "lodash.throttle": "^4.1.1",
