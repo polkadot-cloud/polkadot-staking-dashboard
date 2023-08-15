@@ -16,6 +16,7 @@ import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
 import type {
   FastUnstakeContextInterface,
@@ -30,13 +31,14 @@ export const FastUnstakeProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { api, isReady, consts, network } = useApi();
+  const { inSetup } = useStaking();
   const { activeAccount } = useConnect();
+  const { api, isReady, consts, network } = useApi();
   const { metrics, activeEra } = useNetworkMetrics();
-  const { inSetup, getNominationsStatus } = useStaking();
+  const { getNominationStatus } = useNominationStatus();
   const { fastUnstakeErasToCheckPerBlock } = metrics;
   const { bondDuration } = consts;
-  const nominationStatuses = getNominationsStatus();
+  const { nominees } = getNominationStatus(activeAccount, 'nominator');
 
   // store whether a fast unstake check is in progress.
   const [checking, setChecking] = useState<boolean>(false);
@@ -114,17 +116,12 @@ export const FastUnstakeProvider = ({
       setStateWithRef(initialMeta, setMeta, metaRef);
       setStateWithRef(initialIsExposed, setIsExposed, isExposedRef);
 
-      // check for any active nominations
-      const activeNominations = Object.entries(nominationStatuses)
-        .map(([k, v]: any) => (v === 'active' ? k : false))
-        .filter((v) => v !== false);
-
       // start process if account is inactively nominating & local fast unstake data is not
       // complete.
       if (
         activeAccount &&
         !inSetup() &&
-        !activeNominations.length &&
+        !nominees.active.length &&
         initialIsExposed === null
       ) {
         // if localMeta existed, start checking from the next era.

@@ -21,6 +21,15 @@ export const useNominationStatus = () => {
   const { getAccountNominations } = useBonded();
   const { inSetup, eraStakers, getNominationsStatusFromTargets } = useStaking();
 
+  // Utility to get an account's nominees alongside their status.
+  const getNomineesStatus = (who: MaybeAccount, type: 'nominator' | 'pool') => {
+    const nominations =
+      type === 'nominator'
+        ? getAccountNominations(who)
+        : poolNominations?.targets ?? [];
+    return getNominationsStatusFromTargets(who, nominations);
+  };
+
   // Utility to get the nominees of a provided nomination status.
   const getNomineesByStatus = (nominees: AnyJson[], status: string) =>
     nominees
@@ -33,15 +42,8 @@ export const useNominationStatus = () => {
     who: MaybeAccount,
     type: 'nominator' | 'pool'
   ) => {
-    const nominations =
-      type === 'nominator'
-        ? getAccountNominations(who)
-        : poolNominations?.targets ?? [];
-
     // Get the sets nominees from the provided account's targets.
-    const nominees = Object.entries(
-      getNominationsStatusFromTargets(who, nominations)
-    );
+    const nominees = Object.entries(getNomineesStatus(who, type));
     const activeNominees = getNomineesByStatus(nominees, 'active');
 
     // Attempt to get validator stake from meta batch (may still be syncing).
@@ -51,7 +53,7 @@ export const useNominationStatus = () => {
     // first reward-earning nominee is found.
     let earningRewards = false;
     if (stake.length > 0) {
-      activeNominees.every((nominee) => {
+      getNomineesByStatus(nominees, 'active').every((nominee) => {
         const validator = validators.find(({ address }) => address === nominee);
 
         if (validator) {
@@ -87,7 +89,7 @@ export const useNominationStatus = () => {
     let str;
     if (inSetup() || isSyncing) {
       str = t('nominate.notNominating', { ns: 'pages' });
-    } else if (!nominations.length) {
+    } else if (!nominees.length) {
       str = t('nominate.noNominationsSet', { ns: 'pages' });
     } else if (activeNominees.length) {
       str = t('nominate.nominatingAnd', { ns: 'pages' });
@@ -111,5 +113,5 @@ export const useNominationStatus = () => {
     };
   };
 
-  return { getNominationStatus };
+  return { getNominationStatus, getNomineesStatus };
 };

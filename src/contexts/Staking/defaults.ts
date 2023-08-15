@@ -40,7 +40,6 @@ export const defaultTargets: StakingTargets = {
 export const defaultNominationStatus: NominationStatuses = {};
 
 export const defaultStakingContext: StakingContextInterface = {
-  getNominationsStatus: () => defaultNominationStatus,
   // eslint-disable-next-line
   getNominationsStatusFromTargets: (w, t) => defaultNominationStatus,
   // eslint-disable-next-line

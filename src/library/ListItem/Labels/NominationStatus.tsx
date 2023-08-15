@@ -8,6 +8,8 @@ import { useApi } from 'contexts/Api';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useStaking } from 'contexts/Staking';
 import { ValidatorStatusWrapper } from 'library/ListItem/Wrappers';
+import { useNominationStatus } from 'library/Hooks/useNominationStatus';
+import { useConnect } from 'contexts/Connect';
 import type { NominationStatusProps } from '../types';
 
 export const NominationStatus = ({
@@ -16,11 +18,13 @@ export const NominationStatus = ({
   bondFor,
 }: NominationStatusProps) => {
   const { t } = useTranslation('library');
-  const { getNominationsStatus, eraStakers, erasStakersSyncing } = useStaking();
-  const { getPoolNominationStatus } = useBondedPools();
   const {
     network: { unit, units },
   } = useApi();
+  const { activeAccount } = useConnect();
+  const { getPoolNominationStatus } = useBondedPools();
+  const { getNomineesStatus } = useNominationStatus();
+  const { eraStakers, erasStakersSyncing } = useStaking();
 
   const { activeAccountOwnStake, stakers } = eraStakers;
 
@@ -30,7 +34,7 @@ export const NominationStatus = ({
     nominationStatus = getPoolNominationStatus(nominator, address);
   } else {
     // get all active account's nominations.
-    const nominationStatuses = getNominationsStatus();
+    const nominationStatuses = getNomineesStatus(activeAccount, 'nominator');
     // find the nominator status within the returned nominations.
     nominationStatus = nominationStatuses[address];
   }

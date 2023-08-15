@@ -62,7 +62,6 @@ export interface ExposureOther {
 }
 
 export interface StakingContextInterface {
-  getNominationsStatus: () => any;
   getNominationsStatusFromTargets: (w: MaybeAccount, t: any[]) => any;
   setTargets: (t: any) => any;
   hasController: () => boolean;
