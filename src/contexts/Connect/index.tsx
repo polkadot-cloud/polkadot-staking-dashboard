@@ -431,7 +431,7 @@ export const ConnectProvider = ({
     updateInitialisedExtensions(id);
   };
 
-  const setActiveAccount = (address: string | null) => {
+  const setActiveAccount = (address: MaybeAccount) => {
     if (address === null) {
       localStorage.removeItem(`${network.name}_active_account`);
     } else {
