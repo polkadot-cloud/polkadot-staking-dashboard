@@ -65,12 +65,10 @@ export const useImportExtension = () => {
     keyring.setSS58Format(network.ss58);
 
     // remove accounts that do not contain correctly formatted addresses.
-    newAccounts = newAccounts.filter((i: ExtensionAccount) =>
-      isValidAddress(i.address)
-    );
+    newAccounts = newAccounts.filter((i) => isValidAddress(i.address));
 
     // reformat addresses to ensure correct ss58 format
-    newAccounts.forEach(async (account: ExtensionAccount) => {
+    newAccounts.forEach(async (account) => {
       const { address } = keyring.addFromAddress(account.address);
       account.address = address;
       return account;
