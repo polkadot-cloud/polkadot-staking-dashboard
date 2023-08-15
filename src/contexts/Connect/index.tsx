@@ -156,7 +156,7 @@ export const ConnectProvider = ({
       importLocalAccounts(getLocalLedgerAccounts);
       hardwareInitialisedRef.current = true;
       // Finally, fetch any read-only accounts that have been added by `system` or `user`.
-      importExternalAccounts();
+      importLocalAccounts(getLocalExternalAccounts);
     }
   }, [extensionsFetched]);
 
@@ -257,40 +257,6 @@ export const ConnectProvider = ({
         connectToAccount(activeAccountInSet);
       }
       // add accounts to imported.
-      addToAccounts(localAccounts);
-    }
-  };
-
-  /* importExternalAccounts
-   * checks previously imported read-only accounts from
-   * localStorage and adds them to `accounts` state.
-   * if local active account is present, it will also be
-   * assigned as active.
-   * Should be called AFTER extension accounts are imported, as
-   * to not replace an extension account by an external account.
-   */
-  const importExternalAccounts = () => {
-    // import any local external accounts
-    let localAccounts = getLocalExternalAccounts(network.name);
-
-    if (localAccounts.length) {
-      const activeAccountInSet =
-        localAccounts.find(
-          ({ address }) => address === getActiveAccountLocal(network)
-        ) ?? null;
-
-      // remove already-imported accounts
-      localAccounts = localAccounts.filter(
-        (l) =>
-          accountsRef.current.find(({ address }) => address === l.address) ===
-          undefined
-      );
-
-      // set active account for network
-      if (activeAccountInSet) {
-        connectToAccount(activeAccountInSet);
-      }
-      // add external accounts to imported
       addToAccounts(localAccounts);
     }
   };
