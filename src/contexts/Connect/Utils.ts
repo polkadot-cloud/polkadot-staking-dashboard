@@ -87,9 +87,9 @@ export const getLocalExternalAccounts = (network?: NetworkName) => {
 // gets accounts that exist in local `external_accounts`
 export const getInExternalAccounts = (
   accounts: ExtensionAccount[],
-  network: Network
+  network: NetworkName
 ) => {
-  const localExternalAccounts = getLocalExternalAccounts(network.name);
+  const localExternalAccounts = getLocalExternalAccounts(network);
 
   return (
     localExternalAccounts.filter(

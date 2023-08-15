@@ -77,7 +77,7 @@ export const useImportExtension = () => {
     });
 
     // remove newAccounts from local external accounts if present
-    const inExternal = getInExternalAccounts(newAccounts, network);
+    const inExternal = getInExternalAccounts(newAccounts, network.name);
     forget(inExternal);
 
     // find any accounts that have been removed from this extension
