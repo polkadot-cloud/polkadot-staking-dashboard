@@ -138,11 +138,18 @@ export const APIProvider = ({ children }: { children: React.ReactNode }) => {
     connectProvider(network.name, newProvider);
   };
 
+  // Handle a switch in API.
+  const handleApiSwitch = () => {
+    setApi(null);
+    setConsts(defaults.consts);
+    setchainState(undefined);
+  };
   // Dynamically load `Sc` when user opts to use light client.
-  useEffectIgnoreInitial(() => {
+  useEffect(() => {
     let cancel: () => void | undefined;
 
     if (isLightClient) {
+      handleApiSwitch();
       setApiStatus('connecting');
 
       const ScPromise = makeCancelable(import('@substrate/connect'));

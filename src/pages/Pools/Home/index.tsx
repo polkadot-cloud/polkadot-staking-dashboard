@@ -55,12 +55,16 @@ export const HomeInner = () => {
       setMemberCount(0);
       return;
     }
+    // If `Subscan` plugin is enabled, fetch member count directly from the API.
     if (pluginEnabled('subscan') && !fetchingMemberCount.current) {
       fetchingMemberCount.current = true;
       const poolDetails = await fetchPoolDetails(selectedActivePool.id);
       fetchingMemberCount.current = false;
       setMemberCount(poolDetails?.member_count || 0);
+      return;
     }
+    // If no plugin available, fetch all pool members from RPC and filter them to determine current
+    // pool member count. NOTE: Expensive operation.
     setMemberCount(
       getMembersOfPoolFromNode(selectedActivePool?.id ?? 0).length
     );
