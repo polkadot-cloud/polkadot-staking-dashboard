@@ -301,7 +301,7 @@ export const StakingProvider = ({
 
     for (const target of fromTargets) {
       const staker = eraStakersRef.current.stakers.find(
-        ({ address }: any) => address === target
+        ({ address }) => address === target
       );
 
       if (staker === undefined) {
