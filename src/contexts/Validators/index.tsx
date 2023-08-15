@@ -397,7 +397,7 @@ export const ValidatorsProvider = ({
       validatorMetaBatchesRef
     );
 
-    const subscribeToIdentities = async (addr: AnyApi) => {
+    const subscribeToIdentities = async (addr: string[]) => {
       const unsub = await api.query.identity.identityOf.multi<AnyApi>(
         addr,
         (result) => {
@@ -425,7 +425,7 @@ export const ValidatorsProvider = ({
       return unsub;
     };
 
-    const subscribeToSuperIdentities = async (addr: AnyApi) => {
+    const subscribeToSuperIdentities = async (addr: string[]) => {
       const unsub = await api.query.identity.superOf.multi<AnyApi>(
         addr,
         async (result) => {
