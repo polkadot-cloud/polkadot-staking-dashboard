@@ -1,5 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import BigNumber from 'bignumber.js';
 import type {
@@ -40,14 +41,10 @@ export const defaultTargets: StakingTargets = {
 export const defaultNominationStatus: NominationStatuses = {};
 
 export const defaultStakingContext: StakingContextInterface = {
-  // eslint-disable-next-line
   getNominationsStatusFromTargets: (w, t) => defaultNominationStatus,
-  // eslint-disable-next-line
   setTargets: (t) => {},
   hasController: () => false,
-  // eslint-disable-next-line
   getControllerNotImported: (a) => null,
-  // eslint-disable-next-line
   addressDifferentToStash: (a) => false,
   isBonding: () => false,
   isNominating: () => false,

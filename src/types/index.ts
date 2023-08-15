@@ -98,13 +98,13 @@ export type BondFor = 'pool' | 'nominator';
 export type Fn = () => void;
 
 // any types to compress compiler warnings
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyApi = any;
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyJson = any;
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyFunction = any;
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyMetaBatch = any;
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnySubscan = any;
