@@ -48,7 +48,7 @@ export const NominationStatus = ({
   // Determine whether to display fast unstake button or regular unstake button.
   const unstakeButton =
     fastUnstakeErasToCheckPerBlock > 0 &&
-    !nominationStatus.activeNominees.length &&
+    !nominationStatus.nominees.active.length &&
     (checking || !isExposed)
       ? {
           disabled: checking || isReadOnlyAccount(controller),

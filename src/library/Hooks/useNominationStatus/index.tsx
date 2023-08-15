@@ -10,7 +10,7 @@ import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
-import type { MaybeAccount } from 'types';
+import type { AnyJson, MaybeAccount } from 'types';
 
 export const useNominationStatus = () => {
   const { t } = useTranslation();
@@ -21,22 +21,28 @@ export const useNominationStatus = () => {
   const { getAccountNominations } = useBonded();
   const { inSetup, eraStakers, getNominationsStatusFromTargets } = useStaking();
 
+  // Utility to get the nominees of a provided nomination status.
+  const getNomineesByStatus = (nominees: AnyJson[], status: string) =>
+    nominees
+      .map(([k, v]) => (v === status ? k : false))
+      .filter((v) => v !== false);
+
+  // Utility to get the status of the provided account's nominations, and whether they are earning
+  // reards.
   const getNominationStatus = (
     who: MaybeAccount,
     type: 'nominator' | 'pool'
   ) => {
-    // Get nominations either as a nominator or as a pool.
     const nominations =
       type === 'nominator'
         ? getAccountNominations(who)
         : poolNominations?.targets ?? [];
 
-    // Get the active nominees from the provided account's targets.
-    const activeNominees = Object.entries(
+    // Get the sets nominees from the provided account's targets.
+    const nominees = Object.entries(
       getNominationsStatusFromTargets(who, nominations)
-    )
-      .map(([k, v]) => (v === 'active' ? k : false))
-      .filter((v) => v !== false);
+    );
+    const activeNominees = getNomineesByStatus(nominees, 'active');
 
     // Attempt to get validator stake from meta batch (may still be syncing).
     const stake = meta.validators_browse?.stake ?? [];
@@ -95,7 +101,11 @@ export const useNominationStatus = () => {
     }
 
     return {
-      activeNominees,
+      nominees: {
+        active: activeNominees,
+        inactive: getNomineesByStatus(nominees, 'inactive'),
+        waiting: getNomineesByStatus(nominees, 'waiting'),
+      },
       earningRewards,
       message: str,
     };
