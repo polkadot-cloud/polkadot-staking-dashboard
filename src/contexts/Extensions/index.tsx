@@ -48,7 +48,8 @@ export const ExtensionsProvider = ({
   let injectedWeb3Interval: ReturnType<typeof setInterval>;
   let injectCounter = 0;
 
-  // handle completed interval check for `injectedWeb3`.
+  // Handle completed interval check for `injectedWeb3`. If `injectedWeb3` is present, get installed
+  // extensions and add to state.
   const handleClearInterval = (hasInjectedWeb3: boolean) => {
     clearInterval(injectedWeb3Interval);
     if (hasInjectedWeb3) {
@@ -57,8 +58,8 @@ export const ExtensionsProvider = ({
     setStateWithRef(false, setCheckingInjectedWeb3, checkingInjectedWeb3Ref);
   };
 
-  // sets an interval to listen to `window` until the
-  // `injectedWeb3` property is present.
+  // Sets an interval to listen to `window` until the `injectedWeb3` property is present. Cancels
+  // after 500 * 10 milliseconds.
   useEffect(() => {
     if (!intervalInitialisedRef.current) {
       intervalInitialisedRef.current = true;
@@ -75,9 +76,7 @@ export const ExtensionsProvider = ({
         }
       }, 500);
     }
-    return () => {
-      clearInterval(injectedWeb3Interval);
-    };
+    return () => clearInterval(injectedWeb3Interval);
   });
 
   const setExtensionStatus = (id: string, status: string) => {
