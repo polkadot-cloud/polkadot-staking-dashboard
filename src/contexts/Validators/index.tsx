@@ -328,6 +328,7 @@ export const ValidatorsProvider = ({
   };
 
   /*
+    // TODO: refactor
     Fetches a new batch of subscribed validator metadata. Stores the returning
     metadata alongside the unsubscribe function in state.
     structure:
