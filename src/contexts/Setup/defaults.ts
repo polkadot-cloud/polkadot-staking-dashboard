@@ -1,5 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import type {
   NominatorProgress,
@@ -24,24 +25,16 @@ export const defaultPoolProgress: PoolProgress = {
 };
 
 export const defaultSetupContext: SetupContextInterface = {
-  // eslint-disable-next-line
   getSetupProgress: (a, b) => ({
     section: 1,
     progress: defaultNominatorProgress,
   }),
-  // eslint-disable-next-line
   removeSetupProgress: (a, b) => {},
-  // eslint-disable-next-line
   getNominatorSetupPercent: (a) => 0,
-  // eslint-disable-next-line
   getPoolSetupPercent: (a) => 0,
-  // eslint-disable-next-line
   setActiveAccountSetup: (t, p) => {},
-  // eslint-disable-next-line
   setActiveAccountSetupSection: (t, s) => {},
-  // eslint-disable-next-line
   setOnNominatorSetup: (v) => {},
-  // eslint-disable-next-line
   setOnPoolSetup: (v) => {},
   onNominatorSetup: false,
   onPoolSetup: false,

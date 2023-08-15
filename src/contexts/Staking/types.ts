@@ -18,7 +18,9 @@ export interface StakingMetrics {
 }
 
 export interface EraStakers {
-  stakers: any[];
+  stakers: (ExposureValue & {
+    address: string;
+  })[];
   nominators: any[] | undefined;
   totalActiveNominators: number;
   activeValidators: number;
@@ -60,7 +62,6 @@ export interface ExposureOther {
 }
 
 export interface StakingContextInterface {
-  getNominationsStatus: () => any;
   getNominationsStatusFromTargets: (w: MaybeAccount, t: any[]) => any;
   setTargets: (t: any) => any;
   hasController: () => boolean;

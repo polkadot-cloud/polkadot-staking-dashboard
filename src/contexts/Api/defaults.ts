@@ -1,5 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import { stringToU8a } from '@polkadot/util';
 import BigNumber from 'bignumber.js';
@@ -21,7 +22,6 @@ export const consts: APIConstants = {
 };
 
 export const defaultApiContext: APIContextInterface = {
-  // eslint-disable-next-line
   switchNetwork: async (n, lc) => {
     await new Promise((resolve) => resolve(null));
   },

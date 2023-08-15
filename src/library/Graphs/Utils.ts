@@ -44,7 +44,7 @@ export const calculateDailyPayouts = (
   fromDate: Date,
   maxDays: number,
   units: number,
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   subject: string
 ) => {
   let dailyPayouts: AnySubscan = [];

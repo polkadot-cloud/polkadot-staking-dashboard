@@ -16,7 +16,6 @@ import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type {
   EraStakers,
   Exposure,
-  NominationStatuses,
   StakingContextInterface,
   StakingMetrics,
   StakingTargets,
@@ -31,7 +30,6 @@ import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import {
   defaultEraStakers,
-  defaultNominationStatus,
   defaultStakingContext,
   defaultStakingMetrics,
   defaultTargets,
@@ -253,33 +251,6 @@ export const StakingProvider = ({
     });
   };
 
-  /*
-   * Get the status of nominations.
-   * Possible statuses: waiting, inactive, active.
-   */
-  const getNominationsStatus = () => {
-    if (inSetup() || !activeAccount) {
-      return defaultNominationStatus;
-    }
-    const statuses: NominationStatuses = {};
-    for (const nomination of getAccountNominations(activeAccount)) {
-      const s = eraStakersRef.current.stakers.find(
-        ({ address }) => address === nomination
-      );
-
-      if (s === undefined) {
-        statuses[nomination] = 'waiting';
-        continue;
-      }
-      if (!(s.others ?? []).find(({ who }: any) => who === activeAccount)) {
-        statuses[nomination] = 'inactive';
-        continue;
-      }
-      statuses[nomination] = 'active';
-    }
-    return statuses;
-  };
-
   /* Sets an account's stored target validators */
   const setTargets = (value: StakingTargets) => {
     localStorage.setItem(`${activeAccount}_targets`, JSON.stringify(value));
@@ -301,7 +272,7 @@ export const StakingProvider = ({
 
     for (const target of fromTargets) {
       const staker = eraStakersRef.current.stakers.find(
-        ({ address }: any) => address === target
+        ({ address }) => address === target
       );
 
       if (staker === undefined) {
@@ -394,7 +365,6 @@ export const StakingProvider = ({
   return (
     <StakingContext.Provider
       value={{
-        getNominationsStatus,
         getNominationsStatusFromTargets,
         setTargets,
         hasController,

@@ -7,7 +7,7 @@ import type { PoolsTabsContextInterface } from '../types';
 
 export const PoolsTabsContext: React.Context<PoolsTabsContextInterface> =
   React.createContext({
-    // eslint-disable-next-line
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setActiveTab: (t: number) => {},
     activeTab: 0,
   });
