@@ -17,61 +17,67 @@ export const useNominationStatus = () => {
   const { network } = useApi();
   const { isSyncing } = useUi();
   const { meta, validators } = useValidators();
-  const { getAccountNominations } = useBonded();
   const { poolNominations } = useActivePools();
+  const { getAccountNominations } = useBonded();
   const { inSetup, eraStakers, getNominationsStatusFromTargets } = useStaking();
-  const { stakers } = eraStakers;
 
   const getNominationStatus = (
     who: MaybeAccount,
     type: 'nominator' | 'pool'
   ) => {
+    // Get nominations either as a nominator or as a pool.
     const nominations =
       type === 'nominator'
         ? getAccountNominations(who)
         : poolNominations?.targets ?? [];
-    const nominationStatuses = getNominationsStatusFromTargets(
-      who,
-      nominations
-    );
-    const stake = meta.validators_browse?.stake ?? [];
-    const stakeSynced = stake.length > 0 ?? false;
 
-    const activeNominees = Object.entries(nominationStatuses)
-      .map(([k, v]: any) => (v === 'active' ? k : false))
+    // Get the active nominees from the provided account's targets.
+    const activeNominees = Object.entries(
+      getNominationsStatusFromTargets(who, nominations)
+    )
+      .map(([k, v]) => (v === 'active' ? k : false))
       .filter((v) => v !== false);
 
+    // Attempt to get validator stake from meta batch (may still be syncing).
+    const stake = meta.validators_browse?.stake ?? [];
+
+    // Determine whether active nominees are earning rewards. This function exists once the
+    // first reward-earning nominee is found.
     let earningRewards = false;
-    if (stakeSynced) {
-      for (const nominee of activeNominees) {
-        const validator = validators.find((v: any) => v.address === nominee);
+    if (stake.length > 0) {
+      activeNominees.every((nominee) => {
+        const validator = validators.find(({ address }) => address === nominee);
+
         if (validator) {
-          const batchIndex = validators.indexOf(validator);
-          const nomineeMeta = stake[batchIndex];
-          const { lowestReward } = nomineeMeta;
+          const others =
+            eraStakers.stakers.find(({ address }) => address === nominee)
+              ?.others || [];
 
-          const validatorInEra =
-            stakers.find((s: any) => s.address === nominee) || null;
-
-          if (validatorInEra) {
-            const { others } = validatorInEra;
+          if (others.length) {
+            // If the provided account is a part of the validator's backers, check if they are above
+            // the lowest reward threshold. If so, they are earning rewards and this iteration can
+            // exit.
             const stakedValue =
-              others?.find((o: any) => o.who === who)?.value ?? false;
+              others?.find((o) => o.who === who)?.value ?? false;
             if (stakedValue) {
-              const stakedValueUnit = planckToUnit(
-                new BigNumber(rmCommas(stakedValue)),
-                network.units
-              );
-              if (stakedValueUnit.isGreaterThanOrEqualTo(lowestReward)) {
+              const { lowestReward } = stake[validators.indexOf(validator)];
+              if (
+                planckToUnit(
+                  new BigNumber(rmCommas(stakedValue)),
+                  network.units
+                ).isGreaterThanOrEqualTo(lowestReward)
+              ) {
                 earningRewards = true;
-                break;
+                return false;
               }
             }
           }
         }
-      }
+        return true;
+      });
     }
 
+    // Determine the localised message to display based on the nomination status.
     let str;
     if (inSetup() || isSyncing) {
       str = t('nominate.notNominating', { ns: 'pages' });
