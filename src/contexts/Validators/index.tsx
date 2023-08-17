@@ -7,10 +7,10 @@ import {
   rmCommas,
   setStateWithRef,
   shuffle,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import { ValidatorCommunity } from '@polkadotcloud/community/validators';
 import React, { useEffect, useRef, useState } from 'react';
+import { ValidatorCommunity } from '@polkadot-cloud/community/validators';
 import type {
   Validator,
   ValidatorAddresses,

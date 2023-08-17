@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp } from '@polkadotcloud/core-ui';
+import { ButtonHelp } from '@polkadot-cloud/react';
 import { ReactOdometer } from '@polkadotcloud/react-odometer';
 import { useHelp } from 'contexts/Help';
 import { StatBox } from './Item';

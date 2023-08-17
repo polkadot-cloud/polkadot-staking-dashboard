@@ -3,8 +3,8 @@
 
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonSecondary } from '@polkadotcloud/core-ui';
-import { isValidAddress } from '@polkadotcloud/utils';
+import { ButtonSecondary } from '@polkadot-cloud/react';
+import { isValidAddress } from '@polkadot-cloud/utils';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';

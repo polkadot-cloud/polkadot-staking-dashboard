@@ -5,7 +5,7 @@ import {
   ModalFixedTitle,
   ModalMotionTwoSection,
   ModalSection,
-} from '@polkadotcloud/core-ui';
+} from '@polkadot-cloud/react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useModal } from 'contexts/Modal';

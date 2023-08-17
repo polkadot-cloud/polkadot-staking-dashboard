@@ -11,8 +11,8 @@ import {
   ModalMotionThreeSection,
   ModalPadding,
   ModalSection,
-} from '@polkadotcloud/core-ui';
-import { ExtensionsArray } from '@polkadotcloud/community/extensions';
+} from '@polkadot-cloud/react';
+import { ExtensionsArray } from '@polkadot-cloud/community/extensions';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useExtensions } from 'contexts/Extensions';

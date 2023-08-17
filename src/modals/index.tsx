@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalContainer, ModalCard, ModalHeight } from '@polkadotcloud/core-ui';
+import { ModalContainer, ModalCard, ModalHeight } from '@polkadot-cloud/react';
 import { useAnimation } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';

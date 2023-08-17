@@ -8,7 +8,7 @@ import {
   ButtonText,
   ModalCustomHeader,
   ModalPadding,
-} from '@polkadotcloud/core-ui';
+} from '@polkadot-cloud/react';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';

@@ -6,8 +6,8 @@ import {
   ActionItem,
   ButtonSubmitInvert,
   ModalWarnings,
-} from '@polkadotcloud/core-ui';
-import { planckToUnit, rmCommas } from '@polkadotcloud/utils';
+} from '@polkadot-cloud/react';
+import { planckToUnit, rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { forwardRef, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';

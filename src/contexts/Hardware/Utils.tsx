@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { localStorageOrDefault } from '@polkadotcloud/utils';
+import { localStorageOrDefault } from '@polkadot-cloud/utils';
 import { LedgerApps } from 'config/ledger';
 import type { LedgerAccount, VaultAccount } from 'contexts/Connect/types';
 import type { MaybeString } from 'types';

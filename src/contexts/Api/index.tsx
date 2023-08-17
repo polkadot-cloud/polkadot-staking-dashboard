@@ -8,7 +8,7 @@ import {
   makeCancelable,
   rmCommas,
   varToUrlHash,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useState } from 'react';
 import { NetworkList } from 'config/networks';

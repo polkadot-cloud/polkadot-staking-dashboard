@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { setStateWithRef, shuffle } from '@polkadotcloud/utils';
+import { setStateWithRef, shuffle } from '@polkadot-cloud/utils';
 import React, { useRef, useState } from 'react';
 import type {
   BondedPool,

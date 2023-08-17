@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import Keyring from '@polkadot/keyring';
-import { localStorageOrDefault } from '@polkadotcloud/utils';
+import { localStorageOrDefault } from '@polkadot-cloud/utils';
 import type { ExtensionAccount } from 'contexts/Extensions/types';
 import type { Network, NetworkName } from 'types';
 import type { ExternalAccount } from './types';
