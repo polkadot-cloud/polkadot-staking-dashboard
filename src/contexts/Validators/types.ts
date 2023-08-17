@@ -6,7 +6,6 @@ import type { AnyMetaBatch } from 'types';
 export interface ValidatorsContextInterface {
   fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => void;
   removeValidatorMetaBatch: (k: string) => void;
-  fetchValidatorPrefs: (v: ValidatorAddresses) => Promise<Validator[] | null>;
   addFavorite: (a: string) => void;
   removeFavorite: (a: string) => void;
   validators: Validator[];

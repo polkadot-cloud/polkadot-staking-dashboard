@@ -145,13 +145,7 @@ export const ValidatorsProvider = ({
     const targetsFormatted = targets.map((item: any) => ({ address: item }));
     // fetch preferences
     const nominationsWithPrefs = await fetchValidatorPrefs(targetsFormatted);
-    if (nominationsWithPrefs) {
-      setNominated(nominationsWithPrefs);
-      return;
-    }
-
-    // return empty otherwise.
-    setNominated([]);
+    setNominated(nominationsWithPrefs || []);
   };
 
   // fetch active account's pool nominations in validator list format
@@ -182,11 +176,7 @@ export const ValidatorsProvider = ({
     n = n.map((item: string) => ({ address: item }));
     // fetch preferences
     const nominationsWithPrefs = await fetchValidatorPrefs(n);
-    if (nominationsWithPrefs) {
-      setPoolNominated(nominationsWithPrefs);
-    } else {
-      setPoolNominated([]);
-    }
+    setPoolNominated(nominationsWithPrefs || []);
   };
 
   // re-fetch favorites on network change
@@ -308,34 +298,26 @@ export const ValidatorsProvider = ({
     );
   };
 
-  // Fetches prefs for a list of validators
+  // Fetches prefs for a list of validators.
   const fetchValidatorPrefs = async (addresses: ValidatorAddresses) => {
-    if (!addresses.length || !api) {
-      return null;
-    }
+    if (!addresses.length || !api) return null;
 
     const v: string[] = [];
-    for (const address of addresses) {
-      v.push(address.address);
-    }
+    for (const { address } of addresses) v.push(address);
+    const results = await api.query.staking.validators.multi(v);
 
-    const allPrefs = await api.query.staking.validators.multi(v);
-
-    const validatorsWithPrefs = [];
-    let i = 0;
-    for (const p of allPrefs) {
-      const prefs: AnyApi = p.toHuman();
-
-      validatorsWithPrefs.push({
+    const formatted: Validator[] = [];
+    for (let i = 0; i < results.length; i++) {
+      const prefs: AnyApi = results[i].toHuman();
+      formatted.push({
         address: v[i],
         prefs: {
-          commission: prefs?.commission.slice(0, -1) ?? '0',
+          commission: prefs?.commission.replace(/%/g, '') ?? '0',
           blocked: prefs.blocked,
         },
       });
-      i++;
     }
-    return validatorsWithPrefs;
+    return formatted;
   };
 
   /*
@@ -633,7 +615,6 @@ export const ValidatorsProvider = ({
       value={{
         fetchValidatorMetaBatch,
         removeValidatorMetaBatch,
-        fetchValidatorPrefs,
         addFavorite,
         removeFavorite,
         validators,

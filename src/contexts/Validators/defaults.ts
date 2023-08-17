@@ -14,7 +14,6 @@ export const defaultExposureData = {
 export const defaultValidatorsContext: ValidatorsContextInterface = {
   fetchValidatorMetaBatch: (k, v, r) => {},
   removeValidatorMetaBatch: (k) => {},
-  fetchValidatorPrefs: async (v) => null,
   addFavorite: (a) => {},
   removeFavorite: (a) => {},
   validators: [],
