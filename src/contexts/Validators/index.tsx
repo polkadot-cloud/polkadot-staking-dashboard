@@ -18,7 +18,7 @@ import type {
   ValidatorAddresses,
   ValidatorsContextInterface,
 } from 'contexts/Validators/types';
-import type { AnyApi, AnyMetaBatch, Fn } from 'types';
+import type { AnyApi, AnyMetaBatch, Fn, Sync } from 'types';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
@@ -47,13 +47,13 @@ export const ValidatorsProvider = ({
   const { maxNominatorRewardedPerValidator } = consts;
   const { earliestStoredSession } = metrics;
 
-  // stores the total validator entries
+  // Stores the total validator entries.
   const [validators, setValidators] = useState<Validator[]>([]);
 
-  // track whether the validator list has been fetched yet
-  const [fetchedValidators, setFetchedValidators] = useState<number>(0);
+  // Track whether the validator list has been fetched.
+  const [validatorsFetched, setValidatorsFetched] = useState<Sync>('unsynced');
 
-  // stores the currently active validator set
+  // Stores the currently active validator set.
   const [sessionValidators, setSessionValidators] = useState<SessionValidators>(
     defaultSessionValidators
   );
@@ -99,7 +99,7 @@ export const ValidatorsProvider = ({
 
   // reset validators list on network change
   useEffectIgnoreInitial(() => {
-    setFetchedValidators(0);
+    setValidatorsFetched('unsynced');
     setSessionValidators(defaultSessionValidators);
     setSessionParachainValidators(defaultSessionParachainValidators);
     removeValidatorMetaBatch('validators_browse');
@@ -239,13 +239,9 @@ export const ValidatorsProvider = ({
 
   // Fetches and formats the active validator set, and derives metrics from the result.
   const fetchValidators = async () => {
-    if (!isReady || !api) return;
+    if (!isReady || !api || validatorsFetched !== 'unsynced') return;
 
-    // Return if fetching has not yet started.
-    if ([1, 2].includes(fetchedValidators)) {
-      return;
-    }
-    setFetchedValidators(1);
+    setValidatorsFetched('syncing');
 
     // Await formatted exposure data.
     const { exposures, notFullCommissionCount, totalNonAllCommission } =
@@ -259,7 +255,7 @@ export const ValidatorsProvider = ({
           .toNumber()
       : 0;
 
-    setFetchedValidators(2);
+    setValidatorsFetched('synced');
     setAvgCommission(average);
     // Validators are shuffled before committed to state.
     setValidators(shuffle(exposures));
