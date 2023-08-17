@@ -5,11 +5,6 @@
 import BigNumber from 'bignumber.js';
 import type { ValidatorsContextInterface } from 'contexts/Validators/types';
 
-export const defaultSessionParachainValidators = {
-  list: [],
-  unsub: null,
-};
-
 export const defaultExposureData = {
   exposures: [],
   notFullCommissionCount: 0,

@@ -12,15 +12,11 @@ export const getLocalFavorites = (network: NetworkName) => {
     : [];
 };
 
-// Get validator exopsures for an era.
+// Get validator exposures for an era.
 export const getEraLocalExposures = (network: NetworkName, era: string) => {
   const data = localStorage.getItem('exposures');
   const current = data ? (JSON.parse(data) as LocalExposureData) : null;
-
-  if (current?.[network]?.era === era) {
-    return current[network];
-  }
-  return null;
+  return current?.[network]?.era === era ? current[network] : null;
 };
 
 // Set validator exposure data to local storage.
@@ -30,11 +26,11 @@ export const setEraLocalExposures = (
   exposures: Validator[],
   avgCommission: number
 ) => {
-  const current = localStorage.getItem('exposures') || '{}';
+  const data = localStorage.getItem('exposures') || '{}';
   localStorage.setItem(
     'exposures',
     JSON.stringify({
-      ...JSON.parse(current),
+      ...JSON.parse(data),
       [network]: {
         era,
         exposures,
