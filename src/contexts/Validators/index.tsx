@@ -24,7 +24,11 @@ import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useActivePools } from '../Pools/ActivePools';
 import { defaultExposureData, defaultValidatorsContext } from './defaults';
-import { getLocalFavorites } from './Utils';
+import {
+  getEraLocalExposures,
+  getLocalFavorites,
+  setEraLocalExposures,
+} from './Utils';
 
 export const ValidatorsProvider = ({
   children,
@@ -33,8 +37,8 @@ export const ValidatorsProvider = ({
 }) => {
   const { activeAccount } = useConnect();
   const { poolNominations } = useActivePools();
-  const { isReady, api, network, consts } = useApi();
   const { activeEra, metrics } = useNetworkMetrics();
+  const { isReady, api, network, consts } = useApi();
   const { bondedAccounts, getAccountNominations } = useBonded();
   const { units, name } = network;
   const { earliestStoredSession } = metrics;
@@ -43,14 +47,8 @@ export const ValidatorsProvider = ({
   // Stores the total validator entries.
   const [validators, setValidators] = useState<Validator[]>([]);
 
-  // Stores the user's favorite validators.
-  const [favorites, setFavorites] = useState<string[]>(getLocalFavorites(name));
-
   // Track whether the validator list has been fetched.
   const [validatorsFetched, setValidatorsFetched] = useState<Sync>('unsynced');
-
-  // Stores the average network commission rate.
-  const [avgCommission, setAvgCommission] = useState(0);
 
   // Stores the currently active validator set.
   const [sessionValidators, setSessionValidators] = useState<string[]>([]);
@@ -61,6 +59,12 @@ export const ValidatorsProvider = ({
     []
   );
   const sessionParaUnsub = useRef<Fn>();
+
+  // Stores the average network commission rate.
+  const [avgCommission, setAvgCommission] = useState(0);
+
+  // Stores the user's favorite validators.
+  const [favorites, setFavorites] = useState<string[]>(getLocalFavorites(name));
 
   // TODO: refactor.
   // Stores the meta data batches for validator lists.
@@ -82,10 +86,10 @@ export const ValidatorsProvider = ({
   // stores the user's favorites validators as list
   const [favoritesList, setFavoritesList] = useState<Validator[] | null>(null);
 
-  // stores validator community
+  // Stores a randomised validator community dataset.
   const [validatorCommunity] = useState<any>([...shuffle(ValidatorCommunity)]);
 
-  // reset validators list on network change
+  // Reset validators list on network change.
   useEffectIgnoreInitial(() => {
     setValidatorsFetched('unsynced');
     setSessionValidators([]);
@@ -97,7 +101,7 @@ export const ValidatorsProvider = ({
 
   // fetch validators and session validators when activeEra ready
   useEffectIgnoreInitial(() => {
-    if (isReady) {
+    if (isReady && activeEra.index.isGreaterThan(0)) {
       fetchValidators();
       subscribeSessionValidators();
     }
@@ -242,23 +246,43 @@ export const ValidatorsProvider = ({
   // Fetches and formats the active validator set, and derives metrics from the result.
   const fetchValidators = async () => {
     if (!isReady || !api || validatorsFetched !== 'unsynced') return;
-
     setValidatorsFetched('syncing');
 
-    // Await formatted exposure data.
-    const { exposures, notFullCommissionCount, totalNonAllCommission } =
-      await getDataFromExposures();
+    // If local exposure data exists for the current active era, store these values in state.
+    // Otherwise, fetch exposures from API.
+    const localExposures = getEraLocalExposures(
+      name,
+      activeEra.index.toString()
+    );
 
-    // Get average network commission for all non-100% commissioned validators.
-    const average = notFullCommissionCount
-      ? totalNonAllCommission
-          .dividedBy(notFullCommissionCount)
-          .decimalPlaces(2)
-          .toNumber()
-      : 0;
+    // The current exposures for the active era.
+    let exposures: Validator[] = [];
+    // Average network commission for all non-100% commissioned exposures.
+    let avg = 0;
 
+    if (localExposures) {
+      exposures = localExposures.exposures;
+      avg = localExposures.avgCommission;
+    } else {
+      const {
+        exposures: newExposures,
+        notFullCommissionCount,
+        totalNonAllCommission,
+      } = await getDataFromExposures();
+
+      exposures = newExposures;
+      avg = notFullCommissionCount
+        ? totalNonAllCommission
+            .dividedBy(notFullCommissionCount)
+            .decimalPlaces(2)
+            .toNumber()
+        : 0;
+    }
+
+    // Set exposure data for the era to local storage.
+    setEraLocalExposures(name, activeEra.index.toString(), exposures, avg);
     setValidatorsFetched('synced');
-    setAvgCommission(average);
+    setAvgCommission(avg);
     // Validators are shuffled before committed to state.
     setValidators(shuffle(exposures));
   };

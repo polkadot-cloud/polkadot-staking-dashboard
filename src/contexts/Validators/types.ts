@@ -34,3 +34,12 @@ export interface ValidatorPrefs {
   commission: number;
   blocked: boolean;
 }
+
+export type LocalExposureData = Record<
+  string,
+  {
+    avgCommission: number;
+    era: string;
+    exposures: Validator[];
+  }
+>;
