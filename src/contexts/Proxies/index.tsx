@@ -10,7 +10,7 @@ import {
   removedFrom,
   rmCommas,
   setStateWithRef,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useRef, useState } from 'react';
 import { isSupportedProxy } from 'config/proxies';

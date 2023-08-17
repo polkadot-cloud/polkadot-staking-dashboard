@@ -5,7 +5,7 @@ import {
   capitalizeFirstLetter,
   planckToUnit,
   rmCommas,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';

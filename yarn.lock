@@ -1502,6 +1502,26 @@
     picocolors "^1.0.0"
     tslib "^2.6.0"
 
+"@polkadot-cloud/community@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/community/-/community-0.1.10.tgz#d2a99190c0a89a67275264084e6e750269990986"
+  integrity sha512-VT38rqOvORuYdPLigS8UNwvitoc0DFZWEazsvHxz9bTnPBL/7M3LujWXO14OSGw+FTvfz4RzPwovmW4u7RoT/Q==
+
+"@polkadot-cloud/core@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/core/-/core-0.0.5.tgz#7c30b7e02a68ee686bef67d7aa7126c9d13beb53"
+  integrity sha512-a0kV6G4mzZobHv9MV20EkkfsKELfHygFII8TjjTCotqy++7omYDNdNiXAV/UBg5pVKWQljL2W/Kq0eBtiSd/cg==
+
+"@polkadot-cloud/react@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/react/-/react-0.1.2.tgz#6ede7e72e13f7e021f7b42b1d2ea84738b22555f"
+  integrity sha512-3hGFOYlfOfBtrrguiBh/Hk+51Z7BTdEWvLY8WHswsPYlk/1qNoNIRtW7tr1gFs6cJm3BBOWqNUp0lurIQ3KxPQ==
+
+"@polkadot-cloud/utils@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/utils/-/utils-0.0.1.tgz#24b0d569c4637e4d539ba3a2c669339144162133"
+  integrity sha512-YWSQ/sPRwVcO1LBJAVS7E7TI+dYpVY/Oe/sDwLThMVaVXzaIx18tBBhoEXXU85a8N0bXJHYVOMIWoCnAem4ZJw==
+
 "@polkadot/api-augment@10.9.1":
   version "10.9.1"
   resolved "https://registry.yarnpkg.com/@polkadot/api-augment/-/api-augment-10.9.1.tgz#9fc81b81903229bb23b0b16783e97ec52a5d4f1b"
@@ -1827,30 +1847,10 @@
     tslib "^2.5.3"
     ws "^8.13.0"
 
-"@polkadotcloud/community@0.1.10":
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/@polkadotcloud/community/-/community-0.1.10.tgz#8755d448098bfab6ff35e9fc7bad3d5c7a81e641"
-  integrity sha512-NKcm8+ZDnEk8TB27x3JSF7+vSC2wKDMmEFI6SyKIcHTS0WvY5uN8x6U5uwHQh/ESBNa824t+GYPLo7ZGTx3HWA==
-
-"@polkadotcloud/core-ui@^0.3.88":
-  version "0.3.88"
-  resolved "https://registry.npmjs.org/@polkadotcloud/core-ui/-/core-ui-0.3.88.tgz#d38eb1bdf2a6266500217b1a90633c6db9b49065"
-  integrity sha512-u29454xvss0GR0QRgeamqznBHpb0ZmhZVdchAF7T+SfVtU+SJ4NijFd/WD5gjxS13fIUQ6uqATFAkIncC1qz5A==
-
 "@polkadotcloud/react-odometer@^0.1.19":
   version "0.1.19"
   resolved "https://registry.yarnpkg.com/@polkadotcloud/react-odometer/-/react-odometer-0.1.19.tgz#3bd476c8d00fa011a14f7bc8b9b5227a26c9299a"
   integrity sha512-s7JJIIP4ZR37J+r478TrE5yCuO2niT1ATscTm/0wVLq/nFvCrJ63JZbCLl13I17ZotId41kRUb3vGxIYn4giMQ==
-
-"@polkadotcloud/themes@^0.1.6":
-  version "0.1.6"
-  resolved "https://registry.yarnpkg.com/@polkadotcloud/themes/-/themes-0.1.6.tgz#53d16a163a412111a43b82a2367f3a065a19eb7c"
-  integrity sha512-mC7tVtGt2iyXih8JsgKG9gr0XqvlkfgmdaoDKvRCxgTF/sbSgMJT32Rjk/H1jU2h6PlPYOhM/uGk6doeSSYEmQ==
-
-"@polkadotcloud/utils@^0.2.23":
-  version "0.2.23"
-  resolved "https://registry.yarnpkg.com/@polkadotcloud/utils/-/utils-0.2.23.tgz#8d4bfd81213b18a2ac66986da9169140a24a256e"
-  integrity sha512-J+YJwfNIqdU6mO9rN1ZFUvm1mBp7OIdybotePUZ4kRL/vxMKTPk3usNVzVv45PctRuNtve70MQdEmsbEiigafw==
 
 "@remix-run/router@1.8.0":
   version "1.8.0"

@@ -7,8 +7,8 @@ import {
   ButtonHelp,
   ButtonSubmitInvert,
   ModalWarnings,
-} from '@polkadotcloud/core-ui';
-import { rmCommas } from '@polkadotcloud/utils';
+} from '@polkadot-cloud/react';
+import { rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { intervalToDuration } from 'date-fns';
 import Slider from 'rc-slider';

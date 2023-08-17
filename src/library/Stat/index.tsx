@@ -7,8 +7,8 @@ import {
   ButtonHelp,
   ButtonPrimary,
   ButtonSecondary,
-} from '@polkadotcloud/core-ui';
-import { applyWidthAsPadding } from '@polkadotcloud/utils';
+} from '@polkadot-cloud/react';
+import { applyWidthAsPadding } from '@polkadot-cloud/utils';
 import React, { useEffect, useLayoutEffect, useRef } from 'react';
 import { useHelp } from 'contexts/Help';
 import { useNotifications } from 'contexts/Notifications';

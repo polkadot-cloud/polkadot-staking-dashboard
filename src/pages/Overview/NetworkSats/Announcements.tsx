@@ -8,7 +8,7 @@ import {
   planckToUnit,
   rmCommas,
   sortWithNull,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';

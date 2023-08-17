@@ -3,7 +3,7 @@
 
 import TransportWebHID from '@ledgerhq/hw-transport-webhid';
 import { u8aToBuffer } from '@polkadot/util';
-import { localStorageOrDefault, setStateWithRef } from '@polkadotcloud/utils';
+import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import { newSubstrateApp } from '@zondax/ledger-substrate';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';

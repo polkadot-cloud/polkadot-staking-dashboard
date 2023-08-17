@@ -13,8 +13,8 @@ import {
   ButtonText,
   ModalConnectItem,
   ModalHardwareItem,
-} from '@polkadotcloud/core-ui';
-import { inChrome } from '@polkadotcloud/utils';
+} from '@polkadot-cloud/react';
+import { inChrome } from '@polkadot-cloud/utils';
 import React from 'react';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';

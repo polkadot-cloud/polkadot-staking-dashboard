@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { useAnimation } from 'framer-motion';
-import { ModalCanvas, ModalContent, ModalScroll } from '@polkadotcloud/core-ui';
+import { ModalCanvas, ModalContent, ModalScroll } from '@polkadot-cloud/react';
 import { useCanvas } from 'contexts/Canvas';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { CanvasWrapper } from './Wrappers';

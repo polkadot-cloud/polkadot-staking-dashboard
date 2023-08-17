@@ -3,7 +3,7 @@
 
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonHelp, ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
+import { ButtonHelp, ButtonPrimaryInvert } from '@polkadot-cloud/react';
 import type { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
