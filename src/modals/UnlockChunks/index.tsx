@@ -5,8 +5,8 @@ import {
   ModalFixedTitle,
   ModalMotionTwoSection,
   ModalSection,
-} from '@polkadotcloud/core-ui';
-import { setStateWithRef } from '@polkadotcloud/utils';
+} from '@polkadot-cloud/react';
+import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';

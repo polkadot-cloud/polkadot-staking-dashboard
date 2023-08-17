@@ -3,7 +3,7 @@
 
 import { faExternalLinkAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ModalPadding } from '@polkadotcloud/core-ui';
+import { ModalPadding } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { ReactComponent as ForumSVG } from 'img/forum.svg';
 import { Title } from 'library/Modal/Title';

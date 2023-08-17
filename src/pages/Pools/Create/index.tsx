@@ -7,7 +7,7 @@ import {
   PageHeading,
   PageRow,
   PageTitle,
-} from '@polkadotcloud/core-ui';
+} from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { Element } from 'react-scroll';
 import { useConnect } from 'contexts/Connect';

@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
+import { greaterThanZero, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import {
   addDays,

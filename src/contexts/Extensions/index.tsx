@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { setStateWithRef } from '@polkadotcloud/utils';
-import { ExtensionsArray } from '@polkadotcloud/community/extensions';
+import { setStateWithRef } from '@polkadot-cloud/utils';
+import { ExtensionsArray } from '@polkadot-cloud/community/extensions';
 import React, { useEffect, useRef, useState } from 'react';
 import type {
   ExtensionInjected,

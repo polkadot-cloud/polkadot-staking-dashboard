@@ -7,7 +7,7 @@ import {
   clipAddress,
   localStorageOrDefault,
   setStateWithRef,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { DappName } from 'consts';
 import { useApi } from 'contexts/Api';

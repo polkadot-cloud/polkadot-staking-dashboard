@@ -9,7 +9,7 @@ import {
   ButtonText,
   ModalConnectItem,
   ModalHardwareItem,
-} from '@polkadotcloud/core-ui';
+} from '@polkadot-cloud/react';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';

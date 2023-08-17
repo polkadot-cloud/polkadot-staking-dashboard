@@ -3,8 +3,8 @@
 
 import { faFlag } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonHelp } from '@polkadotcloud/core-ui';
-import { planckToUnit } from '@polkadotcloud/utils';
+import { ButtonHelp } from '@polkadot-cloud/react';
+import { planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';

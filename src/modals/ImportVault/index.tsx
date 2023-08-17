@@ -7,7 +7,7 @@ import {
   ButtonText,
   HardwareAddress,
   HardwareStatusBar,
-} from '@polkadotcloud/core-ui';
+} from '@polkadot-cloud/react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';

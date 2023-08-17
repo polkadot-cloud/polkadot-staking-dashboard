@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSecondary } from '@polkadotcloud/core-ui';
+import { ButtonSecondary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useModal } from 'contexts/Modal';
 import { NoAccountsWrapper } from './Wrappers';

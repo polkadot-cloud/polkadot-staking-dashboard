@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { faCheck, faCheckDouble } from '@fortawesome/free-solid-svg-icons';
-import { ButtonTertiary } from '@polkadotcloud/core-ui';
-import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
+import { ButtonTertiary } from '@polkadot-cloud/react';
+import { greaterThanZero, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';

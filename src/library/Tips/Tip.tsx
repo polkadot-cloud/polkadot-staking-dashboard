@@ -6,7 +6,7 @@ import {
   ButtonPrimary,
   ButtonPrimaryInvert,
   ButtonSecondary,
-} from '@polkadotcloud/core-ui';
+} from '@polkadot-cloud/react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';

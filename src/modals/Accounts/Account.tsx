@@ -3,9 +3,9 @@
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, planckToUnit } from '@polkadotcloud/utils';
+import { clipAddress, planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { Extensions } from '@polkadotcloud/community/extensions';
+import { Extensions } from '@polkadot-cloud/community/extensions';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';

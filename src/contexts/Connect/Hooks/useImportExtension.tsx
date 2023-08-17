@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import Keyring from '@polkadot/keyring';
-import { isValidAddress } from '@polkadotcloud/utils';
+import { isValidAddress } from '@polkadot-cloud/utils';
 import { useApi } from 'contexts/Api';
 import { useExtensions } from 'contexts/Extensions';
 import type {

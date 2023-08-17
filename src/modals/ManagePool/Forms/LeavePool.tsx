@@ -6,12 +6,12 @@ import {
   ActionItem,
   ButtonSubmitInvert,
   ModalWarnings,
-} from '@polkadotcloud/core-ui';
+} from '@polkadot-cloud/react';
 import {
   greaterThanZero,
   planckToUnit,
   unitToPlanck,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
 import { useEffect, useState } from 'react';
