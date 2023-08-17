@@ -31,21 +31,21 @@ import {
   defaultSessionValidators,
   defaultValidatorsContext,
 } from './defaults';
+import { getLocalFavorites } from './Utils';
 
-// wrapper component to provide components with context
 export const ValidatorsProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const { isReady, api, network, consts } = useApi();
   const { activeAccount } = useConnect();
+  const { poolNominations } = useActivePools();
+  const { isReady, api, network, consts } = useApi();
   const { activeEra, metrics } = useNetworkMetrics();
   const { bondedAccounts, getAccountNominations } = useBonded();
-  const { poolNominations } = useActivePools();
-  const { units } = network;
-  const { maxNominatorRewardedPerValidator } = consts;
+  const { units, name } = network;
   const { earliestStoredSession } = metrics;
+  const { maxNominatorRewardedPerValidator } = consts;
 
   // Stores the total validator entries.
   const [validators, setValidators] = useState<Validator[]>([]);
@@ -58,14 +58,15 @@ export const ValidatorsProvider = ({
     defaultSessionValidators
   );
 
-  // stores the average network commission rate
+  // Stores the average network commission rate.
   const [avgCommission, setAvgCommission] = useState(0);
 
-  // stores the currently active parachain validator set
+  // Stores the currently active parachain validator set.
   const [sessionParachainValidators, setSessionParachainValidators] =
     useState<SessionParachainValidators>(defaultSessionParachainValidators);
 
-  // stores the meta data batches for validator lists
+  // TODO: refactor.
+  // Stores the meta data batches for validator lists.
   const [validatorMetaBatches, setValidatorMetaBatch] = useState<AnyMetaBatch>(
     {}
   );
@@ -74,16 +75,8 @@ export const ValidatorsProvider = ({
   // stores the meta batch subscriptions for validator lists
   const validatorSubsRef = useRef<Record<string, Fn[]>>({});
 
-  // get favorites from local storage
-  const getFavorites = () => {
-    const localFavourites = localStorage.getItem(`${network.name}_favorites`);
-    return localFavourites !== null
-      ? (JSON.parse(localFavourites) as string[])
-      : [];
-  };
-
   // stores the user's favorite validators
-  const [favorites, setFavorites] = useState<string[]>(getFavorites());
+  const [favorites, setFavorites] = useState<string[]>(getLocalFavorites(name));
 
   // stores the user's nominated validators as list
   const [nominated, setNominated] = useState<Validator[] | null>(null);
@@ -185,7 +178,7 @@ export const ValidatorsProvider = ({
 
   // re-fetch favorites on network change
   useEffectIgnoreInitial(() => {
-    setFavorites(getFavorites());
+    setFavorites(getLocalFavorites(name));
   }, [network]);
 
   // fetch favorites in validator list format
