@@ -26,6 +26,7 @@ import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useActivePools } from '../Pools/ActivePools';
 import {
+  defaultExporeData,
   defaultSessionParachainValidators,
   defaultSessionValidators,
   defaultValidatorsContext,
@@ -143,9 +144,8 @@ export const ValidatorsProvider = ({
   }, [isReady, activeAccount, bondedAccounts]);
 
   const fetchNominatedList = async () => {
-    if (!activeAccount) {
-      return;
-    }
+    if (!activeAccount) return;
+
     // get raw targets list
     const targets = getAccountNominations(activeAccount);
 
@@ -205,37 +205,27 @@ export const ValidatorsProvider = ({
     setFavoritesList(favoritesWithPrefs || []);
   };
 
-  /*
-   * Fetches the active validator set.
-   * Validator meta batches are derived from this initial list.
-   */
-  const fetchValidators = async () => {
-    if (!isReady || !api) {
-      return;
-    }
+  // Fetch validator entries and format the returning data.
+  const getDataFromExposures = async () => {
+    if (!isReady || !api) return defaultExporeData;
 
-    // return if fetching not started
-    if ([1, 2].includes(fetchedValidators)) {
-      return;
-    }
+    const entries = await api.query.staking.validators.entries();
 
-    setFetchedValidators(1);
-
-    // fetch validator set
-    const v: Validator[] = [];
+    const exposures: Validator[] = [];
+    let notFullCommissionCount = 0;
     let totalNonAllCommission = new BigNumber(0);
-    const exposures = await api.query.staking.validators.entries();
-    exposures.forEach(([a, p]: AnyApi) => {
-      const address = a.args[0].toHuman();
+    entries.forEach(([a, p]: AnyApi) => {
+      const address = a.toHuman().pop();
       const prefs = p.toHuman();
-
-      const commission = new BigNumber(prefs.commission.slice(0, -1));
+      const commission = new BigNumber(prefs.commission.replace(/%/g, ''));
 
       if (!commission.isEqualTo(100)) {
         totalNonAllCommission = totalNonAllCommission.plus(commission);
+      } else {
+        notFullCommissionCount++;
       }
 
-      v.push({
+      exposures.push({
         address,
         prefs: {
           commission: Number(commission.toFixed(2)),
@@ -244,11 +234,24 @@ export const ValidatorsProvider = ({
       });
     });
 
-    // get average network commission for all non-100% commissioned validators.
-    const notFullCommissionCount = exposures.filter(
-      (e: AnyApi) => e.commission !== '100%'
-    ).length;
+    return { exposures, notFullCommissionCount, totalNonAllCommission };
+  };
 
+  // Fetches and formats the active validator set, and derives metrics from the result.
+  const fetchValidators = async () => {
+    if (!isReady || !api) return;
+
+    // Return if fetching has not yet started.
+    if ([1, 2].includes(fetchedValidators)) {
+      return;
+    }
+    setFetchedValidators(1);
+
+    // Await formatted exposure data.
+    const { exposures, notFullCommissionCount, totalNonAllCommission } =
+      await getDataFromExposures();
+
+    // Get average network commission for all non-100% commissioned validators.
     const average = notFullCommissionCount
       ? totalNonAllCommission
           .dividedBy(notFullCommissionCount)
@@ -258,13 +261,11 @@ export const ValidatorsProvider = ({
 
     setFetchedValidators(2);
     setAvgCommission(average);
-    // shuffle validators before setting them.
-    setValidators(shuffle(v));
+    // Validators are shuffled before committed to state.
+    setValidators(shuffle(exposures));
   };
 
-  /*
-   * subscribe to active session
-   */
+  // Subscribe to active session
   const subscribeSessionValidators = async () => {
     if (api !== null && isReady) {
       const unsub: AnyApi = await api.query.session.validators((v: AnyApi) => {
@@ -277,9 +278,7 @@ export const ValidatorsProvider = ({
     }
   };
 
-  /*
-   * subscribe to active parachain validators
-   */
+  // Subscribe to active parachain validators.
   const subscribeParachainValidators = async () => {
     if (api !== null && isReady) {
       const unsub: AnyApi = await api.query.paraSessionInfo.accountKeys(
@@ -295,9 +294,7 @@ export const ValidatorsProvider = ({
     }
   };
 
-  /*
-   * fetches prefs for a list of validators
-   */
+  // Fetches prefs for a list of validators
   const fetchValidatorPrefs = async (addresses: ValidatorAddresses) => {
     if (!addresses.length || !api) {
       return null;
