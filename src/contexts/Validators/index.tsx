@@ -617,7 +617,7 @@ export const ValidatorsProvider = ({
         validators,
         avgCommission,
         meta: validatorMetaBatchesRef.current,
-        session: sessionValidators,
+        sessionValidators,
         sessionParachain: sessionParachainValidators.list,
         favorites,
         nominated,

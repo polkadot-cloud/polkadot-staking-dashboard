@@ -10,7 +10,7 @@ import type { AnyFunction, AnyJson } from 'types';
 export const useValidatorFilters = () => {
   const { t } = useTranslation('library');
   const { consts } = useApi();
-  const { meta, session, sessionParachain } = useValidators();
+  const { meta, sessionValidators, sessionParachain } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
 
   /*
@@ -117,8 +117,10 @@ export const useValidatorFilters = () => {
    */
   const filterActive = (list: any) => {
     // if list has not yet been populated, return original list
-    if (session.length === 0) return list;
-    return list.filter((validator: any) => session.includes(validator.address));
+    if (sessionValidators.length === 0) return list;
+    return list.filter((validator: any) =>
+      sessionValidators.includes(validator.address)
+    );
   };
 
   /*
@@ -141,9 +143,9 @@ export const useValidatorFilters = () => {
    */
   const filterInSession = (list: any) => {
     // if list has not yet been populated, return original list
-    if (session.length === 0) return list;
+    if (sessionValidators.length === 0) return list;
     return list.filter(
-      (validator: any) => !session.includes(validator.address)
+      (validator: any) => !sessionValidators.includes(validator.address)
     );
   };
 
