@@ -7,7 +7,7 @@ import type { Validator } from 'contexts/Validators/types';
 import { useValidatorFilters } from 'library/Hooks/useValidatorFilters';
 
 export const useFetchMehods = () => {
-  const { validators, sessionParachain } = useValidators();
+  const { validators, sessionParaValidators } = useValidators();
   const { applyFilter, applyOrder } = useValidatorFilters();
   let { favoritesList } = useValidators();
   if (favoritesList === null) {
@@ -144,7 +144,7 @@ export const useFetchMehods = () => {
       .filter(
         (n: any) => !nominations.find((o: any) => o.address === n.address)
       )
-      .filter((n: any) => !sessionParachain?.includes(n.address) || false);
+      .filter((n: any) => !sessionParaValidators?.includes(n.address) || false);
 
     const random = applyFilter(
       null,

@@ -12,7 +12,6 @@ import BigNumber from 'bignumber.js';
 import { ValidatorCommunity } from '@polkadotcloud/community/validators';
 import React, { useEffect, useRef, useState } from 'react';
 import type {
-  SessionParachainValidators,
   Validator,
   ValidatorAddresses,
   ValidatorsContextInterface,
@@ -24,11 +23,7 @@ import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useActivePools } from '../Pools/ActivePools';
-import {
-  defaultExposureData,
-  defaultSessionParachainValidators,
-  defaultValidatorsContext,
-} from './defaults';
+import { defaultExposureData, defaultValidatorsContext } from './defaults';
 import { getLocalFavorites } from './Utils';
 
 export const ValidatorsProvider = ({
@@ -54,16 +49,18 @@ export const ValidatorsProvider = ({
   // Track whether the validator list has been fetched.
   const [validatorsFetched, setValidatorsFetched] = useState<Sync>('unsynced');
 
+  // Stores the average network commission rate.
+  const [avgCommission, setAvgCommission] = useState(0);
+
   // Stores the currently active validator set.
   const [sessionValidators, setSessionValidators] = useState<string[]>([]);
   const sessionUnsub = useRef<Fn>();
 
-  // Stores the average network commission rate.
-  const [avgCommission, setAvgCommission] = useState(0);
-
   // Stores the currently active parachain validator set.
-  const [sessionParachainValidators, setSessionParachainValidators] =
-    useState<SessionParachainValidators>(defaultSessionParachainValidators);
+  const [sessionParaValidators, setSessionParaValidators] = useState<string[]>(
+    []
+  );
+  const sessionParaUnsub = useRef<Fn>();
 
   // TODO: refactor.
   // Stores the meta data batches for validator lists.
@@ -92,7 +89,7 @@ export const ValidatorsProvider = ({
   useEffectIgnoreInitial(() => {
     setValidatorsFetched('unsynced');
     setSessionValidators([]);
-    setSessionParachainValidators(defaultSessionParachainValidators);
+    setSessionParaValidators([]);
     removeValidatorMetaBatch('validators_browse');
     setAvgCommission(0);
     setValidators([]);
@@ -165,7 +162,13 @@ export const ValidatorsProvider = ({
     if (sessionValidators.length) {
       sessionUnsub.current?.();
     }
-    return () => sessionUnsub.current?.();
+    if (sessionParaValidators.length) {
+      sessionParaUnsub.current?.();
+    }
+    return () => {
+      sessionUnsub.current?.();
+      sessionParaUnsub.current?.();
+    };
   }, [network]);
 
   const fetchPoolNominatedList = async () => {
@@ -260,30 +263,25 @@ export const ValidatorsProvider = ({
     setValidators(shuffle(exposures));
   };
 
-  // Subscribe to active session
+  // Subscribe to active session validators.
   const subscribeSessionValidators = async () => {
-    if (api !== null && isReady) {
-      const unsub: AnyApi = await api.query.session.validators((v: AnyApi) => {
-        setSessionValidators(v.toHuman());
-        sessionUnsub.current = unsub;
-      });
-    }
+    if (!api || !isReady) return;
+    const unsub: AnyApi = await api.query.session.validators((v: AnyApi) => {
+      setSessionValidators(v.toHuman());
+      sessionUnsub.current = unsub;
+    });
   };
 
   // Subscribe to active parachain validators.
   const subscribeParachainValidators = async () => {
-    if (api !== null && isReady) {
-      const unsub: AnyApi = await api.query.paraSessionInfo.accountKeys(
-        earliestStoredSession.toString(),
-        (v: AnyApi) => {
-          setSessionParachainValidators({
-            ...sessionParachainValidators,
-            list: v.toHuman(),
-            unsub,
-          });
-        }
-      );
-    }
+    if (!api || !isReady) return;
+    const unsub: AnyApi = await api.query.paraSessionInfo.accountKeys(
+      earliestStoredSession.toString(),
+      (v: AnyApi) => {
+        setSessionParaValidators(v.toHuman());
+        sessionParaUnsub.current = unsub;
+      }
+    );
   };
 
   // Fetches prefs for a list of validators
@@ -618,7 +616,7 @@ export const ValidatorsProvider = ({
         avgCommission,
         meta: validatorMetaBatchesRef.current,
         sessionValidators,
-        sessionParachain: sessionParachainValidators.list,
+        sessionParaValidators,
         favorites,
         nominated,
         poolNominated,

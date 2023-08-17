@@ -10,7 +10,7 @@ import type { AnyFunction, AnyJson } from 'types';
 export const useValidatorFilters = () => {
   const { t } = useTranslation('library');
   const { consts } = useApi();
-  const { meta, sessionValidators, sessionParachain } = useValidators();
+  const { meta, sessionValidators, sessionParaValidators } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
 
   /*
@@ -130,9 +130,9 @@ export const useValidatorFilters = () => {
    */
   const filterNonParachainValidator = (list: any) => {
     // if list has not yet been populated, return original list
-    if ((sessionParachain?.length ?? 0) === 0) return list;
+    if ((sessionParaValidators?.length ?? 0) === 0) return list;
     return list.filter((validator: any) =>
-      sessionParachain.includes(validator.address)
+      sessionParaValidators.includes(validator.address)
     );
   };
 
