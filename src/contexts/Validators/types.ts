@@ -12,7 +12,7 @@ export interface ValidatorsContextInterface {
   validators: Validator[];
   avgCommission: number;
   meta: AnyMetaBatch;
-  session: SessionValidators;
+  session: string[];
   sessionParachain: string[];
   favorites: string[];
   nominated: Validator[] | null;
@@ -24,11 +24,6 @@ export interface ValidatorsContextInterface {
 export type ValidatorAddresses = {
   address: string;
 }[];
-
-export interface SessionValidators {
-  list: string[];
-  unsub: { (): void } | null;
-}
 
 export interface SessionParachainValidators {
   list: string[];

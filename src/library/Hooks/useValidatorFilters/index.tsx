@@ -117,10 +117,8 @@ export const useValidatorFilters = () => {
    */
   const filterActive = (list: any) => {
     // if list has not yet been populated, return original list
-    if (session.list.length === 0) return list;
-    return list.filter((validator: any) =>
-      session.list.includes(validator.address)
-    );
+    if (session.length === 0) return list;
+    return list.filter((validator: any) => session.includes(validator.address));
   };
 
   /*
@@ -143,9 +141,9 @@ export const useValidatorFilters = () => {
    */
   const filterInSession = (list: any) => {
     // if list has not yet been populated, return original list
-    if (session.list.length === 0) return list;
+    if (session.length === 0) return list;
     return list.filter(
-      (validator: any) => !session.list.includes(validator.address)
+      (validator: any) => !session.includes(validator.address)
     );
   };
 

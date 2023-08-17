@@ -10,10 +10,9 @@ import {
 } from '@polkadotcloud/utils';
 import BigNumber from 'bignumber.js';
 import { ValidatorCommunity } from '@polkadotcloud/community/validators';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import type {
   SessionParachainValidators,
-  SessionValidators,
   Validator,
   ValidatorAddresses,
   ValidatorsContextInterface,
@@ -26,9 +25,8 @@ import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useActivePools } from '../Pools/ActivePools';
 import {
-  defaultExporeData,
+  defaultExposureData,
   defaultSessionParachainValidators,
-  defaultSessionValidators,
   defaultValidatorsContext,
 } from './defaults';
 import { getLocalFavorites } from './Utils';
@@ -50,13 +48,15 @@ export const ValidatorsProvider = ({
   // Stores the total validator entries.
   const [validators, setValidators] = useState<Validator[]>([]);
 
+  // Stores the user's favorite validators.
+  const [favorites, setFavorites] = useState<string[]>(getLocalFavorites(name));
+
   // Track whether the validator list has been fetched.
   const [validatorsFetched, setValidatorsFetched] = useState<Sync>('unsynced');
 
   // Stores the currently active validator set.
-  const [sessionValidators, setSessionValidators] = useState<SessionValidators>(
-    defaultSessionValidators
-  );
+  const [sessionValidators, setSessionValidators] = useState<string[]>([]);
+  const sessionUnsub = useRef<Fn>();
 
   // Stores the average network commission rate.
   const [avgCommission, setAvgCommission] = useState(0);
@@ -72,11 +72,9 @@ export const ValidatorsProvider = ({
   );
   const validatorMetaBatchesRef = useRef(validatorMetaBatches);
 
+  // TODO: refactor.
   // stores the meta batch subscriptions for validator lists
   const validatorSubsRef = useRef<Record<string, Fn[]>>({});
-
-  // stores the user's favorite validators
-  const [favorites, setFavorites] = useState<string[]>(getLocalFavorites(name));
 
   // stores the user's nominated validators as list
   const [nominated, setNominated] = useState<Validator[] | null>(null);
@@ -93,7 +91,7 @@ export const ValidatorsProvider = ({
   // reset validators list on network change
   useEffectIgnoreInitial(() => {
     setValidatorsFetched('unsynced');
-    setSessionValidators(defaultSessionValidators);
+    setSessionValidators([]);
     setSessionParachainValidators(defaultSessionParachainValidators);
     removeValidatorMetaBatch('validators_browse');
     setAvgCommission(0);
@@ -162,6 +160,14 @@ export const ValidatorsProvider = ({
     }
   }, [isReady, poolNominations]);
 
+  // Unsubscribe on network change and component unmount.
+  useEffect(() => {
+    if (sessionValidators.length) {
+      sessionUnsub.current?.();
+    }
+    return () => sessionUnsub.current?.();
+  }, [network]);
+
   const fetchPoolNominatedList = async () => {
     // get raw nominations list
     let n = poolNominations.targets;
@@ -200,7 +206,7 @@ export const ValidatorsProvider = ({
 
   // Fetch validator entries and format the returning data.
   const getDataFromExposures = async () => {
-    if (!isReady || !api) return defaultExporeData;
+    if (!isReady || !api) return defaultExposureData;
 
     const entries = await api.query.staking.validators.entries();
 
@@ -258,11 +264,8 @@ export const ValidatorsProvider = ({
   const subscribeSessionValidators = async () => {
     if (api !== null && isReady) {
       const unsub: AnyApi = await api.query.session.validators((v: AnyApi) => {
-        setSessionValidators({
-          ...sessionValidators,
-          list: v.toHuman(),
-          unsub,
-        });
+        setSessionValidators(v.toHuman());
+        sessionUnsub.current = unsub;
       });
     }
   };

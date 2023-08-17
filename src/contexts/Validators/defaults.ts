@@ -5,17 +5,12 @@
 import BigNumber from 'bignumber.js';
 import type { ValidatorsContextInterface } from 'contexts/Validators/types';
 
-export const defaultSessionValidators = {
-  list: [],
-  unsub: null,
-};
-
 export const defaultSessionParachainValidators = {
   list: [],
   unsub: null,
 };
 
-export const defaultExporeData = {
+export const defaultExposureData = {
   exposures: [],
   notFullCommissionCount: 0,
   totalNonAllCommission: new BigNumber(0),
@@ -30,7 +25,7 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   validators: [],
   avgCommission: 0,
   meta: {},
-  session: defaultSessionValidators,
+  session: [],
   sessionParachain: [],
   favorites: [],
   nominated: null,
