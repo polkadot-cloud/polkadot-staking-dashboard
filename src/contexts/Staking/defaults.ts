@@ -38,6 +38,11 @@ export const defaultTargets: StakingTargets = {
   nominations: [],
 };
 
+const defaultLowestReward = {
+  lowest: new BigNumber(0),
+  oversubscribed: false,
+};
+
 export const defaultNominationStatus: NominationStatuses = {};
 
 export const defaultStakingContext: StakingContextInterface = {
@@ -49,7 +54,7 @@ export const defaultStakingContext: StakingContextInterface = {
   isBonding: () => false,
   isNominating: () => false,
   inSetup: () => true,
-  getLowestRewardFromStaker: (address) => new BigNumber(0),
+  getLowestRewardFromStaker: (address) => defaultLowestReward,
   staking: defaultStakingMetrics,
   eraStakers: defaultEraStakers,
   targets: defaultTargets,

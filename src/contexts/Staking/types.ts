@@ -48,6 +48,7 @@ export interface ExposureValue {
 export type Staker = ExposureValue & {
   address: string;
   lowestReward: string;
+  oversubscribed: boolean;
 };
 
 export interface ActiveAccountStaker {
@@ -60,6 +61,11 @@ export interface ExposureOther {
   value: string;
 }
 
+interface LowestReward {
+  lowest: BigNumber;
+  oversubscribed: boolean;
+}
+
 export interface StakingContextInterface {
   getNominationsStatusFromTargets: (w: MaybeAccount, t: any[]) => any;
   setTargets: (t: any) => any;
@@ -69,7 +75,7 @@ export interface StakingContextInterface {
   isBonding: () => boolean;
   isNominating: () => boolean;
   inSetup: () => any;
-  getLowestRewardFromStaker: (a: MaybeAccount) => BigNumber;
+  getLowestRewardFromStaker: (a: MaybeAccount) => LowestReward;
   staking: StakingMetrics;
   eraStakers: EraStakers;
   targets: any;

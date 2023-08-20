@@ -368,11 +368,19 @@ export const StakingProvider = ({
   /*
    * Helper function to get the lowest reward from an active validaor
    */
-  const getLowestRewardFromStaker = (address: MaybeAccount) =>
-    new BigNumber(
-      eraStakersRef.current.stakers.find((s) => s.address === address)
-        ?.lowestReward || 0
+  const getLowestRewardFromStaker = (address: MaybeAccount) => {
+    const staker = eraStakersRef.current.stakers.find(
+      (s) => s.address === address
     );
+
+    const lowest = new BigNumber(staker?.lowestReward || 0);
+    const oversubscribed = staker?.oversubscribed || false;
+
+    return {
+      lowest,
+      oversubscribed,
+    };
+  };
 
   return (
     <StakingContext.Provider
