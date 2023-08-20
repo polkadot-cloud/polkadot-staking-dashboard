@@ -9,20 +9,20 @@ import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import { getIdentityDisplay } from '../../ValidatorList/Validator/Utils';
 import type { IdentityProps } from '../types';
 
-export const Identity = ({ address, batchKey, batchIndex }: IdentityProps) => {
-  const { meta, validatorIdentities } = useValidators();
+export const Identity = ({ address, batchKey }: IdentityProps) => {
+  const { meta, validatorIdentities, validatorSupers } = useValidators();
 
-  const supers = meta[batchKey]?.supers ?? [];
   const stake = meta[batchKey]?.stake ?? [];
 
   const [display, setDisplay] = useState(
-    getIdentityDisplay(validatorIdentities[address], supers[batchIndex])
+    getIdentityDisplay(validatorIdentities[address], validatorSupers[address])
   );
+
   // aggregate synced status
   const identitiesSynced =
     Object.values(validatorIdentities).length > 0 ?? false;
 
-  const supersSynced = supers.length > 0 ?? false;
+  const supersSynced = Object.values(validatorSupers).length > 0 ?? false;
 
   const synced = {
     identities: identitiesSynced && supersSynced,
@@ -31,9 +31,9 @@ export const Identity = ({ address, batchKey, batchIndex }: IdentityProps) => {
 
   useEffect(() => {
     setDisplay(
-      getIdentityDisplay(validatorIdentities[address], supers[batchIndex])
+      getIdentityDisplay(validatorIdentities[address], validatorSupers[address])
     );
-  }, [meta, validatorIdentities, address]);
+  }, [validatorSupers, validatorIdentities, address]);
 
   return (
     <IdentityWrapper

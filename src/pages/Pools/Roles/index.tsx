@@ -29,15 +29,15 @@ export const Roles = ({
   listenIsValid = () => {},
 }: RolesProps) => {
   const { t } = useTranslation('pages');
-  const { isReady, network } = useApi();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { fetchIdentitiesMetaBatch } = useIdentities();
-  const { isOwner, selectedActivePool } = useActivePools();
+  const { openHelp } = useHelp();
   const { isPoolSyncing } = useUi();
   const { openModalWith } = useModal();
+  const { isReady, network } = useApi();
+  const { fetchIdentitiesMetaBatch } = useIdentities();
+  const { isOwner, selectedActivePool } = useActivePools();
+  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { id } = selectedActivePool || { id: 0 };
   const roles = defaultRoles;
-  const { openHelp } = useHelp();
 
   const initialiseEdits = (() => {
     const initState: Record<string, RoleEditEntry> = {};

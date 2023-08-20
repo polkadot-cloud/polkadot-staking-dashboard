@@ -468,64 +468,6 @@ export const ValidatorsProvider = ({
       validatorMetaBatchesRef
     );
 
-    const subscribeToSuperIdentities = async (addr: string[]) => {
-      const unsub = await api.query.identity.superOf.multi<AnyApi>(
-        addr,
-        async (result) => {
-          // determine where supers exist
-          const supers: AnyApi = [];
-          const supersWithIdentity: AnyApi = [];
-
-          for (let i = 0; i < result.length; i++) {
-            const resultItem = result[i].toHuman();
-            supers.push(resultItem);
-            if (resultItem !== null) {
-              supersWithIdentity.push(i);
-            }
-          }
-
-          // get supers one-off multi query
-          const query = supers
-            .filter((s: AnyApi) => s !== null)
-            .map((s: AnyApi) => s[0]);
-
-          const temp = await api.query.identity.identityOf.multi<AnyApi>(
-            query,
-            (_identities) => {
-              for (let j = 0; j < _identities.length; j++) {
-                const identity = _identities[j].toHuman();
-                // inject identity into super array
-                supers[supersWithIdentity[j]].identity = identity;
-              }
-            }
-          );
-          temp();
-
-          // check if batch still exists before updating
-          if (validatorMetaBatchesRef.current[key]) {
-            setStateWithRef(
-              {
-                ...validatorMetaBatchesRef.current,
-                [key]: {
-                  ...validatorMetaBatchesRef.current[key],
-                  supers,
-                },
-              },
-              setValidatorMetaBatch,
-              validatorMetaBatchesRef
-            );
-          }
-        }
-      );
-      return unsub;
-    };
-
-    await Promise.all([subscribeToSuperIdentities(addresses)]).then(
-      (unsubs: Fn[]) => {
-        addMetaBatchUnsubs(key, unsubs);
-      }
-    );
-
     // subscribe to validator nominators
     const args: AnyApi = [];
 

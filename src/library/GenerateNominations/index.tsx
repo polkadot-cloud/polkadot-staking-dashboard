@@ -39,8 +39,13 @@ export const GenerateNominations = ({
   const { isReady, consts } = useApi();
   const { isFastUnstaking } = useUnstaking();
   const { activeAccount, isReadOnlyAccount } = useConnect();
-  const { removeValidatorMetaBatch, validators, meta, validatorIdentities } =
-    useValidators();
+  const {
+    removeValidatorMetaBatch,
+    validators,
+    meta,
+    validatorIdentities,
+    validatorSupers,
+  } = useValidators();
   const {
     fetch: fetchFromMethod,
     add: addNomination,
@@ -92,7 +97,8 @@ export const GenerateNominations = ({
     }
     if (
       batch.stake === undefined ||
-      !Object.values(validatorIdentities).length
+      !Object.values(validatorIdentities).length ||
+      !Object.values(validatorSupers).length
     ) {
       return;
     }
