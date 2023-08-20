@@ -75,7 +75,7 @@
     "eslint-config-airbnb-typescript": "^17.1.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-import-resolver-typescript": "^3.6.0",
-    "eslint-plugin-import": "^2.28.0",
+    "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-prefer-arrow-functions": "^3.1.4",
@@ -85,7 +85,7 @@
     "gh-pages": "^6.0.0",
     "prettier": "^3.0.2",
     "prettier-plugin-organize-imports": "^3.2.3",
-    "sass": "^1.65.1",
+    "sass": "^1.66.0",
     "typescript": "^5.1.6",
     "vite": "^4.4.9",
     "vite-bundle-visualizer": "^0.10.0",
@@ -93,6 +93,6 @@
     "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svgr": "^3.2.0",
     "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^0.34.1"
+    "vitest": "^0.34.2"
   }
 }
