@@ -18,9 +18,7 @@ export interface StakingMetrics {
 }
 
 export interface EraStakers {
-  stakers: (ExposureValue & {
-    address: string;
-  })[];
+  stakers: Staker[];
   nominators: any[] | undefined;
   totalActiveNominators: number;
   activeValidators: number;
@@ -49,6 +47,7 @@ export interface ExposureValue {
 
 export type Staker = ExposureValue & {
   address: string;
+  lowestReward: string;
 };
 
 export interface ActiveAccountStaker {
@@ -70,6 +69,7 @@ export interface StakingContextInterface {
   isBonding: () => boolean;
   isNominating: () => boolean;
   inSetup: () => any;
+  getLowestRewardFromStaker: (a: MaybeAccount) => BigNumber;
   staking: StakingMetrics;
   eraStakers: EraStakers;
   targets: any;

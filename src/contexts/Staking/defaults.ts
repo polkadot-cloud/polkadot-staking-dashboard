@@ -49,6 +49,7 @@ export const defaultStakingContext: StakingContextInterface = {
   isBonding: () => false,
   isNominating: () => false,
   inSetup: () => true,
+  getLowestRewardFromStaker: (address) => new BigNumber(0),
   staking: defaultStakingMetrics,
   eraStakers: defaultEraStakers,
   targets: defaultTargets,
