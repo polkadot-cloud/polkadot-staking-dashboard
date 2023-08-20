@@ -10,17 +10,18 @@ import { getIdentityDisplay } from '../../ValidatorList/Validator/Utils';
 import type { IdentityProps } from '../types';
 
 export const Identity = ({ address, batchKey, batchIndex }: IdentityProps) => {
-  const { meta } = useValidators();
+  const { meta, validatorIdentities } = useValidators();
 
-  const identities = meta[batchKey]?.identities ?? [];
   const supers = meta[batchKey]?.supers ?? [];
   const stake = meta[batchKey]?.stake ?? [];
 
   const [display, setDisplay] = useState(
-    getIdentityDisplay(identities[batchIndex], supers[batchIndex])
+    getIdentityDisplay(validatorIdentities[address], supers[batchIndex])
   );
   // aggregate synced status
-  const identitiesSynced = identities.length > 0 ?? false;
+  const identitiesSynced =
+    Object.values(validatorIdentities).length > 0 ?? false;
+
   const supersSynced = supers.length > 0 ?? false;
 
   const synced = {
@@ -29,8 +30,10 @@ export const Identity = ({ address, batchKey, batchIndex }: IdentityProps) => {
   };
 
   useEffect(() => {
-    setDisplay(getIdentityDisplay(identities[batchIndex], supers[batchIndex]));
-  }, [meta, address]);
+    setDisplay(
+      getIdentityDisplay(validatorIdentities[address], supers[batchIndex])
+    );
+  }, [meta, validatorIdentities, address]);
 
   return (
     <IdentityWrapper

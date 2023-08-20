@@ -37,9 +37,10 @@ export const GenerateNominations = ({
   const { t } = useTranslation('library');
   const { openModalWith } = useModal();
   const { isReady, consts } = useApi();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { isFastUnstaking } = useUnstaking();
-  const { removeValidatorMetaBatch, validators, meta } = useValidators();
+  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { removeValidatorMetaBatch, validators, meta, validatorIdentities } =
+    useValidators();
   const {
     fetch: fetchFromMethod,
     add: addNomination,
@@ -89,7 +90,10 @@ export const GenerateNominations = ({
     if (batch === undefined) {
       return;
     }
-    if (batch.stake === undefined) {
+    if (
+      batch.stake === undefined ||
+      !Object.values(validatorIdentities).length
+    ) {
       return;
     }
 

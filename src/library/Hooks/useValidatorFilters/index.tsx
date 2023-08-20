@@ -10,7 +10,12 @@ import type { AnyFunction, AnyJson } from 'types';
 export const useValidatorFilters = () => {
   const { t } = useTranslation('library');
   const { consts } = useApi();
-  const { meta, sessionValidators, sessionParaValidators } = useValidators();
+  const {
+    meta,
+    sessionValidators,
+    sessionParaValidators,
+    validatorIdentities,
+  } = useValidators();
   const { maxNominatorRewardedPerValidator } = consts;
 
   /*
@@ -35,15 +40,14 @@ export const useValidatorFilters = () => {
         continue;
       }
 
-      const identities = meta[batchKey]?.identities ?? [];
       const supers = meta[batchKey]?.supers ?? [];
 
       // push validator if sync has not completed
-      if (!identities.length || !supers.length) {
+      if (!Object.values(validatorIdentities).length || !supers.length) {
         filteredList.push(validator);
       }
 
-      const identityExists = identities[addressBatchIndex] ?? null;
+      const identityExists = validatorIdentities[validator.address] ?? null;
       const superExists = supers[addressBatchIndex] ?? null;
 
       // validator included if identity or super identity has been set
