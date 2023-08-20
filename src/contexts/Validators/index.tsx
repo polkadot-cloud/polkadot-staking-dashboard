@@ -283,21 +283,8 @@ export const ValidatorsProvider = ({
     // Validators are shuffled before committed to state.
     setValidators(shuffle(exposures));
 
-    // Set validator identity data.
-    const addresses = exposures.map(({ address }) => address);
-
-    const identities: AnyApi[] = (
-      await api.query.identity.identityOf.multi(
-        exposures.map(({ address }) => address)
-      )
-    ).map((identity) => identity.toHuman());
-
-    const identitiesKeyed = Object.fromEntries(
-      Object.entries(
-        Object.fromEntries(identities.map((k, i) => [addresses[i], k]))
-      ).filter(([, v]) => v != null)
-    );
-    setValidatorIdentities(identitiesKeyed);
+    const identities = await fetchValidatorIdentities(exposures);
+    setValidatorIdentities(identities);
   };
 
   // Subscribe to active session validators.
@@ -341,6 +328,25 @@ export const ValidatorsProvider = ({
       });
     }
     return formatted;
+  };
+
+  // Fetches validator identities.
+  const fetchValidatorIdentities = async (exposures: Validator[]) => {
+    if (!api) return {};
+
+    const addresses = exposures.map(({ address }) => address);
+
+    const identities: AnyApi[] = (
+      await api.query.identity.identityOf.multi(
+        exposures.map(({ address }) => address)
+      )
+    ).map((identity) => identity.toHuman());
+
+    return Object.fromEntries(
+      Object.entries(
+        Object.fromEntries(identities.map((k, i) => [addresses[i], k]))
+      ).filter(([, v]) => v != null)
+    );
   };
 
   /*
