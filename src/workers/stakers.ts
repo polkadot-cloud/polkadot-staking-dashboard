@@ -103,9 +103,12 @@ const processExposures = (data: DataInitialiseExposures) => {
             ).toString()
           : '0';
 
+      const oversubscribed = others.length > maxNominatorRewardedPerValidator;
+
       stakers.push({
         address,
         lowestReward,
+        oversubscribed,
         ...val,
       });
 
