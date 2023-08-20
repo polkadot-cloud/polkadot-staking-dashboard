@@ -9,10 +9,8 @@ import { IdentityWrapper } from 'library/ListItem/Wrappers';
 import { getIdentityDisplay } from '../../ValidatorList/Validator/Utils';
 import type { IdentityProps } from '../types';
 
-export const Identity = ({ address, batchKey }: IdentityProps) => {
-  const { meta, validatorIdentities, validatorSupers } = useValidators();
-
-  const stake = meta[batchKey]?.stake ?? [];
+export const Identity = ({ address }: IdentityProps) => {
+  const { validatorIdentities, validatorSupers } = useValidators();
 
   const [display, setDisplay] = useState(
     getIdentityDisplay(validatorIdentities[address], validatorSupers[address])
@@ -23,11 +21,6 @@ export const Identity = ({ address, batchKey }: IdentityProps) => {
     Object.values(validatorIdentities).length > 0 ?? false;
 
   const supersSynced = Object.values(validatorSupers).length > 0 ?? false;
-
-  const synced = {
-    identities: identitiesSynced && supersSynced,
-    stake: stake.length > 0 ?? false,
-  };
 
   useEffect(() => {
     setDisplay(
@@ -44,7 +37,7 @@ export const Identity = ({ address, batchKey }: IdentityProps) => {
     >
       <Identicon value={address} size={24} />
       <div className="inner">
-        {synced.identities && display !== null ? (
+        {identitiesSynced && supersSynced && display !== null ? (
           <h4>{display}</h4>
         ) : (
           <h4>{clipAddress(address)}</h4>

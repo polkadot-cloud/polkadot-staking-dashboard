@@ -14,8 +14,6 @@ export const useFetchMehods = () => {
     favoritesList = [];
   }
 
-  const rawBatchKey = 'validators_browse';
-
   const fetch = (method: string) => {
     let nominations;
     switch (method) {
@@ -72,8 +70,7 @@ export const useFetchMehods = () => {
     filtered = applyFilter(
       ['active'],
       ['all_commission', 'blockedall', 'missing_identity'],
-      filtered,
-      rawBatchKey
+      filtered
     );
 
     // order validators to find profitable candidates
@@ -94,16 +91,14 @@ export const useFetchMehods = () => {
     waiting = applyFilter(
       null,
       ['all_commission', 'blockedall', 'missing_identity', 'in_session'],
-      waiting,
-      rawBatchKey
+      waiting
     );
 
     // filter validators to find active candidates
     active = applyFilter(
       ['active'],
       ['all_commission', 'blockedall', 'missing_identity'],
-      active,
-      rawBatchKey
+      active
     );
 
     // choose shuffled subset of waiting
@@ -129,8 +124,7 @@ export const useFetchMehods = () => {
         'missing_identity',
         'not_parachain_validator',
       ],
-      all,
-      rawBatchKey
+      all
     ).filter(
       (n: any) => !nominations.find((o: any) => o.address === n.address)
     );
@@ -138,8 +132,7 @@ export const useFetchMehods = () => {
     const active = applyFilter(
       ['active'],
       ['all_commission', 'blockedall', 'missing_identity'],
-      all,
-      rawBatchKey
+      all
     )
       .filter(
         (n: any) => !nominations.find((o: any) => o.address === n.address)
@@ -149,8 +142,7 @@ export const useFetchMehods = () => {
     const random = applyFilter(
       null,
       ['all_commission', 'blockedall', 'missing_identity'],
-      all,
-      rawBatchKey
+      all
     ).filter(
       (n: any) => !nominations.find((o: any) => o.address === n.address)
     );

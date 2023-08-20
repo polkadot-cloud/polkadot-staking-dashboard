@@ -7,8 +7,6 @@ export interface NominationProps {
   validator: any;
   nominator: MaybeAccount;
   toggleFavorites: boolean;
-  batchIndex: number;
-  batchKey: string;
   bondFor: BondFor;
   inModal: boolean;
 }
@@ -16,8 +14,6 @@ export interface NominationProps {
 export interface DefaultProps {
   validator: any;
   toggleFavorites: boolean;
-  batchIndex: number;
-  batchKey: string;
   showMenu: boolean;
   inModal: boolean;
 }

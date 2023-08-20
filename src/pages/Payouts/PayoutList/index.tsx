@@ -210,11 +210,7 @@ export const PayoutListInner = ({
                           {label === t('payouts.payout') && (
                             <>
                               {batchIndex > 0 ? (
-                                <Identity
-                                  address={p.validator_stash}
-                                  batchIndex={batchIndex}
-                                  batchKey="validators_browse"
-                                />
+                                <Identity address={p.validator_stash} />
                               ) : (
                                 <div>{clipAddress(p.validator_stash)}</div>
                               )}

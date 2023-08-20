@@ -12,15 +12,12 @@ export const defaultExposureData = {
 };
 
 export const defaultValidatorsContext: ValidatorsContextInterface = {
-  fetchValidatorMetaBatch: (k, v, r) => {},
-  removeValidatorMetaBatch: (k) => {},
   addFavorite: (a) => {},
   removeFavorite: (a) => {},
   validators: [],
   validatorIdentities: {},
   validatorSupers: {},
   avgCommission: 0,
-  meta: {},
   sessionValidators: [],
   sessionParaValidators: [],
   favorites: [],

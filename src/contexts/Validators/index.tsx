@@ -1,13 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  greaterThanZero,
-  planckToUnit,
-  rmCommas,
-  setStateWithRef,
-  shuffle,
-} from '@polkadot-cloud/utils';
+import { greaterThanZero, shuffle } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useRef, useState } from 'react';
 import { ValidatorCommunity } from '@polkadot-cloud/community/validators';
@@ -17,7 +11,7 @@ import type {
   ValidatorAddresses,
   ValidatorsContextInterface,
 } from 'contexts/Validators/types';
-import type { AnyApi, AnyMetaBatch, Fn, Sync } from 'types';
+import type { AnyApi, Fn, Sync } from 'types';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
@@ -37,13 +31,12 @@ export const ValidatorsProvider = ({
   children: React.ReactNode;
 }) => {
   const { activeAccount } = useConnect();
+  const { isReady, api, network } = useApi();
   const { poolNominations } = useActivePools();
   const { activeEra, metrics } = useNetworkMetrics();
-  const { isReady, api, network, consts } = useApi();
   const { bondedAccounts, getAccountNominations } = useBonded();
-  const { units, name } = network;
+  const { name } = network;
   const { earliestStoredSession } = metrics;
-  const { maxNominatorRewardedPerValidator } = consts;
 
   // Stores all validator entries.
   const [validators, setValidators] = useState<Validator[]>([]);
@@ -77,17 +70,6 @@ export const ValidatorsProvider = ({
   // Stores the user's favorite validators.
   const [favorites, setFavorites] = useState<string[]>(getLocalFavorites(name));
 
-  // TODO: refactor.
-  // Stores the meta data batches for validator lists.
-  const [validatorMetaBatches, setValidatorMetaBatch] = useState<AnyMetaBatch>(
-    {}
-  );
-  const validatorMetaBatchesRef = useRef(validatorMetaBatches);
-
-  // TODO: refactor.
-  // stores the meta batch subscriptions for validator lists
-  const validatorSubsRef = useRef<Record<string, Fn[]>>({});
-
   // stores the user's nominated validators as list
   const [nominated, setNominated] = useState<Validator[] | null>(null);
 
@@ -105,7 +87,6 @@ export const ValidatorsProvider = ({
     setValidatorsFetched('unsynced');
     setSessionValidators([]);
     setSessionParaValidators([]);
-    removeValidatorMetaBatch('validators_browse');
     setAvgCommission(0);
     setValidators([]);
     setValidatorIdentities({});
@@ -118,13 +99,6 @@ export const ValidatorsProvider = ({
       fetchValidators();
       subscribeSessionValidators();
     }
-
-    return () => {
-      // unsubscribe from any validator meta batches
-      Object.values(validatorSubsRef.current).map((batch: AnyMetaBatch) =>
-        Object.entries(batch).map(([, v]: AnyApi) => v())
-      );
-    };
   }, [isReady, activeEra]);
 
   // fetch parachain session validators when `earliestStoredSession` ready
@@ -133,13 +107,6 @@ export const ValidatorsProvider = ({
       subscribeParachainValidators();
     }
   }, [isReady, earliestStoredSession]);
-
-  // pre-populating validator meta batches. Needed for generating nominations
-  useEffectIgnoreInitial(() => {
-    if (validators.length > 0) {
-      fetchValidatorMetaBatch('validators_browse', validators, true);
-    }
-  }, [isReady, validators]);
 
   // fetch active account's nominations in validator list format
   useEffectIgnoreInitial(() => {
@@ -398,179 +365,6 @@ export const ValidatorsProvider = ({
   };
 
   /*
-    // TODO: refactor
-    Fetches a new batch of subscribed validator metadata. Stores the returning
-    metadata alongside the unsubscribe function in state.
-    structure:
-    {
-      key: {
-        [
-          {
-          addresses [],
-          identities: [],
-        }
-      ]
-    },
-  };
-  */
-  const fetchValidatorMetaBatch = async (
-    key: string,
-    v: AnyMetaBatch,
-    refetch = false
-  ) => {
-    if (!isReady || !api) {
-      return;
-    }
-
-    if (!v.length) {
-      return;
-    }
-
-    if (!refetch) {
-      // if already exists, do not re-fetch
-      if (validatorMetaBatchesRef.current[key] !== undefined) {
-        return;
-      }
-    } else {
-      // tidy up if existing batch exists
-      const updatedValidatorMetaBatches: AnyMetaBatch = {
-        ...validatorMetaBatchesRef.current,
-      };
-      delete updatedValidatorMetaBatches[key];
-      setStateWithRef(
-        updatedValidatorMetaBatches,
-        setValidatorMetaBatch,
-        validatorMetaBatchesRef
-      );
-
-      if (validatorSubsRef.current[key] !== undefined) {
-        for (const unsub of validatorSubsRef.current[key]) {
-          unsub();
-        }
-      }
-    }
-
-    const addresses = [];
-    for (const address of v) {
-      addresses.push(address.address);
-    }
-
-    // store batch addresses
-    setStateWithRef(
-      {
-        ...validatorMetaBatchesRef.current,
-        [key]: {
-          ...validatorMetaBatchesRef.current[key],
-          addresses,
-        },
-      },
-      setValidatorMetaBatch,
-      validatorMetaBatchesRef
-    );
-
-    // subscribe to validator nominators
-    const args: AnyApi = [];
-
-    for (let i = 0; i < v.length; i++) {
-      args.push([activeEra.index.toString(), v[i].address]);
-    }
-
-    const unsub3 = await api.query.staking.erasStakers.multi<AnyApi>(
-      args,
-      (result) => {
-        const stake = [];
-
-        for (let validator of result) {
-          validator = validator.toHuman();
-          let others = validator.others ?? [];
-
-          // account for yourself being an additional nominator.
-          const totalNominations = others.length + 1;
-
-          // reformat others.value properties from string to BigNumber.
-          others = others.map((other: AnyApi) => ({
-            ...other,
-            value: new BigNumber(rmCommas(other.value)),
-          }));
-
-          // sort others lowest first.
-          others = others.sort((a: AnyApi, b: AnyApi) =>
-            a.value.minus(b.value)
-          );
-
-          // get the lowest reward stake of the validator, which is
-          // the largest index - `maxNominatorRewardedPerValidator`,
-          // or the first index if does not exist.
-          const lowestRewardIndex = Math.max(
-            others.length - maxNominatorRewardedPerValidator.toNumber(),
-            0
-          );
-
-          const lowestReward =
-            others.length > 0
-              ? planckToUnit(others[lowestRewardIndex]?.value, units)
-              : 0;
-
-          stake.push({
-            total: validator.total,
-            own: validator.own,
-            total_nominations: totalNominations,
-            lowestReward,
-          });
-        }
-
-        // check if batch still exists before updating
-        if (validatorMetaBatchesRef.current[key]) {
-          setStateWithRef(
-            {
-              ...validatorMetaBatchesRef.current,
-              [key]: {
-                ...validatorMetaBatchesRef.current[key],
-                stake,
-              },
-            },
-            setValidatorMetaBatch,
-            validatorMetaBatchesRef
-          );
-        }
-      }
-    );
-
-    addMetaBatchUnsubs(key, [unsub3]);
-  };
-
-  /*
-   * Helper function to add mataBatch unsubs by key.
-   */
-  const addMetaBatchUnsubs = (key: string, unsubs: Fn[]) => {
-    const newUnsubs = validatorSubsRef.current;
-    const keyUnsubs = newUnsubs[key] ?? [];
-
-    keyUnsubs.push(...unsubs);
-    newUnsubs[key] = keyUnsubs;
-    validatorSubsRef.current = newUnsubs;
-  };
-
-  const removeValidatorMetaBatch = (key: string) => {
-    if (validatorSubsRef.current[key] !== undefined) {
-      // ubsubscribe from updates
-      for (const unsub of validatorSubsRef.current[key]) {
-        unsub();
-      }
-      // wipe data
-      const updatedValidatorMetaBatches: AnyMetaBatch = {
-        ...validatorMetaBatchesRef.current,
-      };
-      delete updatedValidatorMetaBatches[key];
-      setStateWithRef(
-        updatedValidatorMetaBatches,
-        setValidatorMetaBatch,
-        validatorMetaBatchesRef
-      );
-    }
-  };
-
-  /*
    * Adds a favorite validator.
    */
   const addFavorite = (address: string) => {
@@ -603,15 +397,12 @@ export const ValidatorsProvider = ({
   return (
     <ValidatorsContext.Provider
       value={{
-        fetchValidatorMetaBatch,
-        removeValidatorMetaBatch,
         addFavorite,
         removeFavorite,
         validators,
         validatorIdentities,
         validatorSupers,
         avgCommission,
-        meta: validatorMetaBatchesRef.current,
         sessionValidators,
         sessionParaValidators,
         favorites,

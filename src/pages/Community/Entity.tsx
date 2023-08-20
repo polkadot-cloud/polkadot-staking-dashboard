@@ -16,8 +16,7 @@ import { useCommunitySections } from './context';
 export const Entity = () => {
   const { t } = useTranslation('pages');
   const { isReady, network } = useApi();
-  const { validators: allValidators, removeValidatorMetaBatch } =
-    useValidators();
+  const { validators: allValidators } = useValidators();
   const { setActiveSection, activeItem } = useCommunitySections();
 
   const { name, validators: entityAllValidators } = activeItem;
@@ -35,7 +34,6 @@ export const Entity = () => {
   }, [allValidators, network]);
 
   useEffect(() => {
-    removeValidatorMetaBatch(batchKey);
     const newValidators = [...activeValidators];
     setActiveValidators(newValidators);
   }, [name, activeItem, network]);
