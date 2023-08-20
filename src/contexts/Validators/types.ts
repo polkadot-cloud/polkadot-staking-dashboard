@@ -10,6 +10,7 @@ export interface ValidatorsContextInterface {
   removeFavorite: (a: string) => void;
   validators: Validator[];
   validatorIdentities: Record<string, Identity>;
+  validatorSupers: Record<string, AnyJson>;
   avgCommission: number;
   meta: AnyMetaBatch;
   sessionValidators: string[];

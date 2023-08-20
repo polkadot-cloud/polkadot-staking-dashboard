@@ -56,6 +56,11 @@ export const ValidatorsProvider = ({
     Record<string, Identity>
   >({});
 
+  // Store validator super identity data.
+  const [validatorSupers, setValidatorSupers] = useState<Record<string, any>>(
+    {}
+  );
+
   // Stores the currently active validator set.
   const [sessionValidators, setSessionValidators] = useState<string[]>([]);
   const sessionUnsub = useRef<Fn>();
@@ -104,6 +109,7 @@ export const ValidatorsProvider = ({
     setAvgCommission(0);
     setValidators([]);
     setValidatorIdentities({});
+    setValidatorSupers({});
   }, [network]);
 
   // fetch validators and session validators when activeEra ready
@@ -283,8 +289,14 @@ export const ValidatorsProvider = ({
     // Validators are shuffled before committed to state.
     setValidators(shuffle(exposures));
 
-    const identities = await fetchValidatorIdentities(exposures);
+    const addresses = exposures.map(({ address }) => address);
+    const [identities, supers] = await Promise.all([
+      fetchValidatorIdentities(addresses),
+      fetchValidatorSupers(addresses),
+    ]);
+
     setValidatorIdentities(identities);
+    setValidatorSupers(supers);
   };
 
   // Subscribe to active session validators.
@@ -331,22 +343,58 @@ export const ValidatorsProvider = ({
   };
 
   // Fetches validator identities.
-  const fetchValidatorIdentities = async (exposures: Validator[]) => {
+  const fetchValidatorIdentities = async (addresses: string[]) => {
     if (!api) return {};
 
-    const addresses = exposures.map(({ address }) => address);
-
     const identities: AnyApi[] = (
-      await api.query.identity.identityOf.multi(
-        exposures.map(({ address }) => address)
-      )
+      await api.query.identity.identityOf.multi(addresses)
     ).map((identity) => identity.toHuman());
 
     return Object.fromEntries(
       Object.entries(
         Object.fromEntries(identities.map((k, i) => [addresses[i], k]))
-      ).filter(([, v]) => v != null)
+      ).filter(([, v]) => v !== null)
     );
+  };
+
+  // Fetch validator super accounts and their identities.
+  const fetchValidatorSupers = async (addresses: string[]) => {
+    if (!api) return {};
+
+    const supersRaw: AnyApi[] = (
+      await api.query.identity.superOf.multi(addresses)
+    ).map((superOf) => superOf.toHuman());
+
+    const supers = Object.fromEntries(
+      Object.entries(
+        Object.fromEntries(
+          supersRaw.map((k, i) => [
+            addresses[i],
+            {
+              superOf: k,
+            },
+          ])
+        )
+      ).filter(([, { superOf }]) => superOf !== null)
+    );
+
+    const superIdentities = (
+      await api.query.identity.identityOf.multi(
+        Object.values(supers).map(({ superOf }) => superOf[0])
+      )
+    ).map((superIdentity) => superIdentity.toHuman());
+
+    const supersWithIdentity = Object.fromEntries(
+      Object.entries(supers).map(([k, v]: AnyApi, i) => [
+        k,
+        {
+          ...v,
+          identity: superIdentities[i],
+        },
+      ])
+    );
+
+    return supersWithIdentity;
   };
 
   /*
@@ -619,6 +667,7 @@ export const ValidatorsProvider = ({
         removeFavorite,
         validators,
         validatorIdentities,
+        validatorSupers,
         avgCommission,
         meta: validatorMetaBatchesRef.current,
         sessionValidators,
