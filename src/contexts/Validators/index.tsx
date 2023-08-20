@@ -12,6 +12,7 @@ import BigNumber from 'bignumber.js';
 import React, { useEffect, useRef, useState } from 'react';
 import { ValidatorCommunity } from '@polkadot-cloud/community/validators';
 import type {
+  Identity,
   Validator,
   ValidatorAddresses,
   ValidatorsContextInterface,
@@ -44,11 +45,16 @@ export const ValidatorsProvider = ({
   const { earliestStoredSession } = metrics;
   const { maxNominatorRewardedPerValidator } = consts;
 
-  // Stores the total validator entries.
+  // Stores all validator entries.
   const [validators, setValidators] = useState<Validator[]>([]);
 
   // Track whether the validator list has been fetched.
   const [validatorsFetched, setValidatorsFetched] = useState<Sync>('unsynced');
+
+  // Store validator identity data.
+  const [validatorIdentities, setValidatorIdentities] = useState<
+    Record<string, Identity>
+  >({});
 
   // Stores the currently active validator set.
   const [sessionValidators, setSessionValidators] = useState<string[]>([]);
@@ -97,6 +103,7 @@ export const ValidatorsProvider = ({
     removeValidatorMetaBatch('validators_browse');
     setAvgCommission(0);
     setValidators([]);
+    setValidatorIdentities({});
   }, [network]);
 
   // fetch validators and session validators when activeEra ready
@@ -275,6 +282,22 @@ export const ValidatorsProvider = ({
     setAvgCommission(avg);
     // Validators are shuffled before committed to state.
     setValidators(shuffle(exposures));
+
+    // Set validator identity data.
+    const addresses = exposures.map(({ address }) => address);
+
+    const identities: AnyApi[] = (
+      await api.query.identity.identityOf.multi(
+        exposures.map(({ address }) => address)
+      )
+    ).map((identity) => identity.toHuman());
+
+    const identitiesKeyed = Object.fromEntries(
+      Object.entries(
+        Object.fromEntries(identities.map((k, i) => [addresses[i], k]))
+      ).filter(([, v]) => v != null)
+    );
+    setValidatorIdentities(identitiesKeyed);
   };
 
   // Subscribe to active session validators.
@@ -618,6 +641,7 @@ export const ValidatorsProvider = ({
         addFavorite,
         removeFavorite,
         validators,
+        validatorIdentities,
         avgCommission,
         meta: validatorMetaBatchesRef.current,
         sessionValidators,

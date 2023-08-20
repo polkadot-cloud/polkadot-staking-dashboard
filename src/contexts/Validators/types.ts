@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type { AnyMetaBatch } from 'types';
+import type { AnyJson, AnyMetaBatch } from 'types';
 
 export interface ValidatorsContextInterface {
   fetchValidatorMetaBatch: (k: string, v: [], r?: boolean) => void;
@@ -9,6 +9,7 @@ export interface ValidatorsContextInterface {
   addFavorite: (a: string) => void;
   removeFavorite: (a: string) => void;
   validators: Validator[];
+  validatorIdentities: Record<string, Identity>;
   avgCommission: number;
   meta: AnyMetaBatch;
   sessionValidators: string[];
@@ -18,6 +19,12 @@ export interface ValidatorsContextInterface {
   poolNominated: Validator[] | null;
   favoritesList: Validator[] | null;
   validatorCommunity: any[];
+}
+
+export interface Identity {
+  deposit: string;
+  info: AnyJson;
+  judgements: AnyJson[];
 }
 
 export type ValidatorAddresses = {

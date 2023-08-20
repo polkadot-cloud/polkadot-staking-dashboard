@@ -17,6 +17,7 @@ export const defaultValidatorsContext: ValidatorsContextInterface = {
   addFavorite: (a) => {},
   removeFavorite: (a) => {},
   validators: [],
+  validatorIdentities: {},
   avgCommission: 0,
   meta: {},
   sessionValidators: [],
