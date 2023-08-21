@@ -11,8 +11,7 @@ export const ActiveNominatorsStat = () => {
   const { t } = useTranslation('pages');
   const { consts } = useApi();
   const { maxElectingVoters } = consts;
-  const { eraStakers } = useStaking();
-  const { totalActiveNominators } = eraStakers;
+  const { totalActiveNominators } = useStaking().eraStakers;
 
   // active nominators as percent
   let totalNominatorsAsPercent = 0;

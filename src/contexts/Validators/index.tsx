@@ -261,7 +261,6 @@ export const ValidatorsProvider = ({
       fetchValidatorIdentities(addresses),
       fetchValidatorSupers(addresses),
     ]);
-
     setValidatorIdentities(identities);
     setValidatorSupers(supers);
   };

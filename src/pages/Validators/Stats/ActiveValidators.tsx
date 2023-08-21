@@ -9,10 +9,10 @@ import { Pie } from 'library/StatBoxList/Pie';
 
 export const ActiveValidatorsStat = () => {
   const { t } = useTranslation('pages');
-  const { staking, eraStakers } = useStaking();
-
-  const { validatorCount } = staking;
-  const { activeValidators } = eraStakers;
+  const {
+    staking: { validatorCount },
+    eraStakers: { activeValidators },
+  } = useStaking();
 
   // active validators as percent. Avoiding dividing by zero.
   let activeValidatorsAsPercent = new BigNumber(0);

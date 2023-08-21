@@ -80,7 +80,11 @@ const processExposures = (data: DataInitialiseExposures) => {
     activeValidators++;
 
     const address = keys[1];
-    let others = val?.others ?? [];
+    let others =
+      val?.others.map((o) => ({
+        ...o,
+        value: rmCommas(o.value),
+      })) ?? [];
 
     // Accumulate active nominators and min active stake threshold.
     if (others.length) {
@@ -109,7 +113,9 @@ const processExposures = (data: DataInitialiseExposures) => {
         address,
         lowestReward,
         oversubscribed,
-        ...val,
+        others,
+        own: rmCommas(val.own),
+        total: rmCommas(val.total),
       });
 
       // Accumulate active stake for all nominators.

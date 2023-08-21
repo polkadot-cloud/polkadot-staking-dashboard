@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit, rmCommas } from '@polkadot-cloud/utils';
+import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -74,7 +74,7 @@ export const useNominationStatus = () => {
               const { lowest } = getLowestRewardFromStaker(nominee);
               if (
                 planckToUnit(
-                  new BigNumber(rmCommas(stakedValue)),
+                  new BigNumber(stakedValue),
                   network.units
                 ).isGreaterThanOrEqualTo(lowest)
               ) {
