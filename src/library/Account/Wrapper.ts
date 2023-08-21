@@ -6,6 +6,7 @@ import type { WrapperProps } from './types';
 
 export const Wrapper = styled.button<WrapperProps>`
   border: 1px solid var(--border-primary-color);
+  transition: transform var(--transition-duration) ease-out;
   cursor: ${(props) => (props.$canClick ? 'pointer' : 'default')};
   font-size: ${(props) => props.$fontSize};
   border-radius: 1.25rem;
@@ -16,7 +17,6 @@ export const Wrapper = styled.button<WrapperProps>`
   padding: 0 1rem;
   max-width: 235px;
   flex: 1;
-  transition: transform var(--transition-duration) ease-out;
   &:hover {
     transform: scale(1.03);
   }
@@ -43,8 +43,8 @@ export const Wrapper = styled.button<WrapperProps>`
   }
 
   .title {
-    font-family: InterSemiBold, sans-serif;
     color: var(--text-color-secondary);
+    font-family: InterSemiBold, sans-serif;
     margin-left: 0.25rem;
     text-overflow: ellipsis;
     white-space: nowrap;
