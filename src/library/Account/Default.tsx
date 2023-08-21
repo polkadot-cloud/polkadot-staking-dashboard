@@ -12,7 +12,6 @@ import { Wrapper } from './Wrapper';
 import type { AccountProps } from './types';
 
 export const Account = ({
-  filled = false,
   fontSize = '1.05rem',
   format,
   value,
@@ -51,12 +50,7 @@ export const Account = ({
   }, [value, title]);
 
   return (
-    <Wrapper
-      onClick={onClick}
-      $canClick={canClick}
-      $filled={filled}
-      $fontSize={fontSize}
-    >
+    <Wrapper onClick={onClick} $canClick={canClick} $fontSize={fontSize}>
       {label !== undefined && (
         <div className="account-label">
           {label}{' '}
