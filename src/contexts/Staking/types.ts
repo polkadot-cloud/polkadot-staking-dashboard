@@ -17,12 +17,15 @@ export interface StakingMetrics {
   totalStaked: BigNumber;
 }
 
+export interface ActiveAccountOwnStake {
+  address: string;
+  value: string;
+}
 export interface EraStakers {
-  stakers: Staker[];
-  nominators: any[] | undefined;
-  totalActiveNominators: number;
+  activeAccountOwnStake: ActiveAccountOwnStake[];
   activeValidators: number;
-  activeAccountOwnStake: any[];
+  stakers: Staker[];
+  totalActiveNominators: number;
 }
 
 export type NominationStatuses = Record<string, string>;
