@@ -7,14 +7,13 @@ export interface AccountProps {
   format: string;
   label?: string;
   canClick: boolean;
-  filled: boolean;
   fontSize?: string;
   title?: string;
   readOnly?: boolean;
+  pool?: any;
 }
 
 export interface WrapperProps {
   $canClick: boolean;
-  $filled: boolean;
   $fontSize: string;
 }

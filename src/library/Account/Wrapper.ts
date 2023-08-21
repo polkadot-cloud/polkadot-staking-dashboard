@@ -6,9 +6,8 @@ import type { WrapperProps } from './types';
 
 export const Wrapper = styled.button<WrapperProps>`
   border: 1px solid var(--border-primary-color);
+  transition: transform var(--transition-duration) ease-out;
   cursor: ${(props) => (props.$canClick ? 'pointer' : 'default')};
-  background: ${(props) =>
-    props.$filled ? 'var(--button-tab-background)' : 'none'};
   font-size: ${(props) => props.$fontSize};
   border-radius: 1.25rem;
   box-shadow: none;
@@ -16,9 +15,8 @@ export const Wrapper = styled.button<WrapperProps>`
   flex-flow: row wrap;
   align-items: center;
   padding: 0 1rem;
-  max-width: 225px;
+  max-width: 235px;
   flex: 1;
-  transition: transform var(--transition-duration) ease-out;
   &:hover {
     transform: scale(1.03);
   }
@@ -27,7 +25,7 @@ export const Wrapper = styled.button<WrapperProps>`
   }
   .account-label {
     border-right: 1px solid var(--border-secondary-color);
-    color: var(--text-color-primary);
+    color: var(--text-color-secondary);
     font-size: 0.8em;
     display: flex;
     align-items: center;
@@ -45,29 +43,22 @@ export const Wrapper = styled.button<WrapperProps>`
   }
 
   .title {
+    color: var(--text-color-secondary);
     font-family: InterSemiBold, sans-serif;
-    color: var(--text-color-primary);
     margin-left: 0.25rem;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    line-height: 2.15rem;
+    line-height: 2.25rem;
     flex: 1;
+
+    &.syncing {
+      opacity: 0.4;
+    }
 
     &.unassigned {
       color: var(--text-color-secondary);
       opacity: 0.45;
-    }
-  }
-
-  .wallet {
-    width: 1em;
-    height: 1em;
-    margin-left: 0.8rem;
-    opacity: 0.8;
-
-    path {
-      fill: var(--text-color-primary);
     }
   }
 `;
