@@ -1,11 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  capitalizeFirstLetter,
-  planckToUnit,
-  rmCommas,
-} from '@polkadot-cloud/utils';
+import { capitalizeFirstLetter, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -19,13 +15,14 @@ export const EraStatus = ({ address }: { address: MaybeAccount }) => {
   const {
     network: { unit, units },
   } = useApi();
+  const {
+    eraStakers: { stakers },
+    erasStakersSyncing,
+  } = useStaking();
   const { isSyncing } = useUi();
-  const { eraStakers, erasStakersSyncing } = useStaking();
-  const { stakers } = eraStakers;
 
   // is the validator in the active era
-  const validatorInEra =
-    stakers.find((s: any) => s.address === address) || null;
+  const validatorInEra = stakers.find((s) => s.address === address) || null;
 
   // flag whether validator is active
   const validatorStatus = isSyncing
@@ -38,10 +35,10 @@ export const EraStatus = ({ address }: { address: MaybeAccount }) => {
   if (validatorInEra) {
     const { others, own } = validatorInEra;
     others.forEach((o: any) => {
-      totalStakePlanck = totalStakePlanck.plus(rmCommas(o.value));
+      totalStakePlanck = totalStakePlanck.plus(o.value);
     });
     if (own) {
-      totalStakePlanck = totalStakePlanck.plus(rmCommas(own));
+      totalStakePlanck = totalStakePlanck.plus(own);
     }
   }
 

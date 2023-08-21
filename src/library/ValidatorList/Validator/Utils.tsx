@@ -9,7 +9,8 @@ export const getIdentityDisplay = (_identity: any, _superIdentity: any) => {
 
   // check super identity exists, get display.Raw if it does
   const superIdentity = _superIdentity?.identity ?? null;
-  const superRaw = _superIdentity?.[1]?.Raw ?? null;
+  const superRaw = _superIdentity?.superOf?.[1]?.Raw ?? null;
+
   const superDisplay = superIdentity?.info?.display?.Raw ?? null;
 
   // check if super raw has been encoded

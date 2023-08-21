@@ -42,16 +42,17 @@ export const StakingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isReady, api, apiStatus, network } = useApi();
   const {
     activeAccount,
     accounts: connectAccounts,
     getActiveAccount,
   } = useConnect();
-  const { activeEra } = useNetworkMetrics();
   const { getStashLedger } = useBalances();
+  const { activeEra } = useNetworkMetrics();
+  const { isReady, api, apiStatus, network, consts } = useApi();
   const { bondedAccounts, getBondedAccount, getAccountNominations } =
     useBonded();
+  const { maxNominatorRewardedPerValidator } = consts;
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
@@ -248,6 +249,8 @@ export const StakingProvider = ({
       activeAccount,
       units: network.units,
       exposures,
+      maxNominatorRewardedPerValidator:
+        maxNominatorRewardedPerValidator.toNumber(),
     });
   };
 
@@ -362,6 +365,23 @@ export const StakingProvider = ({
     !activeAccount ||
     (!hasController() && !isBonding() && !isNominating() && !isUnlocking());
 
+  /*
+   * Helper function to get the lowest reward from an active validaor
+   */
+  const getLowestRewardFromStaker = (address: MaybeAccount) => {
+    const staker = eraStakersRef.current.stakers.find(
+      (s) => s.address === address
+    );
+
+    const lowest = new BigNumber(staker?.lowestReward || 0);
+    const oversubscribed = staker?.oversubscribed || false;
+
+    return {
+      lowest,
+      oversubscribed,
+    };
+  };
+
   return (
     <StakingContext.Provider
       value={{
@@ -373,6 +393,7 @@ export const StakingProvider = ({
         isBonding,
         isNominating,
         inSetup,
+        getLowestRewardFromStaker,
         staking: stakingMetrics,
         eraStakers: eraStakersRef.current,
         erasStakersSyncing: erasStakersSyncingRef.current,

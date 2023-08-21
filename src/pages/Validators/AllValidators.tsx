@@ -42,7 +42,6 @@ export const AllValidators = () => {
                 <ValidatorList
                   bondFor="nominator"
                   validators={validators}
-                  batchKey="validators_browse"
                   title={t('validators.networkValidators')}
                   selectable={false}
                   defaultFilters={{

@@ -111,9 +111,6 @@ export const PayoutListInner = ({
     return <></>;
   }
 
-  // get validator metadata
-  const batchKey = 'validators_browse';
-
   return (
     <ListWrapper>
       <Header>
@@ -213,11 +210,7 @@ export const PayoutListInner = ({
                           {label === t('payouts.payout') && (
                             <>
                               {batchIndex > 0 ? (
-                                <Identity
-                                  address={p.validator_stash}
-                                  batchIndex={batchIndex}
-                                  batchKey={batchKey}
-                                />
+                                <Identity address={p.validator_stash} />
                               ) : (
                                 <div>{clipAddress(p.validator_stash)}</div>
                               )}
@@ -227,7 +220,7 @@ export const PayoutListInner = ({
                             <>
                               {pool ? (
                                 <PoolIdentity
-                                  batchKey={batchKey}
+                                  batchKey="bonded_pools"
                                   batchIndex={batchIndex}
                                   pool={pool}
                                 />

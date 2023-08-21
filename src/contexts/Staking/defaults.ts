@@ -27,15 +27,19 @@ export const defaultStakingMetrics: StakingMetrics = {
 };
 
 export const defaultEraStakers: EraStakers = {
-  stakers: [],
-  nominators: undefined,
-  totalActiveNominators: 0,
-  activeValidators: 0,
   activeAccountOwnStake: [],
+  activeValidators: 0,
+  stakers: [],
+  totalActiveNominators: 0,
 };
 
 export const defaultTargets: StakingTargets = {
   nominations: [],
+};
+
+const defaultLowestReward = {
+  lowest: new BigNumber(0),
+  oversubscribed: false,
 };
 
 export const defaultNominationStatus: NominationStatuses = {};
@@ -49,6 +53,7 @@ export const defaultStakingContext: StakingContextInterface = {
   isBonding: () => false,
   isNominating: () => false,
   inSetup: () => true,
+  getLowestRewardFromStaker: (address) => defaultLowestReward,
   staking: defaultStakingMetrics,
   eraStakers: defaultEraStakers,
   targets: defaultTargets,

@@ -11,12 +11,12 @@ import type { ParaValidatorProps } from '../types';
 
 export const ParaValidator = ({ address }: ParaValidatorProps) => {
   const { t } = useTranslation('library');
-  const { sessionParachain } = useValidators();
+  const { sessionParaValidators } = useValidators();
   const { setTooltipTextAndOpen } = useTooltip();
 
   const tooltipText = t('validatingParachainBlocks');
 
-  if (!sessionParachain?.includes(address || '')) {
+  if (!sessionParaValidators?.includes(address || '')) {
     return <></>;
   }
 

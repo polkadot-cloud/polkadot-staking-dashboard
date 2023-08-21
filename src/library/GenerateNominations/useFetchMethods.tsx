@@ -7,14 +7,12 @@ import type { Validator } from 'contexts/Validators/types';
 import { useValidatorFilters } from 'library/Hooks/useValidatorFilters';
 
 export const useFetchMehods = () => {
-  const { validators, sessionParachain } = useValidators();
+  const { validators, sessionParaValidators } = useValidators();
   const { applyFilter, applyOrder } = useValidatorFilters();
   let { favoritesList } = useValidators();
   if (favoritesList === null) {
     favoritesList = [];
   }
-
-  const rawBatchKey = 'validators_browse';
 
   const fetch = (method: string) => {
     let nominations;
@@ -72,8 +70,7 @@ export const useFetchMehods = () => {
     filtered = applyFilter(
       ['active'],
       ['all_commission', 'blockedall', 'missing_identity'],
-      filtered,
-      rawBatchKey
+      filtered
     );
 
     // order validators to find profitable candidates
@@ -94,16 +91,14 @@ export const useFetchMehods = () => {
     waiting = applyFilter(
       null,
       ['all_commission', 'blockedall', 'missing_identity', 'in_session'],
-      waiting,
-      rawBatchKey
+      waiting
     );
 
     // filter validators to find active candidates
     active = applyFilter(
       ['active'],
       ['all_commission', 'blockedall', 'missing_identity'],
-      active,
-      rawBatchKey
+      active
     );
 
     // choose shuffled subset of waiting
@@ -129,8 +124,7 @@ export const useFetchMehods = () => {
         'missing_identity',
         'not_parachain_validator',
       ],
-      all,
-      rawBatchKey
+      all
     ).filter(
       (n: any) => !nominations.find((o: any) => o.address === n.address)
     );
@@ -138,19 +132,17 @@ export const useFetchMehods = () => {
     const active = applyFilter(
       ['active'],
       ['all_commission', 'blockedall', 'missing_identity'],
-      all,
-      rawBatchKey
+      all
     )
       .filter(
         (n: any) => !nominations.find((o: any) => o.address === n.address)
       )
-      .filter((n: any) => !sessionParachain?.includes(n.address) || false);
+      .filter((n: any) => !sessionParaValidators?.includes(n.address) || false);
 
     const random = applyFilter(
       null,
       ['all_commission', 'blockedall', 'missing_identity'],
-      all,
-      rawBatchKey
+      all
     ).filter(
       (n: any) => !nominations.find((o: any) => o.address === n.address)
     );

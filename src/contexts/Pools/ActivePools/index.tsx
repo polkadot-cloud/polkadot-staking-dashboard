@@ -389,9 +389,7 @@ export const ActivePoolsProvider = ({
         statuses[nomination] = 'waiting';
         continue;
       }
-      const exists = (s.others ?? []).find(
-        ({ who }: any) => who === activeAccount
-      );
+      const exists = (s.others ?? []).find(({ who }) => who === activeAccount);
       if (exists === undefined) {
         statuses[nomination] = 'inactive';
         continue;

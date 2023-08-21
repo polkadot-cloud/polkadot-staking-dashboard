@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { planckToUnit, rmCommas } from '@polkadot-cloud/utils';
+import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -16,10 +16,16 @@ export const useNominationStatus = () => {
   const { t } = useTranslation();
   const { network } = useApi();
   const { isSyncing } = useUi();
-  const { meta, validators } = useValidators();
+  const { validators } = useValidators();
   const { poolNominations } = useActivePools();
   const { getAccountNominations } = useBonded();
-  const { inSetup, eraStakers, getNominationsStatusFromTargets } = useStaking();
+  const {
+    inSetup,
+    eraStakers,
+    erasStakersSyncing,
+    getNominationsStatusFromTargets,
+    getLowestRewardFromStaker,
+  } = useStaking();
 
   // Utility to get an account's nominees alongside their status.
   const getNomineesStatus = (who: MaybeAccount, type: 'nominator' | 'pool') => {
@@ -46,13 +52,10 @@ export const useNominationStatus = () => {
     const nominees = Object.entries(getNomineesStatus(who, type));
     const activeNominees = getNomineesByStatus(nominees, 'active');
 
-    // Attempt to get validator stake from meta batch (may still be syncing).
-    const stake = meta.validators_browse?.stake ?? [];
-
     // Determine whether active nominees are earning rewards. This function exists once the
-    // first reward-earning nominee is found.
+    // eras stakers has synced.
     let earningRewards = false;
-    if (stake.length > 0) {
+    if (!erasStakersSyncing) {
       getNomineesByStatus(nominees, 'active').every((nominee) => {
         const validator = validators.find(({ address }) => address === nominee);
 
@@ -68,12 +71,12 @@ export const useNominationStatus = () => {
             const stakedValue =
               others?.find((o) => o.who === who)?.value ?? false;
             if (stakedValue) {
-              const { lowestReward } = stake[validators.indexOf(validator)];
+              const { lowest } = getLowestRewardFromStaker(nominee);
               if (
                 planckToUnit(
-                  new BigNumber(rmCommas(stakedValue)),
+                  new BigNumber(stakedValue),
                   network.units
-                ).isGreaterThanOrEqualTo(lowestReward)
+                ).isGreaterThanOrEqualTo(lowest)
               ) {
                 earningRewards = true;
                 return false;

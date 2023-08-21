@@ -22,8 +22,6 @@ export interface FavoriteProps {
 
 export interface IdentityProps {
   address: string;
-  batchIndex: number;
-  batchKey: string;
 }
 
 export interface PoolIdentityProps {
@@ -44,8 +42,7 @@ export interface NominationStatusProps {
 }
 
 export interface OversubscribedProps {
-  batchIndex: number;
-  batchKey: string;
+  address: MaybeAccount;
 }
 
 export interface SelectProps {

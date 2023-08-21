@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ButtonHelp, ModalPadding } from '@polkadot-cloud/react';
-import { clipAddress, planckToUnit, rmCommas } from '@polkadot-cloud/utils';
+import { clipAddress, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
@@ -32,29 +32,29 @@ export const ValidatorMetrics = () => {
   const { address, identity } = config;
   const { fetchEraPoints }: any = useSubscan();
   const { activeEra } = useNetworkMetrics();
-  const { eraStakers } = useStaking();
-  const { stakers } = eraStakers;
+  const {
+    eraStakers: { stakers },
+  } = useStaking();
   const { openHelp } = useHelp();
 
   // is the validator in the active era
-  const validatorInEra =
-    stakers.find((s: any) => s.address === address) || null;
+  const validatorInEra = stakers.find((s) => s.address === address) || null;
 
   let validatorOwnStake = new BigNumber(0);
   let otherStake = new BigNumber(0);
   if (validatorInEra) {
     const { others, own } = validatorInEra;
 
-    others.forEach((o: any) => {
-      otherStake = otherStake.plus(rmCommas(o.value));
+    others.forEach(({ value }) => {
+      otherStake = otherStake.plus(value);
     });
     if (own) {
-      validatorOwnStake = new BigNumber(rmCommas(own));
+      validatorOwnStake = new BigNumber(own);
     }
   }
   const [list, setList] = useState([]);
 
-  const ref: any = React.useRef();
+  const ref = useRef<HTMLDivElement>(null);
   const size = useSize(ref.current);
   const { width, height, minHeight } = formatSize(size, 300);
 

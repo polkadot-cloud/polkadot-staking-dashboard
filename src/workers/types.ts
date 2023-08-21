@@ -13,6 +13,7 @@ export interface DataInitialiseExposures {
   activeAccount: MaybeAccount;
   units: number;
   exposures: Exposure[];
+  maxNominatorRewardedPerValidator: number;
 }
 
 export interface ResponseInitialiseExposures {
