@@ -25,6 +25,11 @@ export interface Identity {
   judgements: AnyJson[];
 }
 
+export interface ValidatorSuper {
+  identity: Identity;
+  superOf: [string, { Raw: string }];
+}
+
 export type ValidatorAddresses = {
   address: string;
 }[];

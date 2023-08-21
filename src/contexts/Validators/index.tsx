@@ -9,6 +9,7 @@ import type {
   Identity,
   Validator,
   ValidatorAddresses,
+  ValidatorSuper,
   ValidatorsContextInterface,
 } from 'contexts/Validators/types';
 import type { AnyApi, Fn, Sync } from 'types';
@@ -50,9 +51,9 @@ export const ValidatorsProvider = ({
   >({});
 
   // Store validator super identity data.
-  const [validatorSupers, setValidatorSupers] = useState<Record<string, any>>(
-    {}
-  );
+  const [validatorSupers, setValidatorSupers] = useState<
+    Record<string, ValidatorSuper>
+  >({});
 
   // Stores the currently active validator set.
   const [sessionValidators, setSessionValidators] = useState<string[]>([]);
