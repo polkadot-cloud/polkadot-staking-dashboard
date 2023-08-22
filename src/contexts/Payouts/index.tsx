@@ -40,6 +40,20 @@ export const PayoutsProvider = ({
     };
   };
 
+  // Calls service worker to check exppsures for given era.
+  // eslint-disable-next-line
+  const checkExposures = async (era: number, exposures: AnyJson) => {
+    if (!api) return;
+
+    worker.postMessage({
+      task: 'processEraForExposure',
+      currentEra: String(era),
+      who: activeAccount,
+      networkName: network.name,
+      exposures,
+    });
+  };
+
   // Fetch exposure data required for pending payouts.
   const fetchExposureData = async () => {
     if (!api || !activeAccount) return;
@@ -52,21 +66,23 @@ export const PayoutsProvider = ({
     }
 
     const eraExposures = await Promise.all(calls);
+
+    // TODO: store all exposure data in local storage.
     for (const eraExposure of eraExposures) {
       // eslint-disable-next-line
       const exposures = eraExposure.map(([keys, val]: AnyApi) => ({
         keys: keys.toHuman(),
         val: val.toHuman(),
       }));
-      // TODO: store exposure data in local storage.
     }
+
+    // get first era exposures in localStorage from `start` era.
+    // checkExposures(start, exposures);
   };
 
   // Fetch pending payouts.
   const fetchPendingPayouts = async () => {
     if (!api || !activeAccount) return;
-
-    // TODO: clear local storage eras that are older than `HistoryDepth`.
 
     // Get eras required for payout calculation.
     const { start, end } = getErasToCheck();
@@ -84,8 +100,8 @@ export const PayoutsProvider = ({
       const { total, individual } = eraPayout;
 
       // TODO: store this era payout in local storage.
+
       // const activeAccountPayout = rmCommas(individual[activeAccount] || 0);
-      // console.log(activeAccountPayout);
 
       // TODO: Check if active account had a payout in this era. If so, store in Payouts and in local stoarage.
       // do this next.
@@ -99,7 +115,9 @@ export const PayoutsProvider = ({
   const startPendingPayoutProcess = async () => {
     // Populate localStorage with the needed exposure data.
     await fetchExposureData();
+
     // Fetch reward data and determine whether there are pending payouts.
+    // TODO: move this to `useEffect` once all required workers have completed.
     await fetchPendingPayouts();
     payoutsSynced.current = 'synced';
   };
@@ -123,6 +141,8 @@ export const PayoutsProvider = ({
       const { currentEra, exposed, exposeValidator } = data;
 
       // TODO: process received era exposure data, set in local storage.
+      // TODO: if there are more exposures to process, check next era.
+      // checkExposures(nextEra, exposures);
     }
   };
 

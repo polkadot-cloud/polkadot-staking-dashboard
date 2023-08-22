@@ -248,6 +248,8 @@ export const FastUnstakeProvider = ({
       val: val.toHuman(),
     }));
 
+    // TODO: store `exposures` into local `exposures` data.
+
     worker.postMessage({
       task: 'processEraForExposure',
       currentEra: era.toString(),
