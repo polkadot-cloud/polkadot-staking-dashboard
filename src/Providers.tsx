@@ -37,6 +37,7 @@ import { UIProvider } from 'contexts/UI';
 import { ValidatorsProvider } from 'contexts/Validators';
 import { withProviders } from 'library/Hooks';
 import { CanvasProvider } from 'contexts/Canvas';
+import { PayoutsProvider } from 'contexts/Payouts';
 
 // !! Provider order matters.
 export const Providers = withProviders(
@@ -62,6 +63,7 @@ export const Providers = withProviders(
   TransferOptionsProvider,
   ValidatorsProvider,
   FastUnstakeProvider,
+  PayoutsProvider,
   UIProvider,
   PluginsProvider,
   SetupProvider,
