@@ -8,8 +8,11 @@ import type { AnyApi, Sync, AnyJson } from 'types';
 import { useConnect } from 'contexts/Connect';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useNetworkMetrics } from 'contexts/Network';
+import Worker from 'workers/stakers?worker';
 import { MaxSupportedPayoutEras, defaultPayoutsContext } from './defaults';
 import type { PayoutsContextInterface } from './types';
+
+const worker = new Worker();
 
 export const PayoutsProvider = ({
   children,
@@ -27,17 +30,50 @@ export const PayoutsProvider = ({
   // Track whether payouts have been fetched.
   const payoutsSynced = React.useRef<Sync>('unsynced');
 
+  // Calculate eras to check for pending payouts.
+  const getErasToCheck = () => {
+    const start = activeEra?.index.minus(1).toNumber() || 1;
+    const end = Math.max(start - MaxSupportedPayoutEras, 1);
+    return {
+      start,
+      end,
+    };
+  };
+
+  // Fetch exposure data required for pending payouts.
+  const fetchExposureData = async () => {
+    if (!api || !activeAccount) return;
+
+    const calls = [];
+    const { start, end } = getErasToCheck();
+    for (let i = start; i >= end; i--) {
+      // TODO: only fetch eras that are not in local storage.
+      calls.push(api.query.staking.erasStakers.entries(i));
+    }
+
+    const eraExposures = await Promise.all(calls);
+    for (const eraExposure of eraExposures) {
+      // eslint-disable-next-line
+      const exposures = eraExposure.map(([keys, val]: AnyApi) => ({
+        keys: keys.toHuman(),
+        val: val.toHuman(),
+      }));
+      // TODO: store exposure data in local storage.
+    }
+  };
+
   // Fetch pending payouts.
   const fetchPendingPayouts = async () => {
-    if (!api) return;
+    if (!api || !activeAccount) return;
 
-    // TODO: clear local storage eras that are older than `MaxSupportedPayoutEras`.
+    // TODO: clear local storage eras that are older than `HistoryDepth`.
 
-    // Fetch last era payouts.
-    const startEra = activeEra?.index.minus(1).toNumber() || 1;
-    const finishEra = Math.max(startEra - MaxSupportedPayoutEras, 1);
+    // Get eras required for payout calculation.
+    const { start, end } = getErasToCheck();
+
+    // Accumulate needed calls for reward data.
     const calls = [];
-    for (let i = startEra; i >= finishEra; i--) {
+    for (let i = start; i >= end; i--) {
       // TODO: only fetch eras that are not in local storage.
       calls.push(api.query.staking.erasRewardPoints<AnyApi>(i));
     }
@@ -48,13 +84,46 @@ export const PayoutsProvider = ({
       const { total, individual } = eraPayout;
 
       // TODO: store this era payout in local storage.
+      // const activeAccountPayout = rmCommas(individual[activeAccount] || 0);
+      // console.log(activeAccountPayout);
 
       // TODO: Check if active account had a payout in this era. If so, store in Payouts and in local stoarage.
+      // do this next.
     }
 
     // TODO: commit all payouts to state once all synced.
     setPayouts({});
+  };
+
+  // Start pending payout process.
+  const startPendingPayoutProcess = async () => {
+    // Populate localStorage with the needed exposure data.
+    await fetchExposureData();
+    // Fetch reward data and determine whether there are pending payouts.
+    await fetchPendingPayouts();
     payoutsSynced.current = 'synced';
+  };
+
+  // Handle worker message on completed exposure check.
+  worker.onmessage = (message: MessageEvent) => {
+    if (message) {
+      // ensure correct task received.
+      const { data } = message;
+      const { task } = data;
+      if (task !== 'processEraForExposure') {
+        return;
+      }
+      // ensure still same conditions.
+      const { networkName, who } = data;
+      if (networkName !== network.name || who !== activeAccount) {
+        return;
+      }
+
+      // eslint-disable-next-line
+      const { currentEra, exposed, exposeValidator } = data;
+
+      // TODO: process received era exposure data, set in local storage.
+    }
   };
 
   // Fetch payouts if active account is nominating.
@@ -65,7 +134,7 @@ export const PayoutsProvider = ({
       payoutsSynced.current === 'unsynced'
     ) {
       payoutsSynced.current = 'syncing';
-      fetchPendingPayouts();
+      startPendingPayoutProcess();
     }
   }, [isNominating(), activeEra]);
 

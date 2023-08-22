@@ -31,16 +31,15 @@ ctx.addEventListener('message', (event: AnyJson) => {
   postMessage({ task, ...message });
 });
 
-// process fast unstake era exposures.
-//
-// checks if an account has been exposed in an
-// era.
+// Process era exposures and return if an account was exposed, along with the validator they backed.
 const processEraForExposure = (data: AnyJson) => {
   const { currentEra, exposures, task, networkName, who } = data;
   let exposed = false;
 
-  // check exposed as validator or nominator.
+  // If exposed, the validator that was backed.
   let exposedValidator: string | null = null;
+
+  // Check exposed as validator or nominator.
   exposures.every(({ keys, val }: any) => {
     const validator = keys[1];
     if (validator === who) {

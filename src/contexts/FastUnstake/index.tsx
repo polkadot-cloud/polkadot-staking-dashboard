@@ -147,11 +147,11 @@ export const FastUnstakeProvider = ({
       }
     };
   }, [
-    isReady,
-    activeAccount,
-    network.name,
-    activeEra.index,
     inSetup(),
+    isReady,
+    network.name,
+    activeAccount,
+    activeEra.index,
     fastUnstakeErasToCheckPerBlock,
   ]);
 
@@ -240,15 +240,13 @@ export const FastUnstakeProvider = ({
   const checkEra = async (era: BigNumber) => {
     if (!api) return;
 
-    // checkpoint: checking era: era
-
-    const exposuresRaw = await api.query.staking.erasStakers.entries(
-      era.toString()
-    );
-    const exposures = exposuresRaw.map(([keys, val]: AnyApi) => ({
+    const exposures = (
+      await api.query.staking.erasStakers.entries(era.toString())
+    ).map(([keys, val]: AnyApi) => ({
       keys: keys.toHuman(),
       val: val.toHuman(),
     }));
+
     worker.postMessage({
       task: 'processEraForExposure',
       currentEra: era.toString(),
