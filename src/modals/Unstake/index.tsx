@@ -35,7 +35,7 @@ export const Unstake = () => {
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
-  const { setModalStatus, setResize } = useOverlay().modal;
+  const { setModalStatus, setModalResize } = useOverlay().modal;
   const { getBondedAccount, getAccountNominations } = useBonded();
 
   const { units } = network;
@@ -73,7 +73,7 @@ export const Unstake = () => {
   }, [freeToUnbond.toString(), isValid]);
 
   // modal resize on form update
-  useEffect(() => setResize(), [bond, notEnoughFunds]);
+  useEffect(() => setModalResize(), [bond, notEnoughFunds]);
 
   // tx to submit
   const getTx = () => {

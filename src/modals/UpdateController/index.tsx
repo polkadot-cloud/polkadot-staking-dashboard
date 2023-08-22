@@ -24,7 +24,7 @@ export const UpdateController = () => {
   const { getBondedAccount } = useBonded();
   const { getSignerWarnings } = useSignerWarnings();
   const { activeAccount, getAccount } = useConnect();
-  const { setModalStatus, setResize } = useOverlay().modal;
+  const { setModalStatus, setModalResize } = useOverlay().modal;
 
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
@@ -39,7 +39,7 @@ export const UpdateController = () => {
     return tx;
   };
 
-  useEffect(() => setResize(), [notEnoughFunds]);
+  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   // handle extrinsic
   const submitExtrinsic = useSubmitExtrinsic({

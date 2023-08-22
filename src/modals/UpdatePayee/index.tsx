@@ -32,7 +32,7 @@ export const UpdatePayee = () => {
   const { getBondedAccount } = useBonded();
   const { getPayeeItems } = usePayeeConfig();
   const { getSignerWarnings } = useSignerWarnings();
-  const { setModalStatus, setResize } = useOverlay().modal;
+  const { setModalStatus, setModalResize } = useOverlay().modal;
 
   const controller = getBondedAccount(activeAccount);
   const { payee } = staking;
@@ -118,7 +118,7 @@ export const UpdatePayee = () => {
     );
   }, []);
 
-  useEffect(() => setResize(), [notEnoughFunds]);
+  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   const warnings = getSignerWarnings(
     activeAccount,

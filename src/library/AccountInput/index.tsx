@@ -28,7 +28,7 @@ export const AccountInput = ({
   const { t } = useTranslation('library');
 
   const { formatAccountSs58, accounts } = useConnect();
-  const { setResize } = useOverlay().modal;
+  const { setModalResize } = useOverlay().modal;
 
   // store current input value
   const [value, setValue] = useState(initialValue || '');
@@ -138,7 +138,7 @@ export const AccountInput = ({
     setReformatted(false);
     setValue('');
     setValid(null);
-    setResize();
+    setModalResize();
     setSuccessLocked(false);
     if (resetCallback) {
       resetCallback();

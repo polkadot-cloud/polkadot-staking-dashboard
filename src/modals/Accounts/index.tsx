@@ -37,7 +37,11 @@ export const Accounts = () => {
   const { bondedAccounts } = useBonded();
   const { ledgers, getLocks } = useBalances();
   const { memberships } = usePoolMemberships();
-  const { replaceModal, status: modalStatus, setResize } = useOverlay().modal;
+  const {
+    replaceModal,
+    status: modalStatus,
+    setModalResize,
+  } = useOverlay().modal;
   const { activeAccount, disconnectFromAccount, setActiveProxy, accounts } =
     useConnect();
 
@@ -110,14 +114,10 @@ export const Accounts = () => {
     }
   }
 
-  useEffect(() => {
-    setLocalAccounts(accounts);
-  }, [accounts]);
+  useEffect(() => setLocalAccounts(accounts), [accounts]);
 
   useEffectIgnoreInitial(() => {
-    if (modalStatus === 'open') {
-      setResize();
-    }
+    if (modalStatus === 'open') setModalResize();
   }, [activeAccount, accounts, bondedAccounts, balances, ledgers, extensions]);
 
   return (

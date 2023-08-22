@@ -119,13 +119,13 @@ export const Modal = ({ modals, externalOverlayStatus }: ModalProps) => {
     modal: {
       config: { key, size, options },
       status,
-      height,
-      resize,
+      modalHeight,
+      modalResizeCounter,
+      setModalRef,
+      modalMaxHeight,
+      setModalHeight,
       setModalStatus,
-      setRef,
-      setHeightRef,
-      maxHeight,
-      setHeight,
+      setModalHeightRef,
     },
   } = useOverlay();
   const controls = useAnimation();
@@ -155,8 +155,8 @@ export const Modal = ({ modals, externalOverlayStatus }: ModalProps) => {
   const handleResize = () => {
     if (status !== 'open' || options?.disableWindowResize) return;
     let h = modalRef.current?.clientHeight ?? 0;
-    h = h > maxHeight ? maxHeight : h;
-    setHeight(h);
+    h = h > modalMaxHeight ? modalMaxHeight : h;
+    setModalHeight(h);
   };
 
   // Control on modal status change.
@@ -188,7 +188,7 @@ export const Modal = ({ modals, externalOverlayStatus }: ModalProps) => {
   }, [externalOverlayStatus]);
 
   // Resize modal on status or resize change.
-  useEffect(() => handleResize(), [resize]);
+  useEffect(() => handleResize(), [modalResizeCounter]);
 
   // Resize modal on window size change.
   useEffect(() => {
@@ -200,8 +200,8 @@ export const Modal = ({ modals, externalOverlayStatus }: ModalProps) => {
 
   // Update the modal's content ref as they are initialised.
   useEffect(() => {
-    setRef(modalRef);
-    setHeightRef(heightRef);
+    setModalRef(modalRef);
+    setModalHeightRef(heightRef);
   }, [modalRef?.current, heightRef?.current]);
 
   if (status === 'closed') {
@@ -243,9 +243,9 @@ export const Modal = ({ modals, externalOverlayStatus }: ModalProps) => {
               ref={heightRef}
               size={size}
               style={{
-                height,
+                height: modalHeight,
                 overflow:
-                  height >= maxHeight && !options?.disableScroll
+                  modalHeight >= modalMaxHeight && !options?.disableScroll
                     ? 'scroll'
                     : 'hidden',
               }}

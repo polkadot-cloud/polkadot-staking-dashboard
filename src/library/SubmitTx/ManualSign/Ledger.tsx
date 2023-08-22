@@ -40,7 +40,7 @@ export const Ledger = ({
     handleUnmount,
   } = useLedgerHardware();
   const { openHelp } = useHelp();
-  const { setResize } = useOverlay().modal;
+  const { setModalResize } = useOverlay().modal;
   const { activeAccount, accountHasSigner, getAccount } = useConnect();
   const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();
 
@@ -88,7 +88,7 @@ export const Ledger = ({
 
   // Resize modal on content change.
   useEffect(() => {
-    setResize();
+    setModalResize();
   }, [isPaired, getStatusCodes()]);
 
   // Listen for new Ledger status reports.

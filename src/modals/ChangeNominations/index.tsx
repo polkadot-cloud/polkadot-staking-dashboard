@@ -30,7 +30,7 @@ export const ChangeNominations = () => {
   const {
     setModalStatus,
     config: { options },
-    setResize,
+    setModalResize,
   } = useOverlay().modal;
   const { poolNominations, isNominator, isOwner, selectedActivePool } =
     useActivePools();
@@ -62,7 +62,7 @@ export const ChangeNominations = () => {
     isValid = (isNominator() || isOwner()) ?? false;
   }
 
-  useEffect(() => setResize(), [notEnoughFunds]);
+  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   useEffect(() => setValid(isValid), [isValid]);
 

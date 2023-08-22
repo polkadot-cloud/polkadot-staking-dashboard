@@ -38,7 +38,7 @@ export const ImportVault = () => {
     removeVaultAccount,
     getVaultAccount,
   } = useVaultHardware();
-  const { setResize } = useOverlay().modal;
+  const { setModalResize } = useOverlay().modal;
 
   const renameHandler = (address: string, newName: string) => {
     renameVaultAccount(address, newName);
@@ -64,7 +64,7 @@ export const ImportVault = () => {
   };
 
   useEffect(() => {
-    setResize();
+    setModalResize();
   }, [vaultAccounts]);
 
   return (

@@ -18,7 +18,7 @@ import { Tasks } from './Tasks';
 export const ManagePool = () => {
   const { t } = useTranslation('modals');
   const { notEnoughFunds } = useTxMeta();
-  const { setHeight } = useOverlay().modal;
+  const { setModalHeight } = useOverlay().modal;
   const { isOwner, selectedActivePool } = useActivePools();
 
   // modal task
@@ -45,7 +45,7 @@ export const ManagePool = () => {
     } else {
       height += formsRef.current?.clientHeight || 0;
     }
-    setHeight(height);
+    setModalHeight(height);
   }, [
     section,
     task,

@@ -35,7 +35,7 @@ export const NominateFromFavorites = () => {
   const {
     config: { options },
     setModalStatus,
-    setResize,
+    setModalResize,
   } = useOverlay().modal;
   const { selectedActivePool, isNominator, isOwner } = useActivePools();
 
@@ -72,7 +72,7 @@ export const NominateFromFavorites = () => {
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
 
-  useEffect(() => setResize(), [notEnoughFunds, selectedFavorites]);
+  useEffect(() => setModalResize(), [notEnoughFunds, selectedFavorites]);
 
   // ensure selected list is within limits
   useEffect(() => {

@@ -31,7 +31,7 @@ export const Bond = () => {
   const {
     setModalStatus,
     config: { options },
-    setResize,
+    setModalResize,
   } = useOverlay().modal;
   const { units } = network;
   const { bondFor } = options;
@@ -133,9 +133,10 @@ export const Bond = () => {
   );
 
   // modal resize on form update
-  useEffect(() => {
-    setResize();
-  }, [bond, bondValid, notEnoughFunds, feedbackErrors.length, warnings.length]);
+  useEffect(
+    () => setModalResize(),
+    [bond, bondValid, notEnoughFunds, feedbackErrors.length, warnings.length]
+  );
 
   return (
     <>

@@ -25,7 +25,7 @@ export const UnlockChunks = () => {
   const { getStashLedger } = useBalances();
   const {
     config: { options },
-    setHeight,
+    setModalHeight,
   } = useOverlay().modal;
   const { getPoolUnlocking } = useActivePools();
   const { bondFor } = options || {};
@@ -79,7 +79,7 @@ export const UnlockChunks = () => {
 
   // resize modal on state change
   useEffect(() => {
-    setHeight(getModalHeight());
+    setModalHeight(getModalHeight());
   }, [task, notEnoughFunds, sectionRef.current, unlocking]);
 
   // resize this modal on window resize
@@ -90,7 +90,7 @@ export const UnlockChunks = () => {
     };
   }, []);
   const resizeCallback = () => {
-    setHeight(getModalHeight());
+    setModalHeight(getModalHeight());
   };
 
   return (

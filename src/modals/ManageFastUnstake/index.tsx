@@ -33,7 +33,7 @@ export const ManageFastUnstake = () => {
   const { getBondedAccount } = useBonded();
   const { api, consts, network } = useApi();
   const { isFastUnstaking } = useUnstaking();
-  const { setResize, setModalStatus } = useOverlay().modal;
+  const { setModalResize, setModalStatus } = useOverlay().modal;
   const { getSignerWarnings } = useSignerWarnings();
   const { activeEra, metrics } = useNetworkMetrics();
   const { feeReserve, getTransferOptions } = useTransferOptions();
@@ -74,7 +74,7 @@ export const ManageFastUnstake = () => {
   ]);
 
   useEffect(
-    () => setResize(),
+    () => setModalResize(),
     [notEnoughFunds, isExposed, queueDeposit, isFastUnstaking]
   );
 

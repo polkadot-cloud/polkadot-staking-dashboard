@@ -18,7 +18,7 @@ export const BalanceTest = () => {
   const { activeAccount } = useConnect();
   const { notEnoughFunds } = useTxMeta();
   const { newBatchCall } = useBatchCall();
-  const { setModalStatus, setResize } = useOverlay().modal;
+  const { setModalStatus, setModalResize } = useOverlay().modal;
   const { units } = network;
 
   // tx to submit
@@ -57,7 +57,7 @@ export const BalanceTest = () => {
     callbackInBlock: () => {},
   });
 
-  useEffect(() => setResize(), [notEnoughFunds]);
+  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   return (
     <>

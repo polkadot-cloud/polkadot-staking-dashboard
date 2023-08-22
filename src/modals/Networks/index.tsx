@@ -23,7 +23,7 @@ import {
 
 export const Networks = () => {
   const { t } = useTranslation('modals');
-  const { setModalStatus, setResize } = useOverlay().modal;
+  const { setModalStatus, setModalResize } = useOverlay().modal;
   const { switchNetwork, network, isLightClient } = useApi();
   const networkKey: string = network.name;
 
@@ -36,9 +36,7 @@ export const Networks = () => {
     });
   });
 
-  useEffect(() => {
-    setResize();
-  }, [braveBrowser]);
+  useEffect(() => setModalResize(), [braveBrowser]);
 
   return (
     <>

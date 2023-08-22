@@ -37,7 +37,7 @@ export const JoinPool = () => {
   const {
     setModalStatus,
     config: { options },
-    setResize,
+    setModalResize,
   } = useOverlay().modal;
 
   const { id: poolId, setActiveTab } = options;
@@ -68,7 +68,10 @@ export const JoinPool = () => {
   const [feedbackErrors, setFeedbackErrors] = useState<string[]>([]);
 
   // modal resize on form update
-  useEffect(() => setResize(), [bond, notEnoughFunds, feedbackErrors.length]);
+  useEffect(
+    () => setModalResize(),
+    [bond, notEnoughFunds, feedbackErrors.length]
+  );
 
   // tx to submit
   const getTx = () => {

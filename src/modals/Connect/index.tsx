@@ -31,7 +31,7 @@ import { ExtensionsWrapper } from './Wrappers';
 export const Connect = () => {
   const { t } = useTranslation('modals');
   const { extensions } = useExtensions();
-  const { replaceModal, setHeight, maxHeight } = useOverlay().modal;
+  const { replaceModal, setModalHeight, modalMaxHeight } = useOverlay().modal;
 
   const installed = ExtensionsArray.filter((a) =>
     extensions.find((b) => b.id === a.id)
@@ -64,7 +64,7 @@ export const Connect = () => {
       readOnlyRef.current?.clientHeight || 0,
       proxiesRef.current?.clientHeight || 0
     );
-    setHeight(height);
+    setModalHeight(height);
   };
 
   // Resize modal on state change.
@@ -117,7 +117,7 @@ export const Connect = () => {
 
         <ModalMotionThreeSection
           style={{
-            maxHeight: maxHeight - (headerRef.current?.clientHeight || 0),
+            maxHeight: modalMaxHeight - (headerRef.current?.clientHeight || 0),
           }}
           animate={
             section === 0 ? 'home' : section === 1 ? 'readOnly' : 'proxies'

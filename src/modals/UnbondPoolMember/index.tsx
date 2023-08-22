@@ -34,7 +34,7 @@ export const UnbondPoolMember = () => {
   const { getSignerWarnings } = useSignerWarnings();
   const {
     setModalStatus,
-    setResize,
+    setModalResize,
     config: { options },
   } = useOverlay().modal;
 
@@ -68,7 +68,7 @@ export const UnbondPoolMember = () => {
     setBondValid(isValid);
   }, [freeToUnbond.toString(), isValid]);
 
-  useEffect(() => setResize(), [bond, notEnoughFunds]);
+  useEffect(() => setModalResize(), [bond, notEnoughFunds]);
 
   // tx to submit
   const getTx = () => {

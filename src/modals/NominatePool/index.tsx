@@ -18,7 +18,7 @@ import { useOverlay } from 'contexts/Overlay';
 export const NominatePool = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { setModalStatus, setResize } = useOverlay().modal;
+  const { setModalStatus, setModalResize } = useOverlay().modal;
   const { activeAccount } = useConnect();
   const { selectedActivePool, isOwner, isNominator, targets } =
     useActivePools();
@@ -49,7 +49,7 @@ export const NominatePool = () => {
 
   useEffect(() => setValid(isValid), [isValid]);
 
-  useEffect(() => setResize(), [notEnoughFunds]);
+  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   const submitExtrinsic = useSubmitExtrinsic({
     tx: getTx(),

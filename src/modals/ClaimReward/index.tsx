@@ -27,7 +27,7 @@ export const ClaimReward = () => {
   const {
     setModalStatus,
     config: { options },
-    setResize,
+    setModalResize,
   } = useOverlay().modal;
 
   const { units, unit } = network;
@@ -82,7 +82,7 @@ export const ClaimReward = () => {
     warnings.push(`${t('noRewards')}`);
   }
 
-  useEffect(() => setResize(), [notEnoughFunds, warnings.length]);
+  useEffect(() => setModalResize(), [notEnoughFunds, warnings.length]);
 
   return (
     <>

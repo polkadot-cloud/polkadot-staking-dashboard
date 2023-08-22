@@ -25,7 +25,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   } = useLedgerHardware();
   const { mode } = useTheme();
   const { openHelp } = useHelp();
-  const { replaceModal, setResize } = useOverlay().modal;
+  const { replaceModal, setModalResize } = useOverlay().modal;
 
   const statusCodes = getStatusCodes();
 
@@ -54,9 +54,7 @@ export const Splash = ({ handleLedgerLoop }: AnyFunction) => {
   }, [isPaired]);
 
   // Resize modal on new message
-  useEffect(() => {
-    setResize();
-  }, [statusCodes, feedback]);
+  useEffect(() => setModalResize(), [statusCodes, feedback]);
 
   return (
     <>

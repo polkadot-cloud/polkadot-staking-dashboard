@@ -18,7 +18,7 @@ export const SelectFavorites = () => {
   const {
     config: { options },
     setModalStatus,
-    setResize,
+    setModalResize,
   } = useOverlay().modal;
   const { favoritesList } = useValidators();
   const { maxNominations } = consts;
@@ -44,9 +44,7 @@ export const SelectFavorites = () => {
     }
   }, []);
 
-  useEffect(() => {
-    setResize();
-  }, [selectedFavorites]);
+  useEffect(() => setModalResize(), [selectedFavorites]);
 
   const batchKey = 'favorite_validators';
 

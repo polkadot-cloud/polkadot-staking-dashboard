@@ -41,7 +41,7 @@ export const Unbond = () => {
   const { isDepositor, selectedActivePool } = useActivePools();
   const {
     setModalStatus,
-    setResize,
+    setModalResize,
     config: { options },
   } = useOverlay().modal;
 
@@ -174,7 +174,7 @@ export const Unbond = () => {
 
   // modal resize on form update
   useEffect(
-    () => setResize(),
+    () => setModalResize(),
     [bond, notEnoughFunds, feedbackErrors.length, warnings.length]
   );
 

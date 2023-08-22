@@ -52,7 +52,7 @@ export const ValidatorListInner = ({
     isReady,
     network: { colors },
   } = useApi();
-  const { setResize } = useOverlay().modal;
+  const { setModalResize } = useOverlay().modal;
   const provider = useList();
   const { mode } = useTheme();
   const { isSyncing } = useUi();
@@ -238,8 +238,7 @@ export const ValidatorListInner = ({
 
   // if in modal, handle resize
   const maybeHandleModalResize = () => {
-    if (!inModal) return;
-    setResize();
+    if (inModal) setModalResize();
   };
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {

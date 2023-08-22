@@ -27,7 +27,7 @@ export const Nominate = () => {
   const { getStashLedger } = useBalances();
   const { targets, staking } = useStaking();
   const { getSignerWarnings } = useSignerWarnings();
-  const { setModalStatus, setResize } = useOverlay().modal;
+  const { setModalStatus, setModalResize } = useOverlay().modal;
 
   const { units, unit } = network;
   const { minNominatorBond } = staking;
@@ -50,7 +50,7 @@ export const Nominate = () => {
     );
   }, [targets]);
 
-  useEffect(() => setResize(), [notEnoughFunds]);
+  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   // tx to submit
   const getTx = () => {

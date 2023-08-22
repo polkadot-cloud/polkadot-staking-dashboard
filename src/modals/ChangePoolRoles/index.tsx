@@ -24,7 +24,7 @@ export const ChangePoolRoles = () => {
   const {
     setModalStatus,
     config: { options },
-    setResize,
+    setModalResize,
   } = useOverlay().modal;
   const { id: poolId, roleEdits } = options;
 
@@ -59,7 +59,7 @@ export const ChangePoolRoles = () => {
     },
   });
 
-  useEffect(() => setResize(), [notEnoughFunds]);
+  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   return (
     <>

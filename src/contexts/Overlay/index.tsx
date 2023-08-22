@@ -53,7 +53,7 @@ export const OverlayProvider = ({
   const [modalHeight, setModalHeightState] = useState<number>(0);
 
   // Store the modal's resize counter.
-  const [modalResize, setModalResizeState] = useState<number>(0);
+  const [modalResizeCounter, setModalResizeCounterState] = useState<number>(0);
 
   // Store the ref to the modal height container. Used for controlling whether height is transitionable.
   const [modalRef, setModalRef] = useState<RefObject<HTMLDivElement>>();
@@ -118,7 +118,7 @@ export const OverlayProvider = ({
   // Increments modal resize to trigger a height transition.
   const setModalResize = () => {
     transitionOn();
-    setModalResizeState(modalResize + 1);
+    setModalResizeCounterState(modalResizeCounter + 1);
     setTimeout(() => transitionOff(), 500);
   };
 
@@ -192,13 +192,13 @@ export const OverlayProvider = ({
         modal: {
           status: modalStatusRef.current,
           config: modalConfigRef.current,
-          height: modalHeight,
-          resize: modalResize,
-          maxHeight: modalMaxHeight,
-          setResize: setModalResize,
-          setHeight: setModalHeight,
-          setRef: setModalRef,
-          setHeightRef: setModalHeightRef,
+          modalHeight,
+          modalResizeCounter,
+          modalMaxHeight,
+          setModalResize,
+          setModalHeight,
+          setModalRef,
+          setModalHeightRef,
           setModalStatus,
           openModal,
           replaceModal,

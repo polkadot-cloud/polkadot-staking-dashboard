@@ -15,7 +15,7 @@ import { Splash } from './Splash';
 
 export const ImportLedger: React.FC = () => {
   const { network } = useApi();
-  const { setResize } = useOverlay().modal;
+  const { setModalResize } = useOverlay().modal;
   const {
     transportResponse,
     getIsExecuting,
@@ -137,7 +137,7 @@ export const ImportLedger: React.FC = () => {
 
   // Resize modal on content change.
   useEffect(() => {
-    setResize();
+    setModalResize();
   }, [isPaired, getStatusCodes(), addressesRef.current]);
 
   // Listen for new Ledger status reports.

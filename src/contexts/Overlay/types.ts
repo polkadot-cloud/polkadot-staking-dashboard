@@ -23,13 +23,13 @@ export interface OverlayContextInterface {
   modal: {
     status: ModalStatus;
     config: AnyJson;
-    height: number;
-    resize: number;
-    maxHeight: number;
-    setResize: () => void;
-    setHeight: (v: number) => void;
-    setRef: (v: RefObject<HTMLDivElement>) => void;
-    setHeightRef: (v: RefObject<HTMLDivElement>) => void;
+    modalHeight: number;
+    modalResizeCounter: number;
+    modalMaxHeight: number;
+    setModalResize: () => void;
+    setModalHeight: (v: number) => void;
+    setModalRef: (v: RefObject<HTMLDivElement>) => void;
+    setModalHeightRef: (v: RefObject<HTMLDivElement>) => void;
     setModalStatus: (status: ModalStatus) => void;
     replaceModal: (config: ModalConfig) => void;
     openModal: (config: ModalConfig) => void;

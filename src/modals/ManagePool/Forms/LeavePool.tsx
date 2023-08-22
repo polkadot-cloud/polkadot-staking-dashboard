@@ -34,7 +34,7 @@ export const LeavePool = ({ setSection }: any) => {
   const { api, network, consts } = useApi();
   const { activeAccount } = useConnect();
   const { units } = network;
-  const { setModalStatus, setResize } = useOverlay().modal;
+  const { setModalStatus, setModalResize } = useOverlay().modal;
   const { getTransferOptions } = useTransferOptions();
   const { selectedActivePool } = useActivePools();
   const { erasToSeconds } = useErasToTimeLeft();
@@ -76,9 +76,7 @@ export const LeavePool = ({ setSection }: any) => {
   }, [freeToUnbond.toString(), isValid]);
 
   // modal resize on form update
-  useEffect(() => {
-    setResize();
-  }, [bond]);
+  useEffect(() => setModalResize(), [bond]);
 
   // tx to submit
   const getTx = () => {

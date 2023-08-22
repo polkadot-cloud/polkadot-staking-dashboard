@@ -25,7 +25,7 @@ export const WithdrawPoolMember = () => {
   const {
     setModalStatus,
     config: { options },
-    setResize,
+    setModalResize,
   } = useOverlay().modal;
   const { activeEra } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
@@ -82,7 +82,7 @@ export const WithdrawPoolMember = () => {
     },
   });
 
-  useEffect(() => setResize(), [notEnoughFunds]);
+  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   const warnings = getSignerWarnings(
     activeAccount,
