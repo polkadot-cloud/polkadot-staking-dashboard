@@ -15,14 +15,16 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { useTxMeta } from 'contexts/TxMeta';
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
   const { activeAccount } = useConnect();
-  const { setStatus: setModalStatus, config, setResize } = useModal();
+  const { notEnoughFunds } = useTxMeta();
   const { selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
+  const { setStatus: setModalStatus, config, setResize } = useModal();
 
   const { units, unit } = network;
   let { pendingRewards } = selectedActivePool || {};
@@ -76,9 +78,7 @@ export const ClaimReward = () => {
     warnings.push(`${t('noRewards')}`);
   }
 
-  useEffect(() => {
-    setResize();
-  }, [warnings.length]);
+  useEffect(() => setResize(), [notEnoughFunds, warnings.length]);
 
   return (
     <>

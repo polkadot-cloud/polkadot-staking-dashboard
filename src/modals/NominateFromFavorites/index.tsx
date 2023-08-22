@@ -21,19 +21,21 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Title } from 'library/Modal/Title';
 import { SubmitTx } from 'library/SubmitTx';
 import { ValidatorList } from 'library/ValidatorList';
+import { useTxMeta } from 'contexts/TxMeta';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {
   const { t } = useTranslation('modals');
   const { consts, api } = useApi();
   const { activeAccount } = useConnect();
+  const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
-  const { config, setStatus: setModalStatus, setResize } = useModal();
   const { favoritesList } = useValidators();
-  const { selectedActivePool, isNominator, isOwner } = useActivePools();
-  const controller = getBondedAccount(activeAccount);
   const { getSignerWarnings } = useSignerWarnings();
+  const { config, setStatus: setModalStatus, setResize } = useModal();
+  const { selectedActivePool, isNominator, isOwner } = useActivePools();
 
+  const controller = getBondedAccount(activeAccount);
   const { maxNominations } = consts;
   const { bondFor, nominations } = config;
   const signingAccount = bondFor === 'pool' ? activeAccount : controller;
@@ -66,9 +68,7 @@ export const NominateFromFavorites = () => {
   // valid to submit transaction
   const [valid, setValid] = useState<boolean>(false);
 
-  useEffect(() => {
-    setResize();
-  }, [selectedFavorites]);
+  useEffect(() => setResize(), [notEnoughFunds, selectedFavorites]);
 
   // ensure selected list is within limits
   useEffect(() => {

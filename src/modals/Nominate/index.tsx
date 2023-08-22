@@ -16,16 +16,18 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { useTxMeta } from 'contexts/TxMeta';
 
 export const Nominate = () => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
   const { activeAccount } = useConnect();
-  const { targets, staking } = useStaking();
+  const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { getStashLedger } = useBalances();
-  const { setStatus: setModalStatus } = useModal();
+  const { targets, staking } = useStaking();
   const { getSignerWarnings } = useSignerWarnings();
+  const { setStatus: setModalStatus, setResize } = useModal();
 
   const { units, unit } = network;
   const { minNominatorBond } = staking;
@@ -47,6 +49,8 @@ export const Nominate = () => {
         activeUnit.isGreaterThanOrEqualTo(minNominatorBondUnit)
     );
   }, [targets]);
+
+  useEffect(() => setResize(), [notEnoughFunds]);
 
   // tx to submit
   const getTx = () => {

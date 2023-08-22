@@ -6,16 +6,19 @@ import { unitToPlanck } from '@polkadot-cloud/utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
+import { useTxMeta } from 'contexts/TxMeta';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { useEffect } from 'react';
 
 export const BalanceTest = () => {
-  const { newBatchCall } = useBatchCall();
   const { api, network } = useApi();
   const { activeAccount } = useConnect();
-  const { setStatus: setModalStatus } = useModal();
+  const { notEnoughFunds } = useTxMeta();
+  const { newBatchCall } = useBatchCall();
+  const { setStatus: setModalStatus, setResize } = useModal();
   const { units } = network;
 
   // tx to submit
@@ -53,6 +56,8 @@ export const BalanceTest = () => {
     },
     callbackInBlock: () => {},
   });
+
+  useEffect(() => setResize(), [notEnoughFunds]);
 
   return (
     <>

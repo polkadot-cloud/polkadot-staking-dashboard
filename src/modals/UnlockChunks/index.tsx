@@ -14,16 +14,18 @@ import { useConnect } from 'contexts/Connect';
 import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
+import { useTxMeta } from 'contexts/TxMeta';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
 
 export const UnlockChunks = () => {
   const { t } = useTranslation('modals');
   const { activeAccount } = useConnect();
-  const { config, setModalHeight } = useModal();
-  const { bondFor } = config || {};
+  const { notEnoughFunds } = useTxMeta();
   const { getStashLedger } = useBalances();
+  const { config, setModalHeight } = useModal();
   const { getPoolUnlocking } = useActivePools();
+  const { bondFor } = config || {};
 
   // get the unlocking per bondFor
   const getUnlocking = () => {
@@ -75,7 +77,7 @@ export const UnlockChunks = () => {
   // resize modal on state change
   useEffect(() => {
     setModalHeight(getModalHeight());
-  }, [task, sectionRef.current, unlocking]);
+  }, [task, notEnoughFunds, sectionRef.current, unlocking]);
 
   // resize this modal on window resize
   useEffect(() => {

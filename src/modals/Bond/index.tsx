@@ -18,16 +18,18 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { useTxMeta } from 'contexts/TxMeta';
 
 export const Bond = () => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
-  const { units } = network;
-  const { setStatus: setModalStatus, config, setResize } = useModal();
   const { activeAccount } = useConnect();
-  const { feeReserve, getTransferOptions } = useTransferOptions();
+  const { notEnoughFunds } = useTxMeta();
   const { selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
+  const { feeReserve, getTransferOptions } = useTransferOptions();
+  const { setStatus: setModalStatus, config, setResize } = useModal();
+  const { units } = network;
   const { bondFor } = config;
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
@@ -129,7 +131,7 @@ export const Bond = () => {
   // modal resize on form update
   useEffect(() => {
     setResize();
-  }, [bond, bondValid, feedbackErrors.length, warnings.length]);
+  }, [bond, bondValid, notEnoughFunds, feedbackErrors.length, warnings.length]);
 
   return (
     <>

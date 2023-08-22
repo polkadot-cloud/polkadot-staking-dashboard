@@ -4,7 +4,7 @@
 import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
 import { isNotZero, planckToUnit, rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
@@ -16,15 +16,17 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { useTxMeta } from 'contexts/TxMeta';
 
 export const WithdrawPoolMember = () => {
   const { t } = useTranslation('modals');
   const { api, network, consts } = useApi();
   const { activeAccount } = useConnect();
-  const { setStatus: setModalStatus, config } = useModal();
+  const { setStatus: setModalStatus, config, setResize } = useModal();
   const { activeEra } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
   const { getSignerWarnings } = useSignerWarnings();
+  const { notEnoughFunds } = useTxMeta();
 
   const { member, who } = config;
   const { historyDepth } = consts;
@@ -75,6 +77,8 @@ export const WithdrawPoolMember = () => {
       }
     },
   });
+
+  useEffect(() => setResize(), [notEnoughFunds]);
 
   const warnings = getSignerWarnings(
     activeAccount,

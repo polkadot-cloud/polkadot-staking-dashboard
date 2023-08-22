@@ -4,7 +4,6 @@
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import type { RefObject } from 'react';
 import React, { useRef, useState } from 'react';
-import { useTxMeta } from 'contexts/TxMeta';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { defaultModalContext } from './defaults';
 import type {
@@ -15,8 +14,6 @@ import type {
 } from './types';
 
 export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
-  const { notEnoughFunds } = useTxMeta();
-
   // Store the modal configuration options.
   const [options, setOptionsState] = useState<ModalOptions>({
     modal: '',
@@ -40,10 +37,6 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Store the ref to the modal height container. Used for controlling whether height is transitionable.
   const [heightRef, setHeightRef] = useState<RefObject<HTMLDivElement>>();
-
-  useEffectIgnoreInitial(() => {
-    setResize();
-  }, [notEnoughFunds]);
 
   useEffectIgnoreInitial(() => {
     const h = modalRef?.current?.clientHeight || 0;

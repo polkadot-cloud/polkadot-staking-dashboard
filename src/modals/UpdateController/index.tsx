@@ -12,16 +12,19 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useEffect } from 'react';
 import { Switch } from './Switch';
 import { Wrapper } from './Wrapper';
 
 export const UpdateController = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { setStatus: setModalStatus } = useModal();
-  const { activeAccount, getAccount } = useConnect();
+  const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
   const { getSignerWarnings } = useSignerWarnings();
+  const { activeAccount, getAccount } = useConnect();
+  const { setStatus: setModalStatus, setResize } = useModal();
 
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);
@@ -35,6 +38,8 @@ export const UpdateController = () => {
     tx = api.tx.staking.setController();
     return tx;
   };
+
+  useEffect(() => setResize(), [notEnoughFunds]);
 
   // handle extrinsic
   const submitExtrinsic = useSubmitExtrinsic({

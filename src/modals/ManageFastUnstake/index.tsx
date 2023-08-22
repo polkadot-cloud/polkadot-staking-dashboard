@@ -24,18 +24,20 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { useTxMeta } from 'contexts/TxMeta';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
-  const { api, consts, network } = useApi();
   const { activeAccount } = useConnect();
+  const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
-  const { activeEra, metrics } = useNetworkMetrics();
-  const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
-  const { setResize, setStatus } = useModal();
-  const { feeReserve, getTransferOptions } = useTransferOptions();
+  const { api, consts, network } = useApi();
   const { isFastUnstaking } = useUnstaking();
+  const { setResize, setStatus } = useModal();
   const { getSignerWarnings } = useSignerWarnings();
+  const { activeEra, metrics } = useNetworkMetrics();
+  const { feeReserve, getTransferOptions } = useTransferOptions();
+  const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
 
   const { bondDuration, fastUnstakeDeposit } = consts;
   const { fastUnstakeErasToCheckPerBlock } = metrics;
@@ -71,9 +73,10 @@ export const ManageFastUnstake = () => {
     feeReserve,
   ]);
 
-  useEffect(() => {
-    setResize();
-  }, [isExposed, queueDeposit, isFastUnstaking]);
+  useEffect(
+    () => setResize(),
+    [notEnoughFunds, isExposed, queueDeposit, isFastUnstaking]
+  );
 
   // tx to submit
   const getTx = () => {

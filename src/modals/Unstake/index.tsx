@@ -24,19 +24,21 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
+import { useTxMeta } from 'contexts/TxMeta';
 
 export const Unstake = () => {
   const { t } = useTranslation('modals');
   const { newBatchCall } = useBatchCall();
-  const { api, network, consts } = useApi();
+  const { notEnoughFunds } = useTxMeta();
   const { activeAccount } = useConnect();
+  const { api, network, consts } = useApi();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
   const { setStatus: setModalStatus, setResize } = useModal();
   const { getBondedAccount, getAccountNominations } = useBonded();
-  const { units } = network;
 
+  const { units } = network;
   const controller = getBondedAccount(activeAccount);
   const nominations = getAccountNominations(activeAccount);
   const { bondDuration } = consts;
@@ -71,9 +73,7 @@ export const Unstake = () => {
   }, [freeToUnbond.toString(), isValid]);
 
   // modal resize on form update
-  useEffect(() => {
-    setResize();
-  }, [bond]);
+  useEffect(() => setResize(), [bond, notEnoughFunds]);
 
   // tx to submit
   const getTx = () => {

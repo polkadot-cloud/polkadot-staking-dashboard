@@ -10,16 +10,19 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useEffect } from 'react';
 import { RoleChange } from './RoleChange';
 import { Wrapper } from './Wrapper';
 
 export const ChangePoolRoles = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { setStatus: setModalStatus } = useModal();
-  const { replacePoolRoles } = useBondedPools();
   const { activeAccount } = useConnect();
-  const { config } = useModal();
+  const { notEnoughFunds } = useTxMeta();
+  const { config, setResize } = useModal();
+  const { replacePoolRoles } = useBondedPools();
+  const { setStatus: setModalStatus } = useModal();
   const { id: poolId, roleEdits } = config;
 
   // tx to submit
@@ -52,6 +55,8 @@ export const ChangePoolRoles = () => {
       replacePoolRoles(poolId, roleEdits);
     },
   });
+
+  useEffect(() => setResize(), [notEnoughFunds]);
 
   return (
     <>

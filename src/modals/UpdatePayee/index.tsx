@@ -21,17 +21,20 @@ import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
 import { SubmitTx } from 'library/SubmitTx';
 import type { MaybeAccount } from 'types';
+import { useTxMeta } from 'contexts/TxMeta';
 
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { activeAccount } = useConnect();
-  const { getBondedAccount } = useBonded();
-  const { setStatus: setModalStatus } = useModal();
-  const controller = getBondedAccount(activeAccount);
   const { staking } = useStaking();
+  const { activeAccount } = useConnect();
+  const { notEnoughFunds } = useTxMeta();
+  const { getBondedAccount } = useBonded();
   const { getPayeeItems } = usePayeeConfig();
   const { getSignerWarnings } = useSignerWarnings();
+  const { setStatus: setModalStatus, setResize } = useModal();
+
+  const controller = getBondedAccount(activeAccount);
   const { payee } = staking;
 
   const DefaultSelected: PayeeConfig = {
@@ -114,6 +117,8 @@ export const UpdatePayee = () => {
         : DefaultSelected
     );
   }, []);
+
+  useEffect(() => setResize(), [notEnoughFunds]);
 
   const warnings = getSignerWarnings(
     activeAccount,

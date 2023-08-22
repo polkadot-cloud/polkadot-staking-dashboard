@@ -28,20 +28,21 @@ import { StaticNote } from 'modals/Utils/StaticNote';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');
-  const { api, network, consts } = useApi();
-  const { units } = network;
-  const { setStatus: setModalStatus, setResize, config } = useModal();
-  const { activeAccount } = useConnect();
-  const { staking } = useStaking();
-  const { getBondedAccount } = useBonded();
-  const { bondFor } = config;
-  const { stats } = usePoolsConfig();
-  const { isDepositor, selectedActivePool } = useActivePools();
   const { txFees } = useTxMeta();
-  const { getTransferOptions } = useTransferOptions();
+  const { staking } = useStaking();
+  const { stats } = usePoolsConfig();
+  const { activeAccount } = useConnect();
+  const { notEnoughFunds } = useTxMeta();
+  const { getBondedAccount } = useBonded();
+  const { api, network, consts } = useApi();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
+  const { getTransferOptions } = useTransferOptions();
+  const { isDepositor, selectedActivePool } = useActivePools();
+  const { setStatus: setModalStatus, setResize, config } = useModal();
 
+  const { units } = network;
+  const { bondFor } = config;
   const controller = getBondedAccount(activeAccount);
   const { minNominatorBond: minNominatorBondBn } = staking;
   const { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn } = stats;
@@ -168,9 +169,10 @@ export const Unbond = () => {
   }
 
   // modal resize on form update
-  useEffect(() => {
-    setResize();
-  }, [bond, feedbackErrors.length, warnings.length]);
+  useEffect(
+    () => setResize(),
+    [bond, notEnoughFunds, feedbackErrors.length, warnings.length]
+  );
 
   return (
     <>

@@ -27,14 +27,15 @@ import { SubmitTx } from 'library/SubmitTx';
 export const JoinPool = () => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
-  const { txFees } = useTxMeta();
   const { activeAccount } = useConnect();
   const { newBatchCall } = useBatchCall();
   const { setActiveAccountSetup } = useSetup();
+  const { txFees, notEnoughFunds } = useTxMeta();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
   const { setStatus: setModalStatus, config, setResize } = useModal();
+
   const { id: poolId, setActiveTab } = config;
   const { units } = network;
 
@@ -63,9 +64,7 @@ export const JoinPool = () => {
   const [feedbackErrors, setFeedbackErrors] = useState<string[]>([]);
 
   // modal resize on form update
-  useEffect(() => {
-    setResize();
-  }, [bond, feedbackErrors.length]);
+  useEffect(() => setResize(), [bond, notEnoughFunds, feedbackErrors.length]);
 
   // tx to submit
   const getTx = () => {

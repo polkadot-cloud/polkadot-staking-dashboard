@@ -23,14 +23,16 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
+import { useTxMeta } from 'contexts/TxMeta';
 
 export const UnbondPoolMember = () => {
   const { t } = useTranslation('modals');
-  const { api, network, consts } = useApi();
-  const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount } = useConnect();
+  const { notEnoughFunds } = useTxMeta();
+  const { api, network, consts } = useApi();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
+  const { setStatus: setModalStatus, setResize, config } = useModal();
 
   const { units } = network;
   const { bondDuration } = consts;
@@ -62,10 +64,7 @@ export const UnbondPoolMember = () => {
     setBondValid(isValid);
   }, [freeToUnbond.toString(), isValid]);
 
-  // modal resize on form update
-  useEffect(() => {
-    setResize();
-  }, [bond]);
+  useEffect(() => setResize(), [bond, notEnoughFunds]);
 
   // tx to submit
   const getTx = () => {
