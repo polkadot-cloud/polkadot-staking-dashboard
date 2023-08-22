@@ -5,14 +5,13 @@ import { ModalOverlay } from '@polkadot-cloud/react';
 import { useAnimation } from 'framer-motion';
 import { useEffect } from 'react';
 import { useHelp } from 'contexts/Help';
-import { useCanvas } from 'contexts/Canvas';
 import { useOverlay } from 'contexts/Overlay';
 
 export const Overlay = () => {
   const controls = useAnimation();
   const { status: helpStatus } = useHelp();
   const { status: modalStatus } = useOverlay().modal;
-  const { status: canvasStatus } = useCanvas();
+  const { status: canvasStatus } = useOverlay().canvas;
 
   const onFadeIn = async () => {
     await controls.start('visible');
@@ -27,27 +26,31 @@ export const Overlay = () => {
   }, [modalStatus]);
 
   useEffect(() => {
-    if (canvasStatus === 1 && modalStatus !== 'open') onFadeIn();
-    if (canvasStatus === 2 && modalStatus !== 'open') onFadeOut();
+    if (canvasStatus === 'open' && modalStatus !== 'open') onFadeIn();
+    if (canvasStatus === 'closing' && modalStatus !== 'open') onFadeOut();
   }, [canvasStatus]);
 
   // Managing fade is more complex with help, as it can overlay modal and canvas. Do not fade in/out
   // if modal or canvas is open. (help can be opened in a modal, canvas can be summoned in an open
   // modal).
   useEffect(() => {
-    if (helpStatus === 1 && modalStatus !== 'open' && canvasStatus !== 1)
+    if (helpStatus === 1 && modalStatus !== 'open' && canvasStatus !== 'open')
       onFadeIn();
-    if (helpStatus === 2 && modalStatus !== 'open' && canvasStatus !== 1)
+    if (helpStatus === 2 && modalStatus !== 'open' && canvasStatus !== 'open')
       onFadeOut();
   }, [helpStatus]);
 
-  if (modalStatus === 'closed' && helpStatus === 0 && canvasStatus === 0) {
+  if (
+    modalStatus === 'closed' &&
+    helpStatus === 0 &&
+    canvasStatus === 'closed'
+  ) {
     return <></>;
   }
 
   return (
     <ModalOverlay
-      blur={canvasStatus === 1 || helpStatus === 1 ? '14px' : '4px'}
+      blur={canvasStatus === 'open' || helpStatus === 1 ? '14px' : '4px'}
       initial={{
         opacity: 0,
       }}

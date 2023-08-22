@@ -2,12 +2,34 @@
 // SPDX-License-Identifier: GPL-3.0-only
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import type { OverlayContextInterface } from './types';
+import type {
+  CanvasConfig,
+  ModalConfig,
+  OverlayContextInterface,
+} from './types';
+
+export const defaultModalConfig: ModalConfig = {
+  key: '',
+  options: {},
+  size: 'large',
+};
+
+export const defaultCanvasConfig: CanvasConfig = {
+  key: '',
+  options: {},
+};
 
 export const defaultOverlayContext: OverlayContextInterface = {
+  canvas: {
+    status: 'closed',
+    config: defaultCanvasConfig,
+    openCanvas: (config) => {},
+    closeCanvas: () => {},
+    setCanvasStatus: (s) => {},
+  },
   modal: {
     status: 'closed',
-    config: {},
+    config: defaultModalConfig,
     height: 0,
     resize: 0,
     maxHeight: 0,

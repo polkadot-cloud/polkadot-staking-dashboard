@@ -1,52 +1,67 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalContainer, ModalCard, ModalHeight } from '@polkadot-cloud/react';
+import {
+  ModalContainer,
+  ModalCard,
+  ModalHeight,
+  ModalScroll,
+  ModalContent,
+  ModalCanvas,
+} from '@polkadot-cloud/react';
 import { useAnimation } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorFallbackModal } from 'library/ErrorBoundary';
 import { useHelp } from 'contexts/Help';
-import { useCanvas } from 'contexts/Canvas';
 import { useOverlay } from 'contexts/Overlay';
-import type { ModalProps } from 'contexts/Overlay/types';
-import { AccountPoolRoles } from './AccountPoolRoles';
-import { Accounts } from './Accounts';
-import { Bio } from './Bio';
-import { Bond } from './Bond';
-import { ChangeNominations } from './ChangeNominations';
-import { ChangePoolRoles } from './ChangePoolRoles';
-import { ChooseLanguage } from './ChooseLanguage';
-import { ClaimReward } from './ClaimReward';
-import { Connect } from './Connect';
-import { GoToFeedback } from './GoToFeedback';
-import { ImportLedger } from './ImportLedger';
-import { ImportVault } from './ImportVault';
-import { JoinPool } from './JoinPool';
-import { ManageFastUnstake } from './ManageFastUnstake';
-import { ManagePool } from './ManagePool';
-import { Networks } from './Networks';
-import { Nominate } from './Nominate';
-import { NominateFromFavorites } from './NominateFromFavorites';
-import { NominatePool } from './NominatePool';
-import { PoolNominations } from './PoolNominations';
-import { SelectFavorites } from './SelectFavorites';
-import { Settings } from './Settings';
-import { Unbond } from './Unbond';
-import { UnbondPoolMember } from './UnbondPoolMember';
-import { UnlockChunks } from './UnlockChunks';
-import { Unstake } from './Unstake';
-import { UpdateController } from './UpdateController';
-import { UpdatePayee } from './UpdatePayee';
-import { UpdateReserve } from './UpdateReserve';
-import { ValidatorMetrics } from './ValidatorMetrics';
-import { WithdrawPoolMember } from './WithdrawPoolMember';
+import type {
+  CanvasProps,
+  ModalProps,
+  OverlayProps,
+} from 'contexts/Overlay/types';
+import { CanvasWrapper } from 'library/Canvas/Wrappers';
+import { TestCanvas } from 'canvas/TestCanvas';
+import { AccountPoolRoles } from '../modals/AccountPoolRoles';
+import { Accounts } from '../modals/Accounts';
+import { Bio } from '../modals/Bio';
+import { Bond } from '../modals/Bond';
+import { ChangeNominations } from '../modals/ChangeNominations';
+import { ChangePoolRoles } from '../modals/ChangePoolRoles';
+import { ChooseLanguage } from '../modals/ChooseLanguage';
+import { ClaimReward } from '../modals/ClaimReward';
+import { Connect } from '../modals/Connect';
+import { GoToFeedback } from '../modals/GoToFeedback';
+import { ImportLedger } from '../modals/ImportLedger';
+import { ImportVault } from '../modals/ImportVault';
+import { JoinPool } from '../modals/JoinPool';
+import { ManageFastUnstake } from '../modals/ManageFastUnstake';
+import { ManagePool } from '../modals/ManagePool';
+import { Networks } from '../modals/Networks';
+import { Nominate } from '../modals/Nominate';
+import { NominateFromFavorites } from '../modals/NominateFromFavorites';
+import { NominatePool } from '../modals/NominatePool';
+import { PoolNominations } from '../modals/PoolNominations';
+import { SelectFavorites } from '../modals/SelectFavorites';
+import { Settings } from '../modals/Settings';
+import { Unbond } from '../modals/Unbond';
+import { UnbondPoolMember } from '../modals/UnbondPoolMember';
+import { UnlockChunks } from '../modals/UnlockChunks';
+import { Unstake } from '../modals/Unstake';
+import { UpdateController } from '../modals/UpdateController';
+import { UpdatePayee } from '../modals/UpdatePayee';
+import { UpdateReserve } from '../modals/UpdateReserve';
+import { ValidatorMetrics } from '../modals/ValidatorMetrics';
+import { WithdrawPoolMember } from '../modals/WithdrawPoolMember';
 
-export const Modals = () => {
+export const Overlays = () => {
   const { status } = useHelp();
   return (
-    <Modal
+    <Overlay
       helpStatus={status}
+      canvas={{
+        TestCanvas,
+      }}
       modals={{
         Bio,
         AccountPoolRoles,
@@ -84,6 +99,15 @@ export const Modals = () => {
   );
 };
 
+export const Overlay = ({ modals, canvas, helpStatus }: OverlayProps) => {
+  return (
+    <>
+      <Modal modals={modals} helpStatus={helpStatus} />
+      <Canvas canvas={canvas} />
+    </>
+  );
+};
+
 export const Modal = ({ modals, helpStatus }: ModalProps) => {
   const {
     config: { key, size, options },
@@ -97,7 +121,7 @@ export const Modal = ({ modals, helpStatus }: ModalProps) => {
     setHeight,
   } = useOverlay().modal;
   const controls = useAnimation();
-  const { status: canvasStatus } = useCanvas();
+  const { status: canvasStatus } = useOverlay().canvas;
   const modalRef = useRef<HTMLDivElement>(null);
   const heightRef = useRef<HTMLDivElement>(null);
 
@@ -133,8 +157,8 @@ export const Modal = ({ modals, helpStatus }: ModalProps) => {
 
   // Control on canvas status change.
   useEffect(() => {
-    if (canvasStatus === 1) if (status === 'open') onOut();
-    if (canvasStatus === 2) if (status === 'open') onIn();
+    if (canvasStatus === 'open') if (status === 'open') onOut();
+    if (canvasStatus === 'closing') if (status === 'open') onIn();
   }, [canvasStatus]);
 
   // Control dim help status change.
@@ -209,7 +233,9 @@ export const Modal = ({ modals, helpStatus }: ModalProps) => {
               <ModalCard
                 ref={modalRef}
                 className={
-                  helpStatus === 1 || canvasStatus === 1 ? 'dimmed' : undefined
+                  helpStatus === 1 || canvasStatus === 'open'
+                    ? 'dimmed'
+                    : undefined
                 }
               >
                 <ErrorBoundary FallbackComponent={ErrorFallbackModal}>
@@ -230,5 +256,66 @@ export const Modal = ({ modals, helpStatus }: ModalProps) => {
         </ModalContainer>
       ) : null}
     </>
+  );
+};
+
+export const Canvas = ({ canvas }: CanvasProps) => {
+  const controls = useAnimation();
+  const {
+    status,
+    setCanvasStatus,
+    config: { key },
+  } = useOverlay().canvas;
+
+  const onFadeIn = async () => {
+    await controls.start('visible');
+  };
+
+  const onFadeOut = async () => {
+    await controls.start('hidden');
+    setCanvasStatus('closed');
+  };
+
+  useEffect(() => {
+    // canvas has been opened - fade in.
+    if (status === 'open') {
+      onFadeIn();
+    }
+    // canvas closure triggered - fade out.
+    if (status === 'closing') {
+      onFadeOut();
+    }
+  }, [status]);
+
+  if (status === 'closed') {
+    return <></>;
+  }
+
+  const ActiveCanvas: React.FC = canvas[key] || null;
+
+  return (
+    <ModalCanvas
+      initial={{
+        opacity: 0,
+      }}
+      animate={controls}
+      transition={{
+        duration: 0.15,
+      }}
+      variants={{
+        hidden: {
+          opacity: 0,
+        },
+        visible: {
+          opacity: 1,
+        },
+      }}
+    >
+      <ModalScroll>
+        <ModalContent>
+          <CanvasWrapper>{ActiveCanvas && <ActiveCanvas />}</CanvasWrapper>
+        </ModalContent>
+      </ModalScroll>
+    </ModalCanvas>
   );
 };

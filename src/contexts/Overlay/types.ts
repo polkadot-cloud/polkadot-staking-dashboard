@@ -6,6 +6,13 @@ import type React from 'react';
 import type { AnyJson } from 'types';
 
 export interface OverlayContextInterface {
+  canvas: {
+    status: CanvasStatus;
+    config: CanvasConfig;
+    openCanvas: (config: CanvasConfig) => void;
+    closeCanvas: () => void;
+    setCanvasStatus: (status: CanvasStatus) => void;
+  };
   modal: {
     status: ModalStatus;
     config: AnyJson;
@@ -21,14 +28,20 @@ export interface OverlayContextInterface {
     openModal: (config: ModalConfig) => void;
   };
 }
+
+export interface CanvasProps {
+  canvas: Record<string, React.FC>;
+}
+
 export interface ModalProps {
   modals: Record<string, React.FC>;
   helpStatus?: number;
 }
+export type OverlayProps = ModalProps & CanvasProps;
 
 export type OverlayType = 'modal' | 'canvas' | 'prompt';
 
-export type OverlayStatus = 'open' | 'closed';
+export type CanvasStatus = 'open' | 'closing' | 'closed';
 
 export type ModalStatus =
   | 'closed'
@@ -48,7 +61,10 @@ export interface ModalConfig {
 }
 
 // TODO: implement
-export type CanvasConfig = AnyJson;
+export interface CanvasConfig {
+  key: string;
+  options?: ConfigOptions;
+}
 
 // TODO: implement
 export type PromptConfig = AnyJson;

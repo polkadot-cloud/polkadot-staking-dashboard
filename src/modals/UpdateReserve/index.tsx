@@ -32,6 +32,7 @@ export const UpdateReserve = () => {
   const { network } = useApi();
   const { setModalStatus } = useOverlay().modal;
   const { openHelp } = useHelp();
+  const { openCanvas } = useOverlay().canvas;
   const { feeReserve, setFeeReserveBalance, getTransferOptions } =
     useTransferOptions();
   const { activeAccount, accountHasSigner } = useConnect();
@@ -112,6 +113,10 @@ export const UpdateReserve = () => {
                       onClick={() =>
                         openHelp('Reserve Balance For Existential Deposit')
                       }
+                      style={{ marginLeft: '0.65rem' }}
+                    />
+                    <ButtonHelp
+                      onClick={() => openCanvas({ key: 'TestCanvas' })}
                       style={{ marginLeft: '0.65rem' }}
                     />
                   </>

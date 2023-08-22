@@ -15,7 +15,6 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
-import { Canvas } from 'library/Canvas';
 import { Prompt } from 'library/Prompt';
 import { PagesConfig } from 'config/pages';
 import { useApi } from 'contexts/Api';
@@ -30,7 +29,7 @@ import { NetworkBar } from 'library/NetworkBar';
 import { Notifications } from 'library/Notifications';
 import { SideMenu } from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
-import { Modals } from 'modals';
+import { Overlays } from 'overlay';
 import { Overlay } from 'library/Overlay';
 
 export const RouterInner = () => {
@@ -82,14 +81,11 @@ export const RouterInner = () => {
         {/* Prompting background: closed by default */}
         <Overlay />
 
-        {/* Modal: closed by default */}
-        <Modals />
+        {/* Overlays: modal and canvas. Closed by default */}
+        <Overlays />
 
         {/* Help: closed by default */}
         <Help />
-
-        {/* Canvas: closed by default */}
-        <Canvas />
 
         {/* Menu: closed by default */}
         <Menu />

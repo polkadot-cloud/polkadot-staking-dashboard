@@ -7,10 +7,12 @@ import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import type {
   ModalConfig,
+  CanvasConfig,
   ModalStatus,
   OverlayContextInterface,
+  CanvasStatus,
 } from './types';
-import { defaultOverlayContext } from './defaults';
+import { defaultModalConfig, defaultOverlayContext } from './defaults';
 
 export const OverlayProvider = ({
   children,
@@ -22,11 +24,8 @@ export const OverlayProvider = ({
   const modalStatusRef = useRef(modalStatus);
 
   // Store modal configuration.
-  const [modalConfig, setModalConfigState] = useState<ModalConfig>({
-    key: '',
-    options: {},
-    size: 'large',
-  });
+  const [modalConfig, setModalConfigState] =
+    useState<ModalConfig>(defaultModalConfig);
   const modalConfigRef = useRef(modalConfig);
 
   // Store the modal's current height.
@@ -104,6 +103,30 @@ export const OverlayProvider = ({
   const transitionOff = () =>
     modalHeightRef?.current?.classList.remove('transition-height');
 
+  // Store canvas status
+  const [canvasStatus, setCanvasStatus] = useState<CanvasStatus>('closed');
+
+  // Store config options of the canvas.
+  const [canvasConfig, setCanvasConfig] = useState<CanvasConfig>({
+    key: '',
+    options: {},
+  });
+
+  // Open the canvas.
+  const openCanvas = ({ key, options }: CanvasConfig) => {
+    setCanvasStatus('open');
+    setCanvasConfig({
+      key,
+      options: options || {},
+    });
+  };
+
+  // Close the canvas.
+  const closeCanvas = () => {
+    setCanvasStatus('closing');
+  };
+
+  // Update modal height and open modal once refs are initialised.
   useEffectIgnoreInitial(() => {
     const height = modalRef?.current?.clientHeight || 0;
     if (modalStatusRef.current === 'opening') {
@@ -114,9 +137,26 @@ export const OverlayProvider = ({
     }
   }, [modalStatusRef.current, modalRef?.current]);
 
+  // When canvas fade out completes, reset active definiton.
+  useEffectIgnoreInitial(() => {
+    if (canvasStatus === 'closed') {
+      setCanvasConfig({
+        key: '',
+        options: {},
+      });
+    }
+  }, [canvasStatus]);
+
   return (
     <OverlayContext.Provider
       value={{
+        canvas: {
+          status: canvasStatus,
+          config: canvasConfig,
+          openCanvas,
+          closeCanvas,
+          setCanvasStatus,
+        },
         modal: {
           status: modalStatusRef.current,
           config: modalConfigRef.current,
