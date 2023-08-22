@@ -9,6 +9,7 @@ export const defaultOverlayContext: OverlayContextInterface = {
   setStatus: () => {},
   openOverlay: (type, config) => {},
   modal: {
+    status: 'closed',
     config: {},
     height: 0,
     resize: 0,

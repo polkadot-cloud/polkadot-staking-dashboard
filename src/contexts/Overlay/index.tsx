@@ -141,6 +141,7 @@ export const OverlayProvider = ({
         setStatus,
         openOverlay,
         modal: {
+          status: modalStatusRef.current,
           config: modalConfigRef.current,
           height: modalHeight,
           resize: modalResize,

@@ -12,6 +12,7 @@ export interface OverlayContextInterface {
     config: ModalConfig | CanvasConfig | PromptConfig
   ) => void;
   modal: {
+    status: ModalStatus;
     config: AnyJson;
     height: number;
     resize: number;
