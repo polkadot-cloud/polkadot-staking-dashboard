@@ -76,7 +76,9 @@ export const OverlayProvider = ({
   const openModal = ({ key, size = 'large', options = {} }: ModalConfig) => {
     setModalConfig({ key, size, options });
     setModalStatus('opening');
-    setOpenOverlayInstances('inc', 'modal');
+    if (!options?.replacing) {
+      setOpenOverlayInstances('inc', 'modal');
+    }
   };
 
   // Closes one modal and opens another.
@@ -86,7 +88,10 @@ export const OverlayProvider = ({
       openModal({
         key,
         size,
-        options,
+        options: {
+          ...options,
+          replacing: true,
+        },
       });
     }, 10);
   };
