@@ -8,7 +8,7 @@ import type { AnyApi, Sync, AnyJson } from 'types';
 import { useConnect } from 'contexts/Connect';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useNetworkMetrics } from 'contexts/Network';
-import { defaultPayoutsContext } from './defaults';
+import { MaxSupportedPayoutEras, defaultPayoutsContext } from './defaults';
 import type { PayoutsContextInterface } from './types';
 
 export const PayoutsProvider = ({
@@ -31,21 +31,26 @@ export const PayoutsProvider = ({
   const fetchPendingPayouts = async () => {
     if (!api) return;
 
-    // Fetch last era payouts.
-    // TODO: Loop through last `MaxSupportedPayoutEras`.
     // TODO: clear local storage eras that are older than `MaxSupportedPayoutEras`.
-    const lastEra = activeEra.index.minus(1);
 
-    // TODO: only fetch if not in local storage.
-    const lastEraPayout = await api.query.staking.erasRewardPoints<AnyApi>(
-      lastEra.toString()
-    );
+    // Fetch last era payouts.
+    const startEra = activeEra?.index.minus(1).toNumber() || 1;
+    const finishEra = Math.max(startEra - MaxSupportedPayoutEras, 1);
+    const calls = [];
+    for (let i = startEra; i >= finishEra; i--) {
+      // TODO: only fetch eras that are not in local storage.
+      calls.push(api.query.staking.erasRewardPoints<AnyApi>(i));
+    }
 
-    // eslint-disable-next-line
-    const { total, individual } = lastEraPayout;
+    const eraPayouts = await Promise.all(calls);
+    for (const eraPayout of eraPayouts) {
+      // eslint-disable-next-line
+      const { total, individual } = eraPayout;
 
-    // TODO: store this era payout in local storage.
-    // TODO: Check if active account had a payout in this era. If so, store in Payouts and in local stoarage.
+      // TODO: store this era payout in local storage.
+
+      // TODO: Check if active account had a payout in this era. If so, store in Payouts and in local stoarage.
+    }
 
     // TODO: commit all payouts to state once all synced.
     setPayouts({});

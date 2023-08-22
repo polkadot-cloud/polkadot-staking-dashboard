@@ -6,3 +6,5 @@ import type { PayoutsContextInterface } from './types';
 export const defaultPayoutsContext: PayoutsContextInterface = {
   payouts: null,
 };
+
+export const MaxSupportedPayoutEras = 7;
