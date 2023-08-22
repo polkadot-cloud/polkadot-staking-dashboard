@@ -17,6 +17,7 @@ import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
+import { validateLocalExposure } from 'contexts/Validators/Utils';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
 import type {
   FastUnstakeContextInterface,
@@ -300,15 +301,13 @@ export const FastUnstakeProvider = ({
 
   // gets any existing fast unstake metadata for an account.
   const getLocalMeta = (): LocalMeta | null => {
-    let localMeta: AnyJson = localStorage.getItem(getLocalkey(activeAccount));
+    const localMeta: AnyJson = localStorage.getItem(getLocalkey(activeAccount));
+    if (!localMeta) return null;
 
-    if (!localMeta) {
-      return null;
-    }
-
-    localMeta = JSON.parse(localMeta);
-
-    const localMetaValidated = validateMeta(localMeta);
+    const localMetaValidated = validateLocalExposure(
+      JSON.parse(localMeta),
+      checkToEra
+    );
     if (!localMetaValidated) {
       // remove if not valid.
       localStorage.removeItem(getLocalkey(activeAccount));
@@ -320,56 +319,6 @@ export const FastUnstakeProvider = ({
       JSON.stringify(localMetaValidated)
     );
     return localMetaValidated;
-  };
-
-  // validates stored fast unstake metadata for an account.
-  const validateMeta = (localMeta: AnyJson): LocalMeta | null => {
-    const localIsExposed = localMeta?.isExposed ?? null;
-    let localChecked = localMeta?.checked ?? null;
-
-    // check types saved
-    if (typeof localIsExposed !== 'boolean' || !Array.isArray(localChecked)) {
-      return null;
-    }
-    // check checked only contains numbers
-    const checkedNumeric = localChecked.every(
-      (e: AnyJson) => typeof e === 'number'
-    );
-    if (!checkedNumeric) {
-      return null;
-    }
-
-    // remove any expired eras and sort highest first
-    localChecked = localChecked
-      .filter((e: number) => checkToEra.isLessThan(e))
-      .sort((a: number, b: number) => b - a);
-
-    // if no remaining eras, invalid
-    if (!localChecked.length) {
-      return null;
-    }
-
-    // check if highest -> lowest are decremented, no missing eras.
-    let i = 0;
-    let prev = 0;
-    const noMissingEras = localChecked.every((e: number) => {
-      i++;
-      if (i === 1) {
-        prev = e;
-        return true;
-      }
-      const p = prev;
-      prev = e;
-      if (e === p - 1) return true;
-      return false;
-    });
-    if (!noMissingEras) {
-      return null;
-    }
-    return {
-      isExposed: localIsExposed,
-      checked: localChecked,
-    };
   };
 
   return (
