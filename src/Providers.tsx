@@ -37,6 +37,7 @@ import { UIProvider } from 'contexts/UI';
 import { ValidatorsProvider } from 'contexts/Validators';
 import { withProviders } from 'library/Hooks';
 import { CanvasProvider } from 'contexts/Canvas';
+import { OverlayProvider } from 'contexts/Overlay';
 
 // !! Provider order matters.
 export const Providers = withProviders(
@@ -70,6 +71,7 @@ export const Providers = withProviders(
   TooltipProvider,
   TxMetaProvider,
   ExtrinsicsProvider,
+  OverlayProvider,
   ModalProvider,
   CanvasProvider,
   PromptProvider,
