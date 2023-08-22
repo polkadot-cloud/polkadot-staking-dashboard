@@ -120,7 +120,6 @@ export const Modal = ({ modals, helpStatus }: ModalProps) => {
 
   const handleResize = () => {
     if (status !== 'open' || options?.disableWindowResize) return;
-
     let h = modalRef.current?.clientHeight ?? 0;
     h = h > maxHeight ? maxHeight : h;
     setHeight(h);
@@ -144,11 +143,10 @@ export const Modal = ({ modals, helpStatus }: ModalProps) => {
     if (helpStatus === 2) if (status === 'open') onIn();
   }, [helpStatus]);
 
-  // resize modal on status or resize change
-  useEffect(() => {
-    handleResize();
-  }, [resize]);
+  // resize modal on status or resize change.
+  useEffect(() => handleResize(), [resize]);
 
+  // resize modal on window size change.
   useEffect(() => {
     windowResize();
     return () => {
@@ -156,7 +154,7 @@ export const Modal = ({ modals, helpStatus }: ModalProps) => {
     };
   });
 
-  // store the modal's content ref.
+  // update the modal's content ref.
   useEffect(() => {
     setRef(modalRef);
     setHeightRef(heightRef);

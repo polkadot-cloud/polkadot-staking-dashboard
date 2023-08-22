@@ -6,12 +6,6 @@ import type React from 'react';
 import type { AnyJson } from 'types';
 
 export interface OverlayContextInterface {
-  status: OverlayStatus;
-  setStatus: (status: OverlayStatus) => void;
-  openOverlay: (
-    ype: OverlayType,
-    config: ModalConfig | CanvasConfig | PromptConfig
-  ) => void;
   modal: {
     status: ModalStatus;
     config: AnyJson;

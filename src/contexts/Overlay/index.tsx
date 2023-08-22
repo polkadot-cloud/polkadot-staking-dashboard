@@ -6,13 +6,9 @@ import React, { useRef, useState } from 'react';
 import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import type {
-  CanvasConfig,
   ModalConfig,
   ModalStatus,
   OverlayContextInterface,
-  OverlayStatus,
-  OverlayType,
-  PromptConfig,
 } from './types';
 import { defaultOverlayContext } from './defaults';
 
@@ -21,10 +17,6 @@ export const OverlayProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  // Store the overlay status.
-  const [status, setStatusState] = useState<OverlayStatus>('closed');
-  const statusRef = useRef(status);
-
   // Store the modal status.
   const [modalStatus, setModalStatusState] = useState<ModalStatus>('closed');
   const modalStatusRef = useRef(modalStatus);
@@ -52,10 +44,6 @@ export const OverlayProvider = ({
 
   // The maximum allowed height for the modal.
   const modalMaxHeight = window.innerHeight * 0.8;
-
-  const setStatus = (newStatus: OverlayStatus) => {
-    setStateWithRef(newStatus, setStatusState, statusRef);
-  };
 
   const setModalConfig = (config: ModalConfig) => {
     setStateWithRef(config, setModalConfigState, modalConfigRef);
@@ -116,14 +104,6 @@ export const OverlayProvider = ({
   const transitionOff = () =>
     modalHeightRef?.current?.classList.remove('transition-height');
 
-  const openOverlay = (
-    type: OverlayType,
-    config: ModalConfig | CanvasConfig | PromptConfig
-  ) => {
-    setStatus('open');
-    if (type === 'modal') openModal(config as ModalConfig);
-  };
-
   useEffectIgnoreInitial(() => {
     const height = modalRef?.current?.clientHeight || 0;
     if (modalStatusRef.current === 'opening') {
@@ -137,9 +117,6 @@ export const OverlayProvider = ({
   return (
     <OverlayContext.Provider
       value={{
-        status: statusRef.current,
-        setStatus,
-        openOverlay,
         modal: {
           status: modalStatusRef.current,
           config: modalConfigRef.current,

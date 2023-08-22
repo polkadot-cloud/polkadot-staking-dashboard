@@ -5,9 +5,6 @@
 import type { OverlayContextInterface } from './types';
 
 export const defaultOverlayContext: OverlayContextInterface = {
-  status: 'closed',
-  setStatus: () => {},
-  openOverlay: (type, config) => {},
   modal: {
     status: 'closed',
     config: {},
