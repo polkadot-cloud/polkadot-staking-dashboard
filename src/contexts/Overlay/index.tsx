@@ -149,6 +149,7 @@ export const OverlayProvider = ({
           setHeight: setModalHeight,
           setRef: setModalRef,
           setHeightRef: setModalHeightRef,
+          setModalStatus,
           openModal,
           replaceModal,
         },

@@ -20,6 +20,7 @@ export interface OverlayContextInterface {
     setHeight: (v: number) => void;
     setRef: (v: RefObject<HTMLDivElement>) => void;
     setHeightRef: (v: RefObject<HTMLDivElement>) => void;
+    setModalStatus: (status: ModalStatus) => void;
     replaceModal: (config: ModalConfig) => void;
     openModal: (config: ModalConfig) => void;
   };
