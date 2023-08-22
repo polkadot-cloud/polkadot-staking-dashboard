@@ -37,12 +37,12 @@ export interface OverlayContextInterface {
 }
 
 export interface CanvasProps {
-  canvas: Record<string, React.FC>;
+  canvas?: Record<string, React.FC>;
   externalOverlayStatus: CanvasStatus;
 }
 
 export interface ModalProps {
-  modals: Record<string, React.FC>;
+  modals?: Record<string, React.FC>;
   externalOverlayStatus: CanvasStatus;
 }
 export type OverlayProps = ModalProps & CanvasProps;

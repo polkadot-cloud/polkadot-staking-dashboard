@@ -23,7 +23,6 @@ import type {
   OverlayProps,
 } from 'contexts/Overlay/types';
 import { CanvasWrapper } from 'library/Canvas/Wrappers';
-import { TestCanvas } from 'canvas/TestCanvas';
 import { AccountPoolRoles } from '../modals/AccountPoolRoles';
 import { Accounts } from '../modals/Accounts';
 import { Bio } from '../modals/Bio';
@@ -61,9 +60,6 @@ export const Overlays = () => {
   return (
     <Overlay
       externalOverlayStatus={status}
-      canvas={{
-        TestCanvas,
-      }}
       modals={{
         Bio,
         AccountPoolRoles,
@@ -102,8 +98,8 @@ export const Overlays = () => {
 };
 
 export const Overlay = ({
-  modals,
-  canvas,
+  modals = {},
+  canvas = {},
   externalOverlayStatus,
 }: OverlayProps) => {
   return (
@@ -230,7 +226,7 @@ export const Modal = ({ modals, externalOverlayStatus }: ModalProps) => {
     scale: 0.9,
   };
 
-  const ActiveModal: React.FC = modals[key] || null;
+  const ActiveModal: React.FC | null = modals?.[key] || null;
 
   return (
     <>
@@ -338,7 +334,7 @@ export const Canvas = ({ canvas, externalOverlayStatus }: CanvasProps) => {
     return <></>;
   }
 
-  const ActiveCanvas: React.FC = canvas[key] || null;
+  const ActiveCanvas: React.FC | null = canvas?.[key] || null;
 
   return (
     <ModalCanvas

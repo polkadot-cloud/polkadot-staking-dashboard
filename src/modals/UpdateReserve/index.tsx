@@ -30,14 +30,13 @@ export const UpdateReserve = () => {
     network: { units, unit },
   } = useApi();
   const { network } = useApi();
-  const { setModalStatus } = useOverlay().modal;
   const { openHelp } = useHelp();
-  const { openCanvas } = useOverlay().canvas;
+  const { setModalStatus } = useOverlay().modal;
+  const { activeAccount, accountHasSigner } = useConnect();
   const { feeReserve, setFeeReserveBalance, getTransferOptions } =
     useTransferOptions();
-  const { activeAccount, accountHasSigner } = useConnect();
-  const { edReserved } = getTransferOptions(activeAccount);
 
+  const { edReserved } = getTransferOptions(activeAccount);
   const minReserve = planckToUnit(edReserved, units);
   const maxReserve = minReserve.plus(
     ['polkadot', 'westend'].includes(network.name) ? 3 : 1
@@ -113,10 +112,6 @@ export const UpdateReserve = () => {
                       onClick={() =>
                         openHelp('Reserve Balance For Existential Deposit')
                       }
-                      style={{ marginLeft: '0.65rem' }}
-                    />
-                    <ButtonHelp
-                      onClick={() => openCanvas({ key: 'TestCanvas' })}
                       style={{ marginLeft: '0.65rem' }}
                     />
                   </>
