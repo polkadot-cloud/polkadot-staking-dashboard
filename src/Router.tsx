@@ -30,7 +30,7 @@ import { NetworkBar } from 'library/NetworkBar';
 import { Notifications } from 'library/Notifications';
 import { SideMenu } from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
-import { Modal } from 'modals';
+import { Modals } from 'modals';
 import { Overlay } from 'library/Overlay';
 
 export const RouterInner = () => {
@@ -83,7 +83,7 @@ export const RouterInner = () => {
         <Overlay />
 
         {/* Modal: closed by default */}
-        <Modal />
+        <Modals />
 
         {/* Help: closed by default */}
         <Help />

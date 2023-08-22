@@ -3,7 +3,7 @@
 
 import { ModalContainer, ModalCard, ModalHeight } from '@polkadot-cloud/react';
 import { useAnimation } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorFallbackModal } from 'library/ErrorBoundary';
 import { useHelp } from 'contexts/Help';
@@ -41,7 +41,45 @@ import { UpdateReserve } from './UpdateReserve';
 import { ValidatorMetrics } from './ValidatorMetrics';
 import { WithdrawPoolMember } from './WithdrawPoolMember';
 
-export const Modal = () => {
+export const Modals = () => (
+  <Modal
+    modals={{
+      Bio,
+      AccountPoolRoles,
+      Bond,
+      ChangeNominations,
+      ChangePoolRoles,
+      ChooseLanguage,
+      ClaimReward,
+      Connect,
+      Accounts,
+      GoToFeedback,
+      JoinPool,
+      ImportLedger,
+      ImportVault,
+      ManagePool,
+      ManageFastUnstake,
+      Networks,
+      Nominate,
+      NominateFromFavorites,
+      NominatePool,
+      PoolNominations,
+      SelectFavorites,
+      Settings,
+      ValidatorMetrics,
+      UnbondPoolMember,
+      UnlockChunks,
+      Unstake,
+      UpdateController,
+      Unbond,
+      UpdatePayee,
+      UpdateReserve,
+      WithdrawPoolMember,
+    }}
+  />
+);
+
+export const Modal = ({ modals }: { modals: Record<string, React.FC> }) => {
   const {
     config: { key, size, options },
     status,
@@ -142,6 +180,8 @@ export const Modal = () => {
     scale: 0.9,
   };
 
+  const ActiveModal: React.FC = modals[key] || null;
+
   return (
     <>
       {status !== 'replacing' ? (
@@ -171,37 +211,7 @@ export const Modal = () => {
                 }
               >
                 <ErrorBoundary FallbackComponent={ErrorFallbackModal}>
-                  {key === 'AccountPoolRoles' && <AccountPoolRoles />}
-                  {key === 'Bio' && <Bio />}
-                  {key === 'Bond' && <Bond />}
-                  {key === 'ChangeNominations' && <ChangeNominations />}
-                  {key === 'ChangePoolRoles' && <ChangePoolRoles />}
-                  {key === 'ChooseLanguage' && <ChooseLanguage />}
-                  {key === 'ClaimReward' && <ClaimReward />}
-                  {key === 'Connect' && <Connect />}
-                  {key === 'Accounts' && <Accounts />}
-                  {key === 'GoToFeedback' && <GoToFeedback />}
-                  {key === 'JoinPool' && <JoinPool />}
-                  {key === 'ImportLedger' && <ImportLedger />}
-                  {key === 'ImportVault' && <ImportVault />}
-                  {key === 'ManagePool' && <ManagePool />}
-                  {key === 'ManageFastUnstake' && <ManageFastUnstake />}
-                  {key === 'Networks' && <Networks />}
-                  {key === 'Nominate' && <Nominate />}
-                  {key === 'NominateFromFavorites' && <NominateFromFavorites />}
-                  {key === 'NominatePool' && <NominatePool />}
-                  {key === 'PoolNominations' && <PoolNominations />}
-                  {key === 'SelectFavorites' && <SelectFavorites />}
-                  {key === 'Settings' && <Settings />}
-                  {key === 'ValidatorMetrics' && <ValidatorMetrics />}
-                  {key === 'UnbondPoolMember' && <UnbondPoolMember />}
-                  {key === 'UnlockChunks' && <UnlockChunks />}
-                  {key === 'Unstake' && <Unstake />}
-                  {key === 'UpdateController' && <UpdateController />}
-                  {key === 'Unbond' && <Unbond />}
-                  {key === 'UpdatePayee' && <UpdatePayee />}
-                  {key === 'UpdateReserve' && <UpdateReserve />}
-                  {key === 'WithdrawPoolMember' && <WithdrawPoolMember />}
+                  {ActiveModal && <ActiveModal />}
                 </ErrorBoundary>
               </ModalCard>
             </ModalHeight>
