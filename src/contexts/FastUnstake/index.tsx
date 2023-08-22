@@ -158,15 +158,15 @@ export const FastUnstakeProvider = ({
   // handle worker message on completed exposure check.
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
-      // ensure correct task received
+      // ensure correct task received.
       const { data } = message;
       const { task } = data;
-      if (task !== 'process_fast_unstake_era') {
+      if (task !== 'processEraForExposure') {
         return;
       }
       // ensure still same conditions.
-      const { where, who } = data;
-      if (where !== network.name || who !== activeAccount) {
+      const { networkName, who } = data;
+      if (networkName !== network.name || who !== activeAccount) {
         // checkpoint: conditions have changed, cancel fast unstake.
         return;
       }
@@ -250,10 +250,10 @@ export const FastUnstakeProvider = ({
       val: val.toHuman(),
     }));
     worker.postMessage({
-      task: 'process_fast_unstake_era',
+      task: 'processEraForExposure',
       currentEra: era.toString(),
       who: activeAccount,
-      where: network.name,
+      networkName: network.name,
       exposures,
     });
   };

@@ -129,7 +129,7 @@ export const StakingProvider = ({
     if (message) {
       const { data }: { data: ResponseInitialiseExposures } = message;
       const { task } = data;
-      if (task !== 'initialise_exposures') {
+      if (task !== 'processExposures') {
         return;
       }
       const {
@@ -240,7 +240,7 @@ export const StakingProvider = ({
 
     // worker to calculate stats
     worker.postMessage({
-      task: 'initialise_exposures',
+      task: 'processExposures',
       activeAccount,
       units: network.units,
       exposures,

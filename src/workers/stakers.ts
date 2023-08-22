@@ -20,11 +20,11 @@ ctx.addEventListener('message', (event: AnyJson) => {
   const { task } = data;
   let message: AnyJson = {};
   switch (task) {
-    case 'initialise_exposures':
+    case 'processExposures':
       message = processExposures(data as DataInitialiseExposures);
       break;
-    case 'process_fast_unstake_era':
-      message = processFastUnstakeEra(data);
+    case 'processEraForExposure':
+      message = processEraForExposure(data);
       break;
     default:
   }
@@ -35,20 +35,23 @@ ctx.addEventListener('message', (event: AnyJson) => {
 //
 // checks if an account has been exposed in an
 // era.
-const processFastUnstakeEra = (data: AnyJson) => {
-  const { currentEra, exposures, task, where, who } = data;
+const processEraForExposure = (data: AnyJson) => {
+  const { currentEra, exposures, task, networkName, who } = data;
   let exposed = false;
 
   // check exposed as validator or nominator.
+  let exposedValidator: string | null = null;
   exposures.every(({ keys, val }: any) => {
     const validator = keys[1];
     if (validator === who) {
+      exposedValidator = validator;
       exposed = true;
       return false;
     }
     const others = val?.others ?? [];
     const inOthers = others.find((o: AnyJson) => o.who === who);
     if (inOthers) {
+      exposedValidator = validator;
       exposed = true;
       return false;
     }
@@ -58,8 +61,9 @@ const processFastUnstakeEra = (data: AnyJson) => {
   return {
     currentEra,
     exposed,
+    exposedValidator,
     task,
-    where,
+    networkName,
     who,
   };
 };
