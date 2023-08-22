@@ -8,7 +8,7 @@ import type { AnyJson } from 'types';
 export interface OverlayContextInterface {
   openOverlayInstances: number;
   setOpenOverlayInstances: (
-    direction: 'inc' | 'dec',
+    direction: OverlayInstanceDirection,
     instanceType: 'modal' | 'canvas'
   ) => void;
   activeOverlayInstance: ActiveOverlayInstance;
@@ -46,6 +46,8 @@ export interface ModalProps {
   externalOverlayStatus: CanvasStatus;
 }
 export type OverlayProps = ModalProps & CanvasProps;
+
+export type OverlayInstanceDirection = 'inc' | 'dec';
 
 export type ActiveOverlayInstance = 'modal' | 'canvas' | null;
 

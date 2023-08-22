@@ -12,6 +12,7 @@ import type {
   OverlayContextInterface,
   CanvasStatus,
   ActiveOverlayInstance,
+  OverlayInstanceDirection,
 } from './types';
 import { defaultModalConfig, defaultOverlayContext } from './defaults';
 
@@ -25,7 +26,7 @@ export const OverlayProvider = ({
     useState<number>(0);
 
   const setOpenOverlayInstances = (
-    direction: 'inc' | 'dec',
+    direction: OverlayInstanceDirection,
     instanceType: 'modal' | 'canvas'
   ) => {
     if (direction === 'inc') {
