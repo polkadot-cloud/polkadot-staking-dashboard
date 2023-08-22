@@ -72,11 +72,7 @@ export interface ModalConfig {
   size?: ModalSize;
 }
 
-// TODO: implement
 export interface CanvasConfig {
   key: string;
   options?: ConfigOptions;
 }
-
-// TODO: implement
-export type PromptConfig = AnyJson;
