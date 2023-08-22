@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useValidators } from 'contexts/Validators';
 import type { Validator } from 'contexts/Validators/types';
@@ -22,6 +21,7 @@ import { Title } from 'library/Modal/Title';
 import { SubmitTx } from 'library/SubmitTx';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from 'contexts/Overlay';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {
@@ -32,12 +32,16 @@ export const NominateFromFavorites = () => {
   const { getBondedAccount } = useBonded();
   const { favoritesList } = useValidators();
   const { getSignerWarnings } = useSignerWarnings();
-  const { config, setStatus: setModalStatus, setResize } = useModal();
+  const {
+    config: { options },
+    setModalStatus,
+    setResize,
+  } = useOverlay().modal;
   const { selectedActivePool, isNominator, isOwner } = useActivePools();
 
   const controller = getBondedAccount(activeAccount);
   const { maxNominations } = consts;
-  const { bondFor, nominations } = config;
+  const { bondFor, nominations } = options;
   const signingAccount = bondFor === 'pool' ? activeAccount : controller;
 
   // store filtered favorites

@@ -13,7 +13,6 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
@@ -25,6 +24,7 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from 'contexts/Overlay';
 
 export const Unstake = () => {
   const { t } = useTranslation('modals');
@@ -35,7 +35,7 @@ export const Unstake = () => {
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
-  const { setStatus: setModalStatus, setResize } = useModal();
+  const { setModalStatus, setResize } = useOverlay().modal;
   const { getBondedAccount, getAccountNominations } = useBonded();
 
   const { units } = network;

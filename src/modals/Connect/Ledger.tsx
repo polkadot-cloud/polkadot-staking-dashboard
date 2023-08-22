@@ -18,12 +18,12 @@ import { inChrome } from '@polkadot-cloud/utils';
 import React from 'react';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { ReactComponent as LedgerLogoSVG } from 'img/ledgerLogo.svg';
+import { useOverlay } from 'contexts/Overlay';
 
 export const Ledger = (): React.ReactElement => {
   const { openHelp } = useHelp();
-  const { replaceModalWith } = useModal();
+  const { replaceModal } = useOverlay().modal;
   const { name } = useApi().network;
   const url = 'ledger.com';
 
@@ -60,9 +60,7 @@ export const Ledger = (): React.ReactElement => {
           <div className="row margin">
             <ButtonPrimaryInvert
               text="USB"
-              onClick={() => {
-                replaceModalWith('ImportLedger', {}, 'large');
-              }}
+              onClick={() => replaceModal({ key: 'ImportLedger' })}
               iconLeft={faUsb}
               iconTransform="shrink-1"
               disabled={!inChrome()}

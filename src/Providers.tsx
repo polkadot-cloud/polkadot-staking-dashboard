@@ -16,7 +16,6 @@ import { HelpProvider } from 'contexts/Help';
 import { IdentitiesProvider } from 'contexts/Identities';
 import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
-import { ModalProvider } from 'contexts/Modal';
 import { NetworkMetricsProvider } from 'contexts/Network';
 import { NotificationsProvider } from 'contexts/Notifications';
 import { PromptProvider } from 'contexts/Prompt';
@@ -72,7 +71,6 @@ export const Providers = withProviders(
   TxMetaProvider,
   ExtrinsicsProvider,
   OverlayProvider,
-  ModalProvider,
   CanvasProvider,
   PromptProvider,
   MigrateProvider

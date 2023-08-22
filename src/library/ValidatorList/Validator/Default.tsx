@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
-import { useModal } from 'contexts/Modal';
 import { useNotifications } from 'contexts/Notifications';
 import type { NotificationText } from 'contexts/Notifications/types';
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
@@ -18,6 +17,7 @@ import {
   Separator,
   Wrapper,
 } from 'library/ListItem/Wrappers';
+import { useOverlay } from 'contexts/Overlay';
 import { useValidators } from '../../../contexts/Validators';
 import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';
@@ -38,7 +38,7 @@ export const Default = ({
 }: DefaultProps) => {
   const { t } = useTranslation('library');
   const { selectActive } = useList();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { addNotification } = useNotifications();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
   const { validatorIdentities, validatorSupers } = useValidators();
@@ -68,14 +68,13 @@ export const Default = ({
       wrap: null,
       title: `${t('viewMetrics')}`,
       cb: () => {
-        openModalWith(
-          'ValidatorMetrics',
-          {
+        openModal({
+          key: 'ValidatorMetrics',
+          options: {
             address,
             identity,
           },
-          'large'
-        );
+        });
       },
     },
     {

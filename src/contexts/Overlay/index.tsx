@@ -32,7 +32,7 @@ export const OverlayProvider = ({
   // Store modal configuration.
   const [modalConfig, setModalConfigState] = useState<ModalConfig>({
     key: '',
-    config: {},
+    options: {},
     size: 'large',
   });
   const modalConfigRef = useRef(modalConfig);
@@ -65,25 +65,25 @@ export const OverlayProvider = ({
     setStateWithRef(newStatus, setModalStatusState, modalStatusRef);
   };
 
-  const openModal = ({ key, size = 'large', config = {} }: ModalConfig) => {
-    setModalConfig({ key, size, config });
+  const openModal = ({ key, size = 'large', options = {} }: ModalConfig) => {
+    setModalConfig({ key, size, options });
     setModalStatus('opening');
   };
 
   // Closes one modal and opens another.
-  const replaceModal = ({ key, size = 'large', config = {} }: ModalConfig) => {
+  const replaceModal = ({ key, size = 'large', options = {} }: ModalConfig) => {
     setModalStatus('replacing');
     setTimeout(() => {
       openModal({
         key,
         size,
-        config,
+        options,
       });
     }, 10);
   };
 
   const setModalHeight = (height: number, transition: boolean = true) => {
-    if (statusRef.current === 'closed') return;
+    if (modalStatusRef.current === 'closed') return;
 
     // Ensrue transition class is removed if not transitioning. Otherwise, ensure class exists.
     if (transition) transitionOn();
@@ -132,7 +132,7 @@ export const OverlayProvider = ({
         setModalStatus('open');
       }
     }
-  }, [statusRef.current, modalRef?.current]);
+  }, [modalStatusRef.current, modalRef?.current]);
 
   return (
     <OverlayContext.Provider

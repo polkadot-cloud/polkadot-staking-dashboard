@@ -11,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -19,6 +18,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from 'contexts/Overlay';
 
 export const ChangeNominations = () => {
   const { t } = useTranslation('modals');
@@ -27,10 +27,14 @@ export const ChangeNominations = () => {
   const { notEnoughFunds } = useTxMeta();
   const { getSignerWarnings } = useSignerWarnings();
   const { getBondedAccount, getAccountNominations } = useBonded();
-  const { setStatus: setModalStatus, config, setResize } = useModal();
+  const {
+    setModalStatus,
+    config: { options },
+    setResize,
+  } = useOverlay().modal;
   const { poolNominations, isNominator, isOwner, selectedActivePool } =
     useActivePools();
-  const { nominations: newNominations, provider, bondFor } = config;
+  const { nominations: newNominations, provider, bondFor } = options;
 
   const isPool = bondFor === 'pool';
   const isStaking = bondFor === 'nominator';

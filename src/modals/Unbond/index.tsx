@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
@@ -25,6 +24,7 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
+import { useOverlay } from 'contexts/Overlay';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');
@@ -39,10 +39,14 @@ export const Unbond = () => {
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
   const { isDepositor, selectedActivePool } = useActivePools();
-  const { setStatus: setModalStatus, setResize, config } = useModal();
+  const {
+    setModalStatus,
+    setResize,
+    config: { options },
+  } = useOverlay().modal;
 
   const { units } = network;
-  const { bondFor } = config;
+  const { bondFor } = options;
   const controller = getBondedAccount(activeAccount);
   const { minNominatorBond: minNominatorBondBn } = staking;
   const { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn } = stats;

@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { Warning } from 'library/Form/Warning';
@@ -22,6 +21,7 @@ import { SelectItem } from 'library/SelectItems/Item';
 import { SubmitTx } from 'library/SubmitTx';
 import type { MaybeAccount } from 'types';
 import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from 'contexts/Overlay';
 
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals');
@@ -32,7 +32,7 @@ export const UpdatePayee = () => {
   const { getBondedAccount } = useBonded();
   const { getPayeeItems } = usePayeeConfig();
   const { getSignerWarnings } = useSignerWarnings();
-  const { setStatus: setModalStatus, setResize } = useModal();
+  const { setModalStatus, setResize } = useOverlay().modal;
 
   const controller = getBondedAccount(activeAccount);
   const { payee } = staking;

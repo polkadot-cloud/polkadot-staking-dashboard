@@ -6,7 +6,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { PageTitleTabProps } from '@polkadot-cloud/react/core/types';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -17,6 +16,7 @@ import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
 import { StatBoxList } from 'library/StatBoxList';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useOverlay } from 'contexts/Overlay';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
 import { PoolFavorites } from './Favorites';
@@ -33,7 +33,7 @@ import { PoolsTabsProvider, usePoolsTabs } from './context';
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
   const { pluginEnabled } = usePlugins();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { activeAccount } = useConnect();
   const {
     favorites,
@@ -130,7 +130,10 @@ export const HomeInner = () => {
             ? {
                 title: t('pools.allRoles'),
                 onClick: () =>
-                  openModalWith('AccountPoolRoles', { who: activeAccount }),
+                  openModal({
+                    key: 'AccountPoolRoles',
+                    options: { who: activeAccount },
+                  }),
               }
             : undefined
         }

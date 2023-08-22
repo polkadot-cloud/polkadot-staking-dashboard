@@ -13,10 +13,10 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
 import { useIdentities } from 'contexts/Identities';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
+import { useOverlay } from 'contexts/Overlay';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';
@@ -31,7 +31,7 @@ export const Roles = ({
   const { t } = useTranslation('pages');
   const { openHelp } = useHelp();
   const { isPoolSyncing } = useUi();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { isReady, network } = useApi();
   const { fetchIdentitiesMetaBatch } = useIdentities();
   const { isOwner, selectedActivePool } = useActivePools();
@@ -111,7 +111,11 @@ export const Roles = ({
       }
     } else {
       // else, open modal with role edits data to update pool roles.
-      openModalWith('ChangePoolRoles', { id, roleEdits }, 'small');
+      openModal({
+        key: 'ChangePoolRoles',
+        options: { id, roleEdits },
+        size: 'small',
+      });
     }
   };
 

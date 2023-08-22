@@ -4,7 +4,7 @@
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
-import { useModal } from 'contexts/Modal';
+import { useOverlay } from 'contexts/Overlay';
 
 export const JoinPool = ({
   id,
@@ -14,21 +14,21 @@ export const JoinPool = ({
   setActiveTab: any;
 }) => {
   const { t } = useTranslation('library');
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
 
   return (
     <div className="label button-with-text">
       <button
         type="button"
         onClick={() => {
-          openModalWith(
-            'JoinPool',
-            {
+          openModal({
+            key: 'JoinPool',
+            options: {
               id,
               setActiveTab,
             },
-            'small'
-          );
+            size: 'small',
+          });
         }}
       >
         {t('join')}

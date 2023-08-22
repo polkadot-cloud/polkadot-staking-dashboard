@@ -15,7 +15,6 @@ import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
-import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
@@ -25,6 +24,7 @@ import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from 'contexts/Overlay';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
@@ -33,7 +33,7 @@ export const ManageFastUnstake = () => {
   const { getBondedAccount } = useBonded();
   const { api, consts, network } = useApi();
   const { isFastUnstaking } = useUnstaking();
-  const { setResize, setStatus } = useModal();
+  const { setResize, setModalStatus } = useOverlay().modal;
   const { getSignerWarnings } = useSignerWarnings();
   const { activeEra, metrics } = useNetworkMetrics();
   const { feeReserve, getTransferOptions } = useTransferOptions();
@@ -98,7 +98,7 @@ export const ManageFastUnstake = () => {
     shouldSubmit: valid,
     callbackSubmit: () => {},
     callbackInBlock: () => {
-      setStatus('closing');
+      setModalStatus('closing');
     },
   });
 

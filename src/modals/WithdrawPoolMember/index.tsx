@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { Warning } from 'library/Form/Warning';
@@ -17,18 +16,23 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from 'contexts/Overlay';
 
 export const WithdrawPoolMember = () => {
   const { t } = useTranslation('modals');
   const { api, network, consts } = useApi();
   const { activeAccount } = useConnect();
-  const { setStatus: setModalStatus, config, setResize } = useModal();
+  const {
+    setModalStatus,
+    config: { options },
+    setResize,
+  } = useOverlay().modal;
   const { activeEra } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
   const { getSignerWarnings } = useSignerWarnings();
   const { notEnoughFunds } = useTxMeta();
 
-  const { member, who } = config;
+  const { member, who } = options;
   const { historyDepth } = consts;
   const { unbondingEras, points } = member;
 

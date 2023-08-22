@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { BondFeedback } from 'library/Form/Bond/BondFeedback';
@@ -19,6 +18,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from 'contexts/Overlay';
 
 export const Bond = () => {
   const { t } = useTranslation('modals');
@@ -28,9 +28,13 @@ export const Bond = () => {
   const { selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
   const { feeReserve, getTransferOptions } = useTransferOptions();
-  const { setStatus: setModalStatus, config, setResize } = useModal();
+  const {
+    setModalStatus,
+    config: { options },
+    setResize,
+  } = useOverlay().modal;
   const { units } = network;
-  const { bondFor } = config;
+  const { bondFor } = options;
   const isStaking = bondFor === 'nominator';
   const isPooling = bondFor === 'pool';
   const { nominate, pool } = getTransferOptions(activeAccount);

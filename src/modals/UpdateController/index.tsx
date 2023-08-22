@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -14,6 +13,7 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useEffect } from 'react';
+import { useOverlay } from 'contexts/Overlay';
 import { Switch } from './Switch';
 import { Wrapper } from './Wrapper';
 
@@ -24,7 +24,7 @@ export const UpdateController = () => {
   const { getBondedAccount } = useBonded();
   const { getSignerWarnings } = useSignerWarnings();
   const { activeAccount, getAccount } = useConnect();
-  const { setStatus: setModalStatus, setResize } = useModal();
+  const { setModalStatus, setResize } = useOverlay().modal;
 
   const controller = getBondedAccount(activeAccount);
   const account = getAccount(controller);

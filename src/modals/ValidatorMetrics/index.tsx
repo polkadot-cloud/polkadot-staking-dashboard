@@ -8,7 +8,6 @@ import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import { useSubscan } from 'contexts/Subscan';
@@ -22,14 +21,15 @@ import { Title } from 'library/Modal/Title';
 import { StatWrapper, StatsWrapper } from 'library/Modal/Wrappers';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
+import { useOverlay } from 'contexts/Overlay';
 
 export const ValidatorMetrics = () => {
   const { t } = useTranslation('modals');
   const {
     network: { units, unit },
   } = useApi();
-  const { config } = useModal();
-  const { address, identity } = config;
+  const { options } = useOverlay().modal.config;
+  const { address, identity } = options;
   const { fetchEraPoints }: any = useSubscan();
   const { activeEra } = useNetworkMetrics();
   const {

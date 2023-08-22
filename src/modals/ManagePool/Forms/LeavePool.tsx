@@ -18,7 +18,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
@@ -28,13 +27,14 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
+import { useOverlay } from 'contexts/Overlay';
 
 export const LeavePool = ({ setSection }: any) => {
   const { t } = useTranslation('modals');
   const { api, network, consts } = useApi();
   const { activeAccount } = useConnect();
   const { units } = network;
-  const { setStatus: setModalStatus, setResize } = useModal();
+  const { setModalStatus, setResize } = useOverlay().modal;
   const { getTransferOptions } = useTransferOptions();
   const { selectedActivePool } = useActivePools();
   const { erasToSeconds } = useErasToTimeLeft();

@@ -12,7 +12,6 @@ import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useVaultHardware } from 'contexts/Hardware/Vault';
-import { useModal } from 'contexts/Modal';
 import { usePrompt } from 'contexts/Prompt';
 import { ReactComponent as Icon } from 'img/polkadotVault.svg';
 import { Identicon } from 'library/Identicon';
@@ -22,11 +21,12 @@ import { NoAccounts } from 'library/Import/NoAccounts';
 import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
+import { useOverlay } from 'contexts/Overlay';
 import { Reader } from './Reader';
 
 export const ImportVault = () => {
   const { t } = useTranslation();
-  const { replaceModalWith } = useModal();
+  const { replaceModal } = useOverlay().modal;
   const { renameImportedAccount } = useConnect();
   const { openPromptWith, status: promptStatus } = usePrompt();
 
@@ -38,7 +38,7 @@ export const ImportVault = () => {
     removeVaultAccount,
     getVaultAccount,
   } = useVaultHardware();
-  const { setResize } = useModal();
+  const { setResize } = useOverlay().modal;
 
   const renameHandler = (address: string, newName: string) => {
     renameVaultAccount(address, newName);
@@ -129,7 +129,7 @@ export const ImportVault = () => {
             })}
             inProgress={false}
             handleDone={() =>
-              replaceModalWith('Connect', { disableScroll: true }, 'large')
+              replaceModal({ key: 'Connect', options: { disableScroll: true } })
             }
             t={{
               tDone: t('done', { ns: 'library' }),

@@ -16,9 +16,9 @@ import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import type { ExternalAccount } from 'contexts/Connect/types';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { AccountInput } from 'library/AccountInput';
 import { Identicon } from 'library/Identicon';
+import { useOverlay } from 'contexts/Overlay';
 import {
   ActionWithButton,
   ManualAccount,
@@ -28,9 +28,9 @@ import type { ListWithInputProps } from './types';
 
 export const ReadOnly = ({ setInputOpen, inputOpen }: ListWithInputProps) => {
   const { t } = useTranslation('modals');
-  const { accounts, forgetAccounts, addExternalAccount } = useConnect();
-  const { setResize } = useModal();
   const { openHelp } = useHelp();
+  const { setResize } = useOverlay().modal;
+  const { accounts, forgetAccounts, addExternalAccount } = useConnect();
 
   // get all external accounts
   const externalAccountsOnly = accounts.filter(

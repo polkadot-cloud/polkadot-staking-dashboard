@@ -13,13 +13,13 @@ import {
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { ReactComponent as VaultSVG } from 'img/polkadotVault.svg';
+import { useOverlay } from 'contexts/Overlay';
 
 export const Vault = (): React.ReactElement => {
   const { t } = useTranslation('modals');
   const { openHelp } = useHelp();
-  const { replaceModalWith } = useModal();
+  const { replaceModal } = useOverlay().modal;
   const url = 'signer.parity.io';
 
   return (
@@ -48,7 +48,7 @@ export const Vault = (): React.ReactElement => {
             <ButtonPrimaryInvert
               text={t('import')}
               onClick={() => {
-                replaceModalWith('ImportVault', {}, 'large');
+                replaceModal({ key: 'ImportVault' });
               }}
               iconLeft={faQrcode}
               iconTransform="shrink-1"

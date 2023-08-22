@@ -4,12 +4,12 @@
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { ButtonSecondary } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useModal } from 'contexts/Modal';
+import { useOverlay } from 'contexts/Overlay';
 import { NoAccountsWrapper } from './Wrappers';
 
 export const NoAccounts = ({ children, text, Icon }: any) => {
   const { t } = useTranslation('modals');
-  const { replaceModalWith } = useModal();
+  const { replaceModal } = useOverlay().modal;
 
   return (
     <>
@@ -20,7 +20,7 @@ export const NoAccounts = ({ children, text, Icon }: any) => {
             iconLeft={faChevronLeft}
             iconTransform="shrink-3"
             onClick={async () =>
-              replaceModalWith('Connect', { disableScroll: true }, 'large')
+              replaceModal({ key: 'Connect', options: { disableScroll: true } })
             }
           />
         </h1>

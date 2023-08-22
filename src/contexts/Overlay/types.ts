@@ -44,7 +44,7 @@ export type ModalSize = 'small' | 'large' | 'xl';
 
 export interface ModalConfig {
   key: string;
-  config?: ConfigOptions;
+  options?: ConfigOptions;
   size?: ModalSize;
 }
 

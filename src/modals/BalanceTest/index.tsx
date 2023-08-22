@@ -5,7 +5,7 @@ import { ModalPadding } from '@polkadot-cloud/react';
 import { unitToPlanck } from '@polkadot-cloud/utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
+import { useOverlay } from 'contexts/Overlay';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
@@ -18,7 +18,7 @@ export const BalanceTest = () => {
   const { activeAccount } = useConnect();
   const { notEnoughFunds } = useTxMeta();
   const { newBatchCall } = useBatchCall();
-  const { setStatus: setModalStatus, setResize } = useModal();
+  const { setModalStatus, setResize } = useOverlay().modal;
   const { units } = network;
 
   // tx to submit

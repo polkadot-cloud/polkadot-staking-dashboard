@@ -11,10 +11,10 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
 import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from 'contexts/Overlay';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
 
@@ -23,9 +23,12 @@ export const UnlockChunks = () => {
   const { activeAccount } = useConnect();
   const { notEnoughFunds } = useTxMeta();
   const { getStashLedger } = useBalances();
-  const { config, setModalHeight } = useModal();
+  const {
+    config: { options },
+    setHeight,
+  } = useOverlay().modal;
   const { getPoolUnlocking } = useActivePools();
-  const { bondFor } = config || {};
+  const { bondFor } = options || {};
 
   // get the unlocking per bondFor
   const getUnlocking = () => {
@@ -76,7 +79,7 @@ export const UnlockChunks = () => {
 
   // resize modal on state change
   useEffect(() => {
-    setModalHeight(getModalHeight());
+    setHeight(getModalHeight());
   }, [task, notEnoughFunds, sectionRef.current, unlocking]);
 
   // resize this modal on window resize
@@ -87,7 +90,7 @@ export const UnlockChunks = () => {
     };
   }, []);
   const resizeCallback = () => {
-    setModalHeight(getModalHeight());
+    setHeight(getModalHeight());
   };
 
   return (

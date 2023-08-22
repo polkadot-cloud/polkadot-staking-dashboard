@@ -14,7 +14,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -24,6 +23,7 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from 'contexts/Overlay';
 
 export const UnbondPoolMember = () => {
   const { t } = useTranslation('modals');
@@ -32,11 +32,15 @@ export const UnbondPoolMember = () => {
   const { api, network, consts } = useApi();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
-  const { setStatus: setModalStatus, setResize, config } = useModal();
+  const {
+    setModalStatus,
+    setResize,
+    config: { options },
+  } = useOverlay().modal;
 
   const { units } = network;
   const { bondDuration } = consts;
-  const { member, who } = config;
+  const { member, who } = options;
   const { points } = member;
   const freeToUnbond = planckToUnit(new BigNumber(rmCommas(points)), units);
 

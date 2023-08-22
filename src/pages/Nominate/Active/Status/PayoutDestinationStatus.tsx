@@ -4,17 +4,17 @@
 import { faGear, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { usePayeeConfig } from 'library/Hooks/usePayeeConfig';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
+import { useOverlay } from 'contexts/Overlay';
 
 export const PayoutDestinationStatus = () => {
   const { t } = useTranslation('pages');
   const { isSyncing } = useUi();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { staking, inSetup } = useStaking();
   const { isFastUnstaking } = useUnstaking();
   const { getPayeeItems } = usePayeeConfig();
@@ -60,7 +60,7 @@ export const PayoutDestinationStatus = () => {
                   isSyncing ||
                   isReadOnlyAccount(activeAccount) ||
                   isFastUnstaking,
-                onClick: () => openModalWith('UpdatePayee', {}, 'small'),
+                onClick: () => openModal({ key: 'UpdatePayee', size: 'small' }),
               },
             ]
           : []

@@ -5,13 +5,14 @@ import { faPlug, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
+import { useOverlay } from 'contexts/Overlay';
 import { ConnectedAccount, HeadingWrapper } from './Wrappers';
 
 export const Connect = () => {
   const { t } = useTranslation('library');
-  const { openModalWith } = useModal();
   const { accounts } = useConnect();
+  const { openModal } = useOverlay().modal;
+
   return (
     <HeadingWrapper>
       <ConnectedAccount>
@@ -21,7 +22,7 @@ export const Connect = () => {
               text={t('accounts')}
               iconLeft={faWallet}
               onClick={() => {
-                openModalWith('Accounts', {}, 'large');
+                openModal({ key: 'Accounts' });
               }}
               style={{ color: 'white', fontSize: '1.05rem' }}
             />
@@ -31,7 +32,7 @@ export const Connect = () => {
               iconRight={faPlug}
               iconTransform="grow-1"
               onClick={() => {
-                openModalWith('Connect', {}, 'large');
+                openModal({ key: 'Connect' });
               }}
               style={{ color: 'white', fontSize: '1.05rem' }}
             />
@@ -42,11 +43,7 @@ export const Connect = () => {
             iconRight={faPlug}
             iconTransform="grow-1"
             onClick={() => {
-              openModalWith(
-                accounts.length ? 'Accounts' : 'Connect',
-                {},
-                'large'
-              );
+              openModal({ key: accounts.length ? 'Accounts' : 'Connect' });
             }}
             style={{ color: 'white', fontSize: '1.05rem' }}
           />

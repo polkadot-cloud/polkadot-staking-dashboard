@@ -6,9 +6,9 @@ import { useAnimation } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { ErrorFallbackModal } from 'library/ErrorBoundary';
-import { useModal } from 'contexts/Modal';
 import { useHelp } from 'contexts/Help';
 import { useCanvas } from 'contexts/Canvas';
+import { useOverlay } from 'contexts/Overlay';
 import { AccountPoolRoles } from './AccountPoolRoles';
 import { Accounts } from './Accounts';
 import { Bio } from './Bio';
@@ -43,20 +43,17 @@ import { WithdrawPoolMember } from './WithdrawPoolMember';
 
 export const Modal = () => {
   const {
-    size,
-    modal,
+    config: { key, size, options },
     status,
     height,
     resize,
-    config,
-    setStatus,
-    setModalRef,
+    setModalStatus,
+    setRef,
     setHeightRef,
-    modalMaxHeight,
-    setModalHeight,
-  } = useModal();
+    maxHeight,
+    setHeight,
+  } = useOverlay().modal;
   const controls = useAnimation();
-  const maxHeight = modalMaxHeight();
   const { status: helpStatus } = useHelp();
   const { status: canvasStatus } = useCanvas();
   const modalRef = useRef<HTMLDivElement>(null);
@@ -64,7 +61,7 @@ export const Modal = () => {
 
   const onOutClose = async () => {
     await controls.start('out');
-    setStatus('closed');
+    setModalStatus('closed');
   };
   const onIn = async () => {
     await controls.start('in');
@@ -74,17 +71,17 @@ export const Modal = () => {
   };
 
   const windowResize = () => {
-    if (!config?.disableWindowResize) {
+    if (!options?.disableWindowResize) {
       window.addEventListener('resize', handleResize);
     }
   };
 
   const handleResize = () => {
-    if (status !== 'open' || config?.disableWindowResize) return;
+    if (status !== 'open' || options?.disableWindowResize) return;
 
     let h = modalRef.current?.clientHeight ?? 0;
     h = h > maxHeight ? maxHeight : h;
-    setModalHeight(h);
+    setHeight(h);
   };
 
   // Control on modal status change.
@@ -119,7 +116,7 @@ export const Modal = () => {
 
   // store the modal's content ref.
   useEffect(() => {
-    setModalRef(modalRef);
+    setRef(modalRef);
     setHeightRef(heightRef);
   }, [modalRef?.current, heightRef?.current]);
 
@@ -162,7 +159,7 @@ export const Modal = () => {
               style={{
                 height,
                 overflow:
-                  height >= maxHeight && !config?.disableScroll
+                  height >= maxHeight && !options?.disableScroll
                     ? 'scroll'
                     : 'hidden',
               }}
@@ -174,39 +171,37 @@ export const Modal = () => {
                 }
               >
                 <ErrorBoundary FallbackComponent={ErrorFallbackModal}>
-                  {modal === 'AccountPoolRoles' && <AccountPoolRoles />}
-                  {modal === 'Bio' && <Bio />}
-                  {modal === 'Bond' && <Bond />}
-                  {modal === 'ChangeNominations' && <ChangeNominations />}
-                  {modal === 'ChangePoolRoles' && <ChangePoolRoles />}
-                  {modal === 'ChooseLanguage' && <ChooseLanguage />}
-                  {modal === 'ClaimReward' && <ClaimReward />}
-                  {modal === 'Connect' && <Connect />}
-                  {modal === 'Accounts' && <Accounts />}
-                  {modal === 'GoToFeedback' && <GoToFeedback />}
-                  {modal === 'JoinPool' && <JoinPool />}
-                  {modal === 'ImportLedger' && <ImportLedger />}
-                  {modal === 'ImportVault' && <ImportVault />}
-                  {modal === 'ManagePool' && <ManagePool />}
-                  {modal === 'ManageFastUnstake' && <ManageFastUnstake />}
-                  {modal === 'Networks' && <Networks />}
-                  {modal === 'Nominate' && <Nominate />}
-                  {modal === 'NominateFromFavorites' && (
-                    <NominateFromFavorites />
-                  )}
-                  {modal === 'NominatePool' && <NominatePool />}
-                  {modal === 'PoolNominations' && <PoolNominations />}
-                  {modal === 'SelectFavorites' && <SelectFavorites />}
-                  {modal === 'Settings' && <Settings />}
-                  {modal === 'ValidatorMetrics' && <ValidatorMetrics />}
-                  {modal === 'UnbondPoolMember' && <UnbondPoolMember />}
-                  {modal === 'UnlockChunks' && <UnlockChunks />}
-                  {modal === 'Unstake' && <Unstake />}
-                  {modal === 'UpdateController' && <UpdateController />}
-                  {modal === 'Unbond' && <Unbond />}
-                  {modal === 'UpdatePayee' && <UpdatePayee />}
-                  {modal === 'UpdateReserve' && <UpdateReserve />}
-                  {modal === 'WithdrawPoolMember' && <WithdrawPoolMember />}
+                  {key === 'AccountPoolRoles' && <AccountPoolRoles />}
+                  {key === 'Bio' && <Bio />}
+                  {key === 'Bond' && <Bond />}
+                  {key === 'ChangeNominations' && <ChangeNominations />}
+                  {key === 'ChangePoolRoles' && <ChangePoolRoles />}
+                  {key === 'ChooseLanguage' && <ChooseLanguage />}
+                  {key === 'ClaimReward' && <ClaimReward />}
+                  {key === 'Connect' && <Connect />}
+                  {key === 'Accounts' && <Accounts />}
+                  {key === 'GoToFeedback' && <GoToFeedback />}
+                  {key === 'JoinPool' && <JoinPool />}
+                  {key === 'ImportLedger' && <ImportLedger />}
+                  {key === 'ImportVault' && <ImportVault />}
+                  {key === 'ManagePool' && <ManagePool />}
+                  {key === 'ManageFastUnstake' && <ManageFastUnstake />}
+                  {key === 'Networks' && <Networks />}
+                  {key === 'Nominate' && <Nominate />}
+                  {key === 'NominateFromFavorites' && <NominateFromFavorites />}
+                  {key === 'NominatePool' && <NominatePool />}
+                  {key === 'PoolNominations' && <PoolNominations />}
+                  {key === 'SelectFavorites' && <SelectFavorites />}
+                  {key === 'Settings' && <Settings />}
+                  {key === 'ValidatorMetrics' && <ValidatorMetrics />}
+                  {key === 'UnbondPoolMember' && <UnbondPoolMember />}
+                  {key === 'UnlockChunks' && <UnlockChunks />}
+                  {key === 'Unstake' && <Unstake />}
+                  {key === 'UpdateController' && <UpdateController />}
+                  {key === 'Unbond' && <Unbond />}
+                  {key === 'UpdatePayee' && <UpdatePayee />}
+                  {key === 'UpdateReserve' && <UpdateReserve />}
+                  {key === 'WithdrawPoolMember' && <WithdrawPoolMember />}
                 </ErrorBoundary>
               </ModalCard>
             </ModalHeight>
@@ -214,7 +209,7 @@ export const Modal = () => {
               type="button"
               className="close"
               onClick={() => {
-                setStatus('closing');
+                setModalStatus('closing');
               }}
             >
               &nbsp;

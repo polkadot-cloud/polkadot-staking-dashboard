@@ -4,14 +4,14 @@
 import { ModalOverlay } from '@polkadot-cloud/react';
 import { useAnimation } from 'framer-motion';
 import { useEffect } from 'react';
-import { useModal } from 'contexts/Modal';
 import { useHelp } from 'contexts/Help';
 import { useCanvas } from 'contexts/Canvas';
+import { useOverlay } from 'contexts/Overlay';
 
 export const Overlay = () => {
   const controls = useAnimation();
   const { status: helpStatus } = useHelp();
-  const { status: modalStatus } = useModal();
+  const { status: modalStatus } = useOverlay().modal;
   const { status: canvasStatus } = useCanvas();
 
   const onFadeIn = async () => {
