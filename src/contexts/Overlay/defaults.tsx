@@ -20,6 +20,10 @@ export const defaultCanvasConfig: CanvasConfig = {
 };
 
 export const defaultOverlayContext: OverlayContextInterface = {
+  openOverlayInstances: 0,
+  setOpenOverlayInstances: (direction, instanceType) => {},
+  activeOverlayInstance: null,
+  setActiveOverlayInstance: (instance) => {},
   canvas: {
     status: 'closed',
     config: defaultCanvasConfig,

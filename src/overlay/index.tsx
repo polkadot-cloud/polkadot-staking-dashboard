@@ -18,6 +18,7 @@ import { useHelp } from 'contexts/Help';
 import { useOverlay } from 'contexts/Overlay';
 import type {
   CanvasProps,
+  CanvasStatus,
   ModalProps,
   OverlayProps,
 } from 'contexts/Overlay/types';
@@ -59,7 +60,7 @@ export const Overlays = () => {
   const { status } = useHelp();
   return (
     <Overlay
-      helpStatus={status}
+      externalOverlayStatus={status}
       canvas={{
         TestCanvas,
       }}
@@ -100,34 +101,45 @@ export const Overlays = () => {
   );
 };
 
-export const Overlay = ({ modals, canvas, helpStatus }: OverlayProps) => {
+export const Overlay = ({
+  modals,
+  canvas,
+  externalOverlayStatus,
+}: OverlayProps) => {
   return (
     <>
-      <OverlayBackground />
-      <Modal modals={modals} helpStatus={helpStatus} />
-      <Canvas canvas={canvas} />
+      <OverlayBackground externalOverlayStatus={externalOverlayStatus} />
+      <Modal modals={modals} externalOverlayStatus={externalOverlayStatus} />
+      <Canvas canvas={canvas} externalOverlayStatus={externalOverlayStatus} />
     </>
   );
 };
 
-export const Modal = ({ modals, helpStatus }: ModalProps) => {
+export const Modal = ({ modals, externalOverlayStatus }: ModalProps) => {
   const {
-    config: { key, size, options },
-    status,
-    height,
-    resize,
-    setModalStatus,
-    setRef,
-    setHeightRef,
-    maxHeight,
-    setHeight,
-  } = useOverlay().modal;
+    activeOverlayInstance,
+    setOpenOverlayInstances,
+    setActiveOverlayInstance,
+    modal: {
+      config: { key, size, options },
+      status,
+      height,
+      resize,
+      setModalStatus,
+      setRef,
+      setHeightRef,
+      maxHeight,
+      setHeight,
+    },
+  } = useOverlay();
   const controls = useAnimation();
   const { status: canvasStatus } = useOverlay().canvas;
   const modalRef = useRef<HTMLDivElement>(null);
   const heightRef = useRef<HTMLDivElement>(null);
 
   const onOutClose = async () => {
+    setOpenOverlayInstances('dec', 'modal');
+    setActiveOverlayInstance(null);
     await controls.start('out');
     setModalStatus('closed');
   };
@@ -153,26 +165,36 @@ export const Modal = ({ modals, helpStatus }: ModalProps) => {
 
   // Control on modal status change.
   useEffect(() => {
-    if (status === 'open') onIn();
+    if (activeOverlayInstance === 'modal' && status === 'open') onIn();
     if (status === 'closing') onOutClose();
   }, [status]);
 
   // Control on canvas status change.
   useEffect(() => {
-    if (canvasStatus === 'open') if (status === 'open') onOut();
-    if (canvasStatus === 'closing') if (status === 'open') onIn();
+    // fade out modal if canvas has been opened.
+    if (canvasStatus === 'open' && status === 'open') onOut();
+    // fade in modal if its open & canvas is closing.
+    if (canvasStatus === 'closing') {
+      if (status === 'open') onIn();
+    }
   }, [canvasStatus]);
 
-  // Control dim help status change.
+  // Control dim external overlay change.
   useEffect(() => {
-    if (helpStatus === 1) if (status === 'open') onOut();
-    if (helpStatus === 2) if (status === 'open') onIn();
-  }, [helpStatus]);
+    // fade out modal if external overlay has been opened.
+    if (externalOverlayStatus === 'open' && status === 'open') onOut();
+    // fade in modal if its open & external overlay is closing.
+    if (
+      externalOverlayStatus === 'closing' &&
+      activeOverlayInstance === 'modal'
+    )
+      onIn();
+  }, [externalOverlayStatus]);
 
-  // resize modal on status or resize change.
+  // Resize modal on status or resize change.
   useEffect(() => handleResize(), [resize]);
 
-  // resize modal on window size change.
+  // Resize modal on window size change.
   useEffect(() => {
     windowResize();
     return () => {
@@ -180,7 +202,7 @@ export const Modal = ({ modals, helpStatus }: ModalProps) => {
     };
   });
 
-  // update the modal's content ref.
+  // Update the modal's content ref as they are initialised.
   useEffect(() => {
     setRef(modalRef);
     setHeightRef(heightRef);
@@ -235,7 +257,7 @@ export const Modal = ({ modals, helpStatus }: ModalProps) => {
               <ModalCard
                 ref={modalRef}
                 className={
-                  helpStatus === 1 || canvasStatus === 'open'
+                  externalOverlayStatus === 'open' || canvasStatus === 'open'
                     ? 'dimmed'
                     : undefined
                 }
@@ -261,31 +283,54 @@ export const Modal = ({ modals, helpStatus }: ModalProps) => {
   );
 };
 
-export const Canvas = ({ canvas }: CanvasProps) => {
+export const Canvas = ({ canvas, externalOverlayStatus }: CanvasProps) => {
   const controls = useAnimation();
   const {
-    status,
-    setCanvasStatus,
-    config: { key },
-  } = useOverlay().canvas;
+    setOpenOverlayInstances,
+    activeOverlayInstance,
+    setActiveOverlayInstance,
+    modal: { status: modalStatus },
+    canvas: {
+      status,
+      setCanvasStatus,
+      config: { key },
+    },
+  } = useOverlay();
 
-  const onFadeIn = async () => {
+  const onIn = async () => {
     await controls.start('visible');
   };
 
-  const onFadeOut = async () => {
+  const onOut = async (closing: boolean) => {
+    if (closing) {
+      setOpenOverlayInstances('dec', 'canvas');
+      setActiveOverlayInstance(modalStatus === 'open' ? 'modal' : null);
+    }
     await controls.start('hidden');
-    setCanvasStatus('closed');
+
+    if (closing) setCanvasStatus('closed');
   };
+
+  // Control dim help status change.
+  useEffect(() => {
+    if (externalOverlayStatus === 'open' && status === 'open') onOut(false);
+
+    if (externalOverlayStatus === 'closing') {
+      if (activeOverlayInstance === 'canvas') {
+        setCanvasStatus('open');
+        onIn();
+      }
+    }
+  }, [externalOverlayStatus]);
 
   useEffect(() => {
     // canvas has been opened - fade in.
     if (status === 'open') {
-      onFadeIn();
+      onIn();
     }
     // canvas closure triggered - fade out.
     if (status === 'closing') {
-      onFadeOut();
+      onOut(true);
     }
   }, [status]);
 
@@ -322,42 +367,37 @@ export const Canvas = ({ canvas }: CanvasProps) => {
   );
 };
 
-export const OverlayBackground = () => {
+export const OverlayBackground = ({
+  externalOverlayStatus,
+}: {
+  externalOverlayStatus?: CanvasStatus;
+}) => {
   const controls = useAnimation();
-  const { status: helpStatus } = useHelp();
-  const { status: modalStatus } = useOverlay().modal;
-  const { status: canvasStatus } = useOverlay().canvas;
+  const {
+    modal: { status: modalStatus },
+    canvas: { status: canvasStatus },
+  } = useOverlay();
 
-  const onFadeIn = async () => {
+  let { openOverlayInstances } = useOverlay();
+  if (externalOverlayStatus === 'open') {
+    openOverlayInstances++;
+  }
+
+  const onIn = async () => {
     await controls.start('visible');
   };
-  const onFadeOut = async () => {
+  const onOut = async () => {
     await controls.start('hidden');
   };
 
   useEffect(() => {
-    if (modalStatus === 'open') onFadeIn();
-    if (modalStatus === 'closing') onFadeOut();
-  }, [modalStatus]);
-
-  useEffect(() => {
-    if (canvasStatus === 'open' && modalStatus !== 'open') onFadeIn();
-    if (canvasStatus === 'closing' && modalStatus !== 'open') onFadeOut();
-  }, [canvasStatus]);
-
-  // Managing fade is more complex with help, as it can overlay modal and canvas. Do not fade in/out
-  // if modal or canvas is open. (help can be opened in a modal, canvas can be summoned in an open
-  // modal).
-  useEffect(() => {
-    if (helpStatus === 1 && modalStatus !== 'open' && canvasStatus !== 'open')
-      onFadeIn();
-    if (helpStatus === 2 && modalStatus !== 'open' && canvasStatus !== 'open')
-      onFadeOut();
-  }, [helpStatus]);
+    if (openOverlayInstances > 0) onIn();
+    if (openOverlayInstances === 0) onOut();
+  }, [openOverlayInstances]);
 
   if (
     modalStatus === 'closed' &&
-    helpStatus === 0 &&
+    externalOverlayStatus === 'closed' &&
     canvasStatus === 'closed'
   ) {
     return <></>;
@@ -365,7 +405,11 @@ export const OverlayBackground = () => {
 
   return (
     <ModalOverlay
-      blur={canvasStatus === 'open' || helpStatus === 1 ? '14px' : '4px'}
+      blur={
+        canvasStatus === 'open' || externalOverlayStatus === 'open'
+          ? '14px'
+          : '4px'
+      }
       initial={{
         opacity: 0,
       }}

@@ -26,17 +26,19 @@ export interface ExternalWithKeys {
   website?: string;
 }
 
+export type HelpStatus = 'closed' | 'open' | 'closing';
+
 export interface HelpContextInterface {
   openHelp: (d: MaybeString) => void;
   closeHelp: () => void;
-  setStatus: (s: number) => void;
+  setStatus: (s: HelpStatus) => void;
   setDefinition: (d: MaybeString) => void;
-  status: number;
+  status: HelpStatus;
   definition: MaybeString;
 }
 
 export interface HelpContextState {
-  status: number;
+  status: HelpStatus;
   definition: MaybeString;
 }
 

@@ -11,6 +11,7 @@ import type {
   ModalStatus,
   OverlayContextInterface,
   CanvasStatus,
+  ActiveOverlayInstance,
 } from './types';
 import { defaultModalConfig, defaultOverlayContext } from './defaults';
 
@@ -19,6 +20,26 @@ export const OverlayProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  // Store the modal status.
+  const [openOverlayInstances, setOpenOverlayInstancesState] =
+    useState<number>(0);
+
+  const setOpenOverlayInstances = (
+    direction: 'inc' | 'dec',
+    instanceType: 'modal' | 'canvas'
+  ) => {
+    if (direction === 'inc') {
+      setOpenOverlayInstancesState(openOverlayInstances + 1);
+      setActiveOverlayInstance(instanceType);
+    } else {
+      setOpenOverlayInstancesState(Math.max(openOverlayInstances - 1, 0));
+    }
+  };
+
+  // Store the currently active overlay instance.
+  const [activeOverlayInstance, setActiveOverlayInstance] =
+    useState<ActiveOverlayInstance>(null);
+
   // Store the modal status.
   const [modalStatus, setModalStatusState] = useState<ModalStatus>('closed');
   const modalStatusRef = useRef(modalStatus);
@@ -55,6 +76,7 @@ export const OverlayProvider = ({
   const openModal = ({ key, size = 'large', options = {} }: ModalConfig) => {
     setModalConfig({ key, size, options });
     setModalStatus('opening');
+    setOpenOverlayInstances('inc', 'modal');
   };
 
   // Closes one modal and opens another.
@@ -115,6 +137,7 @@ export const OverlayProvider = ({
   // Open the canvas.
   const openCanvas = ({ key, options }: CanvasConfig) => {
     setCanvasStatus('open');
+    setOpenOverlayInstances('inc', 'canvas');
     setCanvasConfig({
       key,
       options: options || {},
@@ -150,6 +173,10 @@ export const OverlayProvider = ({
   return (
     <OverlayContext.Provider
       value={{
+        openOverlayInstances,
+        setOpenOverlayInstances,
+        activeOverlayInstance,
+        setActiveOverlayInstance,
         canvas: {
           status: canvasStatus,
           config: canvasConfig,

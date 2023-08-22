@@ -6,6 +6,13 @@ import type React from 'react';
 import type { AnyJson } from 'types';
 
 export interface OverlayContextInterface {
+  openOverlayInstances: number;
+  setOpenOverlayInstances: (
+    direction: 'inc' | 'dec',
+    instanceType: 'modal' | 'canvas'
+  ) => void;
+  activeOverlayInstance: ActiveOverlayInstance;
+  setActiveOverlayInstance: (instance: ActiveOverlayInstance) => void;
   canvas: {
     status: CanvasStatus;
     config: CanvasConfig;
@@ -31,13 +38,16 @@ export interface OverlayContextInterface {
 
 export interface CanvasProps {
   canvas: Record<string, React.FC>;
+  externalOverlayStatus: CanvasStatus;
 }
 
 export interface ModalProps {
   modals: Record<string, React.FC>;
-  helpStatus?: number;
+  externalOverlayStatus: CanvasStatus;
 }
 export type OverlayProps = ModalProps & CanvasProps;
+
+export type ActiveOverlayInstance = 'modal' | 'canvas' | null;
 
 export type OverlayType = 'modal' | 'canvas' | 'prompt';
 
