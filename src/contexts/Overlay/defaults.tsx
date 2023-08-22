@@ -17,7 +17,7 @@ export const defaultOverlayContext: OverlayContextInterface = {
     setHeight: () => {},
     setRef: (ref) => {},
     setHeightRef: (height) => {},
-    replaceWith: (config) => {},
-    openWith: (config) => {},
+    replaceModal: (config) => {},
+    openModal: (config) => {},
   },
 };

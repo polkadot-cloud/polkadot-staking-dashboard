@@ -65,20 +65,16 @@ export const OverlayProvider = ({
     setStateWithRef(newStatus, setModalStatusState, modalStatusRef);
   };
 
-  const openModalWith = ({ key, size = 'large', config = {} }: ModalConfig) => {
+  const openModal = ({ key, size = 'large', config = {} }: ModalConfig) => {
     setModalConfig({ key, size, config });
     setModalStatus('opening');
   };
 
   // Closes one modal and opens another.
-  const replaceModalWith = ({
-    key,
-    size = 'large',
-    config = {},
-  }: ModalConfig) => {
+  const replaceModal = ({ key, size = 'large', config = {} }: ModalConfig) => {
     setModalStatus('replacing');
     setTimeout(() => {
-      openModalWith({
+      openModal({
         key,
         size,
         config,
@@ -125,7 +121,7 @@ export const OverlayProvider = ({
     config: ModalConfig | CanvasConfig | PromptConfig
   ) => {
     setStatus('open');
-    if (type === 'modal') openModalWith(config as ModalConfig);
+    if (type === 'modal') openModal(config as ModalConfig);
   };
 
   useEffectIgnoreInitial(() => {
@@ -153,8 +149,8 @@ export const OverlayProvider = ({
           setHeight: setModalHeight,
           setRef: setModalRef,
           setHeightRef: setModalHeightRef,
-          openWith: openModalWith,
-          replaceWith: replaceModalWith,
+          openModal,
+          replaceModal,
         },
       }}
     >
