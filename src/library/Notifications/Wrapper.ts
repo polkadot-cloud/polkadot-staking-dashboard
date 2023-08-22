@@ -27,7 +27,7 @@ export const Wrapper = styled.ul`
     overflow: hidden;
 
     h3 {
-      color: var(--network-color-primary);
+      color: var(--accent-color-primary);
       margin: 0 0 0.5rem;
       flex: 1;
     }

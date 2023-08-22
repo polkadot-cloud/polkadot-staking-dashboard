@@ -49,24 +49,24 @@ export const ItemWrapper = styled(motion.div)`
           color: var(--text-color-secondary);
           font-family: InterSemiBold, sans-serif;
           &.claim {
-            color: var(--network-color-secondary);
+            color: var(--accent-color-secondary);
           }
           &.reward {
-            color: var(--network-color-primary);
+            color: var(--accent-color-primary);
           }
         }
 
         h5 {
           color: var(--text-color-secondary);
           &.claim {
-            color: var(--network-color-secondary);
-            border: 1px solid var(--network-color-secondary);
+            color: var(--accent-color-secondary);
+            border: 1px solid var(--accent-color-secondary);
             border-radius: 0.75rem;
             padding: 0.2rem 0.5rem;
           }
           &.reward {
-            color: var(--network-color-primary);
-            border: 1px solid var(--network-color-primary);
+            color: var(--accent-color-primary);
+            border: 1px solid var(--accent-color-primary);
             border-radius: 0.75rem;
             padding: 0.2rem 0.5rem;
           }

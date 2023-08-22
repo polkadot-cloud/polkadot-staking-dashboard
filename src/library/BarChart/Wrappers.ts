@@ -25,11 +25,11 @@ export const BarChartWrapper = styled.div<{ $lessPadding?: boolean }>`
     }
   }
   .d1 {
-    background: var(--network-color-primary);
+    background: var(--accent-color-primary);
     color: rgba(255, 255, 255, 0.95);
   }
   .d2 {
-    background: var(--network-color-secondary);
+    background: var(--accent-color-secondary);
     color: rgba(255, 255, 255, 0.95);
   }
   .d3 {

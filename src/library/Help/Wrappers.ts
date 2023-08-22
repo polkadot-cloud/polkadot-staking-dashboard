@@ -122,7 +122,7 @@ export const ItemWrapper = styled(motion.div)<any>`
       text-align: left;
 
       &.icon {
-        color: var(--network-color-primary);
+        color: var(--accent-color-primary);
         margin-bottom: 0;
       }
     }

@@ -67,7 +67,7 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
       &.next {
         color: ${(props) =>
           props.$next
-            ? 'var(--network-color-primary)'
+            ? 'var(--accent-color-primary)'
             : 'var(--text-color-secondary)'};
         cursor: ${(props) => (props.$next ? 'pointer' : 'default')};
         opacity: ${(props) => (props.$next ? 1 : 0.4)};
@@ -75,7 +75,7 @@ export const PaginationWrapper = styled.div<PaginationWrapperProps>`
       &.prev {
         color: ${(props) =>
           props.$prev
-            ? 'var(--network-color-primary)'
+            ? 'var(--accent-color-primary)'
             : 'var(--text-color-secondary)'};
         cursor: ${(props) => (props.$prev ? 'pointer' : 'default')};
         opacity: ${(props) => (props.$prev ? 1 : 0.4)};

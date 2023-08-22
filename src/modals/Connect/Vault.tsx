@@ -39,7 +39,7 @@ export const Vault = (): React.ReactElement => {
               marginRight
               style={{
                 opacity: 1,
-                color: 'var(--network-color-primary)',
+                color: 'var(--accent-color-primary)',
                 fontFamily: 'Unbounded',
               }}
             />

@@ -9,6 +9,7 @@ import {
   ModalContent,
   ModalCanvas,
   ModalOverlay,
+  ModalCanvasContent,
 } from '@polkadot-cloud/react';
 import { useAnimation } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
@@ -22,7 +23,6 @@ import type {
   ModalProps,
   OverlayProps,
 } from 'contexts/Overlay/types';
-import { CanvasWrapper } from 'library/Canvas/Wrappers';
 import { AccountPoolRoles } from '../modals/AccountPoolRoles';
 import { Accounts } from '../modals/Accounts';
 import { Bio } from '../modals/Bio';
@@ -356,7 +356,9 @@ export const Canvas = ({ canvas, externalOverlayStatus }: CanvasProps) => {
     >
       <ModalScroll>
         <ModalContent>
-          <CanvasWrapper>{ActiveCanvas && <ActiveCanvas />}</CanvasWrapper>
+          <ModalCanvasContent>
+            {ActiveCanvas && <ActiveCanvas />}
+          </ModalCanvasContent>
         </ModalContent>
       </ModalScroll>
     </ModalCanvas>

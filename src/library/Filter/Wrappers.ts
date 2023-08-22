@@ -94,7 +94,7 @@ export const LargeItemWrapper = styled.div`
       align-items: center;
     }
     svg {
-      color: var(--network-color-primary);
+      color: var(--accent-color-primary);
       margin-right: 0.75rem;
     }
     p {
@@ -127,11 +127,11 @@ export const TabWrapper = styled.button<{ $active?: boolean }>`
   border: 1px solid
     ${(props) =>
       props.$active
-        ? 'var(--network-color-primary)'
+        ? 'var(--accent-color-primary)'
         : 'var(--border-primary-color)'};
   color: ${(props) =>
     props.$active
-      ? 'var(--network-color-primary)'
+      ? 'var(--accent-color-primary)'
       : 'var(--text-color-secondary)'};
   font-size: 0.9rem;
   padding: 0.5rem 1.25rem;

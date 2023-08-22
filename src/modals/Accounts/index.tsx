@@ -139,7 +139,7 @@ export const Accounts = () => {
           {activeAccount && (
             <ButtonText
               style={{
-                color: 'var(--network-color-primary)',
+                color: 'var(--accent-color-primary)',
               }}
               text={t('disconnect')}
               iconRight={faLinkSlash}

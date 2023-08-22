@@ -15,7 +15,7 @@ const Wrapper = styled.div<{ $active: boolean }>`
   padding: 0.25rem 0.4rem;
   color: ${(props) =>
     props.$active
-      ? 'var(--network-color-primary)'
+      ? 'var(--accent-color-primary)'
       : 'var(--text-color-secondary)'};
   opacity: ${(props) => (props.$active ? 1 : 0.5)};
   z-index: 2;

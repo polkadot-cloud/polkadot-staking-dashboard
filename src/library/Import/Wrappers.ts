@@ -112,7 +112,7 @@ export const QRViewerWrapper = styled.div`
   padding: 2rem 1rem;
 
   .title {
-    color: var(--network-color-primary);
+    color: var(--accent-color-primary);
     font-family: 'Unbounded';
     margin-bottom: 1rem;
   }
@@ -144,7 +144,7 @@ export const QRViewerWrapper = styled.div`
 
     &.withBorder {
       padding: 0.95rem;
-      border: 3.75px solid var(--network-color-pending);
+      border: 3.75px solid var(--accent-color-pending);
     }
   }
   .foot {

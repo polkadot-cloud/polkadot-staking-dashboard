@@ -25,7 +25,7 @@ export const SummaryWrapper = styled.div`
       align-items: center;
 
       svg {
-        color: var(--network-color-primary);
+        color: var(--accent-color-primary);
       }
     }
 

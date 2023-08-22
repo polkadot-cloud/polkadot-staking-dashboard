@@ -48,11 +48,11 @@ export const UpdateReserve = () => {
 
   const sliderProps = {
     trackStyle: {
-      backgroundColor: 'var(--network-color-primary)',
+      backgroundColor: 'var(--accent-color-primary)',
     },
     handleStyle: {
       backgroundColor: 'var(--background-primary)',
-      borderColor: 'var(--network-color-primary)',
+      borderColor: 'var(--accent-color-primary)',
       opacity: 1,
     },
   };

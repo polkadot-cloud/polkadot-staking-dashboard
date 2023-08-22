@@ -40,7 +40,7 @@ export const Wrapper = styled.div`
 `;
 
 export const ConnectedAccount = styled(motion.div)`
-  background: var(--network-color-primary);
+  background: var(--accent-color-primary);
   border-radius: 1.5rem;
   display: flex;
   transition: transform var(--transition-duration);
@@ -83,8 +83,8 @@ export const Item = styled.button`
   }
 
   .label {
-    color: var(--network-color-primary);
-    border: 0.125rem solid var(--network-color-primary);
+    color: var(--accent-color-primary);
+    border: 0.125rem solid var(--accent-color-primary);
     border-radius: 0.8rem;
     font-size: 0.85rem;
     margin-right: 0.6rem;
@@ -101,7 +101,7 @@ export const Item = styled.button`
   }
 
   &.connect {
-    background: var(--network-color-primary);
+    background: var(--accent-color-primary);
     > span {
       color: white;
     }

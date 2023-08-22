@@ -431,14 +431,14 @@ export const Commission = ({ setSection, incrementCalculateHeight }: any) => {
 
   const sliderProps = {
     trackStyle: {
-      backgroundColor: 'var(--network-color-primary)',
+      backgroundColor: 'var(--accent-color-primary)',
     },
     railStyle: {
       backgroundColor: 'var(--button-secondary-background)',
     },
     handleStyle: {
       backgroundColor: 'var(--background-primary)',
-      borderColor: 'var(--network-color-primary)',
+      borderColor: 'var(--accent-color-primary)',
       opacity: 1,
     },
     activeDotStyle: {
