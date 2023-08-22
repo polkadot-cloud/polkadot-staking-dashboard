@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import { useStaking } from 'contexts/Staking';
 import { Warning } from 'library/Form/Warning';
@@ -21,17 +20,21 @@ import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
 import { SubmitTx } from 'library/SubmitTx';
 import type { MaybeAccount } from 'types';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from 'contexts/Overlay';
 
 export const UpdatePayee = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { activeAccount } = useConnect();
-  const { getBondedAccount } = useBonded();
-  const { setStatus: setModalStatus } = useModal();
-  const controller = getBondedAccount(activeAccount);
   const { staking } = useStaking();
+  const { activeAccount } = useConnect();
+  const { notEnoughFunds } = useTxMeta();
+  const { getBondedAccount } = useBonded();
   const { getPayeeItems } = usePayeeConfig();
   const { getSignerWarnings } = useSignerWarnings();
+  const { setModalStatus, setModalResize } = useOverlay().modal;
+
+  const controller = getBondedAccount(activeAccount);
   const { payee } = staking;
 
   const DefaultSelected: PayeeConfig = {
@@ -114,6 +117,8 @@ export const UpdatePayee = () => {
         : DefaultSelected
     );
   }, []);
+
+  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   const warnings = getSignerWarnings(
     activeAccount,

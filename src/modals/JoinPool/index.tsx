@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import type { ClaimPermission } from 'contexts/Pools/types';
 import { useSetup } from 'contexts/Setup';
@@ -23,19 +22,25 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { useOverlay } from 'contexts/Overlay';
 
 export const JoinPool = () => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
-  const { txFees } = useTxMeta();
   const { activeAccount } = useConnect();
   const { newBatchCall } = useBatchCall();
   const { setActiveAccountSetup } = useSetup();
+  const { txFees, notEnoughFunds } = useTxMeta();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
-  const { setStatus: setModalStatus, config, setResize } = useModal();
-  const { id: poolId, setActiveTab } = config;
+  const {
+    setModalStatus,
+    config: { options },
+    setModalResize,
+  } = useOverlay().modal;
+
+  const { id: poolId, setActiveTab } = options;
   const { units } = network;
 
   const { totalPossibleBond, totalAdditionalBond } =
@@ -63,9 +68,10 @@ export const JoinPool = () => {
   const [feedbackErrors, setFeedbackErrors] = useState<string[]>([]);
 
   // modal resize on form update
-  useEffect(() => {
-    setResize();
-  }, [bond, feedbackErrors.length]);
+  useEffect(
+    () => setModalResize(),
+    [bond, notEnoughFunds, feedbackErrors.length]
+  );
 
   // tx to submit
   const getTx = () => {

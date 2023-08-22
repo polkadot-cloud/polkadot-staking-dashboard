@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
 import { useStaking } from 'contexts/Staking';
@@ -25,23 +24,29 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
+import { useOverlay } from 'contexts/Overlay';
 
 export const Unbond = () => {
   const { t } = useTranslation('modals');
-  const { api, network, consts } = useApi();
-  const { units } = network;
-  const { setStatus: setModalStatus, setResize, config } = useModal();
-  const { activeAccount } = useConnect();
-  const { staking } = useStaking();
-  const { getBondedAccount } = useBonded();
-  const { bondFor } = config;
-  const { stats } = usePoolsConfig();
-  const { isDepositor, selectedActivePool } = useActivePools();
   const { txFees } = useTxMeta();
-  const { getTransferOptions } = useTransferOptions();
+  const { staking } = useStaking();
+  const { stats } = usePoolsConfig();
+  const { activeAccount } = useConnect();
+  const { notEnoughFunds } = useTxMeta();
+  const { getBondedAccount } = useBonded();
+  const { api, network, consts } = useApi();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
+  const { getTransferOptions } = useTransferOptions();
+  const { isDepositor, selectedActivePool } = useActivePools();
+  const {
+    setModalStatus,
+    setModalResize,
+    config: { options },
+  } = useOverlay().modal;
 
+  const { units } = network;
+  const { bondFor } = options;
   const controller = getBondedAccount(activeAccount);
   const { minNominatorBond: minNominatorBondBn } = staking;
   const { minJoinBond: minJoinBondBn, minCreateBond: minCreateBondBn } = stats;
@@ -168,9 +173,10 @@ export const Unbond = () => {
   }
 
   // modal resize on form update
-  useEffect(() => {
-    setResize();
-  }, [bond, feedbackErrors.length, warnings.length]);
+  useEffect(
+    () => setModalResize(),
+    [bond, notEnoughFunds, feedbackErrors.length, warnings.length]
+  );
 
   return (
     <>

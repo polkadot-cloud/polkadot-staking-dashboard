@@ -10,10 +10,10 @@ import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import type { LedgerResponse } from 'contexts/Hardware/types';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { useTxMeta } from 'contexts/TxMeta';
 import { EstimatedTxFee } from 'library/EstimatedTxFee';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
+import { useOverlay } from 'contexts/Overlay';
 import type { SubmitProps } from '../types';
 
 export const Ledger = ({
@@ -40,7 +40,7 @@ export const Ledger = ({
     handleUnmount,
   } = useLedgerHardware();
   const { openHelp } = useHelp();
-  const { setResize } = useModal();
+  const { setModalResize } = useOverlay().modal;
   const { activeAccount, accountHasSigner, getAccount } = useConnect();
   const { txFeesValid, setTxSignature, getTxSignature } = useTxMeta();
 
@@ -88,7 +88,7 @@ export const Ledger = ({
 
   // Resize modal on content change.
   useEffect(() => {
-    setResize();
+    setModalResize();
   }, [isPaired, getStatusCodes()]);
 
   // Listen for new Ledger status reports.

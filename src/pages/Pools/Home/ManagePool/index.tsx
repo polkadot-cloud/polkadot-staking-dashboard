@@ -6,17 +6,17 @@ import { ButtonHelp, ButtonPrimary, PageRow } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { Nominations } from 'pages/Nominate/Active/Nominations';
+import { useOverlay } from 'contexts/Overlay';
 
 export const ManagePool = () => {
   const { t } = useTranslation('pages');
   const { isSyncing } = useUi();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { activeAccount } = useConnect();
   const {
     isOwner,
@@ -55,7 +55,9 @@ export const ManagePool = () => {
                   iconTransform="grow-1"
                   text={t('pools.nominate')}
                   disabled={!canNominate}
-                  onClick={() => openModalWith('NominatePool', {}, 'small')}
+                  onClick={() =>
+                    openModal({ key: 'NominatePool', size: 'small' })
+                  }
                 />
               </div>
             </CardHeaderWrapper>

@@ -3,25 +3,24 @@
 
 import { faChartLine } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useModal } from 'contexts/Modal';
+import { useOverlay } from 'contexts/Overlay';
 import type { MetricsProps } from '../types';
 
 export const Metrics = ({ display, address }: MetricsProps) => {
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
 
   return (
     <div className="label">
       <button
         type="button"
         onClick={() =>
-          openModalWith(
-            'ValidatorMetrics',
-            {
+          openModal({
+            key: 'ValidatorMetrics',
+            options: {
               address,
               identity: display,
             },
-            'large'
-          )
+          })
         }
       >
         <FontAwesomeIcon icon={faChartLine} transform="shrink-2" />

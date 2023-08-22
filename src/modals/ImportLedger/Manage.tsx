@@ -7,11 +7,11 @@ import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLedgerApp } from 'contexts/Hardware/Utils';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { usePrompt } from 'contexts/Prompt';
 import { ReactComponent as StatusBarIcon } from 'img/ledgerIcon.svg';
 import { Heading } from 'library/Import/Heading';
 import type { AnyJson } from 'types';
+import { useOverlay } from 'contexts/Overlay';
 import { Addresess } from './Addresses';
 import { Reset } from './Reset';
 
@@ -25,7 +25,7 @@ export const Manage = ({
   const { setIsExecuting, getIsExecuting, resetStatusCodes, getFeedback } =
     useLedgerHardware();
   const { openPromptWith } = usePrompt();
-  const { replaceModalWith } = useModal();
+  const { replaceModal } = useOverlay().modal;
   const { openHelp } = useHelp();
 
   const { appName, Icon } = getLedgerApp(name);
@@ -75,7 +75,7 @@ export const Manage = ({
           resetStatusCodes();
         }}
         handleDone={() =>
-          replaceModalWith('Connect', { disableScroll: true }, 'large')
+          replaceModal({ key: 'Connect', options: { disableScroll: true } })
         }
         t={{
           tDone: t('done', { ns: 'library' }),

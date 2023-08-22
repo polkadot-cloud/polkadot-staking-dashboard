@@ -24,7 +24,7 @@ export const Wrapper = styled(motion.div)`
     padding: 0.65rem 0rem;
 
     &.success {
-      border: 1px solid var(--network-color-primary);
+      border: 1px solid var(--accent-color-primary);
     }
     &.warning {
       border: 1px solid var(--status-warning-color);
@@ -64,8 +64,8 @@ export const Wrapper = styled(motion.div)`
 
     > span {
       &.success {
-        color: var(--network-color-primary);
-        border: 1px solid var(--network-color-primary);
+        color: var(--accent-color-primary);
+        border: 1px solid var(--accent-color-primary);
       }
       &.warning {
         color: var(--status-warning-color);

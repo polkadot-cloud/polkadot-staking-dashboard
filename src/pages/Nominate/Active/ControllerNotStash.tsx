@@ -13,10 +13,10 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
+import { useOverlay } from 'contexts/Overlay';
 
 export const ControllerNotStash = () => {
   const { t } = useTranslation('pages');
@@ -24,7 +24,7 @@ export const ControllerNotStash = () => {
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { addressDifferentToStash } = useStaking();
   const { getBondedAccount } = useBonded();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { isSyncing } = useUi();
   const controller = getBondedAccount(activeAccount);
 
@@ -57,9 +57,7 @@ export const ControllerNotStash = () => {
                   <ButtonPrimary
                     text={t('nominate.updateToStash')}
                     iconLeft={faCircleArrowRight}
-                    onClick={() =>
-                      openModalWith('UpdateController', {}, 'large')
-                    }
+                    onClick={() => openModal({ key: 'UpdateController' })}
                   />
                 </div>
               </CardWrapper>

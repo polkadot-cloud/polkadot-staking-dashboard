@@ -14,7 +14,6 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -24,6 +23,7 @@ import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
+import { useOverlay } from 'contexts/Overlay';
 import { ContentWrapper } from './Wrappers';
 
 export const Forms = forwardRef(
@@ -36,11 +36,14 @@ export const Forms = forwardRef(
     const { selectedActivePool } = useActivePools();
     const { removeFromBondedPools } = useBondedPools();
     const { removePoolMember } = usePoolMembers();
-    const { setStatus: setModalStatus, config } = useModal();
+    const {
+      setModalStatus,
+      config: { options },
+    } = useOverlay().modal;
     const { getBondedAccount } = useBonded();
     const { getSignerWarnings } = useSignerWarnings();
 
-    const { bondFor, poolClosure } = config || {};
+    const { bondFor, poolClosure } = options || {};
     const { historyDepth } = consts;
     const { units } = network;
     const controller = getBondedAccount(activeAccount);

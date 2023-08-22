@@ -27,7 +27,7 @@ export const Wrapper = styled.div`
 
     .complete {
       margin: 0;
-      color: var(--network-color-primary);
+      color: var(--accent-color-primary);
     }
 
     span {

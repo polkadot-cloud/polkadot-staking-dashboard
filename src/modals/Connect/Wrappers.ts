@@ -69,7 +69,7 @@ export const ExtensionInner = styled.div`
       color: var(--status-success-color);
     }
     .active {
-      color: var(--network-color-primary);
+      color: var(--accent-color-primary);
     }
   }
   .icon {

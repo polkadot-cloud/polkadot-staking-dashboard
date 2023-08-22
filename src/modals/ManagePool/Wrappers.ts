@@ -61,7 +61,7 @@ export const SliderWrapper = styled.div`
     }
     &.neutral,
     .neutral {
-      color: var(--network-color-primary);
+      color: var(--accent-color-primary);
       opacity: 0.8;
     }
     &.danger,
@@ -103,7 +103,7 @@ export const SliderWrapper = styled.div`
       }
 
       .rc-slider-handle-dragging {
-        box-shadow: 0 0 0 5px var(--network-color-transparent) !important;
+        box-shadow: 0 0 0 5px var(--accent-color-transparent) !important;
       }
     }
   }

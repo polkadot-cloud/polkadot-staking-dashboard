@@ -5,20 +5,24 @@ import { ModalPadding } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
 import type { Validator } from 'contexts/Validators/types';
 import { Title } from 'library/Modal/Title';
 import { ValidatorList } from 'library/ValidatorList';
+import { useOverlay } from 'contexts/Overlay';
 import { FooterWrapper, ListWrapper } from './Wrappers';
 
 export const SelectFavorites = () => {
   const { t } = useTranslation('modals');
   const { consts } = useApi();
-  const { config, setStatus, setResize } = useModal();
+  const {
+    config: { options },
+    setModalStatus,
+    setModalResize,
+  } = useOverlay().modal;
   const { favoritesList } = useValidators();
   const { maxNominations } = consts;
-  const { nominations, callback: generateNominationsCallback } = config;
+  const { nominations, callback: generateNominationsCallback } = options;
 
   // store filtered favorites
   const [availableFavorites, setAvailableFavorites] = useState<Validator[]>([]);
@@ -40,9 +44,7 @@ export const SelectFavorites = () => {
     }
   }, []);
 
-  useEffect(() => {
-    setResize();
-  }, [selectedFavorites]);
+  useEffect(() => setModalResize(), [selectedFavorites]);
 
   const batchKey = 'favorite_validators';
 
@@ -55,7 +57,7 @@ export const SelectFavorites = () => {
     if (!selectedFavorites.length) return;
     const newNominations = [...nominations].concat(...selectedFavorites);
     generateNominationsCallback(newNominations);
-    setStatus('closing');
+    setModalStatus('closing');
   };
 
   const totalAfterSelection = nominations.length + selectedFavorites.length;

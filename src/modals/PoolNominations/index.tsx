@@ -3,14 +3,16 @@
 
 import { ModalPadding } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { ValidatorList } from 'library/ValidatorList';
+import { useOverlay } from 'contexts/Overlay';
 import { ListWrapper } from './Wrappers';
 
 export const PoolNominations = () => {
-  const { config } = useModal();
-  const { nominator, targets } = config;
+  const {
+    config: { options },
+  } = useOverlay().modal;
+  const { nominator, targets } = options;
   const batchKey = 'pool_nominations';
   const { t } = useTranslation('modals');
 

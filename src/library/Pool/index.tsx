@@ -8,7 +8,6 @@ import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { useMenu } from 'contexts/Menu';
-import { useModal } from 'contexts/Modal';
 import { useNotifications } from 'contexts/Notifications';
 import type { NotificationText } from 'contexts/Notifications/types';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -27,6 +26,7 @@ import {
   Wrapper,
 } from 'library/ListItem/Wrappers';
 import { usePoolsTabs } from 'pages/Pools/Home/context';
+import { useOverlay } from 'contexts/Overlay';
 import { JoinPool } from '../ListItem/Labels/JoinPool';
 import { Members } from '../ListItem/Labels/Members';
 import { PoolId } from '../ListItem/Labels/PoolId';
@@ -35,7 +35,7 @@ import type { PoolProps } from './types';
 export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
   const { t } = useTranslation('library');
   const { memberCounter, addresses, id, state } = pool;
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { meta } = useBondedPools();
   const { membership } = usePoolMemberships();
@@ -80,14 +80,13 @@ export const Pool = ({ pool, batchKey, batchIndex }: PoolProps) => {
     wrap: null,
     title: `${t('viewPoolNominations')}`,
     cb: () => {
-      openModalWith(
-        'PoolNominations',
-        {
+      openModal({
+        key: 'PoolNominations',
+        options: {
           nominator: addresses.stash,
           targets: targetValidators,
         },
-        'large'
-      );
+      });
     },
   });
 

@@ -15,7 +15,6 @@ import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { SelectableWrapper } from 'library/List';
@@ -24,6 +23,7 @@ import { SelectItem } from 'library/SelectItems/Item';
 import { ValidatorList } from 'library/ValidatorList';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { useStaking } from 'contexts/Staking';
+import { useOverlay } from 'contexts/Overlay';
 import type {
   GenerateNominationsInnerProps,
   Nominations,
@@ -36,7 +36,7 @@ export const GenerateNominations = ({
   batchKey,
 }: GenerateNominationsInnerProps) => {
   const { t } = useTranslation('library');
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { isReady, consts } = useApi();
   const { isFastUnstaking } = useUnstaking();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -146,14 +146,14 @@ export const GenerateNominations = ({
       setNominations([..._nominations]);
       updateSetters(_nominations);
     };
-    openModalWith(
-      'SelectFavorites',
-      {
+    openModal({
+      key: 'SelectFavorites',
+      options: {
         nominations,
         callback: updateList,
       },
-      'xl'
-    );
+      size: 'xl',
+    });
   };
 
   // function for clearing nomination list

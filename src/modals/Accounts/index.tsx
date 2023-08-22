@@ -15,10 +15,10 @@ import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useOverlay } from 'contexts/Overlay';
 import { AccountButton } from './Account';
 import { Delegates } from './Delegates';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
@@ -37,7 +37,11 @@ export const Accounts = () => {
   const { bondedAccounts } = useBonded();
   const { ledgers, getLocks } = useBalances();
   const { memberships } = usePoolMemberships();
-  const { replaceModalWith, status: modalStatus, setResize } = useModal();
+  const {
+    replaceModal,
+    status: modalStatus,
+    setModalResize,
+  } = useOverlay().modal;
   const { activeAccount, disconnectFromAccount, setActiveProxy, accounts } =
     useConnect();
 
@@ -110,14 +114,10 @@ export const Accounts = () => {
     }
   }
 
-  useEffect(() => {
-    setLocalAccounts(accounts);
-  }, [accounts]);
+  useEffect(() => setLocalAccounts(accounts), [accounts]);
 
   useEffectIgnoreInitial(() => {
-    if (modalStatus === 'open') {
-      setResize();
-    }
+    if (modalStatus === 'open') setModalResize();
   }, [activeAccount, accounts, bondedAccounts, balances, ledgers, extensions]);
 
   return (
@@ -130,7 +130,7 @@ export const Accounts = () => {
             iconLeft={faChevronLeft}
             iconTransform="shrink-3"
             onClick={() =>
-              replaceModalWith('Connect', { disableScroll: true }, 'large')
+              replaceModal({ key: 'Connect', options: { disableScroll: true } })
             }
             marginLeft
           />
@@ -139,7 +139,7 @@ export const Accounts = () => {
           {activeAccount && (
             <ButtonText
               style={{
-                color: 'var(--network-color-primary)',
+                color: 'var(--accent-color-primary)',
               }}
               text={t('disconnect')}
               iconRight={faLinkSlash}

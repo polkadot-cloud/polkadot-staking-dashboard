@@ -7,15 +7,15 @@ import { useApi } from 'contexts/Api';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import type { LedgerAddress, LedgerResponse } from 'contexts/Hardware/types';
-import { useModal } from 'contexts/Modal';
 import { useLedgerLoop } from 'library/Hooks/useLedgerLoop';
 import type { AnyJson } from 'types';
+import { useOverlay } from 'contexts/Overlay';
 import { Manage } from './Manage';
 import { Splash } from './Splash';
 
 export const ImportLedger: React.FC = () => {
   const { network } = useApi();
-  const { setResize } = useModal();
+  const { setModalResize } = useOverlay().modal;
   const {
     transportResponse,
     getIsExecuting,
@@ -137,7 +137,7 @@ export const ImportLedger: React.FC = () => {
 
   // Resize modal on content change.
   useEffect(() => {
-    setResize();
+    setModalResize();
   }, [isPaired, getStatusCodes(), addressesRef.current]);
 
   // Listen for new Ledger status reports.
