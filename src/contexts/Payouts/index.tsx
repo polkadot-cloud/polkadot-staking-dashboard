@@ -4,9 +4,10 @@
 import React, { useEffect } from 'react';
 import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
-import type { Sync, AnyJson } from 'types';
+import type { AnyApi, Sync, AnyJson } from 'types';
 import { useConnect } from 'contexts/Connect';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useNetworkMetrics } from 'contexts/Network';
 import { defaultPayoutsContext } from './defaults';
 import type { PayoutsContextInterface } from './types';
 
@@ -15,9 +16,10 @@ export const PayoutsProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { network } = useApi();
+  const { api, network } = useApi();
   const { isNominating } = useStaking();
   const { activeAccount } = useConnect();
+  const { activeEra } = useNetworkMetrics();
 
   // Store active accont's payout state.
   const [payouts, setPayouts] = React.useState<AnyJson>(null);
@@ -25,14 +27,42 @@ export const PayoutsProvider = ({
   // Track whether payouts have been fetched.
   const payoutsSynced = React.useRef<Sync>('unsynced');
 
+  // Fetch pending payouts.
+  const fetchPendingPayouts = async () => {
+    if (!api) return;
+
+    // Fetch last era payouts.
+    // TODO: Loop through last `MaxSupportedPayoutEras`.
+    // TODO: clear local storage eras that are older than `MaxSupportedPayoutEras`.
+    const lastEra = activeEra.index.minus(1);
+
+    // TODO: only fetch if not in local storage.
+    const lastEraPayout = await api.query.staking.erasRewardPoints<AnyApi>(
+      lastEra.toString()
+    );
+
+    // eslint-disable-next-line
+    const { total, individual } = lastEraPayout;
+
+    // TODO: store this era payout in local storage.
+    // TODO: Check if active account had a payout in this era. If so, store in Payouts and in local stoarage.
+
+    // TODO: commit all payouts to state once all synced.
+    setPayouts({});
+    payoutsSynced.current = 'synced';
+  };
+
   // Fetch payouts if active account is nominating.
   useEffect(() => {
-    if (isNominating() && payoutsSynced.current === 'unsynced') {
+    if (
+      isNominating() &&
+      !activeEra.index.isZero() &&
+      payoutsSynced.current === 'unsynced'
+    ) {
       payoutsSynced.current = 'syncing';
-      setPayouts({});
-      payoutsSynced.current = 'synced';
+      fetchPendingPayouts();
     }
-  }, [isNominating()]);
+  }, [isNominating(), activeEra]);
 
   // Clear payout state on network / active account change.
   useEffectIgnoreInitial(() => {
