@@ -8,16 +8,16 @@ import type { LedgerAccount } from 'contexts/Connect/types';
 import { useLedgerHardware } from 'contexts/Hardware/Ledger';
 import { getLocalLedgerAddresses } from 'contexts/Hardware/Utils';
 import type { LedgerAddress } from 'contexts/Hardware/types';
-import { useModal } from 'contexts/Modal';
 import { usePrompt } from 'contexts/Prompt';
 import { ConfirmWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
+import { useOverlay } from 'contexts/Overlay';
 
 export const Reset = ({ removeLedgerAddress }: AnyJson) => {
   const { t } = useTranslation('modals');
   const { forgetAccounts } = useConnect();
   const { setStatus } = usePrompt();
-  const { replaceModalWith } = useModal();
+  const { replaceModal } = useOverlay().modal;
   const { ledgerAccounts, removeLedgerAccount } = useLedgerHardware();
 
   const removeAccounts = () => {
@@ -33,7 +33,7 @@ export const Reset = ({ removeLedgerAddress }: AnyJson) => {
     });
 
     // Go back to Connect modal.
-    replaceModalWith('Connect', { disableScroll: true }, 'large');
+    replaceModal({ key: 'Connect', options: { disableScroll: true } });
   };
 
   return (

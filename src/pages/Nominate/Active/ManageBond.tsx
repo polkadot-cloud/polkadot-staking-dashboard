@@ -10,18 +10,18 @@ import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { useOverlay } from 'contexts/Overlay';
 import { BondedChart } from '../../../library/BarChart/BondedChart';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
   const { network } = useApi();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { getStashLedger } = useBalances();
   const { getTransferOptions } = useTransferOptions();
@@ -57,7 +57,11 @@ export const ManageBond = () => {
             }
             marginRight
             onClick={() =>
-              openModalWith('Bond', { bondFor: 'nominator' }, 'small')
+              openModal({
+                key: 'Bond',
+                options: { bondFor: 'nominator' },
+                size: 'small',
+              })
             }
             text="+"
           />
@@ -70,7 +74,11 @@ export const ManageBond = () => {
             }
             marginRight
             onClick={() =>
-              openModalWith('Unbond', { bondFor: 'nominator' }, 'small')
+              openModal({
+                key: 'Unbond',
+                options: { bondFor: 'nominator' },
+                size: 'small',
+              })
             }
             text="-"
           />
@@ -81,11 +89,11 @@ export const ManageBond = () => {
             iconLeft={faLockOpen}
             marginRight
             onClick={() =>
-              openModalWith(
-                'UnlockChunks',
-                { bondFor: 'nominator', disableWindowResize: true },
-                'small'
-              )
+              openModal({
+                key: 'UnlockChunks',
+                options: { bondFor: 'nominator', disableWindowResize: true },
+                size: 'small',
+              })
             }
             text={String(totalUnlockChuncks ?? 0)}
           />

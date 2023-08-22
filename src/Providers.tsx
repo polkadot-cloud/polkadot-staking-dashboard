@@ -16,7 +16,6 @@ import { HelpProvider } from 'contexts/Help';
 import { IdentitiesProvider } from 'contexts/Identities';
 import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
-import { ModalProvider } from 'contexts/Modal';
 import { NetworkMetricsProvider } from 'contexts/Network';
 import { NotificationsProvider } from 'contexts/Notifications';
 import { PromptProvider } from 'contexts/Prompt';
@@ -36,7 +35,7 @@ import { TxMetaProvider } from 'contexts/TxMeta';
 import { UIProvider } from 'contexts/UI';
 import { ValidatorsProvider } from 'contexts/Validators';
 import { withProviders } from 'library/Hooks';
-import { CanvasProvider } from 'contexts/Canvas';
+import { OverlayProvider } from 'contexts/Overlay';
 
 // !! Provider order matters.
 export const Providers = withProviders(
@@ -70,8 +69,7 @@ export const Providers = withProviders(
   TooltipProvider,
   TxMetaProvider,
   ExtrinsicsProvider,
-  ModalProvider,
-  CanvasProvider,
+  OverlayProvider,
   PromptProvider,
   MigrateProvider
 )(ThemedRouter);

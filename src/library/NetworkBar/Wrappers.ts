@@ -55,7 +55,7 @@ export const Summary = styled.div`
     opacity: 0.75;
   }
   p {
-    border-left: 1px solid var(--network-color-transparent);
+    border-left: 1px solid var(--accent-color-transparent);
     margin: 0.25rem 0.5rem 0.25rem 0.15rem;
     font-size: 0.85rem;
     padding-left: 0.5rem;

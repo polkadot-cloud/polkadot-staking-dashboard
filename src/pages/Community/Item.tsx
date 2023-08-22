@@ -11,14 +11,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Suspense, lazy, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
-import { useModal } from 'contexts/Modal';
+import { useOverlay } from 'contexts/Overlay';
 import { ItemWrapper } from './Wrappers';
 import { useCommunitySections } from './context';
 import type { ItemProps } from './types';
 
 export const Item = ({ item, actionable }: ItemProps) => {
   const { t } = useTranslation('pages');
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { network } = useApi();
 
   const {
@@ -76,7 +76,7 @@ export const Item = ({ item, actionable }: ItemProps) => {
             {name}
             <button
               type="button"
-              onClick={() => openModalWith('Bio', { name, bio }, 'large')}
+              onClick={() => openModal({ key: 'Bio', options: { name, bio } })}
               className="active"
             >
               <span>{t('community.bio')}</span>

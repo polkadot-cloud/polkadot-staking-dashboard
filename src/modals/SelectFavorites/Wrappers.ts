@@ -26,7 +26,7 @@ export const FooterWrapper = styled.div`
 
   button {
     font-size: 1.2rem;
-    color: var(--network-color-primary);
+    color: var(--accent-color-primary);
 
     &:disabled {
       color: var(--text-color-secondary);

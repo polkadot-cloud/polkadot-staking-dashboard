@@ -49,7 +49,7 @@ export const ContentWrapper = styled.div`
   position: relative;
 
   a {
-    color: var(--network-color-primary);
+    color: var(--accent-color-primary);
   }
   .header {
     width: 100%;
@@ -121,7 +121,7 @@ export const FilterListButton = styled.button<{ $active: boolean }>`
   border: 1px solid
     ${(props) =>
       props.$active
-        ? 'var(--network-color-stroke)'
+        ? 'var(--accent-color-stroke)'
         : 'var(--button-primary-background)'};
   background: var(--button-primary-background);
   width: 100%;
@@ -136,7 +136,7 @@ export const FilterListButton = styled.button<{ $active: boolean }>`
   h4 {
     color: ${(props) =>
       props.$active
-        ? 'var(--network-color-stroke)'
+        ? 'var(--accent-color-stroke)'
         : 'var(--text-color-secondary)'};
     transition: color var(--transition-duration);
   }
@@ -144,7 +144,7 @@ export const FilterListButton = styled.button<{ $active: boolean }>`
   svg {
     color: ${(props) =>
       props.$active
-        ? 'var(--network-color-stroke)'
+        ? 'var(--accent-color-stroke)'
         : 'var(--text-color-secondary)'};
     opacity: ${(props) => (props.$active ? 1 : 0.7)};
     transition: color var(--transition-duration);

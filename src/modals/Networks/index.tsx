@@ -9,9 +9,9 @@ import { useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { NetworkList } from 'config/networks';
 import { useApi } from 'contexts/Api';
-import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import type { AnyJson, NetworkName } from 'types';
+import { useOverlay } from 'contexts/Overlay';
 import { ReactComponent as BraveIconSVG } from '../../img/brave-logo.svg';
 import {
   BraveWarning,
@@ -23,7 +23,7 @@ import {
 
 export const Networks = () => {
   const { t } = useTranslation('modals');
-  const { setStatus, setResize } = useModal();
+  const { setModalStatus, setModalResize } = useOverlay().modal;
   const { switchNetwork, network, isLightClient } = useApi();
   const networkKey: string = network.name;
 
@@ -36,9 +36,7 @@ export const Networks = () => {
     });
   });
 
-  useEffect(() => {
-    setResize();
-  }, [braveBrowser]);
+  useEffect(() => setModalResize(), [braveBrowser]);
 
   return (
     <>
@@ -61,7 +59,7 @@ export const Networks = () => {
                     onClick={() => {
                       if (networkKey !== key) {
                         switchNetwork(key, isLightClient);
-                        setStatus('closing');
+                        setModalStatus('closing');
                       }
                     }}
                   >
@@ -94,7 +92,7 @@ export const Networks = () => {
               type="button"
               onClick={() => {
                 switchNetwork(networkKey as NetworkName, false);
-                setStatus('closing');
+                setModalStatus('closing');
               }}
             >
               <h3>RPC</h3>
@@ -106,7 +104,7 @@ export const Networks = () => {
               type="button"
               onClick={() => {
                 switchNetwork(networkKey as NetworkName, true);
-                setStatus('closing');
+                setModalStatus('closing');
               }}
             >
               <h3>{t('lightClient')}</h3>

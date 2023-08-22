@@ -11,7 +11,6 @@ import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
-import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useSetup } from 'contexts/Setup';
 import { useStaking } from 'contexts/Staking';
@@ -19,6 +18,7 @@ import { useUi } from 'contexts/UI';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
+import { useOverlay } from 'contexts/Overlay';
 
 export const NominationStatus = ({
   showButtons = true,
@@ -31,7 +31,7 @@ export const NominationStatus = ({
   const { isReady } = useApi();
   const { inSetup } = useStaking();
   const { isNetworkSyncing } = useUi();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { metrics } = useNetworkMetrics();
   const { getBondedAccount } = useBonded();
   const { checking, isExposed } = useFastUnstake();
@@ -55,14 +55,14 @@ export const NominationStatus = ({
           title: fastUnstakeText,
           icon: faBolt,
           onClick: () => {
-            openModalWith('ManageFastUnstake', {}, 'small');
+            openModal({ key: 'ManageFastUnstake', size: 'small' });
           },
         }
       : {
           title: t('nominate.unstake'),
           icon: faSignOutAlt,
           disabled: !isReady || isReadOnlyAccount(controller) || !activeAccount,
-          onClick: () => openModalWith('Unstake', {}, 'small'),
+          onClick: () => openModal({ key: 'Unstake', size: 'small' }),
         };
 
   // Display progress alongside start title if exists and in setup.

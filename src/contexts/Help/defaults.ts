@@ -9,6 +9,6 @@ export const defaultHelpContext: HelpContextInterface = {
   closeHelp: () => {},
   setStatus: (status) => {},
   setDefinition: (definition) => {},
-  status: 0,
+  status: 'closed',
   definition: null,
 };

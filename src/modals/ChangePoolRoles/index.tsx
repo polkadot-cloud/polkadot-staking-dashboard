@@ -5,22 +5,28 @@ import { ModalPadding } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useEffect } from 'react';
+import { useOverlay } from 'contexts/Overlay';
 import { RoleChange } from './RoleChange';
 import { Wrapper } from './Wrapper';
 
 export const ChangePoolRoles = () => {
   const { t } = useTranslation('modals');
   const { api } = useApi();
-  const { setStatus: setModalStatus } = useModal();
-  const { replacePoolRoles } = useBondedPools();
   const { activeAccount } = useConnect();
-  const { config } = useModal();
-  const { id: poolId, roleEdits } = config;
+  const { notEnoughFunds } = useTxMeta();
+  const { replacePoolRoles } = useBondedPools();
+  const {
+    setModalStatus,
+    config: { options },
+    setModalResize,
+  } = useOverlay().modal;
+  const { id: poolId, roleEdits } = options;
 
   // tx to submit
   const getTx = () => {
@@ -52,6 +58,8 @@ export const ChangePoolRoles = () => {
       replacePoolRoles(poolId, roleEdits);
     },
   });
+
+  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   return (
     <>

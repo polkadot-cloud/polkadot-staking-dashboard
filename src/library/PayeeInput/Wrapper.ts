@@ -11,7 +11,7 @@ export const Wrapper = styled.div<{ $activeInput?: boolean }>`
     border-bottom: 1.5px solid
       ${(props) =>
         props.$activeInput
-          ? 'var(--network-color-primary)'
+          ? 'var(--accent-color-primary)'
           : 'var(--border-primary-color)'};
     padding: 0rem 0 0.4rem 0;
     transition: border var(--transition-duration);

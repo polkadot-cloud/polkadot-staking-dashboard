@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { usePlugins } from 'contexts/Plugins';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
@@ -18,6 +17,7 @@ import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
+import { useOverlay } from 'contexts/Overlay';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
@@ -27,7 +27,7 @@ export const BalanceChart = () => {
   const prices = usePrices();
   const { plugins } = usePlugins();
   const { isNetworkSyncing } = useUi();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { getBalance, getLocks } = useBalances();
   const { activeAccount, accountHasSigner } = useConnect();
   const { feeReserve, getTransferOptions } = useTransferOptions();
@@ -234,7 +234,7 @@ export const BalanceChart = () => {
                     <ButtonTertiary
                       text="Reserve Balance"
                       onClick={() =>
-                        openModalWith('UpdateReserve', {}, 'small')
+                        openModal({ key: 'UpdateReserve', size: 'small' })
                       }
                       iconRight={
                         isNetworkSyncing

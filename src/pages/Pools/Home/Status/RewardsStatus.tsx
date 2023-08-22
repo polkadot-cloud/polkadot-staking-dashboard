@@ -7,10 +7,10 @@ import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
+import { useOverlay } from 'contexts/Overlay';
 
 export const RewardsStatus = () => {
   const { t } = useTranslation('pages');
@@ -19,7 +19,7 @@ export const RewardsStatus = () => {
     isReady,
   } = useApi();
   const { isPoolSyncing } = useUi();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { selectedActivePool } = useActivePools();
   const { activeAccount, isReadOnlyAccount } = useConnect();
 
@@ -42,7 +42,11 @@ export const RewardsStatus = () => {
           disabled: !isReady || isReadOnlyAccount(activeAccount),
           small: true,
           onClick: () =>
-            openModalWith('ClaimReward', { claimType: 'withdraw' }, 'small'),
+            openModal({
+              key: 'ClaimReward',
+              options: { claimType: 'withdraw' },
+              size: 'small',
+            }),
         },
         {
           title: t('pools.compound'),
@@ -53,7 +57,11 @@ export const RewardsStatus = () => {
             selectedActivePool?.bondedPool?.state === 'Destroying',
           small: true,
           onClick: () =>
-            openModalWith('ClaimReward', { claimType: 'bond' }, 'small'),
+            openModal({
+              key: 'ClaimReward',
+              options: { claimType: 'bond' },
+              size: 'small',
+            }),
         },
       ]
     : undefined;

@@ -49,7 +49,7 @@ export const Wrapper = styled.div`
       }
 
       h2 {
-        color: var(--network-color-primary);
+        color: var(--accent-color-primary);
       }
 
       h4 {

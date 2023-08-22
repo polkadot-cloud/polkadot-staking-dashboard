@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
-import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
@@ -24,11 +23,12 @@ import {
   Separator,
   Wrapper,
 } from 'library/ListItem/Wrappers';
+import { useOverlay } from 'contexts/Overlay';
 
 export const Member = ({ who, batchKey, batchIndex }: any) => {
   const { t } = useTranslation('pages');
   const { meta } = usePoolMembers();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { selectActive } = useList();
   const { activeEra } = useNetworkMetrics();
   const { selectedActivePool, isOwner, isBouncer } = useActivePools();
@@ -57,14 +57,14 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
         wrap: null,
         title: `${t('pools.unbondFunds')}`,
         cb: () => {
-          openModalWith(
-            'UnbondPoolMember',
-            {
+          openModal({
+            key: 'UnbondPoolMember',
+            options: {
               who,
               member,
             },
-            'small'
-          );
+            size: 'small',
+          });
         },
       });
     }
@@ -83,7 +83,11 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
           wrap: null,
           title: `${t('pools.withdrawFunds')}`,
           cb: () => {
-            openModalWith('WithdrawPoolMember', { who, member }, 'small');
+            openModal({
+              key: 'WithdrawPoolMember',
+              options: { who, member },
+              size: 'small',
+            });
           },
         });
       }

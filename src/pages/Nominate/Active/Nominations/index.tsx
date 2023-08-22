@@ -7,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
@@ -16,6 +15,7 @@ import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { ValidatorList } from 'library/ValidatorList';
 import type { MaybeAccount } from 'types';
+import { useOverlay } from 'contexts/Overlay';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({
@@ -26,7 +26,7 @@ export const Nominations = ({
   nominator: MaybeAccount;
 }) => {
   const { t } = useTranslation('pages');
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { inSetup } = useStaking();
   const { isSyncing } = useUi();
   const { activeAccount, isReadOnlyAccount } = useConnect();
@@ -58,30 +58,30 @@ export const Nominations = ({
   // callback function to stop nominating selected validators
   const cbStopNominatingSelected = (provider: any) => {
     const { selected } = provider;
-    openModalWith(
-      'ChangeNominations',
-      {
+    openModal({
+      key: 'ChangeNominations',
+      options: {
         nominations: [...nominations].filter(
           (n) => !selected.map((_s: any) => _s.address).includes(n)
         ),
         provider,
         bondFor,
       },
-      'small'
-    );
+      size: 'small',
+    });
   };
 
   // callback function for adding nominations
   const cbAddNominations = ({ setSelectActive }: any) => {
     setSelectActive(false);
-    openModalWith(
-      'NominateFromFavorites',
-      {
+    openModal({
+      key: 'NominateFromFavorites',
+      options: {
         nominations,
         bondFor,
       },
-      'xl'
-    );
+      size: 'xl',
+    });
   };
 
   // determine whether buttons are disabled
@@ -116,14 +116,14 @@ export const Nominations = ({
               text={t('nominate.stop')}
               disabled={stopBtnDisabled}
               onClick={() =>
-                openModalWith(
-                  'ChangeNominations',
-                  {
+                openModal({
+                  key: 'ChangeNominations',
+                  options: {
                     nominations: [],
                     bondFor,
                   },
-                  'small'
-                )
+                  size: 'small',
+                })
               }
             />
           )}
