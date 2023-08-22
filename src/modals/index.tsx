@@ -9,6 +9,7 @@ import { ErrorFallbackModal } from 'library/ErrorBoundary';
 import { useHelp } from 'contexts/Help';
 import { useCanvas } from 'contexts/Canvas';
 import { useOverlay } from 'contexts/Overlay';
+import type { ModalProps } from 'contexts/Overlay/types';
 import { AccountPoolRoles } from './AccountPoolRoles';
 import { Accounts } from './Accounts';
 import { Bio } from './Bio';
@@ -41,45 +42,49 @@ import { UpdateReserve } from './UpdateReserve';
 import { ValidatorMetrics } from './ValidatorMetrics';
 import { WithdrawPoolMember } from './WithdrawPoolMember';
 
-export const Modals = () => (
-  <Modal
-    modals={{
-      Bio,
-      AccountPoolRoles,
-      Bond,
-      ChangeNominations,
-      ChangePoolRoles,
-      ChooseLanguage,
-      ClaimReward,
-      Connect,
-      Accounts,
-      GoToFeedback,
-      JoinPool,
-      ImportLedger,
-      ImportVault,
-      ManagePool,
-      ManageFastUnstake,
-      Networks,
-      Nominate,
-      NominateFromFavorites,
-      NominatePool,
-      PoolNominations,
-      SelectFavorites,
-      Settings,
-      ValidatorMetrics,
-      UnbondPoolMember,
-      UnlockChunks,
-      Unstake,
-      UpdateController,
-      Unbond,
-      UpdatePayee,
-      UpdateReserve,
-      WithdrawPoolMember,
-    }}
-  />
-);
+export const Modals = () => {
+  const { status } = useHelp();
+  return (
+    <Modal
+      helpStatus={status}
+      modals={{
+        Bio,
+        AccountPoolRoles,
+        Bond,
+        ChangeNominations,
+        ChangePoolRoles,
+        ChooseLanguage,
+        ClaimReward,
+        Connect,
+        Accounts,
+        GoToFeedback,
+        JoinPool,
+        ImportLedger,
+        ImportVault,
+        ManagePool,
+        ManageFastUnstake,
+        Networks,
+        Nominate,
+        NominateFromFavorites,
+        NominatePool,
+        PoolNominations,
+        SelectFavorites,
+        Settings,
+        ValidatorMetrics,
+        UnbondPoolMember,
+        UnlockChunks,
+        Unstake,
+        UpdateController,
+        Unbond,
+        UpdatePayee,
+        UpdateReserve,
+        WithdrawPoolMember,
+      }}
+    />
+  );
+};
 
-export const Modal = ({ modals }: { modals: Record<string, React.FC> }) => {
+export const Modal = ({ modals, helpStatus }: ModalProps) => {
   const {
     config: { key, size, options },
     status,
@@ -92,7 +97,6 @@ export const Modal = ({ modals }: { modals: Record<string, React.FC> }) => {
     setHeight,
   } = useOverlay().modal;
   const controls = useAnimation();
-  const { status: helpStatus } = useHelp();
   const { status: canvasStatus } = useCanvas();
   const modalRef = useRef<HTMLDivElement>(null);
   const heightRef = useRef<HTMLDivElement>(null);

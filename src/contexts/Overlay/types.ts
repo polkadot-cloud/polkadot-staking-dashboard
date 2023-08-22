@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import type { RefObject } from 'react';
+import type React from 'react';
 import type { AnyJson } from 'types';
 
 export interface OverlayContextInterface {
@@ -25,6 +26,10 @@ export interface OverlayContextInterface {
     replaceModal: (config: ModalConfig) => void;
     openModal: (config: ModalConfig) => void;
   };
+}
+export interface ModalProps {
+  modals: Record<string, React.FC>;
+  helpStatus?: number;
 }
 
 export type OverlayType = 'modal' | 'canvas' | 'prompt';
