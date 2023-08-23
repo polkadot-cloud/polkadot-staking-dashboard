@@ -1517,10 +1517,10 @@
   resolved "https://registry.npmjs.org/@polkadot-cloud/react/-/react-0.1.3.tgz#635ac69043acf69e158b8e0dc8c65dbab74f0ae1"
   integrity sha512-Q+7V9QY6AAgevug0t2d4H1NgnQ3b7Ci3h0yiP0x8KGU9jdWRIxqf+78t1BENmK2wYtI6zV2V4hQA9JTwGB6pbg==
 
-"@polkadot-cloud/utils@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.npmjs.org/@polkadot-cloud/utils/-/utils-0.0.1.tgz#24b0d569c4637e4d539ba3a2c669339144162133"
-  integrity sha512-YWSQ/sPRwVcO1LBJAVS7E7TI+dYpVY/Oe/sDwLThMVaVXzaIx18tBBhoEXXU85a8N0bXJHYVOMIWoCnAem4ZJw==
+"@polkadot-cloud/utils@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/utils/-/utils-0.0.4.tgz#660d5ea9dbf6548f0f7ae9d0d4b86e6016d90c23"
+  integrity sha512-cSjaNcB/DgmKjG+VUJuA/wOBvUqsBRIr7KhVfJgD6tozqCyyHUgVO041T2uQioX+HauExO+5/wOVExthtS4ewQ==
 
 "@polkadot/api-augment@10.9.1":
   version "10.9.1"

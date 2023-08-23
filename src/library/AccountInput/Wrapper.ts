@@ -28,7 +28,7 @@ export const AccountInputWrapper = styled.div`
   }
 
   .input {
-    border: 1px solid var(--transparent-color);
+    border: 1px solid transparent;
     border-radius: 1rem;
     display: flex;
     flex-flow: row wrap;
