@@ -168,17 +168,16 @@ export const FastUnstakeProvider = ({
       // ensure still same conditions.
       const { networkName, who } = data;
       if (networkName !== network.name || who !== activeAccount) {
-        // checkpoint: conditions have changed, cancel fast unstake.
         return;
       }
-      const { currentEra, exposed } = data;
+      const { era, exposed } = data;
 
       // ensure checked eras are in order highest first.
       const checked = metaRef.current.checked
-        .concat(Number(currentEra))
+        .concat(Number(era))
         .sort((a: number, b: number) => b - a);
 
-      if (!metaRef.current.checked.includes(Number(currentEra))) {
+      if (!metaRef.current.checked.includes(Number(era))) {
         // update localStorage with updated changes.
         localStorage.setItem(
           getLocalkey(who),
@@ -215,7 +214,7 @@ export const FastUnstakeProvider = ({
         subscribeToFastUnstakeQueue();
       } else {
         // continue checking the next era.
-        checkEra(new BigNumber(currentEra).minus(1));
+        checkEra(new BigNumber(era).minus(1));
       }
     }
   };
@@ -252,7 +251,7 @@ export const FastUnstakeProvider = ({
 
     worker.postMessage({
       task: 'processEraForExposure',
-      currentEra: era.toString(),
+      era: era.toString(),
       who: activeAccount,
       networkName: network.name,
       exposures,

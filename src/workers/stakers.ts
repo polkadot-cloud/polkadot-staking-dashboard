@@ -33,7 +33,7 @@ ctx.addEventListener('message', (event: AnyJson) => {
 
 // Process era exposures and return if an account was exposed, along with the validator they backed.
 const processEraForExposure = (data: AnyJson) => {
-  const { currentEra, exposures, task, networkName, who } = data;
+  const { era, exposures, task, networkName, who } = data;
   let exposed = false;
 
   // If exposed, the validator that was backed.
@@ -58,11 +58,11 @@ const processEraForExposure = (data: AnyJson) => {
   });
 
   return {
-    currentEra,
+    networkName,
+    era,
     exposed,
     exposedValidator,
     task,
-    networkName,
     who,
   };
 };
@@ -71,8 +71,14 @@ const processEraForExposure = (data: AnyJson) => {
 //
 // abstracts active nominators erasStakers.
 const processExposures = (data: DataInitialiseExposures) => {
-  const { units, exposures, activeAccount, maxNominatorRewardedPerValidator } =
-    data;
+  const {
+    networkName,
+    era,
+    units,
+    exposures,
+    activeAccount,
+    maxNominatorRewardedPerValidator,
+  } = data;
 
   const stakers: Staker[] = [];
   let activeValidators = 0;
@@ -156,6 +162,8 @@ const processExposures = (data: DataInitialiseExposures) => {
   });
 
   return {
+    networkName,
+    era,
     stakers,
     totalActiveNominators: nominators.length,
     activeAccountOwnStake,

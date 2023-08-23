@@ -47,7 +47,7 @@ export const PayoutsProvider = ({
 
     worker.postMessage({
       task: 'processEraForExposure',
-      currentEra: String(era),
+      era: String(era),
       who: activeAccount,
       networkName: network.name,
       exposures,
@@ -138,7 +138,7 @@ export const PayoutsProvider = ({
       }
 
       // eslint-disable-next-line
-      const { currentEra, exposed, exposeValidator } = data;
+      const { era, exposed, exposeValidator } = data;
 
       // TODO: process received era exposure data, set in local storage.
       // TODO: if there are more exposures to process, check next era.

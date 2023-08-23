@@ -84,3 +84,11 @@ export interface StakingContextInterface {
   targets: any;
   erasStakersSyncing: any;
 }
+
+export type LocalExposuresData = Record<
+  string,
+  {
+    era: string;
+    exposures: EraStakers;
+  }
+>;

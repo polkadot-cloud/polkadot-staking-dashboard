@@ -128,10 +128,16 @@ export const StakingProvider = ({
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
       const { data }: { data: ResponseInitialiseExposures } = message;
-      const { task } = data;
-      if (task !== 'processExposures') {
+      const { task, networkName, era } = data;
+
+      // ensure task matches, & era is still the same.
+      if (
+        task !== 'processExposures' ||
+        networkName !== network.name ||
+        era !== activeEra.index.toString()
+      )
         return;
-      }
+
       const {
         stakers,
         totalActiveNominators,
@@ -240,6 +246,8 @@ export const StakingProvider = ({
 
     // worker to calculate stats
     worker.postMessage({
+      era: activeEra.index.toString(),
+      networkName: network.name,
       task: 'processExposures',
       activeAccount,
       units: network.units,
