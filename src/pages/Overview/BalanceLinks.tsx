@@ -29,7 +29,21 @@ export const BalanceLinks = () => {
           iconRight={faExternalLinkAlt}
           iconTransform="shrink-2"
           text="Subscan"
+          marginRight
           disabled={!activeAccount}
+        />
+        <ButtonPrimaryInvert
+          lg
+          onClick={() =>
+            window.open(
+              `https://${name}.polkawatch.app/nomination/${activeAccount}`,
+              '_blank'
+            )
+          }
+          iconRight={faExternalLinkAlt}
+          iconTransform="shrink-2"
+          text="Polkawatch"
+          disabled={!(activeAccount && ['polkadot', 'kusama'].includes(name))}
         />
       </section>
     </MoreWrapper>
