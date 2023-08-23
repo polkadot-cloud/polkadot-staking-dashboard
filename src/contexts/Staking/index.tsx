@@ -15,7 +15,6 @@ import type { ExternalAccount } from 'contexts/Connect/types';
 import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type {
   EraStakers,
-  Exposure,
   StakingContextInterface,
   StakingMetrics,
   StakingTargets,
@@ -34,6 +33,7 @@ import {
   defaultStakingMetrics,
   defaultTargets,
 } from './defaults';
+import { setLocalEraExposures } from './Utils';
 
 const worker = new Worker();
 
@@ -79,24 +79,6 @@ export const StakingProvider = ({
     ) as StakingTargets
   );
 
-  useEffectIgnoreInitial(() => {
-    if (apiStatus === 'connecting') {
-      setStateWithRef(defaultEraStakers, setEraStakers, eraStakersRef);
-      setStakingMetrics(stakingMetrics);
-    }
-  }, [apiStatus]);
-
-  // Handle staking metrics subscription
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      unsubscribeMetrics();
-      subscribeToStakingkMetrics();
-    }
-    return () => {
-      unsubscribeMetrics();
-    };
-  }, [isReady, activeEra, activeAccount]);
-
   // Handle metrics unsubscribe.
   const unsubscribeMetrics = () => {
     if (unsub.current !== null) {
@@ -104,26 +86,6 @@ export const StakingProvider = ({
       unsub.current = null;
     }
   };
-
-  // handle syncing with eraStakers
-  useEffectIgnoreInitial(() => {
-    if (isReady) {
-      fetchEraStakers();
-    }
-  }, [isReady, activeEra.index, activeAccount]);
-
-  useEffectIgnoreInitial(() => {
-    if (activeAccount) {
-      // set account's targets
-      setTargetsState(
-        localStorageOrDefault(
-          `${activeAccount}_targets`,
-          defaultTargets,
-          true
-        ) as StakingTargets
-      );
-    }
-  }, [isReady, bondedAccounts, activeAccount, eraStakersRef.current?.stakers]);
 
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
@@ -226,23 +188,29 @@ export const StakingProvider = ({
     return payeeFinal;
   };
 
-  // Fetches the active nominator set and metadata around it.
-  const fetchEraStakers = async () => {
-    if (!isReady || activeEra.index.isZero() || !api) {
-      return;
-    }
-    const exposuresRaw = await api.query.staking.erasStakers.entries(
-      activeEra.index.toString()
+  // Fetches erasStakers exposures for an era, and saves to `localStorage`.
+  const fetchEraStakers = async (era: string) => {
+    if (!isReady || activeEra.index.isZero() || !api) return [];
+
+    const exposures = (await api.query.staking.erasStakers.entries(era)).map(
+      ([keys, val]: AnyApi) => ({
+        keys: keys.toHuman(),
+        val: val.toHuman(),
+      })
     );
+
+    setLocalEraExposures(network.name, era, exposures);
+    return exposures;
+  };
+
+  // Fetches the active nominator set and metadata around it.
+  const fetchActiveEraStakers = async () => {
+    if (!isReady || activeEra.index.isZero() || !api) return;
 
     // flag eraStakers is recyncing
     setStateWithRef(true, setErasStakersSyncing, erasStakersSyncingRef);
 
-    // humanise exposures to send to worker
-    const exposures: Exposure[] = exposuresRaw.map(([keys, val]: AnyApi) => ({
-      keys: keys.toHuman(),
-      val: val.toHuman(),
-    }));
+    const exposures = await fetchEraStakers(activeEra.index.toString());
 
     // worker to calculate stats
     worker.postMessage({
@@ -359,9 +327,46 @@ export const StakingProvider = ({
     };
   };
 
+  useEffectIgnoreInitial(() => {
+    if (apiStatus === 'connecting') {
+      setStateWithRef(defaultEraStakers, setEraStakers, eraStakersRef);
+      setStakingMetrics(stakingMetrics);
+    }
+  }, [apiStatus]);
+
+  // Handle staking metrics subscription
+  useEffectIgnoreInitial(() => {
+    if (isReady) {
+      unsubscribeMetrics();
+      subscribeToStakingkMetrics();
+    }
+    return () => {
+      unsubscribeMetrics();
+    };
+  }, [isReady, activeEra, activeAccount]);
+
+  // handle syncing with eraStakers
+  useEffectIgnoreInitial(() => {
+    if (isReady) fetchActiveEraStakers();
+  }, [isReady, activeEra.index, activeAccount]);
+
+  useEffectIgnoreInitial(() => {
+    if (activeAccount) {
+      // set account's targets
+      setTargetsState(
+        localStorageOrDefault(
+          `${activeAccount}_targets`,
+          defaultTargets,
+          true
+        ) as StakingTargets
+      );
+    }
+  }, [isReady, bondedAccounts, activeAccount, eraStakersRef.current?.stakers]);
+
   return (
     <StakingContext.Provider
       value={{
+        fetchEraStakers,
         getNominationsStatusFromTargets,
         setTargets,
         hasController,

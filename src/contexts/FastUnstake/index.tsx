@@ -32,8 +32,8 @@ export const FastUnstakeProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { inSetup } = useStaking();
   const { activeAccount } = useConnect();
+  const { inSetup, fetchEraStakers } = useStaking();
   const { api, isReady, consts, network } = useApi();
   const { metrics, activeEra } = useNetworkMetrics();
   const { getNominationStatus } = useNominationStatus();
@@ -240,14 +240,7 @@ export const FastUnstakeProvider = ({
   const checkEra = async (era: BigNumber) => {
     if (!api) return;
 
-    const exposures = (
-      await api.query.staking.erasStakers.entries(era.toString())
-    ).map(([keys, val]: AnyApi) => ({
-      keys: keys.toHuman(),
-      val: val.toHuman(),
-    }));
-
-    // TODO: store `exposures` into local `exposures` data.
+    const exposures = await fetchEraStakers(era.toString());
 
     worker.postMessage({
       task: 'processEraForExposure',

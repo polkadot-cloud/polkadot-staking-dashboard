@@ -20,9 +20,9 @@ export const PayoutsProvider = ({
   children: React.ReactNode;
 }) => {
   const { api, network } = useApi();
-  const { isNominating } = useStaking();
   const { activeAccount } = useConnect();
   const { activeEra } = useNetworkMetrics();
+  const { isNominating, fetchEraStakers } = useStaking();
 
   // Store active accont's payout state.
   const [payouts, setPayouts] = React.useState<AnyJson>(null);
@@ -62,19 +62,13 @@ export const PayoutsProvider = ({
     const { start, end } = getErasToCheck();
     for (let i = start; i >= end; i--) {
       // TODO: only fetch eras that are not in local storage.
-      calls.push(api.query.staking.erasStakers.entries(i));
+      calls.push(fetchEraStakers(String(i)));
     }
 
+    // eslint-disable-next-line
     const eraExposures = await Promise.all(calls);
 
     // TODO: store all exposure data in local storage.
-    for (const eraExposure of eraExposures) {
-      // eslint-disable-next-line
-      const exposures = eraExposure.map(([keys, val]: AnyApi) => ({
-        keys: keys.toHuman(),
-        val: val.toHuman(),
-      }));
-    }
 
     // get first era exposures in localStorage from `start` era.
     // checkExposures(start, exposures);

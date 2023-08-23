@@ -70,6 +70,7 @@ interface LowestReward {
 }
 
 export interface StakingContextInterface {
+  fetchEraStakers: (era: string) => Promise<Exposure[]>;
   getNominationsStatusFromTargets: (w: MaybeAccount, t: any[]) => any;
   setTargets: (t: any) => any;
   hasController: () => boolean;
