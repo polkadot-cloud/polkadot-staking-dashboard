@@ -19,9 +19,14 @@ export const getLocalFavorites = (network: NetworkName) => {
 
 // Get local validator entries data for an era.
 export const getLocalEraValidators = (network: NetworkName, era: string) => {
-  const data = localStorage.getItem('validators');
+  const data = localStorage.getItem(`${network}_validators`);
   const current = data ? (JSON.parse(data) as LocalValidatorEntriesData) : null;
-  return current?.[network]?.era === era ? current[network] : null;
+  const currentEra = current?.era;
+
+  if (currentEra && currentEra !== era)
+    localStorage.removeItem(`${network}_validators`);
+
+  return currentEra === era ? current : null;
 };
 
 // Set local validator entries data for an era.
@@ -31,16 +36,12 @@ export const setLocalEraValidators = (
   entries: Validator[],
   avgCommission: number
 ) => {
-  const data = localStorage.getItem('validators') || '{}';
   localStorage.setItem(
-    'validators',
+    `${network}_validators`,
     JSON.stringify({
-      ...JSON.parse(data),
-      [network]: {
-        era,
-        entries,
-        avgCommission,
-      },
+      era,
+      entries,
+      avgCommission,
     })
   );
 };

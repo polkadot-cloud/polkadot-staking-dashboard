@@ -44,11 +44,8 @@ export interface ValidatorPrefs {
   blocked: boolean;
 }
 
-export type LocalValidatorEntriesData = Record<
-  string,
-  {
-    avgCommission: number;
-    era: string;
-    entries: Validator[];
-  }
->;
+export interface LocalValidatorEntriesData {
+  avgCommission: number;
+  era: string;
+  entries: Validator[];
+}
