@@ -19,11 +19,11 @@ import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import { useActivePools } from '../Pools/ActivePools';
-import { defaultExposureData, defaultValidatorsContext } from './defaults';
+import { defaultValidatorsData, defaultValidatorsContext } from './defaults';
 import {
-  getEraLocalExposures,
+  getLocalEraValidators,
   getLocalFavorites,
-  setEraLocalExposures,
+  setLocalEraValidators,
 } from './Utils';
 
 export const ValidatorsProvider = ({
@@ -183,15 +183,15 @@ export const ValidatorsProvider = ({
   };
 
   // Fetch validator entries and format the returning data.
-  const getDataFromExposures = async () => {
-    if (!isReady || !api) return defaultExposureData;
+  const getValidatorEntries = async () => {
+    if (!isReady || !api) return defaultValidatorsData;
 
-    const entries = await api.query.staking.validators.entries();
+    const result = await api.query.staking.validators.entries();
 
-    const exposures: Validator[] = [];
+    const entries: Validator[] = [];
     let notFullCommissionCount = 0;
     let totalNonAllCommission = new BigNumber(0);
-    entries.forEach(([a, p]: AnyApi) => {
+    result.forEach(([a, p]: AnyApi) => {
       const address = a.toHuman().pop();
       const prefs = p.toHuman();
       const commission = new BigNumber(prefs.commission.replace(/%/g, ''));
@@ -202,7 +202,7 @@ export const ValidatorsProvider = ({
         notFullCommissionCount++;
       }
 
-      exposures.push({
+      entries.push({
         address,
         prefs: {
           commission: Number(commission.toFixed(2)),
@@ -211,7 +211,7 @@ export const ValidatorsProvider = ({
       });
     });
 
-    return { exposures, notFullCommissionCount, totalNonAllCommission };
+    return { entries, notFullCommissionCount, totalNonAllCommission };
   };
 
   // Fetches and formats the active validator set, and derives metrics from the result.
@@ -219,29 +219,26 @@ export const ValidatorsProvider = ({
     if (!isReady || !api || validatorsFetched !== 'unsynced') return;
     setValidatorsFetched('syncing');
 
-    // If local exposure data exists for the current active era, store these values in state.
-    // Otherwise, fetch exposures from API.
-    const localExposures = getEraLocalExposures(
+    // If local validator entries exist for the current era, store these values in state. Otherwise,
+    // fetch entries from API.
+    const localEraValidators = getLocalEraValidators(
       name,
       activeEra.index.toString()
     );
 
-    // The current exposures for the active era.
-    let exposures: Validator[] = [];
-    // Average network commission for all non-100% commissioned exposures.
+    // The validator entries for the current active era.
+    let validatorEntries: Validator[] = [];
+    // Average network commission for all non-100% commissioned validators.
     let avg = 0;
 
-    if (localExposures) {
-      exposures = localExposures.exposures;
-      avg = localExposures.avgCommission;
+    if (localEraValidators) {
+      validatorEntries = localEraValidators.entries;
+      avg = localEraValidators.avgCommission;
     } else {
-      const {
-        exposures: newExposures,
-        notFullCommissionCount,
-        totalNonAllCommission,
-      } = await getDataFromExposures();
+      const { entries, notFullCommissionCount, totalNonAllCommission } =
+        await getValidatorEntries();
 
-      exposures = newExposures;
+      validatorEntries = entries;
       avg = notFullCommissionCount
         ? totalNonAllCommission
             .dividedBy(notFullCommissionCount)
@@ -250,14 +247,19 @@ export const ValidatorsProvider = ({
         : 0;
     }
 
-    // Set exposure data for the era to local storage.
-    setEraLocalExposures(name, activeEra.index.toString(), exposures, avg);
+    // Set entries data for the era to local storage.
+    setLocalEraValidators(
+      name,
+      activeEra.index.toString(),
+      validatorEntries,
+      avg
+    );
     setValidatorsFetched('synced');
     setAvgCommission(avg);
     // Validators are shuffled before committed to state.
-    setValidators(shuffle(exposures));
+    setValidators(shuffle(validatorEntries));
 
-    const addresses = exposures.map(({ address }) => address);
+    const addresses = validatorEntries.map(({ address }) => address);
     const [identities, supers] = await Promise.all([
       fetchValidatorIdentities(addresses),
       fetchValidatorSupers(addresses),

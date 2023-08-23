@@ -5,8 +5,8 @@
 import BigNumber from 'bignumber.js';
 import type { ValidatorsContextInterface } from 'contexts/Validators/types';
 
-export const defaultExposureData = {
-  exposures: [],
+export const defaultValidatorsData = {
+  entries: [],
   notFullCommissionCount: 0,
   totalNonAllCommission: new BigNumber(0),
 };

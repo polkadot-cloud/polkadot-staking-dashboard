@@ -44,11 +44,11 @@ export interface ValidatorPrefs {
   blocked: boolean;
 }
 
-export type LocalExposureData = Record<
+export type LocalValidatorEntriesData = Record<
   string,
   {
     avgCommission: number;
     era: string;
-    exposures: Validator[];
+    entries: Validator[];
   }
 >;

@@ -3,7 +3,10 @@
 
 import type BigNumber from 'bignumber.js';
 import type { LocalMeta } from 'contexts/FastUnstake/types';
-import type { LocalExposureData, Validator } from 'contexts/Validators/types';
+import type {
+  LocalValidatorEntriesData,
+  Validator,
+} from 'contexts/Validators/types';
 import type { AnyJson, NetworkName } from 'types';
 
 // Get favorite validators from local storage.
@@ -14,35 +17,35 @@ export const getLocalFavorites = (network: NetworkName) => {
     : [];
 };
 
-// Get validator exposures for an era.
-export const getEraLocalExposures = (network: NetworkName, era: string) => {
-  const data = localStorage.getItem('exposures');
-  const current = data ? (JSON.parse(data) as LocalExposureData) : null;
+// Get local validator entries data for an era.
+export const getLocalEraValidators = (network: NetworkName, era: string) => {
+  const data = localStorage.getItem('validators');
+  const current = data ? (JSON.parse(data) as LocalValidatorEntriesData) : null;
   return current?.[network]?.era === era ? current[network] : null;
 };
 
-// Set validator exposure data to local storage.
-export const setEraLocalExposures = (
+// Set local validator entries data for an era.
+export const setLocalEraValidators = (
   network: NetworkName,
   era: string,
-  exposures: Validator[],
+  entries: Validator[],
   avgCommission: number
 ) => {
-  const data = localStorage.getItem('exposures') || '{}';
+  const data = localStorage.getItem('validators') || '{}';
   localStorage.setItem(
-    'exposures',
+    'validators',
     JSON.stringify({
       ...JSON.parse(data),
       [network]: {
         era,
-        exposures,
+        entries,
         avgCommission,
       },
     })
   );
 };
 
-// Validate local exposure metadata.
+// Validate local exposure metadata, currently used for fast unstake only.
 export const validateLocalExposure = (
   localMeta: AnyJson,
   endEra: BigNumber
