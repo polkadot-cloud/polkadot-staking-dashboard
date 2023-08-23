@@ -197,20 +197,15 @@ export const StakingProvider = ({
   const fetchEraStakers = async (era: string) => {
     if (!isReady || activeEra.index.isZero() || !api) return [];
 
-    let exposures: Exposure[] = [];
     const localExposures = getLocalEraExposures(
       network.name,
       era,
       activeEra.index.toString()
     );
 
-    if (localExposures) {
-      exposures = localExposures;
-    } else {
-      exposures = formatRawExposures(
-        await api.query.staking.erasStakers.entries(era)
-      );
-    }
+    const exposures: Exposure[] =
+      localExposures ||
+      formatRawExposures(await api.query.staking.erasStakers.entries(era));
 
     // For resource limitation concerns, only store the current era in local storage.
     if (era === activeEra.index.toString())

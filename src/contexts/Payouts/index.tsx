@@ -61,7 +61,6 @@ export const PayoutsProvider = ({
     const calls = [];
     const { start, end } = getErasToCheck();
     for (let i = start; i >= end; i--) {
-      // TODO: only fetch eras that are not in local storage.
       calls.push(fetchEraStakers(String(i)));
     }
 
