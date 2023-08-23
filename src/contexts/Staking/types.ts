@@ -86,10 +86,16 @@ export interface StakingContextInterface {
   erasStakersSyncing: any;
 }
 
-export type LocalExposuresData = Record<
-  string,
-  {
-    era: string;
-    exposures: EraStakers;
-  }
->;
+export interface LocalExposuresData {
+  era: string;
+  exposures: LocalExposure[];
+}
+
+export interface LocalExposure {
+  k: [string, string];
+  v: {
+    o: [string, string];
+    w: string;
+    t: string;
+  };
+}
