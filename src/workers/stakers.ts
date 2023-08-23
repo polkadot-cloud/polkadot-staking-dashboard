@@ -72,6 +72,7 @@ const processEraForExposure = (data: AnyJson) => {
 // abstracts active nominators erasStakers.
 const processExposures = (data: DataInitialiseExposures) => {
   const {
+    task,
     networkName,
     era,
     units,
@@ -168,6 +169,7 @@ const processExposures = (data: DataInitialiseExposures) => {
     totalActiveNominators: nominators.length,
     activeAccountOwnStake,
     activeValidators,
+    task,
     who: activeAccount,
   };
 };
