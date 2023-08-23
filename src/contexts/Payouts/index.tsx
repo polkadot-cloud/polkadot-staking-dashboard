@@ -59,6 +59,8 @@ export const PayoutsProvider = ({
     if (!api || !activeAccount) return;
 
     const calls = [];
+    // TODO: reformat to only fetch one era exposures at a time, keep track in same fashion as fast
+    // unstake.
     const { start, end } = getErasToCheck();
     for (let i = start; i >= end; i--) {
       calls.push(fetchEraStakers(String(i)));
