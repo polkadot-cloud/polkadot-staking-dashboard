@@ -118,7 +118,7 @@ export const PayoutsProvider = ({
   // Start pending payout process once exposure data is fetched.
   // eslint-disable-next-line
   const checkPendingPayouts = async () => {
-    if (!api) return;
+    if (!api || !activeAccount) return;
 
     // Fetch reward data and determine whether there are pending payouts.
     const { startEra, endEra } = getErasToCheck();
@@ -139,8 +139,12 @@ export const PayoutsProvider = ({
       const eraValidatorReward = new BigNumber(rmCommas(result[0].toHuman()));
       const eraRewardPoints = result[1].toHuman();
 
-      // TODO: get validator from earlier exposure data processing.
-      const validator = 0;
+      // Get validator from era exposure data. Falls back no null if it cannot be found.
+      const validator = getLocalEraExposure(
+        network.name,
+        currentEra.toString(),
+        activeAccount
+      );
 
       const total = new BigNumber(rmCommas(eraRewardPoints.total));
       const individual = new BigNumber(
