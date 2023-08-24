@@ -186,9 +186,12 @@ export const PayoutsProvider = ({
           ? new BigNumber(0)
           : validatorRewardPoints.dividedBy(totalRewardPoints);
 
+        // Deduct validator commission from it's share.
         const validatorReward = validatorShare.multipliedBy(eraTotalPayout);
         const validatorCommission = validatorReward.multipliedBy(commission);
         const leftoverReward = validatorReward.minus(validatorCommission);
+
+        // Determine `who`'s share of the leftover reward.
         const whoPayout = leftoverReward.multipliedBy(share);
 
         // TODO: Store payout data in local storage.
