@@ -120,12 +120,10 @@ export const PayoutsProvider = ({
   const checkPendingPayouts = async () => {
     if (!api || !activeAccount) return;
 
-    // Fetch reward data and determine whether there are pending payouts.
+    // Loop eras and determine validator ledgers to fetch.
+    const erasValidators = [];
     const { startEra, endEra } = getErasToCheck();
     let currentEra = startEra;
-
-    const erasValidators = [];
-    // Loop eras and determine  validator ledgers to fetch.
     while (currentEra.isGreaterThanOrEqualTo(endEra)) {
       const validators = Object.keys(
         getLocalEraExposure(network.name, currentEra.toString(), activeAccount)
@@ -137,18 +135,16 @@ export const PayoutsProvider = ({
     const uniqueValidators = [...new Set(erasValidators)];
 
     // Fetch ledgers to determine which rewards have been claimed.
-    const ledgerCalls = uniqueValidators.map((validator: AnyJson) =>
-      api.query.staking.ledger(validator)
+    // eslint-disable-next-line
+    const ledgerResults = await Promise.all(uniqueValidators.map((validator: AnyJson) =>
+        api.query.staking.ledger(validator)
+      )
     );
-
     // TODO: determine if payouts need to be calculated. Cache claimed results to local storage so
     // claimed validators do not need to be fetched again. If cached, only check `claimed: false`
     // and update if they have been.
-    //
-    // eslint-disable-next-line
-    const ledgerResults = await Promise.all(ledgerCalls);
     /*
-    polkadot_era_payouts_claimed = {
+    polkadot_payouts_claimed = {
       accountAddress: {
         1176: {
           validatorAddress1: true,
@@ -163,13 +159,16 @@ export const PayoutsProvider = ({
     */
 
     const calls = [];
-    // TODO: instead of looping eras here, loop above `polkadot_era_payouts_claimed` eras for the
+    // TODO: instead of looping eras here, loop above `polkadot_payouts_claimed` eras for the
     // accountAddress, to only fetch unclaimed payouts.
     while (currentEra.isGreaterThanOrEqualTo(endEra)) {
       const thisEra = currentEra.toString();
 
+      // TODO: iterate through new local storage era validators where claimed is false. Can
+      // also construct a new array for line 213, 214: call `getLocalEraExposure` again to get
+      // `share`.
       const validatorPrefsCalls = Object.keys(
-        getLocalEraExposure(network.name, currentEra.toString(), activeAccount)
+        getLocalEraExposure(network.name, thisEra.toString(), activeAccount)
       ).map((validator: AnyJson) =>
         api.query.staking.erasValidatorPrefs<AnyApi>(
           thisEra.toString(),
@@ -193,7 +192,7 @@ export const PayoutsProvider = ({
       const eraTotalPayout = new BigNumber(rmCommas(reward.toHuman()));
       const eraRewardPoints = points.toHuman();
 
-      // TODO: use `unclaimedValidators` instead.
+      // TODO: this will be replaced.
       const exposedValidators = getLocalEraExposure(
         network.name,
         currentEra.toString(),
