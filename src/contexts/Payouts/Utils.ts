@@ -4,6 +4,18 @@
 import BigNumber from 'bignumber.js';
 import type { AnyJson, NetworkName } from 'types';
 
+// Check if local exposure entry exists for an era.
+export const hasLocalEraExposure = (
+  network: NetworkName,
+  era: string,
+  who: string
+) => {
+  const current = JSON.parse(
+    localStorage.getItem(`${network}_era_exposures`) || '{}'
+  );
+  return !!current?.[who]?.[era];
+};
+
 // Get local exposure entry for an era.
 export const getLocalEraExposure = (
   network: NetworkName,
@@ -13,7 +25,7 @@ export const getLocalEraExposure = (
   const current = JSON.parse(
     localStorage.getItem(`${network}_era_exposures`) || '{}'
   );
-  return current?.[who]?.[era] || null;
+  return current?.[who]?.[era] || [];
 };
 
 // Set local exposure entry for an era.
@@ -21,7 +33,7 @@ export const setLocalEraExposure = (
   network: NetworkName,
   era: string,
   who: string,
-  validator: string | null,
+  exposedValidators: Record<string, string> | null,
   endEra: string
 ) => {
   const current = JSON.parse(
@@ -40,7 +52,7 @@ export const setLocalEraExposure = (
       ...current,
       [who]: {
         ...whoRemoveStaleEras,
-        [era]: validator,
+        [era]: exposedValidators,
       },
     })
   );

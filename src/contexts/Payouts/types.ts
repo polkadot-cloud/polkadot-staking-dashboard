@@ -11,5 +11,5 @@ export type PayoutsContextInterface = {
 
 export interface EraPayout {
   era: BigNumber;
-  reward: BigNumber;
+  payout: BigNumber;
 }

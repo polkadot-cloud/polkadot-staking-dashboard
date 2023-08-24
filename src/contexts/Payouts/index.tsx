@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
-import type { AnyApi, Sync } from 'types';
+import type { AnyApi, AnyJson, Sync } from 'types';
 import { useConnect } from 'contexts/Connect';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -13,7 +13,11 @@ import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { MaxSupportedPayoutEras, defaultPayoutsContext } from './defaults';
 import type { EraPayout, PayoutsContextInterface } from './types';
-import { getLocalEraExposure, setLocalEraExposure } from './Utils';
+import {
+  getLocalEraExposure,
+  hasLocalEraExposure,
+  setLocalEraExposure,
+} from './Utils';
 
 const worker = new Worker();
 
@@ -65,14 +69,8 @@ export const PayoutsProvider = ({
   const checkEra = async (era: BigNumber) => {
     if (!activeAccount) return;
 
-    const localEraExposure = getLocalEraExposure(
-      network.name,
-      era.toString(),
-      activeAccount
-    );
-
     // Bypass worker if local exposure data is available.
-    if (localEraExposure) {
+    if (hasLocalEraExposure(network.name, era.toString(), activeAccount)) {
       // Continue processing eras, or move onto reward processing.
       shouldContinueProcessing(era, getErasToCheck().endEra);
     } else {
@@ -100,7 +98,7 @@ export const PayoutsProvider = ({
       if (networkName !== network.name || who !== activeAccount) return;
 
       // eslint-disable-next-line
-      const { era, exposedValidator } = data;
+      const { era, exposedValidators } = data;
       const { endEra } = getErasToCheck();
 
       // Store received era exposure data results in local storage.
@@ -108,7 +106,7 @@ export const PayoutsProvider = ({
         networkName,
         era,
         who,
-        exposedValidator,
+        exposedValidators,
         endEra.toString()
       );
 
@@ -125,12 +123,30 @@ export const PayoutsProvider = ({
     // Fetch reward data and determine whether there are pending payouts.
     const { startEra, endEra } = getErasToCheck();
     let currentEra = startEra;
+
     const calls = [];
     while (currentEra.isGreaterThanOrEqualTo(endEra)) {
+      const thisEra = currentEra;
+
+      const validatorPrefsCalls =
+        Object.keys(
+          getLocalEraExposure(
+            network.name,
+            currentEra.toString(),
+            activeAccount
+          )
+        ).map((validator: AnyJson) =>
+          api.query.staking.erasValidatorPrefs<AnyApi>(
+            thisEra.toString(),
+            validator
+          )
+        ) || [];
+
       calls.push(
         Promise.all([
-          api.query.staking.erasValidatorReward<AnyApi>(currentEra.toString()),
-          api.query.staking.erasRewardPoints<AnyApi>(currentEra.toString()),
+          api.query.staking.erasValidatorReward<AnyApi>(thisEra.toString()),
+          api.query.staking.erasRewardPoints<AnyApi>(thisEra.toString()),
+          ...validatorPrefsCalls,
         ])
       );
       currentEra = currentEra.minus(1);
@@ -138,36 +154,48 @@ export const PayoutsProvider = ({
 
     currentEra = startEra;
     const eraPayouts: EraPayout[] = [];
-    for (const result of await Promise.all(calls)) {
-      const eraTotalPayout = new BigNumber(rmCommas(result[0].toHuman()));
-      const eraRewardPoints = result[1].toHuman();
+    for (const [reward, points, ...prefs] of await Promise.all(calls)) {
+      const eraTotalPayout = new BigNumber(rmCommas(reward.toHuman()));
+      const eraRewardPoints = points.toHuman();
 
-      // Get validator from era exposure data. Falls back no null if it cannot be found.
-      const validator = getLocalEraExposure(
+      const exposedValidators = getLocalEraExposure(
         network.name,
         currentEra.toString(),
         activeAccount
       );
 
-      // Calculate the validator's share of total era payout.
-      const totalRewardPoints = new BigNumber(rmCommas(eraRewardPoints.total));
-      const validatorRewardPoints = new BigNumber(
-        rmCommas(eraRewardPoints.individual?.[validator] || '0')
-      );
-      const validatorShare = validatorRewardPoints.isZero()
-        ? new BigNumber(0)
-        : validatorRewardPoints.dividedBy(totalRewardPoints);
+      const i = 0;
+      for (const pref of prefs) {
+        const eraValidatorPrefs = pref.toHuman();
+        const commission = new BigNumber(
+          eraValidatorPrefs.commission.replace(/%/g, '')
+        ).multipliedBy(0.01);
 
-      // eslint-disable-next-line
-      const validatorReward = validatorShare.multipliedBy(eraTotalPayout);
+        // Get validator from era exposure data. Falls back no null if it cannot be found.
+        const validator = Object.keys(exposedValidators)?.[i] || '';
+        const share = (Object.values(exposedValidators)?.[i] as string) || '0';
 
-      // TODO: deduct validator commission from `validatorReward` to get leftover. (needs more worker data).
-      // TODO: calculate user share (individual `exposure.other.value` / exposure.total`). (needs more worker data).
-      // TODO: Calculate `activeAccount`'s share of the validator's payout: user share * leftover.
+        // Calculate the validator's share of total era payout.
+        const totalRewardPoints = new BigNumber(
+          rmCommas(eraRewardPoints.total)
+        );
+        const validatorRewardPoints = new BigNumber(
+          rmCommas(eraRewardPoints.individual?.[validator] || '0')
+        );
+        const validatorShare = validatorRewardPoints.isZero()
+          ? new BigNumber(0)
+          : validatorRewardPoints.dividedBy(totalRewardPoints);
 
-      // TODO: Store payout data in local stoarage and push real reward to `payouts`.
+        const validatorReward = validatorShare.multipliedBy(eraTotalPayout);
+        const validatorCommission = validatorReward.multipliedBy(commission);
+        const leftoverReward = validatorReward.minus(validatorCommission);
+        const whoPayout = leftoverReward.multipliedBy(share);
+
+        // TODO: Store payout data in local stoarage.
+
+        eraPayouts.push({ era: currentEra, payout: whoPayout });
+      }
       currentEra = currentEra.minus(1);
-      eraPayouts.push({ era: currentEra, reward: new BigNumber(0) });
     }
 
     setPendingPayouts(eraPayouts);

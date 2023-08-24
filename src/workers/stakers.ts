@@ -37,20 +37,33 @@ const processEraForExposure = (data: AnyJson) => {
   let exposed = false;
 
   // If exposed, the validator that was backed.
-  let exposedValidator: string | null = null;
+  const exposedValidators: Record<string, string> = {};
 
   // Check exposed as validator or nominator.
   exposures.every(({ keys, val }: any) => {
     const validator = keys[1];
+    const others = val?.others ?? [];
+    const own = val?.own || 0;
+    const total = val?.total || 0;
+
     if (validator === who) {
-      exposedValidator = validator;
+      const share = new BigNumber(own).isZero()
+        ? '0'
+        : new BigNumber(own).dividedBy(total).toString();
+
+      exposedValidators[validator] = share;
       exposed = true;
       return false;
     }
-    const others = val?.others ?? [];
+
     const inOthers = others.find((o: AnyJson) => o.who === who);
+
     if (inOthers) {
-      exposedValidator = validator;
+      const share = new BigNumber(inOthers.value).isZero()
+        ? '0'
+        : new BigNumber(inOthers.value).dividedBy(total).toString();
+
+      exposedValidators[validator] = share;
       exposed = true;
       return false;
     }
@@ -61,9 +74,12 @@ const processEraForExposure = (data: AnyJson) => {
     networkName,
     era,
     exposed,
-    exposedValidator,
+    exposedValidators: Object.keys(exposedValidators).length
+      ? exposedValidators
+      : null,
     task,
     who,
+    whoShare: '0',
   };
 };
 
