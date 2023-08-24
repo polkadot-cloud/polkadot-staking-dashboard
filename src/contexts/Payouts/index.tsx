@@ -13,6 +13,7 @@ import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { MaxSupportedPayoutEras, defaultPayoutsContext } from './defaults';
 import type { PayoutsContextInterface } from './types';
+import { getLocalEraExposure, setLocalEraExposure } from './Utils';
 
 const worker = new Worker();
 
@@ -46,18 +47,42 @@ export const PayoutsProvider = ({
     };
   };
 
+  // Determine whether to keep processing a next era, or move onto checking for pending payouts.
+  const shouldContinueProcessing = (era: BigNumber, endEra: BigNumber) => {
+    // If there are more exposures to process, check next era.
+    if (new BigNumber(era).isGreaterThan(endEra))
+      checkEra(new BigNumber(era).minus(1));
+    // If all exposures have been processed, check for pending payouts.
+    else if (new BigNumber(era).isEqualTo(endEra)) {
+      checkPendingPayouts();
+    }
+  };
+
   // Fetch exposure data for an era, and pass the data to the worker to determine the validator the
   // active account was backing in that era.
   const checkEra = async (era: BigNumber) => {
     if (!activeAccount) return;
-    const exposures = await fetchEraStakers(era.toString());
-    worker.postMessage({
-      task: 'processEraForExposure',
-      era: String(era),
-      who: activeAccount,
-      networkName: network.name,
-      exposures,
-    });
+
+    const localEraExposure = getLocalEraExposure(
+      network.name,
+      era.toString(),
+      activeAccount
+    );
+
+    // Bypass worker if local exposure data is available.
+    if (localEraExposure) {
+      // Continue processing eras, or move onto reward processing.
+      shouldContinueProcessing(era, getErasToCheck().endEra);
+    } else {
+      const exposures = await fetchEraStakers(era.toString());
+      worker.postMessage({
+        task: 'processEraForExposure',
+        era: String(era),
+        who: activeAccount,
+        networkName: network.name,
+        exposures,
+      });
+    }
   };
 
   // Handle worker message on completed exposure check.
@@ -73,18 +98,20 @@ export const PayoutsProvider = ({
       if (networkName !== network.name || who !== activeAccount) return;
 
       // eslint-disable-next-line
-      const { era, exposed, exposeValidator } = data;
+      const { era, exposedValidator } = data;
       const { endEra } = getErasToCheck();
 
-      // TODO: process received era exposure data results and set in local storage.
+      // Store received era exposure data results in local storage.
+      setLocalEraExposure(
+        networkName,
+        era,
+        who,
+        exposedValidator,
+        endEra.toString()
+      );
 
-      // If there are more exposures to process, check next era.
-      if (new BigNumber(era).isGreaterThan(endEra))
-        checkEra(new BigNumber(era).minus(1));
-      // If all exposures have been processed, check for pending payouts.
-      else if (new BigNumber(era).isEqualTo(endEra)) {
-        checkPendingPayouts();
-      }
+      // Continue processing eras, or move onto reward processing.
+      shouldContinueProcessing(era, endEra);
     }
   };
 
