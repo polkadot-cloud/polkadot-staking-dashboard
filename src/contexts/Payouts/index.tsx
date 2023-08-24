@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
-import type { AnyApi, Sync, AnyJson } from 'types';
+import type { AnyApi, Sync } from 'types';
 import { useConnect } from 'contexts/Connect';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useNetworkMetrics } from 'contexts/Network';
@@ -12,7 +12,7 @@ import Worker from 'workers/stakers?worker';
 import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { MaxSupportedPayoutEras, defaultPayoutsContext } from './defaults';
-import type { PayoutsContextInterface } from './types';
+import type { EraPayout, PayoutsContextInterface } from './types';
 import { getLocalEraExposure, setLocalEraExposure } from './Utils';
 
 const worker = new Worker();
@@ -28,7 +28,9 @@ export const PayoutsProvider = ({
   const { isNominating, fetchEraStakers } = useStaking();
 
   // Store active accont's payout state.
-  const [payouts, setPayouts] = useState<AnyJson>(null);
+  const [pendingPayouts, setPendingPayouts] = useState<EraPayout[] | null>(
+    null
+  );
 
   // Track whether payouts have been fetched.
   const [payoutsSynced, setPayoutsSynced] = useState<Sync>('unsynced');
@@ -135,8 +137,9 @@ export const PayoutsProvider = ({
     }
 
     currentEra = startEra;
+    const eraPayouts: EraPayout[] = [];
     for (const result of await Promise.all(calls)) {
-      const eraValidatorReward = new BigNumber(rmCommas(result[0].toHuman()));
+      const eraTotalPayout = new BigNumber(rmCommas(result[0].toHuman()));
       const eraRewardPoints = result[1].toHuman();
 
       // Get validator from era exposure data. Falls back no null if it cannot be found.
@@ -146,30 +149,28 @@ export const PayoutsProvider = ({
         activeAccount
       );
 
-      const total = new BigNumber(rmCommas(eraRewardPoints.total));
-      const individual = new BigNumber(
+      // Calculate the validator's share of total era payout.
+      const totalRewardPoints = new BigNumber(rmCommas(eraRewardPoints.total));
+      const validatorRewardPoints = new BigNumber(
         rmCommas(eraRewardPoints.individual?.[validator] || '0')
       );
-      const share = individual.isZero()
+      const validatorShare = validatorRewardPoints.isZero()
         ? new BigNumber(0)
-        : individual.dividedBy(total);
-      const payout = eraValidatorReward.multipliedBy(share);
+        : validatorRewardPoints.dividedBy(totalRewardPoints);
 
-      console.log(
-        'era ',
-        currentEra.toString(),
-        ' payout: ',
-        payout.toString()
-      );
+      // eslint-disable-next-line
+      const validatorReward = validatorShare.multipliedBy(eraTotalPayout);
 
-      // TODO: Store payout data in local stoarage.
+      // TODO: deduct validator commission from `validatorReward` to get leftover. (needs more worker data).
+      // TODO: calculate user share (individual `exposure.other.value` / exposure.total`). (needs more worker data).
+      // TODO: Calculate `activeAccount`'s share of the validator's payout: user share * leftover.
 
+      // TODO: Store payout data in local stoarage and push real reward to `payouts`.
       currentEra = currentEra.minus(1);
+      eraPayouts.push({ era: currentEra, reward: new BigNumber(0) });
     }
 
-    // TODO: commit all payout data to state.
-    setPayouts({});
-
+    setPendingPayouts(eraPayouts);
     setStateWithRef('synced', setPayoutsSynced, payoutsSyncedRef);
   };
 
@@ -188,15 +189,15 @@ export const PayoutsProvider = ({
 
   // Clear payout state on network / active account change.
   useEffectIgnoreInitial(() => {
-    if (payouts !== null) {
-      setPayouts(null);
+    if (pendingPayouts !== null) {
+      setPendingPayouts(null);
       setStateWithRef('unsynced', setPayoutsSynced, payoutsSyncedRef);
     }
   }, [network, activeAccount]);
 
   return (
     <PayoutsContext.Provider
-      value={{ payouts, payoutsSynced: payoutsSyncedRef.current }}
+      value={{ pendingPayouts, payoutsSynced: payoutsSyncedRef.current }}
     >
       {children}
     </PayoutsContext.Provider>
