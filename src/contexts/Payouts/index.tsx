@@ -191,7 +191,8 @@ export const PayoutsProvider = ({
         const leftoverReward = validatorReward.minus(validatorCommission);
         const whoPayout = leftoverReward.multipliedBy(share);
 
-        // TODO: Store payout data in local stoarage.
+        // TODO: Store payout data in local storage.
+        // TODO: Could store these payouts better, e.g. put all payouts for an era under one key.
 
         eraPayouts.push({ era: currentEra, payout: whoPayout });
       }
