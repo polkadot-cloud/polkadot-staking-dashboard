@@ -35,6 +35,7 @@
     "@polkadot/util": "^12.1.1",
     "@polkadot/util-crypto": "12.3.2",
     "@polkadotcloud/react-odometer": "^0.1.19",
+    "@polkawatch/ddp-client": "^2.0.8",
     "@substrate/connect": "^0.7.31",
     "@zondax/ledger-substrate": "^0.41.1",
     "bignumber.js": "^9.1.1",
