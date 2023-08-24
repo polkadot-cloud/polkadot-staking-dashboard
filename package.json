@@ -40,7 +40,7 @@
     "bignumber.js": "^9.1.1",
     "bn.js": "^5.2.1",
     "buffer": "^6.0.3",
-    "chart.js": "^4.3.3",
+    "chart.js": "^4.4.0",
     "date-fns": "^2.29.3",
     "framer-motion": "^10.16.1",
     "i18next": "^23.4.5",
