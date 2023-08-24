@@ -134,15 +134,15 @@ export const PayoutsProvider = ({
     // Filter out duplicate validators.
     const uniqueValidators = [...new Set(erasValidators)];
 
-    // Fetch ledgers to determine which rewards have been claimed.
+    // Fetch ledgers to determine which rewards have been claimed (use local data if exists).
     // eslint-disable-next-line
     const ledgerResults = await Promise.all(uniqueValidators.map((validator: AnyJson) =>
         api.query.staking.ledger(validator)
       )
     );
     // TODO: determine if payouts need to be calculated. Cache claimed results to local storage so
-    // claimed validators do not need to be fetched again. If cached, only check `claimed: false`
-    // and update if they have been.
+    // claimed validator ledgers do not need to be fetched again. If cached, only check `claimed:
+    // false` and update if they have been.
     /*
     polkadot_payouts_claimed = {
       accountAddress: {
