@@ -83,9 +83,7 @@ export const FastUnstakeProvider = ({
       fastUnstakeErasToCheckPerBlock > 0
     ) {
       // cancel fast unstake check on network change or account change.
-      for (const u of unsubs.current) {
-        u();
-      }
+      for (const unsub of unsubs.current) unsub();
 
       setStateWithRef(false, setChecking, checkingRef);
       setStateWithRef(null, setqueueDeposit, queueDepositRef);
@@ -143,9 +141,7 @@ export const FastUnstakeProvider = ({
     }
 
     return () => {
-      for (const u of unsubs.current) {
-        u();
-      }
+      for (const unsub of unsubs.current) unsub();
     };
   }, [
     inSetup(),
