@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import React, { useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import type { AnyApi, Sync, AnyJson } from 'types';
@@ -9,6 +9,8 @@ import { useConnect } from 'contexts/Connect';
 import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
 import { useNetworkMetrics } from 'contexts/Network';
 import Worker from 'workers/stakers?worker';
+import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
+import BigNumber from 'bignumber.js';
 import { MaxSupportedPayoutEras, defaultPayoutsContext } from './defaults';
 import type { PayoutsContextInterface } from './types';
 
@@ -25,26 +27,30 @@ export const PayoutsProvider = ({
   const { isNominating, fetchEraStakers } = useStaking();
 
   // Store active accont's payout state.
-  const [payouts, setPayouts] = React.useState<AnyJson>(null);
+  const [payouts, setPayouts] = useState<AnyJson>(null);
 
   // Track whether payouts have been fetched.
-  const payoutsSynced = React.useRef<Sync>('unsynced');
+  const [payoutsSynced, setPayoutsSynced] = useState<Sync>('unsynced');
+  const payoutsSyncedRef = useRef(payoutsSynced);
 
   // Calculate eras to check for pending payouts.
   const getErasToCheck = () => {
-    const start = activeEra?.index.minus(1).toNumber() || 1;
-    const end = Math.max(start - MaxSupportedPayoutEras, 1);
+    const startEra = activeEra?.index.minus(1) || new BigNumber(1);
+    const endEra = BigNumber.max(
+      startEra.minus(MaxSupportedPayoutEras).plus(1),
+      1
+    );
     return {
-      start,
-      end,
+      startEra,
+      endEra,
     };
   };
 
-  // Calls service worker to check exppsures for given era.
-  // eslint-disable-next-line
-  const checkExposures = async (era: number, exposures: AnyJson) => {
-    if (!api) return;
-
+  // Fetch exposure data for an era, and pass the data to the worker to determine the validator the
+  // active account was backing in that era.
+  const checkEra = async (era: BigNumber) => {
+    if (!activeAccount) return;
+    const exposures = await fetchEraStakers(era.toString());
     worker.postMessage({
       task: 'processEraForExposure',
       era: String(era),
@@ -54,91 +60,86 @@ export const PayoutsProvider = ({
     });
   };
 
-  // Fetch exposure data required for pending payouts.
-  const fetchExposureData = async () => {
-    if (!api || !activeAccount) return;
-
-    const calls = [];
-    // TODO: reformat to only fetch one era exposures at a time, keep track in same fashion as fast
-    // unstake.
-    const { start, end } = getErasToCheck();
-    for (let i = start; i >= end; i--) {
-      calls.push(fetchEraStakers(String(i)));
-    }
-
-    // eslint-disable-next-line
-    const eraExposures = await Promise.all(calls);
-
-    // TODO: store all exposure data in local storage.
-
-    // get first era exposures in localStorage from `start` era.
-    // checkExposures(start, exposures);
-  };
-
-  // Fetch pending payouts.
-  const fetchPendingPayouts = async () => {
-    if (!api || !activeAccount) return;
-
-    // Get eras required for payout calculation.
-    const { start, end } = getErasToCheck();
-
-    // Accumulate needed calls for reward data.
-    const calls = [];
-    for (let i = start; i >= end; i--) {
-      // TODO: only fetch eras that are not in local storage.
-      calls.push(api.query.staking.erasRewardPoints<AnyApi>(i));
-    }
-
-    const eraPayouts = await Promise.all(calls);
-    for (const eraPayout of eraPayouts) {
-      // eslint-disable-next-line
-      const { total, individual } = eraPayout;
-
-      // TODO: store this era payout in local storage.
-
-      // const activeAccountPayout = rmCommas(individual[activeAccount] || 0);
-
-      // TODO: Check if active account had a payout in this era. If so, store in Payouts and in local stoarage.
-      // do this next.
-    }
-
-    // TODO: commit all payouts to state once all synced.
-    setPayouts({});
-  };
-
-  // Start pending payout process.
-  const startPendingPayoutProcess = async () => {
-    // Populate localStorage with the needed exposure data.
-    await fetchExposureData();
-
-    // Fetch reward data and determine whether there are pending payouts.
-    // TODO: move this to `useEffect` once all required workers have completed.
-    await fetchPendingPayouts();
-    payoutsSynced.current = 'synced';
-  };
-
   // Handle worker message on completed exposure check.
   worker.onmessage = (message: MessageEvent) => {
     if (message) {
       // ensure correct task received.
       const { data } = message;
       const { task } = data;
-      if (task !== 'processEraForExposure') {
-        return;
-      }
-      // ensure still same conditions.
+      if (task !== 'processEraForExposure') return;
+
+      // Exit early if network or account conditions have changed.
       const { networkName, who } = data;
-      if (networkName !== network.name || who !== activeAccount) {
-        return;
-      }
+      if (networkName !== network.name || who !== activeAccount) return;
 
       // eslint-disable-next-line
       const { era, exposed, exposeValidator } = data;
+      const { endEra } = getErasToCheck();
 
-      // TODO: process received era exposure data, set in local storage.
-      // TODO: if there are more exposures to process, check next era.
-      // checkExposures(nextEra, exposures);
+      // TODO: process received era exposure data results and set in local storage.
+
+      // If there are more exposures to process, check next era.
+      if (new BigNumber(era).isGreaterThan(endEra))
+        checkEra(new BigNumber(era).minus(1));
+      // If all exposures have been processed, check for pending payouts.
+      else if (new BigNumber(era).isEqualTo(endEra)) {
+        checkPendingPayouts();
+      }
     }
+  };
+
+  // Start pending payout process once exposure data is fetched.
+  // eslint-disable-next-line
+  const checkPendingPayouts = async () => {
+    if (!api) return;
+
+    // Fetch reward data and determine whether there are pending payouts.
+    const { startEra, endEra } = getErasToCheck();
+    let currentEra = startEra;
+    const calls = [];
+    while (currentEra.isGreaterThanOrEqualTo(endEra)) {
+      calls.push(
+        Promise.all([
+          api.query.staking.erasValidatorReward<AnyApi>(currentEra.toString()),
+          api.query.staking.erasRewardPoints<AnyApi>(currentEra.toString()),
+        ])
+      );
+      currentEra = currentEra.minus(1);
+    }
+
+    currentEra = startEra;
+    for (const result of await Promise.all(calls)) {
+      const eraValidatorReward = new BigNumber(rmCommas(result[0].toHuman()));
+      const eraRewardPoints = result[1].toHuman();
+
+      // TODO: get validator from earlier exposure data processing.
+      const validator = 0;
+
+      const total = new BigNumber(rmCommas(eraRewardPoints.total));
+      const individual = new BigNumber(
+        rmCommas(eraRewardPoints.individual?.[validator] || '0')
+      );
+      const share = individual.isZero()
+        ? new BigNumber(0)
+        : individual.dividedBy(total);
+      const payout = eraValidatorReward.multipliedBy(share);
+
+      console.log(
+        'era ',
+        currentEra.toString(),
+        ' payout: ',
+        payout.toString()
+      );
+
+      // TODO: Store payout data in local stoarage.
+
+      currentEra = currentEra.minus(1);
+    }
+
+    // TODO: commit all payout data to state.
+    setPayouts({});
+
+    setStateWithRef('synced', setPayoutsSynced, payoutsSyncedRef);
   };
 
   // Fetch payouts if active account is nominating.
@@ -146,10 +147,11 @@ export const PayoutsProvider = ({
     if (
       isNominating() &&
       !activeEra.index.isZero() &&
-      payoutsSynced.current === 'unsynced'
+      payoutsSyncedRef.current === 'unsynced'
     ) {
-      payoutsSynced.current = 'syncing';
-      startPendingPayoutProcess();
+      payoutsSyncedRef.current = 'syncing';
+      // Start checking eras for exposures, starting with the previous one.
+      checkEra(activeEra.index.minus(1));
     }
   }, [isNominating(), activeEra]);
 
@@ -157,12 +159,14 @@ export const PayoutsProvider = ({
   useEffectIgnoreInitial(() => {
     if (payouts !== null) {
       setPayouts(null);
-      payoutsSynced.current = 'unsynced';
+      setStateWithRef('unsynced', setPayoutsSynced, payoutsSyncedRef);
     }
   }, [network, activeAccount]);
 
   return (
-    <PayoutsContext.Provider value={{ payouts }}>
+    <PayoutsContext.Provider
+      value={{ payouts, payoutsSynced: payoutsSyncedRef.current }}
+    >
       {children}
     </PayoutsContext.Provider>
   );
