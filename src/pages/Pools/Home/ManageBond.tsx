@@ -60,7 +60,7 @@ export const ManageBond = () => {
               openModal({
                 key: 'Bond',
                 options: { bondFor: 'pool' },
-                size: 'small',
+                size: 'sm',
               })
             }
             text="+"
@@ -78,7 +78,7 @@ export const ManageBond = () => {
               openModal({
                 key: 'Unbond',
                 options: { bondFor: 'pool' },
-                size: 'small',
+                size: 'sm',
               })
             }
             text="-"
@@ -92,7 +92,7 @@ export const ManageBond = () => {
               openModal({
                 key: 'UnlockChunks',
                 options: { bondFor: 'pool', disableWindowResize: true },
-                size: 'small',
+                size: 'sm',
               })
             }
             text={String(totalUnlockChuncks ?? 0)}

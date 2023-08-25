@@ -60,7 +60,7 @@ export const PayoutDestinationStatus = () => {
                   isSyncing ||
                   isReadOnlyAccount(activeAccount) ||
                   isFastUnstaking,
-                onClick: () => openModal({ key: 'UpdatePayee', size: 'small' }),
+                onClick: () => openModal({ key: 'UpdatePayee', size: 'sm' }),
               },
             ]
           : []

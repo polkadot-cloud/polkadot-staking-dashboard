@@ -55,14 +55,14 @@ export const NominationStatus = ({
           title: fastUnstakeText,
           icon: faBolt,
           onClick: () => {
-            openModal({ key: 'ManageFastUnstake', size: 'small' });
+            openModal({ key: 'ManageFastUnstake', size: 'sm' });
           },
         }
       : {
           title: t('nominate.unstake'),
           icon: faSignOutAlt,
           disabled: !isReady || isReadOnlyAccount(controller) || !activeAccount,
-          onClick: () => openModal({ key: 'Unstake', size: 'small' }),
+          onClick: () => openModal({ key: 'Unstake', size: 'sm' }),
         };
 
   // Display progress alongside start title if exists and in setup.

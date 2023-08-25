@@ -76,7 +76,7 @@ export const ClosurePrompts = () => {
                     openModal({
                       key: 'UnbondPoolMember',
                       options: { who: activeAccount, member: membership },
-                      size: 'small',
+                      size: 'sm',
                     })
                   }
                 />
@@ -96,7 +96,7 @@ export const ClosurePrompts = () => {
                         poolClosure: true,
                         disableWindowResize: true,
                       },
-                      size: 'small',
+                      size: 'sm',
                     })
                   }
                 />

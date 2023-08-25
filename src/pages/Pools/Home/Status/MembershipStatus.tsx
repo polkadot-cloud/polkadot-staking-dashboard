@@ -66,7 +66,7 @@ export const MembershipStatus = ({
           openModal({
             key: 'ManagePool',
             options: { disableWindowResize: true },
-            size: 'small',
+            size: 'sm',
           }),
       });
     }

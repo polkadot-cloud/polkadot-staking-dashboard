@@ -64,7 +64,7 @@ export const UnstakePrompts = () => {
                     iconLeft={faBolt}
                     text={getFastUnstakeText()}
                     onClick={() =>
-                      openModal({ key: 'ManageFastUnstake', size: 'small' })
+                      openModal({ key: 'ManageFastUnstake', size: 'sm' })
                     }
                   />
                 ) : (
@@ -84,7 +84,7 @@ export const UnstakePrompts = () => {
                           poolClosure: true,
                           disableWindowResize: true,
                         },
-                        size: 'small',
+                        size: 'sm',
                       })
                     }
                   />

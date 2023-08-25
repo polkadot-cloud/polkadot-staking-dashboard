@@ -67,7 +67,7 @@ export const Nominations = ({
         provider,
         bondFor,
       },
-      size: 'small',
+      size: 'sm',
     });
   };
 
@@ -122,7 +122,7 @@ export const Nominations = ({
                     nominations: [],
                     bondFor,
                   },
-                  size: 'small',
+                  size: 'sm',
                 })
               }
             />

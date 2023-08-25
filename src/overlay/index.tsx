@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import { Overlay } from '@polkadot-cloud/react';
 import { useHelp } from 'contexts/Help';
 import { ErrorFallbackModal } from 'library/ErrorBoundary';
+import { Overlay } from '@polkadot-cloud/react';
 import { AccountPoolRoles } from '../modals/AccountPoolRoles';
 import { Accounts } from '../modals/Accounts';
 import { Bio } from '../modals/Bio';

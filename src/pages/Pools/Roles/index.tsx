@@ -114,7 +114,7 @@ export const Roles = ({
       openModal({
         key: 'ChangePoolRoles',
         options: { id, roleEdits },
-        size: 'small',
+        size: 'sm',
       });
     }
   };

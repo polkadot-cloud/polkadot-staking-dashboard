@@ -27,7 +27,7 @@ export const JoinPool = ({
               id,
               setActiveTab,
             },
-            size: 'small',
+            size: 'sm',
           });
         }}
       >

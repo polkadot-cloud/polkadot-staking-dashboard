@@ -45,7 +45,7 @@ export const RewardsStatus = () => {
             openModal({
               key: 'ClaimReward',
               options: { claimType: 'withdraw' },
-              size: 'small',
+              size: 'sm',
             }),
         },
         {
@@ -60,7 +60,7 @@ export const RewardsStatus = () => {
             openModal({
               key: 'ClaimReward',
               options: { claimType: 'bond' },
-              size: 'small',
+              size: 'sm',
             }),
         },
       ]

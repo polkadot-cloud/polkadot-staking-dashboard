@@ -55,9 +55,7 @@ export const ManagePool = () => {
                   iconTransform="grow-1"
                   text={t('pools.nominate')}
                   disabled={!canNominate}
-                  onClick={() =>
-                    openModal({ key: 'NominatePool', size: 'small' })
-                  }
+                  onClick={() => openModal({ key: 'NominatePool', size: 'sm' })}
                 />
               </div>
             </CardHeaderWrapper>

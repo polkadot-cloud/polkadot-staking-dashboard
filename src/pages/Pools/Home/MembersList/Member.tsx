@@ -63,7 +63,7 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
               who,
               member,
             },
-            size: 'small',
+            size: 'sm',
           });
         },
       });
@@ -86,7 +86,7 @@ export const Member = ({ who, batchKey, batchIndex }: any) => {
             openModal({
               key: 'WithdrawPoolMember',
               options: { who, member },
-              size: 'small',
+              size: 'sm',
             });
           },
         });

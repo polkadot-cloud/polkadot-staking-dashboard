@@ -234,7 +234,7 @@ export const BalanceChart = () => {
                     <ButtonTertiary
                       text="Reserve Balance"
                       onClick={() =>
-                        openModal({ key: 'UpdateReserve', size: 'small' })
+                        openModal({ key: 'UpdateReserve', size: 'sm' })
                       }
                       iconRight={
                         isNetworkSyncing
