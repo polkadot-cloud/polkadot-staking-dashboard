@@ -5,7 +5,7 @@ import { faPlug, faWallet } from '@fortawesome/free-solid-svg-icons';
 import { ButtonText } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { ConnectedAccount, HeadingWrapper } from './Wrappers';
 
 export const Connect = () => {

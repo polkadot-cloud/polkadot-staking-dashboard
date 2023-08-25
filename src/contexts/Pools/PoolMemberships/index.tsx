@@ -11,7 +11,7 @@ import type {
   PoolMembershipsContextState,
 } from 'contexts/Pools/types';
 import type { AnyApi, Fn } from 'types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import * as defaults from './defaults';

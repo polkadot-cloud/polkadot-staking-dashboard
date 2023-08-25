@@ -15,7 +15,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { BondedChart } from '../../../library/BarChart/BondedChart';
 
 export const ManageBond = () => {
@@ -60,7 +60,7 @@ export const ManageBond = () => {
               openModal({
                 key: 'Bond',
                 options: { bondFor: 'nominator' },
-                size: 'small',
+                size: 'sm',
               })
             }
             text="+"
@@ -77,7 +77,7 @@ export const ManageBond = () => {
               openModal({
                 key: 'Unbond',
                 options: { bondFor: 'nominator' },
-                size: 'small',
+                size: 'sm',
               })
             }
             text="-"
@@ -92,7 +92,7 @@ export const ManageBond = () => {
               openModal({
                 key: 'UnlockChunks',
                 options: { bondFor: 'nominator', disableWindowResize: true },
-                size: 'small',
+                size: 'sm',
               })
             }
             text={String(totalUnlockChuncks ?? 0)}

@@ -7,7 +7,7 @@ import { useConnect } from 'contexts/Connect';
 import { usePlugins } from 'contexts/Plugins';
 import type { PoolMember, PoolMemberContext } from 'contexts/Pools/types';
 import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount, Sync } from 'types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useApi } from '../../Api';
 import { defaultPoolMembers } from './defaults';
 

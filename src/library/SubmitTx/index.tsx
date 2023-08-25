@@ -8,7 +8,7 @@ import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { Default } from './Default';
 import { ManualSign } from './ManualSign';
 import type { SubmitTxProps } from './types';

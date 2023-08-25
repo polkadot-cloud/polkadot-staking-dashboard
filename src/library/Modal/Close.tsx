@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: GPL-3.0-only
 
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { CloseWrapper } from './Wrappers';
 
 export const Close = () => {

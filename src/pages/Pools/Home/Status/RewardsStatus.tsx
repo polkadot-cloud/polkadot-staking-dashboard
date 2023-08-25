@@ -10,7 +10,7 @@ import { useConnect } from 'contexts/Connect';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const RewardsStatus = () => {
   const { t } = useTranslation('pages');
@@ -45,7 +45,7 @@ export const RewardsStatus = () => {
             openModal({
               key: 'ClaimReward',
               options: { claimType: 'withdraw' },
-              size: 'small',
+              size: 'sm',
             }),
         },
         {
@@ -60,7 +60,7 @@ export const RewardsStatus = () => {
             openModal({
               key: 'ClaimReward',
               options: { claimType: 'bond' },
-              size: 'small',
+              size: 'sm',
             }),
         },
       ]

@@ -11,7 +11,7 @@ import '@polkadot-cloud/core/template/default/fonts/index.css';
 // Default template theme.
 import '@polkadot-cloud/core/template/default/index.css';
 
-// Core UI styles.
+// Polkadot Cloud core styles.
 import '@polkadot-cloud/core/css/styles/index.css';
 
 // Miscellaneous component styles.

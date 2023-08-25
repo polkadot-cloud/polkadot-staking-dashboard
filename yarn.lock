@@ -1507,23 +1507,24 @@
   resolved "https://registry.npmjs.org/@polkadot-cloud/community/-/community-0.1.10.tgz#d2a99190c0a89a67275264084e6e750269990986"
   integrity sha512-VT38rqOvORuYdPLigS8UNwvitoc0DFZWEazsvHxz9bTnPBL/7M3LujWXO14OSGw+FTvfz4RzPwovmW4u7RoT/Q==
 
-"@polkadot-cloud/core@^0.1.1", "@polkadot-cloud/core@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/core/-/core-0.1.2.tgz#67cff1b96bbf13576bb6d307a55c1825fb435ad7"
-  integrity sha512-L2WpBPp04238aXZX2w44GHz5ozILPLuHibsvTWgswSmZPJuF5SVkEQnCKLXvPjP2o5RlpbiDl0rYUd+F9Qo7HA==
+"@polkadot-cloud/core@0.1.6":
+  version "0.1.6"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/core/-/core-0.1.6.tgz#c82934fdbc1fd5e9759de30f2bb6881cec2a5bf4"
+  integrity sha512-4nftY+1sXXG4qauZhlagafdWsBLewnuk+UtqA8z5AIADr2QmEfsuQMBXIwsAZIaHPvP2/VfjCwLEBKQR3uWAow==
 
-"@polkadot-cloud/react@^0.1.7":
+"@polkadot-cloud/core@^0.1.7":
   version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/react/-/react-0.1.7.tgz#badf6f0e958e0265501321182985a46f96f3b7ec"
-  integrity sha512-CkKLxxzWcChc46tSSLrrTXoHBjIHhcPDVAQI0bTeVSU4z36avxMwSXz1HjYIEh1RVdJLajonf69fWJtvzgFbgg==
-  dependencies:
-    "@polkadot-cloud/core" "^0.1.2"
-    "@polkadot-cloud/utils" "^0.0.1"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/core/-/core-0.1.7.tgz#ec46b59efc2067d1fea26b3cccb36ee1b51be14a"
+  integrity sha512-5z4grPh78Z/BZS0hmwJHxEYB+oIUwxNorCaV1TwewyFGvmrLDkeCOVnH/J+mLZAj/v/3UkV+R1nOP4iJubFvnQ==
 
-"@polkadot-cloud/utils@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@polkadot-cloud/utils/-/utils-0.0.1.tgz#24b0d569c4637e4d539ba3a2c669339144162133"
-  integrity sha512-YWSQ/sPRwVcO1LBJAVS7E7TI+dYpVY/Oe/sDwLThMVaVXzaIx18tBBhoEXXU85a8N0bXJHYVOMIWoCnAem4ZJw==
+"@polkadot-cloud/react@^0.1.20":
+  version "0.1.20"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/react/-/react-0.1.20.tgz#0386f58edb11617f074bc754b454ea2bef693ee8"
+  integrity sha512-K2d+YzPGfHF/eZ1TU7264VGKGpqEtg07nYCbmpThXCFnrPkO/oe9UT5ym/7Rpzq4aNSugIJ6YXtUL8UPCCheSQ==
+  dependencies:
+    "@polkadot-cloud/core" "0.1.6"
+    "@polkadot-cloud/utils" "^0.0.4"
+    react-error-boundary "^4.0.11"
 
 "@polkadot-cloud/utils@^0.0.4":
   version "0.0.4"
@@ -2780,10 +2781,10 @@ chalk@^4.0.0, chalk@^4.1.1:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chart.js@^4.3.3:
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-4.3.3.tgz#dcd98afadf9fcfa5219e72ace5912092ea48fd36"
-  integrity sha512-aTk7pBw+x6sQYhon/NR3ikfUJuym/LdgpTlgZRe2PaEhjUMKBKyNaFCMVRAyTEWYFNO7qRu7iQVqOw/OqzxZxQ==
+chart.js@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-4.4.0.tgz#df843fdd9ec6bd88d7f07e2b95348d221bd2698c"
+  integrity sha512-vQEj6d+z0dcsKLlQvbKIMYFHd3t8W/7L2vfJIbYcfyPcRx92CsHqECpueN8qVGNlKyDcr5wBrYAYKnfu/9Q1hQ==
   dependencies:
     "@kurkle/color" "^0.3.0"
 
@@ -5778,10 +5779,10 @@ typeforce@^1.11.5:
   resolved "https://registry.yarnpkg.com/typeforce/-/typeforce-1.18.0.tgz#d7416a2c5845e085034d70fcc5b6cc4a90edbfdc"
   integrity sha512-7uc1O8h1M1g0rArakJdf0uLRSSgFcYexrVoKo+bzJd32gd4gDy2L/Z+8/FjPnU9ydY3pEnVPtr9FyscYY60K1g==
 
-typescript@^5.1.6:
-  version "5.1.6"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.1.6.tgz#02f8ac202b6dad2c0dd5e0913745b47a37998274"
-  integrity sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==
+typescript@^5.2.2:
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.2.2.tgz#5ebb5e5a5b75f085f22bc3f8460fba308310fa78"
+  integrity sha512-mI4WrpHsbCIcwT9cF4FZvr80QUeKvsUsUvKDoR+X/7XHQH98xYD8YHZg7ANtz2GtZt/CBq2QJ0thkGJMHfqc1w==
 
 ufo@^1.1.2:
   version "1.1.2"

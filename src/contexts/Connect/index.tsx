@@ -27,7 +27,7 @@ import {
   getLocalVaultAccounts,
 } from 'contexts/Hardware/Utils';
 import type { AnyApi, MaybeAccount, NetworkName } from 'types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useImportExtension } from './Hooks/useImportExtension';
 import {
   extensionIsLocal,
