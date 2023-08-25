@@ -1512,15 +1512,15 @@
   resolved "https://registry.npmjs.org/@polkadot-cloud/core/-/core-0.1.6.tgz#c82934fdbc1fd5e9759de30f2bb6881cec2a5bf4"
   integrity sha512-4nftY+1sXXG4qauZhlagafdWsBLewnuk+UtqA8z5AIADr2QmEfsuQMBXIwsAZIaHPvP2/VfjCwLEBKQR3uWAow==
 
-"@polkadot-cloud/core@0.1.7":
+"@polkadot-cloud/core@^0.1.7":
   version "0.1.7"
   resolved "https://registry.npmjs.org/@polkadot-cloud/core/-/core-0.1.7.tgz#ec46b59efc2067d1fea26b3cccb36ee1b51be14a"
   integrity sha512-5z4grPh78Z/BZS0hmwJHxEYB+oIUwxNorCaV1TwewyFGvmrLDkeCOVnH/J+mLZAj/v/3UkV+R1nOP4iJubFvnQ==
 
-"@polkadot-cloud/react@0.1.19":
-  version "0.1.19"
-  resolved "https://registry.npmjs.org/@polkadot-cloud/react/-/react-0.1.19.tgz#858cd8e7b8dc8e0c6c6b830f66961c627c5fc965"
-  integrity sha512-laauadQPtKTNmYS83uAPJF5T0fvefG2tV6cPIqTnaAgwVfKohkxMS9YfmbvlKdz+2mVNgSeZj7EBSFgMO9HFKA==
+"@polkadot-cloud/react@^0.1.20":
+  version "0.1.20"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/react/-/react-0.1.20.tgz#0386f58edb11617f074bc754b454ea2bef693ee8"
+  integrity sha512-K2d+YzPGfHF/eZ1TU7264VGKGpqEtg07nYCbmpThXCFnrPkO/oe9UT5ym/7Rpzq4aNSugIJ6YXtUL8UPCCheSQ==
   dependencies:
     "@polkadot-cloud/core" "0.1.6"
     "@polkadot-cloud/utils" "^0.0.4"
