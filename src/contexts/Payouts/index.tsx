@@ -12,7 +12,11 @@ import Worker from 'workers/stakers?worker';
 import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { MaxSupportedPayoutEras, defaultPayoutsContext } from './defaults';
-import type { EraPayout, PayoutsContextInterface } from './types';
+import type {
+  EraPayout,
+  LocalValidatorExposure,
+  PayoutsContextInterface,
+} from './types';
 import {
   getLocalEraExposure,
   hasLocalEraExposure,
@@ -132,14 +136,15 @@ export const PayoutsProvider = ({
       currentEra = currentEra.minus(1);
     }
     // Filter out duplicate validators.
+    // eslint-disable-next-line
     const uniqueValidators = [...new Set(erasValidators)];
 
     // Fetch ledgers to determine which rewards have been claimed (use local data if exists).
     // eslint-disable-next-line
-    const ledgerResults = await Promise.all(uniqueValidators.map((validator: AnyJson) =>
-        api.query.staking.ledger(validator)
-      )
-    );
+    // const ledgerResults = await Promise.all(uniqueValidators.map((validator: AnyJson) =>
+    //     api.query.staking.ledger(validator)
+    //   )
+    // );
     // TODO: determine if payouts need to be calculated. Cache claimed results to local storage so
     // claimed validator ledgers do not need to be fetched again. If cached, only check `claimed:
     // false` and update if they have been.
@@ -159,6 +164,7 @@ export const PayoutsProvider = ({
     */
 
     const calls = [];
+    currentEra = startEra;
     // TODO: instead of looping eras here, loop above `polkadot_payouts_claimed` eras for the
     // accountAddress, to only fetch unclaimed payouts.
     while (currentEra.isGreaterThanOrEqualTo(endEra)) {
@@ -202,13 +208,19 @@ export const PayoutsProvider = ({
       const i = 0;
       for (const pref of prefs) {
         const eraValidatorPrefs = pref.toHuman();
+
         const commission = new BigNumber(
           eraValidatorPrefs.commission.replace(/%/g, '')
         ).multipliedBy(0.01);
 
         // Get validator from era exposure data. Falls back no null if it cannot be found.
         const validator = Object.keys(exposedValidators)?.[i] || '';
-        const share = (Object.values(exposedValidators)?.[i] as string) || '0';
+        const localExposed: LocalValidatorExposure[] | null =
+          Object.values(exposedValidators);
+
+        const staked = new BigNumber(localExposed?.[i]?.staked || '0');
+        const total = new BigNumber(localExposed?.[i]?.total || '0');
+        const isValidator = localExposed?.[i]?.isValidator || false;
 
         // Calculate the validator's share of total era payout.
         const totalRewardPoints = new BigNumber(
@@ -217,20 +229,20 @@ export const PayoutsProvider = ({
         const validatorRewardPoints = new BigNumber(
           rmCommas(eraRewardPoints.individual?.[validator] || '0')
         );
-        const validatorShare = validatorRewardPoints.isZero()
-          ? new BigNumber(0)
-          : validatorRewardPoints.dividedBy(totalRewardPoints);
+        const avail = eraTotalPayout
+          .multipliedBy(validatorRewardPoints)
+          .dividedBy(totalRewardPoints);
 
-        // Deduct validator commission from it's share.
-        const validatorReward = validatorShare.multipliedBy(eraTotalPayout);
-        const validatorCommission = validatorReward.multipliedBy(commission);
-        const leftoverReward = validatorReward.minus(validatorCommission);
+        const valCut = commission.multipliedBy(avail);
 
-        // Determine `who`'s share of the leftover reward.
-        const whoPayout = leftoverReward.multipliedBy(share);
+        const rewardValue = avail
+          .minus(valCut)
+          .multipliedBy(staked)
+          .dividedBy(total)
+          .plus(isValidator ? valCut : 0);
 
         // TODO: Store payout data in local storage.
-        eraPayouts.push({ era: currentEra, payout: whoPayout });
+        eraPayouts.push({ era: currentEra, payout: rewardValue });
       }
       currentEra = currentEra.minus(1);
     }

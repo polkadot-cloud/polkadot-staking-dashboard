@@ -13,3 +13,10 @@ export interface EraPayout {
   era: BigNumber;
   payout: BigNumber;
 }
+
+export interface LocalValidatorExposure {
+  staked: string;
+  total: string;
+  share: string;
+  isValidator: boolean;
+}

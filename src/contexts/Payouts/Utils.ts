@@ -3,6 +3,7 @@
 
 import BigNumber from 'bignumber.js';
 import type { AnyJson, NetworkName } from 'types';
+import type { LocalValidatorExposure } from './types';
 
 // Check if local exposure entry exists for an era.
 export const hasLocalEraExposure = (
@@ -33,7 +34,7 @@ export const setLocalEraExposure = (
   network: NetworkName,
   era: string,
   who: string,
-  exposedValidators: Record<string, string> | null,
+  exposedValidators: Record<string, LocalValidatorExposure> | null,
   endEra: string
 ) => {
   const current = JSON.parse(

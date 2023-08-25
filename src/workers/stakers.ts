@@ -9,6 +9,7 @@ import type {
   Staker,
 } from 'contexts/Staking/types';
 import type { AnyJson } from 'types';
+import type { LocalValidatorExposure } from 'contexts/Payouts/types';
 import type { DataInitialiseExposures } from './types';
 
 // eslint-disable-next-line no-restricted-globals
@@ -37,7 +38,7 @@ const processEraForExposure = (data: AnyJson) => {
   let exposed = false;
 
   // If exposed, the validator that was backed.
-  const exposedValidators: Record<string, string> = {};
+  const exposedValidators: Record<string, LocalValidatorExposure> = {};
 
   // Check exposed as validator or nominator.
   exposures.every(({ keys, val }: any) => {
@@ -45,13 +46,20 @@ const processEraForExposure = (data: AnyJson) => {
     const others = val?.others ?? [];
     const own = val?.own || 0;
     const total = val?.total || 0;
+    const isValidator = validator === who;
 
-    if (validator === who) {
+    if (isValidator) {
       const share = new BigNumber(own).isZero()
         ? '0'
         : new BigNumber(own).dividedBy(total).toString();
 
-      exposedValidators[validator] = share;
+      exposedValidators[validator] = {
+        staked: own,
+        total,
+        share,
+        isValidator,
+      };
+
       exposed = true;
       return false;
     }
@@ -63,8 +71,15 @@ const processEraForExposure = (data: AnyJson) => {
         ? '0'
         : new BigNumber(inOthers.value).dividedBy(total).toString();
 
-      exposedValidators[validator] = share;
+      exposedValidators[validator] = {
+        staked: inOthers.value,
+        total,
+        share,
+        isValidator,
+      };
       exposed = true;
+
+      // TODO: only return false if processing fast unstake.
       return false;
     }
     return true;
@@ -79,7 +94,6 @@ const processEraForExposure = (data: AnyJson) => {
       : null,
     task,
     who,
-    whoShare: '0',
   };
 };
 
