@@ -100,8 +100,6 @@ export const PayoutsProvider = ({
       // Exit early if network or account conditions have changed.
       const { networkName, who } = data;
       if (networkName !== network.name || who !== activeAccount) return;
-
-      // eslint-disable-next-line
       const { era, exposedValidators } = data;
       const { endEra } = getErasToCheck();
 
@@ -120,7 +118,6 @@ export const PayoutsProvider = ({
   };
 
   // Start pending payout process once exposure data is fetched.
-  // eslint-disable-next-line
   const checkPendingPayouts = async () => {
     if (!api || !activeAccount) return;
 
@@ -140,7 +137,6 @@ export const PayoutsProvider = ({
     const uniqueValidators = [...new Set(erasValidators)];
 
     // Fetch ledgers to determine which rewards have been claimed (use local data if exists).
-    // eslint-disable-next-line
     // const ledgerResults = await Promise.all(uniqueValidators.map((validator: AnyJson) =>
     //     api.query.staking.ledger(validator)
     //   )
