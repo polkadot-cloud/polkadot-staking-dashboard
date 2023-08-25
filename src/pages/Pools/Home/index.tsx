@@ -4,7 +4,7 @@
 import { PageRow, PageTitle, RowSection } from '@polkadot-cloud/react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { PageTitleTabProps } from '@polkadot-cloud/react/core/types';
+import type { PageTitleTabProps } from '@polkadot-cloud/react/base/types';
 import { useConnect } from 'contexts/Connect';
 import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';

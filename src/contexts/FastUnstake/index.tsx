@@ -15,7 +15,7 @@ import { useNetworkMetrics } from 'contexts/Network';
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { defaultFastUnstakeContext, defaultMeta } from './defaults';
 import type {

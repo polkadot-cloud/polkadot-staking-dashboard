@@ -1515,10 +1515,10 @@
     gulp-livereload "^4.0.2"
     tiny-lr "^2.0.0"
 
-"@polkadot-cloud/react@^0.1.8":
-  version "0.1.8"
-  resolved "https://registry.npmjs.org/@polkadot-cloud/react/-/react-0.1.8.tgz#2fcb82df912d75dfb779c82f8987be0302674143"
-  integrity sha512-AlNNinQdx3hXEVo1sWHFguFt5+PDraIp/mARFAPdNRxsejsosrl4IpFmE8CEOQQwea49Jo0bZbFkuJVUlq4KtA==
+"@polkadot-cloud/react@0.1.13":
+  version "0.1.13"
+  resolved "https://registry.npmjs.org/@polkadot-cloud/react/-/react-0.1.13.tgz#821e18b8fa47b3a2490a3ec3f0d112f9a9dd4a64"
+  integrity sha512-lDfh4biNyT7GI03pUDjrQwdNsTw5MxXR/qgpwxA411UmQqg702Aiuzpsjfi2Wgix9A03o2hNvOpXd8TZj0p1Bw==
   dependencies:
     "@polkadot-cloud/core" "^0.1.4"
     "@polkadot-cloud/utils" "^0.0.4"

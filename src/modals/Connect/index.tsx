@@ -19,7 +19,7 @@ import { useExtensions } from 'contexts/Extensions';
 import { Close } from 'library/Modal/Close';
 import { SelectItems } from 'library/SelectItems';
 import type { AnyFunction } from 'types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useOverlay } from 'contexts/Overlay';
 import { Extension } from './Extension';
 import { Ledger } from './Ledger';

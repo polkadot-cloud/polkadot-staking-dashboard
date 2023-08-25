@@ -12,7 +12,7 @@ import type {
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyMetaBatch, Fn, MaybeAccount } from 'types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useApi } from '../../Api';
 import { usePoolsConfig } from '../PoolsConfig';
 import { defaultBondedPoolsContext } from './defaults';

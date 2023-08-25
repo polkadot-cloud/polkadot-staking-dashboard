@@ -9,7 +9,7 @@ import { useConnect } from 'contexts/Connect';
 import { useStaking } from 'contexts/Staking';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import type { AnyJson, MaybeAccount } from 'types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import * as defaults from './defaults';
 import type { TxMetaContextInterface } from './types';
 

@@ -7,7 +7,7 @@ import { AppVersion } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useUi } from 'contexts/UI';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 
 export const MigrateProvider = ({
   children,
