@@ -17,7 +17,7 @@ import { LegendItem } from 'library/BarChart/LegendItem';
 import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');

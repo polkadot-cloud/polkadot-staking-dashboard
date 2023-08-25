@@ -12,7 +12,7 @@ import { ReactComponent as PolkadotVaultIconSVG } from 'img/polkadotVault.svg';
 import { Identicon } from 'library/Identicon';
 import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 

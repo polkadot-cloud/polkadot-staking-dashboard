@@ -15,7 +15,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { BondedChart } from '../../../library/BarChart/BondedChart';
 
 export const ManageBond = () => {

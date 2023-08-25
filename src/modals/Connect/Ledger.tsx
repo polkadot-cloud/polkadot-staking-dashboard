@@ -19,7 +19,7 @@ import React from 'react';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
 import { ReactComponent as LedgerLogoSVG } from 'img/ledgerLogo.svg';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const Ledger = (): React.ReactElement => {
   const { openHelp } = useHelp();

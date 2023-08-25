@@ -21,7 +21,7 @@ import { NoAccounts } from 'library/Import/NoAccounts';
 import { Remove } from 'library/Import/Remove';
 import { AddressesWrapper } from 'library/Import/Wrappers';
 import type { AnyJson } from 'types';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { Reader } from './Reader';
 
 export const ImportVault = () => {

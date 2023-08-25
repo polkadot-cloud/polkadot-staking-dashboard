@@ -11,7 +11,7 @@ import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { Nominations } from 'pages/Nominate/Active/Nominations';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const ManagePool = () => {
   const { t } = useTranslation('pages');

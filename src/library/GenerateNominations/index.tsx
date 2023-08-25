@@ -23,7 +23,7 @@ import { SelectItem } from 'library/SelectItems/Item';
 import { ValidatorList } from 'library/ValidatorList';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
 import { useStaking } from 'contexts/Staking';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import type {
   GenerateNominationsInnerProps,
   Nominations,

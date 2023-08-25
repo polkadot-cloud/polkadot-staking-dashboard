@@ -15,7 +15,7 @@ import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { ValidatorList } from 'library/ValidatorList';
 import type { MaybeAccount } from 'types';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { Wrapper } from './Wrapper';
 
 export const Nominations = ({

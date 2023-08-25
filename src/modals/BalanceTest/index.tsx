@@ -5,7 +5,7 @@ import { ModalPadding } from '@polkadot-cloud/react';
 import { unitToPlanck } from '@polkadot-cloud/utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useTxMeta } from 'contexts/TxMeta';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';

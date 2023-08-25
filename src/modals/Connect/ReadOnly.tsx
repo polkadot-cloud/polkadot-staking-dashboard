@@ -18,7 +18,7 @@ import type { ExternalAccount } from 'contexts/Connect/types';
 import { useHelp } from 'contexts/Help';
 import { AccountInput } from 'library/AccountInput';
 import { Identicon } from 'library/Identicon';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import {
   ActionWithButton,
   ManualAccount,

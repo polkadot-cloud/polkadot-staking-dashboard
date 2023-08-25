@@ -24,7 +24,7 @@ import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');

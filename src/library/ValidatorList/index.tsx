@@ -21,7 +21,7 @@ import { Pagination } from 'library/List/Pagination';
 import { SearchInput } from 'library/List/SearchInput';
 import { Selectable } from 'library/List/Selectable';
 import { Validator } from 'library/ValidatorList/Validator';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
 import { Filters } from './Filters';

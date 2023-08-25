@@ -23,7 +23,7 @@ import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const UnbondPoolMember = () => {
   const { t } = useTranslation('modals');

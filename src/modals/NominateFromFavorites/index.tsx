@@ -21,7 +21,7 @@ import { Title } from 'library/Modal/Title';
 import { SubmitTx } from 'library/SubmitTx';
 import { ValidatorList } from 'library/ValidatorList';
 import { useTxMeta } from 'contexts/TxMeta';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { ListWrapper } from './Wrappers';
 
 export const NominateFromFavorites = () => {

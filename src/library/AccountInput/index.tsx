@@ -9,7 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
 import { Identicon } from 'library/Identicon';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { AccountInputWrapper } from './Wrapper';
 import type { AccountInputProps } from './types';
 

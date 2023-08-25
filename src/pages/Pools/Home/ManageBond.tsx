@@ -13,7 +13,7 @@ import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { BondedChart } from 'library/BarChart/BondedChart';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');

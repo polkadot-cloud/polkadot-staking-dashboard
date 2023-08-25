@@ -16,7 +16,7 @@ import { useIdentities } from 'contexts/Identities';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { RolesWrapper } from '../Home/ManagePool/Wrappers';
 import { PoolAccount } from '../PoolAccount';
 import { RoleEditInput } from './RoleEditInput';

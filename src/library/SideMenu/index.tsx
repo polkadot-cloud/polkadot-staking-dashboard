@@ -21,7 +21,7 @@ import { ReactComponent as LogoGithubSVG } from 'img/logo-github.svg';
 import { ReactComponent as MoonOutlineSVG } from 'img/moon-outline.svg';
 import { ReactComponent as SunnyOutlineSVG } from 'img/sunny-outline.svg';
 import { useOutsideAlerter } from 'library/Hooks';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { Heading } from './Heading/Heading';
 import { Main } from './Main';
 import { Secondary } from './Secondary';

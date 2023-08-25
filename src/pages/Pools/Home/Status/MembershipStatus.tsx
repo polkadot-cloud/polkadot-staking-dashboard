@@ -11,7 +11,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useStatusButtons } from './useStatusButtons';
 
 export const MembershipStatus = ({
