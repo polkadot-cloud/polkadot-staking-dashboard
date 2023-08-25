@@ -13,7 +13,7 @@ import type {
   ValidatorsContextInterface,
 } from 'contexts/Validators/types';
 import type { AnyApi, Fn, Sync } from 'types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';

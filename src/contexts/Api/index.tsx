@@ -30,7 +30,7 @@ import type {
   NetworkState,
 } from 'contexts/Api/types';
 import type { AnyApi, NetworkName } from 'types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import * as defaults from './defaults';
 
 export const APIProvider = ({ children }: { children: React.ReactNode }) => {
