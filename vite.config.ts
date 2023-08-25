@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import react from '@vitejs/plugin-react-swc';
 import { defineConfig } from 'vite';
@@ -9,8 +9,13 @@ import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 // https://vitejs.dev/config/
+//
+// NOTES:
+// - `base` is configured in `package.json` with the vite --base flag. In local dev it is `/`,
+//   whereas gh-pages always deploys to `/polkadot-staking-dashboard/`. Producution builds can also
+//   be configureed with the `--base` flag.
+// - `BASE_URL`env variable is used in the codebase to refer to the supplied base.
 export default defineConfig({
-  base: '/',
   plugins: [
     eslint(),
     react(),

@@ -1,10 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import type React from 'react';
 import type { FunctionComponent, SVGProps } from 'react';
 import type { Theme } from 'contexts/Themes/types';
-import type { PageProps } from 'pages/types';
 
 export type NetworkName = 'polkadot' | 'kusama' | 'westend';
 
@@ -93,6 +92,14 @@ export interface PageItem {
 
 export type PagesConfigItems = PageItem[];
 
+export interface PageProps {
+  page: PageProp;
+}
+
+interface PageProp {
+  key: string;
+}
+
 export type MaybeAccount = string | null;
 
 export type MaybeString = string | null;
@@ -107,13 +114,13 @@ export type BondFor = 'pool' | 'nominator';
 export type Fn = () => void;
 
 // any types to compress compiler warnings
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyApi = any;
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyJson = any;
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyFunction = any;
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyMetaBatch = any;
-// eslint-disable-next-line
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnySubscan = any;

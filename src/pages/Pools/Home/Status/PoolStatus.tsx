@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import {
   faExclamationTriangle,
@@ -18,10 +18,7 @@ export const PoolStatus = () => {
   const { selectedActivePool, poolNominations } = useActivePools();
 
   const poolStash = selectedActivePool?.addresses?.stash || '';
-  const { earningRewards, activeNominees } = getNominationStatus(
-    poolStash,
-    'pool'
-  );
+  const { earningRewards, nominees } = getNominationStatus(poolStash, 'pool');
   const poolState = selectedActivePool?.bondedPool?.state ?? null;
   const poolNominating = !!poolNominations?.targets?.length;
 
@@ -51,7 +48,7 @@ export const PoolStatus = () => {
     ? t('pools.inactivePoolNotNominating')
     : !poolNominating
     ? t('pools.inactivePoolNotNominating')
-    : activeNominees.length
+    : nominees.active.length
     ? `${t('pools.nominatingAnd')} ${
         earningRewards
           ? t('pools.earningRewards')

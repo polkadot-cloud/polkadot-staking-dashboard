@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, isNotZero, planckToUnit } from '@polkadotcloud/utils';
+import { clipAddress, isNotZero, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { formatDistance, fromUnixTime } from 'date-fns';
 import { motion } from 'framer-motion';
@@ -111,9 +111,6 @@ export const PayoutListInner = ({
     return <></>;
   }
 
-  // get validator metadata
-  const batchKey = 'validators_browse';
-
   return (
     <ListWrapper>
       <Header>
@@ -213,11 +210,7 @@ export const PayoutListInner = ({
                           {label === t('payouts.payout') && (
                             <>
                               {batchIndex > 0 ? (
-                                <Identity
-                                  address={p.validator_stash}
-                                  batchIndex={batchIndex}
-                                  batchKey={batchKey}
-                                />
+                                <Identity address={p.validator_stash} />
                               ) : (
                                 <div>{clipAddress(p.validator_stash)}</div>
                               )}
@@ -227,7 +220,7 @@ export const PayoutListInner = ({
                             <>
                               {pool ? (
                                 <PoolIdentity
-                                  batchKey={batchKey}
+                                  batchKey="bonded_pools"
                                   batchIndex={batchIndex}
                                   pool={pool}
                                 />

@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import type React from 'react';
 import type { BondedPool } from 'contexts/Pools/types';
@@ -22,8 +22,6 @@ export interface FavoriteProps {
 
 export interface IdentityProps {
   address: string;
-  batchIndex: number;
-  batchKey: string;
 }
 
 export interface PoolIdentityProps {
@@ -44,8 +42,7 @@ export interface NominationStatusProps {
 }
 
 export interface OversubscribedProps {
-  batchIndex: number;
-  batchKey: string;
+  address: MaybeAccount;
 }
 
 export interface SelectProps {

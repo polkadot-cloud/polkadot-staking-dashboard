@@ -1,16 +1,14 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import type { TooltipContextInterface } from './types';
 
 export const defaultTooltipContext: TooltipContextInterface = {
   openTooltip: () => {},
   closeTooltip: () => {},
-  // eslint-disable-next-line
   setTooltipPosition: (x, y) => {},
-  // eslint-disable-next-line
   showTooltip: () => {},
-  // eslint-disable-next-line
   setTooltipTextAndOpen: (t) => {},
   open: 0,
   show: 0,

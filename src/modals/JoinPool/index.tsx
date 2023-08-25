@@ -1,14 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalPadding } from '@polkadotcloud/core-ui';
-import { planckToUnit, unitToPlanck } from '@polkadotcloud/utils';
+import { ModalPadding } from '@polkadot-cloud/react';
+import { planckToUnit, unitToPlanck } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import type { ClaimPermission } from 'contexts/Pools/types';
 import { useSetup } from 'contexts/Setup';
@@ -23,19 +22,25 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const JoinPool = () => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
-  const { txFees } = useTxMeta();
   const { activeAccount } = useConnect();
   const { newBatchCall } = useBatchCall();
   const { setActiveAccountSetup } = useSetup();
+  const { txFees, notEnoughFunds } = useTxMeta();
   const { getSignerWarnings } = useSignerWarnings();
   const { getTransferOptions } = useTransferOptions();
   const { queryPoolMember, addToPoolMembers } = usePoolMembers();
-  const { setStatus: setModalStatus, config, setResize } = useModal();
-  const { id: poolId, setActiveTab } = config;
+  const {
+    setModalStatus,
+    config: { options },
+    setModalResize,
+  } = useOverlay().modal;
+
+  const { id: poolId, setActiveTab } = options;
   const { units } = network;
 
   const { totalPossibleBond, totalAdditionalBond } =
@@ -59,10 +64,14 @@ export const JoinPool = () => {
   // bond valid
   const [bondValid, setBondValid] = useState<boolean>(false);
 
+  // feedback errors to trigger modal resize
+  const [feedbackErrors, setFeedbackErrors] = useState<string[]>([]);
+
   // modal resize on form update
-  useEffect(() => {
-    setResize();
-  }, [bond]);
+  useEffect(
+    () => setModalResize(),
+    [bond, notEnoughFunds, feedbackErrors.length]
+  );
 
   // tx to submit
   const getTx = () => {
@@ -119,7 +128,10 @@ export const JoinPool = () => {
           syncing={largestTxFee.isZero()}
           joiningPool
           bondFor="pool"
-          listenIsValid={setBondValid}
+          listenIsValid={(valid, errors) => {
+            setBondValid(valid);
+            setFeedbackErrors(errors);
+          }}
           defaultBond={null}
           setters={[
             {

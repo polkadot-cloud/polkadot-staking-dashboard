@@ -1,13 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import {
   ActionItem,
   ModalNotes,
   ModalPadding,
   ModalWarnings,
-} from '@polkadotcloud/core-ui';
-import { planckToUnit } from '@polkadotcloud/utils';
+} from '@polkadot-cloud/react';
+import { planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +15,6 @@ import { useApi } from 'contexts/Api';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useFastUnstake } from 'contexts/FastUnstake';
-import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { Warning } from 'library/Form/Warning';
@@ -24,18 +23,21 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const ManageFastUnstake = () => {
   const { t } = useTranslation('modals');
-  const { api, consts, network } = useApi();
   const { activeAccount } = useConnect();
+  const { notEnoughFunds } = useTxMeta();
   const { getBondedAccount } = useBonded();
-  const { activeEra, metrics } = useNetworkMetrics();
-  const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
-  const { setResize, setStatus } = useModal();
-  const { feeReserve, getTransferOptions } = useTransferOptions();
+  const { api, consts, network } = useApi();
   const { isFastUnstaking } = useUnstaking();
+  const { setModalResize, setModalStatus } = useOverlay().modal;
   const { getSignerWarnings } = useSignerWarnings();
+  const { activeEra, metrics } = useNetworkMetrics();
+  const { feeReserve, getTransferOptions } = useTransferOptions();
+  const { isExposed, counterForQueue, queueDeposit, meta } = useFastUnstake();
 
   const { bondDuration, fastUnstakeDeposit } = consts;
   const { fastUnstakeErasToCheckPerBlock } = metrics;
@@ -71,9 +73,10 @@ export const ManageFastUnstake = () => {
     feeReserve,
   ]);
 
-  useEffect(() => {
-    setResize();
-  }, [isExposed, queueDeposit, isFastUnstaking]);
+  useEffect(
+    () => setModalResize(),
+    [notEnoughFunds, isExposed, queueDeposit, isFastUnstaking]
+  );
 
   // tx to submit
   const getTx = () => {
@@ -95,7 +98,7 @@ export const ManageFastUnstake = () => {
     shouldSubmit: valid,
     callbackSubmit: () => {},
     callbackInBlock: () => {
-      setStatus('closing');
+      setModalStatus('closing');
     },
   });
 

@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
@@ -24,12 +24,12 @@ export const Wrapper = styled.div<{ $format?: string; $inModal?: boolean }>`
       `
       box-shadow: none;
       border: none;`}
+
     flex: 1;
     border-radius: 1rem;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
-    flex: 1;
     overflow: hidden;
     position: absolute;
     top: 0px;
@@ -37,6 +37,7 @@ export const Wrapper = styled.div<{ $format?: string; $inModal?: boolean }>`
     width: 100%;
     height: 100%;
     padding: 0;
+
     .row {
       flex: 1 0 100%;
       height: 3.25rem;
@@ -45,7 +46,7 @@ export const Wrapper = styled.div<{ $format?: string; $inModal?: boolean }>`
       padding: 0 0.5rem;
 
       &.status {
-        height: 2.75rem;
+        height: 2.5rem;
       }
       svg {
         margin: 0;
@@ -60,9 +61,9 @@ export const Labels = styled.div`
   font-size: 0.85rem;
   align-items: center;
   overflow: hidden;
-  flex: 1 1 100%;
+  flex-grow: 1;
   padding: 0 0 0 0.25rem;
-  height: 2.75rem;
+  height: inherit;
 
   button {
     padding: 0 0.1rem;
@@ -74,7 +75,7 @@ export const Labels = styled.div`
       opacity: 0.75;
     }
     &.active {
-      color: var(--network-color-primary);
+      color: var(--accent-color-primary);
     }
     &:disabled {
       opacity: var(--opacity-disabled);
@@ -102,7 +103,7 @@ export const Labels = styled.div`
       margin-right: 0;
 
       button {
-        color: var(--network-color-primary);
+        color: var(--accent-color-primary);
         font-size: 0.95rem;
         display: flex;
         flex-flow: row wrap;

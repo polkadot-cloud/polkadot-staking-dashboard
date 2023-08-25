@@ -1,5 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import BigNumber from 'bignumber.js';
 import type { Balance, BalancesContextInterface, Ledger } from './types';
@@ -7,13 +8,9 @@ import type { Balance, BalancesContextInterface, Ledger } from './types';
 export const defaultBalancesContext: BalancesContextInterface = {
   ledgers: [],
   balances: [],
-  // eslint-disable-next-line
   getStashLedger: (address) => defaultLedger,
-  // eslint-disable-next-line
   getBalance: (address) => defaultBalance,
-  // eslint-disable-next-line
   getLocks: (address) => [],
-  // eslint-disable-next-line
   getNonce: (address) => 0,
 };
 

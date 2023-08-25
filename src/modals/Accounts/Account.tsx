@@ -1,18 +1,18 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, planckToUnit } from '@polkadotcloud/utils';
+import { clipAddress, planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
-import { Extensions } from '@polkadotcloud/community/extensions';
+import { Extensions } from '@polkadot-cloud/community/extensions';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { ReactComponent as LedgerIconSVG } from 'img/ledgerIcon.svg';
 import { ReactComponent as PolkadotVaultIconSVG } from 'img/polkadotVault.svg';
 import { Identicon } from 'library/Identicon';
 import { useApi } from 'contexts/Api';
 import { useTransferOptions } from 'contexts/TransferOptions';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { AccountWrapper } from './Wrappers';
 import type { AccountItemProps } from './types';
 
@@ -32,7 +32,7 @@ export const AccountButton = ({
     activeProxyType,
     connectToAccount,
   } = useConnect();
-  const { setStatus } = useModal();
+  const { setModalStatus } = useOverlay().modal;
   const { units, unit } = useApi().network;
   const { getTransferOptions } = useTransferOptions();
   const { freeBalance } = getTransferOptions(address || '');
@@ -66,7 +66,7 @@ export const AccountButton = ({
     if (!imported) return;
     connectToAccount(getAccount(connectTo));
     setActiveProxy(proxyType ? { address: connectProxy, proxyType } : null);
-    setStatus('closing');
+    setModalStatus('closing');
   };
 
   return (

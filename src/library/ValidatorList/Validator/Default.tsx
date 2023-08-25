@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { faBars, faChartLine } from '@fortawesome/free-solid-svg-icons';
@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useMenu } from 'contexts/Menu';
-import { useModal } from 'contexts/Modal';
 import { useNotifications } from 'contexts/Notifications';
 import type { NotificationText } from 'contexts/Notifications/types';
 import { CopyAddress } from 'library/ListItem/Labels/CopyAddress';
@@ -18,6 +17,7 @@ import {
   Separator,
   Wrapper,
 } from 'library/ListItem/Wrappers';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useValidators } from '../../../contexts/Validators';
 import { useList } from '../../List/context';
 import { Blocked } from '../../ListItem/Labels/Blocked';
@@ -33,30 +33,25 @@ import type { DefaultProps } from './types';
 export const Default = ({
   validator,
   toggleFavorites,
-  batchIndex,
-  batchKey,
   showMenu,
   inModal,
 }: DefaultProps) => {
   const { t } = useTranslation('library');
-  const { openModalWith } = useModal();
+  const { selectActive } = useList();
+  const { openModal } = useOverlay().modal;
   const { addNotification } = useNotifications();
   const { setMenuPosition, setMenuItems, open }: any = useMenu();
-  const { meta } = useValidators();
-  const { selectActive } = useList();
-
-  const identities = meta[batchKey]?.identities ?? [];
-  const supers = meta[batchKey]?.supers ?? [];
+  const { validatorIdentities, validatorSupers } = useValidators();
 
   const { address, prefs } = validator;
   const commission = prefs?.commission ?? null;
 
   const identity = getIdentityDisplay(
-    identities[batchIndex],
-    supers[batchIndex]
+    validatorIdentities[address],
+    validatorSupers[address]
   );
 
-  // copy address notification
+  // copy address notification.
   const notificationCopyAddress: NotificationText | null =
     address == null
       ? null
@@ -73,14 +68,13 @@ export const Default = ({
       wrap: null,
       title: `${t('viewMetrics')}`,
       cb: () => {
-        openModalWith(
-          'ValidatorMetrics',
-          {
+        openModal({
+          key: 'ValidatorMetrics',
+          options: {
             address,
             identity,
           },
-          'large'
-        );
+        });
       },
     },
     {
@@ -109,14 +103,10 @@ export const Default = ({
         <MenuPosition ref={posRef} />
         <div className="row">
           {selectActive && <Select item={validator} />}
-          <Identity
-            address={address}
-            batchIndex={batchIndex}
-            batchKey={batchKey}
-          />
+          <Identity address={address} />
           <div>
             <Labels>
-              <Oversubscribed batchIndex={batchIndex} batchKey={batchKey} />
+              <Oversubscribed address={address} />
               <Blocked prefs={prefs} />
               <Commission commission={commission} />
               <ParaValidator address={address} />

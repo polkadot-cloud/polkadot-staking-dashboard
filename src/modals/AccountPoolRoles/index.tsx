@@ -1,24 +1,24 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { ButtonOption, ModalPadding } from '@polkadotcloud/core-ui';
+import { ButtonOption, ModalPadding } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { ContentWrapper } from './Wrappers';
 
 export const AccountPoolRoles = () => {
   const { t } = useTranslation('modals');
-  const { config } = useModal();
+  const { options } = useOverlay().modal.config;
   const { getAccountPools } = useBondedPools();
   const { membership } = usePoolMemberships();
-  const { who } = config;
+  const { who } = options;
   const accountPools = getAccountPools(who);
   const totalAccountPools = Object.entries(accountPools).length;
   const { label } = useStatusButtons();
@@ -54,7 +54,7 @@ export const AccountPoolRoles = () => {
 
 const Button = ({ item, poolId }: { item: string[]; poolId: string }) => {
   const { t } = useTranslation('modals');
-  const { setStatus } = useModal();
+  const { setModalStatus } = useOverlay().modal;
   const { bondedPools } = useBondedPools();
   const { setSelectedPoolId } = useActivePools();
   const pool = bondedPools.find((b) => String(b.id) === poolId);
@@ -66,7 +66,7 @@ const Button = ({ item, poolId }: { item: string[]; poolId: string }) => {
       disabled={false}
       onClick={() => {
         setSelectedPoolId(poolId);
-        setStatus('closing');
+        setModalStatus('closing');
       }}
     >
       <div className="icon">

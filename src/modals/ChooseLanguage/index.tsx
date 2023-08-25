@@ -1,18 +1,18 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalPadding } from '@polkadotcloud/core-ui';
+import { ModalPadding } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useModal } from 'contexts/Modal';
 import { ReactComponent as LanguageSVG } from 'img/language.svg';
 import { Title } from 'library/Modal/Title';
 import { availableLanguages } from 'locale';
 import { changeLanguage } from 'locale/utils';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { ContentWrapper, LocaleButton } from './Wrapper';
 
 export const ChooseLanguage = () => {
   const { i18n, t } = useTranslation('modals');
-  const { setStatus } = useModal();
+  const { setModalStatus } = useOverlay().modal;
 
   return (
     <>
@@ -31,7 +31,7 @@ export const ChooseLanguage = () => {
                     type="button"
                     onClick={() => {
                       changeLanguage(code, i18n);
-                      setStatus('closing');
+                      setModalStatus('closing');
                     }}
                   >
                     {label}

@@ -1,16 +1,18 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalPadding } from '@polkadotcloud/core-ui';
+import { ModalPadding } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
-import { useModal } from 'contexts/Modal';
 import { Title } from 'library/Modal/Title';
 import { ValidatorList } from 'library/ValidatorList';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { ListWrapper } from './Wrappers';
 
 export const PoolNominations = () => {
-  const { config } = useModal();
-  const { nominator, targets } = config;
+  const {
+    config: { options },
+  } = useOverlay().modal;
+  const { nominator, targets } = options;
   const batchKey = 'pool_nominations';
   const { t } = useTranslation('modals');
 

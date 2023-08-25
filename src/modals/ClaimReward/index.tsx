@@ -1,37 +1,39 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  ActionItem,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadotcloud/core-ui';
-import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
+import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
+import { greaterThanZero, planckToUnit } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Warning } from 'library/Form/Warning';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const ClaimReward = () => {
   const { t } = useTranslation('modals');
   const { api, network } = useApi();
   const { activeAccount } = useConnect();
-  const { setStatus: setModalStatus, config } = useModal();
+  const { notEnoughFunds } = useTxMeta();
   const { selectedActivePool } = useActivePools();
   const { getSignerWarnings } = useSignerWarnings();
+  const {
+    setModalStatus,
+    config: { options },
+    setModalResize,
+  } = useOverlay().modal;
 
   const { units, unit } = network;
   let { pendingRewards } = selectedActivePool || {};
   pendingRewards = pendingRewards ?? new BigNumber(0);
-  const { claimType } = config;
+  const { claimType } = options;
 
   // ensure selected payout is valid
   useEffect(() => {
@@ -79,6 +81,8 @@ export const ClaimReward = () => {
   if (!greaterThanZero(pendingRewards)) {
     warnings.push(`${t('noRewards')}`);
   }
+
+  useEffect(() => setModalResize(), [notEnoughFunds, warnings.length]);
 
   return (
     <>

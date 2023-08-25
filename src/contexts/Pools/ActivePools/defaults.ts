@@ -1,5 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import BigNumber from 'bignumber.js';
 import type { ActivePool, ActivePoolsContextState } from '../types';
@@ -57,10 +58,8 @@ export const defaultActivePoolContext: ActivePoolsContextState = {
   getPoolBondedAccount: () => null,
   getPoolUnlocking: () => [],
   getPoolRoles: () => poolRoles,
-  // eslint-disable-next-line
   setTargets: (t) => {},
   getNominationsStatus: () => nominationStatus,
-  // eslint-disable-next-line
   setSelectedPoolId: (p) => {},
   selectedActivePool,
   targets,

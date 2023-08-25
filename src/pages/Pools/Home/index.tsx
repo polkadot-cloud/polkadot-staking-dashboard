@@ -1,12 +1,11 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { PageRow, PageTitle, RowSection } from '@polkadotcloud/core-ui';
+import { PageRow, PageTitle, RowSection } from '@polkadot-cloud/react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { PageTitleTabProps } from '@polkadotcloud/core-ui/core/types';
+import type { PageTitleTabProps } from '@polkadot-cloud/react/base/types';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { usePlugins } from 'contexts/Plugins';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
@@ -17,6 +16,7 @@ import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
 import { StatBoxList } from 'library/StatBoxList';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
 import { PoolFavorites } from './Favorites';
@@ -33,7 +33,7 @@ import { PoolsTabsProvider, usePoolsTabs } from './context';
 export const HomeInner = () => {
   const { t } = useTranslation('pages');
   const { pluginEnabled } = usePlugins();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { activeAccount } = useConnect();
   const {
     favorites,
@@ -55,12 +55,16 @@ export const HomeInner = () => {
       setMemberCount(0);
       return;
     }
+    // If `Subscan` plugin is enabled, fetch member count directly from the API.
     if (pluginEnabled('subscan') && !fetchingMemberCount.current) {
       fetchingMemberCount.current = true;
       const poolDetails = await fetchPoolDetails(selectedActivePool.id);
       fetchingMemberCount.current = false;
       setMemberCount(poolDetails?.member_count || 0);
+      return;
     }
+    // If no plugin available, fetch all pool members from RPC and filter them to determine current
+    // pool member count. NOTE: Expensive operation.
     setMemberCount(
       getMembersOfPoolFromNode(selectedActivePool?.id ?? 0).length
     );
@@ -126,7 +130,10 @@ export const HomeInner = () => {
             ? {
                 title: t('pools.allRoles'),
                 onClick: () =>
-                  openModalWith('AccountPoolRoles', { who: activeAccount }),
+                  openModal({
+                    key: 'AccountPoolRoles',
+                    options: { who: activeAccount },
+                  }),
               }
             : undefined
         }

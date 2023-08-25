@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components';
 import { TwoThreshold } from 'library/SelectItems/Wrapper';
@@ -69,16 +69,16 @@ export const ExtensionInner = styled.div`
       color: var(--status-success-color);
     }
     .active {
-      color: var(--network-color-primary);
+      color: var(--accent-color-primary);
     }
   }
   .icon {
-    width: 2.6rem;
-    height: 2.6rem;
+    color: var(--text-color-primary);
+    width: 100%;
 
     svg {
-      width: inherit;
-      height: inherit;
+      max-width: 2.6rem;
+      max-height: 2.6rem;
     }
   }
   svg {

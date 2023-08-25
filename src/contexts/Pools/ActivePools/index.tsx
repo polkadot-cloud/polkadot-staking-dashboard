@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { localStorageOrDefault, setStateWithRef } from '@polkadotcloud/utils';
+import { localStorageOrDefault, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type {
@@ -11,7 +11,7 @@ import type {
 } from 'contexts/Pools/types';
 import { useStaking } from 'contexts/Staking';
 import type { AnyApi, AnyJson, Sync } from 'types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useApi } from '../../Api';
 import { useConnect } from '../../Connect';
 import { useBondedPools } from '../BondedPools';
@@ -389,9 +389,7 @@ export const ActivePoolsProvider = ({
         statuses[nomination] = 'waiting';
         continue;
       }
-      const exists = (s.others ?? []).find(
-        ({ who }: any) => who === activeAccount
-      );
+      const exists = (s.others ?? []).find(({ who }) => who === activeAccount);
       if (exists === undefined) {
         statuses[nomination] = 'inactive';
         continue;

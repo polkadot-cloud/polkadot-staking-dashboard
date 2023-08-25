@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -7,7 +7,7 @@ import {
   PageHeading,
   PageRow,
   PageTitle,
-} from '@polkadotcloud/core-ui';
+} from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { Element } from 'react-scroll';
 import { useConnect } from 'contexts/Connect';

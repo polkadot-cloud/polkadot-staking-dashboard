@@ -1,26 +1,26 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonHelp, ButtonPrimary, ButtonRow } from '@polkadotcloud/core-ui';
-import { planckToUnit } from '@polkadotcloud/utils';
+import { ButtonHelp, ButtonPrimary, ButtonRow } from '@polkadot-cloud/react';
+import { planckToUnit } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { BondedChart } from 'library/BarChart/BondedChart';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const ManageBond = () => {
   const { t } = useTranslation('pages');
 
   const { network } = useApi();
   const { units } = network;
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { activeAccount, isReadOnlyAccount } = useConnect();
   const { isPoolSyncing } = useUi();
   const { isBonding, isMember, selectedActivePool } = useActivePools();
@@ -56,7 +56,13 @@ export const ManageBond = () => {
               state === 'Destroying'
             }
             marginRight
-            onClick={() => openModalWith('Bond', { bondFor: 'pool' }, 'small')}
+            onClick={() =>
+              openModal({
+                key: 'Bond',
+                options: { bondFor: 'pool' },
+                size: 'sm',
+              })
+            }
             text="+"
           />
           <ButtonPrimary
@@ -69,7 +75,11 @@ export const ManageBond = () => {
             }
             marginRight
             onClick={() =>
-              openModalWith('Unbond', { bondFor: 'pool' }, 'small')
+              openModal({
+                key: 'Unbond',
+                options: { bondFor: 'pool' },
+                size: 'sm',
+              })
             }
             text="-"
           />
@@ -79,11 +89,11 @@ export const ManageBond = () => {
             }
             iconLeft={faLockOpen}
             onClick={() =>
-              openModalWith(
-                'UnlockChunks',
-                { bondFor: 'pool', disableWindowResize: true },
-                'small'
-              )
+              openModal({
+                key: 'UnlockChunks',
+                options: { bondFor: 'pool', disableWindowResize: true },
+                size: 'sm',
+              })
             }
             text={String(totalUnlockChuncks ?? 0)}
           />

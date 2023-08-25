@@ -1,18 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  ActionItem,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadotcloud/core-ui';
-import { isNotZero, planckToUnit, rmCommas } from '@polkadotcloud/utils';
+import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
+import { isNotZero, planckToUnit, rmCommas } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { Warning } from 'library/Form/Warning';
@@ -20,17 +15,24 @@ import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const WithdrawPoolMember = () => {
   const { t } = useTranslation('modals');
   const { api, network, consts } = useApi();
   const { activeAccount } = useConnect();
-  const { setStatus: setModalStatus, config } = useModal();
+  const {
+    setModalStatus,
+    config: { options },
+    setModalResize,
+  } = useOverlay().modal;
   const { activeEra } = useNetworkMetrics();
   const { removePoolMember } = usePoolMembers();
   const { getSignerWarnings } = useSignerWarnings();
+  const { notEnoughFunds } = useTxMeta();
 
-  const { member, who } = config;
+  const { member, who } = options;
   const { historyDepth } = consts;
   const { unbondingEras, points } = member;
 
@@ -79,6 +81,8 @@ export const WithdrawPoolMember = () => {
       }
     },
   });
+
+  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   const warnings = getSignerWarnings(
     activeAccount,

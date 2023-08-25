@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -8,17 +8,19 @@ import {
   ButtonText,
   ModalCustomHeader,
   ModalPadding,
-} from '@polkadotcloud/core-ui';
+} from '@polkadot-cloud/react';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useExtensions } from 'contexts/Extensions';
-import { useModal } from 'contexts/Modal';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useProxies } from 'contexts/Proxies';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import {
+  useEffectIgnoreInitial,
+  useOverlay,
+} from '@polkadot-cloud/react/hooks';
 import { AccountButton } from './Account';
 import { Delegates } from './Delegates';
 import { AccountSeparator, AccountWrapper } from './Wrappers';
@@ -37,7 +39,11 @@ export const Accounts = () => {
   const { bondedAccounts } = useBonded();
   const { ledgers, getLocks } = useBalances();
   const { memberships } = usePoolMemberships();
-  const { replaceModalWith, status: modalStatus, setResize } = useModal();
+  const {
+    replaceModal,
+    status: modalStatus,
+    setModalResize,
+  } = useOverlay().modal;
   const { activeAccount, disconnectFromAccount, setActiveProxy, accounts } =
     useConnect();
 
@@ -110,14 +116,10 @@ export const Accounts = () => {
     }
   }
 
-  useEffect(() => {
-    setLocalAccounts(accounts);
-  }, [accounts]);
+  useEffect(() => setLocalAccounts(accounts), [accounts]);
 
   useEffectIgnoreInitial(() => {
-    if (modalStatus === 'open') {
-      setResize();
-    }
+    if (modalStatus === 'open') setModalResize();
   }, [activeAccount, accounts, bondedAccounts, balances, ledgers, extensions]);
 
   return (
@@ -130,7 +132,7 @@ export const Accounts = () => {
             iconLeft={faChevronLeft}
             iconTransform="shrink-3"
             onClick={() =>
-              replaceModalWith('Connect', { disableScroll: true }, 'large')
+              replaceModal({ key: 'Connect', options: { disableScroll: true } })
             }
             marginLeft
           />
@@ -139,7 +141,7 @@ export const Accounts = () => {
           {activeAccount && (
             <ButtonText
               style={{
-                color: 'var(--network-color-primary)',
+                color: 'var(--accent-color-primary)',
               }}
               text={t('disconnect')}
               iconRight={faLinkSlash}

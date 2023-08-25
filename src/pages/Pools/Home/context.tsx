@@ -1,13 +1,13 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { extractUrlValue } from '@polkadotcloud/utils';
+import { extractUrlValue } from '@polkadot-cloud/utils';
 import React, { useState } from 'react';
 import type { PoolsTabsContextInterface } from '../types';
 
 export const PoolsTabsContext: React.Context<PoolsTabsContextInterface> =
   React.createContext({
-    // eslint-disable-next-line
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     setActiveTab: (t: number) => {},
     activeTab: 0,
   });

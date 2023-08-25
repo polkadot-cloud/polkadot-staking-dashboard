@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { ThemedRouter } from 'Themes';
 import { APIProvider } from 'contexts/Api';
@@ -16,7 +16,6 @@ import { HelpProvider } from 'contexts/Help';
 import { IdentitiesProvider } from 'contexts/Identities';
 import { MenuProvider } from 'contexts/Menu';
 import { MigrateProvider } from 'contexts/Migrate';
-import { ModalProvider } from 'contexts/Modal';
 import { NetworkMetricsProvider } from 'contexts/Network';
 import { NotificationsProvider } from 'contexts/Notifications';
 import { ParaSyncProvider } from 'contexts/ParaSync';
@@ -37,7 +36,7 @@ import { TxMetaProvider } from 'contexts/TxMeta';
 import { UIProvider } from 'contexts/UI';
 import { ValidatorsProvider } from 'contexts/Validators';
 import { withProviders } from 'library/Hooks';
-import { CanvasProvider } from 'contexts/Canvas';
+import { OverlayProvider } from '@polkadot-cloud/react';
 
 // !! Provider order matters.
 export const Providers = withProviders(
@@ -72,8 +71,7 @@ export const Providers = withProviders(
   TooltipProvider,
   TxMetaProvider,
   ExtrinsicsProvider,
-  ModalProvider,
-  CanvasProvider,
+  OverlayProvider,
   PromptProvider,
   MigrateProvider
 )(ThemedRouter);

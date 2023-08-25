@@ -1,24 +1,19 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import {
-  ActionItem,
-  ModalPadding,
-  ModalWarnings,
-} from '@polkadotcloud/core-ui';
+import { ActionItem, ModalPadding, ModalWarnings } from '@polkadot-cloud/react';
 import {
   greaterThanZero,
   planckToUnit,
   rmCommas,
   unitToPlanck,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { getUnixTime } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { Warning } from 'library/Form/Warning';
 import { useErasToTimeLeft } from 'library/Hooks/useErasToTimeLeft';
 import { useSignerWarnings } from 'library/Hooks/useSignerWarnings';
@@ -27,18 +22,25 @@ import { timeleftAsString } from 'library/Hooks/useTimeLeft/utils';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
 import { StaticNote } from 'modals/Utils/StaticNote';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const UnbondPoolMember = () => {
   const { t } = useTranslation('modals');
-  const { api, network, consts } = useApi();
-  const { setStatus: setModalStatus, setResize, config } = useModal();
   const { activeAccount } = useConnect();
+  const { notEnoughFunds } = useTxMeta();
+  const { api, network, consts } = useApi();
   const { erasToSeconds } = useErasToTimeLeft();
   const { getSignerWarnings } = useSignerWarnings();
+  const {
+    setModalStatus,
+    setModalResize,
+    config: { options },
+  } = useOverlay().modal;
 
   const { units } = network;
   const { bondDuration } = consts;
-  const { member, who } = config;
+  const { member, who } = options;
   const { points } = member;
   const freeToUnbond = planckToUnit(new BigNumber(rmCommas(points)), units);
 
@@ -66,10 +68,7 @@ export const UnbondPoolMember = () => {
     setBondValid(isValid);
   }, [freeToUnbond.toString(), isValid]);
 
-  // modal resize on form update
-  useEffect(() => {
-    setResize();
-  }, [bond]);
+  useEffect(() => setModalResize(), [bond, notEnoughFunds]);
 
   // tx to submit
   const getTx = () => {

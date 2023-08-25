@@ -1,25 +1,25 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary, ButtonRow, PageRow } from '@polkadotcloud/core-ui';
+import { ButtonPrimary, ButtonRow, PageRow } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Card/Wrappers';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const ClosurePrompts = () => {
   const { t } = useTranslation('pages');
   const { colors } = useApi().network;
   const { activeAccount } = useConnect();
   const { mode } = useTheme();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { membership } = usePoolMemberships();
   const { isPoolSyncing } = useUi();
   const { isBonding, selectedActivePool, isDepositor, poolNominations } =
@@ -73,11 +73,11 @@ export const ClosurePrompts = () => {
                     (!depositorCanWithdraw && !depositorCanUnbond)
                   }
                   onClick={() =>
-                    openModalWith(
-                      'UnbondPoolMember',
-                      { who: activeAccount, member: membership },
-                      'small'
-                    )
+                    openModal({
+                      key: 'UnbondPoolMember',
+                      options: { who: activeAccount, member: membership },
+                      size: 'sm',
+                    })
                   }
                 />
                 <ButtonPrimary
@@ -89,15 +89,15 @@ export const ClosurePrompts = () => {
                   }
                   disabled={isPoolSyncing || !isBonding()}
                   onClick={() =>
-                    openModalWith(
-                      'UnlockChunks',
-                      {
+                    openModal({
+                      key: 'UnlockChunks',
+                      options: {
                         bondFor: 'pool',
                         poolClosure: true,
                         disableWindowResize: true,
                       },
-                      'small'
-                    )
+                      size: 'sm',
+                    })
                   }
                 />
               </ButtonRow>

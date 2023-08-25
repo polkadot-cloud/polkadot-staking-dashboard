@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import {
   faChartPie,
@@ -10,12 +10,11 @@ import {
   faUserEdit,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { camelize } from '@polkadotcloud/utils';
+import { camelize } from '@polkadot-cloud/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useValidators } from 'contexts/Validators';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { SelectableWrapper } from 'library/List';
@@ -23,6 +22,8 @@ import { SelectItems } from 'library/SelectItems';
 import { SelectItem } from 'library/SelectItems/Item';
 import { ValidatorList } from 'library/ValidatorList';
 import { Wrapper } from 'pages/Overview/NetworkSats/Wrappers';
+import { useStaking } from 'contexts/Staking';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import type {
   GenerateNominationsInnerProps,
   Nominations,
@@ -35,11 +36,12 @@ export const GenerateNominations = ({
   batchKey,
 }: GenerateNominationsInnerProps) => {
   const { t } = useTranslation('library');
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { isReady, consts } = useApi();
-  const { activeAccount, isReadOnlyAccount } = useConnect();
   const { isFastUnstaking } = useUnstaking();
-  const { removeValidatorMetaBatch, validators, meta } = useValidators();
+  const { activeAccount, isReadOnlyAccount } = useConnect();
+  const { stakers } = useStaking().eraStakers;
+  const { validators, validatorIdentities, validatorSupers } = useValidators();
   const {
     fetch: fetchFromMethod,
     add: addNomination,
@@ -68,12 +70,9 @@ export const GenerateNominations = ({
   // ref for the height of the container
   const heightRef = useRef<HTMLDivElement>(null);
 
-  const rawBatchKey = 'validators_browse';
-
   // update nominations on account switch
   useEffect(() => {
     if (nominations !== defaultNominations) {
-      removeValidatorMetaBatch(batchKey);
       setNominations([...defaultNominations]);
     }
   }, [activeAccount]);
@@ -84,12 +83,11 @@ export const GenerateNominations = ({
       return;
     }
 
-    // wait for validator meta data to be fetched
-    const batch = meta[rawBatchKey];
-    if (batch === undefined) {
-      return;
-    }
-    if (batch.stake === undefined) {
+    if (
+      !stakers.length ||
+      !Object.values(validatorIdentities).length ||
+      !Object.values(validatorSupers).length
+    ) {
       return;
     }
 
@@ -125,7 +123,6 @@ export const GenerateNominations = ({
   const addNominationByType = (type: string) => {
     if (method) {
       const newNominations = addNomination(nominations, type);
-      removeValidatorMetaBatch(batchKey);
       setNominations([...newNominations]);
       updateSetters([...newNominations]);
     }
@@ -146,24 +143,22 @@ export const GenerateNominations = ({
     setSelectActive(false);
 
     const updateList = (_nominations: Nominations) => {
-      removeValidatorMetaBatch(batchKey);
       setNominations([..._nominations]);
       updateSetters(_nominations);
     };
-    openModalWith(
-      'SelectFavorites',
-      {
+    openModal({
+      key: 'SelectFavorites',
+      options: {
         nominations,
         callback: updateList,
       },
-      'xl'
-    );
+      size: 'xl',
+    });
   };
 
   // function for clearing nomination list
   const clearNominations = () => {
     setMethod(null);
-    removeValidatorMetaBatch(batchKey);
     setNominations([]);
     updateSetters([]);
   };
@@ -174,7 +169,6 @@ export const GenerateNominations = ({
     resetSelected,
     setSelectActive,
   }: any) => {
-    removeValidatorMetaBatch(batchKey);
     const newNominations = [...nominations].filter(
       (n: any) => !selected.map((_s: any) => _s.address).includes(n.address)
     );
@@ -198,7 +192,6 @@ export const GenerateNominations = ({
       icon: faChartPie,
       onClick: () => {
         setMethod('Optimal Selection');
-        removeValidatorMetaBatch(batchKey);
         setNominations([]);
         setFetching(true);
       },
@@ -209,7 +202,6 @@ export const GenerateNominations = ({
       icon: faCoins,
       onClick: () => {
         setMethod('Active Low Commission');
-        removeValidatorMetaBatch(batchKey);
         setNominations([]);
         setFetching(true);
       },
@@ -220,7 +212,6 @@ export const GenerateNominations = ({
       icon: faHeart,
       onClick: () => {
         setMethod('From Favorites');
-        removeValidatorMetaBatch(batchKey);
         setNominations([]);
         setFetching(true);
       },
@@ -231,7 +222,6 @@ export const GenerateNominations = ({
       icon: faUserEdit,
       onClick: () => {
         setMethod('Manual');
-        removeValidatorMetaBatch(batchKey);
         setNominations([]);
       },
     },
@@ -298,7 +288,6 @@ export const GenerateNominations = ({
                 // set a temporary height to prevent height snapping on re-renders.
                 setHeight(heightRef?.current?.clientHeight || null);
                 setTimeout(() => setHeight(null), 200);
-                removeValidatorMetaBatch(batchKey);
                 setFetching(true);
               }}
             >

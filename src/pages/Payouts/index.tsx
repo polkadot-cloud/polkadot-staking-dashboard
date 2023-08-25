@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { ButtonHelp, PageRow, PageTitle } from '@polkadotcloud/core-ui';
+import { ButtonHelp, PageRow, PageTitle } from '@polkadot-cloud/react';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MaxPayoutDays } from 'consts';
@@ -19,8 +19,7 @@ import { useSize } from 'library/Hooks/useSize';
 import { StatBoxList } from 'library/StatBoxList';
 import { StatusLabel } from 'library/StatusLabel';
 import { SubscanButton } from 'library/SubscanButton';
-import type { AnySubscan } from 'types';
-import type { PageProps } from '../types';
+import type { AnySubscan, PageProps } from 'types';
 import { PayoutList } from './PayoutList';
 import { LastEraPayoutStat } from './Stats/LastEraPayout';
 

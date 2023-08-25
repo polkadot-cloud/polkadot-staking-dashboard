@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -7,8 +7,8 @@ import {
   ModalCanvas,
   ModalContent,
   ModalScroll,
-} from '@polkadotcloud/core-ui';
-import { camelize } from '@polkadotcloud/utils';
+} from '@polkadot-cloud/react';
+import { camelize } from '@polkadot-cloud/utils';
 import { useAnimation } from 'framer-motion';
 import { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -37,17 +37,17 @@ export const Help = () => {
 
   const onFadeOut = useCallback(async () => {
     await controls.start('hidden');
-    setStatus(0);
+    setStatus('closed');
   }, []);
 
   // control canvas fade.
   useEffect(() => {
-    if (status === 1) onFadeIn();
-    if (status === 2) onFadeOut();
+    if (status === 'open') onFadeIn();
+    if (status === 'closing') onFadeOut();
   }, [status]);
 
   // render early if help not open
-  if (status === 0) return <></>;
+  if (status === 'closed') return <></>;
 
   let meta: HelpItem | undefined;
 
@@ -149,6 +149,9 @@ export const Help = () => {
           opacity: 1,
           scale: 1,
         },
+      }}
+      style={{
+        zIndex: 20,
       }}
     >
       <ModalScroll>

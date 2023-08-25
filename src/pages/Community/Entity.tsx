@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import { ButtonSecondary, PageHeading, PageRow } from '@polkadotcloud/core-ui';
+import { ButtonSecondary, PageHeading, PageRow } from '@polkadot-cloud/react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -16,8 +16,7 @@ import { useCommunitySections } from './context';
 export const Entity = () => {
   const { t } = useTranslation('pages');
   const { isReady, network } = useApi();
-  const { validators: allValidators, removeValidatorMetaBatch } =
-    useValidators();
+  const { validators: allValidators } = useValidators();
   const { setActiveSection, activeItem } = useCommunitySections();
 
   const { name, validators: entityAllValidators } = activeItem;
@@ -35,7 +34,6 @@ export const Entity = () => {
   }, [allValidators, network]);
 
   useEffect(() => {
-    removeValidatorMetaBatch(batchKey);
     const newValidators = [...activeValidators];
     setActiveValidators(newValidators);
   }, [name, activeItem, network]);

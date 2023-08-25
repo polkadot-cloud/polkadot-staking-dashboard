@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { u8aToString, u8aUnwrapBytes } from '@polkadot/util';
-import { clipAddress, remToUnit } from '@polkadotcloud/utils';
+import { clipAddress, remToUnit } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
@@ -10,16 +10,15 @@ import { useConnect } from 'contexts/Connect';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { Identicon } from 'library/Identicon';
 import { Wrapper } from './Wrapper';
-import type { PoolAccountProps } from './types';
+import type { AccountProps } from './types';
 
-export const PoolAccount = ({
+export const Account = ({
   label,
   pool,
   onClick,
   canClick,
-  filled = false,
   fontSize = '1.05rem',
-}: PoolAccountProps) => {
+}: AccountProps) => {
   const { t } = useTranslation('library');
   const { isReady } = useApi();
   const { activeAccount } = useConnect();
@@ -71,12 +70,7 @@ export const PoolAccount = ({
   }
 
   return (
-    <Wrapper
-      $canClick={canClick}
-      $filled={filled}
-      onClick={onClick}
-      fontSize={fontSize}
-    >
+    <Wrapper $canClick={canClick} $fontSize={fontSize} onClick={onClick}>
       {label !== undefined && <div className="account-label">{label}</div>}
 
       <span className="identicon">

@@ -1,9 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faBug } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
+import React from 'react';
 import { Wrapper } from './Wrapper';
 
 export const ErrorFallbackApp = ({
@@ -50,18 +51,21 @@ export const ErrorFallbackRoutes = ({
   );
 };
 
-export const ErrorFallbackModal = ({
-  resetErrorBoundary,
-}: {
-  resetErrorBoundary: () => void;
-}) => {
+interface ErrorFallbackProps {
+  resetErrorBoundary?: () => void;
+}
+export const ErrorFallbackModal: React.FC = (props: ErrorFallbackProps) => {
+  const { resetErrorBoundary } = props;
   const { t } = useTranslation('library');
 
   return (
     <Wrapper className="modal">
       <h2>{t('errorUnknown')}</h2>
       <h4>
-        <button type="button" onClick={resetErrorBoundary}>
+        <button
+          type="button"
+          onClick={() => resetErrorBoundary && resetErrorBoundary()}
+        >
           {t('clickToReload')}
         </button>
       </h4>

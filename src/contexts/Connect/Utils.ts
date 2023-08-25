@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import Keyring from '@polkadot/keyring';
-import { localStorageOrDefault } from '@polkadotcloud/utils';
+import { localStorageOrDefault } from '@polkadot-cloud/utils';
 import type { ExtensionAccount } from 'contexts/Extensions/types';
-import type { Network } from 'types';
+import type { Network, NetworkName } from 'types';
 import type { ExternalAccount } from './types';
 
 // extension utils
@@ -72,17 +72,14 @@ export const getActiveAccountLocal = (network: Network) => {
 
 // gets local external accounts, formatting their addresses
 // using active network ss58 format.
-export const getLocalExternalAccounts = (
-  network: Network,
-  activeNetworkOnly = false
-) => {
+export const getLocalExternalAccounts = (network?: NetworkName) => {
   let localAccounts = localStorageOrDefault<ExternalAccount[]>(
     'external_accounts',
     [],
     true
   ) as ExternalAccount[];
-  if (activeNetworkOnly) {
-    localAccounts = localAccounts.filter((l) => l.network === network.name);
+  if (network) {
+    localAccounts = localAccounts.filter((l) => l.network === network);
   }
   return localAccounts;
 };
@@ -90,9 +87,9 @@ export const getLocalExternalAccounts = (
 // gets accounts that exist in local `external_accounts`
 export const getInExternalAccounts = (
   accounts: ExtensionAccount[],
-  network: Network
+  network: NetworkName
 ) => {
-  const localExternalAccounts = getLocalExternalAccounts(network, true);
+  const localExternalAccounts = getLocalExternalAccounts(network);
 
   return (
     localExternalAccounts.filter(
@@ -106,7 +103,7 @@ export const removeLocalExternalAccounts = (
   network: Network,
   accounts: ExternalAccount[]
 ) => {
-  let localExternalAccounts = getLocalExternalAccounts(network, true);
+  let localExternalAccounts = getLocalExternalAccounts(network.name);
   localExternalAccounts = localExternalAccounts.filter(
     (a) =>
       accounts.find(

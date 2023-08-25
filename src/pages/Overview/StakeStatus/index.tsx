@@ -1,7 +1,7 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { RowSection } from '@polkadotcloud/core-ui';
+import { RowSection } from '@polkadot-cloud/react';
 import { usePlugins } from 'contexts/Plugins';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { NominationStatus } from 'pages/Nominate/Active/Status/NominationStatus';

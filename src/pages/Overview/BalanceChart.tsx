@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import {
   faCheck,
@@ -7,14 +7,13 @@ import {
   faExternalLinkAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ButtonTertiary } from '@polkadotcloud/core-ui';
-import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
+import { greaterThanZero, planckToUnit } from '@polkadot-cloud/utils';
+import { ButtonTertiary } from '@polkadot-cloud/react';
 import BigNumber from 'bignumber.js';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { usePlugins } from 'contexts/Plugins';
 import { useTooltip } from 'contexts/Tooltip';
 import { useTransferOptions } from 'contexts/TransferOptions';
@@ -25,6 +24,7 @@ import { Bar, BarChartWrapper, Legend } from 'library/BarChart/Wrappers';
 import { CardHeaderWrapper } from 'library/Card/Wrappers';
 import { usePrices } from 'library/Hooks/usePrices';
 import { TooltipTrigger } from 'library/ListItem/Wrappers';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const BalanceChart = () => {
   const { t } = useTranslation('pages');
@@ -34,8 +34,8 @@ export const BalanceChart = () => {
   const prices = usePrices();
   const { plugins } = usePlugins();
   const { isNetworkSyncing } = useUi();
-  const { openModalWith } = useModal();
   const { setTooltipTextAndOpen } = useTooltip();
+  const { openModal } = useOverlay().modal;
   const { getBalance, getLocks } = useBalances();
   const { activeAccount, accountHasSigner } = useConnect();
   const { feeReserve, getTransferOptions } = useTransferOptions();
@@ -264,7 +264,7 @@ export const BalanceChart = () => {
                     <ButtonTertiary
                       text="Reserve Balance"
                       onClick={() =>
-                        openModalWith('UpdateReserve', {}, 'small')
+                        openModal({ key: 'UpdateReserve', size: 'sm' })
                       }
                       iconRight={
                         isNetworkSyncing

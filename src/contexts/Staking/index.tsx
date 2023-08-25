@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import type { VoidFn } from '@polkadot/api/types';
 import {
@@ -7,7 +7,7 @@ import {
   isNotZero,
   localStorageOrDefault,
   setStateWithRef,
-} from '@polkadotcloud/utils';
+} from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import React, { useRef, useState } from 'react';
 import { useBalances } from 'contexts/Balances';
@@ -16,7 +16,6 @@ import type { PayeeConfig, PayeeOptions } from 'contexts/Setup/types';
 import type {
   EraStakers,
   Exposure,
-  NominationStatuses,
   StakingContextInterface,
   StakingMetrics,
   StakingTargets,
@@ -24,14 +23,13 @@ import type {
 import type { AnyApi, AnyJson, MaybeAccount } from 'types';
 import Worker from 'workers/stakers?worker';
 import type { ResponseInitialiseExposures } from 'workers/types';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useApi } from '../Api';
 import { useBonded } from '../Bonded';
 import { useConnect } from '../Connect';
 import { useNetworkMetrics } from '../Network';
 import {
   defaultEraStakers,
-  defaultNominationStatus,
   defaultStakingContext,
   defaultStakingMetrics,
   defaultTargets,
@@ -44,16 +42,17 @@ export const StakingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { isReady, api, apiStatus, network } = useApi();
   const {
     activeAccount,
     accounts: connectAccounts,
     getActiveAccount,
   } = useConnect();
-  const { activeEra } = useNetworkMetrics();
   const { getStashLedger } = useBalances();
+  const { activeEra } = useNetworkMetrics();
+  const { isReady, api, apiStatus, network, consts } = useApi();
   const { bondedAccounts, getBondedAccount, getAccountNominations } =
     useBonded();
+  const { maxNominatorRewardedPerValidator } = consts;
 
   // Store staking metrics in state.
   const [stakingMetrics, setStakingMetrics] = useState<StakingMetrics>(
@@ -250,34 +249,9 @@ export const StakingProvider = ({
       activeAccount,
       units: network.units,
       exposures,
+      maxNominatorRewardedPerValidator:
+        maxNominatorRewardedPerValidator.toNumber(),
     });
-  };
-
-  /*
-   * Get the status of nominations.
-   * Possible statuses: waiting, inactive, active.
-   */
-  const getNominationsStatus = () => {
-    if (inSetup() || !activeAccount) {
-      return defaultNominationStatus;
-    }
-    const statuses: NominationStatuses = {};
-    for (const nomination of getAccountNominations(activeAccount)) {
-      const s = eraStakersRef.current.stakers.find(
-        ({ address }) => address === nomination
-      );
-
-      if (s === undefined) {
-        statuses[nomination] = 'waiting';
-        continue;
-      }
-      if (!(s.others ?? []).find(({ who }: any) => who === activeAccount)) {
-        statuses[nomination] = 'inactive';
-        continue;
-      }
-      statuses[nomination] = 'active';
-    }
-    return statuses;
   };
 
   /* Sets an account's stored target validators */
@@ -301,7 +275,7 @@ export const StakingProvider = ({
 
     for (const target of fromTargets) {
       const staker = eraStakersRef.current.stakers.find(
-        ({ address }: any) => address === target
+        ({ address }) => address === target
       );
 
       if (staker === undefined) {
@@ -391,10 +365,26 @@ export const StakingProvider = ({
     !activeAccount ||
     (!hasController() && !isBonding() && !isNominating() && !isUnlocking());
 
+  /*
+   * Helper function to get the lowest reward from an active validaor
+   */
+  const getLowestRewardFromStaker = (address: MaybeAccount) => {
+    const staker = eraStakersRef.current.stakers.find(
+      (s) => s.address === address
+    );
+
+    const lowest = new BigNumber(staker?.lowestReward || 0);
+    const oversubscribed = staker?.oversubscribed || false;
+
+    return {
+      lowest,
+      oversubscribed,
+    };
+  };
+
   return (
     <StakingContext.Provider
       value={{
-        getNominationsStatus,
         getNominationsStatusFromTargets,
         setTargets,
         hasController,
@@ -403,6 +393,7 @@ export const StakingProvider = ({
         isBonding,
         isNominating,
         inSetup,
+        getLowestRewardFromStaker,
         staking: stakingMetrics,
         eraStakers: eraStakersRef.current,
         erasStakersSyncing: erasStakersSyncingRef.current,

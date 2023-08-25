@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -8,18 +8,18 @@ import {
   PageRow,
   PageTitle,
   RowSection,
-} from '@polkadotcloud/core-ui';
+} from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { useBonded } from 'contexts/Bonded';
 import { useConnect } from 'contexts/Connect';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { useStaking } from 'contexts/Staking';
 import { useUi } from 'contexts/UI';
 import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatBoxList } from 'library/StatBoxList';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { ControllerNotStash } from './ControllerNotStash';
 import { ManageBond } from './ManageBond';
 import { Nominations } from './Nominations';
@@ -31,7 +31,7 @@ import { UnstakePrompts } from './UnstakePrompts';
 
 export const Active = () => {
   const { t } = useTranslation('pages');
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { activeAccount } = useConnect();
   const { isSyncing } = useUi();
   const { targets, setTargets, inSetup } = useStaking();
@@ -87,7 +87,7 @@ export const Active = () => {
                       isSyncing ||
                       isFastUnstaking
                     }
-                    onClick={() => openModalWith('Nominate', {}, 'small')}
+                    onClick={() => openModal({ key: 'Nominate' })}
                   />
                 </div>
               </CardHeaderWrapper>

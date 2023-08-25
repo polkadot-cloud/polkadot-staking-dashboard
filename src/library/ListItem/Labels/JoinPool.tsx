@@ -1,10 +1,10 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTranslation } from 'react-i18next';
-import { useModal } from 'contexts/Modal';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const JoinPool = ({
   id,
@@ -14,21 +14,21 @@ export const JoinPool = ({
   setActiveTab: any;
 }) => {
   const { t } = useTranslation('library');
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
 
   return (
     <div className="label button-with-text">
       <button
         type="button"
         onClick={() => {
-          openModalWith(
-            'JoinPool',
-            {
+          openModal({
+            key: 'JoinPool',
+            options: {
               id,
               setActiveTab,
             },
-            'small'
-          );
+            size: 'sm',
+          });
         }}
       >
         {t('join')}

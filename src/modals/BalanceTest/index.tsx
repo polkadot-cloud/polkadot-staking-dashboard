@@ -1,21 +1,24 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { ModalPadding } from '@polkadotcloud/core-ui';
-import { unitToPlanck } from '@polkadotcloud/utils';
+import { ModalPadding } from '@polkadot-cloud/react';
+import { unitToPlanck } from '@polkadot-cloud/utils';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
+import { useTxMeta } from 'contexts/TxMeta';
 import { useBatchCall } from 'library/Hooks/useBatchCall';
 import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { Close } from 'library/Modal/Close';
 import { SubmitTx } from 'library/SubmitTx';
+import { useEffect } from 'react';
 
 export const BalanceTest = () => {
-  const { newBatchCall } = useBatchCall();
   const { api, network } = useApi();
   const { activeAccount } = useConnect();
-  const { setStatus: setModalStatus } = useModal();
+  const { notEnoughFunds } = useTxMeta();
+  const { newBatchCall } = useBatchCall();
+  const { setModalStatus, setModalResize } = useOverlay().modal;
   const { units } = network;
 
   // tx to submit
@@ -53,6 +56,8 @@ export const BalanceTest = () => {
     },
     callbackInBlock: () => {},
   });
+
+  useEffect(() => setModalResize(), [notEnoughFunds]);
 
   return (
     <>

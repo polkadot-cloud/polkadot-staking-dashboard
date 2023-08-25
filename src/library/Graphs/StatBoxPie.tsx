@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { ArcElement, Chart as ChartJS, Tooltip } from 'chart.js';
 import { Pie } from 'react-chartjs-2';

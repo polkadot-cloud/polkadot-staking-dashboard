@@ -1,17 +1,17 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faCog } from '@fortawesome/free-solid-svg-icons';
-import { determinePoolDisplay } from '@polkadotcloud/utils';
+import { determinePoolDisplay } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { Stat } from 'library/Stat';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useStatusButtons } from './useStatusButtons';
 
 export const MembershipStatus = ({
@@ -24,7 +24,7 @@ export const MembershipStatus = ({
   const { t } = useTranslation('pages');
   const { isReady } = useApi();
   const { isPoolSyncing } = useUi();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { label, buttons } = useStatusButtons();
   const { bondedPools, meta } = useBondedPools();
   const { getTransferOptions } = useTransferOptions();
@@ -63,7 +63,11 @@ export const MembershipStatus = ({
         disabled: !isReady || isReadOnlyAccount(activeAccount),
         small: true,
         onClick: () =>
-          openModalWith('ManagePool', { disableWindowResize: true }, 'small'),
+          openModal({
+            key: 'ManagePool',
+            options: { disableWindowResize: true },
+            size: 'sm',
+          }),
       });
     }
   }

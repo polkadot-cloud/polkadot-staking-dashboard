@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faGlasses } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { clipAddress, remToUnit } from '@polkadotcloud/utils';
+import { clipAddress, remToUnit } from '@polkadot-cloud/utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useConnect } from 'contexts/Connect';
@@ -12,7 +12,6 @@ import { Wrapper } from './Wrapper';
 import type { AccountProps } from './types';
 
 export const Account = ({
-  filled = false,
   fontSize = '1.05rem',
   format,
   value,
@@ -51,12 +50,7 @@ export const Account = ({
   }, [value, title]);
 
   return (
-    <Wrapper
-      onClick={onClick}
-      $canClick={canClick}
-      $filled={filled}
-      $fontSize={fontSize}
-    >
+    <Wrapper onClick={onClick} $canClick={canClick} $fontSize={fontSize}>
       {label !== undefined && (
         <div className="account-label">
           {label}{' '}

@@ -1,4 +1,4 @@
-[![Polkadot - App](https://img.shields.io/badge/Polkadot-App-E6007A?logo=polkadot&logoColor=E6007A)](https://staking.polkadot.network) ![ci](https://github.com/paritytech/polkadot-staking-dashboard/actions/workflows/ci.yml/badge.svg) [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Polkadot - App](https://img.shields.io/badge/Polkadot-App-E6007A?logo=polkadot&logoColor=E6007A)](https://staking.polkadot.network) ![ci](https://github.com/paritytech/polkadot-staking-dashboard/actions/workflows/ci.yml/badge.svg) [![License](https://img.shields.io/badge/License-GPL3.0-blue.svg)](https://opensource.org/licenses/GPL-3.0)
 
 # Polkadot Staking Dashboard
 
@@ -8,9 +8,9 @@
 
 The Polkadot Staking Dashboard is a community-driven project, and we welcome contributions to bolster the dashboard's functionality and features.
 
-- **Web Extensions**: Submit PR to the [Polkadot Cloud repository](https://github.com/paritytech/polkadot-cloud) to add a web extension. The extension will then be available in the `@polkadotcloud/community` NPM package. Full instructions can be found [here](https://github.com/paritytech/polkadot-cloud/tree/main/packages/community#adding-web-extension-wallets).
+- **Web Extensions**: Submit PR to the [Polkadot Cloud repository](https://github.com/paritytech/polkadot-cloud/tree/main/packages/community#adding-web-extension-wallets) to add a web extension. The extension will then be available in the `@polkadot-cloud/community` NPM package. Full instructions can be found [here](https://github.com/paritytech/polkadot-cloud/tree/main/packages/community#adding-web-extension-wallets).
 
-- **Validator Operators**: Submit PR to the [Polkadot Cloud repository](https://github.com/paritytech/polkadot-cloud) to add a validator operator. The operator will then be available in the `@polkadotcloud/community` NPM package. Full instructions can be found [here](https://github.com/paritytech/polkadot-cloud/tree/main/packages/community#adding-validator-operators).
+- **Validator Operators**: Submit PR to the [Polkadot Cloud repository](https://github.com/paritytech/polkadot-cloud/tree/main/packages/community#adding-validator-operators) to add a validator operator. The operator will then be available in the `@polkadot-cloud/community` NPM package. Full instructions can be found [here](https://github.com/paritytech/polkadot-cloud/tree/main/packages/community#adding-validator-operators).
 
 ## URL Variable Support
 
@@ -37,7 +37,7 @@ staking.polkadot.network/#/overview?n=kusama&l=cn
 You may build a container using:
 
 ```
-./scripts/build-container.sh
+./shell/build-container.sh
 ```
 
 Then run your container with:

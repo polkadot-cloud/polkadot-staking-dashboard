@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faChrome, faUsb } from '@fortawesome/free-brands-svg-icons';
 import {
@@ -13,17 +13,17 @@ import {
   ButtonText,
   ModalConnectItem,
   ModalHardwareItem,
-} from '@polkadotcloud/core-ui';
-import { inChrome } from '@polkadotcloud/utils';
+} from '@polkadot-cloud/react';
+import { inChrome } from '@polkadot-cloud/utils';
 import React from 'react';
 import { useApi } from 'contexts/Api';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
 import { ReactComponent as LedgerLogoSVG } from 'img/ledgerLogo.svg';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const Ledger = (): React.ReactElement => {
   const { openHelp } = useHelp();
-  const { replaceModalWith } = useModal();
+  const { replaceModal } = useOverlay().modal;
   const { name } = useApi().network;
   const url = 'ledger.com';
 
@@ -60,9 +60,7 @@ export const Ledger = (): React.ReactElement => {
           <div className="row margin">
             <ButtonPrimaryInvert
               text="USB"
-              onClick={() => {
-                replaceModalWith('ImportLedger', {}, 'large');
-              }}
+              onClick={() => replaceModal({ key: 'ImportLedger' })}
               iconLeft={faUsb}
               iconTransform="shrink-1"
               disabled={!inChrome()}

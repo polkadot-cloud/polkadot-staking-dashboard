@@ -1,29 +1,34 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import {
   ModalFixedTitle,
   ModalMotionTwoSection,
   ModalSection,
-} from '@polkadotcloud/core-ui';
-import { setStateWithRef } from '@polkadotcloud/utils';
+} from '@polkadot-cloud/react';
+import { setStateWithRef } from '@polkadot-cloud/utils';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useBalances } from 'contexts/Balances';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useActivePools } from 'contexts/Pools/ActivePools';
 import { Title } from 'library/Modal/Title';
+import { useTxMeta } from 'contexts/TxMeta';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { Forms } from './Forms';
 import { Overview } from './Overview';
 
 export const UnlockChunks = () => {
   const { t } = useTranslation('modals');
   const { activeAccount } = useConnect();
-  const { config, setModalHeight } = useModal();
-  const { bondFor } = config || {};
+  const { notEnoughFunds } = useTxMeta();
   const { getStashLedger } = useBalances();
+  const {
+    config: { options },
+    setModalHeight,
+  } = useOverlay().modal;
   const { getPoolUnlocking } = useActivePools();
+  const { bondFor } = options || {};
 
   // get the unlocking per bondFor
   const getUnlocking = () => {
@@ -75,7 +80,7 @@ export const UnlockChunks = () => {
   // resize modal on state change
   useEffect(() => {
     setModalHeight(getModalHeight());
-  }, [task, sectionRef.current, unlocking]);
+  }, [task, notEnoughFunds, sectionRef.current, unlocking]);
 
   // resize this modal on window resize
   useEffect(() => {

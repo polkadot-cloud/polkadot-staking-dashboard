@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import BigNumber from 'bignumber.js';
 import { useEffect, useState } from 'react';
@@ -70,7 +70,7 @@ export const Bond = ({ section }: SetupStepProps) => {
           syncing={txFees.isZero()}
           bondFor="nominator"
           inSetup
-          listenIsValid={setBondValid}
+          listenIsValid={(valid) => setBondValid(valid)}
           defaultBond={initialBondValue}
           setters={[
             {

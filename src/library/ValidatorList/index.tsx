@@ -1,9 +1,9 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faBars, faGripVertical } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { isNotZero } from '@polkadotcloud/utils';
+import { isNotZero } from '@polkadot-cloud/utils';
 import { motion } from 'framer-motion';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,18 +11,17 @@ import { ListItemsPerBatch, ListItemsPerPage } from 'consts';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useFilters } from 'contexts/Filters';
-import { useModal } from 'contexts/Modal';
 import { useNetworkMetrics } from 'contexts/Network';
 import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
-import { useValidators } from 'contexts/Validators';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
 import { MotionContainer } from 'library/List/MotionContainer';
 import { Pagination } from 'library/List/Pagination';
 import { SearchInput } from 'library/List/SearchInput';
 import { Selectable } from 'library/List/Selectable';
 import { Validator } from 'library/ValidatorList/Validator';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { useValidatorFilters } from '../Hooks/useValidatorFilters';
 import { ListProvider, useList } from '../List/context';
 import { Filters } from './Filters';
@@ -30,7 +29,6 @@ import { Filters } from './Filters';
 export const ValidatorListInner = ({
   nominator: initialNominator,
   validators: initialValidators,
-  batchKey,
   allowMoreCols,
   allowFilters,
   toggleFavorites,
@@ -48,20 +46,18 @@ export const ValidatorListInner = ({
   alwaysRefetchValidators = false,
   defaultFilters = undefined,
   disableThrottle = false,
-  refetchOnListUpdate = false,
 }: any) => {
   const { t } = useTranslation('library');
-  const { mode } = useTheme();
   const {
     isReady,
     network: { colors },
   } = useApi();
+  const { setModalResize } = useOverlay().modal;
+  const provider = useList();
+  const { mode } = useTheme();
+  const { isSyncing } = useUi();
   const { activeAccount } = useConnect();
   const { activeEra } = useNetworkMetrics();
-  const { fetchValidatorMetaBatch } = useValidators();
-  const provider = useList();
-  const modal = useModal();
-  const { isSyncing } = useUi();
 
   // determine the nominator of the validator list.
   // By default this will be the activeAccount. But for pools,
@@ -210,7 +206,6 @@ export const ValidatorListInner = ({
     setValidatorsDefault(initialValidators);
     setValidators(initialValidators);
     setFetched(true);
-    fetchValidatorMetaBatch(batchKey, initialValidators, refetchOnListUpdate);
   };
 
   // handle filter / order update
@@ -221,18 +216,9 @@ export const ValidatorListInner = ({
       if (order !== 'default') {
         filteredValidators = applyOrder(order, filteredValidators);
       }
-      filteredValidators = applyFilter(
-        includes,
-        excludes,
-        filteredValidators,
-        batchKey
-      );
+      filteredValidators = applyFilter(includes, excludes, filteredValidators);
       if (searchTerm) {
-        filteredValidators = applySearch(
-          filteredValidators,
-          batchKey,
-          searchTerm
-        );
+        filteredValidators = applySearch(filteredValidators, searchTerm);
       }
       setValidators(filteredValidators);
       setPage(1);
@@ -252,8 +238,7 @@ export const ValidatorListInner = ({
 
   // if in modal, handle resize
   const maybeHandleModalResize = () => {
-    if (!inModal) return;
-    modal.setResize();
+    if (inModal) setModalResize();
   };
 
   const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -263,13 +248,8 @@ export const ValidatorListInner = ({
     if (order !== 'default') {
       filteredValidators = applyOrder(order, filteredValidators);
     }
-    filteredValidators = applyFilter(
-      includes,
-      excludes,
-      filteredValidators,
-      batchKey
-    );
-    filteredValidators = applySearch(filteredValidators, batchKey, newValue);
+    filteredValidators = applyFilter(includes, excludes, filteredValidators);
+    filteredValidators = applySearch(filteredValidators, newValue);
 
     // ensure no duplicates
     filteredValidators = filteredValidators.filter(
@@ -343,39 +323,32 @@ export const ValidatorListInner = ({
         <MotionContainer>
           {listValidators.length ? (
             <>
-              {listValidators.map((validator: any, index: number) => {
-                // fetch batch data by referring to default list index.
-                const batchIndex = validatorsDefault.indexOf(validator);
-
-                return (
-                  <motion.div
-                    className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
-                    key={`nomination_${index}`}
-                    variants={{
-                      hidden: {
-                        y: 15,
-                        opacity: 0,
-                      },
-                      show: {
-                        y: 0,
-                        opacity: 1,
-                      },
-                    }}
-                  >
-                    <Validator
-                      validator={validator}
-                      nominator={nominator}
-                      toggleFavorites={toggleFavorites}
-                      batchIndex={batchIndex}
-                      batchKey={batchKey}
-                      format={format}
-                      showMenu={showMenu}
-                      bondFor={bondFor}
-                      inModal={inModal}
-                    />
-                  </motion.div>
-                );
-              })}
+              {listValidators.map((validator: any, index: number) => (
+                <motion.div
+                  key={`nomination_${index}`}
+                  className={`item ${listFormat === 'row' ? 'row' : 'col'}`}
+                  variants={{
+                    hidden: {
+                      y: 15,
+                      opacity: 0,
+                    },
+                    show: {
+                      y: 0,
+                      opacity: 1,
+                    },
+                  }}
+                >
+                  <Validator
+                    validator={validator}
+                    nominator={nominator}
+                    toggleFavorites={toggleFavorites}
+                    format={format}
+                    showMenu={showMenu}
+                    bondFor={bondFor}
+                    inModal={inModal}
+                  />
+                </motion.div>
+              ))}
             </>
           ) : (
             <h4 style={{ marginTop: '1rem' }}>

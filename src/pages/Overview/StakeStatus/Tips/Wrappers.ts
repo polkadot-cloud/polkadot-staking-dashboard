@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
@@ -66,43 +66,46 @@ export const ItemInnerWrapper = styled.div`
 
         &.active {
           h4:hover {
-            color: var(--network-color-primary);
+            color: var(--accent-color-primary);
             .more {
-              color: var(--network-color-primary);
+              color: var(--accent-color-primary);
               opacity: 1;
             }
           }
         }
 
-        h4 {
-          color: var(--text-color-secondary);
-          transition: color var(--transition-duration);
-          font-family: InterSemiBold, sans-serif;
+        > button {
           position: absolute;
           top: 0;
           left: 0;
-          width: auto;
           height: 1.85rem;
           max-width: 100%;
-          padding: 0.15rem 1.75rem 0rem 0;
-          text-align: left;
-          font-size: 1.05rem;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-        }
-        .more {
-          color: var(--text-color-secondary);
-          position: absolute;
-          right: 0.2rem;
-          top: 0.43rem;
-          display: flex;
-          align-items: center;
-          transition: all var(--transition-duration);
-          font-size: 1rem;
-          opacity: 0.5;
-          > svg {
-            margin-left: 0.4rem;
+          width: auto;
+
+          > h4 {
+            color: var(--text-color-secondary);
+            transition: color var(--transition-duration);
+            font-family: InterSemiBold, sans-serif;
+            text-align: left;
+            font-size: 1.05rem;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            padding: 0.15rem 1.75rem 0rem 0;
+            width: 100%;
+
+            > svg {
+              color: var(--text-color-secondary);
+              transition: all var(--transition-duration);
+              position: absolute;
+              right: 0.2rem;
+              top: 0.43rem;
+              display: flex;
+              align-items: center;
+              font-size: 1rem;
+              opacity: 0.5;
+              margin-left: 0.4rem;
+            }
           }
         }
       }
@@ -129,7 +132,7 @@ export const PageToggleWrapper = styled.div`
     }
     &:hover {
       opacity: 1;
-      color: var(--network-color-primary);
+      color: var(--accent-color-primary);
     }
     &:disabled {
       color: var(--text-color-secondary);

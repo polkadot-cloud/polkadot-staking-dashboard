@@ -1,8 +1,8 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
-import { Body, Main, Page, Side } from '@polkadotcloud/core-ui';
-import { extractUrlValue } from '@polkadotcloud/utils';
+import { Body, Main, Page, Side } from '@polkadot-cloud/react';
+import { extractUrlValue } from '@polkadot-cloud/utils';
 import { AnimatePresence } from 'framer-motion';
 import { useEffect, useRef } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -15,7 +15,6 @@ import {
   Routes,
   useLocation,
 } from 'react-router-dom';
-import { Canvas } from 'library/Canvas';
 import { Prompt } from 'library/Prompt';
 import { PagesConfig } from 'config/pages';
 import { useApi } from 'contexts/Api';
@@ -30,8 +29,7 @@ import { NetworkBar } from 'library/NetworkBar';
 import { Notifications } from 'library/Notifications';
 import { SideMenu } from 'library/SideMenu';
 import { Tooltip } from 'library/Tooltip';
-import { Modal } from 'modals';
-import { Overlay } from 'library/Overlay';
+import { Overlays } from 'overlay';
 
 export const RouterInner = () => {
   const { t } = useTranslation();
@@ -79,17 +77,11 @@ export const RouterInner = () => {
   return (
     <ErrorBoundary FallbackComponent={ErrorFallbackApp}>
       <Body>
-        {/* Prompting background: closed by default */}
-        <Overlay />
-
-        {/* Modal: closed by default */}
-        <Modal />
-
         {/* Help: closed by default */}
         <Help />
 
-        {/* Canvas: closed by default */}
-        <Canvas />
+        {/* Overlays: modal and canvas. Closed by default */}
+        <Overlays />
 
         {/* Menu: closed by default */}
         <Menu />

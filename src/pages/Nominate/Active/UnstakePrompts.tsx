@@ -1,25 +1,25 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import { faBolt, faLockOpen } from '@fortawesome/free-solid-svg-icons';
-import { ButtonPrimary, ButtonRow, PageRow } from '@polkadotcloud/core-ui';
-import { isNotZero } from '@polkadotcloud/utils';
+import { ButtonPrimary, ButtonRow, PageRow } from '@polkadot-cloud/react';
+import { isNotZero } from '@polkadot-cloud/utils';
 import { useTranslation } from 'react-i18next';
 import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
-import { useModal } from 'contexts/Modal';
 import { useTheme } from 'contexts/Themes';
 import { useTransferOptions } from 'contexts/TransferOptions';
 import { useUi } from 'contexts/UI';
 import { CardWrapper } from 'library/Card/Wrappers';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const UnstakePrompts = () => {
   const { t } = useTranslation('pages');
   const { unit, colors } = useApi().network;
   const { activeAccount } = useConnect();
   const { mode } = useTheme();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const { isNetworkSyncing } = useUi();
   const { isFastUnstaking, isUnstaking, getFastUnstakeText } = useUnstaking();
   const { getTransferOptions } = useTransferOptions();
@@ -64,7 +64,7 @@ export const UnstakePrompts = () => {
                     iconLeft={faBolt}
                     text={getFastUnstakeText()}
                     onClick={() =>
-                      openModalWith('ManageFastUnstake', {}, 'small')
+                      openModal({ key: 'ManageFastUnstake', size: 'sm' })
                     }
                   />
                 ) : (
@@ -77,15 +77,15 @@ export const UnstakePrompts = () => {
                     }
                     disabled={false}
                     onClick={() =>
-                      openModalWith(
-                        'UnlockChunks',
-                        {
+                      openModal({
+                        key: 'UnlockChunks',
+                        options: {
                           bondFor: 'nominator',
                           poolClosure: true,
                           disableWindowResize: true,
                         },
-                        'small'
-                      )
+                        size: 'sm',
+                      })
                     }
                   />
                 )}

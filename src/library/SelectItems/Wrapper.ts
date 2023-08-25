@@ -1,5 +1,5 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
-// SPDX-License-Identifier: Apache-2.0
+// SPDX-License-Identifier: GPL-3.0-only
 
 import styled from 'styled-components';
 
@@ -84,7 +84,7 @@ export const Wrapper = styled.div<{
     border: 1.75px solid
       ${(props) =>
         props.$selected
-          ? 'var(--network-color-primary)'
+          ? 'var(--accent-color-primary)'
           : 'var(--border-primary-color)'};
     border-radius: 1rem;
     width: 100%;
@@ -95,9 +95,9 @@ export const Wrapper = styled.div<{
     &:hover {
       border-color: ${(props) =>
         props.$hoverBorder
-          ? 'var(--network-color-primary)'
+          ? 'var(--accent-color-primary)'
           : props.$selected
-          ? 'var(--network-color-primary)'
+          ? 'var(--accent-color-primary)'
           : 'var(--border-primary-color)'};
     }
 
@@ -117,7 +117,7 @@ export const Wrapper = styled.div<{
 
       > .icon {
         background: var(--background-list-item);
-        color: var(--network-color-primary);
+        color: var(--accent-color-primary);
         width: 6rem;
         display: flex;
         align-items: center;
@@ -144,7 +144,7 @@ export const Wrapper = styled.div<{
       > .toggle {
         color: ${(props) =>
           props.$selected
-            ? 'var(--network-color-primary)'
+            ? 'var(--accent-color-primary)'
             : 'var(--text-color-secondary)'};
         opacity: ${(props) => (props.$selected ? 1 : 0.5)};
         width: 4rem;
