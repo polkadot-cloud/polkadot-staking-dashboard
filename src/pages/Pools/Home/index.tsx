@@ -16,7 +16,7 @@ import { CardWrapper } from 'library/Card/Wrappers';
 import { PoolList } from 'library/PoolList/Default';
 import { StatBoxList } from 'library/StatBoxList';
 import { usePoolsConfig } from 'contexts/Pools/PoolsConfig';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { Roles } from '../Roles';
 import { ClosurePrompts } from './ClosurePrompts';
 import { PoolFavorites } from './Favorites';

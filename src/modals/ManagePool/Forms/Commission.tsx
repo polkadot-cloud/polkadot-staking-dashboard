@@ -29,7 +29,7 @@ import { useSubmitExtrinsic } from 'library/Hooks/useSubmitExtrinsic';
 import { SubmitTx } from 'library/SubmitTx';
 import 'rc-slider/assets/index.css';
 import type { MaybeAccount } from 'types';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { SliderWrapper } from '../Wrappers';
 import type { ChangeRateInput } from './types';
 

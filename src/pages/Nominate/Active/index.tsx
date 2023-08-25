@@ -19,7 +19,7 @@ import { CardHeaderWrapper, CardWrapper } from 'library/Card/Wrappers';
 import { GenerateNominations } from 'library/GenerateNominations';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { StatBoxList } from 'library/StatBoxList';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { ControllerNotStash } from './ControllerNotStash';
 import { ManageBond } from './ManageBond';
 import { Nominations } from './Nominations';

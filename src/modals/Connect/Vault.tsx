@@ -14,7 +14,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHelp } from 'contexts/Help';
 import { ReactComponent as VaultSVG } from 'img/polkadotVault.svg';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const Vault = (): React.ReactElement => {
   const { t } = useTranslation('modals');

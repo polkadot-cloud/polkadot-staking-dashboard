@@ -3,7 +3,7 @@
 
 import { ModalPadding } from '@polkadot-cloud/react';
 import { Title } from 'library/Modal/Title';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { Wrapper } from './Wrapper';
 
 export const Bio = () => {

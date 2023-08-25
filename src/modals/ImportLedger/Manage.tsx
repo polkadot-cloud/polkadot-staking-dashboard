@@ -11,7 +11,7 @@ import { usePrompt } from 'contexts/Prompt';
 import { ReactComponent as StatusBarIcon } from 'img/ledgerIcon.svg';
 import { Heading } from 'library/Import/Heading';
 import type { AnyJson } from 'types';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { Addresess } from './Addresses';
 import { Reset } from './Reset';
 

@@ -10,7 +10,7 @@ import { usePoolMemberships } from 'contexts/Pools/PoolMemberships';
 import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { useStatusButtons } from 'pages/Pools/Home/Status/useStatusButtons';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { ContentWrapper } from './Wrappers';
 
 export const AccountPoolRoles = () => {

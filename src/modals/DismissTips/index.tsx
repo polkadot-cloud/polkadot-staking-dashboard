@@ -5,7 +5,7 @@ import { ButtonSubmit, ModalPadding } from '@polkadot-cloud/react';
 import { useTranslation } from 'react-i18next';
 import { usePlugins } from 'contexts/Plugins';
 import { Title } from 'library/Modal/Title';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const DismissTips = () => {
   const { t } = useTranslation('tips');

@@ -8,7 +8,7 @@ import type { FunctionComponent } from 'react';
 import React from 'react';
 import { useHelp } from 'contexts/Help';
 import { ReactComponent as CrossSVG } from 'img/cross.svg';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { TitleWrapper } from './Wrappers';
 
 interface TitleProps {

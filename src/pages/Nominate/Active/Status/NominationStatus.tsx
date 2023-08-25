@@ -18,7 +18,7 @@ import { useUi } from 'contexts/UI';
 import { useNominationStatus } from 'library/Hooks/useNominationStatus';
 import { useUnstaking } from 'library/Hooks/useUnstaking';
 import { Stat } from 'library/Stat';
-import { useOverlay } from 'contexts/Overlay';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const NominationStatus = ({
   showButtons = true,
@@ -55,14 +55,14 @@ export const NominationStatus = ({
           title: fastUnstakeText,
           icon: faBolt,
           onClick: () => {
-            openModal({ key: 'ManageFastUnstake', size: 'small' });
+            openModal({ key: 'ManageFastUnstake', size: 'sm' });
           },
         }
       : {
           title: t('nominate.unstake'),
           icon: faSignOutAlt,
           disabled: !isReady || isReadOnlyAccount(controller) || !activeAccount,
-          onClick: () => openModal({ key: 'Unstake', size: 'small' }),
+          onClick: () => openModal({ key: 'Unstake', size: 'sm' }),
         };
 
   // Display progress alongside start title if exists and in setup.
