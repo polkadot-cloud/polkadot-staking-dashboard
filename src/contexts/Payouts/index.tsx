@@ -276,7 +276,7 @@ export const PayoutsProvider = ({
       }
 
       // This is not currently useful for preventing re-syncing. Need to know the eras that have
-      // been already.
+      // been claimed already and remove them from `erasToCheck`.
       setLocalUnclaimedPayouts(
         network.name,
         thisEra.toString(),
