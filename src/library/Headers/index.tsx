@@ -9,6 +9,7 @@ import { useBondedPools } from 'contexts/Pools/BondedPools';
 import { usePoolMembers } from 'contexts/Pools/PoolMembers';
 import { useUi } from 'contexts/UI';
 import { useValidators } from 'contexts/Validators';
+import { usePayouts } from 'contexts/Payouts';
 import { Connect } from './Connect';
 import { Connected } from './Connected';
 import { SideMenuToggle } from './SideMenuToggle';
@@ -19,22 +20,23 @@ export const Headers = () => {
   const { isSyncing } = useUi();
   const { pathname } = useLocation();
   const { pending } = useExtrinsics();
+  const { unclaimedPayouts } = usePayouts();
   const { pluginEnabled } = usePlugins();
   const { validators } = useValidators();
   const { bondedPools } = useBondedPools();
   const { poolMembersNode } = usePoolMembers();
 
-  // keep syncing if on validators page and still fetching
-  const onValidatorsSyncing = () => {
-    if (pageFromUri(pathname, 'overview') === 'validators') {
-      if (!validators.length) {
+  // keep syncing if on nominate page and still fetching payouts
+  const onNominateSyncing = () => {
+    if (pageFromUri(pathname, 'overview') === 'nominate') {
+      if (unclaimedPayouts === null) {
         return true;
       }
     }
     return false;
   };
 
-  // keep syncing if on pools page and still fetching bonded pools or pool members. Ignore pool
+  // Keep syncing if on pools page and still fetching bonded pools or pool members. Ignore pool
   // member sync if Subscan is enabled.
   const onPoolsSyncing = () => {
     if (pageFromUri(pathname, 'overview') === 'pools') {
@@ -48,7 +50,21 @@ export const Headers = () => {
     return false;
   };
 
-  const syncing = isSyncing || onValidatorsSyncing() || onPoolsSyncing();
+  // Keep syncing if on validators page and still fetching
+  const onValidatorsSyncing = () => {
+    if (pageFromUri(pathname, 'overview') === 'validators') {
+      if (!validators.length) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const syncing =
+    isSyncing ||
+    onNominateSyncing() ||
+    onValidatorsSyncing() ||
+    onPoolsSyncing();
 
   return (
     <>
