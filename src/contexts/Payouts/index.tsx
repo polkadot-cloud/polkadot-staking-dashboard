@@ -330,4 +330,4 @@ export const PayoutsContext = React.createContext<PayoutsContextInterface>(
   defaultPayoutsContext
 );
 
-export const useBonded = () => React.useContext(PayoutsContext);
+export const usePayouts = () => React.useContext(PayoutsContext);

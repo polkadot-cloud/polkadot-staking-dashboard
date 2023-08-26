@@ -3,7 +3,7 @@
 
 import { Separator } from '@polkadot-cloud/react';
 import { CardWrapper } from 'library/Card/Wrappers';
-import { ControllerStatus } from './ControllerStatus';
+import { UnclaimedPayoutsStatus } from './UnclaimedPayoutsStatus';
 import { NominationStatus } from './NominationStatus';
 import { PayoutDestinationStatus } from './PayoutDestinationStatus';
 
@@ -11,8 +11,8 @@ export const Status = ({ height }: { height: number }) => (
   <CardWrapper height={height}>
     <NominationStatus />
     <Separator />
-    <PayoutDestinationStatus />
+    <UnclaimedPayoutsStatus />
     <Separator />
-    <ControllerStatus />
+    <PayoutDestinationStatus />
   </CardWrapper>
 );
