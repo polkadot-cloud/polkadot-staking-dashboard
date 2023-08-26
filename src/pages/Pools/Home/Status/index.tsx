@@ -14,14 +14,14 @@ export const Status = ({ height }: { height: number }) => {
   return (
     <CardWrapper height={height}>
       <MembershipStatus />
+      <Separator />
+      <RewardsStatus />
       {selectedActivePool && (
         <>
           <Separator />
           <PoolStatus />
         </>
       )}
-      <Separator />
-      <RewardsStatus />
     </CardWrapper>
   );
 };
