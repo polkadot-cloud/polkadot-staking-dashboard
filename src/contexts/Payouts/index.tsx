@@ -176,7 +176,7 @@ export const PayoutsProvider = ({
           .map((e: string) => rmCommas(e))
           .filter(
             (e: string) =>
-              erasToCheck.includes(e) &&
+              !erasToCheck.includes(e) &&
               new BigNumber(e).isLessThanOrEqualTo(startEra) &&
               new BigNumber(e).isGreaterThanOrEqualTo(endEra)
           )
