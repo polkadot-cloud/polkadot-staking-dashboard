@@ -58,3 +58,41 @@ export const setLocalEraExposure = (
     })
   );
 };
+
+// Get unclaimed payouts for an account.
+export const getLocalUnclaimedPayouts = (network: NetworkName, who: string) => {
+  const current = JSON.parse(
+    localStorage.getItem(`${network}_unclaimed_payouts`) || '{}'
+  );
+  return current?.[who] || {};
+};
+
+// Set local unclaimed payouts for an account.
+export const setLocalUnclaimedPayouts = (
+  network: NetworkName,
+  era: string,
+  who: string,
+  unclaimdPayouts: Record<string, string>,
+  endEra: string
+) => {
+  const current = JSON.parse(
+    localStorage.getItem(`${network}_unclaimed_payouts`) || '{}'
+  );
+
+  const whoRemoveStaleEras = Object.fromEntries(
+    Object.entries(current[who] || {}).filter(([k]: AnyJson) =>
+      new BigNumber(k).isGreaterThanOrEqualTo(endEra)
+    )
+  );
+
+  localStorage.setItem(
+    `${network}_unclaimed_payouts`,
+    JSON.stringify({
+      ...current,
+      [who]: {
+        ...whoRemoveStaleEras,
+        [era]: unclaimdPayouts,
+      },
+    })
+  );
+};

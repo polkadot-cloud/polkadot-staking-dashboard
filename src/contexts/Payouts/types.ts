@@ -1,7 +1,6 @@
 // Copyright 2023 @paritytech/polkadot-staking-dashboard authors & contributors
 // SPDX-License-Identifier: GPL-3.0-only
 
-import type BigNumber from 'bignumber.js';
 import type { Sync } from 'types';
 
 export type PayoutsContextInterface = {
@@ -11,7 +10,7 @@ export type PayoutsContextInterface = {
 
 export type UnclaimedPayouts = Record<string, EraUnclaimedPayouts> | null;
 
-export type EraUnclaimedPayouts = Record<string, BigNumber>;
+export type EraUnclaimedPayouts = Record<string, string>;
 
 export interface LocalValidatorExposure {
   staked: string;

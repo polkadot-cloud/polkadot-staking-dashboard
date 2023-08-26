@@ -21,6 +21,7 @@ import {
   getLocalEraExposure,
   hasLocalEraExposure,
   setLocalEraExposure,
+  setLocalUnclaimedPayouts,
 } from './Utils';
 
 const worker = new Worker();
@@ -130,8 +131,6 @@ export const PayoutsProvider = ({
         getLocalEraExposure(network.name, currentEra.toString(), activeAccount)
       );
       erasValidators.push(...validators);
-
-      // TODO: only check eras that are not present in local storage.
       erasToCheck.push(currentEra.toString());
       currentEra = currentEra.minus(1);
     }
@@ -269,19 +268,31 @@ export const PayoutsProvider = ({
               .dividedBy(total)
               .plus(isValidator ? valCut : 0);
 
-        // TODO: Also store payout data in local storage.
-
         unclaimed[thisEra.toString()] = {
           ...unclaimed[thisEra.toString()],
-          [validator]: unclaimedPayout,
+          [validator]: unclaimedPayout.toString(),
         };
         j++;
       }
+
+      // This is not currently useful for preventing re-syncing. Need to know the eras that have
+      // been already.
+      setLocalUnclaimedPayouts(
+        network.name,
+        thisEra.toString(),
+        activeAccount,
+        unclaimed[thisEra.toString()],
+        endEra.toString()
+      );
+
       i++;
       currentEra = currentEra.minus(1);
     }
 
-    setUnclaimedPayouts(unclaimed);
+    setUnclaimedPayouts({
+      ...unclaimedPayouts,
+      ...unclaimed,
+    });
     setStateWithRef('synced', setPayoutsSynced, payoutsSyncedRef);
   };
 
