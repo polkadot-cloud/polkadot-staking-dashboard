@@ -6,7 +6,6 @@ import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import type { AnyApi, AnyJson, Sync } from 'types';
 import { useConnect } from 'contexts/Connect';
-import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetworkMetrics } from 'contexts/Network';
 import Worker from 'workers/stakers?worker';
 import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
@@ -58,13 +57,17 @@ export const PayoutsProvider = ({
   };
 
   // Determine whether to keep processing a next era, or move onto checking for pending payouts.
-  const shouldContinueProcessing = (era: BigNumber, endEra: BigNumber) => {
+  const shouldContinueProcessing = async (
+    era: BigNumber,
+    endEra: BigNumber
+  ) => {
     // If there are more exposures to process, check next era.
     if (new BigNumber(era).isGreaterThan(endEra))
       checkEra(new BigNumber(era).minus(1));
     // If all exposures have been processed, check for pending payouts.
     else if (new BigNumber(era).isEqualTo(endEra)) {
-      checkPendingPayouts();
+      await checkPendingPayouts();
+      setStateWithRef('synced', setPayoutsSynced, payoutsSyncedRef);
     }
   };
 
@@ -293,26 +296,31 @@ export const PayoutsProvider = ({
       ...unclaimedPayouts,
       ...unclaimed,
     });
-    setStateWithRef('synced', setPayoutsSynced, payoutsSyncedRef);
   };
 
   // Fetch payouts if active account is nominating.
   useEffect(() => {
-    if (
-      isNominating() &&
-      !activeEra.index.isZero() &&
-      payoutsSyncedRef.current === 'unsynced'
-    ) {
-      payoutsSyncedRef.current = 'syncing';
-      // Start checking eras for exposures, starting with the previous one.
-      checkEra(activeEra.index.minus(1));
+    if (!activeEra.index.isZero()) {
+      if (
+        isNominating() &&
+        unclaimedPayouts === null &&
+        payoutsSyncedRef.current !== 'syncing'
+      ) {
+        setStateWithRef('syncing', setPayoutsSynced, payoutsSyncedRef);
+        // Start checking eras for exposures, starting with the previous one.
+        checkEra(activeEra.index.minus(1));
+      }
     }
   }, [isNominating(), activeEra]);
 
   // Clear payout state on network / active account change.
-  useEffectIgnoreInitial(() => {
+  useEffect(() => {
     if (unclaimedPayouts !== null) {
       setUnclaimedPayouts(null);
+    }
+    if (!isNominating()) {
+      setStateWithRef('synced', setPayoutsSynced, payoutsSyncedRef);
+    } else {
       setStateWithRef('unsynced', setPayoutsSynced, payoutsSyncedRef);
     }
   }, [network, activeAccount]);
