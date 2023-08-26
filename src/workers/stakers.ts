@@ -9,6 +9,7 @@ import type {
   Staker,
 } from 'contexts/Staking/types';
 import type { AnyJson } from 'types';
+import type { LocalValidatorExposure } from 'contexts/Payouts/types';
 import type { DataInitialiseExposures } from './types';
 
 // eslint-disable-next-line no-restricted-globals
@@ -20,46 +21,77 @@ ctx.addEventListener('message', (event: AnyJson) => {
   const { task } = data;
   let message: AnyJson = {};
   switch (task) {
-    case 'initialise_exposures':
+    case 'processExposures':
       message = processExposures(data as DataInitialiseExposures);
       break;
-    case 'process_fast_unstake_era':
-      message = processFastUnstakeEra(data);
+    case 'processEraForExposure':
+      message = processEraForExposure(data);
       break;
     default:
   }
   postMessage({ task, ...message });
 });
 
-// process fast unstake era exposures.
-//
-// checks if an account has been exposed in an
-// era.
-const processFastUnstakeEra = (data: AnyJson) => {
-  const { currentEra, exposures, task, where, who } = data;
+// Process era exposures and return if an account was exposed, along with the validator they backed.
+const processEraForExposure = (data: AnyJson) => {
+  const { era, exposures, exitOnExposed, task, networkName, who } = data;
   let exposed = false;
 
-  // check exposed as validator or nominator.
+  // If exposed, the validator that was backed.
+  const exposedValidators: Record<string, LocalValidatorExposure> = {};
+
+  // Check exposed as validator or nominator.
   exposures.every(({ keys, val }: any) => {
     const validator = keys[1];
-    if (validator === who) {
-      exposed = true;
-      return false;
-    }
     const others = val?.others ?? [];
-    const inOthers = others.find((o: AnyJson) => o.who === who);
-    if (inOthers) {
+    const own = val?.own || 0;
+    const total = val?.total || 0;
+    const isValidator = validator === who;
+
+    if (isValidator) {
+      const share = new BigNumber(own).isZero()
+        ? '0'
+        : new BigNumber(own).dividedBy(total).toString();
+
+      exposedValidators[validator] = {
+        staked: own,
+        total,
+        share,
+        isValidator,
+      };
+
       exposed = true;
-      return false;
+      if (exitOnExposed) return false;
     }
+
+    const inOthers = others.find((o: AnyJson) => o.who === who);
+
+    if (inOthers) {
+      const share = new BigNumber(inOthers.value).isZero()
+        ? '0'
+        : new BigNumber(inOthers.value).dividedBy(total).toString();
+
+      exposedValidators[validator] = {
+        staked: inOthers.value,
+        total,
+        share,
+        isValidator,
+      };
+      exposed = true;
+      if (exitOnExposed) return false;
+    }
+
     return true;
   });
 
   return {
-    currentEra,
+    networkName,
+    era,
     exposed,
+    exposedValidators: Object.keys(exposedValidators).length
+      ? exposedValidators
+      : null,
     task,
-    where,
     who,
   };
 };
@@ -68,8 +100,15 @@ const processFastUnstakeEra = (data: AnyJson) => {
 //
 // abstracts active nominators erasStakers.
 const processExposures = (data: DataInitialiseExposures) => {
-  const { units, exposures, activeAccount, maxNominatorRewardedPerValidator } =
-    data;
+  const {
+    task,
+    networkName,
+    era,
+    units,
+    exposures,
+    activeAccount,
+    maxNominatorRewardedPerValidator,
+  } = data;
 
   const stakers: Staker[] = [];
   let activeValidators = 0;
@@ -153,10 +192,13 @@ const processExposures = (data: DataInitialiseExposures) => {
   });
 
   return {
+    networkName,
+    era,
     stakers,
     totalActiveNominators: nominators.length,
     activeAccountOwnStake,
     activeValidators,
+    task,
     who: activeAccount,
   };
 };

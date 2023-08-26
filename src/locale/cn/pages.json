@@ -40,6 +40,7 @@
       "notNominating": "未提名",
       "payoutDestination": "收益到账地址",
       "payoutDestinationSubtitle": "选择如何接收收益。收益可以是复合式增长，也可以作为自由余额发回账户",
+      "pendingPayouts": "待付",
       "poolDestroy": "提名池正在被摧毁，不能做提名操作",
       "poolNominations": "池的提名",
       "proxyprompt": "因本应用将很快取消对Controller帐户, 转而支持代理帐户. 请您尽快将Controller帐户切换到Stash帐户, 以便有更好体验",

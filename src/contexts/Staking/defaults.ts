@@ -45,6 +45,7 @@ const defaultLowestReward = {
 export const defaultNominationStatus: NominationStatuses = {};
 
 export const defaultStakingContext: StakingContextInterface = {
+  fetchEraStakers: async (e) => new Promise((resolve) => resolve([])),
   getNominationsStatusFromTargets: (w, t) => defaultNominationStatus,
   setTargets: (t) => {},
   hasController: () => false,
