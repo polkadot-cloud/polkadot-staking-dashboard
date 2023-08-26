@@ -196,10 +196,9 @@ export const PayoutsProvider = ({
     erasToCheck.forEach((era) => {
       const eraValidators: string[] = [];
       Object.entries(unclaimedRewards).forEach(([validator, eras]) => {
-        if (eras.includes(era.toString())) eraValidators.push(validator);
+        if (eras.includes(era)) eraValidators.push(validator);
       });
-      if (eraValidators.length > 0)
-        unclaimedByEra[era.toString()] = eraValidators;
+      if (eraValidators.length > 0) unclaimedByEra[era] = eraValidators;
     });
 
     // Accumulate calls needed to fetch data to calculate rewards.
@@ -226,7 +225,7 @@ export const PayoutsProvider = ({
       const thisEra = Object.keys(unclaimedByEra)[i];
       const eraTotalPayout = new BigNumber(rmCommas(reward.toHuman()));
       const eraRewardPoints = points.toHuman();
-      const unclaimedValidators = unclaimedByEra[thisEra.toString()];
+      const unclaimedValidators = unclaimedByEra[thisEra];
 
       let j = 0;
       for (const pref of prefs) {
@@ -240,7 +239,7 @@ export const PayoutsProvider = ({
 
         const localExposed: LocalValidatorExposure | null = getLocalEraExposure(
           network.name,
-          thisEra.toString(),
+          thisEra,
           activeAccount
         )?.[validator];
 
@@ -269,8 +268,8 @@ export const PayoutsProvider = ({
               .dividedBy(total)
               .plus(isValidator ? valCut : 0);
 
-        unclaimed[thisEra.toString()] = {
-          ...unclaimed[thisEra.toString()],
+        unclaimed[thisEra] = {
+          ...unclaimed[thisEra],
           [validator]: unclaimedPayout.toString(),
         };
         j++;
@@ -280,9 +279,9 @@ export const PayoutsProvider = ({
       // been claimed already and remove them from `erasToCheck`.
       setLocalUnclaimedPayouts(
         network.name,
-        thisEra.toString(),
+        thisEra,
         activeAccount,
-        unclaimed[thisEra.toString()],
+        unclaimed[thisEra],
         endEra.toString()
       );
       i++;
