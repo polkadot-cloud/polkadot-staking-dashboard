@@ -66,7 +66,7 @@ export const PayoutsProvider = ({
       checkEra(new BigNumber(era).minus(1));
     // If all exposures have been processed, check for pending payouts.
     else if (new BigNumber(era).isEqualTo(endEra)) {
-      await checkPendingPayouts();
+      await getUnclaimedPayouts();
       setStateWithRef('synced', setPayoutsSynced, payoutsSyncedRef);
     }
   };
@@ -121,7 +121,7 @@ export const PayoutsProvider = ({
   };
 
   // Start pending payout process once exposure data is fetched.
-  const checkPendingPayouts = async () => {
+  const getUnclaimedPayouts = async () => {
     if (!api || !activeAccount) return;
 
     // Accumulate eras to check, and determine all validator ledgers to fetch from exposures.
@@ -204,28 +204,26 @@ export const PayoutsProvider = ({
     // Accumulate calls needed to fetch data to calculate rewards.
     const calls: AnyApi[] = [];
     Object.entries(unclaimedByEra).forEach(([era, validators]) => {
-      if (validators.length > 0) {
-        const validatorPrefsCalls = validators.map((validator: AnyJson) =>
-          api.query.staking.erasValidatorPrefs<AnyApi>(era, validator)
-        );
+      if (validators.length > 0)
         calls.push(
           Promise.all([
             api.query.staking.erasValidatorReward<AnyApi>(era),
             api.query.staking.erasRewardPoints<AnyApi>(era),
-            ...validatorPrefsCalls,
+            ...validators.map((validator: AnyJson) =>
+              api.query.staking.erasValidatorPrefs<AnyApi>(era, validator)
+            ),
           ])
         );
-      }
     });
 
     // Iterate calls and determine unclaimed payouts.
     const unclaimed: UnclaimedPayouts = {};
     let i = 0;
     for (const [reward, points, ...prefs] of await Promise.all(calls)) {
-      const thisEra = Object.keys(unclaimedByEra)[i];
+      const era = Object.keys(unclaimedByEra)[i];
       const eraTotalPayout = new BigNumber(rmCommas(reward.toHuman()));
       const eraRewardPoints = points.toHuman();
-      const unclaimedValidators = unclaimedByEra[thisEra];
+      const unclaimedValidators = unclaimedByEra[era];
 
       let j = 0;
       for (const pref of prefs) {
@@ -239,7 +237,7 @@ export const PayoutsProvider = ({
 
         const localExposed: LocalValidatorExposure | null = getLocalEraExposure(
           network.name,
-          thisEra,
+          era,
           activeAccount
         )?.[validator];
 
@@ -268,8 +266,8 @@ export const PayoutsProvider = ({
               .dividedBy(total)
               .plus(isValidator ? valCut : 0);
 
-        unclaimed[thisEra] = {
-          ...unclaimed[thisEra],
+        unclaimed[era] = {
+          ...unclaimed[era],
           [validator]: unclaimedPayout.toString(),
         };
         j++;
@@ -279,9 +277,9 @@ export const PayoutsProvider = ({
       // been claimed already and remove them from `erasToCheck`.
       setLocalUnclaimedPayouts(
         network.name,
-        thisEra,
+        era,
         activeAccount,
-        unclaimed[thisEra],
+        unclaimed[era],
         endEra.toString()
       );
       i++;
