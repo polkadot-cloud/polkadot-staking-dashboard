@@ -36,6 +36,7 @@ import { TxMetaProvider } from 'contexts/TxMeta';
 import { UIProvider } from 'contexts/UI';
 import { ValidatorsProvider } from 'contexts/Validators';
 import { withProviders } from 'library/Hooks';
+import { PayoutsProvider } from 'contexts/Payouts';
 import { OverlayProvider } from '@polkadot-cloud/react';
 
 // !! Provider order matters.
@@ -63,6 +64,7 @@ export const Providers = withProviders(
   TransferOptionsProvider,
   ValidatorsProvider,
   FastUnstakeProvider,
+  PayoutsProvider,
   UIProvider,
   PluginsProvider,
   SetupProvider,

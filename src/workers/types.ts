@@ -6,10 +6,12 @@ import type {
   Exposure,
   Staker,
 } from 'contexts/Staking/types';
-import type { MaybeAccount } from 'types';
+import type { MaybeAccount, NetworkName } from 'types';
 
 export interface DataInitialiseExposures {
   task: string;
+  networkName: NetworkName;
+  era: string;
   activeAccount: MaybeAccount;
   units: number;
   exposures: Exposure[];
@@ -18,6 +20,8 @@ export interface DataInitialiseExposures {
 
 export interface ResponseInitialiseExposures {
   task: string;
+  networkName: NetworkName;
+  era: string;
   stakers: Staker[];
   totalActiveNominators: number;
   activeAccountOwnStake: ActiveAccountStaker[];

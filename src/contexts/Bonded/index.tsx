@@ -87,7 +87,7 @@ export const BondedProvider = ({ children }: { children: React.ReactNode }) => {
         [api.query.staking.bonded, address],
         [api.query.staking.nominators, address],
       ],
-      async ([controller, nominations]): Promise<void> => {
+      async ([controller, nominations]) => {
         const newAccount: BondedAccount = {
           address,
         };

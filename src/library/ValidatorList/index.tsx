@@ -12,7 +12,6 @@ import { useApi } from 'contexts/Api';
 import { useConnect } from 'contexts/Connect';
 import { useFilters } from 'contexts/Filters';
 import { useNetworkMetrics } from 'contexts/Network';
-import { StakingContext } from 'contexts/Staking';
 import { useTheme } from 'contexts/Themes';
 import { useUi } from 'contexts/UI';
 import { Header, List, Wrapper as ListWrapper } from 'library/List';
@@ -368,19 +367,7 @@ export const ValidatorList = (props: any) => {
       selectActive={selectActive}
       selectToggleable={selectToggleable}
     >
-      <ValidatorListShouldUpdate {...props} />
+      <ValidatorListInner {...props} />
     </ListProvider>
   );
 };
-
-export class ValidatorListShouldUpdate extends React.Component<any, any> {
-  static contextType = StakingContext;
-
-  shouldComponentUpdate(nextProps: any) {
-    return this.props.validators !== nextProps.validators;
-  }
-
-  render() {
-    return <ValidatorListInner {...this.props} />;
-  }
-}
