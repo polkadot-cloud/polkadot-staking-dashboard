@@ -13,9 +13,9 @@ import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
 import BigNumber from 'bignumber.js';
 import { MaxSupportedPayoutEras, defaultPayoutsContext } from './defaults';
 import type {
-  EraPayout,
   LocalValidatorExposure,
   PayoutsContextInterface,
+  UnclaimedPayouts,
 } from './types';
 import {
   getLocalEraExposure,
@@ -36,9 +36,8 @@ export const PayoutsProvider = ({
   const { isNominating, fetchEraStakers } = useStaking();
 
   // Store active accont's payout state.
-  const [pendingPayouts, setPendingPayouts] = useState<EraPayout[] | null>(
-    null
-  );
+  const [unclaimedPayouts, setUnclaimedPayouts] =
+    useState<UnclaimedPayouts>(null);
 
   // Track whether payouts have been fetched.
   const [payoutsSynced, setPayoutsSynced] = useState<Sync>('unsynced');
@@ -131,9 +130,18 @@ export const PayoutsProvider = ({
         getLocalEraExposure(network.name, currentEra.toString(), activeAccount)
       );
       erasValidators.push(...validators);
+
+      // TODO: only check eras that are not present in local storage.
       erasToCheck.push(currentEra.toString());
       currentEra = currentEra.minus(1);
     }
+
+    // Ensure no validator duplicates.
+    const uniqueValidators = [...new Set(erasValidators)];
+    // Ensure `erasToCheck` is in order, highest first.
+    erasToCheck = erasToCheck.sort((a: string, b: string) =>
+      new BigNumber(b).minus(a).toNumber()
+    );
 
     const validatorExposedEras = (validator: string) => {
       const exposedEras: string[] = [];
@@ -144,27 +152,19 @@ export const PayoutsProvider = ({
           )?.[0] === validator
         )
           exposedEras.push(era);
-
       return exposedEras;
     };
 
-    // Ensure `erasToCheck` is in order, highest first.
-    erasToCheck = erasToCheck.sort((a: string, b: string) =>
-      new BigNumber(b).minus(a).toNumber()
-    );
-
     // Fetch controllers in order to query ledgers.
-    const uniqueValidators = [...new Set(erasValidators)];
     const bondedResults =
       await api.query.staking.bonded.multi<AnyApi>(uniqueValidators);
-
     const validatorControllers: Record<string, string> = {};
     for (let i = 0; i < bondedResults.length; i++) {
       const ctlr = bondedResults[i].unwrapOr(null);
       if (ctlr) validatorControllers[uniqueValidators[i]] = ctlr;
     }
 
-    // Fetch ledgers to determine which rewards have been claimed (use local data if exists).
+    // Fetch ledgers to determine which rewards have not yet been claimed.
     const ledgerResults = await api.query.staking.ledger.multi<AnyApi>(
       Object.values(validatorControllers)
     );
@@ -193,12 +193,10 @@ export const PayoutsProvider = ({
       Object.entries(unclaimedRewards).forEach(([validator, eras]) => {
         if (eras.includes(era.toString())) eraValidators.push(validator);
       });
+
       if (eraValidators.length > 0)
         unclaimedByEra[era.toString()] = eraValidators;
     });
-
-    // TODO: Cache `unclaimedByEra` to local storage so claimed validator ledgers do not need to be
-    // fetched again.
 
     // Accumulate calls needed to fetch data to calculate rewards.
     const calls: AnyApi[] = [];
@@ -221,7 +219,7 @@ export const PayoutsProvider = ({
 
     // Iterate calls and determine unclaimed payouts.
     currentEra = startEra;
-    const unclaimedPayouts: EraPayout[] = [];
+    const unclaimed: UnclaimedPayouts = {};
 
     let i = 0;
     for (const [reward, points, ...prefs] of await Promise.all(calls)) {
@@ -263,7 +261,7 @@ export const PayoutsProvider = ({
 
         const valCut = commission.multipliedBy(avail);
 
-        const rewardValue = total.isZero()
+        const unclaimedPayout = total.isZero()
           ? new BigNumber(0)
           : avail
               .minus(valCut)
@@ -271,19 +269,19 @@ export const PayoutsProvider = ({
               .dividedBy(total)
               .plus(isValidator ? valCut : 0);
 
-        // TODO: Store payout data in local storage.
-        unclaimedPayouts.push({
-          era: currentEra,
-          validator,
-          payout: rewardValue,
-        });
+        // TODO: Also store payout data in local storage.
+
+        unclaimed[thisEra.toString()] = {
+          ...unclaimed[thisEra.toString()],
+          [validator]: unclaimedPayout,
+        };
         j++;
       }
       i++;
       currentEra = currentEra.minus(1);
     }
 
-    setPendingPayouts(unclaimedPayouts);
+    setUnclaimedPayouts(unclaimed);
     setStateWithRef('synced', setPayoutsSynced, payoutsSyncedRef);
   };
 
@@ -302,15 +300,15 @@ export const PayoutsProvider = ({
 
   // Clear payout state on network / active account change.
   useEffectIgnoreInitial(() => {
-    if (pendingPayouts !== null) {
-      setPendingPayouts(null);
+    if (unclaimedPayouts !== null) {
+      setUnclaimedPayouts(null);
       setStateWithRef('unsynced', setPayoutsSynced, payoutsSyncedRef);
     }
   }, [network, activeAccount]);
 
   return (
     <PayoutsContext.Provider
-      value={{ pendingPayouts, payoutsSynced: payoutsSyncedRef.current }}
+      value={{ unclaimedPayouts, payoutsSynced: payoutsSyncedRef.current }}
     >
       {children}
     </PayoutsContext.Provider>

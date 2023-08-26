@@ -5,7 +5,7 @@ import type { PayoutsContextInterface } from './types';
 
 export const defaultPayoutsContext: PayoutsContextInterface = {
   payoutsSynced: 'unsynced',
-  pendingPayouts: null,
+  unclaimedPayouts: null,
 };
 
 export const MaxSupportedPayoutEras = 7;

@@ -6,14 +6,12 @@ import type { Sync } from 'types';
 
 export type PayoutsContextInterface = {
   payoutsSynced: Sync;
-  pendingPayouts: EraPayout[] | null;
+  unclaimedPayouts: UnclaimedPayouts;
 };
 
-export interface EraPayout {
-  era: BigNumber;
-  validator: string;
-  payout: BigNumber;
-}
+export type UnclaimedPayouts = Record<string, EraUnclaimedPayouts> | null;
+
+export type EraUnclaimedPayouts = Record<string, BigNumber>;
 
 export interface LocalValidatorExposure {
   staked: string;
