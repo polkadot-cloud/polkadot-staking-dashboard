@@ -11,8 +11,8 @@ export const Status = ({ height }: { height: number }) => (
   <CardWrapper height={height}>
     <NominationStatus />
     <Separator />
-    <UnclaimedPayoutsStatus />
-    <Separator />
     <PayoutDestinationStatus />
+    <Separator />
+    <UnclaimedPayoutsStatus />
   </CardWrapper>
 );
