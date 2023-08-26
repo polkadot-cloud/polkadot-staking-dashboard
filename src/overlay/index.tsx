@@ -35,6 +35,7 @@ import { UpdatePayee } from '../modals/UpdatePayee';
 import { UpdateReserve } from '../modals/UpdateReserve';
 import { ValidatorMetrics } from '../modals/ValidatorMetrics';
 import { WithdrawPoolMember } from '../modals/WithdrawPoolMember';
+import { OtherBalances } from '../modals/OtherBalances';
 
 export const Overlays = () => {
   const { status } = useHelp();
@@ -58,6 +59,7 @@ export const Overlays = () => {
         ImportVault,
         ManagePool,
         ManageFastUnstake,
+        OtherBalances,
         Networks,
         Nominate,
         NominateFromFavorites,

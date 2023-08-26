@@ -2,14 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { motion } from 'framer-motion';
-import { ButtonPrimaryInvert } from '@polkadotcloud/core-ui';
+import { ButtonPrimaryInvert, ModalCanvasCard } from '@polkadot-cloud/react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { MotionContainer } from 'library/List/MotionContainer';
-import { useCanvas } from 'contexts/Canvas';
-import { CanvasCardWrapper } from '../Wrappers';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 
 export const Swap = () => {
-  const { closeCanvas } = useCanvas();
+  const { closeCanvas } = useOverlay().canvas;
   const staggerProps = {
     variants: {
       hidden: {
@@ -36,15 +35,15 @@ export const Swap = () => {
         </div>
         <h1>Swap</h1>
       </motion.div>
-      <CanvasCardWrapper {...staggerProps}>
+      <ModalCanvasCard {...staggerProps}>
         <h2>Choose Tokens</h2>
-      </CanvasCardWrapper>
-      <CanvasCardWrapper {...staggerProps}>
+      </ModalCanvasCard>
+      <ModalCanvasCard {...staggerProps}>
         <h2>Swap</h2>
-      </CanvasCardWrapper>
-      <CanvasCardWrapper {...staggerProps}>
+      </ModalCanvasCard>
+      <ModalCanvasCard {...staggerProps}>
         <h2>Bridge</h2>
-      </CanvasCardWrapper>
+      </ModalCanvasCard>
     </MotionContainer>
   );
 };

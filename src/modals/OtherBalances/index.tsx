@@ -6,8 +6,8 @@ import {
   ButtonPrimaryInvert,
   ButtonTertiary,
   ModalPadding,
-} from '@polkadotcloud/core-ui';
-import { greaterThanZero, planckToUnit } from '@polkadotcloud/utils';
+} from '@polkadot-cloud/react';
+import { greaterThanZero, planckToUnit } from '@polkadot-cloud/utils';
 import { faRightLeft } from '@fortawesome/free-solid-svg-icons';
 import { Close } from 'library/Modal/Close';
 import { Title } from 'library/Modal/Title';
@@ -18,7 +18,6 @@ import type { AnyJson } from 'types';
 import { Token } from 'library/Token';
 import { TokenSvgWrapper } from 'library/Token/Wrappers';
 import { PinnedAssets } from 'config/paras';
-import { useCanvas } from 'contexts/Canvas';
 import {
   SectionWrapper,
   ChainWrapper,
@@ -36,7 +35,6 @@ export const OtherBalances = () => {
       getTokenUnits,
     },
   } = useParaSync();
-  const { openCanvas } = useCanvas();
 
   // Interlay assets fetched already ignore zero balances.
   const paraInterlayAssets = paraBalances?.interlay?.tokens || [];
@@ -84,7 +82,7 @@ export const OtherBalances = () => {
                 <ButtonPrimaryInvert
                   text="Swap"
                   iconLeft={faRightLeft}
-                  onClick={() => openCanvas()}
+                  onClick={() => {}}
                   disabled={getInterlayBalance('Token', t).isZero()}
                 />
               </div>
@@ -107,7 +105,7 @@ export const OtherBalances = () => {
               <div>
                 <ButtonPrimaryInvert
                   iconLeft={faRightLeft}
-                  onClick={() => openCanvas()}
+                  onClick={() => {}}
                   disabled={getAssetHubBalance(t).isZero()}
                   text="Swap"
                 />

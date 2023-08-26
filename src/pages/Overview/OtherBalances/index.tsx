@@ -5,7 +5,7 @@ import {
   ButtonHelp,
   ButtonPrimaryInvert,
   Separator,
-} from '@polkadotcloud/core-ui';
+} from '@polkadot-cloud/react';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { TokensWrapper } from 'library/Token/Wrappers';
 import { useApi } from 'contexts/Api';
@@ -13,7 +13,7 @@ import { useParaSync } from 'contexts/ParaSync';
 import type { AnyJson } from 'types';
 import { RadicalLoaderWrapper } from 'library/Loader/Wrapper';
 import { useHelp } from 'contexts/Help';
-import { useModal } from 'contexts/Modal';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { PinnedAssets } from 'config/paras';
 import { MoreWrapper } from '../Wrappers';
 import { TokenList } from './TokenList';
@@ -23,7 +23,7 @@ export const BalanceFooter = () => {
     network: { name },
   } = useApi();
   const { openHelp } = useHelp();
-  const { openModalWith } = useModal();
+  const { openModal } = useOverlay().modal;
   const {
     paraSyncing,
     paraBalances,
@@ -129,7 +129,7 @@ export const BalanceFooter = () => {
           text="Manage"
           iconLeft={faGlobe}
           disabled={!enabled || paraSyncing !== 'synced'}
-          onClick={() => openModalWith('OtherBalances', {}, 'large')}
+          onClick={() => openModal({ key: 'OtherBalances' })}
         />
       </section>
     </MoreWrapper>

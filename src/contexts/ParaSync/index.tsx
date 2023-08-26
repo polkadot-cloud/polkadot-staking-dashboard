@@ -7,7 +7,7 @@ import type { AnyJson, Sync } from 'types';
 import { getParaMeta } from 'config/paras';
 import { useConnect } from 'contexts/Connect';
 import { useApi } from 'contexts/Api';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import type { ParaBalances, ParaSyncContextInterface } from './types';
 import { defaultParaSyncContext } from './defaults';
 import { useAssetHub } from './Hooks/useAssetHub';
