@@ -158,14 +158,12 @@ export const FastUnstakeProvider = ({
       // ensure correct task received.
       const { data } = message;
       const { task } = data;
-      if (task !== 'processEraForExposure') {
-        return;
-      }
+      if (task !== 'processEraForExposure') return;
+
       // ensure still same conditions.
       const { networkName, who } = data;
-      if (networkName !== network.name || who !== activeAccount) {
-        return;
-      }
+      if (networkName !== network.name || who !== activeAccount) return;
+
       const { era, exposed } = data;
 
       // ensure checked eras are in order highest first.

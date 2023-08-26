@@ -55,14 +55,12 @@ export const validateLocalExposure = (
   let localChecked = localMeta?.checked ?? null;
 
   // check types saved.
-  if (typeof localIsExposed !== 'boolean' || !Array.isArray(localChecked)) {
+  if (typeof localIsExposed !== 'boolean' || !Array.isArray(localChecked))
     return null;
-  }
+
   // check checked only contains numbers.
   const checkedNumeric = localChecked.every((e) => typeof e === 'number');
-  if (!checkedNumeric) {
-    return null;
-  }
+  if (!checkedNumeric) return null;
 
   // remove any expired eras and sort highest first.
   localChecked = localChecked
@@ -88,9 +86,9 @@ export const validateLocalExposure = (
     if (e === p - 1) return true;
     return false;
   });
-  if (!noMissingEras) {
-    return null;
-  }
+
+  if (!noMissingEras) return null;
+
   return {
     isExposed: localIsExposed,
     checked: localChecked,

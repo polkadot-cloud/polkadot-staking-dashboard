@@ -26,7 +26,7 @@ export const Headers = () => {
   const { bondedPools } = useBondedPools();
   const { poolMembersNode } = usePoolMembers();
 
-  // keep syncing if on nominate page and still fetching payouts
+  // Keep syncing if on nominate page and still fetching payouts.
   const onNominateSyncing = () => {
     if (pageFromUri(pathname, 'overview') === 'nominate')
       if (payoutsSynced !== 'synced') return true;
@@ -47,7 +47,7 @@ export const Headers = () => {
     return false;
   };
 
-  // Keep syncing if on validators page and still fetching
+  // Keep syncing if on validators page and still fetching.
   const onValidatorsSyncing = () => {
     if (pageFromUri(pathname, 'overview') === 'validators')
       if (!validators.length) return true;

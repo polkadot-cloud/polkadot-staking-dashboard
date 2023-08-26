@@ -124,7 +124,7 @@ export const PayoutsProvider = ({
   const checkPendingPayouts = async () => {
     if (!api || !activeAccount) return;
 
-    // Loop eras and determine validator ledgers to fetch.
+    // Accumulate eras to check, and determine all validator ledgers to fetch from exposures.
     const erasValidators = [];
     const { startEra, endEra } = getErasInterval();
     let erasToCheck: string[] = [];
@@ -140,11 +140,13 @@ export const PayoutsProvider = ({
 
     // Ensure no validator duplicates.
     const uniqueValidators = [...new Set(erasValidators)];
+
     // Ensure `erasToCheck` is in order, highest first.
     erasToCheck = erasToCheck.sort((a: string, b: string) =>
       new BigNumber(b).minus(a).toNumber()
     );
 
+    // Helper function to check which eras a validator was exposed in.
     const validatorExposedEras = (validator: string) => {
       const exposedEras: string[] = [];
       for (const era of erasToCheck)
@@ -166,7 +168,8 @@ export const PayoutsProvider = ({
       if (ctlr) validatorControllers[uniqueValidators[i]] = ctlr;
     }
 
-    // Fetch ledgers to determine which rewards have not yet been claimed.
+    // Fetch ledgers to determine which eras have not yet been claimed per validator. Only includes
+    // eras that are in `erasToCheck`.
     const ledgerResults = await api.query.staking.ledger.multi<AnyApi>(
       Object.values(validatorControllers)
     );
@@ -188,21 +191,19 @@ export const PayoutsProvider = ({
       }
     }
 
-    // Reformat unclaimed rewards to be era => validators[].
+    // Reformat unclaimed rewards to be { era: validators[] }.
     const unclaimedByEra: Record<string, string[]> = {};
     erasToCheck.forEach((era) => {
       const eraValidators: string[] = [];
       Object.entries(unclaimedRewards).forEach(([validator, eras]) => {
         if (eras.includes(era.toString())) eraValidators.push(validator);
       });
-
       if (eraValidators.length > 0)
         unclaimedByEra[era.toString()] = eraValidators;
     });
 
     // Accumulate calls needed to fetch data to calculate rewards.
     const calls: AnyApi[] = [];
-    currentEra = startEra;
     Object.entries(unclaimedByEra).forEach(([era, validators]) => {
       if (validators.length > 0) {
         const validatorPrefsCalls = validators.map((validator: AnyJson) =>
@@ -216,13 +217,10 @@ export const PayoutsProvider = ({
           ])
         );
       }
-      currentEra = currentEra.minus(1);
     });
 
     // Iterate calls and determine unclaimed payouts.
-    currentEra = startEra;
     const unclaimed: UnclaimedPayouts = {};
-
     let i = 0;
     for (const [reward, points, ...prefs] of await Promise.all(calls)) {
       const thisEra = Object.keys(unclaimedByEra)[i];
@@ -287,9 +285,7 @@ export const PayoutsProvider = ({
         unclaimed[thisEra.toString()],
         endEra.toString()
       );
-
       i++;
-      currentEra = currentEra.minus(1);
     }
 
     setUnclaimedPayouts({
