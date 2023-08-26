@@ -6,7 +6,7 @@ import { useStaking } from 'contexts/Staking';
 import { useApi } from 'contexts/Api';
 import type { AnyApi, AnyJson, Sync } from 'types';
 import { useConnect } from 'contexts/Connect';
-import { useEffectIgnoreInitial } from 'library/Hooks/useEffectIgnoreInitial';
+import { useEffectIgnoreInitial } from '@polkadot-cloud/react/hooks';
 import { useNetworkMetrics } from 'contexts/Network';
 import Worker from 'workers/stakers?worker';
 import { rmCommas, setStateWithRef } from '@polkadot-cloud/utils';
