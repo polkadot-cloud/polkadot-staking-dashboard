@@ -243,6 +243,7 @@ export const FastUnstakeProvider = ({
       era: era.toString(),
       who: activeAccount,
       networkName: network.name,
+      exitOnExposed: true,
       exposures,
     });
   };

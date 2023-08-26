@@ -34,7 +34,7 @@ ctx.addEventListener('message', (event: AnyJson) => {
 
 // Process era exposures and return if an account was exposed, along with the validator they backed.
 const processEraForExposure = (data: AnyJson) => {
-  const { era, exposures, task, networkName, who } = data;
+  const { era, exposures, exitOnExposed, task, networkName, who } = data;
   let exposed = false;
 
   // If exposed, the validator that was backed.
@@ -61,7 +61,7 @@ const processEraForExposure = (data: AnyJson) => {
       };
 
       exposed = true;
-      return false;
+      if (exitOnExposed) return false;
     }
 
     const inOthers = others.find((o: AnyJson) => o.who === who);
@@ -78,10 +78,9 @@ const processEraForExposure = (data: AnyJson) => {
         isValidator,
       };
       exposed = true;
-
-      // TODO: only return false if processing fast unstake.
-      return false;
+      if (exitOnExposed) return false;
     }
+
     return true;
   });
 
