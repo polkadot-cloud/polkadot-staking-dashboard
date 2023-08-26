@@ -25,9 +25,9 @@ export const UnclaimedPayoutsStatus = () => {
     <Stat
       label={t('nominate.pendingPayouts')}
       helpKey="Payout"
-      stat={`${planckToUnit(totalUnclaimed, network.units)
-        .decimalPlaces(4, BigNumber.ROUND_DOWN)
-        .toFormat()} ${network.unit}
+      stat={`${planckToUnit(totalUnclaimed, network.units).toFormat()} ${
+        network.unit
+      }
       `}
     />
   );
