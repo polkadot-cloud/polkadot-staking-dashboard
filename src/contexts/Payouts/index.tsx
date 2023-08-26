@@ -135,6 +135,19 @@ export const PayoutsProvider = ({
       currentEra = currentEra.minus(1);
     }
 
+    const validatorExposedEras = (validator: string) => {
+      const exposedEras: string[] = [];
+      for (const era of erasToCheck)
+        if (
+          Object.values(
+            Object.keys(getLocalEraExposure(network.name, era, activeAccount))
+          )?.[0] === validator
+        )
+          exposedEras.push(era);
+
+      return exposedEras;
+    };
+
     // Ensure `erasToCheck` is in order, highest first.
     erasToCheck = erasToCheck.sort((a: string, b: string) =>
       new BigNumber(b).minus(a).toNumber()
@@ -160,12 +173,15 @@ export const PayoutsProvider = ({
       const ledger = ledgerResult.unwrapOr(null)?.toHuman();
       if (ledger) {
         unclaimedRewards[ledger.stash] = ledger.claimedRewards
-          .map((r: string) => rmCommas(r))
+          .map((e: string) => rmCommas(e))
           .filter(
-            (r: string) =>
-              !erasToCheck.includes(r) &&
-              new BigNumber(r).isLessThanOrEqualTo(startEra) &&
-              new BigNumber(r).isGreaterThanOrEqualTo(endEra)
+            (e: string) =>
+              erasToCheck.includes(e) &&
+              new BigNumber(e).isLessThanOrEqualTo(startEra) &&
+              new BigNumber(e).isGreaterThanOrEqualTo(endEra)
+          )
+          .filter((r: string) =>
+            validatorExposedEras(ledger.stash).includes(r)
           );
       }
     }
@@ -188,10 +204,10 @@ export const PayoutsProvider = ({
     const calls: AnyApi[] = [];
     currentEra = startEra;
     Object.entries(unclaimedByEra).forEach(([era, validators]) => {
-      const validatorPrefsCalls = validators.map((validator: AnyJson) =>
-        api.query.staking.erasValidatorPrefs<AnyApi>(era, validator)
-      );
-      if (validators.length > 0)
+      if (validators.length > 0) {
+        const validatorPrefsCalls = validators.map((validator: AnyJson) =>
+          api.query.staking.erasValidatorPrefs<AnyApi>(era, validator)
+        );
         calls.push(
           Promise.all([
             api.query.staking.erasValidatorReward<AnyApi>(era),
@@ -199,7 +215,7 @@ export const PayoutsProvider = ({
             ...validatorPrefsCalls,
           ])
         );
-
+      }
       currentEra = currentEra.minus(1);
     });
 
@@ -212,32 +228,27 @@ export const PayoutsProvider = ({
       const thisEra = Object.keys(unclaimedByEra)[i];
       const eraTotalPayout = new BigNumber(rmCommas(reward.toHuman()));
       const eraRewardPoints = points.toHuman();
-
-      // Filter exposed validators for the era to only include those with unclaimed payouts.
-      const unclaimedValidators = getLocalEraExposure(
-        network.name,
-        currentEra.toString(),
-        activeAccount
-      ).filter((v: string) =>
-        Object.values(unclaimedByEra[thisEra.toString()]).includes(v)
-      );
+      const unclaimedValidators = unclaimedByEra[thisEra.toString()];
 
       let j = 0;
       for (const pref of prefs) {
         const eraValidatorPrefs = pref.toHuman();
-
         const commission = new BigNumber(
           eraValidatorPrefs.commission.replace(/%/g, '')
         ).multipliedBy(0.01);
 
         // Get validator from era exposure data. Falls back no null if it cannot be found.
-        const validator = Object.keys(unclaimedValidators)?.[j] || '';
-        const localExposed: LocalValidatorExposure[] | null =
-          Object.values(unclaimedValidators);
+        const validator = unclaimedValidators?.[j] || '';
 
-        const staked = new BigNumber(localExposed?.[j]?.staked || '0');
-        const total = new BigNumber(localExposed?.[j]?.total || '0');
-        const isValidator = localExposed?.[j]?.isValidator || false;
+        const localExposed: LocalValidatorExposure | null = getLocalEraExposure(
+          network.name,
+          thisEra.toString(),
+          activeAccount
+        )?.[validator];
+
+        const staked = new BigNumber(localExposed?.staked || '0');
+        const total = new BigNumber(localExposed?.total || '0');
+        const isValidator = localExposed?.isValidator || false;
 
         // Calculate the validator's share of total era payout.
         const totalRewardPoints = new BigNumber(
@@ -252,14 +263,20 @@ export const PayoutsProvider = ({
 
         const valCut = commission.multipliedBy(avail);
 
-        const rewardValue = avail
-          .minus(valCut)
-          .multipliedBy(staked)
-          .dividedBy(total)
-          .plus(isValidator ? valCut : 0);
+        const rewardValue = total.isZero()
+          ? new BigNumber(0)
+          : avail
+              .minus(valCut)
+              .multipliedBy(staked)
+              .dividedBy(total)
+              .plus(isValidator ? valCut : 0);
 
         // TODO: Store payout data in local storage.
-        unclaimedPayouts.push({ era: currentEra, payout: rewardValue });
+        unclaimedPayouts.push({
+          era: currentEra,
+          validator,
+          payout: rewardValue,
+        });
         j++;
       }
       i++;

@@ -11,6 +11,7 @@ export type PayoutsContextInterface = {
 
 export interface EraPayout {
   era: BigNumber;
+  validator: string;
   payout: BigNumber;
 }
 
