@@ -14,8 +14,8 @@ import { useSize } from 'library/Hooks/useSize';
 import { Identicon } from 'library/Identicon';
 import { Title } from 'library/Modal/Title';
 import { StatusLabel } from 'library/StatusLabel';
-import { useOverlay } from 'contexts/Overlay';
 import type { ValidatorDetail } from '@polkawatch/ddp-client';
+import { useOverlay } from '@polkadot-cloud/react/hooks';
 import { usePolkawatchApi } from '../../contexts/Polkawatch';
 import { PolkawatchButton } from '../../library/PolkawatchButton';
 
@@ -70,14 +70,11 @@ export const ValidatorDecentralization = () => {
       >
         <PolkawatchButton />
         <CardWrapper
+          className="transparent"
           style={{
             margin: '0 0 0 0.5rem',
             height: 350,
-            border: 'none',
-            boxShadow: 'none',
           }}
-          $flex
-          $transparent
         >
           <CardHeaderWrapper>
             <h4>
